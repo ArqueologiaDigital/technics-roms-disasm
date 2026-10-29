@@ -10,6 +10,8 @@
 # tools/table_segments.py; the JPEG segments are files in src/table/.
 # Reference image: kn7000_table.rom, SHA-1 fcf5645a1a2300ff5e42e73b8f42ccd10a190d86.
 
+.include "src/table/style_macros.inc"   # the style format's record and event macros
+
 .equ TABLE_ROM_BASE, 0x48000000
 .mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)
 
@@ -228,111 +230,112 @@ ResBitmapTable:
     .long	ResBitmap052
     .long	0, 0   # end of the table
 ResBitmap000:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0003f0, 0x000630
+    .incbin	"build/table_png/gui/bitmap_000.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_000.png (24x24, 8 bpp)
 ResBitmap001:
-    .incbin_range	"baserom/kn7000_table.rom", 0x000630, 0x000870
+    .incbin	"build/table_png/gui/bitmap_001.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_001.png (24x24, 8 bpp)
 ResBitmap002:
-    .incbin_range	"baserom/kn7000_table.rom", 0x000870, 0x003e94
+    .incbin	"build/table_png/gui/bitmap_002.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_002.png (307x45, 8 bpp)
 ResBitmap003:
-    .incbin_range	"baserom/kn7000_table.rom", 0x003e94, 0x0045c0
+    .incbin	"build/table_png/gui/bitmap_003.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_003.png (33x54, 8 bpp)
 ResBitmap004:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0045c0, 0x004780
+    .incbin	"build/table_png/gui/bitmap_004.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_004.png (32x14, 8 bpp)
 ResBitmap005:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004780, 0x0048b2
+    .incbin	"build/table_png/gui/bitmap_005.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_005.png (17x17, 8 bpp)
 ResBitmap006:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0048b2, 0x0048be
+    .incbin	"build/table_png/gui/bitmap_006.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_006.png (3x3, 8 bpp)
 ResBitmap007:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0048be, 0x004ab6
+    .incbin	"build/table_png/gui/bitmap_007.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_007.png (27x18, 8 bpp)
 ResBitmap008:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004ab6, 0x004cae
+    .incbin	"build/table_png/gui/bitmap_008.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_008.png (27x18, 8 bpp)
 ResBitmap009:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004cae, 0x004ea6
+    .incbin	"build/table_png/gui/bitmap_009.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_009.png (27x18, 8 bpp)
 ResBitmap010:
-    .incbin_range	"baserom/kn7000_table.rom", 0x004ea6, 0x00509e
+    .incbin	"build/table_png/gui/bitmap_010.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_010.png (27x18, 8 bpp)
 ResBitmap011:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00509e, 0x005296
+    .incbin	"build/table_png/gui/bitmap_011.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_011.png (27x18, 8 bpp)
 ResBitmap012:
-    .incbin_range	"baserom/kn7000_table.rom", 0x005296, 0x00548e
+    .incbin	"build/table_png/gui/bitmap_012.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_012.png (27x18, 8 bpp)
 ResBitmap013:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00548e, 0x00588e
+    .incbin	"build/table_png/gui/bitmap_013.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_013.png (32x32, 8 bpp)
 ResBitmap014:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00588e, 0x005c8e
+    .incbin	"build/table_png/gui/bitmap_014.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_014.png (32x32, 8 bpp)
 ResBitmap015:
-    .incbin_range	"baserom/kn7000_table.rom", 0x005c8e, 0x00608e
+    .incbin	"build/table_png/gui/bitmap_015.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_015.png (32x32, 8 bpp)
 ResBitmap016:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00608e, 0x00648e
+    .incbin	"build/table_png/gui/bitmap_016.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_016.png (32x32, 8 bpp)
 ResBitmap017:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00648e, 0x00688e
+    .incbin	"build/table_png/gui/bitmap_017.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_017.png (32x32, 8 bpp)
 ResBitmap018:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00688e, 0x006c8e
+    .incbin	"build/table_png/gui/bitmap_018.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_018.png (32x32, 8 bpp)
 ResBitmap019:
-    .incbin_range	"baserom/kn7000_table.rom", 0x006c8e, 0x00708e
+    .incbin	"build/table_png/gui/bitmap_019.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_019.png (32x32, 8 bpp)
 ResBitmap020:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00708e, 0x00748e
+    .incbin	"build/table_png/gui/bitmap_020.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_020.png (32x32, 8 bpp)
 ResBitmap021:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00748e, 0x00788e
+    .incbin	"build/table_png/gui/bitmap_021.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_021.png (32x32, 8 bpp)
 ResBitmap022:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00788e, 0x007c8e
+    .incbin	"build/table_png/gui/bitmap_022.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_022.png (32x32, 8 bpp)
 ResBitmap023:
-    .incbin_range	"baserom/kn7000_table.rom", 0x007c8e, 0x00808e
+    .incbin	"build/table_png/gui/bitmap_023.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_023.png (32x32, 8 bpp)
 ResBitmap024:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00808e, 0x00848e
+    .incbin	"build/table_png/gui/bitmap_024.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_024.png (32x32, 8 bpp)
 ResBitmap025:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00848e, 0x00888e
+    .incbin	"build/table_png/gui/bitmap_025.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_025.png (32x32, 8 bpp)
 ResBitmap026:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00888e, 0x008c8e
+    .incbin	"build/table_png/gui/bitmap_026.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_026.png (32x32, 8 bpp)
 ResBitmap027:
-    .incbin_range	"baserom/kn7000_table.rom", 0x008c8e, 0x00908e
+    .incbin	"build/table_png/gui/bitmap_027.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_027.png (32x32, 8 bpp)
 ResBitmap028:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00908e, 0x00948e
+    .incbin	"build/table_png/gui/bitmap_028.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_028.png (32x32, 8 bpp)
 ResBitmap029:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00948e, 0x00988e
+    .incbin	"build/table_png/gui/bitmap_029.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_029.png (32x32, 8 bpp)
 ResBitmap030:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00988e, 0x00993e
+    .incbin	"build/table_png/gui/bitmap_030.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_030.png (15x11, 8 bpp)
 ResBitmap031:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00993e, 0x0099ee
+    .incbin	"build/table_png/gui/bitmap_031.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_031.png (15x11, 8 bpp)
 ResBitmap032:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0099ee, 0x009dee
+    .incbin	"build/table_png/gui/bitmap_032.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_032.png (32x32, 8 bpp)
 ResBitmap033:
-    .incbin_range	"baserom/kn7000_table.rom", 0x009dee, 0x00a1ee
+    .incbin	"build/table_png/gui/bitmap_033.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_033.png (32x32, 8 bpp)
 ResBitmap034:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00a1ee, 0x00a5ee
+    .incbin	"build/table_png/gui/bitmap_034.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_034.png (32x32, 8 bpp)
 ResBitmap035:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00a5ee, 0x00a9ee
+    .incbin	"build/table_png/gui/bitmap_035.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_035.png (32x32, 8 bpp)
 ResBitmap036:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00a9ee, 0x00adee
+    .incbin	"build/table_png/gui/bitmap_036.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_036.png (32x32, 8 bpp)
 ResBitmap037:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00adee, 0x00b1ee
+    .incbin	"build/table_png/gui/bitmap_037.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_037.png (32x32, 8 bpp)
 ResBitmap038:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00b1ee, 0x00b5ee
+    .incbin	"build/table_png/gui/bitmap_038.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_038.png (32x32, 8 bpp)
 ResBitmap039:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00b5ee, 0x00b9ee
+    .incbin	"build/table_png/gui/bitmap_039.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_039.png (32x32, 8 bpp)
 ResBitmap040:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00b9ee, 0x00bdee
+    .incbin	"build/table_png/gui/bitmap_040.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_040.png (32x32, 8 bpp)
 ResBitmap041:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00bdee, 0x00c1ee
+    .incbin	"build/table_png/gui/bitmap_041.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_041.png (32x32, 8 bpp)
 ResBitmap042:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00c1ee, 0x00c5ee
+    .incbin	"build/table_png/gui/bitmap_042.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_042.png (32x32, 8 bpp)
 ResBitmap043:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00c5ee, 0x00c9ee
+    .incbin	"build/table_png/gui/bitmap_043.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_043.png (32x32, 8 bpp)
 ResBitmap044:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00c9ee, 0x00cdee
+    .incbin	"build/table_png/gui/bitmap_044.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_044.png (32x32, 8 bpp)
 ResBitmap045:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00cdee, 0x00d51a
+    .incbin	"build/table_png/gui/bitmap_045.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_045.png (33x54, 8 bpp)
 ResBitmap046:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00d51a, 0x00d6da
+    .incbin	"build/table_png/gui/bitmap_046.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_046.png (32x14, 8 bpp)
 ResBitmap047:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00d6da, 0x00de06
+    .incbin	"build/table_png/gui/bitmap_047.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_047.png (33x54, 8 bpp)
 ResBitmap048:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00de06, 0x00dfc6
+    .incbin	"build/table_png/gui/bitmap_048.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_048.png (32x14, 8 bpp)
 ResBitmap049:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00dfc6, 0x00e22a
+    .incbin	"build/table_png/gui/bitmap_049.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_049.png (34x18, 8 bpp)
 ResBitmap050:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e22a, 0x00e48e
+    .incbin	"build/table_png/gui/bitmap_050.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_050.png (34x18, 8 bpp)
 ResBitmap051:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e48e, 0x00e686
+    .incbin	"build/table_png/gui/bitmap_051.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_051.png (27x18, 8 bpp)
 ResBitmap052:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00e686, 0x00e880
+    .incbin	"build/table_png/gui/bitmap_052.bin"   # census: generated -- tools/table_png.py from src/table/gui/bitmap_052.png (27x18, 8 bpp)
+    .align	4, 0xff
 ResFrameTable:
     .word	1, 1
     .long	ResFrame000
@@ -482,151 +485,151 @@ ResFrameTable:
     .long	ResFrame072
     .long	0, 0   # end of the table
 ResFrame000:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead0, 0x00ead2
+    .incbin	"build/table_png/gui/frame_000.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_000.png (1x1, 8 bpp)
 ResFrame001:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead2, 0x00ead4
+    .incbin	"build/table_png/gui/frame_001.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_001.png (1x1, 8 bpp)
 ResFrame002:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead4, 0x00ead6
+    .incbin	"build/table_png/gui/frame_002.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_002.png (1x1, 8 bpp)
 ResFrame003:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead6, 0x00ead8
+    .incbin	"build/table_png/gui/frame_003.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_003.png (1x1, 8 bpp)
 ResFrame004:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ead8, 0x00eadc
+    .incbin	"build/table_png/gui/frame_004.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_004.png (2x2, 8 bpp)
 ResFrame005:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eadc, 0x00eae0
+    .incbin	"build/table_png/gui/frame_005.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_005.png (2x2, 8 bpp)
 ResFrame006:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eae0, 0x00eae4
+    .incbin	"build/table_png/gui/frame_006.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_006.png (2x2, 8 bpp)
 ResFrame007:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eae4, 0x00eae8
+    .incbin	"build/table_png/gui/frame_007.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_007.png (2x2, 8 bpp)
 ResFrame008:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eae8, 0x00eb06
+    .incbin	"build/table_png/gui/frame_008.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_008.png (5x5, 8 bpp)
 ResFrame009:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb06, 0x00eb24
+    .incbin	"build/table_png/gui/frame_009.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_009.png (5x5, 8 bpp)
 ResFrame010:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb24, 0x00eb42
+    .incbin	"build/table_png/gui/frame_010.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_010.png (5x5, 8 bpp)
 ResFrame011:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb42, 0x00eb60
+    .incbin	"build/table_png/gui/frame_011.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_011.png (5x5, 8 bpp)
 ResFrame012:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eb60, 0x00ebba
+    .incbin	"build/table_png/gui/frame_012.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_012.png (9x9, 8 bpp)
 ResFrame013:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ebba, 0x00ec14
+    .incbin	"build/table_png/gui/frame_013.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_013.png (9x9, 8 bpp)
 ResFrame014:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ec14, 0x00ec6e
+    .incbin	"build/table_png/gui/frame_014.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_014.png (9x9, 8 bpp)
 ResFrame015:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ec6e, 0x00ecc8
+    .incbin	"build/table_png/gui/frame_015.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_015.png (9x9, 8 bpp)
 ResFrame016:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ecc8, 0x00ed8c
+    .incbin	"build/table_png/gui/frame_016.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_016.png (14x14, 8 bpp)
 ResFrame017:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ed8c, 0x00ee50
+    .incbin	"build/table_png/gui/frame_017.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_017.png (14x14, 8 bpp)
 ResFrame018:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ee50, 0x00ef14
+    .incbin	"build/table_png/gui/frame_018.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_018.png (14x14, 8 bpp)
 ResFrame019:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00ef14, 0x00efd8
+    .incbin	"build/table_png/gui/frame_019.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_019.png (14x14, 8 bpp)
 ResFrame020:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efd8, 0x00efda
+    .incbin	"build/table_png/gui/frame_020.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_020.png (1x1, 8 bpp)
 ResFrame021:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efda, 0x00efdc
+    .incbin	"build/table_png/gui/frame_021.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_021.png (1x1, 8 bpp)
 ResFrame022:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efdc, 0x00efde
+    .incbin	"build/table_png/gui/frame_022.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_022.png (1x1, 8 bpp)
 ResFrame023:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efde, 0x00efe0
+    .incbin	"build/table_png/gui/frame_023.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_023.png (1x1, 8 bpp)
 ResFrame024:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efe0, 0x00efe4
+    .incbin	"build/table_png/gui/frame_024.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_024.png (2x2, 8 bpp)
 ResFrame025:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efe4, 0x00efe8
+    .incbin	"build/table_png/gui/frame_025.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_025.png (2x2, 8 bpp)
 ResFrame026:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efe8, 0x00efec
+    .incbin	"build/table_png/gui/frame_026.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_026.png (2x2, 8 bpp)
 ResFrame027:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00efec, 0x00eff0
+    .incbin	"build/table_png/gui/frame_027.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_027.png (2x2, 8 bpp)
 ResFrame028:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00eff0, 0x00f00e
+    .incbin	"build/table_png/gui/frame_028.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_028.png (5x5, 8 bpp)
 ResFrame029:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f00e, 0x00f02c
+    .incbin	"build/table_png/gui/frame_029.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_029.png (5x5, 8 bpp)
 ResFrame030:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f02c, 0x00f04a
+    .incbin	"build/table_png/gui/frame_030.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_030.png (5x5, 8 bpp)
 ResFrame031:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f04a, 0x00f068
+    .incbin	"build/table_png/gui/frame_031.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_031.png (5x5, 8 bpp)
 ResFrame032:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f068, 0x00f0c2
+    .incbin	"build/table_png/gui/frame_032.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_032.png (9x9, 8 bpp)
 ResFrame033:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f0c2, 0x00f11c
+    .incbin	"build/table_png/gui/frame_033.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_033.png (9x9, 8 bpp)
 ResFrame034:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f11c, 0x00f176
+    .incbin	"build/table_png/gui/frame_034.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_034.png (9x9, 8 bpp)
 ResFrame035:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f176, 0x00f1d0
+    .incbin	"build/table_png/gui/frame_035.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_035.png (9x9, 8 bpp)
 ResFrame036:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f1d0, 0x00f294
+    .incbin	"build/table_png/gui/frame_036.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_036.png (14x14, 8 bpp)
 ResFrame037:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f294, 0x00f358
+    .incbin	"build/table_png/gui/frame_037.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_037.png (14x14, 8 bpp)
 ResFrame038:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f358, 0x00f41c
+    .incbin	"build/table_png/gui/frame_038.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_038.png (14x14, 8 bpp)
 ResFrame039:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f41c, 0x00f4e0
+    .incbin	"build/table_png/gui/frame_039.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_039.png (14x14, 8 bpp)
 ResFrame040:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f4e0, 0x00f528
+    .incbin	"build/table_png/gui/frame_040.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_040.png (5x12, 8 bpp)
 ResFrame041:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f528, 0x00f588
+    .incbin	"build/table_png/gui/frame_041.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_041.png (6x16, 8 bpp)
 ResFrame042:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f588, 0x00f648
+    .incbin	"build/table_png/gui/frame_042.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_042.png (8x24, 8 bpp)
 ResFrame043:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f648, 0x00f788
+    .incbin	"build/table_png/gui/frame_043.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_043.png (10x32, 8 bpp)
 ResFrame044:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00f788, 0x00fa88
+    .incbin	"build/table_png/gui/frame_044.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_044.png (15x48, 8 bpp)
 ResFrame045:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fa88, 0x00fad0
+    .incbin	"build/table_png/gui/frame_045.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_045.png (5x12, 8 bpp)
 ResFrame046:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fad0, 0x00fb30
+    .incbin	"build/table_png/gui/frame_046.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_046.png (6x16, 8 bpp)
 ResFrame047:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fb30, 0x00fbf0
+    .incbin	"build/table_png/gui/frame_047.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_047.png (8x24, 8 bpp)
 ResFrame048:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fbf0, 0x00fd30
+    .incbin	"build/table_png/gui/frame_048.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_048.png (10x32, 8 bpp)
 ResFrame049:
-    .incbin_range	"baserom/kn7000_table.rom", 0x00fd30, 0x010030
+    .incbin	"build/table_png/gui/frame_049.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_049.png (15x48, 8 bpp)
 ResFrame050:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010030, 0x010170
+    .incbin	"build/table_png/gui/frame_050.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_050.png (20x16, 8 bpp)
 ResFrame051:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010170, 0x0103b0
+    .incbin	"build/table_png/gui/frame_051.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_051.png (24x24, 8 bpp)
 ResFrame052:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0103b0, 0x010770
+    .incbin	"build/table_png/gui/frame_052.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_052.png (29x32, 8 bpp)
 ResFrame053:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010770, 0x010dd0
+    .incbin	"build/table_png/gui/frame_053.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_053.png (34x48, 8 bpp)
 ResFrame054:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010dd0, 0x010f10
+    .incbin	"build/table_png/gui/frame_054.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_054.png (20x16, 8 bpp)
 ResFrame055:
-    .incbin_range	"baserom/kn7000_table.rom", 0x010f10, 0x011150
+    .incbin	"build/table_png/gui/frame_055.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_055.png (24x24, 8 bpp)
 ResFrame056:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011150, 0x011510
+    .incbin	"build/table_png/gui/frame_056.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_056.png (29x32, 8 bpp)
 ResFrame057:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011510, 0x011b70
+    .incbin	"build/table_png/gui/frame_057.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_057.png (34x48, 8 bpp)
 ResFrame058:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011b70, 0x011c70
+    .incbin	"build/table_png/gui/frame_058.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_058.png (16x16, 8 bpp)
 ResFrame059:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011c70, 0x011d70
+    .incbin	"build/table_png/gui/frame_059.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_059.png (16x16, 8 bpp)
 ResFrame060:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011d70, 0x011d8e
+    .incbin	"build/table_png/gui/frame_060.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_060.png (5x5, 8 bpp)
 ResFrame061:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011d8e, 0x011dac
+    .incbin	"build/table_png/gui/frame_061.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_061.png (5x5, 8 bpp)
 ResFrame062:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011dac, 0x011dca
+    .incbin	"build/table_png/gui/frame_062.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_062.png (5x5, 8 bpp)
 ResFrame063:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011dca, 0x011de8
+    .incbin	"build/table_png/gui/frame_063.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_063.png (5x5, 8 bpp)
 ResFrame064:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011de8, 0x011e06
+    .incbin	"build/table_png/gui/frame_064.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_064.png (5x5, 8 bpp)
 ResFrame065:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e06, 0x011e24
+    .incbin	"build/table_png/gui/frame_065.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_065.png (5x5, 8 bpp)
 ResFrame066:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e24, 0x011e42
+    .incbin	"build/table_png/gui/frame_066.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_066.png (5x5, 8 bpp)
 ResFrame067:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e42, 0x011e60
+    .incbin	"build/table_png/gui/frame_067.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_067.png (5x5, 8 bpp)
 ResFrame068:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e60, 0x011e7e
+    .incbin	"build/table_png/gui/frame_068.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_068.png (5x5, 8 bpp)
 ResFrame069:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e7e, 0x011e9c
+    .incbin	"build/table_png/gui/frame_069.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_069.png (5x5, 8 bpp)
 ResFrame070:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011e9c, 0x011eba
+    .incbin	"build/table_png/gui/frame_070.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_070.png (5x5, 8 bpp)
 ResFrame071:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011eba, 0x011ed8
+    .incbin	"build/table_png/gui/frame_071.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_071.png (5x5, 8 bpp)
 ResFrame072:
-    .incbin_range	"baserom/kn7000_table.rom", 0x011ed8, 0x01221c
+    .incbin	"build/table_png/gui/frame_072.bin"   # census: generated -- tools/table_png.py from src/table/gui/frame_072.png (76x11, 8 bpp)
 ResIconTable:
     .word	24, 24
     .long	ResIcon000
@@ -1110,485 +1113,485 @@ ResIconTable:
     .long	ResIcon239
     .long	0, 0   # end of the table
 ResIcon000:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0129a4, 0x012ac4
+    .incbin	"build/table_png/gui/icon_000.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_000.png (24x24, 4 bpp)
 ResIcon001:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012ac4, 0x012be4
+    .incbin	"build/table_png/gui/icon_001.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_001.png (24x24, 4 bpp)
 ResIcon002:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012be4, 0x012d04
+    .incbin	"build/table_png/gui/icon_002.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_002.png (24x24, 4 bpp)
 ResIcon003:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012d04, 0x012e24
+    .incbin	"build/table_png/gui/icon_003.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_003.png (24x24, 4 bpp)
 ResIcon004:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012e24, 0x012f44
+    .incbin	"build/table_png/gui/icon_004.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_004.png (24x24, 4 bpp)
 ResIcon005:
-    .incbin_range	"baserom/kn7000_table.rom", 0x012f44, 0x013064
+    .incbin	"build/table_png/gui/icon_005.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_005.png (24x24, 4 bpp)
 ResIcon006:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013064, 0x013184
+    .incbin	"build/table_png/gui/icon_006.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_006.png (24x24, 4 bpp)
 ResIcon007:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013184, 0x0132a4
+    .incbin	"build/table_png/gui/icon_007.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_007.png (24x24, 4 bpp)
 ResIcon008:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0132a4, 0x0133c4
+    .incbin	"build/table_png/gui/icon_008.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_008.png (24x24, 4 bpp)
 ResIcon009:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0133c4, 0x0134e4
+    .incbin	"build/table_png/gui/icon_009.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_009.png (24x24, 4 bpp)
 ResIcon010:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0134e4, 0x013604
+    .incbin	"build/table_png/gui/icon_010.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_010.png (24x24, 4 bpp)
 ResIcon011:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013604, 0x013724
+    .incbin	"build/table_png/gui/icon_011.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_011.png (24x24, 4 bpp)
 ResIcon012:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013724, 0x013844
+    .incbin	"build/table_png/gui/icon_012.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_012.png (24x24, 4 bpp)
 ResIcon013:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013844, 0x013964
+    .incbin	"build/table_png/gui/icon_013.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_013.png (24x24, 4 bpp)
 ResIcon014:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013964, 0x013a84
+    .incbin	"build/table_png/gui/icon_014.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_014.png (24x24, 4 bpp)
 ResIcon015:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013a84, 0x013ba4
+    .incbin	"build/table_png/gui/icon_015.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_015.png (24x24, 4 bpp)
 ResIcon016:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013ba4, 0x013cc4
+    .incbin	"build/table_png/gui/icon_016.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_016.png (24x24, 4 bpp)
 ResIcon017:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013cc4, 0x013de4
+    .incbin	"build/table_png/gui/icon_017.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_017.png (24x24, 4 bpp)
 ResIcon018:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013de4, 0x013f04
+    .incbin	"build/table_png/gui/icon_018.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_018.png (24x24, 4 bpp)
 ResIcon019:
-    .incbin_range	"baserom/kn7000_table.rom", 0x013f04, 0x014024
+    .incbin	"build/table_png/gui/icon_019.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_019.png (24x24, 4 bpp)
 ResIcon020:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014024, 0x014144
+    .incbin	"build/table_png/gui/icon_020.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_020.png (24x24, 4 bpp)
 ResIcon021:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014144, 0x014264
+    .incbin	"build/table_png/gui/icon_021.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_021.png (24x24, 4 bpp)
 ResIcon022:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014264, 0x014384
+    .incbin	"build/table_png/gui/icon_022.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_022.png (24x24, 4 bpp)
 ResIcon023:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014384, 0x0144a4
+    .incbin	"build/table_png/gui/icon_023.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_023.png (24x24, 4 bpp)
 ResIcon024:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0144a4, 0x0145c4
+    .incbin	"build/table_png/gui/icon_024.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_024.png (24x24, 4 bpp)
 ResIcon025:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0145c4, 0x0146e4
+    .incbin	"build/table_png/gui/icon_025.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_025.png (24x24, 4 bpp)
 ResIcon026:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0146e4, 0x014804
+    .incbin	"build/table_png/gui/icon_026.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_026.png (24x24, 4 bpp)
 ResIcon027:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014804, 0x014924
+    .incbin	"build/table_png/gui/icon_027.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_027.png (24x24, 4 bpp)
 ResIcon028:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014924, 0x014a44
+    .incbin	"build/table_png/gui/icon_028.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_028.png (24x24, 4 bpp)
 ResIcon029:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014a44, 0x014b64
+    .incbin	"build/table_png/gui/icon_029.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_029.png (24x24, 4 bpp)
 ResIcon030:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014b64, 0x014c84
+    .incbin	"build/table_png/gui/icon_030.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_030.png (24x24, 4 bpp)
 ResIcon031:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014c84, 0x014da4
+    .incbin	"build/table_png/gui/icon_031.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_031.png (24x24, 4 bpp)
 ResIcon032:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014da4, 0x014ec4
+    .incbin	"build/table_png/gui/icon_032.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_032.png (24x24, 4 bpp)
 ResIcon033:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014ec4, 0x014fe4
+    .incbin	"build/table_png/gui/icon_033.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_033.png (24x24, 4 bpp)
 ResIcon034:
-    .incbin_range	"baserom/kn7000_table.rom", 0x014fe4, 0x015104
+    .incbin	"build/table_png/gui/icon_034.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_034.png (24x24, 4 bpp)
 ResIcon035:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015104, 0x015224
+    .incbin	"build/table_png/gui/icon_035.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_035.png (24x24, 4 bpp)
 ResIcon036:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015224, 0x015344
+    .incbin	"build/table_png/gui/icon_036.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_036.png (24x24, 4 bpp)
 ResIcon037:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015344, 0x015464
+    .incbin	"build/table_png/gui/icon_037.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_037.png (24x24, 4 bpp)
 ResIcon038:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015464, 0x015584
+    .incbin	"build/table_png/gui/icon_038.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_038.png (24x24, 4 bpp)
 ResIcon039:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015584, 0x0156a4
+    .incbin	"build/table_png/gui/icon_039.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_039.png (24x24, 4 bpp)
 ResIcon040:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0156a4, 0x0157c4
+    .incbin	"build/table_png/gui/icon_040.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_040.png (24x24, 4 bpp)
 ResIcon041:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0157c4, 0x0158e4
+    .incbin	"build/table_png/gui/icon_041.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_041.png (24x24, 4 bpp)
 ResIcon042:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0158e4, 0x015a04
+    .incbin	"build/table_png/gui/icon_042.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_042.png (24x24, 4 bpp)
 ResIcon043:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015a04, 0x015b24
+    .incbin	"build/table_png/gui/icon_043.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_043.png (24x24, 4 bpp)
 ResIcon044:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015b24, 0x015c44
+    .incbin	"build/table_png/gui/icon_044.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_044.png (24x24, 4 bpp)
 ResIcon045:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015c44, 0x015d64
+    .incbin	"build/table_png/gui/icon_045.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_045.png (24x24, 4 bpp)
 ResIcon046:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015d64, 0x015e84
+    .incbin	"build/table_png/gui/icon_046.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_046.png (24x24, 4 bpp)
 ResIcon047:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015e84, 0x015fa4
+    .incbin	"build/table_png/gui/icon_047.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_047.png (24x24, 4 bpp)
 ResIcon048:
-    .incbin_range	"baserom/kn7000_table.rom", 0x015fa4, 0x0160c4
+    .incbin	"build/table_png/gui/icon_048.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_048.png (24x24, 4 bpp)
 ResIcon049:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0160c4, 0x0161e4
+    .incbin	"build/table_png/gui/icon_049.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_049.png (24x24, 4 bpp)
 ResIcon050:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0161e4, 0x016304
+    .incbin	"build/table_png/gui/icon_050.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_050.png (24x24, 4 bpp)
 ResIcon051:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016304, 0x016424
+    .incbin	"build/table_png/gui/icon_051.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_051.png (24x24, 4 bpp)
 ResIcon052:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016424, 0x016544
+    .incbin	"build/table_png/gui/icon_052.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_052.png (24x24, 4 bpp)
 ResIcon053:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016544, 0x016664
+    .incbin	"build/table_png/gui/icon_053.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_053.png (24x24, 4 bpp)
 ResIcon054:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016664, 0x016784
+    .incbin	"build/table_png/gui/icon_054.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_054.png (24x24, 4 bpp)
 ResIcon055:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016784, 0x0168a4
+    .incbin	"build/table_png/gui/icon_055.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_055.png (24x24, 4 bpp)
 ResIcon056:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0168a4, 0x0169c4
+    .incbin	"build/table_png/gui/icon_056.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_056.png (24x24, 4 bpp)
 ResIcon057:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0169c4, 0x016ae4
+    .incbin	"build/table_png/gui/icon_057.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_057.png (24x24, 4 bpp)
 ResIcon058:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016ae4, 0x016c04
+    .incbin	"build/table_png/gui/icon_058.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_058.png (24x24, 4 bpp)
 ResIcon059:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016c04, 0x016d24
+    .incbin	"build/table_png/gui/icon_059.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_059.png (24x24, 4 bpp)
 ResIcon060:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016d24, 0x016e44
+    .incbin	"build/table_png/gui/icon_060.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_060.png (24x24, 4 bpp)
 ResIcon061:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016e44, 0x016f64
+    .incbin	"build/table_png/gui/icon_061.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_061.png (24x24, 4 bpp)
 ResIcon062:
-    .incbin_range	"baserom/kn7000_table.rom", 0x016f64, 0x017084
+    .incbin	"build/table_png/gui/icon_062.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_062.png (24x24, 4 bpp)
 ResIcon063:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017084, 0x0171a4
+    .incbin	"build/table_png/gui/icon_063.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_063.png (24x24, 4 bpp)
 ResIcon064:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0171a4, 0x0172c4
+    .incbin	"build/table_png/gui/icon_064.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_064.png (24x24, 4 bpp)
 ResIcon065:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0172c4, 0x0173e4
+    .incbin	"build/table_png/gui/icon_065.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_065.png (24x24, 4 bpp)
 ResIcon066:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0173e4, 0x017504
+    .incbin	"build/table_png/gui/icon_066.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_066.png (24x24, 4 bpp)
 ResIcon067:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017504, 0x017624
+    .incbin	"build/table_png/gui/icon_067.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_067.png (24x24, 4 bpp)
 ResIcon068:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017624, 0x017744
+    .incbin	"build/table_png/gui/icon_068.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_068.png (24x24, 4 bpp)
 ResIcon069:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017744, 0x017864
+    .incbin	"build/table_png/gui/icon_069.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_069.png (24x24, 4 bpp)
 ResIcon070:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017864, 0x017984
+    .incbin	"build/table_png/gui/icon_070.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_070.png (24x24, 4 bpp)
 ResIcon071:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017984, 0x017aa4
+    .incbin	"build/table_png/gui/icon_071.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_071.png (24x24, 4 bpp)
 ResIcon072:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017aa4, 0x017bc4
+    .incbin	"build/table_png/gui/icon_072.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_072.png (24x24, 4 bpp)
 ResIcon073:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017bc4, 0x017ce4
+    .incbin	"build/table_png/gui/icon_073.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_073.png (24x24, 4 bpp)
 ResIcon074:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017ce4, 0x017e04
+    .incbin	"build/table_png/gui/icon_074.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_074.png (24x24, 4 bpp)
 ResIcon075:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017e04, 0x017f24
+    .incbin	"build/table_png/gui/icon_075.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_075.png (24x24, 4 bpp)
 ResIcon076:
-    .incbin_range	"baserom/kn7000_table.rom", 0x017f24, 0x018044
+    .incbin	"build/table_png/gui/icon_076.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_076.png (24x24, 4 bpp)
 ResIcon077:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018044, 0x018164
+    .incbin	"build/table_png/gui/icon_077.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_077.png (24x24, 4 bpp)
 ResIcon078:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018164, 0x018284
+    .incbin	"build/table_png/gui/icon_078.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_078.png (24x24, 4 bpp)
 ResIcon079:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018284, 0x0183a4
+    .incbin	"build/table_png/gui/icon_079.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_079.png (24x24, 4 bpp)
 ResIcon080:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0183a4, 0x0184c4
+    .incbin	"build/table_png/gui/icon_080.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_080.png (24x24, 4 bpp)
 ResIcon081:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0184c4, 0x0185e4
+    .incbin	"build/table_png/gui/icon_081.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_081.png (24x24, 4 bpp)
 ResIcon082:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0185e4, 0x018704
+    .incbin	"build/table_png/gui/icon_082.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_082.png (24x24, 4 bpp)
 ResIcon083:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018704, 0x018824
+    .incbin	"build/table_png/gui/icon_083.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_083.png (24x24, 4 bpp)
 ResIcon084:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018824, 0x018944
+    .incbin	"build/table_png/gui/icon_084.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_084.png (24x24, 4 bpp)
 ResIcon085:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018944, 0x018a64
+    .incbin	"build/table_png/gui/icon_085.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_085.png (24x24, 4 bpp)
 ResIcon086:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018a64, 0x018b84
+    .incbin	"build/table_png/gui/icon_086.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_086.png (24x24, 4 bpp)
 ResIcon087:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018b84, 0x018ca4
+    .incbin	"build/table_png/gui/icon_087.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_087.png (24x24, 4 bpp)
 ResIcon088:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018ca4, 0x018dc4
+    .incbin	"build/table_png/gui/icon_088.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_088.png (24x24, 4 bpp)
 ResIcon089:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018dc4, 0x018ee4
+    .incbin	"build/table_png/gui/icon_089.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_089.png (24x24, 4 bpp)
 ResIcon090:
-    .incbin_range	"baserom/kn7000_table.rom", 0x018ee4, 0x019004
+    .incbin	"build/table_png/gui/icon_090.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_090.png (24x24, 4 bpp)
 ResIcon091:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019004, 0x019124
+    .incbin	"build/table_png/gui/icon_091.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_091.png (24x24, 4 bpp)
 ResIcon092:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019124, 0x019244
+    .incbin	"build/table_png/gui/icon_092.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_092.png (24x24, 4 bpp)
 ResIcon093:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019244, 0x019364
+    .incbin	"build/table_png/gui/icon_093.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_093.png (24x24, 4 bpp)
 ResIcon094:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019364, 0x019484
+    .incbin	"build/table_png/gui/icon_094.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_094.png (24x24, 4 bpp)
 ResIcon095:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019484, 0x0195a4
+    .incbin	"build/table_png/gui/icon_095.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_095.png (24x24, 4 bpp)
 ResIcon096:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0195a4, 0x0196c4
+    .incbin	"build/table_png/gui/icon_096.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_096.png (24x24, 4 bpp)
 ResIcon097:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0196c4, 0x0197e4
+    .incbin	"build/table_png/gui/icon_097.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_097.png (24x24, 4 bpp)
 ResIcon098:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0197e4, 0x019904
+    .incbin	"build/table_png/gui/icon_098.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_098.png (24x24, 4 bpp)
 ResIcon099:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019904, 0x019a24
+    .incbin	"build/table_png/gui/icon_099.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_099.png (24x24, 4 bpp)
 ResIcon100:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019a24, 0x019b44
+    .incbin	"build/table_png/gui/icon_100.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_100.png (24x24, 4 bpp)
 ResIcon101:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019b44, 0x019c64
+    .incbin	"build/table_png/gui/icon_101.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_101.png (24x24, 4 bpp)
 ResIcon102:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019c64, 0x019d84
+    .incbin	"build/table_png/gui/icon_102.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_102.png (24x24, 4 bpp)
 ResIcon103:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019d84, 0x019ea4
+    .incbin	"build/table_png/gui/icon_103.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_103.png (24x24, 4 bpp)
 ResIcon104:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019ea4, 0x019fc4
+    .incbin	"build/table_png/gui/icon_104.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_104.png (24x24, 4 bpp)
 ResIcon105:
-    .incbin_range	"baserom/kn7000_table.rom", 0x019fc4, 0x01a0e4
+    .incbin	"build/table_png/gui/icon_105.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_105.png (24x24, 4 bpp)
 ResIcon106:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a0e4, 0x01a204
+    .incbin	"build/table_png/gui/icon_106.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_106.png (24x24, 4 bpp)
 ResIcon107:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a204, 0x01a324
+    .incbin	"build/table_png/gui/icon_107.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_107.png (24x24, 4 bpp)
 ResIcon108:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a324, 0x01a444
+    .incbin	"build/table_png/gui/icon_108.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_108.png (24x24, 4 bpp)
 ResIcon109:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a444, 0x01a564
+    .incbin	"build/table_png/gui/icon_109.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_109.png (24x24, 4 bpp)
 ResIcon110:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a564, 0x01a684
+    .incbin	"build/table_png/gui/icon_110.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_110.png (24x24, 4 bpp)
 ResIcon111:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a684, 0x01a7a4
+    .incbin	"build/table_png/gui/icon_111.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_111.png (24x24, 4 bpp)
 ResIcon112:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a7a4, 0x01a8c4
+    .incbin	"build/table_png/gui/icon_112.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_112.png (24x24, 4 bpp)
 ResIcon113:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a8c4, 0x01a9e4
+    .incbin	"build/table_png/gui/icon_113.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_113.png (24x24, 4 bpp)
 ResIcon114:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01a9e4, 0x01ab04
+    .incbin	"build/table_png/gui/icon_114.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_114.png (24x24, 4 bpp)
 ResIcon115:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ab04, 0x01ac24
+    .incbin	"build/table_png/gui/icon_115.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_115.png (24x24, 4 bpp)
 ResIcon116:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ac24, 0x01ad44
+    .incbin	"build/table_png/gui/icon_116.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_116.png (24x24, 4 bpp)
 ResIcon117:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ad44, 0x01ae64
+    .incbin	"build/table_png/gui/icon_117.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_117.png (24x24, 4 bpp)
 ResIcon118:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ae64, 0x01af84
+    .incbin	"build/table_png/gui/icon_118.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_118.png (24x24, 4 bpp)
 ResIcon119:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01af84, 0x01b0a4
+    .incbin	"build/table_png/gui/icon_119.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_119.png (24x24, 4 bpp)
 ResIcon120:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b0a4, 0x01b1c4
+    .incbin	"build/table_png/gui/icon_120.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_120.png (24x24, 4 bpp)
 ResIcon121:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b1c4, 0x01b2e4
+    .incbin	"build/table_png/gui/icon_121.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_121.png (24x24, 4 bpp)
 ResIcon122:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b2e4, 0x01b404
+    .incbin	"build/table_png/gui/icon_122.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_122.png (24x24, 4 bpp)
 ResIcon123:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b404, 0x01b524
+    .incbin	"build/table_png/gui/icon_123.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_123.png (24x24, 4 bpp)
 ResIcon124:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b524, 0x01b644
+    .incbin	"build/table_png/gui/icon_124.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_124.png (24x24, 4 bpp)
 ResIcon125:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b644, 0x01b764
+    .incbin	"build/table_png/gui/icon_125.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_125.png (24x24, 4 bpp)
 ResIcon126:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b764, 0x01b884
+    .incbin	"build/table_png/gui/icon_126.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_126.png (24x24, 4 bpp)
 ResIcon127:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b884, 0x01b9a4
+    .incbin	"build/table_png/gui/icon_127.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_127.png (24x24, 4 bpp)
 ResIcon128:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01b9a4, 0x01bac4
+    .incbin	"build/table_png/gui/icon_128.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_128.png (24x24, 4 bpp)
 ResIcon129:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bac4, 0x01bbe4
+    .incbin	"build/table_png/gui/icon_129.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_129.png (24x24, 4 bpp)
 ResIcon130:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bbe4, 0x01bd04
+    .incbin	"build/table_png/gui/icon_130.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_130.png (24x24, 4 bpp)
 ResIcon131:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bd04, 0x01be24
+    .incbin	"build/table_png/gui/icon_131.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_131.png (24x24, 4 bpp)
 ResIcon132:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01be24, 0x01bf44
+    .incbin	"build/table_png/gui/icon_132.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_132.png (24x24, 4 bpp)
 ResIcon133:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01bf44, 0x01c064
+    .incbin	"build/table_png/gui/icon_133.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_133.png (24x24, 4 bpp)
 ResIcon134:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c064, 0x01c184
+    .incbin	"build/table_png/gui/icon_134.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_134.png (24x24, 4 bpp)
 ResIcon135:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c184, 0x01c2a4
+    .incbin	"build/table_png/gui/icon_135.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_135.png (24x24, 4 bpp)
 ResIcon136:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c2a4, 0x01c3c4
+    .incbin	"build/table_png/gui/icon_136.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_136.png (24x24, 4 bpp)
 ResIcon137:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c3c4, 0x01c4e4
+    .incbin	"build/table_png/gui/icon_137.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_137.png (24x24, 4 bpp)
 ResIcon138:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c4e4, 0x01c604
+    .incbin	"build/table_png/gui/icon_138.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_138.png (24x24, 4 bpp)
 ResIcon139:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c604, 0x01c724
+    .incbin	"build/table_png/gui/icon_139.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_139.png (24x24, 4 bpp)
 ResIcon140:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c724, 0x01c844
+    .incbin	"build/table_png/gui/icon_140.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_140.png (24x24, 4 bpp)
 ResIcon141:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c844, 0x01c964
+    .incbin	"build/table_png/gui/icon_141.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_141.png (24x24, 4 bpp)
 ResIcon142:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01c964, 0x01ca84
+    .incbin	"build/table_png/gui/icon_142.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_142.png (24x24, 4 bpp)
 ResIcon143:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ca84, 0x01cba4
+    .incbin	"build/table_png/gui/icon_143.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_143.png (24x24, 4 bpp)
 ResIcon144:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01cba4, 0x01ccc4
+    .incbin	"build/table_png/gui/icon_144.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_144.png (24x24, 4 bpp)
 ResIcon145:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ccc4, 0x01cde4
+    .incbin	"build/table_png/gui/icon_145.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_145.png (24x24, 4 bpp)
 ResIcon146:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01cde4, 0x01cf04
+    .incbin	"build/table_png/gui/icon_146.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_146.png (24x24, 4 bpp)
 ResIcon147:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01cf04, 0x01d024
+    .incbin	"build/table_png/gui/icon_147.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_147.png (24x24, 4 bpp)
 ResIcon148:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d024, 0x01d144
+    .incbin	"build/table_png/gui/icon_148.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_148.png (24x24, 4 bpp)
 ResIcon149:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d144, 0x01d264
+    .incbin	"build/table_png/gui/icon_149.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_149.png (24x24, 4 bpp)
 ResIcon150:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d264, 0x01d384
+    .incbin	"build/table_png/gui/icon_150.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_150.png (24x24, 4 bpp)
 ResIcon151:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d384, 0x01d4a4
+    .incbin	"build/table_png/gui/icon_151.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_151.png (24x24, 4 bpp)
 ResIcon152:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d4a4, 0x01d5c4
+    .incbin	"build/table_png/gui/icon_152.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_152.png (24x24, 4 bpp)
 ResIcon153:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d5c4, 0x01d6e4
+    .incbin	"build/table_png/gui/icon_153.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_153.png (24x24, 4 bpp)
 ResIcon154:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d6e4, 0x01d804
+    .incbin	"build/table_png/gui/icon_154.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_154.png (24x24, 4 bpp)
 ResIcon155:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d804, 0x01d924
+    .incbin	"build/table_png/gui/icon_155.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_155.png (24x24, 4 bpp)
 ResIcon156:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01d924, 0x01da44
+    .incbin	"build/table_png/gui/icon_156.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_156.png (24x24, 4 bpp)
 ResIcon157:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01da44, 0x01db64
+    .incbin	"build/table_png/gui/icon_157.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_157.png (24x24, 4 bpp)
 ResIcon158:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01db64, 0x01dc84
+    .incbin	"build/table_png/gui/icon_158.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_158.png (24x24, 4 bpp)
 ResIcon159:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dc84, 0x01dda4
+    .incbin	"build/table_png/gui/icon_159.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_159.png (24x24, 4 bpp)
 ResIcon160:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dda4, 0x01dec4
+    .incbin	"build/table_png/gui/icon_160.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_160.png (24x24, 4 bpp)
 ResIcon161:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dec4, 0x01dfe4
+    .incbin	"build/table_png/gui/icon_161.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_161.png (24x24, 4 bpp)
 ResIcon162:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01dfe4, 0x01e104
+    .incbin	"build/table_png/gui/icon_162.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_162.png (24x24, 4 bpp)
 ResIcon163:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e104, 0x01e224
+    .incbin	"build/table_png/gui/icon_163.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_163.png (24x24, 4 bpp)
 ResIcon164:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e224, 0x01e344
+    .incbin	"build/table_png/gui/icon_164.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_164.png (24x24, 4 bpp)
 ResIcon165:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e344, 0x01e464
+    .incbin	"build/table_png/gui/icon_165.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_165.png (24x24, 4 bpp)
 ResIcon166:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e464, 0x01e584
+    .incbin	"build/table_png/gui/icon_166.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_166.png (24x24, 4 bpp)
 ResIcon167:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e584, 0x01e6a4
+    .incbin	"build/table_png/gui/icon_167.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_167.png (24x24, 4 bpp)
 ResIcon168:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e6a4, 0x01e7c4
+    .incbin	"build/table_png/gui/icon_168.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_168.png (24x24, 4 bpp)
 ResIcon169:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e7c4, 0x01e8e4
+    .incbin	"build/table_png/gui/icon_169.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_169.png (24x24, 4 bpp)
 ResIcon170:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01e8e4, 0x01ea04
+    .incbin	"build/table_png/gui/icon_170.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_170.png (24x24, 4 bpp)
 ResIcon171:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ea04, 0x01eb24
+    .incbin	"build/table_png/gui/icon_171.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_171.png (24x24, 4 bpp)
 ResIcon172:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01eb24, 0x01ec44
+    .incbin	"build/table_png/gui/icon_172.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_172.png (24x24, 4 bpp)
 ResIcon173:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ec44, 0x01ed64
+    .incbin	"build/table_png/gui/icon_173.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_173.png (24x24, 4 bpp)
 ResIcon174:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ed64, 0x01ee84
+    .incbin	"build/table_png/gui/icon_174.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_174.png (24x24, 4 bpp)
 ResIcon175:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ee84, 0x01efa4
+    .incbin	"build/table_png/gui/icon_175.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_175.png (24x24, 4 bpp)
 ResIcon176:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01efa4, 0x01f0c4
+    .incbin	"build/table_png/gui/icon_176.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_176.png (24x24, 4 bpp)
 ResIcon177:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f0c4, 0x01f1e4
+    .incbin	"build/table_png/gui/icon_177.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_177.png (24x24, 4 bpp)
 ResIcon178:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f1e4, 0x01f304
+    .incbin	"build/table_png/gui/icon_178.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_178.png (24x24, 4 bpp)
 ResIcon179:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f304, 0x01f424
+    .incbin	"build/table_png/gui/icon_179.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_179.png (24x24, 4 bpp)
 ResIcon180:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f424, 0x01f544
+    .incbin	"build/table_png/gui/icon_180.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_180.png (24x24, 4 bpp)
 ResIcon181:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f544, 0x01f664
+    .incbin	"build/table_png/gui/icon_181.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_181.png (24x24, 4 bpp)
 ResIcon182:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f664, 0x01f784
+    .incbin	"build/table_png/gui/icon_182.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_182.png (24x24, 4 bpp)
 ResIcon183:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f784, 0x01f8a4
+    .incbin	"build/table_png/gui/icon_183.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_183.png (24x24, 4 bpp)
 ResIcon184:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f8a4, 0x01f9c4
+    .incbin	"build/table_png/gui/icon_184.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_184.png (24x24, 4 bpp)
 ResIcon185:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01f9c4, 0x01fae4
+    .incbin	"build/table_png/gui/icon_185.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_185.png (24x24, 4 bpp)
 ResIcon186:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fae4, 0x01fc04
+    .incbin	"build/table_png/gui/icon_186.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_186.png (24x24, 4 bpp)
 ResIcon187:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fc04, 0x01fd24
+    .incbin	"build/table_png/gui/icon_187.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_187.png (24x24, 4 bpp)
 ResIcon188:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fd24, 0x01fe44
+    .incbin	"build/table_png/gui/icon_188.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_188.png (24x24, 4 bpp)
 ResIcon189:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01fe44, 0x01ff64
+    .incbin	"build/table_png/gui/icon_189.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_189.png (24x24, 4 bpp)
 ResIcon190:
-    .incbin_range	"baserom/kn7000_table.rom", 0x01ff64, 0x020084
+    .incbin	"build/table_png/gui/icon_190.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_190.png (24x24, 4 bpp)
 ResIcon191:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020084, 0x0201a4
+    .incbin	"build/table_png/gui/icon_191.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_191.png (24x24, 4 bpp)
 ResIcon192:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0201a4, 0x0202c4
+    .incbin	"build/table_png/gui/icon_192.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_192.png (24x24, 4 bpp)
 ResIcon193:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0202c4, 0x0203e4
+    .incbin	"build/table_png/gui/icon_193.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_193.png (24x24, 4 bpp)
 ResIcon194:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0203e4, 0x020504
+    .incbin	"build/table_png/gui/icon_194.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_194.png (24x24, 4 bpp)
 ResIcon195:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020504, 0x020624
+    .incbin	"build/table_png/gui/icon_195.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_195.png (24x24, 4 bpp)
 ResIcon196:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020624, 0x020744
+    .incbin	"build/table_png/gui/icon_196.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_196.png (24x24, 4 bpp)
 ResIcon197:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020744, 0x020864
+    .incbin	"build/table_png/gui/icon_197.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_197.png (24x24, 4 bpp)
 ResIcon198:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020864, 0x020984
+    .incbin	"build/table_png/gui/icon_198.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_198.png (24x24, 4 bpp)
 ResIcon199:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020984, 0x020aa4
+    .incbin	"build/table_png/gui/icon_199.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_199.png (24x24, 4 bpp)
 ResIcon200:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020aa4, 0x020bc4
+    .incbin	"build/table_png/gui/icon_200.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_200.png (24x24, 4 bpp)
 ResIcon201:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020bc4, 0x020ce4
+    .incbin	"build/table_png/gui/icon_201.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_201.png (24x24, 4 bpp)
 ResIcon202:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020ce4, 0x020e04
+    .incbin	"build/table_png/gui/icon_202.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_202.png (24x24, 4 bpp)
 ResIcon203:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020e04, 0x020f24
+    .incbin	"build/table_png/gui/icon_203.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_203.png (24x24, 4 bpp)
 ResIcon204:
-    .incbin_range	"baserom/kn7000_table.rom", 0x020f24, 0x021044
+    .incbin	"build/table_png/gui/icon_204.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_204.png (24x24, 4 bpp)
 ResIcon205:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021044, 0x021164
+    .incbin	"build/table_png/gui/icon_205.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_205.png (24x24, 4 bpp)
 ResIcon206:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021164, 0x021284
+    .incbin	"build/table_png/gui/icon_206.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_206.png (24x24, 4 bpp)
 ResIcon207:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021284, 0x0213a4
+    .incbin	"build/table_png/gui/icon_207.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_207.png (24x24, 4 bpp)
 ResIcon208:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0213a4, 0x0214c4
+    .incbin	"build/table_png/gui/icon_208.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_208.png (24x24, 4 bpp)
 ResIcon209:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0214c4, 0x0215e4
+    .incbin	"build/table_png/gui/icon_209.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_209.png (24x24, 4 bpp)
 ResIcon210:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0215e4, 0x021704
+    .incbin	"build/table_png/gui/icon_210.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_210.png (24x24, 4 bpp)
 ResIcon211:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021704, 0x021824
+    .incbin	"build/table_png/gui/icon_211.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_211.png (24x24, 4 bpp)
 ResIcon212:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021824, 0x021944
+    .incbin	"build/table_png/gui/icon_212.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_212.png (24x24, 4 bpp)
 ResIcon213:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021944, 0x021a64
+    .incbin	"build/table_png/gui/icon_213.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_213.png (24x24, 4 bpp)
 ResIcon214:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021a64, 0x021b84
+    .incbin	"build/table_png/gui/icon_214.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_214.png (24x24, 4 bpp)
 ResIcon215:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021b84, 0x021ca4
+    .incbin	"build/table_png/gui/icon_215.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_215.png (24x24, 4 bpp)
 ResIcon216:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021ca4, 0x021dc4
+    .incbin	"build/table_png/gui/icon_216.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_216.png (24x24, 4 bpp)
 ResIcon217:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021dc4, 0x021ee4
+    .incbin	"build/table_png/gui/icon_217.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_217.png (24x24, 4 bpp)
 ResIcon218:
-    .incbin_range	"baserom/kn7000_table.rom", 0x021ee4, 0x022004
+    .incbin	"build/table_png/gui/icon_218.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_218.png (24x24, 4 bpp)
 ResIcon219:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022004, 0x022124
+    .incbin	"build/table_png/gui/icon_219.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_219.png (24x24, 4 bpp)
 ResIcon220:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022124, 0x022244
+    .incbin	"build/table_png/gui/icon_220.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_220.png (24x24, 4 bpp)
 ResIcon221:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022244, 0x022364
+    .incbin	"build/table_png/gui/icon_221.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_221.png (24x24, 4 bpp)
 ResIcon222:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022364, 0x022484
+    .incbin	"build/table_png/gui/icon_222.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_222.png (24x24, 4 bpp)
 ResIcon223:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022484, 0x0225a4
+    .incbin	"build/table_png/gui/icon_223.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_223.png (24x24, 4 bpp)
 ResIcon224:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0225a4, 0x0226c4
+    .incbin	"build/table_png/gui/icon_224.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_224.png (24x24, 4 bpp)
 ResIcon225:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0226c4, 0x0227e4
+    .incbin	"build/table_png/gui/icon_225.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_225.png (24x24, 4 bpp)
 ResIcon226:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0227e4, 0x022904
+    .incbin	"build/table_png/gui/icon_226.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_226.png (24x24, 4 bpp)
 ResIcon227:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022904, 0x022a24
+    .incbin	"build/table_png/gui/icon_227.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_227.png (24x24, 4 bpp)
 ResIcon228:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022a24, 0x022b44
+    .incbin	"build/table_png/gui/icon_228.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_228.png (24x24, 4 bpp)
 ResIcon229:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022b44, 0x022c64
+    .incbin	"build/table_png/gui/icon_229.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_229.png (24x24, 4 bpp)
 ResIcon230:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022c64, 0x022d84
+    .incbin	"build/table_png/gui/icon_230.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_230.png (24x24, 4 bpp)
 ResIcon231:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022d84, 0x022ea4
+    .incbin	"build/table_png/gui/icon_231.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_231.png (24x24, 4 bpp)
 ResIcon232:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022ea4, 0x022fc4
+    .incbin	"build/table_png/gui/icon_232.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_232.png (24x24, 4 bpp)
 ResIcon233:
-    .incbin_range	"baserom/kn7000_table.rom", 0x022fc4, 0x0230e4
+    .incbin	"build/table_png/gui/icon_233.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_233.png (24x24, 4 bpp)
 ResIcon234:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0230e4, 0x023204
+    .incbin	"build/table_png/gui/icon_234.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_234.png (24x24, 4 bpp)
 ResIcon235:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023204, 0x023324
+    .incbin	"build/table_png/gui/icon_235.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_235.png (24x24, 4 bpp)
 ResIcon236:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023324, 0x023444
+    .incbin	"build/table_png/gui/icon_236.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_236.png (24x24, 4 bpp)
 ResIcon237:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023444, 0x023564
+    .incbin	"build/table_png/gui/icon_237.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_237.png (24x24, 4 bpp)
 ResIcon238:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023564, 0x023684
+    .incbin	"build/table_png/gui/icon_238.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_238.png (24x24, 4 bpp)
 ResIcon239:
-    .incbin_range	"baserom/kn7000_table.rom", 0x023684, 0x0237a4
+    .incbin	"build/table_png/gui/icon_239.bin"   # census: generated -- tools/table_png.py from src/table/gui/icon_239.png (24x24, 4 bpp)
 ResFontTable:
     .word	8, 16, 4, 1
     .long	ResFont00Glyphs, 0, 0
@@ -1616,64 +1619,14607 @@ ResFontTable:
     .long	ResFont11Glyphs, 0, 0
     .space	0x14, 0x00   # end of the table
 ResFont00Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0238a8, 0x0246a8
+    .incbin	"build/table_png/gui/font_00.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_00.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont01Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0246a8, 0x0254a8
+    .incbin	"build/table_png/gui/font_01.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_01.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont02Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0254a8, 0x0270a8
+    .incbin	"build/table_png/gui/font_02.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_02.png (224 1-bpp glyphs from 0x20, 16x16)
 ResFont03Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0270a8, 0x0277a8
+    .incbin	"build/table_png/gui/font_03.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_03.png (224 1-bpp glyphs from 0x20, 8x8)
 ResFont04Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0277a8, 0x0293a8
+    .incbin	"build/table_png/gui/font_04.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_04.png (224 1-bpp glyphs from 0x20, 16x16)
 ResFont05Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x0293a8, 0x02a218
+    .incbin	"build/table_png/gui/font_05.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_05.png (224 proportional 1-bpp glyphs from 0x20, 16 high)
 ResFont05Kern:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02a218, 0x02a598
+    # {u8 advance width, u8 0, u16 offset of the glyph from ResFontNNGlyphs}
+    .byte	8, 0
+    .word	0   # ' '
+    .byte	5, 0
+    .word	16   # '!'
+    .byte	8, 0
+    .word	32   # '"'
+    .byte	8, 0
+    .word	48   # '#'
+    .byte	8, 0
+    .word	64   # '$'
+    .byte	8, 0
+    .word	80   # '%'
+    .byte	8, 0
+    .word	96   # '&'
+    .byte	5, 0
+    .word	112   # "'"
+    .byte	8, 0
+    .word	128   # '('
+    .byte	8, 0
+    .word	144   # ')'
+    .byte	8, 0
+    .word	160   # '*'
+    .byte	8, 0
+    .word	176   # '+'
+    .byte	5, 0
+    .word	192   # ','
+    .byte	8, 0
+    .word	208   # '-'
+    .byte	5, 0
+    .word	224   # '.'
+    .byte	8, 0
+    .word	240   # '/'
+    .byte	8, 0
+    .word	256   # '0'
+    .byte	7, 0
+    .word	272   # '1'
+    .byte	8, 0
+    .word	288   # '2'
+    .byte	8, 0
+    .word	304   # '3'
+    .byte	8, 0
+    .word	320   # '4'
+    .byte	8, 0
+    .word	336   # '5'
+    .byte	8, 0
+    .word	352   # '6'
+    .byte	8, 0
+    .word	368   # '7'
+    .byte	8, 0
+    .word	384   # '8'
+    .byte	8, 0
+    .word	400   # '9'
+    .byte	5, 0
+    .word	416   # ':'
+    .byte	5, 0
+    .word	432   # ';'
+    .byte	7, 0
+    .word	448   # '<'
+    .byte	8, 0
+    .word	464   # '='
+    .byte	7, 0
+    .word	480   # '>'
+    .byte	8, 0
+    .word	496   # '?'
+    .byte	8, 0
+    .word	512   # '@'
+    .byte	8, 0
+    .word	528   # 'A'
+    .byte	8, 0
+    .word	544   # 'B'
+    .byte	8, 0
+    .word	560   # 'C'
+    .byte	8, 0
+    .word	576   # 'D'
+    .byte	8, 0
+    .word	592   # 'E'
+    .byte	8, 0
+    .word	608   # 'F'
+    .byte	8, 0
+    .word	624   # 'G'
+    .byte	8, 0
+    .word	640   # 'H'
+    .byte	7, 0
+    .word	656   # 'I'
+    .byte	8, 0
+    .word	672   # 'J'
+    .byte	8, 0
+    .word	688   # 'K'
+    .byte	8, 0
+    .word	704   # 'L'
+    .byte	10, 0
+    .word	720   # 'M'
+    .byte	8, 0
+    .word	752   # 'N'
+    .byte	8, 0
+    .word	768   # 'O'
+    .byte	8, 0
+    .word	784   # 'P'
+    .byte	8, 0
+    .word	800   # 'Q'
+    .byte	8, 0
+    .word	816   # 'R'
+    .byte	8, 0
+    .word	832   # 'S'
+    .byte	7, 0
+    .word	848   # 'T'
+    .byte	8, 0
+    .word	864   # 'U'
+    .byte	8, 0
+    .word	880   # 'V'
+    .byte	10, 0
+    .word	896   # 'W'
+    .byte	8, 0
+    .word	928   # 'X'
+    .byte	7, 0
+    .word	944   # 'Y'
+    .byte	8, 0
+    .word	960   # 'Z'
+    .byte	8, 0
+    .word	976   # '['
+    .byte	8, 0
+    .word	992   # '\\'
+    .byte	8, 0
+    .word	1008   # ']'
+    .byte	7, 0
+    .word	1024   # '^'
+    .byte	8, 0
+    .word	1040   # '_'
+    .byte	5, 0
+    .word	1056   # '`'
+    .byte	8, 0
+    .word	1072   # 'a'
+    .byte	8, 0
+    .word	1088   # 'b'
+    .byte	8, 0
+    .word	1104   # 'c'
+    .byte	8, 0
+    .word	1120   # 'd'
+    .byte	8, 0
+    .word	1136   # 'e'
+    .byte	7, 0
+    .word	1152   # 'f'
+    .byte	8, 0
+    .word	1168   # 'g'
+    .byte	8, 0
+    .word	1184   # 'h'
+    .byte	5, 0
+    .word	1200   # 'i'
+    .byte	8, 0
+    .word	1216   # 'j'
+    .byte	8, 0
+    .word	1232   # 'k'
+    .byte	6, 0
+    .word	1248   # 'l'
+    .byte	9, 0
+    .word	1264   # 'm'
+    .byte	8, 0
+    .word	1296   # 'n'
+    .byte	8, 0
+    .word	1312   # 'o'
+    .byte	8, 0
+    .word	1328   # 'p'
+    .byte	8, 0
+    .word	1344   # 'q'
+    .byte	8, 0
+    .word	1360   # 'r'
+    .byte	8, 0
+    .word	1376   # 's'
+    .byte	7, 0
+    .word	1392   # 't'
+    .byte	8, 0
+    .word	1408   # 'u'
+    .byte	8, 0
+    .word	1424   # 'v'
+    .byte	10, 0
+    .word	1440   # 'w'
+    .byte	8, 0
+    .word	1472   # 'x'
+    .byte	8, 0
+    .word	1488   # 'y'
+    .byte	8, 0
+    .word	1504   # 'z'
+    .byte	8, 0
+    .word	1520   # '{'
+    .byte	5, 0
+    .word	1536   # '|'
+    .byte	8, 0
+    .word	1552   # '}'
+    .byte	8, 0
+    .word	1568   # '~'
+    .byte	8, 0
+    .word	1584   # 0x7f
+    .byte	8, 0
+    .word	1600   # 0x80
+    .byte	8, 0
+    .word	1616   # 0x81
+    .byte	5, 0
+    .word	1632   # 0x82
+    .byte	7, 0
+    .word	1648   # 0x83
+    .byte	8, 0
+    .word	1664   # 0x84
+    .byte	10, 0
+    .word	1680   # 0x85
+    .byte	8, 0
+    .word	1712   # 0x86
+    .byte	8, 0
+    .word	1728   # 0x87
+    .byte	5, 0
+    .word	1744   # 0x88
+    .byte	10, 0
+    .word	1760   # 0x89
+    .byte	8, 0
+    .word	1792   # 0x8a
+    .byte	4, 0
+    .word	1808   # 0x8b
+    .byte	8, 0
+    .word	1824   # 0x8c
+    .byte	8, 0
+    .word	1840   # 0x8d
+    .byte	8, 0
+    .word	1856   # 0x8e
+    .byte	8, 0
+    .word	1872   # 0x8f
+    .byte	8, 0
+    .word	1888   # 0x90
+    .byte	5, 0
+    .word	1904   # 0x91
+    .byte	5, 0
+    .word	1920   # 0x92
+    .byte	7, 0
+    .word	1936   # 0x93
+    .byte	7, 0
+    .word	1952   # 0x94
+    .byte	5, 0
+    .word	1968   # 0x95
+    .byte	6, 0
+    .word	1984   # 0x96
+    .byte	10, 0
+    .word	2000   # 0x97
+    .byte	6, 0
+    .word	2032   # 0x98
+    .byte	8, 0
+    .word	2048   # 0x99
+    .byte	8, 0
+    .word	2064   # 0x9a
+    .byte	4, 0
+    .word	2080   # 0x9b
+    .byte	8, 0
+    .word	2096   # 0x9c
+    .byte	8, 0
+    .word	2112   # 0x9d
+    .byte	8, 0
+    .word	2128   # 0x9e
+    .byte	7, 0
+    .word	2144   # 0x9f
+    .byte	8, 0
+    .word	2160   # 0xa0
+    .byte	3, 0
+    .word	2176   # 0xa1
+    .byte	8, 0
+    .word	2192   # 0xa2
+    .byte	8, 0
+    .word	2208   # 0xa3
+    .byte	8, 0
+    .word	2224   # 0xa4
+    .byte	8, 0
+    .word	2240   # 0xa5
+    .byte	3, 0
+    .word	2256   # 0xa6
+    .byte	8, 0
+    .word	2272   # 0xa7
+    .byte	6, 0
+    .word	2288   # 0xa8
+    .byte	8, 0
+    .word	2304   # 0xa9
+    .byte	8, 0
+    .word	2320   # 0xaa
+    .byte	8, 0
+    .word	2336   # 0xab
+    .byte	8, 0
+    .word	2352   # 0xac
+    .byte	5, 0
+    .word	2368   # 0xad
+    .byte	8, 0
+    .word	2384   # 0xae
+    .byte	8, 0
+    .word	2400   # 0xaf
+    .byte	5, 0
+    .word	2416   # 0xb0
+    .byte	8, 0
+    .word	2432   # 0xb1
+    .byte	5, 0
+    .word	2448   # 0xb2
+    .byte	5, 0
+    .word	2464   # 0xb3
+    .byte	4, 0
+    .word	2480   # 0xb4
+    .byte	8, 0
+    .word	2496   # 0xb5
+    .byte	8, 0
+    .word	2512   # 0xb6
+    .byte	8, 0
+    .word	2528   # 0xb7
+    .byte	5, 0
+    .word	2544   # 0xb8
+    .byte	4, 0
+    .word	2560   # 0xb9
+    .byte	5, 0
+    .word	2576   # 0xba
+    .byte	8, 0
+    .word	2592   # 0xbb
+    .byte	8, 0
+    .word	2608   # 0xbc
+    .byte	8, 0
+    .word	2624   # 0xbd
+    .byte	8, 0
+    .word	2640   # 0xbe
+    .byte	8, 0
+    .word	2656   # 0xbf
+    .byte	8, 0
+    .word	2672   # 0xc0
+    .byte	8, 0
+    .word	2688   # 0xc1
+    .byte	8, 0
+    .word	2704   # 0xc2
+    .byte	8, 0
+    .word	2720   # 0xc3
+    .byte	8, 0
+    .word	2736   # 0xc4
+    .byte	8, 0
+    .word	2752   # 0xc5
+    .byte	8, 0
+    .word	2768   # 0xc6
+    .byte	8, 0
+    .word	2784   # 0xc7
+    .byte	8, 0
+    .word	2800   # 0xc8
+    .byte	8, 0
+    .word	2816   # 0xc9
+    .byte	8, 0
+    .word	2832   # 0xca
+    .byte	8, 0
+    .word	2848   # 0xcb
+    .byte	7, 0
+    .word	2864   # 0xcc
+    .byte	7, 0
+    .word	2880   # 0xcd
+    .byte	8, 0
+    .word	2896   # 0xce
+    .byte	7, 0
+    .word	2912   # 0xcf
+    .byte	8, 0
+    .word	2928   # 0xd0
+    .byte	8, 0
+    .word	2944   # 0xd1
+    .byte	8, 0
+    .word	2960   # 0xd2
+    .byte	8, 0
+    .word	2976   # 0xd3
+    .byte	8, 0
+    .word	2992   # 0xd4
+    .byte	8, 0
+    .word	3008   # 0xd5
+    .byte	8, 0
+    .word	3024   # 0xd6
+    .byte	8, 0
+    .word	3040   # 0xd7
+    .byte	8, 0
+    .word	3056   # 0xd8
+    .byte	8, 0
+    .word	3072   # 0xd9
+    .byte	8, 0
+    .word	3088   # 0xda
+    .byte	8, 0
+    .word	3104   # 0xdb
+    .byte	8, 0
+    .word	3120   # 0xdc
+    .byte	7, 0
+    .word	3136   # 0xdd
+    .byte	8, 0
+    .word	3152   # 0xde
+    .byte	8, 0
+    .word	3168   # 0xdf
+    .byte	8, 0
+    .word	3184   # 0xe0
+    .byte	8, 0
+    .word	3200   # 0xe1
+    .byte	8, 0
+    .word	3216   # 0xe2
+    .byte	8, 0
+    .word	3232   # 0xe3
+    .byte	8, 0
+    .word	3248   # 0xe4
+    .byte	8, 0
+    .word	3264   # 0xe5
+    .byte	8, 0
+    .word	3280   # 0xe6
+    .byte	8, 0
+    .word	3296   # 0xe7
+    .byte	8, 0
+    .word	3312   # 0xe8
+    .byte	8, 0
+    .word	3328   # 0xe9
+    .byte	8, 0
+    .word	3344   # 0xea
+    .byte	8, 0
+    .word	3360   # 0xeb
+    .byte	4, 0
+    .word	3376   # 0xec
+    .byte	4, 0
+    .word	3392   # 0xed
+    .byte	5, 0
+    .word	3408   # 0xee
+    .byte	7, 0
+    .word	3424   # 0xef
+    .byte	8, 0
+    .word	3440   # 0xf0
+    .byte	8, 0
+    .word	3456   # 0xf1
+    .byte	8, 0
+    .word	3472   # 0xf2
+    .byte	8, 0
+    .word	3488   # 0xf3
+    .byte	8, 0
+    .word	3504   # 0xf4
+    .byte	8, 0
+    .word	3520   # 0xf5
+    .byte	8, 0
+    .word	3536   # 0xf6
+    .byte	8, 0
+    .word	3552   # 0xf7
+    .byte	8, 0
+    .word	3568   # 0xf8
+    .byte	8, 0
+    .word	3584   # 0xf9
+    .byte	8, 0
+    .word	3600   # 0xfa
+    .byte	8, 0
+    .word	3616   # 0xfb
+    .byte	8, 0
+    .word	3632   # 0xfc
+    .byte	8, 0
+    .word	3648   # 0xfd
+    .byte	8, 0
+    .word	3664   # 0xfe
+    .byte	8, 0
+    .word	3680   # 0xff
 ResFont06Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02a598, 0x02ae58
+    .incbin	"build/table_png/gui/font_06.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_06.png (224 1-bpp glyphs from 0x20, 8x10)
 ResFont07Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02ae58, 0x02bc58
+    .incbin	"build/table_png/gui/font_07.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_07.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont08Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02bc58, 0x02ca58
+    .incbin	"build/table_png/gui/font_08.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_08.png (224 1-bpp glyphs from 0x20, 8x16)
 ResFont09Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02ca58, 0x02e658
+    .incbin	"build/table_png/gui/font_09.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_09.png (224 1-bpp glyphs from 0x20, 16x16)
 ResFont10Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x02e658, 0x031758
+    .incbin	"build/table_png/gui/font_10.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_10.png (224 1-bpp glyphs from 0x20, 16x28)
 ResFont11Glyphs:
-    .incbin_range	"baserom/kn7000_table.rom", 0x031758, 0x034858
+    .incbin	"build/table_png/gui/font_11.bin"   # census: generated -- tools/table_png.py from src/table/gui/font_11.png (224 1-bpp glyphs from 0x20, 16x28)
 
 # dir[1], 0x14b0 bytes.
 # 'ZZZJ', 0x00, 'K', 0x00, 0xdc (the 8-byte signature the reader compares with the
-# program's copy), then 220 records of 0x18 bytes from +0x10, which fill the segment.
-# Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies
+# program's copy 0x485b7370), 8 zero bytes, then 220 records of 0x18 bytes, which fill
+# the segment. Read through TableRomSeg01PtrSize by SramRecordsLoadFactory: it copies
 # records lo..hi over the battery-SRAM table at 0x84030ff8 (same stride), or a
-# program-ROM default record when the signature does not match.
-# TODO: what the 220 records configure.
+# program-ROM default record (0x485b737e) when the signature does not match. Each record
+# is eight 3-byte entries (zzzj_voice, src/table/style_macros.inc). TODO: what the 220
+# records configure.
 SramRecordDefaultsZZZJ:
-    .incbin_range	"baserom/kn7000_table.rom", 0x034858, 0x035d08
+    .ascii	"ZZZJ"
+    .byte	0
+    .ascii	"K"
+    .byte	0
+    .byte	220		# record count (0xDC)
+    .space	8, 0x00
+SramRecordDefault000:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+    zzzj_voice	0x1f, 0x30, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+SramRecordDefault001:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x1b, 0x40, 0x20
+    zzzj_voice	0x05, 0x10, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+SramRecordDefault002:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x1f, 0x30, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault003:
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x21, 0x44, 0x20
+    zzzj_voice	0x04, 0x14, 0x20
+    zzzj_voice	0x07, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x5f, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault004:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+SramRecordDefault005:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x05, 0x14, 0x20
+    zzzj_voice	0x34, 0x40, 0x20
+    zzzj_voice	0x1b, 0x01, 0x20
+    zzzj_voice	0x1b, 0x21, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+SramRecordDefault006:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x05, 0x10, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x32, 0x00, 0x20
+SramRecordDefault007:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x34, 0x01, 0x20
+    zzzj_voice	0x51, 0x74, 0x20
+SramRecordDefault008:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x9b, 0x21, 0x20
+    zzzj_voice	0x33, 0x00, 0x20
+    zzzj_voice	0x58, 0x30, 0x20
+    zzzj_voice	0x30, 0x08, 0x20
+SramRecordDefault009:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x26, 0x40, 0x20
+    zzzj_voice	0x59, 0x08, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x31, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault010:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x42, 0x30, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x3d, 0x60, 0x20
+SramRecordDefault011:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x20, 0x10, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x19, 0x28, 0x20
+    zzzj_voice	0x08, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault012:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault013:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x22, 0x20, 0x20
+    zzzj_voice	0x11, 0x14, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x41, 0x04, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault014:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x02, 0x00, 0x20
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x1b, 0x01, 0x20
+    zzzj_voice	0x43, 0x00, 0x20
+SramRecordDefault015:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x27, 0x08, 0x20
+    zzzj_voice	0x34, 0x24, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x58, 0x40, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+SramRecordDefault016:
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x27, 0x08, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x07, 0x00, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x51, 0x00, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+SramRecordDefault017:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x40, 0x00, 0x26
+    zzzj_voice	0x26, 0x08, 0x20
+    zzzj_voice	0x34, 0x28, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x78, 0x40, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault018:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x22, 0x00, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x1b, 0x20, 0x20
+    zzzj_voice	0x90, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault019:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x12, 0x18, 0x20
+    zzzj_voice	0x3d, 0x60, 0x20
+SramRecordDefault020:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x01, 0x04, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x02, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x30, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault021:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault022:
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x38, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x3e, 0x00, 0x20
+    zzzj_voice	0x1b, 0x21, 0x20
+    zzzj_voice	0x1b, 0x01, 0x20
+    zzzj_voice	0x3d, 0x50, 0x20
+SramRecordDefault023:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x1b, 0x40, 0x20
+    zzzj_voice	0x1f, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault024:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x00, 0x28, 0x20
+    zzzj_voice	0x34, 0x1c, 0x20
+    zzzj_voice	0x1c, 0x00, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault025:
+    zzzj_voice	0x1d, 0x04, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x26, 0x0d, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x32, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault026:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x06, 0x00, 0x20
+    zzzj_voice	0x34, 0x3a, 0x20
+    zzzj_voice	0x35, 0x24, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault027:
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x1b, 0x00, 0x26
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x04, 0x30, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x22, 0x20, 0x20
+    zzzj_voice	0x64, 0x00, 0x20
+    zzzj_voice	0x34, 0x10, 0x20
+SramRecordDefault028:
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x02, 0x48, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+    zzzj_voice	0x1e, 0x00, 0x20
+SramRecordDefault029:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x27, 0x28, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x35, 0x2a, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+    zzzj_voice	0x4b, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault030:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x26, 0x40, 0x20
+    zzzj_voice	0x06, 0x00, 0x20
+    zzzj_voice	0x34, 0x2c, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+SramRecordDefault031:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x5a, 0x50, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault032:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1b, 0x00, 0x20
+    zzzj_voice	0x04, 0x04, 0x20
+    zzzj_voice	0x3d, 0x61, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault033:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x35, 0x40, 0x20
+    zzzj_voice	0x30, 0x18, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+SramRecordDefault034:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x35, 0x22, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+SramRecordDefault035:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x01, 0x04, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x34, 0x2c, 0x20
+    zzzj_voice	0x35, 0x32, 0x20
+    zzzj_voice	0x2f, 0x00, 0x20
+SramRecordDefault036:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x04, 0x14, 0x20
+    zzzj_voice	0x05, 0x10, 0x20
+    zzzj_voice	0x3e, 0x20, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault037:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x34, 0x24, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x04, 0x14, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault038:
+    zzzj_voice	0x11, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x33, 0x00, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+SramRecordDefault039:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x26, 0x0d, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault040:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x1f, 0x04, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x01, 0x01, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x31, 0x00, 0x20
+    zzzj_voice	0x3d, 0x10, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+SramRecordDefault041:
+    zzzj_voice	0x25, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x27, 0x38, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x30, 0x30, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+SramRecordDefault042:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x3b, 0x00, 0x20
+    zzzj_voice	0x41, 0x38, 0x20
+    zzzj_voice	0x38, 0x30, 0x20
+    zzzj_voice	0x49, 0x14, 0x20
+SramRecordDefault043:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault044:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x38, 0x30, 0x20
+    zzzj_voice	0x41, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault045:
+    zzzj_voice	0x40, 0x00, 0x26
+    zzzj_voice	0x40, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x3d, 0x61, 0x20
+    zzzj_voice	0x38, 0x44, 0x20
+    zzzj_voice	0x41, 0x08, 0x20
+SramRecordDefault046:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x42, 0x14, 0x20
+    zzzj_voice	0x35, 0x26, 0x20
+    zzzj_voice	0x38, 0x00, 0x20
+    zzzj_voice	0x39, 0x18, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault047:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x41, 0x18, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault048:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x84, 0x00, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x41, 0x1c, 0x20
+    zzzj_voice	0x3b, 0x20, 0x20
+    zzzj_voice	0x43, 0x50, 0x20
+SramRecordDefault049:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x18, 0x18, 0x20
+    zzzj_voice	0x41, 0x00, 0x20
+    zzzj_voice	0x42, 0x00, 0x20
+    zzzj_voice	0x39, 0x18, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+SramRecordDefault050:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x34, 0x20, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x4b, 0x04, 0x20
+SramRecordDefault051:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x3b, 0x20, 0x20
+    zzzj_voice	0x39, 0x00, 0x20
+    zzzj_voice	0x47, 0x10, 0x20
+    zzzj_voice	0x47, 0x18, 0x20
+SramRecordDefault052:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x31, 0x48, 0x20
+    zzzj_voice	0x18, 0x18, 0x20
+    zzzj_voice	0x39, 0x18, 0x20
+    zzzj_voice	0x31, 0x48, 0x20
+    zzzj_voice	0x1a, 0x08, 0x20
+SramRecordDefault053:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x2c, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x8b, 0x04, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault054:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x20, 0x10, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x1b, 0x40, 0x20
+    zzzj_voice	0x33, 0x00, 0x20
+    zzzj_voice	0x12, 0x10, 0x20
+    zzzj_voice	0x1d, 0x00, 0x20
+SramRecordDefault055:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x34, 0x24, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault056:
+    zzzj_voice	0x40, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0xa7, 0x20, 0x20
+    zzzj_voice	0x12, 0x10, 0x20
+    zzzj_voice	0x50, 0x0c, 0x20
+    zzzj_voice	0x50, 0x0c, 0x20
+    zzzj_voice	0x51, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault057:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x2d, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x84, 0x10, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x3b, 0x20, 0x20
+    zzzj_voice	0x3b, 0x00, 0x20
+    zzzj_voice	0x3d, 0x00, 0x20
+SramRecordDefault058:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x3b, 0x20, 0x20
+    zzzj_voice	0x41, 0x04, 0x20
+    zzzj_voice	0x42, 0x00, 0x20
+SramRecordDefault059:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x48, 0x04, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x19, 0x2c, 0x20
+    zzzj_voice	0x41, 0x1c, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault060:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x38, 0x00, 0x26
+    zzzj_voice	0x51, 0x0c, 0x28
+    zzzj_voice	0x50, 0x0c, 0x20
+    zzzj_voice	0x07, 0x00, 0x20
+    zzzj_voice	0x50, 0x0c, 0x20
+    zzzj_voice	0x39, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+SramRecordDefault061:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault062:
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x19, 0x08, 0x20
+    zzzj_voice	0x59, 0x20, 0x20
+    zzzj_voice	0x18, 0x0e, 0x20
+    zzzj_voice	0x34, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault063:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x1b, 0x21, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x3d, 0x00, 0x20
+    zzzj_voice	0x35, 0x21, 0x20
+SramRecordDefault064:
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x9b, 0x41, 0x20
+    zzzj_voice	0x3b, 0x20, 0x20
+    zzzj_voice	0x30, 0x30, 0x20
+    zzzj_voice	0x5a, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault065:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x43, 0x00, 0x20
+    zzzj_voice	0x43, 0x50, 0x20
+    zzzj_voice	0x47, 0x10, 0x20
+SramRecordDefault066:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x3d, 0x00, 0x20
+    zzzj_voice	0x15, 0x4c, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x41, 0x08, 0x20
+SramRecordDefault067:
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x43, 0x00, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+SramRecordDefault068:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x0c, 0x00, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault069:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x01, 0x01, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x1a, 0x20, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x0c, 0x00, 0x20
+SramRecordDefault070:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x22, 0x20, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x18, 0x0e, 0x20
+    zzzj_voice	0x38, 0x60, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x3d, 0x30, 0x20
+SramRecordDefault071:
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x19, 0x04, 0x20
+    zzzj_voice	0x34, 0x20, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault072:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x3d, 0x18, 0x20
+    zzzj_voice	0x3d, 0x30, 0x20
+    zzzj_voice	0x48, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault073:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x00, 0x40, 0x20
+    zzzj_voice	0x2d, 0x00, 0x20
+    zzzj_voice	0x18, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault074:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x00, 0x40, 0x20
+    zzzj_voice	0x19, 0x50, 0x20
+    zzzj_voice	0x00, 0x40, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault075:
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x5f, 0x10, 0x20
+    zzzj_voice	0x30, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault076:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x18, 0x00, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault077:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x35, 0x2a, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x3d, 0x60, 0x20
+SramRecordDefault078:
+    zzzj_voice	0x1b, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+    zzzj_voice	0x32, 0x00, 0x20
+    zzzj_voice	0x35, 0x21, 0x20
+    zzzj_voice	0x57, 0x30, 0x20
+    zzzj_voice	0x49, 0x04, 0x20
+SramRecordDefault079:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x8b, 0x04, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x47, 0x20, 0x20
+    zzzj_voice	0x52, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault080:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x34, 0x00, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+    zzzj_voice	0x32, 0x10, 0x20
+    zzzj_voice	0x50, 0x14, 0x20
+SramRecordDefault081:
+    zzzj_voice	0x11, 0x00, 0x26
+    zzzj_voice	0x11, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+    zzzj_voice	0x59, 0x18, 0x20
+    zzzj_voice	0x5f, 0x10, 0x20
+    zzzj_voice	0x34, 0x0c, 0x20
+SramRecordDefault082:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x26, 0x00, 0x20
+    zzzj_voice	0x15, 0x4c, 0x20
+    zzzj_voice	0x49, 0x20, 0x20
+    zzzj_voice	0x57, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault083:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x44, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x3e, 0x00, 0x20
+    zzzj_voice	0x38, 0x58, 0x20
+    zzzj_voice	0x49, 0x04, 0x20
+    zzzj_voice	0x5f, 0x10, 0x20
+SramRecordDefault084:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x5a, 0x10, 0x20
+    zzzj_voice	0x38, 0x64, 0x20
+    zzzj_voice	0x45, 0x04, 0x20
+SramRecordDefault085:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x19, 0x0e, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x2d, 0x00, 0x20
+    zzzj_voice	0x8b, 0x10, 0x20
+    zzzj_voice	0x7e, 0x31, 0x20
+SramRecordDefault086:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x18, 0x1b, 0x20
+    zzzj_voice	0x19, 0x0e, 0x20
+    zzzj_voice	0x08, 0x40, 0x24
+    zzzj_voice	0x15, 0x40, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+SramRecordDefault087:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x22, 0x00, 0x20
+    zzzj_voice	0x19, 0x0e, 0x20
+    zzzj_voice	0x30, 0x30, 0x20
+    zzzj_voice	0x3d, 0x0a, 0x20
+    zzzj_voice	0x51, 0x38, 0x20
+    zzzj_voice	0x2e, 0x10, 0x20
+SramRecordDefault088:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x1a, 0x41, 0x20
+    zzzj_voice	0x1a, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault089:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x1b, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault090:
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x19, 0x0e, 0x20
+    zzzj_voice	0x5d, 0x40, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0xd8, 0x50, 0x20
+    zzzj_voice	0x4f, 0x30, 0x20
+SramRecordDefault091:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+    zzzj_voice	0x0d, 0x00, 0x20
+    zzzj_voice	0x30, 0x30, 0x20
+    zzzj_voice	0x46, 0x04, 0x20
+    zzzj_voice	0x47, 0x0c, 0x20
+SramRecordDefault092:
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x51, 0x00, 0x20
+    zzzj_voice	0x59, 0x1c, 0x20
+    zzzj_voice	0x1c, 0x00, 0x20
+    zzzj_voice	0x54, 0x48, 0x20
+    zzzj_voice	0x50, 0x18, 0x20
+SramRecordDefault093:
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x30, 0x04, 0x26
+    zzzj_voice	0x26, 0x40, 0x20
+    zzzj_voice	0x5f, 0x08, 0x20
+    zzzj_voice	0x67, 0x00, 0x20
+    zzzj_voice	0x5b, 0x20, 0x20
+    zzzj_voice	0x0e, 0x00, 0x20
+    zzzj_voice	0x2e, 0x10, 0x20
+SramRecordDefault094:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x8b, 0x04, 0x20
+    zzzj_voice	0x41, 0x04, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault095:
+    zzzj_voice	0x30, 0x00, 0x26
+    zzzj_voice	0x30, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x34, 0x38, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+SramRecordDefault096:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x10, 0x20
+    zzzj_voice	0x5a, 0x10, 0x20
+    zzzj_voice	0x44, 0x50, 0x20
+    zzzj_voice	0x6b, 0x00, 0x20
+    zzzj_voice	0x09, 0x00, 0x20
+    zzzj_voice	0x48, 0x00, 0x20
+SramRecordDefault097:
+    zzzj_voice	0x30, 0x00, 0x26
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x3d, 0x40, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x09, 0x00, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+    zzzj_voice	0x3d, 0x50, 0x20
+SramRecordDefault098:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x1b, 0x00, 0x20
+    zzzj_voice	0x51, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault099:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x50, 0x04, 0x20
+    zzzj_voice	0x6b, 0x00, 0x20
+    zzzj_voice	0x1c, 0x00, 0x20
+    zzzj_voice	0x1e, 0x00, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+SramRecordDefault100:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x12, 0x18, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x3d, 0x50, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault101:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x1b, 0x19, 0x20
+    zzzj_voice	0x92, 0x00, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault102:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x51, 0x68, 0x20
+    zzzj_voice	0x34, 0x38, 0x20
+    zzzj_voice	0x3d, 0x30, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault103:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x27, 0x08, 0x20
+    zzzj_voice	0x59, 0x10, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault104:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault105:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x5a, 0x08, 0x20
+    zzzj_voice	0x1b, 0x40, 0x20
+    zzzj_voice	0x58, 0x30, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+SramRecordDefault106:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x05, 0x30, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x2f, 0x00, 0x20
+SramRecordDefault107:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x5a, 0x30, 0x20
+    zzzj_voice	0x02, 0x00, 0x20
+    zzzj_voice	0x5a, 0x08, 0x20
+    zzzj_voice	0x0c, 0x00, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+SramRecordDefault108:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x44, 0x20
+    zzzj_voice	0x32, 0x00, 0x20
+    zzzj_voice	0x34, 0x38, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault109:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x00, 0x38, 0x24
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x0c, 0x00, 0x20
+    zzzj_voice	0x3d, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault110:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x34, 0x20, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x38, 0x58, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault111:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x22, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x1b, 0x01, 0x20
+    zzzj_voice	0x91, 0x00, 0x20
+    zzzj_voice	0x3d, 0x61, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+SramRecordDefault112:
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x15, 0x4c, 0x20
+    zzzj_voice	0x40, 0x14, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x1a, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault113:
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x01, 0x04, 0x26
+    zzzj_voice	0x22, 0x00, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x5a, 0x10, 0x20
+    zzzj_voice	0x11, 0x14, 0x20
+    zzzj_voice	0x10, 0x06, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault114:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x26, 0x60, 0x20
+    zzzj_voice	0x1a, 0x00, 0x20
+    zzzj_voice	0x3d, 0x18, 0x20
+    zzzj_voice	0x10, 0x16, 0x20
+    zzzj_voice	0x10, 0x1e, 0x20
+    zzzj_voice	0x11, 0x14, 0x20
+SramRecordDefault115:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x26, 0x18, 0x20
+    zzzj_voice	0x19, 0x2a, 0x20
+    zzzj_voice	0x10, 0x1e, 0x20
+    zzzj_voice	0x10, 0x1e, 0x20
+    zzzj_voice	0x10, 0x16, 0x20
+    zzzj_voice	0x18, 0x1c, 0x20
+SramRecordDefault116:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x0a, 0x20, 0x20
+    zzzj_voice	0x13, 0x41, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x10, 0x06, 0x20
+    zzzj_voice	0x10, 0x16, 0x20
+SramRecordDefault117:
+    zzzj_voice	0x2d, 0x00, 0x26
+    zzzj_voice	0x2d, 0x00, 0x26
+    zzzj_voice	0x26, 0x30, 0x20
+    zzzj_voice	0x30, 0x08, 0x20
+    zzzj_voice	0x10, 0x06, 0x20
+    zzzj_voice	0x10, 0x04, 0x20
+    zzzj_voice	0x10, 0x1e, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault118:
+    zzzj_voice	0x2c, 0x00, 0x26
+    zzzj_voice	0x2d, 0x00, 0x26
+    zzzj_voice	0x3f, 0x10, 0x20
+    zzzj_voice	0x59, 0x04, 0x20
+    zzzj_voice	0x56, 0x20, 0x20
+    zzzj_voice	0x19, 0x2c, 0x20
+    zzzj_voice	0x10, 0x1e, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault119:
+    zzzj_voice	0x30, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x5a, 0x40, 0x20
+    zzzj_voice	0x30, 0x08, 0x20
+    zzzj_voice	0x56, 0x20, 0x20
+    zzzj_voice	0x13, 0x40, 0x20
+    zzzj_voice	0x13, 0x58, 0x20
+    zzzj_voice	0x13, 0x44, 0x20
+SramRecordDefault120:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x30, 0x00, 0x20
+    zzzj_voice	0x47, 0x20, 0x20
+    zzzj_voice	0x49, 0x20, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+SramRecordDefault121:
+    zzzj_voice	0x30, 0x00, 0x26
+    zzzj_voice	0x30, 0x00, 0x26
+    zzzj_voice	0x5a, 0x40, 0x20
+    zzzj_voice	0x13, 0x4c, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x13, 0x58, 0x20
+    zzzj_voice	0x13, 0x40, 0x20
+    zzzj_voice	0x13, 0x40, 0x20
+SramRecordDefault122:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x19, 0x08, 0x20
+    zzzj_voice	0x1b, 0x40, 0x20
+    zzzj_voice	0x8b, 0x04, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x78, 0x08, 0x20
+SramRecordDefault123:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x1e, 0x10, 0x20
+    zzzj_voice	0x1e, 0x31, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x54, 0x54, 0x20
+SramRecordDefault124:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x1b, 0x40, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x59, 0x00, 0x20
+    zzzj_voice	0x39, 0x64, 0x20
+SramRecordDefault125:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x19, 0x08, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x49, 0x00, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+SramRecordDefault126:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x19, 0x28, 0x20
+    zzzj_voice	0x35, 0x2c, 0x20
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x10, 0x1e, 0x20
+    zzzj_voice	0x35, 0x24, 0x20
+SramRecordDefault127:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x20, 0x30, 0x20
+    zzzj_voice	0x01, 0x20, 0x20
+    zzzj_voice	0x19, 0x28, 0x20
+    zzzj_voice	0x34, 0x00, 0x20
+    zzzj_voice	0x09, 0x00, 0x20
+    zzzj_voice	0x33, 0x00, 0x20
+SramRecordDefault128:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x22, 0x00, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x31, 0x00, 0x20
+    zzzj_voice	0x09, 0x00, 0x20
+    zzzj_voice	0x1b, 0x20, 0x20
+SramRecordDefault129:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x30, 0x16, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault130:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x1b, 0x19, 0x20
+    zzzj_voice	0x3f, 0x08, 0x20
+    zzzj_voice	0x92, 0x00, 0x20
+    zzzj_voice	0x35, 0x51, 0x20
+    zzzj_voice	0x3d, 0x61, 0x20
+SramRecordDefault131:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x01, 0x04, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x05, 0x10, 0x20
+    zzzj_voice	0x11, 0x14, 0x20
+    zzzj_voice	0x35, 0x2c, 0x20
+    zzzj_voice	0x34, 0x26, 0x20
+SramRecordDefault132:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x1e, 0x30, 0x20
+    zzzj_voice	0x12, 0x20, 0x20
+    zzzj_voice	0x90, 0x18, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault133:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x35, 0x21, 0x20
+    zzzj_voice	0x3d, 0x61, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault134:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x40, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault135:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x26, 0x40, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x51, 0x68, 0x20
+    zzzj_voice	0x57, 0x30, 0x20
+    zzzj_voice	0x02, 0x48, 0x20
+    zzzj_voice	0x50, 0x00, 0x20
+SramRecordDefault136:
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x27, 0x28, 0x20
+    zzzj_voice	0xd6, 0x08, 0x20
+    zzzj_voice	0x51, 0x00, 0x20
+    zzzj_voice	0x33, 0x20, 0x20
+    zzzj_voice	0x32, 0x40, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+SramRecordDefault137:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x01, 0x04, 0x26
+    zzzj_voice	0x26, 0x60, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x5d, 0x40, 0x20
+    zzzj_voice	0x5f, 0x18, 0x20
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x04, 0x40, 0x20
+SramRecordDefault138:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x07, 0x00, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x37, 0x30, 0x20
+    zzzj_voice	0x37, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault139:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x54, 0x40, 0x20
+    zzzj_voice	0x5f, 0x00, 0x20
+    zzzj_voice	0x53, 0x28, 0x20
+    zzzj_voice	0x5f, 0x00, 0x20
+    zzzj_voice	0x61, 0x00, 0x20
+SramRecordDefault140:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x11, 0x00, 0x26
+    zzzj_voice	0x27, 0x28, 0x20
+    zzzj_voice	0x5f, 0x10, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0xd6, 0x08, 0x20
+    zzzj_voice	0x51, 0x70, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault141:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x27, 0x28, 0x20
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x54, 0x4c, 0x20
+    zzzj_voice	0x51, 0x40, 0x20
+    zzzj_voice	0x53, 0x28, 0x20
+    zzzj_voice	0x50, 0x40, 0x20
+SramRecordDefault142:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x27, 0x00, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x41, 0x08, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x66, 0x00, 0x20
+    zzzj_voice	0x07, 0x00, 0x20
+SramRecordDefault143:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x27, 0x00, 0x20
+    zzzj_voice	0x34, 0x20, 0x20
+    zzzj_voice	0x51, 0x68, 0x20
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+SramRecordDefault144:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x38, 0x00, 0x26
+    zzzj_voice	0x26, 0x40, 0x20
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x07, 0x10, 0x20
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x51, 0x30, 0x20
+    zzzj_voice	0x34, 0x20, 0x20
+SramRecordDefault145:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x27, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x59, 0x10, 0x20
+    zzzj_voice	0x01, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault146:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x26, 0x40, 0x20
+    zzzj_voice	0x51, 0x68, 0x20
+    zzzj_voice	0x1a, 0x28, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault147:
+    zzzj_voice	0x1b, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x27, 0x08, 0x20
+    zzzj_voice	0x5f, 0x00, 0x20
+    zzzj_voice	0x07, 0x30, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault148:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x3e, 0x30, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault149:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x5a, 0x08, 0x20
+    zzzj_voice	0x1b, 0x21, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault150:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x05, 0x10, 0x20
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x58, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault151:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x26, 0x08, 0x20
+    zzzj_voice	0x35, 0x21, 0x20
+    zzzj_voice	0x0a, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault152:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x42, 0x00, 0x20
+    zzzj_voice	0x41, 0x08, 0x20
+    zzzj_voice	0x3d, 0x00, 0x20
+SramRecordDefault153:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x50, 0x48, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x24, 0x00, 0x20
+SramRecordDefault154:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x04, 0x04, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x35, 0x24, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+SramRecordDefault155:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x91, 0x00, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault156:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x01, 0x20, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault157:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x5a, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault158:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x19, 0x08, 0x20
+    zzzj_voice	0x34, 0x24, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x01, 0x01, 0x20
+    zzzj_voice	0x00, 0x20, 0x20
+SramRecordDefault159:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x1a, 0x00, 0x26
+    zzzj_voice	0x27, 0x28, 0x20
+    zzzj_voice	0x5f, 0x08, 0x20
+    zzzj_voice	0x1b, 0x21, 0x20
+    zzzj_voice	0x07, 0x00, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x38, 0x68, 0x20
+SramRecordDefault160:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x43, 0x00, 0x20
+    zzzj_voice	0x12, 0x10, 0x20
+SramRecordDefault161:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x1b, 0x20, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+SramRecordDefault162:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x01, 0x20, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x41, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault163:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault164:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x30, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x1b, 0x19, 0x20
+    zzzj_voice	0x34, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault165:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x43, 0x00, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x90, 0x10, 0x20
+SramRecordDefault166:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x1b, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+    zzzj_voice	0x3e, 0x08, 0x20
+    zzzj_voice	0x1b, 0x21, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault167:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault168:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x8b, 0x10, 0x20
+    zzzj_voice	0x1a, 0x41, 0x20
+    zzzj_voice	0x50, 0x0c, 0x20
+    zzzj_voice	0x19, 0x28, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault169:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x1b, 0x41, 0x20
+    zzzj_voice	0x90, 0x00, 0x20
+    zzzj_voice	0x01, 0x20, 0x20
+    zzzj_voice	0x16, 0x08, 0x20
+SramRecordDefault170:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x38, 0x00, 0x26
+    zzzj_voice	0x20, 0x30, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x19, 0x28, 0x20
+    zzzj_voice	0x1b, 0x20, 0x20
+    zzzj_voice	0x19, 0x28, 0x20
+    zzzj_voice	0x1a, 0x20, 0x20
+SramRecordDefault171:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x31, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault172:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x16, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault173:
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x02, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x1a, 0x30, 0x20
+    zzzj_voice	0x02, 0x00, 0x20
+    zzzj_voice	0x04, 0x10, 0x20
+SramRecordDefault174:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault175:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x35, 0x2c, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+    zzzj_voice	0x05, 0x00, 0x20
+SramRecordDefault176:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x38, 0x00, 0x26
+    zzzj_voice	0x25, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+    zzzj_voice	0x1a, 0x20, 0x20
+    zzzj_voice	0x1a, 0x41, 0x20
+    zzzj_voice	0x30, 0x14, 0x20
+SramRecordDefault177:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x02, 0x00, 0x20
+    zzzj_voice	0x30, 0x30, 0x20
+    zzzj_voice	0x18, 0x08, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+SramRecordDefault178:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x00, 0x08, 0x24
+    zzzj_voice	0x6a, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault179:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x1b, 0x10, 0x20
+    zzzj_voice	0x1b, 0x11, 0x20
+    zzzj_voice	0x92, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault180:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1a, 0x40, 0x20
+    zzzj_voice	0x6e, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x01, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault181:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x26, 0x44, 0x20
+    zzzj_voice	0x8b, 0x10, 0x20
+    zzzj_voice	0x51, 0x68, 0x20
+    zzzj_voice	0x1a, 0x41, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x91, 0x00, 0x20
+SramRecordDefault182:
+    zzzj_voice	0x34, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x39, 0x00, 0x20
+    zzzj_voice	0x3d, 0x00, 0x20
+    zzzj_voice	0x08, 0x00, 0x20
+    zzzj_voice	0x47, 0x04, 0x20
+SramRecordDefault183:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x26, 0x18, 0x20
+    zzzj_voice	0x54, 0x00, 0x20
+    zzzj_voice	0x3e, 0x08, 0x20
+    zzzj_voice	0xda, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault184:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x50, 0x0c, 0x20
+    zzzj_voice	0x49, 0x04, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault185:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x26, 0x00, 0x20
+    zzzj_voice	0x15, 0x44, 0x20
+    zzzj_voice	0x50, 0x08, 0x20
+    zzzj_voice	0x18, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault186:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x15, 0x48, 0x20
+    zzzj_voice	0x18, 0x08, 0x20
+    zzzj_voice	0x47, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault187:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x20, 0x10, 0x20
+    zzzj_voice	0x04, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x30, 0x00, 0x20
+    zzzj_voice	0x35, 0x46, 0x20
+SramRecordDefault188:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x01, 0x01, 0x20
+    zzzj_voice	0x1a, 0x38, 0x20
+    zzzj_voice	0x30, 0x18, 0x20
+    zzzj_voice	0x1a, 0x38, 0x20
+    zzzj_voice	0x01, 0x01, 0x20
+SramRecordDefault189:
+    zzzj_voice	0x10, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x90, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault190:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x1a, 0x08, 0x20
+    zzzj_voice	0x30, 0x08, 0x20
+    zzzj_voice	0x35, 0x21, 0x20
+    zzzj_voice	0x15, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault191:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x35, 0x50, 0x20
+    zzzj_voice	0x49, 0x04, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault192:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x10, 0x20
+    zzzj_voice	0x51, 0x68, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x31, 0x00, 0x20
+    zzzj_voice	0x1a, 0x08, 0x20
+    zzzj_voice	0x5d, 0x40, 0x20
+SramRecordDefault193:
+    zzzj_voice	0x34, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x3a, 0x20, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x32, 0x10, 0x20
+    zzzj_voice	0x3c, 0x40, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault194:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x18, 0x0e, 0x20
+    zzzj_voice	0x58, 0x10, 0x20
+    zzzj_voice	0x34, 0x1c, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+SramRecordDefault195:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x32, 0x10, 0x20
+    zzzj_voice	0x49, 0x14, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault196:
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x0c, 0x00, 0x20
+    zzzj_voice	0x3d, 0x08, 0x20
+    zzzj_voice	0x5a, 0x10, 0x20
+    zzzj_voice	0x30, 0x30, 0x20
+SramRecordDefault197:
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x18, 0x1c, 0x20
+    zzzj_voice	0x35, 0x20, 0x20
+    zzzj_voice	0x00, 0x01, 0x20
+    zzzj_voice	0x42, 0x14, 0x20
+SramRecordDefault198:
+    zzzj_voice	0x20, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x18, 0x18, 0x20
+    zzzj_voice	0x51, 0x10, 0x20
+    zzzj_voice	0x38, 0x44, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault199:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x20
+    zzzj_voice	0x00, 0x41, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x35, 0x46, 0x20
+    zzzj_voice	0x3d, 0x00, 0x20
+    zzzj_voice	0x3d, 0x61, 0x20
+SramRecordDefault200:
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x01, 0x04, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x1b, 0x18, 0x20
+    zzzj_voice	0x40, 0x00, 0x20
+    zzzj_voice	0x3f, 0x20, 0x20
+    zzzj_voice	0x3d, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault201:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x04, 0x40, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x5d, 0x40, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x38, 0x04, 0x20
+SramRecordDefault202:
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x48, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x19, 0x08, 0x20
+    zzzj_voice	0x3d, 0x40, 0x20
+    zzzj_voice	0x38, 0x60, 0x20
+    zzzj_voice	0x39, 0x19, 0x20
+    zzzj_voice	0x3d, 0x08, 0x20
+SramRecordDefault203:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x24, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x00, 0x40, 0x20
+    zzzj_voice	0x2d, 0x00, 0x20
+    zzzj_voice	0x08, 0x20, 0x24
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault204:
+    zzzj_voice	0x2c, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x30, 0x10, 0x20
+    zzzj_voice	0x34, 0x24, 0x20
+    zzzj_voice	0x04, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault205:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x1c, 0x20, 0x20
+    zzzj_voice	0x39, 0x00, 0x20
+    zzzj_voice	0x3d, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault206:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x21, 0x44, 0x20
+    zzzj_voice	0x18, 0x0e, 0x20
+    zzzj_voice	0x18, 0x10, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault207:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x18, 0x08, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault208:
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x09, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x4f, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x28, 0x04, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault209:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x21, 0x20, 0x20
+    zzzj_voice	0x18, 0x1c, 0x20
+    zzzj_voice	0x18, 0x18, 0x20
+    zzzj_voice	0x18, 0x1c, 0x20
+    zzzj_voice	0x1a, 0x38, 0x20
+    zzzj_voice	0x1f, 0x30, 0x20
+SramRecordDefault210:
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x08, 0x00, 0x26
+    zzzj_voice	0x21, 0x10, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x18, 0x1c, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault211:
+    zzzj_voice	0x1d, 0x00, 0x26
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x1c, 0x01, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x38, 0x50, 0x20
+    zzzj_voice	0x59, 0x00, 0x20
+    zzzj_voice	0x59, 0x00, 0x20
+SramRecordDefault212:
+    zzzj_voice	0x02, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x20, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x3d, 0x48, 0x20
+    zzzj_voice	0x15, 0x40, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault213:
+    zzzj_voice	0x21, 0x00, 0x26
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x20, 0x10, 0x20
+    zzzj_voice	0x15, 0x00, 0x20
+    zzzj_voice	0x15, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault214:
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x0c, 0x00, 0x26
+    zzzj_voice	0x23, 0x00, 0x20
+    zzzj_voice	0x03, 0x00, 0x20
+    zzzj_voice	0x3f, 0x00, 0x20
+    zzzj_voice	0x41, 0x34, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault215:
+    zzzj_voice	0x28, 0x00, 0x26
+    zzzj_voice	0x01, 0x00, 0x26
+    zzzj_voice	0x21, 0x00, 0x20
+    zzzj_voice	0x1a, 0x08, 0x20
+    zzzj_voice	0x85, 0x00, 0x20
+    zzzj_voice	0x32, 0x10, 0x20
+    zzzj_voice	0x38, 0x30, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault216:
+    zzzj_voice	0x1e, 0x00, 0x26
+    zzzj_voice	0x1b, 0x00, 0x26
+    zzzj_voice	0x26, 0x10, 0x20
+    zzzj_voice	0x70, 0x38, 0x20
+    zzzj_voice	0x35, 0x24, 0x20
+    zzzj_voice	0x50, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault217:
+    zzzj_voice	0x03, 0x00, 0x26
+    zzzj_voice	0x14, 0x00, 0x26
+    zzzj_voice	0x27, 0x20, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x34, 0x08, 0x20
+    zzzj_voice	0x5d, 0x40, 0x20
+    zzzj_voice	0x30, 0x14, 0x20
+    zzzj_voice	0x15, 0x10, 0x20
+SramRecordDefault218:
+    zzzj_voice	0x1c, 0x00, 0x26
+    zzzj_voice	0x19, 0x00, 0x26
+    zzzj_voice	0x26, 0x00, 0x20
+    zzzj_voice	0x19, 0x20, 0x20
+    zzzj_voice	0x34, 0x08, 0x20
+    zzzj_voice	0x19, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+SramRecordDefault219:
+    zzzj_voice	0x1f, 0x00, 0x26
+    zzzj_voice	0x00, 0x00, 0x26
+    zzzj_voice	0x26, 0x18, 0x20
+    zzzj_voice	0x2e, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x34, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
+    zzzj_voice	0x00, 0x00, 0x20
 
 # dir[2], 0xa96c bytes.
 # The factory MEMORY-style container ('TCMP'): MemStyleAreaLoadFactory copies it
 # whole (through TableRomSeg02PtrSize) to MEM_STYLE_AREA 0x50180000 when it starts
-# with 'TCMP'. Format: notes/tcmp-container-synthesis.md.
+# with 'TCMP'. Format: notes/tcmp-container-synthesis.md and kn7000_manual.sym (the
+# TCMP section); typed by tools/gen_table_styles.py, events one per line.
 FactoryMemStyleContainer:
-    .incbin_range	"baserom/kn7000_table.rom", 0x035d08, 0x040674
+    .ascii	"TCMP"		# MemStyleAreaSignatureVerify: strncmp with 0x487312E8
+    .be16	0		# sub-signature (0x487312EC)
+    .be16	0xcc00		# SumU16BE of the checksum range (MemStyleAreaChecksumVerify)
+    .be24	TcmpStyleRecords - FactoryMemStyleContainer	# checksum start (0x70)
+    .be24	0x1b00		# checksum length in halfwords: the N = 3 record block
+    .be16	0
+    .be24	0x025800	# the MEMORY area's length (MemStyleAllocFits)
+    .be24	TcmpHeapEnd - FactoryMemStyleContainer	# the bump allocator's top (MemStyleAllocOffsetGet)
+    .be16	3		# style count N
+    .be16	96		# [INFERENCE] ticks a beat, as in the style format
+    .byte	13, 8, 4, 2, 2, 1, 2, 15	# [INFERENCE] the format's dimensions
+    .space	14, 0x00
+    .space	0x40, 0x20	# ASCII spaces (the ROM template 0x487312E8 has them too)
+TcmpStyleRecords:
+TcmpStyle0:		# MemStyleRecPtr 0
+	.ascii	" Easy 8 Beat "	# the style name
+	.space	3, 0x00
+	.ascii	"             "	# variation 1 name (slot 0; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 2 name (slot 3; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 3 name (slot 6; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 4 name (slot 9; MemStyleVarCopy)
+	.space	3, 0x00
+	.byte	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19	# the 20 slots' variation records
+	.space	12, 0x00
+	style_units	0x44, 0x00, 0x44, 0x00
+	.space	12, 0x00
+TcmpStyle1:		# MemStyleRecPtr 1
+	.ascii	"Easy 16 Beat "	# the style name
+	.space	3, 0x00
+	.ascii	"             "	# variation 1 name (slot 0; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 2 name (slot 3; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 3 name (slot 6; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 4 name (slot 9; MemStyleVarCopy)
+	.space	3, 0x00
+	.byte	20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39	# the 20 slots' variation records
+	.space	12, 0x00
+	style_units	0x44, 0x00, 0x44, 0x00
+	.space	12, 0x00
+TcmpStyle2:		# MemStyleRecPtr 2
+	.ascii	" Easy Swing  "	# the style name
+	.space	3, 0x00
+	.ascii	"             "	# variation 1 name (slot 0; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 2 name (slot 3; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 3 name (slot 6; MemStyleVarCopy)
+	.space	3, 0x00
+	.ascii	"             "	# variation 4 name (slot 9; MemStyleVarCopy)
+	.space	3, 0x00
+	.byte	40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59	# the 20 slots' variation records
+	.space	12, 0x00
+	style_units	0x44, 0x00, 0x44, 0x00
+	.space	12, 0x00
+TcmpVar00:		# MemStyleVarRecPtr 0: style 0 slot 0 (Var1)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream00 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar01:		# MemStyleVarRecPtr 1: style 0 slot 1 (Var1Fill1)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream01 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar02:		# MemStyleVarRecPtr 2: style 0 slot 2 (Var1Fill2)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream02 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar03:		# MemStyleVarRecPtr 3: style 0 slot 3 (Var2)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream03 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar04:		# MemStyleVarRecPtr 4: style 0 slot 4 (Var2Fill1)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream04 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar05:		# MemStyleVarRecPtr 5: style 0 slot 5 (Var2Fill2)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream05 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar06:		# MemStyleVarRecPtr 6: style 0 slot 6 (Var3)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream06 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar07:		# MemStyleVarRecPtr 7: style 0 slot 7 (Var3Fill1)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream07 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar08:		# MemStyleVarRecPtr 8: style 0 slot 8 (Var3Fill2)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream08 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar09:		# MemStyleVarRecPtr 9: style 0 slot 9 (Var4)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream09 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar10:		# MemStyleVarRecPtr 10: style 0 slot 10 (Var4Fill1)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream10 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar11:		# MemStyleVarRecPtr 11: style 0 slot 11 (Var4Fill2)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream11 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar12:		# MemStyleVarRecPtr 12: style 0 slot 12 (Intro1A)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream12 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar13:		# MemStyleVarRecPtr 13: style 0 slot 13 (Intro1B)
+	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream13 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 127, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar14:		# MemStyleVarRecPtr 14: style 0 slot 14 (Intro2A)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream14 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar15:		# MemStyleVarRecPtr 15: style 0 slot 15 (Intro2B)
+	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream15 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 127, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar16:		# MemStyleVarRecPtr 16: style 0 slot 16 (Ending1A)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream16 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar17:		# MemStyleVarRecPtr 17: style 0 slot 17 (Ending1B)
+	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream17 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar18:		# MemStyleVarRecPtr 18: style 0 slot 18 (Ending2A)
+	.byte	0x5a, 0x03, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream18 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar19:		# MemStyleVarRecPtr 19: style 0 slot 19 (Ending2B)
+	.byte	0x5a, 0x03, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream19 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x01, 0x00, 0x26, 64, 47, 0, 64, 12, 64, 60, 108, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 60, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x05, 0x10, 0x20, 64, 55, 0, 11, 12, 68, 62, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x1b, 0x01, 0x20, 64, 70, 0, 116, 12, 68, 62, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 55, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 0, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar20:		# MemStyleVarRecPtr 20: style 1 slot 0 (Var1)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream20 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar21:		# MemStyleVarRecPtr 21: style 1 slot 1 (Var1Fill1)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream21 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar22:		# MemStyleVarRecPtr 22: style 1 slot 2 (Var1Fill2)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream22 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar23:		# MemStyleVarRecPtr 23: style 1 slot 3 (Var2)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream23 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar24:		# MemStyleVarRecPtr 24: style 1 slot 4 (Var2Fill1)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream24 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar25:		# MemStyleVarRecPtr 25: style 1 slot 5 (Var2Fill2)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream25 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar26:		# MemStyleVarRecPtr 26: style 1 slot 6 (Var3)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream26 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 62, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar27:		# MemStyleVarRecPtr 27: style 1 slot 7 (Var3Fill1)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream27 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 62, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar28:		# MemStyleVarRecPtr 28: style 1 slot 8 (Var3Fill2)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream28 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 62, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar29:		# MemStyleVarRecPtr 29: style 1 slot 9 (Var4)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream29 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x41, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar30:		# MemStyleVarRecPtr 30: style 1 slot 10 (Var4Fill1)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream30 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x41, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar31:		# MemStyleVarRecPtr 31: style 1 slot 11 (Var4Fill2)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream31 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x41, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar32:		# MemStyleVarRecPtr 32: style 1 slot 12 (Intro1A)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream32 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar33:		# MemStyleVarRecPtr 33: style 1 slot 13 (Intro1B)
+	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream33 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar34:		# MemStyleVarRecPtr 34: style 1 slot 14 (Intro2A)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream34 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar35:		# MemStyleVarRecPtr 35: style 1 slot 15 (Intro2B)
+	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream35 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar36:		# MemStyleVarRecPtr 36: style 1 slot 16 (Ending1A)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream36 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar37:		# MemStyleVarRecPtr 37: style 1 slot 17 (Ending1B)
+	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream37 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar38:		# MemStyleVarRecPtr 38: style 1 slot 18 (Ending2A)
+	.byte	0x60, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream38 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 103, 0x48, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar39:		# MemStyleVarRecPtr 39: style 1 slot 19 (Ending2B)
+	.byte	0x60, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream39 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 103, 0x01, 0x00, 0x26, 64, 41, 0, 64, 12, 64, 62, 96, 70, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 100, 0x21, 0x00, 0x20, 64, 0, 0, 64, 12, 64, 62, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 80, 0x1b, 0x18, 0x20, 64, 61, 26, 104, 12, 64, 60, 96, 60, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x05, 0x00, 0x20, 64, 70, 52, 24, 12, 68, 60, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 98, 0x32, 0x00, 0x20, 64, 73, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 50, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar40:		# MemStyleVarRecPtr 40: style 2 slot 0 (Var1)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream40 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar41:		# MemStyleVarRecPtr 41: style 2 slot 1 (Var1Fill1)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream41 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar42:		# MemStyleVarRecPtr 42: style 2 slot 2 (Var1Fill2)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream42 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar43:		# MemStyleVarRecPtr 43: style 2 slot 3 (Var2)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream43 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar44:		# MemStyleVarRecPtr 44: style 2 slot 4 (Var2Fill1)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream44 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar45:		# MemStyleVarRecPtr 45: style 2 slot 5 (Var2Fill2)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream45 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar46:		# MemStyleVarRecPtr 46: style 2 slot 6 (Var3)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream46 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar47:		# MemStyleVarRecPtr 47: style 2 slot 7 (Var3Fill1)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream47 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar48:		# MemStyleVarRecPtr 48: style 2 slot 8 (Var3Fill2)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream48 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar49:		# MemStyleVarRecPtr 49: style 2 slot 9 (Var4)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	4 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream49 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar50:		# MemStyleVarRecPtr 50: style 2 slot 10 (Var4Fill1)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream50 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar51:		# MemStyleVarRecPtr 51: style 2 slot 11 (Var4Fill2)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x10, 0x11, 0x11, 0x11, 0x11, 0x11, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream51 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar52:		# MemStyleVarRecPtr 52: style 2 slot 12 (Intro1A)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream52 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar53:		# MemStyleVarRecPtr 53: style 2 slot 13 (Intro1B)
+	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	1 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream53 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar54:		# MemStyleVarRecPtr 54: style 2 slot 14 (Intro2A)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream54 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar55:		# MemStyleVarRecPtr 55: style 2 slot 15 (Intro2B)
+	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream55 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 119, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar56:		# MemStyleVarRecPtr 56: style 2 slot 16 (Ending1A)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream56 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 94, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar57:		# MemStyleVarRecPtr 57: style 2 slot 17 (Ending1B)
+	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	2 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream57 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 124, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar58:		# MemStyleVarRecPtr 58: style 2 slot 18 (Ending2A)
+	.byte	0x22, 0x07, 0x00, 0x00	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream58 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 112, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 64, 96, 64, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 64, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpVar59:		# MemStyleVarRecPtr 59: style 2 slot 19 (Ending2B)
+	.byte	0x22, 0x07, 0x00, 0x10	# +0x00; bit 4 of +0x03 = the A/B pair bit (0x485B6D74, MemStyleVarRecInit)
+	.byte	0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00	# +0x04 one byte a part (MemStyleVarRecInit clamps them to 1 in slots >= 12)
+	.byte	0x00, 0x00, 0x00, 0x00
+	.byte	3 - 1, 4 - 1	# bars - 1, beats a bar - 1 (MemStyleVarBarCount)
+	.byte	0x00, 0x00, 0x00
+	.be24	TcmpStream59 - FactoryMemStyleContainer	# the stream in the heap (MemStyleRecData)
+	.byte	0xff, 0xff	# [INFERENCE] the sound units' two part numbers, as var_head's
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	style_part	0x00, 124, 0x28, 0x00, 0x26, 64, 50, 0, 64, 12, 64, 60, 96, 62, 0	# Drum
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x0b, 102, 0x20, 0x10, 0x20, 64, 0, 0, 64, 12, 64, 58, 108, 64, 0	# Bass
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x1a, 0x08, 0x20, 64, 47, 0, 11, 12, 28, 64, 108, 63, 0	# Acc1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 100, 0x00, 0x00, 0x20, 64, 44, 0, 116, 12, 28, 64, 108, 64, 0	# Acc2
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc3
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc4
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Acc5
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x00, 127, 0x00, 0x00, 0x26, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# Perc
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+TcmpHeap:
+TcmpStream00:
+	.byte	0		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream00_End - TcmpStream00_Events
+TcmpStream00_Events:		# 4 bars of 4 beats, 659 bytes
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 86, 104, 0, 16
+	ev_note	2, 55, 72, 62, 1, 80
+	ev_note	2, 60, 60, 62, 1, 80
+	ev_note	2, 64, 63, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 103, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 71, 22, 0, 80
+	ev_note	3, 67, 71, 22, 0, 80
+	ev_at	48
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 90, 16, 0, 16
+	ev_beat
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 89, 104, 0, 16
+	ev_note	2, 64, 52, 62, 1, 80
+	ev_note	2, 60, 57, 62, 1, 80
+	ev_note	2, 55, 58, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 105, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 71, 19, 0, 80
+	ev_note	3, 67, 71, 20, 0, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 86, 92, 0, 16
+	ev_note	2, 55, 63, 62, 1, 80
+	ev_note	2, 60, 60, 62, 1, 80
+	ev_note	2, 64, 57, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 103, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	3, 64, 71, 20, 0, 80
+	ev_note	3, 67, 71, 20, 0, 80
+	ev_at	48
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 90, 14, 0, 16
+	ev_beat
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 84, 99, 0, 16
+	ev_note	2, 64, 46, 62, 1, 80
+	ev_note	2, 60, 48, 62, 1, 80
+	ev_note	2, 55, 45, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 105, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	3, 64, 71, 19, 0, 80
+	ev_note	3, 67, 71, 20, 0, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 90, 100, 0, 16
+	ev_note	2, 55, 52, 62, 1, 80
+	ev_note	2, 60, 51, 62, 1, 80
+	ev_note	2, 64, 54, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 103, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	3, 64, 71, 22, 0, 80
+	ev_note	3, 67, 71, 20, 0, 80
+	ev_at	48
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 86, 16, 0, 16
+	ev_beat
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 84, 102, 0, 16
+	ev_note	2, 55, 55, 62, 1, 80
+	ev_note	2, 60, 30, 62, 1, 80
+	ev_note	2, 64, 56, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 105, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	3, 64, 71, 29, 0, 80
+	ev_note	3, 67, 71, 28, 0, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 82, 99, 0, 16
+	ev_note	2, 55, 60, 62, 1, 80
+	ev_note	2, 60, 58, 62, 1, 80
+	ev_note	2, 64, 60, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 103, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	3, 64, 71, 23, 0, 80
+	ev_note	3, 67, 71, 24, 0, 80
+	ev_at	48
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 80, 11, 0, 16
+	ev_beat
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 90, 94, 0, 16
+	ev_note	2, 55, 51, 62, 1, 80
+	ev_note	2, 60, 48, 62, 1, 80
+	ev_note	2, 64, 54, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 105, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	3, 64, 71, 25, 0, 80
+	ev_note	3, 67, 71, 25, 0, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_end
+TcmpStream00_End:
+TcmpStream01:
+	.byte	1		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream01_End - TcmpStream01_Events
+TcmpStream01_Events:		# 1 bars of 4 beats, 237 bytes
+	ev_beat
+	ev_note	0, 51, 75, 12, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	0, 36, 90, 16, 0, 0
+	ev_note	1, 36, 86, 104, 0, 16
+	ev_note	2, 55, 72, 10, 1, 80
+	ev_note	2, 60, 60, 10, 1, 80
+	ev_note	2, 64, 63, 12, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 71, 22, 0, 80
+	ev_note	3, 67, 71, 22, 0, 80
+	ev_at	48
+	ev_note	0, 51, 94, 12, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	0, 36, 61, 16, 0, 0
+	ev_note	1, 36, 90, 16, 0, 16
+	ev_at	49
+	ev_note	2, 55, 58, 44, 0, 80
+	ev_note	2, 60, 57, 44, 0, 80
+	ev_note	2, 64, 52, 44, 0, 80
+	ev_beat
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	1, 36, 89, 95, 0, 16
+	ev_at	1
+	ev_note	2, 60, 60, 110, 0, 80
+	ev_note	2, 64, 60, 94, 0, 80
+	ev_at	3
+	ev_note	2, 55, 54, 90, 0, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	0, 48, 70, 12, 0, 0
+	ev_beat
+	ev_note	0, 46, 77, 12, 0, 0
+	ev_note	0, 47, 90, 12, 0, 0
+	ev_note	1, 43, 98, 93, 0, 16
+	ev_at	1
+	ev_note	2, 64, 57, 87, 0, 81
+	ev_note	2, 55, 63, 87, 0, 81
+	ev_note	2, 60, 71, 85, 0, 81
+	ev_note	3, 64, 64, 48, 0, 80
+	ev_note	3, 67, 64, 48, 0, 80
+	ev_at	48
+	ev_note	0, 45, 101, 12, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_at	50
+	ev_note	3, 64, 75, 7, 0, 80
+	ev_note	3, 67, 75, 9, 0, 80
+	ev_end
+TcmpStream01_End:
+TcmpStream02:
+	.byte	2		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream02_End - TcmpStream02_Events
+TcmpStream02_Events:		# 1 bars of 4 beats, 245 bytes
+	ev_beat
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	0, 36, 90, 16, 0, 0
+	ev_note	1, 36, 93, 111, 0, 16
+	ev_note	2, 55, 63, 14, 1, 80
+	ev_note	2, 60, 60, 14, 1, 80
+	ev_note	2, 64, 57, 15, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	0, 37, 103, 12, 0, 0
+	ev_at	3
+	ev_note	3, 64, 72, 11, 0, 80
+	ev_note	3, 67, 70, 12, 0, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	0, 36, 61, 16, 0, 0
+	ev_note	1, 36, 102, 12, 0, 16
+	ev_at	49
+	ev_note	2, 55, 45, 12, 1, 80
+	ev_note	2, 60, 48, 12, 1, 80
+	ev_note	2, 64, 46, 12, 1, 80
+	ev_at	72
+	ev_note	0, 19, 22, 12, 0, 0
+	ev_beat
+	ev_note	0, 53, 69, 12, 0, 0
+	ev_note	0, 48, 91, 12, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_note	0, 36, 87, 16, 0, 0
+	ev_note	1, 43, 96, 95, 0, 16
+	ev_at	1
+	ev_note	3, 67, 58, 62, 1, 80
+	ev_at	46
+	ev_note	3, 60, 54, 16, 1, 80
+	ev_at	48
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_at	94
+	ev_note	3, 64, 57, 95, 0, 80
+	ev_beat
+	ev_note	0, 47, 100, 12, 0, 0
+	ev_note	0, 53, 91, 12, 0, 0
+	ev_note	0, 18, 70, 12, 0, 0
+	ev_note	0, 37, 105, 12, 0, 0
+	ev_note	1, 31, 88, 93, 0, 16
+	ev_at	1
+	ev_note	2, 55, 70, 91, 0, 80
+	ev_note	2, 60, 70, 89, 0, 80
+	ev_note	2, 64, 70, 92, 0, 80
+	ev_at	48
+	ev_note	0, 45, 69, 12, 0, 0
+	ev_note	0, 19, 57, 12, 0, 0
+	ev_at	49
+	ev_note	3, 55, 51, 45, 0, 80
+	ev_end
+TcmpStream02_End:
+TcmpStream03:
+	.byte	3		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream03_End - TcmpStream03_Events
+TcmpStream03_Events:		# 4 bars of 4 beats, 685 bytes
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 86, 104, 0, 16
+	ev_note	2, 55, 72, 62, 1, 80
+	ev_note	2, 60, 60, 62, 1, 80
+	ev_note	2, 64, 63, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 67, 22, 0, 80
+	ev_note	3, 67, 67, 22, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 90, 16, 0, 16
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 89, 104, 0, 16
+	ev_note	2, 55, 58, 62, 1, 80
+	ev_note	2, 60, 57, 62, 1, 80
+	ev_note	2, 64, 52, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 67, 19, 0, 80
+	ev_note	3, 67, 67, 20, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 86, 92, 0, 16
+	ev_note	2, 55, 63, 62, 1, 80
+	ev_note	2, 60, 60, 62, 1, 80
+	ev_note	2, 64, 57, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 67, 22, 0, 80
+	ev_note	3, 67, 67, 22, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 90, 14, 0, 16
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 84, 99, 0, 16
+	ev_note	2, 55, 45, 62, 1, 80
+	ev_note	2, 60, 48, 62, 1, 80
+	ev_note	2, 64, 46, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 59, 46, 0, 80
+	ev_note	3, 67, 59, 47, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 64, 65, 10, 0, 80
+	ev_note	3, 67, 68, 11, 0, 80
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 90, 100, 0, 16
+	ev_note	2, 55, 52, 62, 1, 80
+	ev_note	2, 60, 51, 62, 1, 80
+	ev_note	2, 64, 54, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 67, 22, 0, 80
+	ev_note	3, 67, 67, 22, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 86, 16, 0, 16
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 84, 102, 0, 16
+	ev_note	2, 55, 55, 62, 1, 80
+	ev_note	2, 60, 30, 62, 1, 80
+	ev_note	2, 64, 56, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 67, 19, 0, 80
+	ev_note	3, 67, 67, 20, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 82, 99, 0, 16
+	ev_note	2, 55, 60, 62, 1, 80
+	ev_note	2, 60, 58, 62, 1, 80
+	ev_note	2, 64, 60, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 67, 22, 0, 80
+	ev_note	3, 67, 67, 22, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 80, 11, 0, 16
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 90, 94, 0, 16
+	ev_note	2, 55, 51, 62, 1, 80
+	ev_note	2, 60, 48, 62, 1, 80
+	ev_note	2, 64, 54, 62, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 59, 45, 0, 80
+	ev_note	3, 67, 59, 47, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 64, 65, 10, 0, 80
+	ev_note	3, 67, 68, 11, 0, 80
+	ev_end
+TcmpStream03_End:
+TcmpStream04:
+	.byte	4		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream04_End - TcmpStream04_Events
+TcmpStream04_Events:		# 1 bars of 4 beats, 245 bytes
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 81, 122, 0, 16
+	ev_note	2, 55, 69, 1, 1, 80
+	ev_note	2, 60, 65, 2, 1, 80
+	ev_note	2, 64, 67, 2, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 52, 18, 0, 80
+	ev_note	3, 67, 56, 18, 0, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 71, 52, 0, 16
+	ev_note	2, 55, 51, 46, 0, 80
+	ev_note	2, 60, 51, 46, 0, 80
+	ev_note	2, 64, 51, 46, 0, 80
+	ev_at	72
+	ev_note	0, 38, 82, 14, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 43, 85, 79, 0, 16
+	ev_note	2, 55, 69, 62, 1, 80
+	ev_note	2, 60, 69, 62, 1, 80
+	ev_note	2, 64, 69, 62, 1, 80
+	ev_note	3, 64, 52, 40, 0, 80
+	ev_note	3, 67, 41, 40, 0, 80
+	ev_at	48
+	ev_note	0, 48, 95, 12, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 64, 72, 8, 0, 80
+	ev_note	3, 67, 74, 9, 0, 80
+	ev_beat
+	ev_note	0, 47, 100, 12, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	1, 43, 109, 94, 0, 16
+	ev_at	48
+	ev_note	0, 45, 110, 12, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 64, 45, 47, 0, 80
+	ev_note	3, 67, 36, 47, 0, 80
+	ev_at	95
+	ev_note	0, 49, 95, 12, 0, 0
+	ev_end
+TcmpStream04_End:
+TcmpStream05:
+	.byte	5		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream05_End - TcmpStream05_Events
+TcmpStream05_Events:		# 1 bars of 4 beats, 247 bytes
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 84, 115, 0, 16
+	ev_note	2, 55, 66, 0, 1, 80
+	ev_note	2, 60, 61, 0, 1, 80
+	ev_note	2, 64, 61, 1, 1, 80
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 73, 10, 0, 18
+	ev_note	3, 67, 73, 12, 0, 18
+	ev_at	48
+	ev_note	0, 38, 25, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 86, 17, 0, 16
+	ev_at	50
+	ev_note	2, 60, 61, 1, 1, 80
+	ev_note	2, 64, 50, 1, 1, 80
+	ev_note	2, 55, 60, 127, 0, 80
+	ev_at	72
+	ev_note	0, 38, 44, 14, 0, 0
+	ev_beat
+	ev_note	0, 38, 76, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 43, 97, 49, 0, 16
+	ev_note	3, 67, 70, 62, 1, 18
+	ev_at	48
+	ev_note	0, 38, 89, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 40, 92, 51, 0, 16
+	ev_note	3, 64, 59, 13, 1, 18
+	ev_beat
+	ev_note	0, 38, 107, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	1, 38, 80, 46, 0, 16
+	ev_note	3, 62, 49, 92, 0, 18
+	ev_at	1
+	ev_note	2, 60, 58, 91, 0, 80
+	ev_note	2, 64, 60, 93, 0, 80
+	ev_at	3
+	ev_note	2, 55, 57, 90, 0, 80
+	ev_at	48
+	ev_note	0, 46, 72, 12, 0, 0
+	ev_note	0, 45, 103, 12, 0, 0
+	ev_note	1, 43, 76, 45, 0, 16
+	ev_note	3, 60, 36, 44, 0, 18
+	ev_end
+TcmpStream05_End:
+TcmpStream06:
+	.byte	6		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream06_End - TcmpStream06_Events
+TcmpStream06_Events:		# 4 bars of 4 beats, 1381 bytes
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 88, 106, 0, 16
+	ev_note	2, 55, 51, 12, 1, 18
+	ev_note	2, 60, 57, 11, 1, 18
+	ev_note	2, 64, 39, 12, 1, 18
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 43, 0, 80
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_at	95
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_at	1
+	ev_note	3, 55, 70, 46, 0, 80
+	ev_note	3, 60, 70, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 91, 13, 0, 16
+	ev_note	2, 55, 48, 108, 1, 18
+	ev_note	2, 60, 48, 108, 1, 18
+	ev_note	2, 64, 48, 108, 1, 18
+	ev_at	50
+	ev_note	3, 60, 42, 42, 0, 80
+	ev_at	51
+	ev_note	3, 64, 41, 42, 0, 80
+	ev_at	52
+	ev_note	3, 55, 40, 41, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 91, 17, 1, 16
+	ev_note	3, 60, 31, 43, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	2
+	ev_note	3, 64, 31, 41, 0, 80
+	ev_at	46
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 17, 12, 0, 0
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	95
+	ev_note	3, 60, 71, 43, 0, 80
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 91, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	3, 55, 72, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 95, 103, 0, 16
+	ev_note	2, 55, 51, 12, 1, 18
+	ev_note	2, 60, 57, 11, 1, 18
+	ev_note	2, 64, 39, 12, 1, 18
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 43, 0, 80
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_at	95
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_at	1
+	ev_note	3, 55, 70, 46, 0, 80
+	ev_note	3, 60, 70, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 92, 12, 0, 16
+	ev_note	2, 55, 48, 108, 1, 18
+	ev_note	2, 60, 48, 108, 1, 18
+	ev_note	2, 64, 48, 108, 1, 18
+	ev_at	50
+	ev_note	3, 60, 42, 42, 0, 80
+	ev_at	51
+	ev_note	3, 64, 41, 42, 0, 80
+	ev_at	52
+	ev_note	3, 55, 40, 41, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 97, 96, 0, 16
+	ev_note	3, 60, 31, 43, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	2
+	ev_note	3, 64, 31, 41, 0, 80
+	ev_at	46
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 17, 12, 0, 0
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	95
+	ev_note	3, 60, 71, 43, 0, 80
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 91, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	1, 43, 67, 95, 0, 16
+	ev_note	3, 55, 72, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 77, 106, 0, 16
+	ev_note	2, 55, 51, 12, 1, 18
+	ev_note	2, 60, 57, 11, 1, 18
+	ev_note	2, 64, 39, 12, 1, 18
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 43, 0, 80
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_at	95
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_at	1
+	ev_note	3, 55, 70, 46, 0, 80
+	ev_note	3, 60, 70, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 87, 17, 0, 16
+	ev_note	2, 55, 48, 108, 1, 18
+	ev_note	2, 60, 48, 108, 1, 18
+	ev_note	2, 64, 48, 108, 1, 18
+	ev_at	50
+	ev_note	3, 60, 42, 42, 0, 80
+	ev_at	51
+	ev_note	3, 64, 41, 42, 0, 80
+	ev_at	52
+	ev_note	3, 55, 40, 41, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 87, 30, 1, 16
+	ev_note	3, 60, 31, 43, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	2
+	ev_note	3, 64, 31, 41, 0, 80
+	ev_at	46
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 17, 12, 0, 0
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	95
+	ev_note	3, 60, 71, 43, 0, 80
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 91, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	3, 55, 72, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 85, 108, 0, 16
+	ev_note	2, 55, 51, 12, 1, 18
+	ev_note	2, 60, 57, 11, 1, 18
+	ev_note	2, 64, 39, 12, 1, 18
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 43, 0, 80
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_at	95
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_at	1
+	ev_note	3, 55, 70, 46, 0, 80
+	ev_note	3, 60, 70, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 83, 10, 0, 16
+	ev_note	2, 55, 48, 108, 1, 18
+	ev_note	2, 60, 48, 107, 1, 18
+	ev_note	2, 64, 48, 108, 1, 18
+	ev_at	50
+	ev_note	3, 60, 42, 42, 0, 80
+	ev_at	51
+	ev_note	3, 64, 41, 42, 0, 80
+	ev_at	52
+	ev_note	3, 55, 40, 41, 0, 80
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 84, 94, 0, 16
+	ev_note	3, 60, 31, 43, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	2
+	ev_note	3, 64, 31, 41, 0, 80
+	ev_at	46
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 17, 12, 0, 0
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_at	95
+	ev_note	3, 60, 71, 43, 0, 80
+	ev_note	3, 64, 71, 46, 0, 80
+	ev_beat
+	ev_note	0, 59, 91, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	1, 43, 82, 77, 0, 16
+	ev_note	3, 55, 72, 46, 0, 80
+	ev_at	48
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 31, 46, 0, 80
+	ev_note	3, 55, 31, 46, 0, 80
+	ev_note	3, 64, 31, 46, 0, 80
+	ev_end
+TcmpStream06_End:
+TcmpStream07:
+	.byte	7		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream07_End - TcmpStream07_Events
+TcmpStream07_Events:		# 1 bars of 4 beats, 344 bytes
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 94, 127, 0, 16
+	ev_note	3, 55, 36, 46, 0, 80
+	ev_note	3, 60, 36, 46, 0, 80
+	ev_note	3, 64, 63, 46, 0, 80
+	ev_at	1
+	ev_note	2, 64, 48, 13, 1, 18
+	ev_note	2, 62, 48, 12, 1, 18
+	ev_note	2, 67, 48, 12, 1, 18
+	ev_at	48
+	ev_note	0, 59, 83, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 41, 46, 0, 80
+	ev_note	3, 64, 41, 43, 0, 80
+	ev_note	3, 55, 41, 46, 0, 80
+	ev_at	95
+	ev_note	3, 64, 76, 95, 0, 80
+	ev_beat
+	ev_note	0, 59, 105, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 109, 16, 0, 0
+	ev_at	1
+	ev_note	3, 55, 77, 92, 0, 80
+	ev_note	3, 60, 77, 93, 0, 80
+	ev_at	48
+	ev_note	0, 38, 73, 16, 0, 0
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 97, 47, 0, 16
+	ev_note	2, 62, 67, 108, 1, 18
+	ev_note	2, 64, 67, 108, 1, 18
+	ev_note	2, 67, 67, 110, 1, 18
+	ev_at	72
+	ev_note	0, 38, 88, 16, 0, 0
+	ev_beat
+	ev_note	0, 38, 113, 16, 0, 0
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 45, 103, 98, 0, 16
+	ev_note	3, 60, 56, 82, 0, 80
+	ev_note	3, 55, 56, 81, 0, 80
+	ev_at	2
+	ev_note	3, 64, 56, 82, 0, 80
+	ev_at	48
+	ev_note	0, 38, 66, 16, 0, 0
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 17, 12, 0, 0
+	ev_at	72
+	ev_note	0, 38, 75, 16, 0, 0
+	ev_at	85
+	ev_note	3, 55, 74, 103, 0, 80
+	ev_at	92
+	ev_note	3, 60, 74, 97, 0, 80
+	ev_beat
+	ev_note	0, 59, 91, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 99, 16, 0, 0
+	ev_note	1, 43, 87, 93, 0, 16
+	ev_note	2, 72, 79, 94, 0, 18
+	ev_at	5
+	ev_note	3, 64, 74, 88, 0, 80
+	ev_at	24
+	ev_note	0, 38, 119, 16, 0, 0
+	ev_at	48
+	ev_note	0, 47, 96, 12, 0, 0
+	ev_note	0, 59, 72, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_end
+TcmpStream07_End:
+TcmpStream08:
+	.byte	8		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream08_End - TcmpStream08_Events
+TcmpStream08_Events:		# 1 bars of 4 beats, 293 bytes
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 88, 94, 0, 16
+	ev_note	3, 55, 38, 46, 0, 80
+	ev_note	3, 60, 38, 46, 0, 80
+	ev_note	3, 64, 46, 46, 0, 80
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 44, 46, 0, 80
+	ev_note	3, 64, 38, 43, 0, 80
+	ev_note	3, 55, 38, 46, 0, 80
+	ev_at	95
+	ev_note	3, 64, 71, 93, 0, 80
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 57, 16, 0, 0
+	ev_note	1, 48, 87, 89, 0, 16
+	ev_note	2, 55, 51, 51, 1, 18
+	ev_note	2, 62, 51, 53, 1, 18
+	ev_note	2, 64, 51, 52, 1, 18
+	ev_at	1
+	ev_note	3, 55, 70, 92, 0, 80
+	ev_note	3, 60, 70, 92, 0, 80
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_at	72
+	ev_note	0, 38, 75, 16, 0, 0
+	ev_beat
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 43, 83, 94, 0, 16
+	ev_note	3, 60, 54, 89, 0, 80
+	ev_note	3, 55, 55, 91, 0, 80
+	ev_at	2
+	ev_note	3, 64, 55, 88, 0, 80
+	ev_at	48
+	ev_note	0, 48, 67, 12, 0, 0
+	ev_note	0, 44, 17, 12, 0, 0
+	ev_at	95
+	ev_note	3, 60, 75, 94, 0, 80
+	ev_note	3, 64, 75, 94, 0, 80
+	ev_beat
+	ev_note	0, 38, 78, 16, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	1, 31, 95, 93, 0, 16
+	ev_note	2, 55, 62, 92, 0, 18
+	ev_note	2, 62, 62, 88, 0, 18
+	ev_note	2, 64, 62, 90, 0, 18
+	ev_note	3, 55, 75, 91, 0, 80
+	ev_at	48
+	ev_note	0, 48, 83, 12, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_at	72
+	ev_note	0, 47, 91, 12, 0, 0
+	ev_at	95
+	ev_note	0, 49, 93, 12, 0, 0
+	ev_end
+TcmpStream08_End:
+TcmpStream09:
+	.byte	9		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream09_End - TcmpStream09_Events
+TcmpStream09_Events:		# 4 bars of 4 beats, 1030 bytes
+	ev_beat
+	ev_note	0, 108, 79, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 92, 112, 0, 16
+	ev_note	2, 55, 56, 2, 1, 17
+	ev_note	2, 60, 56, 3, 1, 17
+	ev_note	2, 64, 59, 5, 1, 17
+	ev_at	48
+	ev_note	0, 108, 58, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	95
+	ev_note	3, 64, 71, 19, 0, 80
+	ev_note	3, 67, 71, 21, 0, 80
+	ev_note	3, 60, 62, 19, 0, 80
+	ev_beat
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	48
+	ev_note	0, 108, 58, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 90, 15, 0, 16
+	ev_at	50
+	ev_note	2, 60, 60, 82, 1, 17
+	ev_note	2, 64, 61, 86, 1, 17
+	ev_note	2, 55, 62, 82, 1, 17
+	ev_beat
+	ev_note	0, 108, 58, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 90, 18, 1, 16
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 59, 47, 0, 80
+	ev_note	3, 67, 61, 47, 0, 80
+	ev_note	3, 60, 54, 48, 0, 80
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	49
+	ev_note	3, 67, 80, 8, 0, 80
+	ev_note	3, 60, 71, 7, 0, 80
+	ev_note	3, 64, 78, 6, 0, 80
+	ev_beat
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 87, 117, 0, 16
+	ev_note	2, 64, 61, 3, 1, 17
+	ev_at	1
+	ev_note	2, 55, 63, 0, 1, 17
+	ev_note	2, 60, 62, 3, 1, 17
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 68, 17, 0, 80
+	ev_note	3, 67, 68, 17, 0, 80
+	ev_note	3, 60, 61, 17, 0, 80
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 96, 12, 0, 16
+	ev_at	50
+	ev_note	2, 64, 60, 82, 1, 17
+	ev_at	52
+	ev_note	2, 60, 59, 78, 1, 17
+	ev_note	2, 55, 56, 77, 1, 17
+	ev_beat
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 92, 93, 0, 16
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	1, 43, 91, 45, 0, 16
+	ev_at	2
+	ev_note	3, 64, 52, 47, 0, 80
+	ev_note	3, 60, 45, 46, 0, 80
+	ev_note	3, 67, 47, 46, 0, 80
+	ev_at	24
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	1, 45, 86, 47, 0, 16
+	ev_note	3, 60, 66, 9, 0, 80
+	ev_note	3, 64, 76, 8, 0, 80
+	ev_at	49
+	ev_note	3, 67, 70, 8, 0, 80
+	ev_beat
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 86, 110, 0, 16
+	ev_note	2, 55, 59, 124, 0, 17
+	ev_note	2, 60, 53, 122, 0, 17
+	ev_note	2, 64, 59, 1, 1, 17
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 60, 68, 20, 0, 80
+	ev_note	3, 64, 71, 19, 0, 80
+	ev_note	3, 67, 69, 21, 0, 80
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 88, 13, 0, 16
+	ev_at	50
+	ev_note	2, 64, 56, 84, 1, 17
+	ev_note	2, 60, 54, 81, 1, 17
+	ev_at	51
+	ev_note	2, 55, 57, 78, 1, 17
+	ev_beat
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 87, 21, 1, 16
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 103, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 47, 47, 0, 80
+	ev_note	3, 60, 45, 47, 0, 80
+	ev_note	3, 67, 44, 47, 0, 80
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 71, 8, 0, 80
+	ev_note	3, 64, 76, 7, 0, 80
+	ev_note	3, 67, 74, 6, 0, 80
+	ev_beat
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 87, 111, 0, 16
+	ev_note	2, 55, 65, 4, 1, 17
+	ev_note	2, 60, 63, 6, 1, 17
+	ev_note	2, 64, 62, 8, 1, 17
+	ev_at	48
+	ev_note	0, 108, 60, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 103, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	1
+	ev_note	3, 64, 62, 13, 0, 80
+	ev_note	3, 67, 56, 15, 0, 80
+	ev_at	2
+	ev_note	3, 60, 65, 12, 0, 80
+	ev_at	48
+	ev_note	0, 108, 60, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 83, 13, 0, 16
+	ev_at	52
+	ev_note	2, 64, 63, 77, 1, 17
+	ev_at	53
+	ev_note	2, 60, 57, 72, 1, 17
+	ev_at	54
+	ev_note	2, 55, 56, 71, 1, 17
+	ev_beat
+	ev_note	0, 108, 60, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 36, 84, 99, 0, 16
+	ev_at	48
+	ev_note	0, 108, 60, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_beat
+	ev_note	0, 54, 103, 12, 0, 0
+	ev_note	0, 38, 106, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	1, 43, 81, 50, 0, 16
+	ev_at	1
+	ev_note	3, 60, 65, 47, 0, 80
+	ev_note	3, 64, 61, 46, 0, 80
+	ev_note	3, 67, 60, 47, 0, 80
+	ev_at	48
+	ev_note	0, 108, 60, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	1, 45, 87, 47, 0, 16
+	ev_at	49
+	ev_note	3, 60, 68, 5, 0, 80
+	ev_note	3, 64, 74, 4, 0, 80
+	ev_at	50
+	ev_note	3, 67, 71, 4, 0, 80
+	ev_at	72
+	ev_note	0, 108, 60, 12, 0, 0
+	ev_end
+TcmpStream09_End:
+TcmpStream10:
+	.byte	10		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream10_End - TcmpStream10_Events
+TcmpStream10_Events:		# 1 bars of 4 beats, 274 bytes
+	ev_beat
+	ev_note	0, 108, 79, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 91, 117, 0, 16
+	ev_at	1
+	ev_note	3, 60, 83, 28, 2, 18
+	ev_at	2
+	ev_note	2, 64, 72, 126, 2, 17
+	ev_at	3
+	ev_note	2, 60, 71, 15, 1, 17
+	ev_note	2, 55, 65, 123, 2, 17
+	ev_at	47
+	ev_note	3, 64, 77, 101, 1, 18
+	ev_at	48
+	ev_note	0, 36, 58, 16, 0, 0
+	ev_note	0, 108, 58, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 75, 16, 0, 0
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 114, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 67, 82, 51, 0, 18
+	ev_at	48
+	ev_note	1, 36, 100, 11, 0, 16
+	ev_at	51
+	ev_note	2, 60, 81, 106, 1, 17
+	ev_at	72
+	ev_note	0, 108, 64, 12, 0, 0
+	ev_beat
+	ev_note	0, 19, 50, 12, 0, 0
+	ev_note	0, 108, 105, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	1, 43, 102, 102, 0, 16
+	ev_at	2
+	ev_note	3, 72, 84, 60, 1, 18
+	ev_at	24
+	ev_note	0, 108, 55, 12, 0, 0
+	ev_at	48
+	ev_note	0, 19, 50, 12, 0, 0
+	ev_note	0, 38, 87, 16, 0, 0
+	ev_note	0, 54, 93, 12, 0, 0
+	ev_at	52
+	ev_note	3, 67, 69, 8, 1, 18
+	ev_beat
+	ev_note	0, 54, 112, 12, 0, 0
+	ev_note	0, 38, 99, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	1, 31, 78, 78, 0, 16
+	ev_at	4
+	ev_note	3, 64, 60, 52, 0, 18
+	ev_at	5
+	ev_note	2, 67, 76, 90, 0, 17
+	ev_at	48
+	ev_note	0, 38, 99, 16, 0, 0
+	ev_note	0, 108, 69, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	49
+	ev_note	3, 60, 71, 45, 0, 18
+	ev_at	72
+	ev_note	0, 38, 119, 16, 0, 0
+	ev_note	0, 108, 74, 12, 0, 0
+	ev_end
+TcmpStream10_End:
+TcmpStream11:
+	.byte	11		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream11_End - TcmpStream11_Events
+TcmpStream11_Events:		# 1 bars of 4 beats, 297 bytes
+	ev_beat
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 93, 118, 0, 16
+	ev_note	3, 60, 49, 71, 1, 18
+	ev_note	3, 64, 57, 67, 1, 18
+	ev_at	1
+	ev_note	2, 64, 72, 102, 2, 17
+	ev_at	2
+	ev_note	2, 67, 71, 101, 2, 17
+	ev_note	2, 60, 68, 102, 2, 17
+	ev_at	48
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_beat
+	ev_note	0, 57, 88, 12, 0, 0
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 102, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_at	48
+	ev_note	0, 38, 69, 16, 0, 0
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 66, 56, 0, 16
+	ev_note	3, 72, 91, 109, 1, 18
+	ev_at	53
+	ev_note	2, 72, 88, 83, 1, 17
+	ev_beat
+	ev_note	0, 38, 76, 16, 0, 0
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	0, 36, 66, 16, 0, 0
+	ev_note	1, 43, 80, 41, 0, 16
+	ev_note	3, 67, 82, 58, 1, 18
+	ev_at	48
+	ev_note	0, 38, 94, 16, 0, 0
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	1, 43, 86, 45, 0, 16
+	ev_note	3, 64, 71, 12, 1, 18
+	ev_beat
+	ev_note	0, 36, 82, 16, 0, 0
+	ev_note	0, 54, 102, 12, 0, 0
+	ev_note	0, 38, 107, 16, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	1, 43, 100, 41, 0, 16
+	ev_note	3, 60, 63, 92, 0, 18
+	ev_at	24
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_at	48
+	ev_note	0, 38, 88, 16, 0, 0
+	ev_note	0, 108, 59, 12, 0, 0
+	ev_note	0, 19, 37, 12, 0, 0
+	ev_note	1, 43, 111, 46, 0, 16
+	ev_note	3, 55, 52, 45, 0, 18
+	ev_at	72
+	ev_note	0, 38, 107, 16, 0, 0
+	ev_at	95
+	ev_note	0, 49, 110, 12, 0, 0
+	ev_end
+TcmpStream11_End:
+TcmpStream12:
+	.byte	12		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream12_End - TcmpStream12_Events
+TcmpStream12_Events:		# 1 bars of 4 beats, 146 bytes
+	ev_beat
+	ev_note	0, 19, 60, 12, 0, 0
+	ev_note	1, 36, 103, 110, 0, 1
+	ev_note	2, 72, 82, 124, 2, 1
+	ev_note	3, 48, 28, 77, 1, 1
+	ev_at	48
+	ev_note	3, 55, 45, 29, 1, 1
+	ev_at	94
+	ev_note	2, 67, 76, 30, 2, 1
+	ev_at	95
+	ev_note	3, 60, 63, 13, 1, 1
+	ev_beat
+	ev_note	0, 19, 60, 12, 0, 0
+	ev_at	48
+	ev_note	1, 36, 81, 11, 0, 1
+	ev_note	3, 64, 77, 111, 1, 1
+	ev_at	95
+	ev_note	3, 62, 66, 64, 1, 1
+	ev_beat
+	ev_note	0, 19, 60, 12, 0, 0
+	ev_note	1, 36, 90, 95, 0, 1
+	ev_at	4
+	ev_note	2, 64, 68, 55, 1, 1
+	ev_at	48
+	ev_note	0, 48, 95, 8, 0, 0
+	ev_note	3, 60, 54, 16, 1, 1
+	ev_at	95
+	ev_note	3, 55, 48, 95, 0, 1
+	ev_beat
+	ev_note	0, 48, 89, 12, 0, 0
+	ev_note	1, 43, 98, 92, 0, 1
+	ev_note	2, 62, 43, 91, 0, 1
+	ev_at	48
+	ev_note	0, 45, 97, 12, 0, 0
+	ev_note	3, 52, 28, 48, 0, 1
+	ev_end
+TcmpStream12_End:
+TcmpStream13:
+	.byte	13		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream13_End - TcmpStream13_Events
+TcmpStream13_Events:		# 1 bars of 4 beats, 146 bytes
+	ev_beat
+	ev_note	0, 19, 60, 12, 0, 0
+	ev_note	1, 36, 103, 110, 0, 1
+	ev_note	2, 72, 82, 124, 2, 1
+	ev_note	3, 48, 28, 77, 1, 1
+	ev_at	48
+	ev_note	3, 55, 45, 29, 1, 1
+	ev_at	94
+	ev_note	2, 67, 76, 30, 2, 1
+	ev_at	95
+	ev_note	3, 60, 63, 13, 1, 1
+	ev_beat
+	ev_note	0, 19, 60, 12, 0, 0
+	ev_at	48
+	ev_note	1, 36, 81, 11, 0, 1
+	ev_note	3, 63, 77, 111, 1, 1
+	ev_at	95
+	ev_note	3, 62, 66, 64, 1, 1
+	ev_beat
+	ev_note	0, 19, 60, 12, 0, 0
+	ev_note	1, 36, 90, 95, 0, 1
+	ev_at	4
+	ev_note	2, 63, 68, 55, 1, 1
+	ev_at	48
+	ev_note	0, 48, 95, 8, 0, 0
+	ev_note	3, 60, 54, 16, 1, 1
+	ev_at	95
+	ev_note	3, 55, 48, 95, 0, 1
+	ev_beat
+	ev_note	0, 48, 89, 12, 0, 0
+	ev_note	1, 43, 98, 92, 0, 1
+	ev_note	2, 62, 43, 91, 0, 1
+	ev_at	48
+	ev_note	0, 45, 97, 12, 0, 0
+	ev_note	3, 51, 28, 48, 0, 1
+	ev_end
+TcmpStream13_End:
+TcmpStream14:
+	.byte	14		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream14_End - TcmpStream14_Events
+TcmpStream14_Events:		# 2 bars of 4 beats, 323 bytes
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 81, 122, 0, 1
+	ev_note	2, 55, 69, 1, 1, 1
+	ev_note	2, 60, 65, 2, 1, 1
+	ev_note	2, 64, 67, 2, 1, 1
+	ev_note	3, 55, 76, 22, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 67, 84, 78, 2, 1
+	ev_beat
+	ev_note	0, 38, 88, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 64, 75, 27, 2, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 62, 22, 0, 1
+	ev_note	2, 55, 51, 46, 0, 1
+	ev_note	2, 60, 51, 46, 0, 1
+	ev_note	2, 64, 51, 46, 0, 1
+	ev_note	3, 62, 72, 107, 1, 1
+	ev_at	72
+	ev_note	0, 38, 51, 14, 0, 0
+	ev_note	1, 36, 75, 22, 0, 1
+	ev_beat
+	ev_note	0, 51, 117, 12, 0, 0
+	ev_note	0, 38, 89, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	2, 55, 60, 94, 0, 1
+	ev_note	2, 60, 60, 94, 0, 1
+	ev_note	2, 64, 60, 94, 0, 1
+	ev_note	3, 60, 70, 57, 1, 1
+	ev_at	1
+	ev_note	1, 36, 85, 79, 0, 1
+	ev_at	48
+	ev_note	3, 55, 65, 12, 1, 1
+	ev_beat
+	ev_note	0, 51, 105, 12, 0, 0
+	ev_note	3, 52, 62, 54, 0, 1
+	ev_at	1
+	ev_note	1, 43, 101, 95, 0, 1
+	ev_note	2, 55, 58, 92, 0, 1
+	ev_note	2, 60, 58, 92, 0, 1
+	ev_note	2, 64, 58, 91, 0, 1
+	ev_at	48
+	ev_note	3, 50, 70, 41, 0, 1
+	ev_at	88
+	ev_note	3, 48, 43, 71, 1, 1
+	ev_at	92
+	ev_note	3, 52, 45, 71, 1, 1
+	ev_at	95
+	ev_note	3, 55, 47, 66, 1, 1
+	ev_beat
+	ev_note	0, 36, 64, 16, 0, 0
+	ev_note	0, 51, 84, 12, 0, 0
+	ev_at	1
+	ev_note	2, 55, 71, 65, 1, 1
+	ev_note	2, 60, 71, 64, 1, 1
+	ev_note	2, 64, 71, 64, 1, 1
+	ev_at	2
+	ev_note	1, 36, 106, 62, 1, 1
+	ev_note	3, 60, 49, 63, 1, 1
+	ev_at	4
+	ev_note	3, 64, 52, 62, 1, 1
+	ev_beat
+	ev_beat
+	ev_at	1
+	ev_note	1, 36, 56, 11, 0, 1
+	ev_beat
+	ev_end
+TcmpStream14_End:
+TcmpStream15:
+	.byte	15		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream15_End - TcmpStream15_Events
+TcmpStream15_Events:		# 2 bars of 4 beats, 323 bytes
+	ev_beat
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 36, 81, 122, 0, 1
+	ev_note	2, 55, 69, 1, 1, 1
+	ev_note	2, 60, 65, 2, 1, 1
+	ev_note	2, 63, 67, 2, 1, 1
+	ev_note	3, 55, 76, 22, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 67, 84, 78, 2, 1
+	ev_beat
+	ev_note	0, 38, 93, 14, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 63, 75, 27, 2, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	1, 36, 62, 22, 0, 1
+	ev_note	2, 55, 51, 46, 0, 1
+	ev_note	2, 60, 51, 46, 0, 1
+	ev_note	2, 63, 51, 46, 0, 1
+	ev_note	3, 62, 72, 107, 1, 1
+	ev_at	72
+	ev_note	0, 38, 61, 14, 0, 0
+	ev_note	1, 36, 75, 22, 0, 1
+	ev_beat
+	ev_note	0, 51, 117, 12, 0, 0
+	ev_note	0, 38, 90, 14, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	2, 55, 60, 94, 0, 1
+	ev_note	2, 60, 60, 94, 0, 1
+	ev_note	2, 63, 60, 94, 0, 1
+	ev_note	3, 60, 70, 57, 1, 1
+	ev_at	1
+	ev_note	1, 36, 85, 79, 0, 1
+	ev_at	48
+	ev_note	3, 55, 65, 12, 1, 1
+	ev_beat
+	ev_note	0, 51, 105, 12, 0, 0
+	ev_note	3, 51, 62, 54, 0, 1
+	ev_at	1
+	ev_note	1, 43, 101, 95, 0, 1
+	ev_note	2, 55, 58, 92, 0, 1
+	ev_note	2, 60, 58, 92, 0, 1
+	ev_note	2, 63, 58, 91, 0, 1
+	ev_at	48
+	ev_note	3, 50, 70, 41, 0, 1
+	ev_at	88
+	ev_note	3, 48, 43, 71, 1, 1
+	ev_at	92
+	ev_note	3, 51, 45, 71, 1, 1
+	ev_at	95
+	ev_note	3, 55, 47, 66, 1, 1
+	ev_beat
+	ev_note	0, 36, 64, 16, 0, 0
+	ev_note	0, 51, 84, 12, 0, 0
+	ev_at	1
+	ev_note	2, 55, 71, 65, 1, 1
+	ev_note	2, 60, 71, 64, 1, 1
+	ev_note	2, 63, 71, 64, 1, 1
+	ev_at	2
+	ev_note	1, 36, 106, 62, 1, 1
+	ev_note	3, 60, 49, 63, 1, 1
+	ev_at	4
+	ev_note	3, 63, 52, 62, 1, 1
+	ev_beat
+	ev_beat
+	ev_at	1
+	ev_note	1, 36, 56, 11, 0, 1
+	ev_beat
+	ev_end
+TcmpStream15_End:
+TcmpStream16:
+	.byte	16		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream16_End - TcmpStream16_Events
+TcmpStream16_Events:		# 2 bars of 4 beats, 452 bytes
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 108, 0, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 64, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_beat
+	ev_note	0, 51, 90, 12, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 64, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_at	49
+	ev_note	1, 36, 90, 19, 0, 1
+	ev_beat
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 45, 87, 107, 0, 1
+	ev_note	2, 57, 58, 62, 1, 1
+	ev_note	2, 60, 60, 62, 1, 1
+	ev_note	2, 64, 58, 62, 1, 1
+	ev_note	3, 45, 80, 30, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 52, 53, 56, 0, 1
+	ev_beat
+	ev_note	0, 51, 93, 12, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 57, 73, 95, 0, 1
+	ev_note	3, 60, 58, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 45, 93, 18, 0, 1
+	ev_note	3, 52, 53, 50, 0, 1
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 38, 84, 111, 0, 1
+	ev_note	2, 53, 61, 62, 1, 1
+	ev_note	2, 57, 52, 62, 1, 1
+	ev_note	2, 62, 65, 62, 1, 1
+	ev_note	3, 50, 80, 24, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 53, 68, 47, 0, 1
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 51, 94, 12, 0, 0
+	ev_note	3, 57, 72, 95, 0, 1
+	ev_note	3, 62, 69, 59, 0, 1
+	ev_note	3, 65, 65, 60, 0, 1
+	ev_at	48
+	ev_note	0, 53, 38, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 38, 84, 19, 0, 1
+	ev_note	3, 53, 72, 54, 0, 1
+	ev_at	72
+	ev_note	0, 53, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 53, 70, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 43, 94, 91, 0, 1
+	ev_note	2, 55, 56, 62, 1, 1
+	ev_note	2, 59, 62, 62, 1, 1
+	ev_note	2, 62, 65, 62, 1, 1
+	ev_note	3, 55, 76, 102, 0, 1
+	ev_note	3, 59, 80, 62, 1, 1
+	ev_at	48
+	ev_note	0, 38, 62, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_at	72
+	ev_note	0, 38, 78, 16, 0, 0
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	1, 43, 93, 77, 0, 1
+	ev_note	2, 65, 68, 94, 0, 1
+	ev_note	3, 53, 71, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 45, 105, 12, 0, 0
+	ev_end
+TcmpStream16_End:
+TcmpStream17:
+	.byte	17		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream17_End - TcmpStream17_Events
+TcmpStream17_Events:		# 2 bars of 4 beats, 452 bytes
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 108, 0, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 63, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_beat
+	ev_note	0, 51, 90, 12, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 63, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_at	49
+	ev_note	1, 36, 90, 19, 0, 1
+	ev_beat
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 44, 87, 107, 0, 1
+	ev_note	2, 56, 58, 62, 1, 1
+	ev_note	2, 60, 60, 62, 1, 1
+	ev_note	2, 63, 58, 62, 1, 1
+	ev_note	3, 44, 80, 30, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 51, 53, 56, 0, 1
+	ev_beat
+	ev_note	0, 51, 93, 12, 0, 0
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	3, 56, 73, 95, 0, 1
+	ev_note	3, 60, 58, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 44, 93, 18, 0, 1
+	ev_note	3, 51, 53, 50, 0, 1
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 38, 84, 111, 0, 1
+	ev_note	2, 53, 61, 62, 1, 1
+	ev_note	2, 56, 52, 62, 1, 1
+	ev_note	2, 62, 65, 62, 1, 1
+	ev_note	3, 50, 80, 24, 1, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 53, 68, 47, 0, 1
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 51, 94, 12, 0, 0
+	ev_note	3, 56, 72, 95, 0, 1
+	ev_note	3, 62, 69, 59, 0, 1
+	ev_note	3, 65, 65, 60, 0, 1
+	ev_at	48
+	ev_note	0, 53, 38, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 38, 84, 19, 0, 1
+	ev_note	3, 53, 72, 54, 0, 1
+	ev_at	72
+	ev_note	0, 53, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 53, 70, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 43, 94, 91, 0, 1
+	ev_note	2, 55, 56, 62, 1, 1
+	ev_note	2, 59, 62, 62, 1, 1
+	ev_note	2, 62, 65, 62, 1, 1
+	ev_note	3, 55, 76, 102, 0, 1
+	ev_note	3, 59, 80, 62, 1, 1
+	ev_at	48
+	ev_note	0, 38, 62, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_at	72
+	ev_note	0, 38, 78, 16, 0, 0
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	1, 43, 93, 77, 0, 1
+	ev_note	2, 65, 68, 94, 0, 1
+	ev_note	3, 53, 71, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 45, 105, 12, 0, 0
+	ev_end
+TcmpStream17_End:
+TcmpStream18:
+	.byte	18		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream18_End - TcmpStream18_Events
+TcmpStream18_Events:		# 2 bars of 4 beats, 471 bytes
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 108, 0, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 64, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 51, 94, 12, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 64, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 53, 38, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 66, 18, 0, 1
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_at	72
+	ev_note	0, 53, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 53, 70, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 64, 1, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 64, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 38, 62, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_at	72
+	ev_note	0, 38, 78, 16, 0, 0
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 64, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 45, 105, 12, 0, 0
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 38, 87, 95, 0, 1
+	ev_note	2, 53, 61, 94, 0, 1
+	ev_note	2, 57, 52, 94, 0, 1
+	ev_note	2, 62, 65, 94, 0, 1
+	ev_note	3, 50, 80, 24, 1, 1
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	3, 53, 68, 47, 0, 1
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 57, 16, 0, 0
+	ev_note	1, 43, 96, 88, 0, 1
+	ev_note	2, 53, 68, 94, 0, 1
+	ev_note	2, 55, 56, 90, 0, 1
+	ev_note	2, 59, 62, 94, 0, 1
+	ev_note	2, 62, 65, 94, 0, 1
+	ev_note	3, 55, 72, 49, 0, 1
+	ev_note	3, 62, 69, 59, 0, 1
+	ev_note	3, 65, 65, 60, 0, 1
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	3, 53, 72, 47, 0, 1
+	ev_at	72
+	ev_note	0, 38, 75, 16, 0, 0
+	ev_beat
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	2, 52, 59, 93, 1, 1
+	ev_note	2, 55, 63, 94, 1, 1
+	ev_note	2, 60, 50, 93, 1, 1
+	ev_note	3, 52, 76, 96, 1, 1
+	ev_note	3, 55, 71, 99, 1, 1
+	ev_note	3, 60, 80, 95, 1, 1
+	ev_at	1
+	ev_note	1, 36, 87, 87, 1, 1
+	ev_beat
+	ev_at	3
+	ev_note	0, 51, 69, 12, 0, 0
+	ev_at	4
+	ev_note	0, 36, 41, 16, 0, 0
+	ev_end
+TcmpStream18_End:
+TcmpStream19:
+	.byte	19		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream19_End - TcmpStream19_Events
+TcmpStream19_Events:		# 2 bars of 4 beats, 471 bytes
+	ev_beat
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 108, 0, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 63, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 51, 94, 12, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 63, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 53, 38, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 66, 18, 0, 1
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_at	72
+	ev_note	0, 53, 53, 12, 0, 0
+	ev_beat
+	ev_note	0, 53, 70, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	1, 36, 87, 64, 1, 1
+	ev_note	2, 55, 59, 62, 1, 1
+	ev_note	2, 60, 51, 62, 1, 1
+	ev_note	2, 63, 61, 62, 1, 1
+	ev_note	3, 48, 73, 100, 0, 1
+	ev_at	48
+	ev_note	0, 38, 62, 16, 0, 0
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	3, 55, 54, 51, 0, 1
+	ev_at	72
+	ev_note	0, 38, 78, 16, 0, 0
+	ev_beat
+	ev_note	0, 18, 66, 12, 0, 0
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	3, 60, 72, 94, 0, 1
+	ev_note	3, 63, 70, 94, 0, 1
+	ev_at	48
+	ev_note	0, 19, 53, 12, 0, 0
+	ev_note	0, 45, 105, 12, 0, 0
+	ev_note	3, 55, 63, 50, 0, 1
+	ev_beat
+	ev_note	0, 59, 70, 12, 0, 0
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 86, 16, 0, 0
+	ev_note	1, 38, 87, 95, 0, 1
+	ev_note	2, 53, 61, 94, 0, 1
+	ev_note	2, 56, 52, 94, 0, 1
+	ev_note	2, 62, 65, 94, 0, 1
+	ev_note	3, 50, 80, 24, 1, 1
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	3, 53, 68, 47, 0, 1
+	ev_beat
+	ev_note	0, 59, 93, 12, 0, 0
+	ev_note	0, 44, 67, 12, 0, 0
+	ev_note	0, 38, 57, 16, 0, 0
+	ev_note	1, 43, 96, 88, 0, 1
+	ev_note	2, 53, 68, 94, 0, 1
+	ev_note	2, 55, 56, 90, 0, 1
+	ev_note	2, 59, 62, 94, 0, 1
+	ev_note	2, 62, 65, 94, 0, 1
+	ev_note	3, 55, 72, 49, 0, 1
+	ev_note	3, 62, 69, 59, 0, 1
+	ev_note	3, 65, 65, 60, 0, 1
+	ev_at	48
+	ev_note	0, 44, 19, 12, 0, 0
+	ev_note	0, 36, 57, 16, 0, 0
+	ev_note	3, 53, 72, 47, 0, 1
+	ev_at	72
+	ev_note	0, 38, 75, 16, 0, 0
+	ev_beat
+	ev_note	0, 38, 100, 16, 0, 0
+	ev_note	0, 44, 13, 12, 0, 0
+	ev_note	0, 36, 83, 16, 0, 0
+	ev_note	2, 51, 59, 93, 1, 1
+	ev_note	2, 55, 63, 94, 1, 1
+	ev_note	2, 60, 50, 93, 1, 1
+	ev_note	3, 51, 76, 96, 1, 1
+	ev_note	3, 55, 71, 99, 1, 1
+	ev_note	3, 60, 80, 95, 1, 1
+	ev_at	1
+	ev_note	1, 36, 87, 87, 1, 1
+	ev_beat
+	ev_at	3
+	ev_note	0, 51, 69, 12, 0, 0
+	ev_at	4
+	ev_note	0, 36, 41, 16, 0, 0
+	ev_end
+TcmpStream19_End:
+TcmpStream20:
+	.byte	20		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream20_End - TcmpStream20_Events
+TcmpStream20_Events:		# 4 bars of 4 beats, 889 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 82, 105, 2, 80
+	ev_note	3, 60, 82, 106, 2, 80
+	ev_note	3, 64, 82, 104, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 96, 2, 80
+	ev_note	3, 60, 82, 97, 2, 80
+	ev_note	3, 64, 82, 95, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_note	1, 36, 70, 13, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 87, 41, 1, 16
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 82, 99, 2, 80
+	ev_note	3, 60, 82, 101, 2, 80
+	ev_note	3, 64, 82, 101, 2, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 86, 2, 80
+	ev_note	3, 60, 82, 87, 2, 80
+	ev_note	3, 64, 82, 88, 2, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_note	1, 36, 70, 13, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 87, 41, 1, 16
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_end
+TcmpStream20_End:
+TcmpStream21:
+	.byte	21		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream21_End - TcmpStream21_Events
+TcmpStream21_Events:		# 1 bars of 4 beats, 317 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 107, 26, 1, 16
+	ev_note	3, 55, 82, 4, 2, 80
+	ev_note	3, 60, 82, 4, 2, 80
+	ev_note	3, 64, 82, 5, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	48
+	ev_note	0, 21, 86, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 37, 116, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 17, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 48, 74, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_note	1, 36, 105, 9, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 48, 96, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 103, 38, 0, 16
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 47, 75, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_note	1, 43, 114, 115, 0, 16
+	ev_note	3, 55, 79, 118, 0, 80
+	ev_note	3, 60, 79, 118, 0, 80
+	ev_note	3, 64, 79, 118, 0, 80
+	ev_at	74
+	ev_note	2, 60, 52, 23, 0, 80
+	ev_note	2, 64, 52, 22, 0, 80
+	ev_beat
+	ev_note	0, 47, 96, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	2
+	ev_note	2, 60, 69, 25, 0, 80
+	ev_note	2, 64, 69, 25, 0, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	27
+	ev_note	2, 60, 99, 9, 0, 80
+	ev_note	2, 64, 99, 8, 0, 80
+	ev_at	48
+	ev_note	0, 45, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 21, 80, 12, 0, 0
+	ev_at	95
+	ev_note	0, 57, 105, 12, 0, 0
+	ev_end
+TcmpStream21_End:
+TcmpStream22:
+	.byte	22		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream22_End - TcmpStream22_Events
+TcmpStream22_Events:		# 1 bars of 4 beats, 348 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 104, 10, 1, 16
+	ev_note	3, 55, 61, 63, 1, 80
+	ev_note	3, 60, 61, 63, 1, 80
+	ev_note	3, 64, 61, 63, 1, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_at	72
+	ev_note	0, 48, 63, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	75
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_beat
+	ev_note	0, 48, 93, 12, 0, 0
+	ev_note	0, 21, 90, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 40, 95, 17, 0, 16
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 47, 77, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_note	1, 41, 97, 14, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 47, 98, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 107, 116, 0, 16
+	ev_at	1
+	ev_note	3, 55, 71, 95, 0, 80
+	ev_note	3, 60, 71, 95, 0, 80
+	ev_note	3, 64, 71, 95, 0, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_at	72
+	ev_note	0, 45, 70, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	75
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_beat
+	ev_note	0, 45, 86, 12, 0, 0
+	ev_note	0, 21, 92, 12, 0, 0
+	ev_at	2
+	ev_note	3, 55, 90, 95, 0, 80
+	ev_note	3, 60, 90, 95, 0, 80
+	ev_note	3, 64, 90, 95, 0, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_note	1, 43, 117, 16, 0, 16
+	ev_at	26
+	ev_note	2, 60, 77, 70, 0, 80
+	ev_note	2, 64, 77, 69, 0, 80
+	ev_at	48
+	ev_note	0, 45, 96, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	0, 49, 93, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_end
+TcmpStream22_End:
+TcmpStream23:
+	.byte	23		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream23_End - TcmpStream23_Events
+TcmpStream23_Events:		# 4 bars of 4 beats, 967 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 82, 105, 2, 80
+	ev_note	3, 60, 82, 106, 2, 80
+	ev_note	3, 64, 82, 104, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	26
+	ev_note	2, 60, 72, 13, 0, 80
+	ev_note	2, 64, 84, 12, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 96, 2, 80
+	ev_note	3, 60, 82, 97, 2, 80
+	ev_note	3, 64, 82, 95, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_note	1, 36, 70, 13, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 87, 41, 1, 16
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	26
+	ev_note	2, 60, 72, 13, 0, 80
+	ev_note	2, 64, 84, 12, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 82, 99, 2, 80
+	ev_note	3, 60, 82, 101, 2, 80
+	ev_note	3, 64, 82, 101, 2, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 18, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	26
+	ev_note	2, 60, 72, 13, 0, 80
+	ev_note	2, 64, 84, 12, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 86, 2, 80
+	ev_note	3, 60, 82, 87, 2, 80
+	ev_note	3, 64, 82, 88, 2, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_note	1, 36, 70, 13, 0, 16
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 87, 41, 1, 16
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 52, 29, 0, 80
+	ev_note	2, 64, 52, 29, 0, 80
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	75
+	ev_note	2, 60, 68, 25, 0, 80
+	ev_note	2, 64, 68, 24, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 29, 0, 80
+	ev_note	2, 64, 77, 29, 0, 80
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	26
+	ev_note	2, 60, 72, 13, 0, 80
+	ev_note	2, 64, 84, 12, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_end
+TcmpStream23_End:
+TcmpStream24:
+	.byte	24		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream24_End - TcmpStream24_Events
+TcmpStream24_Events:		# 1 bars of 4 beats, 337 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 47, 12, 0, 0
+	ev_note	1, 36, 114, 10, 1, 16
+	ev_note	3, 55, 79, 45, 1, 80
+	ev_note	3, 60, 66, 46, 1, 80
+	ev_note	3, 64, 67, 47, 1, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 21, 95, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 93, 12, 0, 0
+	ev_note	0, 46, 90, 12, 0, 0
+	ev_at	76
+	ev_note	1, 43, 113, 11, 0, 16
+	ev_at	81
+	ev_note	3, 67, 94, 75, 1, 16
+	ev_beat
+	ev_note	0, 18, 22, 12, 0, 0
+	ev_at	24
+	ev_note	0, 36, 107, 12, 0, 0
+	ev_note	0, 21, 105, 12, 0, 0
+	ev_at	28
+	ev_note	1, 43, 113, 11, 0, 16
+	ev_note	3, 62, 93, 32, 1, 16
+	ev_at	48
+	ev_note	0, 18, 22, 12, 0, 0
+	ev_at	72
+	ev_note	0, 38, 72, 12, 0, 0
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	73
+	ev_note	1, 36, 74, 5, 0, 16
+	ev_at	74
+	ev_note	3, 64, 79, 114, 0, 16
+	ev_at	84
+	ev_note	0, 38, 82, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 103, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_at	2
+	ev_note	1, 45, 120, 24, 0, 16
+	ev_at	24
+	ev_note	0, 48, 117, 12, 0, 0
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	25
+	ev_note	3, 55, 65, 67, 0, 16
+	ev_at	26
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	28
+	ev_note	1, 43, 95, 21, 0, 16
+	ev_at	48
+	ev_note	0, 47, 117, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	53
+	ev_note	1, 38, 80, 42, 0, 16
+	ev_at	72
+	ev_note	0, 36, 104, 12, 0, 0
+	ev_note	0, 45, 117, 12, 0, 0
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	95
+	ev_note	0, 49, 117, 12, 0, 0
+	ev_end
+TcmpStream24_End:
+TcmpStream25:
+	.byte	25		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream25_End - TcmpStream25_Events
+TcmpStream25_Events:		# 1 bars of 4 beats, 329 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 105, 37, 1, 16
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	3, 67, 99, 28, 2, 16
+	ev_at	24
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 38, 58, 12, 0, 0
+	ev_note	0, 19, 19, 12, 0, 0
+	ev_at	79
+	ev_note	1, 36, 111, 20, 0, 16
+	ev_at	84
+	ev_note	0, 38, 72, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 38, 99, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	3, 64, 81, 62, 1, 16
+	ev_at	24
+	ev_note	0, 38, 108, 12, 0, 0
+	ev_note	0, 21, 83, 12, 0, 0
+	ev_at	30
+	ev_note	1, 36, 111, 16, 0, 16
+	ev_at	48
+	ev_note	0, 44, 3, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 52, 25, 0, 80
+	ev_note	2, 64, 52, 25, 0, 80
+	ev_at	72
+	ev_note	0, 38, 109, 12, 0, 0
+	ev_note	0, 21, 93, 12, 0, 0
+	ev_note	3, 62, 68, 117, 0, 16
+	ev_at	75
+	ev_note	2, 60, 68, 21, 0, 80
+	ev_note	2, 64, 68, 21, 0, 80
+	ev_at	78
+	ev_note	1, 36, 107, 4, 0, 16
+	ev_beat
+	ev_note	0, 44, 3, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 25, 0, 80
+	ev_note	2, 64, 77, 25, 0, 80
+	ev_at	3
+	ev_note	1, 43, 117, 25, 0, 16
+	ev_at	24
+	ev_note	0, 38, 109, 12, 0, 0
+	ev_note	0, 21, 99, 12, 0, 0
+	ev_at	26
+	ev_note	2, 60, 72, 9, 0, 80
+	ev_note	2, 64, 84, 8, 0, 80
+	ev_at	27
+	ev_note	1, 45, 93, 64, 0, 16
+	ev_at	48
+	ev_note	0, 44, 3, 12, 0, 0
+	ev_note	3, 55, 88, 46, 0, 16
+	ev_at	72
+	ev_note	0, 38, 113, 12, 0, 0
+	ev_at	95
+	ev_note	0, 49, 117, 12, 0, 0
+	ev_end
+TcmpStream25_End:
+TcmpStream26:
+	.byte	26		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream26_End - TcmpStream26_Events
+TcmpStream26_Events:		# 4 bars of 4 beats, 1494 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 82, 105, 2, 80
+	ev_note	3, 60, 82, 106, 2, 80
+	ev_note	3, 64, 82, 104, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	1
+	ev_note	7, 72, 79, 20, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	7, 73, 82, 23, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	7, 74, 85, 21, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 92, 24, 0, 0
+	ev_at	95
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	0, 54, 115, 12, 0, 0
+	ev_note	7, 79, 90, 22, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 77, 76, 19, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	49
+	ev_note	7, 90, 99, 26, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_at	73
+	ev_note	7, 91, 85, 23, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_at	1
+	ev_note	7, 72, 80, 20, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 73, 91, 24, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	49
+	ev_note	7, 74, 87, 21, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 92, 21, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	7, 79, 70, 22, 0, 0
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_at	3
+	ev_note	0, 54, 118, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	26
+	ev_note	7, 77, 78, 19, 0, 0
+	ev_note	2, 60, 68, 9, 0, 80
+	ev_note	2, 64, 80, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	7, 90, 96, 22, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 91, 70, 22, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 96, 2, 80
+	ev_note	3, 60, 82, 97, 2, 80
+	ev_note	3, 64, 82, 95, 2, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	1
+	ev_note	7, 72, 86, 21, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 73, 99, 22, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	7, 74, 91, 14, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 90, 19, 0, 0
+	ev_at	95
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	0, 54, 111, 12, 0, 0
+	ev_at	1
+	ev_note	7, 79, 91, 17, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 77, 83, 18, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	49
+	ev_note	7, 90, 96, 22, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	1, 36, 70, 20, 0, 16
+	ev_at	73
+	ev_note	7, 91, 85, 18, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	7, 72, 80, 20, 0, 0
+	ev_note	1, 36, 78, 11, 0, 16
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	7, 73, 89, 22, 0, 0
+	ev_at	48
+	ev_note	0, 36, 100, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 88, 14, 1, 16
+	ev_at	49
+	ev_note	7, 74, 87, 29, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 89, 22, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	7, 79, 96, 24, 0, 0
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_at	3
+	ev_note	0, 54, 120, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 90, 91, 20, 0, 0
+	ev_at	26
+	ev_note	2, 60, 68, 9, 0, 80
+	ev_note	2, 64, 80, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 41, 12, 0, 0
+	ev_at	49
+	ev_note	7, 91, 76, 26, 0, 0
+	ev_at	72
+	ev_note	0, 21, 107, 12, 0, 0
+	ev_at	73
+	ev_note	7, 92, 114, 27, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 82, 99, 2, 80
+	ev_note	3, 60, 82, 101, 2, 80
+	ev_note	3, 64, 82, 101, 2, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	1
+	ev_note	7, 72, 96, 28, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	26
+	ev_note	7, 73, 96, 23, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	7, 74, 98, 14, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	74
+	ev_note	7, 78, 102, 18, 0, 0
+	ev_at	95
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	7, 79, 79, 25, 0, 0
+	ev_at	3
+	ev_note	0, 54, 117, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	26
+	ev_note	7, 77, 83, 19, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	49
+	ev_note	7, 90, 91, 19, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_at	73
+	ev_note	7, 91, 83, 23, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_at	1
+	ev_note	7, 72, 78, 22, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 73, 91, 24, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	49
+	ev_note	7, 74, 89, 16, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 93, 24, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	7, 79, 85, 18, 0, 0
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_at	2
+	ev_note	0, 54, 118, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 77, 80, 18, 0, 0
+	ev_at	26
+	ev_note	2, 60, 68, 9, 0, 80
+	ev_note	2, 64, 80, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	7, 90, 86, 25, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 91, 85, 22, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 86, 2, 80
+	ev_note	3, 60, 82, 87, 2, 80
+	ev_note	3, 64, 82, 88, 2, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	1
+	ev_note	7, 72, 89, 18, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	7, 73, 86, 25, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	7, 74, 92, 20, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 94, 25, 0, 0
+	ev_at	95
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	7, 79, 83, 22, 0, 0
+	ev_at	2
+	ev_note	0, 54, 111, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 77, 75, 20, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	49
+	ev_note	7, 90, 96, 24, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	1, 36, 70, 20, 0, 16
+	ev_at	73
+	ev_note	7, 91, 81, 19, 0, 0
+	ev_beat
+	ev_note	0, 36, 92, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 36, 83, 9, 0, 16
+	ev_at	1
+	ev_note	7, 72, 96, 26, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 73, 99, 22, 0, 0
+	ev_at	48
+	ev_note	0, 36, 107, 12, 0, 0
+	ev_note	0, 18, 45, 12, 0, 0
+	ev_note	1, 36, 91, 90, 0, 16
+	ev_at	49
+	ev_note	7, 74, 90, 18, 0, 0
+	ev_at	50
+	ev_note	2, 60, 48, 25, 0, 80
+	ev_note	2, 64, 48, 25, 0, 80
+	ev_at	72
+	ev_note	0, 21, 103, 12, 0, 0
+	ev_at	73
+	ev_note	7, 78, 102, 22, 0, 0
+	ev_at	75
+	ev_note	2, 60, 64, 21, 0, 80
+	ev_note	2, 64, 64, 21, 0, 80
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	0, 54, 109, 12, 0, 0
+	ev_note	7, 79, 92, 23, 0, 0
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	7, 90, 101, 21, 0, 0
+	ev_at	26
+	ev_note	2, 60, 68, 9, 0, 80
+	ev_note	2, 64, 80, 8, 0, 80
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	7, 91, 87, 24, 0, 0
+	ev_at	72
+	ev_note	0, 36, 107, 12, 0, 0
+	ev_note	0, 21, 111, 12, 0, 0
+	ev_note	1, 36, 59, 22, 0, 16
+	ev_at	73
+	ev_note	7, 92, 112, 36, 0, 0
+	ev_end
+TcmpStream26_End:
+TcmpStream27:
+	.byte	27		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream27_End - TcmpStream27_Events
+TcmpStream27_Events:		# 1 bars of 4 beats, 356 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 82, 38, 1, 80
+	ev_note	3, 60, 82, 38, 1, 80
+	ev_note	3, 64, 82, 38, 1, 80
+	ev_note	4, 55, 31, 113, 1, 80
+	ev_note	4, 60, 31, 111, 1, 80
+	ev_note	4, 64, 31, 113, 1, 80
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	93
+	ev_cc	4, 64, 127
+	ev_at	95
+	ev_note	2, 60, 70, 24, 0, 80
+	ev_note	2, 64, 70, 24, 0, 80
+	ev_beat
+	ev_note	0, 38, 103, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	0, 54, 111, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	2, 60, 46, 6, 0, 80
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	2, 60, 67, 7, 0, 80
+	ev_at	72
+	ev_note	0, 55, 117, 12, 0, 0
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	1, 36, 70, 21, 0, 16
+	ev_note	2, 60, 96, 15, 0, 80
+	ev_note	2, 64, 96, 12, 0, 80
+	ev_at	74
+	ev_note	3, 55, 92, 24, 0, 80
+	ev_note	3, 60, 92, 24, 0, 80
+	ev_note	3, 64, 92, 24, 0, 80
+	ev_beat
+	ev_note	1, 36, 78, 11, 0, 16
+	ev_at	24
+	ev_note	0, 54, 101, 12, 0, 0
+	ev_at	26
+	ev_note	3, 67, 90, 35, 1, 16
+	ev_at	48
+	ev_note	0, 108, 77, 12, 0, 0
+	ev_note	1, 36, 88, 14, 1, 16
+	ev_at	72
+	ev_note	0, 108, 65, 12, 0, 0
+	ev_at	76
+	ev_note	3, 62, 71, 113, 0, 16
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 54, 114, 12, 0, 0
+	ev_at	1
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	0, 108, 79, 12, 0, 0
+	ev_at	26
+	ev_note	2, 60, 68, 9, 0, 80
+	ev_note	2, 64, 80, 8, 0, 80
+	ev_note	3, 57, 63, 67, 0, 16
+	ev_at	48
+	ev_note	0, 38, 87, 12, 0, 0
+	ev_note	0, 18, 41, 12, 0, 0
+	ev_note	0, 108, 53, 12, 0, 0
+	ev_at	72
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 108, 72, 12, 0, 0
+	ev_note	0, 21, 99, 12, 0, 0
+	ev_at	77
+	ev_cc	4, 64, 0
+	ev_at	95
+	ev_note	0, 49, 117, 12, 0, 0
+	ev_end
+TcmpStream27_End:
+TcmpStream28:
+	.byte	28		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream28_End - TcmpStream28_Events
+TcmpStream28_Events:		# 1 bars of 4 beats, 422 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 38, 80, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 101, 64, 0, 16
+	ev_note	3, 55, 82, 42, 1, 80
+	ev_note	3, 60, 82, 43, 1, 80
+	ev_note	3, 64, 82, 43, 1, 80
+	ev_note	4, 55, 31, 113, 1, 80
+	ev_note	4, 60, 31, 111, 1, 80
+	ev_note	4, 64, 31, 113, 1, 80
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	48
+	ev_note	0, 38, 103, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	93
+	ev_cc	4, 64, 127
+	ev_at	95
+	ev_note	2, 60, 75, 72, 0, 80
+	ev_note	2, 64, 75, 72, 0, 80
+	ev_beat
+	ev_note	0, 36, 90, 12, 0, 0
+	ev_note	0, 18, 54, 12, 0, 0
+	ev_note	1, 36, 75, 68, 0, 16
+	ev_at	2
+	ev_note	0, 54, 90, 12, 0, 0
+	ev_at	24
+	ev_note	0, 38, 89, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	0, 108, 104, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 111, 12, 0, 0
+	ev_note	0, 38, 118, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	0, 49, 107, 12, 0, 0
+	ev_note	0, 54, 121, 12, 0, 0
+	ev_note	1, 36, 102, 12, 0, 16
+	ev_note	2, 60, 99, 18, 0, 80
+	ev_note	2, 64, 99, 15, 0, 80
+	ev_note	3, 76, 90, 75, 1, 80
+	ev_beat
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	3, 67, 70, 31, 1, 80
+	ev_at	48
+	ev_note	0, 18, 45, 12, 0, 0
+	ev_at	72
+	ev_note	0, 48, 67, 12, 0, 0
+	ev_note	0, 21, 99, 12, 0, 0
+	ev_note	1, 40, 86, 16, 0, 16
+	ev_note	3, 72, 69, 113, 0, 80
+	ev_at	84
+	ev_note	0, 48, 85, 12, 0, 0
+	ev_note	1, 41, 88, 12, 0, 16
+	ev_beat
+	ev_note	0, 48, 105, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	1, 43, 107, 93, 0, 16
+	ev_at	2
+	ev_note	2, 60, 48, 25, 0, 80
+	ev_note	2, 64, 48, 25, 0, 80
+	ev_at	24
+	ev_note	0, 47, 88, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	3, 64, 57, 67, 0, 80
+	ev_at	27
+	ev_note	2, 60, 64, 21, 0, 80
+	ev_note	2, 64, 64, 20, 0, 80
+	ev_at	48
+	ev_note	0, 47, 95, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	0, 54, 83, 12, 0, 0
+	ev_at	49
+	ev_note	2, 60, 73, 25, 0, 80
+	ev_note	2, 64, 73, 25, 0, 80
+	ev_at	72
+	ev_note	0, 36, 105, 12, 0, 0
+	ev_note	0, 45, 103, 12, 0, 0
+	ev_note	0, 54, 109, 12, 0, 0
+	ev_note	0, 21, 99, 12, 0, 0
+	ev_at	74
+	ev_note	2, 60, 68, 9, 0, 80
+	ev_note	2, 64, 80, 8, 0, 80
+	ev_at	77
+	ev_cc	4, 64, 0
+	ev_end
+TcmpStream28_End:
+TcmpStream29:
+	.byte	29		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream29_End - TcmpStream29_Events
+TcmpStream29_Events:		# 4 bars of 4 beats, 1753 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 51, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 71, 38, 1, 80
+	ev_note	3, 60, 71, 36, 1, 80
+	ev_note	3, 64, 71, 36, 1, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	1
+	ev_note	7, 36, 75, 23, 0, 0
+	ev_at	24
+	ev_note	0, 54, 60, 12, 0, 0
+	ev_at	25
+	ev_note	7, 37, 90, 23, 0, 0
+	ev_at	48
+	ev_note	0, 51, 95, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	2, 60, 82, 23, 0, 16
+	ev_at	49
+	ev_note	7, 38, 83, 18, 0, 0
+	ev_at	72
+	ev_note	0, 54, 45, 12, 0, 0
+	ev_note	7, 39, 81, 22, 0, 0
+	ev_note	2, 60, 67, 7, 0, 16
+	ev_at	95
+	ev_note	7, 40, 83, 25, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 78, 12, 0, 0
+	ev_note	0, 54, 121, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	24
+	ev_note	0, 54, 76, 12, 0, 0
+	ev_note	2, 60, 93, 8, 0, 16
+	ev_at	25
+	ev_note	7, 41, 85, 26, 0, 0
+	ev_at	48
+	ev_note	0, 51, 100, 12, 0, 0
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_at	49
+	ev_note	7, 42, 85, 21, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_note	3, 55, 71, 76, 1, 80
+	ev_note	3, 60, 71, 77, 1, 80
+	ev_note	3, 64, 71, 78, 1, 80
+	ev_at	73
+	ev_note	7, 43, 81, 23, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 51, 83, 12, 0, 0
+	ev_note	0, 54, 55, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_note	2, 60, 77, 10, 0, 16
+	ev_at	1
+	ev_note	7, 48, 88, 23, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	25
+	ev_note	7, 49, 90, 19, 0, 0
+	ev_at	48
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 47, 12, 0, 0
+	ev_note	0, 44, 28, 12, 0, 0
+	ev_at	49
+	ev_note	7, 50, 80, 22, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	73
+	ev_note	7, 51, 96, 23, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 85, 12, 0, 0
+	ev_note	0, 54, 119, 12, 0, 0
+	ev_note	2, 60, 71, 13, 0, 16
+	ev_at	1
+	ev_note	7, 52, 76, 20, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	26
+	ev_note	7, 53, 80, 25, 0, 0
+	ev_at	48
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 59, 12, 0, 0
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	2, 60, 77, 23, 0, 16
+	ev_at	50
+	ev_note	7, 54, 82, 20, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 86, 4, 0, 16
+	ev_at	73
+	ev_note	7, 55, 73, 23, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 51, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 71, 38, 1, 80
+	ev_note	3, 60, 71, 36, 1, 80
+	ev_note	3, 64, 71, 36, 1, 80
+	ev_note	4, 55, 31, 126, 2, 80
+	ev_note	4, 60, 31, 126, 2, 80
+	ev_note	4, 64, 31, 126, 2, 80
+	ev_at	1
+	ev_note	7, 56, 107, 24, 0, 0
+	ev_at	24
+	ev_note	0, 54, 60, 12, 0, 0
+	ev_at	26
+	ev_note	7, 37, 96, 23, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 95, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 73, 22, 0, 16
+	ev_at	50
+	ev_note	7, 38, 93, 20, 0, 0
+	ev_at	72
+	ev_note	0, 54, 45, 12, 0, 0
+	ev_note	2, 60, 80, 8, 0, 16
+	ev_at	73
+	ev_note	7, 39, 91, 18, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 78, 12, 0, 0
+	ev_note	0, 54, 121, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	1
+	ev_note	7, 40, 71, 24, 0, 0
+	ev_at	24
+	ev_note	0, 54, 76, 12, 0, 0
+	ev_note	2, 60, 80, 8, 0, 16
+	ev_at	25
+	ev_note	7, 41, 101, 30, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 100, 12, 0, 0
+	ev_at	49
+	ev_note	7, 42, 96, 24, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 70, 13, 0, 16
+	ev_note	3, 55, 71, 76, 1, 80
+	ev_note	3, 60, 71, 77, 1, 80
+	ev_note	3, 64, 71, 78, 1, 80
+	ev_at	73
+	ev_note	7, 43, 91, 23, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 51, 83, 12, 0, 0
+	ev_note	0, 54, 55, 12, 0, 0
+	ev_note	1, 36, 87, 41, 1, 16
+	ev_note	2, 60, 67, 11, 0, 16
+	ev_at	1
+	ev_note	7, 48, 90, 22, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	25
+	ev_note	7, 49, 91, 21, 0, 0
+	ev_at	48
+	ev_note	0, 44, 28, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 47, 12, 0, 0
+	ev_at	49
+	ev_note	7, 50, 78, 19, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	7, 51, 97, 25, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 85, 12, 0, 0
+	ev_note	0, 54, 119, 12, 0, 0
+	ev_note	2, 60, 77, 10, 0, 16
+	ev_at	1
+	ev_note	7, 52, 77, 20, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	25
+	ev_note	7, 53, 79, 26, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 59, 12, 0, 0
+	ev_note	2, 60, 62, 23, 0, 16
+	ev_at	49
+	ev_note	7, 54, 84, 23, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 85, 6, 0, 16
+	ev_at	73
+	ev_note	7, 55, 76, 24, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 51, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	3, 55, 71, 38, 1, 80
+	ev_note	3, 60, 71, 36, 1, 80
+	ev_note	3, 64, 71, 36, 1, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	1
+	ev_note	7, 36, 79, 19, 0, 0
+	ev_at	24
+	ev_note	0, 54, 60, 12, 0, 0
+	ev_note	7, 37, 84, 26, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 95, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 69, 23, 0, 16
+	ev_at	49
+	ev_note	7, 38, 87, 24, 0, 0
+	ev_at	72
+	ev_note	0, 54, 45, 12, 0, 0
+	ev_note	2, 60, 77, 8, 0, 16
+	ev_at	73
+	ev_note	7, 39, 87, 20, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 78, 12, 0, 0
+	ev_note	0, 54, 121, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	7, 40, 76, 26, 0, 0
+	ev_at	24
+	ev_note	0, 54, 76, 12, 0, 0
+	ev_note	2, 60, 71, 9, 0, 16
+	ev_at	25
+	ev_note	7, 41, 95, 28, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 100, 12, 0, 0
+	ev_at	49
+	ev_note	7, 42, 91, 21, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 70, 14, 0, 16
+	ev_note	3, 55, 71, 76, 1, 80
+	ev_note	3, 60, 71, 77, 1, 80
+	ev_note	3, 64, 71, 78, 1, 80
+	ev_at	73
+	ev_note	7, 43, 88, 28, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 51, 83, 12, 0, 0
+	ev_note	0, 54, 55, 12, 0, 0
+	ev_note	1, 36, 86, 23, 1, 16
+	ev_note	2, 60, 74, 11, 0, 16
+	ev_at	1
+	ev_note	7, 48, 94, 19, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	7, 49, 89, 21, 0, 0
+	ev_at	48
+	ev_note	0, 44, 28, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 47, 12, 0, 0
+	ev_at	49
+	ev_note	7, 50, 85, 20, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	73
+	ev_note	7, 51, 94, 19, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 85, 12, 0, 0
+	ev_note	0, 54, 119, 12, 0, 0
+	ev_note	2, 60, 77, 11, 0, 16
+	ev_at	1
+	ev_note	7, 52, 67, 21, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	25
+	ev_note	7, 53, 79, 27, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 59, 12, 0, 0
+	ev_note	2, 60, 78, 23, 0, 16
+	ev_at	50
+	ev_note	7, 54, 86, 20, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 87, 7, 0, 16
+	ev_at	73
+	ev_note	7, 55, 73, 21, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 51, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 83, 17, 1, 16
+	ev_note	3, 55, 71, 38, 1, 80
+	ev_note	3, 60, 71, 36, 1, 80
+	ev_note	3, 64, 71, 36, 1, 80
+	ev_note	4, 55, 30, 126, 2, 80
+	ev_note	4, 60, 30, 126, 2, 80
+	ev_note	4, 64, 30, 126, 2, 80
+	ev_at	1
+	ev_note	7, 56, 107, 23, 0, 0
+	ev_at	24
+	ev_note	0, 54, 60, 12, 0, 0
+	ev_at	25
+	ev_note	7, 37, 94, 24, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 95, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 71, 23, 0, 16
+	ev_at	49
+	ev_note	7, 38, 91, 24, 0, 0
+	ev_at	72
+	ev_note	0, 54, 45, 12, 0, 0
+	ev_note	2, 60, 65, 10, 0, 16
+	ev_at	73
+	ev_note	7, 39, 99, 22, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 78, 12, 0, 0
+	ev_note	0, 54, 121, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	1
+	ev_note	7, 40, 81, 27, 0, 0
+	ev_at	24
+	ev_note	0, 54, 76, 12, 0, 0
+	ev_note	2, 60, 80, 10, 0, 16
+	ev_at	26
+	ev_note	7, 41, 101, 27, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 100, 12, 0, 0
+	ev_at	49
+	ev_note	7, 42, 92, 21, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 70, 13, 0, 16
+	ev_note	3, 55, 71, 76, 1, 80
+	ev_note	3, 60, 71, 77, 1, 80
+	ev_note	3, 64, 71, 78, 1, 80
+	ev_at	73
+	ev_note	7, 43, 86, 20, 0, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 51, 83, 12, 0, 0
+	ev_note	0, 54, 55, 12, 0, 0
+	ev_note	1, 36, 87, 41, 1, 16
+	ev_note	2, 60, 75, 12, 0, 16
+	ev_at	1
+	ev_note	7, 48, 97, 22, 0, 0
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	25
+	ev_note	7, 49, 93, 23, 0, 0
+	ev_at	48
+	ev_note	0, 44, 28, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 47, 12, 0, 0
+	ev_at	49
+	ev_note	7, 50, 73, 20, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	7, 51, 89, 20, 0, 0
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 85, 12, 0, 0
+	ev_note	0, 54, 119, 12, 0, 0
+	ev_note	7, 52, 73, 20, 0, 0
+	ev_note	2, 60, 71, 11, 0, 16
+	ev_at	24
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	7, 53, 73, 29, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	0, 54, 59, 12, 0, 0
+	ev_note	2, 60, 65, 27, 0, 16
+	ev_at	49
+	ev_note	7, 54, 90, 20, 0, 0
+	ev_at	72
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 62, 68, 6, 0, 16
+	ev_at	73
+	ev_note	7, 55, 84, 17, 0, 0
+	ev_end
+TcmpStream29_End:
+TcmpStream30:
+	.byte	30		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream30_End - TcmpStream30_Events
+TcmpStream30_Events:		# 1 bars of 4 beats, 314 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 51, 76, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 92, 20, 1, 16
+	ev_note	4, 55, 31, 113, 1, 80
+	ev_note	4, 60, 31, 111, 1, 80
+	ev_note	4, 64, 31, 113, 1, 80
+	ev_at	24
+	ev_note	0, 54, 60, 12, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 95, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 82, 23, 0, 16
+	ev_at	72
+	ev_note	0, 54, 45, 12, 0, 0
+	ev_note	2, 60, 67, 7, 0, 16
+	ev_at	93
+	ev_cc	4, 64, 127
+	ev_beat
+	ev_note	0, 38, 110, 12, 0, 0
+	ev_note	0, 51, 78, 12, 0, 0
+	ev_note	0, 54, 99, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	24
+	ev_note	0, 54, 90, 12, 0, 0
+	ev_note	2, 60, 93, 8, 0, 16
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 100, 12, 0, 0
+	ev_note	0, 108, 86, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 38, 49, 12, 0, 0
+	ev_note	0, 108, 95, 12, 0, 0
+	ev_note	1, 36, 70, 22, 0, 16
+	ev_beat
+	ev_note	0, 57, 99, 12, 0, 0
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 38, 115, 12, 0, 0
+	ev_note	0, 54, 114, 12, 0, 0
+	ev_note	1, 36, 86, 9, 0, 16
+	ev_note	2, 60, 77, 10, 0, 16
+	ev_at	24
+	ev_note	1, 48, 86, 49, 0, 16
+	ev_note	3, 72, 95, 32, 1, 80
+	ev_at	48
+	ev_note	0, 44, 28, 12, 0, 0
+	ev_at	72
+	ev_note	0, 38, 64, 12, 0, 0
+	ev_note	1, 43, 83, 49, 0, 16
+	ev_note	3, 67, 77, 113, 0, 80
+	ev_beat
+	ev_at	24
+	ev_note	0, 38, 107, 12, 0, 0
+	ev_note	1, 31, 83, 64, 0, 16
+	ev_note	3, 55, 82, 64, 0, 80
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 51, 104, 12, 0, 0
+	ev_note	2, 60, 91, 28, 0, 16
+	ev_at	72
+	ev_note	0, 38, 74, 12, 0, 0
+	ev_note	2, 62, 102, 6, 0, 16
+	ev_at	77
+	ev_cc	4, 64, 0
+	ev_at	95
+	ev_note	0, 52, 119, 12, 0, 0
+	ev_end
+TcmpStream30_End:
+TcmpStream31:
+	.byte	31		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream31_End - TcmpStream31_Events
+TcmpStream31_Events:		# 1 bars of 4 beats, 303 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	1, 36, 89, 110, 0, 16
+	ev_note	3, 55, 72, 125, 0, 80
+	ev_note	3, 60, 75, 0, 1, 80
+	ev_note	3, 64, 75, 1, 1, 80
+	ev_note	4, 55, 31, 126, 2, 16
+	ev_note	4, 60, 31, 39, 1, 16
+	ev_note	4, 64, 31, 126, 2, 16
+	ev_at	24
+	ev_note	0, 54, 60, 12, 0, 0
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_note	2, 60, 88, 26, 0, 16
+	ev_at	72
+	ev_note	0, 54, 45, 12, 0, 0
+	ev_at	89
+	ev_note	0, 48, 64, 12, 0, 0
+	ev_beat
+	ev_note	0, 48, 119, 12, 0, 0
+	ev_note	0, 54, 100, 12, 0, 0
+	ev_note	0, 108, 81, 12, 0, 0
+	ev_at	24
+	ev_note	0, 47, 100, 12, 0, 0
+	ev_note	0, 54, 74, 12, 0, 0
+	ev_note	2, 60, 93, 46, 0, 16
+	ev_note	3, 52, 88, 26, 0, 16
+	ev_at	26
+	ev_note	1, 40, 64, 22, 0, 16
+	ev_at	48
+	ev_note	0, 44, 24, 12, 0, 0
+	ev_note	0, 45, 109, 12, 0, 0
+	ev_note	3, 53, 99, 23, 0, 16
+	ev_at	49
+	ev_note	1, 41, 75, 27, 0, 16
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 38, 127, 12, 0, 0
+	ev_note	0, 49, 95, 12, 0, 0
+	ev_note	0, 54, 109, 12, 0, 0
+	ev_note	2, 62, 85, 11, 0, 16
+	ev_note	3, 55, 87, 71, 1, 16
+	ev_note	3, 62, 94, 68, 1, 16
+	ev_note	3, 64, 96, 68, 1, 16
+	ev_note	4, 62, 36, 84, 1, 16
+	ev_at	78
+	ev_note	1, 43, 99, 12, 1, 16
+	ev_beat
+	ev_at	72
+	ev_note	2, 62, 107, 43, 0, 16
+	ev_at	88
+	ev_note	0, 48, 106, 12, 0, 0
+	ev_beat
+	ev_note	0, 48, 123, 12, 0, 0
+	ev_at	24
+	ev_note	2, 62, 76, 19, 0, 16
+	ev_at	48
+	ev_note	0, 45, 113, 12, 0, 0
+	ev_note	2, 60, 72, 23, 0, 16
+	ev_at	72
+	ev_note	0, 36, 95, 12, 0, 0
+	ev_note	0, 44, 31, 12, 0, 0
+	ev_note	2, 55, 61, 14, 0, 16
+	ev_at	95
+	ev_note	0, 52, 117, 12, 0, 0
+	ev_end
+TcmpStream31_End:
+TcmpStream32:
+	.byte	32		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream32_End - TcmpStream32_Events
+TcmpStream32_Events:		# 1 bars of 4 beats, 338 bytes
+	ev_beat
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 81, 11, 1, 1
+	ev_note	3, 62, 61, 18, 0, 1
+	ev_note	3, 64, 66, 18, 0, 1
+	ev_note	3, 67, 63, 18, 0, 1
+	ev_note	3, 72, 66, 19, 0, 1
+	ev_cc	3, 64, 127
+	ev_note	4, 72, 38, 78, 1, 1
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	2, 60, 52, 24, 0, 1
+	ev_note	2, 64, 52, 24, 0, 1
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_note	2, 60, 68, 22, 0, 1
+	ev_at	73
+	ev_note	2, 64, 68, 21, 0, 1
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 64, 77, 25, 0, 1
+	ev_beat
+	ev_note	0, 46, 80, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 1
+	ev_note	2, 64, 84, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_note	1, 36, 95, 7, 0, 1
+	ev_beat
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 87, 94, 0, 1
+	ev_note	3, 62, 68, 80, 0, 1
+	ev_note	3, 64, 71, 82, 0, 1
+	ev_note	3, 67, 72, 74, 0, 1
+	ev_cc	3, 64, 0
+	ev_note	4, 67, 22, 113, 0, 1
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	26
+	ev_note	0, 38, 49, 12, 0, 0
+	ev_at	28
+	ev_cc	3, 64, 127
+	ev_at	38
+	ev_note	0, 38, 54, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	0, 38, 63, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	74
+	ev_note	0, 38, 80, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 112, 12, 0, 0
+	ev_note	0, 21, 85, 12, 0, 0
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_note	3, 55, 77, 94, 0, 1
+	ev_note	3, 62, 82, 92, 0, 1
+	ev_note	3, 64, 76, 92, 0, 1
+	ev_note	4, 62, 13, 95, 0, 1
+	ev_at	24
+	ev_note	0, 48, 95, 12, 0, 0
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_note	1, 43, 112, 13, 0, 1
+	ev_cc	3, 64, 0
+	ev_at	48
+	ev_note	0, 47, 90, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 45, 99, 12, 0, 0
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_end
+TcmpStream32_End:
+TcmpStream33:
+	.byte	33		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream33_End - TcmpStream33_Events
+TcmpStream33_Events:		# 1 bars of 4 beats, 343 bytes
+	ev_beat
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	3, 62, 61, 18, 0, 1
+	ev_note	3, 63, 66, 18, 0, 1
+	ev_note	3, 67, 63, 18, 0, 1
+	ev_note	3, 72, 66, 19, 0, 1
+	ev_cc	3, 64, 127
+	ev_note	4, 72, 38, 78, 1, 1
+	ev_at	3
+	ev_note	1, 36, 81, 11, 1, 1
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	2, 60, 52, 24, 0, 1
+	ev_note	2, 63, 52, 24, 0, 1
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_note	2, 60, 68, 22, 0, 1
+	ev_at	73
+	ev_note	2, 63, 68, 21, 0, 1
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_beat
+	ev_note	0, 46, 80, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	69
+	ev_note	1, 36, 95, 7, 0, 1
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	3, 62, 68, 80, 0, 1
+	ev_note	3, 63, 71, 82, 0, 1
+	ev_note	3, 67, 72, 74, 0, 1
+	ev_cc	3, 64, 0
+	ev_note	4, 67, 22, 113, 0, 1
+	ev_at	2
+	ev_note	1, 43, 87, 94, 0, 1
+	ev_at	24
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	26
+	ev_note	0, 38, 49, 12, 0, 0
+	ev_at	28
+	ev_cc	3, 64, 127
+	ev_at	38
+	ev_note	0, 38, 54, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	0, 38, 63, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_at	74
+	ev_note	0, 38, 80, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 112, 12, 0, 0
+	ev_note	0, 21, 85, 12, 0, 0
+	ev_note	3, 55, 77, 94, 0, 1
+	ev_note	3, 62, 82, 92, 0, 1
+	ev_note	3, 63, 76, 92, 0, 1
+	ev_note	4, 62, 13, 95, 0, 1
+	ev_at	7
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_at	24
+	ev_note	0, 48, 95, 12, 0, 0
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_cc	3, 64, 0
+	ev_at	33
+	ev_note	1, 43, 112, 13, 0, 1
+	ev_at	48
+	ev_note	0, 47, 90, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 45, 99, 12, 0, 0
+	ev_note	0, 19, 16, 12, 0, 0
+	ev_end
+TcmpStream33_End:
+TcmpStream34:
+	.byte	34		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream34_End - TcmpStream34_Events
+TcmpStream34_Events:		# 2 bars of 4 beats, 445 bytes
+	ev_beat
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 81, 11, 1, 1
+	ev_note	3, 62, 61, 18, 0, 1
+	ev_note	3, 64, 66, 18, 0, 1
+	ev_note	3, 67, 63, 18, 0, 1
+	ev_note	3, 72, 66, 19, 0, 1
+	ev_cc	3, 64, 127
+	ev_note	4, 72, 38, 78, 1, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	2, 60, 52, 24, 0, 1
+	ev_note	2, 64, 52, 24, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	2, 60, 68, 22, 0, 1
+	ev_at	73
+	ev_note	2, 64, 68, 21, 0, 1
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 64, 77, 25, 0, 1
+	ev_beat
+	ev_note	0, 46, 80, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 90, 9, 0, 1
+	ev_note	2, 64, 90, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	1, 36, 95, 7, 0, 1
+	ev_beat
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 87, 94, 0, 1
+	ev_note	3, 62, 68, 80, 0, 1
+	ev_note	3, 64, 71, 82, 0, 1
+	ev_note	3, 67, 72, 74, 0, 1
+	ev_cc	3, 64, 0
+	ev_note	4, 67, 22, 113, 0, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	26
+	ev_note	0, 38, 49, 12, 0, 0
+	ev_at	28
+	ev_cc	3, 64, 127
+	ev_at	38
+	ev_note	0, 38, 54, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	0, 38, 63, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	74
+	ev_note	0, 38, 80, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 112, 12, 0, 0
+	ev_note	0, 21, 85, 12, 0, 0
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_note	3, 55, 77, 94, 0, 1
+	ev_note	3, 62, 82, 95, 0, 1
+	ev_note	3, 64, 76, 95, 0, 1
+	ev_note	4, 62, 13, 95, 0, 1
+	ev_at	1
+	ev_note	2, 69, 79, 98, 0, 1
+	ev_at	24
+	ev_note	0, 48, 95, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	1, 43, 112, 13, 0, 1
+	ev_cc	3, 64, 0
+	ev_at	27
+	ev_note	2, 67, 63, 71, 0, 1
+	ev_at	48
+	ev_note	0, 47, 90, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 62, 55, 49, 0, 1
+	ev_at	72
+	ev_note	0, 45, 99, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	76
+	ev_note	2, 55, 47, 25, 0, 1
+	ev_at	95
+	ev_note	2, 60, 55, 71, 1, 1
+	ev_note	2, 64, 55, 71, 1, 1
+	ev_note	4, 64, 21, 76, 1, 1
+	ev_beat
+	ev_note	0, 36, 60, 12, 0, 0
+	ev_note	0, 38, 74, 12, 0, 0
+	ev_note	0, 49, 87, 12, 0, 0
+	ev_at	1
+	ev_note	4, 60, 19, 75, 1, 1
+	ev_note	4, 55, 18, 74, 1, 1
+	ev_at	2
+	ev_note	1, 36, 85, 72, 1, 1
+	ev_note	3, 55, 53, 74, 1, 1
+	ev_note	3, 60, 56, 73, 1, 1
+	ev_note	3, 64, 53, 72, 1, 1
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TcmpStream34_End:
+TcmpStream35:
+	.byte	35		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream35_End - TcmpStream35_Events
+TcmpStream35_Events:		# 2 bars of 4 beats, 450 bytes
+	ev_beat
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	3, 62, 61, 18, 0, 1
+	ev_note	3, 63, 66, 18, 0, 1
+	ev_note	3, 67, 63, 18, 0, 1
+	ev_note	3, 72, 66, 19, 0, 1
+	ev_cc	3, 64, 127
+	ev_note	4, 72, 38, 78, 1, 1
+	ev_at	3
+	ev_note	1, 36, 81, 11, 1, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	49
+	ev_note	2, 60, 52, 24, 0, 1
+	ev_note	2, 63, 52, 24, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	2, 60, 68, 22, 0, 1
+	ev_at	73
+	ev_note	2, 63, 68, 21, 0, 1
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_beat
+	ev_note	0, 46, 80, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 90, 9, 0, 1
+	ev_note	2, 63, 90, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	69
+	ev_note	1, 36, 95, 7, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	3, 62, 68, 80, 0, 1
+	ev_note	3, 63, 71, 82, 0, 1
+	ev_note	3, 67, 72, 74, 0, 1
+	ev_cc	3, 64, 0
+	ev_note	4, 67, 22, 113, 0, 1
+	ev_at	2
+	ev_note	1, 43, 87, 94, 0, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	26
+	ev_note	0, 38, 49, 12, 0, 0
+	ev_at	28
+	ev_cc	3, 64, 127
+	ev_at	38
+	ev_note	0, 38, 54, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	0, 38, 63, 12, 0, 0
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	74
+	ev_note	0, 38, 80, 12, 0, 0
+	ev_beat
+	ev_note	0, 38, 112, 12, 0, 0
+	ev_note	0, 21, 85, 12, 0, 0
+	ev_note	3, 55, 77, 94, 0, 1
+	ev_note	3, 62, 82, 95, 0, 1
+	ev_note	3, 63, 76, 95, 0, 1
+	ev_note	4, 62, 13, 95, 0, 1
+	ev_at	1
+	ev_note	2, 72, 79, 98, 0, 1
+	ev_at	7
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_at	24
+	ev_note	0, 48, 95, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_cc	3, 64, 0
+	ev_at	27
+	ev_note	2, 67, 63, 71, 0, 1
+	ev_at	33
+	ev_note	1, 43, 112, 13, 0, 1
+	ev_at	48
+	ev_note	0, 47, 90, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 62, 55, 49, 0, 1
+	ev_at	72
+	ev_note	0, 45, 99, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	76
+	ev_note	2, 55, 47, 25, 0, 1
+	ev_at	95
+	ev_note	2, 60, 55, 71, 1, 1
+	ev_note	2, 63, 55, 71, 1, 1
+	ev_note	4, 63, 21, 76, 1, 1
+	ev_beat
+	ev_note	0, 36, 60, 12, 0, 0
+	ev_note	0, 38, 74, 12, 0, 0
+	ev_note	0, 49, 87, 12, 0, 0
+	ev_at	1
+	ev_note	4, 60, 19, 75, 1, 1
+	ev_note	4, 55, 18, 74, 1, 1
+	ev_at	2
+	ev_note	1, 36, 85, 72, 1, 1
+	ev_note	3, 55, 53, 74, 1, 1
+	ev_note	3, 60, 56, 73, 1, 1
+	ev_note	3, 63, 53, 72, 1, 1
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TcmpStream35_End:
+TcmpStream36:
+	.byte	36		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream36_End - TcmpStream36_Events
+TcmpStream36_Events:		# 2 bars of 4 beats, 722 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 95, 34, 1, 1
+	ev_note	3, 55, 72, 28, 1, 1
+	ev_note	3, 60, 72, 32, 1, 1
+	ev_note	3, 64, 73, 34, 1, 1
+	ev_at	8
+	ev_note	4, 79, 37, 56, 4, 1
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 48, 23, 0, 1
+	ev_note	2, 64, 48, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	76
+	ev_note	2, 60, 64, 18, 0, 1
+	ev_note	2, 64, 64, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	2
+	ev_note	2, 60, 73, 25, 0, 1
+	ev_note	2, 64, 73, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	27
+	ev_note	2, 60, 68, 9, 0, 1
+	ev_note	2, 64, 80, 8, 0, 1
+	ev_at	36
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	3, 55, 82, 1, 1, 1
+	ev_note	3, 62, 75, 8, 1, 1
+	ev_note	3, 64, 72, 10, 1, 1
+	ev_at	74
+	ev_note	1, 36, 93, 19, 0, 1
+	ev_at	81
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	1
+	ev_note	1, 36, 86, 21, 0, 1
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	2, 62, 22, 23, 0, 1
+	ev_note	2, 64, 22, 23, 0, 1
+	ev_at	41
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	2, 62, 48, 23, 0, 1
+	ev_note	2, 64, 48, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	75
+	ev_note	2, 62, 64, 18, 0, 1
+	ev_note	2, 64, 64, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 114, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 62, 73, 25, 0, 1
+	ev_note	2, 64, 73, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	1, 36, 88, 7, 0, 1
+	ev_note	3, 55, 73, 23, 0, 1
+	ev_at	26
+	ev_note	2, 62, 68, 9, 0, 1
+	ev_note	2, 64, 80, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	3, 62, 75, 29, 0, 1
+	ev_at	51
+	ev_note	1, 43, 107, 25, 0, 1
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_note	3, 64, 75, 1, 1, 1
+	ev_at	75
+	ev_note	1, 45, 90, 23, 0, 1
+	ev_at	92
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 91, 30, 1, 1
+	ev_note	3, 55, 70, 104, 0, 1
+	ev_note	3, 60, 72, 104, 0, 1
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 50, 12, 0, 0
+	ev_note	2, 60, 48, 23, 0, 1
+	ev_note	2, 64, 48, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_cc	3, 64, 127
+	ev_at	73
+	ev_note	2, 60, 64, 18, 0, 1
+	ev_note	2, 64, 64, 20, 0, 1
+	ev_at	95
+	ev_note	2, 60, 73, 25, 0, 1
+	ev_note	2, 64, 73, 25, 0, 1
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	3
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 68, 9, 0, 1
+	ev_note	2, 64, 80, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 41, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 21, 103, 12, 0, 0
+	ev_note	1, 36, 104, 5, 0, 1
+	ev_note	3, 62, 87, 103, 0, 1
+	ev_note	3, 64, 85, 104, 0, 1
+	ev_note	3, 67, 90, 106, 0, 1
+	ev_at	77
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 109, 95, 0, 1
+	ev_note	4, 74, 66, 97, 0, 1
+	ev_at	24
+	ev_note	0, 48, 40, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	36
+	ev_note	0, 48, 55, 12, 0, 0
+	ev_at	38
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 48, 64, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 48, 93, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_beat
+	ev_note	0, 48, 114, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	1, 38, 91, 91, 0, 1
+	ev_note	3, 55, 81, 94, 0, 1
+	ev_note	3, 62, 77, 94, 0, 1
+	ev_note	3, 64, 75, 94, 0, 1
+	ev_at	2
+	ev_note	4, 67, 63, 92, 0, 1
+	ev_at	6
+	ev_cc	3, 64, 0
+	ev_at	24
+	ev_note	0, 47, 73, 12, 0, 0
+	ev_note	0, 19, 24, 12, 0, 0
+	ev_at	48
+	ev_note	0, 45, 95, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 45, 111, 12, 0, 0
+	ev_note	0, 21, 107, 12, 0, 0
+	ev_at	95
+	ev_note	0, 57, 105, 12, 0, 0
+	ev_end
+TcmpStream36_End:
+TcmpStream37:
+	.byte	37		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream37_End - TcmpStream37_Events
+TcmpStream37_Events:		# 2 bars of 4 beats, 722 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 95, 34, 1, 1
+	ev_note	3, 55, 72, 28, 1, 1
+	ev_note	3, 60, 72, 32, 1, 1
+	ev_note	3, 63, 73, 34, 1, 1
+	ev_at	8
+	ev_note	4, 79, 37, 56, 4, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 52, 23, 0, 1
+	ev_note	2, 63, 52, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	76
+	ev_note	2, 60, 68, 18, 0, 1
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	2
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	27
+	ev_note	2, 60, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	36
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	3, 55, 82, 1, 1, 1
+	ev_note	3, 62, 75, 8, 1, 1
+	ev_note	3, 63, 72, 10, 1, 1
+	ev_at	74
+	ev_note	1, 36, 93, 19, 0, 1
+	ev_at	81
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	1
+	ev_note	1, 36, 86, 21, 0, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	2, 62, 26, 23, 0, 1
+	ev_note	2, 63, 26, 23, 0, 1
+	ev_at	41
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	2, 62, 52, 23, 0, 1
+	ev_note	2, 63, 52, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	75
+	ev_note	2, 62, 68, 18, 0, 1
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 114, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 62, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	1, 36, 88, 7, 0, 1
+	ev_note	3, 55, 73, 23, 0, 1
+	ev_at	26
+	ev_note	2, 62, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	3, 62, 75, 29, 0, 1
+	ev_at	51
+	ev_note	1, 43, 107, 25, 0, 1
+	ev_at	72
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	3, 63, 75, 1, 1, 1
+	ev_at	75
+	ev_note	1, 48, 90, 23, 0, 1
+	ev_at	92
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 91, 30, 1, 1
+	ev_note	3, 55, 70, 104, 0, 1
+	ev_note	3, 60, 72, 104, 0, 1
+	ev_at	24
+	ev_note	0, 19, 42, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 50, 12, 0, 0
+	ev_note	2, 60, 52, 23, 0, 1
+	ev_note	2, 63, 52, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 42, 12, 0, 0
+	ev_cc	3, 64, 127
+	ev_at	73
+	ev_note	2, 60, 68, 18, 0, 1
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	3
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 46, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 41, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 21, 76, 12, 0, 0
+	ev_note	1, 36, 104, 5, 0, 1
+	ev_note	3, 62, 87, 103, 0, 1
+	ev_note	3, 63, 85, 104, 0, 1
+	ev_note	3, 67, 90, 106, 0, 1
+	ev_at	77
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 109, 95, 0, 1
+	ev_note	4, 74, 66, 97, 0, 1
+	ev_at	24
+	ev_note	0, 48, 40, 12, 0, 0
+	ev_note	0, 19, 46, 12, 0, 0
+	ev_at	36
+	ev_note	0, 48, 55, 12, 0, 0
+	ev_at	38
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 48, 64, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 48, 93, 12, 0, 0
+	ev_note	0, 19, 46, 12, 0, 0
+	ev_beat
+	ev_note	0, 48, 114, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	1, 38, 91, 91, 0, 1
+	ev_note	3, 55, 81, 94, 0, 1
+	ev_note	3, 62, 77, 94, 0, 1
+	ev_note	3, 63, 75, 94, 0, 1
+	ev_at	2
+	ev_note	4, 67, 63, 92, 0, 1
+	ev_at	6
+	ev_cc	3, 64, 0
+	ev_at	24
+	ev_note	0, 47, 73, 12, 0, 0
+	ev_note	0, 19, 41, 12, 0, 0
+	ev_at	48
+	ev_note	0, 45, 95, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 45, 111, 12, 0, 0
+	ev_note	0, 21, 80, 12, 0, 0
+	ev_at	95
+	ev_note	0, 57, 105, 12, 0, 0
+	ev_end
+TcmpStream37_End:
+TcmpStream38:
+	.byte	38		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream38_End - TcmpStream38_Events
+TcmpStream38_Events:		# 3 bars of 4 beats, 816 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 95, 34, 1, 1
+	ev_note	3, 55, 72, 28, 1, 1
+	ev_note	3, 60, 72, 32, 1, 1
+	ev_note	3, 64, 73, 34, 1, 1
+	ev_at	8
+	ev_note	4, 79, 37, 36, 4, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 48, 23, 0, 1
+	ev_note	2, 64, 48, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	76
+	ev_note	2, 60, 64, 18, 0, 1
+	ev_note	2, 64, 64, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	2
+	ev_note	2, 60, 73, 25, 0, 1
+	ev_note	2, 64, 73, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	27
+	ev_note	2, 60, 68, 9, 0, 1
+	ev_note	2, 64, 80, 8, 0, 1
+	ev_at	36
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	3, 55, 82, 1, 1, 1
+	ev_note	3, 62, 75, 8, 1, 1
+	ev_note	3, 64, 72, 10, 1, 1
+	ev_at	74
+	ev_note	1, 36, 93, 19, 0, 1
+	ev_at	81
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	1
+	ev_note	1, 36, 86, 21, 0, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	2, 62, 22, 23, 0, 1
+	ev_note	2, 64, 22, 23, 0, 1
+	ev_at	41
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	2, 62, 48, 25, 0, 1
+	ev_note	2, 64, 48, 25, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	75
+	ev_note	2, 62, 64, 18, 0, 1
+	ev_note	2, 64, 64, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 114, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 62, 73, 25, 0, 1
+	ev_note	2, 64, 73, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	1, 36, 88, 7, 0, 1
+	ev_note	3, 55, 73, 23, 0, 1
+	ev_at	26
+	ev_note	2, 62, 68, 9, 0, 1
+	ev_note	2, 64, 80, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	3, 62, 75, 29, 0, 1
+	ev_at	51
+	ev_note	1, 43, 107, 25, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_note	3, 64, 75, 1, 1, 1
+	ev_at	75
+	ev_note	1, 45, 90, 23, 0, 1
+	ev_at	92
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 91, 30, 1, 1
+	ev_note	3, 55, 70, 104, 0, 1
+	ev_note	3, 60, 72, 104, 0, 1
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 50, 12, 0, 0
+	ev_note	2, 60, 48, 23, 0, 1
+	ev_note	2, 64, 48, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_cc	3, 64, 127
+	ev_at	73
+	ev_note	2, 60, 64, 18, 0, 1
+	ev_note	2, 64, 64, 20, 0, 1
+	ev_at	95
+	ev_note	2, 60, 73, 25, 0, 1
+	ev_note	2, 64, 73, 25, 0, 1
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	3
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 68, 9, 0, 1
+	ev_note	2, 64, 80, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 41, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 21, 112, 12, 0, 0
+	ev_note	1, 36, 104, 5, 0, 1
+	ev_note	3, 62, 87, 103, 0, 1
+	ev_note	3, 64, 85, 104, 0, 1
+	ev_note	3, 67, 90, 106, 0, 1
+	ev_at	73
+	ev_note	4, 74, 62, 49, 0, 1
+	ev_at	77
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 109, 95, 0, 1
+	ev_at	23
+	ev_note	4, 67, 55, 50, 0, 1
+	ev_at	24
+	ev_note	0, 48, 40, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	36
+	ev_note	0, 48, 55, 12, 0, 0
+	ev_at	38
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 48, 64, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 48, 93, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	73
+	ev_note	4, 62, 47, 125, 0, 1
+	ev_beat
+	ev_note	0, 48, 114, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	1, 38, 91, 91, 0, 1
+	ev_note	3, 55, 81, 94, 0, 1
+	ev_note	3, 62, 77, 94, 0, 1
+	ev_note	3, 64, 75, 94, 0, 1
+	ev_at	6
+	ev_cc	3, 64, 0
+	ev_at	24
+	ev_note	0, 47, 73, 12, 0, 0
+	ev_note	0, 19, 20, 12, 0, 0
+	ev_at	26
+	ev_note	4, 55, 39, 65, 0, 1
+	ev_at	48
+	ev_note	0, 45, 95, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 45, 111, 12, 0, 0
+	ev_note	0, 21, 100, 12, 0, 0
+	ev_at	95
+	ev_note	0, 57, 105, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 37, 1, 1
+	ev_note	3, 55, 82, 64, 1, 1
+	ev_note	3, 60, 82, 64, 1, 1
+	ev_note	3, 64, 82, 64, 1, 1
+	ev_note	4, 55, 31, 64, 1, 1
+	ev_note	4, 60, 31, 66, 1, 1
+	ev_note	4, 64, 31, 64, 1, 1
+	ev_at	3
+	ev_note	2, 60, 73, 61, 1, 1
+	ev_note	2, 64, 73, 61, 1, 1
+	ev_beat
+	ev_at	24
+	ev_cc	4, 64, 127
+	ev_beat
+	ev_beat
+	ev_at	88
+	ev_cc	4, 64, 0
+	ev_end
+TcmpStream38_End:
+TcmpStream39:
+	.byte	39		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream39_End - TcmpStream39_Events
+TcmpStream39_Events:		# 3 bars of 4 beats, 808 bytes
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 95, 34, 1, 1
+	ev_note	3, 55, 72, 28, 1, 1
+	ev_note	3, 60, 72, 32, 1, 1
+	ev_note	3, 63, 73, 34, 1, 1
+	ev_at	8
+	ev_note	4, 79, 37, 36, 4, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	50
+	ev_note	2, 60, 52, 23, 0, 1
+	ev_note	2, 63, 52, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	76
+	ev_note	2, 60, 68, 18, 0, 1
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	2
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	27
+	ev_note	2, 60, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	36
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	3, 55, 82, 1, 1, 1
+	ev_note	3, 62, 75, 8, 1, 1
+	ev_note	3, 63, 72, 10, 1, 1
+	ev_at	74
+	ev_note	1, 36, 93, 19, 0, 1
+	ev_at	81
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	1
+	ev_note	1, 36, 86, 21, 0, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	2, 62, 26, 23, 0, 1
+	ev_note	2, 63, 26, 23, 0, 1
+	ev_at	41
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	50
+	ev_note	2, 62, 52, 25, 0, 1
+	ev_note	2, 63, 52, 25, 0, 1
+	ev_at	72
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_at	75
+	ev_note	2, 62, 68, 18, 0, 1
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	95
+	ev_note	0, 54, 114, 12, 0, 0
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	1
+	ev_note	2, 62, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_at	24
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	1, 36, 88, 7, 0, 1
+	ev_note	3, 55, 73, 23, 0, 1
+	ev_at	26
+	ev_note	2, 62, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	3, 62, 75, 29, 0, 1
+	ev_at	51
+	ev_note	1, 43, 107, 25, 0, 1
+	ev_at	72
+	ev_note	0, 19, 36, 12, 0, 0
+	ev_note	3, 63, 75, 1, 1, 1
+	ev_at	75
+	ev_note	1, 48, 90, 23, 0, 1
+	ev_at	92
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 91, 30, 1, 1
+	ev_note	3, 55, 70, 104, 0, 1
+	ev_note	3, 60, 72, 104, 0, 1
+	ev_at	24
+	ev_note	0, 19, 42, 12, 0, 0
+	ev_at	48
+	ev_note	0, 18, 50, 12, 0, 0
+	ev_note	2, 60, 52, 23, 0, 1
+	ev_note	2, 63, 52, 23, 0, 1
+	ev_at	72
+	ev_note	0, 19, 42, 12, 0, 0
+	ev_cc	3, 64, 127
+	ev_at	73
+	ev_note	2, 60, 68, 18, 0, 1
+	ev_note	2, 63, 68, 20, 0, 1
+	ev_at	95
+	ev_note	2, 60, 77, 25, 0, 1
+	ev_note	2, 63, 77, 25, 0, 1
+	ev_beat
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_at	3
+	ev_note	0, 54, 124, 12, 0, 0
+	ev_at	24
+	ev_note	0, 19, 46, 12, 0, 0
+	ev_at	25
+	ev_note	2, 60, 72, 9, 0, 1
+	ev_note	2, 63, 84, 8, 0, 1
+	ev_at	48
+	ev_note	0, 18, 41, 12, 0, 0
+	ev_at	72
+	ev_note	0, 36, 76, 12, 0, 0
+	ev_note	0, 21, 76, 12, 0, 0
+	ev_note	1, 36, 104, 5, 0, 1
+	ev_note	3, 62, 87, 103, 0, 1
+	ev_note	3, 63, 85, 104, 0, 1
+	ev_note	3, 67, 90, 106, 0, 1
+	ev_at	73
+	ev_note	4, 74, 62, 49, 0, 1
+	ev_at	77
+	ev_cc	3, 64, 0
+	ev_beat
+	ev_note	0, 36, 102, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_note	1, 43, 109, 95, 0, 1
+	ev_at	23
+	ev_note	4, 67, 55, 50, 0, 1
+	ev_at	24
+	ev_note	0, 48, 40, 12, 0, 0
+	ev_note	0, 19, 46, 12, 0, 0
+	ev_at	36
+	ev_note	0, 48, 55, 12, 0, 0
+	ev_at	38
+	ev_cc	3, 64, 127
+	ev_at	48
+	ev_note	0, 48, 64, 12, 0, 0
+	ev_note	0, 18, 42, 12, 0, 0
+	ev_at	72
+	ev_note	0, 48, 93, 12, 0, 0
+	ev_note	0, 19, 46, 12, 0, 0
+	ev_at	73
+	ev_note	4, 62, 47, 125, 0, 1
+	ev_beat
+	ev_note	0, 48, 114, 12, 0, 0
+	ev_note	0, 18, 100, 12, 0, 0
+	ev_note	1, 38, 91, 91, 0, 1
+	ev_note	3, 55, 81, 94, 0, 1
+	ev_note	3, 62, 77, 94, 0, 1
+	ev_note	3, 63, 75, 94, 0, 1
+	ev_at	6
+	ev_cc	3, 64, 0
+	ev_at	24
+	ev_note	0, 47, 73, 12, 0, 0
+	ev_note	0, 19, 41, 12, 0, 0
+	ev_at	26
+	ev_note	4, 55, 39, 65, 0, 1
+	ev_at	48
+	ev_note	0, 45, 95, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_at	72
+	ev_note	0, 45, 111, 12, 0, 0
+	ev_note	0, 21, 80, 12, 0, 0
+	ev_at	95
+	ev_note	0, 57, 105, 12, 0, 0
+	ev_beat
+	ev_note	0, 36, 99, 12, 0, 0
+	ev_note	0, 18, 46, 12, 0, 0
+	ev_note	1, 36, 92, 37, 1, 1
+	ev_note	3, 55, 82, 64, 1, 1
+	ev_note	3, 60, 82, 64, 1, 1
+	ev_note	3, 63, 82, 64, 1, 1
+	ev_note	4, 55, 31, 64, 1, 1
+	ev_note	4, 60, 31, 66, 1, 1
+	ev_note	4, 63, 31, 64, 1, 1
+	ev_at	3
+	ev_note	2, 60, 77, 61, 1, 1
+	ev_note	2, 63, 77, 61, 1, 1
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TcmpStream39_End:
+TcmpStream40:
+	.byte	40		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream40_End - TcmpStream40_Events
+TcmpStream40_Events:		# 4 bars of 4 beats, 633 bytes
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 36, 78, 100, 0, 16
+	ev_note	2, 55, 53, 81, 0, 80
+	ev_at	2
+	ev_note	2, 60, 56, 81, 0, 80
+	ev_at	4
+	ev_note	2, 64, 54, 81, 0, 80
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	2, 55, 53, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 63, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 65, 17, 0, 80
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 43, 75, 111, 0, 16
+	ev_note	2, 55, 39, 78, 0, 80
+	ev_at	2
+	ev_note	2, 60, 40, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 51, 75, 0, 80
+	ev_beat
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	2, 55, 62, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 64, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 62, 18, 0, 80
+	ev_at	64
+	ev_note	0, 38, 24, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 36, 77, 107, 0, 16
+	ev_note	2, 55, 47, 77, 0, 80
+	ev_at	2
+	ev_note	2, 60, 49, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 47, 77, 0, 80
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	2, 55, 51, 11, 0, 80
+	ev_at	2
+	ev_note	2, 60, 63, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 60, 13, 0, 80
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 43, 77, 109, 0, 16
+	ev_note	2, 55, 51, 77, 0, 80
+	ev_at	2
+	ev_note	2, 60, 57, 77, 0, 80
+	ev_at	4
+	ev_note	2, 64, 54, 80, 0, 80
+	ev_beat
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	2, 55, 68, 16, 0, 80
+	ev_at	2
+	ev_note	2, 60, 69, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 66, 16, 0, 80
+	ev_at	64
+	ev_note	0, 38, 24, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 36, 73, 112, 0, 16
+	ev_note	2, 55, 49, 70, 0, 80
+	ev_at	2
+	ev_note	2, 60, 48, 75, 0, 80
+	ev_at	4
+	ev_note	2, 64, 56, 72, 0, 80
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	2, 55, 66, 14, 0, 80
+	ev_at	2
+	ev_note	2, 60, 66, 19, 0, 80
+	ev_at	4
+	ev_note	2, 64, 64, 16, 0, 80
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 43, 73, 108, 0, 16
+	ev_note	2, 55, 51, 79, 0, 80
+	ev_at	2
+	ev_note	2, 60, 55, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 56, 76, 0, 80
+	ev_beat
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	2, 55, 62, 19, 0, 80
+	ev_at	2
+	ev_note	2, 60, 65, 19, 0, 80
+	ev_at	4
+	ev_note	2, 64, 64, 16, 0, 80
+	ev_at	64
+	ev_note	0, 38, 24, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 36, 74, 118, 0, 16
+	ev_note	2, 55, 50, 73, 0, 80
+	ev_at	2
+	ev_note	2, 60, 50, 75, 0, 80
+	ev_at	4
+	ev_note	2, 64, 59, 72, 0, 80
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	2, 55, 66, 20, 0, 80
+	ev_at	2
+	ev_note	2, 60, 66, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 64, 18, 0, 80
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 43, 71, 110, 0, 16
+	ev_note	2, 55, 59, 78, 0, 80
+	ev_at	2
+	ev_note	2, 60, 57, 80, 0, 80
+	ev_at	4
+	ev_note	2, 64, 60, 82, 0, 80
+	ev_beat
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	2, 55, 65, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 73, 13, 0, 80
+	ev_at	4
+	ev_note	2, 64, 72, 15, 0, 80
+	ev_at	64
+	ev_note	0, 38, 24, 8, 0, 0
+	ev_end
+TcmpStream40_End:
+TcmpStream41:
+	.byte	41		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream41_End - TcmpStream41_Events
+TcmpStream41_Events:		# 1 bars of 4 beats, 180 bytes
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 64, 8, 0, 0
+	ev_note	1, 36, 74, 111, 0, 16
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 39, 8, 0, 0
+	ev_at	1
+	ev_note	2, 55, 67, 25, 0, 80
+	ev_at	2
+	ev_note	2, 60, 73, 22, 0, 80
+	ev_at	4
+	ev_note	2, 64, 71, 25, 0, 80
+	ev_at	32
+	ev_note	0, 38, 18, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_note	0, 36, 40, 8, 0, 0
+	ev_note	1, 36, 75, 35, 0, 16
+	ev_beat
+	ev_note	0, 38, 42, 8, 0, 0
+	ev_note	0, 36, 66, 8, 0, 0
+	ev_note	1, 43, 77, 79, 0, 16
+	ev_at	32
+	ev_note	0, 38, 69, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 67, 8, 0, 0
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 43, 80, 86, 0, 16
+	ev_at	1
+	ev_note	2, 55, 52, 47, 0, 80
+	ev_at	2
+	ev_note	2, 60, 52, 48, 0, 80
+	ev_at	4
+	ev_note	2, 64, 53, 49, 0, 80
+	ev_at	64
+	ev_note	0, 38, 67, 8, 0, 0
+	ev_at	65
+	ev_note	2, 55, 77, 13, 0, 80
+	ev_at	66
+	ev_note	2, 60, 78, 13, 0, 80
+	ev_at	68
+	ev_note	2, 64, 78, 14, 0, 80
+	ev_end
+TcmpStream41_End:
+TcmpStream42:
+	.byte	42		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream42_End - TcmpStream42_Events
+TcmpStream42_Events:		# 1 bars of 4 beats, 172 bytes
+	ev_beat
+	ev_note	0, 38, 46, 8, 0, 0
+	ev_note	0, 36, 64, 8, 0, 0
+	ev_note	1, 36, 63, 109, 0, 16
+	ev_at	64
+	ev_note	0, 38, 35, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	2, 55, 71, 26, 0, 80
+	ev_at	2
+	ev_note	2, 60, 74, 23, 0, 80
+	ev_at	5
+	ev_note	2, 64, 72, 26, 0, 80
+	ev_at	64
+	ev_note	0, 38, 27, 8, 0, 0
+	ev_note	1, 36, 72, 32, 0, 16
+	ev_beat
+	ev_note	0, 38, 52, 8, 0, 0
+	ev_note	0, 36, 66, 8, 0, 0
+	ev_note	1, 43, 65, 68, 0, 16
+	ev_note	2, 55, 50, 50, 0, 80
+	ev_at	2
+	ev_note	2, 60, 51, 47, 0, 80
+	ev_at	5
+	ev_note	2, 64, 52, 47, 0, 80
+	ev_at	64
+	ev_note	0, 38, 56, 8, 0, 0
+	ev_note	2, 55, 73, 14, 0, 80
+	ev_at	66
+	ev_note	2, 60, 74, 14, 0, 80
+	ev_at	69
+	ev_note	2, 64, 75, 14, 0, 80
+	ev_beat
+	ev_note	0, 44, 37, 8, 0, 0
+	ev_note	1, 43, 72, 68, 0, 16
+	ev_at	32
+	ev_note	0, 38, 27, 8, 0, 0
+	ev_at	64
+	ev_note	0, 39, 78, 8, 0, 0
+	ev_note	0, 19, 42, 8, 0, 0
+	ev_end
+TcmpStream42_End:
+TcmpStream43:
+	.byte	43		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream43_End - TcmpStream43_Events
+TcmpStream43_Events:		# 4 bars of 4 beats, 691 bytes
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 49, 8, 0, 0
+	ev_note	1, 36, 80, 64, 0, 16
+	ev_note	3, 55, 49, 117, 2, 80
+	ev_note	3, 60, 49, 117, 2, 80
+	ev_note	3, 64, 49, 121, 2, 80
+	ev_beat
+	ev_note	0, 36, 40, 8, 0, 0
+	ev_note	0, 39, 89, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 36, 74, 78, 0, 16
+	ev_note	2, 55, 53, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 63, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 65, 17, 0, 80
+	ev_at	64
+	ev_note	0, 38, 30, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 59, 8, 0, 0
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	1, 43, 80, 69, 0, 16
+	ev_beat
+	ev_note	0, 36, 44, 8, 0, 0
+	ev_note	0, 39, 89, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 43, 80, 75, 0, 16
+	ev_note	2, 55, 62, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 64, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 62, 18, 0, 80
+	ev_at	64
+	ev_note	0, 38, 37, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 59, 8, 0, 0
+	ev_note	0, 36, 49, 8, 0, 0
+	ev_note	1, 36, 78, 65, 0, 16
+	ev_note	3, 55, 49, 1, 1, 80
+	ev_note	3, 60, 49, 6, 1, 80
+	ev_note	3, 64, 49, 4, 1, 80
+	ev_beat
+	ev_note	0, 36, 42, 8, 0, 0
+	ev_note	0, 39, 88, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 36, 75, 72, 0, 16
+	ev_note	2, 55, 53, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 63, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 65, 17, 0, 80
+	ev_at	64
+	ev_note	0, 38, 22, 8, 0, 0
+	ev_note	3, 55, 40, 90, 1, 80
+	ev_note	3, 60, 40, 89, 1, 80
+	ev_note	3, 64, 40, 90, 1, 80
+	ev_beat
+	ev_note	0, 38, 55, 8, 0, 0
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	1, 43, 74, 69, 0, 16
+	ev_at	64
+	ev_note	0, 38, 55, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 42, 8, 0, 0
+	ev_note	0, 39, 88, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 43, 78, 72, 0, 16
+	ev_note	2, 55, 62, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 64, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 62, 18, 0, 80
+	ev_at	64
+	ev_note	0, 38, 19, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 49, 8, 0, 0
+	ev_note	1, 36, 75, 64, 0, 16
+	ev_note	3, 55, 49, 117, 2, 80
+	ev_note	3, 60, 49, 117, 2, 80
+	ev_note	3, 64, 49, 121, 2, 80
+	ev_beat
+	ev_note	0, 36, 40, 8, 0, 0
+	ev_note	0, 39, 89, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 36, 76, 75, 0, 16
+	ev_note	2, 55, 53, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 63, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 65, 17, 0, 80
+	ev_at	64
+	ev_note	0, 38, 30, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 59, 8, 0, 0
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	1, 43, 74, 71, 0, 16
+	ev_beat
+	ev_note	0, 36, 44, 8, 0, 0
+	ev_note	0, 39, 89, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 43, 75, 76, 0, 16
+	ev_note	2, 55, 62, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 64, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 62, 18, 0, 80
+	ev_at	64
+	ev_note	0, 38, 37, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 59, 8, 0, 0
+	ev_note	0, 36, 49, 8, 0, 0
+	ev_note	1, 36, 78, 63, 0, 16
+	ev_note	3, 55, 49, 1, 1, 80
+	ev_note	3, 60, 49, 6, 1, 80
+	ev_note	3, 64, 49, 4, 1, 80
+	ev_beat
+	ev_note	0, 36, 42, 8, 0, 0
+	ev_note	0, 39, 88, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 36, 75, 61, 0, 16
+	ev_note	2, 55, 53, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 63, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 65, 17, 0, 80
+	ev_at	64
+	ev_note	0, 38, 22, 8, 0, 0
+	ev_note	3, 55, 40, 90, 1, 80
+	ev_note	3, 60, 40, 89, 1, 80
+	ev_note	3, 64, 40, 90, 1, 80
+	ev_beat
+	ev_note	0, 38, 55, 8, 0, 0
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	1, 43, 76, 73, 0, 16
+	ev_at	64
+	ev_note	0, 38, 55, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 42, 8, 0, 0
+	ev_note	0, 39, 88, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_note	1, 43, 78, 65, 0, 16
+	ev_note	2, 55, 62, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 64, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 62, 18, 0, 80
+	ev_at	64
+	ev_note	0, 38, 19, 8, 0, 0
+	ev_end
+TcmpStream43_End:
+TcmpStream44:
+	.byte	44		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream44_End - TcmpStream44_Events
+TcmpStream44_Events:		# 1 bars of 4 beats, 206 bytes
+	ev_beat
+	ev_note	0, 38, 81, 8, 0, 0
+	ev_note	0, 36, 64, 8, 0, 0
+	ev_note	1, 36, 76, 112, 0, 16
+	ev_note	3, 60, 65, 127, 0, 80
+	ev_note	3, 64, 68, 127, 0, 80
+	ev_at	64
+	ev_note	2, 55, 76, 15, 0, 17
+	ev_note	2, 62, 75, 12, 0, 17
+	ev_note	2, 64, 74, 15, 0, 17
+	ev_beat
+	ev_note	0, 36, 55, 8, 0, 0
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 35, 8, 0, 0
+	ev_at	60
+	ev_note	1, 36, 87, 18, 0, 16
+	ev_at	64
+	ev_note	0, 38, 34, 8, 0, 0
+	ev_note	3, 60, 71, 41, 1, 80
+	ev_note	3, 64, 70, 40, 1, 80
+	ev_at	80
+	ev_note	0, 38, 19, 8, 0, 0
+	ev_at	94
+	ev_note	1, 43, 80, 88, 0, 16
+	ev_beat
+	ev_note	0, 38, 55, 8, 0, 0
+	ev_note	0, 36, 66, 8, 0, 0
+	ev_note	2, 55, 70, 49, 0, 17
+	ev_note	2, 60, 68, 52, 0, 17
+	ev_note	2, 64, 70, 50, 0, 17
+	ev_at	32
+	ev_note	0, 38, 70, 8, 0, 0
+	ev_at	64
+	ev_note	2, 55, 73, 15, 0, 17
+	ev_note	2, 60, 76, 12, 0, 17
+	ev_note	2, 64, 77, 16, 0, 17
+	ev_beat
+	ev_note	0, 36, 59, 8, 0, 0
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 37, 8, 0, 0
+	ev_at	6
+	ev_note	1, 40, 80, 90, 0, 16
+	ev_at	64
+	ev_note	0, 38, 53, 8, 0, 0
+	ev_note	0, 19, 44, 8, 0, 0
+	ev_end
+TcmpStream44_End:
+TcmpStream45:
+	.byte	45		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream45_End - TcmpStream45_Events
+TcmpStream45_Events:		# 1 bars of 4 beats, 251 bytes
+	ev_beat
+	ev_note	0, 38, 83, 8, 0, 0
+	ev_note	0, 36, 64, 8, 0, 0
+	ev_note	1, 36, 82, 63, 0, 16
+	ev_at	48
+	ev_note	0, 38, 16, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 28, 8, 0, 0
+	ev_at	65
+	ev_note	2, 55, 42, 32, 0, 80
+	ev_note	2, 60, 42, 32, 0, 80
+	ev_note	2, 64, 42, 33, 0, 80
+	ev_at	72
+	ev_note	1, 43, 87, 19, 0, 16
+	ev_at	80
+	ev_note	0, 38, 47, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 57, 8, 0, 0
+	ev_note	0, 39, 73, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_at	3
+	ev_note	2, 55, 70, 12, 0, 80
+	ev_note	2, 60, 70, 14, 0, 80
+	ev_note	2, 64, 70, 14, 0, 80
+	ev_at	7
+	ev_note	1, 41, 93, 80, 0, 16
+	ev_at	64
+	ev_note	0, 39, 87, 8, 0, 0
+	ev_note	3, 62, 70, 80, 1, 17
+	ev_note	3, 64, 68, 83, 1, 17
+	ev_note	3, 67, 67, 84, 1, 17
+	ev_beat
+	ev_note	0, 36, 66, 8, 0, 0
+	ev_at	2
+	ev_note	2, 60, 40, 54, 0, 80
+	ev_note	2, 64, 40, 70, 0, 80
+	ev_note	2, 55, 40, 51, 0, 80
+	ev_at	8
+	ev_note	1, 40, 82, 81, 0, 16
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 40, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_note	2, 55, 62, 12, 0, 80
+	ev_at	65
+	ev_note	2, 60, 62, 11, 0, 80
+	ev_at	80
+	ev_note	0, 38, 56, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 57, 8, 0, 0
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 44, 8, 0, 0
+	ev_at	6
+	ev_note	1, 38, 84, 86, 0, 16
+	ev_at	32
+	ev_note	0, 38, 49, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 87, 8, 0, 0
+	ev_end
+TcmpStream45_End:
+TcmpStream46:
+	.byte	46		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream46_End - TcmpStream46_Events
+TcmpStream46_Events:		# 4 bars of 4 beats, 843 bytes
+	ev_beat
+	ev_note	0, 36, 48, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 36, 83, 75, 0, 16
+	ev_note	2, 55, 20, 81, 0, 80
+	ev_at	2
+	ev_note	2, 60, 23, 81, 0, 80
+	ev_at	4
+	ev_note	2, 64, 21, 81, 0, 80
+	ev_at	64
+	ev_note	3, 55, 61, 16, 0, 80
+	ev_note	3, 60, 61, 17, 0, 80
+	ev_note	3, 64, 59, 19, 0, 80
+	ev_beat
+	ev_note	0, 36, 30, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 20, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 30, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 32, 17, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 43, 79, 72, 0, 16
+	ev_note	2, 55, 10, 78, 0, 80
+	ev_at	1
+	ev_note	3, 60, 58, 20, 0, 80
+	ev_note	3, 64, 58, 23, 0, 80
+	ev_note	3, 55, 59, 17, 0, 80
+	ev_at	2
+	ev_note	2, 60, 10, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 18, 75, 0, 80
+	ev_beat
+	ev_note	0, 36, 32, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 29, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 31, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 29, 18, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 48, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 36, 76, 86, 0, 16
+	ev_note	2, 55, 14, 77, 0, 80
+	ev_at	2
+	ev_note	2, 60, 16, 79, 0, 80
+	ev_note	3, 64, 54, 26, 0, 80
+	ev_note	3, 60, 55, 23, 0, 80
+	ev_note	3, 55, 58, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 14, 77, 0, 80
+	ev_beat
+	ev_note	0, 36, 30, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 18, 11, 0, 80
+	ev_at	2
+	ev_note	2, 60, 30, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 27, 13, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_note	1, 36, 73, 19, 0, 16
+	ev_at	65
+	ev_note	3, 60, 60, 21, 0, 80
+	ev_note	3, 55, 58, 19, 0, 80
+	ev_note	3, 64, 56, 20, 0, 80
+	ev_beat
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 43, 79, 74, 0, 16
+	ev_note	2, 55, 18, 77, 0, 80
+	ev_at	2
+	ev_note	2, 60, 24, 77, 0, 80
+	ev_at	4
+	ev_note	2, 64, 21, 80, 0, 80
+	ev_beat
+	ev_note	0, 36, 32, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 35, 16, 0, 80
+	ev_at	2
+	ev_note	2, 60, 36, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 33, 16, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 48, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 36, 56, 96, 0, 16
+	ev_note	2, 55, 16, 70, 0, 80
+	ev_at	2
+	ev_note	2, 60, 15, 75, 0, 80
+	ev_at	4
+	ev_note	2, 64, 23, 72, 0, 80
+	ev_at	65
+	ev_note	3, 55, 63, 22, 0, 80
+	ev_note	3, 60, 61, 21, 0, 80
+	ev_note	3, 64, 56, 19, 0, 80
+	ev_beat
+	ev_note	0, 36, 30, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 33, 14, 0, 80
+	ev_at	2
+	ev_note	2, 60, 33, 19, 0, 80
+	ev_at	4
+	ev_note	2, 64, 31, 16, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 43, 71, 85, 0, 16
+	ev_note	2, 55, 18, 79, 0, 80
+	ev_note	3, 60, 64, 21, 0, 80
+	ev_at	1
+	ev_note	3, 55, 59, 20, 0, 80
+	ev_note	3, 64, 59, 20, 0, 80
+	ev_at	2
+	ev_note	2, 60, 22, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 23, 76, 0, 80
+	ev_beat
+	ev_note	0, 36, 32, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 29, 19, 0, 80
+	ev_at	2
+	ev_note	2, 60, 32, 19, 0, 80
+	ev_at	4
+	ev_note	2, 64, 31, 16, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 48, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 36, 64, 91, 0, 16
+	ev_note	2, 55, 17, 73, 0, 80
+	ev_at	2
+	ev_note	2, 60, 17, 75, 0, 80
+	ev_note	3, 55, 62, 23, 0, 80
+	ev_note	3, 60, 56, 22, 0, 80
+	ev_note	3, 64, 53, 22, 0, 80
+	ev_at	4
+	ev_note	2, 64, 26, 72, 0, 80
+	ev_beat
+	ev_note	0, 36, 30, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 33, 20, 0, 80
+	ev_at	2
+	ev_note	2, 60, 33, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 31, 18, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_note	1, 36, 79, 17, 0, 16
+	ev_note	3, 60, 63, 21, 0, 80
+	ev_note	3, 64, 57, 22, 0, 80
+	ev_at	65
+	ev_note	3, 55, 59, 20, 0, 80
+	ev_beat
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 43, 70, 84, 0, 16
+	ev_note	2, 55, 26, 78, 0, 80
+	ev_at	2
+	ev_note	2, 60, 24, 80, 0, 80
+	ev_at	4
+	ev_note	2, 64, 27, 82, 0, 80
+	ev_beat
+	ev_note	0, 36, 32, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 70, 8, 0, 0
+	ev_note	2, 55, 32, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 40, 13, 0, 80
+	ev_at	4
+	ev_note	2, 64, 39, 15, 0, 80
+	ev_at	64
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_end
+TcmpStream46_End:
+TcmpStream47:
+	.byte	47		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream47_End - TcmpStream47_Events
+TcmpStream47_Events:		# 1 bars of 4 beats, 225 bytes
+	ev_beat
+	ev_note	0, 36, 48, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_note	1, 36, 72, 118, 0, 16
+	ev_at	64
+	ev_note	0, 19, 62, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 30, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_note	0, 19, 81, 8, 0, 0
+	ev_at	4
+	ev_note	3, 64, 55, 27, 0, 16
+	ev_at	5
+	ev_note	2, 60, 58, 40, 0, 16
+	ev_note	3, 60, 54, 24, 0, 16
+	ev_at	7
+	ev_note	3, 57, 54, 21, 0, 16
+	ev_note	3, 55, 54, 19, 0, 16
+	ev_at	64
+	ev_note	0, 46, 70, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_at	9
+	ev_note	2, 60, 74, 54, 0, 16
+	ev_at	10
+	ev_note	3, 60, 51, 41, 0, 16
+	ev_at	11
+	ev_note	3, 64, 50, 40, 0, 16
+	ev_at	13
+	ev_note	3, 57, 42, 39, 0, 16
+	ev_at	15
+	ev_note	3, 55, 41, 35, 0, 16
+	ev_at	64
+	ev_note	0, 38, 53, 8, 0, 0
+	ev_note	0, 18, 40, 8, 0, 0
+	ev_note	1, 43, 88, 26, 0, 16
+	ev_at	73
+	ev_note	3, 60, 65, 19, 0, 16
+	ev_note	3, 64, 60, 20, 0, 16
+	ev_at	74
+	ev_note	3, 57, 60, 16, 0, 16
+	ev_at	75
+	ev_note	2, 60, 83, 27, 0, 16
+	ev_note	3, 55, 63, 15, 0, 16
+	ev_beat
+	ev_note	0, 36, 32, 8, 0, 0
+	ev_note	0, 21, 77, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 66, 8, 0, 0
+	ev_note	0, 18, 66, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 34, 8, 0, 0
+	ev_note	0, 18, 53, 8, 0, 0
+	ev_note	1, 43, 92, 27, 0, 16
+	ev_end
+TcmpStream47_End:
+TcmpStream48:
+	.byte	48		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream48_End - TcmpStream48_Events
+TcmpStream48_Events:		# 1 bars of 4 beats, 237 bytes
+	ev_beat
+	ev_note	0, 36, 48, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_at	1
+	ev_note	1, 36, 71, 59, 1, 16
+	ev_note	2, 60, 61, 56, 0, 16
+	ev_note	3, 60, 67, 61, 0, 80
+	ev_at	2
+	ev_note	3, 64, 68, 59, 0, 80
+	ev_note	3, 55, 61, 61, 0, 80
+	ev_at	64
+	ev_note	0, 46, 79, 8, 0, 0
+	ev_at	66
+	ev_note	2, 60, 90, 16, 0, 16
+	ev_at	68
+	ev_note	3, 55, 75, 15, 0, 80
+	ev_note	3, 60, 78, 15, 0, 80
+	ev_note	3, 64, 78, 16, 0, 80
+	ev_beat
+	ev_note	0, 36, 30, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 21, 8, 0, 0
+	ev_at	64
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 36, 51, 8, 0, 0
+	ev_note	0, 46, 59, 8, 0, 0
+	ev_at	1
+	ev_note	2, 60, 77, 55, 0, 16
+	ev_at	2
+	ev_note	1, 43, 76, 54, 0, 16
+	ev_at	3
+	ev_note	3, 55, 49, 54, 0, 80
+	ev_note	3, 60, 64, 53, 0, 80
+	ev_note	3, 64, 60, 51, 0, 80
+	ev_at	64
+	ev_note	0, 46, 86, 8, 0, 0
+	ev_at	66
+	ev_note	2, 60, 87, 15, 0, 16
+	ev_at	67
+	ev_note	1, 43, 73, 23, 0, 16
+	ev_note	3, 60, 81, 16, 0, 80
+	ev_at	68
+	ev_note	3, 55, 84, 16, 0, 80
+	ev_note	3, 64, 84, 15, 0, 80
+	ev_beat
+	ev_note	0, 36, 32, 8, 0, 0
+	ev_note	0, 39, 61, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 29, 8, 0, 0
+	ev_note	0, 19, 44, 8, 0, 0
+	ev_at	64
+	ev_note	0, 39, 90, 8, 0, 0
+	ev_note	0, 18, 57, 8, 0, 0
+	ev_end
+TcmpStream48_End:
+TcmpStream49:
+	.byte	49		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream49_End - TcmpStream49_Events
+TcmpStream49_Events:		# 4 bars of 4 beats, 933 bytes
+	ev_beat
+	ev_note	0, 53, 82, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 48, 74, 75, 0, 16
+	ev_note	2, 55, 40, 81, 0, 80
+	ev_note	3, 55, 38, 117, 2, 80
+	ev_note	3, 60, 38, 117, 2, 80
+	ev_note	3, 64, 38, 121, 2, 80
+	ev_at	2
+	ev_note	2, 60, 43, 81, 0, 80
+	ev_at	4
+	ev_note	2, 64, 41, 81, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 47, 72, 74, 0, 16
+	ev_note	2, 55, 40, 10, 0, 80
+	ev_at	2
+	ev_note	2, 60, 50, 16, 0, 80
+	ev_at	4
+	ev_note	2, 64, 52, 17, 0, 80
+	ev_at	64
+	ev_note	0, 53, 49, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 82, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 16
+	ev_note	2, 55, 26, 78, 0, 80
+	ev_at	2
+	ev_note	2, 60, 27, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 38, 75, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 43, 72, 66, 0, 16
+	ev_note	2, 55, 49, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 51, 17, 0, 80
+	ev_at	4
+	ev_note	2, 64, 49, 18, 0, 80
+	ev_at	64
+	ev_note	0, 53, 49, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 61, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 48, 74, 75, 0, 16
+	ev_note	2, 55, 34, 77, 0, 80
+	ev_note	3, 55, 38, 1, 1, 80
+	ev_note	3, 60, 38, 6, 1, 80
+	ev_note	3, 64, 38, 4, 1, 80
+	ev_at	2
+	ev_note	2, 60, 36, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 34, 77, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 47, 72, 74, 0, 16
+	ev_note	2, 55, 38, 11, 0, 80
+	ev_at	2
+	ev_note	2, 60, 50, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 47, 13, 0, 80
+	ev_at	64
+	ev_note	0, 53, 44, 8, 0, 0
+	ev_note	3, 55, 29, 90, 1, 80
+	ev_note	3, 60, 29, 89, 1, 80
+	ev_note	3, 64, 29, 90, 1, 80
+	ev_beat
+	ev_note	0, 53, 67, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 16
+	ev_note	2, 55, 38, 77, 0, 80
+	ev_at	2
+	ev_note	2, 60, 44, 77, 0, 80
+	ev_at	4
+	ev_note	2, 64, 41, 80, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 43, 72, 66, 0, 16
+	ev_note	2, 55, 55, 16, 0, 80
+	ev_at	2
+	ev_note	2, 60, 56, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 53, 16, 0, 80
+	ev_at	64
+	ev_note	0, 53, 44, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 61, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 48, 74, 75, 0, 16
+	ev_note	2, 55, 36, 70, 0, 80
+	ev_note	3, 55, 38, 117, 2, 80
+	ev_note	3, 60, 38, 117, 2, 80
+	ev_note	3, 64, 38, 121, 2, 80
+	ev_at	2
+	ev_note	2, 60, 35, 75, 0, 80
+	ev_at	4
+	ev_note	2, 64, 43, 72, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 47, 72, 74, 0, 16
+	ev_note	2, 55, 53, 14, 0, 80
+	ev_at	2
+	ev_note	2, 60, 53, 19, 0, 80
+	ev_at	4
+	ev_note	2, 64, 51, 16, 0, 80
+	ev_at	64
+	ev_note	0, 53, 44, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 67, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 16
+	ev_note	2, 55, 38, 79, 0, 80
+	ev_at	2
+	ev_note	2, 60, 42, 79, 0, 80
+	ev_at	4
+	ev_note	2, 64, 43, 76, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 43, 72, 66, 0, 16
+	ev_note	2, 55, 49, 19, 0, 80
+	ev_at	2
+	ev_note	2, 60, 52, 19, 0, 80
+	ev_at	4
+	ev_note	2, 64, 51, 16, 0, 80
+	ev_at	64
+	ev_note	0, 53, 44, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 61, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 48, 74, 75, 0, 16
+	ev_note	2, 55, 37, 73, 0, 80
+	ev_note	3, 55, 38, 1, 1, 80
+	ev_note	3, 60, 38, 6, 1, 80
+	ev_note	3, 64, 38, 4, 1, 80
+	ev_at	2
+	ev_note	2, 60, 37, 75, 0, 80
+	ev_at	4
+	ev_note	2, 64, 46, 72, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 47, 72, 74, 0, 16
+	ev_note	2, 55, 53, 20, 0, 80
+	ev_at	2
+	ev_note	2, 60, 53, 20, 0, 80
+	ev_at	4
+	ev_note	2, 64, 51, 18, 0, 80
+	ev_at	64
+	ev_note	0, 53, 44, 8, 0, 0
+	ev_note	3, 55, 29, 90, 1, 80
+	ev_note	3, 60, 29, 89, 1, 80
+	ev_note	3, 64, 29, 90, 1, 80
+	ev_beat
+	ev_note	0, 53, 67, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 16
+	ev_note	2, 55, 46, 78, 0, 80
+	ev_at	2
+	ev_note	2, 60, 44, 80, 0, 80
+	ev_at	4
+	ev_note	2, 64, 47, 82, 0, 80
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 43, 72, 66, 0, 16
+	ev_note	2, 55, 52, 15, 0, 80
+	ev_at	2
+	ev_note	2, 60, 60, 13, 0, 80
+	ev_at	4
+	ev_note	2, 64, 59, 15, 0, 80
+	ev_at	64
+	ev_note	0, 53, 44, 8, 0, 0
+	ev_end
+TcmpStream49_End:
+TcmpStream50:
+	.byte	50		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream50_End - TcmpStream50_Events
+TcmpStream50_Events:		# 1 bars of 4 beats, 248 bytes
+	ev_beat
+	ev_note	0, 53, 82, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 48, 74, 75, 0, 16
+	ev_note	3, 55, 46, 114, 2, 17
+	ev_note	3, 64, 52, 108, 2, 17
+	ev_at	1
+	ev_note	3, 67, 51, 109, 2, 17
+	ev_note	3, 62, 51, 107, 2, 17
+	ev_at	64
+	ev_note	0, 53, 60, 8, 0, 0
+	ev_note	2, 55, 60, 17, 0, 80
+	ev_at	65
+	ev_note	2, 60, 66, 18, 0, 80
+	ev_at	66
+	ev_note	2, 64, 69, 19, 0, 80
+	ev_beat
+	ev_note	0, 53, 107, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 47, 72, 74, 0, 16
+	ev_at	32
+	ev_note	0, 53, 46, 8, 0, 0
+	ev_at	64
+	ev_note	0, 53, 36, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 82, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 16
+	ev_note	2, 55, 51, 59, 0, 80
+	ev_at	1
+	ev_note	2, 60, 57, 60, 0, 80
+	ev_at	2
+	ev_note	2, 64, 48, 57, 0, 80
+	ev_at	64
+	ev_note	0, 53, 92, 8, 0, 0
+	ev_note	2, 55, 75, 13, 0, 80
+	ev_at	65
+	ev_note	2, 60, 69, 12, 0, 80
+	ev_at	66
+	ev_note	2, 64, 81, 16, 0, 80
+	ev_beat
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 43, 72, 66, 0, 16
+	ev_at	32
+	ev_note	0, 53, 98, 8, 0, 0
+	ev_at	64
+	ev_note	2, 55, 87, 13, 0, 80
+	ev_at	65
+	ev_note	2, 60, 87, 12, 0, 80
+	ev_at	66
+	ev_note	2, 64, 87, 14, 0, 80
+	ev_end
+TcmpStream50_End:
+TcmpStream51:
+	.byte	51		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream51_End - TcmpStream51_Events
+TcmpStream51_Events:		# 1 bars of 4 beats, 262 bytes
+	ev_beat
+	ev_note	0, 53, 85, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 48, 74, 75, 0, 16
+	ev_at	1
+	ev_note	2, 55, 74, 53, 0, 80
+	ev_note	2, 60, 76, 54, 0, 80
+	ev_note	2, 64, 81, 53, 0, 80
+	ev_at	64
+	ev_note	0, 53, 64, 8, 0, 0
+	ev_note	3, 55, 48, 10, 1, 17
+	ev_note	3, 62, 58, 8, 1, 17
+	ev_note	3, 64, 55, 8, 1, 17
+	ev_at	66
+	ev_note	2, 55, 84, 14, 0, 80
+	ev_note	2, 60, 82, 14, 0, 80
+	ev_note	2, 64, 81, 14, 0, 80
+	ev_beat
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 47, 72, 74, 0, 16
+	ev_at	32
+	ev_note	0, 53, 75, 8, 0, 0
+	ev_at	64
+	ev_note	0, 39, 40, 8, 0, 0
+	ev_at	67
+	ev_note	2, 66, 89, 24, 0, 16
+	ev_note	2, 63, 93, 22, 0, 16
+	ev_beat
+	ev_note	0, 53, 105, 8, 0, 0
+	ev_note	0, 36, 52, 8, 0, 0
+	ev_note	0, 39, 55, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 16
+	ev_at	3
+	ev_note	2, 64, 57, 48, 0, 16
+	ev_note	2, 67, 60, 48, 0, 16
+	ev_at	64
+	ev_note	3, 55, 51, 122, 0, 17
+	ev_note	3, 62, 50, 124, 0, 17
+	ev_note	3, 64, 48, 124, 0, 17
+	ev_at	66
+	ev_note	2, 64, 80, 19, 0, 16
+	ev_note	2, 67, 81, 19, 0, 16
+	ev_beat
+	ev_note	0, 53, 90, 8, 0, 0
+	ev_note	0, 36, 37, 8, 0, 0
+	ev_note	0, 39, 83, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 43, 72, 66, 0, 16
+	ev_at	32
+	ev_note	0, 53, 49, 8, 0, 0
+	ev_at	64
+	ev_note	0, 53, 79, 8, 0, 0
+	ev_note	0, 39, 40, 8, 0, 0
+	ev_end
+TcmpStream51_End:
+TcmpStream52:
+	.byte	52		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream52_End - TcmpStream52_Events
+TcmpStream52_Events:		# 1 bars of 4 beats, 258 bytes
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 50, 8, 0, 0
+	ev_note	0, 44, 64, 8, 0, 0
+	ev_at	3
+	ev_note	2, 64, 73, 23, 0, 1
+	ev_at	4
+	ev_note	2, 62, 73, 26, 0, 1
+	ev_note	2, 67, 73, 21, 0, 1
+	ev_at	23
+	ev_note	2, 66, 54, 19, 0, 1
+	ev_at	26
+	ev_note	2, 61, 53, 19, 0, 1
+	ev_at	27
+	ev_note	2, 63, 52, 19, 0, 1
+	ev_at	40
+	ev_note	2, 65, 46, 12, 0, 1
+	ev_at	43
+	ev_note	2, 60, 44, 12, 0, 1
+	ev_at	44
+	ev_note	2, 62, 43, 12, 0, 1
+	ev_at	49
+	ev_note	2, 64, 41, 11, 0, 1
+	ev_at	60
+	ev_bend	2, 0, 56
+	ev_at	62
+	ev_note	2, 67, 74, 32, 0, 1
+	ev_at	64
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_note	3, 43, 71, 108, 0, 1
+	ev_at	70
+	ev_bend	2, 0, 58
+	ev_at	71
+	ev_bend	2, 0, 59
+	ev_at	73
+	ev_bend	2, 0, 60
+	ev_at	75
+	ev_bend	2, 0, 61
+	ev_at	77
+	ev_bend	2, 0, 62
+	ev_at	79
+	ev_bend	2, 0, 63
+	ev_at	81
+	ev_bend	2, 0, 64
+	ev_beat
+	ev_note	0, 39, 99, 8, 0, 0
+	ev_note	0, 44, 55, 8, 0, 0
+	ev_note	1, 41, 81, 64, 0, 1
+	ev_at	6
+	ev_note	2, 65, 64, 34, 0, 1
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 55, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 40, 84, 74, 0, 1
+	ev_note	3, 45, 56, 38, 0, 1
+	ev_at	5
+	ev_note	2, 64, 68, 85, 0, 1
+	ev_at	95
+	ev_note	2, 62, 56, 36, 0, 1
+	ev_beat
+	ev_note	0, 39, 101, 8, 0, 0
+	ev_note	0, 44, 58, 8, 0, 0
+	ev_note	1, 38, 86, 95, 0, 1
+	ev_note	3, 47, 53, 43, 0, 1
+	ev_at	64
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_end
+TcmpStream52_End:
+TcmpStream53:
+	.byte	53		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream53_End - TcmpStream53_Events
+TcmpStream53_Events:		# 1 bars of 4 beats, 258 bytes
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 50, 8, 0, 0
+	ev_note	0, 44, 64, 8, 0, 0
+	ev_at	3
+	ev_note	2, 63, 73, 23, 0, 1
+	ev_at	4
+	ev_note	2, 62, 73, 26, 0, 1
+	ev_note	2, 67, 73, 21, 0, 1
+	ev_at	23
+	ev_note	2, 66, 54, 19, 0, 1
+	ev_at	26
+	ev_note	2, 61, 53, 19, 0, 1
+	ev_at	27
+	ev_note	2, 63, 52, 19, 0, 1
+	ev_at	40
+	ev_note	2, 65, 46, 12, 0, 1
+	ev_at	43
+	ev_note	2, 60, 44, 12, 0, 1
+	ev_at	44
+	ev_note	2, 62, 43, 12, 0, 1
+	ev_at	49
+	ev_note	2, 64, 41, 11, 0, 1
+	ev_at	60
+	ev_bend	2, 0, 56
+	ev_at	62
+	ev_note	2, 67, 74, 32, 0, 1
+	ev_at	64
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_note	3, 43, 71, 108, 0, 1
+	ev_at	70
+	ev_bend	2, 0, 58
+	ev_at	71
+	ev_bend	2, 0, 59
+	ev_at	73
+	ev_bend	2, 0, 60
+	ev_at	75
+	ev_bend	2, 0, 61
+	ev_at	77
+	ev_bend	2, 0, 62
+	ev_at	79
+	ev_bend	2, 0, 63
+	ev_at	81
+	ev_bend	2, 0, 64
+	ev_beat
+	ev_note	0, 39, 99, 8, 0, 0
+	ev_note	0, 44, 55, 8, 0, 0
+	ev_note	1, 41, 81, 64, 0, 1
+	ev_at	6
+	ev_note	2, 65, 64, 34, 0, 1
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 55, 8, 0, 0
+	ev_note	0, 44, 57, 8, 0, 0
+	ev_note	1, 39, 84, 74, 0, 1
+	ev_note	3, 45, 56, 38, 0, 1
+	ev_at	5
+	ev_note	2, 63, 68, 85, 0, 1
+	ev_at	95
+	ev_note	2, 62, 56, 36, 0, 1
+	ev_beat
+	ev_note	0, 39, 101, 8, 0, 0
+	ev_note	0, 44, 58, 8, 0, 0
+	ev_note	1, 38, 86, 95, 0, 1
+	ev_note	3, 47, 53, 43, 0, 1
+	ev_at	64
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_end
+TcmpStream53_End:
+TcmpStream54:
+	.byte	54		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream54_End - TcmpStream54_Events
+TcmpStream54_Events:		# 2 bars of 4 beats, 376 bytes
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 50, 8, 0, 0
+	ev_note	1, 36, 82, 60, 0, 1
+	ev_at	3
+	ev_note	2, 64, 73, 23, 0, 1
+	ev_at	4
+	ev_note	2, 62, 73, 26, 0, 1
+	ev_note	2, 67, 73, 21, 0, 1
+	ev_at	23
+	ev_note	2, 66, 54, 19, 0, 1
+	ev_at	26
+	ev_note	2, 61, 53, 19, 0, 1
+	ev_at	27
+	ev_note	2, 63, 52, 19, 0, 1
+	ev_at	40
+	ev_note	2, 65, 46, 12, 0, 1
+	ev_at	43
+	ev_note	2, 60, 44, 12, 0, 1
+	ev_at	44
+	ev_note	2, 62, 43, 12, 0, 1
+	ev_at	49
+	ev_note	2, 64, 41, 11, 0, 1
+	ev_at	62
+	ev_note	2, 67, 74, 32, 0, 1
+	ev_at	64
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_note	3, 43, 71, 108, 0, 1
+	ev_beat
+	ev_note	0, 39, 99, 8, 0, 0
+	ev_note	0, 44, 50, 8, 0, 0
+	ev_note	1, 41, 81, 64, 0, 1
+	ev_at	6
+	ev_note	2, 65, 64, 34, 0, 1
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 55, 8, 0, 0
+	ev_note	1, 40, 84, 74, 0, 1
+	ev_note	3, 45, 56, 38, 0, 1
+	ev_at	5
+	ev_note	2, 64, 68, 85, 0, 1
+	ev_at	58
+	ev_bend	2, 0, 65
+	ev_at	62
+	ev_bend	2, 0, 66
+	ev_bend	2, 0, 67
+	ev_at	66
+	ev_bend	2, 0, 68
+	ev_at	72
+	ev_bend	2, 0, 64
+	ev_at	95
+	ev_note	2, 62, 56, 36, 0, 1
+	ev_beat
+	ev_note	0, 39, 101, 8, 0, 0
+	ev_note	0, 44, 55, 8, 0, 0
+	ev_note	1, 38, 86, 95, 0, 1
+	ev_note	3, 47, 53, 43, 0, 1
+	ev_at	16
+	ev_note	0, 38, 19, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 35, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 40, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 28, 8, 0, 0
+	ev_at	80
+	ev_note	0, 38, 61, 8, 0, 0
+	ev_at	91
+	ev_note	2, 60, 81, 12, 1, 1
+	ev_at	94
+	ev_note	3, 48, 80, 9, 1, 1
+	ev_beat
+	ev_note	0, 36, 46, 8, 0, 0
+	ev_note	0, 21, 44, 8, 0, 0
+	ev_note	1, 36, 75, 23, 1, 1
+	ev_at	1
+	ev_note	0, 39, 107, 8, 0, 0
+	ev_beat
+	ev_at	32
+	ev_note	0, 38, 13, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	64
+	ev_note	0, 36, 65, 8, 0, 0
+	ev_note	0, 44, 37, 8, 0, 0
+	ev_note	1, 36, 104, 23, 0, 1
+	ev_at	65
+	ev_note	0, 39, 75, 8, 0, 0
+	ev_note	2, 55, 80, 23, 0, 1
+	ev_at	66
+	ev_note	2, 52, 82, 22, 0, 1
+	ev_note	2, 60, 84, 23, 0, 1
+	ev_at	69
+	ev_note	3, 48, 78, 13, 0, 1
+	ev_beat
+	ev_beat
+	ev_end
+TcmpStream54_End:
+TcmpStream55:
+	.byte	55		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream55_End - TcmpStream55_Events
+TcmpStream55_Events:		# 2 bars of 4 beats, 376 bytes
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 50, 8, 0, 0
+	ev_note	1, 36, 82, 60, 0, 1
+	ev_at	3
+	ev_note	2, 63, 73, 23, 0, 1
+	ev_at	4
+	ev_note	2, 62, 73, 26, 0, 1
+	ev_note	2, 67, 73, 21, 0, 1
+	ev_at	23
+	ev_note	2, 66, 54, 19, 0, 1
+	ev_at	26
+	ev_note	2, 61, 53, 19, 0, 1
+	ev_at	27
+	ev_note	2, 63, 52, 19, 0, 1
+	ev_at	40
+	ev_note	2, 65, 46, 12, 0, 1
+	ev_at	43
+	ev_note	2, 60, 44, 12, 0, 1
+	ev_at	44
+	ev_note	2, 62, 43, 12, 0, 1
+	ev_at	49
+	ev_note	2, 64, 41, 11, 0, 1
+	ev_at	62
+	ev_note	2, 67, 74, 32, 0, 1
+	ev_at	64
+	ev_note	1, 43, 87, 23, 0, 1
+	ev_note	3, 43, 71, 108, 0, 1
+	ev_beat
+	ev_note	0, 39, 99, 8, 0, 0
+	ev_note	0, 44, 50, 8, 0, 0
+	ev_note	1, 41, 81, 64, 0, 1
+	ev_at	6
+	ev_note	2, 65, 64, 34, 0, 1
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 71, 8, 0, 0
+	ev_note	0, 36, 55, 8, 0, 0
+	ev_note	1, 39, 84, 74, 0, 1
+	ev_note	3, 45, 56, 38, 0, 1
+	ev_at	5
+	ev_note	2, 63, 68, 85, 0, 1
+	ev_at	58
+	ev_bend	2, 0, 65
+	ev_at	62
+	ev_bend	2, 0, 66
+	ev_bend	2, 0, 67
+	ev_at	66
+	ev_bend	2, 0, 68
+	ev_at	72
+	ev_bend	2, 0, 64
+	ev_at	95
+	ev_note	2, 62, 56, 36, 0, 1
+	ev_beat
+	ev_note	0, 39, 101, 8, 0, 0
+	ev_note	0, 44, 55, 8, 0, 0
+	ev_note	1, 38, 86, 95, 0, 1
+	ev_note	3, 47, 53, 43, 0, 1
+	ev_at	16
+	ev_note	0, 38, 19, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 35, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 40, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 28, 8, 0, 0
+	ev_at	80
+	ev_note	0, 38, 61, 8, 0, 0
+	ev_at	91
+	ev_note	2, 60, 81, 12, 1, 1
+	ev_at	94
+	ev_note	3, 48, 80, 9, 1, 1
+	ev_beat
+	ev_note	0, 36, 46, 8, 0, 0
+	ev_note	0, 21, 44, 8, 0, 0
+	ev_note	1, 36, 75, 23, 1, 1
+	ev_at	1
+	ev_note	0, 39, 107, 8, 0, 0
+	ev_beat
+	ev_at	32
+	ev_note	0, 38, 13, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	64
+	ev_note	0, 36, 65, 8, 0, 0
+	ev_note	0, 44, 37, 8, 0, 0
+	ev_note	1, 36, 104, 23, 0, 1
+	ev_at	65
+	ev_note	0, 39, 119, 8, 0, 0
+	ev_note	2, 55, 80, 23, 0, 1
+	ev_at	66
+	ev_note	2, 51, 82, 22, 0, 1
+	ev_note	2, 60, 84, 23, 0, 1
+	ev_at	69
+	ev_note	3, 48, 78, 13, 0, 1
+	ev_beat
+	ev_beat
+	ev_end
+TcmpStream55_End:
+TcmpStream56:
+	.byte	56		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream56_End - TcmpStream56_Events
+TcmpStream56_Events:		# 2 bars of 4 beats, 391 bytes
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 48, 81, 78, 0, 1
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 47, 76, 78, 0, 1
+	ev_at	1
+	ev_note	2, 55, 79, 37, 0, 1
+	ev_at	2
+	ev_note	2, 59, 79, 36, 0, 1
+	ev_note	2, 52, 66, 38, 0, 1
+	ev_at	3
+	ev_note	2, 62, 75, 35, 0, 1
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 45, 72, 74, 0, 1
+	ev_at	4
+	ev_note	2, 55, 75, 84, 0, 1
+	ev_note	2, 57, 76, 45, 0, 1
+	ev_note	2, 60, 78, 47, 0, 1
+	ev_at	5
+	ev_note	2, 52, 72, 85, 0, 1
+	ev_at	71
+	ev_note	2, 59, 63, 16, 0, 1
+	ev_at	73
+	ev_note	2, 62, 68, 12, 0, 1
+	ev_at	91
+	ev_note	0, 38, 42, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 90, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	1, 43, 75, 75, 0, 1
+	ev_at	32
+	ev_note	0, 38, 49, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 16, 8, 0, 0
+	ev_at	65
+	ev_note	3, 78, 86, 29, 0, 1
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 41, 82, 83, 0, 1
+	ev_at	1
+	ev_note	2, 60, 69, 30, 0, 1
+	ev_note	2, 64, 74, 34, 0, 1
+	ev_note	2, 57, 70, 31, 0, 1
+	ev_at	2
+	ev_note	2, 53, 60, 34, 0, 1
+	ev_at	5
+	ev_note	3, 79, 68, 74, 0, 1
+	ev_at	73
+	ev_note	3, 67, 60, 19, 0, 1
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 40, 79, 79, 0, 1
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_note	2, 53, 54, 94, 1, 1
+	ev_at	65
+	ev_note	3, 65, 51, 80, 1, 1
+	ev_at	66
+	ev_note	3, 76, 68, 74, 1, 1
+	ev_note	3, 79, 65, 75, 1, 1
+	ev_at	67
+	ev_note	3, 71, 63, 75, 1, 1
+	ev_at	69
+	ev_note	2, 59, 59, 91, 1, 1
+	ev_at	72
+	ev_note	2, 64, 63, 87, 1, 1
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 38, 71, 96, 0, 1
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 38, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_at	80
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	1, 43, 77, 93, 0, 1
+	ev_at	32
+	ev_note	0, 38, 79, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 64, 8, 0, 0
+	ev_end
+TcmpStream56_End:
+TcmpStream57:
+	.byte	57		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream57_End - TcmpStream57_Events
+TcmpStream57_Events:		# 2 bars of 4 beats, 391 bytes
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 48, 81, 78, 0, 1
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 46, 76, 78, 0, 1
+	ev_at	1
+	ev_note	2, 55, 79, 37, 0, 1
+	ev_at	2
+	ev_note	2, 60, 79, 36, 0, 1
+	ev_note	2, 51, 66, 38, 0, 1
+	ev_at	3
+	ev_note	2, 62, 75, 35, 0, 1
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 44, 72, 74, 0, 1
+	ev_at	4
+	ev_note	2, 55, 75, 84, 0, 1
+	ev_note	2, 58, 76, 45, 0, 1
+	ev_note	2, 60, 78, 47, 0, 1
+	ev_at	5
+	ev_note	2, 51, 72, 85, 0, 1
+	ev_at	71
+	ev_note	2, 60, 63, 16, 0, 1
+	ev_at	73
+	ev_note	2, 62, 68, 12, 0, 1
+	ev_at	91
+	ev_note	0, 38, 42, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 90, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	1, 43, 75, 75, 0, 1
+	ev_at	32
+	ev_note	0, 38, 49, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 16, 8, 0, 0
+	ev_at	65
+	ev_note	3, 78, 86, 29, 0, 1
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 41, 82, 83, 0, 1
+	ev_at	1
+	ev_note	2, 60, 69, 30, 0, 1
+	ev_note	2, 63, 74, 34, 0, 1
+	ev_note	2, 55, 70, 31, 0, 1
+	ev_at	2
+	ev_note	2, 51, 60, 34, 0, 1
+	ev_at	5
+	ev_note	3, 79, 68, 74, 0, 1
+	ev_at	73
+	ev_note	3, 67, 60, 19, 0, 1
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 39, 79, 79, 0, 1
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_note	2, 53, 54, 94, 1, 1
+	ev_at	65
+	ev_note	3, 65, 51, 80, 1, 1
+	ev_at	66
+	ev_note	3, 74, 68, 74, 1, 1
+	ev_note	3, 79, 65, 75, 1, 1
+	ev_at	67
+	ev_note	3, 71, 63, 75, 1, 1
+	ev_at	69
+	ev_note	2, 59, 59, 91, 1, 1
+	ev_at	72
+	ev_note	2, 62, 63, 87, 1, 1
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 38, 71, 96, 0, 1
+	ev_at	32
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 38, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_at	80
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	1, 43, 77, 93, 0, 1
+	ev_at	32
+	ev_note	0, 38, 79, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 64, 8, 0, 0
+	ev_end
+TcmpStream57_End:
+TcmpStream58:
+	.byte	58		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream58_End - TcmpStream58_Events
+TcmpStream58_Events:		# 3 bars of 4 beats, 534 bytes
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 48, 89, 54, 0, 1
+	ev_at	66
+	ev_note	1, 36, 62, 16, 0, 1
+	ev_at	94
+	ev_note	3, 74, 97, 60, 0, 1
+	ev_at	95
+	ev_note	2, 55, 51, 38, 0, 1
+	ev_note	2, 59, 57, 38, 0, 1
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 47, 93, 94, 0, 1
+	ev_note	2, 62, 40, 39, 0, 1
+	ev_at	1
+	ev_note	2, 52, 44, 38, 0, 1
+	ev_at	61
+	ev_note	3, 76, 66, 22, 0, 1
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_at	80
+	ev_note	3, 74, 61, 16, 0, 1
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_at	1
+	ev_note	3, 72, 66, 59, 0, 1
+	ev_at	2
+	ev_note	1, 45, 76, 79, 0, 1
+	ev_note	2, 55, 57, 51, 0, 1
+	ev_note	2, 57, 56, 46, 0, 1
+	ev_note	2, 52, 64, 91, 0, 1
+	ev_note	2, 60, 72, 45, 0, 1
+	ev_at	66
+	ev_note	2, 55, 77, 23, 0, 1
+	ev_note	2, 59, 73, 22, 0, 1
+	ev_at	67
+	ev_note	2, 62, 73, 23, 0, 1
+	ev_at	71
+	ev_note	3, 74, 68, 19, 0, 1
+	ev_at	91
+	ev_note	0, 38, 42, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 92, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	1, 43, 76, 91, 0, 1
+	ev_at	32
+	ev_note	0, 38, 49, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 16, 8, 0, 0
+	ev_note	3, 78, 84, 22, 0, 1
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	3, 79, 73, 51, 0, 1
+	ev_at	1
+	ev_note	2, 53, 70, 34, 0, 1
+	ev_note	2, 57, 79, 32, 0, 1
+	ev_note	2, 60, 80, 32, 0, 1
+	ev_note	2, 64, 78, 34, 0, 1
+	ev_at	6
+	ev_note	1, 41, 92, 57, 0, 1
+	ev_at	64
+	ev_note	0, 38, 14, 8, 0, 0
+	ev_note	3, 67, 87, 24, 0, 1
+	ev_at	80
+	ev_note	0, 38, 27, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	16
+	ev_note	0, 38, 27, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 23, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_at	56
+	ev_note	1, 43, 88, 44, 0, 1
+	ev_at	64
+	ev_note	0, 36, 85, 8, 0, 0
+	ev_note	0, 39, 103, 8, 0, 0
+	ev_note	3, 65, 84, 28, 0, 1
+	ev_note	3, 71, 79, 21, 0, 1
+	ev_note	3, 76, 84, 23, 0, 1
+	ev_note	3, 79, 84, 23, 0, 1
+	ev_at	65
+	ev_note	2, 53, 72, 34, 0, 1
+	ev_note	2, 59, 87, 33, 0, 1
+	ev_note	2, 64, 102, 30, 0, 1
+	ev_beat
+	ev_at	64
+	ev_note	0, 38, 18, 8, 0, 0
+	ev_at	80
+	ev_note	0, 38, 33, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 94, 8, 0, 0
+	ev_note	0, 36, 92, 8, 0, 0
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	3, 64, 75, 22, 3, 1
+	ev_note	3, 69, 74, 20, 3, 1
+	ev_note	3, 74, 78, 20, 3, 1
+	ev_note	3, 79, 75, 19, 3, 1
+	ev_at	2
+	ev_note	2, 62, 79, 22, 3, 1
+	ev_note	2, 64, 81, 22, 3, 1
+	ev_note	2, 67, 81, 23, 3, 1
+	ev_at	3
+	ev_note	2, 57, 87, 20, 3, 1
+	ev_note	2, 52, 76, 18, 3, 1
+	ev_at	20
+	ev_note	1, 36, 92, 11, 3, 1
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_at	74
+	ev_note	0, 38, 18, 8, 0, 0
+	ev_at	87
+	ev_note	0, 38, 33, 8, 0, 0
+	ev_beat
+	ev_at	4
+	ev_note	0, 38, 29, 8, 0, 0
+	ev_at	14
+	ev_note	0, 38, 60, 8, 0, 0
+	ev_at	26
+	ev_note	0, 38, 34, 8, 0, 0
+	ev_note	0, 36, 73, 8, 0, 0
+	ev_end
+TcmpStream58_End:
+TcmpStream59:
+	.byte	59		# the variation's index (MemStyleAreaStreamsVerify)
+	.be24	TcmpStream59_End - TcmpStream59_Events
+TcmpStream59_Events:		# 3 bars of 4 beats, 534 bytes
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	1, 48, 89, 54, 0, 1
+	ev_at	66
+	ev_note	1, 36, 62, 16, 0, 1
+	ev_at	94
+	ev_note	3, 74, 97, 60, 0, 1
+	ev_at	95
+	ev_note	2, 55, 51, 38, 0, 1
+	ev_note	2, 60, 57, 38, 0, 1
+	ev_beat
+	ev_note	0, 39, 95, 8, 0, 0
+	ev_note	0, 44, 42, 8, 0, 0
+	ev_note	1, 46, 93, 94, 0, 1
+	ev_note	2, 62, 40, 39, 0, 1
+	ev_at	1
+	ev_note	2, 51, 44, 38, 0, 1
+	ev_at	61
+	ev_note	3, 75, 66, 22, 0, 1
+	ev_at	64
+	ev_note	0, 38, 25, 8, 0, 0
+	ev_at	80
+	ev_note	3, 74, 61, 16, 0, 1
+	ev_beat
+	ev_note	0, 38, 48, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_at	1
+	ev_note	3, 72, 66, 59, 0, 1
+	ev_at	2
+	ev_note	1, 44, 76, 79, 0, 1
+	ev_note	2, 55, 57, 51, 0, 1
+	ev_note	2, 58, 56, 46, 0, 1
+	ev_note	2, 51, 64, 91, 0, 1
+	ev_note	2, 60, 72, 45, 0, 1
+	ev_at	66
+	ev_note	2, 55, 77, 23, 0, 1
+	ev_note	2, 60, 73, 22, 0, 1
+	ev_at	67
+	ev_note	2, 62, 73, 23, 0, 1
+	ev_at	71
+	ev_note	3, 74, 68, 19, 0, 1
+	ev_at	91
+	ev_note	0, 38, 42, 8, 0, 0
+	ev_beat
+	ev_note	0, 39, 92, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	1, 43, 76, 91, 0, 1
+	ev_at	32
+	ev_note	0, 38, 49, 8, 0, 0
+	ev_at	64
+	ev_note	0, 38, 16, 8, 0, 0
+	ev_note	3, 78, 84, 22, 0, 1
+	ev_beat
+	ev_note	0, 38, 57, 8, 0, 0
+	ev_note	0, 36, 54, 8, 0, 0
+	ev_note	3, 79, 73, 51, 0, 1
+	ev_at	1
+	ev_note	2, 53, 70, 34, 0, 1
+	ev_note	2, 56, 79, 32, 0, 1
+	ev_note	2, 60, 80, 32, 0, 1
+	ev_note	2, 63, 78, 34, 0, 1
+	ev_at	6
+	ev_note	1, 41, 92, 57, 0, 1
+	ev_at	64
+	ev_note	0, 38, 14, 8, 0, 0
+	ev_note	3, 67, 87, 24, 0, 1
+	ev_at	80
+	ev_note	0, 38, 27, 8, 0, 0
+	ev_beat
+	ev_note	0, 38, 20, 8, 0, 0
+	ev_at	16
+	ev_note	0, 38, 27, 8, 0, 0
+	ev_at	32
+	ev_note	0, 38, 23, 8, 0, 0
+	ev_at	48
+	ev_note	0, 38, 31, 8, 0, 0
+	ev_at	56
+	ev_note	1, 43, 88, 44, 0, 1
+	ev_at	64
+	ev_note	0, 36, 85, 8, 0, 0
+	ev_note	0, 39, 103, 8, 0, 0
+	ev_note	3, 65, 84, 28, 0, 1
+	ev_note	3, 71, 79, 21, 0, 1
+	ev_note	3, 75, 84, 23, 0, 1
+	ev_note	3, 79, 84, 23, 0, 1
+	ev_at	65
+	ev_note	2, 53, 72, 34, 0, 1
+	ev_note	2, 59, 87, 33, 0, 1
+	ev_note	2, 63, 102, 30, 0, 1
+	ev_beat
+	ev_at	64
+	ev_note	0, 38, 18, 8, 0, 0
+	ev_at	80
+	ev_note	0, 38, 33, 8, 0, 0
+	ev_beat
+	ev_note	0, 53, 94, 8, 0, 0
+	ev_note	0, 36, 92, 8, 0, 0
+	ev_note	0, 39, 97, 8, 0, 0
+	ev_note	0, 44, 43, 8, 0, 0
+	ev_note	3, 63, 75, 22, 3, 1
+	ev_note	3, 67, 74, 20, 3, 1
+	ev_note	3, 74, 78, 20, 3, 1
+	ev_note	3, 79, 75, 19, 3, 1
+	ev_at	2
+	ev_note	2, 62, 79, 22, 3, 1
+	ev_note	2, 63, 81, 22, 3, 1
+	ev_note	2, 67, 81, 23, 3, 1
+	ev_at	3
+	ev_note	2, 55, 87, 20, 3, 1
+	ev_note	2, 51, 76, 18, 3, 1
+	ev_at	20
+	ev_note	1, 36, 92, 11, 3, 1
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_at	74
+	ev_note	0, 38, 18, 8, 0, 0
+	ev_at	87
+	ev_note	0, 38, 33, 8, 0, 0
+	ev_beat
+	ev_at	4
+	ev_note	0, 38, 29, 8, 0, 0
+	ev_at	14
+	ev_note	0, 38, 60, 8, 0, 0
+	ev_at	26
+	ev_note	0, 38, 34, 8, 0, 0
+	ev_note	0, 36, 73, 8, 0, 0
+	ev_end
+TcmpStream59_End:
+TcmpHeapEnd:
+    .space	3, 0x00
 
 # dir[3], 0x1d18 bytes.
 # The factory PERFORMANCE PAD user memory ('TPAD'): MemPadAreaLoadFactory clears the
 # 0xa000 bytes at 0x501f91a0 and, when this segment (TableRomSeg03PtrSize) starts
 # with 'TPAD', copies it in; otherwise it builds an empty container
-# (notes/work-ram-map.md, 0x501f91a0).
+# (notes/work-ram-map.md, 0x501f91a0). Typed by tools/gen_table_styles.py by its
+# likeness to 'TCMP' (notes/table-semantics-2026-10-29.md); events one per line.
 FactoryMemPadContainer:
-    .incbin_range	"baserom/kn7000_table.rom", 0x040674, 0x04238c
+    .ascii	"TPAD"		# MemPadAreaLoadFactory: compared with 0x48729858
+    .be16	0
+    .be16	0xe13d		# SumU16BE of the range below (measured: notes/table-semantics-probes)
+    .be24	TpadUserBanks - FactoryMemPadContainer	# checksum start: the user banks
+    .be24	0x03a8		# checksum length in halfwords: up to the heap
+    .be16	0
+    .be24	0x00a000	# the area's length (0xA000, MemPadAreaLoadFactory's memset)
+    .be24	TpadHeapEnd - FactoryMemPadContainer	# [INFERENCE] the allocator's top, as TCMP's
+    .be16	3		# [INFERENCE] the user bank count
+    .be16	96		# [INFERENCE] ticks a beat
+    .byte	16, 6, 16, 2, 0, 2, 0, 15	# [INFERENCE] the format's dimensions
+    .space	14, 0x00
+    .space	0x40, 0x20	# ASCII spaces, as in TCMP
+TpadBank0:
+	.ascii	" Compile Bank 1 "
+	tpad_ref	0x71, 0x02, 0x00
+	tpad_ref	0x75, 0x02, 0x00
+	tpad_ref	0x77, 0x01, 0x00
+	tpad_ref	0x78, 0x01, 0x00
+	tpad_ref	0x28, 0x01, 0x00
+	tpad_ref	0x28, 0x02, 0x00
+	.space	14, 0x00
+TpadBank1:
+	.ascii	" Compile Bank 2 "
+	tpad_ref	0x05, 0x01, 0x00
+	tpad_ref	0x05, 0x02, 0x00
+	tpad_ref	0x05, 0x03, 0x00
+	tpad_ref	0x05, 0x04, 0x00
+	tpad_ref	0x6e, 0x01, 0x00
+	tpad_ref	0x6e, 0x02, 0x00
+	.space	14, 0x00
+TpadUserBanks:
+TpadBank2:
+	.ascii	"  User Bank 1   "
+	tpad_ref	0x00, 0x00, 0x10
+	tpad_ref	0x00, 0x01, 0x10
+	tpad_ref	0x00, 0x02, 0x10
+	tpad_ref	0x00, 0x03, 0x10
+	tpad_ref	0x00, 0x04, 0x10
+	tpad_ref	0x00, 0x05, 0x10
+	.space	14, 0x00
+TpadBank3:
+	.ascii	"  User Bank 2   "
+	tpad_ref	0x01, 0x00, 0x10
+	tpad_ref	0x01, 0x01, 0x10
+	tpad_ref	0x01, 0x02, 0x10
+	tpad_ref	0x01, 0x03, 0x10
+	tpad_ref	0x01, 0x04, 0x10
+	tpad_ref	0x01, 0x05, 0x10
+	.space	14, 0x00
+TpadBank4:
+	.ascii	"  User Bank 3   "
+	tpad_ref	0x02, 0x00, 0x10
+	tpad_ref	0x02, 0x01, 0x10
+	tpad_ref	0x02, 0x02, 0x10
+	tpad_ref	0x02, 0x03, 0x10
+	tpad_ref	0x02, 0x04, 0x10
+	tpad_ref	0x02, 0x05, 0x10
+	.space	14, 0x00
+TpadPad00:
+	.ascii	"   Voice Loop   "
+	.byte	0x71, 0x02, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	1 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream00 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 0, 0, 64, 12, 60, 68, 92, 84, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 42, 0, 64, 12, 60, 64, 92, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad01:
+	.ascii	"  Voice Drum 1  "
+	.byte	0x75, 0x02, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	2 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream01 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 44, 0, 64, 12, 60, 62, 92, 70, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 42, 0, 64, 12, 60, 64, 92, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad02:
+	.ascii	"  Voice Drum 2  "
+	.byte	0x77, 0x01, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream02 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 26, 0, 64, 12, 60, 64, 92, 72, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 42, 0, 64, 12, 60, 64, 92, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad03:
+	.ascii	"   Voice Scat   "
+	.byte	0x78, 0x01, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream03 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x08, 116, 0x35, 0x50, 0x20, 64, 15, 0, 64, 12, 60, 52, 92, 88, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x40, 0x00, 0x26, 64, 32, 0, 64, 12, 60, 56, 92, 72, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad04:
+	.ascii	"  Whistle Maj   "
+	.byte	0x28, 0x01, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	8 - 1, 4 - 1, 6, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream04 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x08, 127, 0x4e, 0x00, 0x20, 64, 40, 0, 89, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad05:
+	.ascii	"  Whistle Min   "
+	.byte	0x28, 0x02, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	8 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream05 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x08, 127, 0x4e, 0x00, 0x20, 64, 40, 0, 89, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x08, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad06:
+	.ascii	"  Piano Minuet  "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	4 - 1, 4 - 1, 2, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream06 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad07:
+	.ascii	"BaroqueInterlude"
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	4 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream07 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x06, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x06, 0x00, 0x20, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad08:
+	.ascii	"   Grandiose    "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	2 - 1, 4 - 1, 3, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream08 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad09:
+	.ascii	"  Pizz Ending   "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x01, 0x01, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	2 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream09 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x2d, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad10:
+	.ascii	"ClassicInterlude"
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	4 - 1, 4 - 1, 6, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream10 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad11:
+	.ascii	"ClassicInterlude"
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	4 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream11 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x20, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad12:
+	.ascii	"   Tom Flam 1   "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream12 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad13:
+	.ascii	"   Tom Flam 2   "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream13 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad14:
+	.ascii	"   Tom Flam 3   "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream14 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad15:
+	.ascii	"   Tom Flam 4   "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x00, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	1 - 1, 4 - 1, 0, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream15 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x26, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x28, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad16:
+	.ascii	"Four Chord Trick"
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	8 - 1, 4 - 1, 4, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream16 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x20, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadPad17:
+	.ascii	"12 Bar In Minor "
+	.byte	0x00, 0x00, 0, 0	# [INFERENCE] the pad's ID: a compile bank's tpad_ref names it
+	.byte	0x11, 0x11, 0, 0	# [INFERENCE] per-part flags, as TCMP's +0x04 bytes
+	.byte	12 - 1, 4 - 1, 14, 0, 0	# bars - 1, beats - 1, kind (as pad_head's)
+	.be24	TpadStream17 - FactoryMemPadContainer	# the stream in the heap
+	.space	8, 0x00
+	style_part	0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 0
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	style_part	0x06, 127, 0x00, 0x00, 0x30, 0, 40, 0, 64, 12, 28, 64, 108, 64, 0	# set-up 1
+	part_more	0, 0, 0, 0, 0, 0, 0, 0, 0
+	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+TpadHeap:
+TpadStream17:
+	.byte	17		# the pad record's index
+	.be24	TpadStream17_End - TpadStream17_Events
+TpadStream17_Events:		# 12 bars of 4 beats, 85 bytes
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x05, 0x06
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x05, 0x06
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream17_End:
+TpadStream07:
+	.byte	7		# the pad record's index
+	.be24	TpadStream07_End - TpadStream07_Events
+TpadStream07_Events:		# 4 bars of 4 beats, 550 bytes
+	ev_beat
+	ev_note	0, 72, 97, 10, 0, 17
+	ev_note	0, 79, 103, 13, 0, 17
+	ev_note	0, 64, 91, 12, 2, 17
+	ev_at	55
+	ev_note	0, 67, 79, 10, 0, 17
+	ev_beat
+	ev_at	3
+	ev_note	0, 67, 85, 21, 0, 17
+	ev_at	7
+	ev_note	0, 79, 106, 33, 1, 17
+	ev_note	0, 72, 100, 24, 1, 17
+	ev_at	49
+	ev_note	0, 67, 82, 13, 0, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 67, 79, 13, 0, 17
+	ev_at	49
+	ev_note	0, 67, 82, 37, 0, 17
+	ev_at	93
+	ev_note	0, 62, 73, 72, 0, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 77, 97, 9, 0, 17
+	ev_at	4
+	ev_note	0, 72, 70, 102, 0, 17
+	ev_at	10
+	ev_note	0, 79, 94, 14, 0, 17
+	ev_at	25
+	ev_note	0, 77, 79, 17, 0, 17
+	ev_at	39
+	ev_note	0, 67, 73, 51, 0, 17
+	ev_at	42
+	ev_note	0, 79, 73, 16, 0, 17
+	ev_at	55
+	ev_note	0, 77, 82, 7, 0, 17
+	ev_at	66
+	ev_note	0, 76, 91, 13, 0, 17
+	ev_at	79
+	ev_note	0, 77, 91, 17, 0, 17
+	ev_at	93
+	ev_note	0, 60, 82, 15, 2, 17
+	ev_beat
+	ev_note	0, 76, 91, 10, 0, 17
+	ev_at	45
+	ev_note	0, 67, 70, 13, 0, 17
+	ev_at	95
+	ev_note	0, 76, 97, 45, 1, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 72, 88, 36, 1, 17
+	ev_note	0, 67, 79, 13, 0, 17
+	ev_at	49
+	ev_note	0, 67, 61, 13, 0, 17
+	ev_beat
+	ev_note	0, 67, 94, 15, 0, 17
+	ev_at	46
+	ev_note	0, 67, 91, 51, 0, 17
+	ev_at	95
+	ev_note	0, 77, 97, 8, 0, 17
+	ev_beat
+	ev_at	2
+	ev_note	0, 62, 97, 84, 0, 17
+	ev_note	0, 72, 85, 99, 0, 17
+	ev_at	11
+	ev_note	0, 79, 94, 14, 0, 17
+	ev_at	25
+	ev_note	0, 77, 79, 14, 0, 17
+	ev_at	39
+	ev_note	0, 67, 70, 13, 0, 17
+	ev_at	43
+	ev_note	0, 79, 73, 16, 0, 17
+	ev_at	53
+	ev_note	0, 77, 79, 16, 0, 17
+	ev_at	70
+	ev_note	0, 67, 67, 16, 0, 17
+	ev_note	0, 76, 88, 16, 0, 17
+	ev_at	87
+	ev_note	0, 77, 82, 17, 0, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 64, 76, 26, 2, 17
+	ev_at	2
+	ev_note	0, 79, 100, 13, 0, 17
+	ev_at	47
+	ev_note	0, 67, 76, 12, 0, 17
+	ev_beat
+	ev_at	3
+	ev_note	0, 72, 103, 36, 1, 17
+	ev_note	0, 79, 103, 43, 1, 17
+	ev_note	0, 67, 67, 12, 0, 17
+	ev_at	50
+	ev_note	0, 67, 61, 10, 0, 17
+	ev_beat
+	ev_at	3
+	ev_note	0, 67, 79, 13, 0, 17
+	ev_at	51
+	ev_note	0, 67, 91, 40, 0, 17
+	ev_beat
+	ev_at	2
+	ev_note	0, 62, 82, 69, 0, 17
+	ev_note	0, 77, 100, 13, 0, 17
+	ev_at	10
+	ev_note	0, 72, 67, 12, 1, 17
+	ev_at	16
+	ev_note	0, 79, 82, 14, 0, 17
+	ev_at	30
+	ev_note	0, 77, 97, 20, 0, 17
+	ev_at	43
+	ev_note	0, 67, 82, 51, 0, 17
+	ev_at	50
+	ev_note	0, 79, 88, 13, 0, 17
+	ev_at	65
+	ev_note	0, 77, 73, 29, 0, 17
+	ev_at	78
+	ev_note	0, 79, 82, 17, 0, 17
+	ev_at	94
+	ev_note	0, 60, 94, 63, 0, 17
+	ev_at	95
+	ev_note	0, 76, 103, 35, 0, 17
+	ev_beat
+	ev_at	44
+	ev_note	0, 67, 85, 14, 0, 17
+	ev_at	50
+	ev_note	0, 84, 103, 11, 0, 17
+	ev_beat
+	ev_at	3
+	ev_note	0, 84, 106, 31, 0, 17
+	ev_note	0, 67, 91, 42, 0, 17
+	ev_note	0, 72, 106, 20, 0, 17
+	ev_at	45
+	ev_note	0, 72, 67, 9, 0, 17
+	ev_at	49
+	ev_note	0, 79, 82, 9, 0, 17
+	ev_note	0, 64, 88, 9, 0, 17
+	ev_beat
+	ev_note	0, 79, 94, 44, 0, 17
+	ev_note	0, 72, 94, 23, 0, 17
+	ev_at	3
+	ev_note	0, 64, 97, 37, 0, 17
+	ev_at	44
+	ev_note	0, 60, 85, 14, 0, 17
+	ev_at	48
+	ev_note	0, 76, 85, 10, 0, 17
+	ev_at	51
+	ev_note	0, 72, 70, 7, 0, 17
+	ev_beat
+	ev_note	0, 72, 97, 27, 0, 17
+	ev_note	0, 76, 97, 44, 0, 17
+	ev_at	4
+	ev_note	0, 60, 100, 40, 0, 17
+	ev_at	50
+	ev_note	0, 67, 91, 13, 0, 17
+	ev_note	0, 72, 85, 6, 0, 17
+	ev_end
+TpadStream07_End:
+TpadStream08:
+	.byte	8		# the pad record's index
+	.be24	TpadStream08_End - TpadStream08_Events
+TpadStream08_Events:		# 2 bars of 4 beats, 330 bytes
+	ev_beat
+	ev_note	0, 48, 103, 35, 1, 17
+	ev_note	0, 36, 109, 25, 1, 17
+	ev_at	2
+	ev_note	0, 72, 112, 68, 0, 17
+	ev_note	0, 60, 100, 64, 0, 17
+	ev_note	0, 64, 100, 79, 0, 17
+	ev_at	39
+	ev_cc	0, 64, 127
+	ev_beat
+	ev_at	2
+	ev_note	0, 72, 106, 24, 0, 17
+	ev_at	27
+	ev_note	0, 60, 100, 23, 0, 17
+	ev_at	50
+	ev_note	0, 64, 103, 17, 0, 17
+	ev_at	74
+	ev_note	0, 72, 100, 7, 0, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 40, 109, 64, 0, 17
+	ev_note	0, 52, 103, 75, 0, 17
+	ev_at	3
+	ev_note	0, 76, 115, 23, 0, 17
+	ev_at	26
+	ev_note	0, 64, 103, 21, 0, 17
+	ev_at	49
+	ev_note	0, 67, 100, 16, 0, 17
+	ev_at	70
+	ev_note	0, 76, 106, 15, 0, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 79, 112, 26, 0, 17
+	ev_at	2
+	ev_note	0, 43, 109, 65, 0, 17
+	ev_note	0, 55, 103, 71, 0, 17
+	ev_at	8
+	ev_cc	0, 64, 0
+	ev_at	24
+	ev_note	0, 67, 97, 25, 0, 17
+	ev_at	36
+	ev_cc	0, 64, 127
+	ev_at	48
+	ev_note	0, 72, 100, 21, 0, 17
+	ev_at	73
+	ev_note	0, 79, 103, 10, 0, 17
+	ev_beat
+	ev_at	2
+	ev_note	0, 48, 115, 54, 0, 17
+	ev_note	0, 60, 103, 61, 0, 17
+	ev_note	0, 84, 106, 17, 0, 17
+	ev_at	25
+	ev_note	0, 72, 97, 23, 0, 17
+	ev_at	46
+	ev_note	0, 76, 106, 21, 0, 17
+	ev_at	71
+	ev_note	0, 84, 106, 12, 0, 17
+	ev_beat
+	ev_at	1
+	ev_note	0, 52, 109, 44, 1, 17
+	ev_note	0, 64, 103, 44, 1, 17
+	ev_at	2
+	ev_note	0, 88, 106, 21, 0, 17
+	ev_at	5
+	ev_cc	0, 64, 0
+	ev_at	8
+	ev_cc	0, 64, 0
+	ev_at	25
+	ev_note	0, 76, 97, 24, 0, 17
+	ev_at	30
+	ev_cc	0, 64, 127
+	ev_at	46
+	ev_note	0, 79, 103, 20, 0, 17
+	ev_at	70
+	ev_note	0, 88, 106, 9, 0, 17
+	ev_at	95
+	ev_note	0, 84, 103, 23, 0, 17
+	ev_beat
+	ev_at	6
+	ev_cc	0, 64, 0
+	ev_at	23
+	ev_note	0, 72, 100, 24, 0, 17
+	ev_at	29
+	ev_cc	0, 64, 127
+	ev_at	46
+	ev_note	0, 76, 103, 17, 0, 17
+	ev_at	69
+	ev_note	0, 84, 103, 18, 0, 17
+	ev_at	95
+	ev_note	0, 55, 97, 61, 0, 17
+	ev_beat
+	ev_at	2
+	ev_note	0, 79, 100, 23, 0, 17
+	ev_at	23
+	ev_note	0, 67, 97, 24, 0, 17
+	ev_at	50
+	ev_note	0, 72, 100, 17, 0, 17
+	ev_at	74
+	ev_note	0, 79, 91, 3, 0, 17
+	ev_at	95
+	ev_cc	0, 64, 0
+	ev_end
+TpadStream08_End:
+TpadStream10:
+	.byte	10		# the pad record's index
+	.be24	TpadStream10_End - TpadStream10_Events
+TpadStream10_Events:		# 4 bars of 4 beats, 396 bytes
+	ev_beat
+	ev_note	0, 69, 87, 16, 0, 2
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x01, 0x06
+	ev_at	19
+	ev_note	0, 71, 66, 16, 0, 2
+	ev_at	33
+	ev_note	0, 69, 67, 16, 0, 2
+	ev_at	51
+	ev_note	0, 68, 69, 16, 0, 2
+	ev_at	73
+	ev_note	0, 69, 72, 18, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 74, 97, 16, 0, 2
+	ev_at	25
+	ev_note	0, 69, 72, 17, 0, 2
+	ev_at	48
+	ev_note	0, 74, 84, 14, 0, 2
+	ev_at	73
+	ev_note	0, 77, 96, 11, 0, 2
+	ev_beat
+	ev_note	0, 81, 88, 113, 0, 2
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_at	3
+	ev_note	0, 67, 87, 14, 0, 2
+	ev_at	22
+	ev_note	0, 69, 61, 20, 0, 2
+	ev_at	38
+	ev_note	0, 67, 78, 18, 0, 2
+	ev_at	54
+	ev_note	0, 66, 83, 17, 0, 2
+	ev_at	75
+	ev_note	0, 67, 78, 22, 0, 2
+	ev_beat
+	ev_at	5
+	ev_note	0, 72, 100, 18, 0, 2
+	ev_at	29
+	ev_note	0, 67, 76, 22, 0, 2
+	ev_at	51
+	ev_note	0, 72, 93, 18, 0, 2
+	ev_at	77
+	ev_note	0, 76, 102, 20, 0, 2
+	ev_beat
+	ev_at	4
+	ev_note	0, 79, 88, 27, 0, 2
+	ev_at	27
+	ev_note	0, 78, 83, 20, 0, 2
+	ev_at	49
+	ev_note	0, 77, 96, 30, 0, 2
+	ev_at	75
+	ev_note	0, 76, 82, 24, 0, 2
+	ev_beat
+	ev_at	3
+	ev_note	0, 74, 97, 22, 0, 2
+	ev_at	25
+	ev_note	0, 72, 81, 20, 0, 2
+	ev_at	48
+	ev_note	0, 71, 88, 19, 0, 2
+	ev_at	68
+	ev_note	0, 69, 94, 15, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	4
+	ev_note	0, 71, 84, 25, 0, 2
+	ev_at	28
+	ev_note	0, 72, 67, 23, 0, 2
+	ev_at	50
+	ev_note	0, 71, 87, 17, 0, 2
+	ev_at	69
+	ev_note	0, 72, 87, 16, 0, 2
+	ev_at	87
+	ev_note	0, 71, 85, 14, 0, 2
+	ev_beat
+	ev_at	8
+	ev_note	0, 72, 88, 15, 0, 2
+	ev_at	25
+	ev_note	0, 71, 90, 11, 0, 2
+	ev_at	40
+	ev_note	0, 72, 69, 11, 0, 2
+	ev_at	52
+	ev_note	0, 71, 78, 14, 0, 2
+	ev_at	67
+	ev_note	0, 72, 68, 13, 0, 2
+	ev_at	80
+	ev_note	0, 71, 76, 15, 0, 2
+	ev_at	94
+	ev_note	0, 72, 59, 13, 0, 2
+	ev_beat
+	ev_at	11
+	ev_note	0, 71, 69, 11, 0, 2
+	ev_at	23
+	ev_note	0, 72, 57, 8, 0, 2
+	ev_at	36
+	ev_note	0, 71, 68, 13, 0, 2
+	ev_at	46
+	ev_note	0, 72, 64, 12, 0, 2
+	ev_at	62
+	ev_note	0, 71, 63, 11, 0, 2
+	ev_at	72
+	ev_note	0, 72, 67, 10, 0, 2
+	ev_at	86
+	ev_note	0, 71, 46, 12, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 72, 69, 21, 0, 2
+	ev_at	15
+	ev_note	0, 71, 75, 30, 0, 2
+	ev_at	38
+	ev_note	0, 69, 67, 17, 0, 2
+	ev_at	65
+	ev_note	0, 71, 68, 21, 0, 2
+	ev_at	93
+	ev_note	0, 72, 90, 106, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream10_End:
+TpadStream11:
+	.byte	11		# the pad record's index
+	.be24	TpadStream11_End - TpadStream11_Events
+TpadStream11_Events:		# 4 bars of 4 beats, 410 bytes
+	ev_beat
+	ev_note	0, 68, 90, 15, 0, 2
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x05, 0x06
+	ev_at	21
+	ev_note	0, 70, 54, 17, 0, 2
+	ev_at	34
+	ev_note	0, 68, 66, 17, 0, 2
+	ev_at	54
+	ev_note	0, 67, 60, 21, 0, 2
+	ev_at	72
+	ev_note	0, 68, 86, 22, 0, 2
+	ev_beat
+	ev_at	2
+	ev_note	0, 72, 92, 16, 0, 2
+	ev_at	24
+	ev_note	0, 65, 72, 18, 0, 2
+	ev_at	44
+	ev_note	0, 68, 86, 18, 0, 2
+	ev_at	69
+	ev_note	0, 72, 93, 15, 0, 2
+	ev_at	95
+	ev_note	0, 77, 85, 99, 0, 2
+	ev_beat
+	ev_beat
+	ev_at	92
+	ev_note	0, 67, 83, 15, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_at	13
+	ev_note	0, 68, 59, 14, 0, 2
+	ev_at	27
+	ev_note	0, 67, 67, 20, 0, 2
+	ev_at	46
+	ev_note	0, 66, 83, 14, 0, 2
+	ev_at	67
+	ev_note	0, 67, 75, 20, 0, 2
+	ev_at	92
+	ev_note	0, 72, 93, 15, 0, 2
+	ev_beat
+	ev_at	18
+	ev_note	0, 67, 72, 22, 0, 2
+	ev_at	41
+	ev_note	0, 72, 83, 18, 0, 2
+	ev_at	68
+	ev_note	0, 75, 92, 15, 0, 2
+	ev_at	93
+	ev_note	0, 79, 79, 26, 0, 2
+	ev_beat
+	ev_at	19
+	ev_note	0, 78, 89, 23, 0, 2
+	ev_at	43
+	ev_note	0, 77, 63, 20, 0, 2
+	ev_at	71
+	ev_note	0, 75, 93, 18, 0, 2
+	ev_at	93
+	ev_note	0, 74, 72, 25, 0, 2
+	ev_beat
+	ev_at	29
+	ev_note	0, 72, 67, 18, 0, 2
+	ev_at	53
+	ev_note	0, 71, 74, 17, 0, 2
+	ev_at	73
+	ev_note	0, 72, 82, 20, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	2
+	ev_note	0, 71, 79, 16, 0, 2
+	ev_at	21
+	ev_note	0, 72, 66, 16, 0, 2
+	ev_at	41
+	ev_note	0, 71, 83, 14, 0, 2
+	ev_at	61
+	ev_note	0, 72, 76, 14, 0, 2
+	ev_at	77
+	ev_note	0, 71, 90, 13, 0, 2
+	ev_at	95
+	ev_note	0, 72, 71, 12, 0, 2
+	ev_beat
+	ev_at	12
+	ev_note	0, 71, 83, 13, 0, 2
+	ev_at	29
+	ev_note	0, 72, 54, 8, 0, 2
+	ev_at	42
+	ev_note	0, 71, 69, 12, 0, 2
+	ev_at	54
+	ev_note	0, 72, 57, 11, 0, 2
+	ev_at	70
+	ev_note	0, 71, 63, 9, 0, 2
+	ev_at	81
+	ev_note	0, 72, 63, 10, 0, 2
+	ev_beat
+	ev_note	0, 71, 66, 13, 0, 2
+	ev_at	11
+	ev_note	0, 72, 52, 10, 0, 2
+	ev_at	25
+	ev_note	0, 71, 52, 9, 0, 2
+	ev_at	35
+	ev_note	0, 72, 62, 11, 0, 2
+	ev_at	49
+	ev_note	0, 71, 72, 16, 0, 2
+	ev_at	64
+	ev_note	0, 72, 70, 9, 0, 2
+	ev_at	76
+	ev_note	0, 71, 61, 13, 0, 2
+	ev_at	88
+	ev_note	0, 72, 65, 10, 0, 2
+	ev_beat
+	ev_at	5
+	ev_note	0, 71, 58, 16, 0, 2
+	ev_at	17
+	ev_note	0, 72, 76, 22, 0, 2
+	ev_at	32
+	ev_note	0, 71, 64, 22, 0, 2
+	ev_at	51
+	ev_note	0, 69, 74, 16, 0, 2
+	ev_at	72
+	ev_note	0, 71, 80, 18, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_at	2
+	ev_note	0, 72, 90, 13, 1, 2
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream11_End:
+TpadStream16:
+	.byte	16		# the pad record's index
+	.be24	TpadStream16_End - TpadStream16_Events
+TpadStream16_Events:		# 8 bars of 4 beats, 129 bytes
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x0a, 0x05, 0x0a
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x06, 0x03
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x0a, 0x05, 0x0a
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x06, 0x03
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x0a, 0x05, 0x0a
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x06, 0x03
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x0a, 0x05, 0x0a
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x06, 0x03
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_beat
+	ev_end
+TpadStream16_End:
+TpadStream14:
+	.byte	14		# the pad record's index
+	.be24	TpadStream14_End - TpadStream14_Events
+TpadStream14_Events:		# 1 bars of 4 beats, 18 bytes
+	ev_beat
+	ev_note	0, 43, 78, 16, 0, 0
+	ev_at	6
+	ev_note	0, 43, 126, 95, 0, 0
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream14_End:
+TpadStream12:
+	.byte	12		# the pad record's index
+	.be24	TpadStream12_End - TpadStream12_Events
+TpadStream12_Events:		# 1 bars of 4 beats, 18 bytes
+	ev_beat
+	ev_note	0, 47, 78, 16, 0, 0
+	ev_at	6
+	ev_note	0, 47, 126, 95, 0, 0
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream12_End:
+TpadStream13:
+	.byte	13		# the pad record's index
+	.be24	TpadStream13_End - TpadStream13_Events
+TpadStream13_Events:		# 1 bars of 4 beats, 18 bytes
+	ev_beat
+	ev_note	0, 45, 78, 16, 0, 0
+	ev_at	6
+	ev_note	0, 45, 126, 95, 0, 0
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream13_End:
+TpadStream15:
+	.byte	15		# the pad record's index
+	.be24	TpadStream15_End - TpadStream15_Events
+TpadStream15_Events:		# 1 bars of 4 beats, 18 bytes
+	ev_beat
+	ev_note	0, 41, 78, 16, 0, 0
+	ev_at	6
+	ev_note	0, 41, 126, 95, 0, 0
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream15_End:
+TpadStream06:
+	.byte	6		# the pad record's index
+	.be24	TpadStream06_End - TpadStream06_Events
+TpadStream06_Events:		# 4 bars of 4 beats, 721 bytes
+	ev_beat
+	ev_at	1
+	ev_note	0, 79, 73, 37, 0, 16
+	ev_at	3
+	ev_note	0, 60, 82, 41, 0, 16
+	ev_at	17
+	ev_cc	0, 64, 127
+	ev_at	27
+	ev_note	0, 81, 49, 13, 0, 16
+	ev_at	49
+	ev_note	0, 79, 55, 10, 0, 16
+	ev_at	54
+	ev_note	0, 67, 48, 38, 0, 16
+	ev_at	65
+	ev_note	0, 81, 52, 14, 0, 16
+	ev_at	81
+	ev_note	0, 79, 91, 16, 0, 16
+	ev_beat
+	ev_at	5
+	ev_note	0, 81, 82, 14, 0, 16
+	ev_note	0, 64, 53, 37, 0, 16
+	ev_at	23
+	ev_note	0, 79, 88, 10, 0, 16
+	ev_at	37
+	ev_note	0, 81, 70, 15, 0, 16
+	ev_at	51
+	ev_note	0, 67, 43, 42, 0, 16
+	ev_at	55
+	ev_note	0, 79, 91, 10, 0, 16
+	ev_at	71
+	ev_note	0, 81, 76, 13, 0, 16
+	ev_at	86
+	ev_note	0, 79, 91, 9, 0, 16
+	ev_beat
+	ev_at	2
+	ev_note	0, 64, 73, 44, 0, 16
+	ev_at	5
+	ev_note	0, 81, 79, 13, 0, 16
+	ev_at	20
+	ev_note	0, 79, 100, 9, 0, 16
+	ev_at	35
+	ev_note	0, 81, 85, 12, 0, 16
+	ev_at	50
+	ev_note	0, 67, 41, 41, 0, 16
+	ev_at	51
+	ev_note	0, 79, 94, 8, 0, 16
+	ev_at	65
+	ev_note	0, 81, 85, 10, 0, 16
+	ev_at	79
+	ev_note	0, 79, 88, 6, 0, 16
+	ev_at	91
+	ev_note	0, 81, 73, 12, 0, 16
+	ev_at	95
+	ev_note	0, 64, 67, 44, 0, 16
+	ev_beat
+	ev_at	7
+	ev_note	0, 79, 82, 11, 0, 16
+	ev_at	21
+	ev_note	0, 81, 76, 10, 0, 16
+	ev_at	29
+	ev_note	0, 79, 61, 12, 0, 16
+	ev_at	42
+	ev_note	0, 81, 79, 10, 0, 16
+	ev_at	46
+	ev_note	0, 67, 45, 48, 0, 16
+	ev_at	53
+	ev_note	0, 79, 91, 13, 0, 16
+	ev_at	70
+	ev_note	0, 78, 82, 9, 0, 16
+	ev_at	80
+	ev_note	0, 79, 76, 19, 0, 16
+	ev_beat
+	ev_note	0, 60, 70, 47, 0, 16
+	ev_at	6
+	ev_note	0, 84, 106, 115, 0, 16
+	ev_at	9
+	ev_cc	0, 64, 0
+	ev_at	50
+	ev_note	0, 67, 45, 43, 0, 16
+	ev_beat
+	ev_at	3
+	ev_note	0, 64, 58, 41, 0, 16
+	ev_at	6
+	ev_cc	0, 64, 127
+	ev_at	50
+	ev_note	0, 67, 50, 45, 0, 16
+	ev_at	52
+	ev_note	0, 79, 100, 15, 0, 16
+	ev_beat
+	ev_at	2
+	ev_note	0, 64, 70, 43, 0, 16
+	ev_at	7
+	ev_cc	0, 64, 0
+	ev_at	10
+	ev_note	0, 72, 73, 5, 1, 16
+	ev_note	0, 79, 82, 120, 0, 16
+	ev_at	49
+	ev_note	0, 67, 47, 45, 0, 16
+	ev_at	57
+	ev_cc	0, 64, 127
+	ev_beat
+	ev_at	1
+	ev_note	0, 64, 73, 48, 0, 16
+	ev_at	47
+	ev_note	0, 76, 106, 19, 0, 16
+	ev_at	49
+	ev_note	0, 60, 55, 28, 0, 16
+	ev_at	93
+	ev_cc	0, 64, 0
+	ev_beat
+	ev_at	2
+	ev_note	0, 60, 64, 37, 0, 16
+	ev_at	5
+	ev_note	0, 76, 106, 40, 0, 16
+	ev_at	25
+	ev_cc	0, 64, 127
+	ev_at	45
+	ev_note	0, 77, 88, 22, 0, 16
+	ev_at	52
+	ev_note	0, 67, 47, 35, 0, 16
+	ev_at	70
+	ev_note	0, 76, 82, 21, 0, 16
+	ev_at	91
+	ev_note	0, 77, 94, 16, 0, 16
+	ev_beat
+	ev_at	1
+	ev_note	0, 64, 64, 45, 0, 16
+	ev_at	17
+	ev_note	0, 76, 88, 18, 0, 16
+	ev_at	38
+	ev_note	0, 77, 85, 13, 0, 16
+	ev_at	47
+	ev_note	0, 67, 49, 48, 0, 16
+	ev_at	55
+	ev_note	0, 76, 94, 12, 0, 16
+	ev_at	71
+	ev_note	0, 77, 79, 12, 0, 16
+	ev_at	87
+	ev_note	0, 76, 94, 10, 0, 16
+	ev_at	95
+	ev_note	0, 64, 79, 43, 0, 16
+	ev_beat
+	ev_at	7
+	ev_note	0, 77, 82, 10, 0, 16
+	ev_at	20
+	ev_note	0, 76, 100, 10, 0, 16
+	ev_at	36
+	ev_note	0, 77, 88, 14, 0, 16
+	ev_at	47
+	ev_note	0, 67, 58, 47, 0, 16
+	ev_at	51
+	ev_note	0, 76, 100, 9, 0, 16
+	ev_at	66
+	ev_note	0, 77, 85, 13, 0, 16
+	ev_at	79
+	ev_note	0, 76, 97, 11, 0, 16
+	ev_at	93
+	ev_note	0, 77, 82, 13, 0, 16
+	ev_at	95
+	ev_note	0, 64, 82, 44, 0, 16
+	ev_beat
+	ev_at	8
+	ev_note	0, 76, 91, 15, 0, 16
+	ev_at	24
+	ev_note	0, 77, 91, 15, 0, 16
+	ev_at	35
+	ev_note	0, 76, 91, 15, 0, 16
+	ev_at	45
+	ev_note	0, 67, 61, 52, 0, 16
+	ev_at	53
+	ev_note	0, 75, 88, 14, 0, 16
+	ev_at	70
+	ev_note	0, 76, 82, 21, 0, 16
+	ev_at	93
+	ev_note	0, 60, 67, 49, 0, 16
+	ev_beat
+	ev_at	3
+	ev_note	0, 79, 109, 116, 0, 16
+	ev_at	9
+	ev_cc	0, 64, 0
+	ev_cc	0, 64, 0
+	ev_at	47
+	ev_note	0, 67, 50, 44, 0, 16
+	ev_at	55
+	ev_cc	0, 64, 127
+	ev_at	95
+	ev_note	0, 64, 76, 44, 0, 16
+	ev_beat
+	ev_at	47
+	ev_note	0, 67, 61, 12, 0, 16
+	ev_at	50
+	ev_note	0, 76, 88, 13, 0, 16
+	ev_at	52
+	ev_note	0, 67, 51, 43, 0, 16
+	ev_at	95
+	ev_cc	0, 64, 0
+	ev_beat
+	ev_at	2
+	ev_note	0, 67, 103, 24, 0, 16
+	ev_at	3
+	ev_note	0, 64, 58, 37, 0, 16
+	ev_at	5
+	ev_note	0, 76, 106, 46, 0, 16
+	ev_at	23
+	ev_cc	0, 64, 127
+	ev_at	50
+	ev_note	0, 67, 54, 37, 0, 16
+	ev_at	54
+	ev_note	0, 64, 85, 12, 0, 16
+	ev_note	0, 72, 79, 12, 0, 16
+	ev_beat
+	ev_at	3
+	ev_note	0, 60, 73, 37, 0, 16
+	ev_at	9
+	ev_cc	0, 64, 0
+	ev_at	11
+	ev_note	0, 64, 97, 29, 0, 16
+	ev_note	0, 72, 103, 48, 0, 16
+	ev_at	50
+	ev_note	0, 55, 82, 26, 0, 16
+	ev_at	53
+	ev_note	0, 64, 67, 12, 0, 16
+	ev_at	54
+	ev_note	0, 67, 55, 18, 0, 16
+	ev_end
+TpadStream06_End:
+TpadStream01:
+	.byte	1		# the pad record's index
+	.be24	TpadStream01_End - TpadStream01_Events
+TpadStream01_Events:		# 2 bars of 4 beats, 148 bytes
+	ev_beat
+	ev_note	0, 44, 87, 34, 0, 0
+	ev_at	1
+	ev_note	0, 68, 114, 40, 0, 0
+	ev_at	2
+	ev_note	0, 58, 122, 45, 0, 0
+	ev_at	48
+	ev_note	0, 55, 98, 48, 0, 0
+	ev_at	95
+	ev_note	0, 68, 91, 41, 0, 0
+	ev_note	0, 56, 109, 15, 0, 0
+	ev_beat
+	ev_at	48
+	ev_note	0, 49, 116, 42, 0, 0
+	ev_beat
+	ev_note	0, 68, 113, 42, 0, 0
+	ev_at	95
+	ev_note	0, 53, 110, 15, 0, 0
+	ev_beat
+	ev_note	0, 68, 86, 40, 0, 0
+	ev_at	47
+	ev_note	0, 51, 122, 10, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 68, 116, 42, 0, 0
+	ev_note	0, 58, 124, 45, 0, 0
+	ev_at	49
+	ev_note	0, 55, 100, 37, 0, 0
+	ev_beat
+	ev_note	0, 56, 102, 20, 0, 0
+	ev_at	1
+	ev_note	0, 68, 88, 37, 0, 0
+	ev_at	48
+	ev_note	0, 49, 111, 41, 0, 0
+	ev_beat
+	ev_note	0, 68, 114, 53, 0, 0
+	ev_beat
+	ev_note	0, 68, 90, 48, 0, 0
+	ev_at	49
+	ev_note	0, 53, 116, 11, 0, 0
+	ev_at	73
+	ev_note	0, 55, 110, 12, 0, 0
+	ev_end
+TpadStream01_End:
+TpadStream02:
+	.byte	2		# the pad record's index
+	.be24	TpadStream02_End - TpadStream02_Events
+TpadStream02_Events:		# 4 bars of 4 beats, 273 bytes
+	ev_beat
+	ev_at	1
+	ev_note	0, 68, 127, 75, 0, 0
+	ev_at	28
+	ev_note	0, 44, 76, 21, 0, 0
+	ev_at	53
+	ev_note	0, 42, 90, 12, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 56, 119, 47, 0, 0
+	ev_at	52
+	ev_note	0, 49, 104, 50, 0, 0
+	ev_at	73
+	ev_note	0, 37, 119, 14, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 68, 127, 19, 0, 0
+	ev_at	49
+	ev_note	0, 68, 127, 21, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 56, 117, 48, 0, 0
+	ev_at	48
+	ev_note	0, 58, 114, 73, 0, 0
+	ev_beat
+	ev_note	0, 68, 127, 84, 0, 0
+	ev_at	23
+	ev_note	0, 44, 76, 21, 0, 0
+	ev_at	47
+	ev_note	0, 42, 90, 12, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 56, 114, 47, 0, 0
+	ev_at	73
+	ev_note	0, 37, 116, 14, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 68, 114, 35, 0, 0
+	ev_at	49
+	ev_note	0, 68, 112, 31, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 49, 97, 54, 0, 0
+	ev_at	49
+	ev_note	0, 59, 109, 10, 0, 0
+	ev_at	74
+	ev_note	0, 60, 119, 15, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 68, 127, 75, 0, 0
+	ev_at	25
+	ev_note	0, 44, 76, 21, 0, 0
+	ev_at	50
+	ev_note	0, 42, 90, 12, 0, 0
+	ev_at	70
+	ev_note	0, 49, 104, 50, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 56, 119, 47, 0, 0
+	ev_at	73
+	ev_note	0, 37, 119, 14, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 68, 127, 19, 0, 0
+	ev_at	49
+	ev_note	0, 68, 127, 21, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	0, 56, 117, 48, 0, 0
+	ev_at	48
+	ev_note	0, 58, 114, 73, 0, 0
+	ev_beat
+	ev_note	0, 68, 127, 84, 0, 0
+	ev_beat
+	ev_at	19
+	ev_note	0, 49, 97, 54, 0, 0
+	ev_at	73
+	ev_note	0, 46, 77, 76, 0, 0
+	ev_beat
+	ev_at	48
+	ev_note	0, 70, 84, 14, 0, 0
+	ev_at	72
+	ev_note	0, 70, 102, 10, 0, 0
+	ev_beat
+	ev_note	0, 71, 92, 50, 0, 0
+	ev_at	48
+	ev_note	0, 72, 115, 84, 0, 0
+	ev_end
+TpadStream02_End:
+TpadStream03:
+	.byte	3		# the pad record's index
+	.be24	TpadStream03_End - TpadStream03_Events
+TpadStream03_Events:		# 4 bars of 4 beats, 430 bytes
+	ev_beat
+	ev_note	0, 48, 82, 51, 0, 1
+	ev_note	1, 36, 103, 51, 0, 0
+	ev_at	48
+	ev_note	1, 49, 116, 40, 0, 0
+	ev_at	53
+	ev_note	0, 60, 104, 50, 0, 1
+	ev_beat
+	ev_note	1, 38, 118, 30, 0, 0
+	ev_at	7
+	ev_note	0, 58, 108, 48, 0, 1
+	ev_at	49
+	ev_note	1, 53, 98, 18, 0, 0
+	ev_at	73
+	ev_note	1, 55, 101, 19, 0, 0
+	ev_beat
+	ev_note	0, 53, 94, 4, 1, 1
+	ev_at	1
+	ev_note	1, 36, 110, 37, 0, 0
+	ev_at	24
+	ev_bend	0, 0, 75
+	ev_at	48
+	ev_bend	0, 0, 64
+	ev_at	49
+	ev_note	1, 36, 95, 36, 0, 0
+	ev_at	72
+	ev_bend	0, 0, 75
+	ev_at	93
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_note	1, 38, 113, 42, 0, 0
+	ev_at	48
+	ev_note	1, 49, 119, 37, 0, 0
+	ev_at	49
+	ev_note	0, 51, 86, 27, 0, 1
+	ev_at	73
+	ev_note	1, 37, 116, 12, 0, 0
+	ev_at	77
+	ev_note	0, 53, 120, 13, 0, 1
+	ev_beat
+	ev_note	0, 48, 70, 42, 0, 1
+	ev_at	1
+	ev_note	1, 36, 106, 36, 0, 0
+	ev_at	48
+	ev_note	0, 60, 107, 42, 0, 1
+	ev_note	1, 36, 93, 41, 0, 0
+	ev_beat
+	ev_note	0, 58, 111, 45, 0, 1
+	ev_note	1, 38, 117, 59, 0, 0
+	ev_at	48
+	ev_note	0, 55, 115, 27, 0, 1
+	ev_at	53
+	ev_note	1, 49, 79, 44, 0, 0
+	ev_beat
+	ev_at	49
+	ev_note	1, 61, 117, 12, 0, 0
+	ev_at	81
+	ev_note	1, 62, 112, 14, 0, 0
+	ev_beat
+	ev_at	32
+	ev_note	1, 63, 124, 13, 0, 0
+	ev_at	48
+	ev_note	1, 44, 96, 24, 0, 0
+	ev_at	49
+	ev_note	1, 44, 117, 53, 0, 0
+	ev_at	72
+	ev_note	1, 42, 112, 11, 0, 0
+	ev_beat
+	ev_pc	0, 0x35, 0x50, 0x20
+	ev_note	0, 48, 82, 51, 0, 1
+	ev_note	1, 36, 103, 51, 0, 0
+	ev_at	48
+	ev_note	1, 49, 116, 40, 0, 0
+	ev_at	53
+	ev_note	0, 60, 104, 50, 0, 1
+	ev_beat
+	ev_note	1, 38, 118, 30, 0, 0
+	ev_at	7
+	ev_note	0, 58, 108, 48, 0, 1
+	ev_at	49
+	ev_note	1, 53, 98, 18, 0, 0
+	ev_at	73
+	ev_note	1, 55, 101, 19, 0, 0
+	ev_beat
+	ev_note	0, 53, 94, 4, 1, 1
+	ev_at	1
+	ev_note	1, 36, 110, 37, 0, 0
+	ev_at	24
+	ev_bend	0, 0, 75
+	ev_at	48
+	ev_bend	0, 0, 64
+	ev_at	49
+	ev_note	1, 36, 95, 36, 0, 0
+	ev_at	72
+	ev_bend	0, 0, 75
+	ev_at	93
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_note	1, 38, 113, 42, 0, 0
+	ev_at	48
+	ev_note	1, 49, 119, 37, 0, 0
+	ev_at	49
+	ev_note	0, 51, 86, 27, 0, 1
+	ev_at	73
+	ev_note	1, 37, 116, 12, 0, 0
+	ev_at	77
+	ev_note	0, 53, 120, 13, 0, 1
+	ev_beat
+	ev_note	0, 48, 70, 42, 0, 1
+	ev_at	1
+	ev_note	1, 36, 106, 36, 0, 0
+	ev_at	33
+	ev_note	1, 58, 122, 87, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	1, 53, 110, 35, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	1, 46, 106, 46, 0, 0
+	ev_at	49
+	ev_note	1, 44, 99, 19, 0, 0
+	ev_at	73
+	ev_note	1, 42, 99, 15, 0, 0
+	ev_beat
+	ev_at	1
+	ev_note	1, 49, 92, 43, 0, 0
+	ev_at	50
+	ev_note	1, 59, 105, 15, 0, 0
+	ev_at	71
+	ev_note	1, 60, 95, 25, 0, 0
+	ev_end
+TpadStream03_End:
+TpadStream04:
+	.byte	4		# the pad record's index
+	.be24	TpadStream04_End - TpadStream04_Events
+TpadStream04_Events:		# 8 bars of 4 beats, 681 bytes
+	ev_beat
+	ev_bend	0, 0, 58
+	ev_note	0, 91, 97, 40, 0, 2
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_at	8
+	ev_bend	0, 0, 59
+	ev_at	14
+	ev_bend	0, 0, 60
+	ev_at	20
+	ev_bend	0, 0, 61
+	ev_at	23
+	ev_bend	0, 0, 62
+	ev_at	26
+	ev_bend	0, 0, 63
+	ev_at	30
+	ev_bend	0, 64, 63
+	ev_at	33
+	ev_bend	0, 0, 64
+	ev_at	60
+	ev_note	0, 96, 81, 51, 0, 2
+	ev_beat
+	ev_at	54
+	ev_note	0, 88, 75, 3, 1, 2
+	ev_beat
+	ev_at	50
+	ev_bend	0, 0, 64
+	ev_at	56
+	ev_bend	0, 0, 67
+	ev_at	58
+	ev_bend	0, 0, 71
+	ev_at	65
+	ev_bend	0, 0, 67
+	ev_at	68
+	ev_bend	0, 0, 64
+	ev_at	89
+	ev_note	0, 84, 82, 36, 0, 2
+	ev_beat
+	ev_at	62
+	ev_note	0, 87, 82, 27, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x01, 0x06
+	ev_beat
+	ev_at	66
+	ev_note	0, 84, 83, 9, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x07, 0x07, 0x07
+	ev_at	2
+	ev_note	0, 89, 91, 46, 0, 2
+	ev_at	22
+	ev_bend	0, 0, 65
+	ev_at	25
+	ev_bend	0, 0, 66
+	ev_at	28
+	ev_bend	0, 0, 67
+	ev_at	32
+	ev_bend	0, 0, 68
+	ev_at	35
+	ev_bend	0, 0, 66
+	ev_at	37
+	ev_bend	0, 0, 64
+	ev_at	58
+	ev_note	0, 87, 89, 20, 0, 2
+	ev_at	93
+	ev_note	0, 89, 88, 44, 0, 2
+	ev_beat
+	ev_at	54
+	ev_note	0, 90, 91, 26, 0, 2
+	ev_at	89
+	ev_note	0, 91, 67, 35, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x01, 0x01
+	ev_at	58
+	ev_note	0, 96, 87, 46, 0, 2
+	ev_beat
+	ev_at	56
+	ev_note	0, 84, 80, 44, 0, 2
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_at	93
+	ev_note	0, 81, 79, 51, 0, 2
+	ev_beat
+	ev_at	54
+	ev_note	0, 84, 75, 57, 0, 2
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x01, 0x06
+	ev_at	88
+	ev_bend	0, 0, 54
+	ev_at	95
+	ev_note	0, 96, 100, 46, 1, 2
+	ev_beat
+	ev_at	5
+	ev_bend	0, 0, 55
+	ev_at	8
+	ev_bend	0, 0, 56
+	ev_at	12
+	ev_bend	0, 0, 57
+	ev_at	14
+	ev_bend	0, 0, 58
+	ev_at	17
+	ev_bend	0, 0, 59
+	ev_at	20
+	ev_bend	0, 0, 60
+	ev_at	27
+	ev_bend	0, 0, 61
+	ev_at	30
+	ev_bend	0, 0, 62
+	ev_at	33
+	ev_bend	0, 0, 63
+	ev_at	39
+	ev_bend	0, 64, 63
+	ev_at	48
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_at	90
+	ev_bend	0, 0, 54
+	ev_beat
+	ev_at	2
+	ev_note	0, 93, 99, 49, 0, 2
+	ev_at	13
+	ev_bend	0, 0, 55
+	ev_at	16
+	ev_bend	0, 0, 56
+	ev_at	19
+	ev_bend	0, 0, 57
+	ev_at	22
+	ev_bend	0, 0, 60
+	ev_at	25
+	ev_bend	0, 0, 61
+	ev_at	28
+	ev_bend	0, 0, 62
+	ev_at	32
+	ev_bend	0, 0, 63
+	ev_at	35
+	ev_bend	0, 0, 64
+	ev_at	94
+	ev_note	0, 91, 76, 53, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x06, 0x02, 0x06
+	ev_at	64
+	ev_note	0, 93, 90, 69, 0, 2
+	ev_beat
+	ev_at	20
+	ev_bend	0, 0, 63
+	ev_at	24
+	ev_bend	0, 0, 62
+	ev_at	27
+	ev_bend	0, 0, 61
+	ev_at	30
+	ev_bend	0, 0, 60
+	ev_at	33
+	ev_bend	0, 0, 59
+	ev_at	35
+	ev_bend	0, 0, 56
+	ev_at	39
+	ev_bend	0, 0, 54
+	ev_at	70
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_at	12
+	ev_note	0, 87, 89, 47, 0, 2
+	ev_at	41
+	ev_bend	0, 0, 65
+	ev_at	44
+	ev_bend	0, 0, 67
+	ev_at	48
+	ev_bend	0, 0, 69
+	ev_at	54
+	ev_bend	0, 0, 67
+	ev_at	57
+	ev_bend	0, 0, 65
+	ev_at	60
+	ev_bend	0, 0, 64
+	ev_at	69
+	ev_note	0, 84, 78, 16, 0, 2
+	ev_beat
+	ev_at	4
+	ev_note	0, 86, 80, 46, 0, 2
+	ev_at	62
+	ev_note	0, 84, 78, 106, 0, 2
+	ev_beat
+	ev_cc	0, 1, 29
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x02, 0x01
+	ev_at	6
+	ev_cc	0, 1, 47
+	ev_at	10
+	ev_cc	0, 1, 74
+	ev_at	15
+	ev_cc	0, 1, 81
+	ev_at	18
+	ev_cc	0, 1, 95
+	ev_at	25
+	ev_cc	0, 1, 97
+	ev_at	28
+	ev_cc	0, 1, 101
+	ev_at	33
+	ev_cc	0, 1, 103
+	ev_at	40
+	ev_cc	0, 1, 104
+	ev_at	49
+	ev_cc	0, 1, 102
+	ev_at	52
+	ev_cc	0, 1, 99
+	ev_at	56
+	ev_cc	0, 1, 86
+	ev_at	61
+	ev_cc	0, 1, 77
+	ev_at	64
+	ev_cc	0, 1, 33
+	ev_at	71
+	ev_cc	0, 1, 22
+	ev_at	74
+	ev_cc	0, 1, 0
+	ev_at	95
+	ev_note	0, 82, 86, 56, 0, 2
+	ev_beat
+	ev_at	64
+	ev_note	0, 80, 83, 24, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x0a, 0x02, 0x0a
+	ev_at	1
+	ev_note	0, 81, 67, 54, 0, 2
+	ev_beat
+	ev_at	68
+	ev_note	0, 85, 102, 22, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x05, 0x03
+	ev_at	3
+	ev_note	0, 86, 71, 46, 0, 2
+	ev_at	61
+	ev_note	0, 88, 79, 26, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 89, 78, 42, 0, 2
+	ev_at	60
+	ev_note	0, 90, 86, 20, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	2
+	ev_note	0, 91, 78, 41, 0, 2
+	ev_at	58
+	ev_note	0, 91, 84, 78, 0, 2
+	ev_beat
+	ev_at	26
+	ev_bend	0, 0, 63
+	ev_at	29
+	ev_bend	0, 0, 63
+	ev_at	32
+	ev_bend	0, 0, 63
+	ev_at	35
+	ev_bend	0, 0, 62
+	ev_at	37
+	ev_note	0, 89, 46, 12, 0, 2
+	ev_at	38
+	ev_bend	0, 0, 62
+	ev_at	41
+	ev_bend	0, 0, 61
+	ev_at	46
+	ev_note	0, 88, 37, 9, 0, 2
+	ev_at	48
+	ev_bend	0, 0, 58
+	ev_at	54
+	ev_bend	0, 0, 58
+	ev_at	55
+	ev_note	0, 86, 29, 7, 0, 2
+	ev_at	57
+	ev_bend	0, 0, 56
+	ev_at	60
+	ev_bend	0, 0, 55
+	ev_at	62
+	ev_bend	0, 0, 54
+	ev_at	64
+	ev_note	0, 84, 20, 5, 0, 2
+	ev_at	66
+	ev_bend	0, 0, 55
+	ev_at	92
+	ev_bend	0, 0, 64
+	ev_end
+TpadStream04_End:
+TpadStream05:
+	.byte	5		# the pad record's index
+	.be24	TpadStream05_End - TpadStream05_Events
+TpadStream05_Events:		# 8 bars of 4 beats, 833 bytes
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_beat
+	ev_at	4
+	ev_note	0, 84, 90, 46, 0, 2
+	ev_at	58
+	ev_note	0, 87, 96, 31, 0, 2
+	ev_beat
+	ev_at	3
+	ev_note	0, 89, 95, 58, 0, 2
+	ev_at	67
+	ev_note	0, 87, 89, 30, 0, 2
+	ev_beat
+	ev_at	63
+	ev_bend	0, 0, 53
+	ev_at	65
+	ev_note	0, 90, 111, 108, 0, 2
+	ev_at	68
+	ev_bend	0, 0, 54
+	ev_at	73
+	ev_bend	0, 0, 55
+	ev_at	76
+	ev_bend	0, 0, 56
+	ev_at	81
+	ev_bend	0, 0, 57
+	ev_at	84
+	ev_bend	0, 0, 58
+	ev_at	89
+	ev_bend	0, 0, 59
+	ev_at	92
+	ev_bend	0, 0, 61
+	ev_at	94
+	ev_bend	0, 0, 63
+	ev_beat
+	ev_at	2
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_at	1
+	ev_note	0, 89, 107, 58, 0, 2
+	ev_at	37
+	ev_bend	0, 0, 65
+	ev_at	39
+	ev_bend	0, 0, 64
+	ev_at	43
+	ev_bend	0, 0, 67
+	ev_at	47
+	ev_bend	0, 0, 68
+	ev_at	50
+	ev_bend	0, 0, 69
+	ev_at	52
+	ev_bend	0, 0, 71
+	ev_at	56
+	ev_bend	0, 0, 67
+	ev_at	63
+	ev_bend	0, 0, 64
+	ev_at	64
+	ev_note	0, 87, 91, 29, 0, 2
+	ev_beat
+	ev_note	0, 89, 88, 53, 0, 2
+	ev_at	65
+	ev_note	0, 87, 91, 23, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 84, 66, 35, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x02, 0x03
+	ev_at	2
+	ev_bend	0, 0, 55
+	ev_at	4
+	ev_note	0, 91, 110, 56, 0, 2
+	ev_at	13
+	ev_bend	0, 0, 56
+	ev_at	18
+	ev_bend	0, 0, 57
+	ev_at	20
+	ev_bend	0, 0, 58
+	ev_at	23
+	ev_bend	0, 0, 59
+	ev_at	29
+	ev_bend	0, 0, 60
+	ev_at	31
+	ev_bend	0, 0, 61
+	ev_at	34
+	ev_bend	0, 0, 62
+	ev_at	39
+	ev_bend	0, 0, 63
+	ev_at	42
+	ev_bend	0, 0, 64
+	ev_at	63
+	ev_note	0, 96, 66, 22, 0, 2
+	ev_beat
+	ev_at	8
+	ev_note	0, 90, 107, 40, 0, 2
+	ev_at	63
+	ev_note	0, 89, 93, 27, 0, 2
+	ev_beat
+	ev_at	4
+	ev_note	0, 87, 95, 50, 0, 2
+	ev_at	67
+	ev_note	0, 84, 70, 14, 0, 2
+	ev_at	94
+	ev_note	0, 87, 83, 64, 0, 2
+	ev_beat
+	ev_at	69
+	ev_note	0, 86, 89, 32, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	45
+	ev_bend	0, 0, 54
+	ev_at	62
+	ev_note	0, 91, 106, 84, 1, 2
+	ev_at	73
+	ev_bend	0, 0, 55
+	ev_at	75
+	ev_bend	0, 0, 56
+	ev_at	77
+	ev_bend	0, 0, 57
+	ev_at	82
+	ev_bend	0, 0, 58
+	ev_at	86
+	ev_bend	0, 0, 59
+	ev_at	88
+	ev_bend	0, 0, 60
+	ev_at	93
+	ev_bend	0, 0, 61
+	ev_beat
+	ev_at	3
+	ev_bend	0, 0, 62
+	ev_at	5
+	ev_bend	0, 0, 63
+	ev_at	10
+	ev_bend	0, 64, 63
+	ev_at	13
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_beat
+	ev_at	5
+	ev_note	0, 94, 104, 53, 0, 2
+	ev_at	27
+	ev_bend	0, 0, 64
+	ev_at	32
+	ev_bend	0, 0, 65
+	ev_at	35
+	ev_bend	0, 0, 68
+	ev_at	37
+	ev_bend	0, 0, 71
+	ev_at	45
+	ev_bend	0, 0, 68
+	ev_at	51
+	ev_bend	0, 0, 64
+	ev_at	55
+	ev_note	0, 96, 35, 14, 0, 2
+	ev_at	67
+	ev_note	0, 91, 96, 19, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_at	3
+	ev_note	0, 96, 101, 51, 0, 2
+	ev_at	95
+	ev_bend	0, 0, 54
+	ev_beat
+	ev_at	3
+	ev_note	0, 95, 115, 51, 0, 2
+	ev_at	5
+	ev_bend	0, 0, 56
+	ev_at	7
+	ev_bend	0, 0, 57
+	ev_at	13
+	ev_bend	0, 0, 58
+	ev_at	16
+	ev_bend	0, 0, 61
+	ev_at	18
+	ev_bend	0, 0, 63
+	ev_at	21
+	ev_bend	0, 0, 64
+	ev_at	66
+	ev_note	0, 92, 97, 32, 0, 2
+	ev_beat
+	ev_at	3
+	ev_note	0, 91, 80, 44, 0, 2
+	ev_at	65
+	ev_note	0, 90, 90, 33, 0, 2
+	ev_beat
+	ev_at	3
+	ev_note	0, 89, 84, 41, 0, 2
+	ev_at	63
+	ev_note	0, 87, 75, 26, 0, 2
+	ev_beat
+	ev_at	3
+	ev_bend	0, 0, 54
+	ev_at	7
+	ev_note	0, 90, 109, 42, 0, 2
+	ev_at	14
+	ev_bend	0, 0, 55
+	ev_at	16
+	ev_bend	0, 0, 56
+	ev_at	21
+	ev_bend	0, 0, 57
+	ev_at	24
+	ev_bend	0, 0, 58
+	ev_at	27
+	ev_bend	0, 0, 59
+	ev_at	30
+	ev_bend	0, 0, 60
+	ev_at	35
+	ev_bend	0, 0, 61
+	ev_at	37
+	ev_bend	0, 0, 63
+	ev_at	40
+	ev_bend	0, 0, 64
+	ev_at	58
+	ev_note	0, 89, 75, 36, 0, 2
+	ev_beat
+	ev_at	8
+	ev_note	0, 87, 109, 51, 0, 2
+	ev_at	69
+	ev_note	0, 84, 99, 117, 0, 2
+	ev_beat
+	ev_at	22
+	ev_cc	0, 1, 25
+	ev_at	27
+	ev_cc	0, 1, 35
+	ev_at	30
+	ev_cc	0, 1, 69
+	ev_at	35
+	ev_cc	0, 1, 86
+	ev_at	40
+	ev_cc	0, 1, 88
+	ev_at	51
+	ev_cc	0, 1, 91
+	ev_at	54
+	ev_cc	0, 1, 95
+	ev_at	83
+	ev_cc	0, 1, 93
+	ev_at	86
+	ev_cc	0, 1, 85
+	ev_at	90
+	ev_cc	0, 1, 73
+	ev_at	94
+	ev_cc	0, 1, 46
+	ev_beat
+	ev_at	3
+	ev_cc	0, 1, 19
+	ev_at	8
+	ev_cc	0, 1, 0
+	ev_cc	0, 1, 2
+	ev_beat
+	ev_note	0, 84, 75, 66, 0, 2
+	ev_sysex	4
+	.byte	0x02, 0x03, 0x02, 0x03
+	ev_at	65
+	ev_note	0, 87, 111, 21, 0, 2
+	ev_beat
+	ev_at	1
+	ev_note	0, 87, 92, 58, 0, 2
+	ev_at	65
+	ev_note	0, 84, 77, 24, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	2
+	ev_note	0, 83, 100, 37, 0, 2
+	ev_at	45
+	ev_note	0, 84, 64, 11, 0, 2
+	ev_at	56
+	ev_note	0, 83, 76, 13, 0, 2
+	ev_at	71
+	ev_note	0, 79, 80, 16, 0, 2
+	ev_beat
+	ev_at	4
+	ev_note	0, 83, 85, 63, 0, 2
+	ev_at	71
+	ev_note	0, 84, 105, 31, 0, 2
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x01, 0x05, 0x01
+	ev_at	61
+	ev_bend	0, 0, 55
+	ev_at	63
+	ev_note	0, 91, 116, 103, 1, 2
+	ev_at	69
+	ev_bend	0, 0, 56
+	ev_at	71
+	ev_bend	0, 0, 58
+	ev_at	74
+	ev_bend	0, 0, 61
+	ev_at	80
+	ev_bend	0, 0, 62
+	ev_at	82
+	ev_bend	0, 0, 63
+	ev_at	85
+	ev_bend	0, 0, 64
+	ev_beat
+	ev_beat
+	ev_sysex	4
+	.byte	0x02, 0x08, 0x02, 0x08
+	ev_at	75
+	ev_bend	0, 0, 63
+	ev_at	82
+	ev_bend	0, 0, 63
+	ev_at	85
+	ev_bend	0, 0, 63
+	ev_at	88
+	ev_bend	0, 0, 63
+	ev_at	93
+	ev_bend	0, 0, 63
+	ev_at	95
+	ev_bend	0, 0, 63
+	ev_beat
+	ev_at	3
+	ev_bend	0, 0, 62
+	ev_note	0, 89, 35, 14, 0, 2
+	ev_at	8
+	ev_bend	0, 0, 62
+	ev_at	10
+	ev_bend	0, 0, 62
+	ev_at	14
+	ev_bend	0, 0, 61
+	ev_at	16
+	ev_note	0, 88, 30, 8, 0, 2
+	ev_at	19
+	ev_bend	0, 0, 61
+	ev_at	21
+	ev_bend	0, 0, 61
+	ev_at	25
+	ev_note	0, 86, 26, 5, 0, 2
+	ev_at	27
+	ev_bend	0, 0, 60
+	ev_at	29
+	ev_bend	0, 0, 59
+	ev_at	32
+	ev_bend	0, 0, 57
+	ev_at	36
+	ev_note	0, 84, 21, 3, 0, 2
+	ev_at	37
+	ev_bend	0, 0, 57
+	ev_at	39
+	ev_bend	0, 0, 57
+	ev_at	42
+	ev_bend	0, 0, 56
+	ev_at	45
+	ev_bend	0, 0, 55
+	ev_at	50
+	ev_bend	0, 0, 54
+	ev_at	87
+	ev_bend	0, 0, 64
+	ev_end
+TpadStream05_End:
+TpadStream00:
+	.byte	0		# the pad record's index
+	.be24	TpadStream00_End - TpadStream00_Events
+TpadStream00_Events:		# 1 bars of 4 beats, 126 bytes
+	ev_beat
+	ev_note	0, 68, 116, 19, 0, 0
+	ev_at	1
+	ev_note	0, 44, 1, 19, 0, 0
+	ev_at	48
+	ev_note	0, 46, 46, 39, 0, 0
+	ev_at	49
+	ev_note	0, 68, 82, 19, 0, 0
+	ev_beat
+	ev_note	0, 44, 1, 19, 0, 0
+	ev_at	1
+	ev_note	0, 61, 127, 35, 0, 0
+	ev_at	49
+	ev_note	0, 46, 46, 35, 0, 0
+	ev_note	0, 68, 95, 17, 0, 0
+	ev_at	73
+	ev_note	0, 61, 93, 14, 0, 0
+	ev_at	95
+	ev_note	0, 68, 117, 20, 0, 0
+	ev_beat
+	ev_note	0, 44, 1, 51, 0, 0
+	ev_at	25
+	ev_note	0, 61, 117, 16, 0, 0
+	ev_at	48
+	ev_note	0, 68, 82, 19, 0, 0
+	ev_at	49
+	ev_note	0, 46, 46, 34, 0, 0
+	ev_beat
+	ev_note	0, 44, 1, 24, 0, 0
+	ev_at	1
+	ev_note	0, 61, 127, 48, 0, 0
+	ev_at	48
+	ev_note	0, 68, 93, 15, 0, 0
+	ev_at	50
+	ev_note	0, 46, 46, 43, 0, 0
+	ev_end
+TpadStream00_End:
+TpadStream09:
+	.byte	9		# the pad record's index
+	.be24	TpadStream09_End - TpadStream09_Events
+TpadStream09_Events:		# 2 bars of 4 beats, 110 bytes
+	ev_beat
+	ev_at	1
+	ev_note	0, 48, 91, 16, 0, 1
+	ev_at	48
+	ev_note	0, 53, 100, 11, 0, 1
+	ev_beat
+	ev_at	1
+	ev_note	0, 58, 107, 12, 0, 1
+	ev_at	49
+	ev_note	0, 63, 105, 9, 0, 1
+	ev_beat
+	ev_note	0, 68, 105, 12, 0, 1
+	ev_at	49
+	ev_note	0, 73, 98, 10, 0, 1
+	ev_beat
+	ev_at	2
+	ev_note	0, 78, 98, 9, 0, 1
+	ev_at	49
+	ev_note	0, 83, 107, 11, 0, 1
+	ev_at	54
+	ev_note	0, 79, 93, 13, 0, 1
+	ev_at	55
+	ev_note	0, 67, 92, 12, 0, 1
+	ev_note	0, 77, 93, 12, 0, 1
+	ev_beat
+	ev_at	2
+	ev_note	0, 84, 111, 9, 0, 1
+	ev_at	5
+	ev_note	0, 60, 93, 18, 0, 1
+	ev_note	0, 76, 102, 18, 0, 1
+	ev_note	0, 79, 107, 18, 0, 1
+	ev_beat
+	ev_beat
+	ev_beat
+	ev_end
+TpadStream09_End:
+TpadHeapEnd:
+    .space	2, 0x00
 
 # dir[4], 0x142f0 bytes.
-# The built-in "Technics Pads" bank resource (16-byte space-padded name first).
-# TechnicsPadsResourceInit stores its address (TableRomSeg04Ptr) in 0x50007760 and,
-# when TechnicsPadsResourceParse rejects it, uses the program ROM's own "Technics Pads" copy
-# instead. Same header shape as TechnicsRhythmsTable (segment 83).
+# The built-in "Technics Pads" PERFORMANCE PAD bank: 120 pads, each a 16-byte name,
+# a bars/beats header, two part set-ups and an event stream in the style format of
+# notes/ic18-rhythm-rom.md. TechnicsPadsResourceInit stores its address
+# (TableRomSeg04Ptr) in 0x50007760 and TechnicsPadsResourceParse reads its header; when
+# the parse fails the program ROM's own copy (0x4872fe4c) is used. Each pad is an
+# include file src/table/pads/<Name>.s (tools/gen_table_styles.py).
 TechnicsPadsResource:
-    .incbin_range	"baserom/kn7000_table.rom", 0x04238c, 0x05667c
+    .ascii	"Technics Pads   "	# strncmp with the firmware's 0x485B6B68
+    .space	8, 0x00		# zero (IC18's style resource keeps its checksum here)
+    .be24	PadCountBlock - TechnicsPadsResource
+    .be24	PadIndex - TechnicsPadsResource	# -> 0x50034C2C
+    .be24	PadTable - TechnicsPadsResource	# -> 0x50034C30
+PadCountBlock:
+    .be16	0
+    .be16	120		# the pad count -> 0x50034C24; the index's limit
+    .be16	96		# [INFERENCE] ticks a beat, as in the style format
+    .byte	16, 2, 1, 0	# [INFERENCE] dimensions (name length 16 ...); nothing reads them
+
+# The pad-ID index: 1024 entries, entry ((id & 0x0700) >> 1) | (id & 0x7F) (func_48434591)
+# serves pad-ID id; an entry below the count is pad n, 0x8000 + n sends the ID to entry n.
+PadIndex:
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_style	18		# Pad_RockPiano
+    sidx_style	6		# Pad_8BeatStrum
+    sidx_style	12		# Pad_FunkGtrStrum
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10a
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10d
+    sidx_alias	0x18e
+    sidx_style	104		# Pad_SpiritualPiano
+    sidx_style	30		# Pad_FunkBass
+    sidx_style	31		# Pad_StandUpBrass
+    sidx_style	32		# Pad_FunkGuitarRiff
+    sidx_alias	0x190
+    sidx_style	33		# Pad_FunkGtrRhythm
+    sidx_alias	0x115
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_style	108		# Pad_WaltzArpeggio
+    sidx_style	110		# Pad_GentleWaltz
+    sidx_style	84		# Pad_PianoMarch
+    sidx_style	80		# Pad_FolkClarinet
+    sidx_style	75		# Pad_JazzVoices
+    sidx_style	72		# Pad_JazzGuitarShot
+    sidx_alias	0x0a0
+    sidx_alias	0x123
+    sidx_alias	0x124
+    sidx_alias	0x125
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_style	4		# Pad_CosmicMaj
+    sidx_alias	0x0a8
+    sidx_style	64		# Pad_ShowPianoMaj
+    sidx_style	52		# Pad_EPBalladMaj
+    sidx_style	58		# Pad_SaxBalladMaj
+    sidx_alias	0x0ac
+    sidx_style	82		# Pad_TradClarinetMaj
+    sidx_style	112		# Pad_ClassicWaltzMaj
+    sidx_style	45		# Pad_SalsaPiano
+    sidx_style	39		# Pad_RhumbaGuitar
+    sidx_style	38		# Pad_BossaGuitar
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_style	36		# Pad_BongoLoop
+    sidx_style	42		# Pad_SambaLoopLow
+    sidx_alias	0x0ac
+    sidx_style	22		# Pad_RAndRollSaxMaj
+    sidx_style	28		# Pad_DanceStringsMaj
+    sidx_style	34		# Pad_FunkOrganMaj
+    sidx_style	70		# Pad_SectionSoloMaj
+    sidx_style	40		# Pad_BeguinePianoMaj
+    sidx_style	46		# Pad_SalsaBrassMaj
+    sidx_style	106		# Pad_GospelBluesMaj
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x143
+    sidx_style	48		# Pad_128Arpeggio
+    sidx_alias	0x149
+    sidx_alias	0x146
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x1cd
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	92		# Pad_CountryBallad
+    sidx_style	94		# Pad_CountryPianoMaj
+    sidx_style	76		# Pad_JazzPianoMaj
+    sidx_style	118		# Pad_SwingyWaltzMaj
+    sidx_style	100		# Pad_FiddleSoloMaj
+    sidx_style	88		# Pad_MarchingBandMaj
+    sidx_style	16		# Pad_FolkGuitarMaj
+    sidx_style	10		# Pad_PopSynthMaj
+    sidx_alias	0x0ee
+    sidx_alias	0x0a1
+    sidx_alias	0x1f1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_alias	0x175
+    sidx_alias	0x0a1
+    sidx_style	2		# Pad_Birdsong
+    sidx_style	3		# Pad_Waves
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_style	7		# Pad_16BeatStrum
+    sidx_style	13		# Pad_MuteGtrSingle
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_style	21		# Pad_RockGtrStrum
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_style	20		# Pad_RAndRGuitar
+    sidx_style	103		# Pad_BaptistPiano
+    sidx_style	105		# Pad_GospelGroove
+    sidx_alias	0x090
+    sidx_alias	0x091
+    sidx_alias	0x092
+    sidx_alias	0x190
+    sidx_alias	0x094
+    sidx_style	19		# Pad_Funk16Guitar
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_style	109		# Pad_WaltzBacking
+    sidx_alias	0x09d
+    sidx_style	79		# Pad_PolonaisePiano
+    sidx_style	81		# Pad_BellowShake
+    sidx_alias	0x0a0
+    sidx_alias	0x0a1
+    sidx_alias	0x0a0
+    sidx_style	73		# Pad_JazzPiano
+    sidx_style	67		# Pad_BigBandBreak
+    sidx_style	74		# Pad_JazzGtrRhythm
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_style	5		# Pad_CosmicMin
+    sidx_alias	0x128
+    sidx_style	65		# Pad_ShowPianoMin
+    sidx_style	53		# Pad_EPBalladMin
+    sidx_style	59		# Pad_SaxBalladMin
+    sidx_alias	0x12c
+    sidx_style	83		# Pad_TradClarinetMin
+    sidx_style	113		# Pad_ClassicWaltzMin
+    sidx_alias	0x0b0
+    sidx_style	44		# Pad_LatinGuitar
+    sidx_alias	0x0b2
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_style	37		# Pad_CongaLoop
+    sidx_style	43		# Pad_SambaLoopHigh
+    sidx_alias	0x12c
+    sidx_style	23		# Pad_RAndRollGuitarMin
+    sidx_style	29		# Pad_DanceSynthMin
+    sidx_style	35		# Pad_FunkSynthMin
+    sidx_style	71		# Pad_SectionSoloMin
+    sidx_style	41		# Pad_BeguinePianoMin
+    sidx_style	47		# Pad_SalsaBrassMin
+    sidx_style	107		# Pad_GospelBluesMin
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	63		# Pad_Arpeggio2
+    sidx_style	49		# Pad_PopBalladPiano
+    sidx_alias	0x149
+    sidx_style	57		# Pad_Crescendo
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	56		# Pad_BalladBacking
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x1cd
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	93		# Pad_CountryFolk
+    sidx_style	95		# Pad_CountryPianoMin
+    sidx_style	77		# Pad_ScatSingerMin
+    sidx_style	119		# Pad_SwingyWaltzMin
+    sidx_style	101		# Pad_BanjoSoloMin
+    sidx_style	89		# Pad_MarchingBandMin
+    sidx_style	17		# Pad_FolkGuitarMin
+    sidx_style	11		# Pad_PopSynthMin
+    sidx_alias	0x16e
+    sidx_alias	0x0a1
+    sidx_alias	0x1f1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_style	1		# Pad_ChurchBells
+    sidx_alias	0x0a1
+    sidx_alias	0x0f7
+    sidx_alias	0x0f8
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_style	8		# Pad_PopEP
+    sidx_style	15		# Pad_FolkGtrStrum
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10a
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10d
+    sidx_style	102		# Pad_GospelDuet
+    sidx_alias	0x08f
+    sidx_style	24		# Pad_DanceLoop1
+    sidx_alias	0x091
+    sidx_alias	0x092
+    sidx_alias	0x190
+    sidx_alias	0x094
+    sidx_alias	0x115
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_style	111		# Pad_WaltzBacking_2
+    sidx_alias	0x09d
+    sidx_style	85		# Pad_MilitaryFanfare
+    sidx_style	78		# Pad_MarchingBrass
+    sidx_alias	0x0a0
+    sidx_alias	0x0a1
+    sidx_alias	0x0a0
+    sidx_alias	0x123
+    sidx_style	68		# Pad_BigBandReeds
+    sidx_alias	0x125
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_alias	0x0a8
+    sidx_alias	0x0a8
+    sidx_alias	0x0aa
+    sidx_alias	0x0ab
+    sidx_alias	0x0ac
+    sidx_alias	0x0ac
+    sidx_alias	0x0ae
+    sidx_alias	0x0af
+    sidx_alias	0x0b0
+    sidx_alias	0x0b1
+    sidx_alias	0x0b2
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b6
+    sidx_alias	0x0b7
+    sidx_alias	0x0ac
+    sidx_alias	0x0b9
+    sidx_alias	0x0ba
+    sidx_alias	0x0bb
+    sidx_alias	0x0bc
+    sidx_alias	0x0bd
+    sidx_alias	0x0be
+    sidx_alias	0x0bf
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	51		# Pad_DreamyBallad
+    sidx_alias	0x0c4
+    sidx_alias	0x149
+    sidx_alias	0x146
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	55		# Pad_AngelBallad
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	61		# Pad_TimpaniRoll
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x2e7
+    sidx_alias	0x0e8
+    sidx_alias	0x0e9
+    sidx_alias	0x0ea
+    sidx_alias	0x0eb
+    sidx_alias	0x0ec
+    sidx_alias	0x0ed
+    sidx_alias	0x0ee
+    sidx_alias	0x0ee
+    sidx_alias	0x0a1
+    sidx_style	0		# Pad_VoiceWelcome
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_alias	0x175
+    sidx_alias	0x0a1
+    sidx_alias	0x0f7
+    sidx_alias	0x0f8
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_style	9		# Pad_PopSynth
+    sidx_style	14		# Pad_MuteGtrStrum
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10a
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10d
+    sidx_alias	0x18e
+    sidx_alias	0x08f
+    sidx_style	25		# Pad_DanceLoop2
+    sidx_alias	0x091
+    sidx_alias	0x092
+    sidx_alias	0x190
+    sidx_alias	0x094
+    sidx_alias	0x115
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_style	114		# Pad_Swing34Strum
+    sidx_style	116		# Pad_CountryWaltz
+    sidx_style	86		# Pad_BugleCall
+    sidx_alias	0x09f
+    sidx_alias	0x0a0
+    sidx_alias	0x0a1
+    sidx_alias	0x0a0
+    sidx_alias	0x123
+    sidx_style	69		# Pad_BrassLipGliss
+    sidx_alias	0x125
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_alias	0x0a8
+    sidx_alias	0x0a8
+    sidx_alias	0x0aa
+    sidx_alias	0x0ab
+    sidx_alias	0x0ac
+    sidx_alias	0x0ac
+    sidx_alias	0x0ae
+    sidx_alias	0x0af
+    sidx_alias	0x0b0
+    sidx_alias	0x0b1
+    sidx_alias	0x0b2
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b6
+    sidx_alias	0x0b7
+    sidx_alias	0x0ac
+    sidx_alias	0x0b9
+    sidx_alias	0x0ba
+    sidx_alias	0x0bb
+    sidx_alias	0x0bc
+    sidx_alias	0x0bd
+    sidx_alias	0x0be
+    sidx_alias	0x0bf
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	50		# Pad_FiftiesVocals
+    sidx_alias	0x0c4
+    sidx_alias	0x149
+    sidx_alias	0x146
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	54		# Pad_44Arpeggio
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x1cd
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	60		# Pad_MovieScene
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	96		# Pad_Country12Strum
+    sidx_style	91		# Pad_CountrySteel
+    sidx_alias	0x0e8
+    sidx_alias	0x0e9
+    sidx_alias	0x0ea
+    sidx_alias	0x0eb
+    sidx_alias	0x0ec
+    sidx_alias	0x0ed
+    sidx_alias	0x0ee
+    sidx_alias	0x0ee
+    sidx_alias	0x0a1
+    sidx_alias	0x1f1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_alias	0x175
+    sidx_alias	0x0a1
+    sidx_alias	0x0f7
+    sidx_alias	0x0f8
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x085
+    sidx_alias	0x086
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10a
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10d
+    sidx_alias	0x18e
+    sidx_alias	0x08f
+    sidx_style	26		# Pad_DanceLoop3
+    sidx_alias	0x091
+    sidx_alias	0x092
+    sidx_alias	0x190
+    sidx_alias	0x094
+    sidx_alias	0x115
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_style	115		# Pad_Swing34Piano
+    sidx_alias	0x09d
+    sidx_style	87		# Pad_ItalianPlayers
+    sidx_alias	0x09f
+    sidx_alias	0x0a0
+    sidx_alias	0x0a1
+    sidx_alias	0x0a0
+    sidx_alias	0x123
+    sidx_style	66		# Pad_JazzFlautist
+    sidx_alias	0x125
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_alias	0x0a8
+    sidx_alias	0x0a8
+    sidx_alias	0x0aa
+    sidx_alias	0x0ab
+    sidx_alias	0x0ac
+    sidx_alias	0x0ac
+    sidx_alias	0x0ae
+    sidx_alias	0x0af
+    sidx_alias	0x0b0
+    sidx_alias	0x0b1
+    sidx_alias	0x0b2
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b6
+    sidx_alias	0x0b7
+    sidx_alias	0x0ac
+    sidx_alias	0x0b9
+    sidx_alias	0x0ba
+    sidx_alias	0x0bb
+    sidx_alias	0x0bc
+    sidx_alias	0x0bd
+    sidx_alias	0x0be
+    sidx_alias	0x0bf
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x143
+    sidx_alias	0x0c4
+    sidx_alias	0x149
+    sidx_alias	0x146
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x1cd
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	97		# Pad_FingerStyleGtr
+    sidx_style	90		# Pad_CountryGuitar
+    sidx_alias	0x0e8
+    sidx_alias	0x0e9
+    sidx_alias	0x0ea
+    sidx_alias	0x0eb
+    sidx_alias	0x0ec
+    sidx_alias	0x0ed
+    sidx_alias	0x0ee
+    sidx_alias	0x0ee
+    sidx_alias	0x0a1
+    sidx_alias	0x1f1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_alias	0x175
+    sidx_alias	0x0a1
+    sidx_alias	0x0f7
+    sidx_alias	0x0f8
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x085
+    sidx_alias	0x086
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10a
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10d
+    sidx_alias	0x18e
+    sidx_alias	0x08f
+    sidx_style	27		# Pad_DanceLoop4
+    sidx_alias	0x091
+    sidx_alias	0x092
+    sidx_alias	0x190
+    sidx_alias	0x094
+    sidx_alias	0x115
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x09c
+    sidx_style	117		# Pad_GospelWaltz
+    sidx_alias	0x09e
+    sidx_alias	0x09f
+    sidx_alias	0x0a0
+    sidx_alias	0x0a1
+    sidx_alias	0x0a0
+    sidx_alias	0x123
+    sidx_alias	0x124
+    sidx_alias	0x125
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_alias	0x0a8
+    sidx_alias	0x0a8
+    sidx_alias	0x0aa
+    sidx_alias	0x0ab
+    sidx_alias	0x0ac
+    sidx_alias	0x0ac
+    sidx_alias	0x0ae
+    sidx_alias	0x0af
+    sidx_alias	0x0b0
+    sidx_alias	0x0b1
+    sidx_alias	0x0b2
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b6
+    sidx_alias	0x0b7
+    sidx_alias	0x0ac
+    sidx_alias	0x0b9
+    sidx_alias	0x0ba
+    sidx_alias	0x0bb
+    sidx_alias	0x0bc
+    sidx_alias	0x0bd
+    sidx_alias	0x0be
+    sidx_alias	0x0bf
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_style	62		# Pad_Arpeggio1
+    sidx_alias	0x0c4
+    sidx_alias	0x149
+    sidx_alias	0x146
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x1cd
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	98		# Pad_BluegrassBanjo
+    sidx_alias	0x0e7
+    sidx_alias	0x0e8
+    sidx_alias	0x0e9
+    sidx_alias	0x0ea
+    sidx_alias	0x0eb
+    sidx_alias	0x0ec
+    sidx_alias	0x0ed
+    sidx_alias	0x0ee
+    sidx_alias	0x0ee
+    sidx_alias	0x0a1
+    sidx_alias	0x1f1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_alias	0x175
+    sidx_alias	0x0a1
+    sidx_alias	0x0f7
+    sidx_alias	0x0f8
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x085
+    sidx_alias	0x086
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10a
+    sidx_alias	0x084
+    sidx_alias	0x084
+    sidx_alias	0x10d
+    sidx_alias	0x18e
+    sidx_alias	0x08f
+    sidx_alias	0x090
+    sidx_alias	0x091
+    sidx_alias	0x092
+    sidx_alias	0x190
+    sidx_alias	0x094
+    sidx_alias	0x115
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x190
+    sidx_alias	0x09c
+    sidx_alias	0x09d
+    sidx_alias	0x09e
+    sidx_alias	0x09f
+    sidx_alias	0x0a0
+    sidx_alias	0x0a1
+    sidx_alias	0x0a0
+    sidx_alias	0x123
+    sidx_alias	0x124
+    sidx_alias	0x125
+    sidx_alias	0x0a0
+    sidx_alias	0x0a0
+    sidx_alias	0x0a8
+    sidx_alias	0x0a8
+    sidx_alias	0x0aa
+    sidx_alias	0x0ab
+    sidx_alias	0x0ac
+    sidx_alias	0x0ac
+    sidx_alias	0x0ae
+    sidx_alias	0x0af
+    sidx_alias	0x0b0
+    sidx_alias	0x0b1
+    sidx_alias	0x0b2
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b0
+    sidx_alias	0x0b6
+    sidx_alias	0x0b7
+    sidx_alias	0x0ac
+    sidx_alias	0x0b9
+    sidx_alias	0x0ba
+    sidx_alias	0x0bb
+    sidx_alias	0x0bc
+    sidx_alias	0x0bd
+    sidx_alias	0x0be
+    sidx_alias	0x0bf
+    sidx_alias	0x0a1
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x143
+    sidx_alias	0x0c4
+    sidx_alias	0x149
+    sidx_alias	0x146
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x1cd
+    sidx_alias	0x149
+    sidx_alias	0x149
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_alias	0x25c
+    sidx_style	99		# Pad_BanjoStrum
+    sidx_alias	0x0e7
+    sidx_alias	0x0e8
+    sidx_alias	0x0e9
+    sidx_alias	0x0ea
+    sidx_alias	0x0eb
+    sidx_alias	0x0ec
+    sidx_alias	0x0ed
+    sidx_alias	0x0ee
+    sidx_alias	0x0ee
+    sidx_alias	0x0a1
+    sidx_alias	0x1f1
+    sidx_alias	0x0a1
+    sidx_alias	0x0a1
+    sidx_alias	0x175
+    sidx_alias	0x175
+    sidx_alias	0x0a1
+    sidx_alias	0x0f7
+    sidx_alias	0x0f8
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+    sidx_alias	0x0f7
+
+PadTable:
+    .be24	Pad_VoiceWelcome - TechnicsPadsResource	# pad 0
+    .be24	Pad_ChurchBells - TechnicsPadsResource	# pad 1
+    .be24	Pad_Birdsong - TechnicsPadsResource	# pad 2
+    .be24	Pad_Waves - TechnicsPadsResource	# pad 3
+    .be24	Pad_CosmicMaj - TechnicsPadsResource	# pad 4
+    .be24	Pad_CosmicMin - TechnicsPadsResource	# pad 5
+    .be24	Pad_8BeatStrum - TechnicsPadsResource	# pad 6
+    .be24	Pad_16BeatStrum - TechnicsPadsResource	# pad 7
+    .be24	Pad_PopEP - TechnicsPadsResource	# pad 8
+    .be24	Pad_PopSynth - TechnicsPadsResource	# pad 9
+    .be24	Pad_PopSynthMaj - TechnicsPadsResource	# pad 10
+    .be24	Pad_PopSynthMin - TechnicsPadsResource	# pad 11
+    .be24	Pad_FunkGtrStrum - TechnicsPadsResource	# pad 12
+    .be24	Pad_MuteGtrSingle - TechnicsPadsResource	# pad 13
+    .be24	Pad_MuteGtrStrum - TechnicsPadsResource	# pad 14
+    .be24	Pad_FolkGtrStrum - TechnicsPadsResource	# pad 15
+    .be24	Pad_FolkGuitarMaj - TechnicsPadsResource	# pad 16
+    .be24	Pad_FolkGuitarMin - TechnicsPadsResource	# pad 17
+    .be24	Pad_RockPiano - TechnicsPadsResource	# pad 18
+    .be24	Pad_Funk16Guitar - TechnicsPadsResource	# pad 19
+    .be24	Pad_RAndRGuitar - TechnicsPadsResource	# pad 20
+    .be24	Pad_RockGtrStrum - TechnicsPadsResource	# pad 21
+    .be24	Pad_RAndRollSaxMaj - TechnicsPadsResource	# pad 22
+    .be24	Pad_RAndRollGuitarMin - TechnicsPadsResource	# pad 23
+    .be24	Pad_DanceLoop1 - TechnicsPadsResource	# pad 24
+    .be24	Pad_DanceLoop2 - TechnicsPadsResource	# pad 25
+    .be24	Pad_DanceLoop3 - TechnicsPadsResource	# pad 26
+    .be24	Pad_DanceLoop4 - TechnicsPadsResource	# pad 27
+    .be24	Pad_DanceStringsMaj - TechnicsPadsResource	# pad 28
+    .be24	Pad_DanceSynthMin - TechnicsPadsResource	# pad 29
+    .be24	Pad_FunkBass - TechnicsPadsResource	# pad 30
+    .be24	Pad_StandUpBrass - TechnicsPadsResource	# pad 31
+    .be24	Pad_FunkGuitarRiff - TechnicsPadsResource	# pad 32
+    .be24	Pad_FunkGtrRhythm - TechnicsPadsResource	# pad 33
+    .be24	Pad_FunkOrganMaj - TechnicsPadsResource	# pad 34
+    .be24	Pad_FunkSynthMin - TechnicsPadsResource	# pad 35
+    .be24	Pad_BongoLoop - TechnicsPadsResource	# pad 36
+    .be24	Pad_CongaLoop - TechnicsPadsResource	# pad 37
+    .be24	Pad_BossaGuitar - TechnicsPadsResource	# pad 38
+    .be24	Pad_RhumbaGuitar - TechnicsPadsResource	# pad 39
+    .be24	Pad_BeguinePianoMaj - TechnicsPadsResource	# pad 40
+    .be24	Pad_BeguinePianoMin - TechnicsPadsResource	# pad 41
+    .be24	Pad_SambaLoopLow - TechnicsPadsResource	# pad 42
+    .be24	Pad_SambaLoopHigh - TechnicsPadsResource	# pad 43
+    .be24	Pad_LatinGuitar - TechnicsPadsResource	# pad 44
+    .be24	Pad_SalsaPiano - TechnicsPadsResource	# pad 45
+    .be24	Pad_SalsaBrassMaj - TechnicsPadsResource	# pad 46
+    .be24	Pad_SalsaBrassMin - TechnicsPadsResource	# pad 47
+    .be24	Pad_128Arpeggio - TechnicsPadsResource	# pad 48
+    .be24	Pad_PopBalladPiano - TechnicsPadsResource	# pad 49
+    .be24	Pad_FiftiesVocals - TechnicsPadsResource	# pad 50
+    .be24	Pad_DreamyBallad - TechnicsPadsResource	# pad 51
+    .be24	Pad_EPBalladMaj - TechnicsPadsResource	# pad 52
+    .be24	Pad_EPBalladMin - TechnicsPadsResource	# pad 53
+    .be24	Pad_44Arpeggio - TechnicsPadsResource	# pad 54
+    .be24	Pad_AngelBallad - TechnicsPadsResource	# pad 55
+    .be24	Pad_BalladBacking - TechnicsPadsResource	# pad 56
+    .be24	Pad_Crescendo - TechnicsPadsResource	# pad 57
+    .be24	Pad_SaxBalladMaj - TechnicsPadsResource	# pad 58
+    .be24	Pad_SaxBalladMin - TechnicsPadsResource	# pad 59
+    .be24	Pad_MovieScene - TechnicsPadsResource	# pad 60
+    .be24	Pad_TimpaniRoll - TechnicsPadsResource	# pad 61
+    .be24	Pad_Arpeggio1 - TechnicsPadsResource	# pad 62
+    .be24	Pad_Arpeggio2 - TechnicsPadsResource	# pad 63
+    .be24	Pad_ShowPianoMaj - TechnicsPadsResource	# pad 64
+    .be24	Pad_ShowPianoMin - TechnicsPadsResource	# pad 65
+    .be24	Pad_JazzFlautist - TechnicsPadsResource	# pad 66
+    .be24	Pad_BigBandBreak - TechnicsPadsResource	# pad 67
+    .be24	Pad_BigBandReeds - TechnicsPadsResource	# pad 68
+    .be24	Pad_BrassLipGliss - TechnicsPadsResource	# pad 69
+    .be24	Pad_SectionSoloMaj - TechnicsPadsResource	# pad 70
+    .be24	Pad_SectionSoloMin - TechnicsPadsResource	# pad 71
+    .be24	Pad_JazzGuitarShot - TechnicsPadsResource	# pad 72
+    .be24	Pad_JazzPiano - TechnicsPadsResource	# pad 73
+    .be24	Pad_JazzGtrRhythm - TechnicsPadsResource	# pad 74
+    .be24	Pad_JazzVoices - TechnicsPadsResource	# pad 75
+    .be24	Pad_JazzPianoMaj - TechnicsPadsResource	# pad 76
+    .be24	Pad_ScatSingerMin - TechnicsPadsResource	# pad 77
+    .be24	Pad_MarchingBrass - TechnicsPadsResource	# pad 78
+    .be24	Pad_PolonaisePiano - TechnicsPadsResource	# pad 79
+    .be24	Pad_FolkClarinet - TechnicsPadsResource	# pad 80
+    .be24	Pad_BellowShake - TechnicsPadsResource	# pad 81
+    .be24	Pad_TradClarinetMaj - TechnicsPadsResource	# pad 82
+    .be24	Pad_TradClarinetMin - TechnicsPadsResource	# pad 83
+    .be24	Pad_PianoMarch - TechnicsPadsResource	# pad 84
+    .be24	Pad_MilitaryFanfare - TechnicsPadsResource	# pad 85
+    .be24	Pad_BugleCall - TechnicsPadsResource	# pad 86
+    .be24	Pad_ItalianPlayers - TechnicsPadsResource	# pad 87
+    .be24	Pad_MarchingBandMaj - TechnicsPadsResource	# pad 88
+    .be24	Pad_MarchingBandMin - TechnicsPadsResource	# pad 89
+    .be24	Pad_CountryGuitar - TechnicsPadsResource	# pad 90
+    .be24	Pad_CountrySteel - TechnicsPadsResource	# pad 91
+    .be24	Pad_CountryBallad - TechnicsPadsResource	# pad 92
+    .be24	Pad_CountryFolk - TechnicsPadsResource	# pad 93
+    .be24	Pad_CountryPianoMaj - TechnicsPadsResource	# pad 94
+    .be24	Pad_CountryPianoMin - TechnicsPadsResource	# pad 95
+    .be24	Pad_Country12Strum - TechnicsPadsResource	# pad 96
+    .be24	Pad_FingerStyleGtr - TechnicsPadsResource	# pad 97
+    .be24	Pad_BluegrassBanjo - TechnicsPadsResource	# pad 98
+    .be24	Pad_BanjoStrum - TechnicsPadsResource	# pad 99
+    .be24	Pad_FiddleSoloMaj - TechnicsPadsResource	# pad 100
+    .be24	Pad_BanjoSoloMin - TechnicsPadsResource	# pad 101
+    .be24	Pad_GospelDuet - TechnicsPadsResource	# pad 102
+    .be24	Pad_BaptistPiano - TechnicsPadsResource	# pad 103
+    .be24	Pad_SpiritualPiano - TechnicsPadsResource	# pad 104
+    .be24	Pad_GospelGroove - TechnicsPadsResource	# pad 105
+    .be24	Pad_GospelBluesMaj - TechnicsPadsResource	# pad 106
+    .be24	Pad_GospelBluesMin - TechnicsPadsResource	# pad 107
+    .be24	Pad_WaltzArpeggio - TechnicsPadsResource	# pad 108
+    .be24	Pad_WaltzBacking - TechnicsPadsResource	# pad 109
+    .be24	Pad_GentleWaltz - TechnicsPadsResource	# pad 110
+    .be24	Pad_WaltzBacking_2 - TechnicsPadsResource	# pad 111
+    .be24	Pad_ClassicWaltzMaj - TechnicsPadsResource	# pad 112
+    .be24	Pad_ClassicWaltzMin - TechnicsPadsResource	# pad 113
+    .be24	Pad_Swing34Strum - TechnicsPadsResource	# pad 114
+    .be24	Pad_Swing34Piano - TechnicsPadsResource	# pad 115
+    .be24	Pad_CountryWaltz - TechnicsPadsResource	# pad 116
+    .be24	Pad_GospelWaltz - TechnicsPadsResource	# pad 117
+    .be24	Pad_SwingyWaltzMaj - TechnicsPadsResource	# pad 118
+    .be24	Pad_SwingyWaltzMin - TechnicsPadsResource	# pad 119
+    .include	"src/table/pads/VoiceWelcome.s"
+    .include	"src/table/pads/ChurchBells.s"
+    .include	"src/table/pads/Birdsong.s"
+    .include	"src/table/pads/Waves.s"
+    .include	"src/table/pads/CosmicMaj.s"
+    .include	"src/table/pads/CosmicMin.s"
+    .include	"src/table/pads/8BeatStrum.s"
+    .include	"src/table/pads/16BeatStrum.s"
+    .include	"src/table/pads/PopEP.s"
+    .include	"src/table/pads/PopSynth.s"
+    .include	"src/table/pads/PopSynthMaj.s"
+    .include	"src/table/pads/PopSynthMin.s"
+    .include	"src/table/pads/FunkGtrStrum.s"
+    .include	"src/table/pads/MuteGtrSingle.s"
+    .include	"src/table/pads/MuteGtrStrum.s"
+    .include	"src/table/pads/FolkGtrStrum.s"
+    .include	"src/table/pads/FolkGuitarMaj.s"
+    .include	"src/table/pads/FolkGuitarMin.s"
+    .include	"src/table/pads/RockPiano.s"
+    .include	"src/table/pads/Funk16Guitar.s"
+    .include	"src/table/pads/RAndRGuitar.s"
+    .include	"src/table/pads/RockGtrStrum.s"
+    .include	"src/table/pads/RAndRollSaxMaj.s"
+    .include	"src/table/pads/RAndRollGuitarMin.s"
+    .include	"src/table/pads/DanceLoop1.s"
+    .include	"src/table/pads/DanceLoop2.s"
+    .include	"src/table/pads/DanceLoop3.s"
+    .include	"src/table/pads/DanceLoop4.s"
+    .include	"src/table/pads/DanceStringsMaj.s"
+    .include	"src/table/pads/DanceSynthMin.s"
+    .include	"src/table/pads/FunkBass.s"
+    .include	"src/table/pads/StandUpBrass.s"
+    .include	"src/table/pads/FunkGuitarRiff.s"
+    .include	"src/table/pads/FunkGtrRhythm.s"
+    .include	"src/table/pads/FunkOrganMaj.s"
+    .include	"src/table/pads/FunkSynthMin.s"
+    .include	"src/table/pads/BongoLoop.s"
+    .include	"src/table/pads/CongaLoop.s"
+    .include	"src/table/pads/BossaGuitar.s"
+    .include	"src/table/pads/RhumbaGuitar.s"
+    .include	"src/table/pads/BeguinePianoMaj.s"
+    .include	"src/table/pads/BeguinePianoMin.s"
+    .include	"src/table/pads/SambaLoopLow.s"
+    .include	"src/table/pads/SambaLoopHigh.s"
+    .include	"src/table/pads/LatinGuitar.s"
+    .include	"src/table/pads/SalsaPiano.s"
+    .include	"src/table/pads/SalsaBrassMaj.s"
+    .include	"src/table/pads/SalsaBrassMin.s"
+    .include	"src/table/pads/128Arpeggio.s"
+    .include	"src/table/pads/PopBalladPiano.s"
+    .include	"src/table/pads/FiftiesVocals.s"
+    .include	"src/table/pads/DreamyBallad.s"
+    .include	"src/table/pads/EPBalladMaj.s"
+    .include	"src/table/pads/EPBalladMin.s"
+    .include	"src/table/pads/44Arpeggio.s"
+    .include	"src/table/pads/AngelBallad.s"
+    .include	"src/table/pads/BalladBacking.s"
+    .include	"src/table/pads/Crescendo.s"
+    .include	"src/table/pads/SaxBalladMaj.s"
+    .include	"src/table/pads/SaxBalladMin.s"
+    .include	"src/table/pads/MovieScene.s"
+    .include	"src/table/pads/TimpaniRoll.s"
+    .include	"src/table/pads/Arpeggio1.s"
+    .include	"src/table/pads/Arpeggio2.s"
+    .include	"src/table/pads/ShowPianoMaj.s"
+    .include	"src/table/pads/ShowPianoMin.s"
+    .include	"src/table/pads/JazzFlautist.s"
+    .include	"src/table/pads/BigBandBreak.s"
+    .include	"src/table/pads/BigBandReeds.s"
+    .include	"src/table/pads/BrassLipGliss.s"
+    .include	"src/table/pads/SectionSoloMaj.s"
+    .include	"src/table/pads/SectionSoloMin.s"
+    .include	"src/table/pads/JazzGuitarShot.s"
+    .include	"src/table/pads/JazzPiano.s"
+    .include	"src/table/pads/JazzGtrRhythm.s"
+    .include	"src/table/pads/JazzVoices.s"
+    .include	"src/table/pads/JazzPianoMaj.s"
+    .include	"src/table/pads/ScatSingerMin.s"
+    .include	"src/table/pads/MarchingBrass.s"
+    .include	"src/table/pads/PolonaisePiano.s"
+    .include	"src/table/pads/FolkClarinet.s"
+    .include	"src/table/pads/BellowShake.s"
+    .include	"src/table/pads/TradClarinetMaj.s"
+    .include	"src/table/pads/TradClarinetMin.s"
+    .include	"src/table/pads/PianoMarch.s"
+    .include	"src/table/pads/MilitaryFanfare.s"
+    .include	"src/table/pads/BugleCall.s"
+    .include	"src/table/pads/ItalianPlayers.s"
+    .include	"src/table/pads/MarchingBandMaj.s"
+    .include	"src/table/pads/MarchingBandMin.s"
+    .include	"src/table/pads/CountryGuitar.s"
+    .include	"src/table/pads/CountrySteel.s"
+    .include	"src/table/pads/CountryBallad.s"
+    .include	"src/table/pads/CountryFolk.s"
+    .include	"src/table/pads/CountryPianoMaj.s"
+    .include	"src/table/pads/CountryPianoMin.s"
+    .include	"src/table/pads/Country12Strum.s"
+    .include	"src/table/pads/FingerStyleGtr.s"
+    .include	"src/table/pads/BluegrassBanjo.s"
+    .include	"src/table/pads/BanjoStrum.s"
+    .include	"src/table/pads/FiddleSoloMaj.s"
+    .include	"src/table/pads/BanjoSoloMin.s"
+    .include	"src/table/pads/GospelDuet.s"
+    .include	"src/table/pads/BaptistPiano.s"
+    .include	"src/table/pads/SpiritualPiano.s"
+    .include	"src/table/pads/GospelGroove.s"
+    .include	"src/table/pads/GospelBluesMaj.s"
+    .include	"src/table/pads/GospelBluesMin.s"
+    .include	"src/table/pads/WaltzArpeggio.s"
+    .include	"src/table/pads/WaltzBacking.s"
+    .include	"src/table/pads/GentleWaltz.s"
+    .include	"src/table/pads/WaltzBacking_2.s"
+    .include	"src/table/pads/ClassicWaltzMaj.s"
+    .include	"src/table/pads/ClassicWaltzMin.s"
+    .include	"src/table/pads/Swing34Strum.s"
+    .include	"src/table/pads/Swing34Piano.s"
+    .include	"src/table/pads/CountryWaltz.s"
+    .include	"src/table/pads/GospelWaltz.s"
+    .include	"src/table/pads/SwingyWaltzMaj.s"
+    .include	"src/table/pads/SwingyWaltzMin.s"
+    .byte	0x00	# TODO: after the last pad; nothing reads it
 
 # dir[5], 0x1841c bytes.
 # The boot opening screen's animation: OpeningFrameDraw draws frame n from u32
@@ -2275,8 +16821,12 @@ SoundImage39:
     .space	2, 0x00
 
 # dir[57], 0xd9ec bytes.
-# Read by AcUserHpMenuProc: u32 offsets from the segment start, indexed by item.
-# TODO: the format of the entries.
+# Read by AcUserHpMenuProc (func_48496B28): u32 offsets from the segment start,
+# indexed by item; 0 = none (DrawBox instead). Each entry is a 2-bpp picture of a
+# USER HP menu panel, drawn with DrawBitmapSPFast4 (four 2-bit pixels per byte,
+# leftmost in bits 7-6, rows of (width + 3) / 4 bytes) in the colours at 0x485fa224,
+# 0x485fa234 or 0x485fa244 (palette first 0x20 / 0x24 / 0x28) by state. Kept as
+# PNGs in src/table/user_hp_menu/ (tools/table_png.py).
 UserHpMenuData:
     .long	UserHpMenuEntry00 - UserHpMenuData
     .long	UserHpMenuEntry01 - UserHpMenuData
@@ -2359,151 +16909,154 @@ UserHpMenuData:
     .long	0
 
 UserHpMenuEntry00:
-    .incbin_range	"baserom/kn7000_table.rom", 0x22f2fc, 0x22f75c
+    .incbin	"build/table_png/user_hp_menu/00.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/00.png (320x14, 2 bpp)
 
 UserHpMenuEntry01:
-    .incbin_range	"baserom/kn7000_table.rom", 0x22f75c, 0x22fbbc
+    .incbin	"build/table_png/user_hp_menu/01.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/01.png (320x14, 2 bpp)
 
 UserHpMenuEntry02:
-    .incbin_range	"baserom/kn7000_table.rom", 0x22fbbc, 0x23001c
+    .incbin	"build/table_png/user_hp_menu/02.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/02.png (320x14, 2 bpp)
 
 UserHpMenuEntry03:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23001c, 0x23047c
+    .incbin	"build/table_png/user_hp_menu/03.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/03.png (320x14, 2 bpp)
 
 UserHpMenuEntry04:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23047c, 0x2308dc
+    .incbin	"build/table_png/user_hp_menu/04.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/04.png (320x14, 2 bpp)
 
 UserHpMenuEntry05:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2308dc, 0x230d3c
+    .incbin	"build/table_png/user_hp_menu/05.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/05.png (320x14, 2 bpp)
 
 UserHpMenuEntry29:
-    .incbin_range	"baserom/kn7000_table.rom", 0x230d3c, 0x230f44
+    .incbin	"build/table_png/user_hp_menu/29.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/29.png (80x26, 2 bpp)
 
 UserHpMenuEntry30:
-    .incbin_range	"baserom/kn7000_table.rom", 0x230f44, 0x231007
+    .incbin	"build/table_png/user_hp_menu/30.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/30.png (60x13, 2 bpp)
 
 UserHpMenuEntry48:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231007, 0x231417
+    .incbin	"build/table_png/user_hp_menu/48.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/48.png (160x26, 2 bpp)
 
 UserHpMenuEntry47:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231417, 0x231827
+    .incbin	"build/table_png/user_hp_menu/47.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/47.png (160x26, 2 bpp)
 
 UserHpMenuEntry43:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231827, 0x231a2f
+    .incbin	"build/table_png/user_hp_menu/43.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/43.png (160x13, 2 bpp)
 
 UserHpMenuEntry44:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231a2f, 0x231e3f
+    .incbin	"build/table_png/user_hp_menu/44.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/44.png (160x26, 2 bpp)
 
 UserHpMenuEntry23:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231e3f, 0x232088
+    .incbin	"build/table_png/user_hp_menu/23.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/23.png (180x13, 2 bpp)
 
 UserHpMenuEntry24:
-    .incbin_range	"baserom/kn7000_table.rom", 0x232088, 0x23224f
+    .incbin	"build/table_png/user_hp_menu/24.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/24.png (140x13, 2 bpp)
 
 UserHpMenuEntry35:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23224f, 0x232312
+    .incbin	"build/table_png/user_hp_menu/35.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/35.png (60x13, 2 bpp)
 
 UserHpMenuEntry17:
-    .incbin_range	"baserom/kn7000_table.rom", 0x232312, 0x232b32
+    .incbin	"build/table_png/user_hp_menu/17.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/17.png (160x52, 2 bpp)
 
 UserHpMenuEntry18:
-    .incbin_range	"baserom/kn7000_table.rom", 0x232b32, 0x23314a
+    .incbin	"build/table_png/user_hp_menu/18.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/18.png (120x52, 2 bpp)
 
 UserHpMenuEntry15:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23314a, 0x23396a
+    .incbin	"build/table_png/user_hp_menu/15.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/15.png (160x52, 2 bpp)
 
 UserHpMenuEntry16:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23396a, 0x233f82
+    .incbin	"build/table_png/user_hp_menu/16.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/16.png (120x52, 2 bpp)
 
 UserHpMenuEntry34:
-    .incbin_range	"baserom/kn7000_table.rom", 0x233f82, 0x23418a
+    .incbin	"build/table_png/user_hp_menu/34.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/34.png (160x13, 2 bpp)
 
 UserHpMenuEntry39:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23418a, 0x234392
+    .incbin	"build/table_png/user_hp_menu/39.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/39.png (160x13, 2 bpp)
 
 UserHpMenuEntry40:
-    .incbin_range	"baserom/kn7000_table.rom", 0x234392, 0x2349aa
+    .incbin	"build/table_png/user_hp_menu/40.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/40.png (160x39, 2 bpp)
 
 UserHpMenuEntry36:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2349aa, 0x234bb2
+    .incbin	"build/table_png/user_hp_menu/36.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/36.png (160x13, 2 bpp)
 
 UserHpMenuEntry38:
-    .incbin_range	"baserom/kn7000_table.rom", 0x234bb2, 0x234dba
+    .incbin	"build/table_png/user_hp_menu/38.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/38.png (160x13, 2 bpp)
 
 UserHpMenuEntry37:
-    .incbin_range	"baserom/kn7000_table.rom", 0x234dba, 0x2353d2
+    .incbin	"build/table_png/user_hp_menu/37.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/37.png (160x39, 2 bpp)
 
 UserHpMenuEntry19:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2353d2, 0x23561b
+    .incbin	"build/table_png/user_hp_menu/19.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/19.png (180x13, 2 bpp)
 
 UserHpMenuEntry20:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23561b, 0x2357e2
+    .incbin	"build/table_png/user_hp_menu/20.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/20.png (140x13, 2 bpp)
 
 UserHpMenuEntry21:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2357e2, 0x235a2b
+    .incbin	"build/table_png/user_hp_menu/21.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/21.png (180x13, 2 bpp)
 
 UserHpMenuEntry22:
-    .incbin_range	"baserom/kn7000_table.rom", 0x235a2b, 0x235bf2
+    .incbin	"build/table_png/user_hp_menu/22.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/22.png (140x13, 2 bpp)
 
 UserHpMenuEntry25:
-    .incbin_range	"baserom/kn7000_table.rom", 0x235bf2, 0x235e3b
+    .incbin	"build/table_png/user_hp_menu/25.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/25.png (180x13, 2 bpp)
 
 UserHpMenuEntry26:
-    .incbin_range	"baserom/kn7000_table.rom", 0x235e3b, 0x236002
+    .incbin	"build/table_png/user_hp_menu/26.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/26.png (140x13, 2 bpp)
 
 UserHpMenuEntry32:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236002, 0x2360c5
+    .incbin	"build/table_png/user_hp_menu/32.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/32.png (60x13, 2 bpp)
 
 UserHpMenuEntry46:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2360c5, 0x2364d5
+    .incbin	"build/table_png/user_hp_menu/46.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/46.png (160x26, 2 bpp)
 
 UserHpMenuEntry45:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2364d5, 0x2368e5
+    .incbin	"build/table_png/user_hp_menu/45.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/45.png (160x26, 2 bpp)
 
 UserHpMenuEntry42:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2368e5, 0x236cf5
+    .incbin	"build/table_png/user_hp_menu/42.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/42.png (160x26, 2 bpp)
 
 UserHpMenuEntry31:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236cf5, 0x236d77
+    .incbin	"build/table_png/user_hp_menu/31.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/31.png (40x13, 2 bpp)
 
 UserHpMenuEntry27:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236d77, 0x236efd
+    .incbin	"build/table_png/user_hp_menu/27.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/27.png (60x26, 2 bpp)
 
 UserHpMenuEntry28:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236efd, 0x236f7f
+    .incbin	"build/table_png/user_hp_menu/28.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/28.png (40x13, 2 bpp)
 
 UserHpMenuEntry33:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236f7f, 0x237042
+    .incbin	"build/table_png/user_hp_menu/33.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/33.png (60x13, 2 bpp)
 
 UserHpMenuEntry41:
-    .incbin_range	"baserom/kn7000_table.rom", 0x237042, 0x237452
+    .incbin	"build/table_png/user_hp_menu/41.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/41.png (80x52, 2 bpp)
 
 UserHpMenuEntry06:
-    .incbin_range	"baserom/kn7000_table.rom", 0x237452, 0x238492
+    .incbin	"build/table_png/user_hp_menu/06.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/06.png (320x52, 2 bpp)
 
 UserHpMenuEntry07:
-    .incbin_range	"baserom/kn7000_table.rom", 0x238492, 0x2390c2
+    .incbin	"build/table_png/user_hp_menu/07.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/07.png (320x39, 2 bpp)
 
 UserHpMenuEntry08:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2390c2, 0x23a102
+    .incbin	"build/table_png/user_hp_menu/08.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/08.png (320x52, 2 bpp)
 
 UserHpMenuEntry09:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23a102, 0x23ad32
+    .incbin	"build/table_png/user_hp_menu/09.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/09.png (320x39, 2 bpp)
 
 UserHpMenuEntry10:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23ad32, 0x23bd72
+    .incbin	"build/table_png/user_hp_menu/10.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/10.png (320x52, 2 bpp)
 
 # slots 11, 13
 UserHpMenuEntry11:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23bd72, 0x23c592
+    .incbin	"build/table_png/user_hp_menu/11.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/11.png (160x52, 2 bpp)
 
 # slots 12, 14
 UserHpMenuEntry12:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23c592, 0x23cbac
+    .incbin	"build/table_png/user_hp_menu/12.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/12.png (160x39, 2 bpp)
+    .space	2, 0x00
 
 # dir[58], 0x83cc bytes.
-# Read by AcTcdImageProc: u32 offsets from the segment start; 0 = none.
-# TODO: the format of the 2400-byte entries.
+# Read by AcTcdImageProc: u32 offsets from the segment start, picked through the
+# u16 table 0x485ec940 by GetM3EmVal(0x8081); 0 = none. Each entry is a 240 x 80
+# 1-bpp picture drawn with DrawBitmapSP2 (fg 0xff, bg 0): 30-byte MSB-first rows.
+# Kept as PNGs in src/table/tcd/ (tools/table_png.py).
 TcdImages:
     .long	TcdImage00 - TcdImages
     .long	TcdImage01 - TcdImages
@@ -2542,53 +17095,162 @@ TcdImages:
     .long	0
 
 TcdImage00:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23cc38, 0x23d598
+    .incbin	"build/table_png/tcd/00.bin"   # census: generated -- tools/table_png.py from src/table/tcd/00.png (240x80, 1 bpp)
 
 TcdImage01:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23d598, 0x23def8
+    .incbin	"build/table_png/tcd/01.bin"   # census: generated -- tools/table_png.py from src/table/tcd/01.png (240x80, 1 bpp)
 
 TcdImage02:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23def8, 0x23e858
+    .incbin	"build/table_png/tcd/02.bin"   # census: generated -- tools/table_png.py from src/table/tcd/02.png (240x80, 1 bpp)
 
 TcdImage03:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23e858, 0x23f1b8
+    .incbin	"build/table_png/tcd/03.bin"   # census: generated -- tools/table_png.py from src/table/tcd/03.png (240x80, 1 bpp)
 
 TcdImage04:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23f1b8, 0x23fb18
+    .incbin	"build/table_png/tcd/04.bin"   # census: generated -- tools/table_png.py from src/table/tcd/04.png (240x80, 1 bpp)
 
 TcdImage05:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23fb18, 0x240478
+    .incbin	"build/table_png/tcd/05.bin"   # census: generated -- tools/table_png.py from src/table/tcd/05.png (240x80, 1 bpp)
 
 TcdImage06:
-    .incbin_range	"baserom/kn7000_table.rom", 0x240478, 0x240dd8
+    .incbin	"build/table_png/tcd/06.bin"   # census: generated -- tools/table_png.py from src/table/tcd/06.png (240x80, 1 bpp)
 
 TcdImage07:
-    .incbin_range	"baserom/kn7000_table.rom", 0x240dd8, 0x241738
+    .incbin	"build/table_png/tcd/07.bin"   # census: generated -- tools/table_png.py from src/table/tcd/07.png (240x80, 1 bpp)
 
 TcdImage08:
-    .incbin_range	"baserom/kn7000_table.rom", 0x241738, 0x242098
+    .incbin	"build/table_png/tcd/08.bin"   # census: generated -- tools/table_png.py from src/table/tcd/08.png (240x80, 1 bpp)
 
 TcdImage09:
-    .incbin_range	"baserom/kn7000_table.rom", 0x242098, 0x2429f8
+    .incbin	"build/table_png/tcd/09.bin"   # census: generated -- tools/table_png.py from src/table/tcd/09.png (240x80, 1 bpp)
 
 TcdImage10:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2429f8, 0x243358
+    .incbin	"build/table_png/tcd/10.bin"   # census: generated -- tools/table_png.py from src/table/tcd/10.png (240x80, 1 bpp)
 
 TcdImage11:
-    .incbin_range	"baserom/kn7000_table.rom", 0x243358, 0x243cb8
+    .incbin	"build/table_png/tcd/11.bin"   # census: generated -- tools/table_png.py from src/table/tcd/11.png (240x80, 1 bpp)
 
 TcdImage12:
-    .incbin_range	"baserom/kn7000_table.rom", 0x243cb8, 0x244618
+    .incbin	"build/table_png/tcd/12.bin"   # census: generated -- tools/table_png.py from src/table/tcd/12.png (240x80, 1 bpp)
 
 TcdImage13:
-    .incbin_range	"baserom/kn7000_table.rom", 0x244618, 0x244f78
+    .incbin	"build/table_png/tcd/13.bin"   # census: generated -- tools/table_png.py from src/table/tcd/13.png (240x80, 1 bpp)
 
 # dir[59], 0x13980c bytes.
-# The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and
-# StyleBuiltinNameTableInit caches it in 0x50034b90 (kn7000_manual.sym, style-name
-# module). TODO: its record format.
+# The built-in styles the style-ID index sends to the table ROM (index entry
+# 0x4000 + n = style n; StyleBuiltinNameResolve): TableRomStyleSubTablePtr returns
+# it and StyleBuiltinNameTableInit caches it in 0x50034b90. u24BE offsets, then the
+# styles in the "Technics Rhythms" format of notes/ic18-rhythm-rom.md, each in
+# its own include file src/table/styles/<Name>.s, typed event by event
+# (tools/gen_table_styles.py; macros src/table/style_macros.inc).
 BuiltinStyleSubTable:
-    .incbin_range	"baserom/kn7000_table.rom", 0x244f78, 0x37e784
+    # u24BE offsets from the segment start, one per style: index entry 0x4000 + n
+    # of the style-ID index sends a style-ID to style n (StyleBuiltinNameResolve).
+    .be24	Style_CountryRock - BuiltinStyleSubTable	# style 0
+    .be24	Style_CountryBlues - BuiltinStyleSubTable	# style 1
+    .be24	Style_CountryPop - BuiltinStyleSubTable	# style 2
+    .be24	Style_CountryFolk - BuiltinStyleSubTable	# style 3
+    .be24	Style_Country2Step - BuiltinStyleSubTable	# style 4
+    .be24	Style_CountryShffle - BuiltinStyleSubTable	# style 5
+    .be24	Style_CountryPiano - BuiltinStyleSubTable	# style 6
+    .be24	Style_CountryBallad - BuiltinStyleSubTable	# style 7
+    .be24	Style_CountryWaltz - BuiltinStyleSubTable	# style 8
+    .be24	Style_PianoShowtime - BuiltinStyleSubTable	# style 9
+    .be24	Style_ModBluegrass - BuiltinStyleSubTable	# style 10
+    .be24	Style_SquareDance - BuiltinStyleSubTable	# style 11
+    .be24	Style_CajunCountry - BuiltinStyleSubTable	# style 12
+    .be24	Style_USAMarch24 - BuiltinStyleSubTable	# style 13
+    .be24	Style_USAMarch68 - BuiltinStyleSubTable	# style 14
+    .be24	Style_GermanMarch - BuiltinStyleSubTable	# style 15
+    .be24	Style_Polka24 - BuiltinStyleSubTable	# style 16
+    .be24	Style_BavarianPolka - BuiltinStyleSubTable	# style 17
+    .be24	Style_Waltz - BuiltinStyleSubTable	# style 18
+    .be24	Style_WaltzBallad - BuiltinStyleSubTable	# style 19
+    .be24	Style_SwingyWaltz - BuiltinStyleSubTable	# style 20
+    .be24	Style_MusetteWaltz - BuiltinStyleSubTable	# style 21
+    .be24	Style_GermanWaltz - BuiltinStyleSubTable	# style 22
+    .be24	Style_ChansonWaltz - BuiltinStyleSubTable	# style 23
+    .be24	Style_ClassicVienna - BuiltinStyleSubTable	# style 24
+    .be24	Style_Bossanova1 - BuiltinStyleSubTable	# style 25
+    .be24	Style_Bossanova2 - BuiltinStyleSubTable	# style 26
+    .be24	Style_Beguine - BuiltinStyleSubTable	# style 27
+    .be24	Style_Rhumba - BuiltinStyleSubTable	# style 28
+    .be24	Style_Bolero - BuiltinStyleSubTable	# style 29
+    .be24	Style_ChaCha - BuiltinStyleSubTable	# style 30
+    .be24	Style_Samba - BuiltinStyleSubTable	# style 31
+    .be24	Style_SambaRock - BuiltinStyleSubTable	# style 32
+    .be24	Style_Salsa - BuiltinStyleSubTable	# style 33
+    .be24	Style_TangoArgent - BuiltinStyleSubTable	# style 34
+    .be24	Style_HawaiiShuffle - BuiltinStyleSubTable	# style 35
+    .be24	Style_Mariachi - BuiltinStyleSubTable	# style 36
+    .be24	Style_GypsyDance - BuiltinStyleSubTable	# style 37
+    .be24	Style_Tarantella - BuiltinStyleSubTable	# style 38
+    .be24	Style_IrishJig - BuiltinStyleSubTable	# style 39
+    .be24	Style_Hawaiian - BuiltinStyleSubTable	# style 40
+    .be24	Style_Merengue - BuiltinStyleSubTable	# style 41
+    .be24	Style_SwingyReggae - BuiltinStyleSubTable	# style 42
+    .be24	Style_Sirtaki - BuiltinStyleSubTable	# style 43
+    .be24	Style_ScottishReel - BuiltinStyleSubTable	# style 44
+    .be24	Style_Cumbia - BuiltinStyleSubTable	# style 45
+    .be24	Style_Bossa22 - BuiltinStyleSubTable	# style 46
+    .be24	Style_Talempong - BuiltinStyleSubTable	# style 47
+    .be24	Style_ItaliaRomance - BuiltinStyleSubTable	# style 48
+    .be24	Style_Dangdut - BuiltinStyleSubTable	# style 49
+    .be24	Style_Keroncong - BuiltinStyleSubTable	# style 50
+    .be24	Style_70sOrchestra - BuiltinStyleSubTable	# style 51
+    .include	"src/table/styles/CountryRock.s"
+    .include	"src/table/styles/CountryBlues.s"
+    .include	"src/table/styles/CountryPop.s"
+    .include	"src/table/styles/CountryFolk.s"
+    .include	"src/table/styles/Country2Step.s"
+    .include	"src/table/styles/CountryShffle.s"
+    .include	"src/table/styles/CountryPiano.s"
+    .include	"src/table/styles/CountryBallad.s"
+    .include	"src/table/styles/CountryWaltz.s"
+    .include	"src/table/styles/PianoShowtime.s"
+    .include	"src/table/styles/ModBluegrass.s"
+    .include	"src/table/styles/SquareDance.s"
+    .include	"src/table/styles/CajunCountry.s"
+    .include	"src/table/styles/USAMarch24.s"
+    .include	"src/table/styles/USAMarch68.s"
+    .include	"src/table/styles/GermanMarch.s"
+    .include	"src/table/styles/Polka24.s"
+    .include	"src/table/styles/BavarianPolka.s"
+    .include	"src/table/styles/Waltz.s"
+    .include	"src/table/styles/WaltzBallad.s"
+    .include	"src/table/styles/SwingyWaltz.s"
+    .include	"src/table/styles/MusetteWaltz.s"
+    .include	"src/table/styles/GermanWaltz.s"
+    .include	"src/table/styles/ChansonWaltz.s"
+    .include	"src/table/styles/ClassicVienna.s"
+    .include	"src/table/styles/Bossanova1.s"
+    .include	"src/table/styles/Bossanova2.s"
+    .include	"src/table/styles/Beguine.s"
+    .include	"src/table/styles/Rhumba.s"
+    .include	"src/table/styles/Bolero.s"
+    .include	"src/table/styles/ChaCha.s"
+    .include	"src/table/styles/Samba.s"
+    .include	"src/table/styles/SambaRock.s"
+    .include	"src/table/styles/Salsa.s"
+    .include	"src/table/styles/TangoArgent.s"
+    .include	"src/table/styles/HawaiiShuffle.s"
+    .include	"src/table/styles/Mariachi.s"
+    .include	"src/table/styles/GypsyDance.s"
+    .include	"src/table/styles/Tarantella.s"
+    .include	"src/table/styles/IrishJig.s"
+    .include	"src/table/styles/Hawaiian.s"
+    .include	"src/table/styles/Merengue.s"
+    .include	"src/table/styles/SwingyReggae.s"
+    .include	"src/table/styles/Sirtaki.s"
+    .include	"src/table/styles/ScottishReel.s"
+    .include	"src/table/styles/Cumbia.s"
+    .include	"src/table/styles/Bossa22.s"
+    .include	"src/table/styles/Talempong.s"
+    .include	"src/table/styles/ItaliaRomance.s"
+    .include	"src/table/styles/Dangdut.s"
+    .include	"src/table/styles/Keroncong.s"
+    .include	"src/table/styles/70sOrchestra.s"
+    .space	3, 0x00
 
 # dir[60], 0x830 bytes.
 # Feature Demo picture D5, returned by DemoJpgDataD5: 'Accordion', larger red lettering.
@@ -9355,11 +24017,2262 @@ DemoJpgD14:
     .align	4
 
 # dir[83], 0x1248 bytes.
-# A truncated in-flash copy of the built-in "Technics Rhythms" style resource.
-# TableRomStyleResourcePtr returns it; StyleBuiltinNameTableInit re-points the
-# style-name table here when it carries the signature (kn7000_manual.sym).
+# A copy of IC18's "Technics Rhythms" header, count block, style-ID index, style
+# table and count-in table, without the styles (notes/ic18-rhythm-rom.md, "The
+# table ROM's copy"). TableRomStyleResourcePtr returns it; StyleBuiltinNameTableInit
+# re-points the index (0x50034b7c) here when it carries the signature. The style and
+# count-in offsets are IC18's (tools/gen_table_styles.py).
 TechnicsRhythmsTable:
-    .incbin_range	"baserom/kn7000_table.rom", 0x3e828c, 0x3e94d4
+    .ascii	"Technics Rhythms"	# strncmp with the firmware's 0x4872980C
+    .be16	0		# checksum: zeroed in this copy (IC18 has 0xE2DA)
+    .be24	0		# checksum start: zeroed
+    .be24	0		# checksum length: zeroed
+    .be24	TrCopyCountBlock - TechnicsRhythmsTable
+    .be24	TrCopyStyleIndex - TechnicsRhythmsTable	# -> 0x50034B7C (StyleBuiltinNameTableInit)
+    .be24	TrCopyStyleTable - TechnicsRhythmsTable
+    .be24	TrCopyCountInTable - TechnicsRhythmsTable
+    .be24	0x0013b2	# the fallback style: IC18's style 0 (an IC18 offset)
+TrCopyCountBlock:
+    .be16	0
+    .be16	221		# the rhythm count (IC18 has 220; this copy adds a 52nd table style)
+    .be16	96		# [INFERENCE] ticks a beat
+    .byte	13, 8, 4, 2, 2, 2	# [INFERENCE] the format's dimensions
+
+# The style-ID index: entry ((id & 0x0F00) >> 1) | (id & 0x7F) serves style-ID id.
+# Below 221: style n of IC18's style table; 0x8000 + n: entry n; 0x4000 + n: style n
+# of this image's BuiltinStyleSubTable.
+TrCopyStyleIndex:
+    sidx_alias	0x300	# id 0x000 -> id 0x600
+    sidx_alias	0x201	# id 0x001 -> id 0x401
+    sidx_alias	0x202	# id 0x002 -> id 0x402
+    sidx_alias	0x202	# id 0x003 -> id 0x402
+    sidx_table	16		# id 0x004: BuiltinStyleSubTable style 16 Style_Polka24
+    sidx_alias	0x185	# id 0x005 -> id 0x305
+    sidx_alias	0x45a	# id 0x006 -> id 0x85a
+    sidx_alias	0x008	# id 0x007 -> id 0x008
+    sidx_table	22		# id 0x008: BuiltinStyleSubTable style 22 Style_GermanWaltz
+    sidx_alias	0x209	# id 0x009 -> id 0x409
+    sidx_alias	0x008	# id 0x00a -> id 0x008
+    sidx_alias	0x18b	# id 0x00b -> id 0x30b
+    sidx_alias	0x20c	# id 0x00c -> id 0x40c
+    sidx_alias	0x10d	# id 0x00d -> id 0x20d
+    sidx_alias	0x45a	# id 0x00e -> id 0x85a
+    sidx_style	96		# id 0x00f: IC18 style 96
+    sidx_alias	0x011	# id 0x010 -> id 0x011
+    sidx_table	4		# id 0x011: BuiltinStyleSubTable style 4 Style_Country2Step
+    sidx_alias	0x212	# id 0x012 -> id 0x412
+    sidx_table	8		# id 0x013: BuiltinStyleSubTable style 8 Style_CountryWaltz
+    sidx_alias	0x294	# id 0x014 -> id 0x514
+    sidx_alias	0x011	# id 0x015 -> id 0x011
+    sidx_alias	0x216	# id 0x016 -> id 0x416
+    sidx_alias	0x216	# id 0x017 -> id 0x416
+    sidx_alias	0x118	# id 0x018 -> id 0x218
+    sidx_alias	0x118	# id 0x019 -> id 0x218
+    sidx_alias	0x21a	# id 0x01a -> id 0x41a
+    sidx_alias	0x118	# id 0x01b -> id 0x218
+    sidx_alias	0x19c	# id 0x01c -> id 0x31c
+    sidx_alias	0x41d	# id 0x01d -> id 0x81d
+    sidx_alias	0x29e	# id 0x01e -> id 0x51e
+    sidx_alias	0x09f	# id 0x01f -> id 0x11f
+    sidx_alias	0x3a0	# id 0x020 -> id 0x720
+    sidx_style	53		# id 0x021: IC18 style 53
+    sidx_alias	0x5a2	# id 0x022 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x023 -> id 0x523
+    sidx_alias	0x2a4	# id 0x024 -> id 0x524
+    sidx_alias	0x1a5	# id 0x025 -> id 0x325
+    sidx_alias	0x3a6	# id 0x026 -> id 0x726
+    sidx_alias	0x227	# id 0x027 -> id 0x427
+    sidx_alias	0x328	# id 0x028 -> id 0x628
+    sidx_alias	0x328	# id 0x029 -> id 0x628
+    sidx_style	56		# id 0x02a: IC18 style 56
+    sidx_alias	0x328	# id 0x02b -> id 0x628
+    sidx_alias	0x22c	# id 0x02c -> id 0x42c
+    sidx_alias	0x0ad	# id 0x02d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x02e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x02f -> id 0x72e
+    sidx_table	46		# id 0x030: BuiltinStyleSubTable style 46 Style_Bossa22
+    sidx_alias	0x030	# id 0x031 -> id 0x030
+    sidx_alias	0x030	# id 0x032 -> id 0x030
+    sidx_alias	0x533	# id 0x033 -> id 0xa33
+    sidx_alias	0x134	# id 0x034 -> id 0x234
+    sidx_alias	0x3b5	# id 0x035 -> id 0x735
+    sidx_alias	0x388	# id 0x036 -> id 0x708
+    sidx_alias	0x3b5	# id 0x037 -> id 0x735
+    sidx_alias	0x533	# id 0x038 -> id 0xa33
+    sidx_alias	0x339	# id 0x039 -> id 0x639
+    sidx_alias	0x6ba	# id 0x03a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0x03b -> id 0x33b
+    sidx_alias	0x13c	# id 0x03c -> id 0x23c
+    sidx_alias	0x0bd	# id 0x03d -> id 0x13d
+    sidx_alias	0x533	# id 0x03e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x03f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x040 -> id 0x140
+    sidx_alias	0x241	# id 0x041 -> id 0x441
+    sidx_alias	0x0c0	# id 0x042 -> id 0x140
+    sidx_alias	0x0c3	# id 0x043 -> id 0x143
+    sidx_alias	0x344	# id 0x044 -> id 0x644
+    sidx_alias	0x145	# id 0x045 -> id 0x245
+    sidx_alias	0x0c0	# id 0x046 -> id 0x140
+    sidx_alias	0x347	# id 0x047 -> id 0x647
+    sidx_alias	0x348	# id 0x048 -> id 0x648
+    sidx_alias	0x348	# id 0x049 -> id 0x648
+    sidx_style	108		# id 0x04a: IC18 style 108
+    sidx_alias	0x64b	# id 0x04b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0x04c -> id 0x54c
+    sidx_style	155		# id 0x04d: IC18 style 155
+    sidx_alias	0x14e	# id 0x04e -> id 0x24e
+    sidx_alias	0x24f	# id 0x04f -> id 0x44f
+    sidx_style	23		# id 0x050: IC18 style 23
+    sidx_alias	0x1d7	# id 0x051 -> id 0x357
+    sidx_alias	0x152	# id 0x052 -> id 0x252
+    sidx_alias	0x353	# id 0x053 -> id 0x653
+    sidx_alias	0x3d4	# id 0x054 -> id 0x754
+    sidx_alias	0x3d5	# id 0x055 -> id 0x755
+    sidx_alias	0x2d6	# id 0x056 -> id 0x556
+    sidx_alias	0x1d7	# id 0x057 -> id 0x357
+    sidx_alias	0x358	# id 0x058 -> id 0x658
+    sidx_alias	0x358	# id 0x059 -> id 0x658
+    sidx_alias	0x45a	# id 0x05a -> id 0x85a
+    sidx_alias	0x3db	# id 0x05b -> id 0x75b
+    sidx_alias	0x2dc	# id 0x05c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x05d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x05e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x05f -> id 0x55c
+    sidx_style	6		# id 0x060: IC18 style 6
+    sidx_alias	0x261	# id 0x061 -> id 0x461
+    sidx_alias	0x3e2	# id 0x062 -> id 0x762
+    sidx_alias	0x5e3	# id 0x063 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x064 -> id 0x762
+    sidx_alias	0x1e5	# id 0x065 -> id 0x365
+    sidx_style	165		# id 0x066: IC18 style 165
+    sidx_alias	0x267	# id 0x067 -> id 0x467
+    sidx_alias	0x168	# id 0x068 -> id 0x268
+    sidx_alias	0x060	# id 0x069 -> id 0x060
+    sidx_alias	0x060	# id 0x06a -> id 0x060
+    sidx_alias	0x36b	# id 0x06b -> id 0x66b
+    sidx_alias	0x16c	# id 0x06c -> id 0x26c
+    sidx_alias	0x16c	# id 0x06d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x06e -> id 0x56e
+    sidx_alias	0x1ef	# id 0x06f -> id 0x36f
+    sidx_alias	0x270	# id 0x070 -> id 0x470
+    sidx_alias	0x3f1	# id 0x071 -> id 0x771
+    sidx_alias	0x272	# id 0x072 -> id 0x472
+    sidx_alias	0x270	# id 0x073 -> id 0x470
+    sidx_alias	0x274	# id 0x074 -> id 0x474
+    sidx_alias	0x274	# id 0x075 -> id 0x474
+    sidx_alias	0x274	# id 0x076 -> id 0x474
+    sidx_alias	0x274	# id 0x077 -> id 0x474
+    sidx_alias	0x278	# id 0x078 -> id 0x478
+    sidx_alias	0x179	# id 0x079 -> id 0x279
+    sidx_alias	0x17a	# id 0x07a -> id 0x27a
+    sidx_alias	0x17a	# id 0x07b -> id 0x27a
+    sidx_alias	0x47c	# id 0x07c -> id 0x87c
+    sidx_alias	0x2fd	# id 0x07d -> id 0x57d
+    sidx_alias	0x47e	# id 0x07e -> id 0x87e
+    sidx_alias	0x77f	# id 0x07f -> id 0xe7f
+    sidx_alias	0x300	# id 0x100 -> id 0x600
+    sidx_alias	0x201	# id 0x101 -> id 0x401
+    sidx_alias	0x202	# id 0x102 -> id 0x402
+    sidx_alias	0x202	# id 0x103 -> id 0x402
+    sidx_table	17		# id 0x104: BuiltinStyleSubTable style 17 Style_BavarianPolka
+    sidx_alias	0x185	# id 0x105 -> id 0x305
+    sidx_alias	0x45a	# id 0x106 -> id 0x85a
+    sidx_alias	0x008	# id 0x107 -> id 0x008
+    sidx_alias	0x388	# id 0x108 -> id 0x708
+    sidx_alias	0x209	# id 0x109 -> id 0x409
+    sidx_alias	0x008	# id 0x10a -> id 0x008
+    sidx_alias	0x18b	# id 0x10b -> id 0x30b
+    sidx_alias	0x20c	# id 0x10c -> id 0x40c
+    sidx_alias	0x10d	# id 0x10d -> id 0x20d
+    sidx_alias	0x45a	# id 0x10e -> id 0x85a
+    sidx_alias	0x00f	# id 0x10f -> id 0x00f
+    sidx_alias	0x011	# id 0x110 -> id 0x011
+    sidx_alias	0x011	# id 0x111 -> id 0x011
+    sidx_table	2		# id 0x112: BuiltinStyleSubTable style 2 Style_CountryPop
+    sidx_style	167		# id 0x113: IC18 style 167
+    sidx_alias	0x294	# id 0x114 -> id 0x514
+    sidx_alias	0x011	# id 0x115 -> id 0x011
+    sidx_alias	0x216	# id 0x116 -> id 0x416
+    sidx_alias	0x216	# id 0x117 -> id 0x416
+    sidx_table	11		# id 0x118: BuiltinStyleSubTable style 11 Style_SquareDance
+    sidx_alias	0x118	# id 0x119 -> id 0x218
+    sidx_alias	0x21a	# id 0x11a -> id 0x41a
+    sidx_alias	0x118	# id 0x11b -> id 0x218
+    sidx_alias	0x19c	# id 0x11c -> id 0x31c
+    sidx_alias	0x41d	# id 0x11d -> id 0x81d
+    sidx_alias	0x29e	# id 0x11e -> id 0x51e
+    sidx_style	54		# id 0x11f: IC18 style 54
+    sidx_alias	0x3a0	# id 0x120 -> id 0x720
+    sidx_alias	0x021	# id 0x121 -> id 0x021
+    sidx_alias	0x5a2	# id 0x122 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x123 -> id 0x523
+    sidx_alias	0x2a4	# id 0x124 -> id 0x524
+    sidx_alias	0x1a5	# id 0x125 -> id 0x325
+    sidx_alias	0x3a6	# id 0x126 -> id 0x726
+    sidx_alias	0x227	# id 0x127 -> id 0x427
+    sidx_alias	0x328	# id 0x128 -> id 0x628
+    sidx_alias	0x328	# id 0x129 -> id 0x628
+    sidx_alias	0x02a	# id 0x12a -> id 0x02a
+    sidx_alias	0x328	# id 0x12b -> id 0x628
+    sidx_alias	0x0ad	# id 0x12c -> id 0x12d
+    sidx_style	43		# id 0x12d: IC18 style 43
+    sidx_alias	0x3ae	# id 0x12e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x12f -> id 0x72e
+    sidx_alias	0x030	# id 0x130 -> id 0x030
+    sidx_alias	0x030	# id 0x131 -> id 0x030
+    sidx_alias	0x030	# id 0x132 -> id 0x030
+    sidx_alias	0x533	# id 0x133 -> id 0xa33
+    sidx_alias	0x134	# id 0x134 -> id 0x234
+    sidx_alias	0x3b5	# id 0x135 -> id 0x735
+    sidx_alias	0x388	# id 0x136 -> id 0x708
+    sidx_alias	0x3b5	# id 0x137 -> id 0x735
+    sidx_alias	0x533	# id 0x138 -> id 0xa33
+    sidx_alias	0x339	# id 0x139 -> id 0x639
+    sidx_alias	0x6ba	# id 0x13a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0x13b -> id 0x33b
+    sidx_alias	0x13c	# id 0x13c -> id 0x23c
+    sidx_table	37		# id 0x13d: BuiltinStyleSubTable style 37 Style_GypsyDance
+    sidx_alias	0x533	# id 0x13e -> id 0xa33
+    sidx_table	25		# id 0x13f: BuiltinStyleSubTable style 25 Style_Bossanova1
+    sidx_style	24		# id 0x140: IC18 style 24
+    sidx_alias	0x241	# id 0x141 -> id 0x441
+    sidx_alias	0x0c0	# id 0x142 -> id 0x140
+    sidx_table	41		# id 0x143: BuiltinStyleSubTable style 41 Style_Merengue
+    sidx_alias	0x344	# id 0x144 -> id 0x644
+    sidx_alias	0x145	# id 0x145 -> id 0x245
+    sidx_alias	0x0c0	# id 0x146 -> id 0x140
+    sidx_alias	0x347	# id 0x147 -> id 0x647
+    sidx_alias	0x348	# id 0x148 -> id 0x648
+    sidx_alias	0x348	# id 0x149 -> id 0x648
+    sidx_alias	0x1ca	# id 0x14a -> id 0x34a
+    sidx_alias	0x64b	# id 0x14b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0x14c -> id 0x54c
+    sidx_alias	0x04d	# id 0x14d -> id 0x04d
+    sidx_alias	0x14e	# id 0x14e -> id 0x24e
+    sidx_alias	0x24f	# id 0x14f -> id 0x44f
+    sidx_style	10		# id 0x150: IC18 style 10
+    sidx_alias	0x1d7	# id 0x151 -> id 0x357
+    sidx_alias	0x152	# id 0x152 -> id 0x252
+    sidx_alias	0x353	# id 0x153 -> id 0x653
+    sidx_alias	0x3d4	# id 0x154 -> id 0x754
+    sidx_alias	0x3d5	# id 0x155 -> id 0x755
+    sidx_alias	0x2d6	# id 0x156 -> id 0x556
+    sidx_alias	0x1d7	# id 0x157 -> id 0x357
+    sidx_alias	0x358	# id 0x158 -> id 0x658
+    sidx_alias	0x358	# id 0x159 -> id 0x658
+    sidx_alias	0x45a	# id 0x15a -> id 0x85a
+    sidx_alias	0x3db	# id 0x15b -> id 0x75b
+    sidx_alias	0x2dc	# id 0x15c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x15d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x15e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x15f -> id 0x55c
+    sidx_style	5		# id 0x160: IC18 style 5
+    sidx_alias	0x261	# id 0x161 -> id 0x461
+    sidx_style	81		# id 0x162: IC18 style 81
+    sidx_alias	0x5e3	# id 0x163 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x164 -> id 0x762
+    sidx_alias	0x1e5	# id 0x165 -> id 0x365
+    sidx_alias	0x066	# id 0x166 -> id 0x066
+    sidx_alias	0x267	# id 0x167 -> id 0x467
+    sidx_alias	0x168	# id 0x168 -> id 0x268
+    sidx_alias	0x060	# id 0x169 -> id 0x060
+    sidx_alias	0x060	# id 0x16a -> id 0x060
+    sidx_alias	0x36b	# id 0x16b -> id 0x66b
+    sidx_alias	0x16c	# id 0x16c -> id 0x26c
+    sidx_alias	0x16c	# id 0x16d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x16e -> id 0x56e
+    sidx_alias	0x1ef	# id 0x16f -> id 0x36f
+    sidx_alias	0x270	# id 0x170 -> id 0x470
+    sidx_alias	0x3f1	# id 0x171 -> id 0x771
+    sidx_alias	0x272	# id 0x172 -> id 0x472
+    sidx_alias	0x270	# id 0x173 -> id 0x470
+    sidx_alias	0x1b4	# id 0x174 -> id 0x334
+    sidx_alias	0x274	# id 0x175 -> id 0x474
+    sidx_alias	0x274	# id 0x176 -> id 0x474
+    sidx_alias	0x274	# id 0x177 -> id 0x474
+    sidx_alias	0x278	# id 0x178 -> id 0x478
+    sidx_alias	0x179	# id 0x179 -> id 0x279
+    sidx_alias	0x17a	# id 0x17a -> id 0x27a
+    sidx_alias	0x17a	# id 0x17b -> id 0x27a
+    sidx_alias	0x47c	# id 0x17c -> id 0x87c
+    sidx_alias	0x2fd	# id 0x17d -> id 0x57d
+    sidx_alias	0x47e	# id 0x17e -> id 0x87e
+    sidx_alias	0x67f	# id 0x17f -> id 0xc7f
+    sidx_alias	0x300	# id 0x200 -> id 0x600
+    sidx_alias	0x201	# id 0x201 -> id 0x401
+    sidx_alias	0x202	# id 0x202 -> id 0x402
+    sidx_alias	0x202	# id 0x203 -> id 0x402
+    sidx_alias	0x004	# id 0x204 -> id 0x004
+    sidx_alias	0x185	# id 0x205 -> id 0x305
+    sidx_alias	0x45a	# id 0x206 -> id 0x85a
+    sidx_alias	0x008	# id 0x207 -> id 0x008
+    sidx_alias	0x388	# id 0x208 -> id 0x708
+    sidx_alias	0x209	# id 0x209 -> id 0x409
+    sidx_alias	0x008	# id 0x20a -> id 0x008
+    sidx_alias	0x20b	# id 0x20b -> id 0x40b
+    sidx_alias	0x20c	# id 0x20c -> id 0x40c
+    sidx_table	18		# id 0x20d: BuiltinStyleSubTable style 18 Style_Waltz
+    sidx_alias	0x45a	# id 0x20e -> id 0x85a
+    sidx_alias	0x00f	# id 0x20f -> id 0x00f
+    sidx_alias	0x011	# id 0x210 -> id 0x011
+    sidx_alias	0x011	# id 0x211 -> id 0x011
+    sidx_alias	0x212	# id 0x212 -> id 0x412
+    sidx_alias	0x013	# id 0x213 -> id 0x013
+    sidx_alias	0x294	# id 0x214 -> id 0x514
+    sidx_alias	0x011	# id 0x215 -> id 0x011
+    sidx_table	35		# id 0x216: BuiltinStyleSubTable style 35 Style_HawaiiShuffle
+    sidx_alias	0x216	# id 0x217 -> id 0x416
+    sidx_style	60		# id 0x218: IC18 style 60
+    sidx_alias	0x2a7	# id 0x219 -> id 0x527
+    sidx_alias	0x21a	# id 0x21a -> id 0x41a
+    sidx_alias	0x118	# id 0x21b -> id 0x218
+    sidx_table	9		# id 0x21c: BuiltinStyleSubTable style 9 Style_PianoShowtime
+    sidx_style	64		# id 0x21d: IC18 style 64
+    sidx_alias	0x29e	# id 0x21e -> id 0x51e
+    sidx_alias	0x09f	# id 0x21f -> id 0x11f
+    sidx_alias	0x3a0	# id 0x220 -> id 0x720
+    sidx_alias	0x021	# id 0x221 -> id 0x021
+    sidx_alias	0x5a2	# id 0x222 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x223 -> id 0x523
+    sidx_alias	0x2a4	# id 0x224 -> id 0x524
+    sidx_alias	0x1a5	# id 0x225 -> id 0x325
+    sidx_alias	0x3a6	# id 0x226 -> id 0x726
+    sidx_alias	0x227	# id 0x227 -> id 0x427
+    sidx_alias	0x328	# id 0x228 -> id 0x628
+    sidx_alias	0x328	# id 0x229 -> id 0x628
+    sidx_alias	0x02a	# id 0x22a -> id 0x02a
+    sidx_alias	0x328	# id 0x22b -> id 0x628
+    sidx_alias	0x22c	# id 0x22c -> id 0x42c
+    sidx_style	45		# id 0x22d: IC18 style 45
+    sidx_alias	0x3ae	# id 0x22e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x22f -> id 0x72e
+    sidx_alias	0x030	# id 0x230 -> id 0x030
+    sidx_alias	0x030	# id 0x231 -> id 0x030
+    sidx_alias	0x030	# id 0x232 -> id 0x030
+    sidx_alias	0x533	# id 0x233 -> id 0xa33
+    sidx_style	146		# id 0x234: IC18 style 146
+    sidx_alias	0x3b5	# id 0x235 -> id 0x735
+    sidx_alias	0x388	# id 0x236 -> id 0x708
+    sidx_alias	0x3b5	# id 0x237 -> id 0x735
+    sidx_alias	0x533	# id 0x238 -> id 0xa33
+    sidx_alias	0x339	# id 0x239 -> id 0x639
+    sidx_alias	0x6ba	# id 0x23a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0x23b -> id 0x33b
+    sidx_table	47		# id 0x23c: BuiltinStyleSubTable style 47 Style_Talempong
+    sidx_alias	0x0bd	# id 0x23d -> id 0x13d
+    sidx_alias	0x533	# id 0x23e -> id 0xa33
+    sidx_table	26		# id 0x23f: BuiltinStyleSubTable style 26 Style_Bossanova2
+    sidx_alias	0x0c0	# id 0x240 -> id 0x140
+    sidx_alias	0x241	# id 0x241 -> id 0x441
+    sidx_alias	0x0c0	# id 0x242 -> id 0x140
+    sidx_table	36		# id 0x243: BuiltinStyleSubTable style 36 Style_Mariachi
+    sidx_alias	0x344	# id 0x244 -> id 0x644
+    sidx_style	74		# id 0x245: IC18 style 74
+    sidx_alias	0x0c0	# id 0x246 -> id 0x140
+    sidx_alias	0x347	# id 0x247 -> id 0x647
+    sidx_alias	0x348	# id 0x248 -> id 0x648
+    sidx_alias	0x348	# id 0x249 -> id 0x648
+    sidx_alias	0x1ca	# id 0x24a -> id 0x34a
+    sidx_style	61		# id 0x24b: IC18 style 61
+    sidx_alias	0x2cc	# id 0x24c -> id 0x54c
+    sidx_alias	0x04d	# id 0x24d -> id 0x04d
+    sidx_style	31		# id 0x24e: IC18 style 31
+    sidx_alias	0x24f	# id 0x24f -> id 0x44f
+    sidx_alias	0x0d0	# id 0x250 -> id 0x150
+    sidx_alias	0x1d7	# id 0x251 -> id 0x357
+    sidx_style	11		# id 0x252: IC18 style 11
+    sidx_alias	0x353	# id 0x253 -> id 0x653
+    sidx_alias	0x3d4	# id 0x254 -> id 0x754
+    sidx_alias	0x3d5	# id 0x255 -> id 0x755
+    sidx_alias	0x2d6	# id 0x256 -> id 0x556
+    sidx_alias	0x1d7	# id 0x257 -> id 0x357
+    sidx_alias	0x358	# id 0x258 -> id 0x658
+    sidx_alias	0x358	# id 0x259 -> id 0x658
+    sidx_alias	0x45a	# id 0x25a -> id 0x85a
+    sidx_alias	0x3db	# id 0x25b -> id 0x75b
+    sidx_alias	0x2dc	# id 0x25c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x25d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x25e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x25f -> id 0x55c
+    sidx_alias	0x060	# id 0x260 -> id 0x060
+    sidx_alias	0x261	# id 0x261 -> id 0x461
+    sidx_style	94		# id 0x262: IC18 style 94
+    sidx_alias	0x5e3	# id 0x263 -> id 0xb63
+    sidx_alias	0x060	# id 0x264 -> id 0x060
+    sidx_alias	0x1e5	# id 0x265 -> id 0x365
+    sidx_alias	0x066	# id 0x266 -> id 0x066
+    sidx_alias	0x267	# id 0x267 -> id 0x467
+    sidx_style	107		# id 0x268: IC18 style 107
+    sidx_alias	0x060	# id 0x269 -> id 0x060
+    sidx_alias	0x060	# id 0x26a -> id 0x060
+    sidx_alias	0x36b	# id 0x26b -> id 0x66b
+    sidx_style	9		# id 0x26c: IC18 style 9
+    sidx_alias	0x16c	# id 0x26d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x26e -> id 0x56e
+    sidx_alias	0x1ef	# id 0x26f -> id 0x36f
+    sidx_alias	0x270	# id 0x270 -> id 0x470
+    sidx_alias	0x3f1	# id 0x271 -> id 0x771
+    sidx_alias	0x272	# id 0x272 -> id 0x472
+    sidx_alias	0x270	# id 0x273 -> id 0x470
+    sidx_alias	0x274	# id 0x274 -> id 0x474
+    sidx_alias	0x274	# id 0x275 -> id 0x474
+    sidx_alias	0x274	# id 0x276 -> id 0x474
+    sidx_alias	0x274	# id 0x277 -> id 0x474
+    sidx_alias	0x278	# id 0x278 -> id 0x478
+    sidx_style	141		# id 0x279: IC18 style 141
+    sidx_style	145		# id 0x27a: IC18 style 145
+    sidx_alias	0x17a	# id 0x27b -> id 0x27a
+    sidx_alias	0x47c	# id 0x27c -> id 0x87c
+    sidx_alias	0x2fd	# id 0x27d -> id 0x57d
+    sidx_alias	0x47e	# id 0x27e -> id 0x87e
+    sidx_alias	0x67f	# id 0x27f -> id 0xc7f
+    sidx_alias	0x300	# id 0x300 -> id 0x600
+    sidx_alias	0x201	# id 0x301 -> id 0x401
+    sidx_alias	0x202	# id 0x302 -> id 0x402
+    sidx_alias	0x202	# id 0x303 -> id 0x402
+    sidx_alias	0x004	# id 0x304 -> id 0x004
+    sidx_table	38		# id 0x305: BuiltinStyleSubTable style 38 Style_Tarantella
+    sidx_alias	0x45a	# id 0x306 -> id 0x85a
+    sidx_alias	0x008	# id 0x307 -> id 0x008
+    sidx_alias	0x388	# id 0x308 -> id 0x708
+    sidx_style	76		# id 0x309: IC18 style 76
+    sidx_alias	0x008	# id 0x30a -> id 0x008
+    sidx_table	21		# id 0x30b: BuiltinStyleSubTable style 21 Style_MusetteWaltz
+    sidx_alias	0x20c	# id 0x30c -> id 0x40c
+    sidx_alias	0x10d	# id 0x30d -> id 0x20d
+    sidx_alias	0x45a	# id 0x30e -> id 0x85a
+    sidx_alias	0x00f	# id 0x30f -> id 0x00f
+    sidx_alias	0x011	# id 0x310 -> id 0x011
+    sidx_alias	0x011	# id 0x311 -> id 0x011
+    sidx_alias	0x212	# id 0x312 -> id 0x412
+    sidx_alias	0x013	# id 0x313 -> id 0x013
+    sidx_alias	0x294	# id 0x314 -> id 0x514
+    sidx_alias	0x011	# id 0x315 -> id 0x011
+    sidx_alias	0x216	# id 0x316 -> id 0x416
+    sidx_alias	0x216	# id 0x317 -> id 0x416
+    sidx_alias	0x118	# id 0x318 -> id 0x218
+    sidx_alias	0x118	# id 0x319 -> id 0x218
+    sidx_alias	0x21a	# id 0x31a -> id 0x41a
+    sidx_alias	0x118	# id 0x31b -> id 0x218
+    sidx_style	66		# id 0x31c: IC18 style 66
+    sidx_alias	0x21e	# id 0x31d -> id 0x41e
+    sidx_alias	0x29e	# id 0x31e -> id 0x51e
+    sidx_alias	0x09f	# id 0x31f -> id 0x11f
+    sidx_alias	0x3a0	# id 0x320 -> id 0x720
+    sidx_alias	0x021	# id 0x321 -> id 0x021
+    sidx_alias	0x5a2	# id 0x322 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x323 -> id 0x523
+    sidx_alias	0x2a4	# id 0x324 -> id 0x524
+    sidx_style	52		# id 0x325: IC18 style 52
+    sidx_alias	0x3a6	# id 0x326 -> id 0x726
+    sidx_alias	0x227	# id 0x327 -> id 0x427
+    sidx_alias	0x328	# id 0x328 -> id 0x628
+    sidx_alias	0x328	# id 0x329 -> id 0x628
+    sidx_alias	0x02a	# id 0x32a -> id 0x02a
+    sidx_alias	0x328	# id 0x32b -> id 0x628
+    sidx_alias	0x22c	# id 0x32c -> id 0x42c
+    sidx_alias	0x0ad	# id 0x32d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x32e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x32f -> id 0x72e
+    sidx_alias	0x030	# id 0x330 -> id 0x030
+    sidx_alias	0x030	# id 0x331 -> id 0x030
+    sidx_alias	0x030	# id 0x332 -> id 0x030
+    sidx_alias	0x533	# id 0x333 -> id 0xa33
+    sidx_style	22		# id 0x334: IC18 style 22
+    sidx_alias	0x3b5	# id 0x335 -> id 0x735
+    sidx_alias	0x388	# id 0x336 -> id 0x708
+    sidx_alias	0x3b5	# id 0x337 -> id 0x735
+    sidx_alias	0x533	# id 0x338 -> id 0xa33
+    sidx_alias	0x339	# id 0x339 -> id 0x639
+    sidx_alias	0x6ba	# id 0x33a -> id 0xd3a
+    sidx_table	27		# id 0x33b: BuiltinStyleSubTable style 27 Style_Beguine
+    sidx_table	43		# id 0x33c: BuiltinStyleSubTable style 43 Style_Sirtaki
+    sidx_alias	0x0bd	# id 0x33d -> id 0x13d
+    sidx_alias	0x533	# id 0x33e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x33f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x340 -> id 0x140
+    sidx_alias	0x241	# id 0x341 -> id 0x441
+    sidx_alias	0x0c0	# id 0x342 -> id 0x140
+    sidx_table	45		# id 0x343: BuiltinStyleSubTable style 45 Style_Cumbia
+    sidx_alias	0x344	# id 0x344 -> id 0x644
+    sidx_alias	0x145	# id 0x345 -> id 0x245
+    sidx_alias	0x0c0	# id 0x346 -> id 0x140
+    sidx_alias	0x347	# id 0x347 -> id 0x647
+    sidx_alias	0x348	# id 0x348 -> id 0x648
+    sidx_alias	0x348	# id 0x349 -> id 0x648
+    sidx_style	33		# id 0x34a: IC18 style 33
+    sidx_table	6		# id 0x34b: BuiltinStyleSubTable style 6 Style_CountryPiano
+    sidx_alias	0x3d0	# id 0x34c -> id 0x750
+    sidx_alias	0x04d	# id 0x34d -> id 0x04d
+    sidx_alias	0x14e	# id 0x34e -> id 0x24e
+    sidx_style	19		# id 0x34f: IC18 style 19
+    sidx_alias	0x0d0	# id 0x350 -> id 0x150
+    sidx_alias	0x1d7	# id 0x351 -> id 0x357
+    sidx_alias	0x152	# id 0x352 -> id 0x252
+    sidx_alias	0x353	# id 0x353 -> id 0x653
+    sidx_alias	0x3d4	# id 0x354 -> id 0x754
+    sidx_alias	0x3d5	# id 0x355 -> id 0x755
+    sidx_alias	0x2d6	# id 0x356 -> id 0x556
+    sidx_style	149		# id 0x357: IC18 style 149
+    sidx_alias	0x358	# id 0x358 -> id 0x658
+    sidx_alias	0x358	# id 0x359 -> id 0x658
+    sidx_alias	0x45a	# id 0x35a -> id 0x85a
+    sidx_alias	0x3db	# id 0x35b -> id 0x75b
+    sidx_alias	0x2dc	# id 0x35c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x35d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x35e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x35f -> id 0x55c
+    sidx_alias	0x060	# id 0x360 -> id 0x060
+    sidx_alias	0x261	# id 0x361 -> id 0x461
+    sidx_alias	0x3e2	# id 0x362 -> id 0x762
+    sidx_alias	0x5e3	# id 0x363 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x364 -> id 0x762
+    sidx_style	8		# id 0x365: IC18 style 8
+    sidx_alias	0x066	# id 0x366 -> id 0x066
+    sidx_style	150		# id 0x367: IC18 style 150
+    sidx_style	16		# id 0x368: IC18 style 16
+    sidx_alias	0x060	# id 0x369 -> id 0x060
+    sidx_alias	0x060	# id 0x36a -> id 0x060
+    sidx_alias	0x36b	# id 0x36b -> id 0x66b
+    sidx_alias	0x16c	# id 0x36c -> id 0x26c
+    sidx_alias	0x16c	# id 0x36d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x36e -> id 0x56e
+    sidx_style	133		# id 0x36f: IC18 style 133
+    sidx_alias	0x270	# id 0x370 -> id 0x470
+    sidx_alias	0x3f1	# id 0x371 -> id 0x771
+    sidx_alias	0x272	# id 0x372 -> id 0x472
+    sidx_alias	0x270	# id 0x373 -> id 0x470
+    sidx_alias	0x274	# id 0x374 -> id 0x474
+    sidx_alias	0x274	# id 0x375 -> id 0x474
+    sidx_alias	0x274	# id 0x376 -> id 0x474
+    sidx_alias	0x274	# id 0x377 -> id 0x474
+    sidx_alias	0x278	# id 0x378 -> id 0x478
+    sidx_style	137		# id 0x379: IC18 style 137
+    sidx_alias	0x17a	# id 0x37a -> id 0x27a
+    sidx_alias	0x17a	# id 0x37b -> id 0x27a
+    sidx_alias	0x47c	# id 0x37c -> id 0x87c
+    sidx_alias	0x57e	# id 0x37d -> id 0xa7e
+    sidx_alias	0x47e	# id 0x37e -> id 0x87e
+    sidx_style	147		# id 0x37f: IC18 style 147
+    sidx_alias	0x300	# id 0x400 -> id 0x600
+    sidx_table	15		# id 0x401: BuiltinStyleSubTable style 15 Style_GermanMarch
+    sidx_table	14		# id 0x402: BuiltinStyleSubTable style 14 Style_USAMarch68
+    sidx_alias	0x202	# id 0x403 -> id 0x402
+    sidx_alias	0x384	# id 0x404 -> id 0x704
+    sidx_table	39		# id 0x405: BuiltinStyleSubTable style 39 Style_IrishJig
+    sidx_alias	0x45a	# id 0x406 -> id 0x85a
+    sidx_alias	0x008	# id 0x407 -> id 0x008
+    sidx_alias	0x388	# id 0x408 -> id 0x708
+    sidx_table	24		# id 0x409: BuiltinStyleSubTable style 24 Style_ClassicVienna
+    sidx_alias	0x008	# id 0x40a -> id 0x008
+    sidx_table	23		# id 0x40b: BuiltinStyleSubTable style 23 Style_ChansonWaltz
+    sidx_table	19		# id 0x40c: BuiltinStyleSubTable style 19 Style_WaltzBallad
+    sidx_style	86		# id 0x40d: IC18 style 86
+    sidx_alias	0x45a	# id 0x40e -> id 0x85a
+    sidx_style	82		# id 0x40f: IC18 style 82
+    sidx_alias	0x011	# id 0x410 -> id 0x011
+    sidx_alias	0x011	# id 0x411 -> id 0x011
+    sidx_table	7		# id 0x412: BuiltinStyleSubTable style 7 Style_CountryBallad
+    sidx_alias	0x013	# id 0x413 -> id 0x013
+    sidx_table	10		# id 0x414: BuiltinStyleSubTable style 10 Style_ModBluegrass
+    sidx_alias	0x011	# id 0x415 -> id 0x011
+    sidx_table	40		# id 0x416: BuiltinStyleSubTable style 40 Style_Hawaiian
+    sidx_alias	0x216	# id 0x417 -> id 0x416
+    sidx_alias	0x118	# id 0x418 -> id 0x218
+    sidx_alias	0x118	# id 0x419 -> id 0x218
+    sidx_table	44		# id 0x41a: BuiltinStyleSubTable style 44 Style_ScottishReel
+    sidx_alias	0x118	# id 0x41b -> id 0x218
+    sidx_alias	0x19c	# id 0x41c -> id 0x31c
+    sidx_alias	0x41d	# id 0x41d -> id 0x81d
+    sidx_style	65		# id 0x41e: IC18 style 65
+    sidx_alias	0x09f	# id 0x41f -> id 0x11f
+    sidx_alias	0x5a2	# id 0x420 -> id 0xb22
+    sidx_alias	0x021	# id 0x421 -> id 0x021
+    sidx_alias	0x5a2	# id 0x422 -> id 0xb22
+    sidx_style	163		# id 0x423: IC18 style 163
+    sidx_alias	0x2a4	# id 0x424 -> id 0x524
+    sidx_alias	0x1a5	# id 0x425 -> id 0x325
+    sidx_alias	0x3a6	# id 0x426 -> id 0x726
+    sidx_style	51		# id 0x427: IC18 style 51
+    sidx_alias	0x328	# id 0x428 -> id 0x628
+    sidx_alias	0x328	# id 0x429 -> id 0x628
+    sidx_alias	0x02a	# id 0x42a -> id 0x02a
+    sidx_alias	0x328	# id 0x42b -> id 0x628
+    sidx_style	89		# id 0x42c: IC18 style 89
+    sidx_alias	0x0ad	# id 0x42d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x42e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x42f -> id 0x72e
+    sidx_alias	0x030	# id 0x430 -> id 0x030
+    sidx_alias	0x030	# id 0x431 -> id 0x030
+    sidx_alias	0x030	# id 0x432 -> id 0x030
+    sidx_alias	0x533	# id 0x433 -> id 0xa33
+    sidx_alias	0x134	# id 0x434 -> id 0x234
+    sidx_alias	0x3b5	# id 0x435 -> id 0x735
+    sidx_alias	0x388	# id 0x436 -> id 0x708
+    sidx_alias	0x3b5	# id 0x437 -> id 0x735
+    sidx_alias	0x533	# id 0x438 -> id 0xa33
+    sidx_alias	0x339	# id 0x439 -> id 0x639
+    sidx_alias	0x6ba	# id 0x43a -> id 0xd3a
+    sidx_style	69		# id 0x43b: IC18 style 69
+    sidx_table	49		# id 0x43c: BuiltinStyleSubTable style 49 Style_Dangdut
+    sidx_alias	0x0bd	# id 0x43d -> id 0x13d
+    sidx_alias	0x533	# id 0x43e -> id 0xa33
+    sidx_style	114		# id 0x43f: IC18 style 114
+    sidx_alias	0x0c0	# id 0x440 -> id 0x140
+    sidx_style	164		# id 0x441: IC18 style 164
+    sidx_alias	0x344	# id 0x442 -> id 0x644
+    sidx_alias	0x0c3	# id 0x443 -> id 0x143
+    sidx_alias	0x344	# id 0x444 -> id 0x644
+    sidx_alias	0x145	# id 0x445 -> id 0x245
+    sidx_alias	0x0c0	# id 0x446 -> id 0x140
+    sidx_alias	0x347	# id 0x447 -> id 0x647
+    sidx_alias	0x348	# id 0x448 -> id 0x648
+    sidx_alias	0x348	# id 0x449 -> id 0x648
+    sidx_alias	0x1ca	# id 0x44a -> id 0x34a
+    sidx_alias	0x64b	# id 0x44b -> id 0xc4b
+    sidx_style	13		# id 0x44c: IC18 style 13
+    sidx_alias	0x04d	# id 0x44d -> id 0x04d
+    sidx_alias	0x14e	# id 0x44e -> id 0x24e
+    sidx_style	101		# id 0x44f: IC18 style 101
+    sidx_alias	0x0d0	# id 0x450 -> id 0x150
+    sidx_alias	0x1d7	# id 0x451 -> id 0x357
+    sidx_alias	0x152	# id 0x452 -> id 0x252
+    sidx_style	99		# id 0x453: IC18 style 99
+    sidx_alias	0x3d4	# id 0x454 -> id 0x754
+    sidx_alias	0x3d5	# id 0x455 -> id 0x755
+    sidx_alias	0x2d6	# id 0x456 -> id 0x556
+    sidx_style	152		# id 0x457: IC18 style 152
+    sidx_alias	0x358	# id 0x458 -> id 0x658
+    sidx_alias	0x358	# id 0x459 -> id 0x658
+    sidx_alias	0x45a	# id 0x45a -> id 0x85a
+    sidx_alias	0x3db	# id 0x45b -> id 0x75b
+    sidx_alias	0x2dc	# id 0x45c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x45d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x45e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x45f -> id 0x55c
+    sidx_alias	0x060	# id 0x460 -> id 0x060
+    sidx_style	7		# id 0x461: IC18 style 7
+    sidx_style	80		# id 0x462: IC18 style 80
+    sidx_alias	0x5e3	# id 0x463 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x464 -> id 0x762
+    sidx_style	100		# id 0x465: IC18 style 100
+    sidx_alias	0x066	# id 0x466 -> id 0x066
+    sidx_style	36		# id 0x467: IC18 style 36
+    sidx_style	21		# id 0x468: IC18 style 21
+    sidx_alias	0x060	# id 0x469 -> id 0x060
+    sidx_alias	0x060	# id 0x46a -> id 0x060
+    sidx_alias	0x36b	# id 0x46b -> id 0x66b
+    sidx_alias	0x16c	# id 0x46c -> id 0x26c
+    sidx_alias	0x16c	# id 0x46d -> id 0x26c
+    sidx_style	25		# id 0x46e: IC18 style 25
+    sidx_alias	0x1ef	# id 0x46f -> id 0x36f
+    sidx_style	161		# id 0x470: IC18 style 161
+    sidx_alias	0x270	# id 0x471 -> id 0x470
+    sidx_style	153		# id 0x472: IC18 style 153
+    sidx_alias	0x270	# id 0x473 -> id 0x470
+    sidx_table	32		# id 0x474: BuiltinStyleSubTable style 32 Style_SambaRock
+    sidx_alias	0x274	# id 0x475 -> id 0x474
+    sidx_alias	0x274	# id 0x476 -> id 0x474
+    sidx_alias	0x274	# id 0x477 -> id 0x474
+    sidx_style	111		# id 0x478: IC18 style 111
+    sidx_alias	0x179	# id 0x479 -> id 0x279
+    sidx_alias	0x17a	# id 0x47a -> id 0x27a
+    sidx_alias	0x17a	# id 0x47b -> id 0x27a
+    sidx_alias	0x47c	# id 0x47c -> id 0x87c
+    sidx_alias	0x2fd	# id 0x47d -> id 0x57d
+    sidx_alias	0x47e	# id 0x47e -> id 0x87e
+    sidx_alias	0x77f	# id 0x47f -> id 0xe7f
+    sidx_alias	0x300	# id 0x500 -> id 0x600
+    sidx_alias	0x201	# id 0x501 -> id 0x401
+    sidx_style	97		# id 0x502: IC18 style 97
+    sidx_alias	0x202	# id 0x503 -> id 0x402
+    sidx_alias	0x004	# id 0x504 -> id 0x004
+    sidx_alias	0x185	# id 0x505 -> id 0x305
+    sidx_alias	0x45a	# id 0x506 -> id 0x85a
+    sidx_alias	0x008	# id 0x507 -> id 0x008
+    sidx_alias	0x388	# id 0x508 -> id 0x708
+    sidx_alias	0x209	# id 0x509 -> id 0x409
+    sidx_alias	0x008	# id 0x50a -> id 0x008
+    sidx_table	48		# id 0x50b: BuiltinStyleSubTable style 48 Style_ItaliaRomance
+    sidx_alias	0x20c	# id 0x50c -> id 0x40c
+    sidx_style	71		# id 0x50d: IC18 style 71
+    sidx_alias	0x45a	# id 0x50e -> id 0x85a
+    sidx_alias	0x00f	# id 0x50f -> id 0x00f
+    sidx_alias	0x011	# id 0x510 -> id 0x011
+    sidx_alias	0x011	# id 0x511 -> id 0x011
+    sidx_alias	0x212	# id 0x512 -> id 0x412
+    sidx_alias	0x013	# id 0x513 -> id 0x013
+    sidx_style	168		# id 0x514: IC18 style 168
+    sidx_alias	0x011	# id 0x515 -> id 0x011
+    sidx_alias	0x216	# id 0x516 -> id 0x416
+    sidx_alias	0x216	# id 0x517 -> id 0x416
+    sidx_alias	0x118	# id 0x518 -> id 0x218
+    sidx_alias	0x118	# id 0x519 -> id 0x218
+    sidx_alias	0x21a	# id 0x51a -> id 0x41a
+    sidx_alias	0x118	# id 0x51b -> id 0x218
+    sidx_alias	0x19c	# id 0x51c -> id 0x31c
+    sidx_style	50		# id 0x51d: IC18 style 50
+    sidx_style	88		# id 0x51e: IC18 style 88
+    sidx_alias	0x09f	# id 0x51f -> id 0x11f
+    sidx_alias	0x3a0	# id 0x520 -> id 0x720
+    sidx_alias	0x021	# id 0x521 -> id 0x021
+    sidx_alias	0x021	# id 0x522 -> id 0x021
+    sidx_style	59		# id 0x523: IC18 style 59
+    sidx_style	47		# id 0x524: IC18 style 47
+    sidx_style	83		# id 0x525: IC18 style 83
+    sidx_alias	0x3a6	# id 0x526 -> id 0x726
+    sidx_style	58		# id 0x527: IC18 style 58
+    sidx_alias	0x328	# id 0x528 -> id 0x628
+    sidx_alias	0x328	# id 0x529 -> id 0x628
+    sidx_alias	0x02a	# id 0x52a -> id 0x02a
+    sidx_alias	0x328	# id 0x52b -> id 0x628
+    sidx_style	118		# id 0x52c: IC18 style 118
+    sidx_alias	0x0ad	# id 0x52d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x52e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x52f -> id 0x72e
+    sidx_alias	0x030	# id 0x530 -> id 0x030
+    sidx_alias	0x030	# id 0x531 -> id 0x030
+    sidx_alias	0x030	# id 0x532 -> id 0x030
+    sidx_alias	0x533	# id 0x533 -> id 0xa33
+    sidx_alias	0x134	# id 0x534 -> id 0x234
+    sidx_alias	0x3b5	# id 0x535 -> id 0x735
+    sidx_alias	0x388	# id 0x536 -> id 0x708
+    sidx_alias	0x3b5	# id 0x537 -> id 0x735
+    sidx_alias	0x533	# id 0x538 -> id 0xa33
+    sidx_alias	0x339	# id 0x539 -> id 0x639
+    sidx_alias	0x6ba	# id 0x53a -> id 0xd3a
+    sidx_style	115		# id 0x53b: IC18 style 115
+    sidx_table	50		# id 0x53c: BuiltinStyleSubTable style 50 Style_Keroncong
+    sidx_alias	0x0bd	# id 0x53d -> id 0x13d
+    sidx_alias	0x533	# id 0x53e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x53f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x540 -> id 0x140
+    sidx_alias	0x241	# id 0x541 -> id 0x441
+    sidx_alias	0x0c0	# id 0x542 -> id 0x140
+    sidx_alias	0x0c3	# id 0x543 -> id 0x143
+    sidx_alias	0x344	# id 0x544 -> id 0x644
+    sidx_alias	0x145	# id 0x545 -> id 0x245
+    sidx_alias	0x0c0	# id 0x546 -> id 0x140
+    sidx_table	42		# id 0x547: BuiltinStyleSubTable style 42 Style_SwingyReggae
+    sidx_alias	0x348	# id 0x548 -> id 0x648
+    sidx_alias	0x348	# id 0x549 -> id 0x648
+    sidx_alias	0x1ca	# id 0x54a -> id 0x34a
+    sidx_alias	0x64b	# id 0x54b -> id 0xc4b
+    sidx_style	12		# id 0x54c: IC18 style 12
+    sidx_alias	0x04d	# id 0x54d -> id 0x04d
+    sidx_alias	0x14e	# id 0x54e -> id 0x24e
+    sidx_style	127		# id 0x54f: IC18 style 127
+    sidx_alias	0x0d0	# id 0x550 -> id 0x150
+    sidx_alias	0x1d7	# id 0x551 -> id 0x357
+    sidx_alias	0x152	# id 0x552 -> id 0x252
+    sidx_style	15		# id 0x553: IC18 style 15
+    sidx_alias	0x3d4	# id 0x554 -> id 0x754
+    sidx_alias	0x3d5	# id 0x555 -> id 0x755
+    sidx_style	124		# id 0x556: IC18 style 124
+    sidx_alias	0x1d7	# id 0x557 -> id 0x357
+    sidx_alias	0x358	# id 0x558 -> id 0x658
+    sidx_alias	0x358	# id 0x559 -> id 0x658
+    sidx_alias	0x45a	# id 0x55a -> id 0x85a
+    sidx_alias	0x3db	# id 0x55b -> id 0x75b
+    sidx_style	18		# id 0x55c: IC18 style 18
+    sidx_alias	0x2dc	# id 0x55d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x55e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x55f -> id 0x55c
+    sidx_alias	0x060	# id 0x560 -> id 0x060
+    sidx_style	103		# id 0x561: IC18 style 103
+    sidx_style	37		# id 0x562: IC18 style 37
+    sidx_alias	0x5e3	# id 0x563 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x564 -> id 0x762
+    sidx_table	51		# id 0x565: BuiltinStyleSubTable style 51 Style_70sOrchestra
+    sidx_alias	0x066	# id 0x566 -> id 0x066
+    sidx_style	112		# id 0x567: IC18 style 112
+    sidx_style	130		# id 0x568: IC18 style 130
+    sidx_alias	0x060	# id 0x569 -> id 0x060
+    sidx_alias	0x060	# id 0x56a -> id 0x060
+    sidx_alias	0x36b	# id 0x56b -> id 0x66b
+    sidx_alias	0x16c	# id 0x56c -> id 0x26c
+    sidx_alias	0x16c	# id 0x56d -> id 0x26c
+    sidx_style	159		# id 0x56e: IC18 style 159
+    sidx_alias	0x1ef	# id 0x56f -> id 0x36f
+    sidx_alias	0x270	# id 0x570 -> id 0x470
+    sidx_alias	0x3f1	# id 0x571 -> id 0x771
+    sidx_alias	0x272	# id 0x572 -> id 0x472
+    sidx_alias	0x270	# id 0x573 -> id 0x470
+    sidx_alias	0x274	# id 0x574 -> id 0x474
+    sidx_alias	0x274	# id 0x575 -> id 0x474
+    sidx_alias	0x274	# id 0x576 -> id 0x474
+    sidx_alias	0x274	# id 0x577 -> id 0x474
+    sidx_style	104		# id 0x578: IC18 style 104
+    sidx_alias	0x179	# id 0x579 -> id 0x279
+    sidx_alias	0x17a	# id 0x57a -> id 0x27a
+    sidx_alias	0x257	# id 0x57b -> id 0x457
+    sidx_alias	0x47c	# id 0x57c -> id 0x87c
+    sidx_style	140		# id 0x57d: IC18 style 140
+    sidx_alias	0x47e	# id 0x57e -> id 0x87e
+    sidx_alias	0x77f	# id 0x57f -> id 0xe7f
+    sidx_table	13		# id 0x600: BuiltinStyleSubTable style 13 Style_USAMarch24
+    sidx_alias	0x201	# id 0x601 -> id 0x401
+    sidx_alias	0x202	# id 0x602 -> id 0x402
+    sidx_alias	0x202	# id 0x603 -> id 0x402
+    sidx_alias	0x004	# id 0x604 -> id 0x004
+    sidx_alias	0x185	# id 0x605 -> id 0x305
+    sidx_alias	0x45a	# id 0x606 -> id 0x85a
+    sidx_alias	0x008	# id 0x607 -> id 0x008
+    sidx_alias	0x388	# id 0x608 -> id 0x708
+    sidx_alias	0x209	# id 0x609 -> id 0x409
+    sidx_alias	0x008	# id 0x60a -> id 0x008
+    sidx_alias	0x18b	# id 0x60b -> id 0x30b
+    sidx_alias	0x20c	# id 0x60c -> id 0x40c
+    sidx_alias	0x10d	# id 0x60d -> id 0x20d
+    sidx_alias	0x45a	# id 0x60e -> id 0x85a
+    sidx_alias	0x00f	# id 0x60f -> id 0x00f
+    sidx_alias	0x011	# id 0x610 -> id 0x011
+    sidx_table	1		# id 0x611: BuiltinStyleSubTable style 1 Style_CountryBlues
+    sidx_alias	0x212	# id 0x612 -> id 0x412
+    sidx_alias	0x013	# id 0x613 -> id 0x013
+    sidx_alias	0x294	# id 0x614 -> id 0x514
+    sidx_alias	0x011	# id 0x615 -> id 0x011
+    sidx_alias	0x216	# id 0x616 -> id 0x416
+    sidx_alias	0x216	# id 0x617 -> id 0x416
+    sidx_alias	0x118	# id 0x618 -> id 0x218
+    sidx_alias	0x118	# id 0x619 -> id 0x218
+    sidx_alias	0x21a	# id 0x61a -> id 0x41a
+    sidx_alias	0x118	# id 0x61b -> id 0x218
+    sidx_alias	0x19c	# id 0x61c -> id 0x31c
+    sidx_alias	0x41d	# id 0x61d -> id 0x81d
+    sidx_alias	0x29e	# id 0x61e -> id 0x51e
+    sidx_alias	0x09f	# id 0x61f -> id 0x11f
+    sidx_alias	0x3a0	# id 0x620 -> id 0x720
+    sidx_alias	0x021	# id 0x621 -> id 0x021
+    sidx_alias	0x5a2	# id 0x622 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x623 -> id 0x523
+    sidx_alias	0x2a4	# id 0x624 -> id 0x524
+    sidx_style	84		# id 0x625: IC18 style 84
+    sidx_alias	0x3a6	# id 0x626 -> id 0x726
+    sidx_alias	0x227	# id 0x627 -> id 0x427
+    sidx_style	44		# id 0x628: IC18 style 44
+    sidx_alias	0x328	# id 0x629 -> id 0x628
+    sidx_alias	0x02a	# id 0x62a -> id 0x02a
+    sidx_alias	0x328	# id 0x62b -> id 0x628
+    sidx_alias	0x22c	# id 0x62c -> id 0x42c
+    sidx_alias	0x0ad	# id 0x62d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x62e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x62f -> id 0x72e
+    sidx_alias	0x030	# id 0x630 -> id 0x030
+    sidx_alias	0x030	# id 0x631 -> id 0x030
+    sidx_alias	0x030	# id 0x632 -> id 0x030
+    sidx_alias	0x533	# id 0x633 -> id 0xa33
+    sidx_alias	0x134	# id 0x634 -> id 0x234
+    sidx_alias	0x3b5	# id 0x635 -> id 0x735
+    sidx_alias	0x388	# id 0x636 -> id 0x708
+    sidx_alias	0x3b5	# id 0x637 -> id 0x735
+    sidx_alias	0x533	# id 0x638 -> id 0xa33
+    sidx_table	30		# id 0x639: BuiltinStyleSubTable style 30 Style_ChaCha
+    sidx_table	29		# id 0x63a: BuiltinStyleSubTable style 29 Style_Bolero
+    sidx_alias	0x1bb	# id 0x63b -> id 0x33b
+    sidx_alias	0x13c	# id 0x63c -> id 0x23c
+    sidx_alias	0x0bd	# id 0x63d -> id 0x13d
+    sidx_alias	0x533	# id 0x63e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x63f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x640 -> id 0x140
+    sidx_alias	0x241	# id 0x641 -> id 0x441
+    sidx_alias	0x0c0	# id 0x642 -> id 0x140
+    sidx_alias	0x0c3	# id 0x643 -> id 0x143
+    sidx_table	33		# id 0x644: BuiltinStyleSubTable style 33 Style_Salsa
+    sidx_alias	0x145	# id 0x645 -> id 0x245
+    sidx_alias	0x0c0	# id 0x646 -> id 0x140
+    sidx_style	148		# id 0x647: IC18 style 148
+    sidx_style	3		# id 0x648: IC18 style 3
+    sidx_alias	0x348	# id 0x649 -> id 0x648
+    sidx_alias	0x1ca	# id 0x64a -> id 0x34a
+    sidx_alias	0x64b	# id 0x64b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0x64c -> id 0x54c
+    sidx_alias	0x04d	# id 0x64d -> id 0x04d
+    sidx_alias	0x14e	# id 0x64e -> id 0x24e
+    sidx_alias	0x24f	# id 0x64f -> id 0x44f
+    sidx_alias	0x0d0	# id 0x650 -> id 0x150
+    sidx_alias	0x1d7	# id 0x651 -> id 0x357
+    sidx_alias	0x152	# id 0x652 -> id 0x252
+    sidx_style	126		# id 0x653: IC18 style 126
+    sidx_style	134		# id 0x654: IC18 style 134
+    sidx_alias	0x3d5	# id 0x655 -> id 0x755
+    sidx_style	131		# id 0x656: IC18 style 131
+    sidx_alias	0x1d7	# id 0x657 -> id 0x357
+    sidx_style	2		# id 0x658: IC18 style 2
+    sidx_alias	0x358	# id 0x659 -> id 0x658
+    sidx_alias	0x45a	# id 0x65a -> id 0x85a
+    sidx_style	26		# id 0x65b: IC18 style 26
+    sidx_alias	0x2dc	# id 0x65c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x65d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x65e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x65f -> id 0x55c
+    sidx_alias	0x060	# id 0x660 -> id 0x060
+    sidx_alias	0x261	# id 0x661 -> id 0x461
+    sidx_style	28		# id 0x662: IC18 style 28
+    sidx_alias	0x5e3	# id 0x663 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x664 -> id 0x762
+    sidx_alias	0x1e5	# id 0x665 -> id 0x365
+    sidx_alias	0x066	# id 0x666 -> id 0x066
+    sidx_alias	0x267	# id 0x667 -> id 0x467
+    sidx_alias	0x168	# id 0x668 -> id 0x268
+    sidx_alias	0x060	# id 0x669 -> id 0x060
+    sidx_alias	0x060	# id 0x66a -> id 0x060
+    sidx_style	27		# id 0x66b: IC18 style 27
+    sidx_alias	0x16c	# id 0x66c -> id 0x26c
+    sidx_alias	0x16c	# id 0x66d -> id 0x26c
+    sidx_style	160		# id 0x66e: IC18 style 160
+    sidx_alias	0x1ef	# id 0x66f -> id 0x36f
+    sidx_alias	0x270	# id 0x670 -> id 0x470
+    sidx_alias	0x3f1	# id 0x671 -> id 0x771
+    sidx_alias	0x272	# id 0x672 -> id 0x472
+    sidx_alias	0x270	# id 0x673 -> id 0x470
+    sidx_alias	0x274	# id 0x674 -> id 0x474
+    sidx_alias	0x274	# id 0x675 -> id 0x474
+    sidx_alias	0x274	# id 0x676 -> id 0x474
+    sidx_alias	0x274	# id 0x677 -> id 0x474
+    sidx_alias	0x278	# id 0x678 -> id 0x478
+    sidx_alias	0x179	# id 0x679 -> id 0x279
+    sidx_alias	0x17a	# id 0x67a -> id 0x27a
+    sidx_alias	0x17a	# id 0x67b -> id 0x27a
+    sidx_alias	0x47c	# id 0x67c -> id 0x87c
+    sidx_alias	0x2fd	# id 0x67d -> id 0x57d
+    sidx_alias	0x47e	# id 0x67e -> id 0x87e
+    sidx_alias	0x67f	# id 0x67f -> id 0xc7f
+    sidx_alias	0x300	# id 0x700 -> id 0x600
+    sidx_alias	0x201	# id 0x701 -> id 0x401
+    sidx_alias	0x202	# id 0x702 -> id 0x402
+    sidx_alias	0x202	# id 0x703 -> id 0x402
+    sidx_style	110		# id 0x704: IC18 style 110
+    sidx_alias	0x185	# id 0x705 -> id 0x305
+    sidx_alias	0x45a	# id 0x706 -> id 0x85a
+    sidx_alias	0x008	# id 0x707 -> id 0x008
+    sidx_style	75		# id 0x708: IC18 style 75
+    sidx_alias	0x209	# id 0x709 -> id 0x409
+    sidx_alias	0x008	# id 0x70a -> id 0x008
+    sidx_alias	0x18b	# id 0x70b -> id 0x30b
+    sidx_alias	0x20c	# id 0x70c -> id 0x40c
+    sidx_alias	0x10d	# id 0x70d -> id 0x20d
+    sidx_alias	0x45a	# id 0x70e -> id 0x85a
+    sidx_alias	0x00f	# id 0x70f -> id 0x00f
+    sidx_alias	0x011	# id 0x710 -> id 0x011
+    sidx_alias	0x011	# id 0x711 -> id 0x011
+    sidx_alias	0x212	# id 0x712 -> id 0x412
+    sidx_alias	0x013	# id 0x713 -> id 0x013
+    sidx_alias	0x294	# id 0x714 -> id 0x514
+    sidx_alias	0x011	# id 0x715 -> id 0x011
+    sidx_alias	0x216	# id 0x716 -> id 0x416
+    sidx_alias	0x216	# id 0x717 -> id 0x416
+    sidx_alias	0x118	# id 0x718 -> id 0x218
+    sidx_alias	0x118	# id 0x719 -> id 0x218
+    sidx_alias	0x21a	# id 0x71a -> id 0x41a
+    sidx_alias	0x118	# id 0x71b -> id 0x218
+    sidx_alias	0x19c	# id 0x71c -> id 0x31c
+    sidx_alias	0x41d	# id 0x71d -> id 0x81d
+    sidx_alias	0x29e	# id 0x71e -> id 0x51e
+    sidx_alias	0x09f	# id 0x71f -> id 0x11f
+    sidx_style	42		# id 0x720: IC18 style 42
+    sidx_alias	0x021	# id 0x721 -> id 0x021
+    sidx_alias	0x5a2	# id 0x722 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x723 -> id 0x523
+    sidx_alias	0x2a4	# id 0x724 -> id 0x524
+    sidx_alias	0x1a5	# id 0x725 -> id 0x325
+    sidx_style	49		# id 0x726: IC18 style 49
+    sidx_alias	0x227	# id 0x727 -> id 0x427
+    sidx_alias	0x328	# id 0x728 -> id 0x628
+    sidx_alias	0x328	# id 0x729 -> id 0x628
+    sidx_alias	0x02a	# id 0x72a -> id 0x02a
+    sidx_alias	0x328	# id 0x72b -> id 0x628
+    sidx_alias	0x22c	# id 0x72c -> id 0x42c
+    sidx_alias	0x0ad	# id 0x72d -> id 0x12d
+    sidx_table	20		# id 0x72e: BuiltinStyleSubTable style 20 Style_SwingyWaltz
+    sidx_alias	0x3ae	# id 0x72f -> id 0x72e
+    sidx_alias	0x030	# id 0x730 -> id 0x030
+    sidx_alias	0x030	# id 0x731 -> id 0x030
+    sidx_alias	0x030	# id 0x732 -> id 0x030
+    sidx_alias	0x533	# id 0x733 -> id 0xa33
+    sidx_alias	0x134	# id 0x734 -> id 0x234
+    sidx_table	34		# id 0x735: BuiltinStyleSubTable style 34 Style_TangoArgent
+    sidx_alias	0x388	# id 0x736 -> id 0x708
+    sidx_alias	0x3b5	# id 0x737 -> id 0x735
+    sidx_alias	0x533	# id 0x738 -> id 0xa33
+    sidx_style	77		# id 0x739: IC18 style 77
+    sidx_alias	0x6ba	# id 0x73a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0x73b -> id 0x33b
+    sidx_alias	0x13c	# id 0x73c -> id 0x23c
+    sidx_alias	0x0bd	# id 0x73d -> id 0x13d
+    sidx_alias	0x533	# id 0x73e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x73f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x740 -> id 0x140
+    sidx_alias	0x241	# id 0x741 -> id 0x441
+    sidx_alias	0x0c0	# id 0x742 -> id 0x140
+    sidx_alias	0x0c3	# id 0x743 -> id 0x143
+    sidx_alias	0x344	# id 0x744 -> id 0x644
+    sidx_alias	0x145	# id 0x745 -> id 0x245
+    sidx_alias	0x0c0	# id 0x746 -> id 0x140
+    sidx_alias	0x347	# id 0x747 -> id 0x647
+    sidx_style	4		# id 0x748: IC18 style 4
+    sidx_alias	0x348	# id 0x749 -> id 0x648
+    sidx_alias	0x1ca	# id 0x74a -> id 0x34a
+    sidx_alias	0x64b	# id 0x74b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0x74c -> id 0x54c
+    sidx_style	156		# id 0x74d: IC18 style 156
+    sidx_alias	0x14e	# id 0x74e -> id 0x24e
+    sidx_alias	0x24f	# id 0x74f -> id 0x44f
+    sidx_style	109		# id 0x750: IC18 style 109
+    sidx_alias	0x1d7	# id 0x751 -> id 0x357
+    sidx_alias	0x152	# id 0x752 -> id 0x252
+    sidx_alias	0x353	# id 0x753 -> id 0x653
+    sidx_style	17		# id 0x754: IC18 style 17
+    sidx_table	0		# id 0x755: BuiltinStyleSubTable style 0 Style_CountryRock
+    sidx_alias	0x2d6	# id 0x756 -> id 0x556
+    sidx_alias	0x1d7	# id 0x757 -> id 0x357
+    sidx_style	98		# id 0x758: IC18 style 98
+    sidx_alias	0x358	# id 0x759 -> id 0x658
+    sidx_alias	0x45a	# id 0x75a -> id 0x85a
+    sidx_style	29		# id 0x75b: IC18 style 29
+    sidx_alias	0x2dc	# id 0x75c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x75d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x75e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x75f -> id 0x55c
+    sidx_alias	0x060	# id 0x760 -> id 0x060
+    sidx_alias	0x261	# id 0x761 -> id 0x461
+    sidx_style	41		# id 0x762: IC18 style 41
+    sidx_alias	0x5e3	# id 0x763 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x764 -> id 0x762
+    sidx_alias	0x1e5	# id 0x765 -> id 0x365
+    sidx_alias	0x066	# id 0x766 -> id 0x066
+    sidx_alias	0x267	# id 0x767 -> id 0x467
+    sidx_alias	0x168	# id 0x768 -> id 0x268
+    sidx_alias	0x060	# id 0x769 -> id 0x060
+    sidx_alias	0x060	# id 0x76a -> id 0x060
+    sidx_style	87		# id 0x76b: IC18 style 87
+    sidx_alias	0x16c	# id 0x76c -> id 0x26c
+    sidx_alias	0x16c	# id 0x76d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x76e -> id 0x56e
+    sidx_alias	0x1ef	# id 0x76f -> id 0x36f
+    sidx_alias	0x270	# id 0x770 -> id 0x470
+    sidx_style	166		# id 0x771: IC18 style 166
+    sidx_alias	0x272	# id 0x772 -> id 0x472
+    sidx_alias	0x270	# id 0x773 -> id 0x470
+    sidx_alias	0x274	# id 0x774 -> id 0x474
+    sidx_alias	0x274	# id 0x775 -> id 0x474
+    sidx_alias	0x274	# id 0x776 -> id 0x474
+    sidx_alias	0x274	# id 0x777 -> id 0x474
+    sidx_alias	0x278	# id 0x778 -> id 0x478
+    sidx_alias	0x179	# id 0x779 -> id 0x279
+    sidx_alias	0x17a	# id 0x77a -> id 0x27a
+    sidx_alias	0x17a	# id 0x77b -> id 0x27a
+    sidx_alias	0x5fc	# id 0x77c -> id 0xb7c
+    sidx_alias	0x2fd	# id 0x77d -> id 0x57d
+    sidx_alias	0x47e	# id 0x77e -> id 0x87e
+    sidx_alias	0x67f	# id 0x77f -> id 0xc7f
+    sidx_alias	0x300	# id 0x800 -> id 0x600
+    sidx_alias	0x201	# id 0x801 -> id 0x401
+    sidx_alias	0x202	# id 0x802 -> id 0x402
+    sidx_alias	0x202	# id 0x803 -> id 0x402
+    sidx_alias	0x004	# id 0x804 -> id 0x004
+    sidx_alias	0x185	# id 0x805 -> id 0x305
+    sidx_alias	0x45a	# id 0x806 -> id 0x85a
+    sidx_alias	0x008	# id 0x807 -> id 0x008
+    sidx_alias	0x388	# id 0x808 -> id 0x708
+    sidx_alias	0x209	# id 0x809 -> id 0x409
+    sidx_alias	0x008	# id 0x80a -> id 0x008
+    sidx_alias	0x18b	# id 0x80b -> id 0x30b
+    sidx_alias	0x20c	# id 0x80c -> id 0x40c
+    sidx_alias	0x10d	# id 0x80d -> id 0x20d
+    sidx_alias	0x45a	# id 0x80e -> id 0x85a
+    sidx_alias	0x00f	# id 0x80f -> id 0x00f
+    sidx_alias	0x011	# id 0x810 -> id 0x011
+    sidx_alias	0x011	# id 0x811 -> id 0x011
+    sidx_alias	0x212	# id 0x812 -> id 0x412
+    sidx_alias	0x013	# id 0x813 -> id 0x013
+    sidx_alias	0x294	# id 0x814 -> id 0x514
+    sidx_alias	0x011	# id 0x815 -> id 0x011
+    sidx_alias	0x216	# id 0x816 -> id 0x416
+    sidx_alias	0x216	# id 0x817 -> id 0x416
+    sidx_alias	0x118	# id 0x818 -> id 0x218
+    sidx_alias	0x118	# id 0x819 -> id 0x218
+    sidx_alias	0x21a	# id 0x81a -> id 0x41a
+    sidx_alias	0x118	# id 0x81b -> id 0x218
+    sidx_alias	0x19c	# id 0x81c -> id 0x31c
+    sidx_style	72		# id 0x81d: IC18 style 72
+    sidx_alias	0x29e	# id 0x81e -> id 0x51e
+    sidx_alias	0x09f	# id 0x81f -> id 0x11f
+    sidx_style	46		# id 0x820: IC18 style 46
+    sidx_alias	0x021	# id 0x821 -> id 0x021
+    sidx_alias	0x5a2	# id 0x822 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x823 -> id 0x523
+    sidx_alias	0x2a4	# id 0x824 -> id 0x524
+    sidx_alias	0x1a5	# id 0x825 -> id 0x325
+    sidx_style	48		# id 0x826: IC18 style 48
+    sidx_alias	0x227	# id 0x827 -> id 0x427
+    sidx_alias	0x328	# id 0x828 -> id 0x628
+    sidx_alias	0x328	# id 0x829 -> id 0x628
+    sidx_alias	0x02a	# id 0x82a -> id 0x02a
+    sidx_alias	0x328	# id 0x82b -> id 0x628
+    sidx_alias	0x22c	# id 0x82c -> id 0x42c
+    sidx_alias	0x0ad	# id 0x82d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x82e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x82f -> id 0x72e
+    sidx_alias	0x030	# id 0x830 -> id 0x030
+    sidx_alias	0x030	# id 0x831 -> id 0x030
+    sidx_alias	0x030	# id 0x832 -> id 0x030
+    sidx_alias	0x533	# id 0x833 -> id 0xa33
+    sidx_alias	0x134	# id 0x834 -> id 0x234
+    sidx_style	73		# id 0x835: IC18 style 73
+    sidx_alias	0x388	# id 0x836 -> id 0x708
+    sidx_alias	0x3b5	# id 0x837 -> id 0x735
+    sidx_alias	0x533	# id 0x838 -> id 0xa33
+    sidx_alias	0x339	# id 0x839 -> id 0x639
+    sidx_alias	0x6ba	# id 0x83a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0x83b -> id 0x33b
+    sidx_alias	0x13c	# id 0x83c -> id 0x23c
+    sidx_alias	0x0bd	# id 0x83d -> id 0x13d
+    sidx_alias	0x533	# id 0x83e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x83f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x840 -> id 0x140
+    sidx_alias	0x241	# id 0x841 -> id 0x441
+    sidx_alias	0x0c0	# id 0x842 -> id 0x140
+    sidx_alias	0x0c3	# id 0x843 -> id 0x143
+    sidx_alias	0x344	# id 0x844 -> id 0x644
+    sidx_alias	0x145	# id 0x845 -> id 0x245
+    sidx_alias	0x0c0	# id 0x846 -> id 0x140
+    sidx_alias	0x347	# id 0x847 -> id 0x647
+    sidx_alias	0x348	# id 0x848 -> id 0x648
+    sidx_alias	0x348	# id 0x849 -> id 0x648
+    sidx_alias	0x1ca	# id 0x84a -> id 0x34a
+    sidx_alias	0x64b	# id 0x84b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0x84c -> id 0x54c
+    sidx_alias	0x04d	# id 0x84d -> id 0x04d
+    sidx_alias	0x14e	# id 0x84e -> id 0x24e
+    sidx_alias	0x24f	# id 0x84f -> id 0x44f
+    sidx_alias	0x0d0	# id 0x850 -> id 0x150
+    sidx_alias	0x1d7	# id 0x851 -> id 0x357
+    sidx_alias	0x152	# id 0x852 -> id 0x252
+    sidx_alias	0x353	# id 0x853 -> id 0x653
+    sidx_alias	0x3d4	# id 0x854 -> id 0x754
+    sidx_table	12		# id 0x855: BuiltinStyleSubTable style 12 Style_CajunCountry
+    sidx_alias	0x2d6	# id 0x856 -> id 0x556
+    sidx_alias	0x1d7	# id 0x857 -> id 0x357
+    sidx_style	128		# id 0x858: IC18 style 128
+    sidx_alias	0x358	# id 0x859 -> id 0x658
+    sidx_style	1		# id 0x85a: IC18 style 1
+    sidx_style	132		# id 0x85b: IC18 style 132
+    sidx_alias	0x2dc	# id 0x85c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x85d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x85e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x85f -> id 0x55c
+    sidx_alias	0x060	# id 0x860 -> id 0x060
+    sidx_alias	0x261	# id 0x861 -> id 0x461
+    sidx_style	78		# id 0x862: IC18 style 78
+    sidx_alias	0x5e3	# id 0x863 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x864 -> id 0x762
+    sidx_alias	0x1e5	# id 0x865 -> id 0x365
+    sidx_alias	0x066	# id 0x866 -> id 0x066
+    sidx_alias	0x267	# id 0x867 -> id 0x467
+    sidx_alias	0x168	# id 0x868 -> id 0x268
+    sidx_alias	0x060	# id 0x869 -> id 0x060
+    sidx_alias	0x060	# id 0x86a -> id 0x060
+    sidx_alias	0x36b	# id 0x86b -> id 0x66b
+    sidx_alias	0x16c	# id 0x86c -> id 0x26c
+    sidx_alias	0x16c	# id 0x86d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x86e -> id 0x56e
+    sidx_alias	0x1ef	# id 0x86f -> id 0x36f
+    sidx_alias	0x270	# id 0x870 -> id 0x470
+    sidx_alias	0x3f1	# id 0x871 -> id 0x771
+    sidx_alias	0x272	# id 0x872 -> id 0x472
+    sidx_alias	0x270	# id 0x873 -> id 0x470
+    sidx_alias	0x274	# id 0x874 -> id 0x474
+    sidx_alias	0x274	# id 0x875 -> id 0x474
+    sidx_alias	0x274	# id 0x876 -> id 0x474
+    sidx_alias	0x274	# id 0x877 -> id 0x474
+    sidx_alias	0x278	# id 0x878 -> id 0x478
+    sidx_alias	0x179	# id 0x879 -> id 0x279
+    sidx_alias	0x17a	# id 0x87a -> id 0x27a
+    sidx_alias	0x17a	# id 0x87b -> id 0x27a
+    sidx_style	143		# id 0x87c: IC18 style 143
+    sidx_alias	0x2fd	# id 0x87d -> id 0x57d
+    sidx_style	135		# id 0x87e: IC18 style 135
+    sidx_alias	0x77f	# id 0x87f -> id 0xe7f
+    sidx_style	121		# id 0x900: IC18 style 121
+    sidx_alias	0x201	# id 0x901 -> id 0x401
+    sidx_alias	0x202	# id 0x902 -> id 0x402
+    sidx_alias	0x202	# id 0x903 -> id 0x402
+    sidx_alias	0x004	# id 0x904 -> id 0x004
+    sidx_alias	0x185	# id 0x905 -> id 0x305
+    sidx_alias	0x45a	# id 0x906 -> id 0x85a
+    sidx_alias	0x008	# id 0x907 -> id 0x008
+    sidx_style	120		# id 0x908: IC18 style 120
+    sidx_alias	0x209	# id 0x909 -> id 0x409
+    sidx_alias	0x008	# id 0x90a -> id 0x008
+    sidx_alias	0x18b	# id 0x90b -> id 0x30b
+    sidx_alias	0x20c	# id 0x90c -> id 0x40c
+    sidx_alias	0x10d	# id 0x90d -> id 0x20d
+    sidx_alias	0x45a	# id 0x90e -> id 0x85a
+    sidx_style	91		# id 0x90f: IC18 style 91
+    sidx_alias	0x011	# id 0x910 -> id 0x011
+    sidx_table	5		# id 0x911: BuiltinStyleSubTable style 5 Style_CountryShffle
+    sidx_alias	0x212	# id 0x912 -> id 0x412
+    sidx_alias	0x013	# id 0x913 -> id 0x013
+    sidx_alias	0x294	# id 0x914 -> id 0x514
+    sidx_alias	0x011	# id 0x915 -> id 0x011
+    sidx_alias	0x216	# id 0x916 -> id 0x416
+    sidx_alias	0x216	# id 0x917 -> id 0x416
+    sidx_alias	0x118	# id 0x918 -> id 0x218
+    sidx_alias	0x118	# id 0x919 -> id 0x218
+    sidx_alias	0x21a	# id 0x91a -> id 0x41a
+    sidx_alias	0x118	# id 0x91b -> id 0x218
+    sidx_alias	0x19c	# id 0x91c -> id 0x31c
+    sidx_alias	0x41d	# id 0x91d -> id 0x81d
+    sidx_alias	0x29e	# id 0x91e -> id 0x51e
+    sidx_alias	0x09f	# id 0x91f -> id 0x11f
+    sidx_alias	0x3a0	# id 0x920 -> id 0x720
+    sidx_alias	0x021	# id 0x921 -> id 0x021
+    sidx_alias	0x5a2	# id 0x922 -> id 0xb22
+    sidx_alias	0x2a3	# id 0x923 -> id 0x523
+    sidx_alias	0x2a4	# id 0x924 -> id 0x524
+    sidx_alias	0x1a5	# id 0x925 -> id 0x325
+    sidx_alias	0x3a6	# id 0x926 -> id 0x726
+    sidx_alias	0x227	# id 0x927 -> id 0x427
+    sidx_alias	0x328	# id 0x928 -> id 0x628
+    sidx_alias	0x328	# id 0x929 -> id 0x628
+    sidx_alias	0x02a	# id 0x92a -> id 0x02a
+    sidx_alias	0x328	# id 0x92b -> id 0x628
+    sidx_alias	0x22c	# id 0x92c -> id 0x42c
+    sidx_alias	0x0ad	# id 0x92d -> id 0x12d
+    sidx_alias	0x3ae	# id 0x92e -> id 0x72e
+    sidx_alias	0x3ae	# id 0x92f -> id 0x72e
+    sidx_alias	0x030	# id 0x930 -> id 0x030
+    sidx_alias	0x030	# id 0x931 -> id 0x030
+    sidx_alias	0x030	# id 0x932 -> id 0x030
+    sidx_alias	0x533	# id 0x933 -> id 0xa33
+    sidx_alias	0x134	# id 0x934 -> id 0x234
+    sidx_alias	0x3b5	# id 0x935 -> id 0x735
+    sidx_alias	0x388	# id 0x936 -> id 0x708
+    sidx_alias	0x3b5	# id 0x937 -> id 0x735
+    sidx_alias	0x533	# id 0x938 -> id 0xa33
+    sidx_alias	0x339	# id 0x939 -> id 0x639
+    sidx_style	68		# id 0x93a: IC18 style 68
+    sidx_alias	0x1bb	# id 0x93b -> id 0x33b
+    sidx_alias	0x13c	# id 0x93c -> id 0x23c
+    sidx_alias	0x0bd	# id 0x93d -> id 0x13d
+    sidx_alias	0x533	# id 0x93e -> id 0xa33
+    sidx_alias	0x0bf	# id 0x93f -> id 0x13f
+    sidx_alias	0x0c0	# id 0x940 -> id 0x140
+    sidx_alias	0x241	# id 0x941 -> id 0x441
+    sidx_alias	0x0c0	# id 0x942 -> id 0x140
+    sidx_alias	0x0c3	# id 0x943 -> id 0x143
+    sidx_alias	0x344	# id 0x944 -> id 0x644
+    sidx_alias	0x145	# id 0x945 -> id 0x245
+    sidx_alias	0x0c0	# id 0x946 -> id 0x140
+    sidx_alias	0x347	# id 0x947 -> id 0x647
+    sidx_alias	0x348	# id 0x948 -> id 0x648
+    sidx_alias	0x348	# id 0x949 -> id 0x648
+    sidx_alias	0x1ca	# id 0x94a -> id 0x34a
+    sidx_style	32		# id 0x94b: IC18 style 32
+    sidx_alias	0x2cc	# id 0x94c -> id 0x54c
+    sidx_style	157		# id 0x94d: IC18 style 157
+    sidx_alias	0x14e	# id 0x94e -> id 0x24e
+    sidx_alias	0x24f	# id 0x94f -> id 0x44f
+    sidx_alias	0x0d0	# id 0x950 -> id 0x150
+    sidx_alias	0x1d7	# id 0x951 -> id 0x357
+    sidx_alias	0x152	# id 0x952 -> id 0x252
+    sidx_alias	0x353	# id 0x953 -> id 0x653
+    sidx_alias	0x3d4	# id 0x954 -> id 0x754
+    sidx_alias	0x3d5	# id 0x955 -> id 0x755
+    sidx_alias	0x2d6	# id 0x956 -> id 0x556
+    sidx_alias	0x1d7	# id 0x957 -> id 0x357
+    sidx_style	125		# id 0x958: IC18 style 125
+    sidx_alias	0x358	# id 0x959 -> id 0x658
+    sidx_alias	0x45a	# id 0x95a -> id 0x85a
+    sidx_style	38		# id 0x95b: IC18 style 38
+    sidx_alias	0x2dc	# id 0x95c -> id 0x55c
+    sidx_alias	0x2dc	# id 0x95d -> id 0x55c
+    sidx_alias	0x2dc	# id 0x95e -> id 0x55c
+    sidx_alias	0x2dc	# id 0x95f -> id 0x55c
+    sidx_alias	0x060	# id 0x960 -> id 0x060
+    sidx_alias	0x261	# id 0x961 -> id 0x461
+    sidx_style	90		# id 0x962: IC18 style 90
+    sidx_alias	0x5e3	# id 0x963 -> id 0xb63
+    sidx_alias	0x3e2	# id 0x964 -> id 0x762
+    sidx_alias	0x1e5	# id 0x965 -> id 0x365
+    sidx_alias	0x066	# id 0x966 -> id 0x066
+    sidx_alias	0x267	# id 0x967 -> id 0x467
+    sidx_alias	0x168	# id 0x968 -> id 0x268
+    sidx_alias	0x060	# id 0x969 -> id 0x060
+    sidx_alias	0x060	# id 0x96a -> id 0x060
+    sidx_alias	0x36b	# id 0x96b -> id 0x66b
+    sidx_alias	0x16c	# id 0x96c -> id 0x26c
+    sidx_alias	0x16c	# id 0x96d -> id 0x26c
+    sidx_alias	0x2ee	# id 0x96e -> id 0x56e
+    sidx_alias	0x1ef	# id 0x96f -> id 0x36f
+    sidx_alias	0x270	# id 0x970 -> id 0x470
+    sidx_alias	0x3f1	# id 0x971 -> id 0x771
+    sidx_alias	0x272	# id 0x972 -> id 0x472
+    sidx_alias	0x270	# id 0x973 -> id 0x470
+    sidx_alias	0x274	# id 0x974 -> id 0x474
+    sidx_alias	0x274	# id 0x975 -> id 0x474
+    sidx_alias	0x274	# id 0x976 -> id 0x474
+    sidx_alias	0x274	# id 0x977 -> id 0x474
+    sidx_alias	0x278	# id 0x978 -> id 0x478
+    sidx_alias	0x179	# id 0x979 -> id 0x279
+    sidx_alias	0x17a	# id 0x97a -> id 0x27a
+    sidx_alias	0x17a	# id 0x97b -> id 0x27a
+    sidx_style	92		# id 0x97c: IC18 style 92
+    sidx_alias	0x2fd	# id 0x97d -> id 0x57d
+    sidx_style	139		# id 0x97e: IC18 style 139
+    sidx_alias	0x77f	# id 0x97f -> id 0xe7f
+    sidx_alias	0x300	# id 0xa00 -> id 0x600
+    sidx_alias	0x201	# id 0xa01 -> id 0x401
+    sidx_alias	0x202	# id 0xa02 -> id 0x402
+    sidx_alias	0x202	# id 0xa03 -> id 0x402
+    sidx_style	102		# id 0xa04: IC18 style 102
+    sidx_alias	0x185	# id 0xa05 -> id 0x305
+    sidx_alias	0x45a	# id 0xa06 -> id 0x85a
+    sidx_alias	0x008	# id 0xa07 -> id 0x008
+    sidx_alias	0x388	# id 0xa08 -> id 0x708
+    sidx_alias	0x209	# id 0xa09 -> id 0x409
+    sidx_alias	0x008	# id 0xa0a -> id 0x008
+    sidx_alias	0x18b	# id 0xa0b -> id 0x30b
+    sidx_alias	0x20c	# id 0xa0c -> id 0x40c
+    sidx_alias	0x10d	# id 0xa0d -> id 0x20d
+    sidx_alias	0x45a	# id 0xa0e -> id 0x85a
+    sidx_style	117		# id 0xa0f: IC18 style 117
+    sidx_alias	0x011	# id 0xa10 -> id 0x011
+    sidx_alias	0x011	# id 0xa11 -> id 0x011
+    sidx_alias	0x212	# id 0xa12 -> id 0x412
+    sidx_alias	0x013	# id 0xa13 -> id 0x013
+    sidx_alias	0x294	# id 0xa14 -> id 0x514
+    sidx_alias	0x011	# id 0xa15 -> id 0x011
+    sidx_alias	0x216	# id 0xa16 -> id 0x416
+    sidx_alias	0x216	# id 0xa17 -> id 0x416
+    sidx_alias	0x118	# id 0xa18 -> id 0x218
+    sidx_alias	0x118	# id 0xa19 -> id 0x218
+    sidx_alias	0x21a	# id 0xa1a -> id 0x41a
+    sidx_alias	0x118	# id 0xa1b -> id 0x218
+    sidx_alias	0x19c	# id 0xa1c -> id 0x31c
+    sidx_style	119		# id 0xa1d: IC18 style 119
+    sidx_alias	0x29e	# id 0xa1e -> id 0x51e
+    sidx_alias	0x09f	# id 0xa1f -> id 0x11f
+    sidx_alias	0x3a0	# id 0xa20 -> id 0x720
+    sidx_alias	0x021	# id 0xa21 -> id 0x021
+    sidx_alias	0x5a2	# id 0xa22 -> id 0xb22
+    sidx_alias	0x2a3	# id 0xa23 -> id 0x523
+    sidx_alias	0x2a4	# id 0xa24 -> id 0x524
+    sidx_alias	0x1a5	# id 0xa25 -> id 0x325
+    sidx_alias	0x3a6	# id 0xa26 -> id 0x726
+    sidx_alias	0x227	# id 0xa27 -> id 0x427
+    sidx_alias	0x328	# id 0xa28 -> id 0x628
+    sidx_alias	0x328	# id 0xa29 -> id 0x628
+    sidx_alias	0x02a	# id 0xa2a -> id 0x02a
+    sidx_alias	0x328	# id 0xa2b -> id 0x628
+    sidx_alias	0x22c	# id 0xa2c -> id 0x42c
+    sidx_alias	0x0ad	# id 0xa2d -> id 0x12d
+    sidx_alias	0x3ae	# id 0xa2e -> id 0x72e
+    sidx_alias	0x3ae	# id 0xa2f -> id 0x72e
+    sidx_alias	0x030	# id 0xa30 -> id 0x030
+    sidx_alias	0x030	# id 0xa31 -> id 0x030
+    sidx_alias	0x030	# id 0xa32 -> id 0x030
+    sidx_table	31		# id 0xa33: BuiltinStyleSubTable style 31 Style_Samba
+    sidx_alias	0x134	# id 0xa34 -> id 0x234
+    sidx_alias	0x3b5	# id 0xa35 -> id 0x735
+    sidx_alias	0x388	# id 0xa36 -> id 0x708
+    sidx_alias	0x3b5	# id 0xa37 -> id 0x735
+    sidx_alias	0x533	# id 0xa38 -> id 0xa33
+    sidx_alias	0x339	# id 0xa39 -> id 0x639
+    sidx_alias	0x6ba	# id 0xa3a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0xa3b -> id 0x33b
+    sidx_alias	0x13c	# id 0xa3c -> id 0x23c
+    sidx_alias	0x0bd	# id 0xa3d -> id 0x13d
+    sidx_alias	0x533	# id 0xa3e -> id 0xa33
+    sidx_alias	0x0bf	# id 0xa3f -> id 0x13f
+    sidx_alias	0x0c0	# id 0xa40 -> id 0x140
+    sidx_alias	0x241	# id 0xa41 -> id 0x441
+    sidx_alias	0x0c0	# id 0xa42 -> id 0x140
+    sidx_alias	0x0c3	# id 0xa43 -> id 0x143
+    sidx_alias	0x344	# id 0xa44 -> id 0x644
+    sidx_alias	0x145	# id 0xa45 -> id 0x245
+    sidx_alias	0x0c0	# id 0xa46 -> id 0x140
+    sidx_alias	0x347	# id 0xa47 -> id 0x647
+    sidx_alias	0x348	# id 0xa48 -> id 0x648
+    sidx_alias	0x348	# id 0xa49 -> id 0x648
+    sidx_style	106		# id 0xa4a: IC18 style 106
+    sidx_alias	0x64b	# id 0xa4b -> id 0xc4b
+    sidx_style	67		# id 0xa4c: IC18 style 67
+    sidx_style	154		# id 0xa4d: IC18 style 154
+    sidx_alias	0x14e	# id 0xa4e -> id 0x24e
+    sidx_alias	0x24f	# id 0xa4f -> id 0x44f
+    sidx_alias	0x0d0	# id 0xa50 -> id 0x150
+    sidx_alias	0x1d7	# id 0xa51 -> id 0x357
+    sidx_alias	0x152	# id 0xa52 -> id 0x252
+    sidx_alias	0x353	# id 0xa53 -> id 0x653
+    sidx_alias	0x3d4	# id 0xa54 -> id 0x754
+    sidx_alias	0x3d5	# id 0xa55 -> id 0x755
+    sidx_alias	0x2d6	# id 0xa56 -> id 0x556
+    sidx_alias	0x1d7	# id 0xa57 -> id 0x357
+    sidx_style	113		# id 0xa58: IC18 style 113
+    sidx_alias	0x358	# id 0xa59 -> id 0x658
+    sidx_table	3		# id 0xa5a: BuiltinStyleSubTable style 3 Style_CountryFolk
+    sidx_style	129		# id 0xa5b: IC18 style 129
+    sidx_alias	0x2dc	# id 0xa5c -> id 0x55c
+    sidx_alias	0x2dc	# id 0xa5d -> id 0x55c
+    sidx_alias	0x2dc	# id 0xa5e -> id 0x55c
+    sidx_alias	0x2dc	# id 0xa5f -> id 0x55c
+    sidx_alias	0x060	# id 0xa60 -> id 0x060
+    sidx_alias	0x261	# id 0xa61 -> id 0x461
+    sidx_style	95		# id 0xa62: IC18 style 95
+    sidx_style	35		# id 0xa63: IC18 style 35
+    sidx_alias	0x3e2	# id 0xa64 -> id 0x762
+    sidx_alias	0x1e5	# id 0xa65 -> id 0x365
+    sidx_alias	0x066	# id 0xa66 -> id 0x066
+    sidx_alias	0x267	# id 0xa67 -> id 0x467
+    sidx_alias	0x168	# id 0xa68 -> id 0x268
+    sidx_alias	0x060	# id 0xa69 -> id 0x060
+    sidx_alias	0x060	# id 0xa6a -> id 0x060
+    sidx_alias	0x36b	# id 0xa6b -> id 0x66b
+    sidx_alias	0x16c	# id 0xa6c -> id 0x26c
+    sidx_alias	0x16c	# id 0xa6d -> id 0x26c
+    sidx_alias	0x2ee	# id 0xa6e -> id 0x56e
+    sidx_alias	0x1ef	# id 0xa6f -> id 0x36f
+    sidx_alias	0x270	# id 0xa70 -> id 0x470
+    sidx_alias	0x3f1	# id 0xa71 -> id 0x771
+    sidx_alias	0x272	# id 0xa72 -> id 0x472
+    sidx_alias	0x270	# id 0xa73 -> id 0x470
+    sidx_alias	0x274	# id 0xa74 -> id 0x474
+    sidx_alias	0x274	# id 0xa75 -> id 0x474
+    sidx_alias	0x274	# id 0xa76 -> id 0x474
+    sidx_alias	0x274	# id 0xa77 -> id 0x474
+    sidx_alias	0x278	# id 0xa78 -> id 0x478
+    sidx_alias	0x179	# id 0xa79 -> id 0x279
+    sidx_alias	0x17a	# id 0xa7a -> id 0x27a
+    sidx_alias	0x17a	# id 0xa7b -> id 0x27a
+    sidx_alias	0x47c	# id 0xa7c -> id 0x87c
+    sidx_alias	0x2fd	# id 0xa7d -> id 0x57d
+    sidx_style	142		# id 0xa7e: IC18 style 142
+    sidx_alias	0x77f	# id 0xa7f -> id 0xe7f
+    sidx_alias	0x300	# id 0xb00 -> id 0x600
+    sidx_alias	0x201	# id 0xb01 -> id 0x401
+    sidx_alias	0x202	# id 0xb02 -> id 0x402
+    sidx_alias	0x202	# id 0xb03 -> id 0x402
+    sidx_alias	0x004	# id 0xb04 -> id 0x004
+    sidx_alias	0x185	# id 0xb05 -> id 0x305
+    sidx_alias	0x45a	# id 0xb06 -> id 0x85a
+    sidx_alias	0x008	# id 0xb07 -> id 0x008
+    sidx_alias	0x388	# id 0xb08 -> id 0x708
+    sidx_alias	0x209	# id 0xb09 -> id 0x409
+    sidx_alias	0x008	# id 0xb0a -> id 0x008
+    sidx_alias	0x18b	# id 0xb0b -> id 0x30b
+    sidx_alias	0x20c	# id 0xb0c -> id 0x40c
+    sidx_alias	0x10d	# id 0xb0d -> id 0x20d
+    sidx_alias	0x45a	# id 0xb0e -> id 0x85a
+    sidx_alias	0x00f	# id 0xb0f -> id 0x00f
+    sidx_alias	0x011	# id 0xb10 -> id 0x011
+    sidx_alias	0x011	# id 0xb11 -> id 0x011
+    sidx_alias	0x212	# id 0xb12 -> id 0x412
+    sidx_alias	0x013	# id 0xb13 -> id 0x013
+    sidx_alias	0x294	# id 0xb14 -> id 0x514
+    sidx_alias	0x011	# id 0xb15 -> id 0x011
+    sidx_alias	0x216	# id 0xb16 -> id 0x416
+    sidx_alias	0x216	# id 0xb17 -> id 0x416
+    sidx_alias	0x118	# id 0xb18 -> id 0x218
+    sidx_alias	0x118	# id 0xb19 -> id 0x218
+    sidx_alias	0x21a	# id 0xb1a -> id 0x41a
+    sidx_alias	0x118	# id 0xb1b -> id 0x218
+    sidx_alias	0x19c	# id 0xb1c -> id 0x31c
+    sidx_alias	0x41d	# id 0xb1d -> id 0x81d
+    sidx_alias	0x29e	# id 0xb1e -> id 0x51e
+    sidx_alias	0x09f	# id 0xb1f -> id 0x11f
+    sidx_alias	0x3a0	# id 0xb20 -> id 0x720
+    sidx_alias	0x021	# id 0xb21 -> id 0x021
+    sidx_style	55		# id 0xb22: IC18 style 55
+    sidx_alias	0x2a3	# id 0xb23 -> id 0x523
+    sidx_alias	0x2a4	# id 0xb24 -> id 0x524
+    sidx_alias	0x1a5	# id 0xb25 -> id 0x325
+    sidx_style	57		# id 0xb26: IC18 style 57
+    sidx_alias	0x227	# id 0xb27 -> id 0x427
+    sidx_alias	0x328	# id 0xb28 -> id 0x628
+    sidx_alias	0x328	# id 0xb29 -> id 0x628
+    sidx_alias	0x02a	# id 0xb2a -> id 0x02a
+    sidx_alias	0x328	# id 0xb2b -> id 0x628
+    sidx_alias	0x22c	# id 0xb2c -> id 0x42c
+    sidx_alias	0x0ad	# id 0xb2d -> id 0x12d
+    sidx_alias	0x3ae	# id 0xb2e -> id 0x72e
+    sidx_alias	0x3ae	# id 0xb2f -> id 0x72e
+    sidx_alias	0x030	# id 0xb30 -> id 0x030
+    sidx_alias	0x030	# id 0xb31 -> id 0x030
+    sidx_alias	0x030	# id 0xb32 -> id 0x030
+    sidx_style	70		# id 0xb33: IC18 style 70
+    sidx_alias	0x134	# id 0xb34 -> id 0x234
+    sidx_alias	0x3b5	# id 0xb35 -> id 0x735
+    sidx_alias	0x388	# id 0xb36 -> id 0x708
+    sidx_alias	0x3b5	# id 0xb37 -> id 0x735
+    sidx_alias	0x533	# id 0xb38 -> id 0xa33
+    sidx_alias	0x339	# id 0xb39 -> id 0x639
+    sidx_alias	0x6ba	# id 0xb3a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0xb3b -> id 0x33b
+    sidx_alias	0x13c	# id 0xb3c -> id 0x23c
+    sidx_alias	0x0bd	# id 0xb3d -> id 0x13d
+    sidx_alias	0x533	# id 0xb3e -> id 0xa33
+    sidx_alias	0x0bf	# id 0xb3f -> id 0x13f
+    sidx_alias	0x0c0	# id 0xb40 -> id 0x140
+    sidx_alias	0x241	# id 0xb41 -> id 0x441
+    sidx_alias	0x0c0	# id 0xb42 -> id 0x140
+    sidx_alias	0x0c3	# id 0xb43 -> id 0x143
+    sidx_alias	0x344	# id 0xb44 -> id 0x644
+    sidx_alias	0x145	# id 0xb45 -> id 0x245
+    sidx_alias	0x0c0	# id 0xb46 -> id 0x140
+    sidx_alias	0x347	# id 0xb47 -> id 0x647
+    sidx_alias	0x348	# id 0xb48 -> id 0x648
+    sidx_alias	0x348	# id 0xb49 -> id 0x648
+    sidx_alias	0x1ca	# id 0xb4a -> id 0x34a
+    sidx_alias	0x64b	# id 0xb4b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0xb4c -> id 0x54c
+    sidx_alias	0x04d	# id 0xb4d -> id 0x04d
+    sidx_alias	0x14e	# id 0xb4e -> id 0x24e
+    sidx_alias	0x24f	# id 0xb4f -> id 0x44f
+    sidx_style	123		# id 0xb50: IC18 style 123
+    sidx_alias	0x1d7	# id 0xb51 -> id 0x357
+    sidx_alias	0x152	# id 0xb52 -> id 0x252
+    sidx_alias	0x353	# id 0xb53 -> id 0x653
+    sidx_alias	0x3d4	# id 0xb54 -> id 0x754
+    sidx_alias	0x3d5	# id 0xb55 -> id 0x755
+    sidx_alias	0x2d6	# id 0xb56 -> id 0x556
+    sidx_alias	0x1d7	# id 0xb57 -> id 0x357
+    sidx_alias	0x358	# id 0xb58 -> id 0x658
+    sidx_alias	0x358	# id 0xb59 -> id 0x658
+    sidx_alias	0x45a	# id 0xb5a -> id 0x85a
+    sidx_alias	0x3db	# id 0xb5b -> id 0x75b
+    sidx_alias	0x2dc	# id 0xb5c -> id 0x55c
+    sidx_alias	0x2dc	# id 0xb5d -> id 0x55c
+    sidx_alias	0x2dc	# id 0xb5e -> id 0x55c
+    sidx_alias	0x2dc	# id 0xb5f -> id 0x55c
+    sidx_alias	0x060	# id 0xb60 -> id 0x060
+    sidx_alias	0x261	# id 0xb61 -> id 0x461
+    sidx_alias	0x3e2	# id 0xb62 -> id 0x762
+    sidx_style	40		# id 0xb63: IC18 style 40
+    sidx_alias	0x3e2	# id 0xb64 -> id 0x762
+    sidx_alias	0x1e5	# id 0xb65 -> id 0x365
+    sidx_alias	0x066	# id 0xb66 -> id 0x066
+    sidx_alias	0x267	# id 0xb67 -> id 0x467
+    sidx_alias	0x168	# id 0xb68 -> id 0x268
+    sidx_alias	0x060	# id 0xb69 -> id 0x060
+    sidx_alias	0x060	# id 0xb6a -> id 0x060
+    sidx_alias	0x36b	# id 0xb6b -> id 0x66b
+    sidx_alias	0x16c	# id 0xb6c -> id 0x26c
+    sidx_alias	0x16c	# id 0xb6d -> id 0x26c
+    sidx_alias	0x2ee	# id 0xb6e -> id 0x56e
+    sidx_alias	0x1ef	# id 0xb6f -> id 0x36f
+    sidx_alias	0x270	# id 0xb70 -> id 0x470
+    sidx_alias	0x3f1	# id 0xb71 -> id 0x771
+    sidx_alias	0x272	# id 0xb72 -> id 0x472
+    sidx_alias	0x270	# id 0xb73 -> id 0x470
+    sidx_alias	0x274	# id 0xb74 -> id 0x474
+    sidx_alias	0x274	# id 0xb75 -> id 0x474
+    sidx_alias	0x274	# id 0xb76 -> id 0x474
+    sidx_alias	0x274	# id 0xb77 -> id 0x474
+    sidx_alias	0x278	# id 0xb78 -> id 0x478
+    sidx_alias	0x179	# id 0xb79 -> id 0x279
+    sidx_alias	0x17a	# id 0xb7a -> id 0x27a
+    sidx_alias	0x17a	# id 0xb7b -> id 0x27a
+    sidx_style	136		# id 0xb7c: IC18 style 136
+    sidx_alias	0x2fd	# id 0xb7d -> id 0x57d
+    sidx_alias	0x47e	# id 0xb7e -> id 0x87e
+    sidx_alias	0x77f	# id 0xb7f -> id 0xe7f
+    sidx_alias	0x300	# id 0xc00 -> id 0x600
+    sidx_alias	0x201	# id 0xc01 -> id 0x401
+    sidx_alias	0x202	# id 0xc02 -> id 0x402
+    sidx_alias	0x202	# id 0xc03 -> id 0x402
+    sidx_alias	0x004	# id 0xc04 -> id 0x004
+    sidx_alias	0x185	# id 0xc05 -> id 0x305
+    sidx_alias	0x45a	# id 0xc06 -> id 0x85a
+    sidx_alias	0x008	# id 0xc07 -> id 0x008
+    sidx_alias	0x388	# id 0xc08 -> id 0x708
+    sidx_alias	0x209	# id 0xc09 -> id 0x409
+    sidx_alias	0x008	# id 0xc0a -> id 0x008
+    sidx_alias	0x18b	# id 0xc0b -> id 0x30b
+    sidx_alias	0x20c	# id 0xc0c -> id 0x40c
+    sidx_alias	0x10d	# id 0xc0d -> id 0x20d
+    sidx_alias	0x45a	# id 0xc0e -> id 0x85a
+    sidx_alias	0x00f	# id 0xc0f -> id 0x00f
+    sidx_alias	0x011	# id 0xc10 -> id 0x011
+    sidx_alias	0x011	# id 0xc11 -> id 0x011
+    sidx_alias	0x212	# id 0xc12 -> id 0x412
+    sidx_alias	0x013	# id 0xc13 -> id 0x013
+    sidx_alias	0x294	# id 0xc14 -> id 0x514
+    sidx_alias	0x011	# id 0xc15 -> id 0x011
+    sidx_alias	0x216	# id 0xc16 -> id 0x416
+    sidx_alias	0x216	# id 0xc17 -> id 0x416
+    sidx_alias	0x118	# id 0xc18 -> id 0x218
+    sidx_alias	0x118	# id 0xc19 -> id 0x218
+    sidx_alias	0x21a	# id 0xc1a -> id 0x41a
+    sidx_alias	0x118	# id 0xc1b -> id 0x218
+    sidx_alias	0x19c	# id 0xc1c -> id 0x31c
+    sidx_style	63		# id 0xc1d: IC18 style 63
+    sidx_alias	0x29e	# id 0xc1e -> id 0x51e
+    sidx_alias	0x09f	# id 0xc1f -> id 0x11f
+    sidx_alias	0x3a0	# id 0xc20 -> id 0x720
+    sidx_alias	0x021	# id 0xc21 -> id 0x021
+    sidx_alias	0x5a2	# id 0xc22 -> id 0xb22
+    sidx_alias	0x2a3	# id 0xc23 -> id 0x523
+    sidx_alias	0x2a4	# id 0xc24 -> id 0x524
+    sidx_alias	0x1a5	# id 0xc25 -> id 0x325
+    sidx_alias	0x3a6	# id 0xc26 -> id 0x726
+    sidx_alias	0x227	# id 0xc27 -> id 0x427
+    sidx_alias	0x328	# id 0xc28 -> id 0x628
+    sidx_alias	0x328	# id 0xc29 -> id 0x628
+    sidx_alias	0x02a	# id 0xc2a -> id 0x02a
+    sidx_alias	0x328	# id 0xc2b -> id 0x628
+    sidx_alias	0x22c	# id 0xc2c -> id 0x42c
+    sidx_alias	0x0ad	# id 0xc2d -> id 0x12d
+    sidx_alias	0x3ae	# id 0xc2e -> id 0x72e
+    sidx_alias	0x3ae	# id 0xc2f -> id 0x72e
+    sidx_alias	0x030	# id 0xc30 -> id 0x030
+    sidx_alias	0x030	# id 0xc31 -> id 0x030
+    sidx_alias	0x030	# id 0xc32 -> id 0x030
+    sidx_style	116		# id 0xc33: IC18 style 116
+    sidx_alias	0x134	# id 0xc34 -> id 0x234
+    sidx_alias	0x3b5	# id 0xc35 -> id 0x735
+    sidx_alias	0x388	# id 0xc36 -> id 0x708
+    sidx_alias	0x3b5	# id 0xc37 -> id 0x735
+    sidx_alias	0x533	# id 0xc38 -> id 0xa33
+    sidx_alias	0x339	# id 0xc39 -> id 0x639
+    sidx_alias	0x6ba	# id 0xc3a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0xc3b -> id 0x33b
+    sidx_alias	0x13c	# id 0xc3c -> id 0x23c
+    sidx_alias	0x0bd	# id 0xc3d -> id 0x13d
+    sidx_alias	0x533	# id 0xc3e -> id 0xa33
+    sidx_alias	0x0bf	# id 0xc3f -> id 0x13f
+    sidx_alias	0x0c0	# id 0xc40 -> id 0x140
+    sidx_alias	0x241	# id 0xc41 -> id 0x441
+    sidx_alias	0x0c0	# id 0xc42 -> id 0x140
+    sidx_alias	0x0c3	# id 0xc43 -> id 0x143
+    sidx_alias	0x344	# id 0xc44 -> id 0x644
+    sidx_alias	0x145	# id 0xc45 -> id 0x245
+    sidx_alias	0x0c0	# id 0xc46 -> id 0x140
+    sidx_alias	0x347	# id 0xc47 -> id 0x647
+    sidx_alias	0x348	# id 0xc48 -> id 0x648
+    sidx_alias	0x348	# id 0xc49 -> id 0x648
+    sidx_alias	0x1ca	# id 0xc4a -> id 0x34a
+    sidx_style	39		# id 0xc4b: IC18 style 39
+    sidx_alias	0x2cc	# id 0xc4c -> id 0x54c
+    sidx_style	158		# id 0xc4d: IC18 style 158
+    sidx_alias	0x14e	# id 0xc4e -> id 0x24e
+    sidx_alias	0x24f	# id 0xc4f -> id 0x44f
+    sidx_alias	0x0d0	# id 0xc50 -> id 0x150
+    sidx_alias	0x1d7	# id 0xc51 -> id 0x357
+    sidx_alias	0x152	# id 0xc52 -> id 0x252
+    sidx_alias	0x353	# id 0xc53 -> id 0x653
+    sidx_alias	0x3d4	# id 0xc54 -> id 0x754
+    sidx_alias	0x3d5	# id 0xc55 -> id 0x755
+    sidx_alias	0x2d6	# id 0xc56 -> id 0x556
+    sidx_alias	0x1d7	# id 0xc57 -> id 0x357
+    sidx_alias	0x358	# id 0xc58 -> id 0x658
+    sidx_alias	0x358	# id 0xc59 -> id 0x658
+    sidx_style	0		# id 0xc5a: IC18 style 0
+    sidx_alias	0x3db	# id 0xc5b -> id 0x75b
+    sidx_alias	0x2dc	# id 0xc5c -> id 0x55c
+    sidx_alias	0x2dc	# id 0xc5d -> id 0x55c
+    sidx_alias	0x2dc	# id 0xc5e -> id 0x55c
+    sidx_alias	0x2dc	# id 0xc5f -> id 0x55c
+    sidx_alias	0x060	# id 0xc60 -> id 0x060
+    sidx_alias	0x261	# id 0xc61 -> id 0x461
+    sidx_alias	0x3e2	# id 0xc62 -> id 0x762
+    sidx_style	30		# id 0xc63: IC18 style 30
+    sidx_alias	0x3e2	# id 0xc64 -> id 0x762
+    sidx_alias	0x1e5	# id 0xc65 -> id 0x365
+    sidx_alias	0x066	# id 0xc66 -> id 0x066
+    sidx_alias	0x267	# id 0xc67 -> id 0x467
+    sidx_alias	0x168	# id 0xc68 -> id 0x268
+    sidx_alias	0x060	# id 0xc69 -> id 0x060
+    sidx_alias	0x060	# id 0xc6a -> id 0x060
+    sidx_alias	0x36b	# id 0xc6b -> id 0x66b
+    sidx_alias	0x16c	# id 0xc6c -> id 0x26c
+    sidx_alias	0x16c	# id 0xc6d -> id 0x26c
+    sidx_alias	0x2ee	# id 0xc6e -> id 0x56e
+    sidx_alias	0x1ef	# id 0xc6f -> id 0x36f
+    sidx_alias	0x270	# id 0xc70 -> id 0x470
+    sidx_alias	0x3f1	# id 0xc71 -> id 0x771
+    sidx_alias	0x272	# id 0xc72 -> id 0x472
+    sidx_alias	0x270	# id 0xc73 -> id 0x470
+    sidx_alias	0x274	# id 0xc74 -> id 0x474
+    sidx_alias	0x274	# id 0xc75 -> id 0x474
+    sidx_alias	0x274	# id 0xc76 -> id 0x474
+    sidx_alias	0x274	# id 0xc77 -> id 0x474
+    sidx_alias	0x278	# id 0xc78 -> id 0x478
+    sidx_alias	0x179	# id 0xc79 -> id 0x279
+    sidx_alias	0x17a	# id 0xc7a -> id 0x27a
+    sidx_alias	0x17a	# id 0xc7b -> id 0x27a
+    sidx_alias	0x47c	# id 0xc7c -> id 0x87c
+    sidx_alias	0x2fd	# id 0xc7d -> id 0x57d
+    sidx_alias	0x47e	# id 0xc7e -> id 0x87e
+    sidx_style	144		# id 0xc7f: IC18 style 144
+    sidx_alias	0x300	# id 0xd00 -> id 0x600
+    sidx_alias	0x201	# id 0xd01 -> id 0x401
+    sidx_alias	0x202	# id 0xd02 -> id 0x402
+    sidx_alias	0x202	# id 0xd03 -> id 0x402
+    sidx_alias	0x004	# id 0xd04 -> id 0x004
+    sidx_alias	0x185	# id 0xd05 -> id 0x305
+    sidx_alias	0x45a	# id 0xd06 -> id 0x85a
+    sidx_alias	0x008	# id 0xd07 -> id 0x008
+    sidx_alias	0x388	# id 0xd08 -> id 0x708
+    sidx_alias	0x209	# id 0xd09 -> id 0x409
+    sidx_alias	0x008	# id 0xd0a -> id 0x008
+    sidx_alias	0x18b	# id 0xd0b -> id 0x30b
+    sidx_alias	0x20c	# id 0xd0c -> id 0x40c
+    sidx_alias	0x10d	# id 0xd0d -> id 0x20d
+    sidx_alias	0x45a	# id 0xd0e -> id 0x85a
+    sidx_alias	0x00f	# id 0xd0f -> id 0x00f
+    sidx_alias	0x011	# id 0xd10 -> id 0x011
+    sidx_alias	0x011	# id 0xd11 -> id 0x011
+    sidx_alias	0x212	# id 0xd12 -> id 0x412
+    sidx_alias	0x013	# id 0xd13 -> id 0x013
+    sidx_alias	0x294	# id 0xd14 -> id 0x514
+    sidx_alias	0x011	# id 0xd15 -> id 0x011
+    sidx_alias	0x216	# id 0xd16 -> id 0x416
+    sidx_alias	0x216	# id 0xd17 -> id 0x416
+    sidx_alias	0x118	# id 0xd18 -> id 0x218
+    sidx_alias	0x118	# id 0xd19 -> id 0x218
+    sidx_alias	0x21a	# id 0xd1a -> id 0x41a
+    sidx_alias	0x118	# id 0xd1b -> id 0x218
+    sidx_alias	0x19c	# id 0xd1c -> id 0x31c
+    sidx_alias	0x41d	# id 0xd1d -> id 0x81d
+    sidx_alias	0x29e	# id 0xd1e -> id 0x51e
+    sidx_alias	0x09f	# id 0xd1f -> id 0x11f
+    sidx_alias	0x3a0	# id 0xd20 -> id 0x720
+    sidx_alias	0x021	# id 0xd21 -> id 0x021
+    sidx_alias	0x5a2	# id 0xd22 -> id 0xb22
+    sidx_alias	0x2a3	# id 0xd23 -> id 0x523
+    sidx_alias	0x2a4	# id 0xd24 -> id 0x524
+    sidx_alias	0x1a5	# id 0xd25 -> id 0x325
+    sidx_alias	0x3a6	# id 0xd26 -> id 0x726
+    sidx_alias	0x227	# id 0xd27 -> id 0x427
+    sidx_alias	0x328	# id 0xd28 -> id 0x628
+    sidx_alias	0x328	# id 0xd29 -> id 0x628
+    sidx_alias	0x02a	# id 0xd2a -> id 0x02a
+    sidx_alias	0x328	# id 0xd2b -> id 0x628
+    sidx_alias	0x22c	# id 0xd2c -> id 0x42c
+    sidx_alias	0x0ad	# id 0xd2d -> id 0x12d
+    sidx_alias	0x3ae	# id 0xd2e -> id 0x72e
+    sidx_alias	0x3ae	# id 0xd2f -> id 0x72e
+    sidx_alias	0x030	# id 0xd30 -> id 0x030
+    sidx_alias	0x030	# id 0xd31 -> id 0x030
+    sidx_alias	0x030	# id 0xd32 -> id 0x030
+    sidx_alias	0x533	# id 0xd33 -> id 0xa33
+    sidx_alias	0x134	# id 0xd34 -> id 0x234
+    sidx_alias	0x3b5	# id 0xd35 -> id 0x735
+    sidx_alias	0x388	# id 0xd36 -> id 0x708
+    sidx_alias	0x3b5	# id 0xd37 -> id 0x735
+    sidx_alias	0x533	# id 0xd38 -> id 0xa33
+    sidx_alias	0x339	# id 0xd39 -> id 0x639
+    sidx_table	28		# id 0xd3a: BuiltinStyleSubTable style 28 Style_Rhumba
+    sidx_alias	0x1bb	# id 0xd3b -> id 0x33b
+    sidx_alias	0x13c	# id 0xd3c -> id 0x23c
+    sidx_alias	0x0bd	# id 0xd3d -> id 0x13d
+    sidx_alias	0x533	# id 0xd3e -> id 0xa33
+    sidx_alias	0x0bf	# id 0xd3f -> id 0x13f
+    sidx_alias	0x0c0	# id 0xd40 -> id 0x140
+    sidx_alias	0x241	# id 0xd41 -> id 0x441
+    sidx_alias	0x0c0	# id 0xd42 -> id 0x140
+    sidx_alias	0x0c3	# id 0xd43 -> id 0x143
+    sidx_alias	0x344	# id 0xd44 -> id 0x644
+    sidx_alias	0x145	# id 0xd45 -> id 0x245
+    sidx_alias	0x0c0	# id 0xd46 -> id 0x140
+    sidx_alias	0x347	# id 0xd47 -> id 0x647
+    sidx_alias	0x348	# id 0xd48 -> id 0x648
+    sidx_alias	0x348	# id 0xd49 -> id 0x648
+    sidx_style	34		# id 0xd4a: IC18 style 34
+    sidx_alias	0x64b	# id 0xd4b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0xd4c -> id 0x54c
+    sidx_style	151		# id 0xd4d: IC18 style 151
+    sidx_alias	0x14e	# id 0xd4e -> id 0x24e
+    sidx_alias	0x24f	# id 0xd4f -> id 0x44f
+    sidx_alias	0x0d0	# id 0xd50 -> id 0x150
+    sidx_alias	0x1d7	# id 0xd51 -> id 0x357
+    sidx_alias	0x152	# id 0xd52 -> id 0x252
+    sidx_alias	0x353	# id 0xd53 -> id 0x653
+    sidx_alias	0x3d4	# id 0xd54 -> id 0x754
+    sidx_alias	0x3d5	# id 0xd55 -> id 0x755
+    sidx_alias	0x2d6	# id 0xd56 -> id 0x556
+    sidx_alias	0x1d7	# id 0xd57 -> id 0x357
+    sidx_alias	0x358	# id 0xd58 -> id 0x658
+    sidx_alias	0x358	# id 0xd59 -> id 0x658
+    sidx_alias	0x45a	# id 0xd5a -> id 0x85a
+    sidx_alias	0x3db	# id 0xd5b -> id 0x75b
+    sidx_alias	0x2dc	# id 0xd5c -> id 0x55c
+    sidx_alias	0x2dc	# id 0xd5d -> id 0x55c
+    sidx_alias	0x2dc	# id 0xd5e -> id 0x55c
+    sidx_alias	0x2dc	# id 0xd5f -> id 0x55c
+    sidx_alias	0x060	# id 0xd60 -> id 0x060
+    sidx_alias	0x261	# id 0xd61 -> id 0x461
+    sidx_alias	0x3e2	# id 0xd62 -> id 0x762
+    sidx_style	93		# id 0xd63: IC18 style 93
+    sidx_alias	0x3e2	# id 0xd64 -> id 0x762
+    sidx_alias	0x1e5	# id 0xd65 -> id 0x365
+    sidx_alias	0x066	# id 0xd66 -> id 0x066
+    sidx_alias	0x267	# id 0xd67 -> id 0x467
+    sidx_alias	0x168	# id 0xd68 -> id 0x268
+    sidx_alias	0x060	# id 0xd69 -> id 0x060
+    sidx_alias	0x060	# id 0xd6a -> id 0x060
+    sidx_alias	0x36b	# id 0xd6b -> id 0x66b
+    sidx_alias	0x16c	# id 0xd6c -> id 0x26c
+    sidx_alias	0x16c	# id 0xd6d -> id 0x26c
+    sidx_alias	0x2ee	# id 0xd6e -> id 0x56e
+    sidx_alias	0x1ef	# id 0xd6f -> id 0x36f
+    sidx_alias	0x270	# id 0xd70 -> id 0x470
+    sidx_alias	0x3f1	# id 0xd71 -> id 0x771
+    sidx_alias	0x272	# id 0xd72 -> id 0x472
+    sidx_alias	0x270	# id 0xd73 -> id 0x470
+    sidx_alias	0x274	# id 0xd74 -> id 0x474
+    sidx_alias	0x274	# id 0xd75 -> id 0x474
+    sidx_alias	0x274	# id 0xd76 -> id 0x474
+    sidx_alias	0x274	# id 0xd77 -> id 0x474
+    sidx_alias	0x278	# id 0xd78 -> id 0x478
+    sidx_alias	0x179	# id 0xd79 -> id 0x279
+    sidx_alias	0x17a	# id 0xd7a -> id 0x27a
+    sidx_alias	0x17a	# id 0xd7b -> id 0x27a
+    sidx_alias	0x47c	# id 0xd7c -> id 0x87c
+    sidx_alias	0x2fd	# id 0xd7d -> id 0x57d
+    sidx_alias	0x47e	# id 0xd7e -> id 0x87e
+    sidx_alias	0x77f	# id 0xd7f -> id 0xe7f
+    sidx_alias	0x300	# id 0xe00 -> id 0x600
+    sidx_alias	0x201	# id 0xe01 -> id 0x401
+    sidx_alias	0x202	# id 0xe02 -> id 0x402
+    sidx_alias	0x202	# id 0xe03 -> id 0x402
+    sidx_style	105		# id 0xe04: IC18 style 105
+    sidx_alias	0x185	# id 0xe05 -> id 0x305
+    sidx_alias	0x45a	# id 0xe06 -> id 0x85a
+    sidx_alias	0x008	# id 0xe07 -> id 0x008
+    sidx_alias	0x388	# id 0xe08 -> id 0x708
+    sidx_alias	0x209	# id 0xe09 -> id 0x409
+    sidx_alias	0x008	# id 0xe0a -> id 0x008
+    sidx_alias	0x18b	# id 0xe0b -> id 0x30b
+    sidx_alias	0x20c	# id 0xe0c -> id 0x40c
+    sidx_alias	0x10d	# id 0xe0d -> id 0x20d
+    sidx_alias	0x45a	# id 0xe0e -> id 0x85a
+    sidx_alias	0x00f	# id 0xe0f -> id 0x00f
+    sidx_alias	0x011	# id 0xe10 -> id 0x011
+    sidx_alias	0x011	# id 0xe11 -> id 0x011
+    sidx_alias	0x212	# id 0xe12 -> id 0x412
+    sidx_alias	0x013	# id 0xe13 -> id 0x013
+    sidx_alias	0x294	# id 0xe14 -> id 0x514
+    sidx_alias	0x011	# id 0xe15 -> id 0x011
+    sidx_alias	0x216	# id 0xe16 -> id 0x416
+    sidx_alias	0x216	# id 0xe17 -> id 0x416
+    sidx_alias	0x118	# id 0xe18 -> id 0x218
+    sidx_alias	0x118	# id 0xe19 -> id 0x218
+    sidx_alias	0x21a	# id 0xe1a -> id 0x41a
+    sidx_alias	0x118	# id 0xe1b -> id 0x218
+    sidx_alias	0x19c	# id 0xe1c -> id 0x31c
+    sidx_style	85		# id 0xe1d: IC18 style 85
+    sidx_alias	0x29e	# id 0xe1e -> id 0x51e
+    sidx_alias	0x09f	# id 0xe1f -> id 0x11f
+    sidx_alias	0x3a0	# id 0xe20 -> id 0x720
+    sidx_alias	0x021	# id 0xe21 -> id 0x021
+    sidx_alias	0x5a2	# id 0xe22 -> id 0xb22
+    sidx_alias	0x2a3	# id 0xe23 -> id 0x523
+    sidx_alias	0x2a4	# id 0xe24 -> id 0x524
+    sidx_alias	0x1a5	# id 0xe25 -> id 0x325
+    sidx_alias	0x3a6	# id 0xe26 -> id 0x726
+    sidx_alias	0x227	# id 0xe27 -> id 0x427
+    sidx_alias	0x328	# id 0xe28 -> id 0x628
+    sidx_alias	0x328	# id 0xe29 -> id 0x628
+    sidx_alias	0x02a	# id 0xe2a -> id 0x02a
+    sidx_alias	0x328	# id 0xe2b -> id 0x628
+    sidx_alias	0x22c	# id 0xe2c -> id 0x42c
+    sidx_alias	0x0ad	# id 0xe2d -> id 0x12d
+    sidx_alias	0x3ae	# id 0xe2e -> id 0x72e
+    sidx_alias	0x3ae	# id 0xe2f -> id 0x72e
+    sidx_alias	0x030	# id 0xe30 -> id 0x030
+    sidx_alias	0x030	# id 0xe31 -> id 0x030
+    sidx_alias	0x030	# id 0xe32 -> id 0x030
+    sidx_alias	0x533	# id 0xe33 -> id 0xa33
+    sidx_alias	0x134	# id 0xe34 -> id 0x234
+    sidx_alias	0x3b5	# id 0xe35 -> id 0x735
+    sidx_alias	0x388	# id 0xe36 -> id 0x708
+    sidx_alias	0x3b5	# id 0xe37 -> id 0x735
+    sidx_alias	0x533	# id 0xe38 -> id 0xa33
+    sidx_alias	0x339	# id 0xe39 -> id 0x639
+    sidx_alias	0x6ba	# id 0xe3a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0xe3b -> id 0x33b
+    sidx_alias	0x13c	# id 0xe3c -> id 0x23c
+    sidx_alias	0x0bd	# id 0xe3d -> id 0x13d
+    sidx_alias	0x533	# id 0xe3e -> id 0xa33
+    sidx_alias	0x0bf	# id 0xe3f -> id 0x13f
+    sidx_alias	0x0c0	# id 0xe40 -> id 0x140
+    sidx_alias	0x241	# id 0xe41 -> id 0x441
+    sidx_alias	0x0c0	# id 0xe42 -> id 0x140
+    sidx_alias	0x0c3	# id 0xe43 -> id 0x143
+    sidx_alias	0x344	# id 0xe44 -> id 0x644
+    sidx_alias	0x145	# id 0xe45 -> id 0x245
+    sidx_alias	0x0c0	# id 0xe46 -> id 0x140
+    sidx_alias	0x347	# id 0xe47 -> id 0x647
+    sidx_alias	0x348	# id 0xe48 -> id 0x648
+    sidx_alias	0x348	# id 0xe49 -> id 0x648
+    sidx_style	79		# id 0xe4a: IC18 style 79
+    sidx_alias	0x64b	# id 0xe4b -> id 0xc4b
+    sidx_style	14		# id 0xe4c: IC18 style 14
+    sidx_alias	0x04d	# id 0xe4d -> id 0x04d
+    sidx_alias	0x14e	# id 0xe4e -> id 0x24e
+    sidx_alias	0x24f	# id 0xe4f -> id 0x44f
+    sidx_alias	0x0d0	# id 0xe50 -> id 0x150
+    sidx_alias	0x1d7	# id 0xe51 -> id 0x357
+    sidx_alias	0x152	# id 0xe52 -> id 0x252
+    sidx_alias	0x353	# id 0xe53 -> id 0x653
+    sidx_style	20		# id 0xe54: IC18 style 20
+    sidx_alias	0x3d5	# id 0xe55 -> id 0x755
+    sidx_alias	0x2d6	# id 0xe56 -> id 0x556
+    sidx_alias	0x1d7	# id 0xe57 -> id 0x357
+    sidx_alias	0x358	# id 0xe58 -> id 0x658
+    sidx_alias	0x358	# id 0xe59 -> id 0x658
+    sidx_alias	0x45a	# id 0xe5a -> id 0x85a
+    sidx_alias	0x3db	# id 0xe5b -> id 0x75b
+    sidx_alias	0x2dc	# id 0xe5c -> id 0x55c
+    sidx_alias	0x2dc	# id 0xe5d -> id 0x55c
+    sidx_alias	0x2dc	# id 0xe5e -> id 0x55c
+    sidx_alias	0x2dc	# id 0xe5f -> id 0x55c
+    sidx_alias	0x060	# id 0xe60 -> id 0x060
+    sidx_alias	0x261	# id 0xe61 -> id 0x461
+    sidx_alias	0x3e2	# id 0xe62 -> id 0x762
+    sidx_alias	0x5e3	# id 0xe63 -> id 0xb63
+    sidx_alias	0x3e2	# id 0xe64 -> id 0x762
+    sidx_alias	0x1e5	# id 0xe65 -> id 0x365
+    sidx_alias	0x066	# id 0xe66 -> id 0x066
+    sidx_alias	0x267	# id 0xe67 -> id 0x467
+    sidx_alias	0x168	# id 0xe68 -> id 0x268
+    sidx_alias	0x060	# id 0xe69 -> id 0x060
+    sidx_alias	0x060	# id 0xe6a -> id 0x060
+    sidx_alias	0x36b	# id 0xe6b -> id 0x66b
+    sidx_alias	0x16c	# id 0xe6c -> id 0x26c
+    sidx_alias	0x16c	# id 0xe6d -> id 0x26c
+    sidx_alias	0x2ee	# id 0xe6e -> id 0x56e
+    sidx_alias	0x1ef	# id 0xe6f -> id 0x36f
+    sidx_alias	0x270	# id 0xe70 -> id 0x470
+    sidx_alias	0x3f1	# id 0xe71 -> id 0x771
+    sidx_alias	0x272	# id 0xe72 -> id 0x472
+    sidx_alias	0x270	# id 0xe73 -> id 0x470
+    sidx_alias	0x274	# id 0xe74 -> id 0x474
+    sidx_alias	0x274	# id 0xe75 -> id 0x474
+    sidx_alias	0x274	# id 0xe76 -> id 0x474
+    sidx_alias	0x274	# id 0xe77 -> id 0x474
+    sidx_alias	0x278	# id 0xe78 -> id 0x478
+    sidx_alias	0x179	# id 0xe79 -> id 0x279
+    sidx_alias	0x17a	# id 0xe7a -> id 0x27a
+    sidx_alias	0x17a	# id 0xe7b -> id 0x27a
+    sidx_alias	0x47c	# id 0xe7c -> id 0x87c
+    sidx_alias	0x2fd	# id 0xe7d -> id 0x57d
+    sidx_alias	0x47e	# id 0xe7e -> id 0x87e
+    sidx_style	138		# id 0xe7f: IC18 style 138
+    sidx_alias	0x300	# id 0xf00 -> id 0x600
+    sidx_alias	0x201	# id 0xf01 -> id 0x401
+    sidx_alias	0x202	# id 0xf02 -> id 0x402
+    sidx_alias	0x202	# id 0xf03 -> id 0x402
+    sidx_alias	0x004	# id 0xf04 -> id 0x004
+    sidx_alias	0x185	# id 0xf05 -> id 0x305
+    sidx_alias	0x45a	# id 0xf06 -> id 0x85a
+    sidx_alias	0x008	# id 0xf07 -> id 0x008
+    sidx_alias	0x388	# id 0xf08 -> id 0x708
+    sidx_alias	0x209	# id 0xf09 -> id 0x409
+    sidx_alias	0x008	# id 0xf0a -> id 0x008
+    sidx_alias	0x18b	# id 0xf0b -> id 0x30b
+    sidx_alias	0x20c	# id 0xf0c -> id 0x40c
+    sidx_alias	0x10d	# id 0xf0d -> id 0x20d
+    sidx_alias	0x45a	# id 0xf0e -> id 0x85a
+    sidx_alias	0x00f	# id 0xf0f -> id 0x00f
+    sidx_alias	0x011	# id 0xf10 -> id 0x011
+    sidx_alias	0x011	# id 0xf11 -> id 0x011
+    sidx_alias	0x212	# id 0xf12 -> id 0x412
+    sidx_alias	0x013	# id 0xf13 -> id 0x013
+    sidx_alias	0x294	# id 0xf14 -> id 0x514
+    sidx_alias	0x011	# id 0xf15 -> id 0x011
+    sidx_alias	0x216	# id 0xf16 -> id 0x416
+    sidx_alias	0x216	# id 0xf17 -> id 0x416
+    sidx_alias	0x118	# id 0xf18 -> id 0x218
+    sidx_alias	0x118	# id 0xf19 -> id 0x218
+    sidx_alias	0x21a	# id 0xf1a -> id 0x41a
+    sidx_alias	0x118	# id 0xf1b -> id 0x218
+    sidx_alias	0x19c	# id 0xf1c -> id 0x31c
+    sidx_style	62		# id 0xf1d: IC18 style 62
+    sidx_alias	0x29e	# id 0xf1e -> id 0x51e
+    sidx_alias	0x09f	# id 0xf1f -> id 0x11f
+    sidx_alias	0x3a0	# id 0xf20 -> id 0x720
+    sidx_alias	0x021	# id 0xf21 -> id 0x021
+    sidx_alias	0x5a2	# id 0xf22 -> id 0xb22
+    sidx_alias	0x2a3	# id 0xf23 -> id 0x523
+    sidx_alias	0x2a4	# id 0xf24 -> id 0x524
+    sidx_alias	0x1a5	# id 0xf25 -> id 0x325
+    sidx_alias	0x3a6	# id 0xf26 -> id 0x726
+    sidx_alias	0x227	# id 0xf27 -> id 0x427
+    sidx_alias	0x328	# id 0xf28 -> id 0x628
+    sidx_alias	0x328	# id 0xf29 -> id 0x628
+    sidx_alias	0x02a	# id 0xf2a -> id 0x02a
+    sidx_alias	0x328	# id 0xf2b -> id 0x628
+    sidx_alias	0x22c	# id 0xf2c -> id 0x42c
+    sidx_alias	0x0ad	# id 0xf2d -> id 0x12d
+    sidx_alias	0x3ae	# id 0xf2e -> id 0x72e
+    sidx_alias	0x3ae	# id 0xf2f -> id 0x72e
+    sidx_alias	0x030	# id 0xf30 -> id 0x030
+    sidx_alias	0x030	# id 0xf31 -> id 0x030
+    sidx_alias	0x030	# id 0xf32 -> id 0x030
+    sidx_alias	0x533	# id 0xf33 -> id 0xa33
+    sidx_alias	0x134	# id 0xf34 -> id 0x234
+    sidx_alias	0x3b5	# id 0xf35 -> id 0x735
+    sidx_alias	0x388	# id 0xf36 -> id 0x708
+    sidx_alias	0x3b5	# id 0xf37 -> id 0x735
+    sidx_alias	0x533	# id 0xf38 -> id 0xa33
+    sidx_alias	0x339	# id 0xf39 -> id 0x639
+    sidx_alias	0x6ba	# id 0xf3a -> id 0xd3a
+    sidx_alias	0x1bb	# id 0xf3b -> id 0x33b
+    sidx_alias	0x13c	# id 0xf3c -> id 0x23c
+    sidx_alias	0x0bd	# id 0xf3d -> id 0x13d
+    sidx_alias	0x533	# id 0xf3e -> id 0xa33
+    sidx_alias	0x0bf	# id 0xf3f -> id 0x13f
+    sidx_alias	0x0c0	# id 0xf40 -> id 0x140
+    sidx_alias	0x241	# id 0xf41 -> id 0x441
+    sidx_alias	0x0c0	# id 0xf42 -> id 0x140
+    sidx_alias	0x0c3	# id 0xf43 -> id 0x143
+    sidx_alias	0x344	# id 0xf44 -> id 0x644
+    sidx_alias	0x145	# id 0xf45 -> id 0x245
+    sidx_alias	0x0c0	# id 0xf46 -> id 0x140
+    sidx_alias	0x347	# id 0xf47 -> id 0x647
+    sidx_alias	0x348	# id 0xf48 -> id 0x648
+    sidx_alias	0x348	# id 0xf49 -> id 0x648
+    sidx_alias	0x1ca	# id 0xf4a -> id 0x34a
+    sidx_alias	0x64b	# id 0xf4b -> id 0xc4b
+    sidx_alias	0x2cc	# id 0xf4c -> id 0x54c
+    sidx_alias	0x04d	# id 0xf4d -> id 0x04d
+    sidx_alias	0x14e	# id 0xf4e -> id 0x24e
+    sidx_alias	0x24f	# id 0xf4f -> id 0x44f
+    sidx_alias	0x0d0	# id 0xf50 -> id 0x150
+    sidx_alias	0x1d7	# id 0xf51 -> id 0x357
+    sidx_alias	0x152	# id 0xf52 -> id 0x252
+    sidx_alias	0x353	# id 0xf53 -> id 0x653
+    sidx_alias	0x3d4	# id 0xf54 -> id 0x754
+    sidx_alias	0x3d5	# id 0xf55 -> id 0x755
+    sidx_alias	0x2d6	# id 0xf56 -> id 0x556
+    sidx_alias	0x1d7	# id 0xf57 -> id 0x357
+    sidx_alias	0x358	# id 0xf58 -> id 0x658
+    sidx_alias	0x358	# id 0xf59 -> id 0x658
+    sidx_alias	0x45a	# id 0xf5a -> id 0x85a
+    sidx_alias	0x3db	# id 0xf5b -> id 0x75b
+    sidx_alias	0x2dc	# id 0xf5c -> id 0x55c
+    sidx_alias	0x2dc	# id 0xf5d -> id 0x55c
+    sidx_alias	0x2dc	# id 0xf5e -> id 0x55c
+    sidx_alias	0x2dc	# id 0xf5f -> id 0x55c
+    sidx_alias	0x060	# id 0xf60 -> id 0x060
+    sidx_alias	0x261	# id 0xf61 -> id 0x461
+    sidx_alias	0x3e2	# id 0xf62 -> id 0x762
+    sidx_alias	0x5e3	# id 0xf63 -> id 0xb63
+    sidx_alias	0x3e2	# id 0xf64 -> id 0x762
+    sidx_alias	0x1e5	# id 0xf65 -> id 0x365
+    sidx_alias	0x066	# id 0xf66 -> id 0x066
+    sidx_alias	0x267	# id 0xf67 -> id 0x467
+    sidx_alias	0x168	# id 0xf68 -> id 0x268
+    sidx_alias	0x060	# id 0xf69 -> id 0x060
+    sidx_alias	0x060	# id 0xf6a -> id 0x060
+    sidx_alias	0x36b	# id 0xf6b -> id 0x66b
+    sidx_alias	0x16c	# id 0xf6c -> id 0x26c
+    sidx_alias	0x16c	# id 0xf6d -> id 0x26c
+    sidx_alias	0x2ee	# id 0xf6e -> id 0x56e
+    sidx_alias	0x1ef	# id 0xf6f -> id 0x36f
+    sidx_alias	0x270	# id 0xf70 -> id 0x470
+    sidx_alias	0x3f1	# id 0xf71 -> id 0x771
+    sidx_alias	0x272	# id 0xf72 -> id 0x472
+    sidx_alias	0x270	# id 0xf73 -> id 0x470
+    sidx_alias	0x274	# id 0xf74 -> id 0x474
+    sidx_alias	0x274	# id 0xf75 -> id 0x474
+    sidx_alias	0x274	# id 0xf76 -> id 0x474
+    sidx_alias	0x274	# id 0xf77 -> id 0x474
+    sidx_alias	0x278	# id 0xf78 -> id 0x478
+    sidx_alias	0x179	# id 0xf79 -> id 0x279
+    sidx_alias	0x17a	# id 0xf7a -> id 0x27a
+    sidx_alias	0x17a	# id 0xf7b -> id 0x27a
+    sidx_alias	0x47c	# id 0xf7c -> id 0x87c
+    sidx_alias	0x2fd	# id 0xf7d -> id 0x57d
+    sidx_alias	0x47e	# id 0xf7e -> id 0x87e
+    sidx_style	162		# id 0xf7f: IC18 style 162
+
+# IC18's style table: offsets into IC18's resource (0x40010000), not into this image.
+TrCopyStyleTable:
+    .be24	0x0013b2	# IC18 style 0
+    .be24	0x008298	# IC18 style 1
+    .be24	0x00d74b	# IC18 style 2
+    .be24	0x01187d	# IC18 style 3
+    .be24	0x01860d	# IC18 style 4
+    .be24	0x01da6d	# IC18 style 5
+    .be24	0x025e60	# IC18 style 6
+    .be24	0x02c718	# IC18 style 7
+    .be24	0x031e62	# IC18 style 8
+    .be24	0x03ac0f	# IC18 style 9
+    .be24	0x041772	# IC18 style 10
+    .be24	0x045197	# IC18 style 11
+    .be24	0x0489c7	# IC18 style 12
+    .be24	0x04cc59	# IC18 style 13
+    .be24	0x051841	# IC18 style 14
+    .be24	0x0560f8	# IC18 style 15
+    .be24	0x05b079	# IC18 style 16
+    .be24	0x064ba8	# IC18 style 17
+    .be24	0x069ffc	# IC18 style 18
+    .be24	0x0715e3	# IC18 style 19
+    .be24	0x07682d	# IC18 style 20
+    .be24	0x07bdf2	# IC18 style 21
+    .be24	0x08259a	# IC18 style 22
+    .be24	0x08b7d5	# IC18 style 23
+    .be24	0x091619	# IC18 style 24
+    .be24	0x095e95	# IC18 style 25
+    .be24	0x09c67b	# IC18 style 26
+    .be24	0x09fa1f	# IC18 style 27
+    .be24	0x0a8368	# IC18 style 28
+    .be24	0x0b03ce	# IC18 style 29
+    .be24	0x0b68c7	# IC18 style 30
+    .be24	0x0bce24	# IC18 style 31
+    .be24	0x0c37c1	# IC18 style 32
+    .be24	0x0ca361	# IC18 style 33
+    .be24	0x0cf8f0	# IC18 style 34
+    .be24	0x0d4068	# IC18 style 35
+    .be24	0x0dae59	# IC18 style 36
+    .be24	0x0e09b9	# IC18 style 37
+    .be24	0x0e60a3	# IC18 style 38
+    .be24	0x0ed7c4	# IC18 style 39
+    .be24	0x0f2b83	# IC18 style 40
+    .be24	0x0f8f5e	# IC18 style 41
+    .be24	0x0ff01f	# IC18 style 42
+    .be24	0x102010	# IC18 style 43
+    .be24	0x107266	# IC18 style 44
+    .be24	0x10b561	# IC18 style 45
+    .be24	0x10d2ff	# IC18 style 46
+    .be24	0x111081	# IC18 style 47
+    .be24	0x11651e	# IC18 style 48
+    .be24	0x120314	# IC18 style 49
+    .be24	0x1261ab	# IC18 style 50
+    .be24	0x12bdc7	# IC18 style 51
+    .be24	0x130bee	# IC18 style 52
+    .be24	0x13803a	# IC18 style 53
+    .be24	0x13ccdb	# IC18 style 54
+    .be24	0x14294a	# IC18 style 55
+    .be24	0x146fcb	# IC18 style 56
+    .be24	0x149cd9	# IC18 style 57
+    .be24	0x14fbe3	# IC18 style 58
+    .be24	0x1556a7	# IC18 style 59
+    .be24	0x15920a	# IC18 style 60
+    .be24	0x15e22c	# IC18 style 61
+    .be24	0x165698	# IC18 style 62
+    .be24	0x16a404	# IC18 style 63
+    .be24	0x16e40f	# IC18 style 64
+    .be24	0x1725a0	# IC18 style 65
+    .be24	0x17733d	# IC18 style 66
+    .be24	0x17c6f5	# IC18 style 67
+    .be24	0x18310c	# IC18 style 68
+    .be24	0x189e85	# IC18 style 69
+    .be24	0x19025d	# IC18 style 70
+    .be24	0x199b6c	# IC18 style 71
+    .be24	0x19c748	# IC18 style 72
+    .be24	0x1a0047	# IC18 style 73
+    .be24	0x1a730c	# IC18 style 74
+    .be24	0x1adab5	# IC18 style 75
+    .be24	0x1b1249	# IC18 style 76
+    .be24	0x1b479e	# IC18 style 77
+    .be24	0x1b9404	# IC18 style 78
+    .be24	0x1c1b23	# IC18 style 79
+    .be24	0x1cc522	# IC18 style 80
+    .be24	0x1d2651	# IC18 style 81
+    .be24	0x1d95fb	# IC18 style 82
+    .be24	0x1decf2	# IC18 style 83
+    .be24	0x1e3f68	# IC18 style 84
+    .be24	0x1ec374	# IC18 style 85
+    .be24	0x1f38b8	# IC18 style 86
+    .be24	0x1f9e85	# IC18 style 87
+    .be24	0x201e91	# IC18 style 88
+    .be24	0x207b54	# IC18 style 89
+    .be24	0x20c80d	# IC18 style 90
+    .be24	0x2124d2	# IC18 style 91
+    .be24	0x2161a3	# IC18 style 92
+    .be24	0x21ab1a	# IC18 style 93
+    .be24	0x2211db	# IC18 style 94
+    .be24	0x225435	# IC18 style 95
+    .be24	0x22b434	# IC18 style 96
+    .be24	0x233906	# IC18 style 97
+    .be24	0x23a092	# IC18 style 98
+    .be24	0x23f71e	# IC18 style 99
+    .be24	0x246722	# IC18 style 100
+    .be24	0x24d05b	# IC18 style 101
+    .be24	0x2532bb	# IC18 style 102
+    .be24	0x25880e	# IC18 style 103
+    .be24	0x25df76	# IC18 style 104
+    .be24	0x264f65	# IC18 style 105
+    .be24	0x269f9b	# IC18 style 106
+    .be24	0x26e805	# IC18 style 107
+    .be24	0x275587	# IC18 style 108
+    .be24	0x27a88e	# IC18 style 109
+    .be24	0x280b09	# IC18 style 110
+    .be24	0x288531	# IC18 style 111
+    .be24	0x291925	# IC18 style 112
+    .be24	0x294e8c	# IC18 style 113
+    .be24	0x29b803	# IC18 style 114
+    .be24	0x2a1e93	# IC18 style 115
+    .be24	0x2a9223	# IC18 style 116
+    .be24	0x2b7bf9	# IC18 style 117
+    .be24	0x2bbe82	# IC18 style 118
+    .be24	0x2c1198	# IC18 style 119
+    .be24	0x2c6747	# IC18 style 120
+    .be24	0x2ca84b	# IC18 style 121
+    .be24	0x2d2e1b	# IC18 style 122
+    .be24	0x2daa46	# IC18 style 123
+    .be24	0x2e1033	# IC18 style 124
+    .be24	0x2e5187	# IC18 style 125
+    .be24	0x2ea12a	# IC18 style 126
+    .be24	0x2ef35c	# IC18 style 127
+    .be24	0x2f2eb8	# IC18 style 128
+    .be24	0x2f84af	# IC18 style 129
+    .be24	0x2fcd2a	# IC18 style 130
+    .be24	0x302fc2	# IC18 style 131
+    .be24	0x30a3d0	# IC18 style 132
+    .be24	0x30e36f	# IC18 style 133
+    .be24	0x31459c	# IC18 style 134
+    .be24	0x3191fb	# IC18 style 135
+    .be24	0x3218c4	# IC18 style 136
+    .be24	0x32c26f	# IC18 style 137
+    .be24	0x332cff	# IC18 style 138
+    .be24	0x3377c9	# IC18 style 139
+    .be24	0x33ccab	# IC18 style 140
+    .be24	0x346bf8	# IC18 style 141
+    .be24	0x34f2e6	# IC18 style 142
+    .be24	0x353b36	# IC18 style 143
+    .be24	0x35bf57	# IC18 style 144
+    .be24	0x3628e9	# IC18 style 145
+    .be24	0x36a657	# IC18 style 146
+    .be24	0x3701ad	# IC18 style 147
+    .be24	0x375755	# IC18 style 148
+    .be24	0x379d52	# IC18 style 149
+    .be24	0x37fed9	# IC18 style 150
+    .be24	0x385a8b	# IC18 style 151
+    .be24	0x38a9c1	# IC18 style 152
+    .be24	0x38e652	# IC18 style 153
+    .be24	0x394ebb	# IC18 style 154
+    .be24	0x39a9d4	# IC18 style 155
+    .be24	0x39f9e7	# IC18 style 156
+    .be24	0x3a6708	# IC18 style 157
+    .be24	0x3ab323	# IC18 style 158
+    .be24	0x3b083b	# IC18 style 159
+    .be24	0x3b6cd4	# IC18 style 160
+    .be24	0x3bce19	# IC18 style 161
+    .be24	0x3c46ff	# IC18 style 162
+    .be24	0x3c9360	# IC18 style 163
+    .be24	0x3cd348	# IC18 style 164
+    .be24	0x3d2df3	# IC18 style 165
+    .be24	0x3d7c68	# IC18 style 166
+    .be24	0x3e153c	# IC18 style 167
+    .be24	0x3e5d75	# IC18 style 168
+# IC18's count-in table (offsets into IC18).
+TrCopyCountInTable:
+    .be24	0x001246	# IC18 count-in, 1 beats
+    .be24	0x00125b	# IC18 count-in, 2 beats
+    .be24	0x001277	# IC18 count-in, 3 beats
+    .be24	0x00129a	# IC18 count-in, 4 beats
+    .be24	0x0012c4	# IC18 count-in, 5 beats
+    .be24	0x0012f5	# IC18 count-in, 6 beats
+    .be24	0x00132d	# IC18 count-in, 7 beats
+    .be24	0x00136c	# IC18 count-in, 8 beats
+    .space	2, 0x00
 
 TableRomImageEnd:
 .org 0x3e94d4   # end of image

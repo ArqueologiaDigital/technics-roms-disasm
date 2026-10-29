@@ -81,6 +81,7 @@ def firmware_routines(rom, r1_end, lib_file, syms, unidasm):
     return {b: sorted(n)[0] for b, n in out.items() if len(n) == 1}
 
 
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -94,6 +95,10 @@ def main():
     ap.add_argument("--fw-lib-file", type=lambda v: int(v, 0), help="its library image (file)")
     ap.add_argument("--fw-sym", nargs="*", default=[], help="its symbol files")
     ap.add_argument("--title", default="SP7001 .XAP plug-in - byte-exact.")
+    ap.add_argument("--typed-gaps", action="store_true",
+                    help="spell the data bytes between strings and pointer tables as typed "
+                         "directives (fill, strings, UTF-16 character tables, pointers, doubles) "
+                         "instead of .incbin_range")
     ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../mame-sony-video/unidasm"))
     a = ap.parse_args()
 
@@ -167,12 +172,22 @@ def main():
             return e + 1 - o
         return 0
 
+    def dbl(p):
+        if p + 8 > dend:
+            return False
+        v = struct.unpack_from("<d", d, p)[0]
+        return v == v and 1e-300 < abs(v) < 1e300 and float(f"{v:.15g}") == v
+
     D = ["", "# ---- data: strings, pointer tables, C-runtime tables ----"]
     o, raw0, nstr, nptr = chi, chi, 0, 0
 
     def flush(upto):
         if upto > raw0:
-            D.append(f".incbin_range {ROMQ}, 0x{raw0:06X}, 0x{upto:06X}")
+            if a.typed_gaps:
+                D.extend(T.typed_gap(d, raw0, upto, base, ptr_ok, nm_or_hex)
+                         or [f".incbin_range {ROMQ}, 0x{raw0:06X}, 0x{upto:06X}"])
+            else:
+                D.append(f".incbin_range {ROMQ}, 0x{raw0:06X}, 0x{upto:06X}")
     while o < dend:
         if o % 4 == 0 and o + 8 <= dend and ptr_ok(struct.unpack_from("<I", d, o)[0]) \
                 and ptr_ok(struct.unpack_from("<I", d, o + 4)[0]):
@@ -186,6 +201,9 @@ def main():
                 D.append(f"    .long {', '.join(rows[i:i + 4])}")
             nptr += 1
             raw0 = o
+            continue
+        if a.typed_gaps and o % 4 == 0 and dbl(o) and dbl(o + 8):
+            o += 16                          # IEEE doubles: left to typed_gap, never read as text
             continue
         n = is_str(o) if (o == chi or d[o - 1] in (0, 0xFF)) else 0
         if n:
