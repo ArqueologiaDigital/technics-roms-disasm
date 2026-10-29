@@ -13,22 +13,22 @@ All routine addresses are program 941's (`kn7000.sym`, `kn7000_manual.sym`).
 
 ## Where each segment stands
 
-| segment                      | slot | form now                                                                          | tool                     |
-|------------------------------|------|-----------------------------------------------------------------------------------|--------------------------|
-| GUI bitmaps, frames, icons   | 0    | 366 indexed PNGs, `src/table/gui/`                                                | `tools/table_png.py`     |
-| GUI fonts                    | 0    | 12 PNG glyph sheets, `src/table/gui/font_NN.png`; font 5's kern table typed       | `tools/table_png.py`     |
-| `SramRecordDefaultsZZZJ`     | 1    | typed: signature, 220 records of eight `zzzj_voice` entries                       | `tools/gen_table_styles` |
-| `FactoryMemStyleContainer`   | 2    | typed 'TCMP': header, 3 style records, 60 variation records, heap streams         | `tools/gen_table_styles` |
-| `FactoryMemPadContainer`     | 3    | typed 'TPAD': header, 5 bank records, 18 pad records, heap streams                | `tools/gen_table_styles` |
-| `TechnicsPadsResource`       | 4    | typed: header, pad-ID index, pad table, 120 pads in `src/table/pads/`             | `tools/gen_table_styles` |
-| `InternalVoiceArchive`       | 6    | **still generic** (below)                                                         |                          |
-| `UserHpMenuData`             | 57   | 47 2-bpp PNGs, `src/table/user_hp_menu/`                                          | `tools/table_png.py`     |
-| `TcdImages`                  | 58   | 14 1-bpp PNGs, `src/table/tcd/`                                                   | `tools/table_png.py`     |
-| `BuiltinStyleSubTable`       | 59   | typed: offsets + 52 styles (51 in table 83), one file each in `src/table/styles/` | `tools/gen_table_styles` |
-| `TechnicsRhythmsTable`       | 83   | typed: the copy of IC18's header, index (`sidx_*`) and offset tables              | `tools/gen_table_styles` |
-| table 83's plug-in data gaps |      | typed where understood (`typed_gap`); 3 gaps still generic (below)                | `tools/gen_table_s.py`   |
-| `BASEEXT.XAP` data           |      | typed (`--typed-gaps`); one 42-byte gap still generic                             | `tools/gen_xap_s.py`     |
-| table 80                     |      | its two passthroughs of table 83's image marked `census: generated`               |                          |
+| segment                      | slot | form now                                                                                           | tool                        |
+|------------------------------|------|----------------------------------------------------------------------------------------------------|-----------------------------|
+| GUI bitmaps, frames, icons   | 0    | 366 indexed PNGs, `src/table/gui/`                                                                 | `tools/table_png.py`        |
+| GUI fonts                    | 0    | 12 PNG glyph sheets, `src/table/gui/font_NN.png`; font 5's kern table typed                        | `tools/table_png.py`        |
+| `SramRecordDefaultsZZZJ`     | 1    | typed: signature, 220 records of eight `zzzj_voice` entries                                        | `tools/gen_table_styles`    |
+| `FactoryMemStyleContainer`   | 2    | typed 'TCMP': header, 3 style records, 60 variation records, heap streams                          | `tools/gen_table_styles`    |
+| `FactoryMemPadContainer`     | 3    | typed 'TPAD': header, 5 bank records, 18 pad records, heap streams                                 | `tools/gen_table_styles`    |
+| `TechnicsPadsResource`       | 4    | typed: header, pad-ID index, pad table, 120 pads in `src/table/pads/`                              | `tools/gen_table_styles`    |
+| `InternalVoiceArchive`       | 6    | typed: hash tables, directories, tones, voices, zones (wave recordings named); many fields as rows | `tools/gen_table_voices.py` |
+| `UserHpMenuData`             | 57   | 47 2-bpp PNGs, `src/table/user_hp_menu/`                                                           | `tools/table_png.py`        |
+| `TcdImages`                  | 58   | 14 1-bpp PNGs, `src/table/tcd/`                                                                    | `tools/table_png.py`        |
+| `BuiltinStyleSubTable`       | 59   | typed: offsets + 52 styles (51 in table 83), one file each in `src/table/styles/`                  | `tools/gen_table_styles`    |
+| `TechnicsRhythmsTable`       | 83   | typed: the copy of IC18's header, index (`sidx_*`) and offset tables                               | `tools/gen_table_styles`    |
+| table 83's plug-in data gaps |      | typed where understood (`typed_gap`); 3 gaps still generic (below)                                 | `tools/gen_table_s.py`      |
+| `BASEEXT.XAP` data           |      | typed (`--typed-gaps`); one 42-byte gap still generic                                              | `tools/gen_xap_s.py`        |
+| table 80                     |      | its two passthroughs of table 83's image marked `census: generated`                                |                             |
 
 `tools/gen_table_s.py` still writes `src/table.s` and `src/sp7001/table.s` whole (`make table-src`,
 `make table-src-sp7001`), and `tools/gen_xap_s.py` writes `src/sp7001/baseext.s` (`make
@@ -141,56 +141,77 @@ census still counts, rather than becoming a wall of anonymous `.byte`.
 
 ## What is still generic, and why
 
-| tree          | entry                                           | bytes   | why                                                                                                 |
-|---------------|-------------------------------------------------|---------|-----------------------------------------------------------------------------------------------------|
-| kn7000-table  | `InternalVoiceArchive`, 1,299 passthroughs      | 637,068 | the 'JK' voice archive: tone bodies, zone lists and four tables not decoded (second pass, below)    |
-| kn7000-sp7001 | the same, `src/sp7001/internal_voice_archive.s` | 637,068 | the same segment                                                                                    |
-| kn7000-sp7001 | plug-in data 0x3EF6C5..0x3F782C                 | 33,127  | widget/descriptor tables: names (`ap_func`, `style_id`, `font` ...) and binary records, not decoded |
-| kn7000-sp7001 | plug-in data 0x3F783E..0x3F88F0                 | 4,274   | the same kind                                                                                       |
-| kn7000-sp7001 | plug-in data 0x3F9194..0x3FB59C                 | 9,224   | the same kind                                                                                       |
-| kn7000-sp7001 | `program/region1_0C.s` x 2, `library_00.s` x 1  | 2.6 MB  | program 942's data region and library head: the program image, not the table (no program lane here) |
+| tree          | entry                                          | bytes  | why                                                                                                 |
+|---------------|------------------------------------------------|--------|-----------------------------------------------------------------------------------------------------|
+| kn7000-sp7001 | plug-in data 0x3EF6C5..0x3F782C                | 33,127 | widget/descriptor tables: names (`ap_func`, `style_id`, `font` ...) and binary records, not decoded |
+| kn7000-sp7001 | plug-in data 0x3F783E..0x3F88F0                | 4,274  | the same kind                                                                                       |
+| kn7000-sp7001 | plug-in data 0x3F9194..0x3FB59C                | 9,224  | the same kind                                                                                       |
+| kn7000-sp7001 | `program/region1_0C.s` x 2, `library_00.s` x 1 | 2.6 MB | program 942's data region and library head: the program image, not the table (no program lane here) |
 
-## The 'JK' internal voice archive (segment 6), second pass
+## The 'JK' internal voice archive (segment 6)
 
 `tools/gen_table_voices.py` writes it to `src/table/voices/internal_archive.s` (table 83:
-`src/sp7001/internal_voice_archive.s`, identical but for the reference image its passthroughs
-name). All pointers are u32 offsets from the archive's first byte, little-endian.
+`src/sp7001/internal_voice_archive.s`, the same text but for the reference image). Since the third
+pass it holds no passthrough. All pointers are u32 offsets from the archive's first byte,
+little-endian. The macros (`jk_param`, `jk_zone6`, `jk_zone8`, `tone_head`, `tone_type`,
+`tone_head_table`, `tone_note`) are in `src/table/style_macros.inc`.
 
-| offset          | item                                  | typed as                                                      | evidence                                                               |
-|-----------------|---------------------------------------|---------------------------------------------------------------|------------------------------------------------------------------------|
-| `+0x00`         | header: `"JK"`, zeros, 1, T, D, 0     | `.ascii`, `.long` label differences                           | `VoiceArchiveScanBoot` 0x48449EF4 reads `+0x14`; lookups `+0x18`       |
-| `T` (0xB2234)   | bank block, 0x54 bytes                | `.long` label differences                                     | `VoiceArchiveScanBoot`: base, T, T + 0x0C cached                       |
-| `T + 0x0C`      | the bank descriptor (-> 0x5003A5A4)   | +0x04 tone dir, +0x14 voice dir, +0x18 elements, +0x1C params | `VoiceRecFetchBanked`, `VoiceElemRecFetch`, `VoiceParamRecFetchBanked` |
-| `D` (0xB2288)   | sound directory, six table pairs      | `.long` label differences                                     | the six `Voice*Lookup*Internal` routines                               |
-| hash tables     | descriptors, buckets, chain entries   | `{mult, nbuckets[, countA, countB]}`, `.long` links, keys     | the walk; every chain is contiguous (12, 12, 24, 8, 8, 12 bytes)       |
-| tone directory  | 1,293 offsets                         | `.long Tone_<Name> - InternalVoiceArchive`                    | descriptor +0x04                                                       |
-| voice directory | 1,617 offsets                         | `.long Voice_<Name> - InternalVoiceArchive`                   | descriptor +0x14                                                       |
-| voice records   | 13-byte name, 3 bytes, 0x1C-byte subs | `.ascii`, `.byte` rows per sub-record                         | `VoiceSubRecFetch` 0x4844978B: record + 0x10 + n x 0x1C                |
-| tone records    | 16-byte name, then the body           | `.ascii`; **body a passthrough**                              | sizes 0x54 + n x 0x7A (n = 1..5) for 1,241; 52 are 0x1A7 bytes         |
-| param records   | 864 x 0x10                            | `.long` multisample header, zone list (numbers), `.byte`      | descriptor +0x1C                                                       |
-| key maps        | six 128-byte maps at 0x9E4FC          | `.byte` rows                                                  | the first word of every multisample header points at one               |
+**How a note reaches a recording.** This is traced through program 941's library.
 
-Still passthroughs (637,068 of 832,592 bytes): the 1,293 tone-record bodies, the block at
-`+0x20..+0x13FBC`, the multisample headers and zone lists (`+0x9E7FC..+0xAFB80` and around), and
-three smaller tables that T points at (+0x3C, +0x40, +0x44, +0x4C, +0x50).
+1. The part's tone block (0x500CE404 + part x 0x130) holds the tone record's address at +0.
+   `TgPartProgramApply` 0x4C03893D stores what `func_48449525` returns. That routine looks the
+   MIDI triple up in the tone-key hash table (`func_4856FC51` / `func_48570078`, sound directory
+   +0x00/+0x18) and indexes the descriptor's +0x04 tone directory with the result.
+2. The note-on staging (0x4C035EAA..) fetches four more records into the voice record
+   (librec):
+   - +0x3C, the voice sub-record (`TgPartVoiceRecFetchIdxSel`);
+   - +0x40, the element (`TgPartElemProgramApplyIdxSel`), whose 5-byte velocity splits pick a
+     5-byte layer entry;
+   - +0x44, the parameter record (`VoiceParamRecFetchBanked`), from the layer's {program, bank};
+   - then `TgPitchZoneFold` and `TgVoiceRoutePtrCalc`.
+3. `TgVoiceRoutePtrCalc` 0x4C02BE45 finds the zone:
+   - the key map is base + *(base + param+0), and gives group = keymap[note];
+   - the zone index is (param+0 + 4)[group];
+   - the zone is (base + param+4) + index x (8 when param+8 bit 7 is set, else 6).
 
-What was found but not typed yet:
+   **That bit is the 6- vs 8-byte selector.** `TgPitchNoteResolve` adds the 8-byte zone's s16 at
+   +6 only when it is set.
+4. `TgVoiceRouteFieldSet` / `TgElemNoteOnStd` put the zone's page (byte +0) and entry (+2 & 0xFFF)
+   into the select word. `TgVoiceSideSelect` takes the TG side from bits 10/11 of the halfword
+   +0. Which TG, MAIN or SUB, each side bit means was not traced, so a zone's comment names both
+   `Main_Ppp_Eeee` / `Sub_Ppp_Eeee`, keeping those that exist in `src/wave/`.
 
-- **Zone lists** (the wave-ROM tie). A param record's second word points at a list of zone
-  entries. An entry starts with a page byte (0..0x0F in 4,600 entries), a flag byte (0x04 / 0x08,
-  plus multiples of 0x20 / 0x10), and a u16 whose low 12 bits are a wave directory entry, which
-  is what `TgElemNoteOnStd` reads (`desc + 2 & 0xFFF`) and `TgVoiceRouteFieldSet` (`desc + 0` low
-  byte). For example, the first list (0xA1A84) starts with page 0x08 entries 0x001, 0x002, 0x003
-  ... = `Main_P08_E001`.. / `Sub_P08_E001`... **Entries are 8 bytes in some lists and 6 in
-  others**, and the selector was not found (the param record's last 8 bytes are the candidate).
-  The zone count is the highest index of the multisample header's group map plus one, for 667
-  of the 864 lists; the other 197 are the 6-byte kind.
-- **Multisample header**: a u32 pointer to a key map (key -> group), then one byte per group
-  (group -> zone index). Its length is not fixed by the key map's highest group in every case.
-- **Tone records**: a 0x54-byte head (the first 16 bytes the name) and n elements of 0x7A
-  (`VoiceModRecFetch` 0x4844982A reads `record + 0x54 + unit x 0x7A`). The `desc+..` /
-  `desc2+..` fields the `Tg*` routines read are not yet mapped onto these offsets: which
-  structure each `desc` is needs `TgPartProgramSet` traced.
+**Static cross-check** (the open item of `wave-roms-2026-10-29.md`): all 3,753 zones of the 864
+zone lists and all 1,462 zones of the trailing zone array name an existing wave directory entry.
+The generator lists any that does not ("no such wave entry"), and none does.
+
+| item                     | count / size                   | typed as                                                   | reader / evidence                               |
+|--------------------------|--------------------------------|------------------------------------------------------------|-------------------------------------------------|
+| header                   | 0x20                           | `.ascii`, `.long`                                          | `VoiceArchiveScanBoot` (+0x14), lookups (+0x18) |
+| bank block T, descriptor | 0x54                           | `.long` label differences                                  | `VoiceArchiveScanBoot`, the fetchers            |
+| sound directory D        | 0x48: 8 hash tables + 2 tables | `.long`                                                    | the `Voice*Lookup*` routines, `func_48570078`   |
+| hash tables              | 8 tables, 11,357 chain entries | descriptors, buckets, entries with links and MIDI keys     | the bucket walks                                |
+| tone directory, records  | 1,293 (+ 'Initial')            | name, `tone_head`/`tone_type`, rows, 0x7A units as rows    | `func_48449525`, `TgNoteOn`, `VoiceModRecFetch` |
+| table tones              | 52 x 0x1A7                     | `tone_head_table`, 128 `tone_note`                         | `TgNoteOnTableTone` 0x4C03600D                  |
+| voice directory, records | 1,617 (+ default)              | name, selector byte, 0x1C sub-records as rows              | `VoiceRecFetchBanked`, `VoiceSubRecFetch`       |
+| parameter records        | 864 x 0x10                     | `jk_param` (offsets symbolic)                              | `TgVoiceRoutePtrCalc`, `TgPitchZoneFold`        |
+| key maps                 | 7 x 128 (one unreferenced)     | `.byte` rows                                               | `TgVoiceRoutePtrCalc`                           |
+| multisample headers      | 864                            | `.long` key map, group -> zone bytes                       | `TgVoiceRoutePtrCalc`                           |
+| zone lists, zone array   | 3,753 + 1,462 zones            | `jk_zone6` / `jk_zone8` with the recording named           | as above                                        |
+| element table            | 87 x 0x23                      | rows                                                       | `VoiceElemRecFetch`, `TgVoiceZoneVeloResolve`   |
+| other descriptor tables  | +0x30 .. +0x44, T+8, D+0x10/14 | rows; names as `.ascii` (128 group names, tunings, curves) | `func_484499E9` (+0x30); the rest not traced    |
+| 0x2C8-byte named records | 40 (descriptor +0x3C)          | name, rows                                                 | size = a SOUND EDIT record; reader not traced   |
+
+**What "typed as rows" means here.** About two thirds of the archive's bytes are rows of `.byte`
+with their offsets in a comment, inside records whose boundaries, names and roles are known but
+whose fields are not traced: the tone heads beyond +0x10/+0x12/+0x44/+0x45, the 0x7A units, the
+voice sub-records, the element rows, the 0x2C8 records and the smaller tables. The census reads 0
+generic for this tree, but **those fields still need naming**.
+
+Field readings for the 0x7A units are left as candidates, not applied. The `Tg*` routines read a
+"desc2" at librec+0x3C with offsets up to +0x47 (EG rates and levels, key scaling, filter). That
+does not fit the 0x1C-byte voice sub-record the staging stores there. Which record those offsets
+really address needs the staging traced once more.
 
 ## BASEEXT.XAP 0x167E4..0x16810
 
@@ -207,13 +228,12 @@ builds: odd-width row pads 393 (bitmaps) and 364 (frames), all 0. Segment 59 has
 whose streams all parse. Segment 4 has 120 pads. TCMP stores 0xCC00 and SumU16BE(0x70, 6912)
 gives 0xCC00. TPAD stores 0xE13D and SumU16BE(0xD0, 936) gives 0xE13D.
 
-`python3 scripts/analysis/data_incbin_census.py` at this lane's last commit (second pass; the
-entry count rose because the archive is now split into labelled items):
+`python3 scripts/analysis/data_incbin_census.py` at this lane's last commit (third pass):
 
 | tree          | generated     | media           | opaque | generic n | generic bytes |
 |---------------|---------------|-----------------|--------|-----------|---------------|
-| kn7000-table  | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 1299      | 637,068       |
-| kn7000-sp7001 | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 1305      | 3,283,338     |
+| kn7000-table  | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 0         | 0             |
+| kn7000-sp7001 | 439 / 299,512 | 159 / 1,316,309 | 0 / 0  | 6         | 2,646,270     |
 | kn7000-b80    | 2 / 4,064,860 | 0 / 0           | 0 / 0  | 0         | 0             |
 
 Before: kn7000-table 447 entries / 2,560,580 B, kn7000-sp7001 704 / 5,176,151 B, kn7000-b80 2 /
