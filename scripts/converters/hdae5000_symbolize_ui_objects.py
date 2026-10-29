@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 r"""hdae5000_symbolize_ui_objects.py -- UI object ids as named constants.
 
+SUPERSEDED 2026-10-29: the HDAE5000_OBJ_* constants are now set by the class macros of
+hdae5000/shared/naka_ui_macros.s from each object's place in <tree>/hdae5000_ui_tree.s
+(scripts/converters/hdae5000_ui_tree.py); the name-table rows this tool parses no longer
+exist.  Kept as the record of the 2026-10 pass that respelled the code's numeric ids.
+
 QUESTION ANSWERED / JOB IT DOES
 -------------------------------
 The HD-AE5000 code names its UI objects to the main CPU as 32-bit ids

@@ -2,90 +2,82 @@
 """Does every HDAE5000_OBJ_<NAME> constant hold the id of the UI object called NAME?
 
 QUESTION ANSWERED
-    Each HD-AE5000 tree defines one `.equ HDAE5000_OBJ_<NAME>, 0x007fNNNN` per named UI
-    object (hdae5000_data_tables.s, after HDAE5000_UiObject_PtrTable).  The main CPU
-    addresses object n of table 0x7F as 0x007F0000 + n, and object n's name is the
-    string HDAE5000_UiObjectName_PtrTable slot n points to.  Byte-exactness does not
-    pin these constants: a constant that is wrong in the same way at every use, or
-    whose uses were respelled to fit it, still assembles to the right bytes.  On
-    2026-10-24 the v2.01i tree had two such constants (SW_HD_FORMAT = #222 and
-    CP_FD_HDSWSEL = #220, the id of CP_FD_HDSWTO), left by the porting tool's `fix`
-    pass.  This check reads the name pointer table and the name pool from the source
-    (not from comments) and fails when
+    Each HD-AE5000 tree defines one HDAE5000_OBJ_<NAME> constant per UI object: since
+    2026-10-29 the class macros of hdae5000/shared/naka_ui_macros.s set it, from the
+    object's position in <tree>/hdae5000_ui_tree.s, to 0x007F0000 + n (object n of
+    table 0x7F).  The firmware's own name for object n is the string slot n of
+    HDAE5000_UiObjectName_PtrTable points at.  Byte-exactness does not pin these
+    constants: a constant that is wrong in the same way at every use still assembles
+    to the right bytes (on 2026-10-24 the v2.01i tree had two such, SW_HD_FORMAT and
+    CP_FD_HDSWSEL, left by the porting tool).  This check reads the constants from the
+    linked ELF (llvm-nm, absolute symbols) and the names from the REFERENCE image, and
+    fails when
 
-      - a constant's value is not 0x007F0000 + the index whose name is <NAME>;
-      - two constants share a value;
-      - (counted, not a failure) a named object has no constant.  Both trees had
-        one constant per named object on 2026-10-24.
+      - an object the firmware names NAME has no HDAE5000_OBJ_NAME, or a different value;
+      - a constant names an object the firmware names otherwise (a symbol made up for an
+        object the firmware left unnamed is fine: the tree has to call it something);
+      - two constants share a value, or an object has no constant.
 
 RUN
     python3 scripts/analysis/hdae5000_obj_constants_check.py [TREE ...]
-    TREE defaults to hdae5000 and every hdae5000_v* directory.  Exit status 1 on a
-    mismatch or a shared value; `make gate` runs it.
+    TREE defaults to hdae5000 and every hdae5000_v* directory.  Needs the built
+    rebuilt_ROMs/<image>.llvm.elf and original_ROMs/<image>.ic4.  Exit status 1 on a
+    mismatch; `make gate` runs it.
 """
 import glob
 import os
-import re
+import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-EQU = re.compile(rb'^\s*\.equ\s+HDAE5000_OBJ_(\w+)\s*,\s*(0x[0-9a-fA-F]+|\d+)')
-SLOT = re.compile(rb'^\s*\.long\s+(HdaeUiName_\w+)\s*;\s*\[\s*(\d+)\]')
-POOL = re.compile(rb'^(HdaeUiName_\w+):\s*\.(asciz|ascii)\s+"((?:[^"\\]|\\.)*)"')
-
-
-def unescape(b):
-    return re.sub(rb'\\(\d{1,3}|.)', lambda m: bytes([int(m.group(1), 8)]) if m.group(1).isdigit()
-                  else m.group(1), b)
+NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
+BASE = 0x280000
+IMAGE = {"hdae5000": "hd-ae5000_v2_06i", "hdae5000_v2_01i": "hd-ae5000_v2_01i"}
 
 
 def check(tree):
-    text = open(os.path.join(tree, "hdae5000_data_tables.s"), "rb").read().split(b"\n")
-    equs, slots, pool = {}, {}, {}
-    in_names = False
-    for ln in text:
-        m = EQU.match(ln)
-        if m:
-            equs[m.group(1).decode()] = int(m.group(2), 0)
-            continue
-        if ln.startswith(b"HDAE5000_UiObjectName_PtrTable:"):
-            in_names = True
-            continue
-        if in_names:
-            m = SLOT.match(ln)
-            if m:
-                slots[int(m.group(2))] = m.group(1).decode()
-            elif ln.strip() and not ln.lstrip().startswith(b";"):
-                in_names = False
-        m = POOL.match(ln)
-        if m:
-            s = unescape(m.group(3)).split(b"\0")[0]
-            pool[m.group(1).decode()] = s.decode("latin-1")
-    idx_of = {}
-    for i, lab in slots.items():
-        nm = pool.get(lab, "")
-        if nm:
-            idx_of.setdefault(nm, []).append(i)
+    t = os.path.basename(os.path.normpath(tree))
+    img = IMAGE[t]
+    out = subprocess.run([NM, "--defined-only", os.path.join(ROOT, "rebuilt_ROMs", img + ".llvm.elf")],
+                         capture_output=True, text=True, check=True).stdout
+    const, sym = {}, {}
+    for ln in out.split("\n"):
+        f = ln.split()
+        if len(f) == 3:
+            if f[2].startswith("HDAE5000_OBJ_") and f[1] in "aA":
+                const[f[2][len("HDAE5000_OBJ_"):]] = int(f[0], 16)
+            sym[f[2]] = int(f[0], 16)
+    rom = open(os.path.join(ROOT, "original_ROMs", img + ".ic4"), "rb").read()
+    u32 = lambda a: int.from_bytes(rom[a - BASE:a - BASE + 4], "little")
+    pt, nt = sym["HDAE5000_UiObjectName_PtrTable"], sym["HDAE5000_UiObject_PtrTable"]
+    n = 0
+    while u32(nt + 4 * n):
+        n += 1
+    names = []
+    for i in range(n):
+        a = u32(pt + 4 * i) - BASE
+        names.append(rom[a:rom.index(b"\0", a)].decode("latin-1"))
     bad = []
-    for nm, v in sorted(equs.items(), key=lambda kv: kv[1]):
-        want = idx_of.get(nm)
-        if not want:
-            bad.append("%s: HDAE5000_OBJ_%s = %#010x, but no object is named %s" % (tree, nm, v, nm))
-        elif v not in [0x007F0000 + i for i in want]:
-            bad.append("%s: HDAE5000_OBJ_%s = %#010x (#%d), but %s is object #%s (%s)" % (
-                os.path.basename(tree), nm, v, v & 0xFFFF, nm, "/".join(map(str, want)),
-                ", ".join("%#010x" % (0x007F0000 + i) for i in want)))
+    for i, nm in enumerate(names):
+        if nm and const.get(nm) != 0x007F0000 + i:
+            bad.append("%s: object #%d is %s, HDAE5000_OBJ_%s = %s" % (
+                t, i, nm, nm, "%#010x" % const[nm] if nm in const else "undefined"))
     by_val = {}
-    for nm, v in equs.items():
+    for nm, v in const.items():
         by_val.setdefault(v, []).append(nm)
+        i = v - 0x007F0000
+        if not 0 <= i < n:
+            bad.append("%s: HDAE5000_OBJ_%s = %#010x is no object of the table" % (t, nm, v))
+        elif names[i] and names[i] != nm:
+            bad.append("%s: HDAE5000_OBJ_%s = %#010x, but the firmware calls #%d %s" % (t, nm, v, i, names[i]))
     for v, nms in sorted(by_val.items()):
         if len(nms) > 1:
-            bad.append("%s: %#010x is the value of %s" % (os.path.basename(tree), v,
-                                                           ", ".join("HDAE5000_OBJ_" + n for n in sorted(nms))))
-    unnamed_const = sorted(set(idx_of) - set(equs))
-    print("%-16s %4d name slots, %3d named objects, %3d constants, %3d named objects without one, %d errors" % (
-        os.path.basename(tree), len(slots), len(idx_of), len(equs), len(unnamed_const), len(bad)))
+            bad.append("%s: %#010x is the value of %s" % (t, v, ", ".join(sorted(nms))))
+    missing = n - len(by_val)
+    if missing:
+        bad.append("%s: %d objects have no HDAE5000_OBJ_ constant" % (t, missing))
+    print("%-16s %4d objects, %3d named by the firmware, %4d constants, %d errors" % (
+        t, n, sum(1 for x in names if x), len(const), len(bad)))
     return bad
 
 
@@ -99,7 +91,8 @@ def main():
         print("FAIL  " + b)
     if bad:
         sys.exit(1)
-    print("OK    every HDAE5000_OBJ_* constant is 0x007F0000 + the index of its name")
+    print("OK    every HDAE5000_OBJ_* constant is 0x007F0000 + the index of its object, and the "
+          "firmware's names agree")
 
 
 if __name__ == "__main__":
