@@ -91,3 +91,40 @@ screens, GUI widgets, etc, just by glancing at the source code. Use macros or hi
 represent them cleanly and effectively."* Their acceptance test is `GUI-BRIEF.md`.
 
 Each lane's outcome and open items are added below as lanes merge.
+
+## Progress (2026-10-29, at c6630b0d7)
+
+Every merge below was followed by its model's gate on main, all green: `make gate`, `gate-wsa1`, `gate-kn7000`,
+`gate-kn6000` and `gate-floppy`.
+
+| lane            | outcome                                                                                                   |
+|-----------------|-----------------------------------------------------------------------------------------------------------|
+| kn7000-wave     | 4 wave ROMs from `kn7000/src/wave/`: directory and records typed, 3,682 recordings opaque PCM (66.3 MB)   |
+| kn5000-waveform | IC307 from `waveform/`: directory and records typed, 1,413 waves opaque PCM (4.17 MB); class 6 = page 2  |
+| kn5000-rhythm   | IC14 from `rhythm_data/`, no `.incbin`: 202 style records, 28,400 tracks; A19/A21 raw-read check        |
+| kn7000-ic18     | all of IC18 typed, no `.incbin`: 169 styles, every event one per line (`verify-ic18-full`)               |
+| kn5000-existing | every KN5000 tree generic 0; HELP databases as text; custom-data style banks typed (format 2)           |
+| floppy-kn5000   | `floppy/` FAT12 framework; 14 KN5000 disks, generic 0, panel/sound/song fields named                     |
+| floppy-others   | 36 WSA1R/KN6000/KN7000 disks, generic 0; zlib 1.0.4 and 'J KD' LZSS byte-exact; WSA1R .TM named          |
+| customdata      | 9 KN7000 + 1 KN6000 custom-data banks typed; .AST rebuilt; residue typed (opaque 4,179 B)               |
+| kn7000-table    | tables 84 and 80 generic 0: 439 pictures as PNG, styles and pads typed, 'JK' voice archive typed       |
+| gui-kn5000      | NAKA GUI C, v10..v5: classes, links, geometry, values by name; menu map; 130/211 titles with a path      |
+| gui-hdae5000    | the HD-AE5000 GUI as nested class macros, links computed from nesting; captions; menu map               |
+| gui-wsa1        | 9,027 display-list records and 3,558 key-map entries as macros; 0 numeric pointers/variables; menu map  |
+
+Still generic on the census (entries / bytes):
+
+| tree           | generic n | generic bytes | owner                                                         |
+|----------------|-----------|---------------|---------------------------------------------------------------|
+| kn7000-program | 3         | 2,563,794     | lane gui-kn7000 (program 941's data region, GUI first)        |
+| kn7000-sp7001  | 6         | 2,646,270     | program 942's region (gui-kn7000 step 4); plug-in GUI tables  |
+| kn7000-b893    | 3         | 2,607,409     | gui-kn7000 step 4 (ports from 941)                            |
+| kn7000-b935    | 3         | 2,602,613     | gui-kn7000 step 4                                             |
+| kn2400         | 446       | 1,993,350     | wave B: the MN10300 siblings, after gui-kn7000's tooling      |
+| kn6000         | 323       | 2,630,724     | wave B                                                        |
+| kn6500         | 327       | 2,140,036     | wave B                                                        |
+| hdsx3          | 30        | 533,544       | wave B                                                        |
+
+Typed but not yet named: fields that keep offset names because no reader was traced. They include the
+KN6000/KN7000 panel-memory and sound-record fields, the 'JK' archive's tone heads, units and elements, and the
+`.SQT` heads. Lane kn67-field-names is on those.
