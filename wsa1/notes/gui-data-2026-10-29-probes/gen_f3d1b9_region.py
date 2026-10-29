@@ -43,14 +43,17 @@ import gui_display_list_macros as G  # noqa: E402
 ROMB = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_b.ic13"), "rb").read()
 ROMA = open(os.path.join(ROOT, "original_ROMs", "wsa1_prom_a.ic12"), "rb").read()
 BASE = 0xF00000
+WARN = "\u26a0".encode("utf-8").decode("latin-1")   # the tree's UTF-8 warning sign, in a latin-1 round trip
 LO, HI = 0xF3D1B9, 0xF3D9A7
 MODULE = os.path.join(ROOT, "prom_b", "modules", "f39000_f3f3ff_sequencer_job_display_lists.s")
-LABELS = {          # entry points: the immediates prom_a loads (see --refs)
-    0xF3D1B9: "DL_F3D1B9", 0xF3D245: "DL_F3D245", 0xF3D353: "DL_F3D353", 0xF3D35D: "DL_F3D35D",
-    0xF3D367: "DL_F3D367", 0xF3D371: "DL_F3D371", 0xF3D376: "DL_F3D376", 0xF3D37B: "DL_F3D37B",
-    0xF3D380: "DL_F3D380", 0xF3D38A: "DL_F3D38A", 0xF3D399: "DLTable_BlankEndRep", 0xF3D3AD: "DL_F3D3AD",
-    0xF3D3CB: "DL_F3D3CB", 0xF3D3E9: "DL_F3D3E9", 0xF3D407: "DL_F3D407",
-    0xF3D5E7: "StepRecordChordFieldArray_F3D5E7",
+LABELS = {          # entry points: the immediates prom_a loads (see --refs); names from what each draws
+    0xF3D1B9: "DL_F3D1B9", 0xF3D245: "DL_F3D245",
+    0xF3D353: "StepRecord_PrevRowNumber_DL", 0xF3D35D: "StepRecord_CurrentRowNumber_DL",
+    0xF3D367: "StepRecord_NextRowNumber_DL", 0xF3D371: "StepRecord_PrevRowNoNumber_DL",
+    0xF3D376: "StepRecord_CurrentRowNoNumber_DL", 0xF3D37B: "StepRecord_NextRowNoNumber_DL",
+    0xF3D380: "DL_F3D380", 0xF3D38A: "StepRecord_MsgLine_DL", 0xF3D399: "DLTable_BlankEndRep",
+    0xF3D3AD: "StepRecord_PrevRow_DL", 0xF3D3CB: "StepRecord_CurrentRow_DL", 0xF3D3E9: "StepRecord_NextRow_DL",
+    0xF3D407: "StepRecord_MarkGrid_DL", 0xF3D56F: "StepRecord_ChordSymbolGrid_DL",
 }
 
 
@@ -94,17 +97,36 @@ def emission():
     H(";   DL_F3D1B9   4 x 35 bytes, A: sub_F81EF3 runs [here, here + 35 * min(4, n))")
     H(";   DL_F3D245   3 x 90 bytes, A: sub_F81F1A runs [base, base + 10 + 20 * count),")
     H(";               base = here + 0 / 0x5A / 0xB4")
-    H(";   DL_F3D353.. single records that sub_F81C90, 0xF81B65 and sub_F81C15 hand to one")
+    H(";   StepRecord_*RowNumber_DL / _NoNumber_DL, DL_F3D380, StepRecord_MsgLine_DL (MsgLine_Text, the bottom line): single records that sub_F81C90,")
+    H(";               0xF81B65 and sub_F81C15 hand to one")
     H(";               interpreter handler each (T_DLB_Handler_Decimal_2, T_DLHandler_IX_Text,")
     H(";               T_DLB_Handler_Decimal, T_DLB_Handler_StringTable)")
     H(";   DLTable_BlankEndRep   the 5 x 4-character table the 15-byte records name")
-    H(";   DL_F3D3AD.. 102 interpreter-B op-02 records at a FIXED 15-byte stride to 0xF3D9A6.")
-    H(";               sub_F81C33 runs [DL_F3D3AD or DL_F3D3CB, DL_F3D3E9 or DL_F3D407) through")
-    H(";               T_DisplayListB_Run; nothing in either image names an address after")
-    H(";               0xF3D407, so how the rest is reached is open (TODO).  Two records' +1 bytes")
-    H(";               are not 15 -- 0x0D at 0xF3D5D9, 0x14 at 0xF3D7E6 -- and are written with")
-    H(";               length=; the old walk stopped at the first of them, and the '2 unlabelled")
-    H(";               bytes' it left at 0xF3D5E5 are that record's own +0x0D position.")
+    H(";   StepRecord_PrevRow_DL .. 102 interpreter-B op-02 records at a FIXED 15-byte stride to 0xF3D9A6:")
+    H(";     records 0-5   the three measure rows: each row's 30-character text (StepRecord_PrevRowText,")
+    H(";                   _CurrentRowText, _NextRowText) and its marker byte.  sub_F81C33 runs")
+    H(";                   [StepRecord_PrevRow_DL or _CurrentRow_DL, StepRecord_NextRow_DL or _MarkGrid_DL)")
+    H(";                   through T_DisplayListB_Run: the previous row only when (0x0F5E) != 0, the")
+    H(";                   next only when (0x0F62) != 0 -- the same words sub_F81C90 draws as the rows'")
+    H(";                   numbers (StepRecord_*RowNumber_DL, or '-' from 1000 on)")
+    H(";     records 6-29  StepRecord_MarkGrid_DL: 24 cells, 3 rows x 8 at the rows' own y (52, 97,")
+    H(";                   142), cell n = UI_DrawScratch+n through DLTable_BlankEndRep (blank, END,")
+    H(";                   REP, two glyphs)")
+    H(";     records 30-101 StepRecord_ChordSymbolGrid_DL: 24 chord symbols on the same grid, three")
+    H(";                   records each -- root (NoteNameTable_F3D9A7), quality (ChordQualityTable_F3D9C7),")
+    H(";                   tail (ChordTailTable_F3DA67)")
+    H(";   " + WARN + " RECORDS 6-101 HAVE NO READER IN EITHER IMAGE, and that is a measurement, not a gap in")
+    H(";   reading: (1) no 24-bit value in either image names an address from 0xF3D408 to 0xF3D9A6")
+    H(";   (--refs); (2) the image's only stride-15 index computations, `muls HL,0x000f` at prom_b")
+    H(";   0xF7E31D (TrackAssign_DrawSelectedPart_DL) and `mul C,0x0f` at prom_a 0xFCABE5 (the part")
+    H(";   note lists), index other arrays; (3) every list end any call site passes in this span is")
+    H(";   StepRecord_NextRow_DL or StepRecord_MarkGrid_DL; (4) no other record in prom_b draws")
+    H(";   through DLTable_BlankEndRep or the three chord tables.  They read as an older build's step-")
+    H(";   record grid left in the image (cf. the OldBuild_* data); that reading is an inference.")
+    H(";   Two records' +1 bytes are not 15 -- 0x0D at 0xF3D5D9, 0x14 at 0xF3D7E6 -- and are written")
+    H(";   with length=; the old walk stopped at the first of them, and the '2 unlabelled bytes' it")
+    H(";   left at 0xF3D5E5 are that record's own +0x0D position.  The label the old walk put at")
+    H(";   0xF3D5E7 (StepRecordChordFieldArray_F3D5E7) fell inside a chord symbol and is gone.")
     H("; Generated by notes/gui-data-2026-10-29-probes/gen_f3d1b9_region.py (--refs: the scan).")
     H("; ------------------------------------------------------------------")
     a = LO
@@ -149,8 +171,8 @@ def main():
         return
     new = emission()
     if a.apply:
-        text = splice(new)          # read the module BEFORE opening it for writing
-        open(MODULE, "wb").write(text.encode("latin-1"))
+        data = splice(new).encode("latin-1")    # read and ENCODE before opening for writing
+        open(MODULE, "wb").write(data)
         print("spliced %d lines into %s" % (len(new), os.path.relpath(MODULE, ROOT)))
     else:
         print("\n".join(new))

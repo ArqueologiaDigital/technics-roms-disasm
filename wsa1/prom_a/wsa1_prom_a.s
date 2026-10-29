@@ -1071,18 +1071,18 @@
 	.set StepSelectAddrTable_F3D089,              0x00f3d089
 	.set DL_F3D1B9,                               0x00f3d1b9
 	.set DL_F3D245,                               0x00f3d245
-	.set DL_F3D353,                               0x00f3d353
-	.set DL_F3D35D,                               0x00f3d35d
-	.set DL_F3D367,                               0x00f3d367
-	.set DL_F3D371,                               0x00f3d371
-	.set DL_F3D376,                               0x00f3d376
-	.set DL_F3D37B,                               0x00f3d37b
+	.set StepRecord_PrevRowNumber_DL,             0x00f3d353
+	.set StepRecord_CurrentRowNumber_DL,          0x00f3d35d
+	.set StepRecord_NextRowNumber_DL,             0x00f3d367
+	.set StepRecord_PrevRowNoNumber_DL,           0x00f3d371
+	.set StepRecord_CurrentRowNoNumber_DL,        0x00f3d376
+	.set StepRecord_NextRowNoNumber_DL,           0x00f3d37b
 	.set DL_F3D380,                               0x00f3d380
-	.set DL_F3D38A,                               0x00f3d38a
-	.set DL_F3D3AD,                               0x00f3d3ad
-	.set DL_F3D3CB,                               0x00f3d3cb
-	.set DL_F3D3E9,                               0x00f3d3e9
-	.set DL_F3D407,                               0x00f3d407
+	.set StepRecord_MsgLine_DL,                   0x00f3d38a
+	.set StepRecord_PrevRow_DL,                   0x00f3d3ad
+	.set StepRecord_CurrentRow_DL,                0x00f3d3cb
+	.set StepRecord_NextRow_DL,                   0x00f3d3e9
+	.set StepRecord_MarkGrid_DL,                  0x00f3d407
 	.set DL_F3DA6F,                               0x00f3da6f
 	.set Data_F3DA77,                             0x00f3da77
 	.set Data_F3DAA2,                             0x00f3daa2

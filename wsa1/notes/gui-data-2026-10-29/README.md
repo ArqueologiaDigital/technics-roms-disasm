@@ -194,8 +194,13 @@ reached by a symbol in code, never by an index.
 
 ⚠ Round 2 (2026-10-29, after the merge) closed most of this section. What is still open:
 
-- the 0xF3D3AD run is a fixed-stride array of 102 records, and nothing names an address in it after
-  0xF3D407 (`gen_f3d1b9_region.py --refs`), so how most of it is reached is open;
+- the 0xF3D3AD run of 102 fixed-stride records: records 0-5 are the three STEP RECORD measure rows
+  (`StepRecord_PrevRow_DL`, `_CurrentRow_DL`, `_NextRow_DL`; sub_F81C33 draws the previous / next row only
+  when (0x0F5E) / (0x0F62) is non-zero). Records 6-29 (`StepRecord_MarkGrid_DL`, 24 END/REP cells) and 30-101
+  (`StepRecord_ChordSymbolGrid_DL`, 24 chord symbols of three records each) have **no reader in either
+  image**, measured four ways in the region's header: no pointer, no stride-15 index into them, no list end
+  past `StepRecord_MarkGrid_DL`, and no other record using their tables. They read as an older build's grid
+  (an inference);
 - the record framed at y = 649 (below);
 - the three neutral RAM names of section 8;
 - the TODO fields.
