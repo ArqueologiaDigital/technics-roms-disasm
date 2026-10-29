@@ -30,8 +30,9 @@
 .equ TableRomDirectory, 0x48000000
 .equ LibRomImageBase, 0x487B8FD1
 
-# 2 branch targets outside the converted code
+# 3 branch targets outside the converted code
 .equ loc_48474952, 0x48474952
+.equ loc_48533C3E, 0x48533C3E
 .equ loc_48535550, 0x48535550
 
 # 11 data addresses named by annotations/*.ann

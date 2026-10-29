@@ -1111,7 +1111,7 @@ func_48580F61_entry:
     cmp     0, a3
     beq     loc_48580F92
     clr     d2
-    mov     ptrs_5000644C, a2
+    mov     PictureImport_Table, a2
 loc_48580F7B:
     mov     (a2), a1
     mov     a3, a0
@@ -1821,7 +1821,7 @@ loc_4858156A:
     inc     d0
     mov     d0, (0x10, sp)
     movhu   (0x2c, sp), d0
-    mov     ptrs_5000644C, a0
+    mov     PictureImport_Table, a0
     asl2    d0
     mov     (d0, a0), a0
     mov     a0, (0x14, sp)
@@ -1835,7 +1835,7 @@ loc_4858158F:
     inc     d0
     mov     d0, (0x10, sp)
     movhu   (0x2c, sp), d0
-    mov     ptrs_5000644C, a0
+    mov     PictureImport_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
@@ -2365,7 +2365,7 @@ func_485819F0:
     and     0x0f, d0
     exthu   d0
     asl2    d0
-    mov     ptrs_486AFAA0, a0
+    mov     func_485819F0_Table, a0
     mov     (d0, a0), d1
     movhu   (0x22, sp), d0
     mov     d1, (0x1c, sp)
@@ -4420,7 +4420,7 @@ loc_48582E34:
     jmp     loc_485831A0
 loc_48582E3B:
     asl2    d0
-    mov     Str_XHF_XHf_XHp_XH_XHz_XH_XH_XH_XH_XH_XH_XH, a0
+    mov     func_48582CF0_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48582E46:
@@ -5830,7 +5830,7 @@ loc_48583AA0:
 loc_48583AA7:
     add     -1, d0
     asl2    d0
-    mov     ptrs_486B1598+100, a0
+    mov     func_4858391E_Table+100, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48583AB4:
@@ -5972,7 +5972,7 @@ loc_48583C20:
     jmp     loc_48583FBC
 loc_48583C27:
     asl2    d0
-    mov     ptrs_486B1598+52, a0
+    mov     func_4858391E_Table+52, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48583C32:
@@ -6128,7 +6128,7 @@ loc_48583E00:
     jmp     loc_48583FBC
 loc_48583E07:
     asl2    d0
-    mov     ptrs_486B1598, a0
+    mov     func_4858391E_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48583E12:

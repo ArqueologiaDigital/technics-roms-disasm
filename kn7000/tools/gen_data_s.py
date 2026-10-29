@@ -60,19 +60,23 @@ LINES_PER_FILE = 40000
 PROFILES = {
     "941": dict(rom="baserom/kn7000_program.rom", src="src/program", prog="src/program.s",
                 syms=["kn7000.sym", "kn7000_manual.sym", "kn7000_exports_from_942.sym"],
-                labels="build/kn7000_program.labels", r1=0x186000, pal=0x32573C, end=0x3B8FD1, structs=True),
+                labels="build/kn7000_program.labels", r1=0x186000, pal=0x32573C, end=0x3B8FD1, structs=True,
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/941", string_arrays=True, string_arrays_min=4, text_strict=True),
     "b935": dict(rom="baserom/kn7000_program_b935.rom", src="src/b935/program", prog="src/b935/program.s",
                  syms=["kn7000_b935.sym", "kn7000_b935_manual.sym", "kn7000_b935_exports.sym",
                        "kn7000_b935_bycode.sym"],
-                 labels="build/kn7000_program_b935.labels", r1=0x18595C, pal=0x3256D8, end=0x3B8F6D, structs=True),
+                 labels="build/kn7000_program_b935.labels", r1=0x18595C, pal=0x3256D8, end=0x3B8F6D, structs=True,
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b935", string_arrays=True, string_arrays_min=4, text_strict=True),
     "b893": dict(rom="baserom/kn7000_program_b893.rom", src="src/b893/program", prog="src/b893/program.s",
                  syms=["kn7000_b893.sym", "kn7000_b893_manual.sym", "kn7000_b893_exports.sym",
                        "kn7000_b893_bycode.sym"],
-                 labels="build/kn7000_program_b893.labels", r1=0x1846A0, pal=0x323E80, end=0x3B76B1, structs=True),
+                 labels="build/kn7000_program_b893.labels", r1=0x1846A0, pal=0x323E80, end=0x3B76B1, structs=True,
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b893", string_arrays=True, string_arrays_min=4, text_strict=True),
     "sp7001": dict(rom="baserom/kn7000_program_sp7001.rom", src="src/sp7001/program", prog="src/sp7001/program.s",
                    syms=["kn7000_sp7001.sym", "kn7000_sp7001_manual.sym", "kn7000_sp7001_new.sym",
                          "kn7000_sp7001_exports.sym"],
-                   labels="build/kn7000_program_sp7001.labels", r1=0x1864F4, pal=0x326760, end=0x3BA785, structs=True),
+                   labels="build/kn7000_program_sp7001.labels", r1=0x1864F4, pal=0x326760, end=0x3BA785, structs=True,
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/sp7001", string_arrays=True, string_arrays_min=4, text_strict=True),
 }
 # The SX-KN6000 (v7.1) and SX-KN6500 (v1.3) program flash images, the same MILK
 # framework linked at 0x4C000000 (../kn6000, ../kn6500).  Their extra keys: `root`,
@@ -325,6 +329,22 @@ class Gen:
             if mo and self.in_data(int(mo.group(2), 16)):
                 self.fixed.setdefault(int(mo.group(2), 16), mo.group(1))
                 self.names.add(mo.group(1))
+        # the data names of annotations/*.ann (`equ NAME ADDR`, ported by gen_program_s):
+        # program.s defines them as .equ only while no data label has their address, so
+        # the previous labels.sym carries them the other times; either way they are fixed
+        # names (and array boundaries), or each generation would undo the last
+        import glob as _glob
+        ann = set()
+        for f in _glob.glob(os.path.join(KN7, "annotations", "*.ann")):
+            for line in open(f, encoding="latin-1"):
+                mo = re.match(r"equ\s+(\w+)\s", line)
+                if mo:
+                    ann.add(mo.group(1))
+        for n, a in self.prev_data_label.items():
+            if n in ann and self.in_data(a):
+                self.fixed.setdefault(a, n)
+                self.fixed_by_code.discard(a)
+                self.names.add(n)
         for line in open(os.path.join(KN7, P.get("constants", "src/constants.inc"))):
             mo = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
             if mo:
@@ -354,6 +374,11 @@ class Gen:
             k += 1
         self.names.add(n)
         return n
+
+    def rename_at(self, a, base):
+        """Give CPU address `a` a new label `base` (unique), replacing a guessed one."""
+        self.label_at[a] = self.uniq(base)
+        return self.label_at[a]
 
     def name_at(self, a, base):
         """The label of CPU address `a` (creating it as `base` if new)."""
@@ -1164,9 +1189,7 @@ class Gen:
             fn = re.sub(r"_entry$", "", fn) if fn else None
             single = len(g.fields) == 1 and g.fields[0].kind in ("num", "ptr") and g.fields[0].width == s
             base = nm or (f"{fn}_{'Table' if single else 'Records'}" if fn else f"recs_{a:08X}")
-            if a in self.label_at and nm is None:
-                del self.label_at[a]
-            g.label = self.name_at(a, base) if nm is None or a in self.label_at else self.name_at(a, nm)
+            g.label = self.rename_at(a, base) if nm is None else self.name_at(a, nm)
             for k in range(n):
                 for f in g.fields:
                     if f.kind == "ptr":
@@ -1192,6 +1215,269 @@ class Gen:
             self.struct_groups.append(g)
             self.add(a, n * s, g.label, "struct array",
                      lambda gen, it, g=g: gen.render_structs(it, g))
+
+    def ptr_records(self):
+        """Records a pointer leads to: for every pointer the code loads from a
+        typed field or table entry and then reads through (data_readers' ("ptr",
+        ("fld", K, off)) keys), the targets of that field are records whose fields
+        are the offsets those reads use.  Targets reached through the same fields
+        are one kind; a kind whose targets lie a constant distance apart takes it
+        as the record size, otherwise a record ends after its last read field.
+        Nested pointers (a field of such a record) are followed the same way."""
+        import bisect
+        import data_structs as DS
+        import data_struct_names as DN
+        by_fld = collections.defaultdict(list)
+        for acc in self.dr.accesses:
+            k = acc.key
+            if k[0] == "ptr" and k[1][0] == "fld" and acc.off >= 0:
+                by_fld[k[1]].append(acc)
+        self.build_index()
+        self._lmemo, self._tmemo = {}, {}
+        targets = self.field_targets
+        # kinds: fields whose targets overlap are one kind
+        flds = [f for f in by_fld if targets(f)]
+        parent = {f: f for f in flds}
+
+        def find(f):
+            while parent[f] != f:
+                parent[f] = parent[parent[f]]
+                f = parent[f]
+            return f
+        owner = {}
+        for f in flds:
+            for t in targets(f):
+                if t in owner:
+                    parent[find(f)] = find(owner[t])
+                else:
+                    owner[t] = f
+        kinds = collections.defaultdict(list)
+        for f in flds:
+            kinds[find(f)].append(f)
+        all_targets = sorted(owner)
+        hard = sorted(set(all_targets) | set(self.fixed) - self.fixed_by_code)
+        for root, fs in sorted(kinds.items(), key=lambda kv: min(min(targets(f)) for f in kv[1])):
+            accs = [a for f in fs for a in by_fld[f]]
+            ts = sorted({t for f in fs for t in targets(f)} - set())
+            ts = [t for t in ts if self.free(t, 1)]
+            if not ts or not any(a.width for a in accs):
+                continue
+            need = max(a.off + (a.width or 1) for a in accs)
+            room = {}
+            for t in ts:
+                o = self.off(t)
+                e = o
+                k = bisect.bisect_right(hard, t)
+                lim = self.off(hard[k]) if k < len(hard) else DATA_END
+                while e < DATA_END and e < lim and not self.claimed[e] and e - o < 4096:
+                    e += 1
+                room[t] = e - o
+            gaps_ = [b - a for a, b in zip(ts, ts[1:]) if b - a == room[a]]
+            stride = collections.Counter(gaps_).most_common(1)[0][0] if gaps_ else 0
+            if stride < need:
+                stride = need + (-need % 4 if all(room[t] >= need + (-need % 4) for t in ts) else 0)
+            ts = [t for t in ts if room[t] >= stride]
+            if not ts or stride > 4096:
+                continue
+            g = DS.Group(ts[0], stride)
+            g.accs = [(a.off, a) for a in accs if a.off < stride]
+            g.count = len(ts)
+            g.fields = DS.layout(g, self, None, 0, offs=[self.off(t) for t in ts])
+            cont = self.kind_name(root)
+            g.label = cont
+            kind, names = DN.lookup(cont, stride)
+            g.macro = self.uniq(kind or ("REC_" + cont))
+            DS.name_fields(g, names)
+            self.struct_groups.append(g)
+            for i, t in enumerate(ts):
+                lab = self.label_at.get(t)
+                if lab is None:
+                    lab = self.fixed.get(t)
+                if lab is None or (t in self.fixed_by_code and self.GUESSED.match(lab)):
+                    lab = self.rename_at(t, f"{cont}_{i}")
+                else:
+                    lab = self.name_at(t, lab)
+                for f in g.fields:
+                    if f.kind == "ptr":
+                        v = self.m.u32(t + f.off)
+                        if v and self.in_data(v):
+                            self.refs.add(v)
+                self.add(t, stride, lab, "pointed record", lambda gen, it, g=g: gen.render_pointed(it, g))
+
+    def _item_of(self, a):
+        import bisect
+        o = self.off(a)
+        i = bisect.bisect_right(self.starts, o) - 1
+        if i >= 0 and self.ranges[i][0] <= o < self.ranges[i][1]:
+            return self.items[self.ranges[i][0]]
+        return None
+
+    def field_locs(self, fld, depth=0):
+        """The addresses the pointer field `fld` (data_readers ("fld", key, off)) is
+        read from: one fixed word, every record of a typed array or every entry of
+        a pointer table, or the fields of the records another field points at."""
+        if fld in self._lmemo:
+            return self._lmemo[fld]
+        self._lmemo[fld] = set()
+        K, o = fld[1], fld[2]
+        out = set()
+        if K[0] == "abs":
+            out = {K[1] + o}
+        elif K[0] == "rec":
+            b, st = K[1], K[2]
+            it = self._item_of(b) if self.in_data(b) else None
+            if it is not None and st:
+                k = -((b + o - it.start) // st)
+                while b + o + k * st + 4 <= it.start + it.size:
+                    if b + o + k * st >= it.start:
+                        out.add(b + o + k * st)
+                    k += 1
+            elif it is not None and it.kind == "pointer table":
+                out = {it.start + 4 * i + o for i in range(it.size // 4)}
+            else:
+                out = {b + o}
+        elif K[0] == "ptr" and K[1][0] == "fld" and depth < 4:
+            out = {t + o for t in self.field_targets(K[1], depth + 1)}
+        self._lmemo[fld] = out
+        return out
+
+    def field_targets(self, fld, depth=0):
+        """The data addresses the pointer field `fld` holds."""
+        if fld not in self._tmemo:
+            ts = set()
+            for L in self.field_locs(fld, depth):
+                if self.in_data(L) and self.in_data(L + 3):
+                    v = self.m.u32(L)
+                    if v and self.in_data(v):
+                        ts.add(v)
+            self._tmemo[fld] = ts
+        return self._tmemo[fld]
+
+    def kind_name(self, fld):
+        """A name for what the field fld points at: its container's label and the field."""
+        K, o = fld[1], fld[2]
+        if K[0] == "abs":
+            it = self.item_containing(K[1] + o)
+            base = it.label if it is not None and it.label else f"data_{K[1]:08X}"
+            off = K[1] + o - (it.start if it is not None else K[1])
+        elif K[0] == "rec":
+            it = self.item_containing(K[1])
+            base = it.label if it is not None and it.label else f"data_{K[1]:08X}"
+            off = (K[1] + o - (it.start if it is not None else K[1])) % (K[2] or 1 << 30)
+        else:
+            base, off = self.kind_name(K[1]), o
+        return re.sub(r"^REC_", "", f"{base}_p{off}")
+
+    def render_pointed(self, it, g):
+        import data_structs as DS
+        return [f"{it.label}:\t# {g.macro} ({g.stride} bytes)", DS.record_line(self, g, self.rom, self.off(it.start))]
+
+    def message_tables(self):
+        """(`structs` profiles) {u32 key, code address} pairs, >= 3 in a row and
+        8-aligned, in bytes no item holds.  [INFERENCE] dispatch tables: a routine
+        looks the key up and jumps to or calls the address (the list-box message
+        tables such as StyleListBoxMsgTable are this shape; a key that is a MILK
+        id is written by its EV_ / MT_ / other id name).  A code address is a
+        label (loc_<ADDR>, code_refs.txt)."""
+        ids = dict(getattr(self, "ev_name", {}))
+        for d in (getattr(self, "id_name", {}), getattr(self, "fn_name", {})):
+            for k, v in d.items():
+                ids.setdefault(k, v)
+        o = R1_END + (-R1_END % 8)
+        while o + 24 <= DATA_END:
+            n = 0
+            while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8):
+                w0 = int.from_bytes(self.rom[o + 8 * n:o + 8 * n + 4], "little")
+                w1 = int.from_bytes(self.rom[o + 8 * n + 4:o + 8 * n + 8], "little")
+                if not self.in_code(w1) or self.is_addr(w0):
+                    break
+                n += 1
+            if n >= 3:
+                a = self.addr_of(o)
+                ents = [(int.from_bytes(self.rom[o + 8 * k:o + 8 * k + 4], "little"),
+                         int.from_bytes(self.rom[o + 8 * k + 4:o + 8 * k + 8], "little")) for k in range(n)]
+                rd = [x for x in self.dr.accesses if x.key == ("abs", a) or (x.key[0] == "rec" and x.key[1] == a)]
+                nm = self.label_at.get(a) or self.fixed.get(a)
+                if nm is None or (a in self.fixed_by_code and self.GUESSED.match(nm)):
+                    lab = self.rename_at(a, f"MsgTable_{a:08X}")
+                else:
+                    lab = self.name_at(a, nm)
+
+                def render(g, it, ents=ents, rd=rd):
+                    import data_structs as DS
+                    head = f"{it.label}:\t# {len(ents)} x {{u32 key, code address}}: a dispatch table" + (
+                        f"; read by {DS.cite(rd)}" if rd else "")
+                    return [head] + [f"\t.long\t{ids.get(i, f'0x{i:X}' if i > 0xFFFF else str(i))}, {g.ref(h)}"
+                                     for i, h in ents]
+                self.add(a, 8 * n, lab, "message table", render)
+                o += 8 * n
+            else:
+                o += 8
+
+    # The caller-supplied-bitmap blitters (annotations/gfx_draw.ann): a1 = pixels,
+    # d0 = width, d1 = height; bits a pixel, and whether a row is padded to an even
+    # byte count (all but SPFast4, whose rows are (W + 3) / 4 bytes).
+    BLITTERS = {"DrawBitmapSP": 8, "DrawBitmapSPFast": 8, "DrawBitmapSPFast256": 8,
+                "DrawBitmapSPFast16": 4, "DrawBitmapSPFast4": 2, "DrawBitmapSP2": 1}
+
+    def drawn_bitmaps(self):
+        """(`structs` profiles) Pixels the code hands to a caller-supplied-bitmap
+        blitter with a constant width and height (data_readers: the call's a1, d0,
+        d1), directly or through a pointer field / table entry: an indexed PNG in
+        <data dir>/media/ (tools/table_png.py `pk D W H`, rows padded to an even
+        byte count, or `p2 W H`), which the build turns back into the bytes."""
+        import table_png as TP
+        found = collections.defaultdict(set)      # address -> {(depth, w, h, blitter, caller, cpu)}
+        self.build_index()
+        self._lmemo, self._tmemo = {}, {}
+        for acc in self.dr.accesses:
+            if not acc.rw == "arg a1" or not acc.extra or acc.extra[0] not in self.BLITTERS:
+                continue
+            c = acc.extra[1]
+            w, h = c.get("d0"), c.get("d1")
+            if not w or not h or w <= 0 or h <= 0 or w > 640 or h > 240:
+                continue
+            k = acc.key
+            if k[0] == "abs":
+                ts = {k[1]}
+            elif k[0] == "ptr" and k[1][0] == "fld" and acc.off == 0:
+                ts = self.field_targets(k[1])
+            else:
+                continue
+            for t in ts:
+                found[t].add((self.BLITTERS[acc.extra[0]], w, h, acc.extra[0], acc.func, acc.cpu or 0))
+        for a in sorted(found):
+            uses = sorted(found[a], key=lambda u: (u[5], u[4]))
+            shapes = {u[:3] for u in uses}
+            if len(shapes) != 1:
+                print(f"gen_data_s: bitmap at {a:#x} drawn with several shapes {sorted(shapes)}; not typed")
+                continue
+            depth, w, h = shapes.pop()
+            if depth == 2:
+                if w % 4:
+                    continue
+                fmt, n = f"p2 {w} {h}", w // 4 * h
+            else:
+                fmt, n = f"pk {depth} {w} {h}", TP.pk_stride(depth, w) * h
+            if not self.in_data(a) or not self.free(a, n):
+                print(f"gen_data_s: bitmap at {a:#x} ({fmt}) not free; not typed")
+                continue
+            blit, caller, cpu = uses[0][3], uses[0][4], uses[0][5]
+            nm = self.label_at.get(a) or self.fixed.get(a)
+            if nm is None or (a in self.fixed_by_code and self.GUESSED.match(nm)):
+                lab = self.rename_at(a, f"Bitmap_{re.sub(r'_entry$', '', caller or 'x')}")
+            else:
+                lab = self.name_at(a, nm)
+            fn = f"{lab}.png"
+            raw = self.rom[self.off(a):self.off(a) + n]
+            self.media_files[fn] = TP.to_png(fmt, raw)
+            more = f" (+{len(uses) - 1} more)" if len(uses) > 1 else ""
+            self.add(a, n, lab, "bitmap",
+                     lambda g, it, fn=fn, fmt=fmt, blit=blit, caller=caller, cpu=cpu, w=w, h=h, depth=depth, more=more: [
+                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel: {caller} 0x{cpu:08X} draws it with"
+                         f" {blit}{more} ({OUTDIR}/media/{fn})",
+                         f'\t.incbin\t"build/bitmaps/{PROFILE}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f"tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
     def render_structs(self, it, g):
         import data_structs as DS
@@ -1612,7 +1898,9 @@ class Gen:
             func, body = None, []
             for line in open(f, encoding="latin-1").read().split("\n") + ["END:"]:
                 mo = re.match(r"^([A-Za-z_]\w*):", line)
-                if mo and not re.search(r"_L[0-9a-f]+_*$|_entry$", mo.group(1)):
+                # (a local label: _L<hex> in the siblings' code, loc_<ADDR> in the KN7000's)
+                if mo and not re.search(r"_L[0-9a-f]+_*$|_entry$", mo.group(1)) \
+                        and not (P.get("structs") and mo.group(1).startswith("loc_")):
                     if func and len(body) < 400:
                         txt = "\n".join(body)
                         r = {}
@@ -1625,6 +1913,8 @@ class Gen:
                             m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
                             if k and m2:
                                 r[k] = val(m2.group(1)) if m2.group(1) else 0
+                        if r.get("data") and r.get("w") and r.get("h") and "bits" not in r and P.get("bitmap_bits"):
+                            r["bits"], r["bits_default"] = P["bitmap_bits"], True
                         if r.get("data") and r.get("w") and r.get("h") and r.get("bits") in (1, 2, 4, 8):
                             found.append((func, r))
                     func, body = mo.group(1), []
@@ -1635,6 +1925,11 @@ class Gen:
             n = TP.pk_stride(depth, w) * h
             if not self.in_data(a) or not self.free(a, n):
                 print(f"gen_data_s: bitmap of {func} at {a:#x} ({n} bytes) not free; not typed")
+                continue
+            if r.get("bits_default") and self.free(a + n, 1) and self.in_data(a + n) \
+                    and (a + n) not in set(self.prev_data_label.values()) | set(self.label_at):
+                # [INFERENCE] no MT_GetBitCount answer: the depth the drawer uses then (profile
+                # `bitmap_bits`), taken only when the pixels end exactly where the next item or label is
                 continue
             base = func if func.startswith("Bitmap") else "Bitmap_" + re.sub(r"^func_", "", func)
             lab = self.name_at(a, f"{base}_Pixels")
@@ -1660,7 +1955,7 @@ class Gen:
                      lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth: [
                          f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel, rows padded to even bytes: the bitmap"
                          f" {func} answers MT_GetBitmapData with ({OUTDIR}/media/{fn})",
-                         f'\t.incbin\t"build/bitmaps/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
                          f"../kn7000/tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
     # -- text, doubles and name / value tables in what is left -------------------
@@ -1784,7 +2079,8 @@ class Gen:
                 while j < len(parts) and len(parts[j]) == len(parts[i]):
                     j += 1
                 L = len(parts[i]) + 1
-                if j - i >= 8 and L >= 3:
+                if j - i >= 8 and L >= P.get("string_arrays_min", 2) + 1 and not (
+                        P.get("structs") and P.get("text_strict") and all(self.fake_text(r) for r in parts[i:j])):
                     a = self.addr_of(o)
                     rows = parts[i:j]
                     if self.free(a, L * len(rows)) and sum(1 for c in b"".join(rows) if c > 0x20) >= len(rows):
@@ -2205,10 +2501,13 @@ class Gen:
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
             self.name_value_tables()
             self.panel_memories()
-            self.struct_arrays()
-            self.typed_refs()
             if P.get("string_arrays"):
                 self.string_arrays()
+            self.struct_arrays()
+            self.typed_refs()
+            self.message_tables()
+            self.drawn_bitmaps()
+            self.ptr_records()
             self.text_runs()
             self.doubles()
         else:

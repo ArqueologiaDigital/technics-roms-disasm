@@ -8000,7 +8000,7 @@ InitializeBlock12_entry:
     beq     loc_48566583
     bra     loc_48566587
 loc_48566573:
-    mov     data_48693704, d0
+    mov     Bitmap_InitializeBlock12_Pixels, d0
     bra     loc_48566588
 loc_4856657B:
     mov     0x20, d0
@@ -8025,7 +8025,7 @@ func_4856658B:
 loc_48566598:
     exthu   d0
     asl2    d0
-    mov     ptrs_486939FC, a0
+    mov     func_4856658B_Table, a0
     mov     (d0, a0), a0
 loc_485665A2:
     retf    0, 0
@@ -9863,7 +9863,7 @@ loc_4856787F:
     jmp     loc_48567C3E
 loc_485678A3:
     add     8, a0
-    cmp     ptrs_48693F5C, a0
+    cmp     EditExitCatchFunc_Table, a0
     bcs     loc_485678AE
     mov     a1, a0
 loc_485678AE:
@@ -10264,7 +10264,7 @@ loc_48567C74:
     cmp     9, d0
     bgt     loc_48567CC3
     asl2    d0
-    mov     ptrs_48693F5C, a0
+    mov     EditExitCatchFunc_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48567C9F:
@@ -10861,7 +10861,7 @@ loc_4856828F:
     jmp     loc_4856831D
 loc_48568296:
     asl2    d0
-    mov     ptrs_48693F5C+40, a0
+    mov     EditExitCatchFunc_Table+40, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485682A1:
@@ -11380,7 +11380,7 @@ loc_485687B7:
 loc_485687D7:
     call    GetViewInstance, 0, 0
     mov     (0x38, a0), a1
-    mov     ptrs_48693B68, a0
+    mov     AcEffOnOffBoxProc_Table, a0
     mov     (a1), d0
     exthu   d0
     asl2    d0
@@ -12830,7 +12830,7 @@ loc_485696DB:
 loc_485696E2:
     add     -2, d0
     asl2    d0
-    mov     ptrs_486941F4+120, a0
+    mov     EffDispGrid_Table_4+120, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485696EF:
@@ -12953,7 +12953,7 @@ loc_4856981C:
 loc_48569823:
     add     -2, d0
     asl2    d0
-    mov     ptrs_486941F4+80, a0
+    mov     EffDispGrid_Table_4+80, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48569830:
@@ -13264,7 +13264,7 @@ loc_48569AA7:
 loc_48569AAE:
     add     -2, d0
     asl2    d0
-    mov     ptrs_486941F4+40, a0
+    mov     EffDispGrid_Table_4+40, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48569ABB:
@@ -13580,7 +13580,7 @@ loc_48569D30:
 loc_48569D37:
     add     -2, d0
     asl2    d0
-    mov     ptrs_486941F4, a0
+    mov     EffDispGrid_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48569D44:
@@ -13683,7 +13683,7 @@ loc_48569E0C:
     jmp     loc_4856A2F6
 loc_48569E2F:
     add     8, a0
-    cmp     ptrs_486941F4, a0
+    cmp     EffDispGrid_Table_4, a0
     bcs     loc_48569E3A
     mov     a1, a0
 loc_48569E3A:
@@ -14096,7 +14096,7 @@ loc_4856A34B:
 loc_4856A352:
     add     -2, d0
     asl2    d0
-    mov     ptrs_4869407C+80, a0
+    mov     EffDispGrid_Table_3+80, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856A35F:
@@ -14162,7 +14162,7 @@ loc_4856A410:
 loc_4856A417:
     add     -2, d0
     asl2    d0
-    mov     ptrs_4869407C+40, a0
+    mov     EffDispGrid_Table_3+40, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856A424:
@@ -14277,7 +14277,7 @@ loc_4856A580:
 loc_4856A587:
     add     -2, d0
     asl2    d0
-    mov     ptrs_4869407C, a0
+    mov     EffDispGrid_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856A594:
@@ -15114,7 +15114,7 @@ loc_4856AFCF:
     nop
     mul     d0, d1
     mov     d1, a1
-    add     Str_40+354, a1
+    add     EQGainEditCheck_Records+354, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [a2], 0x18
@@ -15274,7 +15274,7 @@ loc_4856B156:
     nop
     mul     d0, d1
     mov     d1, a1
-    add     Str_40, a1
+    add     EQGainEditCheck_Records, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [a2], 0x18
@@ -15434,7 +15434,7 @@ loc_4856B2DD:
     nop
     mul     d1, d0
     mov     d0, a1
-    add     Str_40+162, a1
+    add     EQGainEditCheck_Records+162, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [a2], 0x18
@@ -15624,7 +15624,7 @@ loc_4856B46E:
     exth    d0
     add     d1, d0
     movhu   d0, (0x22, sp)
-    mov     data_48693704, a1
+    mov     Bitmap_InitializeBlock12_Pixels, a1
     mov     0x20, d0
     mov     0xe, d1
     call    DrawBitmapSPFast_entry, [d2,d3,a2,a3], 0x28
@@ -15802,7 +15802,7 @@ loc_4856B670:
 loc_4856B67B:
     sub     a0, d0
     asl2    d0
-    mov     ptrs_486941F4+160, a0
+    mov     EffDispGrid_Table_4+160, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4856B688:
@@ -18288,7 +18288,7 @@ BitmapKenban:
     beq     loc_4856D2FC
     bra     loc_4856D300
 loc_4856D2EB:
-    mov     data_4869EBC0, d0
+    mov     BitmapKenban_Pixels, d0
     bra     loc_4856D301
 loc_4856D2F3:
     mov     0xab, d0
@@ -18993,7 +18993,7 @@ loc_4856DA2F:
     add     0x18, a2
 loc_4856DA46:
     mov     a2, a0
-    mov     data_4869DFF8, a1
+    mov     Bitmap_SplitPoint_13, a1
     mov     0x39, d0
     mov     0x34, d1
     call    DrawBitmapSPFast_entry, [d2,d3,a2,a3], 0x28
@@ -19013,7 +19013,7 @@ loc_4856DA66:
     mov     a3, d0
     ext     d0
     mov     0xc, d1
-    mov     ptrs_486A11B0+48, a0
+    mov     SplitPoint_Table_2+48, a0
     div     d1, d0
     mov     mdr, d0
     asl2    d0
@@ -19032,7 +19032,7 @@ loc_4856DA66:
     bge     loc_4856DABC
 loc_4856DA9B:
     mov     a2, a0
-    mov     data_48695298, a1
+    mov     Bitmap_SplitPoint, a1
     mov     0x39, d0
     mov     0x34, d1
     call    DrawBitmapSPFast_entry, [d2,d3,a2,a3], 0x28
@@ -19063,7 +19063,7 @@ loc_4856DAEA:
     mov     (0xc, a2), a3
     add     8, a2
     movhu   (a2), d0
-    mov     ptrs_486A11B0, a0
+    mov     SplitPoint_Table_2, a0
     exth    d0
     ext     d0
     div     d1, d0
@@ -19182,9 +19182,9 @@ loc_4856DBED:
 loc_4856DBF8:
     extbu   d1
     asl2    d1
-    mov     ptrs_48763794, a1
+    mov     func_4856DBDB_Table, a1
     mov     (d1, a1), a2
-    mov     ptrs_48763794+244, a1
+    mov     func_4856DBDB_Table+244, a1
     mov     (d1, a1), a1
     bra     loc_4856DC2E
 loc_4856DC0C:
@@ -19197,9 +19197,9 @@ loc_4856DC0C:
 loc_4856DC16:
     extbu   d1
     asl2    d1
-    mov     ptrs_48763794+88, a1
+    mov     func_4856DBDB_Table+88, a1
     mov     (d1, a1), a2
-    mov     ptrs_487638E0, a1
+    mov     func_4856DBDB_Table_2, a1
     mov     (d1, a1), a1
     bra     loc_4856DC2E
 loc_4856DC2A:
@@ -19274,10 +19274,10 @@ loc_4856DC92:
     ret     [d2,d3,a2], 0x20
 loc_4856DC9E:
     movbu   (0x30, sp), d0
-    mov     ptrs_48763794, a1
+    mov     func_4856DBDB_Table, a1
     asl2    d0
     mov     (d0, a1), a1
-    mov     ptrs_48763794+244, a2
+    mov     func_4856DBDB_Table+244, a2
     mov     (d0, a2), d0
     bra     loc_4856DCD9
 loc_4856DCB4:
@@ -19288,10 +19288,10 @@ loc_4856DCB4:
     bra     loc_4856DD0E
 loc_4856DCBF:
     movbu   (0x30, sp), d0
-    mov     ptrs_48763794+88, a1
+    mov     func_4856DBDB_Table+88, a1
     asl2    d0
     mov     (d0, a1), a1
-    mov     ptrs_487638E0, a2
+    mov     func_4856DBDB_Table_2, a2
     mov     (d0, a2), d0
     bra     loc_4856DCD9
 loc_4856DCD5:
@@ -19458,7 +19458,7 @@ TtChordFinder:
     movm    [d2,a2], (sp)
     add     -0x28, sp
     mov     d1, d2
-    mov     ptrs_486A29AC+156, a1
+    mov     ChordFinderROOT_Table+156, a1
     mov     sp, a0
     add     0x18, a0
     mov     -0x10, d1
@@ -19898,7 +19898,7 @@ loc_4856E3E7:
     movhu   (0x5016c304), d0
     mov     (0x14, a0), a0
     asl2    d0
-    mov     ptrs_486A29AC, a1
+    mov     ChordFinderROOT_Table, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     mov     d2, d0
@@ -19961,7 +19961,7 @@ loc_4856E47D:
     movhu   (0x5016c300), d0
     mov     (0x14, a0), a0
     asl2    d0
-    mov     ptrs_486A2AD0, a1
+    mov     APCselect_Table, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     mov     0x10, d0
@@ -20104,7 +20104,7 @@ func_4856E588:
     add     -0x20, sp
 func_4856E588_entry:
     mov     a0, a2
-    mov     ptrs_486A2AD0+8, a1
+    mov     APCselect_Table+8, a1
     mov     sp, a0
     add     0x18, a0
     mov     -4, d1
@@ -20118,7 +20118,7 @@ func_4856E588_entry:
     clr     d2
     clr     d0
     mov     d0, (0x10, sp)
-    mov     Str_0_11, a3
+    mov     func_4856E6D0_Records, a3
     mov     -0x240, d3
     mov     sp, a0
     mov     a0, d0
@@ -20302,7 +20302,7 @@ func_4856E6D0_entry:
     bgt     loc_4856E714
     ret     [d2,d3,a2,a3], 0x54
 loc_4856E714:
-    mov     Str_0_11, d3
+    mov     func_4856E6D0_Records, d3
     mov     0xfffffd00, a3
     mov     sp, a0
     mov     a0, d0
@@ -20617,7 +20617,7 @@ loc_4856E9B5:
     jmp     loc_4856EE9D
 loc_4856E9DA:
     add     8, a0
-    cmp     ptrs_486A2D90, a0
+    cmp     func_485702CC_Table, a0
     bcs     loc_4856E9E5
     mov     a1, a0
 loc_4856E9E5:
@@ -20902,7 +20902,7 @@ loc_4856EC60:
     mov     a2, d0
     exthu   d0
     asl2    d0
-    mov     ptrs_486A29AC, a0
+    mov     ChordFinderROOT_Table, a0
     mov     (d0, a0), d0
     mov     0xff, d1
     mov     d0, (0x10, sp)
@@ -23205,7 +23205,7 @@ func_485702CC_entry:
     cmp     0xb, d0
     bgt     loc_48570334
     asl2    d0
-    mov     ptrs_486A2D90, a0
+    mov     func_485702CC_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485702E7:
@@ -23684,7 +23684,7 @@ loc_48570620:
     jmp     loc_48570716
 loc_48570627:
     asl2    d0
-    mov     ptrs_486A2D90+48, a0
+    mov     func_485702CC_Table+48, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48570632:
@@ -23888,7 +23888,7 @@ loc_485707B4:
     jmp     loc_485708AA
 loc_485707BB:
     asl2    d0
-    mov     ptrs_486A2D90+96, a0
+    mov     func_485702CC_Table+96, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485707C6:
@@ -24093,7 +24093,7 @@ loc_48570949:
 loc_48570950:
     add     -2, d0
     asl2    d0
-    mov     ptrs_486A2D90+144, a0
+    mov     func_485702CC_Table+144, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4857095D:
@@ -28039,7 +28039,7 @@ VoiceDirClassFind_entry:
     exthu   d1
     call    VoiceDirClassHashIndex, 0, 0
     asl2    d0
-    mov     ptrs_48763F60, a0
+    mov     VoiceDirClassFind_Table, a0
     mov     (d0, a0), a2
     cmp     0, a2
     beq     loc_4857276D
@@ -28166,7 +28166,7 @@ VoiceDirIndexFind_entry:
     exthu   d1
     call    VoiceDirIndexHashIndex, 0, 0
     asl2    d0
-    mov     ptrs_48764948, a0
+    mov     VoiceDirIndexFind_Table, a0
     mov     (d0, a0), a2
     cmp     0, a2
     beq     loc_48572855
@@ -28337,7 +28337,7 @@ VoiceDirRefFind_entry:
     exthu   d1
     call    VoiceDirRefHashIndex, 0, 0
     asl2    d0
-    mov     ptrs_48765330, a0
+    mov     VoiceDirRefFind_Table, a0
     mov     (d0, a0), a2
     cmp     0, a2
     beq     loc_485729AD
@@ -37133,7 +37133,7 @@ loc_4857821A:
     bgt     loc_4857823D
     add     -3, d0
     asl2    d0
-    mov     ptrs_486AE8CC, a0
+    mov     func_485781F7_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48578239:
@@ -51340,7 +51340,7 @@ func_4857FEA7:
     movhu   d1, (0x1a0, sp)
     mov     a0, (0x19c, sp)
     mov     d0, d2
-    mov     ptrs_486AF5D4+24, a1
+    mov     func_4857FEA7_Table+24, a1
     mov     sp, a0
     add     0x34, a0
     mov     -0x81, d1
@@ -51381,7 +51381,7 @@ loc_4857FF01:
     mov     (0x20, sp), a1
     mov     a2, d1
     call    func_4857F4F3_entry, [d2,d3,a2,a3], 0x24
-    mov     (ptrs_486AF5D4), a0
+    mov     (func_4857FEA7_Table), a0
     clr     d3
     movbu   (a0), d0
     cmp     d3, d0
@@ -51390,7 +51390,7 @@ loc_4857FF01:
 loc_4857FF1F:
     mov     d3, d0
     asl2    d0
-    mov     ptrs_486AF5D4, a0
+    mov     func_4857FEA7_Table, a0
     mov     (d0, a0), d0
     mov     (0x20, sp), a1
     mov     d0, a0
@@ -51448,7 +51448,7 @@ loc_4857FF9C:
     exth    d3
     mov     d3, d0
     asl2    d0
-    mov     ptrs_486AF5D4, a0
+    mov     func_4857FEA7_Table, a0
     mov     (d0, a0), a0
     movbu   (a0), d0
     cmp     0, d0

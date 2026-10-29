@@ -103,16 +103,21 @@ def groups(dr):
     return out
 
 
-def layout(g, gen, base_off, n):
-    """The fields of group g, whose n records start at file offset base_off."""
+def layout(g, gen, base_off, n, offs=None):
+    """The fields of group g, whose n records start at file offset base_off (or,
+    for records a pointer leads to, at the file offsets `offs`)."""
     rom = gen.rom
     s = g.stride
+    offs = offs if offs is not None else [base_off + r * s for r in range(n)]
+    n = len(offs)
     widths = collections.defaultdict(collections.Counter)
     signed = collections.defaultdict(bool)
     byoff = collections.defaultdict(list)
     args = collections.defaultdict(list)
     inner = collections.defaultdict(list)     # element size -> [(offset, access)]
     for o, a in g.accs:
+        if o < 0 or o >= s:
+            continue
         if a.inner and a.inner < s and a.width:
             inner[a.inner].append((o, a))
         elif a.width:
@@ -126,7 +131,7 @@ def layout(g, gen, base_off, n):
     fields = []
 
     def word(r, k, w=4):
-        q = base_off + r * s + k
+        q = offs[r] + k
         return int.from_bytes(rom[q:q + w], "little")
 
     for o in sorted(widths, key=lambda o: (-sum(widths[o].values()), o)):

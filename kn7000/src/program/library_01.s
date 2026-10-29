@@ -17711,7 +17711,7 @@ loc_4C02E87B:
     jmp     loc_4C02F9F6
 loc_4C02E899:
     add     8, a0
-    cmp     Str_empty_1483, a0
+    cmp     TgGlobalParamCommand_Records, a0
     bcs     loc_4C02E8A4
     mov     a1, a0
 loc_4C02E8A4:
@@ -34993,14 +34993,14 @@ loc_4C037C4C:
     exthu   d2
     mov     d2, d0
     add     d0, d0
-    mov     Str_empty_1480+64, a0
+    mov     TgVoiceRouteFieldSet_Table+64, a0
     movhu   (d0, a0), d2
     bra     loc_4C037C78
 loc_4C037C59:
     exthu   d2
     mov     d2, d0
     add     d0, d0
-    mov     Str_empty_1480, a0
+    mov     TgVoiceRouteFieldSet_Table, a0
     movhu   (d0, a0), d2
     bra     loc_4C037C78
 loc_4C037C66:
@@ -36213,7 +36213,7 @@ loc_4C0386C0:
     mulu    d0, d3
     add     d3, d2
     mov     d2, a2
-    mov     Str_empty_1480+136, a1
+    mov     TgVoiceRouteFieldSet_Table+136, a1
     mov     a2, a0
     mov     -0x23, d1
     setlb
@@ -36483,7 +36483,7 @@ TgPartProgramHandlerDispatch:
     blt     loc_4C038922
     cmp     0x78, d1
     bgt     loc_4C038922
-    mov     Str_empty_1478, a1
+    mov     TgPartProgramHandlerDispatch_Records, a1
     add     -0x10, d1
     mov     a1, a0
     mov     0xf, d0
@@ -36497,7 +36497,7 @@ TgPartProgramHandlerDispatch:
     cmp     0, d0
     beq     loc_4C038922
     add     8, a0
-    cmp     Str_empty_1478+128, a0
+    cmp     TgPartProgramHandlerDispatch_Records+128, a0
     bcs     loc_4C0388FB
     mov     a1, a0
 loc_4C0388FB:
@@ -36565,7 +36565,7 @@ loc_4C038957:
     blt     loc_4C0389A9
     cmp     0x78, d2
     bgt     loc_4C0389A9
-    mov     Str_empty_1478+128, a1
+    mov     TgPartProgramHandlerDispatch_Records+128, a1
     add     -0x10, d2
     mov     0xf, d0
     and     d2, d0
@@ -37948,7 +37948,7 @@ TgPartToneModUnitBuild:
     add     -0x40, sp
 TgPartToneModUnitBuild_entry:
     mov     d0, d2
-    mov     Str_empty_1480+172, a1
+    mov     TgVoiceRouteFieldSet_Table+172, a1
     mov     sp, a0
     add     0x38, a0
     mov     -8, d1
@@ -39808,7 +39808,7 @@ TgVoiceEgSegParamGet_entry:
     add     d1, a0
     movbu   (0x24, sp), d1
     movbu   (d0, a0), d2
-    mov     Str_empty_1480+180, a0
+    mov     TgVoiceRouteFieldSet_Table+180, a0
     movbu   (d1, a0), d0
     clr     d3
     and     d0, d2

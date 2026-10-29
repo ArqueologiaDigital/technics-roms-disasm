@@ -1838,7 +1838,7 @@ loc_48541299:
     bgt     loc_48541323
     add     -1, d0
     asl2    d0
-    mov     ptrs_4867B710, a0
+    mov     func_48541281_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485412DE:
@@ -2091,7 +2091,7 @@ loc_485415B4:
     mov     -1, d0
     add     d1, d0
     asl2    d0
-    mov     ptrs_4867B710+36, a0
+    mov     func_48541281_Table+36, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_485415C2:
@@ -16678,7 +16678,7 @@ loc_4854A35B:
     jmp     loc_4854A402
 loc_4854A373:
     add     8, a0
-    cmp     ptrs_4867B948, a0
+    cmp     func_4854AC9E_Table, a0
     bcs     loc_4854A37F
     mov     d3, a0
 loc_4854A37F:
@@ -17592,7 +17592,7 @@ func_4854AC9E_entry:
 loc_4854ACAF:
     movhu   (0xc, sp), d0
     asl2    d0
-    mov     ptrs_4867B948, a0
+    mov     func_4854AC9E_Table, a0
     mov     (d0, a0), a0
     movhu   (0x18, sp), d0
     asl2    d0
@@ -17604,7 +17604,7 @@ loc_4854ACAF:
 loc_4854ACCA:
     movhu   (0xc, sp), d0
     asl2    d0
-    mov     ptrs_4867B948, a0
+    mov     func_4854AC9E_Table, a0
     mov     (d0, a0), d0
     cmp     0, d0
     beq     loc_4854ACDC
@@ -17642,7 +17642,7 @@ DiskInit_entry:
     mov     1, d0
     call    SdMediaStateSet_entry, [d2], 4
     mov     8, d0
-    mov     ptrs_4867B948+92, a0
+    mov     func_4854AC9E_Table+92, a0
     call    cre_tsk, 0, 0
     mov     8, d0
     clr     d1
@@ -23286,7 +23286,7 @@ loc_4854E07C:
     mov     d3, d0
     call    GetBox_entry, 0, 0x14
     movhu   (0x1c, sp), d0
-    mov     ptrs_4867C5DC, a0
+    mov     AcDemoImageProc_Table, a0
     movhu   d0, (0x24, sp)
     movhu   (0x1e, sp), d0
     movhu   d0, (0x26, sp)
@@ -23599,7 +23599,7 @@ loc_4854E390:
     call    SswPoolInit_entry, [a2], 4
     mov     (0x5008295c), a0
     call    SswPoolSelect, 0, 0
-    mov     ptrs_4867F75C, a1
+    mov     StartFeatureDemo_Table, a1
     mov     d2, d0
     asl2    d0
     add     a1, d0
@@ -25486,7 +25486,7 @@ loc_4854FBA1:
     mov     (0x28, sp), a0
     mov     (0x14, a0), a2
     mov     (0x10, a0), d0
-    mov     ptrs_4868D6A4, a0
+    mov     SdcPanelSwAsFunc_Table, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
@@ -27266,7 +27266,7 @@ VwSdFolderImageProc:
     movhu   (0x1a, sp), d0
     add     0x20, a0
     movhu   d0, (0x22, sp)
-    mov     data_4868D710, a1
+    mov     Bitmap_VwSdFolderImageProc, a1
     mov     0x18, d0
     mov     d0, d1
     call    DrawBitmapSP_entry, [d2,d3,a2,a3], 0x28
@@ -42292,7 +42292,7 @@ SdcSmfLoadAsFunc_entry:
     cmp     EV_PAINT, d1
     bne     loc_4855AEB3
     movbu   (0x50083bb6), d0
-    mov     ptrs_4868DD10, a0
+    mov     SdcSmfLoadAsFunc_Table, a0
     asl2    d0
     mov     (d0, a0), d0
     mov     0x0145000f, d1

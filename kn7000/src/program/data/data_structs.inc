@@ -31,18 +31,18 @@
 	.ascii	\x4
 .endm
 
-# REC_Str_empty_1483: 8-byte records (Str_empty_1483, 68 records); fields, and what reads them:
+# REC_TgGlobalParamCommand_Records: 8-byte records (TgGlobalParamCommand_Records, 68 records); fields, and what reads them:
 #   +0   f0           u32            TgGlobalParamCommand 0x4C0092B3 `mov (a0), d1`
 #   +4   x4           u8[4]          no reader seen
-.macro REC_Str_empty_1483 f0=0, x4
+.macro REC_TgGlobalParamCommand_Records f0=0, x4
 	.long	\f0
 	.ascii	\x4
 .endm
 
-# REC_Str_empty_1478: 8-byte records (Str_empty_1478, 32 records); fields, and what reads them:
+# REC_TgPartProgramHandlerDispatch_Records: 8-byte records (TgPartProgramHandlerDispatch_Records, 32 records); fields, and what reads them:
 #   +0   f0           u32            TgPartProgramHandlerDispatch 0x4C0388B3 `mov (a0), d0`; TgPartProgramApply 0x4C03893D `mov (a0), d0` (+1)
 #   +4   x4           u8[4]          no reader seen
-.macro REC_Str_empty_1478 f0=0, x4
+.macro REC_TgPartProgramHandlerDispatch_Records f0=0, x4
 	.long	\f0
 	.ascii	\x4
 .endm
@@ -133,7 +133,7 @@
 	.long	\p4
 .endm
 
-# REC_GetEditSwPointInit_Table: 4-byte records (GetEditSwPointInit_Table, 224 records); fields, and what reads them:
+# REC_GetEditSwPointInit_Table: 4-byte records (GetEditSwPointInit_Table, 80 records); fields, and what reads them:
 #   +0   f0           u16            GetEditSwPointInit 0x48417B30 `movhu (d0, a0), d0`
 #   +2   f2           u16            GetEditSwPointInit 0x48417B30 `movhu (2, a0), d0`
 .macro REC_GetEditSwPointInit_Table f0=0, f2=0
@@ -169,10 +169,10 @@
 	.long	\p4
 .endm
 
-# REC_Str_empty_1414: 8-byte records (Str_empty_1414, 96 records); fields, and what reads them:
+# REC_WindowProc_Records: 8-byte records (WindowProc_Records, 96 records); fields, and what reads them:
 #   +0   f0           u32            WindowProc 0x484180A1 `mov (a0), d0`; PsRadioBoxProc 0x484194A2 `mov (a0), d0` (+2)
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1414 f0=0, p4=0
+.macro REC_WindowProc_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
@@ -193,22 +193,22 @@
 	.long	\p4
 .endm
 
-# REC_AcMixerVolProc_Records: 8-byte records (AcMixerVolProc_Records, 112 records); fields, and what reads them:
+# REC_AcMixerVolProc_Records: 8-byte records (AcMixerVolProc_Records, 48 records); fields, and what reads them:
 #   +0   f0           u32            AcMixerVolProc 0x4841F5C9 `mov (a0), d0`; VwIconListProc 0x48420AB6 `mov (a0), d0` (+1)
-#   +4   x4           u8[4]          no reader seen
-.macro REC_AcMixerVolProc_Records f0=0, x4
+#   +4   p4           ptr            no reader seen
+.macro REC_AcMixerVolProc_Records f0=0, p4=0
 	.long	\f0
-	.ascii	\x4
+	.long	\p4
 .endm
 
-# REC_Str_ZH: 16-byte records (Str_ZH, 13 records); fields, and what reads them:
+# REC_func_48427E0D_Records: 16-byte records (func_48427E0D_Records, 13 records); fields, and what reads them:
 #   +0   p0           ptr            func_48427E0D 0x48427E0D `mov (a2), a1`
 #   +4   f4           s16            func_48427E0D 0x48427E0D `movhu (a3), d1`
 #   +6   x6           u8[2]          no reader seen
 #   +8   p8           ptr            func_48428068 0x48428068 `mov (8, a2), d1`
 #   +12  f12          s16            func_48427E0D 0x48427E0D `movhu (0xc, a0), d0`
 #   +14  x14          u8[2]          no reader seen
-.macro REC_Str_ZH p0=0, f4=0, x6, p8=0, f12=0, x14
+.macro REC_func_48427E0D_Records p0=0, f4=0, x6, p8=0, f12=0, x14
 	.long	\p0
 	.word	\f4
 	.ascii	\x6
@@ -305,34 +305,34 @@
 	.ascii	\x4
 .endm
 
-# REC_Str_empty_1406: 8-byte records (Str_empty_1406, 96 records); fields, and what reads them:
+# REC_func_48448D93_Records: 8-byte records (func_48448D93_Records, 96 records); fields, and what reads them:
 #   +0   f0           u32            func_48448D93 0x48448D93 `mov (a0), d0`; func_48448EA3 0x48448EA3 `mov (a0), d0` (+1)
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1406 f0=0, p4=0
+.macro REC_func_48448D93_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
 
-# REC_Str_empty_1403: 8-byte records (Str_empty_1403, 96 records); fields, and what reads them:
+# REC_func_48448FCA_Records: 8-byte records (func_48448FCA_Records, 96 records); fields, and what reads them:
 #   +0   f0           u32            func_48448FCA 0x48448FCA `mov (a0), d0`; func_48449023 0x48449023 `mov (a0), d0` (+1)
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1403 f0=0, p4=0
+.macro REC_func_48448FCA_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
 
-# REC_Str_empty_1400: 8-byte records (Str_empty_1400, 96 records); fields, and what reads them:
+# REC_func_4844912C_Records: 8-byte records (func_4844912C_Records, 96 records); fields, and what reads them:
 #   +0   f0           u32            func_4844912C 0x4844912C `mov (a0), d0`; func_4844919E 0x4844919E `mov (a0), d1`
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1400 f0=0, p4=0
+.macro REC_func_4844912C_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
 
-# REC_Str_empty_1399: 8-byte records (Str_empty_1399, 16 records); fields, and what reads them:
+# REC_func_4844C962_Records: 8-byte records (func_4844C962_Records, 16 records); fields, and what reads them:
 #   +0   f0           u32            func_4844C962 0x4844C962 `mov (a0), d0`; func_4844D7A4 0x4844D7A4 `mov (a0), d0`
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1399 f0=0, p4=0
+.macro REC_func_4844C962_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
@@ -353,10 +353,10 @@
 	.long	\p4
 .endm
 
-# REC_Str_empty_1396: 8-byte records (Str_empty_1396, 32 records); fields, and what reads them:
+# REC_func_4846144B_Records: 8-byte records (func_4846144B_Records, 32 records); fields, and what reads them:
 #   +0   f0           u32            func_4846144B 0x4846144B `mov (a0), d1`
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1396 f0=0, p4=0
+.macro REC_func_4846144B_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
@@ -483,7 +483,7 @@
 	.long	\p12
 .endm
 
-# REC_Str_S_HH: 28-byte records (Str_S_HH, 68 records); fields, and what reads them:
+# REC_func_4848B12D_Records: 28-byte records (func_4848B12D_Records, 68 records); fields, and what reads them:
 #   +0   p0           ptr            func_4848B12D 0x4848B12D `mov (d0, a0), a1`
 #   +4   p4           ptr            func_4848B153 0x4848B153 `mov (4, a0), a0`; func_4848B153 0x4848B153 `mov (4, a1), a0` (+4)
 #   +8   p8           ptr            no reader seen
@@ -491,7 +491,7 @@
 #   +16  f16          u32            func_4848B153 0x4848B153 `mov (0x10, a0), a2`; func_4848B7CB 0x4848B7CB `mov (0x10, a0), d2`
 #   +20  f20          u32            func_4848B153 0x4848B153 `mov (0x14, a0), a2`; func_4848B153 0x4848B153 `mov (0x14, a0), d0`
 #   +24  p24          ptr            func_4848B153 0x4848B153 `mov (0x18, a0), d0`; func_4848B153 0x4848B153 `mov (0x18, a1), a1` (+5)
-.macro REC_Str_S_HH p0=0, p4=0, p8=0, p12=0, f16=0, f20=0, p24=0
+.macro REC_func_4848B12D_Records p0=0, p4=0, p8=0, p12=0, f16=0, f20=0, p24=0
 	.long	\p0
 	.long	\p4
 	.long	\p8
@@ -565,10 +565,10 @@
 	.long	\p8
 .endm
 
-# REC_ptrs_485F9790: 8-byte records (ptrs_485F9790, 5 records); fields, and what reads them:
+# REC_TtNormal_Records: 8-byte records (TtNormal_Records, 5 records); fields, and what reads them:
 #   +0   p0           ptr            TtNormal 0x48493ACE `mov (d0, a0), d1`; AcHpPreviewProc 0x48495ECF `mov (d0, a0), a2` (+3)
 #   +4   p4           ptr            AcHpTypeEditProc 0x48495CB1 `mov (4, a1), a1`
-.macro REC_ptrs_485F9790 p0=0, p4=0
+.macro REC_TtNormal_Records p0=0, p4=0
 	.long	\p0
 	.long	\p4
 .endm
@@ -581,10 +581,10 @@
 	.long	\p4
 .endm
 
-# REC_Str_P_21: 8-byte records (Str_P_21, 5 records); fields, and what reads them:
+# REC_IvRstOtherPartProc_Records: 8-byte records (IvRstOtherPartProc_Records, 5 records); fields, and what reads them:
 #   +0   f0           u32            IvRstOtherPartProc 0x484936D5 `mov (a0), d0`; AcSndLdOptProc 0x48495361 `mov (d0, a0), d0` (+1)
 #   +4   p4           ptr            AcSndLdOptProc 0x48495361 `mov (4, a1), a1`
-.macro REC_Str_P_21 f0=0, p4=0
+.macro REC_IvRstOtherPartProc_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
@@ -633,18 +633,18 @@
 	.ascii	\x20
 .endm
 
-# REC_ptrs_48605690: 8-byte records (ptrs_48605690, 19 records); fields, and what reads them:
+# REC_AcFavScreenProc_Records: 8-byte records (AcFavScreenProc_Records, 19 records); fields, and what reads them:
 #   +0   p0           ptr            AcFavScreenProc 0x4849E4C5 `mov (d0, a0), a1`; AcFavCategoryProc 0x4849E75A `mov (8, a0), a0` (+2)
 #   +4   p4           ptr            AcFavCategoryProc 0x4849E75A `mov (4, a0), a0`; AcFavCategoryProc 0x4849E75A `mov (4, a0), a1`
-.macro REC_ptrs_48605690 p0=0, p4=0
+.macro REC_AcFavScreenProc_Records p0=0, p4=0
 	.long	\p0
 	.long	\p4
 .endm
 
-# REC_Str_empty_1241: 8-byte records (Str_empty_1241, 96 records); fields, and what reads them:
+# REC_func_4849CD60_Records: 8-byte records (func_4849CD60_Records, 96 records); fields, and what reads them:
 #   +0   f0           u32            func_4849CD60 0x4849CD60 `mov (a0), d0`; AcFavoriteProc 0x4849D1F9 `mov (a0), d0` (+3)
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1241 f0=0, p4=0
+.macro REC_func_4849CD60_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
@@ -751,10 +751,10 @@
 	.long	\p4
 .endm
 
-# REC_Str_empty_1235: 8-byte records (Str_empty_1235, 16 records); fields, and what reads them:
+# REC_func_484B17CB_Records: 8-byte records (func_484B17CB_Records, 16 records); fields, and what reads them:
 #   +0   f0           u32            func_484B17CB 0x484B17CB `mov (a0), d0`
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_1235 f0=0, p4=0
+.macro REC_func_484B17CB_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
@@ -983,15 +983,15 @@
 	.ascii	\x4
 .endm
 
-# REC_Str_empty_975: 8-byte records (Str_empty_975, 32 records); fields, and what reads them:
+# REC_TtCmStep_Records: 8-byte records (TtCmStep_Records, 32 records); fields, and what reads them:
 #   +0   f0           u32            TtCmStep 0x4850305B `mov (a0), d0`; TtMspStep 0x48503240 `mov (a0), d0`
 #   +4   p4           ptr            no reader seen
-.macro REC_Str_empty_975 f0=0, p4=0
+.macro REC_TtCmStep_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
 
-# REC_ptrs_48645708: 48-byte records (ptrs_48645708, 2 records); fields, and what reads them:
+# REC_func_48504606_Records: 48-byte records (func_48504606_Records, 2 records); fields, and what reads them:
 #   +0   p0           ptr            func_48504F37 0x48504F37 `mov (d0, a3), a0`
 #   +4   p4           ptr            func_48504F37 0x48504F37 `mov (4, a3), a0`
 #   +8   p8           ptr            func_48504F37 0x48504F37 `mov (8, a0), a1`
@@ -1004,7 +1004,7 @@
 #   +36  p36          ptr            func_48504F37 0x48504F37 `mov (0x24, a0), a0`; func_48504F37 0x48504F37 `mov (0x24, a0), a1` (+1)
 #   +40  p40          ptr            func_48504F37 0x48504F37 `mov (0x28, a0), a0`; func_48504F37 0x48504F37 `mov (0x28, a0), a1`
 #   +44  p44          ptr            func_48504F37 0x48504F37 `mov (0x2c, a0), a0`; func_48504F37 0x48504F37 `mov (0x2c, a0), a1`
-.macro REC_ptrs_48645708 p0=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, p32=0, p36=0, p40=0, p44=0
+.macro REC_func_48504606_Records p0=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, p32=0, p36=0, p40=0, p44=0
 	.long	\p0
 	.long	\p4
 	.long	\p8
@@ -1019,10 +1019,10 @@
 	.long	\p44
 .endm
 
-# REC_Str_empty_972: 18-byte records (Str_empty_972, 24 records); fields, and what reads them:
+# REC_GetTitleNow_Records: 18-byte records (GetTitleNow_Records, 24 records); fields, and what reads them:
 #   +0   x0           u8[16]         no reader seen
 #   +16  f16          u16            func_48504F37 0x48504F37 `movhu (0x10, a0), d0`; func_48504F37 0x48504F37 `movhu (0x10, a0), d2` (+4)
-.macro REC_Str_empty_972 x0, f16=0
+.macro REC_GetTitleNow_Records x0, f16=0
 	.ascii	\x0
 	.word	\f16
 .endm
@@ -1035,7 +1035,7 @@
 	.long	\p4
 .endm
 
-# REC_ptrs_48645D08: 36-byte records (ptrs_48645D08, 1 records); fields, and what reads them:
+# REC_func_485061D6_Records: 36-byte records (func_485061D6_Records, 1 records); fields, and what reads them:
 #   +0   p0           ptr            func_485062FE 0x485062FE `mov (d0, a2), a0`
 #   +4   p4           ptr            func_485062FE 0x485062FE `mov (4, a2), a0`
 #   +8   p8           ptr            func_485062FE 0x485062FE `mov (8, a0), a1`
@@ -1045,7 +1045,7 @@
 #   +24  p24          ptr            func_485062FE 0x485062FE `mov (0x18, a0), a0`
 #   +28  p28          ptr            func_485062FE 0x485062FE `mov (0x1c, a0), a0`; func_485062FE 0x485062FE `mov (0x1c, a0), a1`
 #   +32  p32          ptr            func_485062FE 0x485062FE `mov (0x20, a0), a0`; func_485062FE 0x485062FE `mov (0x20, a2), a0`
-.macro REC_ptrs_48645D08 p0=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, p32=0
+.macro REC_func_485061D6_Records p0=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, p32=0
 	.long	\p0
 	.long	\p4
 	.long	\p8
@@ -1073,9 +1073,9 @@
 	.long	\p4
 .endm
 
-# REC_ptrs_4864EBF0: 84-byte records (ptrs_4864EBF0, 3 records); fields, and what reads them:
+# REC_func_48509CE3_Records: 84-byte records (func_48509CE3_Records, 3 records); fields, and what reads them:
 #   +0   a0           21 x 4 (u32)   func_48509CE3 0x48509CE3 `mov (d2, a1), a1`
-.macro REC_ptrs_4864EBF0 a0:vararg
+.macro REC_func_48509CE3_Records a0:vararg
 	.long	\a0
 .endm
 
@@ -1161,12 +1161,12 @@
 	.word	\f6
 .endm
 
-# REC_Str_fH_2: 8-byte records (Str_fH_2, 50 records); fields, and what reads them:
+# REC_func_4852B4E2_Records: 8-byte records (func_4852B4E2_Records, 50 records); fields, and what reads them:
 #   +0   f0           u16            func_4852B4E2 0x4852B4E2 `movhu (d3, a0), d0`; func_4852BB43 0x4852BB43 `movhu (a3), d0` (+1)
 #   +2   f2           u16            func_4852D169 0x4852D169 `movhu (2, a0), d1`
 #   +4   f4           u16            func_4852B746 0x4852B746 `movhu (4, a3), d0`; func_4852BB43 0x4852BB43 `movhu (4, a3), d0` (+2)
 #   +6   f6           u16            func_4852B746 0x4852B746 `movhu (a2), d1`; func_4852D169 0x4852D169 `movhu (6, a2), d0` (+1)
-.macro REC_Str_fH_2 f0=0, f2=0, f4=0, f6=0
+.macro REC_func_4852B4E2_Records f0=0, f2=0, f4=0, f6=0
 	.word	\f0
 	.word	\f2
 	.word	\f4
@@ -1333,13 +1333,13 @@
 	.long	\p4
 .endm
 
-# REC_Str_0_11: 16-byte records (Str_0_11, 53 records); fields, and what reads them:
+# REC_func_4856E6D0_Records: 16-byte records (func_4856E6D0_Records, 53 records); fields, and what reads them:
 #   +0   x0           u8[4]          no reader seen
 #   +4   f4           u32            func_4856E6D0 0x4856E6D0 `mov (4, a0), d0`
 #   +8   f8           u32            func_4856E6D0 0x4856E6D0 `mov (8, a0), d0`
 #   +12  f12          s16            func_4856E6D0 0x4856E6D0 `movhu (0xc, a0), d0`
 #   +14  x14          u8[2]          no reader seen
-.macro REC_Str_0_11 x0, f4=0, f8=0, f12=0, x14
+.macro REC_func_4856E6D0_Records x0, f4=0, f8=0, f12=0, x14
 	.ascii	\x0
 	.long	\f4
 	.long	\f8
@@ -1369,6 +1369,54 @@
 .macro REC_func_48582CF0_Records f0=0, p4=0
 	.long	\f0
 	.long	\p4
+.endm
+
+# REC_localeconv_Records: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   p4           ptr            localeconv 0x4C00206A `mov (4, a1), a0`
+#   +8   p8           ptr            localeconv 0x4C00206A `mov (8, a1), a0`
+#   +12  p12          ptr            localeconv 0x4C00206A `mov (0xc, a1), a0`
+#   +16  p16          ptr            localeconv 0x4C00206A `mov (0x10, a1), a0`
+#   +20  p20          ptr            localeconv 0x4C00206A `mov (0x14, a1), a0`
+#   +24  p24          ptr            localeconv 0x4C00206A `mov (0x18, a1), a0`
+#   +28  p28          ptr            localeconv 0x4C00206A `mov (0x1c, a1), a0`
+#   +32  f32          u8             localeconv 0x4C00206A `movbu (0x20, a1), d0`
+#   +33  f33          u8             localeconv 0x4C00206A `movbu (0x21, a1), d0`
+#   +34  f34          u8             localeconv 0x4C00206A `movbu (0x22, a1), d0`
+#   +35  f35          u8             localeconv 0x4C00206A `movbu (0x23, a1), d0`
+#   +36  f36          u8             localeconv 0x4C00206A `movbu (0x24, a1), d0`
+#   +37  f37          u8             localeconv 0x4C00206A `movbu (0x25, a1), d0`
+#   +38  f38          u8             localeconv 0x4C00206A `movbu (0x26, a1), d0`
+#   +39  f39          u8             localeconv 0x4C00206A `movbu (0x27, a1), d0`
+.macro REC_localeconv_Records p0=0, p4=0, p8=0, p12=0, p16=0, p20=0, p24=0, p28=0, f32=0, f33=0, f34=0, f35=0, f36=0, f37=0, f38=0, f39=0
+	.long	\p0
+	.long	\p4
+	.long	\p8
+	.long	\p12
+	.long	\p16
+	.long	\p20
+	.long	\p24
+	.long	\p28
+	.byte	\f32
+	.byte	\f33
+	.byte	\f34
+	.byte	\f35
+	.byte	\f36
+	.byte	\f37
+	.byte	\f38
+	.byte	\f39
+.endm
+
+# REC_localeconv_Records_2: 16-byte records (localeconv_Records_2, 2 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   p4           ptr            localeconv 0x4C00206A `mov (4, a1), a0`
+#   +8   p8           ptr            localeconv 0x4C00206A `mov (8, a1), a0`
+#   +12  p12          ptr            localeconv 0x4C00206A `mov (0xc, a1), a0`
+.macro REC_localeconv_Records_2 p0=0, p4=0, p8=0, p12=0
+	.long	\p0
+	.long	\p4
+	.long	\p8
+	.long	\p12
 .endm
 
 # REC_func_4C02FCBA_Records: 256-byte records (func_4C02FCBA_Records, 7 records); fields, and what reads them:
@@ -1505,10 +1553,10 @@
 	.byte	\f1
 .endm
 
-# REC_Str_EFFECT_9: 44-byte records (Str_EFFECT_9, 27 records); fields, and what reads them:
+# REC_func_484373B7_Records: 44-byte records (func_484373B7_Records, 27 records); fields, and what reads them:
 #   +0   s0           char[20]       func_484373B7 0x484373B7 `call strcpy_entry, [a2], 4`
 #   +20  a20          6 x 4 (u32)    func_4843752C 0x4843752C `mov (d1, a0), d0`
-.macro REC_Str_EFFECT_9 s0, a20:vararg
+.macro REC_func_484373B7_Records s0, a20:vararg
 	.ascii	\s0
 	.long	\a20
 .endm
@@ -1557,10 +1605,10 @@
 	.long	\p4
 .endm
 
-# REC_ptrs_4873B5D4: 8-byte records (ptrs_4873B5D4, 34 records); fields, and what reads them:
+# REC_func_4847C9A7_Records: 8-byte records (func_4847C9A7_Records, 34 records); fields, and what reads them:
 #   +0   p0           ptr            func_4847C9A7 0x4847C9A7 `mov (d2, a2), a1`
 #   +4   p4           ptr            func_4847C9A7 0x4847C9A7 `mov (4, a0), a0`; func_4847CAD2 0x4847CAD2 `mov (4, a0), a0` (+2)
-.macro REC_ptrs_4873B5D4 p0=0, p4=0
+.macro REC_func_4847C9A7_Records p0=0, p4=0
 	.long	\p0
 	.long	\p4
 .endm
@@ -1589,12 +1637,12 @@
 	.ascii	\x22
 .endm
 
-# REC_ptrs_4875100C: 12-byte records (ptrs_4875100C, 4 records); fields, and what reads them:
+# REC_GetFocusObject_Records: 12-byte records (GetFocusObject_Records, 4 records); fields, and what reads them:
 #   +0   p0           ptr            AcChdModGrpDrawBoxProc 0x484FF494 `mov (d0, a0), d0`; CmpRecPtChdGrid 0x4850B897 `mov (d0, a0), a1` (+11)
 #   +4   p4           ptr            AcChdModTypDrawBoxProc 0x484FF5AE `mov (4, a0), a1`; func_484FFFE2 0x484FFFE2 `mov (4, a0), a0` (+11)
 #   +8   f8           u8             func_484FF7D2 0x484FF7D2 `movbu (8, a0), d0`
 #   +9   x9           u8[3]          no reader seen
-.macro REC_ptrs_4875100C p0=0, p4=0, f8=0, x9
+.macro REC_GetFocusObject_Records p0=0, p4=0, f8=0, x9
 	.long	\p0
 	.long	\p4
 	.byte	\f8
@@ -1609,9 +1657,9 @@
 	.byte	\f1
 .endm
 
-# REC_Str_40: 6-byte records (Str_40, 108 records); fields, and what reads them:
+# REC_EQGainEditCheck_Records: 6-byte records (EQGainEditCheck_Records, 108 records); fields, and what reads them:
 #   +0   s0           char[6]        EQGainEditCheck 0x4856AF80 `call strcpy_entry, [a2], 4`; EQFcEditCheck 0x4856B107 `call strcpy_entry, [a2], 4` (+1)
-.macro REC_Str_40 s0
+.macro REC_EQGainEditCheck_Records s0
 	.ascii	\s0
 .endm
 
@@ -1691,10 +1739,10 @@
 	.long	\f52
 .endm
 
-# REC_ptrs_5000776C: 8-byte records (ptrs_5000776C, 7 records); fields, and what reads them:
+# REC_func_48449462_Records: 8-byte records (func_48449462_Records, 7 records); fields, and what reads them:
 #   +0   p0           ptr            func_48449462 0x48449462 `mov (d0, a0), d0`
 #   +4   p4           ptr            func_48449462 0x48449462 `mov (4, a0), d1`
-.macro REC_ptrs_5000776C p0=0, p4=0
+.macro REC_func_48449462_Records p0=0, p4=0
 	.long	\p0
 	.long	\p4
 .endm
@@ -1707,4 +1755,1974 @@
 	.word	\f0
 	.byte	\f2
 	.byte	\f3
+.endm
+
+# REC_SndRecTriFieldGet2_Table_p0_p24: 4-byte records (SndRecTriFieldGet2_Table_p0_p24, 601 records); fields, and what reads them:
+#   +0   f0           u16            func_484122B6 0x484122B6 `movhu (d0, a0), d0`; func_484122B6 0x484122B6 `movhu (d0, a1), d0`
+#   +2   x2           u8[2]          no reader seen
+.macro REC_SndRecTriFieldGet2_Table_p0_p24 f0=0, x2
+	.word	\f0
+	.ascii	\x2
+.endm
+
+# REC_func_4841202C_Table_2_p0_p4: 36-byte records (func_4841202C_Table_2_p0_p4, 91 records); fields, and what reads them:
+#   +0   x0           u8[20]         no reader seen
+#   +20  f20          u16            func_48412626 0x48412626 `movhu (0x14, a1), d0`
+#   +22  f22          u16            func_4841259A 0x4841259A `movhu (0x16, a1), d0`
+#   +24  f24          u16            func_484125E0 0x484125E0 `movhu (0x18, a1), d0`
+#   +26  f26          s8             func_48412727 0x48412727 `movbu (0x1a, a1), d0`
+#   +27  f27          s8             func_4841276E 0x4841276E `movbu (0x1b, a1), d0`
+#   +28  f28          s8             func_484127B5 0x484127B5 `movbu (0x1c, a1), d0`
+#   +29  f29          s8             func_4841266C 0x4841266C `movbu (0x1d, a0), d0`
+#   +30  x30          u8[2]          no reader seen
+#   +32  p32          ptr            func_484127FC 0x484127FC `mov (0x20, a1), a0`
+.macro REC_func_4841202C_Table_2_p0_p4 x0, f20=0, f22=0, f24=0, f26=0, f27=0, f28=0, f29=0, x30, p32=0
+	.ascii	\x0
+	.word	\f20
+	.word	\f22
+	.word	\f24
+	.byte	\f26
+	.byte	\f27
+	.byte	\f28
+	.byte	\f29
+	.ascii	\x30
+	.long	\p32
+.endm
+
+# REC_func_4841202C_Table_2_p0: 16-byte records (func_4841202C_Table_2_p0, 91 records); fields, and what reads them:
+#   +0   x0           u8[1]          no reader seen
+#   +1   f1           u8             func_4841202C 0x4841202C `movbu (1, a0), d0`
+#   +2   x2           u8[2]          no reader seen
+#   +4   p4           ptr            func_48412555 0x48412555 `mov (4, a0), a1`; func_4841259A 0x4841259A `mov (4, a0), a1` (+7)
+#   +8   f8           s8             func_484120D9 0x484120D9 `movbu (8, a0), d0`
+#   +9   f9           s8             func_4841209F 0x4841209F `movbu (9, a0), d0`
+#   +10  f10          s8             func_48412065 0x48412065 `movbu (0xa, a0), d0`
+#   +11  f11          s8             func_4841214D 0x4841214D `movbu (0xb, a0), d0`
+#   +12  f12          s8             func_48412113 0x48412113 `movbu (0xc, a0), d0`
+#   +13  x13          u8[3]          no reader seen
+.macro REC_func_4841202C_Table_2_p0 x0, f1=0, x2, p4=0, f8=0, f9=0, f10=0, f11=0, f12=0, x13
+	.ascii	\x0
+	.byte	\f1
+	.ascii	\x2
+	.long	\p4
+	.byte	\f8
+	.byte	\f9
+	.byte	\f10
+	.byte	\f11
+	.byte	\f12
+	.ascii	\x13
+.endm
+
+# REC_func_48436229_Records_p1284: 40-byte records (func_48436229_Records_p1284, 1 records); fields, and what reads them:
+#   +0   s0           char[18]       EasyCompGrid 0x4850B407 `call strcpy_entry, [a2], 4`
+#   +18  f18          u16            func_4843B8D7 0x4843B8D7 `movhu (0x12, a0), d0`; func_4843B8D7 0x4843B8D7 `movhu (d0, a0), d0` (+1)
+#   +20  x20          u8[16]         no reader seen
+#   +36  p36          ptr            func_4843B8D7 0x4843B8D7 `mov (0x24, a0), d2`; func_4843B8D7 0x4843B8D7 `mov (d0, a0), d2`
+.macro REC_func_48436229_Records_p1284 s0, f18=0, x20, p36=0
+	.ascii	\s0
+	.word	\f18
+	.ascii	\x20
+	.long	\p36
+.endm
+
+# REC_FlashChipIdTable_p8: 280-byte records (FlashChipIdTable_p8, 2 records); fields, and what reads them:
+#   +0   f0           u32            func_4847F6E4 0x4847F6E4 `mov (d1, a0), d2`; FlashSectorErase 0x4847F75A `mov (d0, a0), d0` (+3)
+#   +4   f4           u32            func_4847F7B8 0x4847F7B8 `mov (4, a0), d0`; func_4847F7FC 0x4847F7FC `mov (4, a0), d2` (+1)
+#   +8   x8           u8[272]        no reader seen
+.macro REC_FlashChipIdTable_p8 f0=0, f4=0, x8
+	.long	\f0
+	.long	\f4
+	.ascii	\x8
+.endm
+
+# REC_StyleRecordTable_p4: 732-byte records (StyleRecordTable_p4, 1 records); fields, and what reads them:
+#   +0   f0           u16            func_4847D639 0x4847D639 `movhu (a0), d0`
+#   +2   x2           u8[730]        no reader seen
+.macro REC_StyleRecordTable_p4 f0=0, x2
+	.word	\f0
+	.ascii	\x2
+.endm
+
+# REC_StyleRecordTable_p0: 160-byte records (StyleRecordTable_p0, 1037 records); fields, and what reads them:
+#   +0   x0           u8[117]        no reader seen
+#   +117 f117         u8             func_4847B17D 0x4847B17D `movbu (0x75, a0), d1`
+#   +118 f118         u8             func_4847B17D 0x4847B17D `movbu (0x76, a0), d0`
+#   +119 x119         u8[41]         no reader seen
+.macro REC_StyleRecordTable_p0 x0, f117=0, f118=0, x119
+	.ascii	\x0
+	.byte	\f117
+	.byte	\f118
+	.ascii	\x119
+.endm
+
+# REC_AcNamingEditSwProc_Table_p0_p0: 4-byte records (AcNamingEditSwProc_Table_p0_p0, 1 records); fields, and what reads them:
+#   +0   f0           u8             AcNamingEditSwProc 0x484899CB `movbu (a0), d0`
+#   +1   x1           u8[3]          no reader seen
+.macro REC_AcNamingEditSwProc_Table_p0_p0 f0=0, x1
+	.byte	\f0
+	.ascii	\x1
+.endm
+
+# REC_IvMessageProc_Table_p0: 4-byte records (IvMessageProc_Table_p0, 1 records); fields, and what reads them:
+#   +0   f0           s8             LibStrlen 0x4C0032F7 `movbu (a1), d1`
+#   +1   f1           s8             LibStrlen 0x4C0032F7 `movbu (a1), d1`
+#   +2   x2           u8[2]          no reader seen
+.macro REC_IvMessageProc_Table_p0 f0=0, f1=0, x2
+	.byte	\f0
+	.byte	\f1
+	.ascii	\x2
+.endm
+
+# REC_data_50001850_p0: 4-byte records (data_50001850_p0, 2 records); fields, and what reads them:
+#   +0   f0           u16            func_4848DF91 0x4848DF91 `movhu (d0, a0), d0`
+#   +2   x2           u8[2]          no reader seen
+.macro REC_data_50001850_p0 f0=0, x2
+	.word	\f0
+	.ascii	\x2
+.endm
+
+# REC_TtNormal_Records_p0: 60-byte records (TtNormal_Records_p0, 3 records); fields, and what reads them:
+#   +0   f0           s16            AcHpPreviewProc 0x48495ECF `movhu (d0, a2), d0`; AcHpPreviewProc 0x48495ECF `movhu (d0, a2), d1` (+2)
+#   +2   f2           s16            AcHpPreviewProc 0x48495ECF `movhu (2, a0), d3`
+#   +4   f4           s16            AcHpPreviewProc 0x48495ECF `movhu (4, a0), d1`
+#   +6   x6           u8[54]         no reader seen
+.macro REC_TtNormal_Records_p0 f0=0, f2=0, f4=0, x6
+	.word	\f0
+	.word	\f2
+	.word	\f4
+	.ascii	\x6
+.endm
+
+# REC_AcFavScreenProc_Records_p0: 12-byte records (AcFavScreenProc_Records_p0, 18 records); fields, and what reads them:
+#   +0   f0           u32            AcFavScreenProc 0x4849E4C5 `mov (d0, a1), d2`; AcFavItemProc 0x4849EA59 `mov (d0, a0), d0`
+#   +4   f4           u32            AcFavScreenProc 0x4849E4C5 `mov (4, a1), a3`
+#   +8   p8           ptr            AcFavItemProc 0x4849EA59 `mov (8, a0), a1`
+.macro REC_AcFavScreenProc_Records_p0 f0=0, f4=0, p8=0
+	.long	\f0
+	.long	\f4
+	.long	\p8
+.endm
+
+# REC_AcFavScreenProc_Records_p4: 1-byte records (AcFavScreenProc_Records_p4, 1 records); fields, and what reads them:
+#   +0   f0           u8             AcFavCategoryProc 0x4849E75A `movbu (a0), d0`
+.macro REC_AcFavScreenProc_Records_p4 f0=0
+	.byte	\f0
+.endm
+
+# REC_func_4852B4E2_Records_p0: 5-byte records (func_4852B4E2_Records_p0, 8 records); fields, and what reads them:
+#   +0   f0           s8             func_4852F77C 0x4852F77C `movbu (a1), d0`
+#   +1   f1           s8             func_4852F77C 0x4852F77C `movbu (a1), d0`
+#   +2   x2           u8[3]          no reader seen
+.macro REC_func_4852B4E2_Records_p0 f0=0, f1=0, x2
+	.byte	\f0
+	.byte	\f1
+	.ascii	\x2
+.endm
+
+# REC_StartFeatureDemo_Table_p0: 1258-byte records (StartFeatureDemo_Table_p0, 10 records); fields, and what reads them:
+#   +0   f0           s8             LibStrlen 0x4C0032F7 `movbu (a1), d1`
+#   +1   f1           s8             LibStrlen 0x4C0032F7 `movbu (a1), d1`
+#   +2   x2           u8[26]         no reader seen
+#   +28  p28          ptr            no reader seen
+#   +32  x32          u8[144]        no reader seen
+#   +176 p176         ptr            no reader seen
+#   +180 x180         u8[144]        no reader seen
+#   +324 p324         ptr            no reader seen
+#   +328 x328         u8[72]         no reader seen
+#   +400 p400         ptr            no reader seen
+#   +404 x404         u8[152]        no reader seen
+#   +556 p556         ptr            no reader seen
+#   +560 x560         u8[152]        no reader seen
+#   +712 p712         ptr            no reader seen
+#   +716 x716         u8[152]        no reader seen
+#   +868 p868         ptr            no reader seen
+#   +872 x872         u8[152]        no reader seen
+#   +1024p1024        ptr            no reader seen
+#   +1028x1028        u8[152]        no reader seen
+#   +1180p1180        ptr            no reader seen
+#   +1184x1184        u8[74]         no reader seen
+.macro REC_StartFeatureDemo_Table_p0 f0=0, f1=0, x2, p28=0, x32, p176=0, x180, p324=0, x328, p400=0, x404, p556=0, x560, p712=0, x716, p868=0, x872, p1024=0, x1028, p1180=0, x1184
+	.byte	\f0
+	.byte	\f1
+	.ascii	\x2
+	.long	\p28
+	.ascii	\x32
+	.long	\p176
+	.ascii	\x180
+	.long	\p324
+	.ascii	\x328
+	.long	\p400
+	.ascii	\x404
+	.long	\p556
+	.ascii	\x560
+	.long	\p712
+	.ascii	\x716
+	.long	\p868
+	.ascii	\x872
+	.long	\p1024
+	.ascii	\x1028
+	.long	\p1180
+	.ascii	\x1184
+.endm
+
+# REC_ptrs_48763990_p0: 3800-byte records (ptrs_48763990_p0, 1 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   f4           u16            VoiceDirRemapFind 0x4857267B `movhu (4, a2), d1`
+#   +6   x6           u8[2]          no reader seen
+#   +8   p8           ptr            no reader seen
+#   +12  x12          u8[4]          no reader seen
+#   +16  p16          ptr            no reader seen
+#   +20  x20          u8[4]          no reader seen
+#   +24  p24          ptr            no reader seen
+#   +28  x28          u8[12]         no reader seen
+#   +40  p40          ptr            no reader seen
+#   +44  x44          u8[4]          no reader seen
+#   +48  p48          ptr            no reader seen
+#   +52  x52          u8[4]          no reader seen
+#   +56  p56          ptr            no reader seen
+#   +60  x60          u8[4]          no reader seen
+#   +64  p64          ptr            no reader seen
+#   +68  x68          u8[4]          no reader seen
+#   +72  p72          ptr            no reader seen
+#   +76  x76          u8[4]          no reader seen
+#   +80  p80          ptr            no reader seen
+#   +84  x84          u8[4]          no reader seen
+#   +88  p88          ptr            no reader seen
+#   +92  x92          u8[12]         no reader seen
+#   +104 p104         ptr            no reader seen
+#   +108 x108         u8[4]          no reader seen
+#   +112 p112         ptr            no reader seen
+#   +116 x116         u8[4]          no reader seen
+#   +120 p120         ptr            no reader seen
+#   +124 x124         u8[4]          no reader seen
+#   +128 p128         ptr            no reader seen
+#   +132 x132         u8[12]         no reader seen
+#   +144 p144         ptr            no reader seen
+#   +148 x148         u8[4]          no reader seen
+#   +152 p152         ptr            no reader seen
+#   +156 x156         u8[4]          no reader seen
+#   +160 p160         ptr            no reader seen
+#   +164 x164         u8[8]          no reader seen
+#   +172 p172         ptr            no reader seen
+#   +176 p176         ptr            no reader seen
+#   +180 x180         u8[4]          no reader seen
+#   +184 p184         ptr            no reader seen
+#   +188 x188         u8[4]          no reader seen
+#   +192 p192         ptr            no reader seen
+#   +196 x196         u8[12]         no reader seen
+#   +208 p208         ptr            no reader seen
+#   +212 x212         u8[4]          no reader seen
+#   +216 p216         ptr            no reader seen
+#   +220 x220         u8[4]          no reader seen
+#   +224 p224         ptr            no reader seen
+#   +228 x228         u8[4]          no reader seen
+#   +232 p232         ptr            no reader seen
+#   +236 x236         u8[4]          no reader seen
+#   +240 p240         ptr            no reader seen
+#   +244 x244         u8[4]          no reader seen
+#   +248 p248         ptr            no reader seen
+#   +252 x252         u8[4]          no reader seen
+#   +256 p256         ptr            no reader seen
+#   +260 x260         u8[4]          no reader seen
+#   +264 p264         ptr            no reader seen
+#   +268 x268         u8[4]          no reader seen
+#   +272 p272         ptr            no reader seen
+#   +276 x276         u8[4]          no reader seen
+#   +280 p280         ptr            no reader seen
+#   +284 x284         u8[4]          no reader seen
+#   +288 p288         ptr            no reader seen
+#   +292 x292         u8[4]          no reader seen
+#   +296 p296         ptr            no reader seen
+#   +300 x300         u8[4]          no reader seen
+#   +304 p304         ptr            no reader seen
+#   +308 x308         u8[4]          no reader seen
+#   +312 p312         ptr            no reader seen
+#   +316 x316         u8[4]          no reader seen
+#   +320 p320         ptr            no reader seen
+#   +324 x324         u8[4]          no reader seen
+#   +328 p328         ptr            no reader seen
+#   +332 x332         u8[4]          no reader seen
+#   +336 p336         ptr            no reader seen
+#   +340 x340         u8[4]          no reader seen
+#   +344 p344         ptr            no reader seen
+#   +348 x348         u8[4]          no reader seen
+#   +352 p352         ptr            no reader seen
+#   +356 x356         u8[4]          no reader seen
+#   +360 p360         ptr            no reader seen
+#   +364 p364         ptr            no reader seen
+#   +368 p368         ptr            no reader seen
+#   +372 x372         u8[4]          no reader seen
+#   +376 p376         ptr            no reader seen
+#   +380 x380         u8[4]          no reader seen
+#   +384 p384         ptr            no reader seen
+#   +388 x388         u8[12]         no reader seen
+#   +400 p400         ptr            no reader seen
+#   +404 x404         u8[4]          no reader seen
+#   +408 p408         ptr            no reader seen
+#   +412 x412         u8[4]          no reader seen
+#   +416 p416         ptr            no reader seen
+#   +420 x420         u8[4]          no reader seen
+#   +424 p424         ptr            no reader seen
+#   +428 x428         u8[4]          no reader seen
+#   +432 p432         ptr            no reader seen
+#   +436 x436         u8[4]          no reader seen
+#   +440 p440         ptr            no reader seen
+#   +444 x444         u8[28]         no reader seen
+#   +472 p472         ptr            no reader seen
+#   +476 x476         u8[4]          no reader seen
+#   +480 p480         ptr            no reader seen
+#   +484 x484         u8[20]         no reader seen
+#   +504 p504         ptr            no reader seen
+#   +508 x508         u8[16]         no reader seen
+#   +524 p524         ptr            no reader seen
+#   +528 x528         u8[8]          no reader seen
+#   +536 p536         ptr            no reader seen
+#   +540 x540         u8[20]         no reader seen
+#   +560 p560         ptr            no reader seen
+#   +564 x564         u8[4]          no reader seen
+#   +568 p568         ptr            no reader seen
+#   +572 x572         u8[4]          no reader seen
+#   +576 p576         ptr            no reader seen
+#   +580 x580         u8[4]          no reader seen
+#   +584 p584         ptr            no reader seen
+#   +588 x588         u8[4]          no reader seen
+#   +592 p592         ptr            no reader seen
+#   +596 x596         u8[4]          no reader seen
+#   +600 p600         ptr            no reader seen
+#   +604 x604         u8[4]          no reader seen
+#   +608 p608         ptr            no reader seen
+#   +612 x612         u8[8]          no reader seen
+#   +620 p620         ptr            no reader seen
+#   +624 p624         ptr            no reader seen
+#   +628 x628         u8[4]          no reader seen
+#   +632 p632         ptr            no reader seen
+#   +636 x636         u8[4]          no reader seen
+#   +640 p640         ptr            no reader seen
+#   +644 x644         u8[4]          no reader seen
+#   +648 p648         ptr            no reader seen
+#   +652 x652         u8[4]          no reader seen
+#   +656 p656         ptr            no reader seen
+#   +660 x660         u8[28]         no reader seen
+#   +688 p688         ptr            no reader seen
+#   +692 x692         u8[12]         no reader seen
+#   +704 p704         ptr            no reader seen
+#   +708 x708         u8[4]          no reader seen
+#   +712 p712         ptr            no reader seen
+#   +716 x716         u8[4]          no reader seen
+#   +720 p720         ptr            no reader seen
+#   +724 x724         u8[4]          no reader seen
+#   +728 p728         ptr            no reader seen
+#   +732 x732         u8[20]         no reader seen
+#   +752 p752         ptr            no reader seen
+#   +756 x756         u8[4]          no reader seen
+#   +760 p760         ptr            no reader seen
+#   +764 x764         u8[4]          no reader seen
+#   +768 p768         ptr            no reader seen
+#   +772 x772         u8[4]          no reader seen
+#   +776 p776         ptr            no reader seen
+#   +780 x780         u8[12]         no reader seen
+#   +792 p792         ptr            no reader seen
+#   +796 x796         u8[4]          no reader seen
+#   +800 p800         ptr            no reader seen
+#   +804 x804         u8[4]          no reader seen
+#   +808 p808         ptr            no reader seen
+#   +812 x812         u8[4]          no reader seen
+#   +816 p816         ptr            no reader seen
+#   +820 x820         u8[4]          no reader seen
+#   +824 p824         ptr            no reader seen
+#   +828 x828         u8[4]          no reader seen
+#   +832 p832         ptr            no reader seen
+#   +836 x836         u8[4]          no reader seen
+#   +840 p840         ptr            no reader seen
+#   +844 x844         u8[4]          no reader seen
+#   +848 p848         ptr            no reader seen
+#   +852 x852         u8[4]          no reader seen
+#   +856 p856         ptr            no reader seen
+#   +860 x860         u8[4]          no reader seen
+#   +864 p864         ptr            no reader seen
+#   +868 x868         u8[12]         no reader seen
+#   +880 p880         ptr            no reader seen
+#   +884 x884         u8[12]         no reader seen
+#   +896 p896         ptr            no reader seen
+#   +900 x900         u8[4]          no reader seen
+#   +904 p904         ptr            no reader seen
+#   +908 x908         u8[4]          no reader seen
+#   +912 p912         ptr            no reader seen
+#   +916 x916         u8[20]         no reader seen
+#   +936 p936         ptr            no reader seen
+#   +940 x940         u8[4]          no reader seen
+#   +944 p944         ptr            no reader seen
+#   +948 x948         u8[4]          no reader seen
+#   +952 p952         ptr            no reader seen
+#   +956 p956         ptr            no reader seen
+#   +960 p960         ptr            no reader seen
+#   +964 x964         u8[4]          no reader seen
+#   +968 p968         ptr            no reader seen
+#   +972 x972         u8[4]          no reader seen
+#   +976 p976         ptr            no reader seen
+#   +980 x980         u8[4]          no reader seen
+#   +984 p984         ptr            no reader seen
+#   +988 x988         u8[20]         no reader seen
+#   +1008p1008        ptr            no reader seen
+#   +1012x1012        u8[4]          no reader seen
+#   +1016p1016        ptr            no reader seen
+#   +1020x1020        u8[4]          no reader seen
+#   +1024p1024        ptr            no reader seen
+#   +1028x1028        u8[4]          no reader seen
+#   +1032p1032        ptr            no reader seen
+#   +1036p1036        ptr            no reader seen
+#   +1040p1040        ptr            no reader seen
+#   +1044x1044        u8[12]         no reader seen
+#   +1056p1056        ptr            no reader seen
+#   +1060p1060        ptr            no reader seen
+#   +1064p1064        ptr            no reader seen
+#   +1068x1068        u8[12]         no reader seen
+#   +1080p1080        ptr            no reader seen
+#   +1084x1084        u8[4]          no reader seen
+#   +1088p1088        ptr            no reader seen
+#   +1092x1092        u8[4]          no reader seen
+#   +1096p1096        ptr            no reader seen
+#   +1100x1100        u8[4]          no reader seen
+#   +1104p1104        ptr            no reader seen
+#   +1108x1108        u8[4]          no reader seen
+#   +1112p1112        ptr            no reader seen
+#   +1116x1116        u8[4]          no reader seen
+#   +1120p1120        ptr            no reader seen
+#   +1124x1124        u8[4]          no reader seen
+#   +1128p1128        ptr            no reader seen
+#   +1132x1132        u8[4]          no reader seen
+#   +1136p1136        ptr            no reader seen
+#   +1140x1140        u8[4]          no reader seen
+#   +1144p1144        ptr            no reader seen
+#   +1148p1148        ptr            no reader seen
+#   +1152p1152        ptr            no reader seen
+#   +1156x1156        u8[4]          no reader seen
+#   +1160p1160        ptr            no reader seen
+#   +1164x1164        u8[4]          no reader seen
+#   +1168p1168        ptr            no reader seen
+#   +1172x1172        u8[20]         no reader seen
+#   +1192p1192        ptr            no reader seen
+#   +1196x1196        u8[4]          no reader seen
+#   +1200p1200        ptr            no reader seen
+#   +1204x1204        u8[4]          no reader seen
+#   +1208p1208        ptr            no reader seen
+#   +1212x1212        u8[4]          no reader seen
+#   +1216p1216        ptr            no reader seen
+#   +1220x1220        u8[4]          no reader seen
+#   +1224p1224        ptr            no reader seen
+#   +1228x1228        u8[12]         no reader seen
+#   +1240p1240        ptr            no reader seen
+#   +1244x1244        u8[4]          no reader seen
+#   +1248p1248        ptr            no reader seen
+#   +1252x1252        u8[12]         no reader seen
+#   +1264p1264        ptr            no reader seen
+#   +1268x1268        u8[12]         no reader seen
+#   +1280p1280        ptr            no reader seen
+#   +1284x1284        u8[4]          no reader seen
+#   +1288p1288        ptr            no reader seen
+#   +1292x1292        u8[4]          no reader seen
+#   +1296p1296        ptr            no reader seen
+#   +1300x1300        u8[4]          no reader seen
+#   +1304p1304        ptr            no reader seen
+#   +1308x1308        u8[4]          no reader seen
+#   +1312p1312        ptr            no reader seen
+#   +1316x1316        u8[4]          no reader seen
+#   +1320p1320        ptr            no reader seen
+#   +1324x1324        u8[4]          no reader seen
+#   +1328p1328        ptr            no reader seen
+#   +1332x1332        u8[4]          no reader seen
+#   +1336p1336        ptr            no reader seen
+#   +1340x1340        u8[4]          no reader seen
+#   +1344p1344        ptr            no reader seen
+#   +1348x1348        u8[4]          no reader seen
+#   +1352p1352        ptr            no reader seen
+#   +1356x1356        u8[4]          no reader seen
+#   +1360p1360        ptr            no reader seen
+#   +1364x1364        u8[4]          no reader seen
+#   +1368p1368        ptr            no reader seen
+#   +1372x1372        u8[4]          no reader seen
+#   +1376p1376        ptr            no reader seen
+#   +1380x1380        u8[4]          no reader seen
+#   +1384p1384        ptr            no reader seen
+#   +1388x1388        u8[4]          no reader seen
+#   +1392p1392        ptr            no reader seen
+#   +1396x1396        u8[4]          no reader seen
+#   +1400p1400        ptr            no reader seen
+#   +1404x1404        u8[4]          no reader seen
+#   +1408p1408        ptr            no reader seen
+#   +1412x1412        u8[4]          no reader seen
+#   +1416p1416        ptr            no reader seen
+#   +1420x1420        u8[4]          no reader seen
+#   +1424p1424        ptr            no reader seen
+#   +1428x1428        u8[4]          no reader seen
+#   +1432p1432        ptr            no reader seen
+#   +1436x1436        u8[4]          no reader seen
+#   +1440p1440        ptr            no reader seen
+#   +1444x1444        u8[4]          no reader seen
+#   +1448p1448        ptr            no reader seen
+#   +1452x1452        u8[4]          no reader seen
+#   +1456p1456        ptr            no reader seen
+#   +1460x1460        u8[4]          no reader seen
+#   +1464p1464        ptr            no reader seen
+#   +1468x1468        u8[4]          no reader seen
+#   +1472p1472        ptr            no reader seen
+#   +1476x1476        u8[4]          no reader seen
+#   +1480p1480        ptr            no reader seen
+#   +1484x1484        u8[4]          no reader seen
+#   +1488p1488        ptr            no reader seen
+#   +1492x1492        u8[12]         no reader seen
+#   +1504p1504        ptr            no reader seen
+#   +1508x1508        u8[4]          no reader seen
+#   +1512p1512        ptr            no reader seen
+#   +1516x1516        u8[4]          no reader seen
+#   +1520p1520        ptr            no reader seen
+#   +1524x1524        u8[4]          no reader seen
+#   +1528p1528        ptr            no reader seen
+#   +1532x1532        u8[4]          no reader seen
+#   +1536p1536        ptr            no reader seen
+#   +1540x1540        u8[4]          no reader seen
+#   +1544p1544        ptr            no reader seen
+#   +1548x1548        u8[4]          no reader seen
+#   +1552p1552        ptr            no reader seen
+#   +1556x1556        u8[4]          no reader seen
+#   +1560p1560        ptr            no reader seen
+#   +1564x1564        u8[12]         no reader seen
+#   +1576p1576        ptr            no reader seen
+#   +1580x1580        u8[12]         no reader seen
+#   +1592p1592        ptr            no reader seen
+#   +1596x1596        u8[4]          no reader seen
+#   +1600p1600        ptr            no reader seen
+#   +1604x1604        u8[4]          no reader seen
+#   +1608p1608        ptr            no reader seen
+#   +1612x1612        u8[4]          no reader seen
+#   +1616p1616        ptr            no reader seen
+#   +1620x1620        u8[4]          no reader seen
+#   +1624p1624        ptr            no reader seen
+#   +1628x1628        u8[4]          no reader seen
+#   +1632p1632        ptr            no reader seen
+#   +1636x1636        u8[4]          no reader seen
+#   +1640p1640        ptr            no reader seen
+#   +1644x1644        u8[4]          no reader seen
+#   +1648p1648        ptr            no reader seen
+#   +1652x1652        u8[12]         no reader seen
+#   +1664p1664        ptr            no reader seen
+#   +1668x1668        u8[12]         no reader seen
+#   +1680p1680        ptr            no reader seen
+#   +1684x1684        u8[12]         no reader seen
+#   +1696p1696        ptr            no reader seen
+#   +1700x1700        u8[4]          no reader seen
+#   +1704p1704        ptr            no reader seen
+#   +1708x1708        u8[4]          no reader seen
+#   +1712p1712        ptr            no reader seen
+#   +1716x1716        u8[4]          no reader seen
+#   +1720p1720        ptr            no reader seen
+#   +1724x1724        u8[4]          no reader seen
+#   +1728p1728        ptr            no reader seen
+#   +1732x1732        u8[4]          no reader seen
+#   +1736p1736        ptr            no reader seen
+#   +1740x1740        u8[4]          no reader seen
+#   +1744p1744        ptr            no reader seen
+#   +1748x1748        u8[4]          no reader seen
+#   +1752p1752        ptr            no reader seen
+#   +1756x1756        u8[12]         no reader seen
+#   +1768p1768        ptr            no reader seen
+#   +1772x1772        u8[4]          no reader seen
+#   +1776p1776        ptr            no reader seen
+#   +1780x1780        u8[4]          no reader seen
+#   +1784p1784        ptr            no reader seen
+#   +1788x1788        u8[4]          no reader seen
+#   +1792p1792        ptr            no reader seen
+#   +1796x1796        u8[4]          no reader seen
+#   +1800p1800        ptr            no reader seen
+#   +1804x1804        u8[4]          no reader seen
+#   +1808p1808        ptr            no reader seen
+#   +1812x1812        u8[4]          no reader seen
+#   +1816p1816        ptr            no reader seen
+#   +1820x1820        u8[12]         no reader seen
+#   +1832p1832        ptr            no reader seen
+#   +1836x1836        u8[4]          no reader seen
+#   +1840p1840        ptr            no reader seen
+#   +1844x1844        u8[4]          no reader seen
+#   +1848p1848        ptr            no reader seen
+#   +1852x1852        u8[4]          no reader seen
+#   +1856p1856        ptr            no reader seen
+#   +1860x1860        u8[4]          no reader seen
+#   +1864p1864        ptr            no reader seen
+#   +1868x1868        u8[4]          no reader seen
+#   +1872p1872        ptr            no reader seen
+#   +1876x1876        u8[4]          no reader seen
+#   +1880p1880        ptr            no reader seen
+#   +1884x1884        u8[4]          no reader seen
+#   +1888p1888        ptr            no reader seen
+#   +1892x1892        u8[4]          no reader seen
+#   +1896p1896        ptr            no reader seen
+#   +1900x1900        u8[4]          no reader seen
+#   +1904p1904        ptr            no reader seen
+#   +1908x1908        u8[4]          no reader seen
+#   +1912p1912        ptr            no reader seen
+#   +1916x1916        u8[4]          no reader seen
+#   +1920p1920        ptr            no reader seen
+#   +1924x1924        u8[4]          no reader seen
+#   +1928p1928        ptr            no reader seen
+#   +1932x1932        u8[4]          no reader seen
+#   +1936p1936        ptr            no reader seen
+#   +1940x1940        u8[4]          no reader seen
+#   +1944p1944        ptr            no reader seen
+#   +1948x1948        u8[4]          no reader seen
+#   +1952p1952        ptr            no reader seen
+#   +1956x1956        u8[4]          no reader seen
+#   +1960p1960        ptr            no reader seen
+#   +1964x1964        u8[4]          no reader seen
+#   +1968p1968        ptr            no reader seen
+#   +1972x1972        u8[20]         no reader seen
+#   +1992p1992        ptr            no reader seen
+#   +1996p1996        ptr            no reader seen
+#   +2000p2000        ptr            no reader seen
+#   +2004x2004        u8[4]          no reader seen
+#   +2008p2008        ptr            no reader seen
+#   +2012x2012        u8[4]          no reader seen
+#   +2016p2016        ptr            no reader seen
+#   +2020x2020        u8[4]          no reader seen
+#   +2024p2024        ptr            no reader seen
+#   +2028x2028        u8[4]          no reader seen
+#   +2032p2032        ptr            no reader seen
+#   +2036x2036        u8[4]          no reader seen
+#   +2040p2040        ptr            no reader seen
+#   +2044x2044        u8[4]          no reader seen
+#   +2048p2048        ptr            no reader seen
+#   +2052x2052        u8[4]          no reader seen
+#   +2056p2056        ptr            no reader seen
+#   +2060x2060        u8[4]          no reader seen
+#   +2064p2064        ptr            no reader seen
+#   +2068x2068        u8[12]         no reader seen
+#   +2080p2080        ptr            no reader seen
+#   +2084x2084        u8[4]          no reader seen
+#   +2088p2088        ptr            no reader seen
+#   +2092x2092        u8[4]          no reader seen
+#   +2096p2096        ptr            no reader seen
+#   +2100x2100        u8[4]          no reader seen
+#   +2104p2104        ptr            no reader seen
+#   +2108x2108        u8[4]          no reader seen
+#   +2112p2112        ptr            no reader seen
+#   +2116x2116        u8[4]          no reader seen
+#   +2120p2120        ptr            no reader seen
+#   +2124x2124        u8[4]          no reader seen
+#   +2128p2128        ptr            no reader seen
+#   +2132x2132        u8[4]          no reader seen
+#   +2136p2136        ptr            no reader seen
+#   +2140x2140        u8[4]          no reader seen
+#   +2144p2144        ptr            no reader seen
+#   +2148x2148        u8[4]          no reader seen
+#   +2152p2152        ptr            no reader seen
+#   +2156x2156        u8[4]          no reader seen
+#   +2160p2160        ptr            no reader seen
+#   +2164x2164        u8[4]          no reader seen
+#   +2168p2168        ptr            no reader seen
+#   +2172x2172        u8[4]          no reader seen
+#   +2176p2176        ptr            no reader seen
+#   +2180x2180        u8[4]          no reader seen
+#   +2184p2184        ptr            no reader seen
+#   +2188p2188        ptr            no reader seen
+#   +2192p2192        ptr            no reader seen
+#   +2196x2196        u8[4]          no reader seen
+#   +2200p2200        ptr            no reader seen
+#   +2204x2204        u8[4]          no reader seen
+#   +2208p2208        ptr            no reader seen
+#   +2212x2212        u8[4]          no reader seen
+#   +2216p2216        ptr            no reader seen
+#   +2220x2220        u8[4]          no reader seen
+#   +2224p2224        ptr            no reader seen
+#   +2228x2228        u8[4]          no reader seen
+#   +2232p2232        ptr            no reader seen
+#   +2236x2236        u8[4]          no reader seen
+#   +2240p2240        ptr            no reader seen
+#   +2244x2244        u8[4]          no reader seen
+#   +2248p2248        ptr            no reader seen
+#   +2252x2252        u8[4]          no reader seen
+#   +2256p2256        ptr            no reader seen
+#   +2260x2260        u8[4]          no reader seen
+#   +2264p2264        ptr            no reader seen
+#   +2268x2268        u8[4]          no reader seen
+#   +2272p2272        ptr            no reader seen
+#   +2276x2276        u8[4]          no reader seen
+#   +2280p2280        ptr            no reader seen
+#   +2284x2284        u8[4]          no reader seen
+#   +2288p2288        ptr            no reader seen
+#   +2292x2292        u8[28]         no reader seen
+#   +2320p2320        ptr            no reader seen
+#   +2324x2324        u8[4]          no reader seen
+#   +2328p2328        ptr            no reader seen
+#   +2332x2332        u8[4]          no reader seen
+#   +2336p2336        ptr            no reader seen
+#   +2340x2340        u8[4]          no reader seen
+#   +2344p2344        ptr            no reader seen
+#   +2348x2348        u8[4]          no reader seen
+#   +2352p2352        ptr            no reader seen
+#   +2356x2356        u8[4]          no reader seen
+#   +2360p2360        ptr            no reader seen
+#   +2364x2364        u8[4]          no reader seen
+#   +2368p2368        ptr            no reader seen
+#   +2372x2372        u8[4]          no reader seen
+#   +2376p2376        ptr            no reader seen
+#   +2380x2380        u8[4]          no reader seen
+#   +2384p2384        ptr            no reader seen
+#   +2388x2388        u8[4]          no reader seen
+#   +2392p2392        ptr            no reader seen
+#   +2396x2396        u8[4]          no reader seen
+#   +2400p2400        ptr            no reader seen
+#   +2404x2404        u8[4]          no reader seen
+#   +2408p2408        ptr            no reader seen
+#   +2412x2412        u8[4]          no reader seen
+#   +2416p2416        ptr            no reader seen
+#   +2420x2420        u8[4]          no reader seen
+#   +2424p2424        ptr            no reader seen
+#   +2428x2428        u8[4]          no reader seen
+#   +2432p2432        ptr            no reader seen
+#   +2436x2436        u8[4]          no reader seen
+#   +2440p2440        ptr            no reader seen
+#   +2444x2444        u8[4]          no reader seen
+#   +2448p2448        ptr            no reader seen
+#   +2452x2452        u8[4]          no reader seen
+#   +2456p2456        ptr            no reader seen
+#   +2460x2460        u8[4]          no reader seen
+#   +2464p2464        ptr            no reader seen
+#   +2468x2468        u8[4]          no reader seen
+#   +2472p2472        ptr            no reader seen
+#   +2476x2476        u8[4]          no reader seen
+#   +2480p2480        ptr            no reader seen
+#   +2484x2484        u8[4]          no reader seen
+#   +2488p2488        ptr            no reader seen
+#   +2492x2492        u8[4]          no reader seen
+#   +2496p2496        ptr            no reader seen
+#   +2500x2500        u8[12]         no reader seen
+#   +2512p2512        ptr            no reader seen
+#   +2516x2516        u8[4]          no reader seen
+#   +2520p2520        ptr            no reader seen
+#   +2524x2524        u8[4]          no reader seen
+#   +2528p2528        ptr            no reader seen
+#   +2532x2532        u8[12]         no reader seen
+#   +2544p2544        ptr            no reader seen
+#   +2548x2548        u8[4]          no reader seen
+#   +2552p2552        ptr            no reader seen
+#   +2556x2556        u8[4]          no reader seen
+#   +2560p2560        ptr            no reader seen
+#   +2564x2564        u8[4]          no reader seen
+#   +2568p2568        ptr            no reader seen
+#   +2572x2572        u8[4]          no reader seen
+#   +2576p2576        ptr            no reader seen
+#   +2580x2580        u8[4]          no reader seen
+#   +2584p2584        ptr            no reader seen
+#   +2588x2588        u8[4]          no reader seen
+#   +2592p2592        ptr            no reader seen
+#   +2596x2596        u8[4]          no reader seen
+#   +2600p2600        ptr            no reader seen
+#   +2604x2604        u8[4]          no reader seen
+#   +2608p2608        ptr            no reader seen
+#   +2612x2612        u8[4]          no reader seen
+#   +2616p2616        ptr            no reader seen
+#   +2620x2620        u8[4]          no reader seen
+#   +2624p2624        ptr            no reader seen
+#   +2628x2628        u8[4]          no reader seen
+#   +2632p2632        ptr            no reader seen
+#   +2636x2636        u8[4]          no reader seen
+#   +2640p2640        ptr            no reader seen
+#   +2644x2644        u8[4]          no reader seen
+#   +2648p2648        ptr            no reader seen
+#   +2652x2652        u8[4]          no reader seen
+#   +2656p2656        ptr            no reader seen
+#   +2660x2660        u8[4]          no reader seen
+#   +2664p2664        ptr            no reader seen
+#   +2668x2668        u8[4]          no reader seen
+#   +2672p2672        ptr            no reader seen
+#   +2676x2676        u8[4]          no reader seen
+#   +2680p2680        ptr            no reader seen
+#   +2684x2684        u8[4]          no reader seen
+#   +2688p2688        ptr            no reader seen
+#   +2692x2692        u8[4]          no reader seen
+#   +2696p2696        ptr            no reader seen
+#   +2700x2700        u8[4]          no reader seen
+#   +2704p2704        ptr            no reader seen
+#   +2708x2708        u8[4]          no reader seen
+#   +2712p2712        ptr            no reader seen
+#   +2716x2716        u8[4]          no reader seen
+#   +2720p2720        ptr            no reader seen
+#   +2724x2724        u8[4]          no reader seen
+#   +2728p2728        ptr            no reader seen
+#   +2732x2732        u8[4]          no reader seen
+#   +2736p2736        ptr            no reader seen
+#   +2740x2740        u8[4]          no reader seen
+#   +2744p2744        ptr            no reader seen
+#   +2748x2748        u8[4]          no reader seen
+#   +2752p2752        ptr            no reader seen
+#   +2756x2756        u8[4]          no reader seen
+#   +2760p2760        ptr            no reader seen
+#   +2764x2764        u8[4]          no reader seen
+#   +2768p2768        ptr            no reader seen
+#   +2772x2772        u8[4]          no reader seen
+#   +2776p2776        ptr            no reader seen
+#   +2780x2780        u8[4]          no reader seen
+#   +2784p2784        ptr            no reader seen
+#   +2788x2788        u8[12]         no reader seen
+#   +2800p2800        ptr            no reader seen
+#   +2804x2804        u8[4]          no reader seen
+#   +2808p2808        ptr            no reader seen
+#   +2812x2812        u8[4]          no reader seen
+#   +2816p2816        ptr            no reader seen
+#   +2820x2820        u8[4]          no reader seen
+#   +2824p2824        ptr            no reader seen
+#   +2828x2828        u8[12]         no reader seen
+#   +2840p2840        ptr            no reader seen
+#   +2844x2844        u8[4]          no reader seen
+#   +2848p2848        ptr            no reader seen
+#   +2852x2852        u8[4]          no reader seen
+#   +2856p2856        ptr            no reader seen
+#   +2860x2860        u8[4]          no reader seen
+#   +2864p2864        ptr            no reader seen
+#   +2868x2868        u8[4]          no reader seen
+#   +2872p2872        ptr            no reader seen
+#   +2876x2876        u8[12]         no reader seen
+#   +2888p2888        ptr            no reader seen
+#   +2892x2892        u8[4]          no reader seen
+#   +2896p2896        ptr            no reader seen
+#   +2900x2900        u8[4]          no reader seen
+#   +2904p2904        ptr            no reader seen
+#   +2908x2908        u8[4]          no reader seen
+#   +2912p2912        ptr            no reader seen
+#   +2916x2916        u8[4]          no reader seen
+#   +2920p2920        ptr            no reader seen
+#   +2924x2924        u8[4]          no reader seen
+#   +2928p2928        ptr            no reader seen
+#   +2932x2932        u8[4]          no reader seen
+#   +2936p2936        ptr            no reader seen
+#   +2940x2940        u8[4]          no reader seen
+#   +2944p2944        ptr            no reader seen
+#   +2948x2948        u8[4]          no reader seen
+#   +2952p2952        ptr            no reader seen
+#   +2956x2956        u8[4]          no reader seen
+#   +2960p2960        ptr            no reader seen
+#   +2964x2964        u8[4]          no reader seen
+#   +2968p2968        ptr            no reader seen
+#   +2972x2972        u8[4]          no reader seen
+#   +2976p2976        ptr            no reader seen
+#   +2980x2980        u8[4]          no reader seen
+#   +2984p2984        ptr            no reader seen
+#   +2988x2988        u8[4]          no reader seen
+#   +2992p2992        ptr            no reader seen
+#   +2996x2996        u8[4]          no reader seen
+#   +3000p3000        ptr            no reader seen
+#   +3004x3004        u8[4]          no reader seen
+#   +3008p3008        ptr            no reader seen
+#   +3012x3012        u8[12]         no reader seen
+#   +3024p3024        ptr            no reader seen
+#   +3028x3028        u8[4]          no reader seen
+#   +3032p3032        ptr            no reader seen
+#   +3036x3036        u8[4]          no reader seen
+#   +3040p3040        ptr            no reader seen
+#   +3044x3044        u8[4]          no reader seen
+#   +3048p3048        ptr            no reader seen
+#   +3052x3052        u8[4]          no reader seen
+#   +3056p3056        ptr            no reader seen
+#   +3060x3060        u8[12]         no reader seen
+#   +3072p3072        ptr            no reader seen
+#   +3076x3076        u8[4]          no reader seen
+#   +3080p3080        ptr            no reader seen
+#   +3084x3084        u8[4]          no reader seen
+#   +3088p3088        ptr            no reader seen
+#   +3092x3092        u8[4]          no reader seen
+#   +3096p3096        ptr            no reader seen
+#   +3100x3100        u8[4]          no reader seen
+#   +3104p3104        ptr            no reader seen
+#   +3108x3108        u8[4]          no reader seen
+#   +3112p3112        ptr            no reader seen
+#   +3116x3116        u8[4]          no reader seen
+#   +3120p3120        ptr            no reader seen
+#   +3124x3124        u8[4]          no reader seen
+#   +3128p3128        ptr            no reader seen
+#   +3132x3132        u8[4]          no reader seen
+#   +3136p3136        ptr            no reader seen
+#   +3140x3140        u8[12]         no reader seen
+#   +3152p3152        ptr            no reader seen
+#   +3156x3156        u8[4]          no reader seen
+#   +3160p3160        ptr            no reader seen
+#   +3164x3164        u8[12]         no reader seen
+#   +3176p3176        ptr            no reader seen
+#   +3180x3180        u8[4]          no reader seen
+#   +3184p3184        ptr            no reader seen
+#   +3188x3188        u8[4]          no reader seen
+#   +3192p3192        ptr            no reader seen
+#   +3196x3196        u8[12]         no reader seen
+#   +3208p3208        ptr            no reader seen
+#   +3212x3212        u8[8]          no reader seen
+#   +3220p3220        ptr            no reader seen
+#   +3224p3224        ptr            no reader seen
+#   +3228x3228        u8[4]          no reader seen
+#   +3232p3232        ptr            no reader seen
+#   +3236x3236        u8[4]          no reader seen
+#   +3240p3240        ptr            no reader seen
+#   +3244p3244        ptr            no reader seen
+#   +3248p3248        ptr            no reader seen
+#   +3252x3252        u8[4]          no reader seen
+#   +3256p3256        ptr            no reader seen
+#   +3260x3260        u8[4]          no reader seen
+#   +3264p3264        ptr            no reader seen
+#   +3268x3268        u8[4]          no reader seen
+#   +3272p3272        ptr            no reader seen
+#   +3276x3276        u8[4]          no reader seen
+#   +3280p3280        ptr            no reader seen
+#   +3284x3284        u8[4]          no reader seen
+#   +3288p3288        ptr            no reader seen
+#   +3292x3292        u8[4]          no reader seen
+#   +3296p3296        ptr            no reader seen
+#   +3300x3300        u8[4]          no reader seen
+#   +3304p3304        ptr            no reader seen
+#   +3308x3308        u8[4]          no reader seen
+#   +3312p3312        ptr            no reader seen
+#   +3316x3316        u8[4]          no reader seen
+#   +3320p3320        ptr            no reader seen
+#   +3324x3324        u8[4]          no reader seen
+#   +3328p3328        ptr            no reader seen
+#   +3332x3332        u8[4]          no reader seen
+#   +3336p3336        ptr            no reader seen
+#   +3340x3340        u8[4]          no reader seen
+#   +3344p3344        ptr            no reader seen
+#   +3348x3348        u8[4]          no reader seen
+#   +3352p3352        ptr            no reader seen
+#   +3356x3356        u8[4]          no reader seen
+#   +3360p3360        ptr            no reader seen
+#   +3364x3364        u8[4]          no reader seen
+#   +3368p3368        ptr            no reader seen
+#   +3372x3372        u8[4]          no reader seen
+#   +3376p3376        ptr            no reader seen
+#   +3380x3380        u8[4]          no reader seen
+#   +3384p3384        ptr            no reader seen
+#   +3388x3388        u8[4]          no reader seen
+#   +3392p3392        ptr            no reader seen
+#   +3396x3396        u8[4]          no reader seen
+#   +3400p3400        ptr            no reader seen
+#   +3404x3404        u8[4]          no reader seen
+#   +3408p3408        ptr            no reader seen
+#   +3412x3412        u8[4]          no reader seen
+#   +3416p3416        ptr            no reader seen
+#   +3420x3420        u8[4]          no reader seen
+#   +3424p3424        ptr            no reader seen
+#   +3428x3428        u8[4]          no reader seen
+#   +3432p3432        ptr            no reader seen
+#   +3436x3436        u8[4]          no reader seen
+#   +3440p3440        ptr            no reader seen
+#   +3444x3444        u8[20]         no reader seen
+#   +3464p3464        ptr            no reader seen
+#   +3468x3468        u8[4]          no reader seen
+#   +3472p3472        ptr            no reader seen
+#   +3476x3476        u8[4]          no reader seen
+#   +3480p3480        ptr            no reader seen
+#   +3484x3484        u8[4]          no reader seen
+#   +3488p3488        ptr            no reader seen
+#   +3492x3492        u8[4]          no reader seen
+#   +3496p3496        ptr            no reader seen
+#   +3500x3500        u8[4]          no reader seen
+#   +3504p3504        ptr            no reader seen
+#   +3508x3508        u8[4]          no reader seen
+#   +3512p3512        ptr            no reader seen
+#   +3516x3516        u8[4]          no reader seen
+#   +3520p3520        ptr            no reader seen
+#   +3524x3524        u8[4]          no reader seen
+#   +3528p3528        ptr            no reader seen
+#   +3532x3532        u8[4]          no reader seen
+#   +3536p3536        ptr            no reader seen
+#   +3540x3540        u8[4]          no reader seen
+#   +3544p3544        ptr            no reader seen
+#   +3548x3548        u8[4]          no reader seen
+#   +3552p3552        ptr            no reader seen
+#   +3556x3556        u8[4]          no reader seen
+#   +3560p3560        ptr            no reader seen
+#   +3564x3564        u8[4]          no reader seen
+#   +3568p3568        ptr            no reader seen
+#   +3572x3572        u8[4]          no reader seen
+#   +3576p3576        ptr            no reader seen
+#   +3580x3580        u8[4]          no reader seen
+#   +3584p3584        ptr            no reader seen
+#   +3588x3588        u8[4]          no reader seen
+#   +3592p3592        ptr            no reader seen
+#   +3596x3596        u8[12]         no reader seen
+#   +3608p3608        ptr            no reader seen
+#   +3612x3612        u8[12]         no reader seen
+#   +3624p3624        ptr            no reader seen
+#   +3628x3628        u8[4]          no reader seen
+#   +3632p3632        ptr            no reader seen
+#   +3636x3636        u8[4]          no reader seen
+#   +3640p3640        ptr            no reader seen
+#   +3644x3644        u8[4]          no reader seen
+#   +3648p3648        ptr            no reader seen
+#   +3652x3652        u8[4]          no reader seen
+#   +3656p3656        ptr            no reader seen
+#   +3660x3660        u8[4]          no reader seen
+#   +3664p3664        ptr            no reader seen
+#   +3668x3668        u8[4]          no reader seen
+#   +3672p3672        ptr            no reader seen
+#   +3676x3676        u8[4]          no reader seen
+#   +3680p3680        ptr            no reader seen
+#   +3684x3684        u8[4]          no reader seen
+#   +3688p3688        ptr            no reader seen
+#   +3692x3692        u8[4]          no reader seen
+#   +3696p3696        ptr            no reader seen
+#   +3700x3700        u8[4]          no reader seen
+#   +3704p3704        ptr            no reader seen
+#   +3708x3708        u8[4]          no reader seen
+#   +3712p3712        ptr            no reader seen
+#   +3716x3716        u8[4]          no reader seen
+#   +3720p3720        ptr            no reader seen
+#   +3724x3724        u8[4]          no reader seen
+#   +3728p3728        ptr            no reader seen
+#   +3732x3732        u8[4]          no reader seen
+#   +3736p3736        ptr            no reader seen
+#   +3740x3740        u8[4]          no reader seen
+#   +3744p3744        ptr            no reader seen
+#   +3748x3748        u8[4]          no reader seen
+#   +3752p3752        ptr            no reader seen
+#   +3756x3756        u8[4]          no reader seen
+#   +3760p3760        ptr            no reader seen
+#   +3764x3764        u8[4]          no reader seen
+#   +3768p3768        ptr            no reader seen
+#   +3772x3772        u8[12]         no reader seen
+#   +3784p3784        ptr            no reader seen
+#   +3788x3788        u8[4]          no reader seen
+#   +3792p3792        ptr            no reader seen
+#   +3796x3796        u8[4]          no reader seen
+.macro REC_ptrs_48763990_p0 p0=0, f4=0, x6, p8=0, x12, p16=0, x20, p24=0, x28, p40=0, x44, p48=0, x52, p56=0, x60, p64=0, x68, p72=0, x76, p80=0, x84, p88=0, x92, p104=0, x108, p112=0, x116, p120=0, x124, p128=0, x132, p144=0, x148, p152=0, x156, p160=0, x164, p172=0, p176=0, x180, p184=0, x188, p192=0, x196, p208=0, x212, p216=0, x220, p224=0, x228, p232=0, x236, p240=0, x244, p248=0, x252, p256=0, x260, p264=0, x268, p272=0, x276, p280=0, x284, p288=0, x292, p296=0, x300, p304=0, x308, p312=0, x316, p320=0, x324, p328=0, x332, p336=0, x340, p344=0, x348, p352=0, x356, p360=0, p364=0, p368=0, x372, p376=0, x380, p384=0, x388, p400=0, x404, p408=0, x412, p416=0, x420, p424=0, x428, p432=0, x436, p440=0, x444, p472=0, x476, p480=0, x484, p504=0, x508, p524=0, x528, p536=0, x540, p560=0, x564, p568=0, x572, p576=0, x580, p584=0, x588, p592=0, x596, p600=0, x604, p608=0, x612, p620=0, p624=0, x628, p632=0, x636, p640=0, x644, p648=0, x652, p656=0, x660, p688=0, x692, p704=0, x708, p712=0, x716, p720=0, x724, p728=0, x732, p752=0, x756, p760=0, x764, p768=0, x772, p776=0, x780, p792=0, x796, p800=0, x804, p808=0, x812, p816=0, x820, p824=0, x828, p832=0, x836, p840=0, x844, p848=0, x852, p856=0, x860, p864=0, x868, p880=0, x884, p896=0, x900, p904=0, x908, p912=0, x916, p936=0, x940, p944=0, x948, p952=0, p956=0, p960=0, x964, p968=0, x972, p976=0, x980, p984=0, x988, p1008=0, x1012, p1016=0, x1020, p1024=0, x1028, p1032=0, p1036=0, p1040=0, x1044, p1056=0, p1060=0, p1064=0, x1068, p1080=0, x1084, p1088=0, x1092, p1096=0, x1100, p1104=0, x1108, p1112=0, x1116, p1120=0, x1124, p1128=0, x1132, p1136=0, x1140, p1144=0, p1148=0, p1152=0, x1156, p1160=0, x1164, p1168=0, x1172, p1192=0, x1196, p1200=0, x1204, p1208=0, x1212, p1216=0, x1220, p1224=0, x1228, p1240=0, x1244, p1248=0, x1252, p1264=0, x1268, p1280=0, x1284, p1288=0, x1292, p1296=0, x1300, p1304=0, x1308, p1312=0, x1316, p1320=0, x1324, p1328=0, x1332, p1336=0, x1340, p1344=0, x1348, p1352=0, x1356, p1360=0, x1364, p1368=0, x1372, p1376=0, x1380, p1384=0, x1388, p1392=0, x1396, p1400=0, x1404, p1408=0, x1412, p1416=0, x1420, p1424=0, x1428, p1432=0, x1436, p1440=0, x1444, p1448=0, x1452, p1456=0, x1460, p1464=0, x1468, p1472=0, x1476, p1480=0, x1484, p1488=0, x1492, p1504=0, x1508, p1512=0, x1516, p1520=0, x1524, p1528=0, x1532, p1536=0, x1540, p1544=0, x1548, p1552=0, x1556, p1560=0, x1564, p1576=0, x1580, p1592=0, x1596, p1600=0, x1604, p1608=0, x1612, p1616=0, x1620, p1624=0, x1628, p1632=0, x1636, p1640=0, x1644, p1648=0, x1652, p1664=0, x1668, p1680=0, x1684, p1696=0, x1700, p1704=0, x1708, p1712=0, x1716, p1720=0, x1724, p1728=0, x1732, p1736=0, x1740, p1744=0, x1748, p1752=0, x1756, p1768=0, x1772, p1776=0, x1780, p1784=0, x1788, p1792=0, x1796, p1800=0, x1804, p1808=0, x1812, p1816=0, x1820, p1832=0, x1836, p1840=0, x1844, p1848=0, x1852, p1856=0, x1860, p1864=0, x1868, p1872=0, x1876, p1880=0, x1884, p1888=0, x1892, p1896=0, x1900, p1904=0, x1908, p1912=0, x1916, p1920=0, x1924, p1928=0, x1932, p1936=0, x1940, p1944=0, x1948, p1952=0, x1956, p1960=0, x1964, p1968=0, x1972, p1992=0, p1996=0, p2000=0, x2004, p2008=0, x2012, p2016=0, x2020, p2024=0, x2028, p2032=0, x2036, p2040=0, x2044, p2048=0, x2052, p2056=0, x2060, p2064=0, x2068, p2080=0, x2084, p2088=0, x2092, p2096=0, x2100, p2104=0, x2108, p2112=0, x2116, p2120=0, x2124, p2128=0, x2132, p2136=0, x2140, p2144=0, x2148, p2152=0, x2156, p2160=0, x2164, p2168=0, x2172, p2176=0, x2180, p2184=0, p2188=0, p2192=0, x2196, p2200=0, x2204, p2208=0, x2212, p2216=0, x2220, p2224=0, x2228, p2232=0, x2236, p2240=0, x2244, p2248=0, x2252, p2256=0, x2260, p2264=0, x2268, p2272=0, x2276, p2280=0, x2284, p2288=0, x2292, p2320=0, x2324, p2328=0, x2332, p2336=0, x2340, p2344=0, x2348, p2352=0, x2356, p2360=0, x2364, p2368=0, x2372, p2376=0, x2380, p2384=0, x2388, p2392=0, x2396, p2400=0, x2404, p2408=0, x2412, p2416=0, x2420, p2424=0, x2428, p2432=0, x2436, p2440=0, x2444, p2448=0, x2452, p2456=0, x2460, p2464=0, x2468, p2472=0, x2476, p2480=0, x2484, p2488=0, x2492, p2496=0, x2500, p2512=0, x2516, p2520=0, x2524, p2528=0, x2532, p2544=0, x2548, p2552=0, x2556, p2560=0, x2564, p2568=0, x2572, p2576=0, x2580, p2584=0, x2588, p2592=0, x2596, p2600=0, x2604, p2608=0, x2612, p2616=0, x2620, p2624=0, x2628, p2632=0, x2636, p2640=0, x2644, p2648=0, x2652, p2656=0, x2660, p2664=0, x2668, p2672=0, x2676, p2680=0, x2684, p2688=0, x2692, p2696=0, x2700, p2704=0, x2708, p2712=0, x2716, p2720=0, x2724, p2728=0, x2732, p2736=0, x2740, p2744=0, x2748, p2752=0, x2756, p2760=0, x2764, p2768=0, x2772, p2776=0, x2780, p2784=0, x2788, p2800=0, x2804, p2808=0, x2812, p2816=0, x2820, p2824=0, x2828, p2840=0, x2844, p2848=0, x2852, p2856=0, x2860, p2864=0, x2868, p2872=0, x2876, p2888=0, x2892, p2896=0, x2900, p2904=0, x2908, p2912=0, x2916, p2920=0, x2924, p2928=0, x2932, p2936=0, x2940, p2944=0, x2948, p2952=0, x2956, p2960=0, x2964, p2968=0, x2972, p2976=0, x2980, p2984=0, x2988, p2992=0, x2996, p3000=0, x3004, p3008=0, x3012, p3024=0, x3028, p3032=0, x3036, p3040=0, x3044, p3048=0, x3052, p3056=0, x3060, p3072=0, x3076, p3080=0, x3084, p3088=0, x3092, p3096=0, x3100, p3104=0, x3108, p3112=0, x3116, p3120=0, x3124, p3128=0, x3132, p3136=0, x3140, p3152=0, x3156, p3160=0, x3164, p3176=0, x3180, p3184=0, x3188, p3192=0, x3196, p3208=0, x3212, p3220=0, p3224=0, x3228, p3232=0, x3236, p3240=0, p3244=0, p3248=0, x3252, p3256=0, x3260, p3264=0, x3268, p3272=0, x3276, p3280=0, x3284, p3288=0, x3292, p3296=0, x3300, p3304=0, x3308, p3312=0, x3316, p3320=0, x3324, p3328=0, x3332, p3336=0, x3340, p3344=0, x3348, p3352=0, x3356, p3360=0, x3364, p3368=0, x3372, p3376=0, x3380, p3384=0, x3388, p3392=0, x3396, p3400=0, x3404, p3408=0, x3412, p3416=0, x3420, p3424=0, x3428, p3432=0, x3436, p3440=0, x3444, p3464=0, x3468, p3472=0, x3476, p3480=0, x3484, p3488=0, x3492, p3496=0, x3500, p3504=0, x3508, p3512=0, x3516, p3520=0, x3524, p3528=0, x3532, p3536=0, x3540, p3544=0, x3548, p3552=0, x3556, p3560=0, x3564, p3568=0, x3572, p3576=0, x3580, p3584=0, x3588, p3592=0, x3596, p3608=0, x3612, p3624=0, x3628, p3632=0, x3636, p3640=0, x3644, p3648=0, x3652, p3656=0, x3660, p3664=0, x3668, p3672=0, x3676, p3680=0, x3684, p3688=0, x3692, p3696=0, x3700, p3704=0, x3708, p3712=0, x3716, p3720=0, x3724, p3728=0, x3732, p3736=0, x3740, p3744=0, x3748, p3752=0, x3756, p3760=0, x3764, p3768=0, x3772, p3784=0, x3788, p3792=0, x3796
+	.long	\p0
+	.word	\f4
+	.ascii	\x6
+	.long	\p8
+	.ascii	\x12
+	.long	\p16
+	.ascii	\x20
+	.long	\p24
+	.ascii	\x28
+	.long	\p40
+	.ascii	\x44
+	.long	\p48
+	.ascii	\x52
+	.long	\p56
+	.ascii	\x60
+	.long	\p64
+	.ascii	\x68
+	.long	\p72
+	.ascii	\x76
+	.long	\p80
+	.ascii	\x84
+	.long	\p88
+	.ascii	\x92
+	.long	\p104
+	.ascii	\x108
+	.long	\p112
+	.ascii	\x116
+	.long	\p120
+	.ascii	\x124
+	.long	\p128
+	.ascii	\x132
+	.long	\p144
+	.ascii	\x148
+	.long	\p152
+	.ascii	\x156
+	.long	\p160
+	.ascii	\x164
+	.long	\p172
+	.long	\p176
+	.ascii	\x180
+	.long	\p184
+	.ascii	\x188
+	.long	\p192
+	.ascii	\x196
+	.long	\p208
+	.ascii	\x212
+	.long	\p216
+	.ascii	\x220
+	.long	\p224
+	.ascii	\x228
+	.long	\p232
+	.ascii	\x236
+	.long	\p240
+	.ascii	\x244
+	.long	\p248
+	.ascii	\x252
+	.long	\p256
+	.ascii	\x260
+	.long	\p264
+	.ascii	\x268
+	.long	\p272
+	.ascii	\x276
+	.long	\p280
+	.ascii	\x284
+	.long	\p288
+	.ascii	\x292
+	.long	\p296
+	.ascii	\x300
+	.long	\p304
+	.ascii	\x308
+	.long	\p312
+	.ascii	\x316
+	.long	\p320
+	.ascii	\x324
+	.long	\p328
+	.ascii	\x332
+	.long	\p336
+	.ascii	\x340
+	.long	\p344
+	.ascii	\x348
+	.long	\p352
+	.ascii	\x356
+	.long	\p360
+	.long	\p364
+	.long	\p368
+	.ascii	\x372
+	.long	\p376
+	.ascii	\x380
+	.long	\p384
+	.ascii	\x388
+	.long	\p400
+	.ascii	\x404
+	.long	\p408
+	.ascii	\x412
+	.long	\p416
+	.ascii	\x420
+	.long	\p424
+	.ascii	\x428
+	.long	\p432
+	.ascii	\x436
+	.long	\p440
+	.ascii	\x444
+	.long	\p472
+	.ascii	\x476
+	.long	\p480
+	.ascii	\x484
+	.long	\p504
+	.ascii	\x508
+	.long	\p524
+	.ascii	\x528
+	.long	\p536
+	.ascii	\x540
+	.long	\p560
+	.ascii	\x564
+	.long	\p568
+	.ascii	\x572
+	.long	\p576
+	.ascii	\x580
+	.long	\p584
+	.ascii	\x588
+	.long	\p592
+	.ascii	\x596
+	.long	\p600
+	.ascii	\x604
+	.long	\p608
+	.ascii	\x612
+	.long	\p620
+	.long	\p624
+	.ascii	\x628
+	.long	\p632
+	.ascii	\x636
+	.long	\p640
+	.ascii	\x644
+	.long	\p648
+	.ascii	\x652
+	.long	\p656
+	.ascii	\x660
+	.long	\p688
+	.ascii	\x692
+	.long	\p704
+	.ascii	\x708
+	.long	\p712
+	.ascii	\x716
+	.long	\p720
+	.ascii	\x724
+	.long	\p728
+	.ascii	\x732
+	.long	\p752
+	.ascii	\x756
+	.long	\p760
+	.ascii	\x764
+	.long	\p768
+	.ascii	\x772
+	.long	\p776
+	.ascii	\x780
+	.long	\p792
+	.ascii	\x796
+	.long	\p800
+	.ascii	\x804
+	.long	\p808
+	.ascii	\x812
+	.long	\p816
+	.ascii	\x820
+	.long	\p824
+	.ascii	\x828
+	.long	\p832
+	.ascii	\x836
+	.long	\p840
+	.ascii	\x844
+	.long	\p848
+	.ascii	\x852
+	.long	\p856
+	.ascii	\x860
+	.long	\p864
+	.ascii	\x868
+	.long	\p880
+	.ascii	\x884
+	.long	\p896
+	.ascii	\x900
+	.long	\p904
+	.ascii	\x908
+	.long	\p912
+	.ascii	\x916
+	.long	\p936
+	.ascii	\x940
+	.long	\p944
+	.ascii	\x948
+	.long	\p952
+	.long	\p956
+	.long	\p960
+	.ascii	\x964
+	.long	\p968
+	.ascii	\x972
+	.long	\p976
+	.ascii	\x980
+	.long	\p984
+	.ascii	\x988
+	.long	\p1008
+	.ascii	\x1012
+	.long	\p1016
+	.ascii	\x1020
+	.long	\p1024
+	.ascii	\x1028
+	.long	\p1032
+	.long	\p1036
+	.long	\p1040
+	.ascii	\x1044
+	.long	\p1056
+	.long	\p1060
+	.long	\p1064
+	.ascii	\x1068
+	.long	\p1080
+	.ascii	\x1084
+	.long	\p1088
+	.ascii	\x1092
+	.long	\p1096
+	.ascii	\x1100
+	.long	\p1104
+	.ascii	\x1108
+	.long	\p1112
+	.ascii	\x1116
+	.long	\p1120
+	.ascii	\x1124
+	.long	\p1128
+	.ascii	\x1132
+	.long	\p1136
+	.ascii	\x1140
+	.long	\p1144
+	.long	\p1148
+	.long	\p1152
+	.ascii	\x1156
+	.long	\p1160
+	.ascii	\x1164
+	.long	\p1168
+	.ascii	\x1172
+	.long	\p1192
+	.ascii	\x1196
+	.long	\p1200
+	.ascii	\x1204
+	.long	\p1208
+	.ascii	\x1212
+	.long	\p1216
+	.ascii	\x1220
+	.long	\p1224
+	.ascii	\x1228
+	.long	\p1240
+	.ascii	\x1244
+	.long	\p1248
+	.ascii	\x1252
+	.long	\p1264
+	.ascii	\x1268
+	.long	\p1280
+	.ascii	\x1284
+	.long	\p1288
+	.ascii	\x1292
+	.long	\p1296
+	.ascii	\x1300
+	.long	\p1304
+	.ascii	\x1308
+	.long	\p1312
+	.ascii	\x1316
+	.long	\p1320
+	.ascii	\x1324
+	.long	\p1328
+	.ascii	\x1332
+	.long	\p1336
+	.ascii	\x1340
+	.long	\p1344
+	.ascii	\x1348
+	.long	\p1352
+	.ascii	\x1356
+	.long	\p1360
+	.ascii	\x1364
+	.long	\p1368
+	.ascii	\x1372
+	.long	\p1376
+	.ascii	\x1380
+	.long	\p1384
+	.ascii	\x1388
+	.long	\p1392
+	.ascii	\x1396
+	.long	\p1400
+	.ascii	\x1404
+	.long	\p1408
+	.ascii	\x1412
+	.long	\p1416
+	.ascii	\x1420
+	.long	\p1424
+	.ascii	\x1428
+	.long	\p1432
+	.ascii	\x1436
+	.long	\p1440
+	.ascii	\x1444
+	.long	\p1448
+	.ascii	\x1452
+	.long	\p1456
+	.ascii	\x1460
+	.long	\p1464
+	.ascii	\x1468
+	.long	\p1472
+	.ascii	\x1476
+	.long	\p1480
+	.ascii	\x1484
+	.long	\p1488
+	.ascii	\x1492
+	.long	\p1504
+	.ascii	\x1508
+	.long	\p1512
+	.ascii	\x1516
+	.long	\p1520
+	.ascii	\x1524
+	.long	\p1528
+	.ascii	\x1532
+	.long	\p1536
+	.ascii	\x1540
+	.long	\p1544
+	.ascii	\x1548
+	.long	\p1552
+	.ascii	\x1556
+	.long	\p1560
+	.ascii	\x1564
+	.long	\p1576
+	.ascii	\x1580
+	.long	\p1592
+	.ascii	\x1596
+	.long	\p1600
+	.ascii	\x1604
+	.long	\p1608
+	.ascii	\x1612
+	.long	\p1616
+	.ascii	\x1620
+	.long	\p1624
+	.ascii	\x1628
+	.long	\p1632
+	.ascii	\x1636
+	.long	\p1640
+	.ascii	\x1644
+	.long	\p1648
+	.ascii	\x1652
+	.long	\p1664
+	.ascii	\x1668
+	.long	\p1680
+	.ascii	\x1684
+	.long	\p1696
+	.ascii	\x1700
+	.long	\p1704
+	.ascii	\x1708
+	.long	\p1712
+	.ascii	\x1716
+	.long	\p1720
+	.ascii	\x1724
+	.long	\p1728
+	.ascii	\x1732
+	.long	\p1736
+	.ascii	\x1740
+	.long	\p1744
+	.ascii	\x1748
+	.long	\p1752
+	.ascii	\x1756
+	.long	\p1768
+	.ascii	\x1772
+	.long	\p1776
+	.ascii	\x1780
+	.long	\p1784
+	.ascii	\x1788
+	.long	\p1792
+	.ascii	\x1796
+	.long	\p1800
+	.ascii	\x1804
+	.long	\p1808
+	.ascii	\x1812
+	.long	\p1816
+	.ascii	\x1820
+	.long	\p1832
+	.ascii	\x1836
+	.long	\p1840
+	.ascii	\x1844
+	.long	\p1848
+	.ascii	\x1852
+	.long	\p1856
+	.ascii	\x1860
+	.long	\p1864
+	.ascii	\x1868
+	.long	\p1872
+	.ascii	\x1876
+	.long	\p1880
+	.ascii	\x1884
+	.long	\p1888
+	.ascii	\x1892
+	.long	\p1896
+	.ascii	\x1900
+	.long	\p1904
+	.ascii	\x1908
+	.long	\p1912
+	.ascii	\x1916
+	.long	\p1920
+	.ascii	\x1924
+	.long	\p1928
+	.ascii	\x1932
+	.long	\p1936
+	.ascii	\x1940
+	.long	\p1944
+	.ascii	\x1948
+	.long	\p1952
+	.ascii	\x1956
+	.long	\p1960
+	.ascii	\x1964
+	.long	\p1968
+	.ascii	\x1972
+	.long	\p1992
+	.long	\p1996
+	.long	\p2000
+	.ascii	\x2004
+	.long	\p2008
+	.ascii	\x2012
+	.long	\p2016
+	.ascii	\x2020
+	.long	\p2024
+	.ascii	\x2028
+	.long	\p2032
+	.ascii	\x2036
+	.long	\p2040
+	.ascii	\x2044
+	.long	\p2048
+	.ascii	\x2052
+	.long	\p2056
+	.ascii	\x2060
+	.long	\p2064
+	.ascii	\x2068
+	.long	\p2080
+	.ascii	\x2084
+	.long	\p2088
+	.ascii	\x2092
+	.long	\p2096
+	.ascii	\x2100
+	.long	\p2104
+	.ascii	\x2108
+	.long	\p2112
+	.ascii	\x2116
+	.long	\p2120
+	.ascii	\x2124
+	.long	\p2128
+	.ascii	\x2132
+	.long	\p2136
+	.ascii	\x2140
+	.long	\p2144
+	.ascii	\x2148
+	.long	\p2152
+	.ascii	\x2156
+	.long	\p2160
+	.ascii	\x2164
+	.long	\p2168
+	.ascii	\x2172
+	.long	\p2176
+	.ascii	\x2180
+	.long	\p2184
+	.long	\p2188
+	.long	\p2192
+	.ascii	\x2196
+	.long	\p2200
+	.ascii	\x2204
+	.long	\p2208
+	.ascii	\x2212
+	.long	\p2216
+	.ascii	\x2220
+	.long	\p2224
+	.ascii	\x2228
+	.long	\p2232
+	.ascii	\x2236
+	.long	\p2240
+	.ascii	\x2244
+	.long	\p2248
+	.ascii	\x2252
+	.long	\p2256
+	.ascii	\x2260
+	.long	\p2264
+	.ascii	\x2268
+	.long	\p2272
+	.ascii	\x2276
+	.long	\p2280
+	.ascii	\x2284
+	.long	\p2288
+	.ascii	\x2292
+	.long	\p2320
+	.ascii	\x2324
+	.long	\p2328
+	.ascii	\x2332
+	.long	\p2336
+	.ascii	\x2340
+	.long	\p2344
+	.ascii	\x2348
+	.long	\p2352
+	.ascii	\x2356
+	.long	\p2360
+	.ascii	\x2364
+	.long	\p2368
+	.ascii	\x2372
+	.long	\p2376
+	.ascii	\x2380
+	.long	\p2384
+	.ascii	\x2388
+	.long	\p2392
+	.ascii	\x2396
+	.long	\p2400
+	.ascii	\x2404
+	.long	\p2408
+	.ascii	\x2412
+	.long	\p2416
+	.ascii	\x2420
+	.long	\p2424
+	.ascii	\x2428
+	.long	\p2432
+	.ascii	\x2436
+	.long	\p2440
+	.ascii	\x2444
+	.long	\p2448
+	.ascii	\x2452
+	.long	\p2456
+	.ascii	\x2460
+	.long	\p2464
+	.ascii	\x2468
+	.long	\p2472
+	.ascii	\x2476
+	.long	\p2480
+	.ascii	\x2484
+	.long	\p2488
+	.ascii	\x2492
+	.long	\p2496
+	.ascii	\x2500
+	.long	\p2512
+	.ascii	\x2516
+	.long	\p2520
+	.ascii	\x2524
+	.long	\p2528
+	.ascii	\x2532
+	.long	\p2544
+	.ascii	\x2548
+	.long	\p2552
+	.ascii	\x2556
+	.long	\p2560
+	.ascii	\x2564
+	.long	\p2568
+	.ascii	\x2572
+	.long	\p2576
+	.ascii	\x2580
+	.long	\p2584
+	.ascii	\x2588
+	.long	\p2592
+	.ascii	\x2596
+	.long	\p2600
+	.ascii	\x2604
+	.long	\p2608
+	.ascii	\x2612
+	.long	\p2616
+	.ascii	\x2620
+	.long	\p2624
+	.ascii	\x2628
+	.long	\p2632
+	.ascii	\x2636
+	.long	\p2640
+	.ascii	\x2644
+	.long	\p2648
+	.ascii	\x2652
+	.long	\p2656
+	.ascii	\x2660
+	.long	\p2664
+	.ascii	\x2668
+	.long	\p2672
+	.ascii	\x2676
+	.long	\p2680
+	.ascii	\x2684
+	.long	\p2688
+	.ascii	\x2692
+	.long	\p2696
+	.ascii	\x2700
+	.long	\p2704
+	.ascii	\x2708
+	.long	\p2712
+	.ascii	\x2716
+	.long	\p2720
+	.ascii	\x2724
+	.long	\p2728
+	.ascii	\x2732
+	.long	\p2736
+	.ascii	\x2740
+	.long	\p2744
+	.ascii	\x2748
+	.long	\p2752
+	.ascii	\x2756
+	.long	\p2760
+	.ascii	\x2764
+	.long	\p2768
+	.ascii	\x2772
+	.long	\p2776
+	.ascii	\x2780
+	.long	\p2784
+	.ascii	\x2788
+	.long	\p2800
+	.ascii	\x2804
+	.long	\p2808
+	.ascii	\x2812
+	.long	\p2816
+	.ascii	\x2820
+	.long	\p2824
+	.ascii	\x2828
+	.long	\p2840
+	.ascii	\x2844
+	.long	\p2848
+	.ascii	\x2852
+	.long	\p2856
+	.ascii	\x2860
+	.long	\p2864
+	.ascii	\x2868
+	.long	\p2872
+	.ascii	\x2876
+	.long	\p2888
+	.ascii	\x2892
+	.long	\p2896
+	.ascii	\x2900
+	.long	\p2904
+	.ascii	\x2908
+	.long	\p2912
+	.ascii	\x2916
+	.long	\p2920
+	.ascii	\x2924
+	.long	\p2928
+	.ascii	\x2932
+	.long	\p2936
+	.ascii	\x2940
+	.long	\p2944
+	.ascii	\x2948
+	.long	\p2952
+	.ascii	\x2956
+	.long	\p2960
+	.ascii	\x2964
+	.long	\p2968
+	.ascii	\x2972
+	.long	\p2976
+	.ascii	\x2980
+	.long	\p2984
+	.ascii	\x2988
+	.long	\p2992
+	.ascii	\x2996
+	.long	\p3000
+	.ascii	\x3004
+	.long	\p3008
+	.ascii	\x3012
+	.long	\p3024
+	.ascii	\x3028
+	.long	\p3032
+	.ascii	\x3036
+	.long	\p3040
+	.ascii	\x3044
+	.long	\p3048
+	.ascii	\x3052
+	.long	\p3056
+	.ascii	\x3060
+	.long	\p3072
+	.ascii	\x3076
+	.long	\p3080
+	.ascii	\x3084
+	.long	\p3088
+	.ascii	\x3092
+	.long	\p3096
+	.ascii	\x3100
+	.long	\p3104
+	.ascii	\x3108
+	.long	\p3112
+	.ascii	\x3116
+	.long	\p3120
+	.ascii	\x3124
+	.long	\p3128
+	.ascii	\x3132
+	.long	\p3136
+	.ascii	\x3140
+	.long	\p3152
+	.ascii	\x3156
+	.long	\p3160
+	.ascii	\x3164
+	.long	\p3176
+	.ascii	\x3180
+	.long	\p3184
+	.ascii	\x3188
+	.long	\p3192
+	.ascii	\x3196
+	.long	\p3208
+	.ascii	\x3212
+	.long	\p3220
+	.long	\p3224
+	.ascii	\x3228
+	.long	\p3232
+	.ascii	\x3236
+	.long	\p3240
+	.long	\p3244
+	.long	\p3248
+	.ascii	\x3252
+	.long	\p3256
+	.ascii	\x3260
+	.long	\p3264
+	.ascii	\x3268
+	.long	\p3272
+	.ascii	\x3276
+	.long	\p3280
+	.ascii	\x3284
+	.long	\p3288
+	.ascii	\x3292
+	.long	\p3296
+	.ascii	\x3300
+	.long	\p3304
+	.ascii	\x3308
+	.long	\p3312
+	.ascii	\x3316
+	.long	\p3320
+	.ascii	\x3324
+	.long	\p3328
+	.ascii	\x3332
+	.long	\p3336
+	.ascii	\x3340
+	.long	\p3344
+	.ascii	\x3348
+	.long	\p3352
+	.ascii	\x3356
+	.long	\p3360
+	.ascii	\x3364
+	.long	\p3368
+	.ascii	\x3372
+	.long	\p3376
+	.ascii	\x3380
+	.long	\p3384
+	.ascii	\x3388
+	.long	\p3392
+	.ascii	\x3396
+	.long	\p3400
+	.ascii	\x3404
+	.long	\p3408
+	.ascii	\x3412
+	.long	\p3416
+	.ascii	\x3420
+	.long	\p3424
+	.ascii	\x3428
+	.long	\p3432
+	.ascii	\x3436
+	.long	\p3440
+	.ascii	\x3444
+	.long	\p3464
+	.ascii	\x3468
+	.long	\p3472
+	.ascii	\x3476
+	.long	\p3480
+	.ascii	\x3484
+	.long	\p3488
+	.ascii	\x3492
+	.long	\p3496
+	.ascii	\x3500
+	.long	\p3504
+	.ascii	\x3508
+	.long	\p3512
+	.ascii	\x3516
+	.long	\p3520
+	.ascii	\x3524
+	.long	\p3528
+	.ascii	\x3532
+	.long	\p3536
+	.ascii	\x3540
+	.long	\p3544
+	.ascii	\x3548
+	.long	\p3552
+	.ascii	\x3556
+	.long	\p3560
+	.ascii	\x3564
+	.long	\p3568
+	.ascii	\x3572
+	.long	\p3576
+	.ascii	\x3580
+	.long	\p3584
+	.ascii	\x3588
+	.long	\p3592
+	.ascii	\x3596
+	.long	\p3608
+	.ascii	\x3612
+	.long	\p3624
+	.ascii	\x3628
+	.long	\p3632
+	.ascii	\x3636
+	.long	\p3640
+	.ascii	\x3644
+	.long	\p3648
+	.ascii	\x3652
+	.long	\p3656
+	.ascii	\x3660
+	.long	\p3664
+	.ascii	\x3668
+	.long	\p3672
+	.ascii	\x3676
+	.long	\p3680
+	.ascii	\x3684
+	.long	\p3688
+	.ascii	\x3692
+	.long	\p3696
+	.ascii	\x3700
+	.long	\p3704
+	.ascii	\x3708
+	.long	\p3712
+	.ascii	\x3716
+	.long	\p3720
+	.ascii	\x3724
+	.long	\p3728
+	.ascii	\x3732
+	.long	\p3736
+	.ascii	\x3740
+	.long	\p3744
+	.ascii	\x3748
+	.long	\p3752
+	.ascii	\x3756
+	.long	\p3760
+	.ascii	\x3764
+	.long	\p3768
+	.ascii	\x3772
+	.long	\p3784
+	.ascii	\x3788
+	.long	\p3792
+	.ascii	\x3796
+.endm
+
+# REC_VoiceDirClassFind_Table_p0: 8-byte records (VoiceDirClassFind_Table_p0, 453 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   f4           u16            VoiceDirClassFind 0x4857272A `movhu (4, a2), d1`
+#   +6   x6           u8[2]          no reader seen
+.macro REC_VoiceDirClassFind_Table_p0 p0=0, f4=0, x6
+	.long	\p0
+	.word	\f4
+	.ascii	\x6
+.endm
+
+# REC_VoiceDirIndexFind_Table_p0: 8-byte records (VoiceDirIndexFind_Table_p0, 453 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   f4           u16            VoiceDirIndexFind 0x48572812 `movhu (4, a2), d1`
+#   +6   x6           u8[2]          no reader seen
+.macro REC_VoiceDirIndexFind_Table_p0 p0=0, f4=0, x6
+	.long	\p0
+	.word	\f4
+	.ascii	\x6
+.endm
+
+# REC_VoiceDirRefFind_Table_p0: 12-byte records (VoiceDirRefFind_Table_p0, 466 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   f4           u16            VoiceDirRefFind 0x4857296A `movhu (4, a2), d1`
+#   +6   x6           u8[6]          no reader seen
+.macro REC_VoiceDirRefFind_Table_p0 p0=0, f4=0, x6
+	.long	\p0
+	.word	\f4
+	.ascii	\x6
+.endm
+
+# REC_VoiceDirPartRefFind_Table_p0: 12-byte records (VoiceDirPartRefFind_Table_p0, 389 records); fields, and what reads them:
+#   +0   p0           ptr            no reader seen
+#   +4   f4           u32            VoiceDirPartRefFind 0x48572CC6 `mov (4, a2), d1`
+#   +8   x8           u8[4]          no reader seen
+.macro REC_VoiceDirPartRefFind_Table_p0 p0=0, f4=0, x8
+	.long	\p0
+	.long	\f4
+	.ascii	\x8
+.endm
+
+# REC_ptrs_486AF2C8_p4: 1-byte records (ptrs_486AF2C8_p4, 1 records); fields, and what reads them:
+#   +0   f0           u8             func_4857F73D 0x4857F73D `movbu (a0), d0`
+.macro REC_ptrs_486AF2C8_p4 f0=0
+	.byte	\f0
+.endm
+
+# REC_ptrs_486AF48C_p4: 4-byte records (ptrs_486AF48C_p4, 1 records); fields, and what reads them:
+#   +0   f0           u8             func_4857FB88 0x4857FB88 `movbu (a0), d0`
+#   +1   x1           u8[3]          no reader seen
+.macro REC_ptrs_486AF48C_p4 f0=0, x1
+	.byte	\f0
+	.ascii	\x1
+.endm
+
+# REC_ptrs_486AF5B4_p4: 1-byte records (ptrs_486AF5B4_p4, 1 records); fields, and what reads them:
+#   +0   f0           u8             func_4857FD55 0x4857FD55 `movbu (a0), d0`
+.macro REC_ptrs_486AF5B4_p4 f0=0
+	.byte	\f0
+.endm
+
+# REC_func_4857FEA7_Table_p0: 1-byte records (func_4857FEA7_Table_p0, 1 records); fields, and what reads them:
+#   +0   f0           u8             func_4857FEA7 0x4857FEA7 `movbu (a0), d0`
+.macro REC_func_4857FEA7_Table_p0 f0=0
+	.byte	\f0
+.endm
+
+# REC_func_4854AC9E_Table_p0: 16-byte records (func_4854AC9E_Table_p0, 3 records); fields, and what reads them:
+#   +0   f0           u32            func_4854AC9E 0x4854AC9E `mov (d0, a0), a0`
+#   +4   x4           u8[12]         no reader seen
+.macro REC_func_4854AC9E_Table_p0 f0=0, x4
+	.long	\f0
+	.ascii	\x4
+.endm
+
+# REC_StyleGenreTable_p4_p4: 120-byte records (StyleGenreTable_p4_p4, 7 records); fields, and what reads them:
+#   +0   f0           u16            func_4847B66B 0x4847B66B `movhu (a0), d0`; func_4847BC39 0x4847BC39 `movhu (a0), d0` (+1)
+#   +2   x2           u8[4]          no reader seen
+#   +6   f6           u16            func_4847C49E 0x4847C49E `movhu (6, a0), d0`; func_4847C4F0 0x4847C4F0 `movhu (6, a0), d0`
+#   +8   x8           u8[112]        no reader seen
+.macro REC_StyleGenreTable_p4_p4 f0=0, x2, f6=0, x8
+	.word	\f0
+	.ascii	\x2
+	.word	\f6
+	.ascii	\x8
+.endm
+
+# REC_func_4847C9A7_Records_p4: 10-byte records (func_4847C9A7_Records_p4, 25 records); fields, and what reads them:
+#   +0   f0           u16            func_4847C977 0x4847C977 `movhu (d1, a0), d1`; func_4847CAD2 0x4847CAD2 `movhu (a0), d0` (+1)
+#   +2   x2           u8[8]          no reader seen
+.macro REC_func_4847C9A7_Records_p4 f0=0, x2
+	.word	\f0
+	.ascii	\x2
+.endm
+
+# REC_GetFocusObject_Records_p4: 16-byte records (GetFocusObject_Records_p4, 1 records); fields, and what reads them:
+#   +0   f0           s8             func_484FFF74 0x484FFF74 `movbu (a0), d0`; func_484FFF74 0x484FFF74 `movbu (d1, a0), d0` (+7)
+#   +1   x1           u8[3]          no reader seen
+#   +4   p4           ptr            AcChdModTypDrawBoxProc 0x484FF5AE `mov (4, a1), d0`; CmpRecPtChdGrid 0x4850B897 `mov (4, a0), a0` (+7)
+#   +8   x8           u8[4]          no reader seen
+#   +12  p12          ptr            FE_CmpRecChdModTyp 0x4850F55E `mov (0xc, a0), a1`; FE_CmpRecChdModTyp 0x4850F55E `mov (0xc, a0), d0` (+2)
+.macro REC_GetFocusObject_Records_p4 f0=0, x1, p4=0, x8, p12=0
+	.byte	\f0
+	.ascii	\x1
+	.long	\p4
+	.ascii	\x8
+	.long	\p12
+.endm
+
+# REC_func_4848B12D_Records_p32: 4-byte records (func_4848B12D_Records_p32, 27 records); fields, and what reads them:
+#   +0   p0           ptr            func_4848B09C 0x4848B09C `mov d2, (a0)`; func_4848B153 0x4848B153 `mov (a0), a0` (+3)
+.macro REC_func_4848B12D_Records_p32 p0=0
+	.long	\p0
 .endm

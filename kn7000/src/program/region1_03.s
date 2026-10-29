@@ -3676,7 +3676,7 @@ TechniChordCompute_entry:
     cmp     0x29, d0
     bgt     loc_48472F45
     asl2    d0
-    mov     ptrs_485BC3B4+56, a0
+    mov     TechniChordCompute_Table+56, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48472EE8:
@@ -3769,7 +3769,7 @@ loc_48472F89:
     jmp     loc_48473014
 loc_48472F90:
     asl2    d0
-    mov     ptrs_485BC3B4, a0
+    mov     TechniChordCompute_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48472F9B:
@@ -11987,7 +11987,7 @@ loc_484768DE:
     jmp     loc_48476BEB
 loc_484768E5:
     asl2    d0
-    mov     ptrs_485CD27C, a0
+    mov     inflate_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484768F0:
@@ -15423,7 +15423,7 @@ loc_4847813B:
     jmp     loc_484787CC
 loc_48478142:
     asl2    d0
-    mov     Str_M_GH, a0
+    mov     inflate_codes_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4847814D:
@@ -20800,7 +20800,7 @@ loc_4847B0AA:
     mov     (a0), a0
     mov     0x5004fab0, a3
     add     a0, a0
-    add     Str_8_8, a0
+    add     MssNameFunc_Table, a0
     movhu   (-2, a0), d0
     mov     0x18, d1
     nop
@@ -22013,7 +22013,7 @@ loc_4847BCEB:
     jmp     loc_4847C202
 loc_4847BD10:
     add     8, a0
-    cmp     data_485CF488, a0
+    cmp     StyleListBoxMsgTable+128, a0
     bcs     loc_4847BD1B
     mov     a1, a0
 loc_4847BD1B:
@@ -22023,6 +22023,7 @@ loc_4847BD1B:
 loc_4847BD1E:
     mov     (4, a0), a0
     jmp     (a0)
+loc_4847BD23:
     movbu   (0x5004fb63), d0
     cmp     1, d0
     bne     loc_4847BD33
@@ -22035,6 +22036,7 @@ loc_4847BD33:
     mov     (0x38, sp), d1
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847BD45:
     mov     1, d0
     movbu   d0, (0x5004fb63)
     mov     (0x3c, sp), a0
@@ -22045,6 +22047,7 @@ loc_4847BD33:
     clr     d0
     movbu   d0, (0x5004fb63)
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847BD66:
     mov     (0x34, sp), d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -22063,6 +22066,7 @@ loc_4847BD33:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847BD9F:
     mov     -1, d2
     call    GetTitleNow_entry, 0, 0x10
     cmp     TT_MSORG, d0
@@ -22206,6 +22210,7 @@ loc_4847BF0E:
 loc_4847BF17:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847BF1B:
     mov     (0x3c, sp), a2
     mov     a2, (0x10, sp)
     mov     (0x34, sp), d0
@@ -22430,6 +22435,7 @@ loc_4847C17A:
 loc_4847C1B2:
     clr     d0
     bra     loc_4847C211
+loc_4847C1B5:
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
     nop
@@ -22448,6 +22454,7 @@ loc_4847C1B2:
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     clr     d0
     bra     loc_4847C211
+loc_4847C1F8:
     mov     (0x3c, sp), a0
     call    StyleListBoxGetItem, [d2,d3,a2,a3], 0x10
     clr     d0
@@ -22957,7 +22964,7 @@ loc_4847C5F4:
     ble     loc_4847C5FF
     jmp     loc_4847C964
 loc_4847C5FF:
-    mov     data_485CF488, a1
+    mov     StyleListBoxMsgTable+128, a1
     mov     0xf, d0
     mov     0xfffb0000, d2
     add     d1, d2
@@ -22974,7 +22981,7 @@ loc_4847C5FF:
     jmp     loc_4847C964
 loc_4847C622:
     add     8, a0
-    cmp     data_485CF508, a0
+    cmp     StyleListBoxMsgTable+256, a0
     bcs     loc_4847C62D
     mov     a1, a0
 loc_4847C62D:
@@ -22984,6 +22991,7 @@ loc_4847C62D:
 loc_4847C630:
     mov     (4, a0), a0
     jmp     (a0)
+loc_4847C635:
     movbu   (0x5004fb63), d0
     cmp     1, d0
     bne     loc_4847C645
@@ -22995,6 +23003,7 @@ loc_4847C645:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847C654:
     mov     1, d0
     movbu   d0, (0x5004fb63)
     mov     (0x3c, sp), a0
@@ -23004,6 +23013,7 @@ loc_4847C645:
     clr     d0
     movbu   d0, (0x5004fb63)
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847C672:
     mov     (0x3c, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -23015,6 +23025,7 @@ loc_4847C645:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847C693:
     mov     (0x3c, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -23062,6 +23073,7 @@ loc_4847C70C:
 loc_4847C715:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847C719:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -23146,6 +23158,7 @@ loc_4847C7DE:
 loc_4847C814:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847C818:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -23229,6 +23242,7 @@ loc_4847C8DB:
 loc_4847C911:
     clr     d0
     bra     loc_4847C970
+loc_4847C914:
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
     nop
@@ -23247,10 +23261,12 @@ loc_4847C911:
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     clr     d0
     bra     loc_4847C970
+loc_4847C957:
     mov     (0x3c, sp), a0
     call    func_4847C9A7_entry, [d2,d3,a2,a3], 0x8c
     clr     d0
     bra     loc_4847C970
+loc_4847C961:
     clr     d0
     bra     loc_4847C970
 loc_4847C964:
@@ -23320,7 +23336,7 @@ func_4847C9A7_entry:
     mov     sp, a3
     add     0x1c, a3
     asl     3, d2
-    mov     ptrs_4873B5D4, a2
+    mov     func_4847C9A7_Records, a2
     add     a2, d0
     mov     d0, a0
     mov     (4, a0), a0
@@ -23378,7 +23394,7 @@ func_4847CA7A:
     clr     d1
     clr     d0
     setlb
-    mov     ptrs_4873B5D4, a0
+    mov     func_4847C9A7_Records, a0
     exthu   d1
     asl     3, d1
     mov     (d1, a0), d1
@@ -23443,7 +23459,7 @@ func_4847CAD2_entry:
     call    func_4847CA9D_entry, [d2], 0xc
     exthu   d0
     asl     3, d0
-    add     ptrs_4873B5D4, d0
+    add     func_4847C9A7_Records, d0
     mov     d0, a0
     mov     (4, a0), a0
     mov     0x01550000, d1
@@ -23469,7 +23485,7 @@ loc_4847CB3A:
     ble     loc_4847CB45
     jmp     loc_4847D073
 loc_4847CB45:
-    mov     data_485CF508, a1
+    mov     StyleListBoxMsgTable+256, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -23486,7 +23502,7 @@ loc_4847CB45:
     jmp     loc_4847D073
 loc_4847CB69:
     add     8, a0
-    cmp     data_485CF588, a0
+    cmp     StyleListBoxMsgTable+384, a0
     bcs     loc_4847CB74
     mov     a1, a0
 loc_4847CB74:
@@ -23496,6 +23512,7 @@ loc_4847CB74:
 loc_4847CB77:
     mov     (4, a0), a0
     jmp     (a0)
+loc_4847CB7C:
     movbu   (0x5004fb63), d0
     cmp     1, d0
     bne     loc_4847CB8C
@@ -23508,6 +23525,7 @@ loc_4847CB8C:
     mov     d3, d0
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CB9C:
     mov     1, d0
     movbu   d0, (0x5004fb63)
     mov     (0x3c, sp), a0
@@ -23518,6 +23536,7 @@ loc_4847CB8C:
     clr     d0
     movbu   d0, (0x5004fb63)
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CBBB:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -23536,6 +23555,7 @@ loc_4847CB8C:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CBF0:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -23611,6 +23631,7 @@ loc_4847CCCD:
 loc_4847CCD6:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CCDA:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -23717,6 +23738,7 @@ loc_4847CDD1:
 loc_4847CE07:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CE0B:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -23813,6 +23835,7 @@ loc_4847CEE8:
 loc_4847CF1E:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CF22:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -23859,6 +23882,7 @@ loc_4847CF1E:
 loc_4847CFA1:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847CFA5:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -23905,6 +23929,7 @@ loc_4847CFA1:
 loc_4847D023:
     clr     d0
     bra     loc_4847D080
+loc_4847D026:
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
     nop
@@ -23923,6 +23948,7 @@ loc_4847D023:
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     clr     d0
     bra     loc_4847D080
+loc_4847D069:
     mov     (0x3c, sp), a0
     call    func_4847D083_entry, [d2,d3,a2,a3], 0x10
     clr     d0
@@ -23958,7 +23984,7 @@ func_4847D083_entry:
     movhu   (0x14, a1), d0
     exthu   d1
     asl     3, d1
-    add     ptrs_4873B5D4, d1
+    add     func_4847C9A7_Records, d1
     mov     d1, a0
     mov     (4, a0), a2
     exthu   d0
@@ -24093,7 +24119,7 @@ func_4847D187_entry:
     movhu   (0x14, sp), d0
     movhu   (0x14, a2), d3
     asl     3, d0
-    mov     ptrs_4873B5D4, a2
+    mov     func_4847C9A7_Records, a2
     mov     a2, a0
     add     d0, a0
     mov     (4, a0), a3
@@ -24218,7 +24244,7 @@ loc_4847D2BA:
     ble     loc_4847D2C5
     jmp     loc_4847D62A
 loc_4847D2C5:
-    mov     data_485CF588, a1
+    mov     StyleListBoxMsgTable+384, a1
     mov     0xf, d0
     mov     0xfffb0000, d2
     add     d1, d2
@@ -24245,6 +24271,7 @@ loc_4847D2F3:
 loc_4847D2F6:
     mov     (4, a0), a0
     jmp     (a0)
+loc_4847D2FB:
     movbu   (0x5004fb63), d0
     cmp     1, d0
     bne     loc_4847D30B
@@ -24256,6 +24283,7 @@ loc_4847D30B:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847D31A:
     mov     1, d0
     movbu   d0, (0x5004fb63)
     mov     (0x3c, sp), a0
@@ -24265,6 +24293,7 @@ loc_4847D30B:
     clr     d0
     movbu   d0, (0x5004fb63)
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847D338:
     mov     (0x3c, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -24276,6 +24305,7 @@ loc_4847D30B:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847D359:
     mov     (0x3c, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -24323,6 +24353,7 @@ loc_4847D3D2:
 loc_4847D3DB:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847D3DF:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -24407,6 +24438,7 @@ loc_4847D4A4:
 loc_4847D4DA:
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+loc_4847D4DE:
     mov     (0x3c, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -24490,6 +24522,7 @@ loc_4847D5A1:
 loc_4847D5D7:
     clr     d0
     bra     loc_4847D636
+loc_4847D5DA:
     movhu   (CUR_STYLE_IDX), d0
     mov     0x18, d1
     nop
@@ -24508,10 +24541,12 @@ loc_4847D5D7:
     call    MainPutM3Em_entry, [d2,d3,a2], 0x20
     clr     d0
     bra     loc_4847D636
+loc_4847D61D:
     mov     (0x3c, sp), a0
     call    func_4847D644_entry, [d2,d3,a2,a3], 0x8c
     clr     d0
     bra     loc_4847D636
+loc_4847D627:
     clr     d0
     bra     loc_4847D636
 loc_4847D62A:
@@ -27766,7 +27801,7 @@ loc_4847F538:
     bgt     loc_4847F56E
     mov     d0, a0
     add     a0, a0
-    add     Str_8_8, a0
+    add     MssNameFunc_Table, a0
     movhu   (-2, a0), d2
     mov     StyleRecordTable, a2
     exthu   d2
@@ -27852,7 +27887,7 @@ loc_4847F5FE:
     call    func_4847F2CE_entry, [d2,d3,a2], 0x18
     exthu   d0
     add     d0, d0
-    add     Str_8_8, d0
+    add     MssNameFunc_Table, d0
     mov     d0, a0
     movhu   (-2, a0), d1
     mov     0x18, d0
@@ -30101,7 +30136,7 @@ loc_484808EF:
 loc_484808F8:
     sub     d2, d0
     asl2    d0
-    mov     ptrs_485CFB64, a0
+    mov     func_484808C1_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48480905:

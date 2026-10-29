@@ -363,7 +363,7 @@ loc_4842047B:
     mov     0xff, d1
     mov     (0x20, a0), a0
     movhu   (a0), d0
-    mov     ptrs_485A0B48, a0
+    mov     PsTrackSwitchProc_Table_2, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), a0
@@ -379,7 +379,7 @@ loc_484204AC:
     mov     (0x30, sp), a0
     mov     (0x20, a0), a0
     movhu   (a0), d0
-    mov     ptrs_485A0B48, a0
+    mov     PsTrackSwitchProc_Table_2, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), a0
@@ -1058,6 +1058,7 @@ loc_48420B01:
 loc_48420B04:
     mov     (4, a0), a0
     jmp     (a0)
+loc_48420B09:
     mov     (0x80, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -1069,6 +1070,7 @@ loc_48420B04:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x70
+loc_48420B2A:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, (0x30, sp)
@@ -1287,6 +1289,7 @@ loc_48420CC9:
 loc_48420CDB:
     clr     d0
     ret     [d2,d3,a2,a3], 0x70
+loc_48420CDF:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x24, a0), a0
@@ -1299,6 +1302,7 @@ loc_48420CDB:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x70
+loc_48420D03:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1367,12 +1371,14 @@ loc_48420D5E:
 loc_48420D8B:
     clr     d0
     bra     loc_48420DEC
+loc_48420D8E:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x24, a0), a0
     movhu   (a0), d0
     exth    d0
     bra     loc_48420DEC
+loc_48420D9E:
     mov     (0x80, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -1384,6 +1390,7 @@ loc_48420D8B:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_48420DEC
+loc_48420DBF:
     mov     (0x80, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -1443,6 +1450,7 @@ loc_48420E3A:
 loc_48420E3D:
     mov     (4, a0), a0
     jmp     (a0)
+loc_48420E42:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1465,6 +1473,7 @@ loc_48420E3D:
 loc_48420E79:
     clr     d0
     ret     [d2,d3,a2,a3], 0x44
+loc_48420E7D:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1561,6 +1570,7 @@ loc_48420F52:
 loc_48420F6F:
     clr     d0
     ret     [d2,d3,a2,a3], 0x44
+loc_48420F73:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     add     0x34, a0
@@ -1579,6 +1589,7 @@ loc_48420F6F:
 loc_48420F9B:
     clr     d0
     ret     [d2,d3,a2,a3], 0x44
+loc_48420F9F:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1595,6 +1606,7 @@ loc_48420F9B:
 loc_48420FCA:
     clr     d0
     ret     [d2,d3,a2,a3], 0x44
+loc_48420FCE:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x30, a0), a1
@@ -1602,6 +1614,7 @@ loc_48420FCA:
     clr     d0
     mov     a0, (a1)
     ret     [d2,d3,a2,a3], 0x44
+loc_48420FE1:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1618,6 +1631,7 @@ loc_48420FCA:
 loc_48421006:
     clr     d0
     ret     [d2,d3,a2,a3], 0x44
+loc_4842100A:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1634,6 +1648,7 @@ loc_48421006:
 loc_4842102F:
     mov     0xf5, d0
     ret     [d2,d3,a2,a3], 0x44
+loc_48421035:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x34, a0), a0
@@ -1645,10 +1660,12 @@ loc_4842102F:
 loc_4842104A:
     clr     d0
     bra     loc_484210B4
+loc_4842104D:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x24, a0), d0
     bra     loc_484210B4
+loc_4842105A:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
@@ -1665,11 +1682,13 @@ loc_4842104A:
 loc_4842107E:
     mov     0xff, d0
     bra     loc_484210B4
+loc_48421083:
     mov     Str_PsVariSelect, a1
     mov     (0x54, sp), a0
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484210B4
+loc_48421095:
     mov     (0x54, sp), a0
     mov     Str_Caption, a1
     call    strcpy_entry, [a2], 4
@@ -1824,13 +1843,13 @@ loc_484211F1:
     exth    d2
     mov     d2, d0
     asl2    d0
-    mov     ptrs_485A0D04, a0
+    mov     AcChordBoxProc_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcat_entry, [a2], 4
     mov     d3, d0
     asl2    d0
-    mov     ptrs_485A0EA8, a0
+    mov     AcChordBoxProc_Table_2, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcat_entry, [a2], 4
@@ -1846,7 +1865,7 @@ loc_4842126B:
     mov     0, a3
 loc_4842126D:
     asl2    d3
-    mov     ptrs_50000874, a0
+    mov     AcChordBoxProc_Table_3, a0
     mov     (d3, a0), a0
     asl2    d2
     mov     (d2, a0), a0
@@ -1903,13 +1922,13 @@ GetChordString_entry:
     exth    d3
     mov     d3, d0
     asl2    d0
-    mov     ptrs_485A0D04, a0
+    mov     AcChordBoxProc_Table, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcat_entry, [a2], 4
     mov     d2, d0
     asl2    d0
-    mov     ptrs_485A0EA8, a0
+    mov     AcChordBoxProc_Table_2, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcat_entry, [a2], 4
@@ -1925,7 +1944,7 @@ loc_4842132A:
     mov     0, a3
 loc_4842132C:
     asl2    d2
-    mov     ptrs_50000874, a0
+    mov     AcChordBoxProc_Table_3, a0
     mov     (d2, a0), a0
     asl2    d3
     mov     (d3, a0), a0
@@ -2442,7 +2461,7 @@ loc_48421775:
     add     d2, d0
     exth    d0
     asl2    d0
-    mov     ptrs_485A144C, a1
+    mov     AcTransposeBoxProc_Table, a1
     mov     (d0, a1), a1
     call    strcpy_entry, [a2], 4
     clr     d0
@@ -15816,7 +15835,7 @@ loc_48427A03:
     mov     0x20, d0
     bra     loc_48427A14
 loc_48427A07:
-    mov     func_48427ED4_Table+580, d0
+    mov     data_485A28FC, d0
     bra     loc_48427A14
 loc_48427A0F:
     mov     4, d0
@@ -16254,7 +16273,7 @@ loc_48427E1F:
     clr     d0
     movhu   d0, (0x32, sp)
     movhu   (0x4c, sp), d1
-    mov     Str_ZH, d3
+    mov     func_48427E0D_Records, d3
     mov     d1, d0
     asl     4, d0
     add     d3, d0
@@ -16323,7 +16342,7 @@ loc_48427E69:
     movhu   (0x4c, sp), d0
     asl     4, d0
     mov     d0, a0
-    add     Str_ZH, a0
+    add     func_48427E0D_Records, a0
     movhu   (0xc, a0), d0
     exth    d0
     call    GetPaletteRGB, 0, 0
@@ -16609,7 +16628,7 @@ loc_484280D2:
     exth    d2
     mov     d2, d0
     asl     4, d0
-    mov     Str_ZH, a1
+    mov     func_48427E0D_Records, a1
     add     a1, d0
     mov     d0, a2
     mov     (8, a2), d1
@@ -21143,7 +21162,7 @@ loc_4842A249:
     mov     d3, d0
     sub     0x60010, d0
     asl2    d0
-    mov     ptrs_485ADF90, a0
+    mov     ObjectProc_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_4842A25B:
@@ -21711,7 +21730,7 @@ loc_4842A836:
     mov     d1, d0
     sub     0x60000, d0
     asl2    d0
-    mov     ptrs_485ADF90+80, a1
+    mov     ObjectProc_Table+80, a1
     mov     (d0, a1), a1
     jmp     (a1)
 loc_4842A848:
@@ -34194,7 +34213,7 @@ loc_48431464:
     mov     d2, d0
     sub     0x60008, d0
     asl2    d0
-    mov     ptrs_485AEA1C, a0
+    mov     func_48431434_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48431476:
@@ -38193,7 +38212,7 @@ loc_484335E9:
     mov     d2, d0
     exthu   d0
     asl2    d0
-    mov     ptrs_48736078, a0
+    mov     StyleVariationNameGet_Table, a0
     mov     (d0, a0), a2
 loc_48433606:
     cmp     0, a2
@@ -45430,7 +45449,7 @@ loc_48437468:
     nop
     mulu    d0, d3
     mov     d3, a1
-    add     Str_EFFECT_9, a1
+    add     func_484373B7_Records, a1
     mov     a3, a0
     call    strcpy_entry, [a2], 4
     mov     1, d0
@@ -45599,7 +45618,7 @@ loc_484375D0:
     nop
     nop
     mulu    d3, d0
-    add     Str_EFFECT_9, d0
+    add     func_484373B7_Records, d0
     add     0x14, d0
     mov     d0, a0
     mov     (d1, a0), d0
@@ -61734,10 +61753,12 @@ loc_4843F67F:
     and     0xff, d0
     movbu   d0, (a0)
     bra     loc_4843F718
+loc_4843F703:
     mov     (0x5c, sp), d0
     mov     (0x30, sp), a0
     and     0xff, d0
     movbu   d0, (a0)
+loc_4843F70C:
     bra     loc_4843F718
 loc_4843F70E:
     call    func_48462409_entry, 0, 8
