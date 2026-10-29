@@ -94,18 +94,18 @@ SLIDE_STRING_2:
 ; because address_line_map.py assembles its mirror of v7/maincpu with only the
 ; mirror as -I, where ../../v10/maincpu/images/ does not resolve.
 ; drawn by FLASH_MEM_UPDATE (0xEF4F45) and Flash_CheckAndValidate (0xEF4FBA), at y=80
-Bitmap_1bit_Flash_Memory_Update:	.incbin "images/Bitmap_1bit_Flash_Memory_Update.bin"
+Bitmap_1bit_Flash_Memory_Update:	.incbin "images/Bitmap_1bit_Flash_Memory_Update.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by Erase_and_Burn____when_disk_is_valid (0xEF471B), at y=160
-Bitmap_1bit_Now_Erasing:		.incbin "images/Bitmap_1bit_Now_Erasing.bin"
+Bitmap_1bit_Now_Erasing:		.incbin "images/Bitmap_1bit_Now_Erasing.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by SHOW_FD_TO_FLASH_MEMORY_MESSAGE (0xEF4664), at y=160
-Bitmap_1bit_FD_to_Flash_Memory:		.incbin "images/Bitmap_1bit_FD_to_Flash_Memory.bin"
+Bitmap_1bit_FD_to_Flash_Memory:		.incbin "images/Bitmap_1bit_FD_to_Flash_Memory.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by FLASH_MEM_UPDATE (0xEF4F45) and Flash_CheckAndValidate (0xEF4FBA), at y=160
-Bitmap_1bit_Completed:			.incbin "images/Bitmap_1bit_Completed.bin"
+Bitmap_1bit_Completed:			.incbin "images/Bitmap_1bit_Completed.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by We_seem_to_be_running_boot_ROM_code (0xEF050C), at y=80
-Bitmap_1bit_Please_Wait:		.incbin "images/Bitmap_1bit_Please_Wait.bin"
+Bitmap_1bit_Please_Wait:		.incbin "images/Bitmap_1bit_Please_Wait.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by SHOW_CHANGE_FLOPPY_2_OF_2_MESSAGE (0xEF467E), at y=160
-Bitmap_1bit_Change_FD_2_of_2:		.incbin "images/Bitmap_1bit_Change_FD_2_of_2.bin"
+Bitmap_1bit_Change_FD_2_of_2:		.incbin "images/Bitmap_1bit_Change_FD_2_of_2.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by SHOW_ILLEGAL_DISK_MESSAGE (0xEF4800), at y=160
-Bitmap_1bit_Illegal_Disk:		.incbin "images/Bitmap_1bit_Illegal_Disk.bin"
+Bitmap_1bit_Illegal_Disk:		.incbin "images/Bitmap_1bit_Illegal_Disk.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it
 ; drawn by FLASH_MEM_UPDATE (0xEF4F45) and Flash_CheckAndValidate (0xEF4FBA), at y=200
-Bitmap_1bit_Turn_On_AGAIN:		.incbin "images/Bitmap_1bit_Turn_On_AGAIN.bin"
+Bitmap_1bit_Turn_On_AGAIN:		.incbin "images/Bitmap_1bit_Turn_On_AGAIN.bin"	; census: generated -- scripts/build/mono_images.py, from the .png beside it

@@ -24621,7 +24621,7 @@ RhythmFillIn_LookupAndApply:
 	call	AudioInit_SelectAndDispatch
 	call	AudioMode_ResetVoiceState
 	ret
-RhythmFillIn_PatternTable:	.incbin "includes/romslices/v7_transplant_RhythmFillIn_PatternTable_head.bin"
+RhythmFillIn_PatternTable:	.byte	0x10, 0x04, 0x02, 0x01, 0x08, 0x10, 0x10, 0x10
 ; CmpRealTtl_EnterTitle: XIZ-preserving set-up run when the Composer REALTIME RECORDING title (TT_CMREAL, 0xB5) is
 ;   entered or re-activated: clears 0x28A7 bit 2 and 0xE31C bit 0; unless it comes from TT_CMREAL itself it sets
 ;   0x8CEC bit 0 and, when not playing, sets 0x3431 bit 7, runs Seq_DispatcherEntry and, coming from TT_CMBKSL_S,
@@ -34083,7 +34083,8 @@ CmpStepTitle_OnSwitchIn:
 ; TODO(port): v6 bytes with no v7 line -- disassemble
 	.byte	0x3a, 0x3b, 0x3c, 0x3e, 0x1d, 0x3f, 0x9d, 0xf6
 	.byte	0x5e, 0x5c, 0x5b, 0x5a, 0x0e
-CmpStepTitle_Method3Nop:	.incbin "includes/romslices/v7_transplant_CmpStep_DataBlock.bin", 0x47, 0x1
+CmpStepTitle_Method3Nop:
+	ret
 AccAudio_LockAcquire:
 	ldw wa, 0x8
 	jp Audio_Lock_Acquire

@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 53,581
-#   semantic names ........... 53,095 (99.1%)
+#   symbols .................. 53,583
+#   semantic names ........... 53,097 (99.1%)
 #   positional names ......... 486
 #
 LED_patterns_indicating_firmware_version 00E00000
@@ -45142,6 +45142,8 @@ BitMapOut_CopyPresetTable_Loop 00FB4315
 BitMapOut_CopyPresetTable_Check 00FB432D
 BitMapOut_CopyExtTable_Loop 00FB4343
 BitMapOut_CopyExtTable_Check 00FB435F
+PanelMemory_RecallRecords_Loop 00FB436D
+PanelMemory_RecallRecords_Join 00FB4389
 PanelMemory_RecallKeepStyle 00FB4414
 PanelMemory_CopySlotToLivePanel 00FB449A
 BitMapOut_SelectiveFieldRestore 00FB44BB

@@ -1,0 +1,399 @@
+# KN5000 HELP database, Indonesian (table_data/help_databases.s, HelpDB_Indonesian).
+# SOURCE of help_db_indonesian.bin: scripts/build/help_db_text.py build; that script's docstring
+# gives the format and the evidence.  "@ topic T page P" starts an entry (the title after it is
+# a comment); the line break after each "~0d" (the renderer's newline) is not part of the
+# text; a blank line ends the entry; a page with no entry is empty.
+
+@ topic 0 page 1  DEMO
+KN5000 memiliki dua menu utama pada Demo, yakni Permainan dan Ciri-Ciri Penyajian (Performance dan Feature Presentation).~0d
+Ada 18 lagu demo pada menu penampilan yang menyajikan suara-suara dan gaya KN5000 (Sound dan Style). Itu semua terdapat di dalam tiga sub menu, yaitu: Gaya, Suara, dan Ritme (STYLE, SOUND dan RHYTHM).
+
+@ topic 0 page 2  DEMO
+ Pilihlah diantara ketiga sub menu tersebut dengan menggunakan tombol yang terdapat di bawah layar dan kemudian pilih sebuah lagu demo dengan tombol-tombol yang terdapat pada kiri dan kanan layar. Permainan secara otomatis akan mulai.~0d
+Anda pun dapat memulai sebuah medley dari lagu-lagu yang tersedia dengan menekan tombol Demo untuk beberapa waktu (agak lama). Tekan tombol Stop untuk mengakhiri permainan.~0d
+
+@ topic 0 page 3  DEMO
+Feature Presentation berisi Musical Slide Show, yang memberikan gambaran yang luas dari feature-feature utama daripada KN-5000. Hanya dengan memilih menu Feature, Presentation dan kemudian memilih menu Start The Demo yang ditampilkan pada layar,  selanjutnya nikmatilah permainannya.~0d
+
+@ topic 1 page 1  AUTO PLAY CHORD
+Auto Play Chord memiliki iringan yang disusun secara profesional dan sesuai dengan setiap gaya ritme KN5000. Contoh iringan tersebut akan menyesuaikan dengan nada yang anda mainkan.~0d
+Dengan menekan tombol Auto Play Chord, maka akan muncul pilihan-pilihan berikut:~0d
+
+@ topic 1 page 2  AUTO PLAY CHORD
+One Finger : menciptakan 4 bentuk nada dengan menggunakan sistem One Finger Chord dari Technics.~0d
+Fingered : memperkenalkan keseluruhan nada yang anda mainkan pada bagian kiri keyboard yang terpisah (split).~0d
+Pianist : bermain tanpa split point sehingga anda dapat bermain dengan hanya menggunakan sebuah suara (sound) dari suara-suara yang terdapat pada keyboard.~0d
+
+@ topic 1 page 3  AUTO PLAY CHORD
+Memory : mempertahankan nada yang anda mainkan sesudah anda melepas kunci-kunci nada. Iringan musik akan berlanjut dengan keselarasan yang sama hingga anda bermain pada nada berikutnya.~0d
+On Bass : ketika anda menggunakan Fingered atau Pianist, maka On Bass akan memainkan jajaran bass di sekitar tangga nada terendah pada nada yang anda mainkan dari tangga nada dasar.~0d
+
+@ topic 2 page 1  SOUND ARRANGER ON/OFF
+Sound Arranger membuat kita dapat merubah suara-suara (sound) yang dimainkan pada iringan musiknya. Ada beberapa keadaan yang terdapat pada Sound Arranger, sehingga dengan menekan tombol Sound Arranger anda akan mendengarkan contoh iringan yang berubah-ubah.~0d
+Anda pun dapat mengatur suara (sound) yang dikehendaki dengan menggunakan tombol Sound Arranger Set.~0d
+
+@ topic 3 page 1  SOUND ARRANGER SET
+Sound Arranger membuat kita dapat merubah suara-suara (sound) yang dipakai pada iringan yang diinginkan. Ikuti prosedur berikut untuk menciptakan iringan yang anda inginkan:~0d
+Pilihlah sebuah ritme.~0d
+Tekan tombol Sound Arranger Set.~0d
+Pilih bagian APC pada layar LCD.~0d
+
+@ topic 3 page 2  SOUND ARRANGER SET
+Ganti suara dengan menggunakan tombol-tombol Sound Select.(dapat juga dengan menggunakan Digital Effect).~0d
+Ulangi untuk bagian lainnya bila anda inginkan.~0d
+Tekan tombol Set untuk mengakhiri prosedur tersebut.~0d
+
+@ topic 4 page 1  RHYTHM GROUP
+Gunakan tombol Rhythm Group untuk memilih 200 Rhythm Pattern pada KN5000 dan 20 Custom Rhythm. Ritme-ritme tersebut dikelompokkan ke dalam 15 katagori yang masing-masing memiliki tombol Rhythm Group.~0d
+Lebih dari 10 rhythm patterns tersedia di setiap Rhythm Group.~0d
+Setelah memilih Rhythm Group, tekan salah satu dari tombol-tombol yang terdapat pada sebelah kiri atau kanan layar untuk memilih Rhythm Patterns.~0d
+
+@ topic 4 page 2  RHYTHM GROUP
+Layar dapat menampilkan 10 ritme pada satu bagian. Jika terdapat lebih dari 10 ritme pada suatu kelompok, maka akan muncul Page 1/2 pada layar sebelah kanan atas. Gunakan tombol Page Up/Down untuk memilih bagian berikutnya.~0d
+Custom Rhythm Group adalah kelompok khusus yang dapat menyimpan Composer musik favorit anda.~0d
+
+@ topic 4 page 3  RHYTHM GROUP
+Hal ini dapat berupa bentuk Pattern yang sudah dibuat dan telah anda modifikasi. Pattern yang telah anda ciptakan dari permainan anda ataupun dari software floppy disk, seperti koleksi musik disk dari Technics.~0d
+Sekali anda memasukkan Rhythm Pattern tersebut ke dalam Custom Rhythm Group, maka akan tetap terekam hingga anda menggantinya dengan pattern lainnya. Walaupun KN5000 dimatikan, tetap tidak akan menghapus Custom Rhythm.~0d
+
+@ topic 5 page 1  COMPOSER MEMORY
+COMPOSER memberikan kesempatan kepada anda untuk dapat menciptakan bentuk iringan musik anda sendiri atau bentuk iringan musik baru dari software floppy disk.~0d
+Tombol Composer Memory dipergunakan untuk memilih composer pattern mana yang akan anda mainkan.
+
+@ topic 5 page 2  COMPOSER MEMORY
+ Pilihlah dari ketiga Composer Banks yang ada (A, B dan C) disebelah kiri layar dan 4 memori yang tersedia di setiap bank yang ada disebelah kanan layar. Anda juga dapat mempergunakan tombol Rhythm Variation yang normal untuk mengubah keempat Composer memori yang ada di setiap bank data.~0d
+
+@ topic 6 page 1  COMPOSER MENU
+COMPOSER memberikan kesempatan kepada anda untuk dapat menciptakan bentuk iringan musik anda sendiri atau bentuk iringan musik baru dari software floppy disk.~0d
+Menu composer dengan berbagai keistimewaannya, membuat anda mampu menciptakan bentuk komposisi musik sendiri atau merekam dan mengedit bentuk yang sudah tersedia.~0d
+
+@ topic 6 page 2  COMPOSER MENU
+Menu Composer ini juga termasuk Easy Composer yang dapat menciptakan bentuk composer dengan mengkombinasikan susunan musik dan fasilitas untuk merekam bentuk composer anda yang baru, pada Custom Rhythm Group. Keistimewaan ini terutama bermanfaat bila anda ingin memasukkan pattern baru yang telah anda masukkan dari software floppy disk secara permanen di dalam Custom Rhythm Group.~0d
+
+@ topic 6 page 3  COMPOSER MENU
+Bila anda menekan beberapa saat tombol Composer Menu ketika floppy disk dimasukkan, maka layar Disk Load akan bekerja secara otomatis untuk memudahkan anda memilih bentuk-bentuk composer dari floppy disk.~0d
+
+@ topic 7 page 1  TRANSPOSE
+Anda dapat merubah puncak nada pada KN5000 menjadi kunci apa pun dengan menggunakan tombol-tombol Transpose.~0d
+Tekan tombol transpose beberapa kali pada bagian kanan untuk menaikkan kunci nada dari kunci C menjadi F# dan tombol pada bagian kiri untuk menurunkan kunci nada dari C menjadi G.~0d
+Jika anda mengubah nada ketika sedang menggunakan sebuah not, maka kunci-kunci baru akan mempengaruhi not selanjutnya yang akan dimainkan.~0d
+
+@ topic 7 page 2  TRANSPOSE
+Mengubah nada selalu berhubungan dengan kunci C, sehingga bila anda bermain pada kunci F dan anda ingin mendapatkan bunyi seperti pada kunci F#, maka naikan setengah nada (layar akan menampilkan kunci transpose Db).~0d
+Tekan kedua tombol secara serempak untuk mengatur kembali Transpose pada keadaan normal.~0d
+
+@ topic 8 page 1  TEMPO/PROGRAM
+Tempo/Program terutama digunakan untuk mengubah tempo ritme. Putar ke kiri untuk melambatkan tempo dan ke kanan untuk mempercepat.~0d
+Bila petunjuk pada bagian kiri atas menyala ketika anda sedang menggunakan salah satu dari model setting (Contoh: Sound Edit atau Composer), Putaran Tempo/Program dapat digunakan untuk mengubah fungsi yang sedang dipilih pada layar.~0d
+
+@ topic 9 page 1  MANUAL SEQ PAD
+Manual Sequence Pads memainkan bermacam-macam melodi musik dan efek yang dapat anda tambahkan dalam permainan anda. Ada 6 kelompok yang masing-masing memainkan permainan yang berbeda.~0d
+Hanya dengan menekan salah satu tombol dari kelompok yang tersedia, maka musik atau efeknya akan mulai.~0d
+
+@ topic 9 page 2  MANUAL SEQ PAD
+Beberapa bentuk bermain secara terus menerus, seperti arpeggios loop, hingga anda menekan tombol Stop/Record.~0d
+Tekan tombol Bank, Menu dan Stop/Record untuk mendapatkan keterangan lebih lanjut.~0d
+
+@ topic 10 page 1  MSP BANK
+Ada 15 Bank dari rangkaian permainan dan efek Manual Sequence Pads. Mengubah Bank akan memilih permainan yang berbeda untuk dimainkan dalam 6 kelompok. Banks diaransir dalam beberapa katagori, seperti ; Jazz, Rock dan Komik. Untuk mengganti memori pada MSP, tekanlah tombol Bank dan ciptakan pilihan anda sendiri pada layar.~0d
+Ada 3 tipe khusus pada MSP Bank, yaitu: Pemakai, Kumpulan dan Kontrol (User, Compile & Control).~0d
+
+@ topic 10 page 2  MSP BANK
+Compile Bank mengkombinasikan permainan favorit anda pada MSP dari berbagai memori menjadi satu memori. Tekan tombol MSP Menu untuk penjelasan lebih lanjut.~0d
+User Banks dapat merekam permainan MSP anda sendiri. Tekan tombol Stop/Record untuk keterangan lebih lengkap.~0d
+Control Bank memiliki fungsi-fungsi kontrol yang bermanfaat, seperti Tremolo Slow/Fast dan Glide. Untuk keterangan lengkapnya, dapat dilihat pada Buku Pedoman Cara Pemakaian untuk Pemilik.~0d
+
+@ topic 11 page 1  MSP STOP/RECORD
+Bila Manual Sequence Pad dimainkan dan anda ingin menghentikan permainan dan bermain kembali, maka tekan tombol Stop/Record. Beberapa rangkaian, seperti arpeggios bermain dalam putaran secara terus menerus, hingga anda perlu menekan tombol Stop/Record untuk menghentikannya.~0d
+Jika anda ingin merekam rangkaian permainan MSP anda sendiri, maka ikuti prosedur berikut:~0d
+Pilihlah salah satu dari User Banks.~0d
+
+@ topic 11 page 2  MSP STOP/RECORD
+Ketika menekan tombol Stop/Record, tekanlah salah satu kelompok.~0d
+Pilihlah sound untuk permainan anda.~0d
+Tekan tombol Rhythm Start/Stop.~0d
+Setelah hitungan kedua maka anda mulai bermain.~0d
+Tekan tombol Stop/Record untuk mengakhiri.~0d
+Tekan salah satu tombol untuk mendengarkan permainan anda!~0d
+
+@ topic 12 page 1  MSP MENU
+Menu MSP terdiri atas pengaturan untuk Compile Banks, dimana anda dapat mengelompokkan bersama rangkaian MSP favorit anda dari Banks yang berbeda-beda.~0d
+Anda dapat mengumpulkan bentuk permainan di dalam sebuah Bank dan memberi nama kumpulan Bank tersebut untuk memudahkan anda mengingat apa yang termuat didalamnya.~0d
+MSP Menu juga menyediakan fasilitas untuk menamai User Banks.~0d
+
+@ topic 13 page 1  SPLIT POINT
+Keyboard KN5000 dapat dibagi dalam hal tertentu untuk memudahkan anda mengatur suara yang berbeda pada bagian kanan dan kiri Split Point. Keyboard Split juga aktif bila Auto Play Chord digunakan untuk memakai bentuk One Finger dan Fingered.~0d
+Tekan tombol Split Point berulang-ulang untuk mengubah antara 3 Split Points (G2, C3 dan G3).~0d
+
+@ topic 13 page 2  SPLIT POINT
+Untuk mengatur Split Point anda sendiri, tekan beberapa saat tombol Split Point hingga layar berubah menjadi layar Split Point. Lalu tekan tut dimana anda ingin meletakkan Split Point.~0d
+
+@ topic 14 page 1  OTP / MUSIC STYLIST
+One Touch Play dan Music Stylist membuat KN5000 memberikan yang terbaik untuk anda, membantu anda menciptakan bunyi yang indah dengan segera.~0d
+One Touch Play membuat KN5000 untuk memberikan petunjuk yang sesuai, dan tempo untuk setiap 200 ritme yang tersedia. Petunjuk yang lengkap diatur untuk anda hanya dengan menekan satu tombol.~0d
+
+@ topic 14 page 2  OTP / MUSIC STYLIST
+Untuk menggunakan One Touch Play menyeleksi Rhythm yang ingin dipergunakan, cukup dengan menekan dan menahan beberapa saat tombol One Touch Play (Music Stylist). Dan seketika anda akan melihat daftar nama One Touch Play muncul pada layar. Selanjutnya mainkanlah.~0d
+Music Stylist membimbing anda pada 1000 gaya (style) musik yang terdapat pada KN5000. Dengan menekan dan melepas tombol Music Stylist, maka muncul menu utama Music Stylist pada layar.~0d
+
+@ topic 14 page 3  OTP / MUSIC STYLIST
+Ada dua cara untuk menemukan gaya (style) musik yang ingin anda mainkan, yaitu dapat dengan menggunakan Style Explorer atau dengan menggunakan Alphabetical Style list.~0d
+Style Explorer menyajikan gaya (style) yang berbeda-beda pada katagori musik, dimana setiap katagori menunjukkan gambaran sub katagorinya. Setiap sub katagori memiliki 4 gaya (style) yang berbeda dan masing-masing mempunyai nama.~0d
+
+@ topic 14 page 4  OTP / MUSIC STYLIST
+Alphabetical Style list menampilkan semua gaya secara tersendiri yang ada pada Music Stylist pada satu daftar alphabetical. Jika Anda sudah terbiasa dengan gaya permainan favorit Anda, maka dengan mudahnya, Anda dapat menemukan dan menggunakan fasilitas tersebut.~0d
+
+@ topic 15 page 1  MUSIC STYLE ARRANGER
+Music Style Arranger membantu anda mengubah secara profesional daftar nada, dan menyajikan 4 daftar yang telah diatur untuk setiap Rhythm. Hidupkan MSA dan daftar lengkap akan diatur secara otomatis untuk Rhythm Variation yang terseleksi.~0d
+Ubahlah keempat Rhythm Variation dan daftar akan berubah ; lalu padukan perubahan modus Rhythm Variation. Daftar akan menjadi semakin lengkap dan kompleks dari MSA 1 hingga MSA 4.
+
+@ topic 15 page 2  MUSIC STYLE ARRANGER
+ Tombol-tombol Fill-In akan mengubah susunan MSA secara otomatis. Fill In 1 membuat MSA Variation berubah ke bagian kiri dan Fill In 2 ke bagian kanan.~0d
+Untuk menggunakan MSA, tekan dan tahan beberapa saat tombol MSA hingga pada layar muncul 3 pilihan model MSA, yakni :~0d
+Rhythm : hanya Rhythm Variation yang berubah~0d
+Sound & Rhythm : Sound dan Rhythm keduanya berubah.~0d
+
+@ topic 15 page 3  MUSIC STYLE ARRANGER
+Panel Memory : Music Style Arranger berubah diantara 4 Panel Memories pertama dalam Bank 1.~0d
+
+@ topic 16 page 1  VARIATION & MSA
+Tombol-tombol tersebut digunakan untuk dua fungsi, yaitu:~0d
+Menyeleksi bentuk/variasi ritme.~0d
+Untuk memainkan Music Style Arranger (tergantung apakah MSA hidup atau mati).~0d
+KN5000 memiliki 200 ritme (Rhythm) dan pada setiap Ritme mempunyai 4 Variasi, sehingga anda dapat menggunakan tombol-tombol ini ketika anda memainkan bentuk iringan didalam gaya musik yang sama.~0d
+
+@ topic 16 page 2  VARIATION & MSA
+Bila anda menggunakan Music Style Arranger, maka tombol-tombol Variation akan mengubah iringan dan registrasi. Sekarang tekanlah tombol Music Style Arranger untuk keterangan selengkapnya.~0d
+
+@ topic 17 page 1  FILL IN 1, 2
+Ketika sebuah kelompok musik bermain, sering ada cara-cara tersendiri untuk mengisi suara-suara drum dan variasi musik dalam permainan. KN5000 membantu anda untuk menghasilkan efek tersebut dengan menggunakan 2 Fill Ins untuk setiap Rhythm Variation. Ketika Fill-In 1 atau 2 ditekan, sementara itu Rhythm juga sedang didalam pattern fill-in, dimainkan untuk suatu ukuran, selanjutnya ritme normal akan berjalan.~0d
+
+@ topic 17 page 2  FILL IN 1, 2
+Bila tombol Fill-In ditekan pada ketukan terakhir, Fill-In akan memainkan seluruh langkah berikutnya. Bila ditekan pada ketukan lainnya, maka ia akan memberi peringatan terhadap aturan yang sedang dimainkan.~0d
+Bila anda menekan tombol Fill-In 2 sebelum anda memulai ritme, maka akan terdapat hitungan sederhana sebelum ritme mulai.~0d
+
+@ topic 17 page 3  FILL IN 1, 2
+Fill-In 1 juga memiliki fungsi lainnya ketika menggunakan Sequencer. Bila anda menghentikan permainan Sequencer dan ingin mengulang kembali dari permulaan sebuah lagu, maka tekan tombol Fill-In 1 (Reset).~0d
+
+@ topic 18 page 1  INTRO & ENDING 1, 2
+Tombol-tombol Intro dan Ending memiliki beberapa pembukaan dan penutup yang profesional bagi permainan anda dengan pilihan masing-masing 2 buah Intro dan Ending untuk setiap ritme.~0d
+Aturlah keyboard dengan registrasi (atau gunakanlah One Touch Play untuk melakukannya bagi anda), dan tekan tombol Intro dan Ending sebelum anda bermain. Kemudian mainkan paduan nada (akord) dengan tangan kiri dan akan terdengarlah musik pembuka.~0d
+
+@ topic 18 page 2  INTRO & ENDING 1, 2
+Ketika anda menyelesaikan permainan, tekan satu dari tombol Intro/Ending kembali dan KN5000 mengakhiri iringannya. Bila Ending sudah berakhir, ritme akan berhenti secara otomatis.~0d
+
+@ topic 19 page 1  SYNCHRO & BREAK
+Tombol ini memiliki 2 fungsi yang berubah-ubah tergantung pada bagaimana anda memainkan KN5000.~0d
+Bila anda main tanpa Auto Play Chord Synchro dan Break, maka ritme secara otomatis akan mulai ketika anda memainkan 1 tut dibawah titik Key Split.~0d
+Jika anda sedang menggunakan Auto Play Chord, fungsinya akan berubah-ubah tergantung dengan aktifnya Auto Play Chord Memory:~0d
+
+@ topic 19 page 2  SYNCHRO & BREAK
+Ketika anda menggunakan Auto Play Chord dengan Memory, Synchro & Break, maka ritme (Rhythm) dan iringan secara otomatis akan mulai, ketika anda memainkan satu tut di bagian kiri titik Key Split. Ritme dan iringan akan terus berlanjut hingga anda menekan Synchro dan Break kembali atau tombol Start/Stop atau salah satu dari tombol-tombol Ending.~0d
+
+@ topic 19 page 3  SYNCHRO & BREAK
+Bila anda menggunakan Auto Play Chord tanpa Memory, Synchro dan Break, maka ritme dan iringan akan mulai bermain, hanya bila anda menekan beberapa tut sebelah kiri dari titik Key Split. Selanjutnaya jika anda melepas tut-tut tersebut, ritme dan iringan akan berhenti hingga anda menekan tut-tut itu kembali.~0d
+
+@ topic 20 page 1  START/STOP
+Tombol Start/Stop digunakan untuk banyak tujuan, tetapi fungsi utamanya adalah untuk memulai dan menghentikan ritme secara otomatis.~0d
+Bila anda menggunakan Sequencer, maka tombol Start/Stop akan memulai dan menghentikan permainan sebuah lagu. Dan juga untuk mulai merekam kedalam Manual Sequence Pads dan Sequencer bila metronom digunakan.~0d
+
+@ topic 21 page 1  TAP TEMPO
+Tap Tempo memungkinkan anda menyusun Rhythm Tempo untuk permainan anda hanya dengan mengetuk sebuah tombol. Ketuk tombol Tap Tempo dan selingan diantara dua ketukan terakhir digunakan untuk mengatur tempo. Anda harus mengetuk tombol paling sedikit dua kali.~0d
+
+@ topic 22 page 1  TECHNI-CHORD
+Techni-Chord menambah keharmonian nada bagi melodi nada tunggal anda untuk menjadi untaian nada-nada penuh (akord penuh). Keharmonian nada Techi-Chord didasarkan pada untaian nada (akord) yang anda mainkan dengan tangan kiri anda.~0d
+Anda dapat memilih dari 14 tipe keselarasan yang berbeda.~0d
+Close, Open 1, Open 2, Duet 1 dan Duet 2, Country, Theatre, Hymn, Block, Big Band Brass, Big Band Reeds, Octave, Hard Rock dan Fanfare.~0d
+
+@ topic 22 page 2  TECHNI-CHORD
+Untuk mengganti tipe Techni-Chord, cukup dengan menekan dan menahan beberapa saat tombol Techni-Chord hingga muncul Techni-Chord Setting pada layar.~0d
+Techni-Chord Orchestrator mampu membuat anda menjalin keharmonian nada-nada pada Techni-Chord ke bagian lain pada KN5000 sehingga keharmonian nada dapat memiliki suara yang berbeda dari nada melodi, atau anda dapat menurunkan suaranya.~0d
+
+@ topic 23 page 1  PANEL MEMORY
+Panel Memory menyimpan registrasi anda agar mudah dipanggil kembali. Ada 10 Bank dalam Panel Memori, yang dapat anda gunakan untuk menyimpan 80 registrasi dalam sekejap. Setiap bank dan setiap Panel Memory dapat dinamai sehingga dengan mudah anda dapat menemukan registrasi yang anda inginkan.~0d
+Panel Memori memiliki 2 model, yaitu Normal dan Expand.~0d
+
+@ topic 23 page 2  PANEL MEMORY
+Normal Mode untuk menyimpan registrasi dasar termasuk suara-suara (SOUNDS), efek-efek (EFFECTS) dan penyeimbang (BALANCES). Sedangkan Expand Mode menyimpan untuk hampir semua setting pada keyboard dan memiliki fungsi penyaring untuk membatasi aspek-aspek tertentu pada registrasi Panel Memory.~0d
+Sekarang tekanlah tombol Panel Memory Set untuk mengetahui lebih banyak keterangan mengenai setting Panel Memory dan memilih antara Normal dan Expand Mode.~0d
+
+@ topic 24 page 1  SET
+Tombol Panel Memory Set terutama digunakan untuk menyimpan registrasi di dalam Panel Memory.~0d
+Ikuti petunjuk berikut:~0d
+Atur registrasi.~0d
+Gunakan tombol Next Bank untuk memilih bank yang mana dalam Panel Memory yang anda inginkan.~0d
+Bersamaan dengan menekan tombol Set, tekan juga Panel Memory dimana anda ingin merekam/menyimpan registrasinya.~0d
+
+@ topic 24 page 2  SET
+Daftar tersebut sekarang telah tersimpan di dalam Panel Memory yang anda pilih.~0d
+Untuk mengganti Panel Memory Mode, cukup dengan menekan dan menahan beberapa saat tombol Panel Memory Set hingga Panel Memory Mode, Select Normal atau Expand muncul pada layar.~0d
+
+@ topic 24 page 3  SET
+Bagian ke-2 dan ke-3 dari fungsi ini berisi tentang aturan (setting) untuk Expand Mode Filter. Anda dapat memutuskan lebih mendetail mengenai aturan mana yang anda inginkan untuk dipanggil kembali pada Panel Memory.~0d
+
+@ topic 25 page 1  NEXT BANK
+Tombol Next Bank mengubah dari Panel Memory Bank satu ke Panel Memory Bank selanjutnya, dengan hanya menekan sebuah tombol. Registrasi tidak akan berubah hingga anda menekan satu dari tombol-tombol pada Panel Memory, kemudian anda dapat memeriksa melalui Bank untuk menemukan registrasi selanjutnya yang anda inginkan.~0d
+
+@ topic 26 page 1  BANK VIEW
+Tombol Bank View menyajikan registrasi nama dari sepuluh Panel Memory Bank yang ada pada bagian pertamanya.~0d
+Anda dapat memilih Bank yang berbeda dengan menggunakan tombol-tombol disamping layar.~0d
+Pada bagian ke-2 Bank View menampilkan nama semua Panel Memory pada Bank yang ada. Anda dapat juga menamai Bank dan Panel Memory pribadi dari layar.~0d
+
+@ topic 27 page 1  SEQUENCER PLAY
+Tombol Sequencer Play mengaktifkan layar Sequencer Play, memperlihatkan keenam belas Sequencer Tracks dan fungsinya. Jika anda memuat sebuah lagu dari Floppy Disk, tombol Sequencer Play akan aktif secara otomatis. Hanya dengan menekan tombol Start/Stop, maka lagu yang telah anda masukkan akan bermain kembali.~0d
+
+@ topic 27 page 2  SEQUENCER PLAY
+Anda pun dapat memilih satu dari sepuluh lagu-lagu yang anda inginkan, dan atur sebuah Medley dari 10 lagu yang tersedia.~0d
+Mixer dapat dimasukkan melalui bagian Sequencer Play. Jika Sequencer telah masuk, maka Mixer akan bekerja untuk setiap Track pada bagian-bagian yang khusus, sehingga anda tidak perlu mengetahui part apa yang ditunjuk oleh satu Track untuk menyesuaikan dengan aturannya (settingnya).~0d
+
+@ topic 27 page 3  SEQUENCER PLAY
+Jika anda menekan tombol Exit, tombol Sequencer Play akan terus aktif sehingga memungkinkan anda untuk menggunakan keistimewaan-keistimewaan yang lain pada saat dimana Sequence terus bermain (seperti memilih sound). Untuk menon-aktifkan Sequencer Play, tekan tombol Sequencer Play kembali.~0d
+
+@ topic 28 page 1  EASY REC
+Easy Record adalah cara paling sederhana untuk merekam permainan anda pada KN5000. Jika anda ingin merekam seluruh permainan anda termasuk melodi dan akordnya (dengan Auto Play Chord), maka setting KN5000 untuk lagu yang akan anda mainkan, kemudian tekan tombol Easy Record dan tekan OK seperti yang ditampilkan pada layar LCD.~0d
+
+@ topic 28 page 2  EASY REC
+Keistimewaan ini dapat lebih memudahkan anda untuk mengatur setting dengan skala penuh pada Sequencer dan mulailah merekam dengan cepat dan mudah.~0d
+Anda dapat memilih pada layar Easy Record yang setiap 10 lagunya anda gunakan untuk merekam permainan anda.~0d
+
+@ topic 29 page 1  SEQUENCER MENU
+Sequencer Menu memberikan anda jalan untuk lebih memahami keistimewaan itu selaras dengan yang terdapat pada program Computer Sequencer. Bagian utama Sequencer Menu memiliki dua pilihan.Menciptakan dan Mengedit (CREATE & EDIT).~0d
+
+@ topic 29 page 2  SEQUENCER MENU
+Menu Create memiliki keistimewaan-keistimewaan yang digunakan untuk menciptakan lagu, seperti Realtime, Step dan Punch Record, dan keistimewaan untuk mengatur Sequencer seperti Track Assign dan After Touch.~0d
+Create juga mengandung suatu keistimewaan yang berguna, yang dinamakan Panel Write.
+
+@ topic 29 page 3  SEQUENCER MENU
+ Bila anda ingin merubah suara-suara (Sounds) dan aturan-aturan (SETTINGS) yang digunakan sejak sebuah lagu dimulai , maka buatlah perubahan-perubahan itu dan tekanlah Panel Write. Bentuk baru akan terekam pada awal lagu tersebut.~0d
+
+@ topic 29 page 4  SEQUENCER MENU
+Menu Edit memiliki keistimewaan-keistimewaan yang digunakan untuk mengubah lagu, seperti Note Edit, Quantize, Transpose dan Velocity Change. Anda dapat pula menggandakan dan mengulang bagian-bagian (PART) dari lagu tersebut untuk membentuk Sequence yang lengkap dan lebih cepat, serta ada kemudahan untuk Insert, Delete dan Erase.~0d
+
+@ topic 30 page 1  MIDI
+MIDI terbentuk untuk Musical Instrument Digital Interface dan sebuah sistem yang menghubungkan alat musik yang berbeda secara bersama untuk tujuan yang berbeda-beda, contohnya ; menyatukan suara (SOUND) dari dua alat musik atau menghubungkannya dengan komputer.~0d
+MIDI memliki banyak kegunaan, sehingga banyak ukuran yang dapat diubah. ~0d
+Menu MIDI memiliki semua keistimewaan untuk membentuk KN5000 bagi kebutuhan-kebutuhan anda yang spesifik.~0d
+
+@ topic 30 page 2  MIDI
+Cara termudah untuk mengatur MIDI pada KN5000 adalah dengan menggunakan MIDI Presets yang termasuk di dalam menu. MIDI Presets juga terdapat pada banyak macam aplikasi musik. Hanya dengan menyeleksi satu yang sesuai dengan keinginan anda lalu tekan tombol OK, maka susunan MIDI akan terbentuk. Anda dapat pula memasukkan/ menyimpan User MIDI Setting anda sendiri yang secara permanen akan tinggal didalam KN5000 (kecuali anda menggantinya).~0d
+
+@ topic 30 page 3  MIDI
+KN5000 adalah alat musik General MIDI yang berarti cocok dengan software yang dibuat khusus dengan format bentuk General MIDI, contohnya software Standard MIDI File.~0d
+KN5000 juga memiliki Computer Port yang menghubungkan anda secara langsung kepada Serial Port dalam komputer.~0d
+
+@ topic 31 page 1  CONTROL
+Keistimewaan utama dari Control Menu adalah Initial Setting yang mengembalikan susunan dasar KN5000 menjadi susunan Initial Factory. Anda dapat memilih apakah menghapus permainan seluruhnya (contoh: semua keistimewaan yang telah terprogram) atau bagian-bagian tertentu saja. Rhythm Custom dan User MIDI Settings tidak dipengaruhi oleh Initial Setting.~0d
+
+@ topic 31 page 2  CONTROL
+Menu Control terdiri atas keistimewaan-keistimewaan yang berhubungan dengan kontrol umum dari KN5000, seperti Touch Sensitivity dan fungsi-fungsi Foot Controller.~0d
+Anda dapat juga mengatur lamanya waktu sehingga bermacam-macam pesan dapat tetap tampil di layar, dan menyeleksi layar-layar tertentu menjadi Display Hold aktif secara otomatis, yang berguna sebagai contoh dengan layar Sound dan Rhythm Group.~0d
+
+@ topic 31 page 3  CONTROL
+Menu Control juga terdiri atas susunan untuk Music Style Arranger dan Panel Memory.~0d
+
+@ topic 32 page 1  SOUND
+Menu Sound menawarkan banyak keistimewaan yang dapat mengubah suara (sounds) pada KN5000. Anda dapat menyusun bagian-bagian seperti tingkatan Volume, Panning dan Effect untuk setiap bagiannya.~0d
+Ada kontrol nada seluruhnya yang dinamakan Equalizer, yang dapat disesuaikan dengan selera anda.~0d
+Ada juga daerah susunan Equalizer dan Reverb yang dapat menciptakan imajinasi suara yang berbeda-beda.~0d
+
+@ topic 32 page 2  SOUND
+Keistimewaan-keistimewaan Sound Edit adalah menyunting (EDIT) suara selaras dengan synthesizer profesional, yang memungkinkan anda meng-edit semua presets suara dan menyimpannya kedalam salah satu dari Sound Group Memory. Easy Edit menawarkan bentuk sederhana dari ukuran-ukuran dalam satu bagian.~0d
+Hold sebelah kiri akan mempertahankan bunyi pada bagian kiri Conductor ketika anda sedang menggunakan Auto Play Chord.~0d
+
+@ topic 32 page 3  SOUND
+Master Tuning dan Key Scaling disesuaikan dalam menu Sound. Susunan untuk keistimewaan lain terdiri atas Reverb, Acoustic Illusion, DSP Effect dan Techi-Chord. Sekarang tekan tombol untuk keistimewaan-keistimewaan itu untuk mendapatkan informasi lebih lanjut mengenai hal tersebut.~0d
+
+@ topic 33 page 1  DISK
+Menu disk digunakan ketika anda perlu memuat dan menyimpan dalam Floppy Disk. Hanya dengan memasukkan Floppy Disk, maka KN5000 secara otomatis akan menyeleksi menu pada disket.~0d
+KN5000 dapat memuat banyak macam software termasuk Technics Music Disk Collection dan berbagai macam software lagu seperti Standard MIDI File, Disk Orchestra atau Piano Disc.
+
+@ topic 33 page 2  DISK
+ Standard MIDI Files dapat dimuat ke dalam Sequencer atau langsung dimainkan dari disk, dan Disk Orchestra langsung bermain dari disk.~0d
+Anda dapat memainkan lagu-lagu sebagai suatu medley. Bila satu Standard MIDI File termasuk liriknya, maka KN5000 akan menampilkan lagu tersebut pada layar sebagaimana lagu tersebut dimainkan.~0d
+
+@ topic 33 page 3  DISK
+KN5000 dapat memuat style software dari beberapa pabrik yang menggunakan program Style Convert. Untuk keterangan lebih lanjut mengenai hal ini dapat dilihat pada buku Pedoman Penggunaan untuk Pemakai~0d
+
+@ topic 34 page 1  DIGITAL EFFECT
+Digital Effect berfungsi menaikkan suara pada KN5000, yakni dengan cara menambah efek-efeknya, seperti ; Chorus, Celeste dan Organ Tramelo.~0d
+Setiap suara pada KN5000 memiliki satu Digital Effect, sehingga hanya dengan menekan tombol Digital Effect maka efek yang sesuai akan menambah pada suara tersebut.~0d
+
+@ topic 34 page 2  DIGITAL EFFECT
+Dalam kasus dimana Digital Effect kritis terhadap suara, maka tombol Digital Effects akan aktif secara otomatis ketika anda memilih suara. Contohnya Organ Tremolo dengan suara Jazz Organnya.~0d
+
+@ topic 35 page 1  DSP EFFECT
+DSP Effect bekerja seperti sebuah studio effects processor yang menyajikan efek-efek seperti ; Chorus, Phaser, Delay dan Distortion. Bila DSP bekerja untuk lebih dari satu bagian dalam waktu yang bersamaan, maka semua bagian itu akan mendapat efek DSP yang sama.~0d
+Untuk mengganti setting DSP Effect, tekanlah beberapa saat tombol DSP Effect dan bagian DSP Effect akan muncul pada layar.~0d
+
+@ topic 36 page 1  SUSTAIN
+Sustain membuat suara menghilang secara perlahan setelah anda melepaskan tut. Susunan awal pada Footswitch 1 adalah sustain, sehingga anda dapat menggunakan Footswitch seperti pedal sustain pada piano.~0d
+
+@ topic 37 page 1  DIGITAL REVERB
+Digital Reverb memiliki suara alamiah untuk seluruh suara pada KN5000, dan menyajikan efek/suasana akustik yang beragam layaknya didalam suatu kamar atau gedung konser maupun gereja katedral.~0d
+Untuk mengganti setting Digital Reverb, tekan dan tahanlah beberapa saat tombol Digital Reverb, maka bagian Digital Reverb akan muncul pada layar.~0d
+
+@ topic 38 page 1  SOUND GROUP
+Gunakan tombol-tombol Sound untuk memilih suara-suara yang tersedia pada KN5000 dan untuk memilih 40 Sound Memory. Suara-suara tersebut dikelompokkan kedalam 18 kategori, yang masing-masing memiliki tombol Sound Group.~0d
+Ketika anda menekan satu dari tombol-tombol Sound Group, maka suara-suara pada kelompok tersebut akan muncul pada layar.
+
+@ topic 38 page 2  SOUND GROUP
+ Tekan satu dari tombol-tombol disebelah kiri atau sebelah kanan layar, untuk memilih suara yang ingin anda gunakan.~0d
+Layar menyajikan 10 suara dalam satu bagian. Gunakan tombol Page Up/Down untuk memilih bagian berikutnya.~0d
+Dari 18 Sound Group ada 2 katagori khusus :~0d
+Accordion Register : menampilkan sebaris tabel yang serupa dengan suara asli Accordion dan menyajikan pilihan antara akordion Jerman tau Italia.~0d
+Gunakan tombol-tombol Balance di bawah layar untuk mengatur Registrasi sebagaimana yang anda inginkan.~0d
+
+@ topic 38 page 3  SOUND GROUP
+Digital Drawbar : menyediakan suara-suara organ klasik yang ditampilkan dalam 9 Drawbars pada layar. Gunakan tombol Balance dan tombol PageUp/Down untuk menyesuaikan Drawbars.~0d
+SOUND GROUP terdiri atas 2 Memory Group dimana anda dapat menyimpan 40 bunyi yang telah disunting (di-edit).~0d
+
+@ topic 39 page 1  PART SELECT
+Gunakan tombol-tombol PART SELECT untuk memilih bagian (RIGHT 1, RIGHT 2 or LEFT) yang ditampilkan oleh Sound Select dan tombol-tombol Effect pada panel. Ketika satu bagian diseleksi, panel indikator juga akan aktif/menyala untuk menunjukkan pengaturan (Setting) yang sedang dilakukan.~0d
+Bagian ini berguna bila anda ingin mengubah suara-suara pada bagian Right 2 ketika anda sedang bermain dengan menggunakan Right 1 atau bila anda ingin mengubah suara kiri (LEFT SOUND).~0d
+
+@ topic 40 page 1  CONDUCTOR
+Conductor adalah piranti khusus pada Technics Keyboard yang memudahkan mengatur suara (SOUND) pada keyboard. Anda dapat memiliki 2 suara atau lebih pada seluruh keyboard, yang didalamnya anda dapat menggunakan Right 1 dan Right 2 secara bersama-sama. Atau anda dapat menggunakan bunyi yang berbeda antara bagian kanan dan bagian kiri Keyboard Split, dimana anda dapat menggunakan Right 1 dan Left secara bersama-sama.~0d
+
+@ topic 41 page 1  DISPLAY HOLD
+Display Hold menahan bagian yang sedang ditampilkan pada layar hingga anda menon-aktifkan Display Hold atau menekan tombol Exit. Display Hold sangat bermanfaat karena beberapa bagian dan pesan hanya muncul dalam waktu singkat. Sebagai contoh Rhythm atau Sound Groups atau pesan-pesan yang salah.~0d
+Pada menu Control, bagian Display Time Out dapat anda atur untuk tipe-tipe bagian tertentu guna mengaktifkan Display Hold secara otomatis.~0d
+
+@ topic 44 page 1  R1/R2 OCTAVE
+Tombol-Tombol Octave R1/R2 memisahkan octave tersebut seperti bagian-bagian Condustor Right-1 dan Right-2 dengan aturan +/- 2 oktav. Untuk menormalkan kembali hanya dengan menekan kedua tombol bersamaan.~0d
+
+@ topic 46 page 1  OTHER PARTS/TR
+Tombol OTHER PART atau TOMBOL TRACK, memiliki 2 fungsi. Dalam Home Page atau Mixer, fungsi tersebut berguna untuk masuk ke Balance Control ke bagian-bagian lain pada produk KN5000, seperti bagian 4 hingga 16.~0d
+
+@ topic 46 page 2  OTHER PARTS/TR
+Ketika anda menggunakan Sequencer, Mixer akan bekerja untuk setiap Tracknya dari bagian-bagian yang khusus, sehingga anda tidak perlu mengetahui bagian mana yang berfungsi sebagai Track untuk disesuaikan dengan aturannya. Mixer dapat memainkan aturan dari 8 Track sekaligus, sehingga tombol Track-Track lain digunakan untuk memiliki Track 9 hingga 16.~0d
+
+@ topic 47 page 1  ACOUSTIC ILLUSION
+Acoustic Illusion adalah efek khusus yang secara harfiah menciptakan ilusi dari wilayah akustik yang berbeda-beda, diatas wilayah (Skoup) Digital Reverb.~0d
+Hanya dengan mengaktifkan Acoustic Illusion, maka anda akan dapat mendengarkan perbedaannya.~0d
+Ada 4 tipe Acoustic Illusion :~0d
+Tipe 1: Stereo Besar.~0d
+Tipe 2: Stereo besar untuk bunyi dengan pukulan keras seperti piano atau drum.~0d
+
+@ topic 47 page 2  ACOUSTIC ILLUSION
+Tipe 3: Frekuensi tinggi berada pada bagian kanan, dan frekuensi rendah di kiri.~0d
+Tipe 4: Kedalaman maksimum dari luar Acoustic Illusion.~0d
+Untuk mengubah tipe Acoustic Illusion, cukup dengan menekan dan menahan beberapa saat tombol Acoustic Illusion dan kemudian pada layar akan berubah ke bagian Acoustic Illusion.~0d
+
+@ topic 48 page 1  FADE IN/OUT
+Fade In/Out menambah sentuhan profesional pada permainan anda dengan menambahkan Fade In halus pada lagu anda, atau mengakhiri lagu dengan Fade Out yang lembut, khususnya bermanfaat ketika anda sedang menggunakan Auto Play Chord.~0d
+Tekan Fade In sebelum anda bermain dan seluruh bunyi KN5000 akan muncul perlahan-lahan. Ketika anda menyelesaikan lagu anda, tinggalkan permainan contoh iringan yang anda mainkan dan tekan Fade Out.
+
+@ topic 48 page 2  FADE IN/OUT
+ Musik latar akan hilang seperti suatu karya seorang profesional. Bila anda menekan Fade Out secara tidak sengaja, maka tekanlah lagi tombol yang sama untuk mengatur kembali atau tekan Fade In dan suara akan kembali normal.~0d
+Anda dapat mengatur panjangnya Fade in dan Fade Out dalam mengambil langkah-langkah dan juga untuk Rhythm serta Sequence, untuk menghentikan secara otomatis setelah Fade Out.~0d
+Pengaturan dilakukan dalam bagian Entertainer.~0d
+
+@ topic 49 page 1  ENTERTAINER
+Tombol Entertainer memiliki banyak keistimewaan dalam 1 bagian yang sangat bermanfaat bila anda menggunakan KN5000 pada suatu pertunjukan umum.~0d
+Anda dapat menyesuaikan microphone untuk tingkatan Input dan pengaturan Reverb terpisah dari seluruh Reverb.~0d
+Anda dapat masuk ke menu Disk Load, Fade In/Out dan Mixer.~0d
+Anda dapat mengontrol satu Vocalist Workstation secara langsung dari KN-5000.~0d
+
+@ topic 49 page 2  ENTERTAINER
+Ada tombol Panic yang diatur pada KN5000 dan mengirim perintah pada perlengkapan MIDI luar.~0d
+Mute keys memutuskan hubungan kunci-kunci nada dan putarannya dari suara-suara internal dan MIDI, sehingga Anda dapat meniru ke permainan ulang sequencer.~0d
