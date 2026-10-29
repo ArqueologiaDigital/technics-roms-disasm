@@ -236,6 +236,28 @@ def describe_cmb(ctx):
     return L
 
 
+def describe_sqf(ctx):
+    d = ctx.data
+    if len(d) != 0x7800 or any(d[k * 0xC00:k * 0xC00 + 4] != b'ZZZZ' for k in range(10)):
+        return None
+    w = lambda r, o: r[o] | r[o + 1] << 8  # noqa: E731
+    L = ['; SEQUENCER workspace, all ten banks (wsa1/include/wsa1_files.inc, sqf_*).  Named fields are the disk',
+         '; notes\' (FINDINGS-prom_b-disk-and-file-menus.md); the other bytes are spelled with their offsets.', '',
+         '\t.include\t"wsa1_files.inc"', ctx.label + ':']
+    for k in range(10):
+        r = d[k * 0xC00:(k + 1) * 0xC00]
+        L += ['%s_Bank%d:' % (ctx.label, k), '\tsqf_head\t%d, %d' % (r[4], w(r, 5)), '; +0x07..+0x1B'] + rows(r[7:0x1C])
+        L += ['\t.short\t0x%04x\t; +0x1C BStore_Password (two characters; 0 = none)' % w(r, 0x1C), '; +0x1E..+0x7D'] + rows(r[0x1E:0x7E])
+        L.append('\t.short\t' + ', '.join(str(w(r, 0x7E + 2 * j)) for j in range(17)) + '\t; +0x7E the running block totals (SeqFile_Save)')
+        L += ['; +0xA0..+0xB7'] + rows(r[0xA0:0xB8])
+        L.append('\t.short\t%d, %d\t; +0xB8 the free chain head and count (0x6034B8 / 0x6034BA)' % (w(r, 0xB8), w(r, 0xBA)))
+        L += ['; +0xBC..+0xC9'] + rows(r[0xBC:0xCA]) + ['\t.ascii\t%s\t; +0xCA the song name' % s_esc(r[0xCA:0xD0]), '; +0xD0..+0xFF'] + rows(r[0xD0:0x100])
+        for j in range(17):
+            L.append('\tsqf_dir\t0x%02x, 0x%04x' % (r[0x100 + 3 * j], w(r, 0x101 + 3 * j)))
+        L += ['; +0x133..+0xBFF, not traced'] + rows(r[0x133:])
+    return L
+
+
 def describe(ctx):
     ext = ctx.path.rsplit('.', 1)[-1].upper()
     if ext == 'MID':
@@ -246,4 +268,6 @@ def describe(ctx):
         return describe_tm(ctx)
     if ext == 'CMB':
         return describe_cmb(ctx)
+    if ext == 'SQF':
+        return describe_sqf(ctx)
     return None

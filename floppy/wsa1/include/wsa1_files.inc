@@ -90,3 +90,23 @@
 	.byte	\c20, \c21, \c22, \c23, \c24, \c25, \c26, \c27, \c28, \c29, \c2a, \c2b
 	.endm
 	.endif
+
+; ---- SEQUENCER workspace (.SQF): ten song records of 0xC00 (the HEADER block 0x610000, SeqFile_SaveAllBanks;
+; wsa1/notes/FINDINGS-prom_b-disk-and-file-menus.md, "the SEQUENCER content type";
+; wsa1/notes/sysex-probes/sysex_sequencer_layout.py: the name at +0xCA, SongName_ResetToUnderscores 0xF818EA).
+	.ifndef	WSA1_SQF_INC
+	.set	WSA1_SQF_INC, 1
+; +0x04 the all-banks flag (SeqFile_SaveAllBanks sets record 0's to 1), +0x05 u16 the format word
+; (SeqFile_ProbeSqfHeader refuses a file whose word is not 4).
+	.macro	sqf_head all_banks, format
+	.ascii	"ZZZZ"
+	.byte	\all_banks
+	.short	\format
+	.endm
+; One of the 17 song directory entries at +0x100 (SeqFile_Save walks them): flags (bit 7 = in use) and the
+; chain's first block (0xFFFF none).
+	.macro	sqf_dir flags, first_block
+	.byte	\flags
+	.short	\first_block
+	.endm
+	.endif
