@@ -86,17 +86,23 @@ entry, `Cheap_HardDiskMenuView`.
 
 ## Headers and tools
 
-| file                                         | role                                                                                                                                       |
-|----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| `<tree>/maincpu/ui_widgets/naka_classes.h`   | generated: NAKA_CLASS_* constants, one typedef per class, and the property value names                                                     |
-| `<tree>/maincpu/ui_widgets/naka_ids.h`       | generated: every event_codes.s constant as a `#define`                                                                                     |
-| `<tree>/maincpu/ui_widgets/naka_ram_cells.h` | generated: RAM_<cell> addresses (v10 layout)                                                                                               |
-| `<tree>/maincpu/ui_widgets/naka_types.h`     | includes the three, plus `NAKA_XYWH`, `NAKA_XYXY` and `NAKA_VIEW_ID`                                                                       |
-| `scripts/generators/gen_naka_gui_headers.py` | writes the headers into all five trees (`--check`)                                                                                         |
-| `scripts/converters/naka_gui_symbolize.py`   | the rewrite (`--apply`, `--headers`, `--sync v7,v6,v5`, `--check`). It recompiles each changed file and refuses any whose bin would change |
-| `scripts/analysis/naka_gui_model.py`         | the parser and GUI graph (titles, modes, edges), and `--check` (the enums against the links)                                               |
-| `scripts/generators/gen_naka_menu_map.py`    | `docs/gui/kn5000-menu-map.md` (`--check`)                                                                                                  |
-| `scripts/analysis/naka_gui_census.py`        | the readability census (`--rev` for before/after, `--files TREE` per file)                                                                 |
+| file                                               | role                                                                                                                                       |
+|----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `<tree>/maincpu/ui_widgets/naka_classes.h`         | generated: NAKA_CLASS_* constants, one typedef per class, and the property value names                                                     |
+| `<tree>/maincpu/ui_widgets/naka_ids.h`             | generated: every event_codes.s constant as a `#define`                                                                                     |
+| `<tree>/maincpu/ui_widgets/naka_ram_cells.h`       | generated: RAM_<cell> addresses (v10 layout)                                                                                               |
+| `<tree>/maincpu/ui_widgets/naka_types.h`           | includes the three, plus `NAKA_XYWH`, `NAKA_XYXY` and `NAKA_VIEW_ID`                                                                       |
+| `scripts/generators/gen_naka_gui_headers.py`       | writes the headers into all five trees (`--check`)                                                                                         |
+| `scripts/converters/naka_gui_symbolize.py`         | the rewrite (`--apply`, `--headers`, `--sync v7,v6,v5`, `--check`). It recompiles each changed file and refuses any whose bin would change |
+| `scripts/analysis/naka_gui_model.py`               | the parser and GUI graph (titles, modes, edges), and `--check` (the enums against the links)                                               |
+| `scripts/generators/gen_naka_menu_map.py`          | `docs/gui/kn5000-menu-map.md` (`--check`)                                                                                                  |
+| `scripts/analysis/naka_gui_census.py`              | the readability census (`--rev` for before/after, `--files TREE` per file)                                                                 |
+| `scripts/generators/gen_title_mode_index_equs.py`  | the TT_* / MD_* index block of each event_codes.s (`--check`)                                                                              |
+| `scripts/converters/name_title_index_operands.py`  | names title / mode index operands from control flow; `opens_by_routine()` feeds the menu map                                               |
+| `scripts/converters/naka_asm_records.py`           | `shared/naka_gui.s` (`--gen`, `--check`) and the NAKA_REC_ macro records (`--apply`, `--report`)                                           |
+| `scripts/converters/naka_type_c_slices.py`         | types records one C member covers exactly                                                                                                  |
+| `scripts/converters/name_class_string_pointers.py` | labels class-name / propdata slices, spells their pointers                                                                                 |
+| `scripts/converters/retype_prop_type_records.py`   | SupportClass_PropTypeRecords as `naka_prop_type_t[51]`                                                                                     |
 
 There are three make targets. `make menu-map` regenerates the map. `make gui-census` prints the census. `make
 gui-check` checks the headers, the enums against the links, the spelling and SCREEN headers of all five trees, and
@@ -118,28 +124,85 @@ bins with their `*_c_divergence.json`, which this lane did not have to change. T
 
 ## The GUI-readability census, before and after
 
-Before is `python3 scripts/analysis/naka_gui_census.py --rev 9dbc03088`; after is the same command without `--rev`,
-run at this lane's head. Each column counts places outside comments and strings. "prop values" counts fields
-spelled as a number for which a firmware name exists, and "unnamed prop" counts those for which none exists.
+Each column counts places outside comments and strings. "prop values" counts fields spelled as a number for which
+a firmware name exists, and "unnamed prop" counts those for which none exists. "before" is
+`python3 scripts/analysis/naka_gui_census.py --rev 9dbc03088` (the lane's base). "pass 1" is the first merge
+(2fcde02ba). "now" is the same command without `--rev`, at the head of the second pass.
 
 | tree | state  | class ids | links | view ids | prop values | unnamed prop | rom addrs | ram cells | field_XX | records |
 |------|--------|-----------|-------|----------|-------------|--------------|-----------|-----------|----------|---------|
 | v10  | before | 3,445     | 7,940 | 113      | 15,460      | 1            | 384       | 1,541     | 645      | 3,206   |
-| v10  | after  | 0         | 0     | 0        | 0           | 1            | 356       | 189       | 645      | 3,206   |
+| v10  | pass 1 | 0         | 0     | 0        | 0           | 1            | 356       | 189       | 645      | 3,206   |
+| v10  | now    | 0         | 0     | 0        | 0           | 1            | 73        | 0         | 525      | 3,242   |
 | v9   | before | 3,445     | 7,940 | 114      | 15,460      | 1            | 385       | 1,541     | 645      | 3,206   |
-| v9   | after  | 0         | 0     | 0        | 0           | 1            | 356       | 189       | 645      | 3,206   |
+| v9   | now    | 0         | 0     | 0        | 0           | 1            | 73        | 0         | 525      | 3,242   |
 | v7   | before | 3,445     | 7,940 | 113      | 15,460      | 1            | 384       | 1,541     | 653      | 3,206   |
-| v7   | after  | 0         | 0     | 0        | 0           | 1            | 356       | 189       | 653      | 3,206   |
+| v7   | now    | 0         | 0     | 0        | 0           | 1            | 73        | 0         | 533      | 3,242   |
 | v6   | before | 3,445     | 7,940 | 113      | 15,460      | 1            | 384       | 1,541     | 653      | 3,206   |
-| v6   | after  | 0         | 0     | 0        | 0           | 1            | 356       | 189       | 653      | 3,206   |
+| v6   | now    | 0         | 0     | 0        | 0           | 1            | 75        | 0         | 533      | 3,242   |
 | v5   | before | 3,445     | 7,940 | 113      | 15,460      | 1            | 384       | 1,541     | 653      | 3,206   |
-| v5   | after  | 0         | 0     | 0        | 0           | 1            | 356       | 189       | 653      | 3,206   |
+| v5   | now    | 0         | 0     | 0        | 0           | 1            | 75        | 0         | 533      | 3,242   |
 
-The "rom addrs" drop of 28 is view ids that the old spelling also matched as ROM addresses (0x00F90007 is slot 0xF9,
-element 7). The v9 "before" has one more view id and one more ROM address than v10. In v10 that value,
-`SendPartDataBlock_Data2` (0x00FF0000), was spelled as a pointer, but it is a ScreenID: element 0 of
-`Root_ViewableTable_0FF`. Both trees now spell it `NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckTitle)`. The 420
-per-file copies of the class typedefs are gone.
+Pass 1 removed 28 "rom addrs" that were view ids the old spelling had also matched as ROM addresses (0x00F90007 is
+slot 0xF9, element 7). The v9 "before" has one more view id and one more ROM address than v10: in v10 the value
+`SendPartDataBlock_Data2` (0x00FF0000) was spelled as a pointer, but it is a ScreenID, element 0 of
+`Root_ViewableTable_0FF`. Both trees now spell it `NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckTitle)`. Pass 1
+also removed the 420 per-file copies of the class typedefs.
+
+Two more measures were taken outside this census:
+
+| measure                                                        | before | pass 1 | now                     |
+|----------------------------------------------------------------|--------|--------|-------------------------|
+| titles with a menu path (`docs/gui/kn5000-menu-map.md`)        | -      | 60     | 130 of 211              |
+| title / mode indices spelled TT_* / MD_* in the asm (per tree) | 0      | 0      | 279 / 30                |
+| widget records outside the C as one NAKA_REC_ macro call (v10) | 0      | 0      | 86 (88 in v6/v5)        |
+| Viewable elements with no typed record (v10)                   | 187    | 187    | 65 (13 of them in DRAM) |
+
+## The second pass (2026-10-29, after the first merge)
+
+1. **Titles opened by code.** Three routines in `ui/ui_control_panel.s` post a title or mode change from an index:
+   `UI_ChangeTitleByIndex` (was `UI_PostModeChangeEvent`), `UI_InterruptTitleByIndex` (was
+   `SoundCtrl_SendCommand`) and `UI_ChangeModeByIndex` (was `UI_PostPartChangeEvent`). They post
+   `EVT_CHANGE_TITLE` / `EVT_INTERRUPT_TITLE` with `TITLE_PS + A`, and `EVT_CHANGE_MODE` with
+   `NAKA_MODE_MD_PS + A`. The renames are in `scripts/renaming/rename_title_by_index.sed`. `shared/event_codes.s`
+   now ends with a generated block of `TT_X` / `MD_X` index constants, the firmware's own names
+   (`gen_title_mode_index_equs.py`). `name_title_index_operands.py` walks each file's control flow back from every
+   call (including the two stack-spilling forwarders `FileIO_DiskEventDispatch` and `FileIO_GetDiskCapacity`) and
+   names each operand: `ldw wa, TT_DKLD`. That covers 279 title and 30 mode operands per tree. 18 title sites and 1
+   mode site take the index from memory.
+2. **Panel buttons.** `PanelButton_ModeKey` (`audio/audio_control_engine.s`) maps a mode key's lowest set button
+   bit through `PanelButton_ModeKeyCodes*` and posts `EVT_SW_IN_MODE` (`boot/main_title_ctrl_panel.s`:
+   `NAKA_MODE_MD_PS + payload`). Those maps (`naka_extension_device.c`) are now one `MD_*` byte per button,
+   commented with the MAME driver's port names:
+   - MENU SOUND / CONTROL / MIDI / DISK
+   - DEMO, MSP MENU, HELP, ENTERTAINER
+   - SEQUENCER EASY REC / MENU
+   - COMPOSER MENU, SOUND ARRANGER SET
+
+   `PanelButton_ModeKey_FilterTarget` can redirect two of the sequencer keys: EASY REC opens `MD_SEQ` when byte
+   0x26FC is 1, and MENU opens `MD_SEQ_PLAY` when bit 0 of 0x266A is set. Headers and the menu map now start a path
+   at the button: `MENU DISK button (mode MD_DISK) > "LOAD" (by LoadTtlJgFunc)`.
+3. **Records outside the C.** `scripts/converters/naka_asm_records.py --gen` writes `shared/naka_gui.s` (included
+   after event_codes.s) with class ids, value names, `IDX_<label>` element indices and one keyword-argument macro
+   per class, `NAKA_REC_<Class>`. `--apply` rewrites 86 asm records (88 in v6/v5) as one call each.
+   `scripts/converters/naka_type_c_slices.py` types 36 records that one C member covered exactly: the work-RAM
+   view records of `naka_sequencer_channels.c`, the IvExit byte arrays and `NakaWidget_SVARI`. The nine
+   `bytes_XXXX` members took their asm labels.
+4. **Class-string pointers.** `scripts/converters/name_class_string_pointers.py` labels the already-sliced
+   class-name / propdata strings (`ClassName_<Class>`, `ClassPropdata_<Class>`). It spells 283 pointers per tree
+   (281 in v6/v5) as `NAKA_ADDR()`. Each link script defines the label with the pointer's own value, so each tree's
+   blob is unchanged. In v7/v6/v5 that value is v10's address, as the shared C carries it, and their divergence
+   patches apply as before.
+5. **RAM cells.** `naka_ram_cells.h` also names every cell outside the C-spelled image, after the widget field
+   that keeps its live value there: `<record>_<Field>`, read from the ROM records. The 18 `field_XXXX` members of
+   `naka_sequencer_channels.c` that are such cells take the cell's name.
+6. **field_XX.** `SupportClass_PropTypeRecords` letters A..s are a typed array, `naka_prop_type_t [51]`:
+   - `proc`;
+   - `count`, which CommonIDProc walks;
+   - `size`, which `SupportClassProc_OnGetPropSize` reads at +6;
+   - `values`.
+
+   This is `retype_prop_type_records.py`.
 
 ## Files done
 
@@ -147,44 +210,41 @@ The records in all 15 record-holding files are fully converted, in all five tree
 `naka_accomp7_widgets.c`, `naka_composer_style.c`, `naka_ctrl_menu_body.c`, `naka_debug_naming.c`,
 `naka_direct_play.c`, `naka_disk_menu_file_io.c`, `naka_effects_seq.c`, `naka_extension_device.c`,
 `naka_midi_reverb.c`, `naka_msp_recording.c`, `naka_normal_mode.c`, `naka_perf_style.c`,
-`naka_sound_menu_drawbar.c` and `naka_technichord_part.c`. That is 3,206 records. In the files that hold class
-tables but no records, the class ids are named: `naka_block_007.c`, `naka_block_012.c`, `naka_disk_warning.c`,
-`naka_sequencer_channels.c`, `naka_sequencer_exit.c`, `naka_technichord_strings.c`, `naka_widget_descriptors.c`,
-`naka_widget_names_charmap.c`, `naka_widget_tables_1.c` and `naka_widget_tables_2.c`.
+`naka_sound_menu_drawbar.c` and `naka_technichord_part.c`. The second pass added records in
+`naka_sequencer_channels.c`, `naka_widget_names_charmap.c` and `naka_widget_tables_1.c`, for 3,242 in all. The class
+ids are named in every GUI C file.
 
 ## What remains (measured, not guessed)
 
-- **187 Viewable elements have no typed C record.** 159 are in ROM: 77 `NakaWidget_*`, 38 `Toshi_*`, 25 `FDTest_*`,
-  11 `NakaMenuItem_*` and a few others. They are either in `.s` files (`extensions/extension_data.s`, the factory
-  test) or still untyped members such as `NakaWidget_N1` and `bytes_0464` in `naka_normal_mode.c`. The other 28 are
-  DRAM records in the work-RAM image. The enums name all of them, after their asm label, and the menu map reads them
-  from the ROM. Typing them is next: they need the same `naka_cls_*` treatment.
-- **356 numeric ROM addresses.** Most are the `name` / `propdata` pointers of the Class descriptor tables, and they
-  point into the class-name string pools of *other* blobs, at offsets with no label. Symbolizing them needs labels
-  inside those pools. A few are handler words in `naka_perf_style.c` and `naka_technichord_part.c`, and
-  `IvMesage_Windows`.
-- **189 RAM cells** are in the first 0x7B0 bytes of the work-RAM image (RAM 0x3D524..0x3DCD3). The asm holds that part
-  as `WorkRamInit_Image` and names no cells in it.
-- **645 `field_XX` / `bytes_XX` / `ptr_XX` members** (653 in v7/v6/v5). They are outside the widget records, mostly
-  in `naka_sequencer_channels.c` (309) and `naka_style_bitmaps.c` (104).
-- **1 property value has no name.** `naka_extension_device.c` `TEST3.fontcolor = 0x0043`: ColorIDProc names no
-  colour 0x43.
-- **Menu entries that open a title by code.** These are the `AcTtlJgBox` boxes with a `main_func` (LOAD, DISK TOOLS,
-  DIRECT PLAY, SONG MEDLEY ...). The functions pass raw title indices, for example `LoadTtlJgFunc`
-  (`file_io/title_handlers.s`) does `ldw wa, 0x61; ldw bc, 0x64; calr FileIO_DiskEventDispatch`. Naming them
-  `TITLE_*` in the asm would let the map follow them. Today 60 of the 211 titles have a menu path; the others are
-  listed as "opened by code".
-- **Icons.** `IconIDProc_NameTable` names most icons only `i0`..`i174`, so `idICON_i147` is the firmware's name but
-  not a description.
+- **65 Viewable elements with no typed record.** 20 straddle two C members. For example, an IvExit and the record
+  after it share one `naka_dispatch_t`, so typing them means splitting members, and some of those members hold a
+  pointer at an odd offset (`.inst_ptr = NAKA_ADDR(CRTC_LINE_COMPARE)` in `w47`). 13 are DRAM records in the asm's
+  `WorkRamInit_Image`; the other 15 DRAM records are now typed in `naka_sequencer_channels.c`. 32 asm records were
+  skipped by `naka_asm_records.py --report`, because their block holds strings (`aligned_string`) or ends before or
+  after the record. The enums and the menu map name all of them.
+- **73 numeric ROM addresses** (75 in v6/v5): 25 in `naka_widget_descriptors.c`, 19 in `naka_block_007.c`, 15 in
+  `naka_technichord_strings.c`, and a few handler words. They point at string or record interiors with no slice of
+  their own, and need a label split first.
+- **525 `field_XX` members** (533 in v7/v6/v5). 291 are in `naka_sequencer_channels.c`; none of those is read by its
+  RAM address in the asm (checked: one direct `(0xADDR)` use among them), and none is a widget's cell. Naming them
+  needs the routines that reach them through a base pointer. The rest are spread over 15 files.
+- **1 property value has no name**: `TEST3.fontcolor = 0x0043`.
+- **81 titles have no path.** No traced code opens 108 of the 130 title names that the asm never spells. That
+  includes most sound-edit (`TITLE_SE*`) pages, which the Scoop module's sound-editor screens open through their own
+  data, not NAKA records.
+- **Icons**: the firmware names most only `iNN`.
 
 ## Open questions
 
-- Which panel button enters which mode (MD_DISK, MD_SOUND ...)? The modes are the roots of the menu map, but the
-  button-to-mode table was not traced in this lane. The headers therefore say "mode MD_DISK", not "DISK button".
-- `RectX2Proc`'s internal labels are `TabDraw_TopEdge*`, borrowed from unrelated code. The routine is the x2/width
-  property type, and its labels should be renamed like `RectY2Proc`'s. This lane did not rename them.
-- Is the font index table (`FontIDProc_FontNameTable`, in DRAM) ever rewritten at run time? The names assume the
-  boot image.
+- `RectX2Proc`'s internal labels are `TabDraw_TopEdge*`, borrowed from unrelated code. This lane did not rename
+  them.
+- Is the font index table (`FontIDProc_FontNameTable`, in DRAM) rewritten at run time? The names assume the boot
+  image.
+- These routine names changed in the second pass, and the documentation site still uses the old ones in
+  `feature-demo.md`, `test-modes.md` and `ssf-presentation.md`:
+  - `UI_PostModeChangeEvent` is now `UI_ChangeTitleByIndex`;
+  - `SoundCtrl_SendCommand` is now `UI_InterruptTitleByIndex`;
+  - `UI_PostPartChangeEvent` is now `UI_ChangeModeByIndex`.
 
 ## Website page draft (for `ui-framework.md`, section "Widget records in the C sources")
 
