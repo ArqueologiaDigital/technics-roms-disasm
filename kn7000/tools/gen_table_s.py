@@ -258,6 +258,11 @@ def item_file(it):
     return kind, it[:n], len(it) - n
 
 
+def label_slot(label):
+    """-> the directory slot whose segment carries `label` (build 84's names)."""
+    return next(i for i, v in TS.SEGMENTS.items() if v[0] == label)
+
+
 def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
     """A segment that opens with u32 offsets (from its start; 0 = empty slot) to its
     items: the table as .long <item> - <segment>, then each item once, under the label
@@ -287,8 +292,22 @@ def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
         if len(users) > 1:
             B.append(f"# slots {', '.join(map(str, users))}")
         B.append(f"{lab}:")
-        f = item_file(it) if subdir else None
-        if f:
+        f = item_file(it) if subdir and label_slot(label) not in TS.PNG_GROUPS else None
+        png = TS.PNG_GROUPS.get(label_slot(label))
+        if png:
+            slot = int(lab[len(prefix):])
+            if png[0] == "b1":
+                w, h = png[1], png[2]
+                size, fmt, what = w * h // 8, f"b1 {w} {h}", f"{w}x{h}, 1 bpp"
+            else:
+                rb = png[1][slot]
+                h = len(it) // rb
+                size, fmt, what = rb * h, f"p2 {4 * rb} {h}", f"{4 * rb}x{h}, 2 bpp"
+            B.append(png_item(jpg_dir, f"{subdir}/{slot:02d}", fmt, it[:size], what))
+            assert it[size:] == bytes(len(it) - size), f"{lab}: non-zero bytes after the picture"
+            if len(it) > size:
+                B.append(f"    .space\t{len(it) - size}, 0x00")
+        elif f:
             kind, data, pad = f
             slot = int(lab[len(prefix):])
             fn = f"{subdir}/{slot:02d}_{stems[slot]}.{kind}"

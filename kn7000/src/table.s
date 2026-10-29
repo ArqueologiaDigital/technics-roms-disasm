@@ -2724,8 +2724,12 @@ SoundImage39:
     .space	2, 0x00
 
 # dir[57], 0xd9ec bytes.
-# Read by AcUserHpMenuProc: u32 offsets from the segment start, indexed by item.
-# TODO: the format of the entries.
+# Read by AcUserHpMenuProc (func_48496B28): u32 offsets from the segment start,
+# indexed by item; 0 = none (DrawBox instead). Each entry is a 2-bpp picture of a
+# USER HP menu panel, drawn with DrawBitmapSPFast4 (four 2-bit pixels per byte,
+# leftmost in bits 7-6, rows of (width + 3) / 4 bytes) in the colours at 0x485fa224,
+# 0x485fa234 or 0x485fa244 (palette first 0x20 / 0x24 / 0x28) by state. Kept as
+# PNGs in src/table/user_hp_menu/ (tools/table_png.py).
 UserHpMenuData:
     .long	UserHpMenuEntry00 - UserHpMenuData
     .long	UserHpMenuEntry01 - UserHpMenuData
@@ -2808,151 +2812,154 @@ UserHpMenuData:
     .long	0
 
 UserHpMenuEntry00:
-    .incbin_range	"baserom/kn7000_table.rom", 0x22f2fc, 0x22f75c
+    .incbin	"build/table_png/user_hp_menu/00.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/00.png (320x14, 2 bpp)
 
 UserHpMenuEntry01:
-    .incbin_range	"baserom/kn7000_table.rom", 0x22f75c, 0x22fbbc
+    .incbin	"build/table_png/user_hp_menu/01.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/01.png (320x14, 2 bpp)
 
 UserHpMenuEntry02:
-    .incbin_range	"baserom/kn7000_table.rom", 0x22fbbc, 0x23001c
+    .incbin	"build/table_png/user_hp_menu/02.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/02.png (320x14, 2 bpp)
 
 UserHpMenuEntry03:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23001c, 0x23047c
+    .incbin	"build/table_png/user_hp_menu/03.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/03.png (320x14, 2 bpp)
 
 UserHpMenuEntry04:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23047c, 0x2308dc
+    .incbin	"build/table_png/user_hp_menu/04.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/04.png (320x14, 2 bpp)
 
 UserHpMenuEntry05:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2308dc, 0x230d3c
+    .incbin	"build/table_png/user_hp_menu/05.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/05.png (320x14, 2 bpp)
 
 UserHpMenuEntry29:
-    .incbin_range	"baserom/kn7000_table.rom", 0x230d3c, 0x230f44
+    .incbin	"build/table_png/user_hp_menu/29.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/29.png (80x26, 2 bpp)
 
 UserHpMenuEntry30:
-    .incbin_range	"baserom/kn7000_table.rom", 0x230f44, 0x231007
+    .incbin	"build/table_png/user_hp_menu/30.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/30.png (60x13, 2 bpp)
 
 UserHpMenuEntry48:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231007, 0x231417
+    .incbin	"build/table_png/user_hp_menu/48.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/48.png (160x26, 2 bpp)
 
 UserHpMenuEntry47:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231417, 0x231827
+    .incbin	"build/table_png/user_hp_menu/47.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/47.png (160x26, 2 bpp)
 
 UserHpMenuEntry43:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231827, 0x231a2f
+    .incbin	"build/table_png/user_hp_menu/43.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/43.png (160x13, 2 bpp)
 
 UserHpMenuEntry44:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231a2f, 0x231e3f
+    .incbin	"build/table_png/user_hp_menu/44.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/44.png (160x26, 2 bpp)
 
 UserHpMenuEntry23:
-    .incbin_range	"baserom/kn7000_table.rom", 0x231e3f, 0x232088
+    .incbin	"build/table_png/user_hp_menu/23.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/23.png (180x13, 2 bpp)
 
 UserHpMenuEntry24:
-    .incbin_range	"baserom/kn7000_table.rom", 0x232088, 0x23224f
+    .incbin	"build/table_png/user_hp_menu/24.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/24.png (140x13, 2 bpp)
 
 UserHpMenuEntry35:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23224f, 0x232312
+    .incbin	"build/table_png/user_hp_menu/35.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/35.png (60x13, 2 bpp)
 
 UserHpMenuEntry17:
-    .incbin_range	"baserom/kn7000_table.rom", 0x232312, 0x232b32
+    .incbin	"build/table_png/user_hp_menu/17.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/17.png (160x52, 2 bpp)
 
 UserHpMenuEntry18:
-    .incbin_range	"baserom/kn7000_table.rom", 0x232b32, 0x23314a
+    .incbin	"build/table_png/user_hp_menu/18.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/18.png (120x52, 2 bpp)
 
 UserHpMenuEntry15:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23314a, 0x23396a
+    .incbin	"build/table_png/user_hp_menu/15.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/15.png (160x52, 2 bpp)
 
 UserHpMenuEntry16:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23396a, 0x233f82
+    .incbin	"build/table_png/user_hp_menu/16.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/16.png (120x52, 2 bpp)
 
 UserHpMenuEntry34:
-    .incbin_range	"baserom/kn7000_table.rom", 0x233f82, 0x23418a
+    .incbin	"build/table_png/user_hp_menu/34.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/34.png (160x13, 2 bpp)
 
 UserHpMenuEntry39:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23418a, 0x234392
+    .incbin	"build/table_png/user_hp_menu/39.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/39.png (160x13, 2 bpp)
 
 UserHpMenuEntry40:
-    .incbin_range	"baserom/kn7000_table.rom", 0x234392, 0x2349aa
+    .incbin	"build/table_png/user_hp_menu/40.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/40.png (160x39, 2 bpp)
 
 UserHpMenuEntry36:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2349aa, 0x234bb2
+    .incbin	"build/table_png/user_hp_menu/36.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/36.png (160x13, 2 bpp)
 
 UserHpMenuEntry38:
-    .incbin_range	"baserom/kn7000_table.rom", 0x234bb2, 0x234dba
+    .incbin	"build/table_png/user_hp_menu/38.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/38.png (160x13, 2 bpp)
 
 UserHpMenuEntry37:
-    .incbin_range	"baserom/kn7000_table.rom", 0x234dba, 0x2353d2
+    .incbin	"build/table_png/user_hp_menu/37.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/37.png (160x39, 2 bpp)
 
 UserHpMenuEntry19:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2353d2, 0x23561b
+    .incbin	"build/table_png/user_hp_menu/19.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/19.png (180x13, 2 bpp)
 
 UserHpMenuEntry20:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23561b, 0x2357e2
+    .incbin	"build/table_png/user_hp_menu/20.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/20.png (140x13, 2 bpp)
 
 UserHpMenuEntry21:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2357e2, 0x235a2b
+    .incbin	"build/table_png/user_hp_menu/21.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/21.png (180x13, 2 bpp)
 
 UserHpMenuEntry22:
-    .incbin_range	"baserom/kn7000_table.rom", 0x235a2b, 0x235bf2
+    .incbin	"build/table_png/user_hp_menu/22.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/22.png (140x13, 2 bpp)
 
 UserHpMenuEntry25:
-    .incbin_range	"baserom/kn7000_table.rom", 0x235bf2, 0x235e3b
+    .incbin	"build/table_png/user_hp_menu/25.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/25.png (180x13, 2 bpp)
 
 UserHpMenuEntry26:
-    .incbin_range	"baserom/kn7000_table.rom", 0x235e3b, 0x236002
+    .incbin	"build/table_png/user_hp_menu/26.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/26.png (140x13, 2 bpp)
 
 UserHpMenuEntry32:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236002, 0x2360c5
+    .incbin	"build/table_png/user_hp_menu/32.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/32.png (60x13, 2 bpp)
 
 UserHpMenuEntry46:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2360c5, 0x2364d5
+    .incbin	"build/table_png/user_hp_menu/46.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/46.png (160x26, 2 bpp)
 
 UserHpMenuEntry45:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2364d5, 0x2368e5
+    .incbin	"build/table_png/user_hp_menu/45.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/45.png (160x26, 2 bpp)
 
 UserHpMenuEntry42:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2368e5, 0x236cf5
+    .incbin	"build/table_png/user_hp_menu/42.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/42.png (160x26, 2 bpp)
 
 UserHpMenuEntry31:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236cf5, 0x236d77
+    .incbin	"build/table_png/user_hp_menu/31.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/31.png (40x13, 2 bpp)
 
 UserHpMenuEntry27:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236d77, 0x236efd
+    .incbin	"build/table_png/user_hp_menu/27.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/27.png (60x26, 2 bpp)
 
 UserHpMenuEntry28:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236efd, 0x236f7f
+    .incbin	"build/table_png/user_hp_menu/28.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/28.png (40x13, 2 bpp)
 
 UserHpMenuEntry33:
-    .incbin_range	"baserom/kn7000_table.rom", 0x236f7f, 0x237042
+    .incbin	"build/table_png/user_hp_menu/33.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/33.png (60x13, 2 bpp)
 
 UserHpMenuEntry41:
-    .incbin_range	"baserom/kn7000_table.rom", 0x237042, 0x237452
+    .incbin	"build/table_png/user_hp_menu/41.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/41.png (80x52, 2 bpp)
 
 UserHpMenuEntry06:
-    .incbin_range	"baserom/kn7000_table.rom", 0x237452, 0x238492
+    .incbin	"build/table_png/user_hp_menu/06.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/06.png (320x52, 2 bpp)
 
 UserHpMenuEntry07:
-    .incbin_range	"baserom/kn7000_table.rom", 0x238492, 0x2390c2
+    .incbin	"build/table_png/user_hp_menu/07.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/07.png (320x39, 2 bpp)
 
 UserHpMenuEntry08:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2390c2, 0x23a102
+    .incbin	"build/table_png/user_hp_menu/08.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/08.png (320x52, 2 bpp)
 
 UserHpMenuEntry09:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23a102, 0x23ad32
+    .incbin	"build/table_png/user_hp_menu/09.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/09.png (320x39, 2 bpp)
 
 UserHpMenuEntry10:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23ad32, 0x23bd72
+    .incbin	"build/table_png/user_hp_menu/10.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/10.png (320x52, 2 bpp)
 
 # slots 11, 13
 UserHpMenuEntry11:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23bd72, 0x23c592
+    .incbin	"build/table_png/user_hp_menu/11.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/11.png (160x52, 2 bpp)
 
 # slots 12, 14
 UserHpMenuEntry12:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23c592, 0x23cbac
+    .incbin	"build/table_png/user_hp_menu/12.bin"   # census: generated -- tools/table_png.py from src/table/user_hp_menu/12.png (160x39, 2 bpp)
+    .space	2, 0x00
 
 # dir[58], 0x83cc bytes.
-# Read by AcTcdImageProc: u32 offsets from the segment start; 0 = none.
-# TODO: the format of the 2400-byte entries.
+# Read by AcTcdImageProc: u32 offsets from the segment start, picked through the
+# u16 table 0x485ec940 by GetM3EmVal(0x8081); 0 = none. Each entry is a 240 x 80
+# 1-bpp picture drawn with DrawBitmapSP2 (fg 0xff, bg 0): 30-byte MSB-first rows.
+# Kept as PNGs in src/table/tcd/ (tools/table_png.py).
 TcdImages:
     .long	TcdImage00 - TcdImages
     .long	TcdImage01 - TcdImages
@@ -2991,46 +2998,46 @@ TcdImages:
     .long	0
 
 TcdImage00:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23cc38, 0x23d598
+    .incbin	"build/table_png/tcd/00.bin"   # census: generated -- tools/table_png.py from src/table/tcd/00.png (240x80, 1 bpp)
 
 TcdImage01:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23d598, 0x23def8
+    .incbin	"build/table_png/tcd/01.bin"   # census: generated -- tools/table_png.py from src/table/tcd/01.png (240x80, 1 bpp)
 
 TcdImage02:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23def8, 0x23e858
+    .incbin	"build/table_png/tcd/02.bin"   # census: generated -- tools/table_png.py from src/table/tcd/02.png (240x80, 1 bpp)
 
 TcdImage03:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23e858, 0x23f1b8
+    .incbin	"build/table_png/tcd/03.bin"   # census: generated -- tools/table_png.py from src/table/tcd/03.png (240x80, 1 bpp)
 
 TcdImage04:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23f1b8, 0x23fb18
+    .incbin	"build/table_png/tcd/04.bin"   # census: generated -- tools/table_png.py from src/table/tcd/04.png (240x80, 1 bpp)
 
 TcdImage05:
-    .incbin_range	"baserom/kn7000_table.rom", 0x23fb18, 0x240478
+    .incbin	"build/table_png/tcd/05.bin"   # census: generated -- tools/table_png.py from src/table/tcd/05.png (240x80, 1 bpp)
 
 TcdImage06:
-    .incbin_range	"baserom/kn7000_table.rom", 0x240478, 0x240dd8
+    .incbin	"build/table_png/tcd/06.bin"   # census: generated -- tools/table_png.py from src/table/tcd/06.png (240x80, 1 bpp)
 
 TcdImage07:
-    .incbin_range	"baserom/kn7000_table.rom", 0x240dd8, 0x241738
+    .incbin	"build/table_png/tcd/07.bin"   # census: generated -- tools/table_png.py from src/table/tcd/07.png (240x80, 1 bpp)
 
 TcdImage08:
-    .incbin_range	"baserom/kn7000_table.rom", 0x241738, 0x242098
+    .incbin	"build/table_png/tcd/08.bin"   # census: generated -- tools/table_png.py from src/table/tcd/08.png (240x80, 1 bpp)
 
 TcdImage09:
-    .incbin_range	"baserom/kn7000_table.rom", 0x242098, 0x2429f8
+    .incbin	"build/table_png/tcd/09.bin"   # census: generated -- tools/table_png.py from src/table/tcd/09.png (240x80, 1 bpp)
 
 TcdImage10:
-    .incbin_range	"baserom/kn7000_table.rom", 0x2429f8, 0x243358
+    .incbin	"build/table_png/tcd/10.bin"   # census: generated -- tools/table_png.py from src/table/tcd/10.png (240x80, 1 bpp)
 
 TcdImage11:
-    .incbin_range	"baserom/kn7000_table.rom", 0x243358, 0x243cb8
+    .incbin	"build/table_png/tcd/11.bin"   # census: generated -- tools/table_png.py from src/table/tcd/11.png (240x80, 1 bpp)
 
 TcdImage12:
-    .incbin_range	"baserom/kn7000_table.rom", 0x243cb8, 0x244618
+    .incbin	"build/table_png/tcd/12.bin"   # census: generated -- tools/table_png.py from src/table/tcd/12.png (240x80, 1 bpp)
 
 TcdImage13:
-    .incbin_range	"baserom/kn7000_table.rom", 0x244618, 0x244f78
+    .incbin	"build/table_png/tcd/13.bin"   # census: generated -- tools/table_png.py from src/table/tcd/13.png (240x80, 1 bpp)
 
 # dir[59], 0x13980c bytes.
 # The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and

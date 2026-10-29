@@ -80,6 +80,27 @@ DEMO = [
 ]
 
 
+# Groups whose items are raw pictures kept as indexed PNGs (tools/table_png.py): per
+# segment, the format and, for 2-bpp items, each item's row length in bytes (by the
+# number of the first slot that points at it).
+#  57: AcUserHpMenuProc draws item d0 with DrawBitmapSPFast4 (2 bpp, colours 0x485FA224)
+#      in a box GetBox takes from the item's view (table 0x485F921C, 12-byte rows: view
+#      id, item); the box sizes are in the view resources, not traced.  The row lengths
+#      below are an INFERENCE: heights a multiple of the 13-pixel text line, the row
+#      length whose rows repeat most, checked by eye (all 47 pictures show coherent
+#      panels, notes/table-semantics-2026-10-29.md); slot 47 overridden to 40 (at 80 it
+#      shows two half-panels side by side).  Any row length gives the same bytes back.
+#  58: AcTcdImageProc draws the item with DrawBitmapSP2(width 240, height 80): 1 bpp.
+PNG_GROUPS = {
+    57: ("p2", {0: 80, 1: 80, 2: 80, 3: 80, 4: 80, 5: 80, 6: 80, 7: 80, 8: 80, 9: 80, 10: 80,
+                11: 40, 12: 40, 15: 40, 16: 30, 17: 40, 18: 30, 19: 45, 20: 35, 21: 45, 22: 35,
+                23: 45, 24: 35, 25: 45, 26: 35, 27: 15, 28: 10, 29: 20, 30: 15, 31: 10, 32: 15,
+                33: 15, 34: 40, 35: 15, 36: 40, 37: 40, 38: 40, 39: 40, 40: 40, 41: 20, 42: 40,
+                43: 40, 44: 40, 45: 40, 46: 40, 47: 40, 48: 40}),
+    58: ("b1", 240, 80),
+}
+
+
 # Segments that open with a table of u32 offsets from the segment start, one per slot
 # (0 = empty slot), to their items. Per segment: the label prefix of an item (+ the
 # number of the first slot that points at it), the subdirectory of src/table/ its JPEG
@@ -106,8 +127,8 @@ GROUPS = {
         28: "double_bass", 29: "electric_bass", 30: "analog_synth", 31: "drum_kit",
         32: "sound_effects", 33: "snare_drum", 34: "percussion", 35: "accordion_red_2",
         37: "bank_box", 38: "accordion_purple", 39: "accordion_green"}),
-    57: ("UserHpMenuEntry", None, {}),
-    58: ("TcdImage", None, {}),
+    57: ("UserHpMenuEntry", "user_hp_menu", {}),
+    58: ("TcdImage", "tcd", {}),
     72: ("OrganTab", "organ_tab", {
         0: "16_flu", 1: "8_flu", 2: "4_flu", 3: "2_2-3_flu", 4: "2_flu", 5: "1_flu",
         6: "16_tb", 7: "8_kn", 8: "8_cl", 9: "8_vn",
@@ -189,11 +210,17 @@ def _segments():
         "AcSndImageProc's pictures: u32 offsets from the segment start, indexed by the u16",
         "at 0x5006B80E; 0 = none."])
     s[57] = ("UserHpMenuData", "offtab", None, [
-        "Read by AcUserHpMenuProc: u32 offsets from the segment start, indexed by item.",
-        "TODO: the format of the entries."])
+        "Read by AcUserHpMenuProc (func_48496B28): u32 offsets from the segment start,",
+        "indexed by item; 0 = none (DrawBox instead). Each entry is a 2-bpp picture of a",
+        "USER HP menu panel, drawn with DrawBitmapSPFast4 (four 2-bit pixels per byte,",
+        "leftmost in bits 7-6, rows of (width + 3) / 4 bytes) in the colours at 0x485FA224,",
+        "0x485FA234 or 0x485FA244 (palette first 0x20 / 0x24 / 0x28) by state. Kept as",
+        "PNGs in src/table/user_hp_menu/ (tools/table_png.py)."])
     s[58] = ("TcdImages", "offtab", None, [
-        "Read by AcTcdImageProc: u32 offsets from the segment start; 0 = none.",
-        "TODO: the format of the 2400-byte entries."])
+        "Read by AcTcdImageProc: u32 offsets from the segment start, picked through the",
+        "u16 table 0x485EC940 by GetM3EmVal(0x8081); 0 = none. Each entry is a 240 x 80",
+        "1-bpp picture drawn with DrawBitmapSP2 (fg 0xFF, bg 0): 30-byte MSB-first rows.",
+        "Kept as PNGs in src/table/tcd/ (tools/table_png.py)."])
     s[59] = ("BuiltinStyleSubTable", "raw", None, [
         "The built-in styles' secondary sub-table: TableRomStyleSubTablePtr returns it and",
         "StyleBuiltinNameTableInit caches it in 0x50034B90 (kn7000_manual.sym, style-name",
