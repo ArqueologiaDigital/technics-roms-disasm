@@ -67,6 +67,15 @@ def _reg(model, disk):
     return _written[key], _rules[key]
 
 
+CURRENT = [None, None]   # (model, disk) of the file being described, for typers that write include files
+
+
+def extra_file(name, text):
+    """A payload-side include file (payload/<name>), written and kept like the payload sources."""
+    assert '/' not in name and name.endswith('.s')
+    _reg(*CURRENT)[0]['payload/' + name] = text
+
+
 def payload_label(ctx, i):
     return 'P_%s_p%d' % (ctx.label[2:], i)
 
@@ -101,6 +110,7 @@ def describe_kd(ctx, model, typers=None, note=None):
     if kind == 'RAW':
         return None
     files, rules = _reg(model, ctx.disk)
+    CURRENT[:] = [model, ctx.disk]
     typer = (typers or {}).get(ext)
     lab = ctx.label
     codec = parts[0][0]

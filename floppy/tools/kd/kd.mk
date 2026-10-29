@@ -23,9 +23,10 @@ build/%.zl: build/%.pbin $(KD_DIR)/lzss_j.py
 
 # $(1) model, $(2) disk, $(3) unit, $(4) extracted name, $(5) part, $(6) zd | zl
 define KD_PART
-build/$(1)/$(2)/$(4).p$(5).po: $(1)/$(2)/payload/$(3).p$(5).s build/$(1)/$(2)/kd.stamp tools/kd.inc \
-		$$(LLVM_MC) $$(wildcard $(1)/include/*.inc)
-	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I tools -I $(1)/include -I build/$(1)/$(2) -o $$@ $$<
+build/$(1)/$(2)/$(4).p$(5).po: $(1)/$(2)/payload/$(3).p$(5).s build/$(1)/$(2)/kd.stamp $$(wildcard tools/*.inc) \
+		$$(LLVM_MC) $$(wildcard $(1)/include/*.inc $(1)/$(2)/payload/$(3).p$(5).*.s)
+	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I tools -I $(1)/include -I $(1)/$(2)/payload -I build/$(1)/$(2) \
+	    -o $$@ $$<
 build/$(1)/$(2).o: build/$(1)/$(2)/$(4).p$(5).$(6)
 endef
 

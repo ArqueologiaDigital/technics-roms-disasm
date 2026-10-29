@@ -15,7 +15,13 @@ KIND = {
     'CST': 'a custom style',
 }
 
-TYPERS = {}
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import kn_tcmp  # noqa: E402
+
+TYPERS = {'CMP': kn_tcmp.typer}
 
 
 def note(ctx, ext):
