@@ -80,7 +80,7 @@ wsa1-clean:
 #   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83), table
 #                      build 80 (src/b80/table.s), the IC18 boot ROM (src/ic18/boot.s), all of
 #                      IC18 with its rhythm data (src/ic18/ic18.s), program builds 935 and 893
-#                      (src/b935/, src/b893/, ported from 941) the four wave ROMs (src/wave/)
+#                      (src/b935/, src/b893/, ported from 941), the four wave ROMs (src/wave/)
 #                      and the nine factory custom-style banks (src/customdata/*.s)
 kn7000:
 	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom build-cnv
