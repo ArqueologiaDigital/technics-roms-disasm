@@ -280,7 +280,7 @@ data_50000974:
 data_50000978:
 .incbin_range "baserom/kn7000_program.rom", 0x3B14E0, 0x3B14E4
 
-ModeProc_Table:	# 4 x u32, 917504..917504; read by ModeProc 0x4842AE30: `mov   (d1, a0), d0`; ModeProc 0x4842AE30: `mov   (d0, a0), d1` ...
+ModeProc_Table:	# 4 x u32, 917504..917504; read by ModeProc 0x4842AE30: `mov   (d0, a0), d0`; ModeProc 0x4842AE30: `mov   (d0, a0), d1` ...
 	tab_u32	917504, 917504, 917504, 917504
 ModeProc_Table_2:	# 4 x u32, 917504..917504; read by ModeProc 0x4842AE30: `mov   (d0, a0), d0`; GetModeOld_entry 0x4842B326: `mov   (d0, a0), d0` ...
 	tab_u32	917504, 917504, 917504, 917504
@@ -340,7 +340,7 @@ data_50000A14:
 	.space	1, 0x00
 data_50000A15:
 .incbin_range "baserom/kn7000_program.rom", 0x3B157D, 0x3B1580
-func_4844BFDF_Table:	# 128 x u8, 0..39; read by func_4844BFDF_entry 0x4844B4E4: `movbu  (d0, a0), d2`; func_4844CA6C_entry 0x4844B4E4: `movbu  (d1, a0), d1` ...
+func_4844BFDF_Table:	# 128 x u8, 0..39; read by func_4844BFDF_entry 0x4844B4E4: `movbu  (d0, a0), d2`; func_4844BFDF_entry 0x4844B4E4: `movbu  (d1, a0), d2` ...
 	tab_u8	0, 1, 0, 3, 16, 16, 16, 22, 24, 26, 28, 30, 32, 34, 36, 38	# [0]
 	tab_u8	17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
@@ -357,7 +357,7 @@ func_4844BFDF_Table_2:	# 51 x u16, 0..2068; read by func_4844BFDF_entry 0x4844B4
 	tab_u16	1534, 1761, 2068	# [48]
 data_50000AFE:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1666, 0x3B166C
-func_4844BFDF_Table_3:	# 8 x u8, 0..255; read by func_4844CA6C_entry 0x4844B4E4: `movbu  (d0, a1), d0`; func_4844CA6C_entry 0x4844B4E4: `movbu  (d0, a0), d0` ...
+func_4844BFDF_Table_3:	# 8 x u8, 0..255; read by func_4844BFDF_entry 0x4844B4E4: `movbu  (d0, a1), d0`; func_4844BFDF_entry 0x4844B4E4: `movbu  (d0, a2), d0` ...
 	tab_u8	0, 16, 32, 48, 64, 80, 255, 255
 data_50000B0C:
 	.space	1, 0x00
@@ -539,7 +539,7 @@ data_50000F4C:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1AB4, 0x3B1AC8
 data_50000F60:
 	.space	4, 0x00
-inflate_blocks_Table:	# 19 x u32, 0..18; read by inflate_blocks_entry 0x48476E0B: `mov   (d0, a1), d1`; inflate_blocks_entry 0x48476E0B: `mov   (d0, a1), d0`
+inflate_blocks_Table:	# 19 x u32, 0..18; read by inflate_blocks_entry 0x48476E0B: `mov   (d0, a1), d0`; inflate_blocks_entry 0x48476E0B: `mov   (d0, a1), d1`
 	tab_u32	16, 17, 18, 0, 8, 7, 9, 6	# [0]
 	tab_u32	10, 5, 11, 4, 12, 3, 13, 2	# [8]
 	tab_u32	14, 1, 15	# [16]
@@ -702,7 +702,7 @@ BitmapLoad_ScreenMenu_LOAD_selected:
 	.space	4, 0x00
 BitmapLoad_DbBitmapFile_BITMAP_FILE_selected:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1E50, 0x3B1E54
-DbMemoryDumpProc_Table_2:	# 1 x u32, 2214592512..2214592512; read by DbMemoryDumpProc 0x484878AC: `mov   (d0, a0), d1`; DbMemoryDumpProc 0x484878AC: `mov   (d0, a0), d0`
+DbMemoryDumpProc_Table_2:	# 1 x u32, 2214592512..2214592512; read by DbMemoryDumpProc 0x484878AC: `mov   (d0, a0), d0`; DbMemoryDumpProc 0x484878AC: `mov   (d0, a0), d1`
 	tab_u32	2214592512
 data_500012F0:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1E58, 0x3B1E5C
@@ -710,7 +710,7 @@ data_500012F4:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1E5C, 0x3B1E60
 data_500012F8:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1E60, 0x3B1E64
-DbMemoryDumpProc_Table_3:	# 4 x s16, -1..255; read by DbMemoryDumpProc 0x484878AC: `movhu  (d1, a0), d1`; DbMemoryDumpProc 0x484878AC: `movhu  (d0, a3), d0`
+DbMemoryDumpProc_Table_3:	# 4 x s16, -1..255; read by DbMemoryDumpProc 0x484878AC: `movhu  (d0, a3), d0`; DbMemoryDumpProc 0x484878AC: `movhu  (d1, a0), d1`
 	tab_s16	240, 247, 255, -1
 data_50001304:
 .incbin_range "baserom/kn7000_program.rom", 0x3B1E6C, 0x3B1E70
@@ -3470,7 +3470,7 @@ data_500022F0:
 data_500022F4:
 .incbin_range "baserom/kn7000_program.rom", 0x3B2E5C, 0x3B2E60
 
-AcTrackVolProc_Table:	# 16 x u16, 0..15; read by AcTrackVolProc 0x484956E2: `movhu  (d0, a1), d1`; AcTrackVolProc 0x484956E2: `movhu  (d0, a1), d0`
+AcTrackVolProc_Table:	# 16 x u16, 0..15; read by AcTrackVolProc 0x484956E2: `movhu  (d0, a1), d0`; AcTrackVolProc 0x484956E2: `movhu  (d0, a1), d1`
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
 	tab_u16	12, 13, 14, 15	# [12]
 data_50002318:
@@ -8824,7 +8824,7 @@ func_48538A04_Table:	# 1 x u32, 14680356..14680356; read by func_48538A04_entry 
 	tab_u32	14680356
 data_5000501C:
 .incbin_range "baserom/kn7000_program.rom", 0x3B5B84, 0x3B5B88
-FE_SeqTrkMrgTrack_Table_2:	# 4 x u8, 1..255; read by FE_SeqTrkMrgTrack 0x48538ACC: `movbu  (d1, a0), d1`; FE_SeqTrkMrgTrack 0x48538ACC: `movbu  (d1, a0), d0`
+FE_SeqTrkMrgTrack_Table_2:	# 4 x u8, 1..255; read by FE_SeqTrkMrgTrack 0x48538ACC: `movbu  (d1, a0), d0`; FE_SeqTrkMrgTrack 0x48538ACC: `movbu  (d1, a0), d1`
 	tab_u8	1, 2, 3, 255
 func_48538C34_Table:	# 1 x u32, 14680492..14680492; read by func_48538C34_entry 0x48538BF8: `mov   (a2), d0`
 	tab_u32	14680492
@@ -11539,7 +11539,7 @@ data_50007DE8:
 data_50007DEC:
 .incbin_range "baserom/kn7000_program.rom", 0x3B8954, 0x3B8958
 
-AcSeqTrackPartBoxProc_Table:	# 16 x u16, 7..66; read by AcSeqTrackPartBoxProc 0x4853504B: `movhu  (d0, a1), d0`; AcSeqTrackPartBoxProc 0x4853504B: `movhu  (d0, a0), d0` ...
+AcSeqTrackPartBoxProc_Table:	# 16 x u16, 7..66; read by AcSeqTrackPartBoxProc 0x4853504B: `movhu  (d0, a0), d0`; AcSeqTrackPartBoxProc 0x4853504B: `movhu  (d0, a1), d0` ...
 	tab_u16	16, 17, 18, 64, 65, 66, 27, 7, 8, 9, 10, 11	# [0]
 	tab_u16	12, 13, 14, 15	# [12]
 data_50007E10:
@@ -11562,7 +11562,7 @@ PadRecPtChdGrid_Table_2:	# 2 x s8, 0..5; read by PadRecPtChdGrid 0x485136BF: `mo
 	tab_s8	5, 0
 PadRecPtChdGrid_Table_3:	# 8 x s8, -1..0; read by PadRecPtChdGrid 0x485136BF: `movbu  (d0, a0), d0`
 	tab_s8	0, 0, -1, -1, 0, 0, 0, 0
-AcSeqPlayRecBoxProc_Table:	# 16 x u16, 0..0; read by AcSeqPlayRecBoxProc 0x48534C5C: `movhu  (d0, a1), d0`; AcSeqPlayRecBoxProc 0x48534C5C: `movhu  (d0, a0), d0` ...
+AcSeqPlayRecBoxProc_Table:	# 16 x u16, 0..0; read by AcSeqPlayRecBoxProc 0x48534C5C: `movhu  (d0, a0), d0`; AcSeqPlayRecBoxProc 0x48534C5C: `movhu  (d0, a1), d0` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0	# [12]
 AcSeqTrackNumBoxProc_Table:	# 16 x u16, 0..0; read by AcSeqTrackNumBoxProc 0x48534ED9: `movhu  (d0, a1), d0`; func_4853F354_entry 0x4853F22D: `movhu  (d3, a1), d0` ...

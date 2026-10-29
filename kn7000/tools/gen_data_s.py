@@ -862,7 +862,7 @@ class Gen:
                 continue
             vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=signed) for i in range(n)]
             kind = ("s" if signed else "u") + str(8 * w)
-            readers = sorted({(r[0], r[1], r[2]) for r in rd if r[3] == w}, key=lambda r: (r[1] or 0))
+            readers = sorted({(r[0], r[1], r[2]) for r in rd if r[3] == w}, key=lambda r: (r[1] or 0, r[0] or "", r[2]))
             fn = next((r[0] for r in sorted(rd, key=lambda r: r[1] or 0) if r[0]), None)
             base = (re.sub(r"_entry$", "", fn) + "_Table") if fn else f"tab_{a:08X}"
             self.add(a, w * n, self.name_at(a, base), "reader table",

@@ -229,10 +229,10 @@ func_4C00F9AF_Table:	# 128 x u8, 0..26; read by func_4C00F9AF_entry 0x4C00F12A: 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
-func_4C00FB3C_Table:	# 28 x u8, 0..255; read by func_4C00FB3C 0x4C00F12A: `movbu  (d1, a0), d1`; func_4C00FC3C 0x4C00FBCA: `movbu  (d1, a0), d2` ...
+func_4C00FB3C_Table:	# 28 x u8, 0..255; read by func_4C00FB3C 0x4C00F12A: `movbu  (d1, a0), d1`; TgPartClassRegCollect 0x4C00FBCA: `movbu  (d1, a0), d2` ...
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 16, 17, 32, 64	# [0]
 	tab_u8	65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 255	# [16]
-TgElemRequestFlags_Table:	# 8 x u8, 0..7; read by TgElemRequestFlags_entry 0x4C034E58: `movbu  (d1, a0), d0`; TgElemRequestFlags_entry 0x4C034E58: `movbu  (d0, a0), d0`
+TgElemRequestFlags_Table:	# 8 x u8, 0..7; read by TgElemRequestFlags_entry 0x4C034E58: `movbu  (d0, a0), d0`; TgElemRequestFlags_entry 0x4C034E58: `movbu  (d1, a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7
 data_48587114:
 	.space	1, 0x00
@@ -1314,7 +1314,7 @@ func_4C029CB4_Table:	# 32 x u32, 1..2147483648; read by func_4C029CB4 0x4C024A0A
 	tab_u32	256, 512, 1024, 2048, 4096, 8192, 16384, 32768	# [8]
 	tab_u32	65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608	# [16]
 	tab_u32	16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648	# [24]
-func_4C02A0C4_Table:	# 78 x u8, 0..255; read by func_4C02AD3C_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0` ...
+func_4C02A0C4_Table:	# 78 x u8, 0..255; read by func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A5E8_entry 0x4C024A0A: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 127, 1, 1, 127, 2, 2, 127, 3, 3, 255, 4, 4, 223, 6	# [0]
 	tab_u8	5, 3, 11, 6, 255, 12, 7, 255, 13, 8, 255, 14, 9, 127, 15, 10	# [16]
 	tab_u8	255, 24, 11, 127, 25, 12, 127, 26, 13, 127, 27, 14, 127, 28, 15, 127	# [32]
@@ -1322,18 +1322,18 @@ func_4C02A0C4_Table:	# 78 x u8, 0..255; read by func_4C02AD3C_entry 0x4C024A0A: 
 	tab_u8	21, 255, 39, 22, 255, 40, 23, 255, 41, 24, 255, 42, 25, 63	# [64]
 func_4C02A0C4_Table_2:	# 3 x u8, 0..255; read by func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A5E8_entry 0x4C024A0A: `movbu  (a1), d0`
 	tab_u8	0, 0, 255
-func_4C02A0C4_Table_3:	# 21 x u8, 0..255; read by func_4C02AD3C_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0` ...
+func_4C02A0C4_Table_3:	# 21 x u8, 0..255; read by func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A5E8_entry 0x4C024A0A: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 127, 1, 1, 127, 2, 2, 127, 4, 3, 64, 7, 4, 48, 8	# [0]
 	tab_u8	5, 255, 9, 6, 1	# [16]
 func_4C02AD3C_Table:	# 9 x u8, 0..255; read by func_4C02AD3C_entry 0x4C024A0A: `movbu  (a1), d0`
 	tab_u8	0, 0, 7, 3, 1, 1, 4, 2, 255
-func_4C02A0C4_Table_4:	# 42 x u8, 0..136; read by func_4C02AD3C_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0` ...
+func_4C02A0C4_Table_4:	# 42 x u8, 0..136; read by func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A5E8_entry 0x4C024A0A: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 136, 1, 1, 127, 2, 2, 127, 3, 3, 127, 4, 4, 127, 5	# [0]
 	tab_u8	5, 127, 6, 6, 127, 7, 7, 127, 14, 8, 127, 15, 9, 127, 16, 10	# [16]
 	tab_u8	127, 17, 11, 127, 18, 12, 127, 19, 13, 127	# [32]
-func_4C02A0C4_Table_5:	# 12 x u8, 0..255; read by func_4C02AD3C_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0` ...
+func_4C02A0C4_Table_5:	# 12 x u8, 0..255; read by func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A5E8_entry 0x4C024A0A: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 4, 3, 1, 255, 4, 2, 15, 8, 3, 255
-func_4C02A0C4_Table_6:	# 9 x u8, 0..255; read by func_4C02AD3C_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0` ...
+func_4C02A0C4_Table_6:	# 9 x u8, 0..255; read by func_4C02A0C4_entry 0x4C024A0A: `movbu  (a1), d0`; func_4C02A5E8_entry 0x4C024A0A: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 255, 1, 1, 255, 5, 0, 255
 
 Str_empty_1428:	.asciz "#"
@@ -4524,7 +4524,7 @@ data_4859E170:
 data_4859E188:
 .incbin_range "baserom/kn7000_program.rom", 0x19E188, 0x19E1A0
 
-IndexSwEventHandler_Table:	# 32 x u32, 1..2147483648; read by IndexSwEventHandler_entry 0x48414735: `mov   (d0, a3), d1`; IndexSwEventHandler_entry 0x48414735: `mov   (d0, a3), d0`
+IndexSwEventHandler_Table:	# 32 x u32, 1..2147483648; read by IndexSwEventHandler_entry 0x48414735: `mov   (d0, a3), d0`; IndexSwEventHandler_entry 0x48414735: `mov   (d0, a3), d1`
 	tab_u32	1, 2, 4, 8, 16, 32, 64, 128	# [0]
 	tab_u32	256, 512, 1024, 2048, 4096, 8192, 16384, 32768	# [8]
 	tab_u32	65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608	# [16]
@@ -10295,7 +10295,7 @@ Str_nnddd:	.asciz "nnddd"
 func_48434929_Table:	# 30 x u8, 0..58; read by func_48434929_entry 0x484346E9: `movbu  (d3, a0), d0`; func_48434FC8_entry 0x484346E9: `movbu  (d0, a0), d0`
 	tab_u8	0, 3, 6, 9, 20, 23, 26, 29, 40, 43, 46, 49, 12, 16, 1, 2	# [0]
 	tab_u8	14, 18, 32, 36, 21, 22, 34, 38, 52, 56, 41, 42, 54, 58	# [16]
-func_48434929_Table_2:	# 31 x u8, 0..255; read by func_48434929_entry 0x484346E9: `movbu  (d3, a0), d0`; func_48434FC8_entry 0x484346E9: `movbu  (d0, a0), d1` ...
+func_48434929_Table_2:	# 31 x u8, 0..255; read by func_48434929_entry 0x484346E9: `movbu  (d3, a0), d0`; func_48434DCA_entry 0x484346E9: `movbu  (d0, a0), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 17, 0, 0	# [0]
 	tab_u8	15, 19, 33, 37, 0, 0, 35, 39, 53, 57, 0, 0, 55, 59, 255	# [16]
 
@@ -10349,7 +10349,7 @@ func_48435C29_Table:	# 8 x u32, 19..26; read by func_48435C29 0x48435B33: `mov  
 	tab_u32	25, 24, 19, 20, 21, 22, 23, 26
 data_485B6DC8:
 .incbin_range "baserom/kn7000_program.rom", 0x1B6DC8, 0x1B6EC8
-func_484361BC_Table:	# 44 x u8, 0..255; read by func_48436229_entry 0x48435E84: `movbu  (d0, a0), d0`; func_484361BC 0x48435E84: `movbu  (d0, a0), d0`
+func_484361BC_Table:	# 44 x u8, 0..255; read by func_484361BC 0x48435E84: `movbu  (d0, a0), d0`; func_48436229_entry 0x48435E84: `movbu  (d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1	# [16]
 	tab_u8	0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 255, 255	# [32]
@@ -11021,7 +11021,7 @@ ptrs_485B9C58:
 Str_empty_1395:	.asciz "                  "
 	.align	4, 0xFF	# pad after Str_empty_1395
 
-func_48466D19_Table:	# 4 x u32, 11534346..11567106; read by func_48469B98_entry 0x48457D2A: `mov   (d0, a0), d2`; func_48466D19_entry 0x48457D2A: `mov   (d0, a0), d0` ...
+func_48466D19_Table:	# 4 x u32, 11534346..11567106; read by func_48466D19_entry 0x48457D2A: `mov   (d0, a0), d0`; func_484671F2 0x48457D2A: `mov   (d0, a0), d0` ...
 	tab_u32	11534346, 11567106, 11567105, 11567104
 data_485B9D24:
 .incbin_range "baserom/kn7000_program.rom", 0x1B9D24, 0x1B9D40
@@ -12209,7 +12209,7 @@ func_48483618_Table:	# 33 x u32, 0..2692784255; read by func_48483618 0x48482C54
 	tab_u32	56575	# [32]
 func_48483618_Table_2:	# 7 x s8, -24..24; read by func_48483618 0x48482C54: `movbu  (d1, a0), d1`
 	tab_s8	0, 0, 24, -24, 0, 0, 0
-func_48483618_Table_3:	# 7 x u8, 0..127; read by func_4848372B 0x48482C54: `movbu  (d0, a0), d0`; func_48483618 0x48482C54: `movbu  (d0, a0), d0` ...
+func_48483618_Table_3:	# 7 x u8, 0..127; read by func_48483618 0x48482C54: `movbu  (d0, a0), d0`; func_48483618 0x48482C54: `movbu  (d0, a0), d1` ...
 	tab_u8	127, 116, 127, 127, 0, 116, 116
 func_48483618_Table_4:	# 12 x u16, 0..0; read by func_48483618 0x48482C54: `movhu  (d1, a0), d0`; func_4848372B 0x48482C54: `movhu  (d0, a1), d1`
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -17580,7 +17580,7 @@ Str_empty_1310:	.asciz " --"
 
 func_4848B9F1_Table:	# 5 x u32, 45076..45140; read by func_4848B9F1 0x4848AE8D: `mov   (d2, a0), d0`
 	tab_u32	45076, 45092, 45108, 45124, 45140
-func_4848B9F1_Table_2:	# 5 x u32, 45072..45136; read by func_4848B9F1 0x4848AE8D: `mov   (d1, a0), d0`; func_4848B9F1 0x4848AE8D: `mov   (d0, a0), d0`
+func_4848B9F1_Table_2:	# 5 x u32, 45072..45136; read by func_4848B9F1 0x4848AE8D: `mov   (d0, a0), d0`; func_4848B9F1 0x4848AE8D: `mov   (d1, a0), d0`
 	tab_u32	45072, 45088, 45104, 45120, 45136
 func_4848B9F1_Table_3:	# 6 x u16, 2..65535; read by func_4848B9F1 0x4848AE8D: `movhu  (d0, a0), d3`
 	tab_u16	2, 3, 4, 5, 6, 65535
@@ -18036,7 +18036,7 @@ data_485ECB30:
 data_485ECB72:
 .incbin_range "baserom/kn7000_program.rom", 0x1ECB72, 0x1ECC54
 
-IvSdpartProc_Table:	# 7 x u32, 7340055..4294967295; read by IvSdpartProc 0x4848CD01: `mov   (d0, a3), d0`; IvSdpartProc 0x4848CD01: `mov   (d0, a0), d0` ...
+IvSdpartProc_Table:	# 7 x u32, 7340055..4294967295; read by IvSdpartProc 0x4848CD01: `mov   (d0, a0), d0`; IvSdpartProc 0x4848CD01: `mov   (d0, a3), d0` ...
 	tab_u32	4294967295, 7340055, 7340086, 7340134, 7340155, 7340188, 7340055
 
 Str_SdPT:	.asciz "SdPT"
@@ -18285,7 +18285,7 @@ data_485ED7EC:
 AcSpsKsclEditProc_Table:	# 14 x s16, 0..51; read by AcSpsKsclEditProc 0x48490BB9: `movhu  (d0, a0), d0`
 	tab_s16	15, 0, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49	# [0]
 	tab_s16	50, 51	# [12]
-TtSdkeyscl_Table:	# 29 x s16, 0..255; read by TtSdkeyscl 0x48490AE6: `movhu  (d0, a0), d1`; AcKsclCopyEditProc 0x484914A1: `movhu  (d0, a2), d1` ...
+TtSdkeyscl_Table:	# 29 x s16, 0..255; read by TtSdkeyscl 0x48490AE6: `movhu  (d0, a0), d1`; AcKsclCopyEditProc 0x484914A1: `movhu  (d0, a0), d0` ...
 	tab_s16	255, 16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7	# [0]
 	tab_s16	8, 9, 10, 11, 12, 13, 14, 15, 31, 27, 28, 19	# [12]
 	tab_s16	20, 21, 22, 23, 24	# [24]
@@ -21346,7 +21346,7 @@ AcFootSwProc_Table:	# 184 x s16, -25724..18527; read by AcFootSwProc 0x48494FA4:
 	tab_s16	189, 0, -25061, 18527, 182, 0, -25044, 18527, 183, 0, -25027, 18527	# [156]
 	tab_s16	-1, 0, -25010, 18527, 8241, 12800, 32, 8241, 12800, 32, 8243, 13312	# [168]
 	tab_s16	32, 8261, -256, -1	# [180]
-AcFootSwProc_Table_2:	# 14 x u32, 16384..1214226378; read by AcFootSwProc 0x48494FA4: `mov   (d0, a3), d0`; AcFootSwProc 0x48494FA4: `mov   (d0, a0), d0`
+AcFootSwProc_Table_2:	# 14 x u32, 16384..1214226378; read by AcFootSwProc 0x48494FA4: `mov   (d0, a0), d0`; AcFootSwProc 0x48494FA4: `mov   (d0, a3), d0`
 	tab_u32	16386, 1214226360, 16387, 1214226363, 16388, 1214226366, 16389, 1214226369	# [0]
 	tab_u32	16390, 1214226372, 16391, 1214226375, 16384, 1214226378	# [8]
 
@@ -22892,7 +22892,7 @@ data_486008D8:
 .incbin_range "baserom/kn7000_program.rom", 0x2008D8, 0x2012E5
 	.space	2311, 0x07
 
-AcDrawbarProc_Table:	# 9 x u32, 2097296..2097304; read by AcDrawbarProc 0x48499E24: `mov   (d1, a0), d0`; AcDrawbarProc 0x48499E24: `mov   (d0, a0), d0`
+AcDrawbarProc_Table:	# 9 x u32, 2097296..2097304; read by AcDrawbarProc 0x48499E24: `mov   (d0, a0), d0`; AcDrawbarProc 0x48499E24: `mov   (d1, a0), d0`
 	tab_u32	2097296, 2097298, 2097297, 2097299, 2097300, 2097301, 2097302, 2097303	# [0]
 	tab_u32	2097304	# [8]
 
@@ -29310,20 +29310,20 @@ data_48618888:
 data_4861888D:
 .incbin_range "baserom/kn7000_program.rom", 0x21888D, 0x21888F
 
-func_484C4EB9_Table:	# 3 x u8, 0..2; read by func_484C50EB_entry 0x484C4EB3: `movbu  (d1, a0), d0`; func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0` ...
+func_484C4EB9_Table:	# 3 x u8, 0..2; read by func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C50EB_entry 0x484C4EB3: `movbu  (d0, a0), d1` ...
 	tab_u8	0, 1, 2
-func_484C4EB9_Table_2:	# 13 x u8, 3..15; read by func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`
+func_484C4EB9_Table_2:	# 13 x u8, 3..15; read by func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0`
 	tab_u8	3, 4, 5, 6, 7, 8, 15, 10, 11, 12, 13, 14, 9
-func_484C4EB9_Table_3:	# 5 x u8, 0..6; read by func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`
+func_484C4EB9_Table_3:	# 5 x u8, 0..6; read by func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0`
 	tab_u8	0, 1, 2, 5, 6
-func_484C4EB9_Table_4:	# 4 x u8, 0..255; read by func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`
+func_484C4EB9_Table_4:	# 4 x u8, 0..255; read by func_484C4EB9_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C52C9_entry 0x484C4EB3: `movbu  (a3), d0`
 	tab_u8	0, 1, 255, 255
 func_484C5A3F_Table:	# 52 x u8, 0..255; read by func_484C5A3F_entry 0x484C4EB3: `movbu  (d0, a1), d0`
 	tab_u8	0, 192, 193, 194, 195, 196, 197, 198, 199, 192, 193, 194, 195, 196, 197, 198	# [0]
 	tab_u8	199, 179, 136, 146, 147, 148, 64, 150, 153, 161, 162, 163, 176, 173, 169, 170	# [16]
 	tab_u8	172, 174, 175, 1, 65, 66, 192, 193, 194, 195, 196, 197, 198, 199, 157, 151	# [32]
 	tab_u8	152, 168, 255, 255	# [48]
-func_484C6589_Table:	# 3 x u8, 0..2; read by func_484C6762_entry 0x484C4EB3: `movbu  (d0, a0), d1`; func_484C6985_entry 0x484C4EB3: `movbu  (a2), d0` ...
+func_484C6589_Table:	# 3 x u8, 0..2; read by func_484C6589_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C6762_entry 0x484C4EB3: `movbu  (d0, a0), d1` ...
 	tab_u8	0, 1, 2
 func_484C6589_Table_2:	# 13 x u8, 3..15; read by func_484C6589_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C6985_entry 0x484C4EB3: `movbu  (a3), d0`
 	tab_u8	3, 4, 5, 6, 7, 8, 15, 10, 11, 12, 13, 14, 9
@@ -29331,17 +29331,17 @@ func_484C6589_Table_3:	# 5 x u8, 0..6; read by func_484C6589_entry 0x484C4EB3: `
 	tab_u8	0, 1, 2, 5, 6
 func_484C6589_Table_4:	# 3 x u8, 0..255; read by func_484C6589_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C6985_entry 0x484C4EB3: `movbu  (a3), d0`
 	tab_u8	0, 1, 255
-func_484C7EE3_Table:	# 3 x u8, 0..2; read by func_484C7EE3_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C85F5_entry 0x484C4EB3: `movbu  (a2), d0` ...
+func_484C7EE3_Table:	# 3 x u8, 0..2; read by func_484C7EE3_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C80F1_entry 0x484C4EB3: `movbu  (a2), d0` ...
 	tab_u8	0, 1, 2
-func_484C7EE3_Table_2:	# 13 x u8, 3..15; read by func_484C80F1_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C7EE3_entry 0x484C4EB3: `movbu  (a3), d0` ...
+func_484C7EE3_Table_2:	# 13 x u8, 3..15; read by func_484C7EE3_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C80F1_entry 0x484C4EB3: `movbu  (a3), d0` ...
 	tab_u8	3, 4, 5, 6, 7, 8, 15, 10, 11, 12, 13, 14, 9
-func_484C7EE3_Table_3:	# 5 x u8, 0..6; read by func_484C80F1_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C7EE3_entry 0x484C4EB3: `movbu  (a3), d0` ...
+func_484C7EE3_Table_3:	# 5 x u8, 0..6; read by func_484C7EE3_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C80F1_entry 0x484C4EB3: `movbu  (a3), d0` ...
 	tab_u8	0, 1, 2, 5, 6
-func_484C7EE3_Table_4:	# 3 x u8, 0..255; read by func_484C80F1_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C7EE3_entry 0x484C4EB3: `movbu  (a3), d0` ...
+func_484C7EE3_Table_4:	# 3 x u8, 0..255; read by func_484C7EE3_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C80F1_entry 0x484C4EB3: `movbu  (a3), d0` ...
 	tab_u8	0, 1, 255
 func_484C90D1_Table:	# 4 x u8, 16..255; read by func_484C90D1_entry 0x484C4EB3: `movbu  (d0, a2), d0`
 	tab_u8	16, 17, 18, 255
-func_484C9D84_Table:	# 3 x u8, 0..2; read by func_484CA22B_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C9D84_entry 0x484C4EB3: `movbu  (a2), d0` ...
+func_484C9D84_Table:	# 3 x u8, 0..2; read by func_484C9D84_entry 0x484C4EB3: `movbu  (a2), d0`; func_484C9FA1_entry 0x484C4EB3: `movbu  (a2), d0` ...
 	tab_u8	0, 1, 2
 func_484C9D84_Table_2:	# 13 x u8, 3..15; read by func_484C9D84_entry 0x484C4EB3: `movbu  (a3), d0`; func_484C9FA1_entry 0x484C4EB3: `movbu  (a3), d0` ...
 	tab_u8	3, 4, 5, 6, 7, 8, 15, 10, 11, 12, 13, 14, 9
@@ -29395,7 +29395,7 @@ ptrs_48618B9C:
 data_48618BCC:
 .incbin_range "baserom/kn7000_program.rom", 0x218BCC, 0x218DCC
 
-func_484CDC2B_Table:	# 8 x u8, 0..5; read by func_484CDC2B_entry 0x484C4EB3: `movbu  (d1, a2), d0`; func_484CDC2B_entry 0x484C4EB3: `movbu  (d0, a2), d0`
+func_484CDC2B_Table:	# 8 x u8, 0..5; read by func_484CDC2B_entry 0x484C4EB3: `movbu  (d0, a2), d0`; func_484CDC2B_entry 0x484C4EB3: `movbu  (d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
 func_484CE6EA_Table:	# 24 x u8, 3..255; read by func_484CE6EA 0x484C4EB3: `movbu  (d0, a0), d0`
 	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
@@ -30545,7 +30545,7 @@ Str_ON_112:	.asciz " ON  "
 Str_empty_1218:	.asciz "\x80 "
 .incbin_range "baserom/kn7000_program.rom", 0x226E3F, 0x226E80
 
-AcMidiControlGridBoxProc_Table:	# 3 x u8, 4..8; read by AcMidiControlGridBoxProc 0x484D0426: `movbu  (d1, a0), d1`; AcMidiControlGridBoxProc 0x484D0426: `movbu  (d0, a0), d0`
+AcMidiControlGridBoxProc_Table:	# 3 x u8, 4..8; read by AcMidiControlGridBoxProc 0x484D0426: `movbu  (d0, a0), d0`; AcMidiControlGridBoxProc 0x484D0426: `movbu  (d1, a0), d1`
 	tab_u8	8, 8, 4
 AcMidiControlGridBoxProc_Table_2:	# 17 x u8, 0..255; read by AcMidiControlGridBoxProc 0x484D0426: `movbu  (a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]

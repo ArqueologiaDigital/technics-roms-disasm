@@ -2193,7 +2193,7 @@ data_48645778:
 .incbin_range "baserom/kn7000_program.rom", 0x245778, 0x245780
 func_485045A1_Table:	# 6 x u32, 1114..1148; read by func_485045A1_entry 0x4850419B: `mov   (d0, a0), d0`
 	tab_u32	1114, 1118, 1122, 1126, 1130, 1148
-func_48504F37_Table:	# 4 x u16, 25..95; read by func_48504F37_entry 0x4850419B: `movhu  (d0, a2), d0`; func_48504F37_entry 0x4850419B: `movhu  (d0, a1), d0`
+func_48504F37_Table:	# 4 x u16, 25..95; read by func_48504F37_entry 0x4850419B: `movhu  (d0, a1), d0`; func_48504F37_entry 0x4850419B: `movhu  (d0, a2), d0`
 	tab_u16	25, 50, 80, 95
 data_486457A0:
 .incbin_range "baserom/kn7000_program.rom", 0x2457A0, 0x2457E2
@@ -4785,7 +4785,7 @@ ptrs_4864E6F4:
 	.long	Str_ab_3
 	.long	Str_aa_3
 
-FE_CmpRecQtz_Table:	# 8 x u8, 0..7; read by func_48508D1D_entry 0x48508AF0: `movbu  (d0, a0), d0`; FE_CmpRecQtz 0x48508AF0: `movbu  (d1, a0), d0`
+FE_CmpRecQtz_Table:	# 8 x u8, 0..7; read by FE_CmpRecQtz 0x48508AF0: `movbu  (d1, a0), d0`; func_48508D1D_entry 0x48508AF0: `movbu  (d0, a0), d0`
 	tab_u8	1, 2, 3, 0, 4, 5, 6, 7
 
 Str_2d_35:	.asciz "%2d %%"
@@ -4821,7 +4821,7 @@ Str_1c_13s:	.asciz "%1c:%13s "
 	.align	4, 0xFF	# pad after Str_1c_13s
 Str_13s:	.asciz "  %13s "
 
-FuncEdit_rhyPattern_Table:	# 24 x u8, 0..255; read by FuncEdit_rhyPattern 0x4850972E: `movbu  (d0, a0), d1`; FuncEdit_rhyPattern 0x4850972E: `movbu  (d0, a0), d0`
+FuncEdit_rhyPattern_Table:	# 24 x u8, 0..255; read by FuncEdit_rhyPattern 0x4850972E: `movbu  (d0, a0), d0`; FuncEdit_rhyPattern 0x4850972E: `movbu  (d0, a0), d1`
 	tab_u8	20, 0, 3, 6, 9, 12, 13, 16, 17, 14, 15, 18, 19, 1, 2, 4	# [0]
 	tab_u8	5, 7, 8, 10, 11, 255, 255, 255	# [16]
 
@@ -4958,7 +4958,7 @@ ptrs_4864EBF0:
 	.long	Str_ENDING2_min_2
 	.long	Str_empty_987
 
-CmpPartCopyGrid_Table:	# 8 x u8, 0..7; read by CmpPartCopyGrid 0x48509D23: `movbu  (d0, a1), d0`; CmpPartCopyGrid 0x48509D23: `movbu  (d0, a0), d0`
+CmpPartCopyGrid_Table:	# 8 x u8, 0..7; read by CmpPartCopyGrid 0x48509D23: `movbu  (d0, a0), d0`; CmpPartCopyGrid 0x48509D23: `movbu  (d0, a1), d0`
 	tab_u8	0, 7, 1, 2, 3, 4, 5, 6
 CmpPartCopyGrid_Table_2:	# 4 x u8, 0..9; read by CmpPartCopyGrid 0x48509D23: `movbu  (d0, a0), d0`
 	tab_u8	0, 3, 6, 9
@@ -5266,7 +5266,7 @@ ptrs_4864FEEC:
 
 CmpPartSetGrid1_Table:	# 8 x u8, 0..7; read by CmpPartSetGrid1 0x4850CA35: `movbu  (d0, a0), d0`; CmpPartSetGrid1 0x4850CA35: `movbu  (d0, a2), d0`
 	tab_u8	0, 7, 1, 2, 3, 4, 5, 6
-CmpPartSetGrid1_Table_2:	# 8 x u8, 19..26; read by CmpPartSetGrid1 0x4850CA35: `movbu  (d1, a2), d1`; CmpPartSetGrid1 0x4850CA35: `movbu  (d0, a2), d1`
+CmpPartSetGrid1_Table_2:	# 8 x u8, 19..26; read by CmpPartSetGrid1 0x4850CA35: `movbu  (d0, a2), d1`; CmpPartSetGrid1 0x4850CA35: `movbu  (d1, a2), d1`
 	tab_u8	25, 26, 24, 19, 20, 21, 22, 23
 CmpPartSetGrid1_Table_3:	# 6 x u8, 0..9; read by CmpPartSetGrid1 0x4850CA35: `movbu  (d1, a3), d1`
 	tab_u8	0, 2, 5, 1, 8, 9
@@ -5298,15 +5298,15 @@ Str_empty_951:	.asciz "--"
 	.align	4, 0xFF	# pad after Str_empty_951
 Str_2d_33:	.asciz "%2d"
 
-CmpPartSetGrid2_Table:	# 8 x u8, 0..7; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a3), d0`; CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a0), d3` ...
+CmpPartSetGrid2_Table:	# 8 x u8, 0..7; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a0), d0`; CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a0), d3` ...
 	tab_u8	0, 7, 1, 2, 3, 4, 5, 6
-CmpPartSetGrid2_Table_2:	# 8 x u8, 19..26; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d1, a2), d1`; CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a2), d1`
+CmpPartSetGrid2_Table_2:	# 8 x u8, 19..26; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a2), d1`; CmpPartSetGrid2 0x4850D04A: `movbu  (d1, a2), d1`
 	tab_u8	25, 26, 24, 19, 20, 21, 22, 23
-CmpPartSetGrid2_Table_3:	# 8 x u8, 6..14; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d1, a3), d1`; CmpPartSetGrid2 0x4850D04A: `movbu  (d1, a2), d1` ...
+CmpPartSetGrid2_Table_3:	# 8 x u8, 6..14; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d1, a0), d1`; CmpPartSetGrid2 0x4850D04A: `movbu  (d1, a2), d1` ...
 	tab_u8	12, 13, 10, 11, 14, 14, 6, 7
 CmpPartSetGrid2_Table_4:	# 8 x u8, 0..40; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a1), d0`; CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a2), d0`
 	tab_u8	0, 40, 0, 40, 0, 0, 0, 0
-CmpPartSetGrid2_Table_5:	# 8 x u8, 88..127; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a1), d0`; CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a0), d0`
+CmpPartSetGrid2_Table_5:	# 8 x u8, 88..127; read by CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a0), d0`; CmpPartSetGrid2 0x4850D04A: `movbu  (d0, a1), d0`
 	tab_u8	120, 88, 120, 88, 127, 127, 127, 127
 data_4864FFDC:
 .incbin_range "baserom/kn7000_program.rom", 0x24FFDC, 0x24FFFC
@@ -7210,7 +7210,7 @@ Str_OFF_47:	.asciz "OFF"
 
 PadPartSetGrid1_Table:	# 2 x u8, 0..1; read by PadPartSetGrid1 0x48513C7E: `movbu  (d0, a0), d0`; PadPartSetGrid1 0x48513C7E: `movbu  (d0, a2), d0` ...
 	tab_u8	0, 1
-PadPartSetGrid1_Table_2:	# 2 x u8, 29..30; read by PadPartSetGrid1 0x48513C7E: `movbu  (d0, a2), d1`; PadPartSetGrid1 0x48513C7E: `movbu  (d0, a2), d0`
+PadPartSetGrid1_Table_2:	# 2 x u8, 29..30; read by PadPartSetGrid1 0x48513C7E: `movbu  (d0, a2), d0`; PadPartSetGrid1 0x48513C7E: `movbu  (d0, a2), d1`
 	tab_u8	29, 30
 PadPartSetGrid1_Table_3:	# 6 x u8, 0..9; read by PadPartSetGrid1 0x48513C7E: `movbu  (d1, a2), d1`; PadPartSetGrid1 0x48513C7E: `movbu  (d1, a3), d1`
 	tab_u8	0, 2, 5, 1, 8, 9
@@ -7243,15 +7243,15 @@ Str_empty_932:	.asciz "--"
 	.align	4, 0xFF	# pad after Str_empty_932
 Str_2d_21:	.asciz "%2d"
 
-PadPartSetGrid2_Table:	# 2 x u8, 0..1; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a3), d0`; PadPartSetGrid2 0x485142A7: `movbu  (d0, a0), d0`
+PadPartSetGrid2_Table:	# 2 x u8, 0..1; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a0), d0`; PadPartSetGrid2 0x485142A7: `movbu  (d0, a3), d0`
 	tab_u8	0, 1
-PadPartSetGrid2_Table_2:	# 2 x u8, 29..30; read by PadPartSetGrid2 0x485142A7: `movbu  (d1, a2), d1`; PadPartSetGrid2 0x485142A7: `movbu  (d0, a2), d1`
+PadPartSetGrid2_Table_2:	# 2 x u8, 29..30; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a2), d1`; PadPartSetGrid2 0x485142A7: `movbu  (d1, a2), d1`
 	tab_u8	29, 30
 PadPartSetGrid2_Table_3:	# 6 x u8, 6..13; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a0), d0`; PadPartSetGrid2 0x485142A7: `movbu  (d1, a0), d1`
 	tab_u8	12, 13, 10, 11, 6, 7
 PadPartSetGrid2_Table_4:	# 6 x u8, 0..40; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a2), d0`
 	tab_u8	0, 40, 0, 40, 0, 0
-PadPartSetGrid2_Table_5:	# 8 x u8, 88..255; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a1), d0`; PadPartSetGrid2 0x485142A7: `movbu  (d0, a0), d0`
+PadPartSetGrid2_Table_5:	# 8 x u8, 88..255; read by PadPartSetGrid2 0x485142A7: `movbu  (d0, a0), d0`; PadPartSetGrid2 0x485142A7: `movbu  (d0, a1), d0`
 	tab_u8	120, 88, 120, 88, 127, 127, 255, 255
 data_48656C84:
 .incbin_range "baserom/kn7000_program.rom", 0x256C84, 0x256C9C
@@ -10765,7 +10765,7 @@ ptrs_48663A94:
 Str_MID_12:	.asciz "________.MID"
 	.align	4, 0xFF	# pad after Str_MID_12
 
-func_485233FF_Table:	# 5 x u8, 0..45; read by func_485233FF_entry 0x48522D26: `movbu  (d0, a0), d1`; func_48525A4A 0x4852377B: `movbu  (d0, a2), d1` ...
+func_485233FF_Table:	# 5 x u8, 0..45; read by func_485233FF_entry 0x48522D26: `movbu  (d0, a0), d1`; func_485257B4_entry 0x4852377B: `movbu  (d0, a0), d1` ...
 	tab_u8	0, 10, 15, 35, 45
 func_48525A4A_Table:	# 5 x u8, 5..20; read by func_48525A4A 0x4852377B: `movbu  (d0, a0), d1`
 	tab_u8	10, 5, 20, 10, 10
@@ -10999,7 +10999,7 @@ ptrs_48663F8C:
 data_48663FB8:
 .incbin_range "baserom/kn7000_program.rom", 0x263FB8, 0x264038
 
-func_4852DD7C_Table:	# 16 x u8, 0..255; read by func_4852DD7C_entry 0x4852DA68: `movbu  (d2, a3), d0`; func_4852E8C3_entry 0x4852DA68: `movbu  (d2, a2), d1` ...
+func_4852DD7C_Table:	# 16 x u8, 0..255; read by func_4852DD7C_entry 0x4852DA68: `movbu  (d2, a3), d0`; func_4852DF56_entry 0x4852DA68: `movbu  (d2, a3), d0` ...
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255
 data_48664048:
 .incbin_range "baserom/kn7000_program.rom", 0x264048, 0x26405F
@@ -11161,7 +11161,7 @@ Str_wb_14:	.asciz "wb"
 Str_rb_33:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_33
 
-func_4852ED19_Table:	# 8 x u8, 0..0; read by func_4852EF7E_entry 0x4852EC49: `movbu  (a1), d0`; func_4852F237_entry 0x4852EC49: `movbu  (a1), d0` ...
+func_4852ED19_Table:	# 8 x u8, 0..0; read by func_4852ED19_entry 0x4852EC49: `movbu  (a1), d0`; func_4852EF7E_entry 0x4852EC49: `movbu  (a1), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
 
 Str_BMP_15:	.asciz "BMP"
@@ -17569,7 +17569,7 @@ Str_3d_31:	.asciz "%3d%%"
 Str_1c_3d_5:	.asciz "%1c%3d%%"
 	.align	4, 0xFF	# pad after Str_1c_3d_5
 
-SeqTrAsGridCheck_Table:	# 24 x u8, 0..66; read by SeqTrAsGridCheck_entry 0x48537381: `movbu  (d1, a0), d0`; SeqTrAsGridCheck_entry 0x48537381: `movbu  (a0), d0`
+SeqTrAsGridCheck_Table:	# 24 x u8, 0..66; read by SeqTrAsGridCheck_entry 0x48537381: `movbu  (a0), d0`; SeqTrAsGridCheck_entry 0x48537381: `movbu  (d1, a0), d0`
 	tab_u8	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12	# [0]
 	tab_u8	13, 14, 15, 31, 64, 65, 27, 66	# [16]
 data_48678A14:
@@ -17650,7 +17650,7 @@ Str_3d_21:	.asciz "%3d"
 Str_3d_20:	.asciz "%3d"
 Str_3d_19:	.asciz "%3d"
 
-ApcToSMFConvGrid_Table:	# 12 x u8, 19..255; read by ApcToSMFConvGrid 0x4853A60D: `movbu  (d1, a3), d1`; ApcToSMFConvGrid 0x4853A60D: `movbu  (d0, a0), d0`
+ApcToSMFConvGrid_Table:	# 12 x u8, 19..255; read by ApcToSMFConvGrid 0x4853A60D: `movbu  (d0, a0), d0`; ApcToSMFConvGrid 0x4853A60D: `movbu  (d1, a3), d1`
 	tab_u8	255, 25, 26, 24, 19, 20, 21, 22, 23, 29, 30, 255
 data_48678B78:
 .incbin_range "baserom/kn7000_program.rom", 0x278B78, 0x278B7C
@@ -18163,7 +18163,7 @@ data_4867B897:
 
 func_485488B3_Table:	# 12 x u8, 0..247; read by func_485488B3_entry 0x48547F7D: `movbu  (a1), d0`
 	tab_u8	240, 10, 80, 44, 32, 48, 31, 0, 0, 0, 0, 247
-func_4854A283_Table:	# 20 x u8, 3..66; read by func_4854A66A_entry 0x48549FD2: `movbu  (d0, a0), d2`; func_4854A6E6_entry 0x48549FD2: `movbu  (d0, a0), d1` ...
+func_4854A283_Table:	# 20 x u8, 3..66; read by func_4854A283_entry 0x48549FD2: `movbu  (d0, a0), d0`; func_4854A283_entry 0x48549FD2: `movbu  (d0, a0), d1` ...
 	tab_u8	16, 18, 17, 7, 8, 15, 10, 11, 4, 5, 6, 3, 9, 27, 64, 65	# [0]
 	tab_u8	66, 12, 13, 14	# [16]
 func_4854A283_Table_2:	# 8 x u8, 0..255; read by func_4854A283_entry 0x48549FD2: `movbu  (d0, a0), d1`
@@ -31603,7 +31603,7 @@ Str_empty_794:	.asciz "\xD2?"
 
 func_4C004983_Table:	# 6 x u8, 0..9; read by func_4C004983_entry 0x4C003B2C: `movbu  (d0, a1), d2`; TgPartGlobalChanRefresh_entry 0x4C004DE4: `movbu  (d0, a0), d2` ...
 	tab_u8	8, 9, 0, 4, 7, 2
-func_4C0046B0_Table:	# 6 x u8, 6..255; read by func_4C0046B0_entry 0x4C003B2C: `movbu  (d0, a1), d0`; func_4C004B98_entry 0x4C003B2C: `movbu  (d0, a2), d0` ...
+func_4C0046B0_Table:	# 6 x u8, 6..255; read by func_4C0046B0_entry 0x4C003B2C: `movbu  (d0, a1), d0`; func_4C004983_entry 0x4C003B2C: `movbu  (d0, a1), d0` ...
 	tab_u8	8, 6, 7, 255, 255, 255
 data_486D10A0:
 .incbin_range "baserom/kn7000_program.rom", 0x2D10A0, 0x2D10AA
@@ -31637,15 +31637,15 @@ data_486D1208:
 .incbin_range "baserom/kn7000_program.rom", 0x2D1208, 0x2D121C
 TgPartModRetrigger_Table:	# 4 x u8, 1..64; read by TgPartModRetrigger_entry 0x4C02CA74: `movbu  (d3, a0), d0`
 	tab_u8	1, 4, 16, 64
-TgElemRequestFlags_Table_2:	# 1 x u8, 2..2; read by TgElemRequestFlags_entry 0x4C034E58: `movbu  (d0, a0), d0`; TgMelodicVoiceAlloc_entry 0x4C034FF0: `movbu  (d3, a0), d0` ...
+TgElemRequestFlags_Table_2:	# 1 x u8, 2..2; read by TgElemRequestFlags_entry 0x4C034E58: `movbu  (d0, a0), d0`; TgMelodicVoiceAlloc_entry 0x4C034FF0: `movbu  (d2, a0), d0` ...
 	tab_u8	2
 data_486D1221:
 .incbin_range "baserom/kn7000_program.rom", 0x2D1221, 0x2D1224
 TgPartModDestApply_Table:	# 12 x u16, 1..2048; read by TgPartModDestApply_entry 0x4C02C6CD: `movhu  (d0, a0), d0`; TgPartToneModParamBuild_entry 0x4C0396E2: `movhu  (d0, a0), d0`
 	tab_u16	1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048
-TgPartModDestApply_Table_2:	# 12 x u16, 1..2048; read by TgPartModDestApply_entry 0x4C02C6CD: `movhu  (d1, a0), d1`; TgPartModDestApply_entry 0x4C02C6CD: `movhu  (d0, a0), d0` ...
+TgPartModDestApply_Table_2:	# 12 x u16, 1..2048; read by TgPartModDestApply_entry 0x4C02C6CD: `movhu  (d0, a0), d0`; TgPartModDestApply_entry 0x4C02C6CD: `movhu  (d1, a0), d1` ...
 	tab_u16	1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048
-func_4C00B181_Table:	# 128 x u16, 0..7; read by func_4C00BC7E_entry 0x4C00AE3B: `movhu  (d0, a0), d0`; func_4C00B766_entry 0x4C00AE3B: `movhu  (d0, a0), d0` ...
+func_4C00B181_Table:	# 128 x u16, 0..7; read by func_4C00B181_entry 0x4C00AE3B: `movhu  (d0, a0), d0`; func_4C00B766_entry 0x4C00AE3B: `movhu  (d0, a0), d0` ...
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [0]
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [12]
 	tab_u16	0, 0, 1, 2, 2, 3, 4, 4, 5, 6, 6, 7	# [24]
@@ -31666,7 +31666,7 @@ TgDrumZoneLevelScaleCalc_Table:	# 128 x u8, 0..127; read by TgDrumZoneLevelScale
 	tab_u8	47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 34, 33, 32	# [80]
 	tab_u8	31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16	# [96]
 	tab_u8	15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0	# [112]
-TgDrumZoneLevelScaleCalc_Table_2:	# 128 x s8, -64..0; read by TgDrumZoneLevelScaleCalc_entry 0x4C009F1D: `movbu  (d1, a0), d1`; func_4C00A98E_entry 0x4C00A90C: `movbu  (d0, a0), d3` ...
+TgDrumZoneLevelScaleCalc_Table_2:	# 128 x s8, -64..0; read by TgDrumZoneLevelScaleCalc_entry 0x4C009F1D: `movbu  (d1, a0), d1`; func_4C00A98E_entry 0x4C00A90C: `movbu  (d0, a0), d1` ...
 	tab_s8	-64, -63, -63, -63, -63, -62, -62, -62, -62, -61, -61, -61, -61, -60, -60, -60	# [0]
 	tab_s8	-60, -59, -59, -59, -59, -58, -58, -58, -58, -57, -57, -57, -57, -56, -56, -56	# [16]
 	tab_s8	-56, -55, -55, -55, -55, -54, -54, -54, -54, -53, -53, -53, -53, -52, -52, -52	# [32]
@@ -31677,7 +31677,7 @@ TgDrumZoneLevelScaleCalc_Table_2:	# 128 x s8, -64..0; read by TgDrumZoneLevelSca
 	tab_s8	-15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0	# [112]
 data_486D1454:
 .incbin_range "baserom/kn7000_program.rom", 0x2D1454, 0x2D1B54
-func_4C02FCBA_Table:	# 128 x u8, 1..255; read by func_4C02FCBA_entry 0x4C02FCBA: `movbu  (d1, a0), d1`; TgElemLevelBaseCalc_entry 0x4C03132B: `movbu  (d1, a0), d1` ...
+func_4C02FCBA_Table:	# 128 x u8, 1..255; read by func_4C02FCBA_entry 0x4C02FCBA: `movbu  (d1, a0), d1`; TgElemLevelBaseCalc_entry 0x4C03132B: `movbu  (d0, a0), d0` ...
 	tab_u8	1, 91, 95, 98, 102, 106, 109, 113, 117, 120, 124, 127, 131, 135, 138, 142	# [0]
 	tab_u8	144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159	# [16]
 	tab_u8	160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175	# [32]
@@ -31798,7 +31798,7 @@ func_4C00A98E_Table:	# 26 x u8, 164..255; read by func_4C00A98E_entry 0x4C00A90C
 	tab_u8	186, 182, 178, 176, 174, 172, 170, 168, 166, 164	# [16]
 data_486D25FE:
 .incbin_range "baserom/kn7000_program.rom", 0x2D25FE, 0x2D2649
-func_4C00454C_Table:	# 2 x u8, 248..255; read by func_4C00454C_entry 0x4C003B2C: `movbu  (d0, a3), d0`; func_4C00AB15_entry 0x4C00A90C: `movbu  (d0, a1), d0` ...
+func_4C00454C_Table:	# 2 x u8, 248..255; read by func_4C00454C_entry 0x4C003B2C: `movbu  (d0, a3), d0`; func_4C00AB15_entry 0x4C00A90C: `movbu  (d0, a0), d1` ...
 	tab_u8	255, 248
 data_486D264B:
 .incbin_range "baserom/kn7000_program.rom", 0x2D264B, 0x2D26AE
@@ -31815,7 +31815,7 @@ TgDrumZoneLevelScaleCalc_Table_3:	# 51 x u8, 0..127; read by TgDrumZoneLevelScal
 	tab_u8	16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46	# [16]
 	tab_u8	48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108	# [32]
 	tab_u8	112, 120, 127	# [48]
-func_4C02FFD4_Table:	# 78 x u8, 0..253; read by func_4C02FFD4_entry 0x4C02FCBA: `movbu  (d1, a0), d1`; func_4C02FFD4_entry 0x4C02FCBA: `movbu  (d0, a0), d0` ...
+func_4C02FFD4_Table:	# 78 x u8, 0..253; read by func_4C02FFD4_entry 0x4C02FCBA: `movbu  (d0, a0), d0`; func_4C02FFD4_entry 0x4C02FCBA: `movbu  (d0, a0), d1` ...
 	tab_u8	1, 0, 0, 1, 21, 247, 1, 25, 246, 1, 30, 245, 1, 35, 244, 1	# [0]
 	tab_u8	42, 242, 1, 52, 241, 1, 64, 240, 1, 78, 243, 1, 91, 245, 1, 102	# [16]
 	tab_u8	248, 1, 111, 251, 1, 120, 253, 0, 127, 0, 0, 120, 0, 0, 111, 0	# [32]
@@ -31834,7 +31834,7 @@ Str_empty_321:	.asciz "@"
 
 func_4C00AB15_Table:	# 9 x u8, 49..77; read by func_4C00AB15_entry 0x4C00A90C: `movbu  (d0, a0), d0`; TgKeyOffAmpRelease_entry 0x4C031944: `movbu  (d0, a1), d0` ...
 	tab_u8	49, 49, 53, 57, 61, 65, 69, 73, 77
-TgGlobalRampTick_Table:	# 26 x s8, -127..0; read by TgGlobalRampTick_entry 0x4C009837: `movbu  (d0, a0), d2`; TgGlobalRampTick_entry 0x4C009837: `movbu  (d0, a0), d0`
+TgGlobalRampTick_Table:	# 26 x s8, -127..0; read by TgGlobalRampTick_entry 0x4C009837: `movbu  (d0, a0), d0`; TgGlobalRampTick_entry 0x4C009837: `movbu  (d0, a0), d2`
 	tab_s8	-127, -127, -117, -103, -90, -78, -69, -62, -55, -49, -43, -37, -32, -28, -25, -23	# [0]
 	tab_s8	-20, -18, -15, -13, -11, -9, -7, -5, 0, 0	# [16]
 func_4C02FCBA_Table_2:	# 129 x u8, 0..255; read by func_4C02FCBA_entry 0x4C02FCBA: `movbu  (d1, a0), d0`; TgElemLevelBaseCalc_entry 0x4C03132B: `movbu  (d0, a0), d0`
@@ -31875,7 +31875,7 @@ TgElemStageFresh_Table:	# 51 x u8, 0..127; read by TgElemStageFresh_entry 0x4C03
 data_486D2ED5:
 .incbin_range "baserom/kn7000_program.rom", 0x2D2ED5, 0x2D30A5
 	.space	82, 0x00
-TgElemStageFresh_Table_2:	# 31 x u8, 0..70; read by TgElemStageFresh_entry 0x4C034927: `movbu  (d0, a0), d2`; TgElemStageFresh_entry 0x4C034927: `movbu  (d0, a0), d0` ...
+TgElemStageFresh_Table_2:	# 31 x u8, 0..70; read by TgElemStageFresh_entry 0x4C034927: `movbu  (d0, a0), d0`; TgElemStageFresh_entry 0x4C034927: `movbu  (d0, a0), d2` ...
 	tab_u8	70, 64, 58, 53, 48, 44, 40, 36, 33, 30, 27, 24, 22, 20, 18, 16	# [0]
 	tab_u8	14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0	# [16]
 data_486D3116:
@@ -36909,7 +36909,7 @@ data_48703208:
 data_48703218:
 .incbin_range "baserom/kn7000_program.rom", 0x303218, 0x303228
 
-func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x48407BD8: `movbu  (a2), d0`; func_4840EF52_entry 0x4840E721: `movbu  (a2), d0` ...
+func_4840DDB1_Table:	# 64 x u8, 0..63; read by func_4840DDB1_entry 0x48407BD8: `movbu  (a2), d0`; func_4840EAA5_entry 0x4840E721: `movbu  (a1), d0` ...
 	tab_u8	0, 1, 8, 16, 9, 2, 3, 10, 17, 24, 32, 25, 18, 11, 4, 5	# [0]
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
