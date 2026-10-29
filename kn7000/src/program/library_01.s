@@ -503,7 +503,7 @@ loc_4C024DF4:
     jmp     loc_4C025EF9
 loc_4C024DFD:
     inc     d1
-    mov     data_4858DFE0, a1
+    mov     func_4C024DD8_Records_3+128, a1
     mov     0xf, d0
     and     d1, d0
     asl     3, d0
@@ -542,7 +542,7 @@ loc_4C024E44:
     jmp     loc_4C0253F1
 loc_4C024E4A:
     inc     d1
-    mov     data_4858DF60, a1
+    mov     func_4C024DD8_Records_3, a1
     mov     0xf, d0
     and     d1, d0
     asl     3, d0
@@ -557,7 +557,7 @@ loc_4C024E4A:
     jmp     loc_4C0253F1
 loc_4C024E68:
     add     8, a0
-    cmp     data_4858DFE0, a0
+    cmp     func_4C024DD8_Records_3+128, a0
     bcs     loc_4C024E73
     mov     a1, a0
 loc_4C024E73:
@@ -896,7 +896,7 @@ loc_4C0251D1:
     and     0x1f, d0
     asl     3, d0
     mov     d0, a0
-    mov     data_4858DD9C, a1
+    mov     func_4C024DD8_Records_2, a1
     add     a1, a0
     mov     (a0), d0
     cmp     d2, d0
@@ -966,7 +966,7 @@ loc_4C025284:
     and     0x1f, d0
     asl     3, d0
     mov     d0, a0
-    mov     data_4858DC9C, a1
+    mov     func_4C024DD8_Records+512, a1
     add     a1, a0
     mov     (a0), d0
     cmp     d2, d0
@@ -977,7 +977,7 @@ loc_4C025284:
     jmp     loc_4C025380
 loc_4C0252A7:
     add     8, a0
-    cmp     data_4858DD9C, a0
+    cmp     func_4C024DD8_Records_2, a0
     bcs     loc_4C0252B2
     mov     a1, a0
 loc_4C0252B2:
@@ -1141,7 +1141,7 @@ loc_4C025435:
     mov     d2, d0
     and     0x3f, d0
     asl     3, d0
-    mov     data_4858DA9C, a1
+    mov     func_4C024DD8_Records, a1
     mov     a1, a0
     add     d0, a0
     mov     (a0), d0
@@ -1153,7 +1153,7 @@ loc_4C025435:
     jmp     loc_4C02571F
 loc_4C025457:
     add     8, a0
-    cmp     data_4858DC9C, a0
+    cmp     func_4C024DD8_Records+512, a0
     bcs     loc_4C025462
     mov     a1, a0
 loc_4C025462:
@@ -1817,7 +1817,7 @@ loc_4C025B01:
     mov     d2, d0
     and     0x3f, d0
     asl     3, d0
-    mov     Str_empty_1429, a1
+    mov     func_4C024000_Table+276, a1
     mov     a1, a0
     add     d0, a0
     mov     (a0), d0
@@ -6189,7 +6189,7 @@ loc_4C02836D:
     mov     d2, d1
     sub     d0, d1
     asl2    d1
-    mov     func_4C028307_Table, a0
+    mov     func_4C027A8E_Table+36, a0
     mov     (d1, a0), a0
     jmp     (a0)
     movhu   (0x500d3c54), d0
@@ -7799,7 +7799,7 @@ loc_4C029361:
     ret     [d2,d3,a2], 0x28
 loc_4C029368:
     asl2    d0
-    mov     func_4C0292AF_Table, a0
+    mov     func_4C027A8E_Table+100, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     0x19, d2
@@ -8443,7 +8443,7 @@ func_4C02990C:
     bgt     loc_4C029926
     add     -0x13, d0
     asl2    d0
-    mov     func_4C02990C_Table, a0
+    mov     func_4C027A8E_Table+140, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     1, d0
@@ -8859,7 +8859,7 @@ func_4C029CB4:
 loc_4C029CBA:
     extbu   d0
     asl2    d0
-    mov     func_4C029CB4_Table, a0
+    mov     func_4C027A8E_Table+188, a0
     mov     (d0, a0), d0
     retf    0, 0
     mov     d0, d1
@@ -9377,7 +9377,7 @@ loc_4C02A0ED:
     mov     d0, (0x20, sp)
 loc_4C02A118:
     mov     0, a2
-    mov     func_4C02A0C4_Table, a1
+    mov     func_4C027A8E_Table+316, a1
     setlb
     movbu   (a1), d0
     mov     (0x1c, sp), a0
@@ -9474,7 +9474,7 @@ loc_4C02A1D1:
     mov     d0, (0x14, sp)
 loc_4C02A1E1:
     mov     0, a2
-    mov     func_4C02A0C4_Table_2, a1
+    mov     func_4C027A8E_Table+394, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9497,7 +9497,7 @@ loc_4C02A1E1:
     add     0x2e0, d3
     add     0x56, a3
     mov     0, a2
-    mov     func_4C02A0C4_Table, a1
+    mov     func_4C027A8E_Table+316, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9575,7 +9575,7 @@ loc_4C02A2B2:
     add     0x6b6, d3
     add     0x70, a3
     mov     0, a2
-    mov     func_4C02A0C4_Table_3, a1
+    mov     func_4C027A8E_Table+397, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9606,7 +9606,7 @@ loc_4C02A2B2:
     mov     0, a2
     add     0x74, a0
     movbu   (a0), d0
-    mov     func_4C02AD3C_Table, a1
+    mov     func_4C027A8E_Table+418, a1
     and     0xffffffcf, d0
     movbu   d0, (a0)
     mov     (0x38, sp), d1
@@ -9634,7 +9634,7 @@ loc_4C02A2B2:
     add     0x6d0, d3
     add     0x7a, a3
     mov     0, a2
-    mov     func_4C02A0C4_Table_4, a1
+    mov     func_4C027A8E_Table+427, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9835,7 +9835,7 @@ loc_4C02A4E5:
     add     0x700, d3
     add     0x88, a3
     mov     0, a2
-    mov     func_4C02A0C4_Table_5, a1
+    mov     func_4C027A8E_Table+469, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9853,7 +9853,7 @@ loc_4C02A4E5:
     add     0x716, d3
     add     0x8c, a3
     mov     0, a2
-    mov     func_4C02A0C4_Table_6, a1
+    mov     func_4C027A8E_Table+481, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9880,7 +9880,7 @@ loc_4C02A4E5:
     mov     d0, (0x14, sp)
 loc_4C02A55C:
     mov     0, a2
-    mov     Str_empty_1428, a1
+    mov     func_4C027A8E_Table+490, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9903,7 +9903,7 @@ loc_4C02A55C:
     add     0x2e0, d3
     add     0x98, a3
     mov     0, a2
-    mov     Str_empty_1428, a1
+    mov     func_4C027A8E_Table+490, a1
     setlb
     mov     d3, a0
     movbu   (a1), d0
@@ -9985,7 +9985,7 @@ loc_4C02A60C:
     mov     d0, (0x24, sp)
 loc_4C02A63C:
     mov     0, a2
-    mov     func_4C02A0C4_Table, a1
+    mov     func_4C027A8E_Table+316, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10098,7 +10098,7 @@ loc_4C02A714:
     mov     d0, (0x18, sp)
 loc_4C02A724:
     mov     0, a3
-    mov     func_4C02A0C4_Table_2, a1
+    mov     func_4C027A8E_Table+394, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10138,7 +10138,7 @@ loc_4C02A724:
     add     0x56, d0
     mov     d0, (0x14, sp)
     mov     0, a3
-    mov     func_4C02A0C4_Table, a1
+    mov     func_4C027A8E_Table+316, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10231,7 +10231,7 @@ loc_4C02A830:
     add     0x70, d0
     mov     d0, (0x14, sp)
     mov     0, a3
-    mov     func_4C02A0C4_Table_3, a1
+    mov     func_4C027A8E_Table+397, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10260,7 +10260,7 @@ loc_4C02A830:
     cmp     7, a3
     lcs
     mov     (0x38, sp), a0
-    mov     func_4C02AD3C_Table, a2
+    mov     func_4C027A8E_Table+418, a2
     movbu   (a0), d0
     call    func_4843E45C, 0, 0
     mov     (0x20, sp), a0
@@ -10319,7 +10319,7 @@ loc_4C02A830:
     add     0x7a, d0
     mov     d0, (0x14, sp)
     mov     0, a3
-    mov     func_4C02A0C4_Table_4, a1
+    mov     func_4C027A8E_Table+427, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10535,7 +10535,7 @@ loc_4C02AAB3:
     add     0x88, d0
     mov     d0, (0x14, sp)
     mov     0, a3
-    mov     func_4C02A0C4_Table_5, a1
+    mov     func_4C027A8E_Table+469, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10568,7 +10568,7 @@ loc_4C02AAB3:
     add     0x8c, d0
     mov     d0, (0x14, sp)
     mov     0, a3
-    mov     func_4C02A0C4_Table_6, a1
+    mov     func_4C027A8E_Table+481, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10611,7 +10611,7 @@ loc_4C02AAB3:
     mov     d0, (0x18, sp)
 loc_4C02AB68:
     mov     0, a3
-    mov     Str_empty_1428, a1
+    mov     func_4C027A8E_Table+490, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10652,7 +10652,7 @@ loc_4C02AB68:
     add     0x98, d0
     mov     d0, (0x14, sp)
     mov     0, a3
-    mov     Str_empty_1428, a1
+    mov     func_4C027A8E_Table+490, a1
     setlb
     movbu   (a1), d0
     movbu   (a1), d2
@@ -10818,7 +10818,7 @@ func_4C02AD3C_entry:
     mov     d0, (0x10, sp)
 loc_4C02AD51:
     mov     0, a3
-    mov     func_4C02A0C4_Table, a1
+    mov     func_4C027A8E_Table+316, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -10885,7 +10885,7 @@ loc_4C02ADAB:
     add     0x56, d0
     mov     d0, (0xc, sp)
     mov     0x84000300, a2
-    mov     func_4C02A0C4_Table, a1
+    mov     func_4C027A8E_Table+316, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -10922,7 +10922,7 @@ loc_4C02AE24:
     add     0x70, d0
     mov     d0, (0xc, sp)
     mov     0x840006d6, a2
-    mov     func_4C02A0C4_Table_3, a1
+    mov     func_4C027A8E_Table+397, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -10960,7 +10960,7 @@ loc_4C02AE6D:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0xc, sp)
-    mov     func_4C02AD3C_Table, a1
+    mov     func_4C027A8E_Table+418, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -11000,7 +11000,7 @@ loc_4C02AEBE:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0xc, sp)
-    mov     func_4C02A0C4_Table_4, a1
+    mov     func_4C027A8E_Table+427, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -11038,7 +11038,7 @@ loc_4C02AF14:
     clr     d0
     mov     d0, (0xc, sp)
     mov     0x84000720, a3
-    mov     func_4C02A0C4_Table_5, a1
+    mov     func_4C027A8E_Table+469, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -11077,7 +11077,7 @@ loc_4C02AF63:
     add     0x8c, d0
     mov     d0, (0xc, sp)
     mov     0x84000736, a2
-    mov     func_4C02A0C4_Table_6, a1
+    mov     func_4C027A8E_Table+481, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -11116,7 +11116,7 @@ loc_4C02AFB7:
     mov     d0, (0x10, sp)
 loc_4C02AFCE:
     mov     0, a3
-    mov     Str_empty_1428, a1
+    mov     func_4C027A8E_Table+490, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -11164,7 +11164,7 @@ loc_4C02B00B:
     mov     d0, (0x10, sp)
     clr     d0
     mov     d0, (0xc, sp)
-    mov     Str_empty_1428, a1
+    mov     func_4C027A8E_Table+490, a1
     setlb
     movbu   (a1), d0
     cmp     0xff, d0
@@ -11519,7 +11519,7 @@ func_4C02B422:
     add     -0x14, sp
 func_4C02B422_entry:
     mov     0, a2
-    mov     func_4C02B422_Table, a1
+    mov     func_4C027A8E_Table+2436, a1
     setlb
     mov     (a1), a0
     mov     (a1), a3
@@ -11555,7 +11555,7 @@ func_4C02B474_entry:
     add     0x20, a2
     mov     a2, a0
     call    func_4C02B4F9_entry, [a2,a3], 0x18
-    mov     data_4858E984, a3
+    mov     func_4C027A8E_Table+2340, a3
     mov     a2, a0
     mov     a3, a1
     call    func_4C02B6F8, 0, 0
@@ -11616,7 +11616,7 @@ func_4C02B4F9:
 func_4C02B4F9_entry:
     mov     a0, (0x20, sp)
     mov     0, a3
-    mov     data_4858E774, a2
+    mov     func_4C027A8E_Table+1812, a2
 loc_4C02B508:
     mov     (0x20, sp), a0
     mov     a2, a1
@@ -11633,7 +11633,7 @@ func_4C02B51A:
 func_4C02B51A_entry:
     mov     a0, (0x20, sp)
     mov     0, a3
-    mov     data_4858E774, a2
+    mov     func_4C027A8E_Table+1812, a2
 loc_4C02B529:
     mov     (0x20, sp), a0
     mov     a2, a1
@@ -11661,7 +11661,7 @@ loc_4C02B54A:
     nop
     mulu    d0, d1
     mov     d1, a1
-    add     data_4858E984, a1
+    add     func_4C027A8E_Table+2340, a1
     call    func_4C02B569_entry, [d2,a2,a3], 0x1c
     inc     d2
     mov     d2, d0
@@ -11887,7 +11887,7 @@ loc_4C02B6D9:
     nop
     mulu    d0, d1
     mov     d1, a1
-    add     data_4858E984, a1
+    add     func_4C027A8E_Table+2340, a1
     call    func_4C02B6F8, 0, 0
     inc     d2
     mov     d2, d0
@@ -13109,7 +13109,7 @@ TgModCurveSquareScale_entry:
     mov     d0, d2
     extbu   d1
     add     d1, d1
-    mov     TgModCurveSquareScale_Table, a0
+    mov     TgVoiceSideSelect_Table+64, a0
     movhu   (d1, a0), d0
     exth    d2
     exth    d0
@@ -13139,7 +13139,7 @@ TgPartCutoffResolve_entry:
     mov     0, a2
     beq     loc_4C02C289
     movbu   (0x10, a0), d1
-    mov     TgPartCutoffResolve_Table, a0
+    mov     func_4C01232D_Records+384, a0
     and     0x7f, d1
     movbu   (d1, a0), d0
     extb    d0
@@ -13883,7 +13883,7 @@ loc_4C02C7D2:
     mov     (0x1c, sp), a0
     mov     (0x14, sp), d1
     movhu   (0xc, a0), d2
-    mov     TgPartModDestApply_Table_2, a0
+    mov     TgPartModDestApply_Table+24, a0
     movhu   (d1, a0), d1
     and     d1, d2
     beq     loc_4C02C7F8
@@ -13953,7 +13953,7 @@ loc_4C02C871:
     mov     (0x1c, sp), a0
     mov     (0x14, sp), d0
     movhu   (0xc, a0), d1
-    mov     TgPartModDestApply_Table_2, a0
+    mov     TgPartModDestApply_Table+24, a0
     movhu   (d0, a0), d0
     and     d0, d1
     beq     loc_4C02C8AD
@@ -15330,7 +15330,7 @@ loc_4C02D380:
     add     d1, d3
     clr     d2
     mov     0, a2
-    mov     data_48586564, d1
+    mov     TgVoiceSideSelect_Table+80, d1
     add     d0, d1
     mov     d1, (0x24, sp)
     mov     0x30, d1
@@ -15831,7 +15831,7 @@ loc_4C02D7D5:
     nop
     nop
     mulu    d3, d0
-    add     data_486D319C, d0
+    add     TgPartGlidePlan_Records, d0
     mov     d0, (0x18, sp)
     mov     d0, a0
     mov     (a0), d0
@@ -16123,7 +16123,7 @@ loc_4C02DAB9:
     movhu   d0, (0x2a, a2)
     movbu   d0, (0x29, a2)
     movhu   d0, (0x2c, a2)
-    movhu   (data_486D31A4), d0
+    movhu   (TgPartGlidePlan_Records+8), d0
     mov     -1, d3
     movhu   d0, (0x46, a2)
     clr     d0
@@ -17696,7 +17696,7 @@ loc_4C02E870:
     jmp     loc_4C02F9F6
 loc_4C02E87B:
     mov     (0x24, sp), d1
-    mov     data_48586860, a1
+    mov     func_4C02E85D_Records, a1
     mov     a1, a0
     mov     0x7f, d0
     and     d1, d0
@@ -19259,7 +19259,7 @@ loc_4C02F9F6:
     movbu   (1, a0), d1
     asl2    d0
     sub     a1, d0
-    mov     func_4C02E85D_Table, a0
+    mov     TgVoiceSideSelect_Table+224, a0
     movbu   (d0, a0), d0
     extb    d1
     cmp     d0, d1
@@ -19301,7 +19301,7 @@ loc_4C02FA4F:
     mov     d3, d1
     asl2    d1
     sub     d3, d1
-    mov     func_4C02E85D_Table, a0
+    mov     TgVoiceSideSelect_Table+224, a0
     movbu   (d1, a0), d1
     extb    d0
     sub     d1, d0
@@ -19324,7 +19324,7 @@ loc_4C02FA83:
     mov     d3, d1
     asl2    d1
     sub     d3, d1
-    mov     func_4C02E85D_Table, a0
+    mov     TgVoiceSideSelect_Table+224, a0
     movbu   (d1, a0), d1
     extb    d0
     sub     d1, d0
@@ -19352,7 +19352,7 @@ loc_4C02FAC6:
     mov     d3, d0
     asl2    d0
     sub     d3, d0
-    mov     func_4C02E85D_Table, a0
+    mov     TgVoiceSideSelect_Table+224, a0
     movbu   (d0, a0), d0
     extb    d1
     sub     d0, d1
@@ -19364,7 +19364,7 @@ loc_4C02FAF6:
     asl2    d0
     mov     d0, a0
     sub     d3, a0
-    add     func_4C02E85D_Table, a0
+    add     TgVoiceSideSelect_Table+224, a0
     mov     2, d0
     mov     d0, (0x10, sp)
     mov     0x55, d0
@@ -19622,7 +19622,7 @@ func_4C02FCBA_entry:
     cmp     0x70, d0
     bne     loc_4C02FCE2
     exthu   d1
-    mov     func_4C02FCBA_Table_2, a0
+    mov     func_4C01232D_Records+1441, a0
     movbu   (d1, a0), d0
     mov     -0xc, d2
     exth    d0
@@ -19635,7 +19635,7 @@ loc_4C02FCE2:
     cmp     0, d0
     bge     loc_4C02FD24
     exthu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table, a2
+    mov     TgPartModDestApply_Table+304, a2
     movbu   (d1, a2), d1
     movbu   (a0), d0
     exthu   d1
@@ -19645,7 +19645,7 @@ loc_4C02FCE2:
     asr     4, d0
     asl     8, d0
     mov     d0, a0
-    add     data_486D1454, a0
+    add     func_4C02FCBA_Records, a0
     movbu   (d1, a0), d1
     movbu   (a1), d0
     add     -0xd0, d1
@@ -19666,7 +19666,7 @@ loc_4C02FD24:
     and     0xf0, d0
     asr     4, d0
     asl     8, d0
-    add     data_486D1454, d0
+    add     func_4C02FCBA_Records, d0
     mov     d0, a0
     movbu   (d1, a0), d1
     movbu   (a1), d2
@@ -19778,7 +19778,7 @@ func_4C02FDFA_entry:
     mov     d0, d1
     movbu   (9, a0), d0
     add     0xf, a0
-    mov     func_4C00A98E_Table, a1
+    mov     func_4C01232D_Records+896, a1
     movbu   (d0, a1), d3
     movbu   (a0), d0
     extb    d0
@@ -19793,14 +19793,14 @@ func_4C02FDFA_entry:
     cmp     0, d0
     bge     loc_4C02FE2B
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d1, a0), d1
     not     d0
     mov     d0, d2
     inc     d2
 loc_4C02FE2B:
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d1, a0), d1
     exth    d3
     extb    d1
@@ -19830,7 +19830,7 @@ loc_4C02FE55:
 
 func_4C02FE59:
     movbu   (0xe, a0), d0
-    mov     func_4C00454C_Table, a0
+    mov     func_4C01232D_Records+997, a0
     exth    d0
     movbu   (d0, a0), d0
     movhu   d0, (a1)
@@ -19856,7 +19856,7 @@ func_4C02FE77_entry:
     and     0xe0, d1
     asr     5, d1
     asl     7, d1
-    add     data_486D2264, d1
+    add     func_4C01232D_Records, d1
     and     0x7f, d0
     mov     d1, a0
     movbu   (d0, a0), d2
@@ -20125,7 +20125,7 @@ loc_4C03004D:
     btst    0x20, d0
     beq     loc_4C030085
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table_2, a0
+    mov     func_4C01232D_Records+1328, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20134,7 +20134,7 @@ loc_4C03004D:
     bra     loc_4C030096
 loc_4C030085:
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table, a0
+    mov     func_4C01232D_Records+1250, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20180,7 +20180,7 @@ loc_4C0300BD:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table_2, d0
+    add     func_4C01232D_Records+1328, d0
     mov     d0, a0
     movbu   (1, a0), d1
     bra     loc_4C030102
@@ -20190,7 +20190,7 @@ loc_4C0300EE:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table, d0
+    add     func_4C01232D_Records+1250, d0
     mov     d0, a0
     movbu   (1, a0), d1
 loc_4C030102:
@@ -20211,7 +20211,7 @@ loc_4C030102:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table_2, d0
+    add     func_4C01232D_Records+1328, d0
     mov     d0, a0
     movbu   (2, a0), d1
     extb    d1
@@ -20223,7 +20223,7 @@ loc_4C030136:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table, d0
+    add     func_4C01232D_Records+1250, d0
     mov     d0, a0
     movbu   (2, a0), d1
     extb    d1
@@ -20246,7 +20246,7 @@ loc_4C030150:
     btst    0x20, d0
     beq     loc_4C030182
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table_2, a0
+    mov     func_4C01232D_Records+1328, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20255,7 +20255,7 @@ loc_4C030150:
     bra     loc_4C030193
 loc_4C030182:
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table, a0
+    mov     func_4C01232D_Records+1250, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20301,7 +20301,7 @@ loc_4C0301BA:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table_2, d0
+    add     func_4C01232D_Records+1328, d0
     mov     d0, a0
     movbu   (1, a0), d1
     bra     loc_4C0301FF
@@ -20311,7 +20311,7 @@ loc_4C0301EB:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table, d0
+    add     func_4C01232D_Records+1250, d0
     mov     d0, a0
     movbu   (1, a0), d1
 loc_4C0301FF:
@@ -20332,7 +20332,7 @@ loc_4C0301FF:
     asl2    d1
     sub     d0, d1
     mov     d1, a0
-    add     func_4C02FFD4_Table_2, a0
+    add     func_4C01232D_Records+1328, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -20343,7 +20343,7 @@ loc_4C030232:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table, d0
+    add     func_4C01232D_Records+1250, d0
     mov     d0, a0
     movbu   (2, a0), d0
     extb    d0
@@ -20443,7 +20443,7 @@ loc_4C0302F3:
     btst    0x20, d0
     beq     loc_4C030323
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table_2, a0
+    mov     func_4C01232D_Records+1328, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20452,7 +20452,7 @@ loc_4C0302F3:
     bra     loc_4C030334
 loc_4C030323:
     movbu   (a2), d0
-    mov     func_4C02FFD4_Table, a0
+    mov     func_4C01232D_Records+1250, a0
     and     0x1f, d0
     mov     d0, d1
     asl2    d1
@@ -20499,7 +20499,7 @@ loc_4C03035F:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table_2, d0
+    add     func_4C01232D_Records+1328, d0
     mov     d0, a0
     movbu   (1, a0), d1
     bra     loc_4C0303A5
@@ -20510,7 +20510,7 @@ loc_4C030391:
     asl2    d1
     mov     d1, a0
     sub     d0, a0
-    add     func_4C02FFD4_Table, a0
+    add     func_4C01232D_Records+1250, a0
     movbu   (1, a0), d1
 loc_4C0303A5:
     mov     (0x40, sp), a0
@@ -20529,7 +20529,7 @@ loc_4C0303A5:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table_2, d0
+    add     func_4C01232D_Records+1328, d0
     mov     d0, a0
     movbu   (2, a0), d0
     extb    d0
@@ -20541,7 +20541,7 @@ loc_4C0303D8:
     mov     d1, d0
     asl2    d0
     sub     d1, d0
-    add     func_4C02FFD4_Table, d0
+    add     func_4C01232D_Records+1250, d0
     mov     d0, a0
     movbu   (2, a0), d0
     extb    d0
@@ -20564,7 +20564,7 @@ loc_4C0303F1:
     btst    0x20, d0
     beq     loc_4C030429
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table_2, a0
+    mov     func_4C01232D_Records+1328, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20573,7 +20573,7 @@ loc_4C0303F1:
     bra     loc_4C03043A
 loc_4C030429:
     movbu   (a2), d1
-    mov     func_4C02FFD4_Table, a0
+    mov     func_4C01232D_Records+1250, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -20621,7 +20621,7 @@ loc_4C030461:
     asl2    d0
     sub     d1, d0
     mov     d0, a0
-    add     func_4C02FFD4_Table_2, a0
+    add     func_4C01232D_Records+1328, a0
     movbu   (1, a0), d1
     bra     loc_4C0304A7
 loc_4C030493:
@@ -20631,7 +20631,7 @@ loc_4C030493:
     asl2    d1
     mov     d1, a0
     sub     d0, a0
-    add     func_4C02FFD4_Table, a0
+    add     func_4C01232D_Records+1250, a0
     movbu   (1, a0), d1
 loc_4C0304A7:
     mov     (0x40, sp), a0
@@ -20651,7 +20651,7 @@ loc_4C0304A7:
     asl2    d1
     sub     d0, d1
     mov     d1, a0
-    add     func_4C02FFD4_Table_2, a0
+    add     func_4C01232D_Records+1328, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -20663,7 +20663,7 @@ loc_4C0304DA:
     asl2    d0
     sub     d1, d0
     mov     d0, a0
-    add     func_4C02FFD4_Table, a0
+    add     func_4C01232D_Records+1250, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -21423,7 +21423,7 @@ TgElemNoteOnStd_entry:
 loc_4C030B14:
     mov     (0x1c, sp), a0
     movhu   (0xa, a0), d0
-    mov     func_4C00B181_Table, a0
+    mov     TgPartModDestApply_Table+48, a0
     asr     8, d0
     add     d0, d0
     movhu   (d0, a0), d1
@@ -21695,7 +21695,7 @@ loc_4C030D5D:
     or      d2, d1
     movhu   d1, (a1)
     mov     (0x5c, sp), a0
-    mov     func_4C00454C_Table, a2
+    mov     func_4C01232D_Records+997, a2
     movhu   (a0), d0
     mov     a3, d1
     or      0x7f, d0
@@ -21714,7 +21714,7 @@ loc_4C030D5D:
     mov     (0x28, sp), a1
     and     0xff80, d2
     movbu   (0xb, a1), d0
-    mov     func_4C00BC7E_Table, a1
+    mov     func_4C01232D_Records+1098, a1
     extbu   d0
     movbu   (d0, a1), d1
     mov     d2, d0
@@ -22445,7 +22445,7 @@ loc_4C031347:
     cmp     0x70, d1
     bne     loc_4C031362
     exthu   d0
-    mov     func_4C02FCBA_Table_2, a0
+    mov     func_4C01232D_Records+1441, a0
     movbu   (d0, a0), d0
     exth    d0
     add     -0xc, d0
@@ -22458,7 +22458,7 @@ loc_4C031362:
     cmp     0, d1
     bge     loc_4C0313A6
     exthu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a2
+    mov     TgPartModDestApply_Table+304, a2
     movbu   (d0, a2), d1
     movbu   (a0), d0
     exthu   d1
@@ -22468,7 +22468,7 @@ loc_4C031362:
     asr     4, d0
     asl     8, d0
     mov     d0, a0
-    add     data_486D1454, a0
+    add     func_4C02FCBA_Records, a0
     movbu   (d1, a0), d1
     movbu   (a1), d0
     add     -0xd0, d1
@@ -22489,7 +22489,7 @@ loc_4C0313A6:
     and     0xf0, d1
     asr     4, d1
     asl     8, d1
-    add     data_486D1454, d1
+    add     func_4C02FCBA_Records, d1
     mov     d1, a0
     movbu   (d0, a0), d1
     movbu   (a1), d2
@@ -22839,7 +22839,7 @@ TgAmpEgAttackRateCalc_entry:
     mov     d2, (0x10, sp)
     mov     0x64, d1
     call    TgZoneParamClamp_entry, [d2,d3], 8
-    mov     func_4C00A98E_Table, a0
+    mov     func_4C01232D_Records+896, a0
     extbu   d0
     movbu   (d0, a0), d1
     mov     0x34, a0
@@ -22912,14 +22912,14 @@ loc_4C03168F:
     cmp     0, d1
     bge     loc_4C0316CD
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     not     d1
     mov     d1, d2
     inc     d2
 loc_4C0316CD:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d3
     mov     a2, d0
     extb    d3
@@ -22975,14 +22975,14 @@ loc_4C031717:
     cmp     0, d0
     bge     loc_4C03173E
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d1, a0), d1
     mov     d0, d2
     not     d2
     inc     d2
 loc_4C03173E:
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d1, a0), d1
     mov     a2, d3
     extb    d1
@@ -23027,7 +23027,7 @@ TgAmpEgDecayRatePairCalc_entry:
     mov     a0, (0x30, sp)
     exth    d0
     clr     d3
-    mov     func_4C00454C_Table, a2
+    mov     func_4C01232D_Records+997, a2
     mov     d1, d2
     movbu   (0x2a, a3), d1
     mov     d3, (0x10, sp)
@@ -23120,14 +23120,14 @@ loc_4C031809:
     cmp     0, d1
     bge     loc_4C031845
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     not     d1
     mov     d1, d2
     inc     d2
 loc_4C031845:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     clr     d0
     mov     d0, (0x10, sp)
@@ -23203,14 +23203,14 @@ loc_4C0318C5:
     cmp     d3, d1
     bge     loc_4C0318EB
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     mov     d1, d2
     not     d2
     inc     d2
 loc_4C0318EB:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d0
     extb    d2
     extb    d0
@@ -23302,7 +23302,7 @@ TgKeyOffAmpRelease_entry:
     call    TgZoneParamClamp_entry, [d2,d3], 8
     extbu   d0
     exth    d0
-    mov     func_4C00454C_Table, a0
+    mov     func_4C01232D_Records+997, a0
     movbu   (d0, a0), d1
     mov     0x36, a0
     extbu   d1
@@ -23417,9 +23417,9 @@ loc_4C031A6E:
     mov     (0x18, sp), a1
     movhu   (0x1c, sp), d1
     movbu   (0x1b, a1), d0
-    mov     func_4C00AB15_Table, a1
+    mov     func_4C01232D_Records+1406, a1
     movbu   (d0, a1), d0
-    mov     func_4C00454C_Table, a1
+    mov     func_4C01232D_Records+997, a1
     exth    d0
     movbu   (d0, a1), d2
     movbu   (a0), d0
@@ -23663,7 +23663,7 @@ TgPitchEgAttackCalc_entry:
     mov     0xb, a1
     add     a0, a1
     movbu   (a1), d0
-    mov     func_4C00454C_Table, a2
+    mov     func_4C01232D_Records+997, a2
     movbu   (d0, a2), d1
     mov     0x16, a2
     add     a0, a2
@@ -23726,14 +23726,14 @@ loc_4C031C98:
     cmp     0, d0
     bge     loc_4C031CD6
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d1, a0), d1
     mov     d0, d2
     not     d2
     inc     d2
 loc_4C031CD6:
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d1, a0), d3
     mov     a3, d0
     extb    d3
@@ -23806,14 +23806,14 @@ loc_4C031D39:
     cmp     0, d1
     bge     loc_4C031D67
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     mov     d1, d2
     not     d2
     inc     d2
 loc_4C031D67:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     mov     a3, d3
     extb    d1
@@ -23846,7 +23846,7 @@ TgPitchEgDecayCalc:
 TgPitchEgDecayCalc_entry:
     movbu   (0xd, a1), d0
     mov     a0, a2
-    mov     func_4C00454C_Table, a0
+    mov     func_4C01232D_Records+997, a0
     movbu   (d0, a0), d1
     movbu   (0xf, a1), d0
     mov     d1, a3
@@ -23907,14 +23907,14 @@ loc_4C031DE1:
     cmp     0, d1
     bge     loc_4C031E17
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     not     d1
     mov     d1, d2
     inc     d2
 loc_4C031E17:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     exth    d3
     extb    d1
@@ -23983,14 +23983,14 @@ loc_4C031E8B:
     cmp     0, d1
     bge     loc_4C031EB1
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     not     d1
     mov     d1, d2
     inc     d2
 loc_4C031EB1:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     extb    d2
     extb    d1
@@ -24044,7 +24044,7 @@ TgKeyOffPitchRelease_entry:
     movhu   d0, (0x1e, sp)
     mov     (0x3c, a0), a0
     mov     (0x3c, sp), a1
-    mov     func_4C00454C_Table, a2
+    mov     func_4C01232D_Records+997, a2
     movbu   (7, a1), d0
     mov     0, a3
     movbu   d0, (0x18, sp)
@@ -24075,7 +24075,7 @@ TgKeyOffPitchRelease_entry:
     mov     0x7f, d0
 loc_4C031F4B:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_3, a1
+    mov     func_4C01232D_Records+1199, a1
     movbu   (d0, a1), d0
     mov     -1, d1
     exth    d0
@@ -24091,7 +24091,7 @@ loc_4C031F5D:
     mov     d2, d0
 loc_4C031F65:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_3, a1
+    mov     func_4C01232D_Records+1199, a1
     movbu   (d0, a1), d0
 loc_4C031F6E:
     movhu   d0, (0x1c, sp)
@@ -24163,14 +24163,14 @@ loc_4C031FC5:
     cmp     0, d1
     bge     loc_4C031FEE
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     not     d1
     mov     d1, d2
     inc     d2
 loc_4C031FEE:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     extb    d2
     extb    d1
@@ -24232,7 +24232,7 @@ loc_4C032055:
     cmp     0, d0
     beq     loc_4C0320C5
     movbu   (0x1b, a0), d0
-    mov     func_4C00AB15_Table, a0
+    mov     func_4C01232D_Records+1406, a0
     movbu   (d0, a0), d0
     movbu   (a1), d1
     exth    d0
@@ -24416,13 +24416,13 @@ TgFilterEgAttackCalc_entry:
     mov     d0, (0x14, sp)
     mov     d0, a1
     movbu   (a1), d2
-    movbu   (data_486D264B), d0
+    movbu   (func_4C01232D_Records+999), d0
     mov     d2, d1
     extbu   d1
     cmp     2, d1
     blt     loc_4C0321E1
     extbu   d2
-    mov     func_4C00454C_Table, a1
+    mov     func_4C01232D_Records+997, a1
     movbu   (d2, a1), d0
 loc_4C0321E1:
     mov     0x4b, a2
@@ -24487,14 +24487,14 @@ loc_4C032214:
     cmp     0, d1
     bge     loc_4C032256
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     mov     d1, d2
     not     d2
     inc     d2
 loc_4C032256:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d3
     mov     a3, d1
     extb    d3
@@ -24568,14 +24568,14 @@ loc_4C0322BB:
     cmp     0, d1
     bge     loc_4C0322EB
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     mov     d1, d2
     not     d2
     inc     d2
 loc_4C0322EB:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     mov     a3, d3
     extb    d1
@@ -24606,7 +24606,7 @@ TgFilterEgDecayCalc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x18, sp
 TgFilterEgDecayCalc_entry:
-    mov     func_4C00454C_Table, a2
+    mov     func_4C01232D_Records+997, a2
     mov     a0, a3
     mov     a1, a0
     movbu   (0x42, a0), d0
@@ -24672,14 +24672,14 @@ loc_4C032368:
     cmp     0, d1
     bge     loc_4C03239E
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     mov     d1, d2
     not     d2
     inc     d2
 loc_4C03239E:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     exth    d3
     extb    d1
@@ -24750,14 +24750,14 @@ loc_4C032414:
     cmp     0, d1
     bge     loc_4C03243A
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     not     d1
     mov     d1, d2
     inc     d2
 loc_4C03243A:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     extb    d2
     extb    d1
@@ -24812,7 +24812,7 @@ TgKeyOffFilterRelease_entry:
     movhu   d0, (0x1c, sp)
     mov     (0x3c, a0), a2
     movbu   (7, a0), d0
-    mov     func_4C00454C_Table, a0
+    mov     func_4C01232D_Records+997, a0
     movbu   d0, (0x18, sp)
     movbu   (0x46, a2), d0
     mov     0, a3
@@ -24851,7 +24851,7 @@ TgKeyOffFilterRelease_entry:
     mov     0x7f, d0
 loc_4C0324E6:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_3, a0
+    mov     func_4C01232D_Records+1199, a0
     movbu   (d0, a0), d0
     mov     -1, d1
     exth    d0
@@ -24868,7 +24868,7 @@ loc_4C0324F8:
 loc_4C032500:
     mov     d1, d0
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_3, a0
+    mov     func_4C01232D_Records+1199, a0
     movbu   (d0, a0), d0
 loc_4C03250A:
     movhu   d0, (0x1e, sp)
@@ -24929,14 +24929,14 @@ loc_4C03254D:
     cmp     0, d1
     bge     loc_4C032576
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table, a0
+    mov     TgPartModDestApply_Table+304, a0
     movbu   (d0, a0), d0
     mov     d1, d2
     not     d2
     inc     d2
 loc_4C032576:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_2, a0
+    mov     TgPartModDestApply_Table+432, a0
     movbu   (d0, a0), d1
     extb    d2
     extb    d1
@@ -24997,12 +24997,12 @@ loc_4C0325DC:
     cmp     0, d0
     beq     loc_4C032653
     movbu   (0x1b, a0), d0
-    mov     func_4C00AB15_Table, a0
+    mov     func_4C01232D_Records+1406, a0
     movbu   (d0, a0), d0
     movbu   (a1), d1
     exth    d0
     movhu   (0x20, sp), d2
-    mov     func_4C00454C_Table, a0
+    mov     func_4C01232D_Records+997, a0
     movbu   (d0, a0), d0
     extb    d1
     exth    d2
@@ -25185,7 +25185,7 @@ func_4C032747_entry:
     and     0xe0, d0
     asr     5, d0
     asl     7, d0
-    add     data_486D2264, d0
+    add     func_4C01232D_Records, d0
     and     0x7f, d1
     mov     d0, a2
     movbu   (d1, a2), d2
@@ -25341,7 +25341,7 @@ loc_4C03288F:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (0xd, a0), d1
     btst    0x80, d1
     beq     loc_4C0328AC
@@ -25397,7 +25397,7 @@ func_4C0328CC_entry:
     mov     0x50, a0
     add     d3, a0
     mov     (a0), d2
-    movbu   (data_486D27CD), d0
+    movbu   (func_4C01232D_Records+1385), d0
     and     0xfff3ffff, d2
     mov     d0, d1
     and     0x03, d1
@@ -25410,13 +25410,13 @@ func_4C0328CC_entry:
     mov     0x24, a0
     add     d3, a0
     movhu   (a0), d2
-    movbu   (Str_empty_321), d1
+    movbu   (func_4C01232D_Records+1386), d1
     and     0x80ff, d2
     and     0x7f, d1
     asl     8, d1
     or      d2, d1
     movhu   d1, (a0)
-    movbu   (Str_empty_321+1), d0
+    movbu   (func_4C01232D_Records+1387), d0
     extb    d0
     exthu   d0
     ret     [d2,d3,a2,a3], 0x10
@@ -25428,7 +25428,7 @@ loc_4C032946:
     btst    0x20, d0
     beq     loc_4C032966
     movbu   (a3), d1
-    mov     func_4C02FFD4_Table_2, a0
+    mov     func_4C01232D_Records+1328, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -25437,7 +25437,7 @@ loc_4C032946:
     bra     loc_4C032977
 loc_4C032966:
     movbu   (a3), d1
-    mov     func_4C02FFD4_Table, a0
+    mov     func_4C01232D_Records+1250, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -25478,7 +25478,7 @@ loc_4C0329A4:
     mov     d0, d1
     asl2    d1
     sub     d0, d1
-    add     func_4C02FFD4_Table_2, d1
+    add     func_4C01232D_Records+1328, d1
     mov     d1, a0
     movbu   (1, a0), d1
     bra     loc_4C0329DA
@@ -25488,7 +25488,7 @@ loc_4C0329C6:
     mov     d0, d1
     asl2    d1
     sub     d0, d1
-    add     func_4C02FFD4_Table, d1
+    add     func_4C01232D_Records+1250, d1
     mov     d1, a0
     movbu   (1, a0), d1
 loc_4C0329DA:
@@ -25510,7 +25510,7 @@ loc_4C0329DA:
     asl2    d1
     mov     d1, a0
     sub     d0, a0
-    add     func_4C02FFD4_Table_2, a0
+    add     func_4C01232D_Records+1328, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -25522,7 +25522,7 @@ loc_4C032A0E:
     asl2    d1
     sub     d0, d1
     mov     d1, a0
-    add     func_4C02FFD4_Table, a0
+    add     func_4C01232D_Records+1250, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -25555,7 +25555,7 @@ func_4C032A27_entry:
     mov     0x50, a2
     add     a0, a2
     mov     (a2), d0
-    movbu   (data_486D27CD), d1
+    movbu   (func_4C01232D_Records+1385), d1
     and     0xfff3ffff, d0
     and     0x03, d1
     asl     18, d1
@@ -25565,13 +25565,13 @@ func_4C032A27_entry:
     movhu   d0, (0x62, a3)
     add     0x24, a0
     movhu   (a0), d1
-    movbu   (Str_empty_321), d0
+    movbu   (func_4C01232D_Records+1386), d0
     and     0x80ff, d1
     and     0x7f, d0
     asl     8, d0
     or      d1, d0
     movhu   d0, (a0)
-    movbu   (Str_empty_321+1), d0
+    movbu   (func_4C01232D_Records+1387), d0
     extb    d0
     exthu   d0
     bra     loc_4C032ABD
@@ -25666,7 +25666,7 @@ loc_4C032B46:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (0xd, a0), d1
     btst    0x80, d1
     beq     loc_4C032B63
@@ -25721,7 +25721,7 @@ func_4C032B87_entry:
     mov     0x50, a0
     add     a1, a0
     mov     (a0), d0
-    movbu   (data_486D27CD), d1
+    movbu   (func_4C01232D_Records+1385), d1
     and     0xfff3ffff, d0
     and     0x03, d1
     asl     18, d1
@@ -25731,13 +25731,13 @@ func_4C032B87_entry:
     movhu   d0, (0x62, a2)
     add     0x24, a1
     movhu   (a1), d1
-    movbu   (Str_empty_321), d0
+    movbu   (func_4C01232D_Records+1386), d0
     and     0x80ff, d1
     and     0x7f, d0
     asl     8, d0
     or      d1, d0
     movhu   d0, (a1)
-    movbu   (Str_empty_321+1), d0
+    movbu   (func_4C01232D_Records+1387), d0
     extb    d0
     exthu   d0
     bra     loc_4C032C16
@@ -25869,7 +25869,7 @@ loc_4C032CF2:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (0xd, a0), d0
     btst    0x80, d0
     beq     loc_4C032D0F
@@ -25917,7 +25917,7 @@ loc_4C032D49:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (0xd, a0), d1
     btst    0x80, d1
     beq     loc_4C032D66
@@ -25971,7 +25971,7 @@ func_4C032D84_entry:
     mov     0x50, a0
     add     d3, a0
     mov     (a0), d2
-    movbu   (data_486D27CD), d0
+    movbu   (func_4C01232D_Records+1385), d0
     and     0xfff3ffff, d2
     mov     d0, d1
     and     0x03, d1
@@ -25984,13 +25984,13 @@ func_4C032D84_entry:
     mov     0x24, a0
     add     d3, a0
     movhu   (a0), d2
-    movbu   (Str_empty_321), d1
+    movbu   (func_4C01232D_Records+1386), d1
     and     0x80ff, d2
     and     0x7f, d1
     asl     8, d1
     or      d2, d1
     movhu   d1, (a0)
-    movbu   (Str_empty_321+1), d0
+    movbu   (func_4C01232D_Records+1387), d0
     extb    d0
     exthu   d0
     ret     [d2,d3,a2,a3], 0x10
@@ -26002,7 +26002,7 @@ loc_4C032DFE:
     btst    0x20, d0
     beq     loc_4C032E1E
     movbu   (a3), d1
-    mov     func_4C02FFD4_Table_2, a0
+    mov     func_4C01232D_Records+1328, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -26011,7 +26011,7 @@ loc_4C032DFE:
     bra     loc_4C032E2F
 loc_4C032E1E:
     movbu   (a3), d1
-    mov     func_4C02FFD4_Table, a0
+    mov     func_4C01232D_Records+1250, a0
     and     0x1f, d1
     mov     d1, d0
     asl2    d0
@@ -26052,7 +26052,7 @@ loc_4C032E5C:
     mov     d0, d1
     asl2    d1
     sub     d0, d1
-    add     func_4C02FFD4_Table_2, d1
+    add     func_4C01232D_Records+1328, d1
     mov     d1, a0
     movbu   (1, a0), d1
     bra     loc_4C032E92
@@ -26062,7 +26062,7 @@ loc_4C032E7E:
     mov     d0, d1
     asl2    d1
     sub     d0, d1
-    add     func_4C02FFD4_Table, d1
+    add     func_4C01232D_Records+1250, d1
     mov     d1, a0
     movbu   (1, a0), d1
 loc_4C032E92:
@@ -26084,7 +26084,7 @@ loc_4C032E92:
     asl2    d1
     mov     d1, a0
     sub     d0, a0
-    add     func_4C02FFD4_Table_2, a0
+    add     func_4C01232D_Records+1328, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -26096,7 +26096,7 @@ loc_4C032EC6:
     asl2    d1
     sub     d0, d1
     mov     d1, a0
-    add     func_4C02FFD4_Table, a0
+    add     func_4C01232D_Records+1250, a0
     movbu   (2, a0), d0
     extb    d0
     exthu   d0
@@ -26135,14 +26135,14 @@ func_4C032EDF_entry:
     movhu   d0, (0x62, a3)
     add     0x24, a2
     movhu   (a2), d2
-    movbu   (Str_empty_321), d0
+    movbu   (func_4C01232D_Records+1386), d0
     and     0x80ff, d2
     mov     0x7f, d1
     and     d0, d1
     asl     8, d1
     or      d2, d1
     movhu   d1, (a2)
-    movbu   (Str_empty_321+1), d0
+    movbu   (func_4C01232D_Records+1387), d0
     extb    d0
     exthu   d0
     bra     loc_4C032F56
@@ -26231,7 +26231,7 @@ loc_4C032FDF:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (0xd, a0), d1
     btst    0x80, d1
     beq     loc_4C032FFC
@@ -26295,13 +26295,13 @@ func_4C033020_entry:
     movhu   d0, (0x62, a3)
     add     0x24, a2
     movhu   (a2), d1
-    movbu   (Str_empty_321), d0
+    movbu   (func_4C01232D_Records+1386), d0
     and     0x80ff, d1
     and     0x7f, d0
     asl     8, d0
     or      d1, d0
     movhu   d0, (a2)
-    movbu   (Str_empty_321+1), d0
+    movbu   (func_4C01232D_Records+1387), d0
     extb    d0
     exthu   d0
     bra     loc_4C03309D
@@ -26428,7 +26428,7 @@ loc_4C033177:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (0xd, a0), d1
     btst    0x80, d1
     beq     loc_4C033194
@@ -27743,7 +27743,7 @@ TgElemNoteOnFresh_entry:
 loc_4C033D20:
     mov     (0x24, sp), a0
     movhu   (0xa, a0), d0
-    mov     func_4C00B181_Table, a0
+    mov     TgPartModDestApply_Table+48, a0
     asr     8, d0
     add     d0, d0
     movhu   (d0, a0), d0
@@ -27843,7 +27843,7 @@ loc_4C033DEB:
     nop
     nop
     mul     d1, d0
-    add     data_486D2ED5, d0
+    add     TgPartEditLfoLoadA_Records, d0
     mov     d0, a0
     movbu   (2, a0), d1
     add     0x58, a1
@@ -27979,7 +27979,7 @@ loc_4C033EF8:
     nop
     mul     d0, d3
     mov     d3, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     movbu   (5, a0), d0
     add     0x58, a1
     mov     (a1), d2
@@ -28196,7 +28196,7 @@ loc_4C0340D3:
     mov     (a1), a0
     extbu   d2
     movbu   (0x44, a0), d1
-    mov     data_486D2ED5, a2
+    mov     TgPartEditLfoLoadA_Records, a2
     mov     0x27, d0
     and     0x0f, d1
     extbu   d1
@@ -28429,7 +28429,7 @@ loc_4C034308:
     or      d0, d1
     movhu   d1, (a0)
     mov     (0x20, sp), a0
-    mov     func_4C00BC7E_Table, d2
+    mov     func_4C01232D_Records+1098, d2
     add     0x29, a0
     movbu   (a0), d0
     mov     d2, a1
@@ -28558,7 +28558,7 @@ loc_4C03433C:
     mov     0x7f, d1
 loc_4C03443F:
     extbu   d1
-    mov     TgDrumZoneLevelScaleCalc_Table_3, a1
+    mov     func_4C01232D_Records+1199, a1
     movbu   (d1, a1), d0
     mov     -1, d1
     exth    d0
@@ -28572,7 +28572,7 @@ loc_4C034451:
     mov     0x7f, d0
 loc_4C034457:
     extbu   d0
-    mov     TgDrumZoneLevelScaleCalc_Table_3, a1
+    mov     func_4C01232D_Records+1199, a1
     movbu   (d0, a1), d0
 loc_4C034460:
     mov     (0x20, sp), a1
@@ -29262,19 +29262,19 @@ loc_4C034A76:
 loc_4C034AAE:
     mov     (a1), a0
     movbu   (0x48, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d0
     bra     loc_4C034AF3
 loc_4C034ABD:
     mov     (a1), a0
     movbu   (0x4a, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d0
     bra     loc_4C034AF3
 loc_4C034ACC:
     mov     (a1), a0
     movbu   (0x45, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d0
     bra     loc_4C034AF3
 loc_4C034ADB:
@@ -29285,7 +29285,7 @@ loc_4C034ADB:
     nop
     mulu    d0, d2
     mov     d2, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     mov     d3, d0
     asl2    d0
     add     d3, d0
@@ -29329,7 +29329,7 @@ loc_4C034B28:
 loc_4C034B36:
     movhu   d1, (0x54, a2)
     mov     (0x20, sp), a0
-    mov     data_486D3116, a1
+    mov     TgElemStageFresh_Table_4, a1
     mov     (a0), a0
     movbu   (0x45, a0), d0
     mov     TgElemStageFresh_Table_2, a0
@@ -29585,19 +29585,19 @@ loc_4C034D2F:
 loc_4C034D67:
     mov     (a1), a0
     movbu   (0x48, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d1
     bra     loc_4C034DAC
 loc_4C034D76:
     mov     (a1), a0
     movbu   (0x4a, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d1
     bra     loc_4C034DAC
 loc_4C034D85:
     mov     (a1), a0
     movbu   (0x45, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d1
     bra     loc_4C034DAC
 loc_4C034D94:
@@ -29608,7 +29608,7 @@ loc_4C034D94:
     nop
     mulu    d0, d2
     mov     d2, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     mov     d3, d0
     asl2    d0
     add     d3, d0
@@ -29652,7 +29652,7 @@ loc_4C034DE1:
 loc_4C034DEF:
     movhu   d0, (0x54, a2)
     mov     (0x24, sp), a0
-    mov     data_486D3116, a1
+    mov     TgElemStageFresh_Table_4, a1
     mov     (a0), a0
     mov     TgElemStageFresh_Table_3, a3
     movbu   (0x45, a0), d0
@@ -29731,7 +29731,7 @@ TgElemRequestFlags_entry:
     and     d0, d2
     beq     loc_4C034EC0
     add     4, d1
-    mov     TgElemRequestFlags_Table, a0
+    mov     TgPartEditLfoGroupLoad_Table+484, a0
     movbu   (d1, a0), d0
     mov     2, a0
     add     a3, a0
@@ -29741,7 +29741,7 @@ TgElemRequestFlags_entry:
     bra     loc_4C034ED8
 loc_4C034EC0:
     movbu   (0x28, sp), d0
-    mov     TgElemRequestFlags_Table, a0
+    mov     TgPartEditLfoGroupLoad_Table+484, a0
     mov     d0, a2
     movbu   (d0, a0), d0
     mov     a2, d1
@@ -29789,19 +29789,19 @@ loc_4C034EE6:
 loc_4C034F1E:
     mov     (a1), a0
     movbu   (0x48, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d0
     bra     loc_4C034F63
 loc_4C034F2D:
     mov     (a1), a0
     movbu   (0x4a, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d0
     bra     loc_4C034F63
 loc_4C034F3C:
     mov     (a1), a0
     movbu   (0x45, a0), d0
-    mov     TgElemStageFresh_Table, a0
+    mov     TgPartEgRampBuild_Table_3+1224, a0
     movbu   (d0, a0), d0
     bra     loc_4C034F63
 loc_4C034F4B:
@@ -29812,7 +29812,7 @@ loc_4C034F4B:
     nop
     nop
     mulu    d0, d1
-    add     data_486D2ED5, d1
+    add     TgPartEditLfoLoadA_Records, d1
     mov     d2, d0
     asl2    d0
     add     d2, d0
@@ -30986,7 +30986,7 @@ TgDrumNoteOnStd_entry:
     mov     0x54c, d1
     mov     0x500b5340, a0
     mov     d0, d2
-    movbu   (data_48587114), d0
+    movbu   (TgPartEditLfoGroupLoad_Table+492), d0
     exthu   d2
     or      0x80, d0
     movbu   d0, (2, a3)
@@ -31039,7 +31039,7 @@ loc_4C035A03:
     call    TgDrumStageStd_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_48587115), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+493), d1
     mov     0x54c, d2
     or      0x80, d1
     movbu   d1, (3, a3)
@@ -31094,7 +31094,7 @@ loc_4C035A82:
     call    TgDrumStageStd_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_48587116), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+494), d1
     mov     0x54c, d2
     or      0x80, d1
     movbu   d1, (4, a3)
@@ -31151,7 +31151,7 @@ loc_4C035B01:
     call    TgDrumStageStd_entry, [d2,d3,a2,a3], 0x24
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_48587117), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+495), d1
     extbu   d3
     or      0x80, d1
     movbu   d1, (5, a3)
@@ -31342,7 +31342,7 @@ TgDrumReqFlagsTable_entry:
     extbu   d2
     mov     d0, d3
     mov     a0, a1
-    mov     TgDrumReqFlagsTable_Table, a0
+    mov     TgPartEditLfoGroupLoad_Table+496, a0
     movbu   (d2, a0), d0
     extbu   d3
     mov     0x80, d1
@@ -31788,7 +31788,7 @@ TgNoteOnTableTone_entry:
     call    TgTableToneStage_entry, [d2,d3,a2,a3], 0x50
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_4858711C), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+500), d1
     mov     d0, d2
     or      0x80, d1
     movbu   d1, (2, a3)
@@ -31831,7 +31831,7 @@ loc_4C0360B8:
     call    TgTableToneStage_entry, [d2,d3,a2,a3], 0x50
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_4858711D), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+501), d1
     exthu   d0
     or      0x80, d1
     movbu   d1, (3, a3)
@@ -32168,7 +32168,7 @@ func_4C03630D_entry:
     call    func_4C036187_entry, [d2,d3,a2,a3], 0x50
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_48587120), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+504), d1
     mov     6, a0
     or      0x80, d1
     movbu   d1, (2, a3)
@@ -32221,7 +32221,7 @@ loc_4C036407:
     call    func_4C036187_entry, [d2,d3,a2,a3], 0x50
     mov     a2, a0
     call    TgVoiceSideSelect_entry, [a2], 0xc
-    movbu   (data_48587121), d1
+    movbu   (TgPartEditLfoGroupLoad_Table+505), d1
     mov     d0, d2
     or      0x80, d1
     movbu   d1, (3, a3)
@@ -34993,7 +34993,7 @@ loc_4C037C4C:
     exthu   d2
     mov     d2, d0
     add     d0, d0
-    mov     Str_empty_1479, a0
+    mov     Str_empty_1480+64, a0
     movhu   (d0, a0), d2
     bra     loc_4C037C78
 loc_4C037C59:
@@ -36213,7 +36213,7 @@ loc_4C0386C0:
     mulu    d0, d3
     add     d3, d2
     mov     d2, a2
-    mov     TgPartElemMapScratchBuild_Table, a1
+    mov     Str_empty_1480+136, a1
     mov     a2, a0
     mov     -0x23, d1
     setlb
@@ -36497,7 +36497,7 @@ TgPartProgramHandlerDispatch:
     cmp     0, d0
     beq     loc_4C038922
     add     8, a0
-    cmp     Str_empty_1477, a0
+    cmp     Str_empty_1478+128, a0
     bcs     loc_4C0388FB
     mov     a1, a0
 loc_4C0388FB:
@@ -36565,7 +36565,7 @@ loc_4C038957:
     blt     loc_4C0389A9
     cmp     0x78, d2
     bgt     loc_4C0389A9
-    mov     Str_empty_1477, a1
+    mov     Str_empty_1478+128, a1
     add     -0x10, d2
     mov     0xf, d0
     and     d2, d0
@@ -37948,7 +37948,7 @@ TgPartToneModUnitBuild:
     add     -0x40, sp
 TgPartToneModUnitBuild_entry:
     mov     d0, d2
-    mov     TgPartToneModUnitBuild_Table, a1
+    mov     Str_empty_1480+172, a1
     mov     sp, a0
     add     0x38, a0
     mov     -8, d1
@@ -38553,7 +38553,7 @@ loc_4C0398F0:
 loc_4C0398F6:
     extbu   d0
     add     d0, d0
-    mov     TgPartToneModParamBuild_Table, a0
+    mov     TgElemNoteOnStd_Table_2+256, a0
     movhu   (d0, a0), d1
     mov     d1, a3
     bra     loc_4C039939
@@ -38634,7 +38634,7 @@ loc_4C039974:
     movhu   (a1), d1
     and     0x0f, d0
     add     d0, d0
-    mov     TgPartModDestApply_Table_2, a0
+    mov     TgPartModDestApply_Table+24, a0
     movhu   (d0, a0), d0
     or      d0, d1
     movhu   d1, (a1)
@@ -39064,7 +39064,7 @@ TgPartToneTypeParamGet_entry:
     mulu    d3, d0
     mov     (0, sp), d3
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     mov     d1, d0
     asl2    d0
     add     d1, d0
@@ -39235,7 +39235,7 @@ loc_4C039DAC:
     nop
     nop
     mulu    d3, d1
-    add     data_486D2986, d1
+    add     TgPartEgRampBuild_Records, d1
     mov     d1, a0
     movbu   (d0, a0), d3
     extbu   d2
@@ -39251,7 +39251,7 @@ loc_4C039E0C:
 loc_4C039E13:
     mov     d2, d0
     asl2    d0
-    mov     TgPartEgRampBuild_Table_2, a0
+    mov     TgPartEgRampBuild_Table+48, a0
     mov     (d0, a0), a0
     jmp     (a0)
     mov     (0x18, sp), a0
@@ -39262,7 +39262,7 @@ loc_4C039E13:
     nop
     nop
     mulu    d2, d1
-    add     data_486D2D0A, d1
+    add     TgPartEgRampBuild_Table_3+816, d1
     add     d0, d0
     mov     d1, a0
     movhu   (d0, a0), d3
@@ -39278,7 +39278,7 @@ loc_4C039E13:
     nop
     nop
     mulu    d2, d1
-    add     data_486D2D0A, d1
+    add     TgPartEgRampBuild_Table_3+816, d1
     add     d0, d0
     mov     d1, a0
     movhu   (d0, a0), d3
@@ -39294,7 +39294,7 @@ loc_4C039E60:
     nop
     nop
     mulu    d2, d0
-    add     data_486D2D0A, d0
+    add     TgPartEgRampBuild_Table_3+816, d0
     add     d1, d1
     mov     d0, a0
     movhu   (d1, a0), d3
@@ -39313,7 +39313,7 @@ loc_4C039E60:
     nop
     nop
     mulu    d2, d1
-    add     data_486D2D0A, d1
+    add     TgPartEgRampBuild_Table_3+816, d1
     add     d0, d0
     mov     d1, a0
     movhu   (d0, a0), d3
@@ -39342,7 +39342,7 @@ loc_4C039EAF:
     nop
     nop
     mulu    d2, d0
-    add     data_486D2986, d0
+    add     TgPartEgRampBuild_Records, d0
     add     d1, d0
     mov     d0, a0
     movbu   (1, a0), d3
@@ -39368,7 +39368,7 @@ loc_4C039EF1:
     nop
     nop
     mulu    d3, d1
-    add     data_486D29DA, d1
+    add     TgPartEgRampBuild_Table_3, d1
     add     d0, d0
     mov     d1, a0
     movhu   (d0, a0), d2
@@ -39385,7 +39385,7 @@ loc_4C039EF1:
     nop
     nop
     mulu    d3, d0
-    add     data_486D29DA, d0
+    add     TgPartEgRampBuild_Table_3, d0
     add     d1, d1
     mov     d0, a0
     movhu   (d1, a0), d2
@@ -39402,7 +39402,7 @@ loc_4C039F3F:
     nop
     nop
     mulu    d1, d3
-    add     data_486D29DA, d3
+    add     TgPartEgRampBuild_Table_3, d3
     add     d0, d0
     mov     d3, a0
     movhu   (d0, a0), d1
@@ -39418,7 +39418,7 @@ loc_4C039F3F:
     nop
     mulu    d1, d0
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     mov     a1, d0
     asl2    d0
     sub     a1, d0
@@ -39430,7 +39430,7 @@ loc_4C039F3F:
     nop
     nop
     mulu    d0, d3
-    add     data_486D29DA, d3
+    add     TgPartEgRampBuild_Table_3, d3
     mov     d3, a0
     movhu   (d1, a0), d0
     mov     d0, a3
@@ -39465,7 +39465,7 @@ loc_4C039F9A:
     nop
     nop
     mulu    d0, d1
-    add     data_486D2986, d1
+    add     TgPartEgRampBuild_Records, d1
     mov     d1, a0
     movbu   (4, a0), d1
     extbu   d2
@@ -39482,7 +39482,7 @@ loc_4C039FE8:
     nop
     nop
     mulu    d2, d1
-    add     data_486D2E3C, d1
+    add     TgPartEgRampBuild_Table_3+1122, d1
     add     d0, d0
     mov     d1, a0
     movhu   (d0, a0), d1
@@ -39492,7 +39492,7 @@ loc_4C03A001:
     nop
     nop
     mulu    d2, d0
-    add     data_486D2ED5, d0
+    add     TgPartEditLfoLoadA_Records, d0
     mov     d0, a0
     movbu   (6, a0), d0
     extbu   d1
@@ -39500,7 +39500,7 @@ loc_4C03A001:
     nop
     nop
     mulu    d2, d1
-    add     data_486D2E3C, d1
+    add     TgPartEgRampBuild_Table_3+1122, d1
     add     d0, d0
     mov     d1, a0
     movhu   (d0, a0), d1
@@ -39540,7 +39540,7 @@ loc_4C03A058:
     nop
     nop
     mulu    d2, d1
-    add     data_486D2986, d1
+    add     TgPartEgRampBuild_Records, d1
     mov     d1, a0
     movbu   (5, a0), d2
     mov     (a1), a0
@@ -39549,7 +39549,7 @@ loc_4C03A058:
     nop
     nop
     mulu    d0, d2
-    add     data_486D29DA, d2
+    add     TgPartEgRampBuild_Table_3, d2
     add     d1, d1
     mov     d2, a0
     movhu   (d1, a0), d0
@@ -39591,7 +39591,7 @@ loc_4C03A0A5:
     mulu    d3, d0
     mov     (0x34, sp), d3
     mov     d0, a0
-    add     data_486D2ED5, a0
+    add     TgPartEditLfoLoadA_Records, a0
     mov     d1, d0
     asl2    d0
     add     d1, d0
@@ -39628,7 +39628,7 @@ loc_4C03A0E2:
     nop
     nop
     mulu    d0, d1
-    add     data_486D2ED5, d1
+    add     TgPartEditLfoLoadA_Records, d1
     mov     d2, d0
     asl2    d0
     add     d2, d0
@@ -39800,7 +39800,7 @@ TgVoiceEgSegParamGet_entry:
     nop
     nop
     mulu    d0, d1
-    add     data_486D2ED5, d1
+    add     TgPartEditLfoLoadA_Records, d1
     mov     d2, d0
     asl2    d0
     add     d2, d0
@@ -39808,7 +39808,7 @@ TgVoiceEgSegParamGet_entry:
     add     d1, a0
     movbu   (0x24, sp), d1
     movbu   (d0, a0), d2
-    mov     TgVoiceEgSegParamGet_Table, a0
+    mov     Str_empty_1480+180, a0
     movbu   (d1, a0), d0
     clr     d3
     and     d0, d2
@@ -39886,7 +39886,7 @@ TgVoiceEgSegFlagTest_entry:
     nop
     nop
     mulu    d1, d0
-    add     data_486D2ED5, d0
+    add     TgPartEditLfoLoadA_Records, d0
     add     0x13, d0
     mov     d0, a0
     movbu   (0x18, sp), d0
@@ -40078,7 +40078,7 @@ loc_4C03A41E:
     cmp     8, d0
     bgt     loc_4C03A457
     asl2    d0
-    mov     TgPartToneModSetupMelodic_Table_2, a0
+    mov     TgPartEgRampBuild_Table+132, a0
     mov     (d0, a0), a0
     jmp     (a0)
     exthu   d2
@@ -40135,7 +40135,7 @@ loc_4C03A48F:
     cmp     8, d0
     bgt     loc_4C03A4C8
     asl2    d0
-    mov     TgPartToneModSetupMelodic_Table, a0
+    mov     TgPartEgRampBuild_Table+96, a0
     mov     (d0, a0), a0
     jmp     (a0)
     exthu   d2
@@ -41296,8 +41296,8 @@ TgVoiceMigrateFind_entry:
     mov     d0, d2
     mov     a0, a3
     inc4    a3
-    mov     TgVoiceMigrateFind_Table, a2
-    movbu   (TgVoiceMigrateFind_Table), d0
+    mov     TgPartGlidePlan_Records+1696, a2
+    movbu   (TgPartGlidePlan_Records+1696), d0
     mov     0xff, d3
     cmp     d3, d0
     beq     loc_4C03ADFD
@@ -41425,7 +41425,7 @@ loc_4C03AE73:
     add     d0, d2
     mov     d2, a0
     movbu   (a0), d0
-    add     Str_D8mH, d3
+    add     TgPartEgRampBuild_Table+168, d3
     mov     d3, a0
     mov     (a0), a1
     mov     (0x30, sp), a0

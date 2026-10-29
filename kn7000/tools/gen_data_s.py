@@ -134,6 +134,8 @@ class Item:
 
 
 class Gen:
+    c_escape = staticmethod(c_escape)
+
     def __init__(self):
         self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=os.path.join(KN7, P["src"], "*.s"),
                           sym_paths=[os.path.join(KN7, f) for f in P["syms"]])
@@ -188,8 +190,11 @@ class Gen:
         for f in glob.glob(os.path.join(KN7, P["src"], "*.s")):
             for line in open(f, encoding="latin-1"):
                 self.code_names.update(nx.findall(line.split("#", 1)[0]))
+        self.fixed_by_code = set()
         for n, a in self.prev_data_label.items():
             if n in self.code_names and not n.startswith(("data_", "ram_")):
+                if a not in self.fixed:
+                    self.fixed_by_code.add(a)
                 self.fixed.setdefault(a, n)
                 self.names.add(n)
         for line in open(os.path.join(KN7, P["prog"])):
@@ -941,6 +946,95 @@ class Gen:
                 s = self.rom[o:e].decode("latin-1")
                 self.str_item(a, "Str_" + (sanitize(s, 40) or "empty"), "string")
 
+    # -- struct arrays, from their readers (tools/data_structs.py) ----------------
+    def is_addr(self, v):
+        """A 32-bit value that is an address a pointer field may hold."""
+        return bool(v) and (self.in_data(v) or v in self.extern or self.in_code(v))
+
+    # A name an earlier generation made up from a guess about the bytes, which a
+    # reader-typed item replaces (the code is regenerated with the new name)
+    GUESSED = re.compile(r"(Str|ptrs|doubles|names|data|tab|recs)_")
+
+    def struct_arrays(self):
+        """Arrays of fixed-size records that the code indexes base + i * stride
+        + field (tools/data_readers.py), typed one macro per record kind with
+        a field per offset its readers use (tools/data_structs.py).  An array
+        whose record is a single number is a table (tab_uN, as reader_tables)."""
+        import data_structs as DS
+        import data_struct_names as DN
+        self.dr = DS.readers(self, os.path.join(KN7, P["labels"]), os.path.join(KN7, P["src"], "*.s"))
+        gs = DS.groups(self.dr)
+        hard = set(self.fixed) - self.fixed_by_code | {g.base for g in gs}
+        self.struct_groups = []
+        for g in sorted(gs, key=lambda g: g.base):
+            a, s = g.base, g.stride
+            if not self.in_data(a) or not self.free(a, s):
+                continue
+            o = self.off(a)
+            probe = DS.layout(g, self, o, 1)
+            ptrf = [f for f in probe if f.kind == "ptr" and f.accs]
+            n = 0
+            while n < 65536:
+                ra, ro = a + n * s, o + n * s
+                if not self.free(ra, s) or (n and any(x in hard for x in range(ra, ra + s))):
+                    break
+                if any(not (v == 0 or self.is_addr(v)) for v in
+                       (int.from_bytes(self.rom[ro + f.off:ro + f.off + 4], "little") for f in ptrf)):
+                    break
+                rest = self.rom[ro:ro + s]
+                if n and len(set(rest)) == 1 and rest[0] == 0xFF:
+                    break
+                n += 1
+            if n < 1:
+                continue
+            g.count = n
+            g.fields = DS.layout(g, self, o, n)
+            nm = self.label_at.get(a) or self.fixed.get(a)
+            if nm and a in self.fixed_by_code and self.GUESSED.match(nm):
+                nm = None
+            fn = next((x.func for _o, x in sorted(g.accs, key=lambda t: (t[1].cpu or 0, t[1].insn)) if x.func), None)
+            fn = re.sub(r"_entry$", "", fn) if fn else None
+            single = len(g.fields) == 1 and g.fields[0].kind in ("num", "ptr") and g.fields[0].width == s
+            base = nm or (f"{fn}_{'Table' if single else 'Records'}" if fn else f"recs_{a:08X}")
+            if a in self.label_at and nm is None:
+                del self.label_at[a]
+            g.label = self.name_at(a, base) if nm is None or a in self.label_at else self.name_at(a, nm)
+            for k in range(n):
+                for f in g.fields:
+                    if f.kind == "ptr":
+                        v = self.m.u32(a + k * s + f.off)
+                        if v and self.in_data(v):
+                            self.refs.add(v)
+            if single:
+                f = g.fields[0]
+                kind = ("s" if f.signed else "u") + str(8 * s)
+                vals = [int.from_bytes(self.rom[o + s * i:o + s * i + s], "little", signed=f.signed) for i in range(n)]
+                rd = sorted({(x.func, x.cpu, x.insn) for _o, x in g.accs if x.width},
+                            key=lambda r: (r[1] or 0, r[0] or "", r[2]))
+                if f.kind == "ptr":
+                    self.add(a, n * s, g.label, "pointer table",
+                             lambda gen, it, vals=vals: [f"{it.label}:"] + [f"\t.long\t{gen.ref(v)}" for v in vals])
+                else:
+                    self.add(a, n * s, g.label, "reader table",
+                             lambda gen, it, vals=vals, kind=kind, rd=rd, s=s: gen.render_table(it, vals, kind, rd, s))
+                continue
+            kind, names = DN.lookup(g.label, s)
+            g.macro = self.uniq(kind or ("REC_" + g.label))
+            DS.name_fields(g, names)
+            self.struct_groups.append(g)
+            self.add(a, n * s, g.label, "struct array",
+                     lambda gen, it, g=g: gen.render_structs(it, g))
+
+    def render_structs(self, it, g):
+        import data_structs as DS
+        o = self.off(it.start)
+        rd = DS.cite([x for _o, x in g.accs], 3)
+        out = [f"{it.label}:\t# {g.count} x {g.macro} ({g.stride} bytes each); read by {rd}"]
+        for k in range(g.count):
+            out.append(DS.record_line(self, g, self.rom, o + k * g.stride)
+                       + (f"\t# [{k}]" if k % 8 == 0 and g.count > 8 else ""))
+        return out
+
     # -- media and compressed streams -----------------------------------------
     def media(self):
         """JPEG and BMP files and zlib streams the region holds whole.  A JPEG
@@ -1425,6 +1519,7 @@ class Gen:
             '.include "src/include/panel_memory.inc"',
             '.include "src/include/kn_panel_extra.inc"',
             '.include "src/include/data_tables.inc"',
+            f'.include "{outdir}/data_structs.inc"',
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
@@ -1455,6 +1550,7 @@ class Gen:
             if fn not in self.media_files:
                 os.remove(os.path.join(md, fn))
         self.write(os.path.join(outdir, "gui_ids.inc"), hdr + self.ids_inc())
+        self.write(os.path.join(outdir, "data_structs.inc"), hdr + self.structs_inc())
         self.write(os.path.join(outdir, "rhythm_macros.inc"), hdr + [
             "# The style-record and event macros of src/ic18/rhythm.s (tools/gen_ic18_rhythm_s.py), copied",
             "# verbatim by tools/gen_data_s.py for the program's own Technics Rhythms resource; do not edit.",
@@ -1565,6 +1661,17 @@ class Gen:
             ".endm",
             ""] + self.macro_lines
 
+    def structs_inc(self):
+        import data_structs as DS
+        out = ["# The record kinds of the data region's struct arrays, GENERATED by tools/gen_data_s.py from",
+               "# their readers (tools/data_readers.py, tools/data_structs.py): one macro per kind, a parameter",
+               "# per field.  Each header lists the fields, their types and the instructions that read them;",
+               "# f<off> / p<off> / s<off> / x<off> are fields named by their offset only (a number, a pointer,",
+               "# text, bytes no reader was seen to touch); tools/data_struct_names.py names the others.", ""]
+        for g in self.struct_groups:
+            out += DS.macro_lines(g)
+        return out
+
     def ids_inc(self):
         m = self.m
         out = ["# The OT-block, title and mode ids, GENERATED by tools/gen_data_s.py from the start-up code's",
@@ -1594,11 +1701,12 @@ class Gen:
         self.rhythm()
         self.media()
         self.code_refs()
-        self.typed_refs()
         self.name_value_tables()
-        self.doubles()
         self.panel_memories()
+        self.struct_arrays()
+        self.typed_refs()
         self.text_runs()
+        self.doubles()
         self.reader_tables()
         self.short_strings()
         self.zlib_kinds()

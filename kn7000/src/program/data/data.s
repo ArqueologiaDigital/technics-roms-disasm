@@ -11,6 +11,7 @@
 .include "src/include/panel_memory.inc"
 .include "src/include/kn_panel_extra.inc"
 .include "src/include/data_tables.inc"
+.include "src/program/data/data_structs.inc"
 .include "src/program/data/rhythm_macros.inc"
 .include "src/program/data/gui_ids.inc"
 .include "src/program/data/gui_classes.inc"
@@ -21,4 +22,5 @@
 .include "src/program/data/data_02.s"
 .include "src/program/data/data_03.s"
 .include "src/program/data/data_04.s"
+.include "src/program/data/data_05.s"
 .org 0x3B8FD1
