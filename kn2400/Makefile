@@ -49,6 +49,14 @@ DATA_DIR := src/program/data
 DATA     := --decode-gaps --text 0x3965b8:0x3965bf --long-table 0x3965bf:0x3965d3 \
             --data-src $(DATA_DIR)/data.s:$(DATA_LO):$(DATA_HI)
 FN_SYM   := $(wildcard $(DATA_DIR)/functions.sym)
+# the MILK ids the data defines (gen_data_s.py gui_code_ids.inc): the code's mov / cmp
+# immediates equal to one are spelled with its name
+IDS      := $(if $(wildcard $(DATA_DIR)/gui_code_ids.inc),--ids $(DATA_DIR)/gui_code_ids.inc)
+# The bitmap resources are indexed PNGs in $(DATA_DIR)/media/ (gen_data_s.py bitmaps());
+# ../kn7000/tools/table_png.py turns them back into the bytes the data .incbins from build/bitmaps/.
+BITMAP_PNGS := $(wildcard $(DATA_DIR)/media/*.png)
+# the KN7000 includes the typed demo songs use (kn_song.inc, panel_memory.inc ...)
+SHARED_INCS := $(wildcard ../kn7000/src/include/*.inc)
 DATA_FILES := $(wildcard $(DATA_DIR)/*.s $(DATA_DIR)/*.inc $(DATA_DIR)/media/*) src/constants.inc
 
 .PHONY: all baserom build verify ported-names verify-kn2600 symbols program-src clean distclean
@@ -81,7 +89,12 @@ baserom/.dir:
 	@mkdir -p baserom && touch $@
 
 # ---- build ---------------------------------------------------------------------
-build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py \
+build/bitmaps/.stamp: $(BITMAP_PNGS) $(TOOLS)/table_png.py
+	@mkdir -p build/bitmaps
+	$(PYTHON) $(TOOLS)/table_png.py build --out-dir build/bitmaps --src-root $(DATA_DIR)/media $(BITMAP_PNGS)
+	@touch $@
+
+build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(SHARED_INCS) build/bitmaps/.stamp $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py \
               baserom/$(ROM)
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@
@@ -114,7 +127,7 @@ program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_p
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base 0x48400000 $(CODE) --reflection-tables $(DATA) \
 	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc \
 	    --labels-inc src/labels.inc --out src/program.s \
-	    --unidasm $(UNIDASM) --stats notes/conversion-stats.txt \
+	    --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(IDS) \
 	    --title 'Technics SX-KN2400 / SX-KN2600 program flash image (update v1.1) - byte-exact.' \
 	    --title 'Panasonic MN10300, linked at 0x48400000. See README.md.'
 

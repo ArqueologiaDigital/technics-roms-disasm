@@ -5335,15 +5335,15 @@ RN_empty_777:	.asciz ""
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0514AE, 0x0514B0
 Str_TT_HDDEXT:	.asciz "TT_HDDEXT"
 	.align	4, 0xFF
-data_978514BC:
+BitmapDirsel_Palette:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0514BC, 0x0518BC
-data_978518BC:
+BitmapDirsel_Pixels:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0518BC, 0x05208C
-data_9785208C:
+BitmapBg001_Palette:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x05208C, 0x0522EB
 	.space	289, 0x00
 .incbin_range "baserom/hdsx3_extapr.rom", 0x05240C, 0x05248C
-data_9785248C:
+BitmapBg001_Pixels:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x05248C, 0x05E340
 
 doubles_9785E340:	# IEEE-754 doubles (lo word, hi word)
@@ -5372,9 +5372,9 @@ doubles_97861A30:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x463E4640, 0x42424642	# 1.08485822e+11
 	.long	0x46424242, 0x42394242	# -4.64119642e-277
 .incbin_range "baserom/hdsx3_extapr.rom", 0x061A50, 0x077C8C
-data_97877C8C:
+BitmapBg002_Palette:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x077C8C, 0x07808C
-data_9787808C:
+BitmapBg002_Pixels:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x07808C, 0x07CFA8
 doubles_9787CFA8:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x24972097, 0x40352825	# 2523806.57
@@ -5386,65 +5386,39 @@ data_9789D88C:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09D88C, 0x09D88E
 
 Str_WSL:	.asciz "WSL."
-Str_TMP:	.asciz "TMP."
-Str_TQS:	.asciz "TQS."
-Str_PMC:	.asciz "PMC."
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8A2, 0x09D8A7
-Str_PSM:	.asciz "PSM."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09D893, 0x09D8AC
 Str_CFE:	.asciz "CFE."
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09D8B1, 0x09D8B6
 Str_VAF:	.asciz "VAF."
-Str_PMH:	.asciz "PMH."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8BB, 0x09D8C0
 Str_TSA:	.asciz "TSA."
 Str_DIM:	.asciz "DIM."
-Str_XLT_3:	.asciz "XLT."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8CA, 0x09D8CF
 Str_FIK:	.asciz "FIK."
-Str_XTT:	.asciz "XTT."
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8D9, 0x09D8F2
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8D4, 0x09D8F2
 Str_QES:	.asciz "QES."
-Str_FQS:	.asciz "FQS."
-Str_XXX_2:	.asciz "XXX."
-Str_XXX_3:	.asciz "XXX."
-Str_XXX_4:	.asciz "XXX."
-Str_XXX_5:	.asciz "XXX."
-Str_XXX_6:	.asciz "XXX."
-Str_XXX_7:	.asciz "XXX."
-Str_XXX_8:	.asciz "XXX."
-Str_XXX_9:	.asciz "XXX."
-Str_XXX_10:	.asciz "XXX."
-Str_XXX_11:	.asciz "XXX."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09D8F7, 0x09D92E
 Str_01_02_03_04_05_06_07_08_09_10_11_12_13_1:	.asciz "01:                   \x0902:                   \x0903:                   \x0904:                   \x0905:                   \x0906:                   \x0907:                   \x0908:                   \x0909:                   \x0910:                   \x0911:                   \x0912:                   \x0913:                   \x0914:                   \x0915:                   \x0916:                   \x0917:                   \x0918:                   \x0919:                   \x0920:                   \x09"
 	.align	4, 0xFF
 Str_empty_487:	.asciz "."
 	.align	4, 0xFF
 Str_XXX:	.asciz "XXX"
 Str_LSW_2:	.asciz ".LSW"
-Str_PMT:	.asciz ".PMT"
-Str_SQT_5:	.asciz ".SQT"
-Str_CMP:	.asciz ".CMP"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB18, 0x09DB1D
-Str_MSP:	.asciz ".MSP"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB09, 0x09DB22
 Str_EFC:	.asciz ".EFC"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09DB27, 0x09DB2C
 Str_FAV_5:	.asciz ".FAV"
-Str_HMP:	.asciz ".HMP"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB31, 0x09DB36
 Str_AST:	.asciz ".AST"
 Str_MID_7:	.asciz ".MID"
-Str_TLX_5:	.asciz ".TLX"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB40, 0x09DB45
 Str_KIF_3:	.asciz ".KIF"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09DB4A, 0x09DB68
 Str_USR:	.asciz ".USR"
-Str_SXD:	.asciz ".SXD"
-Str_SXF:	.asciz ".SXF"
-Str_SXC:	.asciz ".SXC"
-Str_SXY:	.asciz ".SXY"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB6D, 0x09DB81
 Str_SXU:	.asciz ".SXU"
 Str_SEQ_5:	.asciz ".SEQ"
-Str_SQF:	.asciz ".SQF"
-Str_RCM:	.asciz ".RCM"
-Str_TTX_6:	.asciz ".TTX"
-Str_XXX_12:	.asciz ".XXX"
-Str_XXX_13:	.asciz ".XXX"
+.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB8B, 0x09DBA4
 Str_empty_486:	.asciz "            \x09"
 	.align	4, 0xFF
 Str_PCLK:	.asciz "PCLK"
@@ -9721,7 +9695,7 @@ Str_ALPHAB_10:	.asciz "ALPHAB."
 Str_LIST_10:	.asciz "LIST"
 Str_S_OUTPUT_10:	.asciz "S-OUTPUT"
 Str_MIXER_10:	.asciz "MIXER"
-Str_C_L_S_12:	.asciz "C.L.S."
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF510, 0x0AF517
 Str_SETUP_10:	.asciz "SETUP &"
 Str_TOOLS_10:	.asciz "TOOLS"
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF525, 0x0AF558

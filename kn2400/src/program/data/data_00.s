@@ -372,9 +372,7 @@ Str_p_47:	.asciz "\x15 p"
 Str_l_p_2:	.asciz "l p"
 .incbin_range "baserom/kn2400_program.rom", 0x002E84, 0x002E8C
 Str_m_p_2:	.asciz "m p"
-.incbin_range "baserom/kn2400_program.rom", 0x002E90, 0x002E95
-Str_Hn_p:	.asciz "\"@Hn p"
-.incbin_range "baserom/kn2400_program.rom", 0x002E9C, 0x002FBC
+.incbin_range "baserom/kn2400_program.rom", 0x002E90, 0x002FBC
 data_48402FBC:
 .incbin_range "baserom/kn2400_program.rom", 0x002FBC, 0x003008
 data_48403008:
@@ -1998,8 +1996,7 @@ Str_ZZZLKG:	.asciz "ZZZLKG"
 Str_ZZZI:	.asciz "ZZZI"
 	.space	1, 0x4B
 Str_ZZZJ:	.asciz "ZZZJ"
-Str_KZZZLKG:	.asciz "KZZZLKG"
-	.align	4, 0xAA
+.incbin_range "baserom/kn2400_program.rom", 0x00CE3B, 0x00CE44
 data_4840CE44:
 .incbin_range "baserom/kn2400_program.rom", 0x00CE44, 0x00CE5C
 data_4840CE5C:
@@ -2291,8 +2288,9 @@ data_4840E324:
 .incbin_range "baserom/kn2400_program.rom", 0x00E324, 0x00E3A4
 data_4840E3A4:
 .incbin_range "baserom/kn2400_program.rom", 0x00E3A4, 0x00E3E4
-data_4840E3E4:
-.incbin_range "baserom/kn2400_program.rom", 0x00E3E4, 0x00E624
+
+Bitmap_UserBitmapCheck_Pixels:	# 24 x 24, 8 bit(s) a pixel, rows padded to even bytes: the bitmap UserBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_UserBitmapCheck_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_UserBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 24 24) from src/program/data/media/Bitmap_UserBitmapCheck_Pixels.png
 
 Bmp_4840E624:	# a BMP file, 246 bytes, 26 x 46, 1 bpp
 	.incbin	"src/program/data/media/Bmp_4840E624.bmp"
@@ -2440,26 +2438,36 @@ Str_PMEM_2s_d_16s:	.asciz "PMEM:%2s-%d %16s"
 	.align	4, 0xFF
 Str_PMEM_2s_16s:	.asciz "PMEM:%2s-  %16s"
 Str_PMEM_2s:	.asciz "PMEM:%2s-                  "
-.incbin_range "baserom/kn2400_program.rom", 0x00F260, 0x00F2AF
-Str_LEFT_15:	.asciz "LEFT"
-Str_ACP1_3:	.asciz "ACP1"
-Str_ACP2_3:	.asciz "ACP2"
-Str_ACP3_3:	.asciz "ACP3"
-Str_ACP4_3:	.asciz "ACP4"
-Str_ACP5_3:	.asciz "ACP5"
-Str_BASS_17:	.asciz "BASS"
-Str_DRM1_3:	.asciz "DRM1"
-Str_DRM2_3:	.asciz "DRM2"
-Str_CHRD_2:	.asciz "CHRD"
-Str_RTBS:	.asciz "RTBS"
-Str_PADS_18:	.asciz "PADS"
-Str_PADS_19:	.asciz "PADS"
-Str_BPDL:	.asciz "BPDL"
-Str_METR:	.asciz "METR"
-Str_CFDR:	.asciz "CFDR"
-.incbin_range "baserom/kn2400_program.rom", 0x00F2FF, 0x00F307
-Str_CTRL_4:	.asciz "CTRL"
-.incbin_range "baserom/kn2400_program.rom", 0x00F30C, 0x00F314
+
+Text_PT1:	# 9 strings of 3 characters, NUL-terminated
+	.asciz	"PT1"
+	.asciz	"PT2"
+	.asciz	"PT3"
+	.asciz	"PT4"
+	.asciz	"PT5"
+	.asciz	"PT6"
+	.asciz	"PT7"
+	.asciz	"PT8"
+	.asciz	"PT9"
+.incbin_range "baserom/kn2400_program.rom", 0x00F284, 0x00F2AF
+Text_LEFT:	# 16 strings of 4 characters, NUL-terminated
+	.asciz	"LEFT"
+	.asciz	"ACP1"
+	.asciz	"ACP2"
+	.asciz	"ACP3"
+	.asciz	"ACP4"
+	.asciz	"ACP5"
+	.asciz	"BASS"
+	.asciz	"DRM1"
+	.asciz	"DRM2"
+	.asciz	"CHRD"
+	.asciz	"RTBS"
+	.asciz	"PADS"
+	.asciz	"PADS"
+	.asciz	"BPDL"
+	.asciz	"METR"
+	.asciz	"CFDR"
+.incbin_range "baserom/kn2400_program.rom", 0x00F2FF, 0x00F314
 data_4840F314:
 .incbin_range "baserom/kn2400_program.rom", 0x00F314, 0x00F584
 data_4840F584:
@@ -6945,8 +6953,7 @@ Str_slide_bmp:	.asciz "slide.bmp"
 Str_slmove_bmp:	.asciz "slmove.bmp"
 Str_mixctr_bmp:	.asciz "mixctr.bmp"
 Str_mixpoint_bmp:	.asciz "mixpoint.bmp"
-Str_fwd_bmp:	.asciz "fwd.bmp"
-Str_bwd_bmp:	.asciz "bwd.bmp"
+.incbin_range "baserom/kn2400_program.rom", 0x01A604, 0x01A614
 Str_pause_bmp:	.asciz "pause.bmp"
 Str_startstop_bmp:	.asciz "startstop.bmp"
 Str_before_bmp:	.asciz "before.bmp"
@@ -7098,18 +7105,21 @@ Str_Round1_bmp:	.asciz "Round1.bmp"
 Str_Round1_bmp_2:	.asciz "Round1.bmp"
 Str_Round1_bmp_3:	.asciz "Round1.bmp"
 Str_Round1_bmp_4:	.asciz "Round1.bmp"
-Str_Round2a_bmp:	.asciz "Round2a.bmp"
-Str_Round2b_bmp:	.asciz "Round2b.bmp"
-Str_Round2c_bmp:	.asciz "Round2c.bmp"
-Str_Round2d_bmp:	.asciz "Round2d.bmp"
-Str_Round5a_bmp:	.asciz "Round5a.bmp"
-Str_Round5b_bmp:	.asciz "Round5b.bmp"
-Str_Round5c_bmp:	.asciz "Round5c.bmp"
-Str_Round5d_bmp:	.asciz "Round5d.bmp"
-Str_Round9a_bmp:	.asciz "Round9a.bmp"
-Str_Round9b_bmp:	.asciz "Round9b.bmp"
-Str_Round9c_bmp:	.asciz "Round9c.bmp"
-Str_Round9d_bmp:	.asciz "Round9d.bmp"
+
+Text_Round2a_bmp:	# 12 strings of 11 characters, NUL-terminated
+	.asciz	"Round2a.bmp"
+	.asciz	"Round2b.bmp"
+	.asciz	"Round2c.bmp"
+	.asciz	"Round2d.bmp"
+	.asciz	"Round5a.bmp"
+	.asciz	"Round5b.bmp"
+	.asciz	"Round5c.bmp"
+	.asciz	"Round5d.bmp"
+	.asciz	"Round9a.bmp"
+	.asciz	"Round9b.bmp"
+	.asciz	"Round9c.bmp"
+	.asciz	"Round9d.bmp"
+
 Str_Round14a_bmp:	.asciz "Round14a.bmp"
 Str_Round14b_bmp:	.asciz "Round14b.bmp"
 Str_Round14c_bmp:	.asciz "Round14c.bmp"
@@ -7118,18 +7128,21 @@ Str_Round1s_bmp:	.asciz "Round1s.bmp"
 Str_Round1s_bmp_2:	.asciz "Round1s.bmp"
 Str_Round1s_bmp_3:	.asciz "Round1s.bmp"
 Str_Round1s_bmp_4:	.asciz "Round1s.bmp"
-Str_Round2sa_bmp:	.asciz "Round2sa.bmp"
-Str_Round2sb_bmp:	.asciz "Round2sb.bmp"
-Str_Round2sc_bmp:	.asciz "Round2sc.bmp"
-Str_Round2sd_bmp:	.asciz "Round2sd.bmp"
-Str_Round5sa_bmp:	.asciz "Round5sa.bmp"
-Str_Round5sb_bmp:	.asciz "Round5sb.bmp"
-Str_Round5sc_bmp:	.asciz "Round5sc.bmp"
-Str_Round5sd_bmp:	.asciz "Round5sd.bmp"
-Str_Round9sa_bmp:	.asciz "Round9sa.bmp"
-Str_Round9sb_bmp:	.asciz "Round9sb.bmp"
-Str_Round9sc_bmp:	.asciz "Round9sc.bmp"
-Str_Round9sd_bmp:	.asciz "Round9sd.bmp"
+
+Text_Round2sa_bmp:	# 12 strings of 12 characters, NUL-terminated
+	.asciz	"Round2sa.bmp"
+	.asciz	"Round2sb.bmp"
+	.asciz	"Round2sc.bmp"
+	.asciz	"Round2sd.bmp"
+	.asciz	"Round5sa.bmp"
+	.asciz	"Round5sb.bmp"
+	.asciz	"Round5sc.bmp"
+	.asciz	"Round5sd.bmp"
+	.asciz	"Round9sa.bmp"
+	.asciz	"Round9sb.bmp"
+	.asciz	"Round9sc.bmp"
+	.asciz	"Round9sd.bmp"
+
 Str_Round14sa_bmp:	.asciz "Round14sa.bmp"
 Str_Round14sb_bmp:	.asciz "Round14sb.bmp"
 Str_Round14sc_bmp:	.asciz "Round14sc.bmp"
@@ -7144,14 +7157,17 @@ Str_Left16_bmp:	.asciz "Left16.bmp"
 Str_Left24_bmp:	.asciz "Left24.bmp"
 Str_Left32_bmp:	.asciz "Left32.bmp"
 Str_Left48_bmp:	.asciz "Left48.bmp"
-Str_LOnOff16_bmp:	.asciz "LOnOff16.bmp"
-Str_LOnOff24_bmp:	.asciz "LOnOff24.bmp"
-Str_LOnOff32_bmp:	.asciz "LOnOff32.bmp"
-Str_LOnOff48_bmp:	.asciz "LOnOff48.bmp"
-Str_ROnOff16_bmp:	.asciz "ROnOff16.bmp"
-Str_ROnOff24_bmp:	.asciz "ROnOff24.bmp"
-Str_ROnOff32_bmp:	.asciz "ROnOff32.bmp"
-Str_ROnOff48_bmp:	.asciz "ROnOff48.bmp"
+
+Text_LOnOff16_bmp:	# 8 strings of 12 characters, NUL-terminated
+	.asciz	"LOnOff16.bmp"
+	.asciz	"LOnOff24.bmp"
+	.asciz	"LOnOff32.bmp"
+	.asciz	"LOnOff48.bmp"
+	.asciz	"ROnOff16.bmp"
+	.asciz	"ROnOff24.bmp"
+	.asciz	"ROnOff32.bmp"
+	.asciz	"ROnOff48.bmp"
+
 Str_LeftSw_bmp:	.asciz "LeftSw.bmp"
 Str_RightSw_bmp:	.asciz "RightSw.bmp"
 Str_EditA_bmp:	.asciz "EditA.bmp"
@@ -7422,80 +7438,86 @@ Str_i6o_bmp:	.asciz "i6o.bmp"
 Str_i7_bmp:	.asciz "i7.bmp"
 Str_i8_bmp:	.asciz "i8.bmp"
 Str_i9_bmp:	.asciz "i9.bmp"
-Str_i10_bmp:	.asciz "i10.bmp"
-Str_i11_bmp:	.asciz "i11.bmp"
-Str_i12_bmp:	.asciz "i12.bmp"
-Str_i13_bmp:	.asciz "i13.bmp"
-Str_i14_bmp:	.asciz "i14.bmp"
-Str_i15_bmp:	.asciz "i15.bmp"
-Str_i16_bmp:	.asciz "i16.bmp"
-Str_i17_bmp:	.asciz "i17.bmp"
-Str_i18_bmp:	.asciz "i18.bmp"
-Str_i19_bmp:	.asciz "i19.bmp"
-Str_i20_bmp:	.asciz "i20.bmp"
-Str_i21_bmp:	.asciz "i21.bmp"
-Str_i22_bmp:	.asciz "i22.bmp"
-Str_i23_bmp:	.asciz "i23.bmp"
-Str_i24_bmp:	.asciz "i24.bmp"
-Str_i25_bmp:	.asciz "i25.bmp"
-Str_i26_bmp:	.asciz "i26.bmp"
-Str_i27_bmp:	.asciz "i27.bmp"
-Str_i28_bmp:	.asciz "i28.bmp"
-Str_i29_bmp:	.asciz "i29.bmp"
-Str_i30_bmp:	.asciz "i30.bmp"
-Str_i31_bmp:	.asciz "i31.bmp"
-Str_i32_bmp:	.asciz "i32.bmp"
-Str_i33_bmp:	.asciz "i33.bmp"
-Str_i34_bmp:	.asciz "i34.bmp"
-Str_i35_bmp:	.asciz "i35.bmp"
-Str_i36_bmp:	.asciz "i36.bmp"
-Str_i37_bmp:	.asciz "i37.bmp"
-Str_i38_bmp:	.asciz "i38.bmp"
-Str_i39_bmp:	.asciz "i39.bmp"
-Str_i40_bmp:	.asciz "i40.bmp"
-Str_i41_bmp:	.asciz "i41.bmp"
-Str_i42_bmp:	.asciz "i42.bmp"
-Str_i43_bmp:	.asciz "i43.bmp"
-Str_i44_bmp:	.asciz "i44.bmp"
-Str_i45_bmp:	.asciz "i45.bmp"
-Str_i46_bmp:	.asciz "i46.bmp"
-Str_i47_bmp:	.asciz "i47.bmp"
-Str_i48_bmp:	.asciz "i48.bmp"
-Str_i49_bmp:	.asciz "i49.bmp"
-Str_i50_bmp:	.asciz "i50.bmp"
-Str_i51_bmp:	.asciz "i51.bmp"
-Str_i52_bmp:	.asciz "i52.bmp"
-Str_i53_bmp:	.asciz "i53.bmp"
-Str_i54_bmp:	.asciz "i54.bmp"
-Str_i55_bmp:	.asciz "i55.bmp"
-Str_i56_bmp:	.asciz "i56.bmp"
-Str_i57_bmp:	.asciz "i57.bmp"
-Str_i58_bmp:	.asciz "i58.bmp"
-Str_i59_bmp:	.asciz "i59.bmp"
-Str_i60_bmp:	.asciz "i60.bmp"
-Str_i61_bmp:	.asciz "i61.bmp"
-Str_i62_bmp:	.asciz "i62.bmp"
-Str_i63_bmp:	.asciz "i63.bmp"
-Str_i64_bmp:	.asciz "i64.bmp"
-Str_i65_bmp:	.asciz "i65.bmp"
-Str_i66_bmp:	.asciz "i66.bmp"
-Str_i67_bmp:	.asciz "i67.bmp"
-Str_i68_bmp:	.asciz "i68.bmp"
-Str_i69_bmp:	.asciz "i69.bmp"
-Str_i70_bmp:	.asciz "i70.bmp"
-Str_i71_bmp:	.asciz "i71.bmp"
-Str_i72_bmp:	.asciz "i72.bmp"
+
+Text_i10_bmp:	# 63 strings of 7 characters, NUL-terminated
+	.asciz	"i10.bmp"
+	.asciz	"i11.bmp"
+	.asciz	"i12.bmp"
+	.asciz	"i13.bmp"
+	.asciz	"i14.bmp"
+	.asciz	"i15.bmp"
+	.asciz	"i16.bmp"
+	.asciz	"i17.bmp"
+	.asciz	"i18.bmp"
+	.asciz	"i19.bmp"
+	.asciz	"i20.bmp"
+	.asciz	"i21.bmp"
+	.asciz	"i22.bmp"
+	.asciz	"i23.bmp"
+	.asciz	"i24.bmp"
+	.asciz	"i25.bmp"
+	.asciz	"i26.bmp"
+	.asciz	"i27.bmp"
+	.asciz	"i28.bmp"
+	.asciz	"i29.bmp"
+	.asciz	"i30.bmp"
+	.asciz	"i31.bmp"
+	.asciz	"i32.bmp"
+	.asciz	"i33.bmp"
+	.asciz	"i34.bmp"
+	.asciz	"i35.bmp"
+	.asciz	"i36.bmp"
+	.asciz	"i37.bmp"
+	.asciz	"i38.bmp"
+	.asciz	"i39.bmp"
+	.asciz	"i40.bmp"
+	.asciz	"i41.bmp"
+	.asciz	"i42.bmp"
+	.asciz	"i43.bmp"
+	.asciz	"i44.bmp"
+	.asciz	"i45.bmp"
+	.asciz	"i46.bmp"
+	.asciz	"i47.bmp"
+	.asciz	"i48.bmp"
+	.asciz	"i49.bmp"
+	.asciz	"i50.bmp"
+	.asciz	"i51.bmp"
+	.asciz	"i52.bmp"
+	.asciz	"i53.bmp"
+	.asciz	"i54.bmp"
+	.asciz	"i55.bmp"
+	.asciz	"i56.bmp"
+	.asciz	"i57.bmp"
+	.asciz	"i58.bmp"
+	.asciz	"i59.bmp"
+	.asciz	"i60.bmp"
+	.asciz	"i61.bmp"
+	.asciz	"i62.bmp"
+	.asciz	"i63.bmp"
+	.asciz	"i64.bmp"
+	.asciz	"i65.bmp"
+	.asciz	"i66.bmp"
+	.asciz	"i67.bmp"
+	.asciz	"i68.bmp"
+	.asciz	"i69.bmp"
+	.asciz	"i70.bmp"
+	.asciz	"i71.bmp"
+	.asciz	"i72.bmp"
+
 Str_i73o_bmp:	.asciz "i73o.bmp"
 Str_i74o_bmp:	.asciz "i74o.bmp"
-Str_i75_bmp:	.asciz "i75.bmp"
-Str_i76_bmp:	.asciz "i76.bmp"
-Str_i77_bmp:	.asciz "i77.bmp"
-Str_i78_bmp:	.asciz "i78.bmp"
-Str_i79_bmp:	.asciz "i79.bmp"
-Str_i80_bmp:	.asciz "i80.bmp"
-Str_i81_bmp:	.asciz "i81.bmp"
-Str_i82_bmp:	.asciz "i82.bmp"
-Str_i83_bmp:	.asciz "i83.bmp"
+
+Text_i75_bmp:	# 9 strings of 7 characters, NUL-terminated
+	.asciz	"i75.bmp"
+	.asciz	"i76.bmp"
+	.asciz	"i77.bmp"
+	.asciz	"i78.bmp"
+	.asciz	"i79.bmp"
+	.asciz	"i80.bmp"
+	.asciz	"i81.bmp"
+	.asciz	"i82.bmp"
+	.asciz	"i83.bmp"
+
 Str_i84o_bmp:	.asciz "i84o.bmp"
 Str_i85_bmp:	.asciz "i85.bmp"
 Str_i86_bmp:	.asciz "i86.bmp"
@@ -7520,136 +7542,138 @@ Str_i104_bmp:	.asciz "i104.bmp"
 Str_i105_bmp:	.asciz "i105.bmp"
 Str_i106_bmp:	.asciz "i106.bmp"
 Str_i107o_bmp:	.asciz "i107o.bmp"
-Str_i108_bmp:	.asciz "i108.bmp"
-Str_i109_bmp:	.asciz "i109.bmp"
-Str_i110_bmp:	.asciz "i110.bmp"
-Str_i111_bmp:	.asciz "i111.bmp"
-Str_i112_bmp:	.asciz "i112.bmp"
-Str_i113_bmp:	.asciz "i113.bmp"
-Str_i114_bmp:	.asciz "i114.bmp"
-Str_i115_bmp:	.asciz "i115.bmp"
-Str_i116_bmp:	.asciz "i116.bmp"
-Str_i117_bmp:	.asciz "i117.bmp"
-Str_i118_bmp:	.asciz "i118.bmp"
-Str_i119_bmp:	.asciz "i119.bmp"
-Str_i120_bmp:	.asciz "i120.bmp"
-Str_i121_bmp:	.asciz "i121.bmp"
-Str_i122_bmp:	.asciz "i122.bmp"
-Str_i123_bmp:	.asciz "i123.bmp"
-Str_i124_bmp:	.asciz "i124.bmp"
-Str_i125_bmp:	.asciz "i125.bmp"
-Str_i126_bmp:	.asciz "i126.bmp"
-Str_i127_bmp:	.asciz "i127.bmp"
-Str_i128_bmp:	.asciz "i128.bmp"
-Str_i129_bmp:	.asciz "i129.bmp"
-Str_i130_bmp:	.asciz "i130.bmp"
-Str_i131_bmp:	.asciz "i131.bmp"
-Str_i132_bmp:	.asciz "i132.bmp"
-Str_i133_bmp:	.asciz "i133.bmp"
-Str_i134_bmp:	.asciz "i134.bmp"
-Str_i135_bmp:	.asciz "i135.bmp"
-Str_i136_bmp:	.asciz "i136.bmp"
-Str_i137_bmp:	.asciz "i137.bmp"
-Str_i138_bmp:	.asciz "i138.bmp"
-Str_i139_bmp:	.asciz "i139.bmp"
-Str_i140_bmp:	.asciz "i140.bmp"
-Str_i141_bmp:	.asciz "i141.bmp"
-Str_i142_bmp:	.asciz "i142.bmp"
-Str_i143_bmp:	.asciz "i143.bmp"
-Str_i144_bmp:	.asciz "i144.bmp"
-Str_i145_bmp:	.asciz "i145.bmp"
-Str_i146_bmp:	.asciz "i146.bmp"
-Str_i147_bmp:	.asciz "i147.bmp"
-Str_i148_bmp:	.asciz "i148.bmp"
-Str_i149_bmp:	.asciz "i149.bmp"
-Str_i150_bmp:	.asciz "i150.bmp"
-Str_i151_bmp:	.asciz "i151.bmp"
-Str_i152_bmp:	.asciz "i152.bmp"
-Str_i153_bmp:	.asciz "i153.bmp"
-Str_i154_bmp:	.asciz "i154.bmp"
-Str_i155_bmp:	.asciz "i155.bmp"
-Str_i156_bmp:	.asciz "i156.bmp"
-Str_i157_bmp:	.asciz "i157.bmp"
-Str_i158_bmp:	.asciz "i158.bmp"
-Str_i159_bmp:	.asciz "i159.bmp"
-Str_i160_bmp:	.asciz "i160.bmp"
-Str_i161_bmp:	.asciz "i161.bmp"
-Str_i162_bmp:	.asciz "i162.bmp"
-Str_i163_bmp:	.asciz "i163.bmp"
-Str_i164_bmp:	.asciz "i164.bmp"
-Str_i165_bmp:	.asciz "i165.bmp"
-Str_i166_bmp:	.asciz "i166.bmp"
-Str_i167_bmp:	.asciz "i167.bmp"
-Str_i168_bmp:	.asciz "i168.bmp"
-Str_i169_bmp:	.asciz "i169.bmp"
-Str_i170_bmp:	.asciz "i170.bmp"
-Str_i171_bmp:	.asciz "i171.bmp"
-Str_i172_bmp:	.asciz "i172.bmp"
-Str_i173_bmp:	.asciz "i173.bmp"
-Str_i174_bmp:	.asciz "i174.bmp"
-Str_i175_bmp:	.asciz "i175.bmp"
-Str_i176_bmp:	.asciz "i176.bmp"
-Str_i177_bmp:	.asciz "i177.bmp"
-Str_i178_bmp:	.asciz "i178.bmp"
-Str_i179_bmp:	.asciz "i179.bmp"
-Str_i180_bmp:	.asciz "i180.bmp"
-Str_i181_bmp:	.asciz "i181.bmp"
-Str_i182_bmp:	.asciz "i182.bmp"
-Str_i183_bmp:	.asciz "i183.bmp"
-Str_i184_bmp:	.asciz "i184.bmp"
-Str_i185_bmp:	.asciz "i185.bmp"
-Str_i186_bmp:	.asciz "i186.bmp"
-Str_i187_bmp:	.asciz "i187.bmp"
-Str_i188_bmp:	.asciz "i188.bmp"
-Str_i189_bmp:	.asciz "i189.bmp"
-Str_i190_bmp:	.asciz "i190.bmp"
-Str_i191_bmp:	.asciz "i191.bmp"
-Str_i192_bmp:	.asciz "i192.bmp"
-Str_i193_bmp:	.asciz "i193.bmp"
-Str_i194_bmp:	.asciz "i194.bmp"
-Str_i195_bmp:	.asciz "i195.bmp"
-Str_i196_bmp:	.asciz "i196.bmp"
-Str_i197_bmp:	.asciz "i197.bmp"
-Str_i198_bmp:	.asciz "i198.bmp"
-Str_i199_bmp:	.asciz "i199.bmp"
-Str_i200_bmp:	.asciz "i200.bmp"
-Str_i201_bmp:	.asciz "i201.bmp"
-Str_i202_bmp:	.asciz "i202.bmp"
-Str_i203_bmp:	.asciz "i203.bmp"
-Str_i204_bmp:	.asciz "i204.bmp"
-Str_i205_bmp:	.asciz "i205.bmp"
-Str_i206_bmp:	.asciz "i206.bmp"
-Str_i207_bmp:	.asciz "i207.bmp"
-Str_i208_bmp:	.asciz "i208.bmp"
-Str_i209_bmp:	.asciz "i209.bmp"
-Str_i210_bmp:	.asciz "i210.bmp"
-Str_i211_bmp:	.asciz "i211.bmp"
-Str_i212_bmp:	.asciz "i212.bmp"
-Str_i213_bmp:	.asciz "i213.bmp"
-Str_i214_bmp:	.asciz "i214.bmp"
-Str_i215_bmp:	.asciz "i215.bmp"
-Str_i216_bmp:	.asciz "i216.bmp"
-Str_i217_bmp:	.asciz "i217.bmp"
-Str_i218_bmp:	.asciz "i218.bmp"
-Str_i219_bmp:	.asciz "i219.bmp"
-Str_i220_bmp:	.asciz "i220.bmp"
-Str_i221_bmp:	.asciz "i221.bmp"
-Str_i222_bmp:	.asciz "i222.bmp"
-Str_i223_bmp:	.asciz "i223.bmp"
-Str_i224_bmp:	.asciz "i224.bmp"
-Str_i225_bmp:	.asciz "i225.bmp"
-Str_i226_bmp:	.asciz "i226.bmp"
-Str_i227_bmp:	.asciz "i227.bmp"
-Str_i228_bmp:	.asciz "i228.bmp"
-Str_i229_bmp:	.asciz "i229.bmp"
-Str_i230_bmp:	.asciz "i230.bmp"
-Str_i231_bmp:	.asciz "i231.bmp"
-Str_i232_bmp:	.asciz "i232.bmp"
-Str_i233_bmp:	.asciz "i233.bmp"
-Str_i234_bmp:	.asciz "i234.bmp"
-Str_i235_bmp:	.asciz "i235.bmp"
-Str_i236_bmp:	.asciz "i236.bmp"
-Str_i237_bmp:	.asciz "i237.bmp"
+
+Text_i108_bmp:	# 130 strings of 8 characters, NUL-terminated
+	.asciz	"i108.bmp"
+	.asciz	"i109.bmp"
+	.asciz	"i110.bmp"
+	.asciz	"i111.bmp"
+	.asciz	"i112.bmp"
+	.asciz	"i113.bmp"
+	.asciz	"i114.bmp"
+	.asciz	"i115.bmp"
+	.asciz	"i116.bmp"
+	.asciz	"i117.bmp"
+	.asciz	"i118.bmp"
+	.asciz	"i119.bmp"
+	.asciz	"i120.bmp"
+	.asciz	"i121.bmp"
+	.asciz	"i122.bmp"
+	.asciz	"i123.bmp"
+	.asciz	"i124.bmp"
+	.asciz	"i125.bmp"
+	.asciz	"i126.bmp"
+	.asciz	"i127.bmp"
+	.asciz	"i128.bmp"
+	.asciz	"i129.bmp"
+	.asciz	"i130.bmp"
+	.asciz	"i131.bmp"
+	.asciz	"i132.bmp"
+	.asciz	"i133.bmp"
+	.asciz	"i134.bmp"
+	.asciz	"i135.bmp"
+	.asciz	"i136.bmp"
+	.asciz	"i137.bmp"
+	.asciz	"i138.bmp"
+	.asciz	"i139.bmp"
+	.asciz	"i140.bmp"
+	.asciz	"i141.bmp"
+	.asciz	"i142.bmp"
+	.asciz	"i143.bmp"
+	.asciz	"i144.bmp"
+	.asciz	"i145.bmp"
+	.asciz	"i146.bmp"
+	.asciz	"i147.bmp"
+	.asciz	"i148.bmp"
+	.asciz	"i149.bmp"
+	.asciz	"i150.bmp"
+	.asciz	"i151.bmp"
+	.asciz	"i152.bmp"
+	.asciz	"i153.bmp"
+	.asciz	"i154.bmp"
+	.asciz	"i155.bmp"
+	.asciz	"i156.bmp"
+	.asciz	"i157.bmp"
+	.asciz	"i158.bmp"
+	.asciz	"i159.bmp"
+	.asciz	"i160.bmp"
+	.asciz	"i161.bmp"
+	.asciz	"i162.bmp"
+	.asciz	"i163.bmp"
+	.asciz	"i164.bmp"
+	.asciz	"i165.bmp"
+	.asciz	"i166.bmp"
+	.asciz	"i167.bmp"
+	.asciz	"i168.bmp"
+	.asciz	"i169.bmp"
+	.asciz	"i170.bmp"
+	.asciz	"i171.bmp"
+	.asciz	"i172.bmp"
+	.asciz	"i173.bmp"
+	.asciz	"i174.bmp"
+	.asciz	"i175.bmp"
+	.asciz	"i176.bmp"
+	.asciz	"i177.bmp"
+	.asciz	"i178.bmp"
+	.asciz	"i179.bmp"
+	.asciz	"i180.bmp"
+	.asciz	"i181.bmp"
+	.asciz	"i182.bmp"
+	.asciz	"i183.bmp"
+	.asciz	"i184.bmp"
+	.asciz	"i185.bmp"
+	.asciz	"i186.bmp"
+	.asciz	"i187.bmp"
+	.asciz	"i188.bmp"
+	.asciz	"i189.bmp"
+	.asciz	"i190.bmp"
+	.asciz	"i191.bmp"
+	.asciz	"i192.bmp"
+	.asciz	"i193.bmp"
+	.asciz	"i194.bmp"
+	.asciz	"i195.bmp"
+	.asciz	"i196.bmp"
+	.asciz	"i197.bmp"
+	.asciz	"i198.bmp"
+	.asciz	"i199.bmp"
+	.asciz	"i200.bmp"
+	.asciz	"i201.bmp"
+	.asciz	"i202.bmp"
+	.asciz	"i203.bmp"
+	.asciz	"i204.bmp"
+	.asciz	"i205.bmp"
+	.asciz	"i206.bmp"
+	.asciz	"i207.bmp"
+	.asciz	"i208.bmp"
+	.asciz	"i209.bmp"
+	.asciz	"i210.bmp"
+	.asciz	"i211.bmp"
+	.asciz	"i212.bmp"
+	.asciz	"i213.bmp"
+	.asciz	"i214.bmp"
+	.asciz	"i215.bmp"
+	.asciz	"i216.bmp"
+	.asciz	"i217.bmp"
+	.asciz	"i218.bmp"
+	.asciz	"i219.bmp"
+	.asciz	"i220.bmp"
+	.asciz	"i221.bmp"
+	.asciz	"i222.bmp"
+	.asciz	"i223.bmp"
+	.asciz	"i224.bmp"
+	.asciz	"i225.bmp"
+	.asciz	"i226.bmp"
+	.asciz	"i227.bmp"
+	.asciz	"i228.bmp"
+	.asciz	"i229.bmp"
+	.asciz	"i230.bmp"
+	.asciz	"i231.bmp"
+	.asciz	"i232.bmp"
+	.asciz	"i233.bmp"
+	.asciz	"i234.bmp"
+	.asciz	"i235.bmp"
+	.asciz	"i236.bmp"
+	.asciz	"i237.bmp"
 .incbin_range "baserom/kn2400_program.rom", 0x01BB42, 0x01BB44
 data_4841BB44:
 .incbin_range "baserom/kn2400_program.rom", 0x01BB44, 0x01BB58
@@ -7657,6 +7681,7 @@ data_4841BB58:
 .incbin_range "baserom/kn2400_program.rom", 0x01BB58, 0x01BB64
 data_4841BB64:
 .incbin_range "baserom/kn2400_program.rom", 0x01BB64, 0x01BB8C
+
 Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er:	.asciz "WRONG SW NUMBER!Sound Name ErrorSName Error!!\xFF\xFF\xFF\xA0\xAC\xB8\xC4\xD0\xDC\xE8\xF4"
 .incbin_range "baserom/kn2400_program.rom", 0x01BBC5, 0x01BBCC
 data_4841BBCC:
@@ -7702,9 +7727,7 @@ Str_House_Shot:	.asciz "   House Shot   "
 data_4841C6C8:
 .incbin_range "baserom/kn2400_program.rom", 0x01C6C8, 0x01C6CC
 data_4841C6CC:
-.incbin_range "baserom/kn2400_program.rom", 0x01C6CC, 0x01C75A
-Str_d_dPd:	.asciz "d<dPd(\n"
-.incbin_range "baserom/kn2400_program.rom", 0x01C762, 0x01C783
+.incbin_range "baserom/kn2400_program.rom", 0x01C6CC, 0x01C783
 	.space	243, 0x00
 .incbin_range "baserom/kn2400_program.rom", 0x01C876, 0x01C878
 Str_empty_1192:	.asciz ">"
@@ -8917,9 +8940,7 @@ Str_Dry_Wet_8_2:	.asciz "   Dry/Wet 8    "
 Str_Dry_Wet_9_2:	.asciz "   Dry/Wet 9    "
 .incbin_range "baserom/kn2400_program.rom", 0x0361F1, 0x036214
 Str_Dry_Wet_10_2:	.asciz "   Dry/Wet 10   "
-.incbin_range "baserom/kn2400_program.rom", 0x036225, 0x03622D
-Str_bCH:	.asciz "bCH*\""
-.incbin_range "baserom/kn2400_program.rom", 0x036233, 0x036248
+.incbin_range "baserom/kn2400_program.rom", 0x036225, 0x036248
 Str_Dry_Wet_11_2:	.asciz "   Dry/Wet 11   "
 .incbin_range "baserom/kn2400_program.rom", 0x036259, 0x03627C
 Str_Dry_Wet_12_2:	.asciz "   Dry/Wet 12   "
@@ -10721,65 +10742,1949 @@ data_48440854:
 Str_DUMMY_2:	.asciz "DUMMY"
 .incbin_range "baserom/kn2400_program.rom", 0x04086A, 0x040888
 data_48440888:
-.incbin_range "baserom/kn2400_program.rom", 0x040888, 0x0411E0
-Str_1_0k_Hz:	.asciz " 1.0k Hz"
-Str_1_2k_Hz:	.asciz " 1.2k Hz"
-Str_1_6k_Hz:	.asciz " 1.6k Hz"
-Str_2_0k_Hz:	.asciz " 2.0k Hz"
-Str_2_4k_Hz:	.asciz " 2.4k Hz"
-Str_2_8k_Hz:	.asciz " 2.8k Hz"
-Str_3_2k_Hz:	.asciz " 3.2k Hz"
-Str_3_6k_Hz:	.asciz " 3.6k Hz"
-Str_4_0k_Hz:	.asciz " 4.0k Hz"
-Str_4_4k_Hz:	.asciz " 4.4k Hz"
-Str_4_8k_Hz:	.asciz " 4.8k Hz"
-Str_5_2k_Hz:	.asciz " 5.2k Hz"
-Str_5_6k_Hz:	.asciz " 5.6k Hz"
-Str_6_0k_Hz:	.asciz " 6.0k Hz"
-Str_6_4k_Hz:	.asciz " 6.4k Hz"
-Str_6_8k_Hz:	.asciz " 6.8k Hz"
-Str_7_2k_Hz:	.asciz " 7.2k Hz"
-Str_7_6k_Hz:	.asciz " 7.6k Hz"
-Str_8_0k_Hz:	.asciz " 8.0k Hz"
-Str_8_4k_Hz:	.asciz " 8.4k Hz"
-Str_8_8k_Hz:	.asciz " 8.8k Hz"
-Str_9_2k_Hz:	.asciz " 9.2k Hz"
-Str_9_6k_Hz:	.asciz " 9.6k Hz"
-Str_10_0k_Hz:	.asciz "10.0k Hz"
-Str_10_8k_Hz:	.asciz "10.8k Hz"
-Str_11_6k_Hz:	.asciz "11.6k Hz"
-Str_12_4k_Hz:	.asciz "12.4k Hz"
-Str_13_2k_Hz:	.asciz "13.2k Hz"
-Str_14_0k_Hz:	.asciz "14.0k Hz"
-Str_14_8k_Hz:	.asciz "14.8k Hz"
-Str_15_6k_Hz:	.asciz "15.6k Hz"
-Str_16_4k_Hz:	.asciz "16.4k Hz"
-Str_17_2k_Hz:	.asciz "17.2k Hz"
-Str_18_0k_Hz:	.asciz "18.0k Hz"
-Str_18_8k_Hz:	.asciz "18.8k Hz"
-Str_19_6k_Hz:	.asciz "19.6k Hz"
-.incbin_range "baserom/kn2400_program.rom", 0x041324, 0x042134
-Str_SIN_2:	.asciz "  SIN   "
-Str_TRI_2:	.asciz "  TRI   "
-Str_SQU:	.asciz "  SQU   "
-.incbin_range "baserom/kn2400_program.rom", 0x04214F, 0x0421CD
-Str_1k_Hz:	.asciz "   1k Hz"
-Str_1_25k_Hz:	.asciz "1.25k Hz"
-Str_1_6k_Hz_2:	.asciz " 1.6k Hz"
-Str_2k_Hz:	.asciz "   2k Hz"
-Str_2_5k_Hz:	.asciz " 2.5k Hz"
-Str_3_15k_Hz:	.asciz "3.15k Hz"
-Str_4k_Hz:	.asciz "   4k Hz"
-Str_5k_Hz:	.asciz "   5k Hz"
-Str_6_3k_Hz:	.asciz " 6.3k Hz"
-Str_8k_Hz:	.asciz "   8k Hz"
-Str_10k_Hz:	.asciz "  10k Hz"
-Str_12_5k_Hz:	.asciz "12.5k Hz"
-Str_16k_Hz:	.asciz "  16k Hz"
-.incbin_range "baserom/kn2400_program.rom", 0x042242, 0x044CA8
-Str_SLOW_2:	.asciz " SLOW   "
-Str_FAST_2:	.asciz " FAST   "
+.incbin_range "baserom/kn2400_program.rom", 0x040888, 0x040898
+
+Text_0_0_Hz:	# 1938 strings of 8 characters, NUL-terminated
+	.asciz	"  0.0 Hz"
+	.asciz	"  0.1 Hz"
+	.asciz	"  0.2 Hz"
+	.asciz	"  0.3 Hz"
+	.asciz	"  0.4 Hz"
+	.asciz	"  0.5 Hz"
+	.asciz	"  0.6 Hz"
+	.asciz	"  0.7 Hz"
+	.asciz	"  0.8 Hz"
+	.asciz	"  0.9 Hz"
+	.asciz	"  1.0 Hz"
+	.asciz	"  1.1 Hz"
+	.asciz	"  1.2 Hz"
+	.asciz	"  1.3 Hz"
+	.asciz	"  1.4 Hz"
+	.asciz	"  1.5 Hz"
+	.asciz	"  1.6 Hz"
+	.asciz	"  1.7 Hz"
+	.asciz	"  1.8 Hz"
+	.asciz	"  1.9 Hz"
+	.asciz	"  2.0 Hz"
+	.asciz	"  2.2 Hz"
+	.asciz	"  2.4 Hz"
+	.asciz	"  2.6 Hz"
+	.asciz	"  2.8 Hz"
+	.asciz	"  3.0 Hz"
+	.asciz	"  3.2 Hz"
+	.asciz	"  3.4 Hz"
+	.asciz	"  3.6 Hz"
+	.asciz	"  3.8 Hz"
+	.asciz	"  4.0 Hz"
+	.asciz	"  4.2 Hz"
+	.asciz	"  4.4 Hz"
+	.asciz	"  4.6 Hz"
+	.asciz	"  4.8 Hz"
+	.asciz	"  5.0 Hz"
+	.asciz	"  5.2 Hz"
+	.asciz	"  5.4 Hz"
+	.asciz	"  5.6 Hz"
+	.asciz	"  5.8 Hz"
+	.asciz	"  6.0 Hz"
+	.asciz	"  6.2 Hz"
+	.asciz	"  6.4 Hz"
+	.asciz	"  6.6 Hz"
+	.asciz	"  6.8 Hz"
+	.asciz	"  7.0 Hz"
+	.asciz	"  7.2 Hz"
+	.asciz	"  7.4 Hz"
+	.asciz	"  7.6 Hz"
+	.asciz	"  7.8 Hz"
+	.asciz	"  8.0 Hz"
+	.asciz	" 8.55 Hz"
+	.asciz	" 9.10 Hz"
+	.asciz	" 9.65 Hz"
+	.asciz	"10.20 Hz"
+	.asciz	"10.75 Hz"
+	.asciz	"11.30 Hz"
+	.asciz	"11.85 Hz"
+	.asciz	"12.40 Hz"
+	.asciz	"12.95 Hz"
+	.asciz	"13.50 Hz"
+	.asciz	"14.05 Hz"
+	.asciz	"14.60 Hz"
+	.asciz	"15.15 Hz"
+	.asciz	"15.70 Hz"
+	.asciz	"16.25 Hz"
+	.asciz	"16.80 Hz"
+	.asciz	"17.35 Hz"
+	.asciz	"17.90 Hz"
+	.asciz	"18.45 Hz"
+	.asciz	"19.00 Hz"
+	.asciz	"19.55 Hz"
+	.asciz	"20.10 Hz"
+	.asciz	"20.65 Hz"
+	.asciz	"21.20 Hz"
+	.asciz	"21.75 Hz"
+	.asciz	"22.30 Hz"
+	.asciz	"22.85 Hz"
+	.asciz	"23.40 Hz"
+	.asciz	"23.95 Hz"
+	.asciz	"24.50 Hz"
+	.asciz	"25.05 Hz"
+	.asciz	"25.60 Hz"
+	.asciz	"26.15 Hz"
+	.asciz	"26.70 Hz"
+	.asciz	"27.25 Hz"
+	.asciz	"27.80 Hz"
+	.asciz	"28.35 Hz"
+	.asciz	"28.90 Hz"
+	.asciz	"29.45 Hz"
+	.asciz	"30.00 Hz"
+	.asciz	"30.55 Hz"
+	.asciz	"31.10 Hz"
+	.asciz	"31.65 Hz"
+	.asciz	"32.20 Hz"
+	.asciz	"32.75 Hz"
+	.asciz	"33.30 Hz"
+	.asciz	"33.85 Hz"
+	.asciz	"34.40 Hz"
+	.asciz	"34.95 Hz"
+	.asciz	" 0.0  Hz"
+	.asciz	" 0.1  Hz"
+	.asciz	" 0.2  Hz"
+	.asciz	" 0.3  Hz"
+	.asciz	" 0.4  Hz"
+	.asciz	" 0.5  Hz"
+	.asciz	" 0.6  Hz"
+	.asciz	" 0.7  Hz"
+	.asciz	" 0.8  Hz"
+	.asciz	" 0.9  Hz"
+	.asciz	" 1.0  Hz"
+	.asciz	" 1.1  Hz"
+	.asciz	" 1.2  Hz"
+	.asciz	" 1.3  Hz"
+	.asciz	" 1.4  Hz"
+	.asciz	" 1.5  Hz"
+	.asciz	" 1.6  Hz"
+	.asciz	" 1.7  Hz"
+	.asciz	" 1.8  Hz"
+	.asciz	" 1.9  Hz"
+	.asciz	" 2.0  Hz"
+	.asciz	" 2.2  Hz"
+	.asciz	" 2.4  Hz"
+	.asciz	" 2.6  Hz"
+	.asciz	" 2.8  Hz"
+	.asciz	" 3.0  Hz"
+	.asciz	" 3.2  Hz"
+	.asciz	" 3.4  Hz"
+	.asciz	" 3.6  Hz"
+	.asciz	" 3.8  Hz"
+	.asciz	" 4.0  Hz"
+	.asciz	" 4.2  Hz"
+	.asciz	" 4.4  Hz"
+	.asciz	" 4.6  Hz"
+	.asciz	" 4.8  Hz"
+	.asciz	" 5.0  Hz"
+	.asciz	" 5.2  Hz"
+	.asciz	" 5.4  Hz"
+	.asciz	" 5.6  Hz"
+	.asciz	" 5.8  Hz"
+	.asciz	" 6.0  Hz"
+	.asciz	" 6.2  Hz"
+	.asciz	" 6.4  Hz"
+	.asciz	" 6.6  Hz"
+	.asciz	" 6.8  Hz"
+	.asciz	" 7.0  Hz"
+	.asciz	" 7.2  Hz"
+	.asciz	" 7.4  Hz"
+	.asciz	" 7.6  Hz"
+	.asciz	" 7.8  Hz"
+	.asciz	" 8.0  Hz"
+	.asciz	" 8.55 Hz"
+	.asciz	" 9.10 Hz"
+	.asciz	" 9.65 Hz"
+	.asciz	"10.20 Hz"
+	.asciz	"10.75 Hz"
+	.asciz	"11.30 Hz"
+	.asciz	"11.85 Hz"
+	.asciz	"12.40 Hz"
+	.asciz	"12.95 Hz"
+	.asciz	"13.50 Hz"
+	.asciz	"14.05 Hz"
+	.asciz	"14.60 Hz"
+	.asciz	"15.15 Hz"
+	.asciz	"15.70 Hz"
+	.asciz	"16.25 Hz"
+	.asciz	"16.80 Hz"
+	.asciz	"17.35 Hz"
+	.asciz	"17.90 Hz"
+	.asciz	"18.45 Hz"
+	.asciz	"19.00 Hz"
+	.asciz	"19.55 Hz"
+	.asciz	"20.10 Hz"
+	.asciz	"20.65 Hz"
+	.asciz	"21.20 Hz"
+	.asciz	"21.75 Hz"
+	.asciz	"22.30 Hz"
+	.asciz	"22.85 Hz"
+	.asciz	"23.40 Hz"
+	.asciz	"23.95 Hz"
+	.asciz	"24.50 Hz"
+	.asciz	"25.05 Hz"
+	.asciz	"25.60 Hz"
+	.asciz	"26.15 Hz"
+	.asciz	"26.70 Hz"
+	.asciz	"27.25 Hz"
+	.asciz	"27.80 Hz"
+	.asciz	"28.35 Hz"
+	.asciz	"28.90 Hz"
+	.asciz	"29.45 Hz"
+	.asciz	"30.00 Hz"
+	.asciz	"30.55 Hz"
+	.asciz	"31.10 Hz"
+	.asciz	"31.65 Hz"
+	.asciz	"32.20 Hz"
+	.asciz	"32.75 Hz"
+	.asciz	"33.30 Hz"
+	.asciz	"33.85 Hz"
+	.asciz	"34.40 Hz"
+	.asciz	"34.95 Hz"
+	.asciz	"    0 Hz"
+	.asciz	"    1 Hz"
+	.asciz	"    2 Hz"
+	.asciz	"    3 Hz"
+	.asciz	"    4 Hz"
+	.asciz	"    5 Hz"
+	.asciz	"    6 Hz"
+	.asciz	"    7 Hz"
+	.asciz	"    8 Hz"
+	.asciz	"    9 Hz"
+	.asciz	"   10 Hz"
+	.asciz	"   20 Hz"
+	.asciz	"   30 Hz"
+	.asciz	"   40 Hz"
+	.asciz	"   50 Hz"
+	.asciz	"   60 Hz"
+	.asciz	"   70 Hz"
+	.asciz	"   80 Hz"
+	.asciz	"   90 Hz"
+	.asciz	"  100 Hz"
+	.asciz	"  120 Hz"
+	.asciz	"  140 Hz"
+	.asciz	"  160 Hz"
+	.asciz	"  180 Hz"
+	.asciz	"  200 Hz"
+	.asciz	"  220 Hz"
+	.asciz	"  240 Hz"
+	.asciz	"  260 Hz"
+	.asciz	"  280 Hz"
+	.asciz	"  300 Hz"
+	.asciz	"  320 Hz"
+	.asciz	"  340 Hz"
+	.asciz	"  360 Hz"
+	.asciz	"  380 Hz"
+	.asciz	"  400 Hz"
+	.asciz	"  420 Hz"
+	.asciz	"  440 Hz"
+	.asciz	"  460 Hz"
+	.asciz	"  480 Hz"
+	.asciz	"  500 Hz"
+	.asciz	"  520 Hz"
+	.asciz	"  540 Hz"
+	.asciz	"  560 Hz"
+	.asciz	"  580 Hz"
+	.asciz	"  600 Hz"
+	.asciz	"  620 Hz"
+	.asciz	"  640 Hz"
+	.asciz	"  660 Hz"
+	.asciz	"  680 Hz"
+	.asciz	"  700 Hz"
+	.asciz	"  720 Hz"
+	.asciz	"  740 Hz"
+	.asciz	"  760 Hz"
+	.asciz	"  780 Hz"
+	.asciz	"  800 Hz"
+	.asciz	"  820 Hz"
+	.asciz	"  840 Hz"
+	.asciz	"  860 Hz"
+	.asciz	"  880 Hz"
+	.asciz	"  900 Hz"
+	.asciz	"  920 Hz"
+	.asciz	"  940 Hz"
+	.asciz	"  960 Hz"
+	.asciz	"  980 Hz"
+	.asciz	" 1.0k Hz"
+	.asciz	" 1.2k Hz"
+	.asciz	" 1.6k Hz"
+	.asciz	" 2.0k Hz"
+	.asciz	" 2.4k Hz"
+	.asciz	" 2.8k Hz"
+	.asciz	" 3.2k Hz"
+	.asciz	" 3.6k Hz"
+	.asciz	" 4.0k Hz"
+	.asciz	" 4.4k Hz"
+	.asciz	" 4.8k Hz"
+	.asciz	" 5.2k Hz"
+	.asciz	" 5.6k Hz"
+	.asciz	" 6.0k Hz"
+	.asciz	" 6.4k Hz"
+	.asciz	" 6.8k Hz"
+	.asciz	" 7.2k Hz"
+	.asciz	" 7.6k Hz"
+	.asciz	" 8.0k Hz"
+	.asciz	" 8.4k Hz"
+	.asciz	" 8.8k Hz"
+	.asciz	" 9.2k Hz"
+	.asciz	" 9.6k Hz"
+	.asciz	"10.0k Hz"
+	.asciz	"10.8k Hz"
+	.asciz	"11.6k Hz"
+	.asciz	"12.4k Hz"
+	.asciz	"13.2k Hz"
+	.asciz	"14.0k Hz"
+	.asciz	"14.8k Hz"
+	.asciz	"15.6k Hz"
+	.asciz	"16.4k Hz"
+	.asciz	"17.2k Hz"
+	.asciz	"18.0k Hz"
+	.asciz	"18.8k Hz"
+	.asciz	"19.6k Hz"
+	.asciz	"  1.0 s "
+	.asciz	"  1.4 s "
+	.asciz	"  1.8 s "
+	.asciz	"  2.2 s "
+	.asciz	"  2.6 s "
+	.asciz	"  3.0 s "
+	.asciz	"  3.4 s "
+	.asciz	"  3.8 s "
+	.asciz	"  4.2 s "
+	.asciz	"  4.6 s "
+	.asciz	"  5.0 s "
+	.asciz	"  5.4 s "
+	.asciz	"  5.8 s "
+	.asciz	"  6.2 s "
+	.asciz	"  6.6 s "
+	.asciz	"  7.0 s "
+	.asciz	"  7.4 s "
+	.asciz	"  7.8 s "
+	.asciz	"  8.2 s "
+	.asciz	"  8.6 s "
+	.asciz	"  9.0 s "
+	.asciz	"  9.4 s "
+	.asciz	"  9.8 s "
+	.asciz	" 10.2 s "
+	.asciz	" 10.6 s "
+	.asciz	" 11.0 s "
+	.asciz	" 11.4 s "
+	.asciz	" 11.8 s "
+	.asciz	" 12.2 s "
+	.asciz	" 12.6 s "
+	.asciz	" 13.0 s "
+	.asciz	" 13.4 s "
+	.asciz	" 13.8 s "
+	.asciz	" 14.2 s "
+	.asciz	" 14.6 s "
+	.asciz	" 15.0 s "
+	.asciz	" 15.4 s "
+	.asciz	" 15.8 s "
+	.asciz	" 16.2 s "
+	.asciz	" 16.6 s "
+	.asciz	" 17.0 s "
+	.asciz	" 17.4 s "
+	.asciz	" 17.8 s "
+	.asciz	" 18.2 s "
+	.asciz	" 18.6 s "
+	.asciz	" 19.0 s "
+	.asciz	" 19.4 s "
+	.asciz	" 19.8 s "
+	.asciz	" 20.2 s "
+	.asciz	" 20.6 s "
+	.asciz	" 21.0 s "
+	.asciz	" 21.4 s "
+	.asciz	" 21.8 s "
+	.asciz	" 22.2 s "
+	.asciz	" 22.6 s "
+	.asciz	" 23.0 s "
+	.asciz	" 23.4 s "
+	.asciz	" 23.8 s "
+	.asciz	" 24.2 s "
+	.asciz	" 24.6 s "
+	.asciz	" 25.0 s "
+	.asciz	" 25.4 s "
+	.asciz	" 25.8 s "
+	.asciz	" 26.2 s "
+	.asciz	" 26.6 s "
+	.asciz	" 27.0 s "
+	.asciz	" 27.4 s "
+	.asciz	" 27.8 s "
+	.asciz	" 28.2 s "
+	.asciz	" 28.6 s "
+	.asciz	" 29.0 s "
+	.asciz	" 29.4 s "
+	.asciz	" 29.8 s "
+	.asciz	" 30.2 s "
+	.asciz	" 30.6 s "
+	.asciz	" 31.0 s "
+	.asciz	"32.25 s "
+	.asciz	"33.50 s "
+	.asciz	"34.75 s "
+	.asciz	"36.00 s "
+	.asciz	"37.25 s "
+	.asciz	"38.50 s "
+	.asciz	"39.75 s "
+	.asciz	"41.00 s "
+	.asciz	"42.25 s "
+	.asciz	"43.50 s "
+	.asciz	"44.75 s "
+	.asciz	"46.00 s "
+	.asciz	"47.25 s "
+	.asciz	"48.50 s "
+	.asciz	"49.75 s "
+	.asciz	"51.00 s "
+	.asciz	"52.25 s "
+	.asciz	"53.50 s "
+	.asciz	"54.75 s "
+	.asciz	"56.00 s "
+	.asciz	"57.25 s "
+	.asciz	"58.50 s "
+	.asciz	"59.75 s "
+	.asciz	"61.00 s "
+	.asciz	"0.001 s "
+	.asciz	"0.002 s "
+	.asciz	"0.003 s "
+	.asciz	"0.004 s "
+	.asciz	"0.005 s "
+	.asciz	"0.006 s "
+	.asciz	"0.007 s "
+	.asciz	"0.008 s "
+	.asciz	"0.009 s "
+	.asciz	"0.010 s "
+	.asciz	"0.011 s "
+	.asciz	"0.012 s "
+	.asciz	"0.013 s "
+	.asciz	"0.014 s "
+	.asciz	"0.015 s "
+	.asciz	"0.016 s "
+	.asciz	"0.017 s "
+	.asciz	"0.018 s "
+	.asciz	"0.019 s "
+	.asciz	"0.020 s "
+	.asciz	"0.021 s "
+	.asciz	"0.022 s "
+	.asciz	"0.023 s "
+	.asciz	"0.024 s "
+	.asciz	"0.025 s "
+	.asciz	"0.026 s "
+	.asciz	"0.027 s "
+	.asciz	"0.028 s "
+	.asciz	"0.029 s "
+	.asciz	"0.030 s "
+	.asciz	"0.031 s "
+	.asciz	"0.032 s "
+	.asciz	"0.033 s "
+	.asciz	"0.034 s "
+	.asciz	"0.035 s "
+	.asciz	"0.036 s "
+	.asciz	"0.037 s "
+	.asciz	"0.038 s "
+	.asciz	"0.039 s "
+	.asciz	"0.040 s "
+	.asciz	"0.041 s "
+	.asciz	"0.042 s "
+	.asciz	"0.043 s "
+	.asciz	"0.044 s "
+	.asciz	"0.045 s "
+	.asciz	"0.046 s "
+	.asciz	"0.047 s "
+	.asciz	"0.048 s "
+	.asciz	"0.049 s "
+	.asciz	"0.050 s "
+	.asciz	"0.051 s "
+	.asciz	"0.052 s "
+	.asciz	"0.053 s "
+	.asciz	"0.054 s "
+	.asciz	"0.055 s "
+	.asciz	"0.056 s "
+	.asciz	"0.057 s "
+	.asciz	"0.058 s "
+	.asciz	"0.059 s "
+	.asciz	"0.060 s "
+	.asciz	"0.061 s "
+	.asciz	"0.062 s "
+	.asciz	"0.063 s "
+	.asciz	"0.064 s "
+	.asciz	"0.065 s "
+	.asciz	"0.066 s "
+	.asciz	"0.067 s "
+	.asciz	"0.068 s "
+	.asciz	"0.069 s "
+	.asciz	"0.070 s "
+	.asciz	"0.071 s "
+	.asciz	"0.072 s "
+	.asciz	"0.073 s "
+	.asciz	"0.074 s "
+	.asciz	"0.075 s "
+	.asciz	"0.076 s "
+	.asciz	"0.077 s "
+	.asciz	"0.078 s "
+	.asciz	"0.079 s "
+	.asciz	"0.080 s "
+	.asciz	"0.081 s "
+	.asciz	"0.082 s "
+	.asciz	"0.083 s "
+	.asciz	"0.084 s "
+	.asciz	"0.085 s "
+	.asciz	"0.086 s "
+	.asciz	"0.087 s "
+	.asciz	"0.088 s "
+	.asciz	"0.089 s "
+	.asciz	"0.090 s "
+	.asciz	"0.091 s "
+	.asciz	"0.092 s "
+	.asciz	"0.093 s "
+	.asciz	"0.094 s "
+	.asciz	"0.095 s "
+	.asciz	"0.096 s "
+	.asciz	"0.097 s "
+	.asciz	"0.098 s "
+	.asciz	"0.099 s "
+	.asciz	"0.100 s "
+	.asciz	"  0.2 s "
+	.asciz	"  0.4 s "
+	.asciz	"  0.6 s "
+	.asciz	"  0.8 s "
+	.asciz	"  1.0 s "
+	.asciz	"  1.2 s "
+	.asciz	"  1.4 s "
+	.asciz	"  1.6 s "
+	.asciz	"  1.8 s "
+	.asciz	"  2.0 s "
+	.asciz	"  2.2 s "
+	.asciz	"  2.4 s "
+	.asciz	"  2.6 s "
+	.asciz	"  2.8 s "
+	.asciz	"  3.0 s "
+	.asciz	"  3.2 s "
+	.asciz	"  3.4 s "
+	.asciz	"  3.6 s "
+	.asciz	"  3.8 s "
+	.asciz	"  4.0 s "
+	.asciz	"  4.2 s "
+	.asciz	"  4.4 s "
+	.asciz	"  4.6 s "
+	.asciz	"  4.8 s "
+	.asciz	"  5.0 s "
+	.asciz	"  5.2 s "
+	.asciz	"  5.4 s "
+	.asciz	"  5.6 s "
+	.asciz	"  5.8 s "
+	.asciz	"  6.0 s "
+	.asciz	"  6.2 s "
+	.asciz	"  6.4 s "
+	.asciz	"  6.6 s "
+	.asciz	"  6.8 s "
+	.asciz	"  7.0 s "
+	.asciz	"  7.2 s "
+	.asciz	"  7.4 s "
+	.asciz	"  7.6 s "
+	.asciz	"  7.8 s "
+	.asciz	"  8.0 s "
+	.asciz	"  8.2 s "
+	.asciz	"  8.4 s "
+	.asciz	"  8.6 s "
+	.asciz	"  8.8 s "
+	.asciz	"  9.0 s "
+	.asciz	"  9.2 s "
+	.asciz	"  9.4 s "
+	.asciz	"  9.6 s "
+	.asciz	"  9.8 s "
+	.asciz	" 10.0 s "
+	.asciz	" 10.2 s "
+	.asciz	" 10.4 s "
+	.asciz	" 10.6 s "
+	.asciz	" 10.8 s "
+	.asciz	" 11.0 s "
+	.asciz	" 11.2 s "
+	.asciz	" 11.4 s "
+	.asciz	" 11.6 s "
+	.asciz	" 11.8 s "
+	.asciz	" 12.0 s "
+	.asciz	" 12.2 s "
+	.asciz	" 12.4 s "
+	.asciz	" 12.6 s "
+	.asciz	" 12.8 s "
+	.asciz	" 13.0 s "
+	.asciz	" 13.2 s "
+	.asciz	" 13.4 s "
+	.asciz	" 13.6 s "
+	.asciz	" 13.8 s "
+	.asciz	" 14.0 s "
+	.asciz	" 14.2 s "
+	.asciz	" 14.4 s "
+	.asciz	" 14.6 s "
+	.asciz	" 14.8 s "
+	.asciz	" 15.0 s "
+	.asciz	" 15.2 s "
+	.asciz	" 15.4 s "
+	.asciz	" 15.6 s "
+	.asciz	" 15.8 s "
+	.asciz	" 16.0 s "
+	.asciz	" 16.2 s "
+	.asciz	" 16.4 s "
+	.asciz	" 16.6 s "
+	.asciz	" 16.8 s "
+	.asciz	" 17.0 s "
+	.asciz	" 17.2 s "
+	.asciz	" 17.4 s "
+	.asciz	" 17.6 s "
+	.asciz	" 17.8 s "
+	.asciz	" 18.0 s "
+	.asciz	" 18.2 s "
+	.asciz	" 18.4 s "
+	.asciz	" 18.6 s "
+	.asciz	" 18.8 s "
+	.asciz	" 19.0 s "
+	.asciz	" 19.2 s "
+	.asciz	" 19.4 s "
+	.asciz	" 19.6 s "
+	.asciz	" 19.8 s "
+	.asciz	" 20.0 s "
+	.asciz	"   10 ms"
+	.asciz	"   12 ms"
+	.asciz	"   14 ms"
+	.asciz	"   16 ms"
+	.asciz	"   18 ms"
+	.asciz	"   20 ms"
+	.asciz	"   22 ms"
+	.asciz	"   24 ms"
+	.asciz	"   26 ms"
+	.asciz	"   28 ms"
+	.asciz	"   30 ms"
+	.asciz	"   32 ms"
+	.asciz	"   34 ms"
+	.asciz	"   36 ms"
+	.asciz	"   38 ms"
+	.asciz	"   40 ms"
+	.asciz	"   42 ms"
+	.asciz	"   44 ms"
+	.asciz	"   46 ms"
+	.asciz	"   48 ms"
+	.asciz	"   50 ms"
+	.asciz	"   55 ms"
+	.asciz	"   60 ms"
+	.asciz	"   65 ms"
+	.asciz	"   70 ms"
+	.asciz	"   75 ms"
+	.asciz	"   80 ms"
+	.asciz	"   85 ms"
+	.asciz	"   90 ms"
+	.asciz	"   95 ms"
+	.asciz	"  100 ms"
+	.asciz	"  110 ms"
+	.asciz	"  120 ms"
+	.asciz	"  130 ms"
+	.asciz	"  140 ms"
+	.asciz	"  150 ms"
+	.asciz	"  160 ms"
+	.asciz	"  170 ms"
+	.asciz	"  180 ms"
+	.asciz	"  190 ms"
+	.asciz	"  200 ms"
+	.asciz	"  210 ms"
+	.asciz	"  220 ms"
+	.asciz	"  230 ms"
+	.asciz	"  240 ms"
+	.asciz	"  250 ms"
+	.asciz	"  260 ms"
+	.asciz	"  270 ms"
+	.asciz	"  280 ms"
+	.asciz	"  290 ms"
+	.asciz	"  300 ms"
+	.asciz	"  310 ms"
+	.asciz	"  320 ms"
+	.asciz	"  330 ms"
+	.asciz	"  340 ms"
+	.asciz	"  350 ms"
+	.asciz	"  360 ms"
+	.asciz	"  370 ms"
+	.asciz	"  380 ms"
+	.asciz	"  390 ms"
+	.asciz	"  400 ms"
+	.asciz	"  410 ms"
+	.asciz	"  420 ms"
+	.asciz	"  430 ms"
+	.asciz	"  440 ms"
+	.asciz	"  450 ms"
+	.asciz	"  460 ms"
+	.asciz	"  470 ms"
+	.asciz	"  480 ms"
+	.asciz	"  490 ms"
+	.asciz	"  500 ms"
+	.asciz	"  550 ms"
+	.asciz	"  600 ms"
+	.asciz	"  650 ms"
+	.asciz	"  700 ms"
+	.asciz	"  750 ms"
+	.asciz	"  800 ms"
+	.asciz	"  850 ms"
+	.asciz	"  900 ms"
+	.asciz	"  950 ms"
+	.asciz	" 1000 ms"
+	.asciz	" 1100 ms"
+	.asciz	" 1200 ms"
+	.asciz	" 1300 ms"
+	.asciz	" 1400 ms"
+	.asciz	" 1500 ms"
+	.asciz	" 1600 ms"
+	.asciz	" 1700 ms"
+	.asciz	" 1800 ms"
+	.asciz	" 1900 ms"
+	.asciz	" 2000 ms"
+	.asciz	" 2100 ms"
+	.asciz	" 2200 ms"
+	.asciz	" 2300 ms"
+	.asciz	" 2400 ms"
+	.asciz	" 2500 ms"
+	.asciz	" 2600 ms"
+	.asciz	" 2700 ms"
+	.asciz	" 2800 ms"
+	.asciz	" 2900 ms"
+	.asciz	"  SIN   "
+	.asciz	"  TRI   "
+	.asciz	"  SQU   "
+	.asciz	"   40 Hz"
+	.asciz	"   50 Hz"
+	.asciz	"   63 Hz"
+	.asciz	"   80 Hz"
+	.asciz	"  100 Hz"
+	.asciz	"  125 Hz"
+	.asciz	"  160 Hz"
+	.asciz	"  200 Hz"
+	.asciz	"  250 Hz"
+	.asciz	"  315 Hz"
+	.asciz	"  400 Hz"
+	.asciz	"  500 Hz"
+	.asciz	"  630 Hz"
+	.asciz	"  800 Hz"
+	.asciz	"   1k Hz"
+	.asciz	"1.25k Hz"
+	.asciz	" 1.6k Hz"
+	.asciz	"   2k Hz"
+	.asciz	" 2.5k Hz"
+	.asciz	"3.15k Hz"
+	.asciz	"   4k Hz"
+	.asciz	"   5k Hz"
+	.asciz	" 6.3k Hz"
+	.asciz	"   8k Hz"
+	.asciz	"  10k Hz"
+	.asciz	"12.5k Hz"
+	.asciz	"  16k Hz"
+	.asciz	"  0.1   "
+	.asciz	"  0.2   "
+	.asciz	"  0.3   "
+	.asciz	"  0.4   "
+	.asciz	"  0.5   "
+	.asciz	"  0.6   "
+	.asciz	"  0.7   "
+	.asciz	"  0.8   "
+	.asciz	"  0.9   "
+	.asciz	"  1.0   "
+	.asciz	"  1.5   "
+	.asciz	"  2.0   "
+	.asciz	"  2.5   "
+	.asciz	"  3.0   "
+	.asciz	"  3.5   "
+	.asciz	"  4.0   "
+	.asciz	"  5.0   "
+	.asciz	"  6.0   "
+	.asciz	"  7.0   "
+	.asciz	"  8.0   "
+	.asciz	"  9.0   "
+	.asciz	" 10.0   "
+	.asciz	" 11.0   "
+	.asciz	" 12.0   "
+	.asciz	" 13.0   "
+	.asciz	" 14.0   "
+	.asciz	" 15.0   "
+	.asciz	" 16.0   "
+	.asciz	" 17.0   "
+	.asciz	" 18.0   "
+	.asciz	" 19.0   "
+	.asciz	" 20.0   "
+	.asciz	"-12.0 dB"
+	.asciz	"-11.5 dB"
+	.asciz	"-11.0 dB"
+	.asciz	"-10.5 dB"
+	.asciz	"-10.0 dB"
+	.asciz	"- 9.5 dB"
+	.asciz	"- 9.0 dB"
+	.asciz	"- 8.5 dB"
+	.asciz	"- 8.0 dB"
+	.asciz	"- 7.5 dB"
+	.asciz	"- 7.0 dB"
+	.asciz	"- 6.5 dB"
+	.asciz	"- 6.0 dB"
+	.asciz	"- 5.5 dB"
+	.asciz	"- 5.0 dB"
+	.asciz	"- 4.5 dB"
+	.asciz	"- 4.0 dB"
+	.asciz	"- 3.5 dB"
+	.asciz	"- 3.0 dB"
+	.asciz	"- 2.5 dB"
+	.asciz	"- 2.0 dB"
+	.asciz	"- 1.5 dB"
+	.asciz	"- 1.0 dB"
+	.asciz	"- 0.5 dB"
+	.asciz	"  0.0 dB"
+	.asciz	"+ 0.5 dB"
+	.asciz	"+ 1.0 dB"
+	.asciz	"+ 1.5 dB"
+	.asciz	"+ 2.0 dB"
+	.asciz	"+ 2.5 dB"
+	.asciz	"+ 3.0 dB"
+	.asciz	"+ 3.5 dB"
+	.asciz	"+ 4.0 dB"
+	.asciz	"+ 4.5 dB"
+	.asciz	"+ 5.0 dB"
+	.asciz	"+ 5.5 dB"
+	.asciz	"+ 6.0 dB"
+	.asciz	"+ 6.5 dB"
+	.asciz	"+ 7.0 dB"
+	.asciz	"+ 7.5 dB"
+	.asciz	"+ 8.0 dB"
+	.asciz	"+ 8.5 dB"
+	.asciz	"+ 9.0 dB"
+	.asciz	"+ 9.5 dB"
+	.asciz	"+10.0 dB"
+	.asciz	"+10.5 dB"
+	.asciz	"+11.0 dB"
+	.asciz	"+11.5 dB"
+	.asciz	"+12.0 dB"
+	.asciz	" 0.10 s "
+	.asciz	" 0.12 s "
+	.asciz	" 0.14 s "
+	.asciz	" 0.16 s "
+	.asciz	" 0.18 s "
+	.asciz	" 0.20 s "
+	.asciz	" 0.22 s "
+	.asciz	" 0.24 s "
+	.asciz	" 0.26 s "
+	.asciz	" 0.28 s "
+	.asciz	" 0.30 s "
+	.asciz	" 0.32 s "
+	.asciz	" 0.34 s "
+	.asciz	" 0.36 s "
+	.asciz	" 0.38 s "
+	.asciz	" 0.40 s "
+	.asciz	" 0.45 s "
+	.asciz	" 0.50 s "
+	.asciz	" 0.55 s "
+	.asciz	" 0.60 s "
+	.asciz	" 0.65 s "
+	.asciz	" 0.70 s "
+	.asciz	" 0.75 s "
+	.asciz	" 0.80 s "
+	.asciz	" 0.90 s "
+	.asciz	" 1.00 s "
+	.asciz	" 1.10 s "
+	.asciz	" 1.20 s "
+	.asciz	" 1.30 s "
+	.asciz	" 1.40 s "
+	.asciz	" 1.50 s "
+	.asciz	" 1.60 s "
+	.asciz	" 1.70 s "
+	.asciz	" 1.80 s "
+	.asciz	" 1.90 s "
+	.asciz	" 2.00 s "
+	.asciz	" 2.10 s "
+	.asciz	" 2.20 s "
+	.asciz	" 2.30 s "
+	.asciz	" 2.40 s "
+	.asciz	" 2.50 s "
+	.asciz	" 2.60 s "
+	.asciz	" 2.70 s "
+	.asciz	" 2.80 s "
+	.asciz	" 2.90 s "
+	.asciz	" 3.00 s "
+	.asciz	" 3.10 s "
+	.asciz	" 3.20 s "
+	.asciz	" 3.30 s "
+	.asciz	" 3.40 s "
+	.asciz	" 3.50 s "
+	.asciz	" 3.60 s "
+	.asciz	" 3.70 s "
+	.asciz	" 3.80 s "
+	.asciz	" 3.90 s "
+	.asciz	" 4.00 s "
+	.asciz	" 4.20 s "
+	.asciz	" 4.40 s "
+	.asciz	" 4.60 s "
+	.asciz	" 4.80 s "
+	.asciz	" 5.00 s "
+	.asciz	" 5.20 s "
+	.asciz	" 5.40 s "
+	.asciz	" 5.60 s "
+	.asciz	" 5.80 s "
+	.asciz	" 6.00 s "
+	.asciz	" 6.20 s "
+	.asciz	" 6.40 s "
+	.asciz	" 6.60 s "
+	.asciz	" 6.80 s "
+	.asciz	" 7.00 s "
+	.asciz	" 7.20 s "
+	.asciz	" 7.40 s "
+	.asciz	" 7.60 s "
+	.asciz	" 7.80 s "
+	.asciz	" 8.00 s "
+	.asciz	" 9.00 s "
+	.asciz	"10.00 s "
+	.asciz	"11.00 s "
+	.asciz	"12.00 s "
+	.asciz	"13.00 s "
+	.asciz	"14.00 s "
+	.asciz	"15.00 s "
+	.asciz	"16.00 s "
+	.asciz	"17.00 s "
+	.asciz	"18.00 s "
+	.asciz	"19.00 s "
+	.asciz	"20.00 s "
+	.asciz	"21.00 s "
+	.asciz	"22.00 s "
+	.asciz	"23.00 s "
+	.asciz	"24.00 s "
+	.asciz	"25.00 s "
+	.asciz	"26.00 s "
+	.asciz	"27.00 s "
+	.asciz	"28.00 s "
+	.asciz	"29.00 s "
+	.asciz	"30.00 s "
+	.asciz	"  .   s "
+	.asciz	"  .   s "
+	.asciz	"-24.0 dB"
+	.asciz	"-23.0 dB"
+	.asciz	"-22.0 dB"
+	.asciz	"-21.0 dB"
+	.asciz	"-20.0 dB"
+	.asciz	"-19.0 dB"
+	.asciz	"-18.0 dB"
+	.asciz	"-17.0 dB"
+	.asciz	"-16.0 dB"
+	.asciz	"-15.0 dB"
+	.asciz	"-14.0 dB"
+	.asciz	"-13.0 dB"
+	.asciz	"-12.0 dB"
+	.asciz	"-11.0 dB"
+	.asciz	"-10.0 dB"
+	.asciz	"- 9.0 dB"
+	.asciz	"- 8.0 dB"
+	.asciz	"- 7.0 dB"
+	.asciz	"- 6.0 dB"
+	.asciz	"- 5.0 dB"
+	.asciz	"- 4.0 dB"
+	.asciz	"- 3.0 dB"
+	.asciz	"- 2.0 dB"
+	.asciz	"- 1.0 dB"
+	.asciz	"  0.0 dB"
+	.asciz	"    0 ms"
+	.asciz	"    1 ms"
+	.asciz	"    2 ms"
+	.asciz	"    3 ms"
+	.asciz	"    4 ms"
+	.asciz	"    5 ms"
+	.asciz	"    6 ms"
+	.asciz	"    7 ms"
+	.asciz	"    8 ms"
+	.asciz	"    9 ms"
+	.asciz	"   10 ms"
+	.asciz	"   11 ms"
+	.asciz	"   12 ms"
+	.asciz	"   13 ms"
+	.asciz	"   14 ms"
+	.asciz	"   15 ms"
+	.asciz	"   16 ms"
+	.asciz	"   17 ms"
+	.asciz	"   18 ms"
+	.asciz	"   19 ms"
+	.asciz	"   20 ms"
+	.asciz	"   21 ms"
+	.asciz	"   22 ms"
+	.asciz	"   23 ms"
+	.asciz	"   24 ms"
+	.asciz	"   25 ms"
+	.asciz	"   26 ms"
+	.asciz	"   27 ms"
+	.asciz	"   28 ms"
+	.asciz	"   29 ms"
+	.asciz	"   30 ms"
+	.asciz	"   31 ms"
+	.asciz	"   32 ms"
+	.asciz	"   33 ms"
+	.asciz	"   34 ms"
+	.asciz	"   35 ms"
+	.asciz	"   36 ms"
+	.asciz	"   37 ms"
+	.asciz	"   38 ms"
+	.asciz	"   39 ms"
+	.asciz	"   40 ms"
+	.asciz	"   41 ms"
+	.asciz	"   42 ms"
+	.asciz	"   43 ms"
+	.asciz	"   44 ms"
+	.asciz	"   45 ms"
+	.asciz	"   46 ms"
+	.asciz	"   47 ms"
+	.asciz	"   48 ms"
+	.asciz	"   49 ms"
+	.asciz	"   50 ms"
+	.asciz	"   51 ms"
+	.asciz	"   52 ms"
+	.asciz	"   53 ms"
+	.asciz	"   54 ms"
+	.asciz	"   55 ms"
+	.asciz	"   56 ms"
+	.asciz	"   57 ms"
+	.asciz	"   58 ms"
+	.asciz	"   59 ms"
+	.asciz	"   60 ms"
+	.asciz	"   61 ms"
+	.asciz	"   62 ms"
+	.asciz	"   63 ms"
+	.asciz	"   64 ms"
+	.asciz	"   65 ms"
+	.asciz	"   66 ms"
+	.asciz	"   67 ms"
+	.asciz	"   68 ms"
+	.asciz	"   69 ms"
+	.asciz	"   70 ms"
+	.asciz	"   71 ms"
+	.asciz	"   72 ms"
+	.asciz	"   73 ms"
+	.asciz	"   74 ms"
+	.asciz	"   75 ms"
+	.asciz	"   76 ms"
+	.asciz	"   77 ms"
+	.asciz	"   78 ms"
+	.asciz	"   79 ms"
+	.asciz	"   80 ms"
+	.asciz	"   81 ms"
+	.asciz	"   82 ms"
+	.asciz	"   83 ms"
+	.asciz	"   84 ms"
+	.asciz	"   85 ms"
+	.asciz	"   86 ms"
+	.asciz	"   87 ms"
+	.asciz	"   88 ms"
+	.asciz	"   89 ms"
+	.asciz	"   90 ms"
+	.asciz	"   91 ms"
+	.asciz	"   92 ms"
+	.asciz	"   93 ms"
+	.asciz	"   94 ms"
+	.asciz	"   95 ms"
+	.asciz	"   96 ms"
+	.asciz	"   97 ms"
+	.asciz	"   98 ms"
+	.asciz	"   99 ms"
+	.asciz	"  100 ms"
+	.asciz	"  101 ms"
+	.asciz	"  102 ms"
+	.asciz	"  103 ms"
+	.asciz	"  104 ms"
+	.asciz	"  105 ms"
+	.asciz	"  106 ms"
+	.asciz	"  107 ms"
+	.asciz	"  108 ms"
+	.asciz	"  109 ms"
+	.asciz	"  110 ms"
+	.asciz	"  111 ms"
+	.asciz	"  112 ms"
+	.asciz	"  113 ms"
+	.asciz	"  114 ms"
+	.asciz	"  115 ms"
+	.asciz	"  116 ms"
+	.asciz	"  117 ms"
+	.asciz	"  118 ms"
+	.asciz	"  119 ms"
+	.asciz	"  120 ms"
+	.asciz	"  121 ms"
+	.asciz	"  122 ms"
+	.asciz	"  123 ms"
+	.asciz	"  124 ms"
+	.asciz	"  125 ms"
+	.asciz	"  126 ms"
+	.asciz	"  127 ms"
+	.asciz	"  128 ms"
+	.asciz	"  129 ms"
+	.asciz	"  130 ms"
+	.asciz	"  131 ms"
+	.asciz	"  132 ms"
+	.asciz	"  133 ms"
+	.asciz	"  134 ms"
+	.asciz	"  135 ms"
+	.asciz	"  136 ms"
+	.asciz	"  137 ms"
+	.asciz	"  138 ms"
+	.asciz	"  139 ms"
+	.asciz	"  140 ms"
+	.asciz	"  141 ms"
+	.asciz	"  142 ms"
+	.asciz	"  143 ms"
+	.asciz	"  144 ms"
+	.asciz	"  145 ms"
+	.asciz	"  146 ms"
+	.asciz	"  147 ms"
+	.asciz	"  148 ms"
+	.asciz	"  149 ms"
+	.asciz	"  150 ms"
+	.asciz	"  151 ms"
+	.asciz	"  152 ms"
+	.asciz	"  153 ms"
+	.asciz	"  154 ms"
+	.asciz	"  155 ms"
+	.asciz	"  156 ms"
+	.asciz	"  157 ms"
+	.asciz	"  158 ms"
+	.asciz	"  159 ms"
+	.asciz	"  160 ms"
+	.asciz	"  161 ms"
+	.asciz	"  162 ms"
+	.asciz	"  163 ms"
+	.asciz	"  164 ms"
+	.asciz	"  165 ms"
+	.asciz	"  166 ms"
+	.asciz	"  167 ms"
+	.asciz	"  168 ms"
+	.asciz	"  169 ms"
+	.asciz	"  170 ms"
+	.asciz	"  171 ms"
+	.asciz	"  172 ms"
+	.asciz	"  173 ms"
+	.asciz	"  174 ms"
+	.asciz	"  175 ms"
+	.asciz	"  176 ms"
+	.asciz	"  177 ms"
+	.asciz	"  178 ms"
+	.asciz	"  179 ms"
+	.asciz	"  180 ms"
+	.asciz	"  181 ms"
+	.asciz	"  182 ms"
+	.asciz	"  183 ms"
+	.asciz	"  184 ms"
+	.asciz	"  185 ms"
+	.asciz	"  186 ms"
+	.asciz	"  187 ms"
+	.asciz	"  188 ms"
+	.asciz	"  189 ms"
+	.asciz	"  190 ms"
+	.asciz	"  191 ms"
+	.asciz	"  192 ms"
+	.asciz	"  193 ms"
+	.asciz	"  194 ms"
+	.asciz	"  195 ms"
+	.asciz	"  196 ms"
+	.asciz	"  197 ms"
+	.asciz	"  198 ms"
+	.asciz	"  199 ms"
+	.asciz	"  200 ms"
+	.asciz	"  201 ms"
+	.asciz	"  202 ms"
+	.asciz	"  203 ms"
+	.asciz	"  204 ms"
+	.asciz	"  205 ms"
+	.asciz	"  206 ms"
+	.asciz	"  207 ms"
+	.asciz	"  208 ms"
+	.asciz	"  209 ms"
+	.asciz	"  210 ms"
+	.asciz	"  211 ms"
+	.asciz	"  212 ms"
+	.asciz	"  213 ms"
+	.asciz	"  214 ms"
+	.asciz	"  215 ms"
+	.asciz	"  216 ms"
+	.asciz	"  217 ms"
+	.asciz	"  218 ms"
+	.asciz	"  219 ms"
+	.asciz	"  220 ms"
+	.asciz	"  221 ms"
+	.asciz	"  222 ms"
+	.asciz	"  223 ms"
+	.asciz	"  224 ms"
+	.asciz	"  225 ms"
+	.asciz	"  226 ms"
+	.asciz	"  227 ms"
+	.asciz	"  228 ms"
+	.asciz	"  229 ms"
+	.asciz	"  230 ms"
+	.asciz	"  231 ms"
+	.asciz	"  232 ms"
+	.asciz	"  233 ms"
+	.asciz	"  234 ms"
+	.asciz	"  235 ms"
+	.asciz	"  236 ms"
+	.asciz	"  237 ms"
+	.asciz	"  238 ms"
+	.asciz	"  239 ms"
+	.asciz	"  240 ms"
+	.asciz	"  241 ms"
+	.asciz	"  242 ms"
+	.asciz	"  243 ms"
+	.asciz	"  244 ms"
+	.asciz	"  245 ms"
+	.asciz	"  246 ms"
+	.asciz	"  247 ms"
+	.asciz	"  248 ms"
+	.asciz	"  249 ms"
+	.asciz	"  250 ms"
+	.asciz	"  251 ms"
+	.asciz	"  252 ms"
+	.asciz	"  253 ms"
+	.asciz	"  254 ms"
+	.asciz	"  255 ms"
+	.asciz	"  256 ms"
+	.asciz	"  257 ms"
+	.asciz	"  258 ms"
+	.asciz	"  259 ms"
+	.asciz	"  260 ms"
+	.asciz	"  261 ms"
+	.asciz	"  262 ms"
+	.asciz	"  263 ms"
+	.asciz	"  264 ms"
+	.asciz	"  265 ms"
+	.asciz	"  266 ms"
+	.asciz	"  267 ms"
+	.asciz	"  268 ms"
+	.asciz	"  269 ms"
+	.asciz	"  270 ms"
+	.asciz	"  271 ms"
+	.asciz	"  272 ms"
+	.asciz	"  273 ms"
+	.asciz	"  274 ms"
+	.asciz	"  275 ms"
+	.asciz	"  276 ms"
+	.asciz	"  277 ms"
+	.asciz	"  278 ms"
+	.asciz	"  279 ms"
+	.asciz	"  280 ms"
+	.asciz	"  281 ms"
+	.asciz	"  282 ms"
+	.asciz	"  283 ms"
+	.asciz	"  284 ms"
+	.asciz	"  285 ms"
+	.asciz	"  286 ms"
+	.asciz	"  287 ms"
+	.asciz	"  288 ms"
+	.asciz	"  289 ms"
+	.asciz	"  290 ms"
+	.asciz	"  291 ms"
+	.asciz	"  292 ms"
+	.asciz	"  293 ms"
+	.asciz	"  294 ms"
+	.asciz	"  295 ms"
+	.asciz	"  296 ms"
+	.asciz	"  297 ms"
+	.asciz	"  298 ms"
+	.asciz	"  299 ms"
+	.asciz	"  300 ms"
+	.asciz	"  301 ms"
+	.asciz	"  302 ms"
+	.asciz	"  303 ms"
+	.asciz	"  304 ms"
+	.asciz	"  305 ms"
+	.asciz	"  306 ms"
+	.asciz	"  307 ms"
+	.asciz	"  308 ms"
+	.asciz	"  309 ms"
+	.asciz	"  310 ms"
+	.asciz	"  311 ms"
+	.asciz	"  312 ms"
+	.asciz	"  313 ms"
+	.asciz	"  314 ms"
+	.asciz	"  315 ms"
+	.asciz	"  316 ms"
+	.asciz	"  317 ms"
+	.asciz	"  318 ms"
+	.asciz	"  319 ms"
+	.asciz	"  320 ms"
+	.asciz	"  321 ms"
+	.asciz	"  322 ms"
+	.asciz	"  323 ms"
+	.asciz	"  324 ms"
+	.asciz	"  325 ms"
+	.asciz	"  326 ms"
+	.asciz	"  327 ms"
+	.asciz	"  328 ms"
+	.asciz	"  329 ms"
+	.asciz	"  330 ms"
+	.asciz	"  331 ms"
+	.asciz	"  332 ms"
+	.asciz	"  333 ms"
+	.asciz	"  334 ms"
+	.asciz	"  335 ms"
+	.asciz	"  336 ms"
+	.asciz	"  337 ms"
+	.asciz	"  338 ms"
+	.asciz	"  339 ms"
+	.asciz	"  340 ms"
+	.asciz	"  341 ms"
+	.asciz	"  342 ms"
+	.asciz	"  343 ms"
+	.asciz	"  344 ms"
+	.asciz	"  345 ms"
+	.asciz	"  346 ms"
+	.asciz	"  347 ms"
+	.asciz	"  348 ms"
+	.asciz	"  349 ms"
+	.asciz	"  350 ms"
+	.asciz	"  351 ms"
+	.asciz	"  352 ms"
+	.asciz	"  353 ms"
+	.asciz	"  354 ms"
+	.asciz	"  355 ms"
+	.asciz	"  356 ms"
+	.asciz	"  357 ms"
+	.asciz	"  358 ms"
+	.asciz	"  359 ms"
+	.asciz	"  360 ms"
+	.asciz	"  361 ms"
+	.asciz	"  362 ms"
+	.asciz	"  363 ms"
+	.asciz	"  364 ms"
+	.asciz	"  365 ms"
+	.asciz	"  366 ms"
+	.asciz	"  367 ms"
+	.asciz	"  368 ms"
+	.asciz	"  369 ms"
+	.asciz	"  370 ms"
+	.asciz	"  371 ms"
+	.asciz	"  372 ms"
+	.asciz	"  373 ms"
+	.asciz	"  374 ms"
+	.asciz	"  375 ms"
+	.asciz	"  376 ms"
+	.asciz	"  377 ms"
+	.asciz	"  378 ms"
+	.asciz	"  379 ms"
+	.asciz	"  380 ms"
+	.asciz	"  381 ms"
+	.asciz	"  382 ms"
+	.asciz	"  383 ms"
+	.asciz	"  384 ms"
+	.asciz	"  385 ms"
+	.asciz	"  386 ms"
+	.asciz	"  387 ms"
+	.asciz	"  388 ms"
+	.asciz	"  389 ms"
+	.asciz	"  390 ms"
+	.asciz	"  391 ms"
+	.asciz	"  392 ms"
+	.asciz	"  393 ms"
+	.asciz	"  394 ms"
+	.asciz	"  395 ms"
+	.asciz	"  396 ms"
+	.asciz	"  397 ms"
+	.asciz	"  398 ms"
+	.asciz	"  399 ms"
+	.asciz	"  400 ms"
+	.asciz	"  401 ms"
+	.asciz	"  402 ms"
+	.asciz	"  403 ms"
+	.asciz	"  404 ms"
+	.asciz	"  405 ms"
+	.asciz	"  406 ms"
+	.asciz	"  407 ms"
+	.asciz	"  408 ms"
+	.asciz	"  409 ms"
+	.asciz	"  410 ms"
+	.asciz	"  411 ms"
+	.asciz	"  412 ms"
+	.asciz	"  413 ms"
+	.asciz	"  414 ms"
+	.asciz	"  415 ms"
+	.asciz	"  416 ms"
+	.asciz	"  417 ms"
+	.asciz	"  418 ms"
+	.asciz	"  419 ms"
+	.asciz	"  420 ms"
+	.asciz	"  421 ms"
+	.asciz	"  422 ms"
+	.asciz	"  423 ms"
+	.asciz	"  424 ms"
+	.asciz	"  425 ms"
+	.asciz	"  426 ms"
+	.asciz	"  427 ms"
+	.asciz	"  428 ms"
+	.asciz	"  429 ms"
+	.asciz	"  430 ms"
+	.asciz	"  431 ms"
+	.asciz	"  432 ms"
+	.asciz	"  433 ms"
+	.asciz	"  434 ms"
+	.asciz	"  435 ms"
+	.asciz	"  436 ms"
+	.asciz	"  437 ms"
+	.asciz	"  438 ms"
+	.asciz	"  439 ms"
+	.asciz	"  440 ms"
+	.asciz	"  441 ms"
+	.asciz	"  442 ms"
+	.asciz	"  443 ms"
+	.asciz	"  444 ms"
+	.asciz	"  445 ms"
+	.asciz	"  446 ms"
+	.asciz	"  447 ms"
+	.asciz	"  448 ms"
+	.asciz	"  449 ms"
+	.asciz	"  450 ms"
+	.asciz	"  451 ms"
+	.asciz	"  452 ms"
+	.asciz	"  453 ms"
+	.asciz	"  454 ms"
+	.asciz	"  455 ms"
+	.asciz	"  456 ms"
+	.asciz	"  457 ms"
+	.asciz	"  458 ms"
+	.asciz	"  459 ms"
+	.asciz	"  460 ms"
+	.asciz	"  461 ms"
+	.asciz	"  462 ms"
+	.asciz	"  463 ms"
+	.asciz	"  464 ms"
+	.asciz	"  465 ms"
+	.asciz	"  466 ms"
+	.asciz	"  467 ms"
+	.asciz	"  468 ms"
+	.asciz	"  469 ms"
+	.asciz	"  470 ms"
+	.asciz	"  471 ms"
+	.asciz	"  472 ms"
+	.asciz	"  473 ms"
+	.asciz	"  474 ms"
+	.asciz	"  475 ms"
+	.asciz	"  476 ms"
+	.asciz	"  477 ms"
+	.asciz	"  478 ms"
+	.asciz	"  479 ms"
+	.asciz	"  480 ms"
+	.asciz	"  481 ms"
+	.asciz	"  482 ms"
+	.asciz	"  483 ms"
+	.asciz	"  484 ms"
+	.asciz	"  485 ms"
+	.asciz	"  486 ms"
+	.asciz	"  487 ms"
+	.asciz	"  488 ms"
+	.asciz	"  489 ms"
+	.asciz	"  490 ms"
+	.asciz	"  491 ms"
+	.asciz	"  492 ms"
+	.asciz	"  493 ms"
+	.asciz	"  494 ms"
+	.asciz	"  495 ms"
+	.asciz	"  496 ms"
+	.asciz	"  497 ms"
+	.asciz	"  498 ms"
+	.asciz	"  499 ms"
+	.asciz	"  500 ms"
+	.asciz	"  501 ms"
+	.asciz	"  502 ms"
+	.asciz	"  503 ms"
+	.asciz	"  504 ms"
+	.asciz	"  505 ms"
+	.asciz	"  506 ms"
+	.asciz	"  507 ms"
+	.asciz	"  508 ms"
+	.asciz	"  509 ms"
+	.asciz	"  510 ms"
+	.asciz	"  511 ms"
+	.asciz	"  512 ms"
+	.asciz	"  513 ms"
+	.asciz	"  514 ms"
+	.asciz	"  515 ms"
+	.asciz	"  516 ms"
+	.asciz	"  517 ms"
+	.asciz	"  518 ms"
+	.asciz	"  519 ms"
+	.asciz	"  520 ms"
+	.asciz	"  521 ms"
+	.asciz	"  522 ms"
+	.asciz	"  523 ms"
+	.asciz	"  524 ms"
+	.asciz	"  525 ms"
+	.asciz	"  526 ms"
+	.asciz	"  527 ms"
+	.asciz	"  528 ms"
+	.asciz	"  529 ms"
+	.asciz	"  530 ms"
+	.asciz	"  531 ms"
+	.asciz	"  532 ms"
+	.asciz	"  533 ms"
+	.asciz	"  534 ms"
+	.asciz	"  535 ms"
+	.asciz	"  536 ms"
+	.asciz	"  537 ms"
+	.asciz	"  538 ms"
+	.asciz	"  539 ms"
+	.asciz	"  540 ms"
+	.asciz	"  541 ms"
+	.asciz	"  542 ms"
+	.asciz	"  543 ms"
+	.asciz	"  544 ms"
+	.asciz	"  545 ms"
+	.asciz	"  546 ms"
+	.asciz	"  547 ms"
+	.asciz	"  548 ms"
+	.asciz	"  549 ms"
+	.asciz	"  550 ms"
+	.asciz	"  551 ms"
+	.asciz	"  552 ms"
+	.asciz	"  553 ms"
+	.asciz	"  554 ms"
+	.asciz	"  555 ms"
+	.asciz	"  556 ms"
+	.asciz	"  557 ms"
+	.asciz	"  558 ms"
+	.asciz	"  559 ms"
+	.asciz	"  560 ms"
+	.asciz	"  561 ms"
+	.asciz	"  562 ms"
+	.asciz	"  563 ms"
+	.asciz	"  564 ms"
+	.asciz	"  565 ms"
+	.asciz	"  566 ms"
+	.asciz	"  567 ms"
+	.asciz	"  568 ms"
+	.asciz	"  569 ms"
+	.asciz	"  570 ms"
+	.asciz	"  571 ms"
+	.asciz	"  572 ms"
+	.asciz	"  573 ms"
+	.asciz	"  574 ms"
+	.asciz	"  575 ms"
+	.asciz	"  576 ms"
+	.asciz	"  577 ms"
+	.asciz	"  578 ms"
+	.asciz	"  579 ms"
+	.asciz	"  580 ms"
+	.asciz	"  581 ms"
+	.asciz	"  582 ms"
+	.asciz	"  583 ms"
+	.asciz	"  584 ms"
+	.asciz	"  585 ms"
+	.asciz	"  586 ms"
+	.asciz	"  587 ms"
+	.asciz	"  588 ms"
+	.asciz	"  589 ms"
+	.asciz	"  590 ms"
+	.asciz	"  591 ms"
+	.asciz	"  592 ms"
+	.asciz	"  593 ms"
+	.asciz	"  594 ms"
+	.asciz	"  595 ms"
+	.asciz	"  596 ms"
+	.asciz	"  597 ms"
+	.asciz	"  598 ms"
+	.asciz	"  599 ms"
+	.asciz	"  600 ms"
+	.asciz	"  601 ms"
+	.asciz	"  602 ms"
+	.asciz	"  603 ms"
+	.asciz	"  604 ms"
+	.asciz	"  605 ms"
+	.asciz	"  606 ms"
+	.asciz	"  607 ms"
+	.asciz	"  608 ms"
+	.asciz	"  609 ms"
+	.asciz	"  610 ms"
+	.asciz	"  611 ms"
+	.asciz	"  612 ms"
+	.asciz	"  613 ms"
+	.asciz	"  614 ms"
+	.asciz	"  615 ms"
+	.asciz	"  616 ms"
+	.asciz	"  617 ms"
+	.asciz	"  618 ms"
+	.asciz	"  619 ms"
+	.asciz	"  620 ms"
+	.asciz	"  621 ms"
+	.asciz	"  622 ms"
+	.asciz	"  623 ms"
+	.asciz	"  624 ms"
+	.asciz	"  625 ms"
+	.asciz	"  626 ms"
+	.asciz	"  627 ms"
+	.asciz	"  628 ms"
+	.asciz	"  629 ms"
+	.asciz	"  630 ms"
+	.asciz	"  631 ms"
+	.asciz	"  632 ms"
+	.asciz	"  633 ms"
+	.asciz	"  634 ms"
+	.asciz	"  635 ms"
+	.asciz	"  636 ms"
+	.asciz	"  637 ms"
+	.asciz	"  638 ms"
+	.asciz	"  639 ms"
+	.asciz	"  640 ms"
+	.asciz	"  641 ms"
+	.asciz	"  642 ms"
+	.asciz	"  643 ms"
+	.asciz	"  644 ms"
+	.asciz	"  645 ms"
+	.asciz	"  646 ms"
+	.asciz	"  647 ms"
+	.asciz	"  648 ms"
+	.asciz	"  649 ms"
+	.asciz	"  650 ms"
+	.asciz	"  651 ms"
+	.asciz	"  652 ms"
+	.asciz	"  653 ms"
+	.asciz	"  654 ms"
+	.asciz	"  655 ms"
+	.asciz	"  656 ms"
+	.asciz	"  657 ms"
+	.asciz	"  658 ms"
+	.asciz	"  659 ms"
+	.asciz	"  660 ms"
+	.asciz	"  661 ms"
+	.asciz	"  662 ms"
+	.asciz	"  663 ms"
+	.asciz	"  664 ms"
+	.asciz	"  665 ms"
+	.asciz	"  666 ms"
+	.asciz	"  667 ms"
+	.asciz	"  668 ms"
+	.asciz	"  669 ms"
+	.asciz	"  670 ms"
+	.asciz	"  671 ms"
+	.asciz	"  672 ms"
+	.asciz	"  673 ms"
+	.asciz	"  674 ms"
+	.asciz	"  675 ms"
+	.asciz	"  676 ms"
+	.asciz	"  677 ms"
+	.asciz	"  678 ms"
+	.asciz	"  679 ms"
+	.asciz	"  680 ms"
+	.asciz	"  681 ms"
+	.asciz	"  682 ms"
+	.asciz	"  683 ms"
+	.asciz	"  684 ms"
+	.asciz	"  685 ms"
+	.asciz	"  686 ms"
+	.asciz	"  687 ms"
+	.asciz	"  688 ms"
+	.asciz	"  689 ms"
+	.asciz	"  690 ms"
+	.asciz	"  691 ms"
+	.asciz	"  692 ms"
+	.asciz	"  693 ms"
+	.asciz	"  694 ms"
+	.asciz	"  695 ms"
+	.asciz	"  696 ms"
+	.asciz	"  697 ms"
+	.asciz	"  698 ms"
+	.asciz	"  699 ms"
+	.asciz	"  700 ms"
+	.asciz	"  701 ms"
+	.asciz	"  702 ms"
+	.asciz	"  703 ms"
+	.asciz	"  704 ms"
+	.asciz	"  705 ms"
+	.asciz	"  706 ms"
+	.asciz	"  707 ms"
+	.asciz	"  708 ms"
+	.asciz	"  709 ms"
+	.asciz	"  710 ms"
+	.asciz	"  711 ms"
+	.asciz	"  712 ms"
+	.asciz	"  713 ms"
+	.asciz	"  714 ms"
+	.asciz	"  715 ms"
+	.asciz	"  716 ms"
+	.asciz	"  717 ms"
+	.asciz	"  718 ms"
+	.asciz	"  719 ms"
+	.asciz	"  720 ms"
+	.asciz	"  721 ms"
+	.asciz	"  722 ms"
+	.asciz	"  723 ms"
+	.asciz	"  724 ms"
+	.asciz	"  725 ms"
+	.asciz	"  726 ms"
+	.asciz	"  727 ms"
+	.asciz	"  728 ms"
+	.asciz	"  729 ms"
+	.asciz	"  730 ms"
+	.asciz	"  731 ms"
+	.asciz	"  732 ms"
+	.asciz	"  733 ms"
+	.asciz	"  734 ms"
+	.asciz	"  735 ms"
+	.asciz	"  736 ms"
+	.asciz	"  737 ms"
+	.asciz	"  738 ms"
+	.asciz	"  739 ms"
+	.asciz	"  740 ms"
+	.asciz	"  741 ms"
+	.asciz	"  742 ms"
+	.asciz	"  743 ms"
+	.asciz	"  744 ms"
+	.asciz	"  745 ms"
+	.asciz	"  746 ms"
+	.asciz	"  747 ms"
+	.asciz	"  748 ms"
+	.asciz	"  749 ms"
+	.asciz	"  750 ms"
+	.asciz	"  751 ms"
+	.asciz	"  752 ms"
+	.asciz	"  753 ms"
+	.asciz	"  754 ms"
+	.asciz	"  755 ms"
+	.asciz	"  756 ms"
+	.asciz	"  757 ms"
+	.asciz	"  758 ms"
+	.asciz	"  759 ms"
+	.asciz	"  760 ms"
+	.asciz	"  761 ms"
+	.asciz	"  762 ms"
+	.asciz	"  763 ms"
+	.asciz	"  764 ms"
+	.asciz	"  765 ms"
+	.asciz	"  766 ms"
+	.asciz	"  767 ms"
+	.asciz	"  768 ms"
+	.asciz	"  769 ms"
+	.asciz	"  770 ms"
+	.asciz	"  771 ms"
+	.asciz	"  772 ms"
+	.asciz	"  773 ms"
+	.asciz	"  774 ms"
+	.asciz	"  775 ms"
+	.asciz	"  776 ms"
+	.asciz	"  777 ms"
+	.asciz	"  778 ms"
+	.asciz	"  779 ms"
+	.asciz	"  780 ms"
+	.asciz	"  781 ms"
+	.asciz	"  782 ms"
+	.asciz	"  783 ms"
+	.asciz	"  784 ms"
+	.asciz	"  785 ms"
+	.asciz	"  786 ms"
+	.asciz	"  787 ms"
+	.asciz	"  788 ms"
+	.asciz	"  789 ms"
+	.asciz	"  790 ms"
+	.asciz	"  791 ms"
+	.asciz	"  792 ms"
+	.asciz	"  793 ms"
+	.asciz	"  794 ms"
+	.asciz	"  795 ms"
+	.asciz	"  796 ms"
+	.asciz	"  797 ms"
+	.asciz	"  798 ms"
+	.asciz	"  799 ms"
+	.asciz	"  700 ms"
+	.asciz	"  701 ms"
+	.asciz	"  702 ms"
+	.asciz	"  703 ms"
+	.asciz	"  704 ms"
+	.asciz	"  705 ms"
+	.asciz	"  706 ms"
+	.asciz	"  707 ms"
+	.asciz	"  708 ms"
+	.asciz	"  709 ms"
+	.asciz	"  710 ms"
+	.asciz	"  711 ms"
+	.asciz	"  712 ms"
+	.asciz	"  713 ms"
+	.asciz	"  714 ms"
+	.asciz	"  715 ms"
+	.asciz	"  716 ms"
+	.asciz	"  717 ms"
+	.asciz	"  718 ms"
+	.asciz	"  719 ms"
+	.asciz	"  720 ms"
+	.asciz	"  721 ms"
+	.asciz	"  722 ms"
+	.asciz	"  723 ms"
+	.asciz	"  724 ms"
+	.asciz	"  725 ms"
+	.asciz	"  726 ms"
+	.asciz	"  727 ms"
+	.asciz	"  728 ms"
+	.asciz	"  729 ms"
+	.asciz	"  730 ms"
+	.asciz	"  731 ms"
+	.asciz	"  732 ms"
+	.asciz	"  733 ms"
+	.asciz	"  734 ms"
+	.asciz	"  735 ms"
+	.asciz	"  736 ms"
+	.asciz	"  737 ms"
+	.asciz	"  738 ms"
+	.asciz	"  739 ms"
+	.asciz	"  740 ms"
+	.asciz	"  741 ms"
+	.asciz	"  742 ms"
+	.asciz	"  743 ms"
+	.asciz	"  744 ms"
+	.asciz	"  745 ms"
+	.asciz	"  746 ms"
+	.asciz	"  747 ms"
+	.asciz	"  748 ms"
+	.asciz	"  749 ms"
+	.asciz	"  750 ms"
+	.asciz	"  751 ms"
+	.asciz	"  752 ms"
+	.asciz	"  753 ms"
+	.asciz	"  754 ms"
+	.asciz	"  755 ms"
+	.asciz	"  756 ms"
+	.asciz	"  757 ms"
+	.asciz	"  758 ms"
+	.asciz	"  759 ms"
+	.asciz	"  760 ms"
+	.asciz	"  761 ms"
+	.asciz	"  762 ms"
+	.asciz	"  763 ms"
+	.asciz	"  764 ms"
+	.asciz	"  765 ms"
+	.asciz	"  766 ms"
+	.asciz	"  767 ms"
+	.asciz	"  768 ms"
+	.asciz	"  769 ms"
+	.asciz	"  770 ms"
+	.asciz	"  771 ms"
+	.asciz	"  772 ms"
+	.asciz	"  773 ms"
+	.asciz	"  774 ms"
+	.asciz	"  775 ms"
+	.asciz	"  776 ms"
+	.asciz	"  777 ms"
+	.asciz	"  778 ms"
+	.asciz	"  779 ms"
+	.asciz	"  780 ms"
+	.asciz	"  781 ms"
+	.asciz	"  782 ms"
+	.asciz	"  783 ms"
+	.asciz	"  784 ms"
+	.asciz	"  785 ms"
+	.asciz	"  786 ms"
+	.asciz	"  787 ms"
+	.asciz	"  788 ms"
+	.asciz	"  789 ms"
+	.asciz	"  790 ms"
+	.asciz	"  791 ms"
+	.asciz	"  792 ms"
+	.asciz	"  793 ms"
+	.asciz	"  794 ms"
+	.asciz	"  795 ms"
+	.asciz	"  796 ms"
+	.asciz	"  797 ms"
+	.asciz	"  798 ms"
+	.asciz	"  799 ms"
+	.asciz	"  800 ms"
+	.asciz	"  801 ms"
+	.asciz	"  802 ms"
+	.asciz	"  803 ms"
+	.asciz	"  804 ms"
+	.asciz	"  805 ms"
+	.asciz	"  806 ms"
+	.asciz	"  807 ms"
+	.asciz	"  808 ms"
+	.asciz	"  809 ms"
+	.asciz	"  810 ms"
+	.asciz	"  811 ms"
+	.asciz	"  812 ms"
+	.asciz	"  813 ms"
+	.asciz	"  814 ms"
+	.asciz	"  815 ms"
+	.asciz	"  816 ms"
+	.asciz	"  817 ms"
+	.asciz	"  818 ms"
+	.asciz	"  819 ms"
+	.asciz	"  820 ms"
+	.asciz	"  821 ms"
+	.asciz	"  822 ms"
+	.asciz	"  823 ms"
+	.asciz	"  824 ms"
+	.asciz	"  825 ms"
+	.asciz	"  826 ms"
+	.asciz	"  827 ms"
+	.asciz	"  828 ms"
+	.asciz	"  829 ms"
+	.asciz	"  830 ms"
+	.asciz	"  831 ms"
+	.asciz	"  832 ms"
+	.asciz	"  833 ms"
+	.asciz	"  834 ms"
+	.asciz	"  835 ms"
+	.asciz	"  836 ms"
+	.asciz	"  837 ms"
+	.asciz	"  838 ms"
+	.asciz	"  839 ms"
+	.asciz	"  840 ms"
+	.asciz	"  841 ms"
+	.asciz	"  842 ms"
+	.asciz	"  843 ms"
+	.asciz	"  844 ms"
+	.asciz	"  845 ms"
+	.asciz	"  846 ms"
+	.asciz	"  847 ms"
+	.asciz	"  848 ms"
+	.asciz	"  849 ms"
+	.asciz	"  850 ms"
+	.asciz	"  851 ms"
+	.asciz	"  852 ms"
+	.asciz	"  853 ms"
+	.asciz	"  854 ms"
+	.asciz	"  855 ms"
+	.asciz	"  856 ms"
+	.asciz	"  857 ms"
+	.asciz	"  858 ms"
+	.asciz	"  859 ms"
+	.asciz	"  860 ms"
+	.asciz	"  861 ms"
+	.asciz	"  862 ms"
+	.asciz	"  863 ms"
+	.asciz	"  864 ms"
+	.asciz	"  865 ms"
+	.asciz	"  866 ms"
+	.asciz	"  867 ms"
+	.asciz	"  868 ms"
+	.asciz	"  869 ms"
+	.asciz	"  870 ms"
+	.asciz	"  871 ms"
+	.asciz	"  872 ms"
+	.asciz	"  873 ms"
+	.asciz	"  874 ms"
+	.asciz	"  875 ms"
+	.asciz	"  876 ms"
+	.asciz	"  877 ms"
+	.asciz	"  878 ms"
+	.asciz	"  879 ms"
+	.asciz	"  880 ms"
+	.asciz	"  881 ms"
+	.asciz	"  882 ms"
+	.asciz	"  883 ms"
+	.asciz	"  884 ms"
+	.asciz	"  885 ms"
+	.asciz	"  886 ms"
+	.asciz	"  887 ms"
+	.asciz	"  888 ms"
+	.asciz	"  889 ms"
+	.asciz	"  890 ms"
+	.asciz	"  891 ms"
+	.asciz	"  892 ms"
+	.asciz	"  893 ms"
+	.asciz	"  894 ms"
+	.asciz	"  895 ms"
+	.asciz	"  896 ms"
+	.asciz	"  897 ms"
+	.asciz	"  898 ms"
+	.asciz	"  899 ms"
+	.asciz	" SLOW   "
+	.asciz	" FAST   "
 	.align	4, 0xFF
+
 Field_AcOtpRamBox_font:	.asciz "font"
 Field_AcOtpRamBox_end:	.asciz ""
 	.align	4, 0xFF
@@ -10993,7 +12898,7 @@ Str_ONE_TOUCH_PLAY:	.asciz "ONE TOUCH PLAY"
 	.align	4, 0xFF
 
 	TtlScreen	OneTouchPlay, sub=OneTouchPlay_OtpRamBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_NORMAL, window=OneTouchPlay_window, title=Str_ONE_TOUCH_PLAY, icon=179	# title "ONE TOUCH PLAY"
-		AcOtpRamBox	OneTouchPlay_OtpRamBox1, super=OneTouchPlay, next=OneTouchPlay_ExitMode1, flag=VF_Const, X=30, Y=82, W=260, H=104, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF, font_AcOtpRamBox=2, fontcolor=CL_White, func=FN_MssNameFunc, data=OneTouchPlay_OtpRamBox1_data, font_AcOtpRamBox=2
+		AcOtpRamBox	OneTouchPlay_OtpRamBox1, super=OneTouchPlay, next=OneTouchPlay_ExitMode1, flag=VF_Const, X=30, Y=82, W=260, H=104, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF, font=2, fontcolor=CL_White, func=FN_MssNameFunc, data=OneTouchPlay_OtpRamBox1_data, font_AcOtpRamBox=2
 		IvExitMode	OneTouchPlay_ExitMode1, super=OneTouchPlay, next=OneTouchPlay_TempoBox1, prev=OneTouchPlay_OtpRamBox1, flag=VF_Const|VF_InvisibleBox, X=2, Y=32, W=16, H=32, mode=MD_NORMAL
 		AcTempoBox	OneTouchPlay_TempoBox1, super=OneTouchPlay, prev=OneTouchPlay_ExitMode1, flag=VF_Const, X=268, Y=4, W=50, H=20, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White
 
@@ -15348,8 +17253,7 @@ Str_TT_WELCOME_2:	.asciz "TT_WELCOME"
 Str_TT_WELCOME:	.asciz "TT_WELCOME"
 	.align	4, 0xFF
 Str_PAL_3:	.asciz "PAL "
-Str_NTSC_3:	.asciz "NTSC"
-.incbin_range "baserom/kn2400_program.rom", 0x05EC72, 0x05EC78
+.incbin_range "baserom/kn2400_program.rom", 0x05EC6D, 0x05EC78
 Str_s_Ver_1X_1X:	.asciz "%s    Ver%1X.%1X"
 	.align	4, 0xFF
 data_4845EC8C:
@@ -17599,9 +19503,7 @@ Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_5:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn2400_program.rom", 0x06532E, 0x065330
 Str_empty_1123:	.asciz "%"
-.incbin_range "baserom/kn2400_program.rom", 0x065332, 0x06538D
-Str_RFH:	.asciz "RFH\""
-.incbin_range "baserom/kn2400_program.rom", 0x065392, 0x0653CC
+.incbin_range "baserom/kn2400_program.rom", 0x065332, 0x0653CC
 Str_SFHVIBRATO_RATE:	.asciz ".SFHVIBRATO RATE"
 Str_VIBRATO_DEPTH_2:	.asciz "VIBRATO DEPTH"
 Str_VIBRATO_DELAY_2:	.asciz "VIBRATO DELAY"
@@ -17942,29 +19844,18 @@ ptrs_48465D50:
 	.long	Str_A_32
 	.long	Str_A_31
 	.long	Str_B_17
-data_48465D80:
-.incbin_range "baserom/kn2400_program.rom", 0x065D80, 0x067520
-data_48467520:
-.incbin_range "baserom/kn2400_program.rom", 0x067520, 0x067764
-data_48467764:
-.incbin_range "baserom/kn2400_program.rom", 0x067764, 0x067A4E
 
-Str_www:	.asciz "\xF0www"
-.incbin_range "baserom/kn2400_program.rom", 0x067A53, 0x067ACC
-Str_wwp:	.asciz "\xF0wwp"
-.incbin_range "baserom/kn2400_program.rom", 0x067AD1, 0x067B4A
-Str_wwwwww:	.asciz "\xF0wwwwww"
-.incbin_range "baserom/kn2400_program.rom", 0x067B52, 0x067B89
-Str_wwwwwwwwwwww:	.asciz "\xF0wwwwwwwwwwww"
-.incbin_range "baserom/kn2400_program.rom", 0x067B97, 0x067C04
-data_48467C04:
-.incbin_range "baserom/kn2400_program.rom", 0x067C04, 0x067FEA
-Str_wwwwww_2:	.asciz "\xF0wwwwww"
-.incbin_range "baserom/kn2400_program.rom", 0x067FF2, 0x068029
-Str_wwwwwwwwwwww_2:	.asciz "\xF0wwwwwwwwwwww"
-.incbin_range "baserom/kn2400_program.rom", 0x068037, 0x0680A4
+BitmapMonback_Pixels:	# 441 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonback answers MT_GetBitmapData with (src/program/data/media/BitmapMonback_Pixels.png)
+	.incbin	"build/bitmaps/BitmapMonback_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 441 108) from src/program/data/media/BitmapMonback_Pixels.png
+BitmapMonvol_Pixels:	# 37 x 29, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonvol answers MT_GetBitmapData with (src/program/data/media/BitmapMonvol_Pixels.png)
+	.incbin	"build/bitmaps/BitmapMonvol_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 37 29) from src/program/data/media/BitmapMonvol_Pixels.png
+BitmapMonon_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonon answers MT_GetBitmapData with (src/program/data/media/BitmapMonon_Pixels.png)
+	.incbin	"build/bitmaps/BitmapMonon_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/program/data/media/BitmapMonon_Pixels.png
+BitmapMonoff_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonoff answers MT_GetBitmapData with (src/program/data/media/BitmapMonoff_Pixels.png)
+	.incbin	"build/bitmaps/BitmapMonoff_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/program/data/media/BitmapMonoff_Pixels.png
 data_484680A4:
 .incbin_range "baserom/kn2400_program.rom", 0x0680A4, 0x0680E4
+
 Str_CcEv_14:	.asciz "CcEv"
 	.align	4, 0xFF
 Str_DRUM1_2_2:	.asciz "         DRUM1&2          "
@@ -18707,20 +20598,50 @@ Str_PgKP:	.asciz "PgKP"
 data_4846A454:
 .incbin_range "baserom/kn2400_program.rom", 0x06A454, 0x06A4B4
 data_4846A4B4:
-.incbin_range "baserom/kn2400_program.rom", 0x06A4B4, 0x06A524
-Str_LEFT_16:	.asciz "LEFT "
-.incbin_range "baserom/kn2400_program.rom", 0x06A52A, 0x06A542
-Str_CHORD_12:	.asciz "CHORD"
-Str_RTBS_2:	.asciz "RTBS "
-Str_PADS_20:	.asciz "PADS "
-Str_PADS_21:	.asciz "PADS "
-Str_CTRL_5:	.asciz "CTRL "
-Str_METR_2:	.asciz "METR "
-Str_CFDR_2:	.asciz "CFDR "
-Str_MIC_18:	.asciz "MIC  "
-Str_APC_13:	.asciz "APC  "
+.incbin_range "baserom/kn2400_program.rom", 0x06A4B4, 0x06A4B8
+
+Text_PT1_2:	# 19 strings of 5 characters, NUL-terminated
+	.asciz	"PT1  "
+	.asciz	"PT2  "
+	.asciz	"PT3  "
+	.asciz	"PT4  "
+	.asciz	"PT5  "
+	.asciz	"PT6  "
+	.asciz	"PT7  "
+	.asciz	"PT8  "
+	.asciz	"PT9  "
+	.asciz	"PT10 "
+	.asciz	"PT11 "
+	.asciz	"PT12 "
+	.asciz	"PT13 "
+	.asciz	"PT14 "
+	.asciz	"PT15 "
+	.asciz	"PT16 "
+	.asciz	"RT1  "
+	.asciz	"RT2  "
+	.asciz	"LEFT "
+Text_A1:	# 8 strings of 2 characters, NUL-terminated
+	.asciz	"A1"
+	.asciz	"A2"
+	.asciz	"A3"
+	.asciz	"A4"
+	.asciz	"A5"
+	.asciz	"BS"
+	.asciz	"D1"
+	.asciz	"D2"
+Text_CHORD:	# 9 strings of 5 characters, NUL-terminated
+	.asciz	"CHORD"
+	.asciz	"RTBS "
+	.asciz	"PADS "
+	.asciz	"PADS "
+	.asciz	"CTRL "
+	.asciz	"METR "
+	.asciz	"CFDR "
+	.asciz	"MIC  "
+	.asciz	"APC  "
 data_4846A578:
 .incbin_range "baserom/kn2400_program.rom", 0x06A578, 0x06A7B8
+
 Str_s_70:	.asciz "%s=   "
 	.align	4, 0xFF
 Str_s_3d_3:	.asciz "%s=%3d"
@@ -18883,53 +20804,57 @@ ptrs_4846AAFC:
 Str_BANK_s_s:	.asciz "BANK %s: %s"
 Str_1d_s_2:	.asciz "%1d : %s"
 	.align	4, 0xFF
-Str_OFF_162:	.asciz "      OFF       "
-Str_SOFT_PEDAL_4:	.asciz "   SOFT PEDAL   "
-Str_SOSTENUTO_PEDAL_4:	.asciz "SOSTENUTO PEDAL "
-Str_P_MEM_INCREMENT_6:	.asciz "P.MEM INCREMENT "
-Str_P_MEM_DECREMENT_6:	.asciz "P.MEM DECREMENT "
-Str_P_MEM_BANK_INC_6:	.asciz "P.MEM BANK INC. "
-Str_P_MEM_BANK_DEC_6:	.asciz "P.MEM BANK DEC. "
-Str_PANEL_MEMORY_1_4:	.asciz "PANEL MEMORY 1  "
-Str_PANEL_MEMORY_2_5:	.asciz "PANEL MEMORY 2  "
-Str_PANEL_MEMORY_3_5:	.asciz "PANEL MEMORY 3  "
-Str_PANEL_MEMORY_4_5:	.asciz "PANEL MEMORY 4  "
-Str_PANEL_MEMORY_5_5:	.asciz "PANEL MEMORY 5  "
-Str_PANEL_MEMORY_6_5:	.asciz "PANEL MEMORY 6  "
-Str_PANEL_MEMORY_7_5:	.asciz "PANEL MEMORY 7  "
-Str_PANEL_MEMORY_8_5:	.asciz "PANEL MEMORY 8  "
-Str_P_MEM_INC_DEC_4:	.asciz "P.MEM INC.+DEC. "
-Str_START_STOP_4:	.asciz "  START/STOP    "
-Str_FILL_IN_1_4:	.asciz "   FILL IN 1    "
-Str_FILL_IN_2_4:	.asciz "   FILL IN 2    "
-Str_INTRO_ENDING_1_4:	.asciz "INTRO&ENDING 1  "
-Str_INTRO_ENDING_2_4:	.asciz "INTRO&ENDING 2  "
-Str_SUSTAIN_7:	.asciz "    SUSTAIN     "
-Str_GLIDE_9:	.asciz "     GLIDE      "
-Str_TECHNI_CHORD_6:	.asciz " TECHNI-CHORD   "
-Str_DIGITAL_EFFECT_7:	.asciz "DIGITAL EFFECT  "
-Str_SOUND_DSP_8:	.asciz "   SOUND DSP    "
-Str_SOUND_DSP_VARI:	.asciz " SOUND DSP VARI "
-Str_ROTARY_SLOW_FAST_6:	.asciz "ROTARY SLOW/FAST"
-Str_MIC_REVERB_EFF:	.asciz " MIC REVERB&EFF."
-Str_PUNCH_RECORD_6:	.asciz "  PUNCH RECORD  "
-Str_APC_HOLD_4:	.asciz "   APC HOLD     "
-Str_FADE_IN_7:	.asciz "    FADE IN     "
-Str_FADE_OUT_7:	.asciz "    FADE OUT    "
-Str_PAD_1_3:	.asciz "     PAD 1      "
-Str_PAD_2_4:	.asciz "     PAD 2      "
-Str_PAD_3_4:	.asciz "     PAD 3      "
-Str_PAD_4_4:	.asciz "     PAD 4      "
-Str_PAD_5_4:	.asciz "     PAD 5      "
-Str_PAD_6_4:	.asciz "     PAD 6      "
-Str_TAP_TEMPO_4:	.asciz "   TAP TEMPO    "
-Str_TOTAL_EXPRESSION_2:	.asciz "TOTAL EXPRESSION"
-Str_PART_EXPRESSION_2:	.asciz "PART EXPRESSION "
-.incbin_range "baserom/kn2400_program.rom", 0x06AE12, 0x06AE24
+
+Text_OFF:	# 43 strings of 16 characters, NUL-terminated
+	.asciz	"      OFF       "
+	.asciz	"   SOFT PEDAL   "
+	.asciz	"SOSTENUTO PEDAL "
+	.asciz	"P.MEM INCREMENT "
+	.asciz	"P.MEM DECREMENT "
+	.asciz	"P.MEM BANK INC. "
+	.asciz	"P.MEM BANK DEC. "
+	.asciz	"PANEL MEMORY 1  "
+	.asciz	"PANEL MEMORY 2  "
+	.asciz	"PANEL MEMORY 3  "
+	.asciz	"PANEL MEMORY 4  "
+	.asciz	"PANEL MEMORY 5  "
+	.asciz	"PANEL MEMORY 6  "
+	.asciz	"PANEL MEMORY 7  "
+	.asciz	"PANEL MEMORY 8  "
+	.asciz	"P.MEM INC.+DEC. "
+	.asciz	"  START/STOP    "
+	.asciz	"   FILL IN 1    "
+	.asciz	"   FILL IN 2    "
+	.asciz	"INTRO&ENDING 1  "
+	.asciz	"INTRO&ENDING 2  "
+	.asciz	"    SUSTAIN     "
+	.asciz	"     GLIDE      "
+	.asciz	" TECHNI-CHORD   "
+	.asciz	"DIGITAL EFFECT  "
+	.asciz	"   SOUND DSP    "
+	.asciz	" SOUND DSP VARI "
+	.asciz	"ROTARY SLOW/FAST"
+	.asciz	" MIC REVERB&EFF."
+	.asciz	"  PUNCH RECORD  "
+	.asciz	"   APC HOLD     "
+	.asciz	"    FADE IN     "
+	.asciz	"    FADE OUT    "
+	.asciz	"     PAD 1      "
+	.asciz	"     PAD 2      "
+	.asciz	"     PAD 3      "
+	.asciz	"     PAD 4      "
+	.asciz	"     PAD 5      "
+	.asciz	"     PAD 6      "
+	.asciz	"   TAP TEMPO    "
+	.asciz	"TOTAL EXPRESSION"
+	.asciz	"PART EXPRESSION "
+	.asciz	"     -----      "
+	.align	4, 0xFF
 data_4846AE24:
 .incbin_range "baserom/kn2400_program.rom", 0x06AE24, 0x06AF94
 data_4846AF94:
 .incbin_range "baserom/kn2400_program.rom", 0x06AF94, 0x06AFCC
+
 Str_s_s_4:	.asciz "%s: %s"
 	.align	4, 0xFF
 Str_E_TOTAL_EXPRESSION:	.asciz "E : TOTAL EXPRESSION"
@@ -18986,26 +20911,38 @@ Str_empty_1086:	.asciz "              "
 	.align	4, 0xFF
 Str_REMOTE_VOL_2d_3:	.asciz "REMOTE VOL=%2d "
 Str_REMOTE_VOL_MAX_3:	.asciz "REMOTE VOL=MAX"
-.incbin_range "baserom/kn2400_program.rom", 0x06B1DB, 0x06B22B
-Str_LEFT_17:	.asciz "LEFT"
-Str_ACP1_4:	.asciz "ACP1"
-Str_ACP2_4:	.asciz "ACP2"
-Str_ACP3_4:	.asciz "ACP3"
-Str_ACP4_4:	.asciz "ACP4"
-Str_ACP5_4:	.asciz "ACP5"
-Str_BASS_18:	.asciz "BASS"
-Str_DRM1_4:	.asciz "DRM1"
-Str_DRM2_4:	.asciz "DRM2"
-Str_CHRD_3:	.asciz "CHRD"
-Str_RTBS_3:	.asciz "RTBS"
-Str_PADS_22:	.asciz "PADS"
-Str_PADS_23:	.asciz "PADS"
-Str_BPDL_2:	.asciz "BPDL"
-Str_METR_3:	.asciz "METR"
-Str_CFDR_3:	.asciz "CFDR"
-.incbin_range "baserom/kn2400_program.rom", 0x06B27B, 0x06B283
-Str_CTRL_6:	.asciz "CTRL"
-.incbin_range "baserom/kn2400_program.rom", 0x06B288, 0x06B28B
+	.align	4, 0xFF
+
+Text_PT1_3:	# 9 strings of 3 characters, NUL-terminated
+	.asciz	"PT1"
+	.asciz	"PT2"
+	.asciz	"PT3"
+	.asciz	"PT4"
+	.asciz	"PT5"
+	.asciz	"PT6"
+	.asciz	"PT7"
+	.asciz	"PT8"
+	.asciz	"PT9"
+.incbin_range "baserom/kn2400_program.rom", 0x06B200, 0x06B22B
+Text_LEFT_2:	# 16 strings of 4 characters, NUL-terminated
+	.asciz	"LEFT"
+	.asciz	"ACP1"
+	.asciz	"ACP2"
+	.asciz	"ACP3"
+	.asciz	"ACP4"
+	.asciz	"ACP5"
+	.asciz	"BASS"
+	.asciz	"DRM1"
+	.asciz	"DRM2"
+	.asciz	"CHRD"
+	.asciz	"RTBS"
+	.asciz	"PADS"
+	.asciz	"PADS"
+	.asciz	"BPDL"
+	.asciz	"METR"
+	.asciz	"CFDR"
+.incbin_range "baserom/kn2400_program.rom", 0x06B27B, 0x06B28B
+
 Str_MUSIC_2:	.asciz "MUSIC"
 	.align	4, 0xFF
 data_4846B294:
@@ -20339,8 +22276,9 @@ Str_2_28:	.asciz "+2"
 	.align	4, 0xFF
 Str_0_16:	.asciz " 0"
 	.align	4, 0xFF
-data_484738B0:
-.incbin_range "baserom/kn2400_program.rom", 0x0738B0, 0x073F94
+
+BitmapDrawsw_Pixels:	# 294 x 6, 8 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapDrawsw answers MT_GetBitmapData with (src/program/data/media/BitmapDrawsw_Pixels.png)
+	.incbin	"build/bitmaps/BitmapDrawsw_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 294 6) from src/program/data/media/BitmapDrawsw_Pixels.png
 data_48473F94:
 .incbin_range "baserom/kn2400_program.rom", 0x073F94, 0x074014
 data_48474014:
@@ -20349,6 +22287,7 @@ data_48474094:
 .incbin_range "baserom/kn2400_program.rom", 0x074094, 0x074114
 data_48474114:
 .incbin_range "baserom/kn2400_program.rom", 0x074114, 0x074194
+
 Field_AcFavorite_end:	.asciz ""
 	.align	4, 0xFF
 
@@ -20712,7 +22651,7 @@ ptrs_4847541C:
 
 Str_SOUND_PART_SETTING:	.asciz "SOUND PART SETTING"
 Str_MIXER_18:	.asciz "MIXER"
-Str_TECHNI_CHORD_7:	.asciz "TECHNI-CHORD"
+Str_TECHNI_CHORD_6:	.asciz "TECHNI-CHORD"
 Str_MASTER_TUNING_4:	.asciz "MASTER TUNING"
 Str_KEY_SCALING_3:	.asciz "KEY SCALING"
 Str_SOUND_LOAD_OPTION_5:	.asciz "SOUND LOAD OPTION"
@@ -20821,7 +22760,7 @@ data_48476408:
 .incbin_range "baserom/kn2400_program.rom", 0x076408, 0x07647D
 Str_SOUND_PART_SETTING_2:	.asciz "SOUND PART SETTING  "
 Str_MIXER_19:	.asciz "MIXER               "
-Str_TECHNI_CHORD_8:	.asciz "TECHNI-CHORD        "
+Str_TECHNI_CHORD_7:	.asciz "TECHNI-CHORD        "
 Str_MASTER_TUNING_5:	.asciz "MASTER TUNING       "
 Str_KEY_SCALING_4:	.asciz "KEY SCALING         "
 Str_SOUND_LOAD_OPTION_6:	.asciz "SOUND LOAD OPTION   "
@@ -20841,36 +22780,39 @@ data_48476618:
 data_48476694:
 .incbin_range "baserom/kn2400_program.rom", 0x076694, 0x0766F0
 Str_fGHSEQUENCER_MENU:	.asciz "\x93fGHSEQUENCER MENU      "
-Str_RECORD_EDIT_4:	.asciz "RECORD & EDIT       "
-Str_COPY_PASTE_4:	.asciz "COPY & PASTE        "
-Str_RANGE_EDIT_4:	.asciz "RANGE EDIT          "
-Str_PANEL_WRITE_4:	.asciz "PANEL WRITE         "
-Str_TRACK_MIXER_4:	.asciz "TRACK MIXER         "
-Str_REALTIME_RECORD_4:	.asciz "REALTIME RECORD     "
-Str_PUNCH_RECORD_7:	.asciz "PUNCH RECORD        "
-Str_STEP_RECORD_7:	.asciz "STEP RECORD         "
-Str_TRACK_ASSIGN_5:	.asciz "TRACK ASSIGN        "
-Str_QUANTIZE_9:	.asciz "QUANTIZE            "
-Str_SONG_SELECT_15:	.asciz "SONG SELECT         "
-Str_SONG_CLEAR_5:	.asciz "SONG CLEAR          "
-Str_TRACK_CLEAR_5:	.asciz "TRACK CLEAR         "
-Str_NOTE_EDIT_5:	.asciz "NOTE EDIT           "
-Str_DRUM_EDIT_5:	.asciz "DRUM EDIT           "
-Str_TRACK_COPY_4:	.asciz "TRACK COPY          "
-Str_SONG_COPY_4:	.asciz "SONG COPY           "
-Str_TRACK_MERGE_4:	.asciz "TRACK MERGE         "
-Str_MEASURE_COPY_6:	.asciz "MEASURE COPY        "
-Str_MEASURE_ERASE_6:	.asciz "MEASURE ERASE       "
-Str_MEASURE_DELETE_6:	.asciz "MEASURE DELETE      "
-Str_MEASURE_INSERT_6:	.asciz "MEASURE INSERT      "
-Str_APC_TO_SMF_CONVERT_6:	.asciz "APC TO SMF CONVERT  "
-Str_NOTE_CHANGE_4:	.asciz "NOTE CHANGE         "
-Str_VELOCITY_CHANGE_4:	.asciz "VELOCITY CHANGE     "
-Str_TRANSPOSE_6:	.asciz "TRANSPOSE           "
-Str_ADVANCE_DELAY_5:	.asciz "ADVANCE/DELAY       "
+
+Text_RECORD_EDIT:	# 27 strings of 20 characters, NUL-terminated
+	.asciz	"RECORD & EDIT       "
+	.asciz	"COPY & PASTE        "
+	.asciz	"RANGE EDIT          "
+	.asciz	"PANEL WRITE         "
+	.asciz	"TRACK MIXER         "
+	.asciz	"REALTIME RECORD     "
+	.asciz	"PUNCH RECORD        "
+	.asciz	"STEP RECORD         "
+	.asciz	"TRACK ASSIGN        "
+	.asciz	"QUANTIZE            "
+	.asciz	"SONG SELECT         "
+	.asciz	"SONG CLEAR          "
+	.asciz	"TRACK CLEAR         "
+	.asciz	"NOTE EDIT           "
+	.asciz	"DRUM EDIT           "
+	.asciz	"TRACK COPY          "
+	.asciz	"SONG COPY           "
+	.asciz	"TRACK MERGE         "
+	.asciz	"MEASURE COPY        "
+	.asciz	"MEASURE ERASE       "
+	.asciz	"MEASURE DELETE      "
+	.asciz	"MEASURE INSERT      "
+	.asciz	"APC TO SMF CONVERT  "
+	.asciz	"NOTE CHANGE         "
+	.asciz	"VELOCITY CHANGE     "
+	.asciz	"TRANSPOSE           "
+	.asciz	"ADVANCE/DELAY       "
 	.space	8, 0x00
 data_48476948:
 .incbin_range "baserom/kn2400_program.rom", 0x076948, 0x076AF4
+
 Str_GiGHCOMPOSER_MENU:	.asciz "GiGHCOMPOSER MENU       "
 Str_EASY_COMPOSER_4:	.asciz "EASY COMPOSER       "
 Str_PATTERN_COPY_4:	.asciz "PATTERN COPY        "
@@ -20896,18 +22838,21 @@ Str_DISK_PREFERENCES_3:	.asciz "DISK PREFERENCES    "
 .incbin_range "baserom/kn2400_program.rom", 0x076D18, 0x076D1C
 data_48476D1C:
 .incbin_range "baserom/kn2400_program.rom", 0x076D1C, 0x076D9D
-Str_SD_LOAD_3:	.asciz "SD LOAD             "
-Str_SD_SAVE_TECHNICS_FMT_2:	.asciz "SD SAVE TECHNICS FMT"
-Str_SD_SAVE_SMF_FORMAT_0_2:	.asciz "SD SAVE SMF FORMAT 0"
-Str_SD_SONG_MEDLEY_4:	.asciz "SD SONG MEDLEY      "
-Str_SD_AUDIO_PLAY_4:	.asciz "SD-AUDIO PLAY       "
-Str_SD_SOUND_PLAY_5:	.asciz "SD-SOUND PLAY       "
-Str_SD_TOOLS_4:	.asciz "SD TOOLS            "
-Str_SD_PREFERENCES_5:	.asciz "SD PREFERENCES      "
-Str_SD_FAVORITE_SONGS_2:	.asciz "SD FAVORITE SONGS   "
+
+Text_SD_LOAD:	# 9 strings of 20 characters, NUL-terminated
+	.asciz	"SD LOAD             "
+	.asciz	"SD SAVE TECHNICS FMT"
+	.asciz	"SD SAVE SMF FORMAT 0"
+	.asciz	"SD SONG MEDLEY      "
+	.asciz	"SD-AUDIO PLAY       "
+	.asciz	"SD-SOUND PLAY       "
+	.asciz	"SD TOOLS            "
+	.asciz	"SD PREFERENCES      "
+	.asciz	"SD FAVORITE SONGS   "
 .incbin_range "baserom/kn2400_program.rom", 0x076E5A, 0x076E5C
 data_48476E5C:
 .incbin_range "baserom/kn2400_program.rom", 0x076E5C, 0x076EDC
+
 Str_ZnGHCONTROL_MENU:	.asciz "ZnGHCONTROL MENU        "
 Str_INITIAL_7:	.asciz "INITIAL             "
 Str_OVERALL_TOUCH_SENS:	.asciz "OVERALL TOUCH SENS  "
@@ -20919,17 +22864,20 @@ Str_FADE_IN_OUT_SETTING_4:	.asciz "FADE IN/OUT SETTING "
 data_48476F74:
 .incbin_range "baserom/kn2400_program.rom", 0x076F74, 0x076FD0
 Str_soGHMIDI_MENU:	.asciz "soGHMIDI MENU           "
-Str_MIDI_PART_SETTING_2:	.asciz "MIDI PART SETTING   "
-Str_CONTROL_MESSAGES_4:	.asciz "CONTROL MESSAGES    "
-Str_REALTIME_MESSAGES_4:	.asciz "REALTIME MESSAGES   "
-Str_COMMON_SETTING_4:	.asciz "COMMON SETTING      "
-Str_INPUT_OUTPUT_SETTING_4:	.asciz "INPUT/OUTPUT SETTING"
-Str_MIDI_PRESETS_4:	.asciz "MIDI PRESETS        "
-Str_MODE_SETTING_5:	.asciz "MODE SETTING        "
-Str_COMPUTER_CONNECTION_4:	.asciz "COMPUTER CONNECTION "
+
+Text_MIDI_PART_SETTING:	# 8 strings of 20 characters, NUL-terminated
+	.asciz	"MIDI PART SETTING   "
+	.asciz	"CONTROL MESSAGES    "
+	.asciz	"REALTIME MESSAGES   "
+	.asciz	"COMMON SETTING      "
+	.asciz	"INPUT/OUTPUT SETTING"
+	.asciz	"MIDI PRESETS        "
+	.asciz	"MODE SETTING        "
+	.asciz	"COMPUTER CONNECTION "
 .incbin_range "baserom/kn2400_program.rom", 0x077091, 0x077094
 data_48477094:
 .incbin_range "baserom/kn2400_program.rom", 0x077094, 0x077108
+
 Str_pGHCUSTOMIZE_MENU:	.asciz "\x91pGHCUSTOMIZE MENU      "
 Str_DISPLAY_TIME_OUT_5:	.asciz "DISPLAY TIME OUT    "
 Str_MIDI_SET_LOAD_OPTION:	.asciz "MIDI SET LOAD OPTION"
@@ -20944,7 +22892,7 @@ Str_DISPLAY_TIME_OUT_6:	.asciz "DISPLAY TIME OUT    "
 Str_MIDI_SET_LOAD_OPTION_2:	.asciz "MIDI SET LOAD OPTION"
 Str_DATA_PROTECTION_6:	.asciz "DATA PROTECTION     "
 Str_LANGUAGE_SETTING_6:	.asciz "LANGUAGE SETTING    "
-Str_SD_PREFERENCES_6:	.asciz "SD PREFERENCES      "
+Str_SD_PREFERENCES_5:	.asciz "SD PREFERENCES      "
 .incbin_range "baserom/kn2400_program.rom", 0x07725E, 0x077260
 data_48477260:
 .incbin_range "baserom/kn2400_program.rom", 0x077260, 0x0772B0
@@ -23100,8 +25048,9 @@ data_4847DAD4:
 .incbin_range "baserom/kn2400_program.rom", 0x07DAD4, 0x07DADC
 data_4847DADC:
 .incbin_range "baserom/kn2400_program.rom", 0x07DADC, 0x07DAE8
-data_4847DAE8:
-	.space	144, 0x00
+
+Bitmap_FDCstopBitmapCheck_Pixels:	# 12 x 12, 8 bit(s) a pixel, rows padded to even bytes: the bitmap FDCstopBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_FDCstopBitmapCheck_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_FDCstopBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 12 12) from src/program/data/media/Bitmap_FDCstopBitmapCheck_Pixels.png
 
 ptrs_4847DB78:
 	.long	func_486605C3_entry_L2db
@@ -23772,14 +25721,16 @@ Str_9_Metal:	.asciz "9:Metal     "
 	.align	4, 0xFF
 Str_X_ERROR:	.asciz "X:ERROR--"
 	.align	4, 0xFF
-data_4847FE60:
-.incbin_range "baserom/kn2400_program.rom", 0x07FE60, 0x0800A0
+
+Bitmap_WallSetBitmapCheck_Pixels:	# 24 x 24, 8 bit(s) a pixel, rows padded to even bytes: the bitmap WallSetBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_WallSetBitmapCheck_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_WallSetBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 24 24) from src/program/data/media/Bitmap_WallSetBitmapCheck_Pixels.png
 data_484800A0:
 .incbin_range "baserom/kn2400_program.rom", 0x0800A0, 0x0800B2
 data_484800B2:
 .incbin_range "baserom/kn2400_program.rom", 0x0800B2, 0x0800C4
 data_484800C4:
 .incbin_range "baserom/kn2400_program.rom", 0x0800C4, 0x0800DC
+
 Str_NO_49:	.asciz " NO  "
 Str_YES_13:	.asciz " YES "
 
@@ -25214,26 +27165,24 @@ data_48485ED8:
 .incbin_range "baserom/kn2400_program.rom", 0x085ED8, 0x085EF0
 data_48485EF0:
 .incbin_range "baserom/kn2400_program.rom", 0x085EF0, 0x085FF0
-data_48485FF0:
-.incbin_range "baserom/kn2400_program.rom", 0x085FF0, 0x086FF8
-data_48486FF8:
-.incbin_range "baserom/kn2400_program.rom", 0x086FF8, 0x088000
-data_48488000:
-.incbin_range "baserom/kn2400_program.rom", 0x088000, 0x089008
-data_48489008:
-.incbin_range "baserom/kn2400_program.rom", 0x089008, 0x08A010
-data_4848A010:
-.incbin_range "baserom/kn2400_program.rom", 0x08A010, 0x08B018
-data_4848B018:
-.incbin_range "baserom/kn2400_program.rom", 0x08B018, 0x08B9CC
-data_4848B9CC:
-.incbin_range "baserom/kn2400_program.rom", 0x08B9CC, 0x08BC88
-data_4848BC88:
-.incbin_range "baserom/kn2400_program.rom", 0x08BC88, 0x08BCDD
-Str_c00_s:	.asciz "\xE0`c00<s\xFE"
-.incbin_range "baserom/kn2400_program.rom", 0x08BCE6, 0x08BD07
-Str_e0py3:	.asciz "\xCC e0py3\xF8"
-.incbin_range "baserom/kn2400_program.rom", 0x08BD10, 0x08BF44
+
+Bitmap_48676BBA_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_48676BBA answers MT_GetBitmapData with (src/program/data/media/Bitmap_48676BBA_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_48676BBA_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_48676BBA_Pixels.png
+Bitmap_48676BF5_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_48676BF5 answers MT_GetBitmapData with (src/program/data/media/Bitmap_48676BF5_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_48676BF5_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_48676BF5_Pixels.png
+Bitmap_48676C30_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_48676C30 answers MT_GetBitmapData with (src/program/data/media/Bitmap_48676C30_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_48676C30_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_48676C30_Pixels.png
+Bitmap_48676C6B_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_48676C6B answers MT_GetBitmapData with (src/program/data/media/Bitmap_48676C6B_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_48676C6B_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_48676C6B_Pixels.png
+Bitmap_48676CA6_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_48676CA6 answers MT_GetBitmapData with (src/program/data/media/Bitmap_48676CA6_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_48676CA6_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_48676CA6_Pixels.png
+BitmapKn2400_Pixels:	# 130 x 138, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapKn2400 answers MT_GetBitmapData with (src/program/data/media/BitmapKn2400_Pixels.png)
+	.incbin	"build/bitmaps/BitmapKn2400_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 130 138) from src/program/data/media/BitmapKn2400_Pixels.png
+BitmapNx_Pixels:	# 100 x 50, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapNx answers MT_GetBitmapData with (src/program/data/media/BitmapNx_Pixels.png)
+	.incbin	"build/bitmaps/BitmapNx_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 100 50) from src/program/data/media/BitmapNx_Pixels.png
+BitmapGm2_Pixels:	# 100 x 50, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapGm2 answers MT_GetBitmapData with (src/program/data/media/BitmapGm2_Pixels.png)
+	.incbin	"build/bitmaps/BitmapGm2_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 100 50) from src/program/data/media/BitmapGm2_Pixels.png
+
 Field_AcMidiPartGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcMidiPartGridBox_fixedrow:	.asciz "fixedrow"
 Field_AcMidiPartGridBox_func:	.asciz "func"
@@ -30761,12 +32710,14 @@ Str_TT_SEDNAME:	.asciz "TT_SEDNAME"
 	.align	4, 0xFF
 Str_TT_SELFOVIEW:	.asciz "TT_SELFOVIEW"
 	.align	4, 0xFF
-data_4849CFD0:
-.incbin_range "baserom/kn2400_program.rom", 0x09CFD0, 0x09D010
-data_4849D010:
-	.space	106, 0x00
-.incbin_range "baserom/kn2400_program.rom", 0x09D07A, 0x09D644
-	.space	108, 0x00
+
+BitmapKenbanSe_Palette:	# 16 colours, 0x00BBGGRR (BitmapKenbanSe: MT_GetBitmapPalette)
+	.long	0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00C0C0C0
+	.long	0x00808080, 0x000000FF, 0x0000FF00, 0x0000FFFF, 0x00FF0000, 0x00FF00FF, 0x00FFFF00, 0x00FFFFFF
+
+BitmapKenbanSe_Pixels:	# 209 x 16, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapKenbanSe answers MT_GetBitmapData with (src/program/data/media/BitmapKenbanSe_Pixels.png)
+	.incbin	"build/bitmaps/BitmapKenbanSe_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 209 16) from src/program/data/media/BitmapKenbanSe_Pixels.png
+
 Str_MD_SOUNDEDIT_5:	.asciz "MD_SOUNDEDIT"
 	.align	4, 0xFF
 Str_MD_SOUNDEDIT_4:	.asciz "MD_SOUNDEDIT"
@@ -31316,9 +33267,11 @@ Str_3d_102:	.asciz "%3d"
 Str_3d_101:	.asciz "%3d"
 Str_3d_100:	.asciz "%3d"
 Str_3d_99:	.asciz "%3d"
-data_4849E730:
-	.space	96, 0x00
-.incbin_range "baserom/kn2400_program.rom", 0x09E790, 0x09EAB0
+
+BitmapConnection_Pixels:	# 35 x 149, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapConnection answers MT_GetBitmapData with (src/program/data/media/BitmapConnection_Pixels.png)
+	.incbin	"build/bitmaps/BitmapConnection_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 35 149) from src/program/data/media/BitmapConnection_Pixels.png
+	.align	4, 0xFF
+
 Str_empty_959:	.asciz "   |   |      |    |     |      |         |   |    |   |    |   "
 	.align	4, 0xFF
 Str_1st_2nd_3rd_4th_8:	.asciz "|-|1st|2nd|3rd|4th"
@@ -33037,9 +34990,23 @@ Str_TT_DPMDLYDOC:	.asciz "TT_DPMDLYDOC"
 	.align	4, 0xFF
 Str_TT_DPMDLYPD:	.asciz "TT_DPMDLYPD"
 Str_TT_DPMDLYSMFLYR:	.asciz "TT_DPMDLYSMFLYR"
-.incbin_range "baserom/kn2400_program.rom", 0x0A4044, 0x0A4100
+
+Text_1234567890123456:	# 11 strings of 16 characters, NUL-terminated
+	.asciz	"1234567890123456"
+	.asciz	" 234567890123456"
+	.asciz	"1 34567890123456"
+	.asciz	"12 4567890123456"
+	.asciz	"123 567890123456"
+	.asciz	"1234 67890123456"
+	.asciz	"12345 7890123456"
+	.asciz	"123456 890123456"
+	.asciz	"1234567 90123456"
+	.asciz	"12345678 0123456"
+	.asciz	"123456789 123456"
+	.align	4, 0xFF
 data_484A4100:
 .incbin_range "baserom/kn2400_program.rom", 0x0A4100, 0x0A4124
+
 Str_Lyrc_2:	.asciz "Lyrc"
 	.align	4, 0xFF
 Str_empty_864:	.asciz "                         "
@@ -33939,20 +35906,23 @@ Str_In_7th_C_8dB_a0:	.asciz "In 7th C~8dB~a0 "
 Str_Maj_incl_F:	.asciz "Maj incl. F "
 Str_Maj_incl_A:	.asciz "Maj incl. A "
 Str_Maj_incl_B_a0:	.asciz "Maj incl. B~a0"
-Str_NATURAL_MIN:	.asciz "NATURAL MIN "
-Str_HARMONIC_MIN:	.asciz "HARMONIC MIN"
-Str_MELODIC_UP:	.asciz "MELODIC UP  "
-Str_MELODIC_DOWN:	.asciz "MELODIC DOWN"
-Str_Basic_CEG:	.asciz "Basic CEG   "
-Str_Rock_CG:	.asciz "Rock  CG    "
-Str_Tension_CEGB:	.asciz "Tension CEGB"
-Str_Tension_CDEG:	.asciz "Tension CDEG"
-Str_Tension_DEGB:	.asciz "Tension DEGB"
-Str_Tension_CEGA:	.asciz "Tension CEGA"
-Str_Tension_ADGC:	.asciz "Tension ADGC"
-Str_Tension_EAGD:	.asciz "Tension EAGD"
-Str_Tension_CEAD:	.asciz "Tension CEAD"
+
+Text_NATURAL_MIN:	# 13 strings of 12 characters, NUL-terminated
+	.asciz	"NATURAL MIN "
+	.asciz	"HARMONIC MIN"
+	.asciz	"MELODIC UP  "
+	.asciz	"MELODIC DOWN"
+	.asciz	"Basic CEG   "
+	.asciz	"Rock  CG    "
+	.asciz	"Tension CEGB"
+	.asciz	"Tension CDEG"
+	.asciz	"Tension DEGB"
+	.asciz	"Tension CEGA"
+	.asciz	"Tension ADGC"
+	.asciz	"Tension EAGD"
+	.asciz	"Tension CEAD"
 	.align	4, 0xFF
+
 Str_Keep_near_C:	.asciz "Keep near C "
 Str_Through:	.asciz "Through     "
 Str_Root_Shift:	.asciz "Root Shift  "
@@ -34791,9 +36761,43 @@ Str_empty_818:	.asciz "                                       "
 Str_empty_817:	.asciz "- - -                                  "
 Str_empty_816:	.asciz "                                       "
 Str_08x_08x_2:	.asciz "%08x, %08x                  "
-.incbin_range "baserom/kn2400_program.rom", 0x0A8AE5, 0x0A8BA2
+	.align	4, 0xFF
+
+Text_20:	# 31 strings of 5 characters, NUL-terminated
+	.asciz	"   20"
+	.asciz	"   25"
+	.asciz	" 31.5"
+	.asciz	"   40"
+	.asciz	"   50"
+	.asciz	"   63"
+	.asciz	"   80"
+	.asciz	"  100"
+	.asciz	"  125"
+	.asciz	"  160"
+	.asciz	"  200"
+	.asciz	"  250"
+	.asciz	"  315"
+	.asciz	"  400"
+	.asciz	"  500"
+	.asciz	"  630"
+	.asciz	"  800"
+	.asciz	"   1k"
+	.asciz	"1.25k"
+	.asciz	" 1.6k"
+	.asciz	"   2k"
+	.asciz	" 2.5k"
+	.asciz	"3.15k"
+	.asciz	"   4k"
+	.asciz	"   5k"
+	.asciz	" 6.3k"
+	.asciz	"   8k"
+	.asciz	"  10k"
+	.asciz	"12.5k"
+	.asciz	"  16k"
+	.asciz	"  20k"
 data_484A8BA2:
 .incbin_range "baserom/kn2400_program.rom", 0x0A8BA2, 0x0A8C20
+
 Str_ERROR_5:	.asciz "ERROR"
 	.align	4, 0xFF
 Str_OFF_51:	.asciz "OFF       "
@@ -38052,2018 +40056,4 @@ Str_sHz_2:	.asciz "%sHz"
 	.align	4, 0xFF
 Str_empty_772:	.asciz "---"
 Str_5_1f_2:	.asciz "%+5.1f"
-.incbin_range "baserom/kn2400_program.rom", 0x0B352F, 0x0B35EA
-data_484B35EA:
-.incbin_range "baserom/kn2400_program.rom", 0x0B35EA, 0x0B3668
-Str_ERROR_3:	.asciz "ERROR"
-	.align	4, 0xFF
-Str_2d_34:	.asciz "%2d"
-Str_2d_33:	.asciz "%2d"
-Str_2d_32:	.asciz "%2d"
-Str_DRUM1_3:	.asciz " DRUM1 "
-Str_BASS_7:	.asciz " BASS  "
-Str_ACCOMP1_4:	.asciz "ACCOMP1"
-Str_ACCOMP2_4:	.asciz "ACCOMP2"
-Str_ACCOMP3_4:	.asciz "ACCOMP3"
-Str_ACCOMP4_4:	.asciz "ACCOMP4"
-Str_ACCOMP5_4:	.asciz "ACCOMP5"
-Str_DRUM2_3:	.asciz " DRUM2 "
-Str_ALL_39:	.asciz "  ALL  "
-
-ptrs_484B36C4:
-	.long	Str_DRUM1_3
-	.long	Str_BASS_7
-	.long	Str_ACCOMP1_4
-	.long	Str_ACCOMP2_4
-	.long	Str_ACCOMP3_4
-	.long	Str_ACCOMP4_4
-	.long	Str_ACCOMP5_4
-	.long	Str_DRUM2_3
-data_484B36E4:
-.incbin_range "baserom/kn2400_program.rom", 0x0B36E4, 0x0B36E8
-data_484B36E8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B36E8, 0x0B36F4
-
-Str_2d_31:	.asciz "%2d"
-Str_2d_30:	.asciz "%2d"
-Str_Major_and_Minor_Patterns_will_be_edited:	.asciz "Major and Minor Patterns will be edited at the same time."
-Str_Dur_und_Moll_Pattern_werden_gleichzeitig_2:	.asciz "Dur und Moll Pattern werden gleichzeitig ver\xE4ndert."
-Str_Les_motifs_Majeurs_et_mineurs_seront_dit:	.asciz "Les motifs Majeurs et mineurs seront \xE9dit\xE9s simultan\xE9ment."
-Str_Las_frases_de_acordes_mayores_y_menores_2:	.asciz "Las frases de acordes mayores y menores se editar\xE1n al mismo tiempo."
-	.align	4, 0xFF
-
-ptrs_484B37EC:
-	.long	Str_Major_and_Minor_Patterns_will_be_edited
-	.long	Str_Dur_und_Moll_Pattern_werden_gleichzeitig_2
-	.long	Str_Les_motifs_Majeurs_et_mineurs_seront_dit
-	.long	Str_Las_frases_de_acordes_mayores_y_menores_2
-	.long	Str_Major_and_Minor_Patterns_will_be_edited
-	.long	Str_Major_and_Minor_Patterns_will_be_edited
-	.long	Str_Major_and_Minor_Patterns_will_be_edited
-
-Str_2d_29:	.asciz "%2d"
-Str_2d_28:	.asciz "%2d"
-Str_2d_27:	.asciz "%2d"
-Str_2d_26:	.asciz "%2d"
-Str_Major_and_Minor_Patterns_will_be_changed:	.asciz "Major and Minor Patterns will be changed at the same time."
-Str_Dur_und_Moll_Pattern_werden_gleichzeitig:	.asciz "Dur und Moll Pattern werden gleichzeitig ge\xE4ndert."
-Str_Les_motifs_Majeurs_et_mineurs_seront_mod:	.asciz "Les motifs Majeurs et mineurs seront modifi\xE9s simultan\xE9ment."
-Str_Las_frases_de_acordes_mayores_y_menores:	.asciz "Las frases de acordes mayores y menores se cambiar\xE1n al mismo tiempo."
-	.align	4, 0xFF
-
-ptrs_484B390C:
-	.long	Str_Major_and_Minor_Patterns_will_be_changed
-	.long	Str_Dur_und_Moll_Pattern_werden_gleichzeitig
-	.long	Str_Les_motifs_Majeurs_et_mineurs_seront_mod
-	.long	Str_Las_frases_de_acordes_mayores_y_menores
-	.long	Str_Major_and_Minor_Patterns_will_be_changed
-	.long	Str_Major_and_Minor_Patterns_will_be_changed
-	.long	Str_Major_and_Minor_Patterns_will_be_changed
-
-Str_Special_3:	.asciz "Special"
-Str_empty_771:	.asciz "----   "
-Str_Other_No_3d_3:	.asciz "Other No.%3d"
-	.align	4, 0xFF
-Str_empty_770:	.asciz "----        "
-	.align	4, 0xFF
-data_484B3958:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3958, 0x0B39A8
-data_484B39A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B39A8, 0x0B3A28
-data_484B3A28:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3A28, 0x0B3B28
-data_484B3B28:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3B28, 0x0B3BA8
-data_484B3BA8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3BA8, 0x0B3C28
-data_484B3C28:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3C28, 0x0B3CA8
-data_484B3CA8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3CA8, 0x0B3D28
-data_484B3D28:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3D28, 0x0B3DA8
-data_484B3DA8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3DA8, 0x0B3E28
-data_484B3E28:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3E28, 0x0B3EA8
-data_484B3EA8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3EA8, 0x0B3F28
-data_484B3F28:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3F28, 0x0B3FA8
-data_484B3FA8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B3FA8, 0x0B4028
-data_484B4028:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4028, 0x0B40A8
-data_484B40A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B40A8, 0x0B4128
-data_484B4128:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4128, 0x0B41A8
-data_484B41A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B41A8, 0x0B4228
-data_484B4228:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4228, 0x0B42A8
-data_484B42A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B42A8, 0x0B4328
-data_484B4328:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4328, 0x0B43A8
-data_484B43A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B43A8, 0x0B4428
-data_484B4428:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4428, 0x0B44A8
-data_484B44A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B44A8, 0x0B4528
-data_484B4528:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4528, 0x0B45A8
-data_484B45A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B45A8, 0x0B4628
-data_484B4628:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4628, 0x0B46A8
-data_484B46A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B46A8, 0x0B4728
-data_484B4728:
-.incbin_range "baserom/kn2400_program.rom", 0x0B4728, 0x0B47A8
-data_484B47A8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B47A8, 0x0B47B0
-data_484B47B0:
-.incbin_range "baserom/kn2400_program.rom", 0x0B47B0, 0x0B47B2
-data_484B47B2:
-.incbin_range "baserom/kn2400_program.rom", 0x0B47B2, 0x0B47B8
-data_484B47B8:
-.incbin_range "baserom/kn2400_program.rom", 0x0B47B8, 0x0B47C0
-Field_AcPadBankSel_padbank:	.asciz "padbank"
-Field_AcPadBankSel_padtype:	.asciz "padtype"
-Field_AcPadBankSel_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcPadBankSel:
-	.long	Field_AcPadBankSel_padbank
-	.long	Field_AcPadBankSel_padtype
-	.long	Field_AcPadBankSel_end
-
-Field_AcPadNameBox_padno:	.asciz "padno"
-Field_AcPadNameBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcPadNameBox:
-	.long	Field_AcPadNameBox_padno
-	.long	Field_AcPadNameBox_end
-
-Field_AcPadBarBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcPadBarBox:
-	.long	Field_AcPadBarBox_end
-
-Field_AcPadCapaBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcPadCapaBox:
-	.long	Field_AcPadCapaBox_end
-
-Field_AcMspCompileGridBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcMspCompileGridBox:
-	.long	Field_AcMspCompileGridBox_end
-
-Field_AcMspCompileBnkNmBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcMspCompileBnkNmBox:
-	.long	Field_AcMspCompileBnkNmBox_end
-
-Field_AcRecPadNameBox_padno:	.asciz "padno"
-Field_AcRecPadNameBox_end:	.asciz ""
-	.align	4, 0xFF
-
-ClassFields_AcRecPadNameBox:
-	.long	Field_AcRecPadNameBox_padno
-	.long	Field_AcRecPadNameBox_end
-
-ClassSig_AcPadBankSel:	.asciz "FF"
-ClassSig_AcPadNameBox:	.asciz "F"
-ClassSig_AcPadBarBox:	.asciz ""
-ClassSig_AcPadCapaBox:	.asciz ""
-ClassSig_AcMspCompileGridBox:	.asciz ""
-ClassSig_AcMspCompileBnkNmBox:	.asciz ""
-ClassSig_AcRecPadNameBox:	.asciz "F"
-ClassName_AcPadBankSel:	.asciz "AcPadBankSel"
-ClassName_AcPadNameBox:	.asciz "AcPadNameBox"
-ClassName_AcPadBarBox:	.asciz "AcPadBarBox"
-ClassName_AcPadCapaBox:	.asciz "AcPadCapaBox"
-ClassName_AcMspCompileGridBox:	.asciz "AcMspCompileGridBox"
-ClassName_AcMspCompileBnkNmBox:	.asciz "AcMspCompileBnkNmBox"
-ClassName_AcRecPadNameBox:	.asciz "AcRecPadNameBox"
-	.align	4, 0xFF
-Str_MT_GetInternalData_2:	.asciz "MT_GetInternalData"
-	.align	4, 0xFF
-FnName_AcPadBankSelProc:	.asciz "AcPadBankSelProc"
-FnName_AcPadNameBoxProc:	.asciz "AcPadNameBoxProc"
-FnName_AcPadBarBoxProc:	.asciz "AcPadBarBoxProc"
-FnName_AcPadCapaBoxProc:	.asciz "AcPadCapaBoxProc"
-FnName_AcMspCompileGridBoxProc:	.asciz "AcMspCompileGridBoxProc"
-FnName_AcMspCompileBnkNmBoxProc:	.asciz "AcMspCompileBnkNmBoxProc"
-FnName_AcRecPadNameBoxProc:	.asciz "AcRecPadNameBoxProc"
-.incbin_range "baserom/kn2400_program.rom", 0x0B4934, 0x0B4938
-FnName_PadRecBankSelFunc:	.asciz "PadRecBankSelFunc"
-FnName_MspBnkShow:	.asciz "MspBnkShow"
-FnName_PadPartSel:	.asciz "PadPartSel"
-FnName_PadRecSoloFunc:	.asciz "PadRecSoloFunc"
-FnName_FE_PadRecQtz:	.asciz "FE_PadRecQtz"
-FnName_FE_PadRecChdModGrp:	.asciz "FE_PadRecChdModGrp"
-FnName_FE_PadRecChdModTyp:	.asciz "FE_PadRecChdModTyp"
-FnName_PadInstClrOnOff:	.asciz "PadInstClrOnOff"
-FnName_PadAllEraseOnOff:	.asciz "PadAllEraseOnOff"
-FnName_PadPartClrOk:	.asciz "PadPartClrOk"
-FnName_MspPadRecShowHideFunc:	.asciz "MspPadRecShowHideFunc"
-FnName_MspMemNmChk:	.asciz "MspMemNmChk"
-FnName_MspMemNmOk:	.asciz "MspMemNmOk"
-FnName_MspCompileSetGridCheck:	.asciz "MspCompileSetGridCheck"
-FnName_MspRGrpSetBnkFunc:	.asciz "MspRGrpSetBnkFunc"
-FnName_MspRgpShowHideFunc:	.asciz "MspRgpShowHideFunc"
-FnName_FE_PadRecSetKey:	.asciz "FE_PadRecSetKey"
-FnName_FE_PadRecSetChord:	.asciz "FE_PadRecSetChord"
-FnName_MspPadNmOk:	.asciz "MspPadNmOk"
-FnName_MspPadNmChk:	.asciz "MspPadNmChk"
-FnName_PadMemClrYes:	.asciz "PadMemClrYes"
-FnName_PadPatSelOK:	.asciz "PadPatSelOK"
-FnName_FuncEdit_srcPadBank:	.asciz "FuncEdit_srcPadBank"
-FnName_FuncEdit_srcPad:	.asciz "FuncEdit_srcPad"
-FnName_FuncEdit_dstPadBank:	.asciz "FuncEdit_dstPadBank"
-FnName_FuncEdit_dstPad:	.asciz "FuncEdit_dstPad"
-FnName_MspPnCpOK:	.asciz "MspPnCpOK"
-FnName_PadPnCpEditFunc:	.asciz "PadPnCpEditFunc"
-FnName_PadRecPtChdGrid:	.asciz "PadRecPtChdGrid"
-FnName_PadPtChdOK:	.asciz "PadPtChdOK"
-FnName_FE_PadPlaySetSynchro:	.asciz "FE_PadPlaySetSynchro"
-FnName_FE_PadPlaySetLoop:	.asciz "FE_PadPlaySetLoop"
-FnName_PadPartSetGrid1:	.asciz "PadPartSetGrid1"
-FnName_PadPartSetGrid2:	.asciz "PadPartSetGrid2"
-FnName_PadPartSetGrid3:	.asciz "PadPartSetGrid3"
-FnName_MspGrpNmChk:	.asciz "MspGrpNmChk"
-FnName_MspGrpNmOk:	.asciz "MspGrpNmOk"
-FnName_PadPtnClrYes:	.asciz "PadPtnClrYes"
-FnName_FE_PadRecMeas:	.asciz "FE_PadRecMeas"
-FnName_FE_PadRecTS:	.asciz "FE_PadRecTS"
-FnName_PadMeasTSOK:	.asciz "PadMeasTSOK"
-FnName_MspPadSelSShowHideFunc:	.asciz "MspPadSelSShowHideFunc"
-FnName_PadMeasTSYes:	.asciz "PadMeasTSYes"
-FnName_SeqToPadCopyGrid:	.asciz "SeqToPadCopyGrid"
-FnName_FE_SeqToPadFstMeas:	.asciz "FE_SeqToPadFstMeas"
-FnName_FE_SeqToPadLstMeas:	.asciz "FE_SeqToPadLstMeas"
-FnName_FE_SeqToPadTrans:	.asciz "FE_SeqToPadTrans"
-FnName_FE_SeqToPadMemory:	.asciz "FE_SeqToPadMemory"
-FnName_FE_SeqToPadPattern:	.asciz "FE_SeqToPadPattern"
-FnName_SeqToPadYes:	.asciz "SeqToPadYes"
-FnName_Seq2PadCpEditFunc:	.asciz "Seq2PadCpEditFunc"
-.incbin_range "baserom/kn2400_program.rom", 0x0B4C58, 0x0B4C5C
-FnName_TtPadBankSel:	.asciz "TtPadBankSel"
-FnName_TtMspReal:	.asciz "TtMspReal"
-FnName_TtMspPadSel:	.asciz "TtMspPadSel"
-FnName_TtMspPnCp:	.asciz "TtMspPnCp"
-FnName_TtMspPtChd:	.asciz "TtMspPtChd"
-FnName_TtMspPadSel_s:	.asciz "TtMspPadSel_s"
-FnName_TtMspSeqCp:	.asciz "TtMspSeqCp"
-FnName_TtMspChdStep:	.asciz "TtMspChdStep"
-FnName_MainPAD_GetPadBankName:	.asciz "MainPAD_GetPadBankName"
-FnName_MainPAD_GetPadName:	.asciz "MainPAD_GetPadName"
-FnName_MainPAD_SetUserPadRecSolo:	.asciz "MainPAD_SetUserPadRecSolo"
-FnName_MainPAD_SetUserPadRecQt:	.asciz "MainPAD_SetUserPadRecQt"
-FnName_MainPAD_SetUserPadRecordArrange:	.asciz "MainPAD_SetUserPadRecordArrange"
-FnName_MainPAD_SetUserPadNoteClear:	.asciz "MainPAD_SetUserPadNoteClear"
-FnName_MainPAD_SetUserPadAllErase:	.asciz "MainPAD_SetUserPadAllErase"
-FnName_MainPAD_UserPadPartClear:	.asciz "MainPAD_UserPadPartClear"
-FnName_MainPAD_SetPadBankName:	.asciz "MainPAD_SetPadBankName"
-FnName_MainPAD_SetCompilePad:	.asciz "MainPAD_SetCompilePad"
-FnName_MainPAD_SetUserPadRecordChord:	.asciz "MainPAD_SetUserPadRecordChord"
-FnName_MainPAD_SetUserPadName:	.asciz "MainPAD_SetUserPadName"
-FnName_MainPAD_UserPadBankClear:	.asciz "MainPAD_UserPadBankClear"
-FnName_MainPAD_PadPhraseCopy:	.asciz "MainPAD_PadPhraseCopy"
-FnName_MainPAD_SetUserPadRecArrAll:	.asciz "MainPAD_SetUserPadRecArrAll"
-FnName_MainPAD_SetUserPadSync:	.asciz "MainPAD_SetUserPadSync"
-FnName_MainPAD_SetUserPadLoop:	.asciz "MainPAD_SetUserPadLoop"
-FnName_MainPAD_SetUserPadPartSetting:	.asciz "MainPAD_SetUserPadPartSetting"
-FnName_MainPAD_UserPadClear:	.asciz "MainPAD_UserPadClear"
-FnName_MainPAD_SetUserPadMeasure:	.asciz "MainPAD_SetUserPadMeasure"
-FnName_MainPAD_SetUserPadMsrTmSigAftClr:	.asciz "MainPAD_SetUserPadMsrTmSigAftClr"
-FnName_MainPAD_PadCopyFromSeq:	.asciz "MainPAD_PadCopyFromSeq"
-.incbin_range "baserom/kn2400_program.rom", 0x0B4EE6, 0x0B4EE8
-Str_PADS_MENU:	.asciz "PADS MENU"
-	.align	4, 0xFF
-
-	TtlScreen	MspMenuScreen, sub=MspMenuScreen_TitleMenu_PHRASE_COPY, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_MSPMENU, window=MspMenuScreen_window, title=Str_PADS_MENU, icon=197	# title "PADS MENU"
-
-Str_PHRASE_COPY:	.asciz "PHRASE COPY"
-
-		AcTitleMenu	MspMenuScreen_TitleMenu_PHRASE_COPY, super=MspMenuScreen, next=MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY, flag=VF_Const, X=163, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=MspMenuScreen_TitleMenu_PHRASE_COPY_selected, str=Str_PHRASE_COPY, title=TT_MSPPNCP, icon=198	# str "PHRASE COPY"
-
-Str_SEQ_TO_PAD_COPY:	.asciz "SEQ TO PAD COPY"
-
-		AcTitleMenu	MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY, super=MspMenuScreen, next=MspMenuScreen_Line1, prev=MspMenuScreen_TitleMenu_PHRASE_COPY, flag=VF_Const, X=163, Y=154, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right4, selected=MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY_selected, str=Str_SEQ_TO_PAD_COPY, title=TT_MSPSEQCP, icon=178	# str "SEQ TO PAD COPY"
-		VwLine	MspMenuScreen_Line1, super=MspMenuScreen, next=MspMenuScreen_Line2, prev=MspMenuScreen_TitleMenu_SEQ_TO_PAD_COPY, flag=VF_Const, X=55, Y=85, W=10, H=1, color=CL_White, linemode=1
-		VwLine	MspMenuScreen_Line2, super=MspMenuScreen, next=MspMenuScreen_TitleMenu_COMPILE_SET, prev=MspMenuScreen_Line1, flag=VF_Const, X=55, Y=126, W=10, H=1, color=CL_White, linemode=1
-
-Str_COMPILE_SET:	.asciz "COMPILE SET"
-
-		AcTitleMenu	MspMenuScreen_TitleMenu_COMPILE_SET, super=MspMenuScreen, next=MspMenuScreen_Line3, prev=MspMenuScreen_Line2, flag=VF_Const, X=163, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=MspMenuScreen_TitleMenu_COMPILE_SET_selected, str=Str_COMPILE_SET, title=TT_MSPGROUP, icon=167	# str "COMPILE SET"
-		VwLine	MspMenuScreen_Line3, super=MspMenuScreen, next=MspMenuScreen_Line4, prev=MspMenuScreen_TitleMenu_COMPILE_SET, flag=VF_Const, X=65, Y=85, W=1, H=85, color=CL_White, linemode=1
-		VwLine	MspMenuScreen_Line4, super=MspMenuScreen, next=MspMenuScreen_Label_RECORDING, prev=MspMenuScreen_Line3, flag=VF_Const, X=55, Y=169, W=10, H=1, color=CL_White, linemode=1
-
-Str_RECORDING_3:	.asciz "RECORDING"
-	.align	4, 0xFF
-
-		VwLabel	MspMenuScreen_Label_RECORDING, super=MspMenuScreen, next=MspMenuScreen_ExitMode1, prev=MspMenuScreen_Line4, flag=VF_Const, X=75, Y=110, W=76, H=19, str=Str_RECORDING_3, fontcolor=CL_White	# str "RECORDING"
-		IvExitMode	MspMenuScreen_ExitMode1, super=MspMenuScreen, next=MspMenuScreen_FuncMenu_A, prev=MspMenuScreen_Label_RECORDING, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
-
-Str_A_2:	.asciz "A"
-	.align	4, 0xFF
-
-		AcFuncMenu	MspMenuScreen_FuncMenu_A, super=MspMenuScreen, next=MspMenuScreen_FuncMenu_C, prev=MspMenuScreen_ExitMode1, flag=VF_Const, X=8, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left2, selected=MspMenuScreen_FuncMenu_A_selected, str=Str_A_2, func=FN_PadRecBankSelFunc, icon=166	# str "A"
-
-Str_C_2:	.asciz "C"
-	.align	4, 0xFF
-
-		AcFuncMenu	MspMenuScreen_FuncMenu_C, super=MspMenuScreen, next=MspMenuScreen_FuncMenu_B, prev=MspMenuScreen_FuncMenu_A, flag=VF_Const, X=8, Y=154, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left4, selected=MspMenuScreen_FuncMenu_C_selected, str=Str_C_2, func=FN_PadRecBankSelFunc, icon=166, vari=2	# str "C"
-
-Str_B_2:	.asciz "B"
-	.align	4, 0xFF
-
-		AcFuncMenu	MspMenuScreen_FuncMenu_B, super=MspMenuScreen, next=MspMenuScreen_Label_BANK, prev=MspMenuScreen_FuncMenu_C, flag=VF_Const, X=8, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left3, selected=MspMenuScreen_FuncMenu_B_selected, str=Str_B_2, func=FN_PadRecBankSelFunc, icon=166, vari=1	# str "B"
-
-Str_BANK_3:	.asciz "BANK"
-	.align	4, 0xFF
-
-		VwLabel	MspMenuScreen_Label_BANK, super=MspMenuScreen, prev=MspMenuScreen_FuncMenu_B, flag=VF_Const, X=75, Y=125, W=36, H=19, str=Str_BANK_3, fontcolor=CL_White	# str "BANK"
-
-Str_PADS_BANK_SELECT:	.asciz "PADS BANK SELECT"
-	.align	4, 0xFF
-
-	TtlScreen	MspBkslScreen, sub=MspBkslScreen_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=MspBkslScreen_window, title=Str_PADS_BANK_SELECT, icon=165	# title "PADS BANK SELECT"
-		IvPageControl	MspBkslScreen_PageControl1, super=MspBkslScreen, next=MspBkslScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=MspBksl1Win_id
-		IvPageControl	MspBkslScreen_PageControl2, super=MspBkslScreen, next=MspBkslScreen_PageControl3, prev=MspBkslScreen_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=2, window=MspBksl2Win_id
-		IvPageControl	MspBkslScreen_PageControl3, super=MspBkslScreen, sub=MspBkslScreen_ShowHide1, next=MspBkslWin, prev=MspBkslScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=3, window=MspBksl3Win_id
-			IvShowHide	MspBkslScreen_ShowHide1, super=MspBkslScreen_PageControl3, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspBnkShow
-		AcWindowPage	MspBkslWin, super=MspBkslScreen, prev=MspBkslScreen_PageControl3, flag=VF_Const, X=244, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=MspBkslWin_page, pagemin=1, pagemax=3
-
-Str_REALTIME_RECORDING_2:	.asciz "REALTIME RECORDING"
-	.align	4, 0xFF
-
-	TtlScreen	MspRealScreen, sub=MspRealScreen_TitleMenu_STEP_RECORD, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL_S, window=MspRealScreen_window, title=Str_REALTIME_RECORDING_2, icon=168	# title "REALTIME RECORDING"
-
-Str_STEP_RECORD_2:	.asciz "STEP RECORD"
-
-		AcTitleMenu	MspRealScreen_TitleMenu_STEP_RECORD, super=MspRealScreen, next=MspRealScreen_Box1, flag=VF_Const, X=8, Y=112, W=100, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left3, selected=MspRealScreen_TitleMenu_STEP_RECORD_selected, str=Str_STEP_RECORD_2, title=TT_MSPSTEP, icon=54	# str "STEP RECORD"
-		VwBox	MspRealScreen_Box1, super=MspRealScreen, sub=MspRealScreen_Label_KEY_IN_CHORD_MODIFY, next=MspRealScreen_IndexWideES1, prev=MspRealScreen_TitleMenu_STEP_RECORD, flag=VF_Const, X=106, Y=45, W=132, H=132, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-
-Str_KEY_IN_CHORD_MODIFY_3:	.asciz "KEY IN CHORD MODIFY"
-
-			VwLabel	MspRealScreen_Label_KEY_IN_CHORD_MODIFY, super=MspRealScreen_Box1, next=MspRealScreen_Label_GROUP, flag=VF_Const, X=112, Y=122, W=118, H=11, str=Str_KEY_IN_CHORD_MODIFY_3, font=3, fontcolor=CL_Text	# str "KEY IN CHORD MODIFY"
-
-Str_GROUP_9:	.asciz "GROUP="
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_GROUP, super=MspRealScreen_Box1, next=MspRealScreen_Label_TYPE, prev=MspRealScreen_Label_KEY_IN_CHORD_MODIFY, flag=VF_Const, X=112, Y=138, W=40, H=11, str=Str_GROUP_9, font=3, fontcolor=CL_White	# str "GROUP="
-
-Str_TYPE_6:	.asciz "TYPE ="
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_TYPE, super=MspRealScreen_Box1, next=PadRealChdModTyp, prev=MspRealScreen_Label_GROUP, flag=VF_Const, X=112, Y=154, W=40, H=11, str=Str_TYPE_6, font=3, fontcolor=CL_White	# str "TYPE ="
-
-Str_empty_97:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	PadRealChdModTyp, super=MspRealScreen_Box1, next=MspRealScreen_FuncEditBox1, prev=MspRealScreen_Label_TYPE, flag=VF_Const, X=150, Y=153, W=86, H=11, color=CL_WallPattern, index=3, caption=Str_empty_97, font=3, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=PadRealChdModTyp_selected, func=FN_FE_PadRecChdModTyp	# caption ""
-
-Str_empty_98:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspRealScreen_FuncEditBox1, super=MspRealScreen_Box1, next=MspRealScreen_PadCapaBox1, prev=PadRealChdModTyp, flag=VF_Const, X=150, Y=137, W=82, H=11, color=CL_WallPattern, index=2, caption=Str_empty_98, font=3, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=MspRealScreen_FuncEditBox1_selected, func=FN_FE_PadRecChdModGrp	# caption ""
-			AcPadCapaBox	MspRealScreen_PadCapaBox1, super=MspRealScreen_Box1, next=MspRealScreen_Label_MEASURE, prev=MspRealScreen_FuncEditBox1, flag=VF_Const, X=192, Y=72, W=40, H=16, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_MEASURE_8:	.asciz "MEASURE ="
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_MEASURE, super=MspRealScreen_Box1, next=MspRealScreen_PadBarBox1, prev=MspRealScreen_PadCapaBox1, flag=VF_Const, X=112, Y=52, W=76, H=19, str=Str_MEASURE_8, fontcolor=CL_White	# str "MEASURE ="
-			AcPadBarBox	MspRealScreen_PadBarBox1, super=MspRealScreen_Box1, next=MspRealScreen_FuncEditBox2, prev=MspRealScreen_Label_MEASURE, flag=VF_Const, X=186, Y=52, W=46, H=19, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_empty_99:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspRealScreen_FuncEditBox2, super=MspRealScreen_Box1, next=MspRealScreen_Label_QUANTIZE, prev=MspRealScreen_PadBarBox1, flag=VF_Const, X=192, Y=92, W=44, H=16, color=CL_WallPattern, index=1, caption=Str_empty_99, fontcolor=CL_White, align=1, length=4, editsw=ES_None, selected=MspRealScreen_FuncEditBox2_selected, func=FN_FE_PadRecQtz	# caption ""
-
-Str_QUANTIZE_3:	.asciz "QUANTIZE="
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_QUANTIZE, super=MspRealScreen_Box1, next=MspRealScreen_Label_MEMORY, prev=MspRealScreen_FuncEditBox2, flag=VF_Const, X=112, Y=92, W=76, H=19, str=Str_QUANTIZE_3, fontcolor=CL_White	# str "QUANTIZE="
-
-Str_MEMORY_12:	.asciz "MEMORY  ="
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_MEMORY, super=MspRealScreen_Box1, prev=MspRealScreen_Label_QUANTIZE, flag=VF_Const, X=112, Y=72, W=76, H=19, str=Str_MEMORY_12, fontcolor=CL_White	# str "MEMORY  ="
-		AcIndexWideES	MspRealScreen_IndexWideES1, super=MspRealScreen, next=MspRealScreen_IndexWideES2, prev=MspRealScreen_Box1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	MspRealScreen_IndexWideES2, super=MspRealScreen, next=MspRealScreen_Label_KEY_IN_CHORD_MODIFY2, prev=MspRealScreen_IndexWideES1, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-
-Str_KEY_IN_CHORD_MODIFY_4:	.asciz "KEY IN CHORD MODIFY"
-
-		VwLabel	MspRealScreen_Label_KEY_IN_CHORD_MODIFY2, super=MspRealScreen, next=MspRealScreen_Label_GROUP2, prev=MspRealScreen_IndexWideES2, flag=VF_Const, X=178, Y=190, W=118, H=11, str=Str_KEY_IN_CHORD_MODIFY_4, font=3, fontcolor=CL_Text	# str "KEY IN CHORD MODIFY"
-
-Str_GROUP_10:	.asciz "GROUP"
-	.align	4, 0xFF
-
-		VwLabel	MspRealScreen_Label_GROUP2, super=MspRealScreen, next=MspRealScreen_Label_TYPE2, prev=MspRealScreen_Label_KEY_IN_CHORD_MODIFY2, flag=VF_Const, X=184, Y=204, W=34, H=11, str=Str_GROUP_10, font=3, fontcolor=CL_White	# str "GROUP"
-
-Str_TYPE_7:	.asciz "TYPE"
-	.align	4, 0xFF
-
-		VwLabel	MspRealScreen_Label_TYPE2, super=MspRealScreen, next=MspRealScreen_Line1, prev=MspRealScreen_Label_GROUP2, flag=VF_Const, X=266, Y=204, W=28, H=11, str=Str_TYPE_7, font=3, fontcolor=CL_White	# str "TYPE"
-		VwLine	MspRealScreen_Line1, super=MspRealScreen, next=MspRealScreen_TitleMenu_PART_SETTING, prev=MspRealScreen_Label_TYPE2, flag=VF_Const, X=164, Y=194, W=10, H=1, color=CL_White, linemode=1
-
-Str_PART_SETTING_5:	.asciz "PART SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	MspRealScreen_TitleMenu_PART_SETTING, super=MspRealScreen, next=MspRealScreen_Line2, prev=MspRealScreen_Line1, flag=VF_Const, X=8, Y=70, W=100, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left2, selected=MspRealScreen_TitleMenu_PART_SETTING_selected, str=Str_PART_SETTING_5, title=TT_MSPPARTSET, icon=177	# str "PART SETTING"
-		VwLine	MspRealScreen_Line2, super=MspRealScreen, next=MspRealScreen_Line3, prev=MspRealScreen_TitleMenu_PART_SETTING, flag=VF_Const, X=302, Y=194, W=10, H=1, color=CL_White, linemode=1
-		VwLine	MspRealScreen_Line3, super=MspRealScreen, next=MspRealScreen_Line4, prev=MspRealScreen_Line2, flag=VF_Const, X=164, Y=194, W=1, H=13, color=CL_White, linemode=1
-		VwLine	MspRealScreen_Line4, super=MspRealScreen, next=MspRealScreen_CmpPatternBox1, prev=MspRealScreen_Line3, flag=VF_Const, X=312, Y=194, W=1, H=13, color=CL_White, linemode=1
-		AcCmpPatternBox	MspRealScreen_CmpPatternBox1, super=MspRealScreen, next=MspRealScreen_FuncESOnOff1, prev=MspRealScreen_Line4, flag=VF_Const, X=80, Y=28, W=160, H=16, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White, align=1, drawPattern=1
-		AcFuncESOnOff	MspRealScreen_FuncESOnOff1, super=MspRealScreen, sub=MspRealScreen_Label_NOTE_CLR, next=MspRealScreen_FuncESOnOff2, prev=MspRealScreen_CmpPatternBox1, flag=VF_Const, X=241, Y=76, W=71, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right2, func=FN_PadInstClrOnOff
-
-Str_NOTE_CLR_2:	.asciz "NOTE CLR"
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_NOTE_CLR, super=MspRealScreen_FuncESOnOff1, flag=VF_Const, X=241, Y=77, W=68, H=19, str=Str_NOTE_CLR_2, fontcolor=CL_BlackW	# str "NOTE CLR"
-		AcFuncESOnOff	MspRealScreen_FuncESOnOff2, super=MspRealScreen, sub=MspRealScreen_Label_ALL_ERAS, next=MspRealScreen_FuncEditSw1, prev=MspRealScreen_FuncESOnOff1, flag=VF_Const, X=241, Y=118, W=71, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right3, func=FN_PadAllEraseOnOff
-
-Str_ALL_ERAS_2:	.asciz "ALL ERAS"
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_ALL_ERAS, super=MspRealScreen_FuncESOnOff2, flag=VF_Const, X=243, Y=119, W=68, H=19, str=Str_ALL_ERAS_2, fontcolor=CL_BlackW	# str "ALL ERAS"
-		AcFuncEditSw	MspRealScreen_FuncEditSw1, super=MspRealScreen, sub=MspRealScreen_Label_PART_CLR, next=MspRealScreen_ShowHide1, prev=MspRealScreen_FuncESOnOff2, flag=VF_Const, X=241, Y=34, W=71, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right1, func=FN_PadPartClrOk
-
-Str_PART_CLR_2:	.asciz "PART CLR"
-	.align	4, 0xFF
-
-			VwLabel	MspRealScreen_Label_PART_CLR, super=MspRealScreen_FuncEditSw1, flag=VF_Const, X=242, Y=35, W=68, H=19, str=Str_PART_CLR_2, fontcolor=CL_BlackW	# str "PART CLR"
-		IvShowHide	MspRealScreen_ShowHide1, super=MspRealScreen, next=MspRealScreen_IndexEditSw1, prev=MspRealScreen_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspPadRecShowHideFunc
-		AcIndexEditSw	MspRealScreen_IndexEditSw1, super=MspRealScreen, sub=MspRealScreen_StrBox_QUANTIZE, prev=MspRealScreen_ShowHide1, flag=VF_Const, X=241, Y=160, W=71, H=18, color=CL_Silver, border=BD_3D_UP2, index=1, fontcolor=CL_Black, editsw=ES_Right4, style=1
-
-Str_QUANTIZE_4:	.asciz "QUANTIZE"
-	.align	4, 0xFF
-
-			VwStrBox	MspRealScreen_StrBox_QUANTIZE, super=MspRealScreen_IndexEditSw1, flag=VF_Const, X=243, Y=162, W=67, H=14, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, str=Str_QUANTIZE_4	# str "QUANTIZE"
-
-Str_PAD_BANK_NAMING:	.asciz "PAD BANK NAMING"
-
-	TtlScreen	MspNameScreen, sub=MspNameScreen_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL, window=MspNameScreen_window, title=Str_PAD_BANK_NAMING, icon=153	# title "PAD BANK NAMING"
-		IvNaming	MspNameScreen_Naming1, super=MspNameScreen, next=MspNameScreen_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspMemNmChk
-		AcFuncEditSw	MspNameScreen_FuncEditSw1, super=MspNameScreen, next=MspNameScreen_CmpPatternBox1, prev=MspNameScreen_Naming1, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_MspMemNmOk
-		AcCmpPatternBox	MspNameScreen_CmpPatternBox1, super=MspNameScreen, prev=MspNameScreen_FuncEditSw1, flag=VF_Const, X=210, Y=2, W=110, H=25, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_PAD_COMPILE_SETTING:	.asciz "PAD COMPILE SETTING"
-
-	TtlScreen	MspCompileSetScreen, sub=MspCompileSetGrid, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPMENU, window=MspCompileSetScreen_window, title=Str_PAD_COMPILE_SETTING, icon=167	# title "PAD COMPILE SETTING"
-
-Str_PADS_BANK_PHRASE:	.asciz "PADS|      BANK      |     PHRASE     "
-Str_PAD1_PAD2_PAD3_PAD4_PAD5_PAD6:	.asciz "|-|PAD1|PAD2|PAD3|PAD4|PAD5|PAD6"
-
-		AcMspCompileGridBox	MspCompileSetGrid, super=MspCompileSetScreen, next=MspCompileSetScreen_IndexWideES1, flag=VF_Const, X=0, Y=62, W=320, H=150, color=CL_WallPattern, border=BD_3D_UP2, font=3, fontcolor=CL_White, row=8, col=3, vertline=1, selrow=MspCompileSetGrid_selrow, selcol=MspCompileSetGrid_selcol, pcol=MspCompileSetGrid_pcol, prow=MspCompileSetGrid_prow, crow=MspCompileSetGrid_crow, fixedcol=Str_PADS_BANK_PHRASE, fixedrow=Str_PAD1_PAD2_PAD3_PAD4_PAD5_PAD6, func=FN_MspCompileSetGridCheck	# fixedcol "PADS|      BANK      |     PHRASE     "; fixedrow "|-|PAD1|PAD2|PAD3|PAD4|PAD5|PAD6"
-		AcIndexWideES	MspCompileSetScreen_IndexWideES1, super=MspCompileSetScreen, next=MspCompileSetScreen_IndexWideES2, prev=MspCompileSetGrid, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-		AcIndexWideES	MspCompileSetScreen_IndexWideES2, super=MspCompileSetScreen, next=MspCompileSetScreen_IndexWideES3, prev=MspCompileSetScreen_IndexWideES1, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=14
-		AcIndexWideES	MspCompileSetScreen_IndexWideES3, super=MspCompileSetScreen, next=MspCompileSetScreen_TitleMenu_NAMING, prev=MspCompileSetScreen_IndexWideES2, flag=VF_Const, X=204, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom7, style=3
-
-Str_NAMING_3:	.asciz "NAMING"
-	.align	4, 0xFF
-
-		AcTitleMenu	MspCompileSetScreen_TitleMenu_NAMING, super=MspCompileSetScreen, next=MspCompileSetScreen_ShowHide1, prev=MspCompileSetScreen_IndexWideES3, flag=VF_Const, X=8, Y=28, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left1, selected=MspCompileSetScreen_TitleMenu_NAMING_selected, str=Str_NAMING_3, title=TT_MSPGRPNAME, icon=153	# str "NAMING"
-		IvShowHide	MspCompileSetScreen_ShowHide1, super=MspCompileSetScreen, next=MspCompileBankName, prev=MspCompileSetScreen_TitleMenu_NAMING, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspRgpShowHideFunc
-
-Str_BANK_4:	.asciz "BANK"
-	.align	4, 0xFF
-
-		AcMspCompileBnkNmBox	MspCompileBankName, super=MspCompileSetScreen, next=MspCompileSetScreen_FuncEditSw1, prev=MspCompileSetScreen_ShowHide1, flag=VF_Const, X=96, Y=34, W=220, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_BANK_4, font=3, fontcolor=CL_White, align=1, length=20, editsw=ES_Left1, dial=1, selected=MspCompileBankName_selected	# caption "BANK"
-		AcFuncEditSw	MspCompileSetScreen_FuncEditSw1, super=MspCompileSetScreen, next=MspCompileSetScreen_Label_BANK, prev=MspCompileBankName, flag=VF_Const, X=271, Y=34, W=41, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right1, func=FN_MspRGrpSetBnkFunc
-
-Str_BANK_5:	.asciz "BANK"
-	.align	4, 0xFF
-
-		VwLabel	MspCompileSetScreen_Label_BANK, super=MspCompileSetScreen, prev=MspCompileSetScreen_FuncEditSw1, flag=VF_Const, X=273, Y=35, W=36, H=19, str=Str_BANK_5, fontcolor=CL_BlackW	# str "BANK"
-
-Str_KEY_SETTING_3:	.asciz "KEY SETTING"
-
-	TtlScreen	MspSetScreen, sub=MspSetScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL_S, window=MspSetScreen_window, title=Str_KEY_SETTING_3, icon=199	# title "KEY SETTING"
-		VwBox	MspSetScreen_Box1, super=MspSetScreen, next=MspSetScreen_Line1, flag=VF_Const, X=60, Y=114, W=200, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-		VwLine	MspSetScreen_Line1, super=MspSetScreen, next=MspSetScreen_Label_CHORD, prev=MspSetScreen_Box1, flag=VF_Const, X=62, Y=152, W=196, H=1, color=CL_White, linemode=1
-
-Str_CHORD_2:	.asciz "CHORD"
-	.align	4, 0xFF
-
-		VwLabel	MspSetScreen_Label_CHORD, super=MspSetScreen, next=MspSetScreen_Label_KEY, prev=MspSetScreen_Line1, flag=VF_Const, X=182, Y=126, W=59, H=19, str=Str_CHORD_2, font=4, fontcolor=CL_Text	# str "CHORD"
-
-Str_KEY_3:	.asciz "KEY"
-
-		VwLabel	MspSetScreen_Label_KEY, super=MspSetScreen, next=MspSetScreen_FuncEditBox1, prev=MspSetScreen_Label_CHORD, flag=VF_Const, X=92, Y=126, W=37, H=19, str=Str_KEY_3, font=4, fontcolor=CL_Text	# str "KEY"
-
-Str_empty_100:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	MspSetScreen_FuncEditBox1, super=MspSetScreen, next=MspSetScreen_FuncEditBox2, prev=MspSetScreen_Label_KEY, flag=VF_Const, X=84, Y=174, W=57, H=19, color=CL_WallPattern, index=1, caption=Str_empty_100, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=MspSetScreen_FuncEditBox1_selected, func=FN_FE_PadRecSetKey	# caption ""
-
-Str_empty_101:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	MspSetScreen_FuncEditBox2, super=MspSetScreen, next=MspSetScreen_Line2, prev=MspSetScreen_FuncEditBox1, flag=VF_Const, X=173, Y=174, W=73, H=19, color=CL_WallPattern, index=2, caption=Str_empty_101, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=MspSetScreen_FuncEditBox2_selected, func=FN_FE_PadRecSetChord	# caption ""
-		VwLine	MspSetScreen_Line2, super=MspSetScreen, next=MspSetScreen_IndexWideES1, prev=MspSetScreen_FuncEditBox2, flag=VF_Const, X=160, Y=116, W=1, H=96, color=CL_White, linemode=1
-		AcIndexWideES	MspSetScreen_IndexWideES1, super=MspSetScreen, next=MspSetScreen_IndexWideES2, prev=MspSetScreen_Line2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	MspSetScreen_IndexWideES2, super=MspSetScreen, next=MspSetScreen_CmpPatternBox1, prev=MspSetScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-		AcCmpPatternBox	MspSetScreen_CmpPatternBox1, super=MspSetScreen, prev=MspSetScreen_IndexWideES2, flag=VF_Const, X=62, Y=46, W=190, H=25, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_SEQ_TO_PAD_COPY_2:	.asciz "SEQ TO PAD COPY"
-
-	TtlScreen	MspSeqCpScreen, sub=MspSeqCpScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPMENU, window=MspSeqCpScreen_window, title=Str_SEQ_TO_PAD_COPY_2, icon=178	# title "SEQ TO PAD COPY"
-		VwBox	MspSeqCpScreen_Box1, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES1, flag=VF_Const, X=0, Y=216, W=320, H=24, color=CL_WallPattern, index=0xFFFF
-		AcIndexWideES	MspSeqCpScreen_IndexWideES1, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES2, prev=MspSeqCpScreen_Box1, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom3, style=3
-		AcIndexWideES	MspSeqCpScreen_IndexWideES2, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES3, prev=MspSeqCpScreen_IndexWideES1, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom2, style=3
-		AcIndexWideES	MspSeqCpScreen_IndexWideES3, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES4, prev=MspSeqCpScreen_IndexWideES2, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=3
-		AcIndexWideES	MspSeqCpScreen_IndexWideES4, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES5, prev=MspSeqCpScreen_IndexWideES3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom4, style=3
-		AcIndexWideES	MspSeqCpScreen_IndexWideES5, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES6, prev=MspSeqCpScreen_IndexWideES4, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom5, style=3
-		AcIndexWideES	MspSeqCpScreen_IndexWideES6, super=MspSeqCpScreen, next=MspSeqCpScreen_IndexWideES7, prev=MspSeqCpScreen_IndexWideES5, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom6, style=14
-		AcIndexWideES	MspSeqCpScreen_IndexWideES7, super=MspSeqCpScreen, next=MspSeqCpScreen_Yajirushi1, prev=MspSeqCpScreen_IndexWideES6, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom7, style=3
-		Yajirushi	MspSeqCpScreen_Yajirushi1, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_SEQUENCER, prev=MspSeqCpScreen_IndexWideES7, flag=VF_Const, X=78, Y=94, W=48, H=40, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
-
-Str_SEQUENCER_3:	.asciz "SEQUENCER"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_SEQUENCER, super=MspSeqCpScreen, next=MspSeqCpScreen_Label1, prev=MspSeqCpScreen_Yajirushi1, flag=VF_Const, X=4, Y=50, W=76, H=19, str=Str_SEQUENCER_3, fontcolor=CL_White	# str "SEQUENCER"
-
-Str_empty_102:	.asciz "("
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label1, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_USER, prev=MspSeqCpScreen_Label_SEQUENCER, flag=VF_Const, X=4, Y=68, W=12, H=19, str=Str_empty_102, fontcolor=CL_White	# str "("
-
-Str_USER:	.asciz "USER"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_USER, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_PAD, prev=MspSeqCpScreen_Label1, flag=VF_Const, X=126, Y=196, W=28, H=11, str=Str_USER, font=3, fontcolor=CL_White	# str "USER"
-
-Str_PAD:	.asciz "PAD"
-
-		VwLabel	MspSeqCpScreen_Label_PAD, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_PERFORMANCE_PAD, prev=MspSeqCpScreen_Label_USER, flag=VF_Const, X=168, Y=206, W=22, H=11, str=Str_PAD, font=3, fontcolor=CL_White	# str "PAD"
-
-Str_PERFORMANCE_PAD:	.asciz "PERFORMANCE PAD"
-
-		VwLabel	MspSeqCpScreen_Label_PERFORMANCE_PAD, super=MspSeqCpScreen, next=MspSeqCpScreen_SeqSongNameBox1, prev=MspSeqCpScreen_Label_PAD, flag=VF_Const, X=140, Y=38, W=124, H=19, str=Str_PERFORMANCE_PAD, fontcolor=CL_White	# str "PERFORMANCE PAD"
-		AcSeqSongNameBox	MspSeqCpScreen_SeqSongNameBox1, super=MspSeqCpScreen, next=MspSeqCpScreen_Label2, prev=MspSeqCpScreen_Label_PERFORMANCE_PAD, flag=VF_Const, X=14, Y=67, W=54, H=19, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_empty_103:	.asciz ")"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label2, super=MspSeqCpScreen, next=MSP_SeqToPadCopyGrid, prev=MspSeqCpScreen_SeqSongNameBox1, flag=VF_Const, X=68, Y=68, W=12, H=19, str=Str_empty_103, fontcolor=CL_White	# str ")"
-
-Str_PART_TRACK_2:	.asciz " PART |TRACK"
-Str_PART1_PART2:	.asciz "|-|PART1|PART2"
-
-		AcGridBoxDelux	MSP_SeqToPadCopyGrid, super=MspSeqCpScreen, next=MspSeqCpScreen_Box2, prev=MspSeqCpScreen_Label2, flag=VF_Const, X=128, Y=98, W=146, H=66, color=CL_WallPattern, border=BD_3D_UP2, index=6, fontcolor=CL_White, row=4, col=2, vertline=1, selrow=MSP_SeqToPadCopyGrid_selrow, selcol=MSP_SeqToPadCopyGrid_selcol, pcol=MSP_SeqToPadCopyGrid_pcol, prow=MSP_SeqToPadCopyGrid_prow, crow=MSP_SeqToPadCopyGrid_crow, fixedcol=Str_PART_TRACK_2, fixedrow=Str_PART1_PART2, func=FN_SeqToPadCopyGrid	# fixedcol " PART |TRACK"; fixedrow "|-|PART1|PART2"
-		VwBox	MspSeqCpScreen_Box2, super=MspSeqCpScreen, next=SeqToPadFstMeas, prev=MSP_SeqToPadCopyGrid, flag=VF_Const, X=0, Y=90, W=76, H=124, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_104:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToPadFstMeas, super=MspSeqCpScreen, next=SeqToPadLstMeas, prev=MspSeqCpScreen_Box2, flag=VF_Const, X=2, Y=170, W=34, H=19, color=CL_WallPattern, index=1, caption=Str_empty_104, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToPadFstMeas_selected, func=FN_FE_SeqToPadFstMeas	# caption ""
-
-Str_empty_105:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToPadLstMeas, super=MspSeqCpScreen, next=MspSeqCpScreen_Line1, prev=SeqToPadFstMeas, flag=VF_Const, X=40, Y=170, W=34, H=19, color=CL_WallPattern, index=2, caption=Str_empty_105, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToPadLstMeas_selected, func=FN_FE_SeqToPadLstMeas	# caption ""
-		VwLine	MspSeqCpScreen_Line1, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_FIRST, prev=SeqToPadLstMeas, flag=VF_Const, X=38, Y=92, W=1, H=120, color=CL_White, linemode=1
-
-Str_FIRST_6:	.asciz "FIRST"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_FIRST, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_MEAS, prev=MspSeqCpScreen_Line1, flag=VF_Const, X=2, Y=103, W=34, H=11, str=Str_FIRST_6, font=3, fontcolor=CL_Text	# str "FIRST"
-
-Str_MEAS_6:	.asciz "MEAS"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_MEAS, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_LAST, prev=MspSeqCpScreen_Label_FIRST, flag=VF_Const, X=4, Y=121, W=28, H=11, str=Str_MEAS_6, font=3, fontcolor=CL_Text	# str "MEAS"
-
-Str_LAST_5:	.asciz "LAST"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_LAST, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_MEAS2, prev=MspSeqCpScreen_Label_MEAS, flag=VF_Const, X=44, Y=103, W=28, H=11, str=Str_LAST_5, font=3, fontcolor=CL_Text	# str "LAST"
-
-Str_MEAS_7:	.asciz "MEAS"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_MEAS2, super=MspSeqCpScreen, next=MspSeqCpScreen_Line2, prev=MspSeqCpScreen_Label_LAST, flag=VF_Const, X=44, Y=121, W=28, H=11, str=Str_MEAS_7, font=3, fontcolor=CL_Text	# str "MEAS"
-		VwLine	MspSeqCpScreen_Line2, super=MspSeqCpScreen, next=MspSeqCpScreen_Box3, prev=MspSeqCpScreen_Label_MEAS2, flag=VF_Const, X=2, Y=144, W=72, H=1, color=CL_White, linemode=1
-		VwBox	MspSeqCpScreen_Box3, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_TRANS, prev=MspSeqCpScreen_Line2, flag=VF_Const, X=78, Y=142, W=38, H=72, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_TRANS_2:	.asciz "TRANS"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_TRANS, super=MspSeqCpScreen, next=SeqToPadTrans, prev=MspSeqCpScreen_Box3, flag=VF_Const, X=80, Y=150, W=34, H=11, str=Str_TRANS_2, font=3, fontcolor=CL_Text	# str "TRANS"
-
-Str_empty_106:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToPadTrans, super=MspSeqCpScreen, next=MspSeqCpScreen_Line3, prev=MspSeqCpScreen_Label_TRANS, flag=VF_Const, X=80, Y=184, W=34, H=19, color=CL_WallPattern, index=3, caption=Str_empty_106, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToPadTrans_selected, func=FN_FE_SeqToPadTrans	# caption ""
-		VwLine	MspSeqCpScreen_Line3, super=MspSeqCpScreen, next=MspSeqCpScreen_Box4, prev=SeqToPadTrans, flag=VF_Const, X=80, Y=172, W=34, H=1, color=CL_White, linemode=1
-		VwBox	MspSeqCpScreen_Box4, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_USER_BANK, prev=MspSeqCpScreen_Line3, flag=VF_Const, X=128, Y=56, W=146, H=40, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_USER_BANK:	.asciz "USER BANK:"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_USER_BANK, super=MspSeqCpScreen, next=SeqToPadMemory, prev=MspSeqCpScreen_Box4, flag=VF_Const, X=130, Y=64, W=64, H=11, str=Str_USER_BANK, font=3, fontcolor=CL_Text	# str "USER BANK:"
-
-Str_empty_107:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToPadMemory, super=MspSeqCpScreen, next=SeqToPadPattern, prev=MspSeqCpScreen_Label_USER_BANK, flag=VF_Const, X=202, Y=60, W=24, H=16, color=CL_WallPattern, index=4, caption=Str_empty_107, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToPadMemory_selected, func=FN_FE_SeqToPadMemory	# caption ""
-
-Str_empty_108:	.asciz ""
-	.align	4, 0xFF
-
-		AcFuncEditBox	SeqToPadPattern, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_PAD2, prev=SeqToPadMemory, flag=VF_Const, X=196, Y=76, W=70, H=16, color=CL_WallPattern, index=5, caption=Str_empty_108, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=SeqToPadPattern_selected, func=FN_FE_SeqToPadPattern	# caption ""
-
-Str_PAD_2:	.asciz "PAD:"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_PAD2, super=MspSeqCpScreen, next=MspSeqCpScreen_FuncEditSw1, prev=SeqToPadPattern, flag=VF_Const, X=166, Y=80, W=28, H=11, str=Str_PAD_2, font=3, fontcolor=CL_Text	# str "PAD:"
-		AcFuncEditSw	MspSeqCpScreen_FuncEditSw1, super=MspSeqCpScreen, next=MspSeqCpScreen_Box5, prev=MspSeqCpScreen_Label_PAD2, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SeqToPadYes
-		VwBox	MspSeqCpScreen_Box5, super=MspSeqCpScreen, next=SeqToPadCopyChord, prev=MspSeqCpScreen_FuncEditSw1, flag=VF_Const, X=128, Y=164, W=146, H=28, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-		AcParaDrawBox	SeqToPadCopyChord, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_CHORD, prev=MspSeqCpScreen_Box5, flag=VF_Const, X=224, Y=170, W=36, H=16, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1, strp=SeqToPadCopyChord_strp
-
-Str_CHORD_3:	.asciz " CHORD"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_CHORD, super=MspSeqCpScreen, next=MspSeqCpScreen_Line4, prev=SeqToPadCopyChord, flag=VF_Const, X=138, Y=170, W=52, H=19, str=Str_CHORD_3, fontcolor=CL_White	# str " CHORD"
-		VwLine	MspSeqCpScreen_Line4, super=MspSeqCpScreen, next=MspSeqCpScreen_FuncMenu_EDIT, prev=MspSeqCpScreen_Label_CHORD, flag=VF_Const, X=206, Y=166, W=1, H=24, color=CL_White, linemode=1
-
-Str_EDIT_6:	.asciz "EDIT"
-	.align	4, 0xFF
-
-		AcFuncMenu	MspSeqCpScreen_FuncMenu_EDIT, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_POSE, prev=MspSeqCpScreen_Line4, flag=VF_Const, X=163, Y=28, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=MspSeqCpScreen_FuncMenu_EDIT_selected, str=Str_EDIT_6, func=FN_Seq2PadCpEditFunc	# str "EDIT"
-
-Str_POSE_2:	.asciz "POSE"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_POSE, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_PART, prev=MspSeqCpScreen_FuncMenu_EDIT, flag=VF_Const, X=84, Y=160, W=28, H=11, str=Str_POSE_2, font=3, fontcolor=CL_White	# str "POSE"
-
-Str_PART_13:	.asciz "PART"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_PART, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_TRACK, prev=MspSeqCpScreen_Label_POSE, flag=VF_Const, X=206, Y=206, W=28, H=11, str=Str_PART_13, font=3, fontcolor=CL_White	# str "PART"
-
-Str_TRACK_2:	.asciz "TRACK"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_TRACK, super=MspSeqCpScreen, next=MspSeqCpScreen_Label_BANK, prev=MspSeqCpScreen_Label_PART, flag=VF_Const, X=242, Y=206, W=34, H=11, str=Str_TRACK_2, font=3, fontcolor=CL_White	# str "TRACK"
-
-Str_BANK_6:	.asciz "BANK"
-	.align	4, 0xFF
-
-		VwLabel	MspSeqCpScreen_Label_BANK, super=MspSeqCpScreen, prev=MspSeqCpScreen_Label_TRACK, flag=VF_Const, X=126, Y=206, W=28, H=11, str=Str_BANK_6, font=3, fontcolor=CL_White	# str "BANK"
-
-Str_PAD_NAMING:	.asciz "PAD NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	MspPadNameScreen, sub=MspPadNameScreen_FuncEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL_S, window=MspPadNameScreen_window, title=Str_PAD_NAMING, icon=153	# title "PAD NAMING"
-		AcFuncEditSw	MspPadNameScreen_FuncEditSw1, super=MspPadNameScreen, next=MspPadNameScreen_Naming1, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_MspPadNmOk
-		IvNaming	MspPadNameScreen_Naming1, super=MspPadNameScreen, next=MspPadNameScreen_CmpPatternBox1, prev=MspPadNameScreen_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspPadNmChk
-		AcCmpPatternBox	MspPadNameScreen_CmpPatternBox1, super=MspPadNameScreen, prev=MspPadNameScreen_Naming1, flag=VF_Const, X=65, Y=28, W=190, H=25, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_RECORD_PAD:	.asciz "RECORD PAD"
-	.align	4, 0xFF
-
-	TtlScreen	MspPadSelScreen, sub=MspPadSelScreen_TitleMenu_BANK_NAMING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPMENU, window=MspPadSelScreen_window, title=Str_RECORD_PAD, icon=197	# title "RECORD PAD"
-
-Str_BANK_NAMING_2:	.asciz "BANK NAMING"
-
-		AcTitleMenu	MspPadSelScreen_TitleMenu_BANK_NAMING, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES1, flag=VF_Const, X=223, Y=70, W=89, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=MspPadSelScreen_TitleMenu_BANK_NAMING_selected, str=Str_BANK_NAMING_2, title=TT_MSPNAME, icon=153	# str "BANK NAMING"
-		AcFuncWideES	MspPadSelScreen_FuncWideES1, super=MspPadSelScreen, next=MspPadSelScreen_Label_PAD1, prev=MspPadSelScreen_TitleMenu_BANK_NAMING, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, func=FN_PadPatSelOK
-
-Str_PAD1:	.asciz "PAD1"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_PAD1, super=MspPadSelScreen, next=MspPadSelScreen_SureWindowMenu_BANK_CLR, prev=MspPadSelScreen_FuncWideES1, flag=VF_Const, X=6, Y=222, W=28, H=11, str=Str_PAD1, font=3, fontcolor=CL_BlackW	# str "PAD1"
-
-Str_BANK_CLR:	.asciz "BANK CLR"
-	.align	4, 0xFF
-
-		AcSureWindowMenu	MspPadSelScreen_SureWindowMenu_BANK_CLR, super=MspPadSelScreen, next=MspPadSelScreen_CmpPatternBox1, prev=MspPadSelScreen_Label_PAD1, flag=VF_Const, X=233, Y=28, W=79, H=30, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right1, selected=MspPadSelScreen_SureWindowMenu_BANK_CLR_selected, str=Str_BANK_CLR, window=MspMemClrWin_id, func=FN_PadMemClrYes	# str "BANK CLR"
-		AcCmpPatternBox	MspPadSelScreen_CmpPatternBox1, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_1, prev=MspPadSelScreen_SureWindowMenu_BANK_CLR, flag=VF_Const, X=210, Y=2, W=110, H=25, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_1_5:	.asciz "1:"
-	.align	4, 0xFF
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_1, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_2, prev=MspPadSelScreen_CmpPatternBox1, flag=VF_Const, X=7, Y=84, W=166, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_1_5, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_1_selected	# caption "1:"
-
-Str_2_7:	.asciz "2:"
-	.align	4, 0xFF
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_2, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_3, prev=MspPadSelScreen_RecPadNameBox_1, flag=VF_Const, X=8, Y=102, W=166, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_2_7, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_2_selected, padno=1	# caption "2:"
-
-Str_3_3:	.asciz "3:"
-	.align	4, 0xFF
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_3, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_4, prev=MspPadSelScreen_RecPadNameBox_2, flag=VF_Const, X=8, Y=120, W=166, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_3_3, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_3_selected, padno=2	# caption "3:"
-
-Str_4_5:	.asciz "4:"
-	.align	4, 0xFF
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_4, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_5, prev=MspPadSelScreen_RecPadNameBox_3, flag=VF_Const, X=8, Y=138, W=166, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_4_5, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_4_selected, padno=3	# caption "4:"
-
-Str_5:	.asciz "5:"
-	.align	4, 0xFF
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_5, super=MspPadSelScreen, next=MspPadSelScreen_RecPadNameBox_6, prev=MspPadSelScreen_RecPadNameBox_4, flag=VF_Const, X=9, Y=156, W=166, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_5, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_5_selected, padno=4	# caption "5:"
-
-Str_6:	.asciz "6:"
-	.align	4, 0xFF
-
-		AcRecPadNameBox	MspPadSelScreen_RecPadNameBox_6, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES2, prev=MspPadSelScreen_RecPadNameBox_5, flag=VF_Const, X=8, Y=174, W=166, H=16, color=CL_WallPattern, index=0xFFFF, caption=Str_6, fontcolor=CL_White, align=1, length=16, editsw=ES_None, selected=MspPadSelScreen_RecPadNameBox_6_selected, padno=5	# caption "6:"
-		AcFuncWideES	MspPadSelScreen_FuncWideES2, super=MspPadSelScreen, next=MspPadSelScreen_Label_PAD2, prev=MspPadSelScreen_RecPadNameBox_6, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom2, func=FN_PadPatSelOK
-
-Str_PAD2:	.asciz "PAD2"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_PAD2, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES3, prev=MspPadSelScreen_FuncWideES2, flag=VF_Const, X=46, Y=222, W=28, H=11, str=Str_PAD2, font=3, fontcolor=CL_BlackW	# str "PAD2"
-		AcFuncWideES	MspPadSelScreen_FuncWideES3, super=MspPadSelScreen, next=MspPadSelScreen_Label_PAD3, prev=MspPadSelScreen_Label_PAD2, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom3, func=FN_PadPatSelOK
-
-Str_PAD3:	.asciz "PAD3"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_PAD3, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES4, prev=MspPadSelScreen_FuncWideES3, flag=VF_Const, X=86, Y=222, W=28, H=11, str=Str_PAD3, font=3, fontcolor=CL_BlackW	# str "PAD3"
-		AcFuncWideES	MspPadSelScreen_FuncWideES4, super=MspPadSelScreen, next=MspPadSelScreen_Label_PAD4, prev=MspPadSelScreen_Label_PAD3, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom4, func=FN_PadPatSelOK
-
-Str_PAD4:	.asciz "PAD4"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_PAD4, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES5, prev=MspPadSelScreen_FuncWideES4, flag=VF_Const, X=126, Y=222, W=28, H=11, str=Str_PAD4, font=3, fontcolor=CL_BlackW	# str "PAD4"
-		AcFuncWideES	MspPadSelScreen_FuncWideES5, super=MspPadSelScreen, next=MspPadSelScreen_Label_PAD5, prev=MspPadSelScreen_Label_PAD4, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom5, func=FN_PadPatSelOK
-
-Str_PAD5:	.asciz "PAD5"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_PAD5, super=MspPadSelScreen, next=MspPadSelScreen_FuncWideES6, prev=MspPadSelScreen_FuncWideES5, flag=VF_Const, X=166, Y=222, W=28, H=11, str=Str_PAD5, font=3, fontcolor=CL_BlackW	# str "PAD5"
-		AcFuncWideES	MspPadSelScreen_FuncWideES6, super=MspPadSelScreen, next=MspPadSelScreen_Label_PAD6, prev=MspPadSelScreen_Label_PAD5, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom6, func=FN_PadPatSelOK
-
-Str_PAD6:	.asciz "PAD6"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_PAD6, super=MspPadSelScreen, next=MspPadSelScreen_Line1, prev=MspPadSelScreen_FuncWideES6, flag=VF_Const, X=206, Y=222, W=28, H=11, str=Str_PAD6, font=3, fontcolor=CL_BlackW	# str "PAD6"
-		VwLine	MspPadSelScreen_Line1, super=MspPadSelScreen, next=MspPadSelScreen_Line2, prev=MspPadSelScreen_Label_PAD6, flag=VF_Const, X=193, Y=121, W=112, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line2, super=MspPadSelScreen, next=MspPadSelScreen_Line3, prev=MspPadSelScreen_Line1, flag=VF_Const, X=215, Y=122, W=7, H=50, color=CL_White
-		VwLine	MspPadSelScreen_Line3, super=MspPadSelScreen, next=MspPadSelScreen_Box1, prev=MspPadSelScreen_Line2, flag=VF_Const, X=241, Y=151, W=16, H=1, color=CL_White, linemode=1
-		VwBox	MspPadSelScreen_Box1, super=MspPadSelScreen, next=MspPadSelScreen_Label_BANK_NAME, prev=MspPadSelScreen_Line3, flag=VF_Const, X=0, Y=34, W=226, H=36, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-
-Str_BANK_NAME:	.asciz "BANK NAME:"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_BANK_NAME, super=MspPadSelScreen, next=MspPadSelScreen_CmpMemNameBox1, prev=MspPadSelScreen_Box1, flag=VF_Const, X=4, Y=45, W=84, H=19, str=Str_BANK_NAME, fontcolor=CL_White	# str "BANK NAME:"
-		AcCmpMemNameBox	MspPadSelScreen_CmpMemNameBox1, super=MspPadSelScreen, next=MspPadSelScreen_Line4, prev=MspPadSelScreen_Label_BANK_NAME, flag=VF_Const, X=88, Y=44, W=136, H=19, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-		VwLine	MspPadSelScreen_Line4, super=MspPadSelScreen, sub=MspPadSelScreen_Label_4, next=MspPadSelScreen_Label_SOLO, prev=MspPadSelScreen_CmpMemNameBox1, flag=VF_Const, X=185, Y=165, W=52, H=13, color=CL_White, linemode=1
-
-Str_4_6:	.asciz "4"
-	.align	4, 0xFF
-
-			VwLabel	MspPadSelScreen_Label_4, super=MspPadSelScreen_Line4, flag=VF_Const, X=195, Y=149, W=12, H=19, str=Str_4_6, fontcolor=CL_White	# str "4"
-
-Str_SOLO_3:	.asciz "SOLO"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_SOLO, super=MspPadSelScreen, next=MspPadSelScreen_Line5, prev=MspPadSelScreen_Line4, flag=VF_Const, X=180, Y=198, W=36, H=19, str=Str_SOLO_3, fontcolor=CL_White	# str "SOLO"
-		VwLine	MspPadSelScreen_Line5, super=MspPadSelScreen, next=MspPadSelScreen_Line6, prev=MspPadSelScreen_Label_SOLO, flag=VF_Const, X=164, Y=206, W=10, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line6, super=MspPadSelScreen, next=MspPadSelScreen_Line7, prev=MspPadSelScreen_Line5, flag=VF_Const, X=224, Y=206, W=10, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line7, super=MspPadSelScreen, next=MspPadSelScreen_Line8, prev=MspPadSelScreen_Line6, flag=VF_Const, X=185, Y=121, W=9, H=44, color=CL_White
-		VwLine	MspPadSelScreen_Line8, super=MspPadSelScreen, next=MspPadSelScreen_Label_1, prev=MspPadSelScreen_Line7, flag=VF_Const, X=237, Y=178, W=24, H=1, color=CL_White, linemode=1
-
-Str_1_6:	.asciz "1"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_1, super=MspPadSelScreen, sub=MspPadSelScreen_Line9, next=MspPadSelScreen_Label_2, prev=MspPadSelScreen_Line8, flag=VF_Const, X=200, Y=126, W=12, H=19, str=Str_1_6, fontcolor=CL_White	# str "1"
-			VwLine	MspPadSelScreen_Line9, super=MspPadSelScreen_Label_1, flag=VF_Const, X=190, Y=143, W=51, H=9, color=CL_White, linemode=1
-
-Str_2_8:	.asciz "2"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_2, super=MspPadSelScreen, next=MspPadSelScreen_Label_3, prev=MspPadSelScreen_Label_1, flag=VF_Const, X=242, Y=129, W=12, H=19, str=Str_2_8, fontcolor=CL_White	# str "2"
-
-Str_3_4:	.asciz "3"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_3, super=MspPadSelScreen, next=MspPadSelScreen_Label_5, prev=MspPadSelScreen_Label_2, flag=VF_Const, X=285, Y=126, W=12, H=19, str=Str_3_4, fontcolor=CL_White	# str "3"
-
-Str_5_2:	.asciz "5"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_5, super=MspPadSelScreen, next=MspPadSelScreen_Label_6, prev=MspPadSelScreen_Label_3, flag=VF_Const, X=243, Y=157, W=12, H=19, str=Str_5_2, fontcolor=CL_White	# str "5"
-
-Str_6_2:	.asciz "6"
-	.align	4, 0xFF
-
-		VwLabel	MspPadSelScreen_Label_6, super=MspPadSelScreen, next=MspPadSelScreen_Line10, prev=MspPadSelScreen_Label_5, flag=VF_Const, X=290, Y=150, W=12, H=19, str=Str_6_2, fontcolor=CL_White	# str "6"
-		VwLine	MspPadSelScreen_Line10, super=MspPadSelScreen, next=MspPadSelScreen_Line11, prev=MspPadSelScreen_Label_6, flag=VF_Const, X=257, Y=143, W=51, H=9, color=CL_White
-		VwLine	MspPadSelScreen_Line11, super=MspPadSelScreen, sub=MspPadSelScreen_Line12, next=MspPadSelScreen_Line13, prev=MspPadSelScreen_Line10, flag=VF_Const, X=304, Y=122, W=9, H=44, color=CL_White, linemode=1
-			VwLine	MspPadSelScreen_Line12, super=MspPadSelScreen_Line11, flag=VF_Const, X=305, Y=122, W=9, H=44, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line13, super=MspPadSelScreen, next=MspPadSelScreen_Line14, prev=MspPadSelScreen_Line11, flag=VF_Const, X=261, Y=165, W=52, H=13, color=CL_White
-		VwLine	MspPadSelScreen_Line14, super=MspPadSelScreen, next=MspPadSelScreen_Line15, prev=MspPadSelScreen_Line13, flag=VF_Const, X=184, Y=121, W=9, H=44, color=CL_White
-		VwLine	MspPadSelScreen_Line15, super=MspPadSelScreen, next=MspPadSelScreen_Line16, prev=MspPadSelScreen_Line14, flag=VF_Const, X=193, Y=120, W=112, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line16, super=MspPadSelScreen, next=MspPadSelScreen_Line17, prev=MspPadSelScreen_Line15, flag=VF_Const, X=190, Y=142, W=51, H=9, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line17, super=MspPadSelScreen, next=MspPadSelScreen_Line18, prev=MspPadSelScreen_Line16, flag=VF_Const, X=241, Y=150, W=16, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line18, super=MspPadSelScreen, sub=MspPadSelScreen_Label_42, next=MspPadSelScreen_Line19, prev=MspPadSelScreen_Line17, flag=VF_Const, X=185, Y=166, W=52, H=13, color=CL_White, linemode=1
-
-Str_4_7:	.asciz "4"
-	.align	4, 0xFF
-
-			VwLabel	MspPadSelScreen_Label_42, super=MspPadSelScreen_Line18, flag=VF_Const, X=195, Y=149, W=12, H=19, str=Str_4_7, fontcolor=CL_White	# str "4"
-		VwLine	MspPadSelScreen_Line19, super=MspPadSelScreen, next=MspPadSelScreen_Line20, prev=MspPadSelScreen_Line18, flag=VF_Const, X=261, Y=166, W=52, H=13, color=CL_White
-		VwLine	MspPadSelScreen_Line20, super=MspPadSelScreen, next=MspPadSelScreen_Line21, prev=MspPadSelScreen_Line19, flag=VF_Const, X=237, Y=179, W=24, H=1, color=CL_White, linemode=1
-		VwLine	MspPadSelScreen_Line21, super=MspPadSelScreen, next=MspPadSelScreen_Line22, prev=MspPadSelScreen_Line20, flag=VF_Const, X=214, Y=122, W=7, H=50, color=CL_White
-		VwLine	MspPadSelScreen_Line22, super=MspPadSelScreen, sub=MspPadSelScreen_Line23, next=MspPadSelScreen_Line24, prev=MspPadSelScreen_Line21, flag=VF_Const, X=276, Y=122, W=7, H=51, color=CL_White, linemode=1
-			VwLine	MspPadSelScreen_Line23, super=MspPadSelScreen_Line22, flag=VF_Const, X=257, Y=142, W=51, H=9, color=CL_White
-		VwLine	MspPadSelScreen_Line24, super=MspPadSelScreen, sub=MspPadSelScreen_Line25, prev=MspPadSelScreen_Line22, flag=VF_Const, X=277, Y=122, W=7, H=51, color=CL_White, linemode=1
-			VwLine	MspPadSelScreen_Line25, super=MspPadSelScreen_Line24, flag=VF_Const, X=257, Y=142, W=51, H=9, color=CL_White
-
-Str_PAD_RECORDING:	.asciz "PAD RECORDING"
-	.align	4, 0xFF
-
-	TtlScreen	MspPadSel_sScreen, sub=MspPadSel_sScreen_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL, window=MspPadSel_sScreen_window, title=Str_PAD_RECORDING, icon=197	# title "PAD RECORDING"
-		AcIndexWideES	MspPadSel_sScreen_IndexWideES1, super=MspPadSel_sScreen, next=MspPadSel_sScreen_IndexWideES2, flag=VF_Const, X=168, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom5, style=3
-		AcIndexWideES	MspPadSel_sScreen_IndexWideES2, super=MspPadSel_sScreen, next=MspPadSel_sScreen_Box1, prev=MspPadSel_sScreen_IndexWideES1, flag=VF_Const, X=209, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom7, style=3
-		VwBox	MspPadSel_sScreen_Box1, super=MspPadSel_sScreen, sub=MspPadSel_sScreen_FuncEditBox1, next=MspPadSel_sScreen_FuncEditSw1, prev=MspPadSel_sScreen_IndexWideES2, flag=VF_Const, X=164, Y=114, W=117, H=100, color=CL_Transparent, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_109:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspPadSel_sScreen_FuncEditBox1, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_FuncEditBox2, flag=VF_Const, X=175, Y=174, W=29, H=19, color=CL_WallPattern, index=1, caption=Str_empty_109, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=MspPadSel_sScreen_FuncEditBox1_selected, func=FN_FE_PadRecMeas	# caption ""
-
-Str_empty_110:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspPadSel_sScreen_FuncEditBox2, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Label_MEASURE, prev=MspPadSel_sScreen_FuncEditBox1, flag=VF_Const, X=222, Y=172, W=49, H=23, color=CL_WallPattern, index=2, caption=Str_empty_110, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=MspPadSel_sScreen_FuncEditBox2_selected, func=FN_FE_PadRecTS	# caption ""
-
-Str_MEASURE_9:	.asciz "MEASURE"
-
-			VwLabel	MspPadSel_sScreen_Label_MEASURE, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Label_TIME, prev=MspPadSel_sScreen_FuncEditBox2, flag=VF_Const, X=166, Y=132, W=46, H=11, str=Str_MEASURE_9, font=3, fontcolor=CL_White	# str "MEASURE"
-
-Str_TIME_3:	.asciz "TIME"
-	.align	4, 0xFF
-
-			VwLabel	MspPadSel_sScreen_Label_TIME, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Label_SIGNATURE, prev=MspPadSel_sScreen_Label_MEASURE, flag=VF_Const, X=218, Y=126, W=28, H=11, str=Str_TIME_3, font=3, fontcolor=CL_White	# str "TIME"
-
-Str_SIGNATURE_2:	.asciz "SIGNATURE"
-	.align	4, 0xFF
-
-			VwLabel	MspPadSel_sScreen_Label_SIGNATURE, super=MspPadSel_sScreen_Box1, next=MspPadSel_sScreen_Line1, prev=MspPadSel_sScreen_Label_TIME, flag=VF_Const, X=218, Y=136, W=58, H=11, str=Str_SIGNATURE_2, font=3, fontcolor=CL_White	# str "SIGNATURE"
-			VwLine	MspPadSel_sScreen_Line1, super=MspPadSel_sScreen_Box1, next=PadRecTSDisable, prev=MspPadSel_sScreen_Label_SIGNATURE, flag=VF_Const, X=213, Y=116, W=1, H=96, color=CL_White, linemode=1
-			PsParaDrawBox	PadRecTSDisable, super=MspPadSel_sScreen_Box1, prev=MspPadSel_sScreen_Line1, flag=VF_Const, X=214, Y=196, W=65, H=12, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White
-		AcFuncEditSw	MspPadSel_sScreen_FuncEditSw1, super=MspPadSel_sScreen, next=MspPadSel_sScreen_TitleMenu_KEY_SETTING, prev=MspPadSel_sScreen_Box1, flag=VF_Const, X=283, Y=160, W=29, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_PadMeasTSOK
-
-Str_KEY_SETTING_4:	.asciz "KEY SETTING"
-
-		AcTitleMenu	MspPadSel_sScreen_TitleMenu_KEY_SETTING, super=MspPadSel_sScreen, next=MspPadSel_sScreen_TitleMenu_CHORD_MODIFY_CHANGE, prev=MspPadSel_sScreen_FuncEditSw1, flag=VF_Const, X=8, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left2, selected=MspPadSel_sScreen_TitleMenu_KEY_SETTING_selected, str=Str_KEY_SETTING_4, title=TT_MSPSET, icon=199	# str "KEY SETTING"
-
-Str_CHORD_MODIFY_CHANGE_3:	.asciz "CHORD MODIFY CHANGE"
-
-		AcTitleMenu	MspPadSel_sScreen_TitleMenu_CHORD_MODIFY_CHANGE, super=MspPadSel_sScreen, next=MspPadSel_sScreen_CmpPatternBox1, prev=MspPadSel_sScreen_TitleMenu_KEY_SETTING, flag=VF_Const, X=8, Y=154, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left4, selected=MspPadSel_sScreen_TitleMenu_CHORD_MODIFY_CHANGE_selected, str=Str_CHORD_MODIFY_CHANGE_3, title=TT_MSPPTCHD, icon=200	# str "CHORD MODIFY CHANGE"
-		AcCmpPatternBox	MspPadSel_sScreen_CmpPatternBox1, super=MspPadSel_sScreen, next=MspPadSel_sScreen_TitleMenu_PLAY_SETTING, prev=MspPadSel_sScreen_TitleMenu_CHORD_MODIFY_CHANGE, flag=VF_Const, X=130, Y=28, W=186, H=25, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_PLAY_SETTING:	.asciz "PLAY SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	MspPadSel_sScreen_TitleMenu_PLAY_SETTING, super=MspPadSel_sScreen, next=MspPadSel_sScreen_SureWindowMenu_CLEAR_THE_PAD, prev=MspPadSel_sScreen_CmpPatternBox1, flag=VF_Const, X=8, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left3, selected=MspPadSel_sScreen_TitleMenu_PLAY_SETTING_selected, str=Str_PLAY_SETTING, title=TT_MSPPLAYSET, icon=177	# str "PLAY SETTING"
-
-Str_CLEAR_THE_PAD:	.asciz "CLEAR THE PAD"
-	.align	4, 0xFF
-
-		AcSureWindowMenu	MspPadSel_sScreen_SureWindowMenu_CLEAR_THE_PAD, super=MspPadSel_sScreen, next=MspPadSel_sScreen_TitleMenu_PAD_NAMING, prev=MspPadSel_sScreen_TitleMenu_PLAY_SETTING, flag=VF_Const, X=8, Y=28, W=120, H=30, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Left1, selected=MspPadSel_sScreen_SureWindowMenu_CLEAR_THE_PAD_selected, str=Str_CLEAR_THE_PAD, window=MspClrPtnWin_id, func=FN_PadPtnClrYes	# str "CLEAR THE PAD"
-
-Str_PAD_NAMING_2:	.asciz "PAD NAMING"
-	.align	4, 0xFF
-
-		AcTitleMenu	MspPadSel_sScreen_TitleMenu_PAD_NAMING, super=MspPadSel_sScreen, next=MspPadSel_sScreen_SetDialFocus1, prev=MspPadSel_sScreen_SureWindowMenu_CLEAR_THE_PAD, flag=VF_Const, X=163, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=MspPadSel_sScreen_TitleMenu_PAD_NAMING_selected, str=Str_PAD_NAMING_2, title=TT_MSPPADNAME, icon=153	# str "PAD NAMING"
-		IvSetDialFocus	MspPadSel_sScreen_SetDialFocus1, super=MspPadSel_sScreen, sub=MspPadSel_sScreen_ShowHide1, next=MspPadSel_sScreen_Line2, prev=MspPadSel_sScreen_TitleMenu_PAD_NAMING, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=16, H=32, index=1
-			IvShowHide	MspPadSel_sScreen_ShowHide1, super=MspPadSel_sScreen_SetDialFocus1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspPadSelSShowHideFunc
-		VwLine	MspPadSel_sScreen_Line2, super=MspPadSel_sScreen, prev=MspPadSel_sScreen_SetDialFocus1, flag=VF_Const, X=165, Y=154, W=114, H=1, color=CL_White, linemode=1
-
-Str_STEP_RECORDING_2:	.asciz "STEP RECORDING"
-	.align	4, 0xFF
-
-	TtlScreen	MspChdDummyScreen, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPREAL, window=MspChdDummyScreen_window, title=Str_STEP_RECORDING_2, icon=54	# title "STEP RECORDING"
-
-Str_PHRASE_COPY_2:	.asciz "PHRASE COPY"
-
-	TtlScreen	MspPnCpScreen, sub=MspPnCpScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPMENU, window=MspPnCpScreen_window, title=Str_PHRASE_COPY_2, icon=198	# title "PHRASE COPY"
-		VwBox	MspPnCpScreen_Box1, super=MspPnCpScreen, sub=PnCpSrcPad, next=MspPnCpScreen_Box2, flag=VF_Const, X=0, Y=70, W=130, H=128, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_111:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	PnCpSrcPad, super=MspPnCpScreen_Box1, next=MspPnCpScreen_Label_BANK, flag=VF_Const, X=2, Y=154, W=126, H=16, color=CL_WallPattern, index=2, caption=Str_empty_111, font=3, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpSrcPad_selected, func=FN_FuncEdit_srcPad	# caption ""
-
-Str_BANK_7:	.asciz "BANK:"
-	.align	4, 0xFF
-
-			VwLabel	MspPnCpScreen_Label_BANK, super=MspPnCpScreen_Box1, next=MspPnCpScreen_Label_PAD, prev=PnCpSrcPad, flag=VF_Const, X=2, Y=82, W=44, H=19, str=Str_BANK_7, fontcolor=CL_Text	# str "BANK:"
-
-Str_PAD_3:	.asciz "PAD:"
-	.align	4, 0xFF
-
-			VwLabel	MspPnCpScreen_Label_PAD, super=MspPnCpScreen_Box1, next=MspPnCpScreen_FuncEditBox1, prev=MspPnCpScreen_Label_BANK, flag=VF_Const, X=2, Y=138, W=36, H=19, str=Str_PAD_3, fontcolor=CL_Text	# str "PAD:"
-
-Str_empty_112:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspPnCpScreen_FuncEditBox1, super=MspPnCpScreen_Box1, prev=MspPnCpScreen_Label_PAD, flag=VF_Const, X=2, Y=98, W=126, H=16, color=CL_WallPattern, index=1, caption=Str_empty_112, font=3, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=MspPnCpScreen_FuncEditBox1_selected, func=FN_FuncEdit_srcPadBank	# caption ""
-		VwBox	MspPnCpScreen_Box2, super=MspPnCpScreen, sub=MspPnCpScreen_FuncEditBox2, next=MspPnCpScreen_FuncEditSw1, prev=MspPnCpScreen_Box1, flag=VF_Const, X=148, Y=70, W=130, H=128, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_empty_113:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspPnCpScreen_FuncEditBox2, super=MspPnCpScreen_Box2, next=MspPnCpScreen_Label_USER_BANK, flag=VF_Const, X=150, Y=98, W=126, H=16, color=CL_WallPattern, index=3, caption=Str_empty_113, font=3, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=MspPnCpScreen_FuncEditBox2_selected, func=FN_FuncEdit_dstPadBank	# caption ""
-
-Str_USER_BANK_2:	.asciz "USER BANK:"
-	.align	4, 0xFF
-
-			VwLabel	MspPnCpScreen_Label_USER_BANK, super=MspPnCpScreen_Box2, next=MspPnCpScreen_Label_PAD2, prev=MspPnCpScreen_FuncEditBox2, flag=VF_Const, X=150, Y=82, W=84, H=19, str=Str_USER_BANK_2, fontcolor=CL_Text	# str "USER BANK:"
-
-Str_PAD_4:	.asciz "PAD:"
-	.align	4, 0xFF
-
-			VwLabel	MspPnCpScreen_Label_PAD2, super=MspPnCpScreen_Box2, next=PnCpDstPad, prev=MspPnCpScreen_Label_USER_BANK, flag=VF_Const, X=150, Y=138, W=36, H=19, str=Str_PAD_4, fontcolor=CL_Text	# str "PAD:"
-
-Str_empty_114:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	PnCpDstPad, super=MspPnCpScreen_Box2, prev=MspPnCpScreen_Label_PAD2, flag=VF_Const, X=150, Y=154, W=126, H=16, color=CL_WallPattern, index=4, caption=Str_empty_114, font=3, fontcolor=CL_White, align=1, length=16, editsw=ES_None, dial=1, selected=PnCpDstPad_selected, func=FN_FuncEdit_dstPad	# caption ""
-		AcFuncEditSw	MspPnCpScreen_FuncEditSw1, super=MspPnCpScreen, next=MspPnCpScreen_Label_FROM, prev=MspPnCpScreen_Box2, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_MspPnCpOK
-
-Str_FROM_5:	.asciz "FROM"
-	.align	4, 0xFF
-
-		VwLabel	MspPnCpScreen_Label_FROM, super=MspPnCpScreen, next=MspPnCpScreen_Label_TO, prev=MspPnCpScreen_FuncEditSw1, flag=VF_Const, X=26, Y=42, W=68, H=31, str=Str_FROM_5, font=11, fontcolor=CL_White	# str "FROM"
-
-Str_TO_5:	.asciz "TO"
-	.align	4, 0xFF
-
-		VwLabel	MspPnCpScreen_Label_TO, super=MspPnCpScreen, next=MspPnCpScreen_IndexWideES1, prev=MspPnCpScreen_Label_FROM, flag=VF_Const, X=194, Y=42, W=36, H=31, str=Str_TO_5, font=11, fontcolor=CL_White	# str "TO"
-		AcIndexWideES	MspPnCpScreen_IndexWideES1, super=MspPnCpScreen, next=MspPnCpScreen_IndexWideES2, prev=MspPnCpScreen_Label_TO, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=3
-		AcIndexWideES	MspPnCpScreen_IndexWideES2, super=MspPnCpScreen, next=MspPnCpScreen_Label_BANK2, prev=MspPnCpScreen_IndexWideES1, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-
-Str_BANK_8:	.asciz "BANK"
-	.align	4, 0xFF
-
-		VwLabel	MspPnCpScreen_Label_BANK2, super=MspPnCpScreen, next=MspPnCpScreen_Label_PAD3, prev=MspPnCpScreen_IndexWideES2, flag=VF_Const, X=22, Y=201, W=36, H=19, str=Str_BANK_8, fontcolor=CL_White	# str "BANK"
-
-Str_PAD_5:	.asciz "PAD"
-
-		VwLabel	MspPnCpScreen_Label_PAD3, super=MspPnCpScreen, next=MspPnCpScreen_IndexWideES3, prev=MspPnCpScreen_Label_BANK2, flag=VF_Const, X=105, Y=201, W=28, H=19, str=Str_PAD_5, fontcolor=CL_White	# str "PAD"
-		AcIndexWideES	MspPnCpScreen_IndexWideES3, super=MspPnCpScreen, next=MspPnCpScreen_Label_USER_BANK2, prev=MspPnCpScreen_Label_PAD3, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-
-Str_USER_BANK_3:	.asciz "USER BANK"
-	.align	4, 0xFF
-
-		VwLabel	MspPnCpScreen_Label_USER_BANK2, super=MspPnCpScreen, next=MspPnCpScreen_Label_PAD4, prev=MspPnCpScreen_IndexWideES3, flag=VF_Const, X=162, Y=201, W=76, H=19, str=Str_USER_BANK_3, fontcolor=CL_White	# str "USER BANK"
-
-Str_PAD_6:	.asciz "PAD"
-
-		VwLabel	MspPnCpScreen_Label_PAD4, super=MspPnCpScreen, next=MspPnCpScreen_Yajirushi1, prev=MspPnCpScreen_Label_USER_BANK2, flag=VF_Const, X=265, Y=201, W=28, H=19, str=Str_PAD_6, fontcolor=CL_White	# str "PAD"
-		Yajirushi	MspPnCpScreen_Yajirushi1, super=MspPnCpScreen, next=MspPnCpScreen_FuncMenu_EDIT, prev=MspPnCpScreen_Label_PAD4, flag=VF_Const, X=132, Y=107, W=17, H=55, color=CL_White, dir=1, tail_x_rate=60, tail_y_rate=50
-
-Str_EDIT_7:	.asciz "EDIT"
-	.align	4, 0xFF
-
-		AcFuncMenu	MspPnCpScreen_FuncMenu_EDIT, super=MspPnCpScreen, next=MspPnCpScreen_IndexWideES4, prev=MspPnCpScreen_Yajirushi1, flag=VF_Const, X=163, Y=28, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=MspPnCpScreen_FuncMenu_EDIT_selected, str=Str_EDIT_7, func=FN_PadPnCpEditFunc	# str "EDIT"
-		AcIndexWideES	MspPnCpScreen_IndexWideES4, super=MspPnCpScreen, prev=MspPnCpScreen_FuncMenu_EDIT, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-
-Str_CHORD_MODIFY_CHANGE_4:	.asciz "CHORD MODIFY CHANGE"
-
-	TtlScreen	MspPtChdScreen, sub=MspSetGrid, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL_S, window=MspPtChdScreen_window, title=Str_CHORD_MODIFY_CHANGE_4, icon=200	# title "CHORD MODIFY CHANGE"
-
-Str_PART_GROUP_MODIFY_TYPE_FUNCTION_2:	.asciz " PART | GROUP |MODIFY TYPE|FUNCTION"
-Str_PART1_PART2_2:	.asciz "|-|PART1|PART2|"
-
-		AcGridBoxDelux	MspSetGrid, super=MspPtChdScreen, next=MspPtChdScreen_IndexWideES1, flag=VF_Const, X=2, Y=56, W=316, H=158, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=4, col=4, vertline=1, selrow=MspSetGrid_selrow, selcol=MspSetGrid_selcol, pcol=MspSetGrid_pcol, prow=MspSetGrid_prow, crow=MspSetGrid_crow, fixedcol=Str_PART_GROUP_MODIFY_TYPE_FUNCTION_2, fixedrow=Str_PART1_PART2_2, func=FN_PadRecPtChdGrid	# fixedcol " PART | GROUP |MODIFY TYPE|FUNCTION"; fixedrow "|-|PART1|PART2|"
-		AcIndexWideES	MspPtChdScreen_IndexWideES1, super=MspPtChdScreen, next=MspPtChdScreen_IndexWideES2, prev=MspSetGrid, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=14
-		AcIndexWideES	MspPtChdScreen_IndexWideES2, super=MspPtChdScreen, next=MspPtChdScreen_IndexWideES3, prev=MspPtChdScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom3, style=3
-		AcIndexWideES	MspPtChdScreen_IndexWideES3, super=MspPtChdScreen, next=MspPtChdScreen_IndexWideES4, prev=MspPtChdScreen_IndexWideES2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	MspPtChdScreen_IndexWideES4, super=MspPtChdScreen, next=MspPtChdScreen_CmpPatternBox1, prev=MspPtChdScreen_IndexWideES3, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-		AcCmpPatternBox	MspPtChdScreen_CmpPatternBox1, super=MspPtChdScreen, next=MspPtChdScreen_FuncEditSw1, prev=MspPtChdScreen_IndexWideES4, flag=VF_Const, X=60, Y=28, W=200, H=25, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White, align=1, drawPattern=1
-		AcFuncEditSw	MspPtChdScreen_FuncEditSw1, super=MspPtChdScreen, prev=MspPtChdScreen_CmpPatternBox1, flag=VF_Const, X=281, Y=34, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right1, style=6, func=FN_PadPtChdOK
-
-Str_PART_SETTING_6:	.asciz "PART SETTING"
-	.align	4, 0xFF
-
-	TtlScreen	MspPartSetScreen, sub=MspPartSetScreen_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPREAL, window=MspPartSetScreen_window, title=Str_PART_SETTING_6, icon=177	# title "PART SETTING"
-		IvPageControl	MspPartSetScreen_PageControl1, super=MspPartSetScreen, sub=MspPartSetScreen_PageControl2, next=MspPartSetScreen_WindowPage1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=MspPartSetP1Win_id
-			IvPageControl	MspPartSetScreen_PageControl2, super=MspPartSetScreen_PageControl1, sub=MspPartSetScreen_PageControl3, flag=VF_Const|VF_InvisibleBox, X=24, Y=0, W=32, H=32, page=2, window=MspPartSetP2Win_id
-				IvPageControl	MspPartSetScreen_PageControl3, super=MspPartSetScreen_PageControl2, flag=VF_Const|VF_InvisibleBox, X=40, Y=0, W=32, H=32, page=3, window=MspPartSetP3Win_id
-		AcWindowPage	MspPartSetScreen_WindowPage1, super=MspPartSetScreen, next=MspPartSetScreen_CmpPatternBox1, prev=MspPartSetScreen_PageControl1, flag=VF_Const, X=244, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=MspPartSetScreen_WindowPage1_page, pagemin=1, pagemax=3
-		AcCmpPatternBox	MspPartSetScreen_CmpPatternBox1, super=MspPartSetScreen, next=MspPartSetScreen_PadBarBox1, prev=MspPartSetScreen_WindowPage1, flag=VF_Const, X=60, Y=28, W=200, H=25, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1, drawPattern=1
-		AcPadBarBox	MspPartSetScreen_PadBarBox1, super=MspPartSetScreen, prev=MspPartSetScreen_CmpPatternBox1, flag=VF_Const, X=260, Y=32, W=50, H=16, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1
-
-Str_PLAY_SETTING_2:	.asciz "PLAY SETTING"
-	.align	4, 0xFF
-
-	TtlScreen	MspPlaySetScreen, sub=MspPlaySetScreen_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPPADSEL_S, window=MspPlaySetScreen_window, title=Str_PLAY_SETTING_2, icon=177	# title "PLAY SETTING"
-		VwBox	MspPlaySetScreen_Box1, super=MspPlaySetScreen, sub=MspPlaySetScreen_Label_START, next=MspPlaySetScreen_Line1, flag=VF_Const, X=60, Y=114, W=200, H=100, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_START_2:	.asciz "START"
-	.align	4, 0xFF
-
-			VwLabel	MspPlaySetScreen_Label_START, super=MspPlaySetScreen_Box1, next=MspPlaySetScreen_FuncEditBox1, flag=VF_Const, X=82, Y=126, W=59, H=19, str=Str_START_2, font=4, fontcolor=CL_Text	# str "START"
-
-Str_empty_115:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspPlaySetScreen_FuncEditBox1, super=MspPlaySetScreen_Box1, next=MspPlaySetScreen_FuncEditBox2, prev=MspPlaySetScreen_Label_START, flag=VF_Const, X=66, Y=174, W=95, H=19, color=CL_WallPattern, index=1, caption=Str_empty_115, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=MspPlaySetScreen_FuncEditBox1_selected, func=FN_FE_PadPlaySetSynchro	# caption ""
-
-Str_empty_116:	.asciz ""
-	.align	4, 0xFF
-
-			AcFuncEditBox	MspPlaySetScreen_FuncEditBox2, super=MspPlaySetScreen_Box1, next=MspPlaySetScreen_Label_LOOP, prev=MspPlaySetScreen_FuncEditBox1, flag=VF_Const, X=183, Y=174, W=65, H=19, color=CL_WallPattern, index=2, caption=Str_empty_116, font=4, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=MspPlaySetScreen_FuncEditBox2_selected, func=FN_FE_PadPlaySetLoop	# caption ""
-
-Str_LOOP:	.asciz "LOOP"
-	.align	4, 0xFF
-
-			VwLabel	MspPlaySetScreen_Label_LOOP, super=MspPlaySetScreen_Box1, prev=MspPlaySetScreen_FuncEditBox2, flag=VF_Const, X=186, Y=126, W=48, H=19, str=Str_LOOP, font=4, fontcolor=CL_Text	# str "LOOP"
-		VwLine	MspPlaySetScreen_Line1, super=MspPlaySetScreen, next=MspPlaySetScreen_Line2, prev=MspPlaySetScreen_Box1, flag=VF_Const, X=62, Y=152, W=196, H=1, color=CL_White, linemode=1
-		VwLine	MspPlaySetScreen_Line2, super=MspPlaySetScreen, next=MspPlaySetScreen_IndexWideES1, prev=MspPlaySetScreen_Line1, flag=VF_Const, X=160, Y=116, W=1, H=96, color=CL_White, linemode=1
-		AcIndexWideES	MspPlaySetScreen_IndexWideES1, super=MspPlaySetScreen, next=MspPlaySetScreen_IndexWideES2, prev=MspPlaySetScreen_Line2, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	MspPlaySetScreen_IndexWideES2, super=MspPlaySetScreen, next=MspPlaySetScreen_CmpPatternBox1, prev=MspPlaySetScreen_IndexWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
-		AcCmpPatternBox	MspPlaySetScreen_CmpPatternBox1, super=MspPlaySetScreen, prev=MspPlaySetScreen_IndexWideES2, flag=VF_Const, X=62, Y=46, W=200, H=25, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, align=1, drawPattern=1
-
-Str_COMPILE_PAD_NAMING:	.asciz "COMPILE PAD NAMING"
-	.align	4, 0xFF
-
-	TtlScreen	MspGrpNameScreen, sub=MspGrpNameScreen_FuncEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_MSPGROUP, window=MspGrpNameScreen_window, title=Str_COMPILE_PAD_NAMING, icon=153	# title "COMPILE PAD NAMING"
-		AcFuncEditSw	MspGrpNameScreen_FuncEditSw1, super=MspGrpNameScreen, next=MspGrpNameScreen_Naming1, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_MspGrpNmOk
-		IvNaming	MspGrpNameScreen_Naming1, super=MspGrpNameScreen, next=MspGrpNameScreen_MspCompileBnkNmBox_BANK, prev=MspGrpNameScreen_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_MspGrpNmChk
-
-Str_BANK_9:	.asciz "BANK"
-	.align	4, 0xFF
-
-		AcMspCompileBnkNmBox	MspGrpNameScreen_MspCompileBnkNmBox_BANK, super=MspGrpNameScreen, prev=MspGrpNameScreen_Naming1, flag=VF_Const, X=60, Y=28, W=240, H=25, color=CL_WallPattern, index=0xFFFF, caption=Str_BANK_9, font=3, fontcolor=CL_White, align=1, length=20, editsw=ES_None, selected=MspGrpNameScreen_MspCompileBnkNmBox_BANK_selected	# caption "BANK"
-
-	Window	MspBksl1Win, sub=MspBksl1Win_PadBankSel1, flag=VF_Const, X=0, Y=28, W=320, H=212, color=CL_Transparent, index=0xFFFF, parent=MspBksl1Win_parent, child=MspBksl1Win_child
-		AcPadBankSel	MspBksl1Win_PadBankSel1, super=MspBksl1Win, next=MspBksl1Win_PadBankSel2, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left2, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel1_caption, visible=MspBksl1Win_PadBankSel1_visible, selected=MspBksl1Win_PadBankSel1_selected, padbank=1
-		AcPadBankSel	MspBksl1Win_PadBankSel2, super=MspBksl1Win, next=MspBksl1Win_PadBankSel3, prev=MspBksl1Win_PadBankSel1, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left3, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel2_caption, visible=MspBksl1Win_PadBankSel2_visible, selected=MspBksl1Win_PadBankSel2_selected, padbank=2
-		AcPadBankSel	MspBksl1Win_PadBankSel3, super=MspBksl1Win, sub=MspBksl1Win_PadBankSel4, next=MspBksl1Win_PadBankSel5, prev=MspBksl1Win_PadBankSel2, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left1, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel3_caption, visible=MspBksl1Win_PadBankSel3_visible, selected=MspBksl1Win_PadBankSel3_selected
-			AcPadBankSel	MspBksl1Win_PadBankSel4, super=MspBksl1Win_PadBankSel3, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left4, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel4_caption, visible=MspBksl1Win_PadBankSel4_visible, selected=MspBksl1Win_PadBankSel4_selected, padbank=3
-		AcPadBankSel	MspBksl1Win_PadBankSel5, super=MspBksl1Win, next=MspBksl1Win_PadBankSel6, prev=MspBksl1Win_PadBankSel3, flag=VF_Const, X=8, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left5, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel5_caption, visible=MspBksl1Win_PadBankSel5_visible, selected=MspBksl1Win_PadBankSel5_selected, padbank=4
-		AcPadBankSel	MspBksl1Win_PadBankSel6, super=MspBksl1Win, next=MspBksl1Win_PadBankSel7, prev=MspBksl1Win_PadBankSel5, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right1, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel6_caption, visible=MspBksl1Win_PadBankSel6_visible, selected=MspBksl1Win_PadBankSel6_selected, padbank=5
-		AcPadBankSel	MspBksl1Win_PadBankSel7, super=MspBksl1Win, next=MspBksl1Win_PadBankSel8, prev=MspBksl1Win_PadBankSel6, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right2, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel7_caption, visible=MspBksl1Win_PadBankSel7_visible, selected=MspBksl1Win_PadBankSel7_selected, padbank=6
-		AcPadBankSel	MspBksl1Win_PadBankSel8, super=MspBksl1Win, next=MspBksl1Win_PadBankSel9, prev=MspBksl1Win_PadBankSel7, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right3, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel8_caption, visible=MspBksl1Win_PadBankSel8_visible, selected=MspBksl1Win_PadBankSel8_selected, padbank=7
-		AcPadBankSel	MspBksl1Win_PadBankSel9, super=MspBksl1Win, next=MspBksl1Win_PadBankSel10, prev=MspBksl1Win_PadBankSel8, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right4, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel9_caption, visible=MspBksl1Win_PadBankSel9_visible, selected=MspBksl1Win_PadBankSel9_selected, padbank=8
-		AcPadBankSel	MspBksl1Win_PadBankSel10, super=MspBksl1Win, prev=MspBksl1Win_PadBankSel9, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right5, fontcolor=CL_Black, caption=MspBksl1Win_PadBankSel10_caption, visible=MspBksl1Win_PadBankSel10_visible, selected=MspBksl1Win_PadBankSel10_selected, padbank=9
-
-	Window	MspBksl2Win, sub=MspBksl2Win_PadBankSel1, flag=VF_Const, X=0, Y=28, W=320, H=212, color=CL_Transparent, index=0xFFFF, parent=MspBksl2Win_parent, child=MspBksl2Win_child
-		AcPadBankSel	MspBksl2Win_PadBankSel1, super=MspBksl2Win, next=MspBksl2Win_PadBankSel2, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left3, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel1_caption, visible=MspBksl2Win_PadBankSel1_visible, selected=MspBksl2Win_PadBankSel1_selected, padbank=12
-		AcPadBankSel	MspBksl2Win_PadBankSel2, super=MspBksl2Win, next=MspBksl2Win_PadBankSel3, prev=MspBksl2Win_PadBankSel1, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel2_caption, visible=MspBksl2Win_PadBankSel2_visible, selected=MspBksl2Win_PadBankSel2_selected, padbank=13
-		AcPadBankSel	MspBksl2Win_PadBankSel3, super=MspBksl2Win, next=MspBksl2Win_PadBankSel4, prev=MspBksl2Win_PadBankSel2, flag=VF_Const, X=8, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left5, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel3_caption, visible=MspBksl2Win_PadBankSel3_visible, selected=MspBksl2Win_PadBankSel3_selected, padbank=14
-		AcPadBankSel	MspBksl2Win_PadBankSel4, super=MspBksl2Win, next=MspBksl2Win_PadBankSel5, prev=MspBksl2Win_PadBankSel3, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right2, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel4_caption, visible=MspBksl2Win_PadBankSel4_visible, selected=MspBksl2Win_PadBankSel4_selected, padbank=16
-		AcPadBankSel	MspBksl2Win_PadBankSel5, super=MspBksl2Win, next=MspBksl2Win_PadBankSel6, prev=MspBksl2Win_PadBankSel4, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right3, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel5_caption, visible=MspBksl2Win_PadBankSel5_visible, selected=MspBksl2Win_PadBankSel5_selected, padbank=17
-		AcPadBankSel	MspBksl2Win_PadBankSel6, super=MspBksl2Win, next=MspBksl2Win_PadBankSel7, prev=MspBksl2Win_PadBankSel5, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right4, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel6_caption, visible=MspBksl2Win_PadBankSel6_visible, selected=MspBksl2Win_PadBankSel6_selected, padbank=18
-		AcPadBankSel	MspBksl2Win_PadBankSel7, super=MspBksl2Win, next=MspBksl2Win_PadBankSel8, prev=MspBksl2Win_PadBankSel6, flag=VF_Const, X=163, Y=198, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right5, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel7_caption, visible=MspBksl2Win_PadBankSel7_visible, selected=MspBksl2Win_PadBankSel7_selected, padbank=19
-		AcPadBankSel	MspBksl2Win_PadBankSel8, super=MspBksl2Win, next=MspBksl2Win_PadBankSel9, prev=MspBksl2Win_PadBankSel7, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left2, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel8_caption, visible=MspBksl2Win_PadBankSel8_visible, selected=MspBksl2Win_PadBankSel8_selected, padbank=11
-		AcPadBankSel	MspBksl2Win_PadBankSel9, super=MspBksl2Win, next=MspBksl2Win_PadBankSel10, prev=MspBksl2Win_PadBankSel8, flag=VF_Const, X=8, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left1, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel9_caption, visible=MspBksl2Win_PadBankSel9_visible, selected=MspBksl2Win_PadBankSel9_selected, padbank=10
-		AcPadBankSel	MspBksl2Win_PadBankSel10, super=MspBksl2Win, prev=MspBksl2Win_PadBankSel9, flag=VF_Const, X=163, Y=30, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right1, fontcolor=CL_Black, caption=MspBksl2Win_PadBankSel10_caption, visible=MspBksl2Win_PadBankSel10_visible, selected=MspBksl2Win_PadBankSel10_selected, padbank=15
-
-	Window	MspBksl3Win, sub=MspBksl3Win_PadBankSel1, flag=VF_Const, X=0, Y=28, W=320, H=212, color=CL_Transparent, index=0xFFFF, parent=MspBksl3Win_parent, child=MspBksl3Win_child
-		AcPadBankSel	MspBksl3Win_PadBankSel1, super=MspBksl3Win, next=MspBksl3Win_PadBankSel2, flag=VF_Const, X=8, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel1_caption, visible=MspBksl3Win_PadBankSel1_visible, selected=MspBksl3Win_PadBankSel1_selected, padtype=1
-		AcPadBankSel	MspBksl3Win_PadBankSel2, super=MspBksl3Win, next=MspBksl3Win_PadBankSel3, prev=MspBksl3Win_PadBankSel1, flag=VF_Const, X=8, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left3, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel2_caption, visible=MspBksl3Win_PadBankSel2_visible, selected=MspBksl3Win_PadBankSel2_selected, padbank=1, padtype=1
-		AcPadBankSel	MspBksl3Win_PadBankSel3, super=MspBksl3Win, next=MspBksl3Win_PadBankSel4, prev=MspBksl3Win_PadBankSel2, flag=VF_Const, X=163, Y=72, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Right2, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel3_caption, visible=MspBksl3Win_PadBankSel3_visible, selected=MspBksl3Win_PadBankSel3_selected, padtype=3
-		AcPadBankSel	MspBksl3Win_PadBankSel4, super=MspBksl3Win, next=MspBksl3Win_PadBankSel5, prev=MspBksl3Win_PadBankSel3, flag=VF_Const, X=163, Y=114, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Right3, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel4_caption, visible=MspBksl3Win_PadBankSel4_visible, selected=MspBksl3Win_PadBankSel4_selected, padbank=1, padtype=3
-		AcPadBankSel	MspBksl3Win_PadBankSel5, super=MspBksl3Win, next=MspBksl3Win_PadBankSel6, prev=MspBksl3Win_PadBankSel4, flag=VF_Const, X=163, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Right4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel5_caption, visible=MspBksl3Win_PadBankSel5_visible, selected=MspBksl3Win_PadBankSel5_selected, padtype=4
-		AcPadBankSel	MspBksl3Win_PadBankSel6, super=MspBksl3Win, prev=MspBksl3Win_PadBankSel5, flag=VF_Const, X=8, Y=156, W=149, H=26, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left4, fontcolor=CL_Black, caption=MspBksl3Win_PadBankSel6_caption, visible=MspBksl3Win_PadBankSel6_visible, selected=MspBksl3Win_PadBankSel6_selected, padbank=2, padtype=1
-
-	Window	PadRrecPartWin1, sub=PadRrecPartWin1_FuncWideES1, flag=VF_Const, X=0, Y=192, W=160, H=48, color=CL_WallPattern, index=0xFFFF, parent=PadRrecPartWin1_parent, child=PadRrecPartWin1_child
-		AcFuncWideES	PadRrecPartWin1_FuncWideES1, super=PadRrecPartWin1, next=PadRrecPartWin1_Label_PART1, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, func=FN_PadPartSel
-
-Str_PART1:	.asciz "PART1"
-	.align	4, 0xFF
-
-		VwLabel	PadRrecPartWin1_Label_PART1, super=PadRrecPartWin1, next=PadRrecPartWin1_FuncWideES2, prev=PadRrecPartWin1_FuncWideES1, flag=VF_Const, X=20, Y=220, W=44, H=19, str=Str_PART1, fontcolor=CL_BlackW	# str "PART1"
-		AcFuncWideES	PadRrecPartWin1_FuncWideES2, super=PadRrecPartWin1, next=PadRrecPartWin1_Label_PART2, prev=PadRrecPartWin1_Label_PART1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, func=FN_PadPartSel
-
-Str_PART2:	.asciz "PART2"
-	.align	4, 0xFF
-
-		VwLabel	PadRrecPartWin1_Label_PART2, super=PadRrecPartWin1, next=PadRrecPartWin1_CmpRecMuteBox_VwStrBox, prev=PadRrecPartWin1_FuncWideES2, flag=VF_Const, X=100, Y=220, W=44, H=19, str=Str_PART2, fontcolor=CL_BlackW	# str "PART2"
-
-Str_VwStrBox_9:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	PadRrecPartWin1_CmpRecMuteBox_VwStrBox, super=PadRrecPartWin1, next=PadRrecPartWin1_CmpRecMuteBox_VwStrBox2, prev=PadRrecPartWin1_Label_PART2, flag=VF_Const, X=3, Y=196, W=74, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, str=Str_VwStrBox_9, selected=PadRrecPartWin1_CmpRecMuteBox_VwStrBox_selected	# str "VwStrBox"
-
-Str_VwStrBox_10:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	PadRrecPartWin1_CmpRecMuteBox_VwStrBox2, super=PadRrecPartWin1, next=MspRealSoloToggle, prev=PadRrecPartWin1_CmpRecMuteBox_VwStrBox, flag=VF_Const, X=82, Y=196, W=74, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, str=Str_VwStrBox_10, part=1, selected=PadRrecPartWin1_CmpRecMuteBox_VwStrBox2_selected	# str "VwStrBox"
-
-Str_SOLO_4:	.asciz "SOLO"
-Str_SOLO_5:	.asciz "SOLO"
-	.align	4, 0xFF
-
-		AcFuncToggle	MspRealSoloToggle, super=PadRrecPartWin1, next=PadRrecPartWin1_TempoBox1, prev=PadRrecPartWin1_CmpRecMuteBox_VwStrBox2, flag=VF_Const, X=8, Y=160, W=41, H=18, stron=Str_SOLO_4, stroff=Str_SOLO_5, onoff=MspRealSoloToggle_onoff, editsw=ES_Left4, func=FN_PadRecSoloFunc	# stron "SOLO"; stroff "SOLO"
-		AcTempoBox	PadRrecPartWin1_TempoBox1, super=PadRrecPartWin1, prev=MspRealSoloToggle, flag=VF_Const, X=258, Y=10, W=60, H=12, color=CL_TitleBar, index=0xFFFF, fontcolor=CL_White
-
-	Window	PadRrecPartWin2, sub=PadRrecPartWin2_FuncWideES1, flag=VF_Const, X=0, Y=192, W=160, H=48, color=CL_WallPattern, index=0xFFFF, parent=PadRrecPartWin2_parent, child=PadRrecPartWin2_child
-		AcFuncWideES	PadRrecPartWin2_FuncWideES1, super=PadRrecPartWin2, next=PadRrecPartWin2_Label_PART1, flag=VF_Const, X=44, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom3, func=FN_PadPartSel
-
-Str_PART1_2:	.asciz "PART1"
-	.align	4, 0xFF
-
-		VwLabel	PadRrecPartWin2_Label_PART1, super=PadRrecPartWin2, next=PadRrecPartWin2_CmpRecMuteBox_VwStrBox, prev=PadRrecPartWin2_FuncWideES1, flag=VF_Const, X=60, Y=220, W=44, H=19, str=Str_PART1_2, fontcolor=CL_BlackW	# str "PART1"
-
-Str_VwStrBox_11:	.asciz "VwStrBox"
-	.align	4, 0xFF
-
-		AcCmpRecMuteBox	PadRrecPartWin2_CmpRecMuteBox_VwStrBox, super=PadRrecPartWin2, next=PadRrecPartWin2_TitleMenu_CHORD_STEP_REC, prev=PadRrecPartWin2_Label_PART1, flag=VF_Const, X=42, Y=196, W=74, H=18, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, str=Str_VwStrBox_11, selected=PadRrecPartWin2_CmpRecMuteBox_VwStrBox_selected	# str "VwStrBox"
-
-Str_CHORD_STEP_REC:	.asciz "CHORD STEP REC"
-	.align	4, 0xFF
-
-		AcTitleMenu	PadRrecPartWin2_TitleMenu_CHORD_STEP_REC, super=PadRrecPartWin2, prev=PadRrecPartWin2_CmpRecMuteBox_VwStrBox, flag=VF_Const, X=8, Y=154, W=100, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left4, selected=PadRrecPartWin2_TitleMenu_CHORD_STEP_REC_selected, str=Str_CHORD_STEP_REC, title=TT_MSPCHDSTEP, icon=54	# str "CHORD STEP REC"
-
-	Window	MspMemClrWin, sub=MspMemClrWin_Box1, flag=VF_Const, X=0, Y=84, W=248, H=108, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=MspMemClrWin_parent, child=MspMemClrWin_child
-		VwBox	MspMemClrWin_Box1, super=MspMemClrWin, sub=MspMemClrWin_FuncEditSw1, next=MspMemClrWin_ExitScreen1, flag=VF_Const, X=247, Y=66, W=73, H=166, color=CL_WallPattern, index=0xFFFF
-			AcFuncEditSw	MspMemClrWin_FuncEditSw1, super=MspMemClrWin_Box1, next=MspMemClrWin_ScreenMenu_NO, flag=VF_Const, X=281, Y=118, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right3, style=9, func=FN_PadMemClrYes
-
-Str_NO_14:	.asciz "NO"
-	.align	4, 0xFF
-
-			AcScreenMenu	MspMemClrWin_ScreenMenu_NO, super=MspMemClrWin_Box1, next=MspMemClrWin_Box2, prev=MspMemClrWin_FuncEditSw1, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_BlackS, editsw=ES_Right4, selected=MspMemClrWin_ScreenMenu_NO_selected, str=Str_NO_14, screen=MspPadSelScreen_id	# str "NO"
-			VwBox	MspMemClrWin_Box2, super=MspMemClrWin_Box1, prev=MspMemClrWin_ScreenMenu_NO, flag=VF_Const, X=230, Y=66, W=84, H=18, color=CL_WallPattern, index=0xFFFF
-		IvExitScreen	MspMemClrWin_ExitScreen1, super=MspMemClrWin, next=MspMemClrWin_LanguageText1, prev=MspMemClrWin_Box1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=MspPadSelScreen_id
-		AcLanguageText	MspMemClrWin_LanguageText1, super=MspMemClrWin, prev=MspMemClrWin_ExitScreen1, flag=VF_Const, X=2, Y=130, W=244, H=20, color=CL_Transparent, index=0xFFFF, font=9, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
-
-	Window	MspPartSetP1Win, sub=MspPartSetG1, flag=VF_Const, X=0, Y=60, W=320, H=180, color=CL_WallPattern, index=0xFFFF, parent=MspPartSetP1Win_parent, child=MspPartSetP1Win_child
-
-Str_empty_117:	.asciz "        |       |                    |         "
-Str_PART1_PART2_3:	.asciz "|-|PART1|PART2|"
-
-		AcGridBoxDelux	MspPartSetG1, super=MspPartSetP1Win, sub=MspPartSetG1_Label_PART, next=MspPartSetP1Win_IndexWideES1, flag=VF_Const, X=0, Y=50, W=318, H=161, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=4, col=4, vertline=1, selrow=MspPartSetG1_selrow, selcol=MspPartSetG1_selcol, pcol=MspPartSetG1_pcol, prow=MspPartSetG1_prow, crow=MspPartSetG1_crow, fixedcol=Str_empty_117, fixedrow=Str_PART1_PART2_3, func=FN_PadPartSetGrid1	# fixedcol "        |       |                    |  "; fixedrow "|-|PART1|PART2|"
-
-Str_PART_14:	.asciz "PART"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG1_Label_PART, super=MspPartSetG1, next=MspPartSetG1_Label_PITCH, flag=VF_Const, X=10, Y=70, W=38, H=17, str=Str_PART_14, fontcolor=CL_White	# str "PART"
-
-Str_PITCH_2:	.asciz "PITCH"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG1_Label_PITCH, super=MspPartSetG1, next=MspPartSetG1_Label_POINT, prev=MspPartSetG1_Label_PART, flag=VF_Const, X=60, Y=64, W=44, H=19, str=Str_PITCH_2, fontcolor=CL_White	# str "PITCH"
-
-Str_POINT_2:	.asciz "POINT"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG1_Label_POINT, super=MspPartSetG1, next=MspPartSetG1_Label_SOUND, prev=MspPartSetG1_Label_PITCH, flag=VF_Const, X=62, Y=80, W=44, H=19, str=Str_POINT_2, fontcolor=CL_White	# str "POINT"
-
-Str_SOUND_5:	.asciz "SOUND"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG1_Label_SOUND, super=MspPartSetG1, next=MspPartSetG1_Label_DIGI_EFF, prev=MspPartSetG1_Label_POINT, flag=VF_Const, X=154, Y=70, W=44, H=19, str=Str_SOUND_5, fontcolor=CL_White	# str "SOUND"
-
-Str_DIGI_EFF_2:	.asciz "DIGI EFF"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG1_Label_DIGI_EFF, super=MspPartSetG1, prev=MspPartSetG1_Label_SOUND, flag=VF_Const, X=248, Y=70, W=66, H=19, str=Str_DIGI_EFF_2, fontcolor=CL_White	# str "DIGI EFF"
-		AcIndexWideES	MspPartSetP1Win_IndexWideES1, super=MspPartSetP1Win, next=MspPartSetP1Win_IndexWideES2, prev=MspPartSetG1, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=14
-		AcIndexWideES	MspPartSetP1Win_IndexWideES2, super=MspPartSetP1Win, next=MspPartSetP1Win_IndexWideES3, prev=MspPartSetP1Win_IndexWideES1, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, editsw2=ES_Bottom8, style=3
-		AcIndexWideES	MspPartSetP1Win_IndexWideES3, super=MspPartSetP1Win, prev=MspPartSetP1Win_IndexWideES2, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom3, style=3
-
-	Window	MspPartSetP2Win, sub=MspPartSetG2, flag=VF_Const, X=0, Y=60, W=320, H=180, color=CL_WallPattern, index=0xFFFF, parent=MspPartSetP2Win_parent, child=MspPartSetP2Win_child
-
-Str_empty_118:	.asciz "     |      |        |    |    |    "
-Str_PART1_PART2_4:	.asciz "|-|PART1|PART2|"
-	.align	4, 0xFF
-
-		AcGridBoxDelux	MspPartSetG2, super=MspPartSetP2Win, sub=MspPartSetG2_Label_PART, next=MspPartSetP2Win_IndexWideES1, flag=VF_Const, X=0, Y=50, W=318, H=161, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=4, col=6, vertline=1, selrow=MspPartSetG2_selrow, selcol=MspPartSetG2_selcol, pcol=MspPartSetG2_pcol, prow=MspPartSetG2_prow, crow=MspPartSetG2_crow, fixedcol=Str_empty_118, fixedrow=Str_PART1_PART2_4, func=FN_PadPartSetGrid2	# fixedcol "     |      |        |    |    |    "; fixedrow "|-|PART1|PART2|"
-
-Str_PART_15:	.asciz "PART"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG2_Label_PART, super=MspPartSetG2, next=MspPartSetG2_Label_BALANCE, flag=VF_Const, X=8, Y=70, W=36, H=19, str=Str_PART_15, fontcolor=CL_White	# str "PART"
-
-Str_BALANCE_2:	.asciz "BALANCE"
-
-			VwLabel	MspPartSetG2_Label_BALANCE, super=MspPartSetG2, next=MspPartSetG2_Label_PAN, prev=MspPartSetG2_Label_PART, flag=VF_Const, X=52, Y=70, W=60, H=19, str=Str_BALANCE_2, fontcolor=CL_White	# str "BALANCE"
-
-Str_PAN_4:	.asciz "PAN"
-
-			VwLabel	MspPartSetG2_Label_PAN, super=MspPartSetG2, next=MspPartSetG2_Label_REV, prev=MspPartSetG2_Label_BALANCE, flag=VF_Const, X=138, Y=70, W=28, H=19, str=Str_PAN_4, fontcolor=CL_White	# str "PAN"
-
-Str_REV_2:	.asciz "REV"
-
-			VwLabel	MspPartSetG2_Label_REV, super=MspPartSetG2, next=MspPartSetG2_Label_CHO, prev=MspPartSetG2_Label_PAN, flag=VF_Const, X=198, Y=70, W=28, H=19, str=Str_REV_2, fontcolor=CL_White	# str "REV"
-
-Str_CHO_2:	.asciz "CHO"
-
-			VwLabel	MspPartSetG2_Label_CHO, super=MspPartSetG2, next=MspPartSetG2_Label_BEND, prev=MspPartSetG2_Label_REV, flag=VF_Const, X=238, Y=70, W=28, H=19, str=Str_CHO_2, fontcolor=CL_White	# str "CHO"
-
-Str_BEND_2:	.asciz "BEND"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG2_Label_BEND, super=MspPartSetG2, next=MspPartSetG2_Label_RANGE, prev=MspPartSetG2_Label_CHO, flag=VF_Const, X=276, Y=62, W=36, H=19, str=Str_BEND_2, fontcolor=CL_White	# str "BEND"
-
-Str_RANGE_2:	.asciz "RANGE"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG2_Label_RANGE, super=MspPartSetG2, prev=MspPartSetG2_Label_BEND, flag=VF_Const, X=272, Y=78, W=44, H=19, str=Str_RANGE_2, fontcolor=CL_White	# str "RANGE"
-		AcIndexWideES	MspPartSetP2Win_IndexWideES1, super=MspPartSetP2Win, sub=MspPartSetP2Win_IndexEditSw1, next=MspPartSetP2Win_IndexEditSw3, prev=MspPartSetG2, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=14
-			AcIndexEditSw	MspPartSetP2Win_IndexEditSw1, super=MspPartSetP2Win_IndexWideES1, sub=MspPartSetP2Win_IndexEditSw2, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, style=3
-				AcIndexEditSw	MspPartSetP2Win_IndexEditSw2, super=MspPartSetP2Win_IndexEditSw1, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=3
-		AcIndexEditSw	MspPartSetP2Win_IndexEditSw3, super=MspPartSetP2Win, next=MspPartSetP2Win_IndexEditSw4, prev=MspPartSetP2Win_IndexWideES1, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom7, style=3
-		AcIndexEditSw	MspPartSetP2Win_IndexEditSw4, super=MspPartSetP2Win, next=MspPartSetP2Win_IndexEditSw5, prev=MspPartSetP2Win_IndexEditSw3, flag=VF_Const, X=160, Y=217, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom5, style=3
-		AcIndexEditSw	MspPartSetP2Win_IndexEditSw5, super=MspPartSetP2Win, prev=MspPartSetP2Win_IndexEditSw4, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, fontcolor=CL_Black, editsw=ES_Bottom8, style=3
-
-	Window	MspClrPtnWin, sub=MspClrPtnWin_ExitScreen1, flag=VF_Const, X=172, Y=28, W=148, H=44, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=MspClrPtnWin_parent, child=MspClrPtnWin_child
-		IvExitScreen	MspClrPtnWin_ExitScreen1, super=MspClrPtnWin, next=MspClrPtnWin_Box1, flag=VF_Const|VF_InvisibleBox, X=14, Y=0, W=32, H=32, screen=MspPadSel_sScreen_id
-		VwBox	MspClrPtnWin_Box1, super=MspClrPtnWin, sub=MspClrPtnWin_ScreenMenu_NO, next=MspClrPtnWin_LanguageText1, prev=MspClrPtnWin_ExitScreen1, flag=VF_Const, X=282, Y=146, W=38, H=28, color=CL_WallPattern, index=0xFFFF
-
-Str_NO_15:	.asciz "NO"
-	.align	4, 0xFF
-
-			AcScreenMenu	MspClrPtnWin_ScreenMenu_NO, super=MspClrPtnWin_Box1, flag=VF_Const, X=281, Y=118, W=31, H=18, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_BlackS, editsw=ES_Right3, selected=MspClrPtnWin_ScreenMenu_NO_selected, str=Str_NO_15, screen=MspPadSel_sScreen_id	# str "NO"
-		AcLanguageText	MspClrPtnWin_LanguageText1, super=MspClrPtnWin, next=MspClrPtnWin_FuncEditSw1, prev=MspClrPtnWin_Box1, flag=VF_Const, X=170, Y=41, W=150, H=22, color=CL_Transparent, index=0xFFFF, font=7, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
-		AcFuncEditSw	MspClrPtnWin_FuncEditSw1, super=MspClrPtnWin, next=MspClrPtnWin_Box2, prev=MspClrPtnWin_LanguageText1, flag=VF_Const, X=281, Y=76, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right2, style=9, func=FN_PadPtnClrYes
-		VwBox	MspClrPtnWin_Box2, super=MspClrPtnWin, sub=MspClrPtnWin_Box3, next=MspClrPtnWin_Box4, prev=MspClrPtnWin_FuncEditSw1, flag=VF_Const, X=148, Y=74, W=132, H=22, color=CL_WallPattern, index=0xFFFF
-			VwBox	MspClrPtnWin_Box3, super=MspClrPtnWin_Box2, flag=VF_Const, X=254, Y=90, W=66, H=10, color=CL_WallPattern, index=0xFFFF
-		VwBox	MspClrPtnWin_Box4, super=MspClrPtnWin, prev=MspClrPtnWin_Box2, flag=VF_Const, X=127, Y=28, W=45, H=43, color=CL_WallPattern, index=0xFFFF
-
-	Window	MspMsTs3Win, sub=MspMsTs3Win_ExitScreen1, flag=VF_Const, X=0, Y=26, W=274, H=80, color=CL_FireRedB, border=BD_3D_UP2, index=0xFFFF, modal=1, parent=MspMsTs3Win_parent, child=MspMsTs3Win_child
-		IvExitScreen	MspMsTs3Win_ExitScreen1, super=MspMsTs3Win, next=MspMsTs3Win_Box1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, screen=MspPadSel_sScreen_id
-		VwBox	MspMsTs3Win_Box1, super=MspMsTs3Win, sub=MspMsTs3Win_FuncEditSw1, next=MspMsTs3Win_Box2, prev=MspMsTs3Win_ExitScreen1, flag=VF_Const, X=274, Y=52, W=46, H=54, color=CL_WallPattern, index=0xFFFF
-			AcFuncEditSw	MspMsTs3Win_FuncEditSw1, super=MspMsTs3Win_Box1, next=MspMsTs3Win_ScreenMenu_NO, flag=VF_Const, X=281, Y=34, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right1, style=9, func=FN_PadMeasTSYes
-
-Str_NO_16:	.asciz "NO"
-	.align	4, 0xFF
-
-			AcScreenMenu	MspMsTs3Win_ScreenMenu_NO, super=MspMsTs3Win_Box1, prev=MspMsTs3Win_FuncEditSw1, flag=VF_Const, X=281, Y=76, W=31, H=18, color=CL_SilverB, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_BlackS, editsw=ES_Right2, selected=MspMsTs3Win_ScreenMenu_NO_selected, str=Str_NO_16, screen=MspPadSel_sScreen_id	# str "NO"
-		VwBox	MspMsTs3Win_Box2, super=MspMsTs3Win, next=MspMsTs3Win_LanguageText1, prev=MspMsTs3Win_Box1, flag=VF_Const, X=280, Y=142, W=40, H=28, color=CL_WallPattern, index=0xFFFF
-		AcLanguageText	MspMsTs3Win_LanguageText1, super=MspMsTs3Win, next=MspMsTs3Win_LanguageText2, prev=MspMsTs3Win_Box2, flag=VF_Const, X=4, Y=32, W=268, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAttentionCheck
-		AcLanguageText	MspMsTs3Win_LanguageText2, super=MspMsTs3Win, next=MspMsTs3Win_LanguageText3, prev=MspMsTs3Win_LanguageText1, flag=VF_Const, X=4, Y=86, W=270, H=16, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, lines=1, func=FN_AttAreYouSureCheck
-		AcLanguageText	MspMsTs3Win_LanguageText3, super=MspMsTs3Win, prev=MspMsTs3Win_LanguageText2, flag=VF_Const, X=4, Y=48, W=270, H=42, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_White, alignment=1, lines=2, func=FN_AttCompRec2
-
-	Window	PadRecPartWin1, sub=PadRecPartWin1_FuncWideES1, flag=VF_Const, X=0, Y=196, W=156, H=44, color=CL_WallPattern, index=0xFFFF, parent=PadRecPartWin1_parent, child=PadRecPartWin1_child
-		AcFuncWideES	PadRecPartWin1_FuncWideES1, super=PadRecPartWin1, sub=PadRecPartWin1_Label_PART1, next=PadRecPartWin1_FuncWideES2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, func=FN_PadPartSel
-
-Str_PART1_3:	.asciz "PART1"
-	.align	4, 0xFF
-
-			VwLabel	PadRecPartWin1_Label_PART1, super=PadRecPartWin1_FuncWideES1, flag=VF_Const, X=18, Y=220, W=52, H=17, str=Str_PART1_3, fontcolor=CL_Text	# str "PART1"
-		AcFuncWideES	PadRecPartWin1_FuncWideES2, super=PadRecPartWin1, sub=PadRecPartWin1_Label_PART2, next=PadRecPartWin1_Label_START_RECORDING, prev=PadRecPartWin1_FuncWideES1, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, func=FN_PadPartSel
-
-Str_PART2_2:	.asciz "PART2"
-	.align	4, 0xFF
-
-			VwLabel	PadRecPartWin1_Label_PART2, super=PadRecPartWin1_FuncWideES2, flag=VF_Const, X=99, Y=220, W=44, H=19, str=Str_PART2_2, fontcolor=CL_Text	# str "PART2"
-
-Str_START_RECORDING_2:	.asciz "START RECORDING"
-
-		VwLabel	PadRecPartWin1_Label_START_RECORDING, super=PadRecPartWin1, next=PadRecPartWin1_Line1, prev=PadRecPartWin1_FuncWideES2, flag=VF_Const, X=16, Y=196, W=134, H=17, str=Str_START_RECORDING_2, fontcolor=CL_SelectedW	# str "START RECORDING"
-		VwLine	PadRecPartWin1_Line1, super=PadRecPartWin1, next=PadRecPartWin1_Line2, prev=PadRecPartWin1_Label_START_RECORDING, flag=VF_Const, X=4, Y=203, W=10, H=1, color=CL_White, linemode=1
-		VwLine	PadRecPartWin1_Line2, super=PadRecPartWin1, next=PadRecPartWin1_Line3, prev=PadRecPartWin1_Line1, flag=VF_Const, X=4, Y=203, W=1, H=12, color=CL_White, linemode=1
-		VwLine	PadRecPartWin1_Line3, super=PadRecPartWin1, next=PadRecPartWin1_Line4, prev=PadRecPartWin1_Line2, flag=VF_Const, X=154, Y=203, W=1, H=12, color=CL_White, linemode=1
-		VwLine	PadRecPartWin1_Line4, super=PadRecPartWin1, prev=PadRecPartWin1_Line3, flag=VF_Const, X=145, Y=203, W=10, H=1, color=CL_White, linemode=1
-
-	Window	PadRecPartWin2, sub=PadRecPartWin2_FuncWideES1, flag=VF_Const, X=56, Y=188, W=86, H=52, color=CL_WallPattern, index=0xFFFF, parent=PadRecPartWin2_parent, child=PadRecPartWin2_child
-		AcFuncWideES	PadRecPartWin2_FuncWideES1, super=PadRecPartWin2, sub=PadRecPartWin2_Label_PART1, next=PadRecPartWin2_Label_START_RECORDING, flag=VF_Const, X=44, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom3, func=FN_PadPartSel
-
-Str_PART1_4:	.asciz "PART1"
-	.align	4, 0xFF
-
-			VwLabel	PadRecPartWin2_Label_PART1, super=PadRecPartWin2_FuncWideES1, flag=VF_Const, X=59, Y=219, W=44, H=19, str=Str_PART1_4, fontcolor=CL_White	# str "PART1"
-
-Str_START_RECORDING_3:	.asciz "START RECORDING"
-
-		VwLabel	PadRecPartWin2_Label_START_RECORDING, super=PadRecPartWin2, prev=PadRecPartWin2_FuncWideES1, flag=VF_Const, X=18, Y=198, W=126, H=19, str=Str_START_RECORDING_3, fontcolor=CL_SelectedW	# str "START RECORDING"
-
-Str_STEP_RECORDING_3:	.asciz "STEP RECORDING"
-	.align	4, 0xFF
-
-	TtlScreen	MspStepScreen, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=MspStepScreen_window, title=Str_STEP_RECORDING_3, icon=54	# title "STEP RECORDING"
-
-	Window	MspPartSetP3Win, sub=MspPartSetG3, flag=VF_Const, X=80, Y=90, W=160, H=60, color=CL_WallPattern, index=0xFFFF, parent=MspPartSetP3Win_parent, child=MspPartSetP3Win_child
-
-Str_empty_119:	.asciz "   |    |    |    |    "
-Str_PART1_PART2_5:	.asciz "|-|PART1|PART2|"
-
-		AcGridBoxDelux	MspPartSetG3, super=MspPartSetP3Win, sub=MspPartSetG3_Label_PART, next=MspPartSetP3Win_IndexWideES1, flag=VF_Const, X=0, Y=50, W=318, H=161, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=4, col=5, vertline=1, selrow=MspPartSetG3_selrow, selcol=MspPartSetG3_selcol, pcol=MspPartSetG3_pcol, prow=MspPartSetG3_prow, crow=MspPartSetG3_crow, fixedcol=Str_empty_119, fixedrow=Str_PART1_PART2_5, func=FN_PadPartSetGrid3	# fixedcol "   |    |    |    |    "; fixedrow "|-|PART1|PART2|"
-
-Str_PART_16:	.asciz "PART"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_PART, super=MspPartSetG3, next=MspPartSetG3_Label_EQ_Hi, flag=VF_Const, X=8, Y=70, W=36, H=19, str=Str_PART_16, fontcolor=CL_White	# str "PART"
-
-Str_EQ_Hi_3:	.asciz "EQ-Hi"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_EQ_Hi, super=MspPartSetG3, next=MspPartSetG3_Label_EQ_Hi2, prev=MspPartSetG3_Label_PART, flag=VF_Const, X=62, Y=64, W=44, H=19, str=Str_EQ_Hi_3, fontcolor=CL_White	# str "EQ-Hi"
-
-Str_EQ_Hi_4:	.asciz "EQ-Hi"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_EQ_Hi2, super=MspPartSetG3, sub=MspPartSetG3_Label_Gain_dB, next=MspPartSetG3_Label_Fc, prev=MspPartSetG3_Label_EQ_Hi, flag=VF_Const, X=128, Y=64, W=44, H=19, str=Str_EQ_Hi_4, fontcolor=CL_White	# str "EQ-Hi"
-
-Str_Gain_dB_3:	.asciz "Gain[dB]"
-	.align	4, 0xFF
-
-				VwLabel	MspPartSetG3_Label_Gain_dB, super=MspPartSetG3_Label_EQ_Hi2, flag=VF_Const, X=116, Y=78, W=68, H=19, str=Str_Gain_dB_3, fontcolor=CL_White	# str "Gain[dB]"
-
-Str_Fc_3:	.asciz "Fc"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_Fc, super=MspPartSetG3, next=MspPartSetG3_Label_EQ_Low, prev=MspPartSetG3_Label_EQ_Hi2, flag=VF_Const, X=74, Y=78, W=20, H=19, str=Str_Fc_3, fontcolor=CL_White	# str "Fc"
-
-Str_EQ_Low_3:	.asciz "EQ-Low"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_EQ_Low, super=MspPartSetG3, next=MspPartSetG3_Label_Fc2, prev=MspPartSetG3_Label_Fc, flag=VF_Const, X=188, Y=64, W=52, H=19, str=Str_EQ_Low_3, fontcolor=CL_White	# str "EQ-Low"
-
-Str_Fc_4:	.asciz "Fc"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_Fc2, super=MspPartSetG3, next=MspPartSetG3_Label_EQ_Low2, prev=MspPartSetG3_Label_EQ_Low, flag=VF_Const, X=202, Y=78, W=20, H=19, str=Str_Fc_4, fontcolor=CL_White	# str "Fc"
-
-Str_EQ_Low_4:	.asciz "EQ-Low"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_EQ_Low2, super=MspPartSetG3, next=MspPartSetG3_Label_Gain_dB2, prev=MspPartSetG3_Label_Fc2, flag=VF_Const, X=256, Y=64, W=52, H=19, str=Str_EQ_Low_4, fontcolor=CL_White	# str "EQ-Low"
-
-Str_Gain_dB_4:	.asciz "Gain[dB]"
-	.align	4, 0xFF
-
-			VwLabel	MspPartSetG3_Label_Gain_dB2, super=MspPartSetG3, prev=MspPartSetG3_Label_EQ_Low2, flag=VF_Const, X=246, Y=78, W=68, H=19, str=Str_Gain_dB_4, fontcolor=CL_White	# str "Gain[dB]"
-		AcIndexWideES	MspPartSetP3Win_IndexWideES1, super=MspPartSetP3Win, next=MspPartSetP3Win_IndexEditSw1, prev=MspPartSetG3, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom1, style=14
-		AcIndexEditSw	MspPartSetP3Win_IndexEditSw1, super=MspPartSetP3Win, next=MspPartSetP3Win_IndexEditSw2, prev=MspPartSetP3Win_IndexWideES1, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom3, style=3
-		AcIndexEditSw	MspPartSetP3Win_IndexEditSw2, super=MspPartSetP3Win, next=MspPartSetP3Win_IndexEditSw3, prev=MspPartSetP3Win_IndexEditSw1, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, fontcolor=CL_Black, editsw=ES_Bottom4, style=3
-		AcIndexEditSw	MspPartSetP3Win_IndexEditSw3, super=MspPartSetP3Win, next=MspPartSetP3Win_IndexEditSw4, prev=MspPartSetP3Win_IndexEditSw2, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=3
-		AcIndexEditSw	MspPartSetP3Win_IndexEditSw4, super=MspPartSetP3Win, prev=MspPartSetP3Win_IndexEditSw3, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, fontcolor=CL_Black, editsw=ES_Bottom8, style=3
-
-RN_MspMenuScreen:	.asciz "MspMenuScreen"
-RN_empty_1171:	.asciz ""
-RN_empty_1172:	.asciz ""
-RN_empty_1173:	.asciz ""
-RN_empty_1174:	.asciz ""
-RN_empty_1175:	.asciz ""
-RN_empty_1176:	.asciz ""
-RN_empty_1177:	.asciz ""
-RN_empty_1178:	.asciz ""
-RN_empty_1179:	.asciz ""
-RN_empty_1180:	.asciz ""
-RN_empty_1181:	.asciz ""
-RN_empty_1182:	.asciz ""
-RN_empty_1183:	.asciz ""
-RN_MspBkslScreen:	.asciz "MspBkslScreen"
-RN_empty_1184:	.asciz ""
-RN_empty_1185:	.asciz ""
-RN_empty_1186:	.asciz ""
-RN_empty_1187:	.asciz ""
-RN_MspBkslWin:	.asciz "MspBkslWin"
-RN_MspRealScreen:	.asciz "MspRealScreen"
-RN_empty_1188:	.asciz ""
-RN_empty_1189:	.asciz ""
-RN_empty_1190:	.asciz ""
-RN_empty_1191:	.asciz ""
-RN_empty_1192:	.asciz ""
-RN_PadRealChdModTyp:	.asciz "PadRealChdModTyp"
-RN_empty_1193:	.asciz ""
-RN_empty_1194:	.asciz ""
-RN_empty_1195:	.asciz ""
-RN_empty_1196:	.asciz ""
-RN_empty_1197:	.asciz ""
-RN_empty_1198:	.asciz ""
-RN_empty_1199:	.asciz ""
-RN_empty_1200:	.asciz ""
-RN_empty_1201:	.asciz ""
-RN_empty_1202:	.asciz ""
-RN_empty_1203:	.asciz ""
-RN_empty_1204:	.asciz ""
-RN_empty_1205:	.asciz ""
-RN_empty_1206:	.asciz ""
-RN_empty_1207:	.asciz ""
-RN_empty_1208:	.asciz ""
-RN_empty_1209:	.asciz ""
-RN_empty_1210:	.asciz ""
-RN_empty_1211:	.asciz ""
-RN_empty_1212:	.asciz ""
-RN_empty_1213:	.asciz ""
-RN_empty_1214:	.asciz ""
-RN_empty_1215:	.asciz ""
-RN_empty_1216:	.asciz ""
-RN_empty_1217:	.asciz ""
-RN_empty_1218:	.asciz ""
-RN_empty_1219:	.asciz ""
-RN_MspNameScreen:	.asciz "MspNameScreen"
-RN_empty_1220:	.asciz ""
-RN_empty_1221:	.asciz ""
-RN_empty_1222:	.asciz ""
-RN_MspCompileSetScreen:	.asciz "MspCompileSetScreen"
-RN_MspCompileSetGrid:	.asciz "MspCompileSetGrid"
-RN_empty_1223:	.asciz ""
-RN_empty_1224:	.asciz ""
-RN_empty_1225:	.asciz ""
-RN_empty_1226:	.asciz ""
-RN_empty_1227:	.asciz ""
-RN_MspCompileBankName:	.asciz "MspCompileBankName"
-RN_empty_1228:	.asciz ""
-RN_empty_1229:	.asciz ""
-RN_MspSetScreen:	.asciz "MspSetScreen"
-RN_empty_1230:	.asciz ""
-RN_empty_1231:	.asciz ""
-RN_empty_1232:	.asciz ""
-RN_empty_1233:	.asciz ""
-RN_empty_1234:	.asciz ""
-RN_empty_1235:	.asciz ""
-RN_empty_1236:	.asciz ""
-RN_empty_1237:	.asciz ""
-RN_empty_1238:	.asciz ""
-RN_empty_1239:	.asciz ""
-RN_MspSeqCpScreen:	.asciz "MspSeqCpScreen"
-RN_empty_1240:	.asciz ""
-RN_empty_1241:	.asciz ""
-RN_empty_1242:	.asciz ""
-RN_empty_1243:	.asciz ""
-RN_empty_1244:	.asciz ""
-RN_empty_1245:	.asciz ""
-RN_empty_1246:	.asciz ""
-RN_empty_1247:	.asciz ""
-RN_empty_1248:	.asciz ""
-RN_empty_1249:	.asciz ""
-RN_empty_1250:	.asciz ""
-RN_empty_1251:	.asciz ""
-RN_empty_1252:	.asciz ""
-RN_empty_1253:	.asciz ""
-RN_empty_1254:	.asciz ""
-RN_empty_1255:	.asciz ""
-RN_SeqToPadCopyGrid:	.asciz "SeqToPadCopyGrid"
-RN_empty_1256:	.asciz ""
-RN_SeqToPadFstMeas:	.asciz "SeqToPadFstMeas"
-RN_SeqToPadLstMeas:	.asciz "SeqToPadLstMeas"
-RN_empty_1257:	.asciz ""
-RN_empty_1258:	.asciz ""
-RN_empty_1259:	.asciz ""
-RN_empty_1260:	.asciz ""
-RN_empty_1261:	.asciz ""
-RN_empty_1262:	.asciz ""
-RN_empty_1263:	.asciz ""
-RN_empty_1264:	.asciz ""
-RN_SeqToPadTrans:	.asciz "SeqToPadTrans"
-RN_empty_1265:	.asciz ""
-RN_empty_1266:	.asciz ""
-RN_empty_1267:	.asciz ""
-RN_SeqToPadMemory:	.asciz "SeqToPadMemory"
-RN_SeqToPadPattern:	.asciz "SeqToPadPattern"
-RN_empty_1268:	.asciz ""
-RN_empty_1269:	.asciz ""
-RN_empty_1270:	.asciz ""
-RN_SeqToPadCopyChord:	.asciz "SeqToPadCopyChord"
-RN_empty_1271:	.asciz ""
-RN_empty_1272:	.asciz ""
-RN_empty_1273:	.asciz ""
-RN_empty_1274:	.asciz ""
-RN_empty_1275:	.asciz ""
-RN_empty_1276:	.asciz ""
-RN_empty_1277:	.asciz ""
-RN_MspPadNameScreen:	.asciz "MspPadNameScreen"
-RN_empty_1278:	.asciz ""
-RN_empty_1279:	.asciz ""
-RN_empty_1280:	.asciz ""
-RN_MspPadSelScreen:	.asciz "MspPadSelScreen"
-RN_empty_1281:	.asciz ""
-RN_empty_1282:	.asciz ""
-RN_empty_1283:	.asciz ""
-RN_empty_1284:	.asciz ""
-RN_empty_1285:	.asciz ""
-RN_empty_1286:	.asciz ""
-RN_empty_1287:	.asciz ""
-RN_empty_1288:	.asciz ""
-RN_empty_1289:	.asciz ""
-RN_empty_1290:	.asciz ""
-RN_empty_1291:	.asciz ""
-RN_empty_1292:	.asciz ""
-RN_empty_1293:	.asciz ""
-RN_empty_1294:	.asciz ""
-RN_empty_1295:	.asciz ""
-RN_empty_1296:	.asciz ""
-RN_empty_1297:	.asciz ""
-RN_empty_1298:	.asciz ""
-RN_empty_1299:	.asciz ""
-RN_empty_1300:	.asciz ""
-RN_empty_1301:	.asciz ""
-RN_empty_1302:	.asciz ""
-RN_empty_1303:	.asciz ""
-RN_empty_1304:	.asciz ""
-RN_empty_1305:	.asciz ""
-RN_empty_1306:	.asciz ""
-RN_empty_1307:	.asciz ""
-RN_empty_1308:	.asciz ""
-RN_empty_1309:	.asciz ""
-RN_empty_1310:	.asciz ""
-RN_empty_1311:	.asciz ""
-RN_empty_1312:	.asciz ""
-RN_empty_1313:	.asciz ""
-RN_empty_1314:	.asciz ""
-RN_empty_1315:	.asciz ""
-RN_empty_1316:	.asciz ""
-RN_empty_1317:	.asciz ""
-RN_empty_1318:	.asciz ""
-RN_empty_1319:	.asciz ""
-RN_empty_1320:	.asciz ""
-RN_empty_1321:	.asciz ""
-RN_empty_1322:	.asciz ""
-RN_empty_1323:	.asciz ""
-RN_empty_1324:	.asciz ""
-RN_empty_1325:	.asciz ""
-RN_empty_1326:	.asciz ""
-RN_empty_1327:	.asciz ""
-RN_empty_1328:	.asciz ""
-RN_empty_1329:	.asciz ""
-RN_empty_1330:	.asciz ""
-RN_empty_1331:	.asciz ""
-RN_empty_1332:	.asciz ""
-RN_empty_1333:	.asciz ""
-RN_empty_1334:	.asciz ""
-RN_empty_1335:	.asciz ""
-RN_empty_1336:	.asciz ""
-RN_empty_1337:	.asciz ""
-RN_MspPadSel_sScreen:	.asciz "MspPadSel_sScreen"
-RN_empty_1338:	.asciz ""
-RN_empty_1339:	.asciz ""
-RN_empty_1340:	.asciz ""
-RN_empty_1341:	.asciz ""
-RN_empty_1342:	.asciz ""
-RN_empty_1343:	.asciz ""
-RN_empty_1344:	.asciz ""
-RN_empty_1345:	.asciz ""
-RN_empty_1346:	.asciz ""
-RN_PadRecTSDisable:	.asciz "PadRecTSDisable"
-RN_empty_1347:	.asciz ""
-RN_empty_1348:	.asciz ""
-RN_empty_1349:	.asciz ""
-RN_empty_1350:	.asciz ""
-RN_empty_1351:	.asciz ""
-RN_empty_1352:	.asciz ""
-RN_empty_1353:	.asciz ""
-RN_empty_1354:	.asciz ""
-RN_empty_1355:	.asciz ""
-RN_empty_1356:	.asciz ""
-RN_MspChdDummyScreen:	.asciz "MspChdDummyScreen"
-RN_MspPnCpScreen:	.asciz "MspPnCpScreen"
-RN_empty_1357:	.asciz ""
-RN_PnCpSrcPad:	.asciz "PnCpSrcPad"
-RN_empty_1358:	.asciz ""
-RN_empty_1359:	.asciz ""
-RN_empty_1360:	.asciz ""
-RN_empty_1361:	.asciz ""
-RN_empty_1362:	.asciz ""
-RN_empty_1363:	.asciz ""
-RN_empty_1364:	.asciz ""
-RN_PnCpDstPad:	.asciz "PnCpDstPad"
-RN_empty_1365:	.asciz ""
-RN_empty_1366:	.asciz ""
-RN_empty_1367:	.asciz ""
-RN_empty_1368:	.asciz ""
-RN_empty_1369:	.asciz ""
-RN_empty_1370:	.asciz ""
-RN_empty_1371:	.asciz ""
-RN_empty_1372:	.asciz ""
-RN_empty_1373:	.asciz ""
-RN_empty_1374:	.asciz ""
-RN_empty_1375:	.asciz ""
-RN_empty_1376:	.asciz ""
-RN_empty_1377:	.asciz ""
-RN_MspPtChdScreen:	.asciz "MspPtChdScreen"
-RN_MspSetGrid:	.asciz "MspSetGrid"
-RN_empty_1378:	.asciz ""
-RN_empty_1379:	.asciz ""
-RN_empty_1380:	.asciz ""
-RN_empty_1381:	.asciz ""
-RN_empty_1382:	.asciz ""
-RN_empty_1383:	.asciz ""
-RN_MspPartSetScreen:	.asciz "MspPartSetScreen"
-RN_empty_1384:	.asciz ""
-RN_empty_1385:	.asciz ""
-RN_empty_1386:	.asciz ""
-RN_empty_1387:	.asciz ""
-RN_empty_1388:	.asciz ""
-RN_empty_1389:	.asciz ""
-RN_MspPlaySetScreen:	.asciz "MspPlaySetScreen"
-RN_empty_1390:	.asciz ""
-RN_empty_1391:	.asciz ""
-RN_empty_1392:	.asciz ""
-RN_empty_1393:	.asciz ""
-RN_empty_1394:	.asciz ""
-RN_empty_1395:	.asciz ""
-RN_empty_1396:	.asciz ""
-RN_empty_1397:	.asciz ""
-RN_empty_1398:	.asciz ""
-RN_empty_1399:	.asciz ""
-RN_MspGrpNameScreen:	.asciz "MspGrpNameScreen"
-RN_empty_1400:	.asciz ""
-RN_empty_1401:	.asciz ""
-RN_empty_1402:	.asciz ""
-RN_MspBksl1Win:	.asciz "MspBksl1Win"
-RN_empty_1403:	.asciz ""
-RN_empty_1404:	.asciz ""
-RN_empty_1405:	.asciz ""
-RN_empty_1406:	.asciz ""
-RN_empty_1407:	.asciz ""
-RN_empty_1408:	.asciz ""
-RN_empty_1409:	.asciz ""
-RN_empty_1410:	.asciz ""
-RN_empty_1411:	.asciz ""
-RN_empty_1412:	.asciz ""
-RN_MspBksl2Win:	.asciz "MspBksl2Win"
-RN_empty_1413:	.asciz ""
-RN_empty_1414:	.asciz ""
-RN_empty_1415:	.asciz ""
-RN_empty_1416:	.asciz ""
-RN_empty_1417:	.asciz ""
-RN_empty_1418:	.asciz ""
-RN_empty_1419:	.asciz ""
-RN_empty_1420:	.asciz ""
-RN_empty_1421:	.asciz ""
-RN_empty_1422:	.asciz ""
-RN_MspBksl3Win:	.asciz "MspBksl3Win"
-RN_empty_1423:	.asciz ""
-RN_empty_1424:	.asciz ""
-RN_empty_1425:	.asciz ""
-RN_empty_1426:	.asciz ""
-RN_empty_1427:	.asciz ""
-RN_empty_1428:	.asciz ""
-RN_PadRrecPartWin1:	.asciz "PadRrecPartWin1"
-RN_empty_1429:	.asciz ""
-RN_empty_1430:	.asciz ""
-RN_empty_1431:	.asciz ""
-RN_empty_1432:	.asciz ""
-RN_empty_1433:	.asciz ""
-RN_empty_1434:	.asciz ""
-RN_MspRealSoloToggle:	.asciz "MspRealSoloToggle"
-RN_empty_1435:	.asciz ""
-RN_PadRrecPartWin2:	.asciz "PadRrecPartWin2"
-RN_empty_1436:	.asciz ""
-RN_empty_1437:	.asciz ""
-RN_empty_1438:	.asciz ""
-RN_empty_1439:	.asciz ""
-RN_MspMemClrWin:	.asciz "MspMemClrWin"
-RN_empty_1440:	.asciz ""
-RN_empty_1441:	.asciz ""
-RN_empty_1442:	.asciz ""
-RN_empty_1443:	.asciz ""
-RN_empty_1444:	.asciz ""
-RN_empty_1445:	.asciz ""
-RN_MspPartSetP1Win:	.asciz "MspPartSetP1Win"
-RN_MspPartSetG1:	.asciz "MspPartSetG1"
-RN_empty_1446:	.asciz ""
-RN_empty_1447:	.asciz ""
-RN_empty_1448:	.asciz ""
-RN_empty_1449:	.asciz ""
-RN_empty_1450:	.asciz ""
-RN_empty_1451:	.asciz ""
-RN_empty_1452:	.asciz ""
-RN_empty_1453:	.asciz ""
-RN_MspPartSetP2Win:	.asciz "MspPartSetP2Win"
-RN_MspPartSetG2:	.asciz "MspPartSetG2"
-RN_empty_1454:	.asciz ""
-RN_empty_1455:	.asciz ""
-RN_empty_1456:	.asciz ""
-RN_empty_1457:	.asciz ""
-RN_empty_1458:	.asciz ""
-RN_empty_1459:	.asciz ""
-RN_empty_1460:	.asciz ""
-RN_empty_1461:	.asciz ""
-RN_empty_1462:	.asciz ""
-RN_empty_1463:	.asciz ""
-RN_empty_1464:	.asciz ""
-RN_empty_1465:	.asciz ""
-RN_empty_1466:	.asciz ""
-RN_MspClrPtnWin:	.asciz "MspClrPtnWin"
-RN_empty_1467:	.asciz ""
-RN_empty_1468:	.asciz ""
-RN_empty_1469:	.asciz ""
-RN_empty_1470:	.asciz ""
-RN_empty_1471:	.asciz ""
-RN_empty_1472:	.asciz ""
-RN_empty_1473:	.asciz ""
-RN_empty_1474:	.asciz ""
-RN_MspMsTs3Win:	.asciz "MspMsTs3Win"
-RN_empty_1475:	.asciz ""
-RN_empty_1476:	.asciz ""
-RN_empty_1477:	.asciz ""
-RN_empty_1478:	.asciz ""
-RN_empty_1479:	.asciz ""
-RN_empty_1480:	.asciz ""
-RN_empty_1481:	.asciz ""
-RN_empty_1482:	.asciz ""
-RN_PadRecPartWin1:	.asciz "PadRecPartWin1"
-RN_empty_1483:	.asciz ""
-RN_empty_1484:	.asciz ""
-RN_empty_1485:	.asciz ""
-RN_empty_1486:	.asciz ""
-RN_empty_1487:	.asciz ""
-RN_empty_1488:	.asciz ""
-RN_empty_1489:	.asciz ""
-RN_empty_1490:	.asciz ""
-RN_empty_1491:	.asciz ""
-RN_PadRecPartWin2:	.asciz "PadRecPartWin2"
-RN_empty_1492:	.asciz ""
-RN_empty_1493:	.asciz ""
-RN_empty_1494:	.asciz ""
-RN_MspStepScreen:	.asciz "MspStepScreen"
-RN_MspPartSetP3Win:	.asciz "MspPartSetP3Win"
-RN_MspPartSetG3:	.asciz "MspPartSetG3"
-RN_empty_1495:	.asciz ""
-RN_empty_1496:	.asciz ""
-RN_empty_1497:	.asciz ""
-RN_empty_1498:	.asciz ""
-RN_empty_1499:	.asciz ""
-RN_empty_1500:	.asciz ""
-RN_empty_1501:	.asciz ""
-RN_empty_1502:	.asciz ""
-RN_empty_1503:	.asciz ""
-RN_empty_1504:	.asciz ""
-RN_empty_1505:	.asciz ""
-RN_empty_1506:	.asciz ""
-RN_empty_1507:	.asciz ""
-RN_empty_1508:	.asciz ""
-.incbin_range "baserom/kn2400_program.rom", 0x0B9D10, 0x0B9D14
-Str_OTB_MSP:	.asciz "OTB_MSP"
-Str_iapmsp:	.asciz "iapmsp"
-	.align	4, 0xFF
-Str_MD_MSP:	.asciz "MD_MSP"
-	.align	4, 0xFF
-Str_TT_MSPBKSL:	.asciz "TT_MSPBKSL"
-	.align	4, 0xFF
-Str_TT_MSPREAL:	.asciz "TT_MSPREAL"
-	.align	4, 0xFF
-Str_TT_MSPMENU:	.asciz "TT_MSPMENU"
-	.align	4, 0xFF
-Str_TT_MSPNAME:	.asciz "TT_MSPNAME"
-	.align	4, 0xFF
-Str_TT_MSPGROUP:	.asciz "TT_MSPGROUP"
-Str_TT_MSPSET:	.asciz "TT_MSPSET"
-	.align	4, 0xFF
-Str_TT_MSPSEQCP:	.asciz "TT_MSPSEQCP"
-Str_TT_MSPPADNAME:	.asciz "TT_MSPPADNAME"
-	.align	4, 0xFF
-Str_TT_MSPPADSEL:	.asciz "TT_MSPPADSEL"
-	.align	4, 0xFF
-Str_TT_MSPPADSEL_S:	.asciz "TT_MSPPADSEL_S"
-	.align	4, 0xFF
-Str_TT_MSPSTEP:	.asciz "TT_MSPSTEP"
-	.align	4, 0xFF
-Str_TT_MSPCHDSTEP_2:	.asciz "TT_MSPCHDSTEP"
-	.align	4, 0xFF
-Str_TT_MSPPNCP:	.asciz "TT_MSPPNCP"
-	.align	4, 0xFF
-Str_TT_MSPPTCHD:	.asciz "TT_MSPPTCHD"
-Str_TT_MSPPARTSET:	.asciz "TT_MSPPARTSET"
-	.align	4, 0xFF
-Str_TT_MSPPLAYSET:	.asciz "TT_MSPPLAYSET"
-	.align	4, 0xFF
-Str_TT_MSPGRPNAME:	.asciz "TT_MSPGRPNAME"
-	.align	4, 0xFF
-data_484B9E14:
-.incbin_range "baserom/kn2400_program.rom", 0x0B9E14, 0x0B9E1C
-Str_OFF_43:	.asciz "OFF"
-Str_ad_b8_2:	.asciz " ~ad~b8"
-Str_ad_2:	.asciz " ~ad "
-Str_ac_b8_2:	.asciz " ~ac~b8"
-Str_ac_2:	.asciz " ~ac "
-Str_ab_b8_2:	.asciz " ~ab~b8"
-Str_ab_2:	.asciz " ~ab "
-Str_aa_2:	.asciz " ~aa "
-
-ptrs_484B9E50:
-	.long	Str_OFF_43
-	.long	Str_ad_b8_2
-	.long	Str_ad_2
-	.long	Str_ac_b8_2
-	.long	Str_ac_2
-	.long	Str_ab_b8_2
-	.long	Str_ab_2
-	.long	Str_aa_2
-
-Str_C_18:	.asciz "C "
-Str_Db:	.asciz "Db"
-Str_D_8:	.asciz "D "
-Str_Eb:	.asciz "Eb"
-Str_E_6:	.asciz "E "
-Str_F_8:	.asciz "F "
-Str_F_7:	.asciz "F#"
-Str_G_6:	.asciz "G "
-Str_Ab:	.asciz "Ab"
-Str_A_20:	.asciz "A "
-Str_Bb:	.asciz "Bb"
-Str_B_8:	.asciz "B "
-Str_empty_786:	.asciz "  "
-Str_empty_785:	.asciz "  "
-Str_empty_784:	.asciz "  "
-Str_empty_769:	.asciz "  "
-
-ptrs_484B9EA0:
-	.long	Str_C_18
-	.long	Str_Db
-	.long	Str_D_8
-	.long	Str_Eb
-	.long	Str_E_6
-	.long	Str_F_8
-	.long	Str_F_7
-	.long	Str_G_6
-	.long	Str_Ab
-	.long	Str_A_20
-	.long	Str_Bb
-	.long	Str_B_8
-	.long	Str_empty_786
-	.long	Str_empty_785
-	.long	Str_empty_784
-	.long	Str_empty_769
-
-Str_USER_1c:	.asciz "USER %1c:"
-	.align	4, 0xFF
-Str_COMPILE_1d:	.asciz "COMPILE %1d:"
-	.align	4, 0xFF
-Str_CONTROL_8:	.asciz "CONTROL:"
-	.align	4, 0xFF
-Str_2d_2d:	.asciz "%2d/%2d"
-Str_1d_2d:	.asciz "-%1d/%2d"
-	.align	4, 0xFF
-Str_2d_25:	.asciz "  /%2d"
-	.align	4, 0xFF
-Str_2d_24:	.asciz "%2d %%"
-	.align	4, 0xFF
-Str_1d_16s_4:	.asciz "%1d : %16s"
-	.align	4, 0xFF
-Str_Special_2:	.asciz "Special"
-Str_Other_No_3d_2:	.asciz "Other No.%3d"
-	.align	4, 0xFF
-Str_1c_16s_3:	.asciz " %1c:%16s"
-	.align	4, 0xFF
-Str_2d_16s_5:	.asciz "%2d:%16s"
-	.align	4, 0xFF
-Str_1d_16s_3:	.asciz " %1d:%16s"
-	.align	4, 0xFF
-Str_Min_3:	.asciz "Min"
-Str_Maj_4:	.asciz "Maj"
-Str_Min_2:	.asciz "Min"
-Str_Maj_3:	.asciz "Maj"
-Str_Min:	.asciz "Min"
-Str_Maj_2:	.asciz "Maj"
-Str_2d_16s_4:	.asciz "%2d:%16s"
-	.align	4, 0xFF
-Str_1c_16s_2:	.asciz " %1c:%16s"
-	.align	4, 0xFF
-Str_ALL_34:	.asciz "        ALL        "
-Str_1d_16s_2:	.asciz " %1d:%16s"
-	.align	4, 0xFF
-Str_1c_16s:	.asciz " %1c:%16s"
-	.align	4, 0xFF
-Str_ALL_33:	.asciz "        ALL        "
-Str_1d_16s:	.asciz " %1d:%16s"
-	.align	4, 0xFF
-Str_empty_765:	.asciz "----"
-	.align	4, 0xFF
-Str_Special:	.asciz "Special"
-Str_Other_No_3d:	.asciz "Other No.%3d"
-	.align	4, 0xFF
-Str_CHANGE:	.asciz "CHANGE"
-Str_KEEP:	.asciz " KEEP "
-	.align	4, 0xFF
-Str_ERROR_2:	.asciz "ERROR"
-	.align	4, 0xFF
-Str_SYNCHRO:	.asciz "SYNCHRO"
-Str_INSTANT:	.asciz "INSTANT"
-Str_ON_81:	.asciz "ON "
-Str_OFF_39:	.asciz "OFF"
-data_484BA040:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA040, 0x0BA042
-data_484BA042:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA042, 0x0BA044
-data_484BA044:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA044, 0x0BA047
-data_484BA047:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA047, 0x0BA04C
-data_484BA04C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA04C, 0x0BA064
-Str_empty_764:	.asciz "---"
-Str_empty_763:	.asciz "--"
-	.align	4, 0xFF
-Str_empty_762:	.asciz "      ----      "
-	.align	4, 0xFF
-Str_empty_761:	.asciz "---"
-Str_OFF_38:	.asciz "  OFF  "
-Str_ON_29:	.asciz "  ON   "
-Str_SOUND_12:	.asciz "(SOUND)"
-data_484BA09C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA09C, 0x0BA09E
-data_484BA09E:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA09E, 0x0BA0A0
-data_484BA0A0:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA0A0, 0x0BA0A5
-data_484BA0A5:
-	.space	5, 0x00
-data_484BA0AA:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA0AA, 0x0BA0B0
-data_484BA0B0:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA0B0, 0x0BA0C8
-Str_empty_760:	.asciz "---"
-Str_empty_759:	.asciz " -- "
-	.align	4, 0xFF
-Str_4d:	.asciz "%4d"
-Str_empty_758:	.asciz "  ----  "
-	.align	4, 0xFF
-Str_CENTER:	.asciz " CENTER "
-	.align	4, 0xFF
-Str_LEFT_2d:	.asciz "LEFT  %2d"
-	.align	4, 0xFF
-data_484BA0FC:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA0FC, 0x0BA108
-Str_empty_757:	.asciz "---"
-Str_3d_48:	.asciz "%3d"
-Str_empty_756:	.asciz "--"
-	.align	4, 0xFF
-Str_2d_23:	.asciz "%2d"
-data_484BA118:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA118, 0x0BA11A
-data_484BA11A:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA11A, 0x0BA11C
-data_484BA11C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA11C, 0x0BA120
-data_484BA120:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA120, 0x0BA124
-data_484BA124:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA124, 0x0BA128
-data_484BA128:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA128, 0x0BA140
-Str_empty_755:	.asciz "---"
-Str_empty_754:	.asciz "---"
-Str_sHz:	.asciz "%sHz"
-	.align	4, 0xFF
-Str_empty_753:	.asciz "---"
-Str_5_1f:	.asciz "%+5.1f"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA15B, 0x0BA216
-data_484BA216:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA216, 0x0BA294
-Str_ERROR:	.asciz "ERROR"
-	.align	4, 0xFF
-Str_2d_22:	.asciz "%2d"
-Str_ENABLE:	.asciz "(ENABLE )"
-Str_DISABLE:	.asciz "(DISABLE)"
-Str_3d_47:	.asciz "%3d"
-Str_OFF_37:	.asciz "OFF"
-Str_empty_752:	.asciz "---"
-Str_3d_46:	.asciz "%3d"
-Str_OFF_36:	.asciz "OFF"
-Str_3d_45:	.asciz "%3d"
-Str_OFF_35:	.asciz "OFF"
-Str_empty_751:	.asciz "---"
-Str_3d_44:	.asciz "%3d"
-Str_3d_43:	.asciz "%3d"
-Str_1c_2d:	.asciz "%1c%2d"
-	.align	4, 0xFF
-Str_1c:	.asciz "%1c"
-Str_d_SOLO:	.asciz "%d-SOLO"
-Str_d_11:	.asciz " %d    "
-Str_b:	.asciz "b"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA2FA, 0x0BA2FC
-Str_c:	.asciz "c"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA2FE, 0x0BA300
-Str_l_5:	.asciz "l"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA302, 0x0BA304
-Str_p_4:	.asciz "p"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA306, 0x0BA308
-Str_q:	.asciz "q"
-.incbin_range "baserom/kn2400_program.rom", 0x0BA30A, 0x0BA30C
-data_484BA30C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA30C, 0x0BA38C
-data_484BA38C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA38C, 0x0BA40C
-data_484BA40C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA40C, 0x0BA48C
-data_484BA48C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA48C, 0x0BA50C
-data_484BA50C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA50C, 0x0BA58C
-data_484BA58C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA58C, 0x0BA60C
-data_484BA60C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA60C, 0x0BA68C
-data_484BA68C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA68C, 0x0BA70C
-data_484BA70C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA70C, 0x0BA78C
-data_484BA78C:
-.incbin_range "baserom/kn2400_program.rom", 0x0BA78C, 0x0BA80C
-Str_Control_Preset:	.asciz "Control Preset"
-	.align	4, 0xFF
-Str_ROTARY_SLOW_FAST:	.asciz "ROTARY SLOW/FAST"
-Str_P_MEM_BANK_INC:	.asciz "P.MEM BANK INC. "
-Str_GLIDE_4:	.asciz "     GLIDE      "
-Str_P_MEM_DECREMENT:	.asciz "P.MEM DECREMENT "
-Str_P_MEM_BANK_DEC:	.asciz "P.MEM BANK DEC. "
-Str_P_MEM_INCREMENT:	.asciz "P.MEM INCREMENT "
 	.align	4, 0xFF

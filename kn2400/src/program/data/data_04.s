@@ -3451,19 +3451,7 @@ APSDPLY_ResNames:
 .incbin_range "baserom/kn2400_program.rom", 0x1D2370, 0x1D2384
 
 Str_KN_Rock_Pop_Tour_FlowerPower_Rock:	.asciz "KN Rock&Pop Tour@\x12FlowerPower Rock"
-.incbin_range "baserom/kn2400_program.rom", 0x1D23A7, 0x1D39A5
-Str_HPP:	.asciz "HPP("
-.incbin_range "baserom/kn2400_program.rom", 0x1D39AA, 0x1D413F
-Str_PPX:	.asciz "PPX("
-.incbin_range "baserom/kn2400_program.rom", 0x1D4144, 0x1DA06F
-Str_HPP_2:	.asciz "HPP-"
-.incbin_range "baserom/kn2400_program.rom", 0x1DA074, 0x1DA2EF
-Str_BPP:	.asciz "BPP@"
-.incbin_range "baserom/kn2400_program.rom", 0x1DA2F4, 0x1DB615
-Str_PPP:	.asciz "PPP\n"
-.incbin_range "baserom/kn2400_program.rom", 0x1DB61A, 0x1DBD65
-Str_FPP:	.asciz "FPP\n"
-.incbin_range "baserom/kn2400_program.rom", 0x1DBD6A, 0x1DD334
+.incbin_range "baserom/kn2400_program.rom", 0x1D23A7, 0x1DD334
 
 .mnbase 0x4FE22CDC   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
 
