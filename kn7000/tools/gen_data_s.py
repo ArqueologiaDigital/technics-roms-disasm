@@ -97,6 +97,9 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
                           model="KN2400", functions_sym=True, bitmaps=True, code_ids=True, text_strict=True,
                           string_arrays=True,
+                          # crt0_start copies .data 0x485DD334 -> 0x50000010, 0x6E78 bytes (kn2400_manual.sym);
+                          # stated, since the typed code spells the copy's source as a data label
+                          raminit=(0x485DD334, 0x50000010, 0x6E78),
                           # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
                           inflate="func_486D4A2A")
