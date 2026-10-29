@@ -1304,6 +1304,61 @@ rebuilt_ROMs/kn5000_table_data.llvm.elf: rebuilt_ROMs/kn5000_table_data.llvm.o t
 rebuilt_ROMs/kn5000_table_data.llvm.rom: rebuilt_ROMs/kn5000_table_data.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- Rhythm data ROM IC14 (rhythm_data/) ---
+# The 4 MB style/pattern mask ROM the main CPU maps at 0x400000.  rhythm_data/ builds the
+# DESCRAMBLED image; the chip read we hold has address lines A19 and A21 swapped, and
+# verify-rhythm-data-raw proves that swapping them back in the rebuilt image gives that read byte
+# for byte (scripts/build/rhythm_rom_address_swap.py).  Both references are git-ignored copies from
+# the private romset, checked by SHA-1 like KN5000_V8_REF.  Notes:
+# notes/rhythm-data-ic14-2026-10-29/README.md.
+KN5000_RHYTHM_REF      ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_rhythm_data_rom.ic14
+KN5000_RHYTHM_SHA1     := fef7f1927935d8fdada2afbdbfac29aac56e1c3c
+KN5000_RHYTHM_RAW_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped
+KN5000_RHYTHM_RAW_SHA1 := e4b572d318c9fe7ba00e5b44ea783e89da9c68bd
+RHYTHMDATA_SRC = $(wildcard rhythm_data/*.s rhythm_data/*.inc rhythm_data/*/*.s)
+
+original_ROMs/kn5000_rhythm_data_rom.ic14:
+	@if [ ! -f "$(KN5000_RHYTHM_REF)" ]; then \
+	  echo "ERROR: the KN5000 rhythm data ROM (IC14) reference is missing: $(KN5000_RHYTHM_REF)"; \
+	  echo "       Point KN5000_RHYTHM_REF at the descrambled image, SHA-1 $(KN5000_RHYTHM_SHA1)"; exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_RHYTHM_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_RHYTHM_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_RHYTHM_REF) has SHA-1 $$got, expected $(KN5000_RHYTHM_SHA1)"; exit 1; fi
+	cp "$(KN5000_RHYTHM_REF)" $@.tmp
+	mv $@.tmp $@
+
+original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped:
+	@if [ ! -f "$(KN5000_RHYTHM_RAW_REF)" ]; then \
+	  echo "ERROR: the KN5000 rhythm data ROM (IC14) raw read is missing: $(KN5000_RHYTHM_RAW_REF)"; \
+	  echo "       Point KN5000_RHYTHM_RAW_REF at it, SHA-1 $(KN5000_RHYTHM_RAW_SHA1)"; exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_RHYTHM_RAW_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_RHYTHM_RAW_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_RHYTHM_RAW_REF) has SHA-1 $$got, expected $(KN5000_RHYTHM_RAW_SHA1)"; exit 1; fi
+	cp "$(KN5000_RHYTHM_RAW_REF)" $@.tmp
+	mv $@.tmp $@
+
+rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.o: $(RHYTHMDATA_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I rhythm_data -o $@ rhythm_data/kn5000_rhythm_data.s
+
+rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.elf: rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.o rhythm_data/rhythm_data.ld
+	$(LLVM_LLD) -T rhythm_data/rhythm_data.ld -o $@ $<
+
+rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom: rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
+llvm-all: original_ROMs/kn5000_rhythm_data_rom.ic14 rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom
+
+.PHONY: verify-rhythm-data-raw
+verify-rhythm-data-raw: rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped
+	@got=$$(sha1sum < original_ROMs/kn5000_rhythm_data_rom.ic14 | cut -d' ' -f1); \
+	 if [ "$$got" = "$(KN5000_RHYTHM_SHA1)" ]; then echo "OK    original_ROMs/kn5000_rhythm_data_rom.ic14 has SHA-1 $(KN5000_RHYTHM_SHA1)"; \
+	 else echo "FAIL  original_ROMs/kn5000_rhythm_data_rom.ic14 has SHA-1 $$got, expected $(KN5000_RHYTHM_SHA1)"; exit 1; fi
+	python3 scripts/build/rhythm_rom_address_swap.py --check rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom \
+	  original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped --sha1 $(KN5000_RHYTHM_RAW_SHA1)
+
+gate: verify-rhythm-data-raw
+
 # --- Custom data ---
 rebuilt_ROMs/kn5000_custom_data.llvm.o: $(CUSTOMDATA_SRC) $(STYLE_EVENT_BINS) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs

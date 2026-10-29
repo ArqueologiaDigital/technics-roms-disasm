@@ -73,6 +73,9 @@ PAIRS = [
     # v2.01i: its own tree (hdae5000_v2_01i/); its original, like v8's, is an
     # uncommitted copy whose SHA-1 the Makefile checks.
     ("hd-ae5000_v2_01i", "hd-ae5000_v2_01i.ic4", "hd-ae5000_v2_01i.llvm.rom"),
+    # Rhythm data ROM IC14 (rhythm_data/), the descrambled image; an uncommitted copy whose SHA-1 the
+    # Makefile checks.  `make gate` also checks the raw read through verify-rhythm-data-raw.
+    ("kn5000_rhythm_data_ic14", "kn5000_rhythm_data_rom.ic14", "kn5000_rhythm_data_ic14.llvm.rom"),
 ]
 
 
