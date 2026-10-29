@@ -87,7 +87,7 @@ for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E
                         prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
                         labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
                         base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
-                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True)
+                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True)
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 
@@ -336,6 +336,10 @@ class Gen:
         if v in self.label_at:
             return self.label_at[v]
         if v in self.extern:
+            # (siblings) a loc_ name the code generator made from code_refs.txt stays listed,
+            # or the next code generation would drop the label again
+            if P.get("scheme") == "naka" and self.extern[v] == f"loc_{v:08X}":
+                self.code_targets.add(v)
             return self.extern[v]
         if self.in_code(v):
             # gen_program_s.py labels it loc_<ADDR> (code_refs.txt)
@@ -1155,6 +1159,121 @@ class Gen:
                      f"{it.label}:\t# a {ext.upper()} file, {n} bytes" + (f", {desc}" if desc else ""),
                      f'\t.incbin\t"{OUTDIR}/media/{fn}"'])
 
+    # -- the built-in tone / voice records (SX-KN6000 / KN6500) -----------------------
+    def tones(self):
+        """(`tones` profiles) ToneRecordDirectory (a manual-symbol name): the program's own
+        table of tone and voice records, one u32 pointer per record index.  The KN6000's
+        func_4C07C26A turns a record index into a record address: from the loaded archive
+        in RAM (0x50033BF8 / 0x50033BC8) when func_4C07CF02 answers 1, else from this
+        directory (`mov ToneRecordDirectory, a0 / asl2 d0 / mov (d0, a0), a0`).  The
+        records it lists lie back to back, so each one's size is the distance to the
+        next; three shapes occur (src/include/voice_record.inc):
+          tone        0x54-byte head (16-character name, SOUND_HEAD) + n x 0x7A units
+                      (SOUND_MOD), n = 1..4
+          TABLE tone  class 0x40 at +0x10: the 16-character name, a 0x17-byte head and
+                      128 three-byte note entries (TgNoteOnTableTone reads +0x27 + note x 3)
+          voice       a 13-character name and three bytes (VOICE_HEAD_TAIL), then one or
+                      two 0x1C-byte sub-records (VOICE_SUB)
+        A record of any other size stays as it is (none in the KN6000 v7.1)."""
+        a0 = self.m.sym_by_name.get("ToneRecordDirectory")
+        if a0 is None or not self.in_data(a0):
+            return
+        m = self.m
+        ptrs = []
+        while self.in_data(m.u32(a0 + 4 * len(ptrs))) and self.free(a0 + 4 * len(ptrs), 4):
+            ptrs.append(m.u32(a0 + 4 * len(ptrs)))
+        targets = sorted(set(ptrs))
+        recs = {}
+        for i, a in enumerate(targets):
+            nxt = targets[i + 1] if i + 1 < len(targets) else None
+            if nxt is None or nxt - a > 0x400:     # the end of a run: the directory follows, or nothing
+                nxt = a0 if a < a0 <= a + 0x400 else None
+            if nxt is None:
+                continue
+            n = nxt - a
+            raw = self.rom[self.off(a):self.off(a) + n]
+            name16 = raw[:16]
+            shape = None
+            if n >= 0x54 + 0x7A and (n - 0x54) % 0x7A == 0 and all(0x20 <= c < 0x7F for c in name16):
+                shape = ("tone", (n - 0x54) // 0x7A)
+            elif n == 0x27 + 3 * 128 and raw[0x10] & 0xC0 == 0x40 and all(0x20 <= c < 0x7F for c in name16):
+                shape = ("table", 128)
+            elif n in (16 + 0x1C, 16 + 2 * 0x1C) and all(0x20 <= c < 0x7F for c in raw[:13]):
+                shape = ("voice", (n - 16) // 0x1C)
+            if shape and self.free(a, n):
+                recs[a] = (n, shape, raw)
+        used = set()
+        names = {}
+        for a, (n, shape, raw) in sorted(recs.items()):
+            nm = raw[:13 if shape[0] == "voice" else 16].decode("latin-1")
+            lab = self.name_at(a, ("Voice_" if shape[0] == "voice" else "Tone_") + (sanitize(nm, 30) or "unnamed"))
+            names[a] = lab
+
+            def render(g, it, raw=raw, shape=shape, nm=nm):
+                kind, k = shape
+                hx = lambda bs: ", ".join(f"0x{x:02x}" for x in bs)
+                if kind == "tone":
+                    out = [f"{it.label}:\t# tone record, {k} unit(s)", f'\t.ascii\t"{c_escape(raw[:16])}"',
+                           f"\tSOUND_HEAD\t{hx(raw[0x10:0x54])}"]
+                    out += [f"\tSOUND_MOD\t{hx(raw[0x54 + 0x7A * j:0x54 + 0x7A * (j + 1)])}" for j in range(k)]
+                elif kind == "table":
+                    out = [f"{it.label}:\t# TABLE tone record: one entry per note (TgNoteOnTableTone)",
+                           f'\t.ascii\t"{c_escape(raw[:16])}"', f"\ttone_head_table\t{hx(raw[0x10:0x27])}"]
+                    out += [f"\ttone_note\t{hx(raw[0x27 + 3 * j:0x2A + 3 * j])}\t# note {j}" for j in range(128)]
+                else:
+                    out = [f"{it.label}:\t# voice record, {k} sub-record(s)", f'\t.ascii\t"{c_escape(raw[:13])}"',
+                           f"\tVOICE_HEAD_TAIL\t{hx(raw[13:16])}"]
+                    out += [f"\tVOICE_SUB\t{hx(raw[16 + 0x1C * j:16 + 0x1C * (j + 1)])}" for j in range(k)]
+                return out
+            self.add(a, n, lab, "tone record", render)
+        self.label_at[a0] = self.fixed.get(a0, "ToneRecordDirectory")
+        self.add(a0, 4 * len(ptrs), self.label_at[a0], "tone directory",
+                 lambda g, it, ptrs=ptrs: [f"{it.label}:\t# {len(ptrs)} record pointers by record index (func_4C07C26A)"]
+                 + [f"\t.long\t{g.ref(p)}\t# {i}" for i, p in enumerate(ptrs)])
+        self.tone_macros = True
+        print(f"gen_data_s: tone directory {len(ptrs)} entries, {len(recs)} records typed")
+
+    # -- the factory panel memories (SX-KN6000) -------------------------------------
+    def panel_banks(self):
+        """FactoryPanelMemory (a manual-symbol name): the factory PANEL MEMORY banks, the
+        .PMT bank layout (floppy/tools/kd/kn_panel.py): per bank its 16-character name and
+        8 memories, each a tag / length list ended by FF FF.  The KN6000's func_4C03D431
+        copies the 16-byte .PMT header and then 0x2D8D0 bytes from here to the backup RAM
+        (0x840007C2 / 0x840007D2, memcpy): the factory reset of the panel memories.  The
+        banks are typed with the floppy describer's PMR_ lines, as the demo songs' banks."""
+        a = self.m.sym_by_name.get("FactoryPanelMemory")
+        if a is None or not self.in_data(a):
+            return
+        sys.path.insert(0, os.path.join(KN7_DIR, "..", "floppy", "tools", "kd"))
+        sys.path.insert(0, os.path.join(KN7_DIR, "..", "floppy", "tools"))
+        import kn_panel
+        rom, o0 = self.rom, self.off(a)
+        o, L, banks = o0, [], 0
+        while all(0x20 <= c < 0x7F for c in rom[o:o + 16]) and rom[o + 16:o + 18] == b"@\x12":
+            name, q, mem = rom[o:o + 16], o + 16, []
+            for k in range(8):
+                recs, e = kn_panel.block(rom, q)
+                if recs is None or not recs or recs[0][1] != 0x40:
+                    break
+                mem.append((recs, q, e))
+                q = e
+            if len(mem) != 8:
+                break
+            L += [f"# bank {banks + 1}: {name.decode('latin-1').strip()!r}", "\t.ascii\t" + kn_panel.s_esc(name)]
+            for k, (recs, _q, _e) in enumerate(mem):
+                L += kn_panel.block_lines(rom, recs, f"memory {k + 1}")
+            banks += 1
+            o = q
+        if not banks or not self.free(a, o - o0):
+            return
+        lines = self.kn7(L, b"")
+        self.label_at[a] = "FactoryPanelMemory"
+        self.add(a, o - o0, "FactoryPanelMemory", "panel banks",
+                 lambda g, it, lines=lines, banks=banks: [
+                     f"{it.label}:\t# {banks} banks x 8 PANEL MEMORY records, the .PMT bank layout (func_4C03D431"
+                     " copies them to the backup RAM)"] + lines)
+        print(f"gen_data_s: factory panel memory, {banks} banks")
+
     # -- bitmap resources (SX-KN6000 / KN6500) ------------------------------------
     BITMAP_METHODS = {"MT_GetBitmapData": "data", "MT_GetBitmapWidth": "w", "MT_GetBitmapHeight": "h",
                       "MT_GetBitmapPalette": "pal", "MT_GetBitCount": "bits"}
@@ -1430,6 +1549,8 @@ class Gen:
             '.include "src/constants.inc"',
             f'.include "{SHARED}src/include/kn_song.inc"',
             f'.include "{SHARED}src/include/panel_memory.inc"',
+            *([f'.include "{SHARED}src/include/voice_record.inc"', f'.include "{OUTDIR}/tone_macros.inc"']
+              if self.tone_macros else []),
             f'.include "{SHARED}src/include/kn_panel_extra.inc"',
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
@@ -1463,6 +1584,20 @@ class Gen:
             if fn not in self.media_files:
                 os.remove(os.path.join(md, fn))
         self.write(os.path.join(outdir, "gui_ids.inc"), hdr + self.ids_inc())
+        if self.tone_macros:
+            self.write(os.path.join(outdir, "tone_macros.inc"), hdr + [
+                "# A TABLE tone's head after its name and its per-note entries: the same macros as",
+                "# kn7000/src/table/style_macros.inc (that file also holds style macros whose names the",
+                "# rhythm resource's macros take), GENERATED by tools/gen_data_s.py.",
+                "# TgNoteOnTableTone (KN7000 lib 0x4C03600D) reads the entry at +0x27 + note x 3: it",
+                "# enables up to two synth layers.",
+                ".macro tone_head_table class, b11, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26",
+                "\t.byte\t\\class, \\b11, \\b12, \\b13, \\b14, \\b15, \\b16, \\b17, \\b18, \\b19, \\b1a, \\b1b, \\b1c, \\b1d, \\b1e, \\b1f",
+                "\t.byte\t\\b20, \\b21, \\b22, \\b23, \\b24, \\b25, \\b26",
+                ".endm",
+                ".macro tone_note a, b, c",
+                "\t.byte\t\\a, \\b, \\c",
+                ".endm"])
         self.write(os.path.join(outdir, "rhythm_macros.inc"), hdr + [
             "# The style-record and event macros of src/ic18/rhythm.s (tools/gen_ic18_rhythm_s.py), copied",
             "# verbatim by tools/gen_data_s.py for the program's own Technics Rhythms resource; do not edit.",
@@ -1631,6 +1766,10 @@ class Gen:
         if PALETTE is not None:
             self.palette()
         self.rhythm()
+        self.tone_macros = False
+        if P.get("tones"):
+            self.tones()
+            self.panel_banks()
         self.media()
         if P.get("bitmaps"):
             self.bitmaps()

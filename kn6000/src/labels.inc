@@ -63035,7 +63035,6 @@
 .equ data_4C32BD38, 0x4c32bd38
 .equ V_TtDebug_ResNames, 0x4c32bd3c
 .equ ptrs_4C32BDE4, 0x4c32bde4
-.equ Str_Soloist_Sounds_Spanish_Trumpets, 0x4c32be24
 .equ data_4C35974C, 0x4c35974c
 .equ data_4C359758, 0x4c359758
 .equ data_4C359898, 0x4c359898
@@ -63864,8 +63863,6 @@
 .equ V_HDDTEST_ResNames, 0x4c3e5e4c
 .equ data_4C3E5E70, 0x4c3e5e70
 .equ Str_his_is_Test_Data_for_PPORT, 0x4c3e5e71
-.equ ptrs_4C3E5FD4, 0x4c3e5fd4
-.equ ptrs_4C3E7104, 0x4c3e7104
 .equ data_4C3E8680, 0x4c3e8680
 .equ data_4C3E8682, 0x4c3e8682
 .equ ptrs_4C3E8684, 0x4c3e8684
