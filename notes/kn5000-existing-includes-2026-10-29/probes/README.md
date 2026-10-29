@@ -2,10 +2,11 @@
 
 Run from the repository root, after `make gate` (it copies the git-ignored v5/v6 references and builds the images).
 
-| script                    | question it answers                                                                                                                                         | command                                                                               |
-|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| `help_db_layout_probe.py` | What layout do the five decompressed HELP databases have: pointer slots, shared empty string, pool order, alignment pads, fill, escapes, Latin-1 letters? With `--titles`, which topic title belongs to each slot? | `python3 notes/kn5000-existing-includes-2026-10-29/probes/help_db_layout_probe.py [--titles]` |
-| `maincpu_slices_probe.py` | Are the v6/v5 bytes that were romslice `.incbin`s EQUAL to v7's bytes under the same labels, and are the v6/v5 boot banners byte-identical to v10's?           | `python3 notes/kn5000-existing-includes-2026-10-29/probes/maincpu_slices_probe.py`    |
+| script                    | question it answers                                                                                                                                                                                                | command                                                                                                                                                           |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `help_db_layout_probe.py` | What layout do the five decompressed HELP databases have: pointer slots, shared empty string, pool order, alignment pads, fill, escapes, Latin-1 letters? With `--titles`, which topic title belongs to each slot? | `python3 notes/kn5000-existing-includes-2026-10-29/probes/help_db_layout_probe.py [--titles]`                                                                     |
+| `rcm_vs_ic19_probe.py`    | Are the Initial Data Disk's `01CTMINI.RCM` sections 0..6 in the same bank format as IC19's banks (header, `+0x2e` used size, directory pointers, cell shape, fill-in cell), and how much of their content differs? | `python3 notes/kn5000-existing-includes-2026-10-29/probes/rcm_vs_ic19_probe.py <idd5000.img>` (the floppy lane's git-ignored `floppy/kn5000/baserom/idd5000.img`) |
+| `maincpu_slices_probe.py` | Are the v6/v5 bytes that were romslice `.incbin`s EQUAL to v7's bytes under the same labels, and are the v6/v5 boot banners byte-identical to v10's?                                                               | `python3 notes/kn5000-existing-includes-2026-10-29/probes/maincpu_slices_probe.py`                                                                                |
 
 What the output means:
 
@@ -17,3 +18,6 @@ What the output means:
   v6 row, and on the four v5 rows that had slices, is what allowed v7's lines to be used verbatim. The v5
   `BitMapOut_CopyExtTable_Check` row says DIFFERENT, as expected: v5's routine is shorter (0x93 B) and was never a
   slice.
+- `rcm_vs_ic19_probe.py` prints one row per RCM section. `HDR`, `USED`, `PTRS`, `CELLS` and `FILLIN` all `True`
+  means the formats agree. Measured 2026-10-29: all seven sections, each differing from IC19 in 36,122-48,220 B of
+  content.
