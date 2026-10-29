@@ -741,7 +741,7 @@ GROUPS = [
         0x76A8: ("CombiPart_Effect2OnOff", "part 1's EFFECT2 ON/OFF (record +0x06)", "Cpu2Query_ApplyPartRecordEffects"),
         0x76A9: ("CombiPart_ReverbSend", "part 1's REVERB SEND (record +0x07)", "Cpu2Query_ApplyPartRecordEffects"),
         0x76AA: ("CombiPart_Pan", "part 1's PAN (record +0x08)", "C0mbinati0nM0de_DrawPart1Pan, Msg0716_RepostPart0Pan"),
-        0x76AF: ("CombiPart_Flags", "part 1's flags (record +0x0D): bit 5 INT; bit 6 TODO", "C0mbinati0nM0de_SetPartInt; MidiOut_ParamGate_Part0 tests bit 6"),
+        0x76AF: ("CombiPart_Flags", "part 1's flags (record +0x0D): bit 5 INT; bit 6 set = MIDI OUT parameter messages for the part are not sent (parts 1-3 only)", "C0mbinati0nM0de_SetPartInt (bit 5); MidiOut_ParamGate_Part0..2 skip MidiOut_DispatchByClass when bit 6 is set and (0x60F007) bit 7 is clear"),
         0x76DF: ("CombiPart_SoundBank", "part 1's sound bank (record +0x3D)", "SoundGroup_LoadSelectionFromPart: (0x216A) = record +0x3D"),
         0x76E5: ("CombiPart_Volume+1*0x40", "", ""),
         0x76E7: ("CombiPart_Effect1Send+1*0x40", "", ""),

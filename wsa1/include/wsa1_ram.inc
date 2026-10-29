@@ -646,7 +646,7 @@
 	.equ CombiPart_Effect2OnOff,			0x76a8	; part 1's EFFECT2 ON/OFF (record +0x06) -- Cpu2Query_ApplyPartRecordEffects
 	.equ CombiPart_ReverbSend,			0x76a9	; part 1's REVERB SEND (record +0x07) -- Cpu2Query_ApplyPartRecordEffects
 	.equ CombiPart_Pan,				0x76aa	; part 1's PAN (record +0x08) -- C0mbinati0nM0de_DrawPart1Pan, Msg0716_RepostPart0Pan
-	.equ CombiPart_Flags,				0x76af	; part 1's flags (record +0x0D): bit 5 INT; bit 6 TODO -- C0mbinati0nM0de_SetPartInt; MidiOut_ParamGate_Part0 tests bit 6
+	.equ CombiPart_Flags,				0x76af	; part 1's flags (record +0x0D): bit 5 INT; bit 6 set = MIDI OUT parameter messages for the part are not sent (parts 1-3 only) -- C0mbinati0nM0de_SetPartInt (bit 5); MidiOut_ParamGate_Part0..2 skip MidiOut_DispatchByClass when bit 6 is set and (0x60F007) bit 7 is clear
 	.equ CombiPart_SoundBank,			0x76df	; part 1's sound bank (record +0x3D) -- SoundGroup_LoadSelectionFromPart: (0x216A) = record +0x3D
 
 ; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.5 MIDI, and the records with no variable"

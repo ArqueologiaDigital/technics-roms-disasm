@@ -449,8 +449,13 @@
 
 ; ---- entry [value] of a table of 8-byte (x0, y0, x1, y1) rectangles, drawn by
 ;      service svc -> DLB_Handler_Array8.  11 bytes.  Opcodes 0x03 and 0x08 share
-;      the handler.  TODO: what tells them apart -- nothing in DLB_Handler_Array8
-;      reads the opcode.
+;      the handler and behave the same: DisplayListB_HandlerTable slots 3 and 8 are
+;      both DLB_Handler_Array8, which never reads the opcode, and no code found reads
+;      a record's opcode (the `ld (XIX),0x03` / `0x08` stores in prom_a, e.g. 0xFBDF51
+;      and 0xFF52D0, set screen state and are followed by screen requests).  The two
+;      are a usage convention: all 44 op-0x08 records erase (svc = LCDSVC_EraseRect),
+;      while op 0x03 fills 116 times and erases 16 -- so dlb_rect_entry_op08 is
+;      "the erase twin" of a fill, an inference from that count.
 .macro dlb_rect_entry var, mask, shift, svc, table, length=11
 	.byte 0x03, \length
 	.short \var
