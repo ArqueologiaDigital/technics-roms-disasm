@@ -14,8 +14,9 @@ only (comments excluded):
   records in blobs    widget records the source still holds inside an
                       .incbin_range (the firmware's own count, from
                       tools/milk_model.py, minus the typed ones)
-  raw ids             hex literals shaped like a MILK id, 0x00SSIIII (class,
-                      object, function, title, mode, event ids), in data lines
+  raw ids             record fields (class-macro arguments) given as a hex
+                      number shaped like a MILK id, (slot 1..0x2FF << 16) |
+                      index: class, object, function, title, mode, event ids
   numeric links       super= / sub= / next= / prev= given as a number
   numeric addresses   0x48xxxxxx / 0x4Cxxxxxx / 0x50xxxxxx literals in data
                       lines (an .incbin_range's file offsets are not counted)
@@ -42,7 +43,7 @@ TREES = {
     "kn7000-b935": "src/b935/program.s",
     "kn7000-b893": "src/b893/program.s",
 }
-ID_RE = re.compile(r"\b0x00[0-2][0-9A-Fa-f]{5}\b")
+ID_RE = re.compile(r"=\s*(0x[0-9A-Fa-f]+)\b")      # a record field given as hex ...
 ADDR_RE = re.compile(r"\b0x(?:48|4[Cc]|50)[0-9A-Fa-f]{6}\b")
 LINK_RE = re.compile(r"\b(super|sub|next|prev)=(0x[0-9A-Fa-f]+|\d+)\b")
 
@@ -99,7 +100,9 @@ def census(kn7, top, objects_total, data_lo, data_hi):
             if is_data:
                 if op in macros:
                     r["typed"] += 1
-                r["raw_ids"] += len(ID_RE.findall(s))
+                if op in macros:
+                    # ... whose value has the shape of a MILK id: slot 1..0x2FF, any index
+                    r["raw_ids"] += sum(1 for v in ID_RE.findall(s) if 0x10000 <= int(v, 16) < 0x3000000)
                 r["numeric_links"] += len(LINK_RE.findall(s))
                 r["numeric_addr"] += len(ADDR_RE.findall(s))
             elif not op.startswith("."):

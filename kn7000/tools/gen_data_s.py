@@ -50,18 +50,48 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import milk_model as MM  # noqa: E402
-from milk_model import BASE, NONE16, RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN  # noqa: E402
+from milk_model import BASE, NONE16  # noqa: E402
 
 KN7 = os.path.dirname(HERE)
-ROMQ = '"baserom/kn7000_program.rom"'
-R1_END = 0x186000            # end of code region 1 (file offset)
-PALETTE = 0x32573C           # display palette, 512 x u32
-DATA_END = 0x3B8FD1          # the library image starts here (gen_program_s LIB_FILE_BASE)
-OUTDIR = "src/program/data"
 LINES_PER_FILE = 40000
-RAMINIT_OFF = RAMINIT_ROM - BASE
-RAMINIT_END = RAMINIT_OFF + RAMINIT_LEN
-RAM_MNBASE = RAMINIT_RAM - RAMINIT_OFF   # .mnbase that makes the image's labels RAM addresses
+# The program builds this generator knows: the image, its converted code, its
+# symbol files, the previous build's labels, and the layout gen_program_s.py
+# gives it (end of code region 1, the palette, the library image's start).
+PROFILES = {
+    "941": dict(rom="baserom/kn7000_program.rom", src="src/program", prog="src/program.s",
+                syms=["kn7000.sym", "kn7000_manual.sym", "kn7000_exports_from_942.sym"],
+                labels="build/kn7000_program.labels", r1=0x186000, pal=0x32573C, end=0x3B8FD1),
+    "b935": dict(rom="baserom/kn7000_program_b935.rom", src="src/b935/program", prog="src/b935/program.s",
+                 syms=["kn7000_b935.sym", "kn7000_b935_manual.sym", "kn7000_b935_exports.sym",
+                       "kn7000_b935_bycode.sym"],
+                 labels="build/kn7000_program_b935.labels", r1=0x18595C, pal=0x3256D8, end=0x3B8F6D),
+    "b893": dict(rom="baserom/kn7000_program_b893.rom", src="src/b893/program", prog="src/b893/program.s",
+                 syms=["kn7000_b893.sym", "kn7000_b893_manual.sym", "kn7000_b893_exports.sym",
+                       "kn7000_b893_bycode.sym"],
+                 labels="build/kn7000_program_b893.labels", r1=0x1846A0, pal=0x323E80, end=0x3B76B1),
+    "sp7001": dict(rom="baserom/kn7000_program_sp7001.rom", src="src/sp7001/program", prog="src/sp7001/program.s",
+                   syms=["kn7000_sp7001.sym", "kn7000_sp7001_manual.sym", "kn7000_sp7001_new.sym",
+                         "kn7000_sp7001_exports.sym"],
+                   labels="build/kn7000_program_sp7001.labels", r1=0x1864F4, pal=0x326760, end=0x3BA785),
+}
+PROFILE = "941"
+
+
+def configure(name):
+    """Bind the module's layout constants to program build `name`."""
+    global PROFILE, P, ROMQ, R1_END, PALETTE, DATA_END, OUTDIR
+    global RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN, RAMINIT_OFF, RAMINIT_END, RAM_MNBASE
+    PROFILE, P = name, PROFILES[name]
+    ROMQ = f'"{P["rom"]}"'
+    R1_END = P["r1"]             # end of code region 1 (file offset)
+    PALETTE = P["pal"]           # display palette, 512 x u32
+    DATA_END = P["end"]          # the library image starts here (gen_program_s LIB_FILE_BASE)
+    OUTDIR = P["src"] + "/data"
+    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = MM.find_raminit(os.path.join(KN7, P["src"], "*.s"))
+    MM.RAMINIT_ROM, MM.RAMINIT_RAM, MM.RAMINIT_LEN = RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN
+    RAMINIT_OFF = RAMINIT_ROM - BASE
+    RAMINIT_END = RAMINIT_OFF + RAMINIT_LEN
+    RAM_MNBASE = RAMINIT_RAM - RAMINIT_OFF   # .mnbase that makes the image's labels RAM addresses
 
 
 def sanitize(text, maxlen=40):
@@ -105,7 +135,8 @@ class Item:
 
 class Gen:
     def __init__(self):
-        self.m = MM.Model()
+        self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=os.path.join(KN7, P["src"], "*.s"),
+                          sym_paths=[os.path.join(KN7, f) for f in P["syms"]])
         m = self.m
         self.rom = m.rom
         self.items = {}               # file offset -> Item
@@ -120,9 +151,9 @@ class Gen:
     # -- names ---------------------------------------------------------------
     def _load_names(self):
         m = self.m
-        lab = os.path.join(KN7, "build", "kn7000_program.labels")
+        lab = os.path.join(KN7, P["labels"])
         if not os.path.exists(lab):
-            sys.exit("gen_data_s: build/kn7000_program.labels missing: run make verify first")
+            sys.exit(f"gen_data_s: {P['labels']} missing: build this program first")
         for line in open(lab):
             n, v = line.split()
             a = int(v, 16)
@@ -140,7 +171,7 @@ class Gen:
         for a, n in m.sym_by_addr.items():
             if self.in_data(a):
                 self.fixed[a] = n
-        for line in open(os.path.join(KN7, "src", "program.s")):
+        for line in open(os.path.join(KN7, P["prog"])):
             mo = re.match(r"\.equ\s+(\w+),\s*0x([0-9A-Fa-f]+)", line)
             if mo and self.in_data(int(mo.group(2), 16)):
                 self.fixed.setdefault(int(mo.group(2), 16), mo.group(1))
@@ -753,6 +784,188 @@ class Gen:
                 s = self.rom[o:e].decode("latin-1")
                 self.str_item(a, "Str_" + (sanitize(s, 40) or "empty"), "string")
 
+    # -- media and compressed streams -----------------------------------------
+    def media(self):
+        """JPEG and BMP files and zlib streams the region holds whole.  A JPEG
+        runs from SOI through its marker segments, the entropy-coded scan (where
+        0xFF is always stuffed or an RSTn) and EOI; a BMP is `BM` + its own file
+        size; a zlib stream ends where inflate says (decompressobj().eof)."""
+        import struct
+        import zlib
+        rom = self.rom
+        self.media_files = {}
+        for mo in re.finditer(rb"\xff\xd8\xff", rom[R1_END:DATA_END]):
+            o = R1_END + mo.start()
+            n = self.jpeg_len(o)
+            if n and self.free(BASE + o, n):
+                self.add_media(o, n, "jpg")
+        for mo in re.finditer(rb"BM", rom[R1_END:DATA_END]):
+            o = R1_END + mo.start()
+            size, res, bits = struct.unpack_from("<IIi", rom, o + 2)
+            hdr = struct.unpack_from("<I", rom, o + 14)[0]
+            if res == 0 and hdr in (12, 40, 108, 124) and 14 + hdr <= bits < size < 0x100000 \
+                    and o + size <= DATA_END and self.free(BASE + o, size):
+                self.add_media(o, size, "bmp")
+        self.zlib_items = []
+        for mo in re.finditer(rb"\x78[\x01\x5e\x9c\xda]", rom[R1_END:DATA_END]):
+            o = R1_END + mo.start()
+            if not self.free(BASE + o, 2):
+                continue
+            d = zlib.decompressobj()
+            try:
+                out = d.decompress(rom[o:DATA_END])
+            except zlib.error:
+                continue
+            if not d.eof or len(out) < 64:
+                continue
+            n = DATA_END - o - len(d.unused_data)
+            levels = [lv for lv in range(1, 10) if zlib.compress(out, lv) == rom[o:o + n]]
+            a = self.addr_of(o)
+            lab = self.name_at(a, f"zlib_{a:08X}")
+            head = out[:16]
+            what = ('"' + c_escape(head.split(b"\0")[0][:24]) + '..."') if is_text(head[:12]) else head[:8].hex(" ")
+            note = (f"census: opaque -- compressed: a zlib stream, {n} bytes, inflating to {len(out)} bytes "
+                    f"that begin {what}; " + (f"Python's zlib at level {levels[0]} re-compresses it byte-exactly, "
+                                              "so the inflated data, once its format is typed, can be the source"
+                                              if levels else "no zlib level reproduces it")
+                    + "; the inflated bytes are not committed (bulk dump bytes)")
+            self.add(a, n, lab, "zlib",
+                     lambda g, it, o=o, n=n, note=note: [f"{it.label}:\t# {note}",
+                                                        f".incbin_range {ROMQ}, 0x{o:06X}, 0x{o + n:06X}"])
+
+    def addr_of(self, o):
+        """The CPU address code uses for file offset o (RAM for the RAM image)."""
+        return o - RAMINIT_OFF + RAMINIT_RAM if RAMINIT_OFF <= o < RAMINIT_END else BASE + o
+
+    def jpeg_len(self, o):
+        rom, i = self.rom, o + 2
+        while i + 4 <= DATA_END:
+            if rom[i] != 0xFF:
+                return None
+            mk = rom[i + 1]
+            if mk == 0xD9:
+                return i + 2 - o
+            if mk == 0x01 or 0xD0 <= mk <= 0xD7:
+                i += 2
+                continue
+            seg = int.from_bytes(rom[i + 2:i + 4], "big")
+            i += 2 + seg
+            if mk == 0xDA:          # scan: entropy-coded data up to the next marker
+                while i + 1 < DATA_END:
+                    if rom[i] == 0xFF and rom[i + 1] != 0 and not 0xD0 <= rom[i + 1] <= 0xD7:
+                        break
+                    i += 1
+        return None
+
+    def add_media(self, o, n, ext):
+        a = self.addr_of(o)
+        lab = self.name_at(a, f"{'Jpeg' if ext == 'jpg' else 'Bmp'}_{a:08X}")
+        fn = f"{lab}.{ext}"
+        self.media_files[fn] = self.rom[o:o + n]
+        desc = ""
+        if ext == "bmp":
+            import struct
+            w, h, _pl, bpp = struct.unpack_from("<iiHH", self.rom, o + 18)
+            desc = f"{w} x {abs(h)}, {bpp} bpp"
+        else:
+            j = o + 2
+            while j < o + n - 9:
+                if self.rom[j] == 0xFF and self.rom[j + 1] in (0xC0, 0xC1, 0xC2):
+                    h = int.from_bytes(self.rom[j + 5:j + 7], "big")
+                    w = int.from_bytes(self.rom[j + 7:j + 9], "big")
+                    desc = f"{w} x {h}"
+                    break
+                j += 1
+        self.add(a, n, lab, "media",
+                 lambda g, it, fn=fn, n=n, ext=ext, desc=desc: [
+                     f"{it.label}:\t# a {ext.upper()} file, {n} bytes" + (f", {desc}" if desc else ""),
+                     f'\t.incbin\t"{OUTDIR}/media/{fn}"'])
+
+    # -- text, doubles and name / value tables in what is left -------------------
+    def name_value_tables(self):
+        """{name pointer, u32 value} runs (>= 4 pairs) whose names are
+        identifiers: the MILK framework's own constant tables that
+        tools/gen_constants.py reads (CL_ BD_ ES_ VF_ ...), and others."""
+        m = self.m
+        o = R1_END - R1_END % 4
+        while o + 32 <= DATA_END:
+            a = self.addr_of(o)
+            n = 0
+            while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8):
+                p = m.u32(self.addr_of(o + 8 * n))
+                s = m.cstr(p) if p and self.in_data(p) else None
+                if not s or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{1,40}", s):
+                    break
+                n += 1
+            if n >= 4:
+                ents = []
+                for k in range(n):
+                    p = m.u32(self.addr_of(o + 8 * k))
+                    v = m.u32(self.addr_of(o + 8 * k) + 4)
+                    s = m.cstr(p)
+                    self.str_item(p, "Str_" + sanitize(s, 40), "string")
+                    ents.append((p, v, s))
+                self.add(a, 8 * n, self.name_at(a, f"names_{a:08X}"), "name table",
+                         lambda g, it, ents=ents: [f"{it.label}:"] + [
+                             f"\t.long\t{g.ref(p)}, " + (s if s in g.names and g.const_value(s) == v else
+                                                          g.ref(v) if g.in_data(v) or v in g.extern else
+                                                          (f"0x{v:X}" if v > 0xFFFF else str(v)))
+                             for p, v, s in ents])
+                o += 8 * n
+            else:
+                o += 4
+
+    def const_value(self, name):
+        for d in self.const.values():
+            for v, n in d.items():
+                if n == name:
+                    return v
+        return None
+
+    def text_runs(self):
+        """NUL-terminated printable strings (>= 4 characters) in the bytes no
+        item holds: message text, help pages, file names the code reaches with
+        computed offsets.  A run is typed only where the string starts right
+        after a NUL / 0xFF / an item, so a string's tail is never split off."""
+        rom = self.rom
+        rx = re.compile(rb"[\x20-\x7e\x09\x0a\x0d\x80-\xfe]{4,}\x00")
+        for mo in rx.finditer(rom, R1_END, DATA_END):
+            o, e = mo.start(), mo.end()
+            bs = rom[o:e - 1]
+            if not is_text(bs) or sum(1 for c in bs if 0x41 <= c <= 0x7A) < 3:
+                continue
+            if o > R1_END and rom[o - 1] not in (0x00, 0xFF) and not self.claimed[o - 1]:
+                continue
+            a = self.addr_of(o)
+            if self.free(a, e - o):
+                self.str_item(a, "Str_" + (sanitize(bs.decode("latin-1"), 40) or "text"), "text")
+
+    def doubles(self):
+        """Runs (>= 4) of 8-aligned IEEE-754 doubles of plausible magnitude
+        (1e-12 .. 1e12, or zero) in the bytes no item holds."""
+        import struct
+        rom = self.rom
+        o = R1_END + (-R1_END % 8)
+        while o + 32 <= DATA_END:
+            n = 0
+            while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8):
+                v = struct.unpack_from("<d", rom, o + 8 * n)[0]
+                if not (v == 0.0 and rom[o + 8 * n:o + 8 * n + 8] == bytes(8) or 1e-12 < abs(v) < 1e12):
+                    break
+                if v != v:
+                    break
+                n += 1
+            nz = sum(1 for k in range(n) if rom[o + 8 * k:o + 8 * k + 8] != bytes(8))
+            if n >= 4 and nz >= n // 2 + 1:
+                vals = [struct.unpack_from("<IId", rom, o + 8 * k) for k in range(n)]
+                a = self.addr_of(o)
+                self.add(a, 8 * n, self.name_at(a, f"doubles_{a:08X}"), "double table",
+                         lambda g, it, vals=vals: [f"{it.label}:\t# IEEE-754 doubles (lo word, hi word)"] + [
+                             f"\t.long\t0x{lo:08X}, 0x{hi:08X}\t# {d:.9g}" for lo, hi, d in vals])
+                o += 8 * n
+            else:
+                o += 8
+
     def gaps(self):
         """Label every referenced address not inside a typed item; the bytes
         between typed items stay .incbin_range, split at those labels."""
@@ -823,8 +1036,8 @@ class Gen:
                "# Licensed under the terms of the GNU General Public License v3 or later",
                "#"]
         top = hdr + [
-            "# The data region of program build 941 (file 0x186000..0x3B8FD1), GENERATED by",
-            "# tools/gen_data_s.py (make data-src) -- do not edit by hand.  Included by src/program.s",
+            f"# The data region of program build {PROFILE} (file 0x{R1_END:06X}..0x{DATA_END:06X}), GENERATED by",
+            f"# tools/gen_data_s.py --profile {PROFILE} -- do not edit by hand.  Included by {P['prog']}",
             "# after code region 1; the library image follows.  See tools/gen_data_s.py and",
             "# tools/milk_model.py for what each structure is and the firmware code that reads it.",
             "",
@@ -841,6 +1054,14 @@ class Gen:
             self.write(os.path.join(outdir, f"data_{n:02d}.s"),
                        hdr + [f"# data.s part {n:02d}: GENERATED by tools/gen_data_s.py -- do not edit by hand.", ""] + p)
         self.write(os.path.join(outdir, "gui_classes.inc"), hdr + self.classes_inc())
+        md = os.path.join(KN7, outdir, "media")
+        os.makedirs(md, exist_ok=True)
+        for fn, bs in sorted(self.media_files.items()):
+            with open(os.path.join(md, fn), "wb") as f:
+                f.write(bs)
+        for fn in os.listdir(md):
+            if fn not in self.media_files:
+                os.remove(os.path.join(md, fn))
         self.write(os.path.join(outdir, "gui_ids.inc"), hdr + self.ids_inc())
         # stale parts
         for fn in os.listdir(os.path.join(KN7, outdir)):
@@ -849,7 +1070,7 @@ class Gen:
                 os.remove(os.path.join(KN7, outdir, fn))
         return len(parts)
 
-    STRING_KINDS = {"string", "class name", "class sig", "field name", "event name", "method name",
+    STRING_KINDS = {"string", "text", "class name", "class sig", "field name", "event name", "method name",
                     "function name", "resource name", "widget text"}
 
     def gap_lines(self, a, b):
@@ -862,7 +1083,17 @@ class Gen:
             if b - a < 4 and b % 4 == 0:
                 return [f"\t.align\t4, 0x{fill:02X}"]
             return [f"\t.space\t{b - a}, 0x{fill:02X}" + ("\t# erased flash" if fill == 0xFF and b - a >= 256 else "")]
-        return [f".incbin_range {ROMQ}, 0x{a:06X}, 0x{b:06X}"]
+        # runs of >= 64 equal bytes inside the gap are fill too
+        out, cur = [], a
+        for mo in re.finditer(rb"(.)\1{63,}", d, re.S):
+            s, e = a + mo.start(), a + mo.end()
+            if cur < s:
+                out.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{s:06X}")
+            out.append(f"\t.space\t{e - s}, 0x{d[mo.start()]:02X}")
+            cur = e
+        if cur < b:
+            out.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{b:06X}")
+        return out
 
     def classes_inc(self):
         return [
@@ -929,10 +1160,12 @@ class Gen:
     def run(self, outdir):
         self.gui()
         self.palette()
+        self.media()
         self.code_refs()
-        for it in list(self.items.values()):
-            pass
         self.typed_refs()
+        self.name_value_tables()
+        self.doubles()
+        self.text_runs()
         self.build_index()
         self.gaps()
         n = self.emit(outdir)
@@ -948,10 +1181,12 @@ class Gen:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--out", default=OUTDIR)
+    ap.add_argument("--profile", default="941", choices=sorted(PROFILES))
+    ap.add_argument("--out", help="output directory (default: <the build's source>/data)")
     a = ap.parse_args()
     os.chdir(KN7)
-    Gen().run(a.out)
+    configure(a.profile)
+    Gen().run(a.out or OUTDIR)
 
 
 if __name__ == "__main__":

@@ -72,7 +72,20 @@ NONE16 = 0xFFFF
 # loc_48410068) copies 0x7F34 bytes from ROM 0x487B0B78 to RAM 0x50000010
 # before anything runs, so a pointer into RAM 0x50000010..0x50007F44 (33 of the
 # widget records, for instance) reads its initial value from those ROM bytes.
-RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = 0x487B0B78, 0x50000010, 0x7F34
+RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = 0x487B0B78, 0x50000010, 0x7F34   # build 941
+
+
+def find_raminit(src_glob):
+    """(ROM source, RAM destination, byte count) of that copy loop, read from a
+    build's converted code: `mov N, d1 / cmp 0, d1 / ble ... / mov SRC, a0 /
+    mov 0x50000010, a1`."""
+    rx = re.compile(r"mov\s+(0x[0-9a-fA-F]+), d1\n\s+cmp\s+0, d1\n\s+ble\s+\S+\n"
+                    r"\s+mov\s+(0x48[0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]), a1\n")
+    for f in sorted(glob.glob(src_glob)):
+        m = rx.search(open(f, encoding="latin-1").read())
+        if m:
+            return int(m.group(2), 16), int(m.group(3), 16), int(m.group(1), 16)
+    sys.exit(f"milk_model: no initialised-RAM copy loop in {src_glob}")
 
 # byte size of each propdata type character (see Model._solve_sizes)
 SIG_SIZE = {"I": 4, "B": 2, "X": 4, "A": 2, "j": 4, "m": 4, "n": 4, "r": 4, "f": 1, "e": 2,
