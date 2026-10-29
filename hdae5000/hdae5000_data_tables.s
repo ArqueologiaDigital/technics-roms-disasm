@@ -102,7 +102,7 @@ HDAE5000_Record_SelectList:	; class 'SelectList'
 	.short 60, 32			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_SelectList                     ; +0x0C NamePtr  -> 'SelectList'
 	.long ClassSig_SelectList                     ; +0x10 SigPtr   -> 'c^ksAAnGGmA' (11 params)
-	.long 0x23975a                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_ListBox - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_DbMemoCl:	; class 'DbMemoCl'
 	.long HDAE5000_DbMemoClProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -110,7 +110,7 @@ HDAE5000_Record_DbMemoCl:	; class 'DbMemoCl'
 	.short 26, 4			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_DbMemoCl                     ; +0x0C NamePtr  -> 'DbMemoCl'
 	.long ClassSig_DbMemoCl                     ; +0x10 SigPtr   -> '^^' (2 params)
-	.long 0x23978a                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_DbMemoCl - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_TtlScreenR:	; class 'TtlScreenR'
 	.long HDAE5000_TtlScreenRProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -118,7 +118,7 @@ HDAE5000_Record_TtlScreenR:	; class 'TtlScreenR'
 	.short 42, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_TtlScreenR                     ; +0x0C NamePtr  -> 'TtlScreenR'
 	.long ClassSig_TtlScreenR                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x239796                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_TtlScreenR - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_AcHddNamingWindow:	; class 'AcHddNamingWindow'
 	.long HDAE5000_AcHddNamingWindowProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -126,7 +126,7 @@ HDAE5000_Record_AcHddNamingWindow:	; class 'AcHddNamingWindow'
 	.short 36, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_AcHddNamingWindow                     ; +0x0C NamePtr  -> 'AcHddNamingWindow'
 	.long ClassSig_AcHddNamingWindow                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x23979a                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_AcHddNamingWindow - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_IvHddNaming:	; class 'IvHddNaming'
 	.long HDAE5000_IvHddNamingProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -134,7 +134,7 @@ HDAE5000_Record_IvHddNaming:	; class 'IvHddNaming'
 	.short 26, 4			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_IvHddNaming                     ; +0x0C NamePtr  -> 'IvHddNaming'
 	.long ClassSig_IvHddNaming                     ; +0x10 SigPtr   -> 'j' (1 params)
-	.long 0x23979e                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_IvHddNaming - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_HDTitleMenu:	; class 'HDTitleMenu'
 	.long HDAE5000_HDTitleMenuProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -142,7 +142,7 @@ HDAE5000_Record_HDTitleMenu:	; class 'HDTitleMenu'
 	.short 54, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_HDTitleMenu                     ; +0x0C NamePtr  -> 'HDTitleMenu'
 	.long ClassSig_HDTitleMenu                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x2397a6                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_HDTitleMenu - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_TtlScreenR2:	; class 'TtlScreenR2'
 	.long HDAE5000_TtlScreenR2Proc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -150,7 +150,7 @@ HDAE5000_Record_TtlScreenR2:	; class 'TtlScreenR2'
 	.short 42, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_TtlScreenR2                     ; +0x0C NamePtr  -> 'TtlScreenR2'
 	.long ClassSig_TtlScreenR2                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x2397aa                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_TtlScreenR2 - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_TtlScreenR3:	; class 'TtlScreenR3'
 	.long HDAE5000_TtlScreenR3Proc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -158,7 +158,7 @@ HDAE5000_Record_TtlScreenR3:	; class 'TtlScreenR3'
 	.short 42, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_TtlScreenR3                     ; +0x0C NamePtr  -> 'TtlScreenR3'
 	.long ClassSig_TtlScreenR3                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x2397ae                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_TtlScreenR3 - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_AcWindowPage1:	; class 'AcWindowPage1'
 	.long HDAE5000_AcWindowPage1Proc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -166,7 +166,7 @@ HDAE5000_Record_AcWindowPage1:	; class 'AcWindowPage1'
 	.short 36, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_AcWindowPage1                     ; +0x0C NamePtr  -> 'AcWindowPage1'
 	.long ClassSig_AcWindowPage1                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x2397b2                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_AcWindowPage1 - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_IvScreenR2:	; class 'IvScreenR2'
 	.long HDAE5000_IvScreenR2Proc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -174,7 +174,7 @@ HDAE5000_Record_IvScreenR2:	; class 'IvScreenR2'
 	.short 34, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_IvScreenR2                     ; +0x0C NamePtr  -> 'IvScreenR2'
 	.long ClassSig_IvScreenR2                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x2397b6                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_IvScreenR2 - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_AcLanguageText1:	; class 'AcLanguageText1'
 	.long HDAE5000_AcLanguageText1Proc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -182,7 +182,7 @@ HDAE5000_Record_AcLanguageText1:	; class 'AcLanguageText1'
 	.short 42, 0			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_AcLanguageText1                     ; +0x0C NamePtr  -> 'AcLanguageText1'
 	.long ClassSig_AcLanguageText1                     ; +0x10 SigPtr   -> '' (0 params)
-	.long 0x2397ba                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_AcLanguageText1 - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_LyricBox:	; class 'LyricBox'
 	.long HDAE5000_LyricBoxProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -190,7 +190,7 @@ HDAE5000_Record_LyricBox:	; class 'LyricBox'
 	.short 46, 18			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_LyricBox                     ; +0x0C NamePtr  -> 'LyricBox'
 	.long ClassSig_LyricBox                     ; +0x10 SigPtr   -> 'mc^^c^' (6 params)
-	.long 0x2397be                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_LyricBox - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 HDAE5000_Record_FDFileSelect:	; class 'FDFileSelect'
 	.long HDAE5000_FDFileSelectProc                     ; +0x00 ProcPtr (== named routine in this tree)
@@ -198,7 +198,7 @@ HDAE5000_Record_FDFileSelect:	; class 'FDFileSelect'
 	.short 32, 10			; +0x08 allsize, +0x0A selfsize
 	.long ClassName_FDFileSelect                     ; +0x0C NamePtr  -> 'FDFileSelect'
 	.long ClassSig_FDFileSelect                     ; +0x10 SigPtr   -> 'Gnn' (3 params)
-	.long 0x2397da                     ; +0x14 ParamListPtr (RAM)
+	.long HDAE5000_ParamNames_FDFileSelect - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST	; +0x14 propname list (its RAM copy)
 
 ; ---------------------------------------------------------------------------
 ; reserved gap: 5832 bytes, all 0x00 (verified above)
