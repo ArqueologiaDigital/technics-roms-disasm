@@ -52,7 +52,21 @@ PROM_C_SRC = prom_c/wsa1_prom_c.s \
 PROM_A_SRC = prom_a/wsa1_prom_a.s $(wildcard prom_a/modules/*.s)
 PROM_B_SRC = prom_b/wsa1_prom_b.s $(wildcard prom_b/modules/*.s)
 
-.PHONY: all clean images-check images-export images-rewrite
+.PHONY: all clean images-check images-export images-rewrite gui-menu-map gui-menu-map-check gui-census
+
+# ---------------------------------------------------------------- the GUI index
+# docs/gui-menu-map.md is GENERATED from the sources (every screen object, what it draws, its key map
+# and the screen requests its handlers write): scripts/analysis/gui_menu_map.py says what it follows.
+# The check is part of the root Makefile's gate-wsa1, after the byte gate has built the ELFs it reads.
+gui-menu-map: all
+	python3 scripts/analysis/gui_menu_map.py
+
+gui-menu-map-check: all
+	python3 scripts/analysis/gui_menu_map.py --check
+
+# How much of the GUI data is still raw numbers (records, key maps, screen table), per image.
+gui-census:
+	python3 scripts/analysis/gui_readability_census.py
 
 # ---------------------------------------------------------------- images
 # Every ROM range that is pixel data is committed as a PNG beside the source,
