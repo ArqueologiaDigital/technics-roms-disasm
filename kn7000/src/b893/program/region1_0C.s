@@ -2873,9 +2873,10 @@ loc_48581B7F:
     jmp     loc_48581EEB
 loc_48581B86:
     asl2    d0
-    mov     data_486AF4F0, a0
+    mov     ptrs_486AF4F0, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48581B91:
     mov     1, d0
     call    func_48580E86, 0, 0
     mov     0x12d, d0
@@ -2883,35 +2884,46 @@ loc_48581B86:
     call    ChangeTitle_entry, [d2,d3,a2], 0x20
     clr     d0
     ret     [d3,a2,a3], 0x1c
+loc_48581BA7:
     mov     1, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BB1:
     mov     0x30, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BBB:
     mov     0x25, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BC5:
     mov     0x33, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BCF:
     mov     0x13, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BD9:
     mov     0x24, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BE3:
     clr     d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BEC:
     clr     d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BF5:
     mov     0x44, d0
     call    func_48580E74, 0, 0
     jmp     loc_48581EEB
+loc_48581BFF:
     mov     0x2b, d0
     call    func_48580E74, 0, 0
+loc_48581C06:
     jmp     loc_48581EEB
     mov     0x36, d0
     call    func_48580E74, 0, 0
@@ -3919,11 +3931,13 @@ loc_48582570:
 loc_4858259B:
     clr     d0
     ret     0, 0x10
+loc_4858259F:
     cmp     EV_ACTIVATE, d1
     bne     loc_485825A7
 loc_485825A7:
     clr     d0
     retf    0, 0
+loc_485825AB:
     cmp     MT_GetLanguagePtr, d1
     beq     loc_485825C5
     cmp     MT_IsEucCode, d1
@@ -4190,9 +4204,10 @@ loc_485827CA:
 loc_485827D1:
     add     -1, d0
     asl2    d0
-    mov     data_486AFD64, a0
+    mov     ptrs_486AFD64, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_485827DE:
     movbu   (0x50172f2a), d2
     movbu   (0x50172f2b), d1
     movbu   (0x50172f29), d0
@@ -4203,6 +4218,7 @@ loc_485827D1:
     call    SaveSmf_entry, [d2], 0x10
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582806:
     mov     0x50172f33, a2
     mov     a2, a0
     mov     Str_rb, a1
@@ -4287,6 +4303,7 @@ loc_485828DC:
     mov     0xc, d0
     call    func_48462DCF_entry, 0, 8
     jmp     loc_48582CBD
+loc_485828F1:
     mov     0x50172f33, a3
     mov     a3, a0
     mov     0x5c, d0
@@ -4329,9 +4346,10 @@ loc_4858294A:
     jmp     loc_48582CBD
 loc_48582951:
     asl2    d0
-    mov     data_486AFD34, a0
+    mov     ptrs_486AFD34, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4858295C:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4339,6 +4357,7 @@ loc_48582951:
     call    SaveLsw_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582977:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4359,6 +4378,7 @@ loc_4858299D:
     mov     d0, d2
     call    ResetSavePMBankNUM, 0, 0
     jmp     loc_48582CBD
+loc_485829BD:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4366,6 +4386,7 @@ loc_4858299D:
     call    SaveMd_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_485829D8:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4373,6 +4394,7 @@ loc_4858299D:
     call    SaveFav_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_485829F3:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4380,6 +4402,7 @@ loc_4858299D:
     call    SaveHmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582A0E:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4387,6 +4410,7 @@ loc_4858299D:
     call    SaveEfc_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582A29:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4394,6 +4418,7 @@ loc_4858299D:
     call    SaveSqt_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582A44:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4401,6 +4426,7 @@ loc_4858299D:
     call    SaveCmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582A5F:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4408,6 +4434,7 @@ loc_4858299D:
     call    SaveMsp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582A7A:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4415,6 +4442,7 @@ loc_4858299D:
     call    SaveTm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582A95:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4422,6 +4450,7 @@ loc_4858299D:
     call    SaveRcm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582AB0:
     mov     1, d0
     mov     0x0004b000, d1
     call    func_484C2E42_entry, 0, 0x3c
@@ -4430,6 +4459,7 @@ loc_4858299D:
     call    SaveCst_entry, [d2,d3,a2,a3], 0x2c
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582AD1:
     mov     0x50172f33, a3
     mov     a3, a0
     mov     0x5c, d0
@@ -4472,21 +4502,25 @@ loc_48582B2A:
     jmp     loc_48582CBD
 loc_48582B31:
     asl2    d0
-    mov     data_486AFD00, a0
+    mov     ptrs_486AFD00, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48582B3C:
     mov     a2, a0
     call    LoadLsw_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582B48:
     mov     a2, a0
     call    LoadPmt_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582B54:
     mov     a2, a0
     call    LoadMd_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582B60:
     mov     a2, a0
     call    LoadSqt_HD_entry, 0, 0xc
     mov     d0, d2
@@ -4498,6 +4532,7 @@ loc_48582B71:
     mov     1, d0
     movbu   d0, (data_500064E5)
     jmp     loc_48582CBD
+loc_48582B7C:
     mov     a2, a0
     call    LoadSqfSeq_HD_entry, 0, 0xc
     mov     d0, d2
@@ -4509,39 +4544,48 @@ loc_48582B8D:
     mov     1, d0
     movbu   d0, (data_500064E5)
     jmp     loc_48582CBD
+loc_48582B98:
     mov     a2, a0
     call    LoadCmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BA4:
     mov     a2, a0
     call    LoadMsp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BB0:
     mov     a2, a0
     call    LoadTm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BBC:
     mov     a2, a0
     call    LoadEfc_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BC8:
     mov     a2, a0
     call    LoadFav_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BD4:
     mov     a2, a0
     call    LoadHmp_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BE0:
     mov     a2, a0
     call    LoadRcm_HD_entry, 0, 0xc
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BEC:
     movbu   (0x50172f29), d0
     exth    d0
     call    LoadCst_entry, [d2,d3,a2,a3], 0x20
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582BFE:
     mov     sp, a0
     add     0x18, a0
     call    func_48551B84_entry, [a2], 0x14
@@ -4555,9 +4599,11 @@ loc_48582C11:
     mov     (0x18, sp), d1
     call    func_484C2E42_entry, 0, 0x3c
     jmp     loc_48582CBD
+loc_48582C1F:
     call    func_48551BFA_entry, 0, 0x10
     mov     d0, d2
     jmp     loc_48582CBD
+loc_48582C2A:
     mov     sp, a0
     add     0x18, a0
     call    func_48551BBF_entry, [a2], 0x14
@@ -4571,14 +4617,17 @@ loc_48582C3D:
     mov     (0x18, sp), d1
     call    func_484C2E42_entry, 0, 0x3c
     bra     loc_48582CBD
+loc_48582C4A:
     call    func_48551C31_entry, 0, 0x10
     mov     d0, d2
     bra     loc_48582CBD
+loc_48582C54:
     mov     0x50172f33, a0
     call    func_48551C68_entry, [a2], 0x14
     mov     d0, d2
     call    SdRemountSync_entry, [d2], 0x10
     bra     loc_48582CBD
+loc_48582C6B:
     movbu   (0x50172f29), d0
     mov     -1, d2
     cmp     0, d0
@@ -4719,8 +4768,10 @@ loc_48582DE2:
     movhu   (0x50173148), d0
 loc_48582DE8:
     ret     0, 0xc
+loc_48582DEB:
     movhu   (0x50173148), d0
     retf    0, 0
+loc_48582DF4:
     clr     d0
     retf    0, 0
 
@@ -5053,6 +5104,7 @@ loc_4858317F:
     movhu   d0, (0x50173148)
 loc_48583198:
     ret     0, 0xc
+loc_4858319B:
     movbu   (0x5017303c), d1
     clr     d0
     cmp     d0, d1
@@ -5070,12 +5122,16 @@ loc_485831BE:
     movhu   d1, (0x50173148)
 loc_485831C5:
     retf    0, 0
+loc_485831C8:
     mov     0x0fffffff, d0
     retf    0, 0
+loc_485831D1:
     mov     0x50172f33, a0
     retf    0, 0
+loc_485831DA:
     mov     0x50172f33, a0
     retf    0, 0
+loc_485831E3:
     mov     0x50172f33, a0
     retf    0, 0
 # InitializeBlock41  (CPU 0x485831ec)

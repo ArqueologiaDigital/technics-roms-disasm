@@ -25442,12 +25442,14 @@ loc_48410251:
     call    DspEffectSelect, 0, 0x20
     call    func_48407F86, 0, 0
     ret     [d2,d3], 0x1c
+loc_4841027C:
     retf    0, 0
 
 func_4841027F:
     add     -8, sp
     call    func_4841028D_entry, [d2,d3,a2,a3], 0x24
     ret     0, 8
+loc_4841028A:
     retf    0, 0
 
 func_4841028D:
@@ -25635,9 +25637,10 @@ SndDbTriDefaultsA_entry:
     cmp     9, d1
     bgt     loc_484104E3
     asl2    d1
-    mov     data_4858DF5C, a0
+    mov     ptrs_4858DF5C, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_484104B3:
     exthu   d0
     mov     sp, a1
     mov     6, d1
@@ -25693,9 +25696,10 @@ SndDbTriDefaultsB_entry:
     cmp     9, d1
     bgt     loc_48410544
     asl2    d1
-    mov     data_4858DF84, a0
+    mov     ptrs_4858DF84, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48410514:
     exthu   d0
     mov     sp, a1
     mov     6, d1
@@ -25751,9 +25755,10 @@ SndDbTriDefaultsC_entry:
     cmp     9, d1
     bgt     loc_484105A5
     asl2    d1
-    mov     data_4858DFAC, a0
+    mov     ptrs_4858DFAC, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48410575:
     exthu   d0
     mov     sp, a1
     mov     6, d1
@@ -25818,9 +25823,10 @@ loc_484105D3:
 loc_484105DA:
     mov     d2, d0
     asl2    d0
-    mov     data_4858DFD4, a0
+    mov     ptrs_4858DFD4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_484105E6:
     extbu   d2
     asl     8, d2
     mov     d3, d0
@@ -25841,6 +25847,7 @@ loc_484105DA:
     exth    d0
     cmp     0, d0
     bge     loc_48410617
+loc_48410614:
     ret     [d2,d3,a2,a3], 0x7c
 loc_48410617:
     mov     d3, d0
@@ -26139,14 +26146,17 @@ loc_48410874:
     ret     [d2,d3,a2,a3], 0x64
 loc_4841087D:
     mov     (0x24, sp), d0
-    mov     data_4858DFFC, a0
+    mov     ptrs_4858DFFC, a0
     asl2    d0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841088A:
     clr     d2
     jmp     loc_4841091D
+loc_4841088E:
     clr     d2
     jmp     loc_4841091D
+loc_48410892:
     mov     0x0000b014, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26154,6 +26164,7 @@ loc_4841087D:
     asr     16, d0
     mov     d0, d2
     bra     loc_4841091D
+loc_484108AC:
     mov     0x0000b024, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26161,6 +26172,7 @@ loc_4841087D:
     asr     16, d0
     mov     d0, d2
     bra     loc_4841091D
+loc_484108C6:
     mov     0x0000b034, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26168,6 +26180,7 @@ loc_4841087D:
     mov     d0, d2
     asr     16, d2
     bra     loc_4841091D
+loc_484108E0:
     mov     0x0000b044, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26175,6 +26188,7 @@ loc_4841087D:
     asr     16, d0
     mov     d0, d2
     bra     loc_4841091D
+loc_484108FA:
     mov     0x0000b054, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26182,10 +26196,13 @@ loc_4841087D:
     asr     16, d0
     mov     d0, d2
     bra     loc_4841091D
+loc_48410914:
     clr     d2
     bra     loc_4841091D
+loc_48410917:
     clr     d2
     bra     loc_4841091D
+loc_4841091A:
     ret     [d2,d3,a2,a3], 0x64
 loc_4841091D:
     movhu   (0x6c, sp), d1
@@ -26399,14 +26416,17 @@ loc_48410ABA:
     ret     [d2,d3,a2,a3], 0x64
 loc_48410AC3:
     mov     (0x24, sp), d0
-    mov     data_4858E024, a0
+    mov     ptrs_4858E024, a0
     asl2    d0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48410AD0:
     clr     d2
     jmp     loc_48410B63
+loc_48410AD4:
     clr     d2
     jmp     loc_48410B63
+loc_48410AD8:
     mov     0x0000b014, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26414,6 +26434,7 @@ loc_48410AC3:
     asr     16, d0
     mov     d0, d2
     bra     loc_48410B63
+loc_48410AF2:
     mov     0x0000b024, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26421,6 +26442,7 @@ loc_48410AC3:
     mov     d0, d2
     asr     16, d2
     bra     loc_48410B63
+loc_48410B0C:
     mov     0x0000b034, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26428,6 +26450,7 @@ loc_48410AC3:
     and     0x00ff0000, d2
     asr     16, d2
     bra     loc_48410B63
+loc_48410B26:
     mov     0x0000b044, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26435,6 +26458,7 @@ loc_48410AC3:
     and     0x00ff0000, d2
     asr     16, d2
     bra     loc_48410B63
+loc_48410B40:
     mov     0x0000b054, d0
     clr     d1
     call    LibParamGet, 0, 0x10
@@ -26442,10 +26466,13 @@ loc_48410AC3:
     asr     16, d0
     mov     d0, d2
     bra     loc_48410B63
+loc_48410B5A:
     clr     d2
     bra     loc_48410B63
+loc_48410B5D:
     clr     d2
     bra     loc_48410B63
+loc_48410B60:
     ret     [d2,d3,a2,a3], 0x64
 loc_48410B63:
     movhu   (0x6c, sp), d1
@@ -27637,7 +27664,7 @@ loc_48411565:
     ret     [d2,d3], 0x1c
 loc_48411582:
     add     8, a0
-    cmp     data_4858E14C, a0
+    cmp     ptrs_4858E14C, a0
     bcs     loc_4841158D
     mov     a1, a0
 loc_4841158D:
@@ -28323,11 +28350,13 @@ loc_48411BB8:
     jmp     loc_48411C61
 loc_48411BBF:
     asl2    d1
-    mov     data_4858E14C, a0
+    mov     ptrs_4858E14C, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48411BCA:
     mov     d2, d0
     ret     [d2], 0x14
+loc_48411BCE:
     exthu   d0
     and     0xff00, d2
     mov     d2, d1
@@ -28350,6 +28379,7 @@ loc_48411BBF:
 loc_48411BFB:
     mov     -1, d0
     ret     [d2], 0x14
+loc_48411C00:
     mov     d2, d0
     call    func_484844B9_entry, [d2,d3,a2], 0x18
     cmp     0, a0
@@ -28507,9 +28537,10 @@ SndRecByteFieldGetA_entry:
     bgt     loc_48411D56
     add     -1, d1
     asl2    d1
-    mov     data_4858E180, a0
+    mov     ptrs_4858E180, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48411D1A:
     mov     0x0000ff00, d3
     exthu   d0
     and     d3, d2
@@ -28559,9 +28590,10 @@ loc_48411D72:
     jmp     loc_48411E2E
 loc_48411D79:
     asl2    d1
-    mov     data_4858E1B0, a0
+    mov     ptrs_4858E1B0, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48411D84:
     mov     0xff, d1
     and     d2, d1
     extbu   d1
@@ -28576,6 +28608,7 @@ loc_48411D79:
     mov     ptrs_48701C9C, a0
     mov     (d1, a0), a0
     ret     [d2], 0x14
+loc_48411DA7:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -28586,6 +28619,7 @@ loc_48411D79:
     cmp     0, a0
     beq     loc_48411E2E
     ret     [d2], 0x14
+loc_48411DBE:
     mov     d2, d0
     call    func_484844B9_entry, [d2,d3,a2], 0x18
     cmp     0, a0
@@ -28659,9 +28693,10 @@ SndRecByteFieldGetB_entry:
     bgt     loc_48411E6E
     add     -1, d1
     asl2    d1
-    mov     data_4858E1E4, a0
+    mov     ptrs_4858E1E4, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48411E56:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -28701,9 +28736,10 @@ loc_48411E94:
     jmp     loc_48411F62
 loc_48411E9B:
     asl2    d1
-    mov     data_4858E214, a0
+    mov     ptrs_4858E214, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48411EA6:
     mov     0xff, d1
     and     d2, d1
     extbu   d1
@@ -28719,6 +28755,7 @@ loc_48411E9B:
     mov     (d1, a0), a0
     movhu   (0x14, a0), d0
     ret     [d2], 0x14
+loc_48411ECC:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -28733,6 +28770,7 @@ loc_48411E9B:
 loc_48411EE6:
     mov     -1, d0
     ret     [d2], 0x14
+loc_48411EEB:
     mov     d2, d0
     call    func_484844B9_entry, [d2,d3,a2], 0x18
     cmp     0, a0
@@ -28809,9 +28847,10 @@ SndRecByteFieldGetC_entry:
     bgt     loc_48411FA7
     add     -1, d1
     asl2    d1
-    mov     data_4858E248, a0
+    mov     ptrs_4858E248, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48411F8A:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -28880,9 +28919,10 @@ func_48411FEA:
     cmp     0xc, d0
     bgt     loc_4841201E
     asl2    d0
-    mov     data_4858E278, a0
+    mov     ptrs_4858E278, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412009:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -28908,9 +28948,10 @@ func_48412023_entry:
     cmp     0xc, d0
     bgt     loc_48412058
     asl2    d0
-    mov     data_4858E2AC, a0
+    mov     ptrs_4858E2AC, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412042:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -28937,9 +28978,10 @@ func_4841205D_entry:
     cmp     0xc, d0
     bgt     loc_48412092
     asl2    d0
-    mov     data_4858E2E0, a0
+    mov     ptrs_4858E2E0, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841207C:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -28966,9 +29008,10 @@ func_48412097_entry:
     cmp     0xc, d0
     bgt     loc_484120CC
     asl2    d0
-    mov     data_4858E314, a0
+    mov     ptrs_4858E314, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_484120B6:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -28995,9 +29038,10 @@ func_484120D1_entry:
     cmp     0xc, d0
     bgt     loc_48412106
     asl2    d0
-    mov     data_4858E348, a0
+    mov     ptrs_4858E348, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_484120F0:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29024,9 +29068,10 @@ func_4841210B_entry:
     cmp     0xc, d0
     bgt     loc_48412140
     asl2    d0
-    mov     data_4858E37C, a0
+    mov     ptrs_4858E37C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841212A:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29058,9 +29103,10 @@ loc_48412159:
     jmp     loc_48412227
 loc_48412160:
     asl2    d1
-    mov     data_4858E3B0, a0
+    mov     ptrs_4858E3B0, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_4841216B:
     mov     0xff, d1
     and     d2, d1
     extbu   d1
@@ -29076,6 +29122,7 @@ loc_48412160:
     mov     (d1, a0), a0
     movhu   (0x12, a0), d0
     ret     [d2], 0x14
+loc_48412191:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -29090,6 +29137,7 @@ loc_48412160:
 loc_484121AB:
     mov     -1, d0
     ret     [d2], 0x14
+loc_484121B0:
     mov     d2, d0
     call    func_484844B9_entry, [d2,d3,a2], 0x18
     cmp     0, a0
@@ -29166,9 +29214,10 @@ func_4841222C_entry:
     bgt     loc_4841226C
     add     -1, d1
     asl2    d1
-    mov     data_4858E3E4, a0
+    mov     ptrs_4858E3E4, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_4841224F:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -29209,9 +29258,10 @@ loc_4841228B:
     jmp     loc_48412378
 loc_48412292:
     asl2    d1
-    mov     data_4858E414, a0
+    mov     ptrs_4858E414, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_4841229D:
     mov     0x3f, d0
     mov     0xff, d3
     and     d2, d3
@@ -29231,6 +29281,7 @@ loc_48412292:
     add     d0, d0
     movhu   (d0, a0), d0
     ret     [d2,d3], 0x18
+loc_484122CA:
     exthu   d0
     and     0xff00, d2
     mov     d2, d1
@@ -29250,6 +29301,7 @@ loc_48412292:
 loc_484122EE:
     mov     -1, d0
     ret     [d2,d3], 0x18
+loc_484122F3:
     mov     d2, d0
     call    func_484844B9_entry, [d2,d3,a2], 0x18
     cmp     0, a0
@@ -29547,9 +29599,10 @@ func_48412513_entry:
     cmp     0xc, d0
     bgt     loc_48412553
     asl2    d0
-    mov     data_4858E448, a0
+    mov     ptrs_4858E448, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412533:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29583,9 +29636,10 @@ func_48412558_entry:
     cmp     0xc, d0
     bgt     loc_48412599
     asl2    d0
-    mov     data_4858E47C, a0
+    mov     ptrs_4858E47C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412578:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29619,9 +29673,10 @@ func_4841259E_entry:
     cmp     0xc, d0
     bgt     loc_484125DF
     asl2    d0
-    mov     data_4858E4B0, a0
+    mov     ptrs_4858E4B0, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_484125BE:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29655,9 +29710,10 @@ func_484125E4_entry:
     cmp     0xc, d0
     bgt     loc_48412625
     asl2    d0
-    mov     data_4858E4E4, a0
+    mov     ptrs_4858E4E4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412604:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29695,9 +29751,10 @@ loc_4841263F:
     jmp     loc_484126E0
 loc_48412646:
     asl2    d0
-    mov     data_4858E518, a0
+    mov     ptrs_4858E518, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412651:
     extbu   d3
     mov     a2, d0
     call    SndRecCountGet_entry, [d2], 0x14
@@ -29793,9 +29850,10 @@ func_484126E5_entry:
     cmp     0xc, d0
     bgt     loc_48412727
     asl2    d0
-    mov     data_4858E54C, a0
+    mov     ptrs_4858E54C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412705:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29830,9 +29888,10 @@ func_4841272C_entry:
     cmp     0xc, d0
     bgt     loc_4841276E
     asl2    d0
-    mov     data_4858E580, a0
+    mov     ptrs_4858E580, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841274C:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29867,9 +29926,10 @@ func_48412773_entry:
     cmp     0xc, d0
     bgt     loc_484127B5
     asl2    d0
-    mov     data_4858E5B4, a0
+    mov     ptrs_4858E5B4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412793:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29904,9 +29964,10 @@ func_484127BA_entry:
     cmp     0xc, d0
     bgt     loc_484127FB
     asl2    d0
-    mov     data_4858E5E8, a0
+    mov     ptrs_4858E5E8, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_484127DA:
     mov     d2, d0
     call    func_48412145_entry, [d2], 0x14
     exth    d0
@@ -29942,9 +30003,10 @@ func_48412800_entry:
     bgt     loc_4841284B
     add     -1, d1
     asl2    d1
-    mov     data_4858E61C, a0
+    mov     ptrs_4858E61C, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48412823:
     exthu   d0
     and     0xff00, d2
     lsr     8, d2
@@ -29991,9 +30053,10 @@ loc_48412869:
 loc_48412870:
     add     -1, d0
     asl2    d0
-    mov     data_4858E64C, a0
+    mov     ptrs_4858E64C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841287D:
     mov     (0x30, sp), d0
     call    SndRecTriFieldGet_entry, [d2], 0x14
     mov     d0, d1
@@ -30132,25 +30195,34 @@ func_48412975:
     cmp     9, d0
     bgt     loc_484129D1
     asl2    d0
-    mov     data_4858E67C, a0
+    mov     ptrs_4858E67C, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412989:
     movhu   (data_48709D24), d0
     bra     loc_484129D2
+loc_48412991:
     movhu   (Str_empty_320), d0
     bra     loc_484129D2
+loc_48412999:
     movhu   (Str_empty_319), d0
     bra     loc_484129D2
+loc_484129A1:
     movhu   (Str_empty_319), d0
     bra     loc_484129D2
+loc_484129A9:
     movhu   (Str_empty_319), d0
     bra     loc_484129D2
+loc_484129B1:
     movhu   (Str_empty_319), d0
     bra     loc_484129D2
+loc_484129B9:
     movhu   (Str_empty_319), d0
     bra     loc_484129D2
+loc_484129C1:
     movhu   (data_487175FC), d0
     bra     loc_484129D2
+loc_484129C9:
     movhu   (data_4871B640), d0
     bra     loc_484129D2
 loc_484129D1:
@@ -30270,9 +30342,10 @@ loc_48412A97:
 loc_48412A9E:
     mov     d3, d0
     asl2    d0
-    mov     data_4858E6A4, a0
+    mov     ptrs_4858E6A4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412AAA:
     extb    d1
     extb    d2
     mov     d2, d0
@@ -30284,6 +30357,7 @@ loc_48412A9E:
     movbu   (a0), d1
     movbu   (1, a0), d0
     bra     loc_48412B1E
+loc_48412AC1:
     extb    d1
     extb    d2
     asl     7, d2
@@ -30294,6 +30368,7 @@ loc_48412A9E:
     movbu   (a0), d1
     movbu   (1, a0), d0
     bra     loc_48412B1E
+loc_48412AD7:
     extb    d1
     extb    d2
     asl     7, d2
@@ -30304,6 +30379,7 @@ loc_48412A9E:
     movbu   (a0), d1
     movbu   (1, a0), d0
     bra     loc_48412B1E
+loc_48412AED:
     extb    d1
     extb    d2
     mov     d2, d0
@@ -30315,6 +30391,7 @@ loc_48412A9E:
     movbu   (a0), d1
     movbu   (1, a0), d0
     bra     loc_48412B1E
+loc_48412B04:
     extb    d1
     extb    d2
     asl     7, d2
@@ -30347,27 +30424,37 @@ func_48412B2D:
     cmp     9, d0
     bgt     loc_48412B91
     asl2    d0
-    mov     data_4858E6CC, a0
+    mov     ptrs_4858E6CC, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412B41:
     mov     0x0000a000, d0
     bra     loc_48412B93
+loc_48412B49:
     mov     0x0000a200, d0
     bra     loc_48412B93
+loc_48412B51:
     mov     0x0000a100, d0
     bra     loc_48412B93
+loc_48412B59:
     mov     0x0000a300, d0
     bra     loc_48412B93
+loc_48412B61:
     mov     0x0000a400, d0
     bra     loc_48412B93
+loc_48412B69:
     mov     0x0000b014, d0
     bra     loc_48412B93
+loc_48412B71:
     mov     0x0000b024, d0
     bra     loc_48412B93
+loc_48412B79:
     mov     0x0000b034, d0
     bra     loc_48412B93
+loc_48412B81:
     mov     0x0000b044, d0
     bra     loc_48412B93
+loc_48412B89:
     mov     0x0000b054, d0
     bra     loc_48412B93
 loc_48412B91:
@@ -30391,25 +30478,34 @@ loc_48412BA2:
     bgt     loc_48412BDE
     add     -0x70, d0
     asl2    d0
-    mov     data_4858E6F4, a0
+    mov     ptrs_4858E6F4, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412BBA:
     mov     1, d0
     bra     loc_48412BE0
+loc_48412BBE:
     mov     2, d0
     bra     loc_48412BE0
+loc_48412BC2:
     mov     4, d0
     bra     loc_48412BE0
+loc_48412BC6:
     mov     5, d0
     bra     loc_48412BE0
+loc_48412BCA:
     mov     6, d0
     bra     loc_48412BE0
+loc_48412BCE:
     mov     8, d0
     bra     loc_48412BE0
+loc_48412BD2:
     mov     0xa, d0
     bra     loc_48412BE0
+loc_48412BD6:
     mov     0xb, d0
     bra     loc_48412BE0
+loc_48412BDA:
     mov     0xc, d0
     bra     loc_48412BE0
 loc_48412BDE:
@@ -30423,11 +30519,12 @@ func_48412BE3:
     blt     loc_48412C5F
     cmp     0xc, d0
     bgt     loc_48412C5F
-    mov     data_4858E738, a0
+    mov     ptrs_4858E738, a0
     add     -1, d0
     asl2    d0
     mov     (d0, a0), a1
     jmp     (a1)
+loc_48412BF9:
     exthu   d1
     mov     0x42, d0
     nop
@@ -30436,6 +30533,7 @@ func_48412BE3:
     mov     d0, a0
     add     0x50021cf4, a0
     rets
+loc_48412C0A:
     exthu   d1
     mov     0x42, d0
     nop
@@ -30444,6 +30542,7 @@ func_48412BE3:
     mov     d0, a0
     add     0x840301b8, a0
     rets
+loc_48412C1B:
     exthu   d1
     mov     0x42, d0
     nop
@@ -30452,6 +30551,7 @@ func_48412BE3:
     mov     d0, a0
     add     0x8403044c, a0
     rets
+loc_48412C2C:
     exthu   d1
     mov     0x42, d0
     nop
@@ -30460,6 +30560,7 @@ func_48412BE3:
     mov     d1, a0
     add     0x84030596, a0
     rets
+loc_48412C3D:
     exthu   d1
     mov     0x42, d0
     nop
@@ -30468,6 +30569,7 @@ func_48412BE3:
     mov     d1, a0
     add     0x84030abe, a0
     rets
+loc_48412C4E:
     exthu   d1
     mov     0x42, d0
     nop
@@ -30487,25 +30589,34 @@ func_48412C63:
     cmp     9, d0
     bgt     loc_48412CBF
     asl2    d0
-    mov     data_4858E768, a0
+    mov     ptrs_4858E768, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48412C77:
     mov     data_48709CDC, a0
     bra     loc_48412CC1
+loc_48412C7F:
     mov     data_4870E538, a0
     bra     loc_48412CC1
+loc_48412C87:
     mov     data_48713198, a0
     bra     loc_48412CC1
+loc_48412C8F:
     mov     data_48713198, a0
     bra     loc_48412CC1
+loc_48412C97:
     mov     data_48713198, a0
     bra     loc_48412CC1
+loc_48412C9F:
     mov     data_48713198, a0
     bra     loc_48412CC1
+loc_48412CA7:
     mov     data_48713198, a0
     bra     loc_48412CC1
+loc_48412CAF:
     mov     data_487175B4, a0
     bra     loc_48412CC1
+loc_48412CB7:
     mov     data_4871B610, a0
     bra     loc_48412CC1
 loc_48412CBF:
@@ -30655,9 +30766,10 @@ loc_48412DD2:
     jmp     loc_48412F39
 loc_48412DD9:
     asl2    d1
-    mov     data_4858E790, a0
+    mov     ptrs_4858E790, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48412DE4:
     mov     a3, d0
     and     0xff, d0
     mov     d0, d1
@@ -30697,6 +30809,7 @@ loc_48412E25:
 loc_48412E2C:
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x20
+loc_48412E30:
     exthu   d0
     mov     a3, d1
     and     0xff00, d1
@@ -30734,6 +30847,7 @@ loc_48412E6B:
 loc_48412E6F:
     mov     -1, d0
     ret     [d2,d3,a2,a3], 0x20
+loc_48412E74:
     mov     a3, d0
     call    func_484844B9_entry, [d2,d3,a2], 0x18
     cmp     0, a0
@@ -31774,9 +31888,10 @@ loc_48413660:
     bgt     loc_484136B8
     add     -0x70, d1
     asl2    d1
-    mov     data_4858E7C4, a0
+    mov     ptrs_4858E7C4, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48413675:
     exthu   d2
     cmp     0, d2
     bne     loc_484136B8
@@ -31785,7 +31900,9 @@ loc_48413660:
     bge     loc_484136B8
     mov     d3, d0
     bra     loc_484136BA
+loc_48413682:
     bra     loc_484136B8
+loc_48413684:
     exthu   d2
     cmp     2, d2
     blt     loc_484136B8
@@ -31798,6 +31915,7 @@ loc_48413660:
     add     d3, d0
     extb    d0
     bra     loc_484136BA
+loc_48413698:
     exthu   d2
     cmp     1, d2
     bne     loc_484136B8
@@ -31808,6 +31926,7 @@ loc_48413660:
     add     d3, d0
     extb    d0
     bra     loc_484136BA
+loc_484136A8:
     exthu   d2
     cmp     9, d2
     bne     loc_484136B8
@@ -31878,9 +31997,10 @@ loc_48413735:
 loc_48413740:
     sub     d2, d0
     asl2    d0
-    mov     data_4858E7F8, a0
+    mov     ptrs_4858E7F8, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841374D:
     movhu   (data_500002DC), d0
     cmp     0, d0
     beq     loc_4841375A
@@ -31897,6 +32017,7 @@ loc_4841375A:
     clr     d3
     mov     d3, d2
     jmp     loc_484139C5
+loc_4841377F:
     movhu   (data_500002DC), d0
     cmp     0, d0
     beq     loc_4841378C
@@ -31916,6 +32037,7 @@ loc_4841378C:
     mov     d0, d3
     mov     2, d2
     jmp     loc_484139C5
+loc_484137C0:
     movhu   (data_500002DC), d0
     cmp     0, d0
     beq     loc_484137CD
@@ -31935,6 +32057,7 @@ loc_484137CD:
     mov     d0, d3
     mov     5, d2
     jmp     loc_484139C5
+loc_48413801:
     movhu   (data_500002DC), d0
     cmp     0, d0
     beq     loc_4841380E
@@ -31954,6 +32077,7 @@ loc_4841380E:
     mov     d0, d3
     mov     8, d2
     jmp     loc_484139C5
+loc_48413842:
     movhu   (data_500002DC), d0
     cmp     0, d0
     beq     loc_4841384F
@@ -31970,6 +32094,7 @@ loc_4841384F:
     clr     d3
     mov     0xb, d2
     jmp     loc_484139C5
+loc_48413875:
     cmp     0, d1
     beq     loc_48413884
     mov     1, d0
@@ -33057,24 +33182,34 @@ loc_484140F7:
     mov     Str_AAH_AAH_AAH_AAH_AAH6AAH_AAHQAAHNAAHFAAH, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841410E:
     movhu   (data_48709D24), d0
     bra     loc_4841415A
+loc_48414116:
     movhu   (Str_empty_320), d0
     bra     loc_4841415A
+loc_4841411E:
     movhu   (Str_empty_319), d0
     bra     loc_4841415A
+loc_48414126:
     movhu   (Str_empty_319), d0
     bra     loc_4841415A
+loc_4841412E:
     movhu   (Str_empty_319), d0
     bra     loc_4841415A
+loc_48414136:
     movhu   (Str_empty_319), d0
     bra     loc_4841415A
+loc_4841413E:
     movhu   (Str_empty_319), d0
     bra     loc_4841415A
+loc_48414146:
     movhu   (data_487175FC), d0
     bra     loc_4841415A
+loc_4841414E:
     clr     d0
     bra     loc_4841415A
+loc_48414151:
     movhu   (data_4871B640), d0
     bra     loc_4841415A
 loc_48414159:
@@ -38089,6 +38224,7 @@ BoxLeftCheck:
     mov     Str_bnAHbnAHbnAHbnAHbnAHbnAHbnAHbnAHbnAH_nAH, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48416E62:
     mov     1, d0
     bra     loc_48416E67
 loc_48416E66:
@@ -38105,9 +38241,10 @@ BoxRightCheck:
     bgt     loc_48416E88
     sub     d1, d0
     asl2    d0
-    mov     data_485A03DC, a0
+    mov     ptrs_485A03DC, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_48416E84:
     mov     1, d0
     bra     loc_48416E89
 loc_48416E88:
@@ -38969,7 +39106,7 @@ loc_484177EB:
     jmp     loc_48417A6B
 loc_4841780F:
     add     8, a0
-    cmp     data_485A0680, a0
+    cmp     ptrs_485A0680, a0
     bcs     loc_4841781A
     mov     a1, a0
 loc_4841781A:
@@ -39195,27 +39332,31 @@ func_48417A7B_entry:
     bgt     loc_48417AD0
     mov     d0, d1
     asl2    d1
-    mov     data_485A0680, a0
+    mov     ptrs_485A0680, a0
     mov     (d1, a0), a0
     jmp     (a0)
+loc_48417A93:
     movhu   (0x500c4d42), d1
     movhu   (0x500c4d44), d0
     cmp     0, d1
     bne     loc_48417AD1
     clr     d0
     bra     loc_48417AD1
+loc_48417AA6:
     movhu   (0x500c4d3e), d1
     movhu   (0x500c4d44), d0
     cmp     0, d1
     bne     loc_48417AD1
     clr     d0
     bra     loc_48417AD1
+loc_48417AB9:
     movhu   (0x500c4d40), d1
     movhu   (0x500c4d44), d0
     cmp     0, d1
     bne     loc_48417AD1
     clr     d0
     bra     loc_48417AD1
+loc_48417ACC:
     add     -3, d0
     bra     loc_48417AD1
 loc_48417AD0:
@@ -48225,7 +48366,7 @@ loc_4841D296:
     jmp     loc_4841D450
 loc_4841D2B9:
     add     8, a0
-    cmp     data_485A0D34, a0
+    cmp     ptrs_485A0D34, a0
     bcs     loc_4841D2C4
     mov     a1, a0
 loc_4841D2C4:
@@ -48638,9 +48779,10 @@ loc_4841D68A:
     jmp     loc_4841D7B0
 loc_4841D691:
     asl2    d0
-    mov     data_485A0D34, a0
+    mov     ptrs_485A0D34, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841D69C:
     mov     sp, a0
     add     0x54, a0
     mov     a0, (0x10, sp)
@@ -48648,74 +48790,87 @@ loc_4841D691:
     mov     d3, d0
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_4841D7B0
+loc_4841D6B2:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_9b, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_4841D7B0
+loc_4841D6C7:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_98_2, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_4841D7B0
+loc_4841D6DC:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_85, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_4841D7B0
+loc_4841D6F1:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_81_5, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_4841D7B0
+loc_4841D706:
     mov     sp, a0
     add     0x54, a0
     mov     Str_ON_131, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_4841D7B0
+loc_4841D719:
     mov     sp, a0
     add     0x54, a0
     mov     Str_OFF_140, a1
     call    strcpy_entry, [a2], 4
     jmp     loc_4841D7B0
+loc_4841D72C:
     mov     sp, a0
     add     0x54, a0
     mov     Str_OK_30, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4841D7B0
+loc_4841D73E:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_empty_1362, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4841D7B0
+loc_4841D752:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_empty_1361, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4841D7B0
+loc_4841D766:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_7f_3, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4841D7B0
+loc_4841D77A:
     mov     0, a3
     mov     sp, a0
     add     0x54, a0
     mov     Str_80_4, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4841D7B0
+loc_4841D78E:
     mov     sp, a0
     add     0x54, a0
     mov     Str_YES_4, a1
     call    strcpy_entry, [a2], 4
     bra     loc_4841D7B0
+loc_4841D7A0:
     mov     sp, a0
     add     0x54, a0
     mov     Str_NO_51, a1
@@ -49018,9 +49173,10 @@ loc_4841DA6C:
     cmp     0x10, d0
     bgt     loc_4841DAD5
     asl2    d0
-    mov     data_485A0D78, a0
+    mov     ptrs_485A0D78, a0
     mov     (d0, a0), a0
     jmp     (a0)
+loc_4841DA80:
     mov     a2, d0
     and     0x80, d0
     beq     loc_4841DA9B
@@ -49037,12 +49193,14 @@ loc_4841DA9B:
     mov     EV_INDEXSW_UP, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4841DAD5
+loc_4841DAAF:
     exth    d3
     mov     d3, (0x10, sp)
     mov     -1, d0
     mov     EV_INDEXSW_UP, d1
     call    SendEvent_entry, [d2,d3], 0x24
     bra     loc_4841DAD5
+loc_4841DAC3:
     exth    d3
     mov     d3, (0x10, sp)
     mov     -1, d0

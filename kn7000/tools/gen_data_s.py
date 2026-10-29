@@ -147,6 +147,7 @@ class Gen:
         self.extern = {}              # CPU address -> name defined outside the data region
         self._load_names()
         self.refs = set()             # CPU addresses referred to (need a label)
+        self.code_targets = set()     # code addresses the typed data names loc_<ADDR>
 
     # -- names ---------------------------------------------------------------
     def _load_names(self):
@@ -280,6 +281,11 @@ class Gen:
         return None
 
     # -- references ----------------------------------------------------------
+    @staticmethod
+    def in_code(v):
+        """An address in code region 1 (a jump-table target, a callback)."""
+        return BASE + 0x80 <= v < BASE + R1_END
+
     def ref(self, v, note=True):
         """A 32-bit value written symbolically when it is an address."""
         if v == 0:
@@ -288,6 +294,10 @@ class Gen:
             return self.label_at[v]
         if v in self.extern:
             return self.extern[v]
+        if self.in_code(v):
+            # gen_program_s.py labels it loc_<ADDR> (code_refs.txt)
+            self.code_targets.add(v)
+            return f"loc_{v:08X}"
         if self.in_data(v):
             it = self.item_containing(v)
             if it is not None and it.label:
@@ -801,7 +811,7 @@ class Gen:
                     if not self.free(a + 4 * n, 4) or (n and (a + 4 * n) in self.refs):
                         break
                     w = m.u32(a + 4 * n)
-                    if not (w and (self.in_data(w) or w in self.extern)):
+                    if not (w and (self.in_data(w) or w in self.extern or self.in_code(w))):
                         break
                     n += 1
                 if n >= 2:
@@ -866,9 +876,161 @@ class Gen:
                                               "so the inflated data, once its format is typed, can be the source"
                                               if levels else "no zlib level reproduces it")
                     + "; the inflated bytes are not committed (bulk dump bytes)")
-            self.add(a, n, lab, "zlib",
-                     lambda g, it, o=o, n=n, note=note: [f"{it.label}:\t# {note}",
-                                                        f".incbin_range {ROMQ}, 0x{o:06X}, 0x{o + n:06X}"])
+            it = self.add(a, n, lab, "zlib",
+                          lambda g, it, o=o, n=n, note=note, out=out, level=(levels or [None])[0]:
+                          g.render_zlib(it, o, n, note, out, level))
+            self.zlib_items.append((a, out))
+
+    # -- the program's own "Technics Rhythms" style resource ------------------------
+    def rhythm(self):
+        """TechnicsRhythmsResource (a manual-symbol name in every build): IC18's
+        format with one style, typed by tools/program_rhythm.py with IC18's macros."""
+        import program_rhythm
+        a = self.m.sym_by_name.get("TechnicsRhythmsResource")
+        if a is None or not self.in_data(a):
+            return
+        try:
+            lines, n = program_rhythm.emit(self.rom, a - BASE, "TechnicsRhythmsResource")
+        except ValueError as e:
+            print(f"gen_data_s: TechnicsRhythmsResource not typed: {e}")
+            return
+        if not self.free(a, n):
+            print("gen_data_s: TechnicsRhythmsResource overlaps a typed item; not typed")
+            return
+        self.rhythm_macros = program_rhythm.macro_block()
+        self.label_at[a] = "TechnicsRhythmsResource"
+        self.add(a, n, "TechnicsRhythmsResource", "rhythm resource", lambda g, it, lines=lines: lines)
+
+    # -- the built-in demo songs: zlib streams typed as songs -------------------------
+    def zlib_kinds(self):
+        """What each zlib stream inflates to, from its content and from the
+        parallel pointer tables that list them (func_48457350, program 941
+        0x48457350: song n's three streams, from three 12-entry tables in the
+        initialised RAM, go through func_48533758 (inflate) to the song record
+        Rec8E0TablePtr(0) (0x8E0 bytes), the event memory 0x5003D36C (0x9800
+        bytes) and a panel-memory bank (func_4C021A4E / func_4C021ADE):
+          record  "ZZZZ" first, n * 0x8E0 bytes: kn_sqt.typer1
+          events  256-byte cells, paired with the record at the same index of
+                  the record table: kn_sqt.typer2
+          panel   a 16-character bank name and 8 PANEL MEMORY records (the
+                  .PMT bank shape, floppy/tools/kd/kn_panel.py)."""
+        z = dict(self.zlib_items)
+        self.zkind, self.zpair, self.zname = {}, {}, {}
+        tables = []
+        for it in self.items.values():
+            if it.kind != "pointer table":
+                continue
+            ws = [self.m.u32(it.start + 4 * i) for i in range(it.size // 4)]
+            if sum(1 for w in ws if w in z) >= 2:
+                tables.append(ws)
+        rec_tab = next((t for t in tables if any(z.get(w, b"")[:4] == b"ZZZZ" for w in t)), None)
+        for a, out in z.items():
+            if out[:4] == b"ZZZZ" and len(out) % 0x8E0 == 0:
+                self.zkind[a] = "record"
+            elif out[16:18] == b"@\x12" and is_text(out[:16]):
+                self.zkind[a] = "panel"
+            elif len(out) % 256 == 0 and rec_tab:
+                for t in tables:
+                    if a in t and t is not rec_tab and len(t) == len(rec_tab):
+                        partner = rec_tab[t.index(a)]
+                        if partner in z:
+                            self.zkind[a] = "events"
+                            self.zpair[a] = z[partner]
+        for t in tables:
+            for k, w in enumerate(t):
+                if w in self.zkind:
+                    self.zname[w] = f"DemoSong{k + 1:02d}"
+
+    @staticmethod
+    def kn7(lines, payload):
+        """kn_sqt / kn_panel's llvm-mc lines in kn7asm syntax: `;` comments become
+        `#`, octal string escapes \\ooo become \\xHH, `.fill n, 1, v` becomes
+        `.space n, v`, the .include lines go (data.s includes the macros once),
+        and `.incbin "REF", off, n` of the inflated payload -- free cells holding
+        what an earlier song left -- become .byte rows of those bytes."""
+        out = []
+        for ln in lines:
+            if ln.strip().startswith(".include"):
+                continue
+            if re.fullmatch(r"\w+:", ln.strip()):
+                # no labels inside a .zlib block (theirs would be payload offsets)
+                out.append(f"# {ln.strip()[:-1]}")
+                continue
+            mo = re.match(r'\s*\.incbin\s+"REF",\s*(0x[0-9a-fA-F]+|\d+),\s*(\d+)(.*)$', ln)
+            if mo:
+                o, n = int(mo.group(1), 0), int(mo.group(2))
+                b = payload[o:o + n]
+                out += ["\t.byte\t" + ", ".join(str(x) for x in b[k:k + 16]) for k in range(0, n, 16)]
+                continue
+            if ln.lstrip().startswith("; census:"):
+                out.append(ln.replace("; census: opaque -- unknown-dump:", "# not events:"))
+                continue
+            ln = re.sub(r"\\([0-7]{3})", lambda m: "\\x%02X" % int(m.group(1), 8), ln)
+            ln = re.sub(r"^(\s*)\.fill\s+(\d+),\s*1,\s*(\S+)", r"\1.space\t\2, \3", ln)
+            if ln.startswith(";"):
+                ln = "#" + ln[1:]
+            else:
+                q, cut = False, None
+                for i, ch in enumerate(ln):
+                    if ch == '"':
+                        q = not q
+                    elif ch == ";" and not q:
+                        cut = i
+                        break
+                if cut is not None:
+                    ln = ln[:cut].rstrip() + "\t# " + ln[cut + 1:].strip()
+            out.append(ln)
+        return out
+
+    def typed_zlib(self, a, out):
+        """The source lines of a demo-song stream's inflated content, or None."""
+        sys.path.insert(0, os.path.join(KN7, "..", "floppy", "tools", "kd"))
+        sys.path.insert(0, os.path.join(KN7, "..", "floppy", "tools"))
+        import kn_sqt
+        import kn_panel
+        kind, nm = self.zkind.get(a), self.zname.get(a, f"Z{a:08X}")
+
+        class Ctx:
+            path = "demo"
+        if kind == "record":
+            L = kn_sqt.typer1(Ctx, 1, out, "REF", f"{nm}_Record")
+        elif kind == "events":
+            kn_sqt._P1["demo"] = self.zpair[a]
+            L = kn_sqt.typer2(Ctx, 2, out, "REF", f"{nm}_Events", self.zpair[a])
+        elif kind == "panel":
+            L = [f"# the bank's name, then its 8 PANEL MEMORY records (tag / length lists ended by FF FF)",
+                 f"{nm}_Panel:", '\t.ascii\t' + kn_panel.s_esc(out[:16])]
+            o, k = 16, 1
+            while o < len(out):
+                recs, e = kn_panel.block(out, o)
+                if recs is None:
+                    # the last memory: the stream holds 0x3A80 bytes, 16 fewer than 16 + 8 * 0x750
+                    q, part = o, []
+                    while q + 2 <= len(out) and q + 2 + out[q + 1] <= len(out):
+                        part.append((q, out[q], out[q + 1]))
+                        q += 2 + out[q + 1]
+                    L += kn_panel.block_lines(out, part, f"memory {k}, cut short: its last {len(out) - q} "
+                                              f"stream bytes start a record the stream ends inside")[:-1]
+                    L += ["\t.byte\t" + ", ".join(str(x) for x in out[q:])]
+                    break
+                L += kn_panel.block_lines(out, recs, f"memory {k}")
+                o, k = e, k + 1
+        else:
+            return None
+        if L is None:
+            return None
+        return self.kn7(L, out)
+
+    def render_zlib(self, it, o, n, note, out, level):
+        lines = self.typed_zlib(it.start, out) if level else None
+        if lines is None:
+            return [f"{it.label}:\t# {note}", f".incbin_range {ROMQ}, 0x{o:06X}, 0x{o + n:06X}"]
+        kind = self.zkind[it.start]
+        what = {"record": "song record", "events": "event memory", "panel": "panel-memory bank"}[kind]
+        return [f"{it.label}:\t# {self.zname.get(it.start, '')}: its {what}, {len(out)} bytes, stored as a zlib "
+                f"stream of {n} bytes (inflated by func_48533758); kn7asm compresses it at level {level} "
+                "(Python's zlib reproduces the firmware's stream byte-exactly)",
+                f"\t.zlib\t{level}"] + lines + ["\t.endzlib"]
 
     def addr_of(self, o):
         """The CPU address code uses for file offset o (RAM for the RAM image)."""
@@ -1095,6 +1257,10 @@ class Gen:
             "# tools/milk_model.py for what each structure is and the firmware code that reads it.",
             "",
             '.include "src/constants.inc"',
+            '.include "src/include/kn_song.inc"',
+            '.include "src/include/panel_memory.inc"',
+            '.include "src/include/kn_panel_extra.inc"',
+            f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
             "",
@@ -1124,6 +1290,23 @@ class Gen:
             if fn not in self.media_files:
                 os.remove(os.path.join(md, fn))
         self.write(os.path.join(outdir, "gui_ids.inc"), hdr + self.ids_inc())
+        self.write(os.path.join(outdir, "rhythm_macros.inc"), hdr + [
+            "# The style-record and event macros of src/ic18/rhythm.s (tools/gen_ic18_rhythm_s.py), copied",
+            "# verbatim by tools/gen_data_s.py for the program's own Technics Rhythms resource; do not edit.",
+            ""] + self.rhythm_macros)
+        self.write(os.path.join(outdir, "code_refs.txt"), [
+            "# Code addresses the typed data points at (jump and pointer tables), GENERATED by",
+            "# tools/gen_data_s.py: tools/gen_program_s.py labels each loc_<ADDR> (or .equ's it when it is",
+            "# not an instruction start)."] + [f"0x{a:08X}" for a in sorted(self.code_targets)])
+        ev = ["# The MILK event (EV_) and method (MT_) ids of block 0's Event and Method name tables,",
+              "# GENERATED by tools/gen_data_s.py: id = (registry slot << 16) | index, slot 5 events, 6",
+              "# methods (the IDNAME tables in data_NN.s compute the same values from their entries'",
+              "# positions).  Included by the program source before the code, which names them in",
+              "# `mov` / `cmp` immediates (tools/gen_program_s.py).", ""]
+        for i, n in sorted(self.ev_name.items()):
+            if (i >> 16) in (5, 6):
+                ev.append(f".equ {n}, 0x{i:08X}")
+        self.write(os.path.join(outdir, "gui_event_ids.inc"), hdr + ev)
         # stale parts
         for fn in os.listdir(os.path.join(KN7, outdir)):
             mo = re.fullmatch(r"data_(\d\d)\.s", fn)
@@ -1219,14 +1402,17 @@ class Gen:
             f.write("\n".join(lines).rstrip("\n") + "\n")
 
     def run(self, outdir):
+        self.rhythm_macros = []
         self.gui()
         self.palette()
+        self.rhythm()
         self.media()
         self.code_refs()
         self.typed_refs()
         self.name_value_tables()
         self.doubles()
         self.text_runs()
+        self.zlib_kinds()
         self.build_index()
         self.gaps()
         n = self.emit(outdir)

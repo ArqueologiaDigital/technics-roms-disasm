@@ -125,6 +125,54 @@ A record whose ResName is not empty (2,200 of 8,509) is named by it.  The others
 record shows one, numbered when that repeats.  These generated names are the source's; the
 firmware has none for those objects.
 
+## Beyond the GUI (second pass, 2026-10-29)
+
+### The built-in demo songs
+
+The 30 zlib streams of each build are its 10 demo songs, three streams each.  func_48457350
+(941 0x48457350; d0 = the song) takes song n's streams from three 12-entry tables in the
+initialised RAM (`ptrs_50000C20` / `_50000C50` / `_50000C80`) and inflates them with
+func_48533758: the song record into Rec8E0TablePtr(0) (0x8E0 bytes), the event memory into
+0x5003D36C (0x9800 bytes) and a panel-memory bank into the buffer func_4C021A4E /
+func_4C021ADE give.  They are the formats of the floppies' .SQT and .PMT files, so the floppy
+describers type them: `floppy/tools/kd/kn_sqt.py` (typer1: the record, its track directory, its
+panel memory; typer2: the cells, every track's events) and `kn_panel.py` (the bank's name and its
+8 PANEL MEMORY records, PMR_* of `src/include/panel_memory.inc`).  gen_data_s.py translates their
+lines to kn7asm syntax (macros `src/include/kn_song.inc`, `kn_panel_extra.inc`) and puts each
+stream's lines in a `.zlib 6` block: kn7asm compresses them with Python's zlib, which reproduces
+all 30 streams byte-exactly.  Two notes:
+
+- A free cell (in no track's chain) holds what an earlier song left there; it is written as
+  `.byte` rows with that comment (not events).
+- The bank stream is 0x3A80 bytes, 16 fewer than a name plus 8 memories of 0x750: its eighth
+  memory is cut short, and its last record is written as bytes.
+
+### The program's own "Technics Rhythms" resource
+
+TechnicsRhythmsResource (941 0x48729988) has IC18's format (`notes/ic18-rhythm-rom.md`) with a
+single style, "8 Beat 1", the fallback.  `tools/program_rhythm.py` types it with IC18's helpers
+and macros (`gen_ic18_rhythm_s.py`; the macro block of `src/ic18/rhythm.s` is copied to
+`<data dir>/rhythm_macros.inc`): header, count block, the 2048-entry index, the tables, the 8
+count-in patterns, the style record and its 20 variations, every event one line.  The checksum
+and every stream are checked as it is written.  The region 0x486C0000..0x486F0000 the review
+named is not style data: it is the tone generator's curve and level tables (the
+`voice_record.inc` readers cite 0x486D1F54, 0x486D2154, 0x486D2713, 0x486D2805) and other
+tables; it stays split and labelled, not typed (see the lane report).
+
+### Jump and pointer tables into code
+
+A pointer table may now hold code addresses (code region 1): a word with no name is written
+`loc_<ADDR>`, and `<data dir>/code_refs.txt` lists them; gen_program_s.py labels each one
+(or `.equ`s it when it is not an instruction start).  Example: `ptrs_485BC3EC`, the
+chord-type switch of TechniChordCompute (0x48472EBA), 42 entries.
+
+### Event and method ids in the code
+
+`<data dir>/gui_event_ids.inc` defines block 0's EV_ / MT_ ids (slots 5 and 6) numerically and
+is included before the code; gen_program_s.py writes them by name in `mov IMM, dN` and
+`cmp IMM, dN`.  The IDNAME tables compute the same values from their positions, and the code's
+bytes check them (an id that disagreed would change an instruction).
+
 ## Readability census (`tools/gui_readability.py`)
 
 Before: the baseline checkout at b58b8f696 (`--root` of the main checkout); after: this branch at
