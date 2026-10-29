@@ -2118,7 +2118,7 @@ _Static_assert(sizeof(naka_disk_menu_file_io_t) == 30944,
 enum Cheap_ViewableTable_060_objects {
     OBJ_DiskMenu,                               /*  0 TtlScreen "DiskMenu" */
       OBJ_StyleConvert_AcTitleMenu,             /*  1 AcTitleMenu */
-    OBJ_s060_e2,                                /*  2 ?, record outside the C sources (0x03EEEE) */
+      OBJ_Cheap_HardDiskMenuView,               /*  2 AcTitleMenu, RAM record initialised from the work-RAM image (Cheap_HardDiskMenuView) */
       OBJ_Preferences_AcTitleMenu,              /*  3 AcTitleMenu */
       OBJ_Save_AcTitleMenu,                     /*  4 AcTitleMenu */
       OBJ_DiskTools_AcTtlJgBox,                 /*  5 AcTtlJgBox */
@@ -2273,7 +2273,7 @@ enum Cheap_ViewableTable_061_objects {
       OBJ_DiskLoadP3_PsFileNameBox_5,              /* 71 PsFileNameBox */
       OBJ_DiskLoadP3_PsFileNameBox_6,              /* 72 PsFileNameBox */
       OBJ_DiskLoadP3_PsFileNameBox_7,              /* 73 PsFileNameBox */
-    OBJ_s061_e74,                                  /* 74 ?, record outside the C sources (0x03EF24) */
+      OBJ_Cheap_SingleBankToggleView,              /* 74 AcMonoIndexToggle, RAM record initialised from the work-RAM image (Cheap_SingleBankToggleView) */
     OBJ_DiskLoadSMF,                               /* 75 TtlScreen "DiskLoadSMF" */
       OBJ_Tech_AcTitleMenu,                        /* 76 AcTitleMenu */
       OBJ_DiskLoadSMF_AcIndexWideES,               /* 77 AcIndexWideES */
@@ -2744,7 +2744,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_Single2,
         .exit = TITLE_PS,
-        .window = 0x0003EC50,
+        .window = RAM_DiskMenu_Window,
         .title = SELF(DiskMenu_text),
         .icon = idICON_i147,
     },
@@ -2755,7 +2755,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .class_ = NAKA_CLASS(AcTitleMenu),
         .super = OBJ_DiskMenu,
         .sub = NAKA_NONE,
-        .next = OBJ_s060_e2,
+        .next = OBJ_Cheap_HardDiskMenuView,
         .prev = NAKA_NONE,
         .flag = VF_Const,
         .rect = NAKA_XYWH(8, 114, 149, 26),
@@ -2766,7 +2766,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left3,
-        .selected = 0x0003EC54,
+        .selected = RAM_StyleConvert_AcTitleMenu_Selected,
         .str = SELF(StyleConvert_text),
         .title = TITLE_STYLCNVWAIT,
         .icon = idICON_i150,
@@ -2781,7 +2781,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .super = OBJ_DiskMenu,
         .sub = NAKA_NONE,
         .next = OBJ_Save_AcTitleMenu,
-        .prev = OBJ_s060_e2,
+        .prev = OBJ_Cheap_HardDiskMenuView,
         .flag = VF_Const,
         .rect = NAKA_XYWH(8, 72, 149, 26),
         .color = CL_Transparent,
@@ -2791,7 +2791,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left2,
-        .selected = 0x0003EC58,
+        .selected = RAM_Preferences_AcTitleMenu_Selected,
         .str = SELF(Preferences_text),
         .title = TITLE_DKSETUP,
         .icon = idICON_i149,
@@ -2814,7 +2814,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right2,
-        .selected = 0x0003EC5A,
+        .selected = RAM_Save_AcTitleMenu_Selected,
         .str = SELF(Save_text),
         .title = TITLE_DKSVMENU,
         .icon = idICON_i43,
@@ -2837,7 +2837,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003EC5C,
+        .selected = RAM_DiskTools_AcTtlJgBox_Selected,
         .str = SELF(DiskTools_str),
         .icon = idICON_i148,
         .main_func = NAKA_MAINFUNC_UtilityTtlJgFunc,
@@ -2860,7 +2860,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right1,
-        .selected = 0x0003EC5E,
+        .selected = RAM_LOAD_AcTtlJgBox_Selected,
         .str = SELF(LOAD_str),
         .icon = idICON_i42,
         .main_func = NAKA_MAINFUNC_LoadTtlJgFunc,
@@ -2894,7 +2894,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003EC60,
+        .selected = RAM_DirectPlay_AcTtlJgBox_Selected,
         .str = SELF(DirectPlay_str),
         .icon = idICON_i44,
         .main_func = NAKA_MAINFUNC_DirectPlayTtlJgFunc,
@@ -2917,7 +2917,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right4,
-        .selected = 0x0003EC62,
+        .selected = RAM_SongMedley_AcTtlJgBox_Selected,
         .str = SELF(SongMedley_str),
         .icon = idICON_i56,
         .main_func = NAKA_MAINFUNC_SongMedleyTtlJgFunc,
@@ -2940,7 +2940,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Green,
         .border = BD_None,
         .exit = TITLE_SQPLAY,
-        .window = 0x0003EC64,
+        .window = RAM_IntSongMedley_Window,
         .title = SELF(InternalSongMedley_text),
         .icon = idICON_i135,
     },
@@ -3018,11 +3018,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSeqSongNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EC68,
+        .sel_num = RAM_IntSongMedley_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EC6A,
-        .aicok = 0x0003EC6C,
+        .paintok = RAM_IntSongMedley_PsFileNameBox_PaintOk,
+        .aicok = RAM_IntSongMedley_PsFileNameBox_AicOk,
     },
 
     .IntSongMedley_PsFileNameBox_2 = {
@@ -3041,11 +3041,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmIntMedleyFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EC6E,
+        .sel_num = RAM_IntSongMedley_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EC70,
-        .aicok = 0x0003EC72,
+        .paintok = RAM_IntSongMedley_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_IntSongMedley_PsFileNameBox_2_AicOk,
     },
 
     .IntSongMedley_Line = {
@@ -3071,7 +3071,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v60_e17_stron),
         .stroff = SELF(v60_e17_stroff),
-        .onoff = 0x0003EC74,
+        .onoff = RAM_IntSongMedley_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right4,
         .index = 0x000C,
     },
@@ -3184,7 +3184,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKSV,
-        .window = 0x0003EC76,
+        .window = RAM_DiskSaveName_Window,
         .title = SELF(SaveFileNaming_text),
         .icon = idICON_i151,
     },
@@ -3235,7 +3235,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EC7A,
+        .window = RAM_ComposerLoad_Window,
         .title = SELF(ComposerLoad_text),
         .icon = idICON_i42,
     },
@@ -3313,11 +3313,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmComposerLoadFunc,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003EC7E,
+        .sel_num = RAM_ComposerLoad_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EC80,
-        .aicok = 0x0003EC82,
+        .paintok = RAM_ComposerLoad_PsFileNameBox_PaintOk,
+        .aicok = RAM_ComposerLoad_PsFileNameBox_AicOk,
     },
 
     .DiskName_Label = {
@@ -3350,7 +3350,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003EC84,
+        .paintok = RAM_ComposerLoad_AcParaStrBox_PaintOk,
     },
 
     .ComposerLoad_AcParaStrBox_2 = {
@@ -3368,7 +3368,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EC86,
+        .paintok = RAM_ComposerLoad_AcParaStrBox_2_PaintOk,
     },
 
     .ComposerLoad_AcIndexEditSw_3 = {
@@ -3428,8 +3428,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003EC88,
-        .child = 0x0003EC8C,
+        .parent = RAM_DiskWaitWin_Parent,
+        .child = RAM_DiskWaitWin_Child,
     },
 
     .DiskWaitWin_AcRotStrBox = {
@@ -3449,7 +3449,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .func = NAKA_APFUNC_WaitingFunc,
         .interval = 0x0014,
         .length = 0x000B,
-        .paintok = 0x0003EC90,
+        .paintok = RAM_DiskWaitWin_AcRotStrBox_PaintOk,
     },
 
     /* ==== SCREEN TITLE_DKSVNAMESMF "SAVE FILE NAMING" -- "TT_DKSVNAMESMF", title id 0x6A, function NAKA_APFUNC_DefaultFunction ====
@@ -3467,7 +3467,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKSVSMF,
-        .window = 0x0003EC92,
+        .window = RAM_DiskSaveNameSMF_Window,
         .title = SELF(SaveFileNaming_text_2),
         .icon = idICON_i151,
     },
@@ -3519,7 +3519,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_CTWALLSET,
-        .window = 0x0003EC96,
+        .window = RAM_WallpaperLoad_Window,
         .title = SELF(WallpaperLoad_text),
         .icon = idICON_i42,
     },
@@ -3641,7 +3641,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003EC9A,
+        .paintok = RAM_WallpaperLoad_AcParaStrBox_PaintOk,
     },
 
     .WallpaperLoad_AcParaStrBox_2 = {
@@ -3659,7 +3659,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EC9C,
+        .paintok = RAM_WallpaperLoad_AcParaStrBox_2_PaintOk,
     },
 
     .WallpaperLoad_AcIndexEditSw_3 = {
@@ -3711,11 +3711,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmWallpaperLoadFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EC9E,
+        .sel_num = RAM_WallpaperLoad_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003ECA0,
-        .aicok = 0x0003ECA2,
+        .paintok = RAM_WallpaperLoad_PsFileNameBox_PaintOk,
+        .aicok = RAM_WallpaperLoad_PsFileNameBox_AicOk,
     },
 
     /* ==== VIEW OBJ_DiskSaveSureWin: Window, the top of an object tree that no title shows
@@ -3731,8 +3731,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003ECA4,
-        .child = 0x0003ECA8,
+        .parent = RAM_DiskSaveSureWin_Parent,
+        .child = RAM_DiskSaveSureWin_Child,
     },
 
     .DiskSaveSureWin_VwBox = {
@@ -3884,8 +3884,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003ECAC,
-        .child = 0x0003ECB0,
+        .parent = RAM_PasswordWin_Parent,
+        .child = RAM_PasswordWin_Child,
     },
 
     .PasswordWin_IvNaming = {
@@ -3968,8 +3968,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003ECB4,
-        .child = 0x0003ECB8,
+        .parent = RAM_CheckPasswordWin_Parent,
+        .child = RAM_CheckPasswordWin_Child,
     },
 
     .CheckPasswordWin_IvNaming = {
@@ -4054,7 +4054,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003ECBC,
+        .window = RAM_DiskLoad_Window,
         .title = SELF(w35_text),
         .icon = idICON_None,
     },
@@ -4072,7 +4072,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_PageBack,
         .border = BD_3D_UP2,
         .index = 0x0000,
-        .page = 0x0003ECC0,
+        .page = RAM_DiskLoadPage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0003,
     },
@@ -4160,8 +4160,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003ECC2,
-        .child = 0x0003ECC6,
+        .parent = RAM_DiskLoadP1_Parent,
+        .child = RAM_DiskLoadP1_Child,
     },
 
     .DiskLoadP1_PsFileNameBox = {
@@ -4180,11 +4180,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmFileNameFunc,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003ECCA,
+        .sel_num = RAM_DiskLoadP1_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003ECCC,
-        .aicok = 0x0003ECCE,
+        .paintok = RAM_DiskLoadP1_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskLoadP1_PsFileNameBox_AicOk,
     },
 
     .DiskLoadP1_AcIndexEditSw = {
@@ -4230,7 +4230,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .rect = NAKA_XYWH(228, 74, 84, 114),
         .font = idCHARA4,
         .main_func = NAKA_MAINFUNC_FmmFileNameFunc,
-        .paintok = 0x0003ECD0,
+        .paintok = RAM_DiskLoadP1_AcFileSfxBox_PaintOk,
     },
 
     .DiskName_Label_3 = {
@@ -4263,7 +4263,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right5,
-        .selected = 0x0003ECD2,
+        .selected = RAM_Smf_AcTitleMenu_Selected,
         .str = SELF(Smf_text),
         .title = TITLE_DKLDSMF,
         .icon = idICON_None,
@@ -4341,7 +4341,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003ECD4,
+        .paintok = RAM_DiskLoadP1_AcParaStrBox_PaintOk,
     },
 
     .DiskLoadP1_AcParaStrBox_2 = {
@@ -4359,7 +4359,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003ECD6,
+        .paintok = RAM_DiskLoadP1_AcParaStrBox_2_PaintOk,
     },
 
     .DiskLoadP1_VwScreenTitle = {
@@ -4393,8 +4393,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003ECD8,
-        .child = 0x0003ECDC,
+        .parent = RAM_DiskLoadP2_Parent,
+        .child = RAM_DiskLoadP2_Child,
     },
 
     .DiskLoadP2_AcIndexEditSw = {
@@ -4676,7 +4676,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_CurFileNameFunc,
-        .paintok = 0x0003ECE0,
+        .paintok = RAM_DiskLoadP2_AcParaStrBox_PaintOk,
     },
 
     .DiskLoadP2_VwBox = {
@@ -4828,11 +4828,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmLoadFilterFunc,
         .column = 0x0001,
         .row = 0x0008,
-        .sel_num = 0x0003ECE2,
+        .sel_num = RAM_DiskLoadP2_PsFileNameBox_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ECE4,
-        .aicok = 0x0003ECE6,
+        .paintok = RAM_DiskLoadP2_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskLoadP2_PsFileNameBox_AicOk,
     },
 
     .DiskLoadP2_Line = {
@@ -4911,8 +4911,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003ECE8,
-        .child = 0x0003ECEC,
+        .parent = RAM_DiskLoadP3_Parent,
+        .child = RAM_DiskLoadP3_Child,
     },
 
     .DiskLoadP3_VwScreenTitle = {
@@ -5082,11 +5082,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadDstFunc,
         .column = 0x0001,
         .row = 0x0004,
-        .sel_num = 0x0003ECF0,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ECF2,
-        .aicok = 0x0003ECF4,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_AicOk,
     },
 
     .DiskLoadP3_AcIndexWideES_3 = {
@@ -5142,7 +5142,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_CurFileNameFunc,
-        .paintok = 0x0003ECF6,
+        .paintok = RAM_DiskLoadP3_AcParaStrBox_PaintOk,
     },
 
     .To_Label = {
@@ -5176,11 +5176,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadSrcFunc,
         .column = 0x0001,
         .row = 0x0004,
-        .sel_num = 0x0003ECF8,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ECFA,
-        .aicok = 0x0003ECFC,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_2_AicOk,
     },
 
     .Mode_Label = {
@@ -5214,11 +5214,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadModeFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ECFE,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_3_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED00,
-        .aicok = 0x0003ED02,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_3_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_3_AicOk,
     },
 
     .DiskLoadP3_PsFileNameBox_4 = {
@@ -5237,11 +5237,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadSrcBankFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED04,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_4_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED06,
-        .aicok = 0x0003ED08,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_4_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_4_AicOk,
     },
 
     .DiskLoadP3_PsFileNameBox_5 = {
@@ -5260,11 +5260,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadSrcMemFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED0A,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_5_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED0C,
-        .aicok = 0x0003ED0E,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_5_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_5_AicOk,
     },
 
     .DiskLoadP3_PsFileNameBox_6 = {
@@ -5283,18 +5283,18 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadDstBankFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED10,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_6_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED12,
-        .aicok = 0x0003ED14,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_6_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_6_AicOk,
     },
 
     .DiskLoadP3_PsFileNameBox_7 = {
         .class_ = NAKA_CLASS(PsFileNameBox),
         .super = OBJ_DiskLoadP3,
         .sub = NAKA_NONE,
-        .next = OBJ_s061_e74,
+        .next = OBJ_Cheap_SingleBankToggleView,
         .prev = OBJ_DiskLoadP3_PsFileNameBox_6,
         .flag = VF_Const,
         .rect = NAKA_XYWH(250, 200, 60, 16),
@@ -5306,11 +5306,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadDstMemFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED16,
+        .sel_num = RAM_DiskLoadP3_PsFileNameBox_7_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED18,
-        .aicok = 0x0003ED1A,
+        .paintok = RAM_DiskLoadP3_PsFileNameBox_7_PaintOk,
+        .aicok = RAM_DiskLoadP3_PsFileNameBox_7_AicOk,
     },
 
     .SINGLE_str = ALIGNED_STRING("SINGLE"),
@@ -5333,7 +5333,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003ED1E,
+        .window = RAM_DiskLoadSMF_Window,
         .title = SELF(SmfLoad_text),
         .icon = idICON_i42,
     },
@@ -5355,7 +5355,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right5,
-        .selected = 0x0003ED22,
+        .selected = RAM_Tech_AcTitleMenu_Selected,
         .str = SELF(Tech_text),
         .title = TITLE_DKLD,
         .icon = idICON_None,
@@ -5464,11 +5464,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003ED24,
+        .sel_num = RAM_DiskLoadSMF_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003ED26,
-        .aicok = 0x0003ED28,
+        .paintok = RAM_DiskLoadSMF_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskLoadSMF_PsFileNameBox_AicOk,
     },
 
     .Info_Label = {
@@ -5497,7 +5497,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v61_e84_stron),
         .stroff = SELF(v61_e84_stroff),
-        .onoff = 0x0003ED2A,
+        .onoff = RAM_DiskLoadSMF_PsWindowToggle_OnOff,
         .editsw = ES_Left2,
         .onwin = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_SongNameSmfLdWin),
         .offwin = NAKA_VIEW_ID(Cheap_ViewableTable_061, OBJ_DiskInfoSmfLdWin),
@@ -5557,11 +5557,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SmfSeqToSongNumFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED2C,
+        .sel_num = RAM_DiskLoadSMF_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED2E,
-        .aicok = 0x0003ED30,
+        .paintok = RAM_DiskLoadSMF_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskLoadSMF_PsFileNameBox_2_AicOk,
     },
 
     .DiskLoadSMF_PsFileNameBox_3 = {
@@ -5580,11 +5580,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SmfSeqSongNameFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED32,
+        .sel_num = RAM_DiskLoadSMF_PsFileNameBox_3_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED34,
-        .aicok = 0x0003ED36,
+        .paintok = RAM_DiskLoadSMF_PsFileNameBox_3_PaintOk,
+        .aicok = RAM_DiskLoadSMF_PsFileNameBox_3_AicOk,
     },
 
     .DiskLoadSMF_AcIndexEditSw_4 = {
@@ -5621,11 +5621,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SmfLoadAsFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED38,
+        .sel_num = RAM_DiskLoadSMF_PsFileNameBox_4_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED3A,
-        .aicok = 0x0003ED3C,
+        .paintok = RAM_DiskLoadSMF_PsFileNameBox_4_PaintOk,
+        .aicok = RAM_DiskLoadSMF_PsFileNameBox_4_AicOk,
     },
 
     .DiskLoadSMF_IvMainEditSw = {
@@ -5708,8 +5708,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003ED3E,
-        .child = 0x0003ED42,
+        .parent = RAM_SongNameSmfLdWin_Parent,
+        .child = RAM_SongNameSmfLdWin_Child,
     },
 
     .SongNameSmfLdWin_AcParaStrBox = {
@@ -5727,7 +5727,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_SongNameFunc,
-        .paintok = 0x0003ED46,
+        .paintok = RAM_SongNameSmfLdWin_AcParaStrBox_PaintOk,
     },
 
     .SongNameSmfLdWin_AcIndexEditSw = {
@@ -5776,8 +5776,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003ED48,
-        .child = 0x0003ED4C,
+        .parent = RAM_DiskInfoSmfLdWin_Parent,
+        .child = RAM_DiskInfoSmfLdWin_Child,
     },
 
     .DiskName_Label_4 = {
@@ -5810,7 +5810,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003ED50,
+        .paintok = RAM_DiskInfoSmfLdWin_AcParaStrBox_PaintOk,
     },
 
     .DiskInfoSmfLdWin_AcParaStrBox_2 = {
@@ -5828,7 +5828,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003ED52,
+        .paintok = RAM_DiskInfoSmfLdWin_AcParaStrBox_2_PaintOk,
     },
 
     .DiskInfoSmfLdWin_AcIndexEditSw = {
@@ -5879,7 +5879,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CMMENU,
-        .window = 0x0003ED54,
+        .window = RAM_CmpSingleLoad_Window,
         .title = SELF(LoadSingleComposer_text),
         .icon = idICON_i82,
     },
@@ -5978,11 +5978,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_CmpSingleLoadSrcFunc,
         .column = 0x0001,
         .row = 0x0004,
-        .sel_num = 0x0003ED58,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED5A,
-        .aicok = 0x0003ED5C,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_AicOk,
     },
 
     .CmpSingleLoad_PsFileNameBox_2 = {
@@ -6001,11 +6001,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_CmpSingleLoadDstFunc,
         .column = 0x0001,
         .row = 0x0004,
-        .sel_num = 0x0003ED5E,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED60,
-        .aicok = 0x0003ED62,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_2_AicOk,
     },
 
     .CmpSingleLoad_AcIndexEditSw = {
@@ -6153,11 +6153,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_CmpSingleLoadFileFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED64,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_3_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED66,
-        .aicok = 0x0003ED68,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_3_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_3_AicOk,
     },
 
     .CmpSingleLoad_AcMonoIndexToggle = {
@@ -6171,7 +6171,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v61_e121_stron),
         .stroff = SELF(v61_e121_stroff),
-        .onoff = 0x0003ED6A,
+        .onoff = RAM_CmpSingleLoad_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right2,
         .index = 0x0003,
     },
@@ -6196,11 +6196,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadSrcMemFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED6C,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_4_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED6E,
-        .aicok = 0x0003ED70,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_4_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_4_AicOk,
     },
 
     .CmpSingleLoad_PsFileNameBox_5 = {
@@ -6219,11 +6219,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadDstMemFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED72,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_5_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED74,
-        .aicok = 0x0003ED76,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_5_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_5_AicOk,
     },
 
     .CmpSingleLoad_PsFileNameBox_6 = {
@@ -6242,11 +6242,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadSrcBankFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED78,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_6_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED7A,
-        .aicok = 0x0003ED7C,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_6_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_6_AicOk,
     },
 
     .CmpSingleLoad_PsFileNameBox_7 = {
@@ -6265,11 +6265,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SingleLoadDstBankFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003ED7E,
+        .sel_num = RAM_CmpSingleLoad_PsFileNameBox_7_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003ED80,
-        .aicok = 0x0003ED82,
+        .paintok = RAM_CmpSingleLoad_PsFileNameBox_7_PaintOk,
+        .aicok = RAM_CmpSingleLoad_PsFileNameBox_7_AicOk,
     },
 
     .CmpSingleLoadSwCtl = {
@@ -6318,7 +6318,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003ED84,
+        .window = RAM_DiskSaveMenu_Window,
         .title = SELF(Save_text_2),
         .icon = idICON_i43,
     },
@@ -6340,7 +6340,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right2,
-        .selected = 0x0003ED88,
+        .selected = RAM_TechnicsFormat_AcTtlJgBox_Selected,
         .str = SELF(TechnicsFormat_str),
         .icon = idICON_None,
         .main_func = NAKA_MAINFUNC_SaveTtlJgFunc,
@@ -6363,7 +6363,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right4,
-        .selected = 0x0003ED8A,
+        .selected = RAM_SmfFormat_AcTtlJgBox_Selected,
         .str = SELF(SmfFormat_str),
         .icon = idICON_None,
         .main_func = NAKA_MAINFUNC_SaveSmfTtlJgFunc,
@@ -6386,7 +6386,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003ED8C,
+        .window = RAM_DiskSave_Window,
         .title = SELF(w89_text),
         .icon = idICON_None,
     },
@@ -6404,7 +6404,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_PageBack,
         .border = BD_3D_UP2,
         .index = 0x0000,
-        .page = 0x0003ED90,
+        .page = RAM_DiskSavePage_Page,
         .pagemin = 0x0001,
         .pagemax = 0x0003,
     },
@@ -6492,8 +6492,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003ED92,
-        .child = 0x0003ED96,
+        .parent = RAM_DiskSaveP1_Parent,
+        .child = RAM_DiskSaveP1_Child,
     },
 
     .DiskSaveP1_AcIndexWideES = {
@@ -6566,7 +6566,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_SaveFileNameFunc,
-        .paintok = 0x0003ED9A,
+        .paintok = RAM_DiskSaveP1_AcParaStrBox_PaintOk,
     },
 
     .SaveAs_Label = {
@@ -6599,7 +6599,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003ED9C,
+        .paintok = RAM_DiskSaveP1_AcParaStrBox_2_PaintOk,
     },
 
     .Name_AcTitleMenu = {
@@ -6617,7 +6617,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003ED9E,
+        .selected = RAM_Name_AcTitleMenu_Selected,
         .str = SELF(Name_text),
         .title = TITLE_DKSVNAME,
         .icon = idICON_None,
@@ -6641,11 +6641,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmFileNameFunc,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003EDA0,
+        .sel_num = RAM_DiskSaveP1_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EDA2,
-        .aicok = 0x0003EDA4,
+        .paintok = RAM_DiskSaveP1_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskSaveP1_PsFileNameBox_AicOk,
     },
 
     .DiskSaveP1_AcIndexEditSw_3 = {
@@ -6691,7 +6691,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .rect = NAKA_XYWH(228, 74, 84, 114),
         .font = idCHARA4,
         .main_func = NAKA_MAINFUNC_FmmFileNameFunc,
-        .paintok = 0x0003EDA6,
+        .paintok = RAM_DiskSaveP1_AcFileSfxBox_PaintOk,
     },
 
     .DiskSaveP1_IvCatchEvent = {
@@ -6736,8 +6736,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003EDA8,
-        .child = 0x0003EDAC,
+        .parent = RAM_DiskSaveP2_Parent,
+        .child = RAM_DiskSaveP2_Child,
     },
 
     .DiskSaveP2_VwBox = {
@@ -6889,11 +6889,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSaveFilterFunc,
         .column = 0x0001,
         .row = 0x0008,
-        .sel_num = 0x0003EDB0,
+        .sel_num = RAM_DiskSaveP2_PsFileNameBox_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EDB2,
-        .aicok = 0x0003EDB4,
+        .paintok = RAM_DiskSaveP2_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskSaveP2_PsFileNameBox_AicOk,
     },
 
     .DiskSaveP2_Line = {
@@ -6956,7 +6956,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .main_func = NAKA_MAINFUNC_SaveFileNameNumFunc,
-        .paintok = 0x0003EDB6,
+        .paintok = RAM_DiskSaveP2_AcParaStrBox_PaintOk,
     },
 
     .SaveAs_Label_2 = {
@@ -7379,8 +7379,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003EDB8,
-        .child = 0x0003EDBC,
+        .parent = RAM_DiskSaveP3_Parent,
+        .child = RAM_DiskSaveP3_Child,
     },
 
     .DiskSaveP3_PsFileNameBox = {
@@ -7399,11 +7399,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSeqSongNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EDC0,
+        .sel_num = RAM_DiskSaveP3_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EDC2,
-        .aicok = 0x0003EDC4,
+        .paintok = RAM_DiskSaveP3_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskSaveP3_PsFileNameBox_AicOk,
     },
 
     .DiskSaveP3_AcIndexWideES = {
@@ -7458,7 +7458,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .main_func = NAKA_MAINFUNC_SaveFileNameNumFunc,
-        .paintok = 0x0003EDC6,
+        .paintok = RAM_DiskSaveP3_AcParaStrBox_PaintOk,
     },
 
     .Save_Label_3 = {
@@ -7551,7 +7551,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EDC8,
+        .window = RAM_DiskSmfSave_Window,
         .title = SELF(SmfSave_text),
         .icon = idICON_i43,
     },
@@ -7574,11 +7574,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EDCC,
+        .sel_num = RAM_DiskSmfSave_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EDCE,
-        .aicok = 0x0003EDD0,
+        .paintok = RAM_DiskSmfSave_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskSmfSave_PsFileNameBox_AicOk,
     },
 
     .DiskSmfSave_AcIndexWideES = {
@@ -7677,7 +7677,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6B_e7_stron),
         .stroff = SELF(v6B_e7_stroff),
-        .onoff = 0x0003EDD2,
+        .onoff = RAM_DiskSmfSave_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right5,
         .index = 0x0017,
     },
@@ -7697,7 +7697,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6B_e8_stron),
         .stroff = SELF(v6B_e8_stroff),
-        .onoff = 0x0003EDD4,
+        .onoff = RAM_DiskSmfSave_AcMonoIndexToggle_2_OnOff,
         .editsw = ES_Right4,
         .index = 0x0016,
     },
@@ -7736,7 +7736,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003EDD6,
+        .selected = RAM_Name_AcTitleMenu_2_Selected,
         .str = SELF(Name_text_2),
         .title = TITLE_DKSVNAMESMF,
         .icon = idICON_None,
@@ -7759,7 +7759,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EDD8,
+        .paintok = RAM_DiskSmfSave_AcParaStrBox_PaintOk,
     },
 
     .DiskSmfSave_AcIndexEditSw_3 = {
@@ -7826,11 +7826,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SmfSeqSongNameFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003EDDA,
+        .sel_num = RAM_DiskSmfSave_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EDDC,
-        .aicok = 0x0003EDDE,
+        .paintok = RAM_DiskSmfSave_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskSmfSave_PsFileNameBox_2_AicOk,
     },
 
     .DiskSmfSave_AcIndexEditSw_4 = {
@@ -7867,11 +7867,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SmfSeqFromSongNumFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003EDE0,
+        .sel_num = RAM_DiskSmfSave_PsFileNameBox_3_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EDE2,
-        .aicok = 0x0003EDE4,
+        .paintok = RAM_DiskSmfSave_PsFileNameBox_3_PaintOk,
+        .aicok = RAM_DiskSmfSave_PsFileNameBox_3_AicOk,
     },
 
     .DiskSmfSave_PsFileNameBox_4 = {
@@ -7890,11 +7890,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_SaveFileNameSmfFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003EDE6,
+        .sel_num = RAM_DiskSmfSave_PsFileNameBox_4_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EDE8,
-        .aicok = 0x0003EDEA,
+        .paintok = RAM_DiskSmfSave_PsFileNameBox_4_PaintOk,
+        .aicok = RAM_DiskSmfSave_PsFileNameBox_4_AicOk,
     },
 
     .Save_Label_6 = {
@@ -7941,7 +7941,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EDEC,
+        .window = RAM_DiskSmfDirectPlay_Window,
         .title = SELF(SmfDirectPlay_text),
         .icon = idICON_i44,
     },
@@ -7964,11 +7964,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EDF0,
+        .sel_num = RAM_DiskSmfDirectPlay_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EDF2,
-        .aicok = 0x0003EDF4,
+        .paintok = RAM_DiskSmfDirectPlay_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskSmfDirectPlay_PsFileNameBox_AicOk,
     },
 
     .DiskSmfDirectPlay_PsFileNameBox_2 = {
@@ -7987,11 +7987,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSmfMedleyFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EDF6,
+        .sel_num = RAM_DiskSmfDirectPlay_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EDF8,
-        .aicok = 0x0003EDFA,
+        .paintok = RAM_DiskSmfDirectPlay_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskSmfDirectPlay_PsFileNameBox_2_AicOk,
     },
 
     .DiskSmfDirectPlay_AcIndexWideES = {
@@ -8105,7 +8105,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6C_e9_stron),
         .stroff = SELF(v6C_e9_stroff),
-        .onoff = 0x0003EDFC,
+        .onoff = RAM_DiskSmfDirectPlay_PsWindowToggle_OnOff,
         .editsw = ES_Left2,
         .onwin = NAKA_VIEW_ID(Cheap_ViewableTable_06C, OBJ_SongNameDPSmfWin),
         .offwin = NAKA_VIEW_ID(Cheap_ViewableTable_06C, OBJ_DiskInfoDPSmfWin),
@@ -8163,7 +8163,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6C_e12_stron),
         .stroff = SELF(v6C_e12_stroff),
-        .onoff = 0x0003EDFE,
+        .onoff = RAM_DiskSmfDirectPlay_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right4,
         .index = 0x000C,
     },
@@ -8183,7 +8183,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6C_e13_stron),
         .stroff = SELF(v6C_e13_stroff),
-        .onoff = 0x0003EE00,
+        .onoff = RAM_DiskSmfDirectPlay_AcMonoIndexToggle_2_OnOff,
         .editsw = ES_Right5,
         .index = 0x0014,
     },
@@ -8337,7 +8337,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(SmfMidiOut_stron),
         .stroff = SELF(SmfMidiOut_stroff),
-        .onoff = 0x0003EE02,
+        .onoff = RAM_SmfMidiOut_OnOff,
         .editsw = ES_Left5,
         .index = 0x0018,
     },
@@ -8406,8 +8406,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003EE04,
-        .child = 0x0003EE08,
+        .parent = RAM_SongNameDPSmfWin_Parent,
+        .child = RAM_SongNameDPSmfWin_Child,
     },
 
     .SongNameDPSmfWin_AcParaStrBox = {
@@ -8425,7 +8425,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_SongNameFunc,
-        .paintok = 0x0003EE0C,
+        .paintok = RAM_SongNameDPSmfWin_AcParaStrBox_PaintOk,
     },
 
     .SongNameDPSmfWin_AcIndexEditSw = {
@@ -8474,8 +8474,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003EE0E,
-        .child = 0x0003EE12,
+        .parent = RAM_DiskInfoDPSmfWin_Parent,
+        .child = RAM_DiskInfoDPSmfWin_Child,
     },
 
     .DiskName_Label_5 = {
@@ -8508,7 +8508,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003EE16,
+        .paintok = RAM_DiskInfoDPSmfWin_AcParaStrBox_PaintOk,
     },
 
     .DiskInfoDPSmfWin_AcParaStrBox_2 = {
@@ -8526,7 +8526,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EE18,
+        .paintok = RAM_DiskInfoDPSmfWin_AcParaStrBox_2_PaintOk,
     },
 
     .DiskInfoDPSmfWin_AcIndexEditSw = {
@@ -8576,7 +8576,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EE1A,
+        .window = RAM_DiskDocDirectPlay_Window,
         .title = SELF(DocDirectPlay_text),
         .icon = idICON_i44,
     },
@@ -8599,11 +8599,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmDocFileNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE1E,
+        .sel_num = RAM_DiskDocDirectPlay_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EE20,
-        .aicok = 0x0003EE22,
+        .paintok = RAM_DiskDocDirectPlay_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskDocDirectPlay_PsFileNameBox_AicOk,
     },
 
     .DiskDocDirectPlay_PsFileNameBox_2 = {
@@ -8622,11 +8622,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmDocMedleyFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE24,
+        .sel_num = RAM_DiskDocDirectPlay_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EE26,
-        .aicok = 0x0003EE28,
+        .paintok = RAM_DiskDocDirectPlay_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskDocDirectPlay_PsFileNameBox_2_AicOk,
     },
 
     .DiskDocDirectPlay_AcIndexEditSw = {
@@ -8850,7 +8850,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6C_e55_stron),
         .stroff = SELF(v6C_e55_stroff),
-        .onoff = 0x0003EE2A,
+        .onoff = RAM_DiskDocDirectPlay_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right4,
         .index = 0x000C,
     },
@@ -8874,7 +8874,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DocDiskNameFunc,
-        .paintok = 0x0003EE2C,
+        .paintok = RAM_DiskDocDirectPlay_AcParaStrBox_PaintOk,
     },
 
     .DiskDocDirectPlay_AcIndexEditSw_5 = {
@@ -8954,7 +8954,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EE2E,
+        .window = RAM_DiskPdDirectPlay_Window,
         .title = SELF(PianoDiscDirectPlay_text),
         .icon = idICON_i44,
     },
@@ -8977,11 +8977,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmPdFileNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE32,
+        .sel_num = RAM_DiskPdDirectPlay_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EE34,
-        .aicok = 0x0003EE36,
+        .paintok = RAM_DiskPdDirectPlay_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskPdDirectPlay_PsFileNameBox_AicOk,
     },
 
     .DiskPdDirectPlay_PsFileNameBox_2 = {
@@ -9000,11 +9000,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmPdMedleyFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE38,
+        .sel_num = RAM_DiskPdDirectPlay_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EE3A,
-        .aicok = 0x0003EE3C,
+        .paintok = RAM_DiskPdDirectPlay_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskPdDirectPlay_PsFileNameBox_2_AicOk,
     },
 
     .DiskPdDirectPlay_AcIndexWideES = {
@@ -9150,7 +9150,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v6C_e72_stron),
         .stroff = SELF(v6C_e72_stroff),
-        .onoff = 0x0003EE3E,
+        .onoff = RAM_DiskPdDirectPlay_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right4,
         .index = 0x000C,
     },
@@ -9314,7 +9314,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EE40,
+        .window = RAM_DiskSongMedley_Window,
         .title = SELF(SongMedley_text),
         .icon = idICON_i56,
     },
@@ -9392,11 +9392,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmDiskMedleySelectFunc,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003EE44,
+        .sel_num = RAM_DiskSongMedley_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EE46,
-        .aicok = 0x0003EE48,
+        .paintok = RAM_DiskSongMedley_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskSongMedley_PsFileNameBox_AicOk,
     },
 
     .DiskSongMedley_PsFileNameBox_2 = {
@@ -9415,11 +9415,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmDiskMedley2Func,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE4A,
+        .sel_num = RAM_DiskSongMedley_PsFileNameBox_2_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EE4C,
-        .aicok = 0x0003EE4E,
+        .paintok = RAM_DiskSongMedley_PsFileNameBox_2_PaintOk,
+        .aicok = RAM_DiskSongMedley_PsFileNameBox_2_AicOk,
     },
 
     .DiskSongMedley_PsFileNameBox_3 = {
@@ -9438,11 +9438,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmDiskMedley1Func,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE50,
+        .sel_num = RAM_DiskSongMedley_PsFileNameBox_3_SelNum,
         .dial = 0x0000,
         .auto_inc = 0x0000,
-        .paintok = 0x0003EE52,
-        .aicok = 0x0003EE54,
+        .paintok = RAM_DiskSongMedley_PsFileNameBox_3_PaintOk,
+        .aicok = RAM_DiskSongMedley_PsFileNameBox_3_AicOk,
     },
 
     .DiskName_Label_6 = {
@@ -9475,7 +9475,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003EE56,
+        .paintok = RAM_SongMedleyDiskName_PaintOk,
     },
 
     .SongMedleyDiskInfo = {
@@ -9493,7 +9493,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EE58,
+        .paintok = RAM_SongMedleyDiskInfo_PaintOk,
     },
 
     .DiskSongMedley_AcIndexEditSw_3 = {
@@ -9606,7 +9606,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v77_e16_stron),
         .stroff = SELF(v77_e16_stroff),
-        .onoff = 0x0003EE5A,
+        .onoff = RAM_DiskSongMedley_AcMonoIndexToggle_OnOff,
         .editsw = ES_Right4,
         .index = 0x000C,
     },
@@ -9626,7 +9626,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v77_e17_stron),
         .stroff = SELF(v77_e17_stroff),
-        .onoff = 0x0003EE5C,
+        .onoff = RAM_DiskSongMedley_AcMonoIndexToggle_2_OnOff,
         .editsw = ES_Right5,
         .index = 0x000E,
     },
@@ -9693,7 +9693,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EE5E,
+        .window = RAM_DiskUtility_Window,
         .title = SELF(DiskTools_text),
         .icon = idICON_i148,
     },
@@ -9770,7 +9770,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right5,
-        .selected = 0x0003EE62,
+        .selected = RAM_Smf_AcTitleMenu_2_Selected,
         .str = SELF(Smf_text_2),
         .title = TITLE_DKUTSMF,
         .icon = idICON_None,
@@ -9874,7 +9874,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003EE64,
+        .selected = RAM_DiskUtility_AcTitleMenu_Selected,
         .str = SELF(w178_text),
         .title = TITLE_DKUTFRMT,
         .icon = idICON_None,
@@ -9912,7 +9912,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right2,
-        .selected = 0x0003EE66,
+        .selected = RAM_DiskUtility_AcScreenMenu_Selected,
         .str = SELF(field_44fe),
         .screen = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_FileRename),
         .icon = idICON_None,
@@ -9970,7 +9970,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left2,
-        .selected = 0x0003EE68,
+        .selected = RAM_COPY_AcScreenMenu_Selected,
         .str = SELF(COPY_str),
         .screen = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_FileCopy),
         .icon = idICON_None,
@@ -9993,7 +9993,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003EE6A,
+        .paintok = RAM_DiskUtility_AcParaStrBox_PaintOk,
     },
 
     .DiskUtility_AcParaStrBox_2 = {
@@ -10011,7 +10011,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EE6C,
+        .paintok = RAM_DiskUtility_AcParaStrBox_2_PaintOk,
     },
 
     .DiskUtility_PsFileNameBox = {
@@ -10030,11 +10030,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmFileNameFunc,
         .column = 0x0002,
         .row = 0x000A,
-        .sel_num = 0x0003EE6E,
+        .sel_num = RAM_DiskUtility_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EE70,
-        .aicok = 0x0003EE72,
+        .paintok = RAM_DiskUtility_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskUtility_PsFileNameBox_AicOk,
     },
 
     .WaitWinCtl = {
@@ -10061,7 +10061,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKUT,
-        .window = 0x0003EE74,
+        .window = RAM_FileRename_Window,
     },
 
     .FileRename_VwScreenTitle = {
@@ -10127,7 +10127,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EE78,
+        .window = RAM_DiskFormat_Window,
         .title = SELF(FloppyDiskFormat_text),
         .icon = idICON_i148,
     },
@@ -10151,7 +10151,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EE7C,
+        .window = RAM_DiskUtilitySMF_Window,
         .title = SELF(SmfDiskTools_text),
         .icon = idICON_i148,
     },
@@ -10173,7 +10173,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_RightJustify,
         .editsw = ES_Right5,
-        .selected = 0x0003EE80,
+        .selected = RAM_Tech_AcTitleMenu_2_Selected,
         .str = SELF(Tech_text_2),
         .title = TITLE_DKUT,
         .icon = idICON_None,
@@ -10297,11 +10297,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FmmSmfFileNameFunc,
         .column = 0x0001,
         .row = 0x000A,
-        .sel_num = 0x0003EE82,
+        .sel_num = RAM_DiskUtilitySMF_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EE84,
-        .aicok = 0x0003EE86,
+        .paintok = RAM_DiskUtilitySMF_PsFileNameBox_PaintOk,
+        .aicok = RAM_DiskUtilitySMF_PsFileNameBox_AicOk,
     },
 
     .DiskUtilitySMF_PsWindowToggle = {
@@ -10315,7 +10315,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .font = idCHARA1,
         .stron = SELF(v7B_e34_stron),
         .stroff = SELF(v7B_e34_stroff),
-        .onoff = 0x0003EE88,
+        .onoff = RAM_DiskUtilitySMF_PsWindowToggle_OnOff,
         .editsw = ES_Left2,
         .onwin = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_SongNameWin),
         .offwin = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_DiskInfoWin),
@@ -10341,7 +10341,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003EE8A,
+        .selected = RAM_DiskUtilitySMF_AcTitleMenu_Selected,
         .str = SELF(w189_text),
         .title = TITLE_DKUTFRMT,
         .icon = idICON_None,
@@ -10412,7 +10412,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right2,
-        .selected = 0x0003EE8C,
+        .selected = RAM_DiskUtilitySMF_AcScreenMenu_Selected,
         .str = SELF(field_49ce),
         .screen = NAKA_VIEW_ID(Cheap_ViewableTable_07B, OBJ_FileRenameSMF),
         .icon = idICON_None,
@@ -10475,8 +10475,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003EE8E,
-        .child = 0x0003EE92,
+        .parent = RAM_DiskInfoWin_Parent,
+        .child = RAM_DiskInfoWin_Child,
     },
 
     .DiskName_Label_8 = {
@@ -10509,7 +10509,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_LeftJustify,
         .main_func = NAKA_MAINFUNC_DiskNameFunc,
-        .paintok = 0x0003EE96,
+        .paintok = RAM_DiskInfoWin_AcParaStrBox_PaintOk,
     },
 
     .DiskInfoWin_AcParaStrBox_2 = {
@@ -10527,7 +10527,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_DiskInfoFunc,
-        .paintok = 0x0003EE98,
+        .paintok = RAM_DiskInfoWin_AcParaStrBox_2_PaintOk,
     },
 
     /* ==== VIEW OBJ_SongNameWin: Window, the top of an object tree that no title shows
@@ -10543,8 +10543,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003EE9A,
-        .child = 0x0003EE9E,
+        .parent = RAM_SongNameWin_Parent,
+        .child = RAM_SongNameWin_Child,
     },
 
     .SongNameWin_AcParaStrBox = {
@@ -10562,7 +10562,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_SongNameFunc,
-        .paintok = 0x0003EEA2,
+        .paintok = RAM_SongNameWin_AcParaStrBox_PaintOk,
     },
 
     /* ==== VIEW OBJ_DiskFormatNamingWin: Window, the top of an object tree that no title shows
@@ -10578,8 +10578,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003EEA4,
-        .child = 0x0003EEA8,
+        .parent = RAM_DiskFormatNamingWin_Parent,
+        .child = RAM_DiskFormatNamingWin_Child,
     },
 
     .DiskFormatNamingWin_IvNaming = {
@@ -10651,8 +10651,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003EEAC,
-        .child = 0x0003EEB0,
+        .parent = RAM_DiskFormatSureWin_Parent,
+        .child = RAM_DiskFormatSureWin_Child,
     },
 
     .DiskFormatSureWin_VwBox = {
@@ -10800,8 +10800,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003EEB4,
-        .child = 0x0003EEB8,
+        .parent = RAM_DiskFormatSelectWin_Parent,
+        .child = RAM_DiskFormatSelectWin_Child,
     },
 
     .DiskFormatSelectWin_IvMainEditSw = {
@@ -10845,7 +10845,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right4,
-        .selected = 0x0003EEBC,
+        .selected = RAM_KByteFormatDd_VwMenuBox_Selected,
         .str = SELF(KByteFormatDd_str),
         .icon = idICON_None,
     },
@@ -10867,7 +10867,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right3,
-        .selected = 0x0003EEBE,
+        .selected = RAM_MByteFormatHd_VwMenuBox_Selected,
         .str = SELF(MByteFormatHd_str),
         .icon = idICON_None,
     },
@@ -10887,7 +10887,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKUT,
-        .window = 0x0003EEC0,
+        .window = RAM_FileCopy_Window,
     },
 
     .FileCopy_VwScreenTitle = {
@@ -10953,7 +10953,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .main_func = NAKA_MAINFUNC_CurFileNameFunc,
-        .paintok = 0x0003EEC4,
+        .paintok = RAM_FileCopy_AcParaStrBox_PaintOk,
     },
 
     .From_Label_2 = {
@@ -11024,11 +11024,11 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .main_func = NAKA_MAINFUNC_FileCopyFunc,
         .column = 0x0001,
         .row = 0x0001,
-        .sel_num = 0x0003EEC6,
+        .sel_num = RAM_FileCopy_PsFileNameBox_SelNum,
         .dial = 0x0001,
         .auto_inc = 0x0001,
-        .paintok = 0x0003EEC8,
-        .aicok = 0x0003EECA,
+        .paintok = RAM_FileCopy_PsFileNameBox_PaintOk,
+        .aicok = RAM_FileCopy_PsFileNameBox_AicOk,
     },
 
     /* ==== VIEW OBJ_FileRenameSMF: Screen, the top of an object tree that no title shows
@@ -11044,7 +11044,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKUTSMF,
-        .window = 0x0003EECC,
+        .window = RAM_FileRenameSMF_Window,
     },
 
     .FileRenameSMF_VwScreenTitle = {
@@ -11108,8 +11108,8 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0001,
-        .parent = 0x0003EED0,
-        .child = 0x0003EED4,
+        .parent = RAM_DiskDeleteSureWin_Parent,
+        .child = RAM_DiskDeleteSureWin_Child,
     },
 
     .DiskDeleteSureWin_VwBox = {
@@ -11261,7 +11261,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKUT,
-        .window = 0x0003EED8,
+        .window = RAM_DiskDeleteSureScr_Window,
     },
 
     .DeleteSure_Label = {
@@ -11292,7 +11292,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_DKSV,
-        .window = 0x0003EEDC,
+        .window = RAM_DiskSaveSureScr_Window,
     },
 
     .OverwriteSure_Label = {
@@ -11325,7 +11325,7 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .color = CL_Gray,
         .border = BD_None,
         .exit = TITLE_DKMENU,
-        .window = 0x0003EEE0,
+        .window = RAM_DiskSetup_Window,
         .title = SELF(Preferences_text_2),
         .icon = idICON_i149,
     },
@@ -11369,9 +11369,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .length = 0x000E,
         .editsw = ES_Left2,
         .dial = 0x0001,
-        .selected = 0x0003EEE4,
+        .selected = RAM_DiskSetup_AcRamEditBox_Selected,
         .func = NAKA_APFUNC_JumpInsertFunc,
-        .data = 0x0003EEE6,
+        .data = RAM_DiskSetup_AcRamEditBox_Value,
     },
 
     .v7E_e2_caption = ALIGNED_STRING("DISK INSERT OPTION :"),
@@ -11394,9 +11394,9 @@ const naka_disk_menu_file_io_t naka_disk_menu_file_io_data
         .length = 0x000B,
         .editsw = ES_Left4,
         .dial = 0x0001,
-        .selected = 0x0003EEEA,
+        .selected = RAM_DiskSetup_AcBitEditBox_Selected,
         .func = NAKA_APFUNC_FilePriorityFunc,
-        .data = 0x0003EEEC,
+        .data = RAM_DiskSetup_AcBitEditBox_Value,
     },
 
     .v7E_e3_caption = ALIGNED_STRING("FILE TYPE PRIORITY :"),

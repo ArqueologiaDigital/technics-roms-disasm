@@ -58,6 +58,7 @@ import gen_naka_gui_headers as H         # noqa: E402
 LLVM = os.path.expanduser('~/compartilhado/llvm-project/build/bin')
 NONE = 0xFFFF
 NUM = re.compile(r'^-?(0x[0-9A-Fa-f]+|\d+)$')
+RAM_LETTERS = set('mnopqrs')        # pBool .. pUlong: the address of the widget's live-value cell
 LINKS = ('super', 'sub', 'next', 'prev')
 
 
@@ -74,6 +75,10 @@ class Names:
                 if re.match(r'^[A-Za-z_]\w*$', n):
                     d.setdefault(v, n)
             self.prop[ch] = d
+        self.cells = {}           # RAM address -> cell name (naka_ram_cells.h)
+        txt = G.read(os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets', 'naka_ram_cells.h'))
+        for n, v in re.findall(r'^#define RAM_(\w+)\s+(0x[0-9A-F]+)u', txt, re.M):
+            self.cells.setdefault(int(v, 16), n)
         self.ids = {}             # prefix -> {value: name}
         txt = G.read(os.path.join(ROOT, 'v10', 'maincpu', 'ui_widgets', 'naka_ids.h'))
         for n, v in re.findall(r'^#define (\w+)\s+(0x[0-9A-F]+)u', txt, re.M):
@@ -245,6 +250,42 @@ def enum_block(f, slot, names, tabs, glob_index, nm):
     return '\n'.join(lines) + '\n'
 
 
+def class_ids_elsewhere(txt, nm, stats):
+    """class ids outside the typed records, where the position says it is a class id:
+    a Class descriptor row `{ NAKA_ADDR(<x>Proc), <parent class>, ...`, a `.classdef_*_parent`
+    member, and a positional record initializer `.<m> = { <class>, ...` whose struct type
+    starts with a `class_` member."""
+    def cls(v):
+        n = nm.cls_by_id.get(int(v, 16))
+        return 'NAKA_CLASS(%s)' % n if n else None
+
+    def row(m):
+        c = cls(m.group(2))
+        if not c:
+            return m.group(0)
+        stats['class ids (tables)'] = stats.get('class ids (tables)', 0) + 1
+        return m.group(1) + c
+    txt = re.sub(r'(\{ NAKA_ADDR\(\w+\), )(0x016[0-9A-Fa-f]{5})(?=,)', row, txt)
+    txt = re.sub(r'^(    \.classdef_\w+_parent = )(0x016[0-9A-Fa-f]{5})(?=,$)', row, txt, flags=re.M)
+    txt = re.sub(r'(\.proc = NAKA_ADDR\(\w+\), \.(?:parent|base_class) = )(0x016[0-9A-Fa-f]{5})(?=,)', row, txt)
+    starts_with_class = set()
+    for mm in re.finditer(r'typedef struct __attribute__\(\(packed\)\) \{\n\s+uint32_t class_;[^{}]*?\} (\w+);', txt):
+        starts_with_class.add(mm.group(1))
+    members = {}
+    for mm in re.finditer(r'^\s+(\w+_t) (\w+);', txt, re.M):
+        members[mm.group(2)] = mm.group(1)
+
+    def pos(m):
+        if members.get(m.group(2)) not in starts_with_class:
+            return m.group(0)
+        c = cls(m.group(4))
+        if not c:
+            return m.group(0)
+        stats['class ids (positional)'] = stats.get('class ids (positional)', 0) + 1
+        return m.group(1) + c
+    return re.sub(r'^(    \.((\w+)) = \{ )(0x016[0-9A-Fa-f]{5})(?=,)', pos, txt, flags=re.M)
+
+
 # ------------------------------------------------------------------ typedefs
 def drop_local_typedefs(txt, generated):
     """remove `naka_cls_X_t` typedefs (and their "NAKA class X" comment) that naka_classes.h
@@ -294,8 +335,11 @@ def drop_local_typedefs(txt, generated):
 def rewrite(path, nm, tabs, glob_index, letters, generated):
     f = G.CFile(path)
     if not f.records:
-        txt, dropped, kept = drop_local_typedefs(f.text, generated)
-        return (txt if dropped else None), {'typedefs dropped': dropped}
+        st = {}
+        txt = class_ids_elsewhere(f.text, nm, st)
+        txt, dropped, kept = drop_local_typedefs(txt, generated)
+        st['typedefs dropped'] = dropped
+        return (txt if txt != f.text else None), st
     txt = f.text
     stats = dict(records=len(f.records))
     names = enum_names(f, tabs, glob_index)
@@ -323,6 +367,9 @@ def rewrite(path, nm, tabs, glob_index, letters, generated):
                 if tgt:
                     t = tabs.t.get(x >> 16)
                     new = 'NAKA_VIEW_ID(%s, %s)' % (t['label'] if t else 'ViewTable_%03X' % (x >> 16), tgt)
+            elif letter in RAM_LETTERS and NUM.match(v.strip()):
+                c = nm.cells.get(int(v, 0))
+                new = 'RAM_' + c if c else None
             elif letter:
                 new = field_value(nm, letter, fname, v)
             if new is None or new == v:
@@ -332,14 +379,30 @@ def rewrite(path, nm, tabs, glob_index, letters, generated):
         return FIELDSUB.sub(fix_field, m.group(0))
 
     txt = G.BLOCK.sub(fix_block, txt)
-    # the object enums, before the initializer
-    if not re.search(r'^enum \w+_objects \{', txt, re.M):
-        blocks = [enum_block(f, s, names[s], tabs, glob_index, nm) for s in sorted(names)]
-        mm = re.search(r'^const \w+ \w+\n    __attribute__', txt, re.M)
-        if not mm:
-            raise SystemExit('%s: no initializer found' % path)
-        sec = ('/* ── Object tables: the element names the records link by ─────────── */\n\n'
-               + '\n'.join(blocks) + '\n')
+    txt = class_ids_elsewhere(txt, nm, stats)
+    # rename OBJ_ constants whose name changed (e.g. a record outside the C sources that now
+    # has a label), then (re)write the object-table section before the initializer
+    ren = {}
+    for o, (sl, k) in f.obj_index.items():
+        nn = names.get(sl, [])
+        if k < len(nn) and nn[k] != o:
+            ren[o] = nn[k]
+    if ren:
+        for i, o in enumerate(sorted(ren)):
+            txt = re.sub(r'\b%s\b' % re.escape(o), '@@REN%d@@' % i, txt)
+        for i, o in enumerate(sorted(ren)):
+            txt = txt.replace('@@REN%d@@' % i, ren[o])
+        stats['renamed'] = len(ren)
+    blocks = [enum_block(f, s_, names[s_], tabs, glob_index, nm) for s_ in sorted(names)]
+    sec = ('/* ── Object tables: the element names the records link by ─────────── */\n\n'
+           + '\n'.join(blocks) + '\n')
+    mm = re.search(r'^const \w+ \w+\n    __attribute__', txt, re.M)
+    if not mm:
+        raise SystemExit('%s: no initializer found' % path)
+    st0 = txt.find('/* ── Object tables: the element names the records link by')
+    if 0 <= st0 < mm.start():
+        txt = txt[:st0] + sec + txt[mm.start():]
+    else:
         txt = txt[:mm.start()] + sec + txt[mm.start():]
     txt, dropped, kept = drop_local_typedefs(txt, generated)
     stats['typedefs dropped'] = dropped

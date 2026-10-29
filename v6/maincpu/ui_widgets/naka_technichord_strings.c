@@ -11068,31 +11068,31 @@ const naka_technichord_strings_t naka_technichord_strings_data
 
     .win_str = "win",
 
-    .classdef_165_0 = { .proc = NAKA_ADDR(PsFileNameBoxProc), .parent = 0x01600011, .allsize = 58, .selfsize = 30, .name = SELF(PsFileNameBox_name), .propdata = SELF(PsFileNameBox_code), .propname = SELF(PtrTbl_UiWidgetProps_EA0CE8) },
+    .classdef_165_0 = { .proc = NAKA_ADDR(PsFileNameBoxProc), .parent = NAKA_CLASS(VwBox), .allsize = 58, .selfsize = 30, .name = SELF(PsFileNameBox_name), .propdata = SELF(PsFileNameBox_code), .propname = SELF(PtrTbl_UiWidgetProps_EA0CE8) },
 
-    .classdef_165_1 = { .proc = NAKA_ADDR(PsWindowToggleProc), .parent = 0x01600026, .allsize = 52, .selfsize = 12, .name = SELF(PsWindowToggle_name), .propdata = SELF(PsWindowToggle_code), .propname = SELF(ptrs_276) },
+    .classdef_165_1 = { .proc = NAKA_ADDR(PsWindowToggleProc), .parent = NAKA_CLASS(PsToggleBox), .allsize = 52, .selfsize = 12, .name = SELF(PsWindowToggle_name), .propdata = SELF(PsWindowToggle_code), .propname = SELF(ptrs_276) },
 
-    .classdef_165_2 = { .proc = NAKA_ADDR(AcTtlJgBoxProc), .parent = 0x0160003D, .allsize = 54, .selfsize = 4, .name = SELF(AcTtlJgBox_name), .propdata = SELF(AcTtlJgBox_code), .propname = SELF(main_func_str_3_ptr) },
+    .classdef_165_2 = { .proc = NAKA_ADDR(AcTtlJgBoxProc), .parent = NAKA_CLASS(VwMenuBox), .allsize = 54, .selfsize = 4, .name = SELF(AcTtlJgBox_name), .propdata = SELF(AcTtlJgBox_code), .propname = SELF(main_func_str_3_ptr) },
 
-    .classdef_165_3 = { .proc = NAKA_ADDR(AcParaStrBoxProc), .parent = 0x01600012, .allsize = 44, .selfsize = 8, .name = SELF(AcParaStrBox_name), .propdata = SELF(AcParaStrBox_code), .propname = SELF(ptrs_277) },
+    .classdef_165_3 = { .proc = NAKA_ADDR(AcParaStrBoxProc), .parent = NAKA_CLASS(PsParaBox), .allsize = 44, .selfsize = 8, .name = SELF(AcParaStrBox_name), .propdata = SELF(AcParaStrBox_code), .propname = SELF(ptrs_277) },
 
-    .classdef_165_4 = { .proc = NAKA_ADDR(AcFileSfxBoxProc), .parent = 0x01600010, .allsize = 34, .selfsize = 12, .name = SELF(AcFileSfxBox_name), .propdata = SELF(AcFileSfxBox_code), .propname = SELF(PtrTbl_UiWidgetProps_EA0DC0) },
+    .classdef_165_4 = { .proc = NAKA_ADDR(AcFileSfxBoxProc), .parent = NAKA_CLASS(Viewable), .allsize = 34, .selfsize = 12, .name = SELF(AcFileSfxBox_name), .propdata = SELF(AcFileSfxBox_code), .propname = SELF(PtrTbl_UiWidgetProps_EA0DC0) },
 
-    .classdef_165_5 = { .proc = NAKA_ADDR(AcMonoIndexToggleProc), .parent = 0x01600026, .allsize = 42, .selfsize = 2, .name = SELF(AcMonoIndexToggle_name), .propdata = SELF(AcMonoIndexToggle_code), .propname = SELF(index_str_ptr) },
+    .classdef_165_5 = { .proc = NAKA_ADDR(AcMonoIndexToggleProc), .parent = NAKA_CLASS(PsToggleBox), .allsize = 42, .selfsize = 2, .name = SELF(AcMonoIndexToggle_name), .propdata = SELF(AcMonoIndexToggle_code), .propname = SELF(index_str_ptr) },
 
-    .classdef_165_6 = { .proc = NAKA_ADDR(IvOneShotTimerProc), .parent = 0x01600027, .allsize = 26, .selfsize = 4, .name = SELF(IvOneShotTimer_name), .propdata = SELF(IvOneShotTimer_code), .propname = SELF(main_func_str_6_ptr) },
+    .classdef_165_6 = { .proc = NAKA_ADDR(IvOneShotTimerProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 26, .selfsize = 4, .name = SELF(IvOneShotTimer_name), .propdata = SELF(IvOneShotTimer_code), .propname = SELF(main_func_str_6_ptr) },
 
-    .classdef_165_7 = { .proc = NAKA_ADDR(VwScreenTitleProc), .parent = 0x01600011, .allsize = 38, .selfsize = 10, .name = SELF(classdef_165_0_name_3), .propdata = SELF(XbG_name), .propname = SELF(ptrs_279) },
+    .classdef_165_7 = { .proc = NAKA_ADDR(VwScreenTitleProc), .parent = NAKA_CLASS(VwBox), .allsize = 38, .selfsize = 10, .name = SELF(classdef_165_0_name_3), .propdata = SELF(XbG_name), .propname = SELF(ptrs_279) },
 
-    .classdef_165_8 = { .proc = NAKA_ADDR(ArrowProc), .parent = 0x01600010, .allsize = 32, .selfsize = 10, .name = SELF(Arrow_code), .propdata = SELF(classdef_165_0_propdata_3), .propname = SELF(PtrTbl_UiWidgetProps_EA0E32) },
+    .classdef_165_8 = { .proc = NAKA_ADDR(ArrowProc), .parent = NAKA_CLASS(Viewable), .allsize = 32, .selfsize = 10, .name = SELF(Arrow_code), .propdata = SELF(classdef_165_0_propdata_3), .propname = SELF(PtrTbl_UiWidgetProps_EA0E32) },
 
-    .classdef_165_9 = { .proc = NAKA_ADDR(IvIndexSwCtrlProc), .parent = 0x01600027, .allsize = 32, .selfsize = 10, .name = SELF(classdef_165_0_name_2), .propdata = SELF(classdef_165_0_propdata_2), .propname = SELF(PtrTbl_UiWidgetProps_EA0E7A) },
+    .classdef_165_9 = { .proc = NAKA_ADDR(IvIndexSwCtrlProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 32, .selfsize = 10, .name = SELF(classdef_165_0_name_2), .propdata = SELF(classdef_165_0_propdata_2), .propname = SELF(PtrTbl_UiWidgetProps_EA0E7A) },
 
-    .classdef_165_10 = { .proc = NAKA_ADDR(AcRotStrBoxProc), .parent = 0x01600012, .allsize = 48, .selfsize = 12, .name = SELF(AcRotStrBox_name), .propdata = SELF(AcRotStrBox_code), .propname = SELF(PtrTbl_UiWidgetProps_EA0EC2) },
+    .classdef_165_10 = { .proc = NAKA_ADDR(AcRotStrBoxProc), .parent = NAKA_CLASS(PsParaBox), .allsize = 48, .selfsize = 12, .name = SELF(AcRotStrBox_name), .propdata = SELF(AcRotStrBox_code), .propname = SELF(PtrTbl_UiWidgetProps_EA0EC2) },
 
-    .classdef_165_11 = { .proc = NAKA_ADDR(IvIndexSwDelayProc), .parent = 0x01600027, .allsize = 30, .selfsize = 8, .name = SELF(classdef_165_0_name), .propdata = SELF(classdef_165_0_propdata), .propname = SELF(PtrTbl_UiWidgetProps_EA0EF8) },
+    .classdef_165_11 = { .proc = NAKA_ADDR(IvIndexSwDelayProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 30, .selfsize = 8, .name = SELF(classdef_165_0_name), .propdata = SELF(classdef_165_0_propdata), .propname = SELF(PtrTbl_UiWidgetProps_EA0EF8) },
 
-    .classdef_165_12 = { .proc = NAKA_ADDR(IvWaitWinCtlProc), .parent = 0x01600027, .allsize = 26, .selfsize = 4, .name = SELF(IvWaitWinCtl_name), .propdata = SELF(IvWaitWinCtl_code), .propname = SELF(win_str_ptr) },
+    .classdef_165_12 = { .proc = NAKA_ADDR(IvWaitWinCtlProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 26, .selfsize = 4, .name = SELF(IvWaitWinCtl_name), .propdata = SELF(IvWaitWinCtl_code), .propname = SELF(win_str_ptr) },
 
     .classrun_165_x1B130 = 0x00000000,
 

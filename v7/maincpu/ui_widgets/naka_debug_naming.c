@@ -1058,9 +1058,9 @@ enum Root_ViewableTable_000_objects {
       OBJ_NamingWindow_AcIndexEditSw_6,             /* 20 AcIndexEditSw */
       OBJ_Position_Label,                           /* 21 Label */
       OBJ_NamingCursorBox,                          /* 22 PsCursorBox "NamingCursorBox" */
-    OBJ_s000_e23,                                   /* 23 ?, record outside the C sources (0x03F160) */
-    OBJ_s000_e24,                                   /* 24 ?, record outside the C sources (0x03F18C) */
-    OBJ_s000_e25,                                   /* 25 ?, record outside the C sources (0x03F1B8) */
+      OBJ_Root_NamingUpperCaseToggleView,           /* 23 AcIndexToggle, RAM record initialised from the work-RAM image (Root_NamingUpperCaseToggleView) */
+      OBJ_Root_NamingLowerCaseToggleView,           /* 24 AcIndexToggle, RAM record initialised from the work-RAM image (Root_NamingLowerCaseToggleView) */
+      OBJ_Root_NamingSymbolToggleView,              /* 25 AcIndexToggle, RAM record initialised from the work-RAM image (Root_NamingSymbolToggleView) */
       OBJ_NamingWindow_AcIndexEditSw_7,             /* 26 AcIndexEditSw */
       OBJ_NamingWindow_AcIndexEditSw_8,             /* 27 AcIndexEditSw */
       OBJ_NamingWindow_AcIndexEditSw_9,             /* 28 AcIndexEditSw */
@@ -1139,7 +1139,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right5,
-        .selected = 0x0003F0B0,
+        .selected = RAM_CheckTitle_AcTitleMenu_Selected,
         .str = SELF(CheckTitle_text),
         .title = TITLE_CHECK,
         .icon = idICON_Default,
@@ -1173,7 +1173,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left5,
-        .selected = 0x0003F0B2,
+        .selected = RAM_DebugWindow_AcWindowMenu_Selected,
         .str = SELF(DebugWindow_str),
         .window = NAKA_VIEW_ID(Root_ViewableTable_000, OBJ_DebugWindow),
         .icon = idICON_Default,
@@ -1192,7 +1192,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F0B4,
+        .window = RAM_ClipBoard_Window,
     },
 
     /* ==== VIEW OBJ_DebugWindow: Window, the top of an object tree that no title shows
@@ -1208,8 +1208,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_Green,
         .border = BD_EditSwitch,
         .modal = 0x0001,
-        .parent = 0x0003F0B8,
-        .child = 0x0003F0BC,
+        .parent = RAM_DebugWindow_Parent,
+        .child = RAM_DebugWindow_Child,
     },
 
     .DebugTime_Label = {
@@ -1242,8 +1242,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .editsw = ES_Left1,
-        .selected = 0x0003F0C0,
-        .page = 0x0003F0C2,
+        .selected = RAM_DebugWindow_DbDebugMenu_Selected,
+        .page = RAM_DebugWindow_DbDebugMenu_Page,
     },
 
     /* ==== VIEW OBJ_NamingWindow: AcNamingWindow, the top of an object tree that no title shows
@@ -1259,8 +1259,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_WallPattern,
         .border = BD_3D_UP2,
         .modal = 0x0000,
-        .parent = 0x0003F0C4,
-        .child = 0x0003F0C8,
+        .parent = RAM_NamingWindow_Parent,
+        .child = RAM_NamingWindow_Child,
     },
 
     .NamingWindow_AcIndexEditSw = {
@@ -1450,7 +1450,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .class_ = NAKA_CLASS(PsCursorBox),
         .super = OBJ_NamingWindow,
         .sub = NAKA_NONE,
-        .next = OBJ_s000_e23,
+        .next = OBJ_Root_NamingUpperCaseToggleView,
         .prev = OBJ_Position_Label,
         .flag = VF_Const,
         .rect = NAKA_XYWH(44, 72, 232, 32),
@@ -1460,7 +1460,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .font = idCHARA5,
         .fontcolor = CL_White,
         .align = AL_Center,
-        .cursor = 0x0003F0CC,
+        .cursor = RAM_NamingCursorBox_Cursor,
     },
 
     .ABC_str = "ABC",
@@ -1480,7 +1480,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .super = OBJ_NamingWindow,
         .sub = NAKA_NONE,
         .next = OBJ_NamingWindow_AcIndexEditSw_8,
-        .prev = OBJ_s000_e25,
+        .prev = OBJ_Root_NamingSymbolToggleView,
         .flag = VF_Const,
         .rect = NAKA_XYWH(204, 216, 32, 23),
         .color = CL_Silver,
@@ -1558,8 +1558,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_Transparent,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F0D4,
-        .child = 0x0003F0D8,
+        .parent = RAM_MemoWindow_Parent,
+        .child = RAM_MemoWindow_Child,
     },
 
     .MemoWindow_DbMemo = {
@@ -1585,8 +1585,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_Transparent,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F0DC,
-        .child = 0x0003F0E0,
+        .parent = RAM_TrackSwitchWindow_Parent,
+        .child = RAM_TrackSwitchWindow_Child,
     },
 
     .TrackSwitchWindow_AcTrackSwitch = {
@@ -1598,9 +1598,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(4, 164, 32, 29),
         .track = TR_Track1,
-        .onoff = 0x0003F0E4,
-        .part = 0x0003F0E6,
-        .recplay = 0x0003F0E8,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_2 = {
@@ -1612,9 +1612,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(44, 164, 32, 29),
         .track = TR_Track2,
-        .onoff = 0x0003F0EA,
-        .part = 0x0003F0EC,
-        .recplay = 0x0003F0EE,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_2_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_2_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_2_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_3 = {
@@ -1626,9 +1626,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(84, 164, 32, 29),
         .track = TR_Track3,
-        .onoff = 0x0003F0F0,
-        .part = 0x0003F0F2,
-        .recplay = 0x0003F0F4,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_3_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_3_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_3_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_4 = {
@@ -1640,9 +1640,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(124, 164, 32, 29),
         .track = TR_Track4,
-        .onoff = 0x0003F0F6,
-        .part = 0x0003F0F8,
-        .recplay = 0x0003F0FA,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_4_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_4_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_4_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_5 = {
@@ -1654,9 +1654,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(164, 164, 32, 29),
         .track = TR_Track5,
-        .onoff = 0x0003F0FC,
-        .part = 0x0003F0FE,
-        .recplay = 0x0003F100,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_5_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_5_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_5_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_6 = {
@@ -1668,9 +1668,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(204, 164, 32, 29),
         .track = TR_Track6,
-        .onoff = 0x0003F102,
-        .part = 0x0003F104,
-        .recplay = 0x0003F106,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_6_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_6_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_6_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_7 = {
@@ -1682,9 +1682,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(244, 164, 32, 29),
         .track = TR_Track7,
-        .onoff = 0x0003F108,
-        .part = 0x0003F10A,
-        .recplay = 0x0003F10C,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_7_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_7_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_7_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_8 = {
@@ -1696,9 +1696,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(284, 164, 32, 29),
         .track = TR_Track8,
-        .onoff = 0x0003F10E,
-        .part = 0x0003F110,
-        .recplay = 0x0003F112,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_8_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_8_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_8_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_9 = {
@@ -1710,9 +1710,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(4, 196, 32, 29),
         .track = TR_Track9,
-        .onoff = 0x0003F114,
-        .part = 0x0003F116,
-        .recplay = 0x0003F118,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_9_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_9_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_9_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_10 = {
@@ -1724,9 +1724,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(44, 196, 32, 29),
         .track = TR_Track10,
-        .onoff = 0x0003F11A,
-        .part = 0x0003F11C,
-        .recplay = 0x0003F11E,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_10_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_10_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_10_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_11 = {
@@ -1738,9 +1738,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(84, 196, 32, 29),
         .track = TR_Track11,
-        .onoff = 0x0003F120,
-        .part = 0x0003F122,
-        .recplay = 0x0003F124,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_11_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_11_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_11_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_12 = {
@@ -1752,9 +1752,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(124, 196, 32, 29),
         .track = TR_Track12,
-        .onoff = 0x0003F126,
-        .part = 0x0003F128,
-        .recplay = 0x0003F12A,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_12_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_12_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_12_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_13 = {
@@ -1766,9 +1766,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(164, 196, 32, 29),
         .track = TR_Track13,
-        .onoff = 0x0003F12C,
-        .part = 0x0003F12E,
-        .recplay = 0x0003F130,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_13_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_13_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_13_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_14 = {
@@ -1780,9 +1780,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(204, 196, 32, 29),
         .track = TR_Track14,
-        .onoff = 0x0003F132,
-        .part = 0x0003F134,
-        .recplay = 0x0003F136,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_14_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_14_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_14_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_15 = {
@@ -1794,9 +1794,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(244, 196, 32, 29),
         .track = TR_Track15,
-        .onoff = 0x0003F138,
-        .part = 0x0003F13A,
-        .recplay = 0x0003F13C,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_15_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_15_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_15_RecPlay,
     },
 
     .TrackSwitchWindow_AcTrackSwitch_16 = {
@@ -1808,9 +1808,9 @@ const naka_debug_naming_t naka_debug_naming_data
         .flag = VF_Const,
         .rect = NAKA_XYWH(284, 196, 32, 29),
         .track = TR_Track16,
-        .onoff = 0x0003F13E,
-        .part = 0x0003F140,
-        .recplay = 0x0003F142,
+        .onoff = RAM_TrackSwitchWindow_AcTrackSwitch_16_OnOff,
+        .part = RAM_TrackSwitchWindow_AcTrackSwitch_16_Part,
+        .recplay = RAM_TrackSwitchWindow_AcTrackSwitch_16_RecPlay,
     },
 
     /* ==== VIEW OBJ_MemDumpWindow: Window, the top of an object tree that no title shows
@@ -1826,8 +1826,8 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_Transparent,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F144,
-        .child = 0x0003F148,
+        .parent = RAM_MemDumpWindow_Parent,
+        .child = RAM_MemDumpWindow_Child,
     },
 
     .MemDumpWindow_DbMemoryDump = {
@@ -1838,7 +1838,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .prev = NAKA_NONE,
         .flag = VF_Const,
         .rect = NAKA_XYWH(32, 80, 257, 154),
-        .adr = 0x0003F14C,
+        .adr = RAM_MemDumpWindow_DbMemoryDump_Adr,
     },
 
     /* ==== SCREEN TITLE_CHECK "CHECK TITLE" -- "TT_CHECK", title id 0xFF, function NAKA_MAINFUNC_CheckTitleFunc ====
@@ -1856,7 +1856,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_Blue,
         .border = BD_Single2,
         .exit = TITLE_PS,
-        .window = 0x0003F150,
+        .window = RAM_CheckTitle_Window,
         .title = SELF(CheckTitle_text_2),
         .icon = idICON_Default,
     },
@@ -1889,7 +1889,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Left5,
-        .selected = 0x0003F154,
+        .selected = RAM_Naming_AcScreenMenu_Selected,
         .str = SELF(Naming_str),
         .screen = NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckNaming),
         .icon = idICON_None,
@@ -1912,7 +1912,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .fontcolor = CL_White,
         .align = AL_Center,
         .editsw = ES_Right5,
-        .selected = 0x0003F156,
+        .selected = RAM_Wall_AcScreenMenu_Selected,
         .str = SELF(Wall_str),
         .screen = NAKA_VIEW_ID(Root_ViewableTable_0FF, OBJ_CheckWall),
         .icon = idICON_None,
@@ -1933,7 +1933,7 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_CHECK,
-        .window = 0x0003F158,
+        .window = RAM_CheckNaming_Window,
         .title = SELF(CheckNaming_text),
         .icon = idICON_Default,
     },
@@ -1975,10 +1975,10 @@ const naka_debug_naming_t naka_debug_naming_data
         .color = CL_Red,
         .border = BD_None,
         .exit = TITLE_CHECK,
-        .window = 0x0003F15C,
+        .window = RAM_CheckWall_Window,
     },
 
-    .NakaWidget_CheckTitle_8_IvExitScreen = { 0x01600049, 0x0007, 0xFFFF, 0xFFFF, 0xFFFF, 0x0018, { 0, 0, 31, 31 }, 0x0000, 0x00FF },
+    .NakaWidget_CheckTitle_8_IvExitScreen = { NAKA_CLASS(IvExitScreen), 0x0007, 0xFFFF, 0xFFFF, 0xFFFF, 0x0018, { 0, 0, 31, 31 }, 0x0000, 0x00FF },
 
     .Root_ViewableTable_000 = {
         NAKA_ADDR(NakaWidget_PanelSimulator),

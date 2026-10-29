@@ -295,7 +295,7 @@ enum Murai_ViewableTable_002_objects {
 const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
     __attribute__((section(".text"), used)) = {
 
-    .classdef_161_31_parent = 0x01600034,
+    .classdef_161_31_parent = NAKA_CLASS(TtlScreen),
 
     .classdef_161_31_allsize = 0x002A,
 
@@ -307,15 +307,15 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
 
     .classdef_161_31_propname = NAKA_ADDR(ClassProps_AcFdemoScreen),
 
-    .classdef_161_32 = { .proc = NAKA_ADDR(AcSndEMenuProc), .parent = 0x01600040, .allsize = 54, .selfsize = 0, .name = SELF(AcSndEMenu_name), .propdata = SELF(AcSndEMenu_code), .propname = NAKA_ADDR(ClassProps_AcSndEMenu) },
+    .classdef_161_32 = { .proc = NAKA_ADDR(AcSndEMenuProc), .parent = NAKA_CLASS(AcModeMenu), .allsize = 54, .selfsize = 0, .name = SELF(AcSndEMenu_name), .propdata = SELF(AcSndEMenu_code), .propname = NAKA_ADDR(ClassProps_AcSndEMenu) },
 
-    .classdef_161_33 = { .proc = NAKA_ADDR(AcPleaseWaitProc), .parent = 0x01600012, .allsize = 36, .selfsize = 0, .name = SELF(AcPleaseWait_name), .propdata = SELF(AcPleaseWait_code), .propname = NAKA_ADDR(ClassProps_AcPleaseWait) },
+    .classdef_161_33 = { .proc = NAKA_ADDR(AcPleaseWaitProc), .parent = NAKA_CLASS(PsParaBox), .allsize = 36, .selfsize = 0, .name = SELF(AcPleaseWait_name), .propdata = SELF(AcPleaseWait_code), .propname = NAKA_ADDR(ClassProps_AcPleaseWait) },
 
-    .classdef_161_34 = { .proc = NAKA_ADDR(AcDrawSettingProc), .parent = 0x01600026, .allsize = 44, .selfsize = 4, .name = SELF(AcDrawSetting_name), .propdata = SELF(AcDrawSetting_code), .propname = NAKA_ADDR(ClassProps_AcDrawSetting) },
+    .classdef_161_34 = { .proc = NAKA_ADDR(AcDrawSettingProc), .parent = NAKA_CLASS(PsToggleBox), .allsize = 44, .selfsize = 4, .name = SELF(AcDrawSetting_name), .propdata = SELF(AcDrawSetting_code), .propname = NAKA_ADDR(ClassProps_AcDrawSetting) },
 
-    .classdef_161_35 = { .proc = NAKA_ADDR(AcDrawbarNameProc), .parent = 0x01600012, .allsize = 40, .selfsize = 4, .name = SELF(AcDrawbarName_name), .propdata = SELF(AcDrawbarName_code), .propname = NAKA_ADDR(ClassProps_AcDrawbarName) },
+    .classdef_161_35 = { .proc = NAKA_ADDR(AcDrawbarNameProc), .parent = NAKA_CLASS(PsParaBox), .allsize = 40, .selfsize = 4, .name = SELF(AcDrawbarName_name), .propdata = SELF(AcDrawbarName_code), .propname = NAKA_ADDR(ClassProps_AcDrawbarName) },
 
-    .classdef_161_36 = { .proc = NAKA_ADDR(IvMPverProc), .parent = 0x01600027, .allsize = 22, .selfsize = 0, .name = 0x00E81088, .propdata = 0x00E81086, .propname = NAKA_ADDR(ClassProps_IvMPver) },
+    .classdef_161_36 = { .proc = NAKA_ADDR(IvMPverProc), .parent = NAKA_CLASS(PsInvisibleBox), .allsize = 22, .selfsize = 0, .name = 0x00E81088, .propdata = 0x00E81086, .propname = NAKA_ADDR(ClassProps_IvMPver) },
 
     .classrun_161_x008C = 0x00000000,
 
@@ -737,7 +737,7 @@ const naka_sound_menu_drawbar_t naka_sound_menu_drawbar_data
         .color = CL_Gray,
         .border = BD_Single2,
         .exit = TITLE_PS,
-        .window = 0x0003E660,
+        .window = RAM_Sdmenu_Window,
         .title = SELF(SoundMenu_text),
         .icon = idICON_i19,
     },

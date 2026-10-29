@@ -1708,7 +1708,7 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F642,
+        .window = RAM_vF4_e13_Window,
         .title = SELF(w0_text),
         .icon = idICON_None,
     },
@@ -1729,7 +1729,7 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F646,
+        .window = RAM_TEST2_Window,
         .title = SELF(w1_text),
         .icon = idICON_None,
     },
@@ -1891,8 +1891,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F64A,
-        .child = 0x0003F64E,
+        .parent = RAM_TEST2OKOK_Parent,
+        .child = RAM_TEST2OKOK_Child,
     },
 
     .Ok_Label = {
@@ -1938,8 +1938,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F652,
-        .child = 0x0003F656,
+        .parent = RAM_TEST2NGNG_Parent,
+        .child = RAM_TEST2NGNG_Child,
     },
 
     .No_Label = {
@@ -1985,8 +1985,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F65A,
-        .child = 0x0003F65E,
+        .parent = RAM_TEST2NGOK_Parent,
+        .child = RAM_TEST2NGOK_Child,
     },
 
     .No_Label_3 = {
@@ -2032,8 +2032,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F662,
-        .child = 0x0003F666,
+        .parent = RAM_TEST2OKNG_Parent,
+        .child = RAM_TEST2OKNG_Child,
     },
 
     .Ok_Label_4 = {
@@ -2082,12 +2082,12 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F66A,
+        .window = RAM_TEST3_Window,
         .func = NAKA_APFUNC_DefaultFunction,
         .font = idCHARA1,
         .fontcolor = 0x0043,
-        .nowswno = 0x0003F66E,
-        .oldswno = 0x0003F670,
+        .nowswno = RAM_TEST3_Nowswno,
+        .oldswno = RAM_TEST3_Oldswno,
     },
 
     /* ==== SCREEN TITLE_TEST4 -- "TT_TEST4", title id 0xF7, function NAKA_MAINFUNC_TEST4FUNC ====
@@ -2104,7 +2104,7 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F672,
+        .window = RAM_TEST4_Window,
         .title = SELF(w15_text),
         .icon = idICON_None,
     },
@@ -2159,7 +2159,7 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F676,
+        .window = RAM_TEST5_Window,
         .title = SELF(w17_text),
         .icon = idICON_None,
     },
@@ -2239,8 +2239,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_Red,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F67A,
-        .child = 0x0003F67E,
+        .parent = RAM_TEST51_Parent,
+        .child = RAM_TEST51_Child,
     },
 
     .LcdPanelTest_Label = {
@@ -2271,8 +2271,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_Blue,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F682,
-        .child = 0x0003F686,
+        .parent = RAM_TEST52_Parent,
+        .child = RAM_TEST52_Child,
     },
 
     .LcdPanelTest_Label_2 = {
@@ -2303,8 +2303,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_Green,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F68A,
-        .child = 0x0003F68E,
+        .parent = RAM_TEST53_Parent,
+        .child = RAM_TEST53_Child,
     },
 
     .LcdPanelTest_Label_3 = {
@@ -2335,8 +2335,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F692,
-        .child = 0x0003F696,
+        .parent = RAM_TEST54_Parent,
+        .child = RAM_TEST54_Child,
     },
 
     .LcdPanelTest_Label_4 = {
@@ -2367,8 +2367,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_Black,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F69A,
-        .child = 0x0003F69E,
+        .parent = RAM_TEST55_Parent,
+        .child = RAM_TEST55_Child,
     },
 
     .LcdPanelTest_Label_5 = {
@@ -2399,8 +2399,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_Black,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F6A2,
-        .child = 0x0003F6A6,
+        .parent = RAM_TEST56_Parent,
+        .child = RAM_TEST56_Child,
     },
 
     .TEST56_Frame = {
@@ -3157,7 +3157,7 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F6AA,
+        .window = RAM_TEST6_Window,
         .title = SELF(w68_text),
         .icon = idICON_None,
     },
@@ -3231,8 +3231,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F6AE,
-        .child = 0x0003F6B2,
+        .parent = RAM_TEST6OK_Parent,
+        .child = RAM_TEST6OK_Child,
     },
 
     .MayBeOk_Label = {
@@ -3263,8 +3263,8 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_WallPattern,
         .border = BD_None,
         .modal = 0x0000,
-        .parent = 0x0003F6B6,
-        .child = 0x0003F6BA,
+        .parent = RAM_TEST6NG_Parent,
+        .child = RAM_TEST6NG_Child,
     },
 
     .No_Label_5 = {
@@ -3296,7 +3296,7 @@ const naka_extension_device_t naka_extension_device_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F6BE,
+        .window = RAM_EXT_Window,
     },
 
     .ptrs_0 = {

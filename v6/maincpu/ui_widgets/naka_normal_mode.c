@@ -240,7 +240,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .color = CL_White,
         .border = BD_None,
         .exit = TITLE_PS,
-        .window = 0x0003F3F8,
+        .window = RAM_Normal_Window,
         .title = SELF(Normal_text),
         .icon = idICON_Default,
     },
@@ -262,7 +262,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .color = CL_White,
         .border = BD_Single1,
         .exit = TITLE_PS,
-        .window = 0x0003F3FC,
+        .window = RAM_normal_Window,
         .title = SELF(field_0174),
         .icon = idICON_None,
     },
@@ -489,7 +489,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .fontcolor = CL_Black,
         .align = AL_Center,
         .func = NAKA_APFUNC_GmOnOffFunc,
-        .data = 0x0003F400,
+        .data = RAM_normal_AcLswBox_Value,
     },
 
     .normal_IvWindowPageControl = {
@@ -500,7 +500,7 @@ const naka_normal_mode_t naka_normal_mode_data
         .prev = OBJ_normal_ChordBox,
         .flag = VF_Const | VF_InvisibleBox,
         .rect = NAKA_XYWH(0, 0, 32, 32),
-        .page = 0x0003F402,
+        .page = RAM_normal_IvWindowPageControl_Page,
     },
 
     .normal_FreeSplitBox = {
@@ -593,7 +593,7 @@ const naka_normal_mode_t naka_normal_mode_data
 
     .bytes_0464 = { 0x47, 0x00, 0x60, 0x01, 0x01, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x16, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x1F, 0x00 },
 
-    .NakaWidget_N1 = { 0x01600035, 0xFFFF, 0x0019, 0xFFFF, 0xFFFF, 0x0008, { 0, 127, 319, 236 } },
+    .NakaWidget_N1 = { NAKA_CLASS(Window), 0xFFFF, 0x0019, 0xFFFF, 0xFFFF, 0x0008, { 0, 127, 319, 236 } },
 
 };
 

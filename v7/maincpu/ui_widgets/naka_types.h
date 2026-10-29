@@ -27,6 +27,7 @@
  * scripts/generators/gen_naka_gui_headers.py. */
 #include "naka_classes.h"
 #include "naka_ids.h"
+#include "naka_ram_cells.h"
 
 /* ── Type codes ─────────────────────────────────────────────── */
 

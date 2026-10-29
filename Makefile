@@ -169,6 +169,9 @@ gui-check: rebuilt_ROMs/kn5000_v10_program.llvm.elf
 	python3 scripts/analysis/naka_gui_model.py --check
 	python3 scripts/converters/naka_gui_symbolize.py --check --tree v10
 	python3 scripts/converters/naka_gui_symbolize.py --check --tree v9
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v7
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v6
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree v5
 	python3 scripts/generators/gen_naka_menu_map.py --check
 gui-census:
 	python3 scripts/analysis/naka_gui_census.py
