@@ -156,3 +156,30 @@
 	.byte	\b4, \b5
 	.word	\tune
 .endm
+# A tone record's head (0x54 bytes; the part tone block's descriptor, 0x500CE404 + part *
+# 0x130 +0; TgPartProgramApply 0x4C03893D stores it). After the 16-byte name:
+#   class   +0x10: & 0xC0 picks the note-on path (TgNoteOn 0x4C036832): 0x00/0xC0 melodic,
+#           0x40 table (TgPartToneIsTableClass), 0x80 kit; & 0xCF = 0x81..0x83 kit layers
+#   b11     +0x11: no reader traced
+#   mod_src +0x12: 2-bit mod source fields (TgPartToneModSetupMelodic 0x4C03A3CD)
+#   type    +0x44: low nibble the tone TYPE / LFO group (TgPartEditLfoGroupLoad 0x4C00CF8B,
+#           TgVoiceEgSegParamGet 0x4C03A20F)
+#   b45     +0x45: the flag TgVoiceEgSegParamGet tests for types 0xA/0xB
+# tone_head covers +0x10..+0x12 and tone_type +0x44..+0x45; the bytes between and after,
+# whose readers are not traced, follow as .byte rows with their offsets.
+.macro tone_head class, b11, mod_src
+	.byte	\class, \b11, \mod_src
+.endm
+.macro tone_type type, b45
+	.byte	\type, \b45
+.endm
+# A TABLE tone (class 0x40): the head is 0x27 bytes, then one 3-byte entry per note that
+# TgNoteOnTableTone (0x4C03600D) reads at +0x27 + note x 3: it enables up to two synth
+# layers (0x4C035EAA builds them).
+.macro tone_head_table class, b11, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26
+	.byte	\class, \b11, \b12, \b13, \b14, \b15, \b16, \b17, \b18, \b19, \b1a, \b1b, \b1c, \b1d, \b1e, \b1f
+	.byte	\b20, \b21, \b22, \b23, \b24, \b25, \b26
+.endm
+.macro tone_note a, b, c
+	.byte	\a, \b, \c
+.endm

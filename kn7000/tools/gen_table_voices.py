@@ -43,6 +43,10 @@ for _f in glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..
             WAVE.add(_m.group(1).decode())
 
 HASHES = [  # (D offset of buckets, D offset of descriptor, label, key bytes, payload bytes, reader)
+    (0x00, 0x18, "Tone", 4, 12, "func_4856FC51 / func_48570078 (dir + 0x18): key (MSB<<16 | LSB<<8 | program); "
+                               "the u16 at entry+8 is the tone-record index func_48449525 looks up through "
+                               "the descriptor's +0x04; the other 10 payload bytes are not traced"),
+    (0x04, 0x1C, "Dir1", 4, 4, "a seventh table of the same shape; its reader is not traced"),
     (0x08, 0x20, "ParamBank", 4, 4, "VoiceParamBankLookupInternal 0x48570DF8: key (MSB<<16 | LSB<<8 | program), "
                                     "payload u16 = parameter record index (bit 15 = invalid)"),
     (0x0C, 0x24, "VoiceBank", 4, 4, "VoiceBankLookupInternal 0x4857150D: key (MSB<<16 | LSB<<8 | program), "
@@ -159,8 +163,7 @@ def internal_voice_archive(d, s, e, label, ref):
     Dl = []
     for o in range(0, 0x48, 4):
         Dl.append(f"    .long\t{ref_(u32(c, D + o))}")
-    Dl.append(f"    .long\t0x{u32(c, D + 0x48):08x}\t# +0x48 [INFERENCE] not a pointer")
-    put(D, 0x4C, Dl)
+    put(D, 0x48, Dl)
     for nm, b, ds, mult, nb, ca, cb, ents, kb, pb, size, why in chains:
         if b - ds == 8:   # the ListMap descriptor also carries the two counts (VoiceArchiveCountA/B)
             put(ds, 8, [f"    .word\t{mult}, {nb}, {ca}, {cb}\t# mult, nbuckets, countA, countB"])
@@ -203,9 +206,8 @@ def internal_voice_archive(d, s, e, label, ref):
             r = o + 0x10 + 0x1C * k
             vl.append(f"    .byte\t{hexrow(c[r:r + 0x1C])}\t# sub-record {k}")
         put(o, size, vl)
-    for o in tone:
-        size = 16
-        put(o, size, [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 16])}"])
+    tone_sorted = sorted(tone)
+    tone_next = {o: tone_sorted[i + 1] for i, o in enumerate(tone_sorted[:-1])}
     # ---- parameter records, multisample headers, zone lists ----
     # TgVoiceRoutePtrCalc 0x4C02BE45: key map = base + *(base + param+0) (func_48449DF8),
     # group = keymap[note], zone = (base + param+4) + (param+0 + 4)[group] * (8 if param+8
@@ -260,6 +262,37 @@ def internal_voice_archive(d, s, e, label, ref):
                      for i in range(0, 128, 16)])
         if o in items:
             pos_ = max(pos_, o + items[o][0])
+
+    # ---- tone records (the part tone block's descriptor, TgPartProgramApply 0x4C03893D stores
+    # the func_48449525 result at 0x500CE404 + part * 0x130) ----
+    starts = sorted(items)
+    for o in tone:
+        nxt = min([x for x in starts if x > o] + [tone_next.get(o, L)])
+        size = nxt - o
+        cls = c[o + 0x10]
+        tl = [f"{labels[o]}:", f"    .ascii\t{asc(c[o:o + 16])}"]
+        if cls & 0xC0 == 0x40 and size >= 0x1A7:       # a TABLE tone (TgNoteOnTableTone 0x4C03600D)
+            size = 0x1A7
+            tl.append(f"    tone_head_table\t0x{cls:02x}, {hexrow(c[o + 0x11:o + 0x27])}")
+            for k in range(128):
+                q = o + 0x27 + 3 * k
+                tl.append(f"    tone_note\t0x{c[q]:02x}, 0x{c[q + 1]:02x}, 0x{c[q + 2]:02x}\t# note {k}")
+        elif size >= 0x54 + 0x7A and (size - 0x54) % 0x7A == 0:
+            h = c[o:o + 0x54]
+            tl.append(f"    tone_head\t0x{h[0x10]:02x}, 0x{h[0x11]:02x}, 0x{h[0x12]:02x}")
+            tl.append(f"    .byte\t{hexrow(h[0x13:0x23])}\t# +0x13")
+            tl.append(f"    .byte\t{hexrow(h[0x23:0x33])}\t# +0x23")
+            tl.append(f"    .byte\t{hexrow(h[0x33:0x44])}\t# +0x33")
+            tl.append(f"    tone_type\t0x{h[0x44]:02x}, 0x{h[0x45]:02x}")
+            tl.append(f"    .byte\t{hexrow(h[0x46:0x54])}\t# +0x46")
+            for k in range((size - 0x54) // 0x7A):
+                q = o + 0x54 + 0x7A * k
+                tl.append(f"{labels[o]}_Unit{k}:\t\t# +0x54 + {k} x 0x7A (VoiceModRecFetch 0x4844982A)")
+                for j in range(0, 0x7A, 16):
+                    tl.append(f"    .byte\t{hexrow(c[q + j:q + min(j + 16, 0x7A)])}\t# +0x{j:02x}")
+        else:
+            size = 16
+        put(o, size, tl)
 
     # ---- assemble, passthroughs for the gaps ----
     out = []
