@@ -87,7 +87,18 @@ program-src: tools/gen_program_s.py tools/mn10300_asm.py kn7000.sym kn7000_manua
 # serve the SP7001 table, whose copies are identical; the rest comes from baserom/.
 TABLE_JPGS := $(wildcard src/table/*.jpg src/table/*/*.jpg src/table/*/*.bmp)
 
-build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table.rom
+# The raw pictures (GUI bitmaps, frame pieces, icons, fonts, TCD and USER HP menu
+# pictures) are indexed PNGs in src/table/<subdir>/; tools/table_png.py turns them back
+# into the bytes the table sources .incbin from build/table_png/ (one stamp for all).
+TABLE_PNGS := $(sort $(wildcard src/table/*/*.png))
+# The style data's include files (tools/gen_table_styles.py) and their macros.
+TABLE_INCS := $(wildcard src/table/*.inc src/table/styles/*.s src/table/styles/*/*.s src/table/pads/*.s src/table/voices/*.s)
+build/table_png/.stamp: $(TABLE_PNGS) tools/table_png.py
+	@mkdir -p build/table_png
+	$(PYTHON) tools/table_png.py build --out-dir build/table_png $(TABLE_PNGS)
+	@touch $@
+
+build/kn7000_table.rom: src/table.s $(TABLE_JPGS) $(TABLE_INCS) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table.rom
 	@mkdir -p build
 	$(ASM) src/table.s -I . -o $@
 
@@ -95,7 +106,7 @@ build/kn7000_table.rom: src/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000
 # offsets to labelled segments, names and comments from tools/table_segments.py. The
 # committed files are the result; the build does not need this.
 .PHONY: table-src
-table-src: tools/gen_table_s.py tools/table_segments.py baserom/kn7000_table.rom
+table-src: tools/gen_table_s.py tools/table_segments.py tools/table_png.py tools/gen_table_styles.py baserom/kn7000_table.rom
 	$(PYTHON) tools/gen_table_s.py --rom baserom/kn7000_table.rom --out src/table.s \
 	    --jpg-dir src/table --title 'KN7000 "Table" flash image (build 84) - byte-exact.'
 
@@ -234,7 +245,7 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) src/sp7001/internal_voice_archive.s build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
 	$(ASM) src/sp7001/table.s -I . -o $@
 
@@ -369,7 +380,7 @@ xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
 		kn7000_sp7001_exports.sym kn7000_sp7001_new.sym \
 		baserom/sp7001_baseext.xap baserom/kn7000_program_sp7001.rom
 	UNIDASM=$(UNIDASM) $(PYTHON) tools/gen_xap_s.py --xap baserom/sp7001_baseext.xap \
-	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E \
+	    --out src/sp7001/baseext.s --base 0x5029B000 --code 0x0:0x1321E --typed-gaps \
 	    --title 'SP7001 BASEEXT.XAP (Key Soft Service base extension) - byte-exact.' \
 	    --sym kn7000_sp7001_baseext.sym \
 	    --fw-rom baserom/kn7000_program_sp7001.rom --fw-r1-end 0x1864F4 --fw-lib-file $(SP7001_LIB_FILE) \
@@ -792,7 +803,7 @@ baserom/customdata/%.ic21: baserom/customdata/%.ast tools/ast_file.py
 	mv $@.tmp $@
 
 define CD_BUILD_RULE
-build/customdata/$(1).ic21: src/customdata/$(1).s $(wildcard src/customdata/$(1)/*.inc) src/customdata/customdata.inc \
+build/customdata/$(1).ic21: src/customdata/$(1).s $(wildcard src/customdata/$(1)/*.inc) src/customdata/customdata.inc src/include/panel_memory.inc src/include/voice_record.inc \
 		tools/kn7asm.py baserom/customdata/$(1).ic21
 	@mkdir -p build/customdata
 	$$(ASM) $$< -I . -o $$@

@@ -600,3 +600,54 @@
 	.equ SmfPlay_LastRead,				0x605145	; the last MidiFileStream_GetByte result (word, negative at the end) -- the SmfPlay_* readers
 	.equ SmfPlay_StreamFlags,			0x605147	; bit 0: the stream ended (a negative read) -- every SmfPlay_* reader sets it; MidiFileDirectPlay_Tick tests it
 	.equ SmfPlay_Playing,				0x605148	; 1 while the file plays -- SmfPlay_StartPlayback sets it; SmfPlay_StopAtEndOfTrack clears it
+
+; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.1 Screen working cells"
+	.equ SoundGroup_PreviousBank,			0x2674	; the bank before the selection was reloaded; its highlight box is erased -- SoundGroup_LoadSelectionFromPart: (0x2674) = old (0x216A)
+	.equ EditScreen_DrawNumber,			0x26b0	; the 16-bit number an edit-screen field draws next: measure, beat, tick, velocity, length, note -- EditScreen_DrawMeasure / _DrawBeat / _DrawTick / _DrawEventVelocity, DrumEdit_DrawRowNote0..11 store it; 53 records draw it
+	.equ UI_CursorBox,				0x2721	; the index of the box a screen draws its cursor highlight in -- Paint_MidiTotalMode, MidiFileSave_MoveNameCursor, S0ngSelectName_CursorLeft/Right
+	.equ MidiScreen_SubPage,			0x2740	; which page / key row a MIDI settings screen shows -- LcdKeyRow1_GeneralMidiMode_Page0 sets 1 (YES/NO); ScreenButton_GeneralMidiMode_Entry reads it
+	.equ MidiOutPgm_SendShown,			0x2741	; 1 while the SEND box is drawn -- MidiOutProgramChange_Send sets it; Paint_MidiOutProgramChange erases the box
+	.equ MidiOutPgm_Cell2742,			0x2742	; TODO: drawn by MidiOutPgm_SendShown's box table; no writer under any spelling -- DLTable_F0D530 only
+	.equ CombiEdit_DrawnPage,			0x2768	; the COMBINATION EDIT page last drawn -- Draw_ReverbDepth, CombiEditMixer_ShowOtherParts: := CombiEdit_Page
+	.equ CombiEdit_DrawnRow,			0x276a	; the COMBINATION EDIT row last drawn -- CombiEditMixer_DrawPartBoxRow: := CombiEdit_Row; CombiEditMixer_ResetRowForPage
+	.equ ToneEdit_TouchCurveSlot,			0x27a3	; the touch-curve slot 1..4 -- Var27A3_SetSlot: (0x27A3) = n when 1 <= n <= 4, else 1
+	.equ SoundEditFilter_TypeShown,			0x27be	; the filter page whose name the MODE box prints (low 3 bits) -- SoundEditFilter_PaintModeField: (0x27BE) := UI_ScreenLatch
+	.equ ToneEdit_LayerResonator,			0x2808	; layer 1's resonator type 0..63; layers 2-4 at +1..+3 -- Arr2808_Set1: ((u8 *)0x2808)[layer - 1] = value; drawn through DLTable_OriginalStringCylinder
+	.equ MessageScreen_Arg,				0x2881	; a byte the message screen draws with its message -- MessageScreen_Paint copies (0x0C12) here for message 0x1A
+
+; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.2 The disk and MIDI-file screens"
+	.equ LoadSingle_BankA,				0x2728	; a USER bank of the LOAD SINGLE screens, drawn at the left; TODO source or destination -- L0adSingle_DrawBankAndNumber: Text_UserBankAbbrevs[(0x2728)]
+	.equ NameEdit_CharBox,				0x2729	; the character cell the name-entry grid highlights -- MidiFileSave_MoveNameCursor: (0x2729) := NameEdit_CharIndex
+	.equ DiskSave_Cell272A,				0x272a	; TODO: bit 0 picks a fill or a clear by the password field; no writer under any spelling -- DL_F589B2, DL_F589CD only
+	.equ MidiFile_ListCursorRow,			0x272d	; the MIDI FILE screens' list cursor row -- 0 on Paint_MidiFileDirectPlay / _L0ad; MidiFile_LcdKeyRow4 decrements it
+	.equ DiskScreen_RowOption,			0x2730	; the option the last LCD-row key chose; each row key writes its own number -- LcdKeyRow1..5_MidiFileSave_Page1 write 0, 0, 1, 2, 3
+	.equ MidiFileSave_Options,			0x2731	; two one-bit options of MIDI FILE SAVE page 1, each drawn OFF / ON -- ScreenEnter_MidiFileSave_Page1
+	.equ DiskLoad_SongNumber,			0x2733	; the song number the row-4 / row-5 keys step -- LcdKeyRow4/5_DiskL0adFile, LcdKeyRow4/5_MidiFileL0ad
+	.equ LoadSingle_BankB,				0x2736	; the other USER bank, drawn at the right; page 1 lists its groups -- SoftKeyCol2_L0adSingleS0und_Page0 writes 1 / 2; L0adSingleS0und_DrawGroupList
+	.equ LoadSingle_SelectedItem,			0x2738	; the item selected on LOAD SINGLE page 0 -- ScreenEnter_L0adSingleS0und_Page0, SoftKeyCol5_L0adSingleS0und_Page0
+	.equ LoadSingle_ListCursorRow,			0x2739	; page 1's cursor row 0..7 -- SoftKeyCols7_8_L0adSingle_Page1
+
+; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.3 Text buffers the records draw as string tables"
+	.equ StepRecord_PrevRowText,			0x1012	; STEP RECORD's previous-measure row, 30 characters -- StepRecord_BuildPrevMeasureRow (ld XIX,0x1012), StepRecord_BlankPrevRowText
+	.equ StepRecord_CurrentRowText,			0x1030	; the current-measure row, 30 characters -- ld XIX,0x1030 in the middle-row builder; StepRecord_BlankCurrentRowText
+	.equ StepRecord_NextRowText,			0x104e	; the next-measure row, 30 characters -- StepRecord_BuildNextMeasureRow (ld XIX,0x104E)
+	.equ SoundEditText_Slot2,			0x2300	; text slot 2 of 4 (slot 1 is 0x22F0), 13 characters -- SoundEditText_SetSlot: ld (XBC+0x2300),D
+	.equ SoundEditText_Slot3,			0x2310	; text slot 3, 13 characters -- SoundEditText_SetSlot: ld (XBC+0x2310),D
+	.equ SoundEditText_Slot4,			0x2320	; text slot 4, 13 characters -- SoundEditText_SetSlot: ld (XBC+0x2320),D
+	.equ NameList_SourceGroup,			0x2940	; the source list's group name, 16 characters -- SoundCopy_LoadNameBuffers, ReMapEdit_LoadNameBuffers
+	.equ NameList_SourceMembers,			0x2950	; its member names, 16 characters each -- SoundCopy_LoadNameBuffers, ReMapEdit_LoadNameBuffers
+
+; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.4 The current combination's part records"
+	.equ Combination_Effect1On,			0x7659	; bit 0: EFF1 (Combination_Current+0x39); inferred from the caption -- cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws EFF1 / ----
+	.equ Combination_Effect2On,			0x7679	; bit 0: EFF2 (Combination_Current+0x59); inferred from the caption -- cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws EFF2 / ----
+	.equ Combination_ReverbOn,			0x7699	; bit 0: REV (Combination_Current+0x79); inferred from the caption -- cleared by CombinationNaming_WriteToUserMemory; EffectEditor_PaintJob2_DL1 draws REV / ---
+	.equ CombiPart_Volume,				0x76a5	; part 1's VOL (record +0x03; part n+1 at +n*0x40) -- C0mbinati0nM0de_DrawPart1Vol; C0mbinati0nM0de_StepPartVol steps it
+	.equ CombiPart_Effect1Send,			0x76a7	; part 1's EFFECT1 SEND (record +0x05) -- Cpu2Query_ApplyPartRecordEffects
+	.equ CombiPart_Effect2OnOff,			0x76a8	; part 1's EFFECT2 ON/OFF (record +0x06) -- Cpu2Query_ApplyPartRecordEffects
+	.equ CombiPart_ReverbSend,			0x76a9	; part 1's REVERB SEND (record +0x07) -- Cpu2Query_ApplyPartRecordEffects
+	.equ CombiPart_Pan,				0x76aa	; part 1's PAN (record +0x08) -- C0mbinati0nM0de_DrawPart1Pan, Msg0716_RepostPart0Pan
+	.equ CombiPart_Flags,				0x76af	; part 1's flags (record +0x0D): bit 5 INT; bit 6 TODO -- C0mbinati0nM0de_SetPartInt; MidiOut_ParamGate_Part0 tests bit 6
+	.equ CombiPart_SoundBank,			0x76df	; part 1's sound bank (record +0x3D) -- SoundGroup_LoadSelectionFromPart: (0x216A) = record +0x3D
+
+; ---- wsa1/notes/gui-data-2026-10-29/README.md -- "8.5 MIDI, and the records with no variable"
+	.equ MidiFilter_Realtime,			0x7f34	; the REALTIME COMMANDS filter bits; bit 2 = SONG POSITION -- MidiIn_SongPosition pends only while bit 2 is set; DL_RealtimeCommandsClock draws bit 2

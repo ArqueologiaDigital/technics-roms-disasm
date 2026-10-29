@@ -2619,16 +2619,16 @@ ScreenEnter_CombiEditInternalSound:
 	ld c, (UI_ScreenLatch:16)                                   ; FBCE02  c1 7a 20 23
 	cp	c, (UI_ScreenLatch_Previous:16)                               ; FBCE06  c1 7b 20 f3
 	jr z, .LFBCE20                                       ; FBCE0A  66 14
-	ld (0x2768:16), 0x00                                 ; FBCE0C  f1 68 27 00 00
+	ld (CombiEdit_DrawnPage:16), 0x00                                 ; FBCE0C  f1 68 27 00 00
 	ld (CombiEdit_Page:16), 0x00                                 ; FBCE11  f1 67 27 00 00
-	ld (0x276a:16), 0x00                                 ; FBCE16  f1 6a 27 00 00
+	ld (CombiEdit_DrawnRow:16), 0x00                                 ; FBCE16  f1 6a 27 00 00
 	ld (CombiEdit_Row:16), 0x00                                 ; FBCE1B  f1 69 27 00 00
 .LFBCE20:
 	ld c, (UI_ScreenId:16)                                   ; FBCE20  c1 7c 20 23
 	cp	c, (UI_ScreenId_Previous:16)                               ; FBCE24  c1 7d 20 f3
 	jr z, .LFBCE3C                                       ; FBCE28  66 12
-	inc 0x01, (0x2768:16)                                ; FBCE2A  c1 68 27 61
-	inc 0x01, (0x276a:16)                                ; FBCE2E  c1 6a 27 61
+	inc 0x01, (CombiEdit_DrawnPage:16)                                ; FBCE2A  c1 68 27 61
+	inc 0x01, (CombiEdit_DrawnRow:16)                                ; FBCE2E  c1 6a 27 61
 	ld (PanelDial_DownButton:16), 0x84                                 ; FBCE32  f1 9b 20 00 84
 	ld (PanelDial_UpButton:16), 0x04                                 ; FBCE37  f1 9c 20 00 04
 .LFBCE3C:
@@ -2653,7 +2653,7 @@ ScreenEnter_CombiEditInternalSound:
 	inc 6,XSP                                            ; FBCE73  ef 66
 .LFBCE75:
 	ld c, (CombiEdit_Page:16)                                   ; FBCE75  c1 67 27 23
-	cp	c, (0x2768:16)                               ; FBCE79  c1 68 27 f3
+	cp	c, (CombiEdit_DrawnPage:16)                               ; FBCE79  c1 68 27 f3
 	jr z, .LFBCE96                                       ; FBCE7D  66 17
 	lda xbc, (.LFBD222:24)                               ; FBCE7F  f2 22 d2 fb 31
 	push XBC                                             ; FBCE84  39
@@ -2666,7 +2666,7 @@ ScreenEnter_CombiEditInternalSound:
 	inc 6,XSP                                            ; FBCE94  ef 66
 .LFBCE96:
 	ld c, (CombiEdit_Row:16)                                   ; FBCE96  c1 69 27 23
-	cp	c, (0x276a:16)                               ; FBCE9A  c1 6a 27 f3
+	cp	c, (CombiEdit_DrawnRow:16)                               ; FBCE9A  c1 6a 27 f3
 	jr z, .LFBCEB7                                       ; FBCE9E  66 17
 	lda xbc, (.LFBD302:24)                               ; FBCEA0  f2 02 d3 fb 31
 	push XBC                                             ; FBCEA5  39
@@ -2925,9 +2925,9 @@ PageKey_CombiEditInternalSound:
 	cp a, 0x01:i3                                          ; FBD08C  c9 d9
 	jr nz, .LFBD0A3                                      ; FBD08E  6e 13
 .LFBD090:
-	ld (0x276a:16), 0x00                                 ; FBD090  f1 6a 27 00 00
+	ld (CombiEdit_DrawnRow:16), 0x00                                 ; FBD090  f1 6a 27 00 00
 	ld (CombiEdit_Row:16), 0x00                                 ; FBD095  f1 69 27 00 00
-	ld (0x276a:16), 0x01                                 ; FBD09A  f1 6a 27 00 01
+	ld (CombiEdit_DrawnRow:16), 0x01                                 ; FBD09A  f1 6a 27 00 01
 	set	4, (UI_Request_Hi:16)                               ; FBD09F  f1 71 20 bc
 .LFBD0A3:
 	ret                                                  ; FBD0A3  0e
@@ -3243,7 +3243,7 @@ Draw_ReverbDepth:   ; entry: named by 1 `.long` operand, first at 0xFBD273
 	call T_DisplayList_Run_Stack                         ; FBD2F4  1d 00 2e f4
 	inc 8,XSP                                            ; FBD2F8  ef 60
 .LFBD2FA:
-	ld	(0x2768:16), (CombiEdit_Page:16)             ; FBD2FA  c1 67 27 19 68 27
+	ld	(CombiEdit_DrawnPage:16), (CombiEdit_Page:16)             ; FBD2FA  c1 67 27 19 68 27
 	popw hl                                              ; FBD300  4b
 	ret                                                  ; FBD301  0e
 .LFBD302:
@@ -3342,7 +3342,7 @@ CombiEditSound_MoveMultipleMessagesPageRowCursor:   ; entry: named by 1 `.long` 
 	call T_DisplayListB_Run_Stack                        ; FBD38A  1d 04 2e f4
 	inc 8,XSP                                            ; FBD38E  ef 60
 .LFBD390:
-	ld	(0x276a:16), (CombiEdit_Row:16)             ; FBD390  c1 69 27 19 6a 27
+	ld	(CombiEdit_DrawnRow:16), (CombiEdit_Row:16)             ; FBD390  c1 69 27 19 6a 27
 	ret                                                  ; FBD396  0e
 .LFBD397:
 	pushw hl                                             ; FBD397  2b
@@ -4183,11 +4183,11 @@ ScreenEnter_CombiEditMixer:
 ScreenEnterBody_CombiEditMixer:
 	pushw hl                                             ; FBDB95  2b
 	push XIX                                             ; FBDB96  3c
-	lda xix, (0x276a:16)                                ; FBDB97  f1 6a 27 34
+	lda xix, (CombiEdit_DrawnRow:16)                                ; FBDB97  f1 6a 27 34
 	ld c, (UI_ScreenLatch:16)                                   ; FBDB9B  c1 7a 20 23
 	cp	c, (UI_ScreenLatch_Previous:16)                               ; FBDB9F  c1 7b 20 f3
 	jr z, .LFBDBEC                                       ; FBDBA3  66 47
-	ld (0x2768:16), 0x00                                 ; FBDBA5  f1 68 27 00 00
+	ld (CombiEdit_DrawnPage:16), 0x00                                 ; FBDBA5  f1 68 27 00 00
 	ld (CombiEdit_Page:16), 0x00                                 ; FBDBAA  f1 67 27 00 00
 	ld (XIX),0x03                                        ; FBDBAF  b4 00 03
 	ld (CombiEdit_Row:16), 0x03                                 ; FBDBB2  f1 69 27 00 03
@@ -4197,7 +4197,7 @@ ScreenEnterBody_CombiEditMixer:
 	ld (CombiEdit_EntryPart:16), h                                   ; FBDBC2  f1 6d 27 46
 	ld (0x2766:16), h                                   ; FBDBC6  f1 66 27 46
 	ld (CombiEdit_Part:16), h                                   ; FBDBCA  f1 65 27 46
-	ld (0x2768:16), 0x00                                 ; FBDBCE  f1 68 27 00 00
+	ld (CombiEdit_DrawnPage:16), 0x00                                 ; FBDBCE  f1 68 27 00 00
 	ld (CombiEdit_Page:16), 0x00                                 ; FBDBD3  f1 67 27 00 00
 	ld (XIX),0x03                                        ; FBDBD8  b4 00 03
 	ld (CombiEdit_Row:16), 0x03                                 ; FBDBDB  f1 69 27 00 03
@@ -4223,12 +4223,12 @@ ScreenEnterBody_CombiEditMixer:
 	ld (CombiEdit_EntryPart:16), h                                   ; FBDC0A  f1 6d 27 46
 	ld (0x2766:16), h                                   ; FBDC0E  f1 66 27 46
 	ld (CombiEdit_Part:16), h                                   ; FBDC12  f1 65 27 46
-	ld (0x2768:16), 0x00                                 ; FBDC16  f1 68 27 00 00
+	ld (CombiEdit_DrawnPage:16), 0x00                                 ; FBDC16  f1 68 27 00 00
 	ld (CombiEdit_Page:16), 0x00                                 ; FBDC1B  f1 67 27 00 00
 	ld (XIX),0x03                                        ; FBDC20  b4 00 03
 	ld (CombiEdit_Row:16), 0x03                                 ; FBDC23  f1 69 27 00 03
 .LFBDC28:
-	inc 0x01, (0x2768:16)                                ; FBDC28  c1 68 27 61
+	inc 0x01, (CombiEdit_DrawnPage:16)                                ; FBDC28  c1 68 27 61
 	incm8 0x01, (xix)                                    ; FBDC2C  84 61
 	ld c, (CombiEdit_Part:16)                                   ; FBDC2E  c1 65 27 23
 	add C,0x10                                           ; FBDC32  cb c8 10
@@ -4249,7 +4249,7 @@ ScreenEnterBody_CombiEditMixer:
 	set	7, (UI_RequestBits:16)                               ; FBDC60  f1 75 20 bf
 ScreenEnterBody_CombiEditMixer_Skip:
 	ld c, (CombiEdit_Page:16)                                   ; FBDC64  c1 67 27 23
-	cp	c, (0x2768:16)                               ; FBDC68  c1 68 27 f3
+	cp	c, (CombiEdit_DrawnPage:16)                               ; FBDC68  c1 68 27 f3
 	jr nz, .LFBDC80                                      ; FBDC6C  6e 12
 	ld a, (CombiEdit_Part:16)                                   ; FBDC6E  c1 65 27 21
 	cp	a, (0x2766:16)                               ; FBDC72  c1 66 27 f1
@@ -4267,7 +4267,7 @@ ScreenEnterBody_CombiEditMixer_Skip:
 	and C,0x10                                           ; FBDC94  cb cc 10
 	jr nz, .LFBDCF7                                      ; FBDC97  6e 5e
 	ld c, (CombiEdit_Page:16)                                   ; FBDC99  c1 67 27 23
-	cp	c, (0x2768:16)                               ; FBDC9D  c1 68 27 f3
+	cp	c, (CombiEdit_DrawnPage:16)                               ; FBDC9D  c1 68 27 f3
 	jr z, .LFBDCBF                                       ; FBDCA1  66 1c
 	call T_CallbackQueue_ResetAndRestartTask2            ; FBDCA3  1d 80 2e f4
 	ld (0x277e:16), 0x00                                 ; FBDCA7  f1 7e 27 00 00
@@ -4725,7 +4725,7 @@ PageKey_CombiEditMixer:
 	cp a, 0x01:i3                                          ; FBE049  c9 d9
 	jr nz, .LFBE05C                                      ; FBE04B  6e 0f
 	calr CombiEditMixer_ResetRowForPage                                      ; FBE04D  1e 69 00
-	inc 0x01, (0x276a:16)                                ; FBE050  c1 6a 27 61
+	inc 0x01, (CombiEdit_DrawnRow:16)                                ; FBE050  c1 6a 27 61
 	inc 0x08, (0x2766:16)                                ; FBE054  c1 66 27 60
 	set	4, (UI_Request_Hi:16)                               ; FBE058  f1 71 20 bc
 .LFBE05C:
@@ -4799,7 +4799,7 @@ CombiEditMixer_ResetRowForPage:
 	jr z, .LFBE0E9                                       ; FBE0E4  66 03
 	ld (XIX),0x09                                        ; FBE0E6  b4 00 09
 .LFBE0E9:
-	ld (0x276a),(xix)                                    ; FBE0E9  84 19 6a 27   ld (0x276a),(XIX)
+	ld (CombiEdit_DrawnRow),(xix)                                    ; FBE0E9  84 19 6a 27   ld (0x276a),(XIX)
 	pop XIX                                              ; FBE0ED  5c
 	ret                                                  ; FBE0EE  0e
 ; CombiEditMixer_SetDialButtons: ScreenEnterBody_CombiEditMixer: PanelDial_UpButton = CombiEdit_Part & 7, PanelDial_DownButton = the same + 0x80.
@@ -4843,7 +4843,7 @@ CombiEditMixer_ShowOtherParts:
 .LFBE135:
 	push XIX                                             ; FBE135  3c
 	lda xix, (T_DisplayList_Run_Stack:24)                ; FBE136  f2 00 2e f4 34
-	ld	(0x2768:16), (CombiEdit_Page:16)             ; FBE13B  c1 67 27 19 68 27
+	ld	(CombiEdit_DrawnPage:16), (CombiEdit_Page:16)             ; FBE13B  c1 67 27 19 68 27
 	call T_LCD_BlankThenSetPanel3Layer_Copy                                        ; FBE141  1d 10 2e f4
 	call T_UiPaint_PageLabelBackdrop                                        ; FBE145  1d 18 2e f4
 	ld (LCD_CurrentLayer:16), 0x00                                 ; FBE149  f1 40 25 00 00
@@ -5093,7 +5093,7 @@ CombiEditMixer_DrawPartBoxRow:
 	ret                                                  ; FBE373  0e
 .LFBE374:
 	ld (LCD_CurrentLayer:16), 0x01                                 ; FBE374  f1 40 25 00 01
-	ld	(UI_DrawScratch+1:16), (0x276a:16)             ; FBE379  c1 6a 27 19 41 26
+	ld	(UI_DrawScratch+1:16), (CombiEdit_DrawnRow:16)             ; FBE379  c1 6a 27 19 41 26
 	lda xbc, (CombiEditMixer_DrawPartBoxRow_DL3:24)                              ; FBE37F  f2 69 82 f1 31
 	push XBC                                             ; FBE384  39
 	lda xwa, (CombiEditMixer_DrawPartBoxRow_DL1:24)                              ; FBE385  f2 5e 82 f1 30
@@ -5105,7 +5105,7 @@ CombiEditMixer_DrawPartBoxRow:
 	lda xwa, (CombiEditMixer_DrawPartBoxRow_DL3:24)                              ; FBE39B  f2 69 82 f1 30
 	push XWA                                             ; FBE3A0  38
 	call T_DisplayListB_Run_Stack                        ; FBE3A1  1d 04 2e f4
-	ld	(0x276a:16), (CombiEdit_Row:16)             ; FBE3A5  c1 69 27 19 6a 27
+	ld	(CombiEdit_DrawnRow:16), (CombiEdit_Row:16)             ; FBE3A5  c1 69 27 19 6a 27
 	inc 8,XSP                                            ; FBE3AB  ef 60
 	inc 8,XSP                                            ; FBE3AD  ef 60
 	ret                                                  ; FBE3AF  0e
@@ -6740,9 +6740,9 @@ CombinationNaming_WriteToUserMemory:
 	pop XIX                                              ; FBF052  5c
 	pop XHL                                              ; FBF053  5b
 	pop XDE                                              ; FBF054  5a
-	ld (0x7659:16), 0x00                                 ; FBF055  f1 59 76 00 00
-	ld (0x7679:16), 0x00                                 ; FBF05A  f1 79 76 00 00
-	ld (0x7699:16), 0x00                                 ; FBF05F  f1 99 76 00 00
+	ld (Combination_Effect1On:16), 0x00                                 ; FBF055  f1 59 76 00 00
+	ld (Combination_Effect2On:16), 0x00                                 ; FBF05A  f1 79 76 00 00
+	ld (Combination_ReverbOn:16), 0x00                                 ; FBF05F  f1 99 76 00 00
 	ld XBC,0x00ec0300                                    ; FBF064  41 00 03 ec 00
 	ld (xiz-4), xbc                                      ; FBF069  be fc 61
 	ld wa, (0x276e:16)                                 ; FBF06C  d1 6e 27 20
@@ -6905,7 +6905,7 @@ ScreenEnterBody_CombinationNaming:
 .LFBF1BE:
 	lda xbc, (DiskSave_PasswordEntry:16)                                ; FBF1BE  f1 f0 22 31
 	ld (xiz-4), xbc                                      ; FBF1C2  be fc 61
-	lda xix, (0x7622:16)                                ; FBF1C5  f1 22 76 34
+	lda xix, (Combination_Current+2:16)                                ; FBF1C5  f1 22 76 34
 	ld h, 0x10:opc                                          ; FBF1C9  26 10
 .LFBF1CB:
 	ld C,(XIX)                                           ; FBF1CB  84 23
@@ -6940,7 +6940,7 @@ ScreenLeaveBody_CombinationNaming:
 	jr z, .LFBF230                                       ; FBF20D  66 21
 	lda xbc, (DiskSave_PasswordEntry:16)                                ; FBF20F  f1 f0 22 31
 	ld (xiz-4), xbc                                      ; FBF213  be fc 61
-	lda xix, (0x7622:16)                                ; FBF216  f1 22 76 34
+	lda xix, (Combination_Current+2:16)                                ; FBF216  f1 22 76 34
 	ld h, 0x10:opc                                          ; FBF21A  26 10
 .LFBF21C:
 	ld xbc, (xiz-4)                                      ; FBF21C  ae fc 21
@@ -7074,7 +7074,7 @@ ScreenEnterBody_CombiEditConfigure_Call:
 ScreenEnterBody_CombiEditConfigure:
 	pushw hl                                             ; FBF2E2  2b
 	push XIX                                             ; FBF2E3  3c
-	lda xix, (0x2768:16)                                ; FBF2E4  f1 68 27 34
+	lda xix, (CombiEdit_DrawnPage:16)                                ; FBF2E4  f1 68 27 34
 	cp	(PanelModeGroup:16), 0x16                            ; FBF2E8  c1 76 20 3f 16
 	jr nz, .LFBF305                                      ; FBF2ED  6e 16
 	ld h, (UI_PartIndex:16)                                   ; FBF2EF  c1 50 22 26
@@ -7102,7 +7102,7 @@ ScreenEnterBody_CombiEditConfigure:
 	ld (0x276b:16), h                                   ; FBF334  f1 6b 27 46
 	ld (XIX),0x00                                        ; FBF338  b4 00 00
 	ld (CombiEdit_Page:16), 0x00                                 ; FBF33B  f1 67 27 00 00
-	ld (0x276a:16), 0x00                                 ; FBF340  f1 6a 27 00 00
+	ld (CombiEdit_DrawnRow:16), 0x00                                 ; FBF340  f1 6a 27 00 00
 	ld (CombiEdit_Row:16), 0x00                                 ; FBF345  f1 69 27 00 00
 	ld	(0x2766:16), (CombiEdit_Part:16)             ; FBF34A  c1 65 27 19 66 27
 .LFBF350:
@@ -7111,7 +7111,7 @@ ScreenEnterBody_CombiEditConfigure:
 	jr z, .LFBF372                                       ; FBF358  66 18
 	inc 0x01, (0x276c:16)                                ; FBF35A  c1 6c 27 61
 	incm8 0x01, (xix)                                    ; FBF35E  84 61
-	inc 0x01, (0x276a:16)                                ; FBF360  c1 6a 27 61
+	inc 0x01, (CombiEdit_DrawnRow:16)                                ; FBF360  c1 6a 27 61
 	inc 0x01, (0x2766:16)                                ; FBF364  c1 66 27 61
 	ld (CombiEdit_DirtySound:16), 0xff                                 ; FBF368  f1 70 27 00 ff
 	ld (0x277e:16), 0x00                                 ; FBF36D  f1 7e 27 00 00
@@ -7512,7 +7512,7 @@ ExitKey_CombiEditConfigure:
 .LFBF704:
 	push XIX                                             ; FBF704  3c
 	lda xix, (LCD_CurrentLayer:16)                                ; FBF705  f1 40 25 34
-	ld	(0x2768:16), (CombiEdit_Page:16)             ; FBF709  c1 67 27 19 68 27
+	ld	(CombiEdit_DrawnPage:16), (CombiEdit_Page:16)             ; FBF709  c1 67 27 19 68 27
 	cp	(PanelModeGroup:16), 0x16                            ; FBF70F  c1 76 20 3f 16
 	jr nz, .LFBF740                                      ; FBF714  6e 2a
 	ld (XIX),0x00                                        ; FBF716  b4 00 00
@@ -7638,11 +7638,11 @@ CombiEditConfigure_RepaintMarkedSounds:
 	ld	(xbc), (CombiEdit_Row)                              ; FBF833  b1 14 69 27
 	ld l, (CombiEdit_Row:16)                                   ; FBF837  c1 69 27 27
 	ld xbc, (xiz-4)                                      ; FBF83B  ae fc 21
-	ld	(xbc+3), (0x276a)                            ; FBF83E  b9 03 14 6a 27
+	ld	(xbc+3), (CombiEdit_DrawnRow)                            ; FBF83E  b9 03 14 6a 27
 	ld xbc, (xiz-4)                                      ; FBF843  ae fc 21
 	inc 4,XBC                                            ; FBF846  e9 64
 	ld (xiz-12), xbc                                     ; FBF848  be f4 61
-	ld (0x276a:16), l                                   ; FBF84B  f1 6a 27 47
+	ld (CombiEdit_DrawnRow:16), l                                   ; FBF84B  f1 6a 27 47
 	ld	(xbc), (0x276b)                              ; FBF84F  b1 14 6b 27
 	ld l, (0x276b:16)                                   ; FBF853  c1 6b 27 27
 	ld xbc, (xiz-4)                                      ; FBF857  ae fc 21

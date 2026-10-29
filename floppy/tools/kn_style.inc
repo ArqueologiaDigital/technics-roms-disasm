@@ -47,6 +47,32 @@
 	.ascii	"\text"
 	.if	(. - .Ltn\@) - 13
 	.error	"tcmp_name: not 13 characters"
+; ---- "TPAD": the pad container (.MSP payloads; a CUSTOM record holds one with one bank, lane customdata's
+; TPAD_* macros, kn7000/src/customdata/customdata.inc).  The same header as TCMP with "TPAD"; the checksum
+; descriptor covers the bank and pad records (it recomputes equal in all 10 .MSP files).
+	.macro	tpad_head base, checksum, csum_start, csum_halfwords, f0e, length, top, nbanks
+	.ascii	"TPAD"
+	.byte	0, 0
+	be16	\checksum
+	be24	\csum_start
+	be24	\csum_halfwords
+	be16	\f0e
+	be24	\length
+	be24	(\top) - (\base)
+	be16	\nbanks
+	.endm
+; A pad reference triple (bank, pad, flags) of a bank record: six per bank.
+	.macro	tpad_ref a, b, c
+	.byte	\a, \b, \c
+	.endm
+; A pad record, 0x60 bytes, after its 16-character name: 13 bytes, the u24BE stream offset, 8 zero bytes,
+; two part set-ups (tcmp_part) and 8 zero bytes (as lane customdata's TPAD_PAD reads it).
+	.macro	tpad_pad base, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x1a, x1b, x1c, stream
+	.byte	\x10, \x11, \x12, \x13, \x14, \x15, \x16, \x17, \x18, \x19, \x1a, \x1b, \x1c
+	be24	(\stream) - (\base)
+	.fill	8, 1, 0
+	.endm
+
 	.endif
 	.byte	\pad, 0, 0
 	.endm
@@ -126,6 +152,32 @@
 ; A status byte RhyEventLenByStatus gives no data bytes (0x8n, 0xAn, 0xF1-F3, F6-FF): one byte.
 	.macro	ev_byte b
 	.byte	\b
+	.endm
+
+; ---- "TPAD": the pad container (.MSP payloads; a CUSTOM record holds one with one bank, lane customdata's
+; TPAD_* macros, kn7000/src/customdata/customdata.inc).  The same header as TCMP with "TPAD"; the checksum
+; descriptor covers the bank and pad records (it recomputes equal in all 10 .MSP files).
+	.macro	tpad_head base, checksum, csum_start, csum_halfwords, f0e, length, top, nbanks
+	.ascii	"TPAD"
+	.byte	0, 0
+	be16	\checksum
+	be24	\csum_start
+	be24	\csum_halfwords
+	be16	\f0e
+	be24	\length
+	be24	(\top) - (\base)
+	be16	\nbanks
+	.endm
+; A pad reference triple (bank, pad, flags) of a bank record: six per bank.
+	.macro	tpad_ref a, b, c
+	.byte	\a, \b, \c
+	.endm
+; A pad record, 0x60 bytes, after its 16-character name: 13 bytes, the u24BE stream offset, 8 zero bytes,
+; two part set-ups (tcmp_part) and 8 zero bytes (as lane customdata's TPAD_PAD reads it).
+	.macro	tpad_pad base, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x1a, x1b, x1c, stream
+	.byte	\x10, \x11, \x12, \x13, \x14, \x15, \x16, \x17, \x18, \x19, \x1a, \x1b, \x1c
+	be24	(\stream) - (\base)
+	.fill	8, 1, 0
 	.endm
 
 	.endif

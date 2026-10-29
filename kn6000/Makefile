@@ -137,7 +137,7 @@ baserom/01ctmini.ic18: baserom/01ctmini.ast $(TOOLS)/ast_file.py
 	echo "$(CD_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/01ctmini.ic18: src/customdata/01ctmini.s $(wildcard src/customdata/01ctmini/*.inc) ../kn7000/src/customdata/customdata.inc $(TOOLS)/kn7asm.py baserom/01ctmini.ic18
+build/01ctmini.ic18: src/customdata/01ctmini.s $(wildcard src/customdata/01ctmini/*.inc) ../kn7000/src/customdata/customdata.inc ../kn7000/src/include/panel_memory.inc ../kn7000/src/include/voice_record.inc $(TOOLS)/kn7asm.py baserom/01ctmini.ic18
 	@mkdir -p build
 	$(ASM) $< -I . -o $@
 
@@ -155,7 +155,7 @@ verify-customdata-ast: baserom/01ctmini.ic18 $(TOOLS)/ast_file.py $(TOOLS)/zlib1
 
 customdata-src: $(TOOLS)/gen_customdata_s.py baserom/01ctmini.ic18
 	$(PYTHON) $(TOOLS)/gen_customdata_s.py --rom baserom/01ctmini.ic18 --ref baserom/01ctmini.ic18 \
-	    --out src/customdata/01ctmini.s --model kn6000 --include ../kn7000/src/customdata/customdata.inc \
+	    --out src/customdata/01ctmini.s --model kn6000 --include ../kn7000/src/customdata/customdata.inc --shared ../kn7000/src/include \
 	    --title 'Technics SX-KN6000 / SX-KN6500 factory CUSTOM STYLE memory (IC18, bank 0x96820000) - byte-exact.' \
 	    --title 'Reference: 01ctmini.ic18, the 0x1E0000-byte bank inflated from 01CTMINI.AST of the' \
 	    --title 'MAME softlist kn6000_flop floppy idd6000 (../kn7000/tools/ast_file.py).'

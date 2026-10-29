@@ -3,9 +3,7 @@
 
 	.include	"kn_song.inc"
 
-; 373 cells of 256 bytes.  Tracks typed event by event: 13 of 15.
-; song 1 track 2 (12 cells from 72): not typed, status 0x90 at +2886: a data byte >= 0x80
-; song 1 track 10 (6 cells from 216): not typed, status 0x90 at +1380: a data byte >= 0x80
+; 373 cells of 256 bytes.  Tracks typed event by event: 15 of 15.
 P_02MOMENT_SQT_p2:
 	sq_cell	0x80, 0, 2	; cell 1: song 1 track 1, 1 of 71
 	sq_beat
@@ -4348,29 +4346,968 @@ P_02MOMENT_SQT_p2:
 	sq_end
 	.fill	30, 1, 0xff	; after the end of track
 	sq_cell	0xff, 0, 73	; cell 72: song 1 track 2, 1 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4705, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 79, 116, 51, 2
+	sq_beat
+	sq_beat
+	sq_note	58, 0, 76, 100, 42, 0
+	sq_beat
+	sq_note	8, 0, 77, 101, 44, 0
+	sq_note	57, 0, 79, 103, 53, 1
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 79, 106, 26, 0
+	sq_beat
+	sq_note	5, 0, 79, 105, 54, 0
+	sq_note	75, 0, 77, 106, 54, 0
+	sq_beat
+	sq_note	43, 0, 76, 100, 40, 0
+	sq_beat
+	sq_note	0, 0, 78, 91, 10, 0
+	sq_note	5, 0, 79, 93, 40, 1
+	sq_beat
+	sq_note	53, 0, 72, 103, 74, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	56, 0, 67, 97, 16, 0
+	sq_beat
+	sq_note	6, 0, 72, 109, 14, 0
+	sq_note	53, 0, 74, 108, 66, 0
+	sq_beat
+	sq_note	55, 0, 69, 94, 23, 4
+	sq_note	56, 0, 72, 93, 2, 3
+	sq_note	56, 0, 76, 103, 80, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 76, 96, 81, 0
+	sq_note	74, 0, 74, 92, 67, 0
+	sq_beat
+	sq_note	45, 0, 76, 99, 40, 0
+	sq_beat
+	sq_note	3, 0, 67, 83, 71, 3
+	sq_note	6, 0, 71, 90, 63, 3
+	.byte	0x06, 0x90, 0x4c	; bytes 1..3 of `sq_note	6, 0, 76, 90, 53, 0` (the event spans two cells)
 	sq_cell	0xff, 72, 74	; cell 73: song 1 track 2, 2 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4805, 251	; events of a track not typed (see above)
+	.byte	0x5a, 0x35, 0x00	; bytes 4..6 of `sq_note	6, 0, 76, 90, 53, 0` (the event spans two cells)
+	sq_note	84, 0, 76, 95, 41, 0
+	sq_beat
+	sq_note	52, 0, 76, 96, 32, 0
+	sq_beat
+	sq_note	8, 0, 76, 90, 56, 0
+	sq_note	74, 0, 74, 98, 64, 0
+	sq_beat
+	sq_note	45, 0, 76, 101, 31, 0
+	sq_beat
+	sq_note	3, 0, 76, 89, 34, 1
+	sq_note	3, 0, 65, 78, 48, 5
+	sq_note	4, 0, 69, 92, 53, 5
+	sq_beat
+	sq_note	56, 0, 72, 105, 5, 4
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	53, 0, 76, 110, 74, 0
+	sq_beat
+	sq_note	37, 0, 77, 109, 56, 0
+	sq_beat
+	sq_note	4, 0, 79, 101, 72, 1
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 79, 107, 52, 0
+	sq_note	56, 0, 77, 91, 44, 0
+	sq_beat
+	sq_note	6, 0, 76, 90, 47, 0
+	sq_note	60, 0, 79, 101, 51, 0
+	sq_beat
+	sq_note	52, 0, 79, 100, 61, 0
+	sq_beat
+	sq_note	55, 0, 79, 103, 90, 0
+	sq_beat
+	sq_note	54, 0, 76, 96, 67, 0
+	sq_beat
+	sq_note	28, 0, 77, 101, 54, 0
+	sq_note	92, 0, 78, 86, 13, 0
+	sq_beat
+	sq_note	10, 0, 79, 76, 83, 0
+	sq_beat
+	sq_note	3, 0, 72, 98, 69, 0
+	sq_beat
+	sq_note	6, 0, 72, 100, 30, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	54, 0, 67, 98, 18, 0
+	sq_beat
+	sq_note	6, 0, 72, 104, 14, 0
+	sq_note	55, 0, 74, 107, 65, 0
+	sq_beat
+	sq_note	54, 0, 69, 93, 69, 3
+	sq_note	54, 0, 72, 96, 80, 2
+	sq_note	54, 0, 76, 96, 64, 1
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 76, 95, 13, 0
+	sq_beat
+	sq_note	2, 0, 76, 99, 14, 0
+	sq_note	18, 0, 77, 78, 31, 0
+	sq_note	33, 0, 76, 74, 31, 0
+	sq_note	48, 0, 74, 81, 57, 0
+	sq_beat
+	sq_note	2, 0, 72, 101, 35, 0
+	.byte	0x34	; bytes 1..1 of `sq_note	52, 0, 67, 76, 14, 4` (the event spans two cells)
 	sq_cell	0x80, 73, 75	; cell 74: song 1 track 2, 3 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4905, 251	; events of a track not typed (see above)
+	.byte	0x90, 0x43, 0x4c, 0x0e, 0x04	; bytes 2..6 of `sq_note	52, 0, 67, 76, 14, 4` (the event spans two cells)
+	sq_note	52, 0, 76, 93, 75, 0
+	sq_note	54, 0, 71, 84, 7, 4
+	sq_beat
+	sq_note	52, 0, 76, 96, 26, 0
+	sq_beat
+	sq_note	6, 0, 76, 96, 17, 0
+	sq_note	53, 0, 76, 100, 70, 0
+	sq_beat
+	sq_note	50, 0, 77, 85, 22, 0
+	sq_beat
+	sq_note	4, 0, 79, 81, 62, 0
+	sq_beat
+	sq_note	1, 0, 69, 93, 72, 4
+	sq_note	1, 0, 65, 81, 63, 4
+	sq_note	2, 0, 79, 89, 38, 1
+	sq_beat
+	sq_note	49, 0, 72, 98, 25, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	58, 0, 76, 87, 23, 0
+	sq_note	75, 0, 77, 81, 22, 0
+	sq_beat
+	sq_note	2, 0, 79, 97, 47, 2
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 76, 97, 69, 0
+	sq_beat
+	sq_note	31, 0, 77, 104, 66, 0
+	sq_beat
+	sq_note	8, 0, 79, 103, 37, 0
+	sq_note	73, 0, 79, 105, 36, 0
+	sq_beat
+	sq_note	44, 0, 79, 105, 31, 0
+	sq_beat
+	sq_note	4, 0, 79, 103, 57, 0
+	sq_note	74, 0, 81, 104, 54, 0
+	sq_beat
+	sq_note	44, 0, 79, 107, 36, 0
+	sq_beat
+	sq_note	7, 0, 79, 101, 42, 1
+	sq_beat
+	sq_note	49, 0, 72, 100, 66, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 67, 94, 15, 0
+	sq_beat
+	.byte	0x03, 0x90, 0x48, 0x6c, 0x12	; bytes 1..5 of `sq_note	3, 0, 72, 108, 18, 0` (the event spans two cells)
 	sq_cell	0xff, 74, 76	; cell 75: song 1 track 2, 4 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4a05, 251	; events of a track not typed (see above)
+	.byte	0x00	; bytes 6..6 of `sq_note	3, 0, 72, 108, 18, 0` (the event spans two cells)
+	sq_note	54, 0, 74, 103, 67, 0
+	sq_beat
+	sq_note	53, 0, 69, 90, 26, 4
+	sq_note	53, 0, 76, 91, 30, 1
+	sq_note	54, 0, 72, 92, 26, 1
+	sq_beat
+	sq_beat
+	sq_note	10, 0, 76, 101, 59, 0
+	sq_beat
+	sq_note	6, 0, 76, 103, 64, 0
+	sq_note	68, 0, 74, 99, 71, 0
+	sq_beat
+	sq_note	41, 0, 72, 105, 43, 0
+	sq_beat
+	sq_note	2, 0, 67, 65, 78, 3
+	sq_note	3, 0, 76, 91, 50, 0
+	sq_note	6, 0, 71, 86, 72, 3
+	sq_note	76, 0, 76, 91, 48, 0
+	sq_beat
+	sq_note	56, 0, 76, 94, 80, 0
+	sq_beat
+	sq_note	53, 0, 74, 100, 79, 0
+	sq_beat
+	sq_note	37, 0, 76, 97, 43, 0
+	sq_beat
+	sq_note	9, 0, 76, 88, 20, 1
+	sq_note	9, 0, 65, 79, 93, 4
+	sq_note	9, 0, 69, 93, 3, 5
+	sq_beat
+	sq_note	50, 0, 72, 103, 30, 0
+	sq_beat
+	sq_note	5, 0, 72, 103, 10, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 76, 113, 71, 0
+	sq_beat
+	sq_note	32, 0, 77, 105, 62, 0
+	sq_beat
+	sq_note	4, 0, 79, 101, 16, 1
+	sq_beat
+	sq_note	48, 0, 79, 100, 24, 0
+	sq_beat
+	sq_note	1, 0, 79, 103, 44, 0
+	sq_note	48, 0, 76, 99, 46, 0
+	sq_beat
+	sq_note	0, 0, 77, 101, 34, 0
+	sq_note	52, 0, 79, 109, 60, 0
+	sq_beat
+	sq_note	55, 0, 79, 105, 57, 0
+	sq_beat
+	sq_note	52, 0, 81, 105, 18, 0
+	sq_beat
+	sq_note	1, 0, 79, 91, 14, 0
+	sq_note	17, 0, 81, 90, 24, 0
+	sq_note	35, 0, 79, 87, 15, 0
+	sq_note	50, 0, 77, 101, 50, 0
+	sq_beat
+	sq_note	6, 0, 76, 93, 39, 0
+	sq_note	54, 0, 78, 94, 11, 0
+	sq_note	59, 0, 79, 93, 38, 1
+	sq_beat
+	sq_beat
+	.byte	0x04	; bytes 1..1 of `sq_note	4, 0, 72, 101, 67, 0` (the event spans two cells)
 	sq_cell	0xff, 75, 77	; cell 76: song 1 track 2, 5 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4b05, 251	; events of a track not typed (see above)
+	.byte	0x90, 0x48, 0x65, 0x43, 0x00	; bytes 2..6 of `sq_note	4, 0, 72, 101, 67, 0` (the event spans two cells)
+	sq_beat
+	sq_note	7, 0, 72, 103, 31, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	55, 0, 67, 105, 18, 0
+	sq_beat
+	sq_note	8, 0, 72, 104, 67, 0
+	sq_beat
+	sq_note	9, 0, 74, 99, 58, 0
+	sq_beat
+	sq_note	6, 0, 69, 90, 23, 3
+	sq_note	7, 0, 76, 93, 73, 0
+	sq_note	7, 0, 72, 94, 19, 3
+	sq_beat
+	sq_note	8, 0, 76, 100, 69, 0
+	sq_beat
+	sq_note	2, 0, 76, 94, 51, 0
+	sq_note	52, 0, 74, 89, 47, 0
+	sq_beat
+	sq_note	5, 0, 76, 100, 28, 0
+	sq_note	51, 0, 67, 79, 17, 4
+	sq_note	51, 0, 71, 91, 20, 4
+	sq_note	52, 0, 76, 99, 64, 0
+	sq_beat
+	sq_note	55, 0, 76, 106, 54, 0
+	sq_beat
+	sq_note	39, 0, 76, 101, 33, 0
+	sq_beat
+	sq_note	2, 0, 76, 100, 46, 0
+	sq_note	68, 0, 77, 90, 39, 0
+	sq_beat
+	sq_note	37, 0, 79, 93, 33, 0
+	sq_note	94, 0, 65, 81, 40, 5
+	sq_note	95, 0, 69, 93, 28, 1
+	sq_note	95, 0, 79, 93, 72, 1
+	sq_beat
+	sq_note	0, 0, 72, 100, 27, 1
+	sq_beat
+	sq_note	48, 0, 69, 84, 38, 0
+	sq_note	49, 0, 72, 100, 37, 0
+	sq_beat
+	sq_note	3, 0, 69, 95, 53, 3
+	sq_note	4, 0, 72, 93, 49, 3
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0xff, 76, 78	; cell 77: song 1 track 2, 6 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4c05, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	10, 0, 74, 116, 53, 0
+	sq_beat
+	sq_note	3, 0, 74, 108, 62, 0
+	sq_beat
+	sq_note	5, 0, 74, 107, 41, 0
+	sq_note	51, 0, 75, 99, 43, 0
+	sq_beat
+	sq_note	4, 0, 77, 101, 43, 0
+	sq_note	55, 0, 74, 105, 15, 1
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 74, 104, 59, 0
+	sq_beat
+	sq_note	6, 0, 74, 109, 36, 0
+	sq_note	49, 0, 75, 101, 41, 0
+	sq_beat
+	sq_note	0, 0, 77, 101, 42, 0
+	sq_note	50, 0, 75, 104, 19, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 75, 111, 56, 0
+	sq_beat
+	sq_note	7, 0, 75, 109, 47, 0
+	sq_note	54, 0, 77, 103, 40, 0
+	sq_beat
+	sq_note	5, 0, 79, 98, 18, 0
+	sq_note	55, 0, 79, 113, 86, 0
+	sq_beat
+	sq_note	53, 0, 77, 111, 94, 0
+	sq_beat
+	sq_note	54, 0, 75, 111, 93, 0
+	sq_beat
+	sq_note	56, 0, 77, 105, 90, 0
+	sq_beat
+	sq_note	54, 0, 74, 113, 9, 1
+	sq_beat
+	sq_beat
+	sq_note	8, 0, 74, 113, 52, 0
+	sq_beat
+	sq_note	7, 0, 74, 108, 42, 0
+	sq_note	56, 0, 75, 102, 44, 0
+	sq_beat
+	sq_note	7, 0, 77, 100, 41, 0
+	sq_note	54, 0, 74, 105, 11, 1
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 74, 110, 59, 0
+	sq_beat
+	sq_note	5, 0, 74, 108, 42, 0
+	sq_note	52, 0, 75, 101, 39, 0
+	sq_beat
+	sq_note	2, 0, 77, 103, 43, 0
+	sq_note	51, 0, 75, 104, 7, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 75, 106, 58, 0
+	sq_beat
+	sq_note	7, 0, 75, 109, 35, 0
+	sq_note	48, 0, 77, 101, 45, 0
+	sq_beat
+	sq_note	3, 0, 79, 99, 20, 0
+	sq_note	55, 0, 79, 110, 84, 0
+	sq_beat
+	sq_note	55, 0, 77, 113, 65, 0
+	sq_beat
+	.byte	0x33, 0x90, 0x50	; bytes 1..3 of `sq_note	51, 0, 80, 107, 63, 0` (the event spans two cells)
 	sq_cell	0xff, 77, 79	; cell 78: song 1 track 2, 7 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4d05, 251	; events of a track not typed (see above)
+	.byte	0x6b, 0x3f, 0x00	; bytes 4..6 of `sq_note	51, 0, 80, 107, 63, 0` (the event spans two cells)
+	sq_beat
+	sq_note	53, 0, 79, 105, 12, 1
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 70, 109, 59, 0
+	sq_beat
+	sq_note	4, 0, 70, 109, 54, 0
+	sq_beat
+	sq_note	0, 0, 70, 107, 47, 0
+	sq_note	51, 0, 72, 98, 39, 0
+	sq_beat
+	sq_note	1, 0, 74, 90, 41, 0
+	sq_note	50, 0, 70, 105, 9, 1
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 70, 106, 55, 0
+	sq_beat
+	sq_note	6, 0, 70, 109, 46, 0
+	sq_note	52, 0, 72, 98, 44, 0
+	sq_beat
+	sq_note	2, 0, 74, 96, 44, 0
+	sq_note	51, 0, 72, 113, 17, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 72, 107, 68, 0
+	sq_beat
+	sq_note	4, 0, 72, 106, 39, 0
+	sq_note	52, 0, 74, 90, 34, 0
+	sq_beat
+	sq_note	0, 0, 75, 102, 20, 0
+	sq_note	51, 0, 75, 111, 93, 0
+	sq_beat
+	sq_note	48, 0, 74, 111, 93, 0
+	sq_beat
+	sq_note	50, 0, 72, 109, 91, 0
+	sq_beat
+	sq_note	53, 0, 74, 110, 30, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 70, 107, 51, 0
+	sq_beat
+	sq_note	2, 0, 70, 109, 56, 0
+	sq_beat
+	sq_note	5, 0, 70, 111, 47, 0
+	sq_note	53, 0, 72, 96, 40, 0
+	sq_beat
+	sq_note	2, 0, 74, 91, 43, 0
+	sq_note	51, 0, 70, 102, 9, 1
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 70, 106, 55, 0
+	sq_beat
+	sq_note	3, 0, 70, 106, 46, 0
+	sq_note	49, 0, 72, 96, 42, 0
+	sq_beat
+	sq_note	0, 0, 74, 96, 43, 0
+	sq_note	49, 0, 72, 110, 21, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 72, 106, 70, 0
+	sq_beat
+	sq_note	6, 0, 72, 106, 39, 0
+	sq_note	51, 0, 74, 101, 36, 0
+	sq_beat
+	sq_note	1, 0, 75, 99, 20, 0
+	sq_note	51, 0, 75, 109, 88, 0
+	sq_beat
+	.byte	0x35	; bytes 1..1 of `sq_note	53, 0, 74, 106, 88, 0` (the event spans two cells)
 	sq_cell	0xff, 78, 80	; cell 79: song 1 track 2, 8 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4e05, 251	; events of a track not typed (see above)
+	.byte	0x90, 0x4a, 0x6a, 0x58, 0x00	; bytes 2..6 of `sq_note	53, 0, 74, 106, 88, 0` (the event spans two cells)
+	sq_beat
+	sq_note	54, 0, 77, 111, 86, 0
+	sq_beat
+	sq_note	53, 0, 75, 106, 82, 0
+	sq_beat
+	sq_note	50, 0, 70, 109, 14, 1
+	sq_beat
+	sq_beat
+	sq_note	8, 0, 70, 109, 55, 0
+	sq_beat
+	sq_note	5, 0, 70, 111, 47, 0
+	sq_note	53, 0, 72, 98, 40, 0
+	sq_beat
+	sq_note	2, 0, 74, 95, 41, 0
+	sq_note	50, 0, 70, 104, 5, 1
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 70, 107, 54, 0
+	sq_beat
+	sq_note	4, 0, 70, 106, 46, 0
+	sq_note	51, 0, 72, 90, 43, 0
+	sq_note	51, 0, 73, 60, 3, 0
+	sq_beat
+	sq_note	2, 0, 74, 96, 37, 0
+	sq_note	48, 0, 72, 104, 18, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 72, 105, 39, 0
+	sq_note	53, 0, 74, 103, 36, 0
+	sq_beat
+	sq_note	0, 0, 75, 97, 18, 0
+	sq_note	50, 0, 75, 111, 3, 1
+	sq_beat
+	sq_note	53, 0, 74, 103, 95, 0
+	sq_beat
+	sq_note	55, 0, 72, 104, 89, 0
+	sq_beat
+	sq_note	56, 0, 74, 104, 85, 0
+	sq_beat
+	sq_note	53, 0, 70, 97, 6, 1
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 70, 107, 57, 0
+	sq_beat
+	sq_note	5, 0, 70, 107, 47, 0
+	sq_note	52, 0, 72, 96, 43, 0
+	sq_beat
+	sq_note	2, 0, 74, 96, 46, 0
+	sq_note	51, 0, 70, 106, 6, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 70, 107, 52, 0
+	sq_beat
+	sq_note	4, 0, 70, 107, 48, 0
+	sq_note	50, 0, 72, 96, 41, 0
+	sq_note	94, 0, 74, 96, 46, 0
+	sq_beat
+	sq_note	49, 0, 72, 110, 17, 1
+	sq_beat
+	sq_beat
+	sq_note	0, 0, 72, 105, 73, 0
+	sq_beat
+	sq_note	7, 0, 72, 100, 36, 0
+	sq_note	51, 0, 74, 101, 35, 0
+	sq_note	95, 0, 75, 102, 20, 0
 	sq_cell	0x80, 79, 81	; cell 80: song 1 track 2, 9 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x4f05, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_note	50, 0, 75, 111, 89, 0
+	sq_beat
+	sq_note	54, 0, 74, 105, 82, 0
+	sq_beat
+	sq_note	52, 0, 77, 107, 77, 0
+	sq_beat
+	sq_note	52, 0, 75, 107, 82, 0
+	sq_beat
+	sq_note	50, 0, 70, 107, 15, 1
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 70, 106, 54, 0
+	sq_beat
+	sq_note	3, 0, 70, 107, 49, 0
+	sq_note	52, 0, 72, 95, 41, 0
+	sq_beat
+	sq_note	2, 0, 74, 96, 44, 0
+	sq_note	51, 0, 70, 102, 9, 1
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 70, 105, 54, 0
+	sq_beat
+	sq_note	6, 0, 70, 106, 46, 0
+	sq_note	52, 0, 72, 93, 41, 0
+	sq_beat
+	sq_note	1, 0, 74, 95, 46, 0
+	sq_note	55, 0, 72, 108, 14, 1
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 72, 110, 70, 0
+	sq_beat
+	sq_note	7, 0, 72, 103, 38, 0
+	sq_note	51, 0, 74, 101, 36, 0
+	sq_beat
+	sq_note	1, 0, 75, 102, 20, 0
+	sq_note	52, 0, 75, 109, 92, 0
+	sq_beat
+	sq_note	58, 0, 74, 105, 88, 0
+	sq_beat
+	sq_note	57, 0, 72, 106, 87, 0
+	sq_beat
+	sq_note	55, 0, 74, 110, 79, 0
+	sq_beat
+	sq_note	50, 0, 70, 105, 10, 1
+	sq_beat
+	sq_beat
+	sq_note	7, 0, 70, 111, 52, 0
+	sq_beat
+	sq_note	4, 0, 70, 111, 48, 0
+	sq_note	52, 0, 72, 98, 42, 0
+	sq_beat
+	sq_note	2, 0, 74, 96, 41, 0
+	sq_note	48, 0, 70, 102, 14, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 70, 109, 57, 0
+	sq_beat
+	sq_note	4, 0, 70, 109, 44, 0
+	sq_note	50, 0, 72, 98, 37, 0
+	sq_note	94, 0, 74, 96, 39, 0
+	sq_beat
+	sq_note	46, 0, 72, 111, 22, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 72, 111, 70, 0
+	sq_beat
+	sq_note	3, 0, 72, 107, 41, 0
+	.byte	0x33, 0x90, 0x4a	; bytes 1..3 of `sq_note	51, 0, 74, 105, 38, 0` (the event spans two cells)
 	sq_cell	0x80, 80, 82	; cell 81: song 1 track 2, 10 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x5005, 251	; events of a track not typed (see above)
+	.byte	0x69, 0x26, 0x00	; bytes 4..6 of `sq_note	51, 0, 74, 105, 38, 0` (the event spans two cells)
+	sq_beat
+	sq_note	3, 0, 75, 104, 18, 0
+	sq_note	54, 0, 75, 109, 86, 0
+	sq_beat
+	sq_note	54, 0, 74, 107, 85, 0
+	sq_beat
+	sq_note	54, 0, 77, 110, 84, 0
+	sq_beat
+	sq_note	52, 0, 75, 109, 85, 0
+	sq_beat
+	sq_note	51, 0, 70, 111, 11, 1
+	sq_beat
+	sq_beat
+	sq_note	9, 0, 70, 109, 52, 0
+	sq_beat
+	sq_note	8, 0, 70, 109, 46, 0
+	sq_note	54, 0, 72, 96, 40, 0
+	sq_beat
+	sq_note	2, 0, 74, 96, 39, 0
+	sq_note	51, 0, 70, 104, 2, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 70, 107, 55, 0
+	sq_beat
+	sq_note	6, 0, 70, 111, 49, 0
+	sq_note	55, 0, 72, 93, 37, 0
+	sq_beat
+	sq_note	1, 0, 74, 99, 44, 0
+	sq_note	50, 0, 72, 110, 24, 1
+	sq_beat
+	sq_note	95, 0, 72, 100, 69, 0
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 72, 105, 36, 0
+	sq_note	51, 0, 74, 106, 29, 0
+	sq_beat
+	sq_note	1, 0, 75, 105, 18, 0
+	sq_note	50, 0, 75, 111, 92, 0
+	sq_beat
+	sq_note	52, 0, 74, 110, 92, 0
+	sq_beat
+	sq_note	53, 0, 72, 108, 85, 0
+	sq_beat
+	sq_note	52, 0, 74, 108, 85, 0
+	sq_beat
+	sq_note	48, 0, 70, 105, 9, 1
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 70, 109, 53, 0
+	sq_note	95, 0, 70, 107, 49, 0
+	sq_beat
+	sq_note	47, 0, 72, 97, 44, 0
+	sq_note	94, 0, 74, 97, 43, 0
+	sq_beat
+	sq_note	46, 0, 70, 104, 5, 1
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 70, 111, 58, 0
+	sq_beat
+	sq_note	6, 0, 70, 107, 49, 0
+	sq_note	53, 0, 72, 97, 39, 0
+	sq_beat
+	sq_note	1, 0, 74, 98, 44, 0
+	sq_note	49, 0, 72, 113, 15, 1
+	sq_beat
+	sq_beat
+	sq_note	1, 0, 72, 110, 72, 0
+	sq_beat
 	sq_cell	0x80, 81, 83	; cell 82: song 1 track 2, 11 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x5105, 251	; events of a track not typed (see above)
+	sq_note	5, 0, 72, 107, 46, 0
+	sq_note	54, 0, 74, 101, 33, 0
+	sq_beat
+	sq_note	4, 0, 75, 104, 20, 0
+	sq_note	54, 0, 75, 111, 84, 0
+	sq_beat
+	sq_note	54, 0, 74, 106, 82, 0
+	sq_beat
+	sq_note	53, 0, 77, 113, 70, 0
+	sq_beat
+	sq_note	55, 0, 75, 107, 72, 0
+	sq_beat
+	sq_note	53, 0, 70, 111, 10, 1
+	sq_beat
+	sq_beat
+	sq_note	9, 0, 70, 112, 53, 0
+	sq_beat
+	sq_note	4, 0, 70, 111, 43, 0
+	sq_note	50, 0, 72, 95, 42, 0
+	sq_beat
+	sq_note	1, 0, 74, 100, 40, 0
+	sq_note	49, 0, 70, 102, 7, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 70, 107, 55, 0
+	sq_beat
+	sq_note	9, 0, 70, 107, 44, 0
+	sq_note	53, 0, 72, 96, 39, 0
+	sq_beat
+	sq_note	1, 0, 74, 98, 44, 0
+	sq_note	49, 0, 72, 113, 20, 1
+	sq_beat
+	sq_beat
+	sq_note	2, 0, 72, 109, 58, 0
+	sq_beat
+	sq_note	0, 0, 72, 103, 36, 0
+	sq_note	47, 0, 74, 103, 33, 0
+	sq_beat
+	sq_note	1, 0, 75, 102, 19, 0
+	sq_note	50, 0, 75, 112, 92, 0
+	sq_beat
+	sq_note	54, 0, 74, 107, 90, 0
+	sq_beat
+	sq_note	51, 0, 72, 103, 90, 0
+	sq_beat
+	sq_note	55, 0, 74, 106, 79, 0
+	sq_beat
+	sq_note	53, 0, 70, 102, 7, 1
+	sq_beat
+	sq_beat
+	sq_note	5, 0, 70, 109, 52, 0
+	sq_beat
+	sq_note	4, 0, 70, 109, 52, 0
+	sq_note	53, 0, 72, 95, 43, 0
+	sq_beat
+	sq_note	5, 0, 74, 98, 39, 0
+	sq_note	51, 0, 70, 102, 5, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 70, 109, 57, 0
+	sq_beat
+	sq_note	5, 0, 70, 109, 43, 0
+	sq_note	49, 0, 72, 95, 40, 0
+	sq_note	94, 0, 74, 99, 44, 0
+	sq_beat
+	sq_note	48, 0, 72, 116, 16, 1
 	sq_cell	0x80, 82, 65535	; cell 83: song 1 track 2, 12 of 12
-	.incbin	"02MOMENT.sqt.p2.ref", 0x5205, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 72, 111, 51, 0
+	sq_beat
+	sq_note	0, 0, 72, 107, 41, 0
+	sq_note	47, 0, 74, 105, 36, 0
+	sq_beat
+	sq_note	1, 0, 75, 107, 17, 0
+	sq_note	48, 0, 75, 109, 84, 0
+	sq_beat
+	sq_note	52, 0, 74, 107, 85, 0
+	sq_beat
+	sq_note	53, 0, 77, 113, 85, 0
+	sq_beat
+	sq_note	55, 0, 75, 111, 80, 0
+	sq_beat
+	sq_note	49, 0, 70, 106, 11, 1
+	sq_beat
+	sq_beat
+	sq_note	9, 0, 70, 107, 50, 0
+	sq_beat
+	sq_note	7, 0, 70, 111, 51, 0
+	sq_note	54, 0, 72, 92, 42, 0
+	sq_beat
+	sq_note	5, 0, 74, 97, 37, 0
+	sq_note	50, 0, 70, 102, 1, 1
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 70, 107, 50, 0
+	sq_beat
+	sq_note	5, 0, 70, 111, 43, 0
+	sq_note	51, 0, 72, 99, 41, 0
+	sq_beat
+	sq_note	1, 0, 74, 99, 41, 0
+	sq_note	50, 0, 72, 113, 46, 216
+	sq_beat
+	sq_end
+	.fill	119, 1, 0x00	; after the end of track
 	sq_cell	0x80, 0, 85	; cell 84: song 1 track 3, 1 of 3
 	sq_beat
 	sq_beat
@@ -12264,17 +13201,707 @@ P_02MOMENT_SQT_p2:
 	sq_end
 	.fill	115, 1, 0xff	; after the end of track
 	sq_cell	0x80, 0, 217	; cell 216: song 1 track 10, 1 of 6
-	.fill	251, 1, 0x81
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0x80, 216, 218	; cell 217: song 1 track 10, 2 of 6
-	.incbin	"02MOMENT.sqt.p2.ref", 0xd805, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	90, 0, 82, 105, 42, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	43, 0, 79, 104, 45, 0
+	sq_note	90, 0, 80, 102, 51, 0
+	sq_beat
+	sq_note	45, 0, 82, 101, 84, 0
+	sq_beat
+	sq_note	42, 0, 87, 97, 6, 1
+	sq_beat
+	sq_note	45, 0, 89, 100, 4, 1
+	sq_beat
+	sq_note	49, 0, 91, 93, 78, 0
+	sq_beat
+	sq_note	51, 0, 82, 104, 91, 1
+	sq_beat
+	sq_beat
+	sq_note	44, 0, 80, 104, 20, 0
+	sq_note	67, 0, 79, 103, 25, 0
+	sq_note	92, 0, 77, 101, 43, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	43, 0, 79, 101, 57, 0
+	sq_note	94, 0, 80, 96, 47, 0
+	sq_beat
+	sq_note	47, 0, 82, 96, 82, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 79, 103, 59, 0
+	sq_beat
+	sq_note	1, 0, 80, 96, 49, 0
+	.byte	0x32, 0x90, 0x52	; bytes 1..3 of `sq_note	50, 0, 82, 102, 92, 0` (the event spans two cells)
 	sq_cell	0x80, 217, 219	; cell 218: song 1 track 10, 3 of 6
-	.incbin	"02MOMENT.sqt.p2.ref", 0xd905, 251	; events of a track not typed (see above)
+	.byte	0x66, 0x5c, 0x00	; bytes 4..6 of `sq_note	50, 0, 82, 102, 92, 0` (the event spans two cells)
+	sq_beat
+	sq_note	42, 0, 87, 94, 11, 1
+	sq_beat
+	sq_note	46, 0, 89, 95, 6, 1
+	sq_beat
+	sq_note	49, 0, 91, 95, 0, 1
+	sq_beat
+	sq_beat
+	sq_note	11, 0, 82, 102, 35, 1
+	sq_beat
+	sq_note	46, 0, 80, 101, 18, 0
+	sq_note	69, 0, 79, 103, 23, 0
+	sq_note	95, 0, 77, 103, 89, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 79, 105, 46, 0
+	sq_note	94, 0, 80, 99, 47, 0
+	sq_beat
+	sq_note	47, 0, 82, 99, 78, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 79, 106, 54, 0
+	sq_beat
+	sq_note	4, 0, 80, 96, 44, 0
+	sq_note	48, 0, 82, 102, 92, 0
+	sq_beat
+	sq_note	44, 0, 87, 99, 4, 1
+	sq_beat
+	sq_note	43, 0, 89, 98, 2, 1
+	sq_beat
+	sq_note	46, 0, 91, 93, 2, 1
+	sq_beat
+	sq_note	48, 0, 82, 95, 8, 2
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 80, 106, 19, 0
+	sq_note	74, 0, 79, 101, 25, 0
+	sq_beat
+	sq_note	2, 0, 77, 101, 28, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 79, 103, 53, 0
+	sq_beat
+	sq_note	1, 0, 80, 95, 49, 0
+	sq_note	50, 0, 82, 99, 65, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	52, 0, 79, 104, 51, 0
+	sq_note	95, 0, 80, 95, 47, 0
+	sq_beat
+	sq_note	47, 0, 82, 99, 91, 0
+	sq_beat
+	sq_note	44, 0, 87, 95, 4, 1
+	sq_beat
+	sq_note	45, 0, 89, 94, 0, 1
+	sq_beat
+	sq_note	47, 0, 91, 90, 95, 0
+	sq_beat
+	sq_note	47, 0, 82, 95, 2, 2
+	sq_beat
+	sq_beat
+	sq_note	46, 0, 80, 105, 19, 0
+	sq_note	69, 0, 79, 96, 21, 0
+	sq_note	90, 0, 77, 101, 70, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 79, 104, 41, 0
+	sq_beat
 	sq_cell	0x80, 218, 220	; cell 219: song 1 track 10, 4 of 6
-	.incbin	"02MOMENT.sqt.p2.ref", 0xda05, 251	; events of a track not typed (see above)
+	sq_note	1, 0, 80, 99, 47, 0
+	sq_note	49, 0, 82, 97, 65, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 79, 107, 40, 0
+	sq_note	95, 0, 80, 95, 50, 0
+	sq_beat
+	sq_note	50, 0, 82, 105, 88, 0
+	sq_beat
+	sq_note	50, 0, 87, 99, 1, 1
+	sq_beat
+	sq_note	48, 0, 89, 95, 0, 1
+	sq_beat
+	sq_note	49, 0, 91, 93, 91, 0
+	sq_beat
+	sq_note	49, 0, 82, 95, 0, 2
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 80, 104, 16, 0
+	sq_note	70, 0, 79, 98, 21, 0
+	sq_note	93, 0, 77, 101, 74, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	41, 0, 79, 97, 47, 0
+	sq_note	92, 0, 80, 97, 49, 0
+	sq_beat
+	sq_note	48, 0, 82, 96, 95, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 79, 99, 54, 0
+	sq_note	52, 0, 81, 93, 11, 0
+	sq_note	95, 0, 80, 97, 45, 0
+	sq_beat
+	sq_note	48, 0, 82, 101, 2, 1
+	sq_beat
+	sq_note	50, 0, 87, 91, 5, 1
+	sq_beat
+	sq_note	53, 0, 89, 96, 93, 0
+	sq_beat
+	sq_note	51, 0, 91, 90, 89, 0
+	sq_beat
+	sq_note	47, 0, 82, 95, 5, 2
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 80, 102, 18, 0
+	sq_note	72, 0, 79, 100, 21, 0
+	sq_note	93, 0, 77, 100, 0, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	4, 0, 79, 105, 44, 0
+	sq_note	48, 0, 80, 102, 44, 0
+	sq_note	94, 0, 82, 97, 42, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 79, 103, 56, 0
+	sq_beat
+	sq_note	2, 0, 80, 97, 49, 0
+	sq_note	51, 0, 82, 102, 92, 0
+	sq_beat
+	sq_note	52, 0, 87, 99, 3, 1
+	sq_beat
+	sq_note	55, 0, 89, 90, 92, 0
+	sq_beat
+	sq_note	52, 0, 91, 95, 93, 0
+	sq_beat
+	.byte	0x31	; bytes 1..1 of `sq_note	49, 0, 82, 96, 94, 1` (the event spans two cells)
 	sq_cell	0x80, 219, 221	; cell 220: song 1 track 10, 5 of 6
-	.incbin	"02MOMENT.sqt.p2.ref", 0xdb05, 251	; events of a track not typed (see above)
+	.byte	0x90, 0x52, 0x60, 0x5e, 0x01	; bytes 2..6 of `sq_note	49, 0, 82, 96, 94, 1` (the event spans two cells)
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 80, 104, 18, 0
+	sq_note	67, 0, 79, 96, 21, 0
+	sq_note	91, 0, 77, 101, 39, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 79, 100, 44, 0
+	sq_beat
+	sq_note	0, 0, 80, 92, 46, 0
+	sq_note	48, 0, 82, 96, 93, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	47, 0, 79, 95, 54, 0
+	sq_note	88, 0, 80, 95, 53, 0
+	sq_beat
+	sq_note	44, 0, 82, 99, 50, 1
+	sq_beat
+	sq_note	91, 0, 87, 95, 54, 0
+	sq_beat
+	sq_note	47, 0, 89, 93, 1, 1
+	sq_beat
+	sq_note	48, 0, 91, 92, 95, 0
+	sq_beat
+	sq_note	47, 0, 82, 99, 7, 2
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 80, 105, 22, 0
+	sq_note	71, 0, 79, 96, 27, 0
+	sq_beat
+	sq_note	2, 0, 77, 99, 87, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	49, 0, 79, 95, 48, 0
+	sq_beat
+	sq_note	0, 0, 80, 97, 50, 0
+	sq_note	50, 0, 82, 94, 84, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	45, 0, 79, 100, 54, 0
+	sq_note	91, 0, 80, 94, 46, 0
+	sq_beat
+	sq_note	42, 0, 82, 96, 94, 0
+	sq_beat
+	sq_note	42, 0, 87, 85, 95, 0
+	sq_beat
+	sq_note	39, 0, 89, 93, 9, 1
+	sq_beat
+	sq_note	48, 0, 91, 89, 4, 1
+	sq_beat
+	sq_note	49, 0, 82, 92, 94, 1
+	sq_beat
+	sq_beat
+	sq_note	43, 0, 80, 99, 27, 0
+	sq_note	70, 0, 79, 96, 23, 0
+	sq_note	94, 0, 77, 96, 93, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	51, 0, 79, 99, 45, 0
+	sq_beat
+	sq_note	1, 0, 80, 99, 54, 0
+	sq_note	53, 0, 82, 85, 32, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 79, 97, 49, 0
+	sq_beat
+	.byte	0x00, 0x90, 0x50, 0x60	; bytes 1..4 of `sq_note	0, 0, 80, 96, 46, 0` (the event spans two cells)
 	sq_cell	0x80, 220, 65535	; cell 221: song 1 track 10, 6 of 6
-	.incbin	"02MOMENT.sqt.p2.ref", 0xdc05, 251	; events of a track not typed (see above)
+	.byte	0x2e, 0x00	; bytes 5..6 of `sq_note	0, 0, 80, 96, 46, 0` (the event spans two cells)
+	sq_note	46, 0, 82, 101, 90, 0
+	sq_beat
+	sq_note	43, 0, 87, 91, 93, 0
+	sq_beat
+	sq_note	37, 0, 89, 91, 9, 1
+	sq_beat
+	sq_note	44, 0, 91, 89, 3, 1
+	sq_beat
+	sq_note	47, 0, 82, 99, 10, 2
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 80, 102, 25, 0
+	sq_note	74, 0, 79, 99, 24, 0
+	sq_beat
+	sq_note	0, 0, 77, 96, 10, 2
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	50, 0, 79, 103, 43, 0
+	sq_note	93, 0, 80, 99, 54, 0
+	sq_beat
+	sq_note	51, 0, 82, 99, 74, 1
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_note	56, 0, 79, 103, 53, 0
+	sq_beat
+	sq_note	3, 0, 80, 89, 46, 0
+	sq_note	50, 0, 82, 99, 95, 0
+	sq_beat
+	sq_note	50, 0, 87, 87, 88, 0
+	sq_beat
+	sq_note	40, 0, 89, 88, 92, 0
+	sq_beat
+	sq_note	38, 0, 91, 89, 95, 0
+	sq_beat
+	sq_note	39, 0, 82, 92, 57, 216
+	sq_beat
+	sq_end
+	.fill	119, 1, 0x00	; after the end of track
 	sq_cell	0xff, 0, 223	; cell 222: song 1 track 11, 1 of 15
 	sq_beat
 	sq_beat

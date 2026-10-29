@@ -35,6 +35,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_program_s as G     # noqa: E402  (disasm_function, encoder, name_target)
 import gen_symbols as GS      # noqa: E402  (find_tables)
 import table_segments as TS   # noqa: E402  (what each directory segment is)
+import table_png as TP        # noqa: E402  (raw pictures <-> indexed PNG files)
+import gen_table_styles as TST  # noqa: E402  (the "Technics Rhythms" style data)
+import gen_table_voices as TV   # noqa: E402  (the 'JK' internal voice archive)
 
 BASE = 0x48000000
 
@@ -117,12 +120,34 @@ def put_jpeg(jpg_dir, name, jpeg):
     open(path, "wb").write(jpeg)
 
 
-def gui_resource_tables(d, s, e, ROMQ):
+OUT_DIR = "src"                 # the directory of the source being written (main() sets it)
+PNG_OUT = "build/table_png"     # where `make` puts the bytes tools/table_png.py makes from the PNGs
+
+
+def png_item(jpg_dir, rel, fmt, raw, what):
+    """Keep `raw` as the PNG <jpg_dir>/<rel>.png (tools/table_png.py) and return the
+    .incbin line of the bytes `make` rebuilds from it."""
+    TP.write_item(os.path.join(jpg_dir, rel + ".png"), fmt, raw)
+    return (f'    .incbin\t"{PNG_OUT}/{rel}.bin"   # census: generated -- tools/table_png.py '
+            f"from {jpg_dir}/{rel}.png ({what})")
+
+
+def tail_lines(d, a, b):
+    """Bytes after an item up to the next one: zero fill, or 0xFF up to a 4-byte boundary."""
+    gap = d[a:b]
+    if gap and gap == b"\xff" * len(gap) and len(gap) < 4 and b % 4 == 0:
+        return ["    .align\t4, 0xff"]
+    assert gap == bytes(b - a), f"GUI tables: unexpected bytes at 0x{a:x}..0x{b:x}"
+    return [f"    .space\t{b - a}, 0x00"] if b > a else []
+
+
+def gui_resource_tables(d, s, e, ROMQ, jpg_dir):
     """Segment 0: five header words (four table pointers and a 0) copied out by
     InitializeResource, zeros, then the four tables. The bitmap, frame-piece and icon
     tables are {s16 width, s16 height, u8 *pixels} rows ended by an all-zero row, the
     font table 0x14-byte descriptors ended by an all-zero one; then the pixel and
-    glyph data the rows point at. All pointers are CPU addresses."""
+    glyph data the rows point at, each item a PNG in <jpg_dir>/gui/ (tools/table_png.py).
+    All pointers are CPU addresses."""
     tabs = ["ResBitmapTable", "ResFrameTable", "ResIconTable", "ResFontTable"]
     ptrs = [u32(d, s + 4 * k) for k in range(5)]
     offs = [p - BASE for p in ptrs[:4]]
@@ -134,27 +159,15 @@ def gui_resource_tables(d, s, e, ROMQ):
         assert d[cur:to] == bytes(to - cur), f"GUI tables: non-zero bytes at 0x{cur:x}"
         return [f"    .space\t0x{to - cur:x}, 0x00"] if to > cur else []
 
-    def blobs(names, end):
-        """Each pointed-at block once, under its first name, up to the next one."""
-        first = {}
-        for p, nm in names:
-            first.setdefault(p, nm)
-        keys = sorted(first)
-        out = []
-        for n, p in enumerate(keys):
-            nxt = keys[n + 1] if n + 1 < len(keys) else end
-            out += [f"{first[p]}:", f"    .incbin_range\t{ROMQ}, 0x{p - BASE:06x}, 0x{nxt - BASE:06x}"]
-        return out, keys
-
     bounds = offs + [e]
     for t, (tab, o) in enumerate(zip(tabs, offs)):
         B += fill(o)
         B.append(f"{tab}:")
         hi = BASE + bounds[t + 1]
-        names = []
+        items = []                                   # (cpu address, label, size, png rel, fmt, what)
         if tab != "ResFontTable":
-            stem = {"ResBitmapTable": "ResBitmap", "ResFrameTable": "ResFrame",
-                    "ResIconTable": "ResIcon"}[tab]
+            stem, file = {"ResBitmapTable": ("ResBitmap", "bitmap"), "ResFrameTable": ("ResFrame", "frame"),
+                          "ResIconTable": ("ResIcon", "icon")}[tab]
             rows = []
             while True:
                 w, h, p = struct.unpack_from("<hhI", d, o + 8 * len(rows))
@@ -162,37 +175,68 @@ def gui_resource_tables(d, s, e, ROMQ):
                     break
                 assert BASE + o < p < hi, f"{tab}[{len(rows)}] points outside its table's area"
                 rows.append((w, h, p))
-            names = [(p, f"{stem}{k:03d}") for k, (w, h, p) in enumerate(rows)]
             first = {}
-            for p, nm in names:
-                first.setdefault(p, nm)              # a shared block keeps the first row's name
+            for k, (w, h, p) in enumerate(rows):
+                if p in first:
+                    continue                         # a shared block keeps the first row's name
+                first[p] = f"{stem}{k:03d}"
+                if stem == "ResIcon":                # DrawIcons_Impl: always 24 x 24, 4 bpp
+                    items.append((p, first[p], 288, f"gui/{file}_{k:03d}", "p4 24 24", "24x24, 4 bpp"))
+                else:                                # one byte per pixel, rows padded to even
+                    items.append((p, first[p], (w + (w & 1)) * h, f"gui/{file}_{k:03d}",
+                                  f"p8 {w} {h}", f"{w}x{h}, 8 bpp"))
             for w, h, p in rows:
                 B += [f"    .word\t{w}, {h}", f"    .long\t{first[p]}"]
-            k = len(rows)
             B.append("    .long\t0, 0   # end of the table")
-            cur = o + 8 * (k + 1)
+            cur = o + 8 * (len(rows) + 1)
         else:
-            k = 0
+            k, fonts = 0, []
             while True:
                 w, h, desc, cols, gl, kern, dbcs = struct.unpack_from("<HHhHIII", d, o + 0x14 * k)
                 if gl == 0:
                     assert d[o + 0x14 * k:o + 0x14 * (k + 1)] == bytes(0x14), "font table end"
                     break
-                names.append((gl, f"ResFont{k:02d}Glyphs"))
-                row = [f"ResFont{k:02d}Glyphs"]
-                for q, nm in ((kern, f"ResFont{k:02d}Kern"), (dbcs, f"ResFont{k:02d}Sjis")):
-                    if q:
-                        assert BASE + o < q < hi, f"font {k}: pointer outside the table's area"
-                        names.append((q, nm))
-                    row.append(nm if q else "0")
+                assert dbcs == 0, f"font {k}: a Shift-JIS table (not handled)"
+                row = [f"ResFont{k:02d}Glyphs", f"ResFont{k:02d}Kern" if kern else "0", "0"]
                 B += [f"    .word\t{w}, {h}, {desc}, {cols}", f"    .long\t{', '.join(row)}"]
+                fonts.append((k, w, h, cols, gl, kern))
                 k += 1
             B.append("    .space\t0x14, 0x00   # end of the table")
             cur = o + 0x14 * (k + 1)
-        lo = min(p for p, _ in names) - BASE
-        B += fill(lo)
-        bl, _keys = blobs(names, hi)
-        B += bl
+            starts = sorted([f[4] for f in fonts] + [f[5] for f in fonts if f[5]]) + [hi]
+            nxt = lambda p: starts[starts.index(p) + 1]          # noqa: E731
+            for k, w, h, cols, gl, kern in fonts:
+                if kern:                             # proportional: {u8 width, 0, u16 offset} from 0x20
+                    n = (nxt(kern) - kern) // 4
+                    ents = [struct.unpack_from("<BBH", d, kern - BASE + 4 * c) for c in range(n)]
+                    offs_k = [x[2] for x in ents] + [nxt(gl) - gl]
+                    assert offs_k == sorted(offs_k) and offs_k[0] == 0, f"font {k}: glyphs out of order"
+                    widths = [(offs_k[c + 1] - offs_k[c]) // h for c in range(n)]
+                    assert all((offs_k[c + 1] - offs_k[c]) % h == 0 for c in range(n))
+                    fmt = f"font 0 {h} {n} columns={','.join(map(str, widths))}"
+                    items.append((gl, f"ResFont{k:02d}Glyphs", offs_k[-1], f"gui/font_{k:02d}", fmt,
+                                  f"{n} proportional 1-bpp glyphs from 0x20, {h} high"))
+                    items.append((kern, f"ResFont{k:02d}Kern", 4 * n, None, ents, None))
+                else:
+                    n = (nxt(gl) - gl) // (cols * h)
+                    items.append((gl, f"ResFont{k:02d}Glyphs", n * cols * h, f"gui/font_{k:02d}",
+                                  f"font {cols} {h} {n}", f"{n} 1-bpp glyphs from 0x20, {8 * cols}x{h}"))
+        items.sort()
+        B += fill(items[0][0] - BASE)
+        for n_, (p, lab, size, rel, fmt, what) in enumerate(items):
+            end = items[n_ + 1][0] if n_ + 1 < len(items) else hi
+            a = p - BASE
+            assert a + size <= end - BASE, f"{lab}: overlaps the next item"
+            B.append(f"{lab}:")
+            if rel is None:                          # a kern table
+                B.append("    # {u8 advance width, u8 0, u16 offset of the glyph from ResFontNNGlyphs}")
+                for c, (wd, z, off) in enumerate(fmt):
+                    ch = chr(0x20 + c)
+                    shown = repr(ch) if 0x20 + c < 0x7F else f"0x{0x20 + c:02x}"
+                    B += [f"    .byte\t{wd}, {z}", f"    .word\t{off}   # {shown}"]
+            else:
+                B.append(png_item(jpg_dir, rel, fmt, d[a:a + size], what))
+            B += tail_lines(d, a + size, end - BASE)
         cur = bounds[t + 1]
     return B
 
@@ -215,6 +259,11 @@ def item_file(it):
     if not 4 <= n <= len(it) or it[n:] != bytes(len(it) - n):
         return None
     return kind, it[:n], len(it) - n
+
+
+def label_slot(label):
+    """-> the directory slot whose segment carries `label` (build 84's names)."""
+    return next(i for i, v in TS.SEGMENTS.items() if v[0] == label)
 
 
 def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
@@ -246,8 +295,22 @@ def offset_group(d, s, e, label, ROMQ, jpg_dir, group):
         if len(users) > 1:
             B.append(f"# slots {', '.join(map(str, users))}")
         B.append(f"{lab}:")
-        f = item_file(it) if subdir else None
-        if f:
+        f = item_file(it) if subdir and label_slot(label) not in TS.PNG_GROUPS else None
+        png = TS.PNG_GROUPS.get(label_slot(label))
+        if png:
+            slot = int(lab[len(prefix):])
+            if png[0] == "b1":
+                w, h = png[1], png[2]
+                size, fmt, what = w * h // 8, f"b1 {w} {h}", f"{w}x{h}, 1 bpp"
+            else:
+                rb = png[1][slot]
+                h = len(it) // rb
+                size, fmt, what = rb * h, f"p2 {4 * rb} {h}", f"{4 * rb}x{h}, 2 bpp"
+            B.append(png_item(jpg_dir, f"{subdir}/{slot:02d}", fmt, it[:size], what))
+            assert it[size:] == bytes(len(it) - size), f"{lab}: non-zero bytes after the picture"
+            if len(it) > size:
+                B.append(f"    .space\t{len(it) - size}, 0x00")
+        elif f:
             kind, data, pad = f
             slot = int(lab[len(prefix):])
             fn = f"{subdir}/{slot:02d}_{stems[slot]}.{kind}"
@@ -417,9 +480,35 @@ def directory_image(d, dirents, ROMQ, jpg_dir, other, compare_label):
             assert b"\0" not in text, f"segment {i} ({label}): a NUL inside the marker text"
             B.append(f"    {op}\t" + asm_string(text).replace("\\x0a", "\\n"))
         elif kind == "gui":
-            B += gui_resource_tables(d, s, e, ROMQ)
+            B += gui_resource_tables(d, s, e, ROMQ, jpg_dir)
         elif kind == "help":
             B += help_texts(d, s, e, label)
+        elif kind == "tpad":
+            B += TST.tpad_container(d, s, e, label)
+        elif kind == "tcmp":
+            B += TST.tcmp_container(d, s, e, label)
+        elif kind == "zzzj":
+            B += TST.sram_record_defaults(d, s, e, label)
+        elif kind == "voices":
+            body = TV.internal_voice_archive(d, s, e, label, ROMQ.strip('"'))
+            rel = os.path.join(jpg_dir, "voices", "internal_archive.s")
+            text = "\n".join(["# (c) 2026 Felipe Correa da Silva Sanches <juca@members.fsf.org>",
+                              "# Licensed under the terms of the GNU General Public License v3 or later",
+                              "#", "# Table segment 6, the INTERNAL 'JK' voice archive (InternalVoiceArchive).",
+                              "# GENERATED by tools/gen_table_voices.py (make table-src); format notes in",
+                              "# notes/table-semantics-2026-10-29.md.", ""] + body) + "\n"
+            if build != "84":     # its passthroughs name this build's reference image: beside its source
+                rel = os.path.join(OUT_DIR, "internal_voice_archive.s")
+            os.makedirs(os.path.dirname(rel), exist_ok=True)
+            open(rel, "w").write(text)
+            B.append(f'    .include\t"{rel}"')
+        elif kind == "pads":
+            B += TST.technics_pads(d, s, e, label, jpg_dir, build)
+        elif kind == "styles":
+            B += TST.style_subtable(d, s, e, label, jpg_dir, build)
+        elif kind == "rhythms":
+            ss = dirents[59]
+            B += TST.rhythms_copy(d, s, e, label, TST.subtable_names(d, ss))
         elif kind == "offtab":
             B += offset_group(d, s, e, label, ROMQ, jpg_dir, TS.GROUPS[i])
         else:
@@ -445,6 +534,8 @@ def main():
     ap.add_argument("--unidasm", default=os.environ.get("UNIDASM", "../../mame-sony-video/unidasm"))
     a = ap.parse_args()
 
+    global OUT_DIR
+    OUT_DIR = os.path.dirname(a.out)
     d = open(a.rom, "rb").read()
     ROMQ = f'"{a.rom}"'
     dirents = directory(d)
@@ -488,7 +579,8 @@ def main():
         body.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{len(d):06X}")
     body.append(f".org 0x{len(d):06x}   # end of image")
 
-    L += ["", ".equ TABLE_ROM_BASE, 0x48000000",
+    L += ["", f'.include "{TST.MACROS}"   # the style format\'s record and event macros',
+          "", ".equ TABLE_ROM_BASE, 0x48000000",
           ".mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)"]
     if equ:
         L += ["", f"# {len(equ)} symbols referenced by the plug-in source (CPU addresses)"]
@@ -568,6 +660,122 @@ def emit_code(d, base, clo, chi, starts, names, notes, ROMQ, used):
             else:
                 B.append(f"    .byte {hexbytes(bs)}   # {mn} {ops}".rstrip())
     return B, nconv, nfail
+
+
+def _asm_str(bs):
+    return "".join("\\" + chr(c) if chr(c) in '"\\' else chr(c) if 0x20 <= c < 0x7F else f"\\x{c:02x}"
+                   for c in bs)
+
+
+def typed_gap(d, lo, hi, base, ptr_ok, nm_or_hex):
+    """The bytes d[lo:hi] between recognised strings and pointer tables, as typed rows:
+    0x00/0xFF fill as .space, NUL-terminated text as .asciz, UTF-16LE character tables
+    (the C runtime's and the naming dialogs' character sets) as .word rows, 4-aligned
+    pointers into the image as .long, 8-aligned IEEE doubles (the printf/strtod power
+    tables) as .long lo, hi with the value, anything else as a commented .byte row.
+    -> None when more than a tenth of the gap (and over 16 bytes) is not understood:
+    the caller then keeps the gap a passthrough, which the census still counts."""
+    out, o, unknown = [], lo, 0
+
+    def printable(c):
+        return 0x20 <= c < 0x7F
+
+    def is_double(p):
+        if p % 4 or p + 8 > hi:
+            return False
+        v = struct.unpack_from("<d", d, p)[0]
+        return v == v and 1e-300 < abs(v) < 1e300 and float(f"{v:.15g}") == v
+
+    while o < hi:
+        b = d[o]
+        cls = d[o + 1:o + 129]
+        if o + 129 <= hi and b == 0 and cls[0x20] == 0xA0 and cls[0x30] == 0x8C and cls[0x41] == 0x89 \
+                and cls[0x61] == 0x8A and cls[0] == 0x10:
+            out.append("    # the C runtime's character-class table (ctype): an entry for EOF, then one")
+            out.append("    # per character 0x00-0x7F: 0x10 control, 0x30 control + space, 0xA0 blank,")
+            out.append("    # 0xC0 punctuation, 0x8C digit, 0x89 / 0x81 upper (hex / other), 0x8A / 0x82 lower")
+            out.append("    .byte 0x00   # EOF")
+            for i in range(0, 128, 16):
+                out.append(f"    .byte {hexbytes(cls[i:i + 16])}   # 0x{i:02x}-0x{i + 15:02x}")
+            o += 129
+            continue
+        if b in (0x00, 0xFF):
+            e = o
+            while e < hi and d[e] == b:
+                if b == 0 and is_double(e):
+                    break                    # a double's zero low bytes are not fill
+                e += 1
+            if e == o:                       # a double starts right here
+                e = o + 8
+                lo32, hi32 = struct.unpack_from("<II", d, o)
+                out.append(f"    .long 0x{lo32:08X}, 0x{hi32:08X}   # double {struct.unpack_from('<d', d, o)[0]:.15g}")
+                o = e
+                continue
+            out.append(f"    .space {e - o}, 0x{b:02X}")
+            o = e
+            continue
+        if o % 4 == 0 and o + 4 <= hi and ptr_ok(struct.unpack_from("<I", d, o)[0]):
+            out.append(f"    .long {nm_or_hex(struct.unpack_from('<I', d, o)[0])}")
+            o += 4
+            continue
+        e = o
+        while e < hi and printable(d[e]):
+            e += 1
+        if e - o >= 2 and e < hi and d[e] == 0:
+            out.append(f'    .asciz "{_asm_str(d[o:e])}"')
+            o = e + 1
+            continue
+        if True:
+            e = o
+            while e + 2 <= hi and printable(d[e]) and d[e + 1] == 0:
+                e += 2
+            if e - o >= 2:
+                chars = d[o:e:2]
+                for i in range(0, len(chars), 16):
+                    seg = chars[i:i + 16]
+                    out.append(f"    .word {', '.join(f'0x{c:04X}' for c in seg)}   "
+                               f"# UTF-16 \"{_asm_str(seg).replace('#', '?')}\"")
+                o = e
+                continue
+        if o % 4 == 0 and o + 8 <= hi:
+            if is_double(o):
+                rows = []
+                while is_double(o) or (o % 4 == 0 and o + 8 <= hi and   # inside a table: any finite value
+                                       1e-300 < abs(struct.unpack_from("<d", d, o)[0]) < 1e300):
+                    v = struct.unpack_from("<d", d, o)[0]
+                    lo32, hi32 = struct.unpack_from("<II", d, o)
+                    rows.append(f"    .long 0x{lo32:08X}, 0x{hi32:08X}   # double {v!r}")
+                    o += 8
+                out += rows
+                continue
+        if o % 4 == 0 and o + 4 <= hi and ptr_ok(struct.unpack_from("<I", d, o)[0]):
+            out.append(f"    .long {nm_or_hex(struct.unpack_from('<I', d, o)[0])}")
+            o += 4
+            continue
+        if o % 4 == 0 and o + 16 <= hi:   # a run of u32 words that differ only in their low byte
+            w0 = struct.unpack_from("<I", d, o)[0]
+            e = o
+            while e + 4 <= hi and struct.unpack_from("<I", d, e)[0] >> 8 == w0 >> 8 and w0 >> 8:
+                e += 4
+            if e - o >= 16:
+                for p in range(o, e, 4):
+                    out.append(f"    .long 0x{struct.unpack_from('<I', d, p)[0]:08X}   # u32 table (CPU 0x{base + p:08X})")
+                o = e
+                continue
+        if o % 4 == 0 and o + 4 <= hi and 0 < struct.unpack_from("<I", d, o)[0] < 0x10000:
+            out.append(f"    .long 0x{struct.unpack_from('<I', d, o)[0]:08X}")
+            o += 4
+            continue
+        e = o + 1
+        while e < hi and d[e] not in (0x00, 0xFF) and not (e % 4 == 0 and e + 4 <= hi and
+                                                            ptr_ok(struct.unpack_from("<I", d, e)[0])):
+            e += 1
+        out.append(f"    .byte {hexbytes(d[o:e])}   # data (CPU 0x{base + o:08X})")
+        unknown += e - o
+        o = e
+    if unknown > 16 and unknown * 10 > hi - lo:
+        return None                          # mostly not understood: the caller keeps it raw
+    return out
 
 
 def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
@@ -652,11 +860,13 @@ def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
         if o < cur:
             continue
         if cur < o:
-            B.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{o:06X}")
+            B.extend(typed_gap(d, cur, o, BASE, lambda w: BASE + plo <= w < BASE + phi, nm_or_hex)
+                     or [f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{o:06X}"])
         B += rows
         cur = end
     if cur < foot:
-        B.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{foot:06X}")
+        B.extend(typed_gap(d, cur, foot, BASE, lambda w: BASE + plo <= w < BASE + phi, nm_or_hex)
+                 or [f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{foot:06X}"])
     B += [f"# XaprFooter  (CPU 0x{BASE + foot:08X})",
           f"    .byte {hexbytes(d[foot:phi])}   # '{text(d[foot:phi])}' magic (checked by PlugInProbe)"]
 

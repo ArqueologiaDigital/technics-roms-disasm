@@ -389,8 +389,8 @@ DL_Error24ItIsImpossibleToAssignTwo:
 ; 0xF2DE6B-0xF2DE88 -- 2 records, 30 bytes -- interpreter B
 ; ------------------------------------------------------------------
 DL_F2DE6B:
-	dlb_string	var=0x2881, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_ARhythmTrackAlreadyExists, width=31, x=24, y=60
-	dlb_string	var=0x2881, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_TracksToRhythmTracksToChord, width=18, x=24, y=140
+	dlb_string	var=MessageScreen_Arg, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_ARhythmTrackAlreadyExists, width=31, x=24, y=60
+	dlb_string	var=MessageScreen_Arg, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_TracksToRhythmTracksToChord, width=18, x=24, y=140
 
 ; ------------------------------------------------------------------
 ; 0xF2DE89-0xF2DEE5 -- string table, 3 entries of 31 bytes
@@ -1566,8 +1566,8 @@ DL_Error24EsIstNichtMGlichZweiSpuren:
 ; 0xF2F857-0xF2F874 -- 2 records, 30 bytes -- interpreter B
 ; ------------------------------------------------------------------
 DL_F2F857:
-	dlb_string	var=0x2881, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_ARhythmTrackAlreadyExists, width=0, x=24, y=60
-	dlb_string	var=0x2881, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_TracksToRhythmTracksToChord, width=0, x=24, y=140
+	dlb_string	var=MessageScreen_Arg, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_ARhythmTrackAlreadyExists, width=0, x=24, y=60
+	dlb_string	var=MessageScreen_Arg, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, table=DLTable_TracksToRhythmTracksToChord, width=0, x=24, y=140
 
 ; ------------------------------------------------------------------
 ; 0xF2F875-0xF2F8CD -- 3 records, 89 bytes -- interpreter A

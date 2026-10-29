@@ -107,6 +107,7 @@ DROP_CMT = [
     re.compile(r'^\+0x[0-9A-Fa-f]{2} .*$'),
     re.compile(r'^\+\d+\s.*$'),
     re.compile(r'^([0-9A-Fa-f]{6}\s+)?(character|glyph) codes below 0x20$'),
+    re.compile(r'^operand bytes the handler does not read$'),   # an A-layout remark; every macro field is read
 ]
 
 
@@ -336,6 +337,8 @@ class Ctx:
         sources already spell that address so (e.g. DisplayListB_Stage+1); else the number."""
         if isinstance(v, str):
             return v
+        if v == 0:
+            return "DLB_NoVariable"         # mask 0 with address 0: include/wsa1_gui.inc
         if v in self.ram:
             return self.ram[v]
         if v in self.ram_spelled:

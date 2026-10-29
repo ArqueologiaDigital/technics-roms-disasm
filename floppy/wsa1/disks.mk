@@ -14,3 +14,10 @@ wsa1_SHA1_mcompos := fcaa6cfddee7606ee132dcb1cd964c5c1997cfb3
 wsa1_SHA1_myset   := 0bf2cf2e5de6b304d91d679b592cd51dadb7224a
 wsa1_SHA1_qsdisk  := 25647ca46a15b54e04afbf405b091b9d9f35b03d
 wsa1_SHA1_synth   := 904d69c1c79a48e7a691180898bc76591a24ca30
+
+# The .TM records are content-addressed include files shared by every disk (wsa1/formats.py,
+# describe_tm): start each regeneration from an empty directory so none is left stale.
+src-wsa1: | wsa1-tm-clean
+.PHONY: wsa1-tm-clean
+wsa1-tm-clean:
+	rm -rf -- wsa1/include/tm

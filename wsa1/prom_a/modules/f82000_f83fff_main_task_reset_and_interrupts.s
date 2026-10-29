@@ -1991,7 +1991,7 @@ INTT1_Tick:
 .LF82D7C:
 	cp	(PanelMode:16), 0x0d                     ; F82D7C  c1 78 20 3f 0d
 	jr Z,.LF82D9B                                 ; F82D81  66 18
-	bit	2, (0x7f34:16)                        ; F82D83  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; F82D83  f1 34 7f ca
 	jr Z,.LF82D9B                                 ; F82D87  66 12
 	bit	2, (MidiCfg_ModeBits:16)                        ; F82D89  f1 32 7f ca
 	jr NZ,.LF82D9B                                ; F82D8D  6e 0c
@@ -2296,7 +2296,7 @@ INTTR4_SequencerTick:
 	ld	(TransportB_State:8), a                               ; F82F64  f0 96 41
 	cp	(PanelMode:16), 0x0d                     ; F82F67  c1 78 20 3f 0d
 	jr z, .LF82F86                                ; F82F6C  66 18
-	bit	2, (0x7f34:16)                        ; F82F6E  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; F82F6E  f1 34 7f ca
 	jr z, .LF82F86                                ; F82F72  66 12
 	bit	2, (MidiCfg_ModeBits:16)                        ; F82F74  f1 32 7f ca
 	jr nz, .LF82F86                               ; F82F78  6e 0c
@@ -2326,7 +2326,7 @@ INTTR4_SequencerTick:
 	ld (TransportC_State:8), 0x10:io                               ; F82FA8  08 95 10
 	cp	(PanelMode:16), 0x0d                     ; F82FAB  c1 78 20 3f 0d
 	jr z, .LF82FCA                                ; F82FB0  66 18
-	bit	2, (0x7f34:16)                        ; F82FB2  f1 34 7f ca
+	bit	2, (MidiFilter_Realtime:16)                        ; F82FB2  f1 34 7f ca
 	jr z, .LF82FCA                                ; F82FB6  66 12
 	bit	2, (MidiCfg_ModeBits:16)                        ; F82FB8  f1 32 7f ca
 	jr nz, .LF82FCA                               ; F82FBC  6e 0c

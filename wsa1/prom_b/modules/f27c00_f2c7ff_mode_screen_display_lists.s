@@ -656,17 +656,18 @@ DLTable_F286F3:
 
 
 ; ------------------------------------------------------------------
-; 0xF286F9-0xF28724 -- 4 display-list records, 44 bytes -- interpreter A
+; 0xF286F9-0xF28724 -- 4 display-list records, 44 bytes -- interpreter B
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  B: notes/prom_b_dl_length_audit.py's walk from the call sites attributes all 4 records to B (rule 'audit').
 ; the one remaining shape-1 site notes/prom_b_dl_call_shapes.py found
 ; still `.incbin` (site 0xF90FBB in prom_a).  Regenerate:
 ; python3 notes/gen_prom_b_dl_shape1_gap_f286f9.py --splice
 ; ------------------------------------------------------------------
 ModeScreen_PaintDirtyFields2_DL1:
 ; drawn (start operand) by ModeScreen_PaintDirtyFields2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28725	; operand bytes the handler does not read
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28735	; operand bytes the handler does not read
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28745	; operand bytes the handler does not read
-	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28755	; operand bytes the handler does not read
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28725
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F28735
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28745
+	dlb_rect_entry	var=UI_DrawScratch, mask=0x01, shift=0, svc=LCDSVC_FillRect, table=DLTable_F28755
 
 
 ; ------------------------------------------------------------------
@@ -1445,7 +1446,7 @@ DL_F29765:
 	dlb_string	var=UI_DrawScratch+2, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=Value_AsciiDigits, width=3, x=264, y=98
 Paint_C0mbinati0nM0dePage2Sound1_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound1 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x76df, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=12, y=48
+	dlb_string_xy	var=CombiPart_SoundBank, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=12, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=12, y=58, digits=3
 
 ; === COVER-R1 0xF297A0-0xF29863 ===
@@ -1558,36 +1559,36 @@ DLText_PartCodes:
 ; ------------------------------------------------------------------
 Paint_C0mbinati0nM0dePage2Sound2_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x771f, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=52, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+1*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=52, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=52, y=58, digits=3
 Paint_C0mbinati0nM0dePage2Sound3_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound3 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x775f, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=92, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+2*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=92, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=92, y=58, digits=3
 Paint_C0mbinati0nM0dePage2Sound4_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound4 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x779f, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=132, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+3*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=132, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=132, y=58, digits=3
 Paint_C0mbinati0nM0dePage2Sound5_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound5 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x77df, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=172, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+4*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=172, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=172, y=58, digits=3
 Paint_C0mbinati0nM0dePage2Sound6_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound6 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x781f, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=212, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+5*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=212, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=212, y=58, digits=3
 Paint_C0mbinati0nM0dePage2Sound7_DL:
 ; ; drawn (start operand) by Paint_C0mbinati0nM0dePage2Sound7 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x785f, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=252, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+6*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=252, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=252, y=58, digits=3
 C0mbinati0nM0de_DrawPart8Sound_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart8Sound -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x789f, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=292, y=48
+	dlb_string_xy	var=CombiPart_SoundBank+7*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PartCodes, width=3, x=292, y=48
 	dlb_number_xy	var=UI_DrawScratch, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, x=292, y=58, digits=3
 C0mbinati0nM0de_DrawPart1Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart1Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x76af, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29944
-	dlb_rect_entry	var=0x76af, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29954
+	dlb_rect_entry	var=CombiPart_Flags, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29944
+	dlb_rect_entry	var=CombiPart_Flags, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29954
 
 ; ==================================================================
 ; 0xF29944-0xF29963 -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1631,8 +1632,8 @@ DLTable_F29954:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart2Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart2Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x76ef, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F2997A
-	dlb_rect_entry	var=0x76ef, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F2998A
+	dlb_rect_entry	var=CombiPart_Flags+1*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F2997A
+	dlb_rect_entry	var=CombiPart_Flags+1*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F2998A
 
 ; ==================================================================
 ; 0xF2997A-0xF29999 -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1676,8 +1677,8 @@ DLTable_F2998A:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart3Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart3Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x772f, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F299B0
-	dlb_rect_entry	var=0x772f, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F299C0
+	dlb_rect_entry	var=CombiPart_Flags+2*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F299B0
+	dlb_rect_entry	var=CombiPart_Flags+2*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F299C0
 
 ; ==================================================================
 ; 0xF299B0-0xF299CF -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1721,8 +1722,8 @@ DLTable_F299C0:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart4Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart4Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x776f, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F299E6
-	dlb_rect_entry	var=0x776f, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F299F6
+	dlb_rect_entry	var=CombiPart_Flags+3*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F299E6
+	dlb_rect_entry	var=CombiPart_Flags+3*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F299F6
 
 ; ==================================================================
 ; 0xF299E6-0xF29A05 -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1766,8 +1767,8 @@ DLTable_F299F6:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart5Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart5Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x77af, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29A1C
-	dlb_rect_entry	var=0x77af, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29A2C
+	dlb_rect_entry	var=CombiPart_Flags+4*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29A1C
+	dlb_rect_entry	var=CombiPart_Flags+4*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29A2C
 
 ; ==================================================================
 ; 0xF29A1C-0xF29A3B -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1811,8 +1812,8 @@ DLTable_F29A2C:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart6Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart6Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x77ef, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29A52
-	dlb_rect_entry	var=0x77ef, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29A62
+	dlb_rect_entry	var=CombiPart_Flags+5*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29A52
+	dlb_rect_entry	var=CombiPart_Flags+5*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29A62
 
 ; ==================================================================
 ; 0xF29A52-0xF29A71 -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1856,8 +1857,8 @@ DLTable_F29A62:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart7Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart7Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x782f, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29A88
-	dlb_rect_entry	var=0x782f, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29A98
+	dlb_rect_entry	var=CombiPart_Flags+6*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29A88
+	dlb_rect_entry	var=CombiPart_Flags+6*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29A98
 
 ; ==================================================================
 ; 0xF29A88-0xF29AA7 -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1901,8 +1902,8 @@ DLTable_F29A98:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart8Int_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart8Int -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x786f, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29ABE
-	dlb_rect_entry	var=0x786f, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29ACE
+	dlb_rect_entry	var=CombiPart_Flags+7*0x40, mask=0x20, shift=5, svc=LCDSVC_EraseRect, table=DLTable_F29ABE
+	dlb_rect_entry	var=CombiPart_Flags+7*0x40, mask=0x20, shift=5, svc=LCDSVC_FillRect, table=DLTable_F29ACE
 
 ; ==================================================================
 ; 0xF29ABE-0xF29ADD -- display-list OPERAND TABLES (32 bytes, 2 objects)
@@ -1946,52 +1947,52 @@ DLTable_F29ACE:
 ; ------------------------------------------------------------------
 C0mbinati0nM0de_DrawPart1Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart1Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x76aa, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=10, y=123
+	dlb_string_xy	var=CombiPart_Pan, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=10, y=123
 C0mbinati0nM0de_DrawPart2Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart2Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x76ea, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=50, y=123
+	dlb_string_xy	var=CombiPart_Pan+1*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=50, y=123
 C0mbinati0nM0de_DrawPart3Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart3Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x772a, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=90, y=123
+	dlb_string_xy	var=CombiPart_Pan+2*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=90, y=123
 C0mbinati0nM0de_DrawPart4Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart4Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x776a, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=130, y=123
+	dlb_string_xy	var=CombiPart_Pan+3*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=130, y=123
 C0mbinati0nM0de_DrawPart5Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart5Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x77aa, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=170, y=123
+	dlb_string_xy	var=CombiPart_Pan+4*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=170, y=123
 C0mbinati0nM0de_DrawPart6Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart6Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x77ea, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=210, y=123
+	dlb_string_xy	var=CombiPart_Pan+5*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=210, y=123
 C0mbinati0nM0de_DrawPart7Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart7Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x782a, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=250, y=123
+	dlb_string_xy	var=CombiPart_Pan+6*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=250, y=123
 C0mbinati0nM0de_DrawPart8Pan_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart8Pan -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x786a, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=290, y=123
+	dlb_string_xy	var=CombiPart_Pan+7*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_PanL64CtrR63, width=3, x=290, y=123
 C0mbinati0nM0de_DrawPart1Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart1Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x76a5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=10, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=10, y=167, digits=3
 C0mbinati0nM0de_DrawPart2Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart2Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x76e5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=50, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+1*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=50, y=167, digits=3
 C0mbinati0nM0de_DrawPart3Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart3Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x7725, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=90, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+2*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=90, y=167, digits=3
 C0mbinati0nM0de_DrawPart4Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart4Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x7765, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=130, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+3*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=130, y=167, digits=3
 C0mbinati0nM0de_DrawPart5Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart5Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x77a5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=170, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+4*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=170, y=167, digits=3
 C0mbinati0nM0de_DrawPart6Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart6Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x77e5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=210, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+5*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=210, y=167, digits=3
 C0mbinati0nM0de_DrawPart7Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart7Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x7825, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=250, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+6*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=250, y=167, digits=3
 C0mbinati0nM0de_DrawPart8Vol_DL:
 ; ; drawn (start operand) by C0mbinati0nM0de_DrawPart8Vol -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_number_xy	var=0x7865, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=290, y=167, digits=3
+	dlb_number_xy	var=CombiPart_Volume+7*0x40, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x8Packed, x=290, y=167, digits=3
 
 ; --- 0xF29BC6-0xF2ADD1: not converted ---
 ; --- 0xF29BC6-0xF29C09: 17-entry pointer table, 4 bytes/entry, stride 0xE6 ---
@@ -3060,7 +3061,7 @@ DL_CombinationGroupMenuReMap1:
 ; 0xF2AF81-0xF2B12F -- 50 display-list records, 431 bytes -- interpreter A
 ; SELF-FRAMING: no call site found for this span, but DL.walk()'s
 ; op/len walk from 0xF2AF81 lands with ZERO DRIFT exactly on 0xF2B130,
-; and every opcode resolves to a documented interpreter-A handler.
+; and every opcode resolves to a documented interpreter-A handler -- but see the CORRECTED line above.
 ; notes/gen_prom_b_selfframing_incbin_module.py
 ; ------------------------------------------------------------------
 Draw_SoundGroupMenuReMap1ReMap2_DL:
@@ -3194,7 +3195,7 @@ DL_SoundGroupMenuReMap1ReMap2:
 ; plus BOTH endpoints being proven independently -- it starts where the
 ; previous object provably ends and lands on an address a pointer names.
 ; ------------------------------------------------------------------
-	dlb_rect_entry	var=0x2674, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F2B2F9
+	dlb_rect_entry	var=SoundGroup_PreviousBank, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F2B2F9
 	dlb_rect_entry	var=SoundSel_Bank, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=DLTable_F2B2F9
 
 ; ------------------------------------------------------------------
@@ -3228,7 +3229,7 @@ DLTable_F2B2F9:
 ;   ends used:  0xF2B38F
 ; ------------------------------------------------------------------
 DL_F2B379:
-	dlb_rect_entry	var=0x2674, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=Data_F2B38F
+	dlb_rect_entry	var=SoundGroup_PreviousBank, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=Data_F2B38F
 	dlb_rect_entry	var=SoundSel_Bank, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=Data_F2B38F
 
 ; === COVER-R1 0xF2B38F-0xF2B574 ===

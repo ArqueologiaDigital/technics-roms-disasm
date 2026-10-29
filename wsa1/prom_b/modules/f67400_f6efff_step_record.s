@@ -2593,7 +2593,7 @@ StepRecord_BuildPrevMeasureRow_Skip:
 	ld	(4052:16), wa	; F68390  ld (0x0fd4),WA
 	ld	(4054:16), iy	; F68394  ld (0x0fd6),IY
 	calr	StepRecord_ReadScanEvent_Veneer	; F68398  calr 0xf6746c
-	ld	xix, 4114	; F6839B  ld XIX,0x00001012
+	ld	xix, StepRecord_PrevRowText	; F6839B  ld XIX,0x00001012
 	calr	StepRecord_SetRowEventFlags_Nop	; F683A0  calr 0xf68574
 	ld	c, 0:opc	; F683A3  ld C,0x00
 	calr	StepRecord_SetRowEventFlags	; F683A5  calr 0xf68504
@@ -2667,7 +2667,7 @@ StepRecord_BuildCurrentMeasureRow_Skip:
 	and	wa, 255	; F6842F  and WA,0x00ff
 	ld	(4054:16), wa	; F68433  ld (0x0fd6),WA
 	calr	StepRecord_ReadScanEvent_Veneer	; F68437  calr 0xf6746c
-	ld	xix, 4144	; F6843A  ld XIX,0x00001030
+	ld	xix, StepRecord_CurrentRowText	; F6843A  ld XIX,0x00001030
 	calr	StepRecord_SetRowEventFlags_Nop	; F6843F  calr 0xf68574
 	ld	c, 2:opc	; F68442  ld C,0x02
 	calr	StepRecord_SetRowEventFlags	; F68444  calr 0xf68504
@@ -2731,7 +2731,7 @@ StepRecord_BuildNextMeasureRow_Skip2:
 	ld	(4052:16), wa	; F684B6  ld (0x0fd4),WA
 	ld	(4054:16), iy	; F684BA  ld (0x0fd6),IY
 	calr	StepRecord_ReadScanEvent_Veneer	; F684BE  calr 0xf6746c
-	ld	xix, 4174	; F684C1  ld XIX,0x0000104e
+	ld	xix, StepRecord_NextRowText	; F684C1  ld XIX,0x0000104e
 	calr	StepRecord_SetRowEventFlags_Nop	; F684C6  calr 0xf68574
 	ld	c, 4:opc	; F684C9  ld C,0x04
 	calr	StepRecord_SetRowEventFlags	; F684CB  calr 0xf68504
@@ -2868,7 +2868,7 @@ StepRecord_SetRowEventFlags_Nop:
 ;   StepRecord_BlankCurrentRowText (0x1030). Basis: caller + body + twin. (notes/naming-
 ;   pilot-2026-10-06/proposals_wave6_u.json)
 StepRecord_BlankPrevRowText:
-	ld	xix, 4114	; F68575  ld XIX,0x00001012
+	ld	xix, StepRecord_PrevRowText	; F68575  ld XIX,0x00001012
 	calr	Text_FillSpaces30	; F6857A  calr 0xf68590
 	ret	; F6857D  ret
 
@@ -2888,7 +2888,7 @@ StepRecord_BlankPrevRowText:
 ;   (0x104E) do for the previous and next rows. That row's '(n/4)' suffix goes at 0x1030 + 15. Basis: caller + body.
 ;   (notes/naming-pilot-2026-10-06/proposals_wave5_r.json)
 StepRecord_BlankCurrentRowText:
-	ld	xix, 4144	; F6857E  ld XIX,0x00001030
+	ld	xix, StepRecord_CurrentRowText	; F6857E  ld XIX,0x00001030
 	calr	Text_FillSpaces30	; F68583  calr 0xf68590
 	ret	; F68586  ret
 
@@ -2907,7 +2907,7 @@ StepRecord_BlankCurrentRowText:
 ;   (Text_FillSpaces30); StepRecord_BuildNextMeasureRow calls it first. Twin of StepRecord_BlankCurrentRowText
 ;   (0x1030). Basis: caller + body + twin. (notes/naming-pilot-2026-10-06/proposals_wave6_u.json)
 StepRecord_BlankNextRowText:
-	ld	xix, 4174	; F68587  ld XIX,0x0000104e
+	ld	xix, StepRecord_NextRowText	; F68587  ld XIX,0x0000104e
 	calr	Text_FillSpaces30	; F6858C  calr 0xf68590
 	ret	; F6858F  ret
 

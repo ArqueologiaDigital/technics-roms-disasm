@@ -3,8 +3,7 @@
 
 	.include	"kn_song.inc"
 
-; 249 cells of 256 bytes.  Tracks typed event by event: 12 of 13.
-; song 1 track 8 (27 cells from 87): not typed, status 0xe0 at +1248: a data byte >= 0x80
+; 249 cells of 256 bytes.  Tracks typed event by event: 13 of 13.
 P_01PIANOD_SQT_p2:
 	sq_cell	0xa1, 0, 2	; cell 1: song 1 track 1, 1 of 6
 	sq_beat
@@ -6064,59 +6063,1924 @@ P_01PIANOD_SQT_p2:
 	sq_end
 	.fill	57, 1, 0x81	; after the end of track
 	sq_cell	0x80, 0, 88	; cell 87: song 1 track 8, 1 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5605, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_bend	79, 0, 0, 60
+	sq_bend	79, 0, 64, 56
+	sq_bend	81, 0, 64, 52
+	sq_bend	83, 0, 64, 46
+	sq_bend	87, 0, 0, 38
+	sq_bend	90, 0, 0, 27
+	sq_bend	90, 0, 0, 18
+	sq_bend	91, 0, 0, 9
+	sq_bend	95, 0, 0, 3
+	sq_beat
+	sq_bend	0, 0, 0, 0
+	sq_note	2, 0, 91, 121, 45, 2
+	sq_bend	12, 0, 0, 5
+	sq_bend	15, 0, 0, 11
+	sq_bend	18, 0, 0, 20
+	sq_bend	18, 0, 0, 30
+	sq_bend	21, 0, 0, 41
+	sq_bend	23, 0, 64, 50
+	sq_bend	27, 0, 64, 56
+	sq_bend	28, 0, 64, 61
+	sq_bend	28, 0, 0, 64
+	sq_cc	45, 0, 3, 1, 3
+	sq_cc	49, 0, 3, 1, 7
+	sq_cc	51, 0, 3, 1, 11
+	sq_cc	51, 0, 3, 1, 15
+	sq_cc	54, 0, 3, 1, 19
+	sq_cc	57, 0, 3, 1, 23
+	sq_cc	59, 0, 3, 1, 25
+	sq_cc	62, 0, 3, 1, 29
+	.byte	0x41	; bytes 1..1 of `sq_cc	65, 0, 3, 1, 32` (the event spans two cells)
 	sq_cell	0x80, 87, 89	; cell 88: song 1 track 8, 2 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5705, 251	; events of a track not typed (see above)
+	.byte	0xb0, 0x03, 0x01, 0x20	; bytes 2..5 of `sq_cc	65, 0, 3, 1, 32` (the event spans two cells)
+	sq_cc	65, 0, 3, 1, 34
+	sq_cc	67, 0, 3, 1, 37
+	sq_cc	70, 0, 3, 1, 40
+	sq_cc	73, 0, 3, 1, 43
+	sq_cc	75, 0, 3, 1, 46
+	sq_cc	75, 0, 3, 1, 49
+	sq_cc	78, 0, 3, 1, 52
+	sq_cc	81, 0, 3, 1, 55
+	sq_cc	83, 0, 3, 1, 58
+	sq_cc	87, 0, 3, 1, 61
+	sq_cc	87, 0, 3, 1, 63
+	sq_cc	90, 0, 3, 1, 66
+	sq_cc	92, 0, 3, 1, 68
+	sq_cc	95, 0, 3, 1, 70
+	sq_beat
+	sq_cc	2, 0, 3, 1, 72
+	sq_cc	2, 0, 3, 1, 74
+	sq_cc	5, 0, 3, 1, 76
+	sq_cc	7, 0, 3, 1, 77
+	sq_cc	10, 0, 3, 1, 79
+	sq_cc	13, 0, 3, 1, 80
+	sq_cc	15, 0, 3, 1, 81
+	sq_cc	15, 0, 3, 1, 82
+	sq_cc	19, 0, 3, 1, 83
+	sq_cc	21, 0, 3, 1, 84
+	sq_cc	23, 0, 3, 1, 85
+	sq_cc	26, 0, 3, 1, 87
+	sq_cc	26, 0, 3, 1, 89
+	sq_cc	29, 0, 3, 1, 91
+	sq_cc	32, 0, 3, 1, 92
+	sq_cc	35, 0, 3, 1, 94
+	sq_cc	38, 0, 3, 1, 95
+	sq_cc	38, 0, 3, 1, 96
+	sq_cc	46, 0, 3, 1, 99
+	sq_cc	54, 0, 3, 1, 101
+	sq_cc	73, 0, 3, 1, 102
+	sq_beat
+	sq_cc	2, 0, 3, 1, 96
+	sq_cc	2, 0, 3, 1, 91
+	sq_cc	5, 0, 3, 1, 85
+	sq_cc	7, 0, 3, 1, 77
+	sq_cc	10, 0, 3, 1, 68
+	sq_cc	13, 0, 3, 1, 60
+	sq_cc	13, 0, 3, 1, 52
+	sq_cc	15, 0, 3, 1, 43
+	sq_cc	18, 0, 3, 1, 33
+	sq_cc	21, 0, 3, 1, 21
+	sq_cc	23, 0, 3, 1, 10
+	sq_cc	23, 0, 3, 1, 0
+	sq_note	56, 0, 89, 104, 43, 0
+	sq_beat
+	.byte	0x03, 0x90, 0x57	; bytes 1..3 of `sq_note	3, 0, 87, 98, 34, 0` (the event spans two cells)
 	sq_cell	0xef, 88, 90	; cell 89: song 1 track 8, 3 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5805, 251	; events of a track not typed (see above)
+	.byte	0x62, 0x22, 0x00	; bytes 4..6 of `sq_note	3, 0, 87, 98, 34, 0` (the event spans two cells)
+	sq_bend	46, 0, 64, 57
+	sq_bend	46, 0, 0, 53
+	sq_bend	49, 0, 64, 45
+	sq_bend	51, 0, 0, 36
+	sq_note	55, 0, 86, 104, 10, 3
+	sq_bend	55, 0, 64, 25
+	sq_bend	58, 0, 0, 16
+	sq_bend	58, 0, 0, 7
+	sq_bend	60, 0, 0, 1
+	sq_bend	63, 0, 0, 0
+	sq_bend	71, 0, 0, 3
+	sq_bend	74, 0, 0, 11
+	sq_bend	77, 0, 0, 24
+	sq_bend	79, 0, 0, 37
+	sq_bend	79, 0, 64, 53
+	sq_bend	82, 0, 0, 64
+	sq_beat
+	sq_cc	6, 0, 3, 1, 9
+	sq_cc	7, 0, 3, 1, 13
+	sq_cc	11, 0, 3, 1, 16
+	sq_cc	13, 0, 3, 1, 19
+	sq_cc	16, 0, 3, 1, 21
+	sq_cc	16, 0, 3, 1, 24
+	sq_cc	19, 0, 3, 1, 26
+	sq_cc	22, 0, 3, 1, 29
+	sq_cc	25, 0, 3, 1, 31
+	sq_cc	27, 0, 3, 1, 33
+	sq_cc	27, 0, 3, 1, 34
+	sq_cc	30, 0, 3, 1, 36
+	sq_cc	33, 0, 3, 1, 37
+	sq_cc	35, 0, 3, 1, 38
+	sq_cc	43, 0, 3, 1, 40
+	sq_cc	63, 0, 3, 1, 38
+	sq_cc	83, 0, 3, 1, 40
+	sq_cc	87, 0, 3, 1, 42
+	sq_beat
+	sq_cc	0, 0, 3, 1, 44
+	sq_cc	14, 0, 3, 1, 43
+	sq_cc	23, 0, 3, 1, 41
+	sq_cc	44, 0, 3, 1, 40
+	sq_cc	53, 0, 3, 1, 37
+	sq_beat
+	sq_cc	8, 0, 3, 1, 34
+	sq_cc	11, 0, 3, 1, 31
+	sq_cc	11, 0, 3, 1, 28
+	sq_cc	13, 0, 3, 1, 25
+	sq_cc	17, 0, 3, 1, 22
+	sq_cc	19, 0, 3, 1, 19
+	sq_cc	22, 0, 3, 1, 15
+	sq_cc	22, 0, 3, 1, 12
+	sq_cc	25, 0, 3, 1, 10
+	sq_cc	27, 0, 3, 1, 7
+	sq_cc	31, 0, 3, 1, 4
+	sq_cc	33, 0, 3, 1, 1
+	.byte	0x21, 0xb0, 0x03, 0x01	; bytes 1..4 of `sq_cc	33, 0, 3, 1, 0` (the event spans two cells)
 	sq_cell	0xef, 89, 91	; cell 90: song 1 track 8, 4 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5905, 251	; events of a track not typed (see above)
+	.byte	0x00	; bytes 5..5 of `sq_cc	33, 0, 3, 1, 0` (the event spans two cells)
+	sq_beat
+	sq_bend	75, 0, 0, 61
+	sq_bend	77, 0, 64, 57
+	sq_bend	77, 0, 0, 53
+	sq_bend	80, 0, 64, 44
+	sq_bend	83, 0, 0, 34
+	sq_bend	86, 0, 0, 21
+	sq_bend	89, 0, 0, 8
+	sq_bend	89, 0, 0, 0
+	sq_beat
+	sq_note	3, 0, 89, 114, 72, 0
+	sq_bend	16, 0, 0, 24
+	sq_bend	20, 0, 0, 39
+	sq_bend	22, 0, 64, 52
+	sq_bend	25, 0, 64, 59
+	sq_bend	28, 0, 0, 64
+	sq_cc	47, 0, 3, 1, 9
+	sq_cc	51, 0, 3, 1, 14
+	sq_cc	51, 0, 3, 1, 19
+	sq_cc	53, 0, 3, 1, 24
+	sq_cc	55, 0, 3, 1, 29
+	sq_cc	59, 0, 3, 1, 33
+	sq_cc	61, 0, 3, 1, 37
+	sq_cc	65, 0, 3, 1, 41
+	sq_cc	65, 0, 3, 1, 45
+	sq_cc	67, 0, 3, 1, 47
+	sq_cc	69, 0, 3, 1, 49
+	sq_cc	71, 0, 3, 1, 51
+	sq_cc	75, 0, 3, 1, 52
+	sq_cc	86, 0, 3, 1, 47
+	sq_cc	86, 0, 3, 1, 42
+	sq_cc	89, 0, 3, 1, 35
+	sq_cc	91, 0, 3, 1, 26
+	sq_cc	95, 0, 3, 1, 17
+	sq_beat
+	sq_cc	1, 0, 3, 1, 6
+	sq_cc	1, 0, 3, 1, 0
+	sq_note	5, 0, 89, 109, 60, 0
+	sq_note	95, 0, 89, 111, 48, 0
+	sq_beat
+	sq_note	48, 0, 87, 101, 45, 0
+	sq_beat
+	sq_note	2, 0, 86, 96, 28, 0
+	sq_bend	36, 0, 64, 57
+	sq_bend	42, 0, 0, 52
+	sq_bend	42, 0, 0, 43
+	sq_bend	45, 0, 0, 33
+	sq_bend	48, 0, 0, 23
+	sq_note	49, 0, 84, 108, 80, 1
+	sq_bend	51, 0, 0, 15
+	sq_bend	54, 0, 0, 9
+	sq_bend	54, 0, 0, 6
+	sq_bend	65, 0, 0, 22
+	sq_bend	65, 0, 0, 32
+	sq_bend	67, 0, 0, 44
+	sq_bend	70, 0, 0, 54
+	sq_bend	73, 0, 0, 61
+	sq_bend	75, 0, 0, 64
+	.byte	0x53	; bytes 1..1 of `sq_cc	83, 0, 3, 1, 7` (the event spans two cells)
 	sq_cell	0xef, 90, 92	; cell 91: song 1 track 8, 5 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5a05, 251	; events of a track not typed (see above)
+	.byte	0xb0, 0x03, 0x01, 0x07	; bytes 2..5 of `sq_cc	83, 0, 3, 1, 7` (the event spans two cells)
+	sq_cc	87, 0, 3, 1, 15
+	sq_cc	87, 0, 3, 1, 23
+	sq_cc	89, 0, 3, 1, 30
+	sq_cc	92, 0, 3, 1, 37
+	sq_cc	95, 0, 3, 1, 44
+	sq_beat
+	sq_cc	1, 0, 3, 1, 50
+	sq_cc	5, 0, 3, 1, 56
+	sq_cc	7, 0, 3, 1, 62
+	sq_cc	7, 0, 3, 1, 68
+	sq_cc	10, 0, 3, 1, 74
+	sq_cc	13, 0, 3, 1, 79
+	sq_cc	15, 0, 3, 1, 84
+	sq_cc	15, 0, 3, 1, 89
+	sq_cc	19, 0, 3, 1, 94
+	sq_cc	20, 0, 3, 1, 99
+	sq_cc	23, 0, 3, 1, 102
+	sq_cc	26, 0, 3, 1, 106
+	sq_cc	26, 0, 3, 1, 110
+	sq_cc	29, 0, 3, 1, 113
+	sq_cc	33, 0, 3, 1, 117
+	sq_cc	35, 0, 3, 1, 119
+	sq_cc	38, 0, 3, 1, 122
+	sq_cc	40, 0, 3, 1, 123
+	sq_cc	40, 0, 3, 1, 127
+	sq_cc	92, 0, 3, 1, 123
+	sq_cc	95, 0, 3, 1, 120
+	sq_cc	95, 0, 3, 1, 117
+	sq_beat
+	sq_cc	2, 0, 3, 1, 113
+	sq_cc	5, 0, 3, 1, 109
+	sq_cc	7, 0, 3, 1, 104
+	sq_cc	10, 0, 3, 1, 100
+	sq_cc	13, 0, 3, 1, 95
+	sq_cc	13, 0, 3, 1, 90
+	sq_cc	15, 0, 3, 1, 84
+	sq_cc	18, 0, 3, 1, 79
+	sq_cc	21, 0, 3, 1, 73
+	sq_cc	24, 0, 3, 1, 68
+	sq_cc	24, 0, 3, 1, 61
+	sq_cc	27, 0, 3, 1, 55
+	sq_cc	30, 0, 3, 1, 47
+	sq_cc	32, 0, 3, 1, 41
+	sq_cc	35, 0, 3, 1, 34
+	sq_cc	35, 0, 3, 1, 27
+	sq_cc	38, 0, 3, 1, 20
+	sq_cc	40, 0, 3, 1, 12
+	sq_cc	43, 0, 3, 1, 5
+	sq_cc	46, 0, 3, 1, 0
+	sq_beat
+	sq_beat
+	sq_bend	87, 0, 0, 191
+	sq_bend	87, 0, 64, 48
 	sq_cell	0xff, 91, 93	; cell 92: song 1 track 8, 6 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5b05, 251	; events of a track not typed (see above)
+	sq_bend	91, 0, 64, 34
+	sq_bend	93, 0, 0, 17
+	sq_beat
+	sq_bend	0, 0, 0, 0
+	sq_note	4, 0, 84, 116, 1, 1
+	sq_bend	25, 0, 0, 32
+	sq_bend	25, 0, 64, 50
+	sq_bend	27, 0, 0, 64
+	sq_cc	49, 0, 3, 1, 5
+	sq_cc	49, 0, 3, 1, 9
+	sq_cc	52, 0, 3, 1, 13
+	sq_cc	55, 0, 3, 1, 16
+	sq_cc	58, 0, 3, 1, 20
+	sq_cc	60, 0, 3, 1, 22
+	sq_cc	63, 0, 3, 1, 24
+	sq_cc	63, 0, 3, 1, 26
+	sq_cc	66, 0, 3, 1, 28
+	sq_cc	69, 0, 3, 1, 29
+	sq_cc	76, 0, 3, 1, 24
+	sq_cc	79, 0, 3, 1, 21
+	sq_cc	82, 0, 3, 1, 15
+	sq_cc	84, 0, 3, 1, 9
+	sq_cc	84, 0, 3, 1, 1
+	sq_cc	84, 0, 3, 1, 0
+	sq_beat
+	sq_note	10, 0, 86, 105, 37, 0
+	sq_note	55, 0, 87, 102, 49, 1
+	sq_beat
+	sq_beat
+	sq_bend	83, 0, 64, 60
+	sq_bend	86, 0, 64, 55
+	sq_bend	86, 0, 64, 47
+	sq_bend	88, 0, 0, 34
+	sq_bend	91, 0, 0, 15
+	sq_bend	94, 0, 0, 0
+	sq_beat
+	sq_note	9, 0, 87, 110, 81, 0
+	sq_bend	23, 0, 0, 32
+	sq_bend	26, 0, 0, 49
+	sq_bend	26, 0, 64, 59
+	sq_bend	28, 0, 0, 64
+	sq_cc	37, 0, 3, 1, 8
+	sq_cc	39, 0, 3, 1, 15
+	sq_cc	42, 0, 3, 1, 21
+	sq_cc	45, 0, 3, 1, 26
+	sq_cc	47, 0, 3, 1, 31
+	sq_cc	47, 0, 3, 1, 34
+	sq_cc	53, 0, 3, 1, 38
+	sq_cc	53, 0, 3, 1, 41
+	sq_cc	55, 0, 3, 1, 43
+	sq_cc	58, 0, 3, 1, 44
+	sq_cc	69, 0, 3, 1, 39
+	sq_cc	73, 0, 3, 1, 35
+	sq_cc	73, 0, 3, 1, 30
+	sq_cc	75, 0, 3, 1, 23
+	sq_cc	78, 0, 3, 1, 16
+	.byte	0x50, 0xb0, 0x03	; bytes 1..3 of `sq_cc	80, 0, 3, 1, 8` (the event spans two cells)
 	sq_cell	0xe5, 92, 94	; cell 93: song 1 track 8, 7 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5c05, 251	; events of a track not typed (see above)
+	.byte	0x01, 0x08	; bytes 4..5 of `sq_cc	80, 0, 3, 1, 8` (the event spans two cells)
+	sq_cc	83, 0, 3, 1, 0
+	sq_beat
+	sq_note	3, 0, 89, 106, 43, 0
+	sq_note	50, 0, 91, 102, 90, 0
+	sq_beat
+	sq_note	50, 0, 89, 108, 79, 0
+	sq_beat
+	sq_note	40, 0, 87, 105, 35, 0
+	sq_bend	92, 0, 64, 54
+	sq_bend	95, 0, 0, 46
+	sq_beat
+	sq_bend	2, 0, 0, 33
+	sq_bend	2, 0, 0, 18
+	sq_bend	5, 0, 0, 4
+	sq_note	7, 0, 87, 105, 36, 2
+	sq_bend	7, 0, 0, 0
+	sq_bend	23, 0, 0, 14
+	sq_bend	27, 0, 0, 29
+	sq_bend	27, 0, 0, 44
+	sq_bend	29, 0, 0, 55
+	sq_bend	32, 0, 0, 63
+	sq_bend	35, 0, 0, 64
+	sq_cc	46, 0, 3, 1, 4
+	sq_cc	49, 0, 3, 1, 6
+	sq_cc	49, 0, 3, 1, 9
+	sq_cc	51, 0, 3, 1, 11
+	sq_cc	55, 0, 3, 1, 13
+	sq_cc	57, 0, 3, 1, 14
+	sq_cc	59, 0, 3, 1, 16
+	sq_cc	59, 0, 3, 1, 17
+	sq_cc	62, 0, 3, 1, 19
+	sq_cc	65, 0, 3, 1, 20
+	sq_cc	68, 0, 3, 1, 22
+	sq_cc	71, 0, 3, 1, 24
+	sq_cc	74, 0, 3, 1, 26
+	sq_cc	74, 0, 3, 1, 28
+	sq_cc	76, 0, 3, 1, 30
+	sq_cc	79, 0, 3, 1, 32
+	sq_cc	82, 0, 3, 1, 34
+	sq_cc	82, 0, 3, 1, 37
+	sq_cc	85, 0, 3, 1, 40
+	sq_cc	87, 0, 3, 1, 43
+	sq_cc	90, 0, 3, 1, 45
+	sq_cc	92, 0, 3, 1, 47
+	sq_cc	95, 0, 3, 1, 49
+	sq_cc	95, 0, 3, 1, 51
+	sq_beat
+	sq_cc	0, 0, 3, 1, 52
+	sq_cc	5, 0, 3, 1, 54
+	sq_cc	7, 0, 3, 1, 56
+	sq_cc	10, 0, 3, 1, 57
+	sq_cc	13, 0, 3, 1, 59
+	sq_cc	13, 0, 3, 1, 60
+	sq_cc	15, 0, 3, 1, 62
+	sq_cc	18, 0, 3, 1, 63
+	.byte	0x15	; bytes 1..1 of `sq_cc	21, 0, 3, 1, 64` (the event spans two cells)
 	sq_cell	0xff, 93, 95	; cell 94: song 1 track 8, 8 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5d05, 251	; events of a track not typed (see above)
+	.byte	0xb0, 0x03, 0x01, 0x40	; bytes 2..5 of `sq_cc	21, 0, 3, 1, 64` (the event spans two cells)
+	sq_cc	21, 0, 3, 1, 65
+	sq_cc	23, 0, 3, 1, 66
+	sq_cc	27, 0, 3, 1, 68
+	sq_cc	30, 0, 3, 1, 69
+	sq_cc	33, 0, 3, 1, 71
+	sq_cc	33, 0, 3, 1, 72
+	sq_cc	35, 0, 3, 1, 73
+	sq_cc	54, 0, 3, 1, 72
+	sq_cc	57, 0, 3, 1, 71
+	sq_cc	57, 0, 3, 1, 70
+	sq_cc	60, 0, 3, 1, 69
+	sq_cc	63, 0, 3, 1, 68
+	sq_cc	84, 0, 3, 1, 62
+	sq_cc	87, 0, 3, 1, 58
+	sq_cc	90, 0, 3, 1, 53
+	sq_cc	90, 0, 3, 1, 47
+	sq_cc	94, 0, 3, 1, 42
+	sq_cc	95, 0, 3, 1, 35
+	sq_beat
+	sq_cc	2, 0, 3, 1, 28
+	sq_cc	6, 0, 3, 1, 21
+	sq_cc	6, 0, 3, 1, 13
+	sq_cc	7, 0, 3, 1, 6
+	sq_cc	11, 0, 3, 1, 0
+	sq_note	49, 0, 86, 105, 45, 0
+	sq_beat
+	sq_note	2, 0, 84, 110, 25, 0
+	sq_bend	41, 0, 64, 54
+	sq_bend	41, 0, 64, 46
+	sq_bend	43, 0, 64, 34
+	sq_bend	47, 0, 0, 20
+	sq_note	49, 0, 86, 110, 18, 3
+	sq_bend	49, 0, 0, 8
+	sq_bend	51, 0, 0, 1
+	sq_bend	51, 0, 0, 0
+	sq_bend	63, 0, 0, 4
+	sq_bend	63, 0, 0, 14
+	sq_bend	66, 0, 64, 26
+	sq_bend	69, 0, 64, 42
+	sq_bend	71, 0, 64, 63
+	sq_bend	75, 0, 0, 64
+	sq_beat
+	sq_cc	8, 0, 3, 1, 4
+	sq_cc	11, 0, 3, 1, 8
+	sq_cc	11, 0, 3, 1, 12
+	sq_cc	14, 0, 3, 1, 16
+	sq_cc	17, 0, 3, 1, 20
+	sq_cc	19, 0, 3, 1, 24
+	sq_cc	23, 0, 3, 1, 27
+	sq_cc	23, 0, 3, 1, 31
+	sq_cc	25, 0, 3, 1, 35
+	sq_cc	27, 0, 3, 1, 39
+	sq_cc	30, 0, 3, 1, 43
+	.byte	0x21, 0xb0, 0x03, 0x01	; bytes 1..4 of `sq_cc	33, 0, 3, 1, 47` (the event spans two cells)
 	sq_cell	0xdf, 94, 96	; cell 95: song 1 track 8, 9 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5e05, 251	; events of a track not typed (see above)
+	.byte	0x2f	; bytes 5..5 of `sq_cc	33, 0, 3, 1, 47` (the event spans two cells)
+	sq_cc	36, 0, 3, 1, 50
+	sq_cc	36, 0, 3, 1, 52
+	sq_cc	39, 0, 3, 1, 54
+	sq_cc	42, 0, 3, 1, 57
+	sq_cc	45, 0, 3, 1, 58
+	sq_cc	47, 0, 3, 1, 60
+	sq_cc	47, 0, 3, 1, 61
+	sq_cc	50, 0, 3, 1, 62
+	sq_cc	57, 0, 3, 1, 64
+	sq_cc	60, 0, 3, 1, 65
+	sq_cc	69, 0, 3, 1, 68
+	sq_cc	69, 0, 3, 1, 69
+	sq_cc	71, 0, 3, 1, 70
+	sq_cc	75, 0, 3, 1, 72
+	sq_cc	77, 0, 3, 1, 73
+	sq_cc	79, 0, 3, 1, 74
+	sq_cc	83, 0, 3, 1, 75
+	sq_cc	83, 0, 3, 1, 76
+	sq_cc	86, 0, 3, 1, 77
+	sq_cc	88, 0, 3, 1, 78
+	sq_cc	91, 0, 3, 1, 80
+	sq_beat
+	sq_cc	3, 0, 3, 1, 81
+	sq_cc	36, 0, 3, 1, 79
+	sq_cc	39, 0, 3, 1, 78
+	sq_cc	41, 0, 3, 1, 76
+	sq_cc	44, 0, 3, 1, 75
+	sq_cc	47, 0, 3, 1, 73
+	sq_cc	47, 0, 3, 1, 70
+	sq_cc	50, 0, 3, 1, 68
+	sq_cc	53, 0, 3, 1, 66
+	sq_cc	55, 0, 3, 1, 63
+	sq_cc	55, 0, 3, 1, 61
+	sq_cc	58, 0, 3, 1, 58
+	sq_cc	61, 0, 3, 1, 55
+	sq_cc	63, 0, 3, 1, 53
+	sq_cc	67, 0, 3, 1, 50
+	sq_cc	67, 0, 3, 1, 47
+	sq_cc	70, 0, 3, 1, 44
+	sq_cc	71, 0, 3, 1, 41
+	sq_cc	75, 0, 3, 1, 39
+	sq_cc	77, 0, 3, 1, 36
+	sq_cc	80, 0, 3, 1, 33
+	sq_cc	80, 0, 3, 1, 31
+	sq_cc	83, 0, 3, 1, 29
+	sq_cc	86, 0, 3, 1, 26
+	sq_cc	88, 0, 3, 1, 24
+	sq_cc	91, 0, 3, 1, 22
+	sq_cc	91, 0, 3, 1, 19
+	sq_cc	94, 0, 3, 1, 16
+	sq_beat
+	.byte	0x01, 0xb0, 0x03	; bytes 1..3 of `sq_cc	1, 0, 3, 1, 13` (the event spans two cells)
 	sq_cell	0xff, 95, 97	; cell 96: song 1 track 8, 10 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x5f05, 251	; events of a track not typed (see above)
+	.byte	0x01, 0x0d	; bytes 4..5 of `sq_cc	1, 0, 3, 1, 13` (the event spans two cells)
+	sq_cc	3, 0, 3, 1, 9
+	sq_cc	7, 0, 3, 1, 6
+	sq_cc	7, 0, 3, 1, 2
+	sq_cc	9, 0, 3, 1, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_bend	81, 0, 64, 61
+	sq_bend	84, 0, 64, 57
+	sq_bend	84, 0, 64, 53
+	sq_bend	86, 0, 0, 47
+	sq_bend	89, 0, 0, 37
+	sq_bend	92, 0, 0, 25
+	sq_bend	95, 0, 0, 12
+	sq_bend	95, 0, 0, 2
+	sq_beat
+	sq_bend	1, 0, 0, 0
+	sq_note	2, 0, 91, 117, 56, 2
+	sq_bend	18, 0, 0, 7
+	sq_bend	21, 0, 0, 16
+	sq_bend	21, 0, 64, 26
+	sq_bend	23, 0, 0, 38
+	sq_bend	26, 0, 0, 48
+	sq_bend	29, 0, 64, 54
+	sq_bend	32, 0, 64, 58
+	sq_bend	32, 0, 64, 61
+	sq_bend	32, 0, 64, 63
+	sq_bend	37, 0, 0, 64
+	sq_cc	59, 0, 3, 1, 2
+	sq_cc	62, 0, 3, 1, 4
+	sq_cc	65, 0, 3, 1, 7
+	sq_cc	67, 0, 3, 1, 9
+	sq_cc	67, 0, 3, 1, 12
+	sq_cc	71, 0, 3, 1, 15
+	sq_cc	74, 0, 3, 1, 19
+	sq_cc	75, 0, 3, 1, 24
+	sq_cc	79, 0, 3, 1, 28
+	.byte	0x51, 0xb0, 0x03, 0x01	; bytes 1..4 of `sq_cc	81, 0, 3, 1, 32` (the event spans two cells)
 	sq_cell	0xfb, 96, 98	; cell 97: song 1 track 8, 11 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6005, 251	; events of a track not typed (see above)
+	.byte	0x20	; bytes 5..5 of `sq_cc	81, 0, 3, 1, 32` (the event spans two cells)
+	sq_cc	81, 0, 3, 1, 37
+	sq_cc	84, 0, 3, 1, 42
+	sq_cc	86, 0, 3, 1, 46
+	sq_cc	89, 0, 3, 1, 50
+	sq_cc	92, 0, 3, 1, 53
+	sq_cc	92, 0, 3, 1, 56
+	sq_cc	95, 0, 3, 1, 60
+	sq_beat
+	sq_cc	2, 0, 3, 1, 63
+	sq_cc	5, 0, 3, 1, 66
+	sq_cc	7, 0, 3, 1, 69
+	sq_cc	7, 0, 3, 1, 73
+	sq_cc	10, 0, 3, 1, 76
+	sq_cc	13, 0, 3, 1, 79
+	sq_cc	15, 0, 3, 1, 82
+	sq_cc	18, 0, 3, 1, 85
+	sq_cc	21, 0, 3, 1, 88
+	sq_cc	21, 0, 3, 1, 91
+	sq_cc	23, 0, 3, 1, 94
+	sq_cc	26, 0, 3, 1, 98
+	sq_cc	29, 0, 3, 1, 101
+	sq_cc	29, 0, 3, 1, 105
+	sq_cc	32, 0, 3, 1, 108
+	sq_cc	32, 0, 3, 1, 111
+	sq_cc	37, 0, 3, 1, 115
+	sq_cc	40, 0, 3, 1, 118
+	sq_cc	43, 0, 3, 1, 121
+	sq_cc	43, 0, 3, 1, 125
+	sq_cc	46, 0, 3, 1, 127
+	sq_beat
+	sq_cc	5, 0, 3, 1, 113
+	sq_cc	7, 0, 3, 1, 102
+	sq_cc	10, 0, 3, 1, 91
+	sq_cc	13, 0, 3, 1, 78
+	sq_cc	15, 0, 3, 1, 64
+	sq_cc	15, 0, 3, 1, 52
+	sq_cc	18, 0, 3, 1, 41
+	sq_cc	21, 0, 3, 1, 29
+	sq_cc	23, 0, 3, 1, 17
+	sq_cc	27, 0, 3, 1, 7
+	sq_cc	30, 0, 3, 1, 0
+	sq_note	52, 0, 89, 105, 47, 0
+	sq_beat
+	sq_note	2, 0, 87, 93, 29, 0
+	sq_note	53, 0, 86, 109, 6, 1
+	sq_beat
+	sq_bend	22, 0, 0, 63
+	sq_bend	25, 0, 64, 62
+	sq_bend	27, 0, 0, 61
+	sq_bend	30, 0, 64, 59
+	sq_bend	32, 0, 64, 57
+	sq_bend	32, 0, 0, 56
+	sq_bend	35, 0, 0, 54
+	sq_bend	38, 0, 64, 52
+	.byte	0x28	; bytes 1..1 of `sq_bend	40, 0, 0, 50` (the event spans two cells)
 	sq_cell	0xff, 97, 99	; cell 98: song 1 track 8, 12 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6105, 251	; events of a track not typed (see above)
+	.byte	0xe0, 0x00, 0x32	; bytes 2..4 of `sq_bend	40, 0, 0, 50` (the event spans two cells)
+	sq_bend	43, 0, 0, 47
+	sq_bend	43, 0, 0, 44
+	sq_bend	47, 0, 0, 40
+	sq_bend	50, 0, 0, 36
+	sq_bend	52, 0, 64, 31
+	sq_bend	55, 0, 0, 26
+	sq_bend	55, 0, 0, 22
+	sq_bend	58, 0, 0, 18
+	sq_bend	61, 0, 0, 14
+	sq_bend	63, 0, 0, 11
+	sq_bend	66, 0, 0, 10
+	sq_bend	77, 0, 64, 38
+	sq_bend	79, 0, 64, 62
+	sq_bend	79, 0, 0, 64
+	sq_beat
+	sq_beat
+	sq_note	48, 0, 84, 100, 52, 0
+	sq_beat
+	sq_note	3, 0, 86, 99, 40, 0
+	sq_note	49, 0, 87, 98, 34, 0
+	sq_bend	86, 0, 0, 58
+	sq_bend	89, 0, 64, 51
+	sq_bend	91, 0, 0, 39
+	sq_bend	94, 0, 0, 23
+	sq_bend	94, 0, 0, 6
+	sq_beat
+	sq_bend	1, 0, 0, 0
+	sq_note	3, 0, 89, 112, 72, 0
+	sq_bend	20, 0, 0, 25
+	sq_bend	23, 0, 0, 39
+	sq_bend	25, 0, 0, 52
+	sq_bend	28, 0, 0, 58
+	sq_bend	31, 0, 0, 64
+	sq_cc	31, 0, 3, 1, 10
+	sq_cc	34, 0, 3, 1, 18
+	sq_cc	34, 0, 3, 1, 23
+	sq_cc	37, 0, 3, 1, 29
+	sq_cc	39, 0, 3, 1, 33
+	sq_cc	42, 0, 3, 1, 37
+	sq_cc	45, 0, 3, 1, 41
+	sq_cc	45, 0, 3, 1, 44
+	sq_cc	47, 0, 3, 1, 47
+	sq_cc	50, 0, 3, 1, 49
+	sq_cc	53, 0, 3, 1, 52
+	sq_cc	55, 0, 3, 1, 53
+	sq_cc	67, 0, 3, 1, 48
+	sq_cc	67, 0, 3, 1, 44
+	sq_cc	70, 0, 3, 1, 39
+	sq_cc	73, 0, 3, 1, 33
+	sq_cc	75, 0, 3, 1, 26
+	sq_cc	78, 0, 3, 1, 19
+	sq_cc	80, 0, 3, 1, 10
+	sq_cc	80, 0, 3, 1, 2
+	sq_cc	83, 0, 3, 1, 0
+	sq_beat
+	sq_note	1, 0, 89, 106, 67, 0
+	sq_beat
+	sq_note	3, 0, 89, 111, 90, 0
+	.byte	0x57	; bytes 1..1 of `sq_note	87, 0, 87, 105, 52, 0` (the event spans two cells)
 	sq_cell	0xff, 98, 100	; cell 99: song 1 track 8, 13 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6205, 251	; events of a track not typed (see above)
+	.byte	0x90, 0x57, 0x69, 0x34, 0x00	; bytes 2..6 of `sq_note	87, 0, 87, 105, 52, 0` (the event spans two cells)
+	sq_beat
+	sq_note	51, 0, 86, 93, 43, 0
+	sq_bend	92, 0, 0, 59
+	sq_bend	92, 0, 64, 54
+	sq_bend	95, 0, 0, 47
+	sq_beat
+	sq_bend	0, 0, 0, 36
+	sq_bend	4, 0, 0, 23
+	sq_bend	7, 0, 0, 11
+	sq_bend	7, 0, 0, 2
+	sq_bend	10, 0, 0, 0
+	sq_note	11, 0, 84, 99, 86, 1
+	sq_bend	30, 0, 0, 10
+	sq_bend	33, 0, 0, 22
+	sq_bend	33, 0, 0, 34
+	sq_bend	35, 0, 64, 44
+	sq_bend	38, 0, 0, 53
+	sq_bend	41, 0, 0, 58
+	sq_bend	43, 0, 64, 62
+	sq_bend	43, 0, 0, 64
+	sq_cc	76, 0, 3, 1, 6
+	sq_cc	78, 0, 3, 1, 11
+	sq_cc	81, 0, 3, 1, 16
+	sq_cc	84, 0, 3, 1, 21
+	sq_cc	87, 0, 3, 1, 26
+	sq_cc	90, 0, 3, 1, 30
+	sq_cc	90, 0, 3, 1, 34
+	sq_cc	93, 0, 3, 1, 38
+	sq_cc	95, 0, 3, 1, 42
+	sq_beat
+	sq_cc	2, 0, 3, 1, 45
+	sq_cc	5, 0, 3, 1, 48
+	sq_cc	7, 0, 3, 1, 50
+	sq_cc	7, 0, 3, 1, 52
+	sq_cc	11, 0, 3, 1, 54
+	sq_cc	14, 0, 3, 1, 56
+	sq_cc	15, 0, 3, 1, 58
+	sq_cc	15, 0, 3, 1, 60
+	sq_cc	19, 0, 3, 1, 61
+	sq_cc	22, 0, 3, 1, 63
+	sq_cc	24, 0, 3, 1, 66
+	sq_cc	26, 0, 3, 1, 68
+	sq_cc	30, 0, 3, 1, 70
+	sq_cc	30, 0, 3, 1, 73
+	sq_cc	32, 0, 3, 1, 75
+	sq_cc	35, 0, 3, 1, 77
+	sq_cc	38, 0, 3, 1, 79
+	sq_cc	41, 0, 3, 1, 81
+	sq_cc	41, 0, 3, 1, 83
+	sq_cc	43, 0, 3, 1, 84
+	sq_cc	46, 0, 3, 1, 86
+	sq_cc	49, 0, 3, 1, 87
+	sq_cc	51, 0, 3, 1, 88
+	sq_cc	68, 0, 3, 1, 86
+	.byte	0x46, 0xb0	; bytes 1..2 of `sq_cc	70, 0, 3, 1, 83` (the event spans two cells)
 	sq_cell	0xff, 99, 101	; cell 100: song 1 track 8, 14 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6305, 251	; events of a track not typed (see above)
+	.byte	0x03, 0x01, 0x53	; bytes 3..5 of `sq_cc	70, 0, 3, 1, 83` (the event spans two cells)
+	sq_cc	73, 0, 3, 1, 81
+	sq_cc	76, 0, 3, 1, 78
+	sq_cc	76, 0, 3, 1, 74
+	sq_cc	79, 0, 3, 1, 70
+	sq_cc	82, 0, 3, 1, 66
+	sq_cc	84, 0, 3, 1, 61
+	sq_cc	87, 0, 3, 1, 55
+	sq_cc	87, 0, 3, 1, 49
+	sq_cc	90, 0, 3, 1, 43
+	sq_cc	93, 0, 3, 1, 36
+	sq_cc	95, 0, 3, 1, 29
+	sq_beat
+	sq_cc	2, 0, 3, 1, 22
+	sq_cc	2, 0, 3, 1, 14
+	sq_cc	5, 0, 3, 1, 7
+	sq_cc	7, 0, 3, 1, 0
+	sq_beat
+	sq_note	87, 0, 84, 104, 4, 1
+	sq_beat
+	sq_beat
+	sq_note	3, 0, 86, 98, 36, 0
+	sq_note	49, 0, 87, 98, 22, 1
+	sq_beat
+	sq_bend	25, 0, 64, 63
+	sq_bend	31, 0, 0, 63
+	sq_bend	33, 0, 64, 62
+	sq_bend	36, 0, 0, 61
+	sq_bend	36, 0, 64, 59
+	sq_bend	39, 0, 0, 58
+	sq_bend	42, 0, 64, 56
+	sq_bend	45, 0, 0, 55
+	sq_bend	47, 0, 64, 53
+	sq_bend	47, 0, 0, 51
+	sq_bend	50, 0, 0, 48
+	sq_bend	53, 0, 64, 44
+	sq_bend	55, 0, 0, 40
+	sq_bend	58, 0, 64, 34
+	sq_bend	58, 0, 0, 28
+	sq_bend	61, 0, 0, 24
+	sq_bend	63, 0, 0, 18
+	sq_bend	66, 0, 0, 13
+	sq_bend	69, 0, 0, 10
+	sq_bend	71, 0, 0, 8
+	sq_bend	71, 0, 0, 6
+	sq_bend	75, 0, 0, 5
+	sq_bend	91, 0, 0, 11
+	sq_bend	94, 0, 0, 18
+	sq_bend	94, 0, 64, 25
+	sq_beat
+	sq_bend	1, 0, 0, 34
+	sq_bend	3, 0, 0, 42
+	sq_bend	6, 0, 64, 51
+	sq_bend	9, 0, 0, 62
+	sq_bend	11, 0, 0, 64
+	sq_beat
+	sq_note	9, 0, 87, 107, 84, 0
+	sq_beat
+	sq_note	5, 0, 89, 99, 32, 0
+	sq_bend	51, 0, 0, 58
+	sq_bend	51, 0, 0, 53
+	sq_bend	53, 0, 0, 46
+	.byte	0x37, 0x90, 0x5b	; bytes 1..3 of `sq_note	55, 0, 91, 105, 33, 1` (the event spans two cells)
 	sq_cell	0xff, 100, 102	; cell 101: song 1 track 8, 15 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6405, 251	; events of a track not typed (see above)
+	.byte	0x69, 0x21, 0x01	; bytes 4..6 of `sq_note	55, 0, 91, 105, 33, 1` (the event spans two cells)
+	sq_bend	56, 0, 64, 37
+	sq_bend	59, 0, 64, 26
+	sq_bend	59, 0, 0, 17
+	sq_bend	62, 0, 0, 9
+	sq_bend	65, 0, 0, 4
+	sq_bend	67, 0, 0, 0
+	sq_bend	79, 0, 0, 2
+	sq_bend	81, 0, 0, 9
+	sq_bend	84, 0, 0, 19
+	sq_bend	84, 0, 0, 29
+	sq_bend	87, 0, 0, 41
+	sq_bend	90, 0, 0, 51
+	sq_bend	91, 0, 0, 57
+	sq_bend	95, 0, 64, 62
+	sq_bend	95, 0, 0, 64
+	sq_beat
+	sq_cc	45, 0, 3, 1, 6
+	sq_cc	49, 0, 3, 1, 8
+	sq_cc	49, 0, 3, 1, 11
+	sq_cc	51, 0, 3, 1, 13
+	sq_cc	54, 0, 3, 1, 14
+	sq_cc	56, 0, 3, 1, 16
+	sq_cc	59, 0, 3, 1, 17
+	sq_cc	59, 0, 3, 1, 18
+	sq_cc	62, 0, 3, 1, 20
+	sq_cc	65, 0, 3, 1, 21
+	sq_cc	67, 0, 3, 1, 22
+	sq_cc	71, 0, 3, 1, 23
+	sq_cc	82, 0, 3, 1, 17
+	sq_cc	83, 0, 3, 1, 11
+	sq_cc	87, 0, 3, 1, 5
+	sq_cc	89, 0, 3, 1, 0
+	sq_beat
+	sq_note	5, 0, 92, 105, 69, 0
+	sq_bend	95, 0, 64, 57
+	sq_beat
+	sq_bend	3, 0, 0, 52
+	sq_bend	5, 0, 0, 40
+	sq_bend	5, 0, 64, 25
+	sq_note	7, 0, 92, 107, 83, 0
+	sq_bend	7, 0, 0, 10
+	sq_bend	10, 0, 0, 0
+	sq_bend	33, 0, 0, 25
+	sq_bend	35, 0, 64, 38
+	sq_bend	38, 0, 0, 51
+	sq_bend	40, 0, 64, 58
+	sq_bend	40, 0, 0, 64
+	sq_cc	59, 0, 3, 1, 14
+	sq_cc	63, 0, 3, 1, 21
+	sq_cc	63, 0, 3, 1, 28
+	sq_cc	66, 0, 3, 1, 34
+	sq_cc	68, 0, 3, 1, 40
+	sq_cc	71, 0, 3, 1, 46
+	sq_cc	74, 0, 3, 1, 50
+	sq_cc	77, 0, 3, 1, 53
+	sq_cc	77, 0, 3, 1, 54
+	.byte	0x57, 0xb0, 0x03, 0x01	; bytes 1..4 of `sq_cc	87, 0, 3, 1, 51` (the event spans two cells)
 	sq_cell	0xff, 101, 103	; cell 102: song 1 track 8, 16 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6505, 251	; events of a track not typed (see above)
+	.byte	0x33	; bytes 5..5 of `sq_cc	87, 0, 3, 1, 51` (the event spans two cells)
+	sq_cc	87, 0, 3, 1, 47
+	sq_cc	90, 0, 3, 1, 41
+	sq_cc	93, 0, 3, 1, 34
+	sq_cc	95, 0, 3, 1, 26
+	sq_beat
+	sq_cc	3, 0, 3, 1, 17
+	sq_cc	3, 0, 3, 1, 8
+	sq_note	3, 0, 91, 98, 43, 0
+	sq_cc	5, 0, 3, 1, 0
+	sq_note	51, 0, 89, 94, 38, 0
+	sq_beat
+	sq_note	1, 0, 91, 102, 52, 0
+	sq_note	48, 0, 89, 102, 19, 0
+	sq_note	91, 0, 87, 98, 39, 0
+	sq_beat
+	sq_bend	45, 0, 0, 58
+	sq_bend	47, 0, 64, 54
+	sq_bend	50, 0, 0, 49
+	sq_note	51, 0, 86, 107, 20, 2
+	sq_bend	52, 0, 0, 43
+	sq_bend	55, 0, 0, 38
+	sq_bend	55, 0, 64, 34
+	sq_bend	66, 0, 0, 42
+	sq_bend	66, 0, 0, 48
+	sq_bend	68, 0, 64, 53
+	sq_bend	71, 0, 0, 58
+	sq_bend	74, 0, 0, 63
+	sq_bend	77, 0, 0, 64
+	sq_cc	86, 0, 3, 1, 12
+	sq_cc	88, 0, 3, 1, 18
+	sq_cc	91, 0, 3, 1, 24
+	sq_cc	91, 0, 3, 1, 31
+	sq_cc	94, 0, 3, 1, 36
+	sq_beat
+	sq_cc	1, 0, 3, 1, 42
+	sq_cc	3, 0, 3, 1, 48
+	sq_cc	6, 0, 3, 1, 53
+	sq_cc	6, 0, 3, 1, 58
+	sq_cc	9, 0, 3, 1, 63
+	sq_cc	11, 0, 3, 1, 68
+	sq_cc	14, 0, 3, 1, 74
+	sq_cc	17, 0, 3, 1, 79
+	sq_cc	17, 0, 3, 1, 84
+	sq_cc	19, 0, 3, 1, 89
+	sq_cc	22, 0, 3, 1, 93
+	sq_cc	25, 0, 3, 1, 97
+	sq_cc	28, 0, 3, 1, 100
+	sq_cc	28, 0, 3, 1, 103
+	sq_cc	31, 0, 3, 1, 106
+	sq_cc	33, 0, 3, 1, 108
+	sq_cc	35, 0, 3, 1, 111
+	sq_cc	39, 0, 3, 1, 113
+	sq_cc	39, 0, 3, 1, 115
+	sq_cc	41, 0, 3, 1, 116
+	.byte	0x2c, 0xb0	; bytes 1..2 of `sq_cc	44, 0, 3, 1, 117` (the event spans two cells)
 	sq_cell	0xff, 102, 104	; cell 103: song 1 track 8, 17 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6605, 251	; events of a track not typed (see above)
+	.byte	0x03, 0x01, 0x75	; bytes 3..5 of `sq_cc	44, 0, 3, 1, 117` (the event spans two cells)
+	sq_cc	53, 0, 3, 1, 119
+	sq_cc	58, 0, 3, 1, 121
+	sq_cc	67, 0, 3, 1, 123
+	sq_cc	78, 0, 3, 1, 127
+	sq_beat
+	sq_cc	25, 0, 3, 1, 123
+	sq_cc	25, 0, 3, 1, 121
+	sq_cc	27, 0, 3, 1, 119
+	sq_cc	31, 0, 3, 1, 116
+	sq_cc	33, 0, 3, 1, 113
+	sq_cc	36, 0, 3, 1, 110
+	sq_cc	39, 0, 3, 1, 107
+	sq_cc	39, 0, 3, 1, 104
+	sq_cc	42, 0, 3, 1, 100
+	sq_cc	44, 0, 3, 1, 96
+	sq_cc	47, 0, 3, 1, 92
+	sq_cc	50, 0, 3, 1, 88
+	sq_cc	50, 0, 3, 1, 83
+	sq_cc	53, 0, 3, 1, 79
+	sq_cc	55, 0, 3, 1, 73
+	sq_cc	59, 0, 3, 1, 68
+	sq_cc	61, 0, 3, 1, 62
+	sq_cc	61, 0, 3, 1, 57
+	sq_cc	63, 0, 3, 1, 51
+	sq_cc	67, 0, 3, 1, 46
+	sq_cc	70, 0, 3, 1, 40
+	sq_cc	72, 0, 3, 1, 35
+	sq_cc	72, 0, 3, 1, 30
+	sq_cc	75, 0, 3, 1, 25
+	sq_cc	77, 0, 3, 1, 20
+	sq_cc	80, 0, 3, 1, 16
+	sq_cc	83, 0, 3, 1, 12
+	sq_cc	83, 0, 3, 1, 8
+	sq_cc	86, 0, 3, 1, 4
+	sq_cc	89, 0, 3, 1, 1
+	sq_cc	91, 0, 3, 1, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
 	sq_cell	0xff, 103, 105	; cell 104: song 1 track 8, 18 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6705, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_bend	79, 0, 64, 60
+	sq_bend	81, 0, 0, 56
+	sq_bend	83, 0, 64, 50
+	sq_bend	83, 0, 64, 40
+	sq_bend	86, 0, 0, 27
+	sq_bend	89, 0, 0, 13
+	sq_bend	91, 0, 0, 1
+	sq_bend	95, 0, 0, 0
+	sq_beat
+	sq_note	0, 0, 91, 123, 50, 2
+	sq_bend	15, 0, 0, 10
+	sq_bend	18, 0, 0, 22
+	sq_bend	21, 0, 0, 32
+	sq_bend	21, 0, 64, 42
+	sq_bend	23, 0, 64, 51
+	sq_bend	26, 0, 0, 57
+	sq_bend	29, 0, 0, 64
+	sq_cc	45, 0, 3, 1, 6
+	sq_cc	45, 0, 3, 1, 11
+	sq_cc	48, 0, 3, 1, 16
+	sq_cc	51, 0, 3, 1, 21
+	sq_cc	53, 0, 3, 1, 25
+	sq_cc	56, 0, 3, 1, 29
+	sq_cc	56, 0, 3, 1, 33
+	sq_cc	59, 0, 3, 1, 36
+	sq_cc	62, 0, 3, 1, 40
+	sq_cc	65, 0, 3, 1, 43
+	sq_cc	67, 0, 3, 1, 46
+	sq_cc	67, 0, 3, 1, 50
+	sq_cc	70, 0, 3, 1, 52
+	sq_cc	73, 0, 3, 1, 55
+	sq_cc	75, 0, 3, 1, 58
+	sq_cc	79, 0, 3, 1, 61
+	sq_cc	79, 0, 3, 1, 64
+	sq_cc	82, 0, 3, 1, 67
+	sq_cc	83, 0, 3, 1, 70
+	sq_cc	87, 0, 3, 1, 72
+	sq_cc	89, 0, 3, 1, 74
+	sq_cc	89, 0, 3, 1, 76
+	sq_cc	92, 0, 3, 1, 77
+	sq_cc	95, 0, 3, 1, 79
+	sq_beat
+	sq_cc	2, 0, 3, 1, 80
 	sq_cell	0x90, 104, 106	; cell 105: song 1 track 8, 19 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6805, 251	; events of a track not typed (see above)
+	sq_cc	4, 0, 3, 1, 82
+	sq_cc	7, 0, 3, 1, 83
+	sq_cc	13, 0, 3, 1, 85
+	sq_cc	15, 0, 3, 1, 86
+	sq_cc	19, 0, 3, 1, 87
+	sq_cc	19, 0, 3, 1, 88
+	sq_cc	20, 0, 3, 1, 89
+	sq_cc	23, 0, 3, 1, 91
+	sq_cc	26, 0, 3, 1, 92
+	sq_cc	29, 0, 3, 1, 94
+	sq_cc	29, 0, 3, 1, 96
+	sq_cc	31, 0, 3, 1, 97
+	sq_cc	34, 0, 3, 1, 98
+	sq_cc	37, 0, 3, 1, 100
+	sq_cc	40, 0, 3, 1, 101
+	sq_cc	43, 0, 3, 1, 102
+	sq_cc	43, 0, 3, 1, 103
+	sq_cc	46, 0, 3, 1, 105
+	sq_cc	57, 0, 3, 1, 102
+	sq_cc	59, 0, 3, 1, 99
+	sq_cc	62, 0, 3, 1, 95
+	sq_cc	65, 0, 3, 1, 90
+	sq_cc	65, 0, 3, 1, 84
+	sq_cc	67, 0, 3, 1, 77
+	sq_cc	70, 0, 3, 1, 70
+	sq_cc	73, 0, 3, 1, 61
+	sq_cc	75, 0, 3, 1, 52
+	sq_cc	75, 0, 3, 1, 42
+	sq_cc	79, 0, 3, 1, 31
+	sq_cc	81, 0, 3, 1, 20
+	sq_cc	84, 0, 3, 1, 9
+	sq_cc	87, 0, 3, 1, 0
+	sq_beat
+	sq_note	50, 0, 89, 111, 47, 0
+	sq_note	95, 0, 87, 98, 28, 0
+	sq_beat
+	sq_bend	35, 0, 64, 59
+	sq_bend	35, 0, 64, 54
+	sq_bend	38, 0, 64, 46
+	sq_bend	40, 0, 64, 34
+	sq_bend	43, 0, 0, 20
+	sq_bend	46, 0, 0, 5
+	sq_bend	46, 0, 0, 0
+	sq_note	49, 0, 86, 107, 21, 1
+	sq_bend	69, 0, 0, 21
+	sq_bend	71, 0, 0, 40
+	sq_bend	71, 0, 0, 55
+	sq_bend	74, 0, 0, 64
+	sq_cc	85, 0, 3, 1, 11
+	sq_cc	87, 0, 3, 1, 19
+	sq_cc	90, 0, 3, 1, 27
+	sq_cc	93, 0, 3, 1, 35
+	sq_cc	93, 0, 3, 1, 42
+	.byte	0x5f, 0xb0	; bytes 1..2 of `sq_cc	95, 0, 3, 1, 49` (the event spans two cells)
 	sq_cell	0x80, 105, 107	; cell 106: song 1 track 8, 20 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6905, 251	; events of a track not typed (see above)
+	.byte	0x03, 0x01, 0x31	; bytes 3..5 of `sq_cc	95, 0, 3, 1, 49` (the event spans two cells)
+	sq_beat
+	sq_cc	3, 0, 3, 1, 54
+	sq_cc	5, 0, 3, 1, 60
+	sq_cc	7, 0, 3, 1, 65
+	sq_cc	11, 0, 3, 1, 69
+	sq_cc	11, 0, 3, 1, 73
+	sq_cc	13, 0, 3, 1, 76
+	sq_cc	16, 0, 3, 1, 80
+	sq_cc	19, 0, 3, 1, 83
+	sq_cc	19, 0, 3, 1, 85
+	sq_cc	21, 0, 3, 1, 88
+	sq_cc	24, 0, 3, 1, 89
+	sq_cc	27, 0, 3, 1, 90
+	sq_cc	39, 0, 3, 1, 87
+	sq_cc	41, 0, 3, 1, 84
+	sq_cc	43, 0, 3, 1, 80
+	sq_cc	43, 0, 3, 1, 74
+	sq_cc	47, 0, 3, 1, 67
+	sq_cc	49, 0, 3, 1, 59
+	sq_cc	51, 0, 3, 1, 51
+	sq_cc	55, 0, 3, 1, 40
+	sq_cc	55, 0, 3, 1, 29
+	sq_cc	58, 0, 3, 1, 18
+	sq_cc	60, 0, 3, 1, 7
+	sq_cc	63, 0, 3, 1, 0
+	sq_beat
+	sq_beat
+	sq_note	95, 0, 84, 105, 22, 0
+	sq_beat
+	sq_note	21, 0, 86, 89, 21, 0
+	sq_note	45, 0, 87, 98, 30, 0
+	sq_bend	83, 0, 0, 60
+	sq_bend	86, 0, 0, 55
+	sq_bend	88, 0, 0, 49
+	sq_bend	91, 0, 0, 39
+	sq_bend	91, 0, 64, 25
+	sq_bend	94, 0, 0, 11
+	sq_beat
+	sq_note	1, 0, 89, 109, 75, 0
+	sq_bend	1, 0, 0, 1
+	sq_bend	3, 0, 0, 0
+	sq_bend	20, 0, 0, 16
+	sq_bend	23, 0, 64, 31
+	sq_bend	26, 0, 64, 46
+	sq_bend	27, 0, 64, 57
+	sq_bend	31, 0, 0, 64
+	sq_cc	37, 0, 3, 1, 6
+	sq_cc	39, 0, 3, 1, 13
+	sq_cc	42, 0, 3, 1, 20
+	sq_cc	44, 0, 3, 1, 27
+	sq_cc	44, 0, 3, 1, 34
+	sq_cc	47, 0, 3, 1, 39
+	sq_cc	50, 0, 3, 1, 44
+	sq_cc	53, 0, 3, 1, 48
+	sq_cc	55, 0, 3, 1, 50
+	.byte	0x37, 0xb0	; bytes 1..2 of `sq_cc	55, 0, 3, 1, 51` (the event spans two cells)
 	sq_cell	0xe0, 106, 108	; cell 107: song 1 track 8, 21 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6a05, 251	; events of a track not typed (see above)
+	.byte	0x03, 0x01, 0x33	; bytes 3..5 of `sq_cc	55, 0, 3, 1, 51` (the event spans two cells)
+	sq_cc	63, 0, 3, 1, 46
+	sq_cc	67, 0, 3, 1, 41
+	sq_cc	67, 0, 3, 1, 34
+	sq_cc	69, 0, 3, 1, 26
+	sq_cc	72, 0, 3, 1, 17
+	sq_cc	75, 0, 3, 1, 7
+	sq_cc	77, 0, 3, 1, 0
+	sq_beat
+	sq_note	0, 0, 89, 114, 66, 0
+	sq_cc	21, 0, 3, 1, 4
+	sq_cc	23, 0, 3, 1, 9
+	sq_cc	26, 0, 3, 1, 15
+	sq_cc	29, 0, 3, 1, 21
+	sq_cc	29, 0, 3, 1, 27
+	sq_cc	31, 0, 3, 1, 34
+	sq_cc	34, 0, 3, 1, 40
+	sq_cc	36, 0, 3, 1, 46
+	sq_cc	39, 0, 3, 1, 52
+	sq_cc	39, 0, 3, 1, 59
+	sq_cc	42, 0, 3, 1, 66
+	sq_cc	45, 0, 3, 1, 73
+	sq_cc	47, 0, 3, 1, 80
+	sq_cc	50, 0, 3, 1, 85
+	sq_cc	50, 0, 3, 1, 88
+	sq_cc	53, 0, 3, 1, 89
+	sq_cc	61, 0, 3, 1, 84
+	sq_cc	61, 0, 3, 1, 79
+	sq_cc	64, 0, 3, 1, 71
+	sq_cc	66, 0, 3, 1, 63
+	sq_cc	69, 0, 3, 1, 55
+	sq_cc	72, 0, 3, 1, 47
+	sq_cc	75, 0, 3, 1, 40
+	sq_cc	75, 0, 3, 1, 33
+	sq_cc	77, 0, 3, 1, 27
+	sq_cc	81, 0, 3, 1, 21
+	sq_cc	83, 0, 3, 1, 16
+	sq_cc	87, 0, 3, 1, 12
+	sq_cc	87, 0, 3, 1, 10
+	sq_cc	89, 0, 3, 1, 9
+	sq_beat
+	sq_note	1, 0, 89, 108, 45, 0
+	sq_cc	1, 0, 3, 1, 15
+	sq_cc	1, 0, 3, 1, 20
+	sq_cc	3, 0, 3, 1, 27
+	sq_cc	6, 0, 3, 1, 34
+	sq_cc	9, 0, 3, 1, 42
+	sq_cc	12, 0, 3, 1, 50
+	sq_cc	12, 0, 3, 1, 57
+	sq_cc	15, 0, 3, 1, 65
+	sq_cc	18, 0, 3, 1, 73
+	.byte	0x15, 0xb0, 0x03, 0x01	; bytes 1..4 of `sq_cc	21, 0, 3, 1, 82` (the event spans two cells)
 	sq_cell	0xff, 107, 109	; cell 108: song 1 track 8, 22 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6b05, 251	; events of a track not typed (see above)
+	.byte	0x52	; bytes 5..5 of `sq_cc	21, 0, 3, 1, 82` (the event spans two cells)
+	sq_cc	23, 0, 3, 1, 90
+	sq_cc	26, 0, 3, 1, 96
+	sq_cc	26, 0, 3, 1, 100
+	sq_cc	29, 0, 3, 1, 102
+	sq_cc	38, 0, 3, 1, 93
+	sq_cc	39, 0, 3, 1, 85
+	sq_cc	42, 0, 3, 1, 76
+	sq_cc	45, 0, 3, 1, 65
+	sq_cc	47, 0, 3, 1, 55
+	sq_cc	47, 0, 3, 1, 45
+	sq_note	49, 0, 87, 94, 46, 0
+	sq_cc	51, 0, 3, 1, 35
+	sq_cc	53, 0, 3, 1, 25
+	sq_cc	56, 0, 3, 1, 17
+	sq_cc	59, 0, 3, 1, 10
+	sq_cc	59, 0, 3, 1, 4
+	sq_cc	62, 0, 3, 1, 0
+	sq_beat
+	sq_note	3, 0, 86, 93, 19, 0
+	sq_note	49, 0, 84, 107, 62, 2
+	sq_bend	49, 0, 0, 59
+	sq_bend	51, 0, 64, 54
+	sq_bend	54, 0, 64, 48
+	sq_bend	57, 0, 0, 39
+	sq_bend	57, 0, 0, 29
+	sq_bend	59, 0, 0, 19
+	sq_bend	61, 0, 0, 7
+	sq_bend	64, 0, 0, 0
+	sq_bend	95, 0, 64, 26
+	sq_beat
+	sq_bend	2, 0, 0, 62
+	sq_bend	5, 0, 64, 64
+	sq_bend	7, 0, 0, 64
+	sq_beat
+	sq_cc	27, 0, 3, 1, 7
+	sq_cc	27, 0, 3, 1, 15
+	sq_cc	30, 0, 3, 1, 24
+	sq_cc	31, 0, 3, 1, 32
+	sq_cc	35, 0, 3, 1, 39
+	sq_cc	38, 0, 3, 1, 45
+	sq_cc	38, 0, 3, 1, 49
+	sq_cc	41, 0, 3, 1, 54
+	sq_cc	43, 0, 3, 1, 58
+	sq_cc	46, 0, 3, 1, 63
+	sq_cc	49, 0, 3, 1, 67
+	sq_cc	49, 0, 3, 1, 72
+	sq_cc	51, 0, 3, 1, 77
+	sq_cc	54, 0, 3, 1, 80
+	sq_cc	57, 0, 3, 1, 84
+	sq_cc	59, 0, 3, 1, 87
+	sq_cc	62, 0, 3, 1, 90
+	sq_cc	62, 0, 3, 1, 93
+	sq_cc	65, 0, 3, 1, 97
+	sq_cc	68, 0, 3, 1, 100
+	.byte	0x44	; bytes 1..1 of `sq_cc	68, 0, 3, 1, 103` (the event spans two cells)
 	sq_cell	0xff, 108, 110	; cell 109: song 1 track 8, 23 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6c05, 251	; events of a track not typed (see above)
+	.byte	0xb0, 0x03, 0x01, 0x67	; bytes 2..5 of `sq_cc	68, 0, 3, 1, 103` (the event spans two cells)
+	sq_cc	73, 0, 3, 1, 106
+	sq_cc	73, 0, 3, 1, 108
+	sq_cc	76, 0, 3, 1, 111
+	sq_cc	79, 0, 3, 1, 112
+	sq_cc	81, 0, 3, 1, 113
+	sq_cc	93, 0, 3, 1, 110
+	sq_cc	95, 0, 3, 1, 105
+	sq_beat
+	sq_cc	2, 0, 3, 1, 100
+	sq_cc	2, 0, 3, 1, 94
+	sq_cc	5, 0, 3, 1, 85
+	sq_cc	7, 0, 3, 1, 76
+	sq_cc	11, 0, 3, 1, 68
+	sq_cc	11, 0, 3, 1, 60
+	sq_cc	13, 0, 3, 1, 51
+	sq_cc	15, 0, 3, 1, 41
+	sq_cc	19, 0, 3, 1, 31
+	sq_cc	21, 0, 3, 1, 20
+	sq_cc	24, 0, 3, 1, 10
+	sq_cc	24, 0, 3, 1, 0
+	sq_beat
+	sq_beat
+	sq_note	6, 0, 84, 99, 93, 0
+	sq_beat
+	sq_note	6, 0, 86, 97, 28, 0
+	sq_note	54, 0, 87, 108, 17, 1
+	sq_beat
+	sq_bend	31, 0, 64, 63
+	sq_bend	33, 0, 64, 62
+	sq_bend	36, 0, 64, 61
+	sq_bend	36, 0, 0, 60
+	sq_bend	39, 0, 64, 58
+	sq_bend	41, 0, 0, 57
+	sq_bend	44, 0, 64, 55
+	sq_bend	47, 0, 0, 54
+	sq_bend	47, 0, 64, 52
+	sq_bend	50, 0, 64, 50
+	sq_bend	53, 0, 0, 48
+	sq_bend	55, 0, 0, 45
+	sq_bend	58, 0, 0, 41
+	sq_bend	58, 0, 64, 37
+	sq_bend	61, 0, 0, 34
+	sq_bend	63, 0, 0, 29
+	sq_bend	67, 0, 0, 26
+	sq_bend	70, 0, 0, 24
+	sq_bend	70, 0, 0, 20
+	sq_bend	71, 0, 0, 16
+	sq_bend	75, 0, 0, 12
+	sq_bend	78, 0, 0, 10
+	sq_bend	80, 0, 0, 8
+	sq_bend	80, 0, 0, 5
+	sq_bend	83, 0, 0, 4
+	sq_beat
+	sq_bend	1, 0, 0, 20
+	sq_bend	3, 0, 64, 31
+	sq_bend	6, 0, 0, 55
+	sq_bend	9, 0, 0, 64
+	sq_beat
+	sq_note	5, 0, 87, 107, 90, 0
+	sq_beat
+	.byte	0x01, 0x90, 0x59, 0x63	; bytes 1..4 of `sq_note	1, 0, 89, 99, 22, 0` (the event spans two cells)
 	sq_cell	0xff, 109, 111	; cell 110: song 1 track 8, 24 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6d05, 251	; events of a track not typed (see above)
+	.byte	0x16, 0x00	; bytes 5..6 of `sq_note	1, 0, 89, 99, 22, 0` (the event spans two cells)
+	sq_bend	34, 0, 0, 60
+	sq_bend	37, 0, 64, 56
+	sq_bend	39, 0, 64, 53
+	sq_bend	39, 0, 64, 48
+	sq_bend	42, 0, 0, 41
+	sq_bend	45, 0, 0, 33
+	sq_bend	47, 0, 0, 25
+	sq_bend	47, 0, 0, 16
+	sq_note	51, 0, 91, 110, 32, 1
+	sq_bend	51, 0, 0, 8
+	sq_bend	54, 0, 0, 2
+	sq_bend	56, 0, 0, 0
+	sq_bend	73, 0, 0, 9
+	sq_bend	75, 0, 0, 19
+	sq_bend	78, 0, 0, 31
+	sq_bend	80, 0, 0, 43
+	sq_bend	83, 0, 64, 53
+	sq_bend	83, 0, 0, 60
+	sq_bend	86, 0, 0, 64
+	sq_beat
+	sq_cc	1, 0, 3, 1, 6
+	sq_cc	3, 0, 3, 1, 11
+	sq_cc	6, 0, 3, 1, 16
+	sq_cc	9, 0, 3, 1, 20
+	sq_cc	9, 0, 3, 1, 24
+	sq_cc	13, 0, 3, 1, 28
+	sq_cc	15, 0, 3, 1, 31
+	sq_cc	18, 0, 3, 1, 35
+	sq_cc	21, 0, 3, 1, 38
+	sq_cc	21, 0, 3, 1, 41
+	sq_cc	23, 0, 3, 1, 44
+	sq_cc	26, 0, 3, 1, 47
+	sq_cc	29, 0, 3, 1, 50
+	sq_cc	31, 0, 3, 1, 52
+	sq_cc	35, 0, 3, 1, 54
+	sq_cc	35, 0, 3, 1, 56
+	sq_cc	37, 0, 3, 1, 57
+	sq_cc	46, 0, 3, 1, 52
+	sq_cc	48, 0, 3, 1, 48
+	sq_cc	51, 0, 3, 1, 43
+	sq_cc	53, 0, 3, 1, 37
+	sq_cc	56, 0, 3, 1, 31
+	sq_cc	56, 0, 3, 1, 22
+	sq_cc	59, 0, 3, 1, 13
+	sq_cc	62, 0, 3, 1, 3
+	sq_cc	65, 0, 3, 1, 0
+	sq_beat
+	sq_note	2, 0, 92, 105, 72, 0
+	sq_bend	92, 0, 0, 61
+	sq_bend	95, 0, 64, 56
+	sq_beat
+	sq_bend	1, 0, 0, 50
+	sq_bend	4, 0, 0, 40
+	sq_bend	4, 0, 0, 26
+	sq_note	5, 0, 92, 105, 94, 0
+	sq_bend	7, 0, 0, 12
+	.byte	0x0a, 0xe0	; bytes 1..2 of `sq_bend	10, 0, 0, 1` (the event spans two cells)
 	sq_cell	0xff, 110, 112	; cell 111: song 1 track 8, 25 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6e05, 251	; events of a track not typed (see above)
+	.byte	0x00, 0x01	; bytes 3..4 of `sq_bend	10, 0, 0, 1` (the event spans two cells)
+	sq_bend	13, 0, 0, 0
+	sq_bend	27, 0, 0, 10
+	sq_bend	27, 0, 0, 25
+	sq_bend	30, 0, 0, 38
+	sq_bend	31, 0, 0, 51
+	sq_bend	34, 0, 64, 58
+	sq_bend	37, 0, 0, 64
+	sq_cc	57, 0, 3, 1, 9
+	sq_cc	59, 0, 3, 1, 14
+	sq_cc	62, 0, 3, 1, 18
+	sq_cc	62, 0, 3, 1, 23
+	sq_cc	65, 0, 3, 1, 28
+	sq_cc	67, 0, 3, 1, 33
+	sq_cc	71, 0, 3, 1, 37
+	sq_cc	74, 0, 3, 1, 41
+	sq_cc	76, 0, 3, 1, 45
+	sq_cc	76, 0, 3, 1, 49
+	sq_cc	79, 0, 3, 1, 52
+	sq_cc	81, 0, 3, 1, 55
+	sq_cc	84, 0, 3, 1, 56
+	sq_cc	92, 0, 3, 1, 51
+	sq_cc	95, 0, 3, 1, 47
+	sq_beat
+	sq_cc	2, 0, 3, 1, 40
+	sq_cc	2, 0, 3, 1, 33
+	sq_cc	5, 0, 3, 1, 25
+	sq_cc	7, 0, 3, 1, 16
+	sq_note	9, 0, 91, 95, 42, 0
+	sq_cc	11, 0, 3, 1, 7
+	sq_cc	13, 0, 3, 1, 0
+	sq_note	54, 0, 89, 96, 39, 0
+	sq_beat
+	sq_note	3, 0, 91, 107, 51, 0
+	sq_note	47, 0, 89, 98, 20, 0
+	sq_note	94, 0, 87, 100, 31, 0
+	sq_beat
+	sq_bend	39, 0, 0, 58
+	sq_bend	41, 0, 64, 52
+	sq_bend	43, 0, 64, 42
+	sq_bend	43, 0, 0, 30
+	sq_bend	47, 0, 0, 16
+	sq_note	47, 0, 86, 109, 35, 3
+	sq_bend	49, 0, 0, 4
+	sq_bend	52, 0, 0, 0
+	sq_bend	66, 0, 0, 12
+	sq_bend	66, 0, 64, 26
+	sq_bend	69, 0, 0, 41
+	sq_bend	71, 0, 64, 53
+	sq_bend	74, 0, 0, 61
+	sq_bend	77, 0, 0, 64
+	sq_cc	87, 0, 3, 1, 7
+	sq_cc	87, 0, 3, 1, 13
+	sq_cc	90, 0, 3, 1, 19
+	sq_cc	93, 0, 3, 1, 25
+	sq_cc	95, 0, 3, 1, 30
 	sq_cell	0xff, 111, 113	; cell 112: song 1 track 8, 26 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x6f05, 251	; events of a track not typed (see above)
+	sq_beat
+	sq_cc	3, 0, 3, 1, 35
+	sq_cc	3, 0, 3, 1, 40
+	sq_cc	6, 0, 3, 1, 45
+	sq_cc	8, 0, 3, 1, 50
+	sq_cc	11, 0, 3, 1, 54
+	sq_cc	14, 0, 3, 1, 58
+	sq_cc	17, 0, 3, 1, 62
+	sq_cc	17, 0, 3, 1, 65
+	sq_cc	19, 0, 3, 1, 69
+	sq_cc	22, 0, 3, 1, 72
+	sq_cc	25, 0, 3, 1, 76
+	sq_cc	27, 0, 3, 1, 78
+	sq_cc	27, 0, 3, 1, 81
+	sq_cc	31, 0, 3, 1, 83
+	sq_cc	33, 0, 3, 1, 84
+	sq_cc	35, 0, 3, 1, 85
+	sq_cc	47, 0, 3, 1, 87
+	sq_cc	58, 0, 3, 1, 85
+	sq_cc	67, 0, 3, 1, 83
+	sq_beat
+	sq_cc	3, 0, 3, 1, 81
+	sq_cc	5, 0, 3, 1, 80
+	sq_cc	14, 0, 3, 1, 78
+	sq_cc	22, 0, 3, 1, 75
+	sq_cc	34, 0, 3, 1, 73
+	sq_cc	36, 0, 3, 1, 72
+	sq_cc	36, 0, 3, 1, 71
+	sq_cc	39, 0, 3, 1, 70
+	sq_cc	42, 0, 3, 1, 69
+	sq_cc	45, 0, 3, 1, 67
+	sq_cc	47, 0, 3, 1, 65
+	sq_cc	47, 0, 3, 1, 63
+	sq_cc	50, 0, 3, 1, 61
+	sq_cc	52, 0, 3, 1, 59
+	sq_cc	55, 0, 3, 1, 57
+	sq_cc	58, 0, 3, 1, 55
+	sq_cc	58, 0, 3, 1, 53
+	sq_cc	61, 0, 3, 1, 51
+	sq_cc	63, 0, 3, 1, 48
+	sq_cc	66, 0, 3, 1, 46
+	sq_cc	69, 0, 3, 1, 44
+	sq_cc	71, 0, 3, 1, 41
+	sq_cc	71, 0, 3, 1, 39
+	sq_cc	75, 0, 3, 1, 36
+	sq_cc	78, 0, 3, 1, 34
+	sq_cc	79, 0, 3, 1, 31
+	sq_cc	82, 0, 3, 1, 29
+	sq_cc	82, 0, 3, 1, 27
+	sq_cc	85, 0, 3, 1, 24
+	sq_cc	88, 0, 3, 1, 22
+	.byte	0x58, 0xb0, 0x03, 0x01	; bytes 1..4 of `sq_cc	88, 0, 3, 1, 19` (the event spans two cells)
 	sq_cell	0xff, 112, 65535	; cell 113: song 1 track 8, 27 of 27
-	.incbin	"01PIANOD.sqt.p2.ref", 0x7005, 251	; events of a track not typed (see above)
+	.byte	0x13	; bytes 5..5 of `sq_cc	88, 0, 3, 1, 19` (the event spans two cells)
+	sq_cc	94, 0, 3, 1, 16
+	sq_cc	94, 0, 3, 1, 13
+	sq_beat
+	sq_cc	1, 0, 3, 1, 11
+	sq_cc	3, 0, 3, 1, 8
+	sq_cc	6, 0, 3, 1, 6
+	sq_cc	8, 0, 3, 1, 4
+	sq_cc	11, 0, 3, 1, 1
+	sq_cc	11, 0, 3, 1, 0
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_beat
+	sq_end
+	; census: opaque -- unknown-dump: cell bytes after the end of track (left over)
+	.incbin	"01PIANOD.sqt.p2.ref", 0x70ba, 70
 	sq_cell	0x84, 0, 115	; cell 114: song 1 track 9, 1 of 5
 	sq_beat
 	sq_beat

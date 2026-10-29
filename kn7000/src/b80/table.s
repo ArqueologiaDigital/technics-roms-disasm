@@ -19,6 +19,7 @@
 
 .mnbase 0x48000000   # CPU address of output offset 0
 
+# census: generated -- tools/kn7asm.py from src/sp7001/table.s (table 83, verify-sp7001)
 .incbin_range "build/kn7000_table_sp7001.rom", 0x000000, 0x139EE8   # directory, seg00..seg06: as build 83
 
 # seg07 (dir[7] = 0x139EE8), the table's 4-byte build marker
@@ -27,6 +28,7 @@ TableBuildString:
     .ascii  "80\n"
     .byte   0
 
+# census: generated -- tools/kn7asm.py from src/sp7001/table.s (table 83, verify-sp7001)
 .incbin_range "build/kn7000_table_sp7001.rom", 0x139EEC, 0x3E0660   # seg08..seg83: as build 83
 
 # Build 83's XAPR plug-in starts at 0x3E8000; build 80's flash is erased from

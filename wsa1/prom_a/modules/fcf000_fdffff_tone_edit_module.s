@@ -14729,10 +14729,10 @@ Var27A3_SetSlot:
 	jr c, .LFD6B44                                       ; FD6B38  67 0a
 	cp h, 0x04:i3                                          ; FD6B3A  ce dc
 	jr ugt, .LFD6B44                                     ; FD6B3C  6b 06
-	ld (0x27a3:16), h                                   ; FD6B3E  f1 a3 27 46
+	ld (ToneEdit_TouchCurveSlot:16), h                                   ; FD6B3E  f1 a3 27 46
 	jr .LFD6B49                                          ; FD6B42  68 05
 .LFD6B44:
-	ld (0x27a3:16), 0x01                                 ; FD6B44  f1 a3 27 00 01
+	ld (ToneEdit_TouchCurveSlot:16), 0x01                                 ; FD6B44  f1 a3 27 00 01
 .LFD6B49:
 	popw hl                                              ; FD6B49  4b
 	unlk XIZ                                             ; FD6B4A  ee 0d
@@ -14744,16 +14744,16 @@ Var27A3_GetValidSlot:
 	pushw hl                                             ; FD6B51  2b
 	push XIX                                             ; FD6B52  3c
 	ld XIX,(XIZ+0x08)                                    ; FD6B53  ae 08 24
-	cp	(0x27a3:16), 0x01                            ; FD6B56  c1 a3 27 3f 01
+	cp	(ToneEdit_TouchCurveSlot:16), 0x01                            ; FD6B56  c1 a3 27 3f 01
 	jr c, .LFD6B6C                                       ; FD6B5B  67 0f
-	cp	(0x27a3:16), 0x04                            ; FD6B5D  c1 a3 27 3f 04
+	cp	(ToneEdit_TouchCurveSlot:16), 0x04                            ; FD6B5D  c1 a3 27 3f 04
 	jr ugt, .LFD6B6C                                     ; FD6B62  6b 08
-	ld c, (0x27a3:16)                                   ; FD6B64  c1 a3 27 23
+	ld c, (ToneEdit_TouchCurveSlot:16)                                   ; FD6B64  c1 a3 27 23
 	ld (XIX),C                                           ; FD6B68  b4 43
 	jr .LFD6B74                                          ; FD6B6A  68 08
 .LFD6B6C:
 	ld (XIX),0x01                                        ; FD6B6C  b4 00 01
-	ld (0x27a3:16), 0x01                                 ; FD6B6F  f1 a3 27 00 01
+	ld (ToneEdit_TouchCurveSlot:16), 0x01                                 ; FD6B6F  f1 a3 27 00 01
 .LFD6B74:
 	ld C,(XIX)                                           ; FD6B74  84 23
 	extz BC                                              ; FD6B76  d9 12
@@ -14780,7 +14780,7 @@ Var27A3_GetValidSlot:
 	ld (XIX),0x01                                        ; FD6B9A  b4 00 01
 .LFD6B9D:
 	ld C,(XIX)                                           ; FD6B9D  84 23
-	ld (0x27a3:16), c                                   ; FD6B9F  f1 a3 27 43
+	ld (ToneEdit_TouchCurveSlot:16), c                                   ; FD6B9F  f1 a3 27 43
 .LFD6BA3:
 	pop XIX                                              ; FD6BA3  5c
 	popw hl                                              ; FD6BA4  4b
@@ -16550,7 +16550,7 @@ SoundEditText_SetSlot:
 	ld C,H                                               ; FD77FB  ce 8b
 	extz BC                                              ; FD77FD  d9 12
 	extz XBC                                             ; FD77FF  e9 12
-	ld (XBC+0x2300),D                                    ; FD7801  f3 e5 00 23 44
+	ld (XBC+SoundEditText_Slot2),D                                    ; FD7801  f3 e5 00 23 44
 	inc 1,H                                              ; FD7806  ce 61
 .LFD7808:
 	cp H,L                                               ; FD7808  cf f6
@@ -16570,7 +16570,7 @@ SoundEditText_SetSlot:
 	ld C,H                                               ; FD7820  ce 8b
 	extz BC                                              ; FD7822  d9 12
 	extz XBC                                             ; FD7824  e9 12
-	ld (XBC+0x2310),D                                    ; FD7826  f3 e5 10 23 44
+	ld (XBC+SoundEditText_Slot3),D                                    ; FD7826  f3 e5 10 23 44
 	inc 1,H                                              ; FD782B  ce 61
 .LFD782D:
 	cp H,L                                               ; FD782D  cf f6
@@ -16590,7 +16590,7 @@ SoundEditText_SetSlot:
 	ld C,H                                               ; FD7845  ce 8b
 	extz BC                                              ; FD7847  d9 12
 	extz XBC                                             ; FD7849  e9 12
-	ld (XBC+0x2320),D                                    ; FD784B  f3 e5 20 23 44
+	ld (XBC+SoundEditText_Slot4),D                                    ; FD784B  f3 e5 20 23 44
 	inc 1,H                                              ; FD7850  ce 61
 .LFD7852:
 	cp H,L                                               ; FD7852  cf f6
@@ -16641,7 +16641,7 @@ SoundEditText_GetSlot:
 	ld C,H                                               ; FD789A  ce 8b
 	extz BC                                              ; FD789C  d9 12
 	extz XBC                                             ; FD789E  e9 12
-	ld D,(XBC+0x2300)                                    ; FD78A0  c3 e5 00 23 24
+	ld D,(XBC+SoundEditText_Slot2)                                    ; FD78A0  c3 e5 00 23 24
 	ld C,H                                               ; FD78A5  ce 8b
 	extz BC                                              ; FD78A7  d9 12
 	extz XBC                                             ; FD78A9  e9 12
@@ -16661,7 +16661,7 @@ SoundEditText_GetSlot:
 	ld C,H                                               ; FD78BF  ce 8b
 	extz BC                                              ; FD78C1  d9 12
 	extz XBC                                             ; FD78C3  e9 12
-	ld D,(XBC+0x2310)                                    ; FD78C5  c3 e5 10 23 24
+	ld D,(XBC+SoundEditText_Slot3)                                    ; FD78C5  c3 e5 10 23 24
 	ld C,H                                               ; FD78CA  ce 8b
 	extz BC                                              ; FD78CC  d9 12
 	extz XBC                                             ; FD78CE  e9 12
@@ -16681,7 +16681,7 @@ SoundEditText_GetSlot:
 	ld C,H                                               ; FD78E4  ce 8b
 	extz BC                                              ; FD78E6  d9 12
 	extz XBC                                             ; FD78E8  e9 12
-	ld D,(XBC+0x2320)                                    ; FD78EA  c3 e5 20 23 24
+	ld D,(XBC+SoundEditText_Slot4)                                    ; FD78EA  c3 e5 20 23 24
 	ld C,H                                               ; FD78EF  ce 8b
 	extz BC                                              ; FD78F1  d9 12
 	extz XBC                                             ; FD78F3  e9 12
@@ -22652,7 +22652,7 @@ Arr2808_Set1:
 	dec 1,BC                                             ; FDA867  d9 69
 	extz XBC                                             ; FDA869  e9 12
 	ld A,(XIZ+0x0a)                                      ; FDA86B  8e 0a 21
-	ld (XBC+0x2808),A                                    ; FDA86E  f3 e5 08 28 41
+	ld (XBC+ToneEdit_LayerResonator),A                                    ; FDA86E  f3 e5 08 28 41
 	unlk XIZ                                             ; FDA873  ee 0d
 	ret                                                  ; FDA875  0e
 ; ---------------------------------------------------------------------
@@ -22674,7 +22674,7 @@ Arr2808_Get1:
 	extz BC                                              ; FDA87D  d9 12
 	dec 1,BC                                             ; FDA87F  d9 69
 	extz XBC                                             ; FDA881  e9 12
-	ld A,(XBC+0x2808)                                    ; FDA883  c3 e5 08 28 21
+	ld A,(XBC+ToneEdit_LayerResonator)                                    ; FDA883  c3 e5 08 28 21
 	ld XBC,(XIZ+0x0a)                                    ; FDA888  ae 0a 21
 	ld (XBC),A                                           ; FDA88B  b1 41
 	unlk XIZ                                             ; FDA88D  ee 0d

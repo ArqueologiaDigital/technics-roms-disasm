@@ -708,13 +708,13 @@ HDAE5000_HDAETitleFunc:
 
 	; Set initial disk status
 	ld xwa, HDAE5000_OBJ_HDDMENU			; 40 00 00 7f 00
-	ld (0x23a09a:24), xwa; f2 9a a0 23 60
+	ld (HDAE5000_RAM_Browser_State+12:24), xwa; f2 9a a0 23 60
 	cp (0x22ad9a:24), 0x01; c2 9a ad 22 3f 01
 	jrl nz, .Lri_done			; 7e xx xx
 	cp (0x22ad9b:24), 0x01; c2 9b ad 22 3f 01
 	jrl nz, .Lri_done			; 7e xx xx
 	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD			; 40 3a 01 7f 00
-	ld (0x23a09a:24), xwa; f2 9a a0 23 60
+	ld (HDAE5000_RAM_Browser_State+12:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
 	; === Case 9: check cylinder count, set disk capacity ===
@@ -727,22 +727,22 @@ HDAE5000_HDAETitleFunc:
 	cp a, 1:i3				; c9 d9
 	jrl nz, .Lri_done			; 7e xx xx
 	ld xwa, HDAE5000_OBJ_SELECT_FILE			; 40 18 00 7f 00
-	ld (0x23a09a:24), xwa; f2 9a a0 23 60
+	ld (HDAE5000_RAM_Browser_State+12:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
 .Lri_case9_cyl2:				; 0x283668
 	ld xwa, HDAE5000_OBJ_LOAD_BY_NUM			; 40 8f 00 7f 00
-	ld (0x23a09a:24), xwa; f2 9a a0 23 60
+	ld (HDAE5000_RAM_Browser_State+12:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
 .Lri_case9_cyl3:				; 0x283675
 	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD			; 40 3a 01 7f 00
-	ld (0x23a09a:24), xwa; f2 9a a0 23 60
+	ld (HDAE5000_RAM_Browser_State+12:24), xwa; f2 9a a0 23 60
 	jrl t, .Lri_done			; 78 xx xx
 
 	; === Case 8: dispatch event to sub-device ===
 .Lri_case8:					; 0x283682
-	ld xwa, (0x23a09a:24); e2 9a a0 23 20
+	ld xwa, (HDAE5000_RAM_Browser_State+12:24); e2 9a a0 23 20
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 21
 	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21 — ld xbc, (xbc+0x0e0a)
 	ld xhl, (xbc + RootFn_ApPostEvent)             ; e3 e5 24 01 23 — ld xhl, (xbc+0x0124)
@@ -784,7 +784,7 @@ HDAE5000_HDAETitleFunc:
 	sla wa, 2				; d8 ec 02
 	lda xbc, (HDAE5000_HDAETitleFunc_ObjIds:24); f2 88 23 2e 31
 	ld	xwa, (xbc+wa)		; e3 07 e4 e0 20 — ld xwa, (xbc+wa)
-	ld (0x23a09a:24), xwa; f2 9a a0 23 60
+	ld (HDAE5000_RAM_Browser_State+12:24), xwa; f2 9a a0 23 60
 
 	; === Common exit ===
 .Lri_done:					; 0x28370B
@@ -1857,7 +1857,7 @@ HDAE5000_HDDNamingCheck:
 	cp	xbc, EVT_GET_STRING
 	jrl	nz, HDAE5000_HDDNamingCheck_Done
 	pushw 0x001a
-	lda xwa, (0x23a04e:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	push xwa
 	push xde
 	call HDAE5000_StrNCpy
@@ -1898,11 +1898,11 @@ HDAE5000_HDDNamingCheck_OnSwIn:
 	pushw hl
 	ld	xwa, xiz
 	push xwa
-	lda xwa, (0x23a04e:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	push xwa
 	call HDAE5000_MemCopy
 	lda	xsp, (xsp+14)
-	lda xwa, (0x23a04e:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -1931,7 +1931,7 @@ HDAE5000_HDDNamingCheck_Skip2:
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	calr	HDAE5000_TypeSel_Init
 HDAE5000_HDDNamingCheck_Join:
-	lda xwa, (0x23a04e:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -1948,7 +1948,7 @@ HDAE5000_HDDNamingCheck_Join:
 	call	(xhl)
 	jrl	t, HDAE5000_HDDNamingCheck_Done
 HDAE5000_HDDNamingCheck_Skip3:
-	lda xwa, (0x23a04e:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -2020,7 +2020,7 @@ HDAE5000_HDD_DIRNAMECheck_OnSetString:
 	pushw 0xa06e
 	call HDAE5000_StrNCpy
 	lda	xsp, (xsp+10)
-	ld	(0x23A07E:24), 0
+	ld	(HDAE5000_RAM_Name_EditBuffer+16:24), 0
 	ld	xhl, xiz
 	jrl	t, HDAE5000_HDD_DIRNAMECheck_Epilogue
 HDAE5000_HDD_DIRNAMECheck_OnGetNamingMode:
@@ -3709,7 +3709,7 @@ HDAE5000_SaveOptSwEventCatch_OnSwIn:
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip2
 	cp	xhl, 0x00000008
 	jrl	nz, HDAE5000_SaveOptSwEventCatch_Done
-	lda xwa, (0x23a04e:24)
+	lda xwa, (HDAE5000_RAM_Name_ColumnRuler:24)
 	ld	xde, xwa
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)

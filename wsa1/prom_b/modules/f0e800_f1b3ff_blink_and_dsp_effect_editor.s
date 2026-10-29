@@ -13416,11 +13416,11 @@ EffectEditor_PaintJob1_DL1:
 	dlb_rect_entry_op08	var=UI_DrawScratch, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=EffectEditor_PaintJob2_DL11 + 0x93
 EffectEditor_PaintJob2_DL1:
 ; ; drawn (start operand) by EffectEditor_PaintJob2 -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x7659, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x4B, width=4, x=88, y=73
-	dlb_string	var=0x7679, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x53, width=4, x=64, y=110
-	dlb_string	var=0x7699, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x5B, width=3, x=200, y=151
-	dlb_string	var=0x7659, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x61, width=3, x=128, y=73
-	dlb_string	var=0x7699, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x67, width=3, x=168, y=151
+	dlb_string	var=Combination_Effect1On, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x4B, width=4, x=88, y=73
+	dlb_string	var=Combination_Effect2On, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x53, width=4, x=64, y=110
+	dlb_string	var=Combination_ReverbOn, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x5B, width=3, x=200, y=151
+	dlb_string	var=Combination_Effect1On, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x61, width=3, x=128, y=73
+	dlb_string	var=Combination_ReverbOn, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=EffectEditor_PaintJob2_DL1 + 0x67, width=3, x=168, y=151
 
 ; --- 0xF1447D-0xF1449E: not converted ---
 ; 0xF1447D-0xF14484: 4-byte-stride table, 2 entries -- the string/array
@@ -17899,7 +17899,7 @@ CombiEditMixer_ShowOtherParts_DL3:
 ; --------------------------------------------------------------------------
 DL_F18044:
 	dlb_string_xy	var=CombiEdit_Part, mask=0x1f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=StringTable_F1828A, width=6, x=77, y=27
-	dlb_string_xy	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=UI_DrawScratch, width=16, x=155, y=27
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=UI_DrawScratch, width=16, x=155, y=27
 
 ; --------------------------------------------------------------------------
 ; RecordArray_F18066 -- record array, 0xF18066-0xF180ED (136 bytes)
@@ -19191,7 +19191,7 @@ DL_MidiOutFilter_F191B1:
 ; Evidence: 1 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F191F8:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=UI_DrawScratch, width=16, x=160, y=40
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=UI_DrawScratch, width=16, x=160, y=40
 
 ; --------------------------------------------------------------------------
 ; DL_F19207 -- display list, 0xF19207-0xF19237 (49 bytes)
@@ -19380,7 +19380,7 @@ StringTable_F193BE:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveLevelsPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveLevelsPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x276a, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19497
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19497
 	dlb_rect_entry	var=CombiEdit_Row, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F19497
 
 ; --------------------------------------------------------------------------
@@ -19416,7 +19416,7 @@ IndexMap_F19497:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveControllerFilterPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveControllerFilterPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x276a, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1952D
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1952D
 	dlb_rect_entry	var=CombiEdit_Row, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1952D
 
 ; --------------------------------------------------------------------------
@@ -19452,7 +19452,7 @@ IndexMap_F1952D:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveAssignAndInputFilterPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveAssignAndInputFilterPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x276a, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F195C3
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F195C3
 	dlb_rect_entry	var=CombiEdit_Row, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F195C3
 
 ; --------------------------------------------------------------------------
@@ -19479,7 +19479,7 @@ IndexMap_F195C3:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveMidiOutPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveMidiOutPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x276a, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19619
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19619
 	dlb_rect_entry	var=CombiEdit_Row, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F19619
 
 ; --------------------------------------------------------------------------
@@ -19506,7 +19506,7 @@ IndexMap_F19619:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveMidiOutFilterPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveMidiOutFilterPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x276a, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1966F
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x0f, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1966F
 	dlb_rect_entry	var=CombiEdit_Row, mask=0x0f, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F1966F
 
 ; --------------------------------------------------------------------------
@@ -19541,7 +19541,7 @@ IndexMap_F1966F:
 ; --------------------------------------------------------------------------
 CombiEditSound_MoveMultipleMessagesPageRowCursor_DL:
 ; ; drawn (start operand) by CombiEditSound_MoveMultipleMessagesPageRowCursor -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x276a, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19705
+	dlb_rect_entry_op08	var=CombiEdit_DrawnRow, mask=0x07, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F19705
 	dlb_rect_entry	var=CombiEdit_Row, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=IndexMap_F19705
 
 ; --------------------------------------------------------------------------
@@ -19568,7 +19568,7 @@ IndexMap_F19705:
 ; --------------------------------------------------------------------------
 CombiEdit_TakePartIndex_DL:
 ; drawn (start operand) by CombiEdit_TakePartIndex -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch, width=16, x=168, y=100
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch, width=16, x=168, y=100
 
 ; --------------------------------------------------------------------------
 ; DL_Rd1Rd2Ud1Ud2Ed1 -- display list, 0xF19754-0xF19771 (30 bytes)
@@ -19586,7 +19586,7 @@ CombiEdit_TakePartIndex_DL:
 ;           notes/prom_b_dl_screens_round5.py --apply.
 DL_Rd1Rd2Ud1Ud2Ed1:
 	dlb_string	var=UI_DrawScratch, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x10, table=StringTable_F193BE, width=3, x=104, y=100
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=Value_AsciiDigits, width=3, x=136, y=100
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=Value_AsciiDigits, width=3, x=136, y=100
 
 ; --------------------------------------------------------------------------
 ; DL_F19772 -- display list, 0xF19772-0xF19780 (15 bytes)
@@ -19968,7 +19968,7 @@ CombiEditSound_PaintMultipleMessagesPage_DL2:
 ; --------------------------------------------------------------------------
 CombiEditSound_PaintMultipleMessagesPage_DL6:
 ; ; drawn (start operand) by CombiEditSound_PaintMultipleMessagesPage -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=0x00002650, width=5, x=112, y=164
+	dlb_string	var=UI_DrawScratch, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=UI_DrawScratch+16, width=5, x=112, y=164
 
 ; --------------------------------------------------------------------------
 ; CombiEditSound_PaintMultipleMessagesPage_DL8 -- display list, 0xF19A4A-0xF19A58 (15 bytes)
@@ -20114,9 +20114,9 @@ DL_CombinationNaming_F19ABF:
 ; Evidence: 3 records, interpreter B, named by its call site's thunk
 ; --------------------------------------------------------------------------
 DL_F19BBD:
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=0x00007622, width=16, x=72, y=92
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=Combination_Current+2, width=16, x=72, y=92
 	dlb_number	var=UI_DrawScratch+16, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, x=176, y=124, digits=3
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=UI_DrawScratch, width=16, x=72, y=143
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x16, table=UI_DrawScratch, width=16, x=72, y=143
 
 ; --------------------------------------------------------------------------
 ; DL_CombinationNaming_F19BE5 -- display list, 0xF19BE5-0xF19C38 (84 bytes)
@@ -20416,7 +20416,7 @@ CombiEditConfigure_RepaintMarkedSounds_DL4:
 ; --------------------------------------------------------------------------
 CombiEditConfigure_RepaintMarkedSounds_DL3:
 ; ; drawn (start operand) by CombiEditConfigure_RepaintMarkedSounds -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry_op08	var=0x2768, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1A1D5
+	dlb_rect_entry_op08	var=CombiEdit_DrawnPage, mask=0x03, shift=0, svc=LCDSVC_EraseRect, table=IndexMap_F1A1D5
 
 ; --------------------------------------------------------------------------
 ; ExitKey_CombiEditConfigure_DL3 -- display list, 0xF1A158-0xF1A162 (11 bytes)

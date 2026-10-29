@@ -8340,7 +8340,7 @@ C0mbinati0nM0de_DrawPart1Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart1Pan_DL                                     ; F91AA3  45 de 9a f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart2Pan_DL                                     ; F91AA8  44 ef 9a f2 00
 	call T_DisplayListB_Run                              ; F91AAD  1d f4 17 f4
-	ld l, (0x76aa:16)                                   ; F91AB1  c1 aa 76 27
+	ld l, (CombiPart_Pan:16)                                   ; F91AB1  c1 aa 76 27
 	and L,0x7f                                           ; F91AB5  cf cc 7f
 	ldw ix, 0x1451                                       ; F91AB8  34 51 14
 	call T_DrawValueGlyph_24x24                          ; F91ABB  1d 34 18 f4
@@ -8354,7 +8354,7 @@ C0mbinati0nM0de_DrawPart2Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart2Pan_DL                                     ; F91AC5  45 ef 9a f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart3Pan_DL                                     ; F91ACA  44 00 9b f2 00
 	call T_DisplayListB_Run                              ; F91ACF  1d f4 17 f4
-	ld l, (0x76ea:16)                                   ; F91AD3  c1 ea 76 27
+	ld l, (CombiPart_Pan+1*0x40:16)                                   ; F91AD3  c1 ea 76 27
 	and L,0x7f                                           ; F91AD7  cf cc 7f
 	ldw ix, 0x1456                                       ; F91ADA  34 56 14
 	call T_DrawValueGlyph_24x24                          ; F91ADD  1d 34 18 f4
@@ -8368,7 +8368,7 @@ C0mbinati0nM0de_DrawPart3Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart3Pan_DL                                     ; F91AE7  45 00 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart4Pan_DL                                     ; F91AEC  44 11 9b f2 00
 	call T_DisplayListB_Run                              ; F91AF1  1d f4 17 f4
-	ld l, (0x772a:16)                                   ; F91AF5  c1 2a 77 27
+	ld l, (CombiPart_Pan+2*0x40:16)                                   ; F91AF5  c1 2a 77 27
 	and L,0x7f                                           ; F91AF9  cf cc 7f
 	ldw ix, 0x145b                                       ; F91AFC  34 5b 14
 	call T_DrawValueGlyph_24x24                          ; F91AFF  1d 34 18 f4
@@ -8382,7 +8382,7 @@ C0mbinati0nM0de_DrawPart4Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart4Pan_DL                                     ; F91B09  45 11 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart5Pan_DL                                     ; F91B0E  44 22 9b f2 00
 	call T_DisplayListB_Run                              ; F91B13  1d f4 17 f4
-	ld l, (0x776a:16)                                   ; F91B17  c1 6a 77 27
+	ld l, (CombiPart_Pan+3*0x40:16)                                   ; F91B17  c1 6a 77 27
 	and L,0x7f                                           ; F91B1B  cf cc 7f
 	ldw ix, 0x1460                                       ; F91B1E  34 60 14
 	call T_DrawValueGlyph_24x24                          ; F91B21  1d 34 18 f4
@@ -8396,7 +8396,7 @@ C0mbinati0nM0de_DrawPart5Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart5Pan_DL                                     ; F91B2B  45 22 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart6Pan_DL                                     ; F91B30  44 33 9b f2 00
 	call T_DisplayListB_Run                              ; F91B35  1d f4 17 f4
-	ld l, (0x77aa:16)                                   ; F91B39  c1 aa 77 27
+	ld l, (CombiPart_Pan+4*0x40:16)                                   ; F91B39  c1 aa 77 27
 	and L,0x7f                                           ; F91B3D  cf cc 7f
 	ldw ix, 0x1465                                       ; F91B40  34 65 14
 	call T_DrawValueGlyph_24x24                          ; F91B43  1d 34 18 f4
@@ -8410,7 +8410,7 @@ C0mbinati0nM0de_DrawPart6Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart6Pan_DL                                     ; F91B4D  45 33 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart7Pan_DL                                     ; F91B52  44 44 9b f2 00
 	call T_DisplayListB_Run                              ; F91B57  1d f4 17 f4
-	ld l, (0x77ea:16)                                   ; F91B5B  c1 ea 77 27
+	ld l, (CombiPart_Pan+5*0x40:16)                                   ; F91B5B  c1 ea 77 27
 	and L,0x7f                                           ; F91B5F  cf cc 7f
 	ldw ix, 0x146a                                       ; F91B62  34 6a 14
 	call T_DrawValueGlyph_24x24                          ; F91B65  1d 34 18 f4
@@ -8424,7 +8424,7 @@ C0mbinati0nM0de_DrawPart7Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart7Pan_DL                                     ; F91B6F  45 44 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart8Pan_DL                                     ; F91B74  44 55 9b f2 00
 	call T_DisplayListB_Run                              ; F91B79  1d f4 17 f4
-	ld l, (0x782a:16)                                   ; F91B7D  c1 2a 78 27
+	ld l, (CombiPart_Pan+6*0x40:16)                                   ; F91B7D  c1 2a 78 27
 	and L,0x7f                                           ; F91B81  cf cc 7f
 	ldw ix, 0x146f                                       ; F91B84  34 6f 14
 	call T_DrawValueGlyph_24x24                          ; F91B87  1d 34 18 f4
@@ -8438,7 +8438,7 @@ C0mbinati0nM0de_DrawPart8Pan:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart8Pan_DL                                     ; F91B91  45 55 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart1Vol_DL                                     ; F91B96  44 66 9b f2 00
 	call T_DisplayListB_Run                              ; F91B9B  1d f4 17 f4
-	ld l, (0x786a:16)                                   ; F91B9F  c1 6a 78 27
+	ld l, (CombiPart_Pan+7*0x40:16)                                   ; F91B9F  c1 6a 78 27
 	and L,0x7f                                           ; F91BA3  cf cc 7f
 	ldw ix, 0x1474                                       ; F91BA6  34 74 14
 	call T_DrawValueGlyph_24x24                          ; F91BA9  1d 34 18 f4
@@ -8451,7 +8451,7 @@ C0mbinati0nM0de_DrawPart1Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart1Vol_DL                                     ; F91BAE  45 66 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart2Vol_DL                                     ; F91BB3  44 72 9b f2 00
 	call T_DisplayListB_Run                              ; F91BB8  1d f4 17 f4
-	ld a, (0x76a5:16)                                   ; F91BBC  c1 a5 76 21
+	ld a, (CombiPart_Volume:16)                                   ; F91BBC  c1 a5 76 21
 	ldw ix, 0x1ba8                                       ; F91BC0  34 a8 1b
 	call LCD_BlitValueBar                                        ; F91BC3  1d 8c 45 f9
 	ret                                                  ; F91BC7  0e
@@ -8463,7 +8463,7 @@ C0mbinati0nM0de_DrawPart2Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart2Vol_DL                                     ; F91BC8  45 72 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart3Vol_DL                                     ; F91BCD  44 7e 9b f2 00
 	call T_DisplayListB_Run                              ; F91BD2  1d f4 17 f4
-	ld a, (0x76e5:16)                                   ; F91BD6  c1 e5 76 21
+	ld a, (CombiPart_Volume+1*0x40:16)                                   ; F91BD6  c1 e5 76 21
 	ldw ix, 0x1bad                                       ; F91BDA  34 ad 1b
 	call LCD_BlitValueBar                                        ; F91BDD  1d 8c 45 f9
 	ret                                                  ; F91BE1  0e
@@ -8475,7 +8475,7 @@ C0mbinati0nM0de_DrawPart3Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart3Vol_DL                                     ; F91BE2  45 7e 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart4Vol_DL                                     ; F91BE7  44 8a 9b f2 00
 	call T_DisplayListB_Run                              ; F91BEC  1d f4 17 f4
-	ld a, (0x7725:16)                                   ; F91BF0  c1 25 77 21
+	ld a, (CombiPart_Volume+2*0x40:16)                                   ; F91BF0  c1 25 77 21
 	ldw ix, 0x1bb2                                       ; F91BF4  34 b2 1b
 	call LCD_BlitValueBar                                        ; F91BF7  1d 8c 45 f9
 	ret                                                  ; F91BFB  0e
@@ -8487,7 +8487,7 @@ C0mbinati0nM0de_DrawPart4Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart4Vol_DL                                     ; F91BFC  45 8a 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart5Vol_DL                                     ; F91C01  44 96 9b f2 00
 	call T_DisplayListB_Run                              ; F91C06  1d f4 17 f4
-	ld a, (0x7765:16)                                   ; F91C0A  c1 65 77 21
+	ld a, (CombiPart_Volume+3*0x40:16)                                   ; F91C0A  c1 65 77 21
 	ldw ix, 0x1bb7                                       ; F91C0E  34 b7 1b
 	call LCD_BlitValueBar                                        ; F91C11  1d 8c 45 f9
 	ret                                                  ; F91C15  0e
@@ -8499,7 +8499,7 @@ C0mbinati0nM0de_DrawPart5Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart5Vol_DL                                     ; F91C16  45 96 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart6Vol_DL                                     ; F91C1B  44 a2 9b f2 00
 	call T_DisplayListB_Run                              ; F91C20  1d f4 17 f4
-	ld a, (0x77a5:16)                                   ; F91C24  c1 a5 77 21
+	ld a, (CombiPart_Volume+4*0x40:16)                                   ; F91C24  c1 a5 77 21
 	ldw ix, 0x1bbc                                       ; F91C28  34 bc 1b
 	call LCD_BlitValueBar                                        ; F91C2B  1d 8c 45 f9
 	ret                                                  ; F91C2F  0e
@@ -8511,7 +8511,7 @@ C0mbinati0nM0de_DrawPart6Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart6Vol_DL                                     ; F91C30  45 a2 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart7Vol_DL                                     ; F91C35  44 ae 9b f2 00
 	call T_DisplayListB_Run                              ; F91C3A  1d f4 17 f4
-	ld a, (0x77e5:16)                                   ; F91C3E  c1 e5 77 21
+	ld a, (CombiPart_Volume+5*0x40:16)                                   ; F91C3E  c1 e5 77 21
 	ldw ix, 0x1bc1                                       ; F91C42  34 c1 1b
 	call LCD_BlitValueBar                                        ; F91C45  1d 8c 45 f9
 	ret                                                  ; F91C49  0e
@@ -8523,7 +8523,7 @@ C0mbinati0nM0de_DrawPart7Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart7Vol_DL                                     ; F91C4A  45 ae 9b f2 00
 	ld XIX,C0mbinati0nM0de_DrawPart8Vol_DL                                     ; F91C4F  44 ba 9b f2 00
 	call T_DisplayListB_Run                              ; F91C54  1d f4 17 f4
-	ld a, (0x7825:16)                                   ; F91C58  c1 25 78 21
+	ld a, (CombiPart_Volume+6*0x40:16)                                   ; F91C58  c1 25 78 21
 	ldw ix, 0x1bc6                                       ; F91C5C  34 c6 1b
 	call LCD_BlitValueBar                                        ; F91C5F  1d 8c 45 f9
 	ret                                                  ; F91C63  0e
@@ -8535,7 +8535,7 @@ C0mbinati0nM0de_DrawPart8Vol:   ; entry: named by 1 `.long` operand, first at 0x
 	ld XIY,C0mbinati0nM0de_DrawPart8Vol_DL                                     ; F91C64  45 ba 9b f2 00
 	ld XIX,0x00f29bc6                                    ; F91C69  44 c6 9b f2 00
 	call T_DisplayListB_Run                              ; F91C6E  1d f4 17 f4
-	ld a, (0x7865:16)                                   ; F91C72  c1 65 78 21
+	ld a, (CombiPart_Volume+7*0x40:16)                                   ; F91C72  c1 65 78 21
 	ldw ix, 0x1bcb                                       ; F91C76  34 cb 1b
 	call LCD_BlitValueBar                                        ; F91C79  1d 8c 45 f9
 	ret                                                  ; F91C7D  0e
@@ -13389,7 +13389,7 @@ SoundGroup_LoadSelectionFromPart:
 	ld H,(XIY+0x1c)                                      ; F94395  8d 1c 26
 	and H,0xff                                           ; F94398  ce cc ff
 	ld a, (SoundSel_Bank:16)                                   ; F9439B  c1 6a 21 21
-	ld (0x2674:16), a                                   ; F9439F  f1 74 26 41
+	ld (SoundGroup_PreviousBank:16), a                                   ; F9439F  f1 74 26 41
 	ld (SoundSel_Bank:16), w                                   ; F943A3  f1 6a 21 40
 	ld (SoundSel_Group:16), l                                   ; F943A7  f1 69 21 47
 	ld (SoundSel_Member:16), h                                   ; F943AB  f1 6b 21 46
@@ -13411,7 +13411,7 @@ SoundGroup_LoadSelectionFromGlobal:
 	ld w, (0x7f0a:16)                                   ; F943CC  c1 0a 7f 20
 	and W,0xff                                           ; F943D0  c8 cc ff
 	ld a, (SoundSel_Bank:16)                                   ; F943D3  c1 6a 21 21
-	ld (0x2674:16), a                                   ; F943D7  f1 74 26 41
+	ld (SoundGroup_PreviousBank:16), a                                   ; F943D7  f1 74 26 41
 	ld (SoundSel_Bank:16), w                                   ; F943DB  f1 6a 21 40
 	ld (SoundSel_Group:16), l                                   ; F943DF  f1 69 21 47
 	ld (SoundSel_Member:16), h                                   ; F943E3  f1 6b 21 46

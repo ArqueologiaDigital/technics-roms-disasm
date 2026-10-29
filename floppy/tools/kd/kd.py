@@ -27,12 +27,10 @@ USAGE
   python3 -I kd.py encode CODEC IN OUT       # CODEC = deflate104 | lzss_j: one stream as it sits on disk
   python3 -I kd.py unpack-dir DIR [--stamp F] # for every container file in DIR: <file>.p1.ref [.p2.ref] payloads
   python3 -I kd.py verify FILE...            # every container of these extracted files re-encodes exactly
-The deflate coder is the C program zdeflate104 (build it with `make -C floppy/tools/kd`); set ZDEFLATE104 to
-its path if it is not next to this script.
+The deflate coder is kn7000/tools/zlib10_deflate.py, the repository's port of zlib 1.0.4 (README.md here).
 """
 import os
 import struct
-import subprocess
 import sys
 import zlib
 
@@ -40,12 +38,16 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import lzss_j  # noqa: E402
 
-ZDEFLATE104 = os.environ.get("ZDEFLATE104", os.path.join(HERE, "zdeflate104"))
+# The deflate coder is the repository's one port of zlib 1.0.4 (kn7000/tools/zlib10_deflate.py, lane
+# customdata), the version the KN6000 / KN7000 programs link.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(HERE))), "kn7000", "tools"))
+import zlib10_deflate  # noqa: E402
 TWO_PART = {"SQT", "LSW"}
 
 
 def deflate104(data):
-    return subprocess.run([ZDEFLATE104], input=data, capture_output=True, check=True).stdout
+    """A part as it sits on disk: zlib 1.0.4's raw deflate, then the big-endian adler32."""
+    return zlib10_deflate.deflate_raw(data, 6) + struct.pack(">I", zlib.adler32(data))
 
 
 def encode(codec, data):

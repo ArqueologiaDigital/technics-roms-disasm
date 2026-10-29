@@ -77,7 +77,7 @@ DL_SineWaveCheckCheckMode1SineWaveRomCheck:
 ; ------------------------------------------------------------------
 Paint_SineWaveCheckMode_DL1:
 ; ; drawn (start operand) by Paint_SineWaveCheckMode -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_rect_entry	var=0x2881, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=DLArray_F2C9CD
+	dlb_rect_entry	var=MessageScreen_Arg, mask=0x07, shift=0, svc=LCDSVC_FillRect, table=DLArray_F2C9CD
 
 ; ------------------------------------------------------------------
 ; 0xF2C9CD-0xF2CA0C -- 8 entries of 8 bytes
@@ -111,7 +111,7 @@ Paint_SineWaveCheckMode_DL3:
 ; ------------------------------------------------------------------
 Paint_SineWaveCheckMode_DL2:
 ; ; drawn (start operand) by Paint_SineWaveCheckMode -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x76a7, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_OffOnOnOn, width=3, x=130, y=226
+	dlb_string_xy	var=CombiPart_Effect1Send, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_OffOnOnOn, width=3, x=130, y=226
 
 ; ------------------------------------------------------------------
 ; 0xF2CA26-0xF2CA36 -- ONE interpreter-B record, run on its own
@@ -121,7 +121,7 @@ Paint_SineWaveCheckMode_DL2:
 ; ------------------------------------------------------------------
 Paint_SineWaveCheckMode_DL4:
 ; ; drawn (start operand) by Paint_SineWaveCheckMode -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x76a8, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_OffOnOnOn, width=3, x=170, y=226
+	dlb_string_xy	var=CombiPart_Effect2OnOff, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_OffOnOnOn, width=3, x=170, y=226
 
 ; ------------------------------------------------------------------
 ; 0xF2CA37-0xF2CA47 -- ONE interpreter-B record, run on its own
@@ -131,7 +131,7 @@ Paint_SineWaveCheckMode_DL4:
 ; ------------------------------------------------------------------
 Paint_SineWaveCheckMode_DL5:
 ; ; drawn (start operand) by Paint_SineWaveCheckMode -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=0x76a9, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_OffOnOnOn, width=3, x=210, y=226
+	dlb_string_xy	var=CombiPart_ReverbSend, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_OffOnOnOn, width=3, x=210, y=226
 
 ; ------------------------------------------------------------------
 ; 0xF2CA48-0xF2CA53 -- string table, 4 entries of 3 bytes

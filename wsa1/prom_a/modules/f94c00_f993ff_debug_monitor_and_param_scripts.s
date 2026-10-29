@@ -1617,7 +1617,7 @@ Paint_SineWaveCheckMode:
 	pop XHL                                              ; F95852  5b
 	pop XDE                                              ; F95853  5a
 	ld c, (SoundSel_Group:16)                                   ; F95854  c1 69 21 23
-	ld (0x2881:16), c                                   ; F95858  f1 81 28 43
+	ld (MessageScreen_Arg:16), c                                   ; F95858  f1 81 28 43
 	lda xbc, (Paint_SineWaveCheckMode_DL1:24)                           ; F9585C  f2 c2 c9 f2 31
 	push XBC                                             ; F95861  39
 	call T_DisplayListB_RunOne_Stack                     ; F95862  1d 0c 2e f4
@@ -1714,14 +1714,14 @@ SoftKeyCol4_SineWaveCheckMode:   ; entry: screen button-handler table
 	link XIZ,0x0000                                      ; F958C9  ee 0c 00 00
 	cp (XIZ+0x08),0x00                                   ; F958CD  8e 08 3f 00
 	jr nz, .LF958E4                                          ; F958D1  6e 11
-	ld c, (0x76a7:16)                                   ; F958D3  c1 a7 76 23
+	ld c, (CombiPart_Effect1Send:16)                                   ; F958D3  c1 a7 76 23
 	cp C,0x7f                                            ; F958D7  cb cf 7f
 	jr z, .LF958FE                                           ; F958DA  66 22
 	pushw 0x7f                                           ; F958DC  0b 7f 00
 	pushw 0x7f                                           ; F958DF  0b 7f 00
 	jr .LF958F2                                              ; F958E2  68 0e
 .LF958E4:
-	ld c, (0x76a7:16)                                   ; F958E4  c1 a7 76 23
+	ld c, (CombiPart_Effect1Send:16)                                   ; F958E4  c1 a7 76 23
 	cp c, 0x00:i3                                          ; F958E8  cb d8
 	jr z, .LF958FE                                           ; F958EA  66 12
 	pushw 0x7f                                           ; F958EC  0b 7f 00
@@ -1742,14 +1742,14 @@ SoftKeyCol5_SineWaveCheckMode:   ; entry: screen button-handler table
 	link XIZ,0x0000                                      ; F95901  ee 0c 00 00
 	cp (XIZ+0x08),0x00                                   ; F95905  8e 08 3f 00
 	jr nz, .LF9591C                                          ; F95909  6e 11
-	ld c, (0x76a8:16)                                   ; F9590B  c1 a8 76 23
+	ld c, (CombiPart_Effect2OnOff:16)                                   ; F9590B  c1 a8 76 23
 	cp C,0x7f                                            ; F9590F  cb cf 7f
 	jr z, .LF95936                                           ; F95912  66 22
 	pushw 0x7f                                           ; F95914  0b 7f 00
 	pushw 0x7f                                           ; F95917  0b 7f 00
 	jr .LF9592A                                              ; F9591A  68 0e
 .LF9591C:
-	ld c, (0x76a8:16)                                   ; F9591C  c1 a8 76 23
+	ld c, (CombiPart_Effect2OnOff:16)                                   ; F9591C  c1 a8 76 23
 	cp c, 0x00:i3                                          ; F95920  cb d8
 	jr z, .LF95936                                           ; F95922  66 12
 	pushw 0x7f                                           ; F95924  0b 7f 00
@@ -1770,14 +1770,14 @@ SoftKeyCol6_SineWaveCheckMode:   ; entry: screen button-handler table
 	link XIZ,0x0000                                      ; F95939  ee 0c 00 00
 	cp (XIZ+0x08),0x00                                   ; F9593D  8e 08 3f 00
 	jr nz, .LF95954                                          ; F95941  6e 11
-	ld c, (0x76a9:16)                                   ; F95943  c1 a9 76 23
+	ld c, (CombiPart_ReverbSend:16)                                   ; F95943  c1 a9 76 23
 	cp C,0x7f                                            ; F95947  cb cf 7f
 	jr z, .LF9596E                                           ; F9594A  66 22
 	pushw 0x7f                                           ; F9594C  0b 7f 00
 	pushw 0x7f                                           ; F9594F  0b 7f 00
 	jr .LF95962                                              ; F95952  68 0e
 .LF95954:
-	ld c, (0x76a9:16)                                   ; F95954  c1 a9 76 23
+	ld c, (CombiPart_ReverbSend:16)                                   ; F95954  c1 a9 76 23
 	cp c, 0x00:i3                                          ; F95958  cb d8
 	jr z, .LF9596E                                           ; F9595A  66 12
 	pushw 0x7f                                           ; F9595C  0b 7f 00
@@ -5235,21 +5235,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F9814A  e9 13
 	add XBC,XIX                                          ; F9814C  ec 81
 	ld A,(XBC)                                           ; F9814E  81 21
-	ld (0x76a7:16), a                                   ; F98150  f1 a7 76 41
+	ld (CombiPart_Effect1Send:16), a                                   ; F98150  f1 a7 76 41
 	ld BC,HL                                             ; F98154  db 89
 	inc 6,BC                                             ; F98156  d9 66
 	sub	bc, (xiz-2)                                  ; F98158  9e fe a1
 	exts XBC                                             ; F9815B  e9 13
 	add XBC,XIX                                          ; F9815D  ec 81
 	ld A,(XBC)                                           ; F9815F  81 21
-	ld (0x76a8:16), a                                   ; F98161  f1 a8 76 41
+	ld (CombiPart_Effect2OnOff:16), a                                   ; F98161  f1 a8 76 41
 	ld BC,HL                                             ; F98165  db 89
 	inc 7,BC                                             ; F98167  d9 67
 	sub	bc, (xiz-2)                                  ; F98169  9e fe a1
 	exts XBC                                             ; F9816C  e9 13
 	add XBC,XIX                                          ; F9816E  ec 81
 	ld A,(XBC)                                           ; F98170  81 21
-	ld (0x76a9:16), a                                   ; F98172  f1 a9 76 41
+	ld (CombiPart_ReverbSend:16), a                                   ; F98172  f1 a9 76 41
 	ldw hl, 0x76e2                                       ; F98176  33 e2 76
 	ld BC,HL                                             ; F98179  db 89
 	inc 5,BC                                             ; F9817B  d9 65
@@ -5257,21 +5257,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F98180  e9 13
 	add XBC,XIX                                          ; F98182  ec 81
 	ld A,(XBC)                                           ; F98184  81 21
-	ld (0x76e7:16), a                                   ; F98186  f1 e7 76 41
+	ld (CombiPart_Effect1Send+1*0x40:16), a                                   ; F98186  f1 e7 76 41
 	ld BC,HL                                             ; F9818A  db 89
 	inc 6,BC                                             ; F9818C  d9 66
 	sub	bc, (xiz-2)                                  ; F9818E  9e fe a1
 	exts XBC                                             ; F98191  e9 13
 	add XBC,XIX                                          ; F98193  ec 81
 	ld A,(XBC)                                           ; F98195  81 21
-	ld (0x76e8:16), a                                   ; F98197  f1 e8 76 41
+	ld (CombiPart_Effect2OnOff+1*0x40:16), a                                   ; F98197  f1 e8 76 41
 	ld BC,HL                                             ; F9819B  db 89
 	inc 7,BC                                             ; F9819D  d9 67
 	sub	bc, (xiz-2)                                  ; F9819F  9e fe a1
 	exts XBC                                             ; F981A2  e9 13
 	add XBC,XIX                                          ; F981A4  ec 81
 	ld A,(XBC)                                           ; F981A6  81 21
-	ld (0x76e9:16), a                                   ; F981A8  f1 e9 76 41
+	ld (CombiPart_ReverbSend+1*0x40:16), a                                   ; F981A8  f1 e9 76 41
 	ldw hl, 0x7722                                       ; F981AC  33 22 77
 	ld BC,HL                                             ; F981AF  db 89
 	inc 5,BC                                             ; F981B1  d9 65
@@ -5279,21 +5279,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F981B6  e9 13
 	add XBC,XIX                                          ; F981B8  ec 81
 	ld A,(XBC)                                           ; F981BA  81 21
-	ld (0x7727:16), a                                   ; F981BC  f1 27 77 41
+	ld (CombiPart_Effect1Send+2*0x40:16), a                                   ; F981BC  f1 27 77 41
 	ld BC,HL                                             ; F981C0  db 89
 	inc 6,BC                                             ; F981C2  d9 66
 	sub	bc, (xiz-2)                                  ; F981C4  9e fe a1
 	exts XBC                                             ; F981C7  e9 13
 	add XBC,XIX                                          ; F981C9  ec 81
 	ld A,(XBC)                                           ; F981CB  81 21
-	ld (0x7728:16), a                                   ; F981CD  f1 28 77 41
+	ld (CombiPart_Effect2OnOff+2*0x40:16), a                                   ; F981CD  f1 28 77 41
 	ld BC,HL                                             ; F981D1  db 89
 	inc 7,BC                                             ; F981D3  d9 67
 	sub	bc, (xiz-2)                                  ; F981D5  9e fe a1
 	exts XBC                                             ; F981D8  e9 13
 	add XBC,XIX                                          ; F981DA  ec 81
 	ld A,(XBC)                                           ; F981DC  81 21
-	ld (0x7729:16), a                                   ; F981DE  f1 29 77 41
+	ld (CombiPart_ReverbSend+2*0x40:16), a                                   ; F981DE  f1 29 77 41
 	ldw hl, 0x7762                                       ; F981E2  33 62 77
 	ld BC,HL                                             ; F981E5  db 89
 	inc 5,BC                                             ; F981E7  d9 65
@@ -5301,21 +5301,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F981EC  e9 13
 	add XBC,XIX                                          ; F981EE  ec 81
 	ld A,(XBC)                                           ; F981F0  81 21
-	ld (0x7767:16), a                                   ; F981F2  f1 67 77 41
+	ld (CombiPart_Effect1Send+3*0x40:16), a                                   ; F981F2  f1 67 77 41
 	ld BC,HL                                             ; F981F6  db 89
 	inc 6,BC                                             ; F981F8  d9 66
 	sub	bc, (xiz-2)                                  ; F981FA  9e fe a1
 	exts XBC                                             ; F981FD  e9 13
 	add XBC,XIX                                          ; F981FF  ec 81
 	ld A,(XBC)                                           ; F98201  81 21
-	ld (0x7768:16), a                                   ; F98203  f1 68 77 41
+	ld (CombiPart_Effect2OnOff+3*0x40:16), a                                   ; F98203  f1 68 77 41
 	ld BC,HL                                             ; F98207  db 89
 	inc 7,BC                                             ; F98209  d9 67
 	sub	bc, (xiz-2)                                  ; F9820B  9e fe a1
 	exts XBC                                             ; F9820E  e9 13
 	add XBC,XIX                                          ; F98210  ec 81
 	ld A,(XBC)                                           ; F98212  81 21
-	ld (0x7769:16), a                                   ; F98214  f1 69 77 41
+	ld (CombiPart_ReverbSend+3*0x40:16), a                                   ; F98214  f1 69 77 41
 	ldw hl, 0x77a2                                       ; F98218  33 a2 77
 	ld BC,HL                                             ; F9821B  db 89
 	inc 5,BC                                             ; F9821D  d9 65
@@ -5323,21 +5323,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F98222  e9 13
 	add XBC,XIX                                          ; F98224  ec 81
 	ld A,(XBC)                                           ; F98226  81 21
-	ld (0x77a7:16), a                                   ; F98228  f1 a7 77 41
+	ld (CombiPart_Effect1Send+4*0x40:16), a                                   ; F98228  f1 a7 77 41
 	ld BC,HL                                             ; F9822C  db 89
 	inc 6,BC                                             ; F9822E  d9 66
 	sub	bc, (xiz-2)                                  ; F98230  9e fe a1
 	exts XBC                                             ; F98233  e9 13
 	add XBC,XIX                                          ; F98235  ec 81
 	ld A,(XBC)                                           ; F98237  81 21
-	ld (0x77a8:16), a                                   ; F98239  f1 a8 77 41
+	ld (CombiPart_Effect2OnOff+4*0x40:16), a                                   ; F98239  f1 a8 77 41
 	ld BC,HL                                             ; F9823D  db 89
 	inc 7,BC                                             ; F9823F  d9 67
 	sub	bc, (xiz-2)                                  ; F98241  9e fe a1
 	exts XBC                                             ; F98244  e9 13
 	add XBC,XIX                                          ; F98246  ec 81
 	ld A,(XBC)                                           ; F98248  81 21
-	ld (0x77a9:16), a                                   ; F9824A  f1 a9 77 41
+	ld (CombiPart_ReverbSend+4*0x40:16), a                                   ; F9824A  f1 a9 77 41
 	ldw hl, 0x77e2                                       ; F9824E  33 e2 77
 	ld BC,HL                                             ; F98251  db 89
 	inc 5,BC                                             ; F98253  d9 65
@@ -5345,21 +5345,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F98258  e9 13
 	add XBC,XIX                                          ; F9825A  ec 81
 	ld A,(XBC)                                           ; F9825C  81 21
-	ld (0x77e7:16), a                                   ; F9825E  f1 e7 77 41
+	ld (CombiPart_Effect1Send+5*0x40:16), a                                   ; F9825E  f1 e7 77 41
 	ld BC,HL                                             ; F98262  db 89
 	inc 6,BC                                             ; F98264  d9 66
 	sub	bc, (xiz-2)                                  ; F98266  9e fe a1
 	exts XBC                                             ; F98269  e9 13
 	add XBC,XIX                                          ; F9826B  ec 81
 	ld A,(XBC)                                           ; F9826D  81 21
-	ld (0x77e8:16), a                                   ; F9826F  f1 e8 77 41
+	ld (CombiPart_Effect2OnOff+5*0x40:16), a                                   ; F9826F  f1 e8 77 41
 	ld BC,HL                                             ; F98273  db 89
 	inc 7,BC                                             ; F98275  d9 67
 	sub	bc, (xiz-2)                                  ; F98277  9e fe a1
 	exts XBC                                             ; F9827A  e9 13
 	add XBC,XIX                                          ; F9827C  ec 81
 	ld A,(XBC)                                           ; F9827E  81 21
-	ld (0x77e9:16), a                                   ; F98280  f1 e9 77 41
+	ld (CombiPart_ReverbSend+5*0x40:16), a                                   ; F98280  f1 e9 77 41
 	ldw hl, 0x7822                                       ; F98284  33 22 78
 	ld BC,HL                                             ; F98287  db 89
 	inc 5,BC                                             ; F98289  d9 65
@@ -5367,21 +5367,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F9828E  e9 13
 	add XBC,XIX                                          ; F98290  ec 81
 	ld A,(XBC)                                           ; F98292  81 21
-	ld (0x7827:16), a                                   ; F98294  f1 27 78 41
+	ld (CombiPart_Effect1Send+6*0x40:16), a                                   ; F98294  f1 27 78 41
 	ld BC,HL                                             ; F98298  db 89
 	inc 6,BC                                             ; F9829A  d9 66
 	sub	bc, (xiz-2)                                  ; F9829C  9e fe a1
 	exts XBC                                             ; F9829F  e9 13
 	add XBC,XIX                                          ; F982A1  ec 81
 	ld A,(XBC)                                           ; F982A3  81 21
-	ld (0x7828:16), a                                   ; F982A5  f1 28 78 41
+	ld (CombiPart_Effect2OnOff+6*0x40:16), a                                   ; F982A5  f1 28 78 41
 	ld BC,HL                                             ; F982A9  db 89
 	inc 7,BC                                             ; F982AB  d9 67
 	sub	bc, (xiz-2)                                  ; F982AD  9e fe a1
 	exts XBC                                             ; F982B0  e9 13
 	add XBC,XIX                                          ; F982B2  ec 81
 	ld A,(XBC)                                           ; F982B4  81 21
-	ld (0x7829:16), a                                   ; F982B6  f1 29 78 41
+	ld (CombiPart_ReverbSend+6*0x40:16), a                                   ; F982B6  f1 29 78 41
 	ldw hl, 0x7862                                       ; F982BA  33 62 78
 	ld BC,HL                                             ; F982BD  db 89
 	inc 5,BC                                             ; F982BF  d9 65
@@ -5389,21 +5389,21 @@ Combination_Recall:   ; entry: prom_b routine directory
 	exts XBC                                             ; F982C4  e9 13
 	add XBC,XIX                                          ; F982C6  ec 81
 	ld A,(XBC)                                           ; F982C8  81 21
-	ld (0x7867:16), a                                   ; F982CA  f1 67 78 41
+	ld (CombiPart_Effect1Send+7*0x40:16), a                                   ; F982CA  f1 67 78 41
 	ld BC,HL                                             ; F982CE  db 89
 	inc 6,BC                                             ; F982D0  d9 66
 	sub	bc, (xiz-2)                                  ; F982D2  9e fe a1
 	exts XBC                                             ; F982D5  e9 13
 	add XBC,XIX                                          ; F982D7  ec 81
 	ld A,(XBC)                                           ; F982D9  81 21
-	ld (0x7868:16), a                                   ; F982DB  f1 68 78 41
+	ld (CombiPart_Effect2OnOff+7*0x40:16), a                                   ; F982DB  f1 68 78 41
 	ld BC,HL                                             ; F982DF  db 89
 	inc 7,BC                                             ; F982E1  d9 67
 	sub	bc, (xiz-2)                                  ; F982E3  9e fe a1
 	exts XBC                                             ; F982E6  e9 13
 	add XBC,XIX                                          ; F982E8  ec 81
 	ld A,(XBC)                                           ; F982EA  81 21
-	ld (0x7869:16), a                                   ; F982EC  f1 69 78 41
+	ld (CombiPart_ReverbSend+7*0x40:16), a                                   ; F982EC  f1 69 78 41
 .LF982F0:
 	pop XIX                                              ; F982F0  5c
 	popw de                                              ; F982F1  4a
@@ -6920,7 +6920,7 @@ MessageScreen_Paint:
 	cp C,0x1a                                            ; F990E2  cb cf 1a
 	jr nz, .LF99118                                      ; F990E5  6e 31
 	ld c, (0x0c12:16)                                   ; F990E7  c1 12 0c 23
-	ld (0x2881:16), c                                   ; F990EB  f1 81 28 43
+	ld (MessageScreen_Arg:16), c                                   ; F990EB  f1 81 28 43
 	ld c, 0x08:opc                                          ; F990EF  23 08
 	mul	bc, (0x7fc1:16)                              ; F990F1  c1 c1 7f 43
 	extz XBC                                             ; F990F5  e9 12

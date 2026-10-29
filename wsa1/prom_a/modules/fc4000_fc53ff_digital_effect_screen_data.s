@@ -297,7 +297,7 @@ DigitalEffect_Values:
 ;          an inner entry point or end named in the list's Read-by line
 SoundEditDigitalEffect_RepaintField_DL:
 ; ; drawn (start operand) by SoundEditDigitalEffect_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string	var=ModelingPage_Fields, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=0x00f034d8, width=3, x=16, y=75
+	dlb_string	var=ModelingPage_Fields, mask=0x80, shift=7, svc=LCDSVC_DrawText8x10, table=DLText_OffOn_F034D8, width=3, x=16, y=75
 ; DLRec_FC45B0 -- a record (op 02, 15 bytes) inside DigitalEffect_Values,
 ;          an inner entry point or end named in the list's Read-by line
 DLRec_FC45B0:
@@ -419,7 +419,7 @@ DLRec_FC46EB:
 ; DLRec_FC46F5 -- a record (op 02, 15 bytes) inside DigitalEffect_ParamValues_FC46E1,
 ;          pointed at by DigitalEffect_FieldRecords_FC470E[3]
 DLRec_FC46F5:
-	dlb_string	var=ModelingPage_Fields+3, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=0x00f05469, width=3, x=216, y=100
+	dlb_string	var=ModelingPage_Fields+3, mask=0x0f, shift=0, svc=LCDSVC_DrawText8x10, table=DLText_SinTriSqrSaw, width=3, x=216, y=100
 ; DLRec_FC4704 -- a record (op 00, 10 bytes) inside DigitalEffect_ParamValues_FC46E1,
 ;          pointed at by DigitalEffect_FieldRecords_FC470E[4]
 DLRec_FC4704:
@@ -501,7 +501,7 @@ DigitalEffect_FieldRecords_FC4788:
 ; Read by: SoundEditDigitalEffect_Paint (prom_b 0xF099F5) at 0xF09AA0, through DigitalEffect_ParamValueLists[type].
 ; Framing: the length bytes walk from 0xFC479C and land exactly on 0xFC47BF.
 DigitalEffect_ParamValues_FC479C:
-	dlb_string	var=ModelingPage_Fields+1, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=0x00f034d2, width=3, x=216, y=70
+	dlb_string	var=ModelingPage_Fields+1, mask=0x01, shift=0, svc=LCDSVC_DrawText8x10, table=DLText_OffOn, width=3, x=216, y=70
 ; DLRec_FC47AB -- a record (op 00, 10 bytes) inside DigitalEffect_ParamValues_FC479C,
 ;          pointed at by DigitalEffect_FieldRecords_FC47BF[2]
 DLRec_FC47AB:
@@ -800,8 +800,8 @@ DLRec_FC4EB9:
 ; Read by: SoundEditCopy_RepaintField (prom_b 0xF09C08) at 0xF09C36 (field 5).
 ; Framing: the length bytes walk from 0xFC4EC4 and land exactly on 0xFC4EE2.
 SoundEditCopy_Field5Values:
-	dlb_string	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=0x00f05b60, width=3, x=104, y=87
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=40, y=101
+	dlb_string	var=ModelingPage_Fields+5, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x14, table=DLText_NoteNamesCm2ToG8, width=3, x=104, y=87
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x10, table=DiskSave_PasswordEntry, width=13, x=40, y=101
 	.set SoundEditCopy_Field5Values_End, .    ; FC4EE2  end marker: the byte after the last record
 
 ; SoundEditCopy_Field2Box -- display list, 1 record(s), 10 bytes, interpreter A
@@ -1065,18 +1065,18 @@ SegmentBounds_FC516E:
 ; Read by: SoundEditMenu_RepaintField (prom_b 0xF09CA9, Dispatch_Code80_RepaintFieldTable[0]) at 0xF09D07 and 0xF09D69, and prom_b 0xF5BF6D, whole; its inner sub-lists 0xFC51B1-0xFC51D3 (0xF09D28), 0xFC51F9-0xFC521B (0xF09D3D), 0xFC524D-0xFC526F (0xF09CD1).
 ; Framing: the length bytes walk from 0xFC517E and land exactly on 0xFC527A.
 DisplayList_FC517E:
-	dlb_string_xy	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=0x00002320, width=16, x=87, y=9
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=SoundEditText_Slot4, width=16, x=87, y=9
 ; DLRec_FC518F -- a record (op 07, 17 bytes) inside DisplayList_FC517E,
 ;          pointed at by DisplayRecordPtrs_FC52B4[1], DisplayRecordPtrs_FC52B4[2]
 DLRec_FC518F:
-	dlb_string_xy	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=0x00f05b60, width=3, x=61, y=53
-	dlb_string_xy	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DiskSave_PasswordEntry, width=13, x=105, y=53
+	dlb_string_xy	var=ModelingPage_Fields+1, mask=0x7f, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DLText_NoteNamesCm2ToG8, width=3, x=61, y=53
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText16x16Packed, table=DiskSave_PasswordEntry, width=13, x=105, y=53
 ; SoundEditMenu_RepaintField_DL3 -- a record (op 07, 17 bytes) inside DisplayList_FC517E,
 ;          pointed at by DisplayRecordPtrs_FC52B4[15]
 SoundEditMenu_RepaintField_DL3:
 ; ; drawn (start operand) by SoundEditMenu_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=ModelingPage_Fields+15, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=0x00f0574d, width=2, x=61, y=122
-	dlb_string_xy	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=0x00002300, width=13, x=73, y=122
+	dlb_string_xy	var=ModelingPage_Fields+15, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_F0574D, width=2, x=61, y=122
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=SoundEditText_Slot2, width=13, x=73, y=122
 ; DLRec_FC51D3 -- a record (op 09, 12 bytes) inside DisplayList_FC517E,
 ;          pointed at by DisplayRecordPtrs_FC52B4[3]
 DLRec_FC51D3:
@@ -1093,8 +1093,8 @@ DLRec_FC51EC:
 ;          pointed at by DisplayRecordPtrs_FC52B4[16]
 SoundEditMenu_RepaintField_DL4:
 ; ; drawn (start operand) by SoundEditMenu_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=ModelingPage_Fields+16, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=0x00f0574d, width=2, x=61, y=152
-	dlb_string_xy	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=0x00002310, width=13, x=73, y=152
+	dlb_string_xy	var=ModelingPage_Fields+16, mask=0x3f, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLTable_F0574D, width=2, x=61, y=152
+	dlb_string_xy	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x8Packed, table=SoundEditText_Slot3, width=13, x=73, y=152
 ; DLRec_FC521B -- a record (op 09, 12 bytes) inside DisplayList_FC517E,
 ;          pointed at by DisplayRecordPtrs_FC52B4[4]
 DLRec_FC521B:
@@ -1115,8 +1115,8 @@ DLRec_FC5241:
 ;          an inner entry point or end named in the list's Read-by line
 SoundEditMenu_RepaintField_DL1:
 ; ; drawn (start operand) by SoundEditMenu_RepaintField -- derivative name (notes/wsa1_display_list_drawer_names.py)
-	dlb_string_xy	var=ModelingPage_Fields+12, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=0x00f32a4e, width=3, x=259, y=122
-	dlb_string_xy	var=ModelingPage_Fields+12, mask=0x0c, shift=2, svc=LCDSVC_DrawText8x8Packed, table=0x00f32a4e, width=3, x=259, y=152
+	dlb_string_xy	var=ModelingPage_Fields+12, mask=0x03, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_CtrLRRdm, width=3, x=259, y=122
+	dlb_string_xy	var=ModelingPage_Fields+12, mask=0x0c, shift=2, svc=LCDSVC_DrawText8x8Packed, table=DLText_CtrLRRdm, width=3, x=259, y=152
 ; DLRec_FC526F -- a record (op 03, 11 bytes) inside DisplayList_FC517E,
 ;          pointed at by DisplayRecordPtrs_FC52B4[0]
 DLRec_FC526F:

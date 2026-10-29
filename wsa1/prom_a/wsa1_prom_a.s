@@ -387,6 +387,11 @@
 ; (best non-structural name).  The gate checks every VALUE; `--check-equates`
 ; checks the NAMES against prom_b after a rename there.  Regenerate, never edit
 ; the names or values; a trailing comment on an equate is kept.
+	.set DLText_OffOn,                            0x00f034d2
+	.set DLText_OffOn_F034D8,                     0x00f034d8
+	.set DLText_SinTriSqrSaw,                     0x00f05469
+	.set DLTable_F0574D,                          0x00f0574d
+	.set DLText_NoteNamesCm2ToG8,                 0x00f05b60
 	.set ScaleTuningOffsets,                      0x00f06800
 	.set ToneGroupNames,                          0x00f068b4
 	.set GroupMaxMemberIndex_ToneGroups,          0x00f06eb4
@@ -1002,6 +1007,7 @@
 	.set RamDefault_SoundRemap,                   0x00f30810
 	.set RamDefault_CombiRemap,                   0x00f30e60
 	.set RamDefault_DrumMap,                      0x00f314b0
+	.set DLText_CtrLRRdm,                         0x00f32a4e
 	.set DL_F3934C,                               0x00f3934c
 	.set DL_F394E3,                               0x00f394e3
 	.set DL_F39551,                               0x00f39551
@@ -1064,6 +1070,19 @@
 	.set DL_StepRecordTrackTrackClrMeas,          0x00f3d016
 	.set StepSelectAddrTable_F3D089,              0x00f3d089
 	.set DL_F3D1B9,                               0x00f3d1b9
+	.set DL_F3D245,                               0x00f3d245
+	.set DL_F3D353,                               0x00f3d353
+	.set DL_F3D35D,                               0x00f3d35d
+	.set DL_F3D367,                               0x00f3d367
+	.set DL_F3D371,                               0x00f3d371
+	.set DL_F3D376,                               0x00f3d376
+	.set DL_F3D37B,                               0x00f3d37b
+	.set DL_F3D380,                               0x00f3d380
+	.set DL_F3D38A,                               0x00f3d38a
+	.set DL_F3D3AD,                               0x00f3d3ad
+	.set DL_F3D3CB,                               0x00f3d3cb
+	.set DL_F3D3E9,                               0x00f3d3e9
+	.set DL_F3D407,                               0x00f3d407
 	.set DL_F3DA6F,                               0x00f3da6f
 	.set Data_F3DA77,                             0x00f3da77
 	.set Data_F3DAA2,                             0x00f3daa2

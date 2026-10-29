@@ -11,20 +11,23 @@ Each disk lives in `floppy/<model>/<disk>/`. Every one is FAT12, so this lane ad
 
 ## Results
 
-All 36 disks rebuild byte-for-byte. Census rows, at the lane's last commit (`data_incbin_census.py`,
-count / bytes):
+All 36 disks rebuild byte-for-byte (`make gate-floppy`, which also covers the 14 KN5000 disks). Census rows at
+the lane's second-pass commit (`data_incbin_census.py`, count / bytes):
 
 | tree          | generated | media  | opaque       | generic n | generic bytes |
 |---------------|-----------|--------|--------------|-----------|---------------|
-| wsa1-floppy   | 0 / 0     | 16 / 0 | 167 / 47,175 | 92        | 6,052,864     |
-| kn6000-floppy | 494 / 0   | 85 / 0 | 237 / 32,791 | 1467      | 6,670,437     |
-| kn7000-floppy | 111 / 0   | 1 / 0  | 90 / 11,122  | 106       | 1,039,008     |
+| wsa1-floppy   | 0 / 0     | 16 / 0 | 180 / 50,503 | 0         | 0             |
+| kn6000-floppy | 494 / 0   | 85 / 0 | 238 / 32,861 | 0         | 0             |
+| kn7000-floppy | 111 / 0   | 1 / 0  | 90 / 11,122  | 0         | 0             |
 
-These are the generic bytes before this lane started: wsa1 7,834,534, kn6000 5,058,008 and kn7000 4,172,513.
-The KN6000 and KN7000 figures are not comparable before and after. Before, a compressed file counted at its
-stored size. Now it is a generated stream plus its **inflated** payload, and an untyped payload counts at the
-inflated size. The generated and media streams show 0 bytes because they are build products. The census
-sizes them only from `<tree>/build/`, and the floppy build is in `floppy/build/`.
+The generated and media rows show 0 bytes because those streams are build products under
+`floppy/build/<model>/<disk>/`, which the census does not size yet. Every opaque entry is leftover bytes:
+- free song cells and free song-store blocks;
+- the stale rest of a WSA1R .MID's last 1024-byte window, and of a .CMB's last kilobyte;
+- the PC formatter's boot code (WSA1R).
+
+Typed text against the binary it spells: .CMP 5.5x, .SQT part 2 5.9x, part 1 4.3x, .PMT 4.1x, .LSW 4.2-4.3x,
+the KN6000 .TM 1.6x and the WSA1R .TM 1.15x (records deduplicated into content-addressed include files).
 
 ## Containers (KN6000 / KN7000): `floppy/tools/kd/`
 
@@ -39,7 +42,10 @@ The first byte of the magic names the model: `I` is the KN6000, `J` the KN7000. 
   - A modern zlib reproduces the single-block streams only. Every multi-block stream on the disks ends its
     first block at exactly 4096 symbols. That is 1.0.4's unconditional `_tr_tally` early block end
     (trees.c:973), which later releases compile only under `TRUNCATE_BLOCK`, at 8192.
-  - `floppy/tools/kd/zlib-1.0.4/` vendors the deflate half, unmodified, and `zdeflate104.c` drives it.
+  - The coder is `kn7000/tools/zlib10_deflate.py`, lane customdata's Python transcription of 1.0.4's
+    deflate. Until the second pass this lane vendored zlib 1.0.4's C deflate (`zdeflate104.c`), which gives
+    the same bytes on every part. It was dropped so the repository has one implementation, at the cost of
+    speed: 3.7 s against 0.1 s for a 1.9 MB custom-data image.
 - **'J KD'** (the KN7000's .CMP .PMT .MSP .SQT .LSW). This is **LZSS**, not deflate. `probes/lzss_brute2.py`
   and `probes/jkd.py` derived the format from the TCMP header that it must decode to:
   - flag bytes, low bit first, 1 = literal;
@@ -64,25 +70,30 @@ The first byte of the magic names the model: `I` is the KN6000, `J` the KN7000. 
 
 ## File kinds and what describes them
 
-| model  | kind                                   | files            | how it is held                                                                                                   | status         |
-|--------|----------------------------------------|------------------|------------------------------------------------------------------------------------------------------------------|----------------|
-| KN6/7  | .CMP                                   | 82               | TCMP container typed in full, every event one per line (`kn_tcmp.py`, `kn_style.inc`)                            | typed          |
-| KN6/7  | .SQT                                   | 101              | part 2: event cells and events typed (`kn_sqt.py`, `kn_song.inc`); part 1: track directory typed, rest reference | mostly typed   |
-| KN6/7  | .AST                                   | 10               | generated: zdeflate104 of the custom-data image (below)                                                          | generated      |
-| KN6/7  | .CNV                                   | 12               | generated: the build output of `kn7000/src/cnv/*.s`                                                              | generated      |
-| KN6000 | .JPG                                   | 64               | the extracted file                                                                                               | media          |
-| KN6/7  | .HMP                                   | 22               | the 0x18C-byte home-page record (halfwords), then the BMP cut out as a `.bmp`                                    | media + record |
-| KN6000 | .TXT .ACT .PRE                         | 18               | `.ascii` lines                                                                                                   | typed          |
-| KN6/7  | .VER                                   | 2                | a Cakewalk .WRK, chunk by chunk                                                                                  | typed          |
-| KN6/7  | .PMT                                   | 72               | payload is the reference                                                                                         | **generic**    |
-| KN6000 | .TM                                    | 50               | payload is the reference                                                                                         | **generic**    |
-| KN6/7  | .LSW                                   | 80               | payload is the reference                                                                                         | **generic**    |
-| KN7000 | .MSP .CST                              | 15               | payload is the reference                                                                                         | **generic**    |
-| KN6000 | .EFC                                   | 2                | payload is the reference                                                                                         | **generic**    |
-| KN6/7  | .MD .FAV                               | 4                | the reference                                                                                                    | **generic**    |
-| WSA1R  | .MID                                   | 16               | the SMF cut out as a `.mid`; the stale rest of the last 1024-byte window opaque                                  | media + opaque |
-| WSA1R  | .SEQ                                   | 10               | the song-store blocks typed; each chain's events one per line                                                    | typed          |
-| WSA1R  | .TM .CMB .SQF .LSW .SLS .SRM .CRM .DRM | 92 (and 3 empty) | the reference                                                                                                    | **generic**    |
+| model  | kind           | how it is held                                                                                                      |
+|--------|----------------|---------------------------------------------------------------------------------------------------------------------|
+| KN6/7  | .CMP           | the TCMP container typed in full, every event one per line (`kn_tcmp.py`, `kn_style.inc`)                           |
+| KN6/7  | .SQT           | song records (track directory, the song's panel memory as PMR_*) and event cells, all 422 chains event by event     |
+| KN6/7  | .PMT           | bank names and memories, each record a PMR_* line (the shared `kn7000/src/include/panel_memory.inc`)                |
+| KN6/7  | .LSW           | part 1: the current panel (PMR_*) and a second record block; part 2: per rhythm, eight sound references (`ls_refs`) |
+| KN6000 | .TM            | 40 SOUND EDIT records (SOUND_HEAD / SOUND_MOD / VOICE_ELEM), the custom-sound kit block (VOICE_*), the tail         |
+| KN7000 | .CST           | one CUSTOM slot record, typed by lane customdata's own emitter (`gen_customdata_s.gen_record`; kn7asm)              |
+| KN7000 | .MSP           | the TPAD container: header, banks, 18 pads, every event (`kn_tpad.py`)                                              |
+| KN6000 | .EFC           | 55 records of 0x42 bytes (the CUSTOM record's five 0x42-byte kinds), name first                                     |
+| KN6/7  | .MD .FAV       | header and u32 entries; named groups of {kind, value} items                                                         |
+| KN6/7  | .AST           | generated: the deflate of the custom-data image that `kn7000/src/customdata` / `kn6000/src/customdata` build        |
+| KN6/7  | .CNV           | generated: the build output of `kn7000/src/cnv/*.s`                                                                 |
+| KN6000 | .JPG           | the extracted file (media)                                                                                          |
+| KN6/7  | .HMP           | the 0x18C-byte home-page record and a 160x100 BMP cut out as a `.bmp` (media)                                       |
+| KN6000 | .TXT .ACT .PRE | `.ascii` lines                                                                                                      |
+| KN6/7  | .VER           | a Cakewalk .WRK, chunk by chunk                                                                                     |
+| WSA1R  | .TM            | 4 banks: tag, 8 lines, 64 tone records, kit, 128 drum instruments (`wsa1/include/tm/`)                              |
+| WSA1R  | .CMB           | 16 bank names, 128 combinations as 23 records each, named from the Reference Guide (`cmb_*`)                        |
+| WSA1R  | .SEQ           | song-store blocks, events one per line                                                                              |
+| WSA1R  | .SQF           | ten song records: the fields the disk notes establish, the rest with offsets (`sqf_*`)                              |
+| WSA1R  | .LSW .SLS      | record blocks: the current combination (`cmb_*`) and further {tag, length} blocks                                   |
+| WSA1R  | .SRM .CRM .DRM | three re-maps: names, group names, {number, source} entries                                                         |
+| WSA1R  | .MID           | the SMF cut out as a `.mid` (media); the stale tail opaque                                                          |
 
 ### Styles: the TCMP container (.CMP)
 
@@ -123,7 +134,10 @@ Every field cited is read by a KN7000 program 941 routine. Their names and addre
 - **Part 1** is 1 or 10 song records, of 0x870 bytes on the KN6000 and 0x8E0 on the KN7000. Each opens with
   "ZZZZ", the 10-song flag and the model signature (01 0A KN6000, 01 0D KN7000). At +0xD0 is a directory of 16
   tracks, {flags, u16 first cell}; this is the KN5000 layout, `notes/feature-presentation-cues-2026-10-18.md`.
-  The rest of the record is the reference: **open**.
+  At +0x140 is a full PANEL MEMORY record, 42 or 43 records long, which all 605 records hold. It is typed as
+  PMR_*. The bytes before it and the 0x30 / 0x50 bytes after it are spelled with their offsets. The KN7000
+  keeps the records at 0x501A5800 + n·0x8E0 (`Rec8E0TablePtr` 0x48456E49, 11 entries) and the cells in its
+  song memory of 0x4D8 pages at 0x501AB9A0 (`SongPageStorePtr` 0x48456E8B).
 - **Part 2** holds the 256-byte cells: flags, prev, next and 251 bytes.
 - **Events: a measured grammar** (`probes/sqt_try.py`) ([INFERENCE]; no KN6000 or KN7000 song reader has been
   traced):
@@ -132,8 +146,9 @@ Every field cited is read by a KN7000 program 941 routine. Their names and addre
   - 0xF1 +5, 0xF2 +6, 0xF3 +7, 0x85 / 0x86 +0;
   - 0x81 beat, 0x82 end.
 
-  412 of 417 track chains parse to their end. The other 5 stay as reference bytes, and the unit names the
-  status where parsing stopped. Free cells are declared opaque: they hold bytes left from earlier songs.
+  All 422 track chains parse to their end. The 5 that stopped in the first pass each end with a note whose
+  last byte, or a bend whose second byte, has bit 7 set; it is the track's last event before 0x82, and what
+  the bit means is not traced. Free cells are declared opaque: they hold bytes left from earlier songs.
 
 ### Custom-data images (.AST)
 
@@ -143,8 +158,9 @@ Each .AST inflates to the SHA-1 of one custom-data dump:
 - `technics_roms/roms/kn6000/01ctmini.ic18` (= kn6500's).
 
 The unit compresses `$(KN7000_CUSTOMDATA_<name>)` / `$(KN6000_CUSTOMDATA_01ctmini)` (`floppy/tools/kd/kd.mk`).
-Until lane customdata's tree builds those images, the variables point at git-ignored copies of the dumps,
-taken with a SHA-1 check. **Integration step:** set the variables to that tree's build outputs.
+These are `kn7000/build/customdata/<name>.ic21` and `kn6000/build/01ctmini.ic18`, built by recursive make
+from lane customdata's typed sources. The header words +8 / +0xC are never written by the saver
+`func_4852D0E5`: they are the old contents of its stack frame (`kn7000/tools/ast_file.py`).
 
 ### WSA1R
 
@@ -154,39 +170,55 @@ taken with a SHA-1 check. **Integration step:** set the variables to that tree's
 - **.SEQ.** The prom_b block store's blocks (`FINDINGS-prom_b-block-store.md`). Events use the KN5000 demo-song
   grammar (`floppy/kn5000/events.py`): bit 7 = status. It parses 443 of 444 chains ([INFERENCE]).
 
-## Still generic, and why (by bytes)
+## What is typed but not yet named
 
-| kind                        | bytes (inflated) | what was tried / what it is                                                                                                                                                                                                  |
-|-----------------------------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| WSA1R .TM                   | 4,456,448        | "WSA SOUND RAM S0", a 16-char name list, then sound parameter records (RAM 0xE80000, DiskLoad_Sound). Low entropy (4-5 bits), not PCM. The record layout needs the L7A1429 parameter notes: not attempted.                   |
-| KN6000/KN7000 .PMT          | 3,272,224        | 'IK '/'JK ' panel memory. A tag/length walk from any start resynchronises at one offset and stops (`probes/pmt_tlv.py`), so it is not the KN5000's PanelTlv list. The real layout needs the KN7000 PM loader: not found yet. |
-| KN6000 .TM                  | 2,354,900        | "KN6000 SOUND RAM", then 66 slots of 712 bytes from +0x10 (42 open with a printable 16-char name), then 90 bytes. Measured, not traced; parameter fields unknown.                                                            |
-| KN6000/KN7000 .SQT part 1   | 1,275,765        | the song records outside the track directory; fields unknown                                                                                                                                                                 |
-| WSA1R .CMB                  | 1,184,768        | "ZZZZ" .. "WSA1", combination RAM 0x16300 bytes to 0xEC0000 (DiskLoad_Combination); not attempted                                                                                                                            |
-| KN6000/KN7000 .LSW          | 589,296          | two parts, "ZZ" + 'IK '/'JK ' panel settings; not attempted                                                                                                                                                                  |
-| WSA1R .SQF                  | 307,200          | the sequencer workspace 0xC00 or the ten bank copies (FINDINGS-prom_b-disk-and-file-menus.md has +4 / +5 / +0x1C / +0x100 / +0x7E); typing those few fields is the next step                                                 |
-| KN7000 .CST, .MSP           | 192,836          | CST: a custom style (u32 size, names); MSP: "TPAD" (a TCMP-like header, "Compile Bank" records); not attempted                                                                                                               |
-| WSA1R small kinds           | 104,448          | .LSW .SLS .SRM .CRM .DRM: RAM windows the disk notes name (0x7000, 0x5210, 0x5860, 0x5EB0)                                                                                                                                   |
-| KN6000/KN7000 .EFC .MD .FAV | 9,364            | not attempted                                                                                                                                                                                                                |
+No byte is generic any more, but many fields have only a neutral name: an offset name (`p<hex>`, `x<hex>`,
+`m<hex>`, `h<hex>`, `e<hex>`) or a commented `.byte` row with its offset. By size:
 
-None of these is declared opaque: each one can be decoded, and the time ran out.
+- **PANEL MEMORY records** (.PMT, .LSW, and the songs' panel copies). PMR_PART's p00..p02 are the part's sound
+  {program, bank LSB, bank MSB}, as lane customdata traced. The record's other fields have no reader traced:
+  its loader is the one-touch writer's source (the triple tables at program 0x4858E19C), so a trace from that
+  writer back into the panel parameter tables would name them in the shared include.
+- **SOUND EDIT and voice records** (KN6000 .TM). The mod units and elements have no names.
+  `TgPartAuxHdr45Get` and the other `TgPartAux*` accessors name the offsets they read, but not their meaning.
+- **WSA1R tone, element, wave-select and drum records** (.TM). These have the record classes of prom_d's tone
+  database, which itself has no field named (`wsa1/notes/FINDINGS-prom-d-tone-database.md`).
+- **The .SQT song record's head** (+0x07..+0xCF, +0x100..+0x13F). The KN5000 lane's slot map
+  (`notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json`) names the KN5000's 0x800-byte record, but the
+  KN6000/KN7000 record is longer and the offsets were not checked against a KN6000/KN7000 reader.
+- **The WSA1R .SQF song record** past the fields the disk notes give, and the WSA1R panel blocks after the
+  combination.
+- **TCMP variation records**: bytes +0x01/+0x02, +0x0C..+0x0F, +0x12..+0x14 and +0x18..+0x1F.
 
 ## Open questions
 
-- Which KN6000/KN7000 routine reads .SQT events? Tracing it would turn the measured lengths into cited ones,
-  and could decode the 5 chains that stop.
-- What .AST +8/+0xC and the .CST header's four addresses are.
-- The TCMP variation record's +0x01/+0x02, +0x0C..+0x0F, +0x12..+0x14 and +0x18..+0x1F. The two bytes at +0x18
-  are FF FF as in the built-in records' sound-unit parts.
-- Whether 'J KD' is the KN5000 SLIDE8K. If so, `compress_slide8k.py` could become a plain encoder.
+- The meanings above, starting with the panel-memory record's fields.
+- What the high bit in those 5 song events means.
+- The KN6000 .TM tail word: it is the KN5000's checksum, ~(LE16 sum of the 40 sound records), in only 13 of
+  the 50 files.
+- What the 8 lines at the start of each WSA1R sound bank are. SoundRam_ClearFourBanks does not write them.
+- Whether 'J KD' is the KN5000's SLIDE8K. If so, `scripts/build/compress_slide8k.py` could use `lzss_j.encode`
+  instead of replaying reference decisions.
+- **Macro strings across the two assemblers.** llvm-mc strips the quotes from a quoted macro argument, and
+  kn7asm keeps them. So no `.ascii \name` macro serves both. The shared includes therefore leave names out of
+  the macros (VOICE_HEAD_TAIL, SOUND_HEAD, PMR_NAME_HEAD / _TAIL), and the floppy sources write `.ascii`
+  themselves. Giving kn7asm the GNU behaviour (quotes stripped, `"\name"` re-quotes) would let one macro take
+  the name.
 
 ## Shared files touched
 
-- `floppy/Makefile`: `MODELS` and one `include tools/kd/kd.mk` line.
-- New in shared places: `floppy/tools/kd/`, `floppy/tools/kd.inc`, `kn_style.inc`, `kn_song.inc`.
-
-Not touched: the root Makefile, `.gitignore`, `data_incbin_census.py` (its TREES rows existed),
-`compare_roms.py`, `assert_byte_identical.py`.
+- `floppy/Makefile`: `MODELS`, one `include tools/kd/kd.mk`.
+- `floppy/wsa1/disks.mk`, `floppy/kn6000/disks.mk`: clean-before-regenerate rules for the content-addressed
+  `include/tm/`.
+- `kn7000/src/include/panel_memory.inc`: the PMR_* section (generated by
+  `floppy/tools/kd/gen_panel_macros.py`, between its BEGIN/END markers).
+- `kn7000/src/include/voice_record.inc`: the SOUND EDIT section (SOUND_HEAD, SOUND_MOD) and VOICE_HEAD_TAIL.
+- Both includes still build lane customdata's banks byte-exact: `make -C kn7000 verify-customdata` and
+  `make -C kn6000 verify-customdata`.
+- Removed: `floppy/tools/kd/zlib-1.0.4/`, `zdeflate104.c` and its Makefile. The deflate is now
+  `kn7000/tools/zlib10_deflate.py`.
+- Not touched: the root Makefile, `.gitignore`, `data_incbin_census.py`, `compare_roms.py`,
+  `assert_byte_identical.py`.
 
 ## Website page draft
 
@@ -199,6 +231,11 @@ Not touched: the root Makefile, `.gitignore`, `data_incbin_census.py` (its TREES
 > matches, in which a reference holds an absolute ring position. Custom-data backups (.AST) are the whole
 > 1.875 MB custom flash, deflated.
 >
+> A panel-memory file (.PMT) holds banks of 8 memories. Each memory is a list of tag/length records: a name,
+> 72-byte part records and the effect, style and sequencer settings. The same record sits inside every song
+> record and current-panel (.LSW) file, and is the source of the four one-touch settings a custom style saves.
+> A sound-memory file (.TM) holds 40 sound-edit records and a user drum kit.
+>
 > A style file (.CMP) is the instrument's "TCMP" style memory, saved whole. It holds:
 > - a header with a checksum and an allocator top;
 > - 3 style records (name, four variation names, 20 owned variations);
@@ -209,8 +246,9 @@ Not touched: the root Makefile, `.gitignore`, `data_incbin_census.py` (its TREES
 > bends. F4 marks a beat and F5 ends the stream. A song file (.SQT) holds 1 or 10 song records, each with a
 > 16-track directory, and an event memory of linked 256-byte cells.
 >
-> The WSA1R saves RAM windows: sound RAM (.TM), combinations (.CMB), the song store's 256-byte blocks (.SEQ)
-> and its workspace (.SQF), plus Standard MIDI Files padded to 1 KB.
+> The WSA1R saves RAM windows: its sound flash (.TM: four banks of 64 tone records, a kit and 128 drum
+> instruments), the user combination bank (.CMB: 128 combinations of 23 records), the song store's 256-byte
+> blocks (.SEQ) and its workspace (.SQF), the panel, three re-map files, and Standard MIDI Files padded to 1 KB.
 >
 > All 36 softlist disks are rebuilt byte for byte from typed source in the disassembly repository
 > (`floppy/`), with the compressed parts regenerated by the instruments' own coders.

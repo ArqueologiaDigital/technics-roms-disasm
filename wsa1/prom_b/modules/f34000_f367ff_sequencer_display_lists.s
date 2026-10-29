@@ -1,12 +1,13 @@
 
 ; ------------------------------------------------------------------
-; 0xF34000-0xF341B5 -- 27 display-list records, 438 bytes -- interpreter A
+; 0xF34000-0xF341B5 -- 27 display-list records, 438 bytes -- interpreter A (1 records) and B (26)
+;   CORRECTED 2026-10-29 (lane gui-wsa1): this said 'interpreter A'.  The first 26 are B: the op-03 record's A reading is impossible (length 11) and its neighbours read as B (rules 'length', 'adjacent').
 ; the fill run above stops dead here; DL.walk() lands with ZERO
 ; DRIFT on 0xF341B6, the ALREADY CALL-VERIFIED start of DL_F341B6
 ; (see its own header below: "entered at: 0xF341B6").
 ; ------------------------------------------------------------------
 DL_F34000:
-	dlb_rect_entry	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F34D18	; operand bytes the handler does not read
+	dlb_rect_entry	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_FillRect, table=DLTable_F34D18
 	dlb_rect_entry_op08	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_EraseRect, table=DLTable_F34D18
 	dlb_string_xy	var=DisplayListB_Stage, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_P1ToP32, width=3, x=5, y=53
 	dlb_string_xy	var=DisplayListB_Stage+1, mask=0xff, shift=0, svc=LCDSVC_DrawText8x8Packed, table=DLText_P1ToP32, width=3, x=35, y=53
@@ -486,7 +487,7 @@ DL_RealtimeRecordSongMeasureQuantiTimeSigMasterClear:
 DL_CycleMasterS0ngMeasureTimeSig:
 	dlb_string	var=UI_DrawScratch+7, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=DLText_OffOn_F349BB, width=3, x=280, y=34
 	dlb_string	var=DisplayListB_Stage+19, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, table=DLText_OffOn_F349C1, width=3, x=280, y=112
-	dlb_string	var=0x0000, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=0x0000264c, width=6, x=256, y=8
+	dlb_string	var=DLB_NoVariable, mask=0x00, shift=0, svc=LCDSVC_DrawText8x14, table=UI_DrawScratch+12, width=6, x=256, y=8
 	dlb_number	var=UI_DrawScratch+11, mask=0xff, shift=0, svc=LCDSVC_DrawText8x10, x=232, y=8, digits=2
 	dlb_number16	var=UI_DrawScratch+4, mask=0x7f, shift=0, svc=LCDSVC_DrawText8x16, x=176, y=40, digits=3
 	dlb_number	var=UI_DrawScratch+6, mask=0xff, shift=0, svc=LCDSVC_DrawText8x16, x=184, y=69, digits=1
