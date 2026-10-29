@@ -119,6 +119,48 @@ def hmp_unit(ctx, model):
     return L
 
 
+def le32(b, o):
+    return int.from_bytes(b[o:o + 4], 'little')
+
+
+def fav_unit(ctx):
+    """FAVORITE (.FAV): measured on the 2 files; no reader traced.  'IK \\0' / 'JK \\0', an i32, then groups:
+    a 16-character name, a u32, then {u32 kind, u32 value} items until kind 2."""
+    d = ctx.data
+    o = 8
+    L = ['; FAVORITE (.FAV): measured, no reader traced ([INFERENCE] a group\'s items are {kind, value}: kinds 3/4/5/6/9',
+         '; with values that look like sound ids {program, bank LSB, bank MSB} (kind 3) and list indices; kind 2 ends',
+         '; the group).', '', ctx.label + ':', '\t.ascii\t%s' % s_escape(d[:4]), '\t.long\t%d' % (le32(d, 4) - (1 << 32) if le32(d, 4) >> 31 else le32(d, 4))]
+    while o < len(d):
+        if o + 20 > len(d):
+            return None
+        L += ['\t.ascii\t%s\t; group name' % s_escape(d[o:o + 16]), '\t.long\t%d' % le32(d, o + 16)]
+        o += 20
+        while True:
+            if o + 8 > len(d):
+                return None
+            k, v = le32(d, o), le32(d, o + 4)
+            L.append('\t.long\t%d, 0x%x\t; kind, value' % (k, v))
+            o += 8
+            if k == 2:
+                break
+    return L if o == len(d) else None
+
+
+def md_unit(ctx):
+    """.MD: measured on the 2 files; no reader traced: 'IK \\0' / 'JK \\0', six u16, then u32 entries."""
+    d = ctx.data
+    if (len(d) - 0x10) % 4:
+        return None
+    L = ['; .MD (UMDINI, on the initial-data disks): measured, no reader traced.  A 16-byte header (signature,',
+         '; six u16), then %d u32 entries ([INFERENCE] parameter ids: 0x2040nn, 0x20nn, 0x80nn ...).' % ((len(d) - 0x10) // 4),
+         '', ctx.label + ':', '\t.ascii\t%s' % s_escape(d[:4]),
+         '\t.short\t' + ', '.join('0x%04x' % int.from_bytes(d[k:k + 2], 'little') for k in range(4, 16, 2))]
+    for k in range(0x10, len(d), 32):
+        L.append('\t.long\t' + ', '.join('0x%x' % le32(d, j) for j in range(k, min(k + 32, len(d)), 4)))
+    return L
+
+
 def describe(ctx, model):
     ext = ctx.path.rsplit('.', 1)[-1].upper()
     base = ctx.path.rsplit('/', 1)[-1].rsplit('.', 1)[0]
@@ -149,6 +191,10 @@ def describe(ctx, model):
         return text_unit(ctx, what)
     if ext == 'HMP' and ctx.data[1:4] == b'K \0' and ctx.data[0x18c:0x18e] == b'BM':
         return hmp_unit(ctx, model)
+    if ext == 'FAV' and ctx.data[1:4] == b'K \0':
+        return fav_unit(ctx)
+    if ext == 'MD' and ctx.data[1:4] == b'K \0':
+        return md_unit(ctx)
     if ext == 'VER' and ctx.data.startswith(b'CAKEWALK'):
         return wrk_unit(ctx)
     return kd_describe.describe_kd(ctx, model, kn_payloads.TYPERS, kn_payloads.note(ctx, ext))
