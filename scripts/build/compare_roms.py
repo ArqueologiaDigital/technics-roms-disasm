@@ -34,6 +34,10 @@ for entry in [
 	("hdae5000 v2.01i",	"hd-ae5000_v2_01i.ic4",		"hd-ae5000_v2_01i.llvm.rom",		0x280000),
 	("table data",		"kn5000_table_data.rom",	"kn5000_table_data.llvm.rom",		0x800000),
 	("custom data",		"kn5000_custom_data.ic19",	"kn5000_custom_data.llvm.rom",		0x300000),
+	# Waveform ROM IC307 (waveform/): no CPU address, linked at 0; reference copied (uncommitted), KN5000_IC307_REF.
+	("waveform IC307",	"kn5000_waveform_rom.ic307",	"kn5000_waveform_ic307.llvm.rom",	0x000000),
+	# Rhythm data ROM IC14, descrambled; reference copied (uncommitted) from the private romset, KN5000_RHYTHM_REF.
+	("rhythm data IC14",	"kn5000_rhythm_data_rom.ic14",	"kn5000_rhythm_data_ic14.llvm.rom",	0x400000),
 ]:
 	key, orig_name, built_name, rom_base = entry
 	built_path = f"rebuilt_ROMs/{built_name}"

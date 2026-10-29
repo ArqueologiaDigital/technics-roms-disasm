@@ -78,7 +78,8 @@ wsa1-clean:
 #                      reads their sizes)
 #   make gate-kn7000   their byte-identity gates, plus the SP7001 set (942/83), table
 #                      build 80 (src/b80/table.s), the IC18 boot ROM (src/ic18/boot.s)
-#                      and program builds 935 and 893 (src/b935/, src/b893/, ported from 941)
+#                      program builds 935 and 893 (src/b935/, src/b893/, ported from 941)
+#                      and the four wave ROMs (src/wave/, verify-wave)
 kn7000:
 	$(MAKE) -C kn7000 build/kn7000_program.rom build/kn7000_table.rom build/kn7000_picture.rom build-cnv
 
@@ -86,7 +87,7 @@ kn7000-clean:
 	$(MAKE) -C kn7000 clean
 
 gate-kn7000:
-	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18 verify-935 verify-893
+	$(MAKE) -C kn7000 verify verify-sp7001 verify-picture verify-cnv verify-table80 verify-ic18 verify-935 verify-893 verify-wave
 
 # ------------------------------------------- the other MN10300 "MILK" firmwares
 # Added 2026-10-24, one folder each, made like kn7000/ and using its tools by
@@ -1304,6 +1305,61 @@ rebuilt_ROMs/kn5000_table_data.llvm.elf: rebuilt_ROMs/kn5000_table_data.llvm.o t
 rebuilt_ROMs/kn5000_table_data.llvm.rom: rebuilt_ROMs/kn5000_table_data.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- Rhythm data ROM IC14 (rhythm_data/) ---
+# The 4 MB style/pattern mask ROM the main CPU maps at 0x400000.  rhythm_data/ builds the
+# DESCRAMBLED image; the chip read we hold has address lines A19 and A21 swapped, and
+# verify-rhythm-data-raw proves that swapping them back in the rebuilt image gives that read byte
+# for byte (scripts/build/rhythm_rom_address_swap.py).  Both references are git-ignored copies from
+# the private romset, checked by SHA-1 like KN5000_V8_REF.  Notes:
+# notes/rhythm-data-ic14-2026-10-29/README.md.
+KN5000_RHYTHM_REF      ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_rhythm_data_rom.ic14
+KN5000_RHYTHM_SHA1     := fef7f1927935d8fdada2afbdbfac29aac56e1c3c
+KN5000_RHYTHM_RAW_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped
+KN5000_RHYTHM_RAW_SHA1 := e4b572d318c9fe7ba00e5b44ea783e89da9c68bd
+RHYTHMDATA_SRC = $(wildcard rhythm_data/*.s rhythm_data/*.inc rhythm_data/*/*.s)
+
+original_ROMs/kn5000_rhythm_data_rom.ic14:
+	@if [ ! -f "$(KN5000_RHYTHM_REF)" ]; then \
+	  echo "ERROR: the KN5000 rhythm data ROM (IC14) reference is missing: $(KN5000_RHYTHM_REF)"; \
+	  echo "       Point KN5000_RHYTHM_REF at the descrambled image, SHA-1 $(KN5000_RHYTHM_SHA1)"; exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_RHYTHM_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_RHYTHM_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_RHYTHM_REF) has SHA-1 $$got, expected $(KN5000_RHYTHM_SHA1)"; exit 1; fi
+	cp "$(KN5000_RHYTHM_REF)" $@.tmp
+	mv $@.tmp $@
+
+original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped:
+	@if [ ! -f "$(KN5000_RHYTHM_RAW_REF)" ]; then \
+	  echo "ERROR: the KN5000 rhythm data ROM (IC14) raw read is missing: $(KN5000_RHYTHM_RAW_REF)"; \
+	  echo "       Point KN5000_RHYTHM_RAW_REF at it, SHA-1 $(KN5000_RHYTHM_RAW_SHA1)"; exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_RHYTHM_RAW_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_RHYTHM_RAW_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_RHYTHM_RAW_REF) has SHA-1 $$got, expected $(KN5000_RHYTHM_RAW_SHA1)"; exit 1; fi
+	cp "$(KN5000_RHYTHM_RAW_REF)" $@.tmp
+	mv $@.tmp $@
+
+rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.o: $(RHYTHMDATA_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I rhythm_data -o $@ rhythm_data/kn5000_rhythm_data.s
+
+rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.elf: rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.o rhythm_data/rhythm_data.ld
+	$(LLVM_LLD) -T rhythm_data/rhythm_data.ld -o $@ $<
+
+rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom: rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
+llvm-all: original_ROMs/kn5000_rhythm_data_rom.ic14 rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom
+
+.PHONY: verify-rhythm-data-raw
+verify-rhythm-data-raw: rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped
+	@got=$$(sha1sum < original_ROMs/kn5000_rhythm_data_rom.ic14 | cut -d' ' -f1); \
+	 if [ "$$got" = "$(KN5000_RHYTHM_SHA1)" ]; then echo "OK    original_ROMs/kn5000_rhythm_data_rom.ic14 has SHA-1 $(KN5000_RHYTHM_SHA1)"; \
+	 else echo "FAIL  original_ROMs/kn5000_rhythm_data_rom.ic14 has SHA-1 $$got, expected $(KN5000_RHYTHM_SHA1)"; exit 1; fi
+	python3 scripts/build/rhythm_rom_address_swap.py --check rebuilt_ROMs/kn5000_rhythm_data_ic14.llvm.rom \
+	  original_ROMs/kn5000_rhythm_data_rom.ic14.as-read-a19a21-swapped --sha1 $(KN5000_RHYTHM_RAW_SHA1)
+
+gate: verify-rhythm-data-raw
+
 # --- Custom data ---
 rebuilt_ROMs/kn5000_custom_data.llvm.o: $(CUSTOMDATA_SRC) $(STYLE_EVENT_BINS) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
@@ -1314,6 +1370,51 @@ rebuilt_ROMs/kn5000_custom_data.llvm.elf: rebuilt_ROMs/kn5000_custom_data.llvm.o
 
 rebuilt_ROMs/kn5000_custom_data.llvm.rom: rebuilt_ROMs/kn5000_custom_data.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
+
+# --- Waveform ROM IC307 (waveform/, lane kn5000-waveform 2026-10-29) ---
+# The reference image is not committed (a private dump, kept out of this public
+# repository like v8's).  `make` copies it, git-ignored, from the private romset
+# and refuses a copy whose SHA-1 differs; override the source with
+#   make KN5000_IC307_REF=/path/to/kn5000_waveform_rom.ic307 ...
+# The PCM bodies are `.incbin`s of that copy (census: opaque -- pcm); the
+# directory, the parameter records, the alignment and the 0xFF tails are typed
+# source.  Notes: notes/waveform-ic307-2026-10-29/README.md.
+KN5000_IC307_REF  ?= $(PROJECTS_ROOT)/technics_romsets/kn5000/kn5000_waveform_rom.ic307
+KN5000_IC307_SHA1 := 4b511bff6625f4655cabd96a263bf548d2ef4bf7
+WAVEFORM_SRC = $(wildcard waveform/*.s waveform/*.inc)
+
+original_ROMs/kn5000_waveform_rom.ic307:
+	@if [ ! -f "$(KN5000_IC307_REF)" ]; then \
+	  echo "ERROR: the KN5000 waveform ROM IC307 reference image is missing: $(KN5000_IC307_REF)"; \
+	  echo "       Point KN5000_IC307_REF at a copy whose SHA-1 is $(KN5000_IC307_SHA1)"; \
+	  exit 1; fi
+	@got=$$(sha1sum < "$(KN5000_IC307_REF)" | cut -d' ' -f1); \
+	 if [ "$$got" != "$(KN5000_IC307_SHA1)" ]; then \
+	  echo "ERROR: $(KN5000_IC307_REF) has SHA-1 $$got, expected $(KN5000_IC307_SHA1)"; exit 1; fi
+	cp "$(KN5000_IC307_REF)" $@.tmp
+	mv $@.tmp $@
+
+verify-ic307-reference: original_ROMs/kn5000_waveform_rom.ic307
+	@got=$$(sha1sum < $< | cut -d' ' -f1); \
+	 if [ "$$got" = "$(KN5000_IC307_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_IC307_SHA1)"; \
+	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_IC307_SHA1)"; exit 1; fi
+
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.o: $(WAVEFORM_SRC) original_ROMs/kn5000_waveform_rom.ic307 $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I waveform -I original_ROMs -o $@ waveform/kn5000_waveform_ic307.s
+
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.elf: rebuilt_ROMs/kn5000_waveform_ic307.llvm.o waveform/waveform.ld
+	$(LLVM_LLD) -T waveform/waveform.ld -o $@ $<
+
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom: rebuilt_ROMs/kn5000_waveform_ic307.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
+llvm-all: original_ROMs/kn5000_waveform_rom.ic307 rebuilt_ROMs/kn5000_waveform_ic307.llvm.rom
+gate: verify-ic307-reference
+clean: clean-waveform
+clean-waveform:
+	rm -f rebuilt_ROMs/kn5000_waveform_ic307.llvm.*
+.PHONY: verify-ic307-reference clean-waveform
 
 # ============================================================================
 # LLVM conversion targets (regenerate .s from ASL sources)

@@ -26,6 +26,24 @@
 #   .byte  b [, b ...]             emit 8-bit values
 #   .word  w [, w ...]             emit 16-bit little-endian values
 #   .long  l [, l ...]             emit 32-bit little-endian values
+#   .be16 / .be24 / .be32 v [, v ...]
+#                                  emit 16/24/32-bit BIG-endian values (the
+#                                  KN7000's style data is big-endian although
+#                                  the MN10300 is little-endian: the firmware
+#                                  reads it through LoadU16BE/LoadU24BE)
+#   .macro NAME [p1 [, p2 ...]]    define a macro, up to `.endm`; invoked as
+#   ...                            `NAME a1, a2 ...` (positional). In its body
+#   .endm                          `\p1` is replaced by the argument text; the
+#                                  longest parameter name that prefixes the word
+#                                  wins (`\s_Intro` = argument s + "_Intro"),
+#                                  and `\()` is an empty separator.
+#                                  Extensions (GNU as style): a parameter may
+#                                  have a default, `p2=0`, which an invocation
+#                                  that leaves it out takes (a parameter with
+#                                  no default must be given); arguments may be
+#                                  given by keyword, `NAME p2=b, p1=a`, in any
+#                                  order, after the positional ones; `\@` is
+#                                  the number of macro expansions so far.
 #   .ascii "text" [, "text" ...]   emit the bytes of each string
 #   .asciz "text" [, "text" ...]   the same, each followed by a NUL
 #                                  (escapes: \\ \" \n \r \t \0 and \xHH,
@@ -37,20 +55,12 @@
 #   .incbin_range "path", START, END           append path[START:END] and
 #                                              assert the current offset == START
 #
-#   .macro NAME [p1[=default] [, p2 ...]]   define a macro (GNU as style); in
-#   ...                                      its body `\p1` is the argument,
-#   .endm                                    `\()` separates a name from what
-#                                            follows (`\p1\()_ix`), `\@` counts
-#                                            expansions.  Invoked as
-#                                            `NAME a, b` or `NAME p2=b, p1=a`
-#                                            (keyword arguments in any order);
-#                                            an argument left out takes its
-#                                            default (none: empty).
-#
 # An instruction operand may be NAME+N or NAME-N (folded to one number).
 #
-# EXPR supports hex (0x..), decimal, defined symbols, ( ) and the operators
-# + - * / % << >> & | ^ ~ (Python precedence; `/` is integer division).
+# EXPR supports hex (0x..), decimal, defined symbols, and + - * ( ), and also
+# / (integer division), % << >> | & ^ ~ with Python's precedence (| lowest, then
+# ^, then &, then the shifts, then + -, then * / %, then unary ~):
+# `PFMT | 18<<4 | 5`, `(Rec - Page) / 2`.
 # Numeric byte/word/long args additionally accept the same expressions.
 #
 # An instruction operand or an EXPR may name a label defined LATER in the source
@@ -101,8 +111,14 @@ class Assembler:
         self.base_dir = base_dir
         self.known = {}    # symbol -> value, as found by the previous pass
         self.parsed = {}   # path -> its lines, parsed once for every pass
+        self.macros = {}   # name -> ([(parameter, default or None)], body source lines)
+        self.expanded = {}   # (name, argument text) -> the body lines, expanded once
+        self.expanded_parsed = {}   # (name, argument text) -> those lines, parsed
+        self.n_expansions = 0    # \@
         self.enc_cache = {}  # (mnemonic, resolved operands, pc) -> bytes, this pass
-        self.expanded = {}   # (path, line) -> the parsed lines of that macro invocation
+        self.file_cache = {}  # path -> its bytes, read once for every pass (an open() on the
+                              # virtiofs share costs ~3 ms, and a source may hold thousands of
+                              # .incbin_range lines of one reference image)
         self.start_pass()
 
     def start_pass(self):
@@ -123,8 +139,6 @@ class Assembler:
         self.prev_off = getattr(self, "line_off", {})
         self.line_off = {}
         self.problem = None    # first error of this pass; raised only if it is exact
-        self.macros = {}       # name -> (params [(name, default)], body source lines)
-        self.n_expansions = 0  # \@
 
     def fail(self, msg):
         """An error that may be an artefact of a placeholder address: keep the
@@ -185,14 +199,14 @@ class Assembler:
     def evaluate(self, expr):
         expr = expr.strip()
         # tokenise into numbers, symbols and operators
-        tokens = re.findall(r"0x[0-9A-Fa-f]+|\d+|[A-Za-z_.][\w.]*|<<|>>|[()+\-*/%&|^~]", expr)
+        tokens = re.findall(r"0x[0-9A-Fa-f]+|\d+|[A-Za-z_.][\w.]*|<<|>>|[()+\-*/%|&^~]", expr)
         py = []
         for tok in tokens:
             if re.fullmatch(r"0x[0-9A-Fa-f]+|\d+", tok):
                 py.append(str(int(tok, 0)))
             elif tok == "/":
-                py.append("//")
-            elif tok in ("<<", ">>") or tok in "()+-*%&|^~":
+                py.append("//")                # integer division
+            elif tok in ("<<", ">>") or tok in "()+-*%|&^~":
                 py.append(tok)
             else:
                 if tok == ".":
@@ -281,9 +295,7 @@ class Assembler:
                       f"{len(self.out):#x} (gap or overlap in the layout)")
         if end < start:
             raise AsmError(f".incbin_range end {end:#x} < start {start:#x}")
-        with open(path, "rb") as f:
-            f.seek(start)
-            chunk = f.read(end - start)
+        chunk = self.file_bytes(path)[start:end]
         if len(chunk) != end - start:
             raise AsmError(f"{path}: only {len(chunk):#x} bytes available for "
                            f"range [{start:#x}, {end:#x})")
@@ -292,10 +304,14 @@ class Assembler:
     def do_incbin(self, args):
         path = self.resolve_path(self.unquote(args[0]))
         start = self.evaluate(args[1]) if len(args) >= 2 else 0
-        with open(path, "rb") as f:
-            f.seek(start)
-            chunk = f.read(self.evaluate(args[2]) if len(args) >= 3 else -1)
-        self.out += chunk
+        data = self.file_bytes(path)
+        self.out += data[start:start + self.evaluate(args[2])] if len(args) >= 3 else data[start:]
+
+    def file_bytes(self, path):
+        if path not in self.file_cache:
+            with open(path, "rb") as f:
+                self.file_cache[path] = f.read()
+        return self.file_cache[path]
 
     def do_byte(self, args, width):
         for a in args:
@@ -319,160 +335,175 @@ class Assembler:
 
     # -- top-level assembly ---------------------------------------------------
 
+    def parse_line(self, raw):
+        """(label or None, op or None, rest, args) of one source line, or None
+        when it holds nothing."""
+        line = strip_comment(raw).strip()
+        if not line:
+            return None
+        label = None
+        m = re.match(r"([A-Za-z_.][\w.]*):(.*)$", line)
+        if m and not line.startswith("."):
+            label, line = m.group(1), m.group(2).strip()
+        if not line:
+            return label, None, "", []
+        parts = line.split(None, 1)
+        rest = parts[1] if len(parts) > 1 else ""
+        return (label, parts[0], rest,
+                self.split_args(rest) if parts[0].startswith(".") else None)
+
     def parse_file(self, path):
         """(line number, label or None, op or None, rest, args) per source line
-        that holds anything; the same in every pass, so done once."""
+        that holds anything; the same in every pass, so done once. A `.macro`
+        ... `.endm` block is taken out here and kept in self.macros."""
         if path not in self.parsed:
+            out = []
+            macro = None
             with open(path, "r") as f:
-                self.parsed[path] = self.parse_lines(enumerate(f, 1))
+                for i, raw in enumerate(f, 1):
+                    if macro is not None:
+                        if strip_comment(raw).strip() == ".endm":
+                            self.macros[macro[0]] = (macro[1], macro[2])
+                            macro = None
+                        else:
+                            macro[2].append(raw)
+                        continue
+                    p = self.parse_line(raw)
+                    if p is None:
+                        continue
+                    if p[1] == ".macro":
+                        head = [a.strip() for a in p[2].replace(",", " ").split()]
+                        if not head:
+                            raise AsmError(f"{path}:{i}: .macro needs a name")
+                        params = [(n, d if eq else None)
+                                  for n, eq, d in (h.partition("=") for h in head[1:])]
+                        macro = (head[0], params, [])
+                        continue
+                    out.append((i,) + p)
+            if macro is not None:
+                raise AsmError(f"{path}: .macro {macro[0]} has no .endm")
+            self.parsed[path] = out
         return self.parsed[path]
 
-    def parse_lines(self, numbered):
-        out, macro = [], None
-        for i, raw in numbered:
-            line = strip_comment(raw).strip()
-            if macro is not None:          # inside .macro: keep the raw lines
-                if line.split(None, 1)[:1] == [".endm"]:
-                    out.append(macro)
-                    macro = None
-                else:
-                    macro[4].append(raw)
-                continue
-            if not line:
-                continue
-            label = None
-            m = re.match(r"([A-Za-z_.][\w.]*):(.*)$", line)
-            if m and not line.startswith("."):
-                label, line = m.group(1), m.group(2).strip()
-            if not line:
-                out.append((i, label, None, "", []))
-                continue
-            parts = line.split(None, 1)
-            rest = parts[1] if len(parts) > 1 else ""
-            if parts[0] == ".macro":
-                macro = (i, label, ".macro", rest, [])
-                continue
-            out.append((i, label, parts[0], rest,
-                        self.split_args(rest) if parts[0].startswith(".") else None))
-        if macro is not None:
-            raise AsmError(f".macro at line {macro[0]} has no .endm")
-        return out
-
-    def define_macro(self, header, body):
-        parts = header.replace(",", " ").split()
-        if not parts:
-            raise AsmError(".macro needs a name")
-        params = []
-        for p in parts[1:]:
-            name, _eq, default = p.partition("=")
-            params.append((name, default))
-        self.macros[parts[0]] = (params, body)
-
-    def expand_macro(self, path, line, op, rest):
-        """The parsed lines of macro `op` invoked with `rest` (cached per
-        invocation: the expansion is the same in every pass)."""
-        key = (path, line, op, rest)
+    def expand_macro(self, name, rest):
+        """The body lines of macro `name` with its parameters replaced (cached:
+        an invocation expands the same way in every pass, \\@ included)."""
+        key = (name, rest)
         got = self.expanded.get(key)
         if got is not None:
             return got
-        params, body = self.macros[op]
+        params, body = self.macros[name]
         names = [n for n, _d in params]
-        vals = {n: d for n, d in params}
-        pos = 0
+        values, pos = {}, 0
         for arg in self.split_args(rest):
             m = re.match(r"([A-Za-z_]\w*)\s*=(?!=)\s*(.*)$", arg, re.S)
-            if m and m.group(1) in vals:
-                vals[m.group(1)] = m.group(2).strip()
+            if m and m.group(1) in names:
+                values[m.group(1)] = m.group(2).strip()
+                pos = len(names)           # no positional argument after a keyword
             else:
                 if pos >= len(names):
-                    raise AsmError(f"macro {op}: too many arguments")
-                vals[names[pos]] = arg
+                    raise AsmError(f"macro {name} takes {len(params)} arguments, got more")
+                values[names[pos]] = arg
                 pos += 1
+        for n, d in params:
+            if n not in values:
+                if d is None:
+                    raise AsmError(f"macro {name}: argument {n} missing (it has no default)")
+                values[n] = d
         self.n_expansions += 1
-        order = sorted(names, key=len, reverse=True)
-        sub = re.compile(r"\\(\(\)|@|" + "|".join(re.escape(n) for n in order) + ")" if order
-                         else r"\\(\(\)|@)")
+        by_len = sorted(names, key=len, reverse=True)
 
         def repl(m):
-            t = m.group(1)
-            return "" if t == "()" else str(self.n_expansions) if t == "@" else vals[t]
-        lines = [(line, sub.sub(repl, raw)) for raw in body]
-        got = self.parse_lines(lines)
+            word = m.group(1)
+            if word == "()":
+                return ""
+            if word == "@":
+                return str(self.n_expansions)
+            for p in by_len:
+                if word.startswith(p):
+                    return values[p] + word[len(p):]
+            raise AsmError(f"macro {name}: unknown parameter \\{word}")
+        got = [re.sub(r"\\(\(\)|@|\w+)", repl, raw) for raw in body]
         self.expanded[key] = got
         return got
 
     def assemble_file(self, path):
         prev_file, prev_line = self.cur_file, self.cur_line
         self.cur_file = path
-        self.run_lines(path, self.parse_file(path))
+        for i, label, op, rest, args in self.parse_file(path):
+            self.cur_line = i
+            self.line_off[(path, i)] = len(self.out)
+            self.do_line(label, op, rest, args)
         self.cur_file, self.cur_line = prev_file, prev_line
 
-    def run_lines(self, path, lines, depth=0):
-        for i, label, op, rest, args in lines:
-            self.cur_line = i
-            if depth == 0:
-                self.line_off[(path, i)] = len(self.out)
-            if label is not None:
-                self.define_label(label)
-            if op is None:
-                continue
-
-            if op == ".macro":
-                self.define_macro(rest, args)
-            elif op in self.macros:
-                if depth > 20:
-                    raise AsmError(f"macro {op}: nested too deeply")
-                self.run_lines(path, self.expand_macro(path, i, op, rest), depth + 1)
-                self.cur_line = i
-            elif op == ".equ":
-                name, expr = args[0], ",".join(args[1:])
-                self.symbols[name] = self.evaluate(expr)
-            elif op == ".org":
-                self.do_org(args)
-            elif op == ".byte":
-                self.do_byte(args, 1)
-            elif op == ".word":
-                self.do_byte(args, 2)
-            elif op == ".long":
-                self.do_byte(args, 4)
-            elif op == ".ascii":
-                self.do_ascii(args, False)
-            elif op == ".asciz":
-                self.do_ascii(args, True)
-            elif op == ".space":
-                self.do_space(args)
-            elif op == ".align":
-                self.do_align(args)
-            elif op == ".incbin":
-                self.do_incbin(args)
-            elif op == ".incbin_range":
-                self.do_incbin_range(args)
-            elif op == ".include":
-                self.assemble_file(self.resolve_path(self.unquote(args[0])))
-            elif op == ".mnbase":
-                self.mn_base = self.evaluate(args[0])
-            elif not op.startswith("."):
-                # A bare mnemonic => an MN10300 instruction. PC-relative targets
-                # (branches/calls/jumps) are absolute CPU addresses, so encode()
-                # needs this instruction's CPU address = mn_base + output offset.
-                if mn10300_asm is None:
-                    raise AsmError("MN10300 encoder (mn10300_asm.py) not available")
-                pc = self.mn_base + len(self.out)
-                key = (op, self.resolve_operands(rest), pc)
-                enc = self.enc_prev.get(key)
-                if enc is None:
-                    try:
-                        enc = mn10300_asm.encode(*key)
-                    except mn10300_asm.EncError as e:
-                        enc = e
-                self.enc_cache[key] = enc
-                if isinstance(enc, Exception):
-                    self.fail(f"cannot encode '{op} {rest}': {enc}")
-                    self.out += b"\0\0"   # e.g. a branch whose target has not settled
-                else:
-                    self.out += enc
+    def do_line(self, label, op, rest, args, depth=0):
+        if label is not None:
+            self.define_label(label)
+        if op is None:
+            return
+        if op in self.macros:
+            if depth > 16:
+                raise AsmError(f"macro {op}: nested too deeply")
+            key = (op, rest)
+            lines = self.expanded_parsed.get(key)
+            if lines is None:
+                lines = [p for p in map(self.parse_line, self.expand_macro(op, rest)) if p is not None]
+                self.expanded_parsed[key] = lines
+            for p in lines:
+                self.do_line(*p, depth=depth + 1)
+        elif op == ".equ":
+            name, expr = args[0], ",".join(args[1:])
+            self.symbols[name] = self.evaluate(expr)
+        elif op == ".org":
+            self.do_org(args)
+        elif op == ".byte":
+            self.do_byte(args, 1)
+        elif op == ".word":
+            self.do_byte(args, 2)
+        elif op == ".long":
+            self.do_byte(args, 4)
+        elif op in (".be16", ".be24", ".be32"):
+            width = int(op[3:]) // 8
+            for a in args:
+                self.out += (self.evaluate(a) & ((1 << (8 * width)) - 1)).to_bytes(width, "big")
+        elif op == ".ascii":
+            self.do_ascii(args, False)
+        elif op == ".asciz":
+            self.do_ascii(args, True)
+        elif op == ".space":
+            self.do_space(args)
+        elif op == ".align":
+            self.do_align(args)
+        elif op == ".incbin":
+            self.do_incbin(args)
+        elif op == ".incbin_range":
+            self.do_incbin_range(args)
+        elif op == ".include":
+            self.assemble_file(self.resolve_path(self.unquote(args[0])))
+        elif op == ".mnbase":
+            self.mn_base = self.evaluate(args[0])
+        elif not op.startswith("."):
+            # A bare mnemonic => an MN10300 instruction. PC-relative targets
+            # (branches/calls/jumps) are absolute CPU addresses, so encode()
+            # needs this instruction's CPU address = mn_base + output offset.
+            if mn10300_asm is None:
+                raise AsmError("MN10300 encoder (mn10300_asm.py) not available")
+            pc = self.mn_base + len(self.out)
+            key = (op, self.resolve_operands(rest), pc)
+            enc = self.enc_prev.get(key)
+            if enc is None:
+                try:
+                    enc = mn10300_asm.encode(*key)
+                except mn10300_asm.EncError as e:
+                    enc = e
+            self.enc_cache[key] = enc
+            if isinstance(enc, Exception):
+                self.fail(f"cannot encode '{op} {rest}': {enc}")
+                self.out += b"\0\0"   # e.g. a branch whose target has not settled
             else:
-                raise AsmError(f"unknown directive {op!r}")
+                self.out += enc
+        else:
+            raise AsmError(f"unknown directive {op!r}")
 
     def define_label(self, name):
         """A label is the CPU address of the current output offset. If the name
