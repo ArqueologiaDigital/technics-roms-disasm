@@ -10,6 +10,8 @@
 # SHA-1 checked) from the softlist floppy's .AST file.
 
 .include "src/customdata/customdata.inc"
+.include "src/include/panel_memory.inc"
+.include "src/include/voice_record.inc"
 
 # ---- block 0: the directory
 CustDir:	CUSTDIR_SIGNATURE

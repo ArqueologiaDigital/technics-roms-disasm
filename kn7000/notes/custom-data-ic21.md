@@ -102,12 +102,52 @@ The sections follow the header in that order with no gap. In the factory sets on
 has a dependency section: a custom-sound block (`count 1` at `+0x88`). The custom-sound block is
 a 0x27-byte header, 128 `{program, bank LSB, bank MSB}` references at `+0x27` and 128 voice
 records of 0x8E bytes at `+0x1A7` (`CustomVoiceRecFetch`; 0x27 + 384 + 128 x 0x8E = 0x48A7).
+It sits in `03custm3` slot 7 and is a user drum kit (header name "User Kit"; voice names such as
+"Electric SD", "Snare Drum 2", "Silent" for unused keys).
 
-**One touch settings.** Four panel memories of 0xA0 bytes (KN6000: 0x90). Their format is the
-library's (`func_4C02A0C4` writes them in the save, `func_4C02AD02` returns the size). Only one
-field is traced: on loading a slot from disk, `func_484859D8` stamps `(slot | 0x200000) & 0xFF`
-into byte `+0x70` of each, the CUSTOM style-ID of its own slot (`func_4843E452`). In all 180 KN7000
-records byte `+0x70` is the slot number. The rest is an `.incbin_range` per record.
+**Voice records** (`kn7000/src/include/voice_record.inc`). The 0x8E-byte record of the tone
+generator's voice-resource banks, the same unit `VoiceRecFetchBanked` 0x484496C9 returns and
+`TgPartLocalEditRecPtr` 0x4C00C2C8 shadows: a 16-byte header (13-byte name; `+0x0D` picks the
+sub-record, `VoiceSubRecFetch` 0x4844978B, 0xFF = none), two 0x1C-byte sub-records at `+0x10`
+(`VoiceSubRecFetch`: `+0x10 + n*0x1C`) and two 0x23-byte element records at `+0x48`
+(`TgPartLocalEditElemRecPtr` 0x4C00C2F9). `VOICE_HEAD`, `VOICE_SUB` and `VOICE_ELEM` type each
+part; the sub-record and element fields keep neutral names (offset in the sub-record), since no
+reader of single fields was traced. No floppy lane has typed a KN6000/KN7000 sound file yet; the
+include is meant for those too.
+
+**One touch settings** (`kn7000/src/include/panel_memory.inc`, shared with the floppy
+describers). Four records of 0xA0 bytes (KN6000: 0x90), one per ONE TOUCH SETTING. The save builds
+them with library `func_4C02A0C4` (KN6000 `func_4C04B9F8`) from four consecutive PANEL MEMORY
+records, the 0x750-byte records of the backup-SRAM store at `0x84000824 + bank*0x3A90 + 0x10 +
+i*0x750` (KN6000: 0x700-byte records at `0x840007D2 + bank*0x3810 + 0x10 + i*0x700`). Each field
+is copied as `source & mask` through a table of `{source offset, destination offset, mask}`
+triples (KN7000 program 0x4858E19C..; the KN6000's 0x4C19AB04.. holds the same bytes, minus the
+last table). `panel_memory_map.py` prints the tables. The record, KN7000 offsets:
+
+| offset                  | macro          | source (panel-memory record)                                      | traced fields                                                                                                                                                              |
+|-------------------------|----------------|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `+0x00` `+0x1A` `+0x34` | `PM_PART`      | part 0..2 at `+0x16 + part*0x4A`, 26 fields                       | `+0..+2` the part's sound {program, bank LSB, bank MSB}: `func_4C02B2FE` classifies it and the writer substitutes the CUSTOM copy's reference for a user sound or kit      |
+| `+0x4E`                 | `PM_ENTRIES`   | byte 0 of the eight 6-byte entries at `+0xF4`                     |                                                                                                                                                                            |
+| `+0x56`                 | `PM_PART`      | part 3 at `+0x2E0` (KN6000 `+0x296`)                              | as above                                                                                                                                                                   |
+| `+0x70`                 | `PM_STYLE`     | 7 fields from `+0x6B6` (`+0x66C`)                                 | `+0x70..+0x72` the style, `func_4843E452(slot)` = slot OR 0x200000, low byte first (also restamped by `func_484859D8` on load); `+0x74` bits 4-5 the setting's number 0..3 |
+| `+0x77`                 | `PM_SET77`     | 3 fields from `+0x6C6` (`+0x67C`)                                 |                                                                                                                                                                            |
+| `+0x7A`                 | `PM_FX`        | 14 fields from `+0x6D0` (`+0x686`)                                | six 14-bit ids re-mapped by `func_48413686` (kinds 0, 9, 1, 2, 3, 4) when they name user data; `[INFERENCE]` effects                                                       |
+| `+0x88`                 | `PM_SET88`     | 4 fields from `+0x700` (`+0x6B6`)                                 |                                                                                                                                                                            |
+| `+0x8C`                 | `PM_SET8C`     | 2 fields from `+0x716` (`+0x6C6`); the second via `func_484417B9` |                                                                                                                                                                            |
+| `+0x8E`                 |                | not written                                                       |                                                                                                                                                                            |
+| `+0x8F..+0x9A`          | `PM_PART_TAIL` | KN7000 only: part `+0x23` (mask 0x07), `+0x38`, `+0x39`, x4       |                                                                                                                                                                            |
+| `+0x9B..+0x9F`          |                | 0xFF (KN6000: `+0x8E..+0x8F`)                                     |                                                                                                                                                                            |
+
+Parameter names are the source offsets (`p<hex>` in a part record, and per section), so the floppy
+lanes' `.PMT` describers can share them; the field meanings of the panel-memory record itself are
+theirs to trace. Two observations fix what wrote the factory files:
+
+- No stored byte breaks a mask, except that **all 80 KN6000 settings have part 3 all 0xFF**
+  (880 bytes outside their masks): the v7.1 writer copies part 3, so these were written by an
+  earlier one.
+- **82 of the KN7000 settings** (76 live) do not hold program 941's part tails at `+0x8F` (their
+  `p23` exceeds the mask 0x07); `02custm6` has none such, `01ctmini` most. Those 13 bytes are
+  spelled as plain bytes with that comment; the rest use `PM_PART_TAIL`.
 
 ## The "TCMP" style container (N = 1)
 
@@ -221,18 +261,20 @@ it to regenerate these files.
 
 | tree                | opaque          | generic n | generic bytes |
 |---------------------|-----------------|-----------|---------------|
-| `kn7000-customdata` | 183 / 2,592,308 | 1,896     | 158,732       |
-| `kn6000-customdata` | 0 / 0           | 80        | 11,520        |
+| `kn7000-customdata` | 183 / 2,592,308 | 0         | 0             |
+| `kn6000-customdata` | 0 / 0           | 0         | 0             |
 
-The generic entries are the one-touch-setting panel memories (four per record, two pieces each
-on the KN7000) and the 128 voice records of the one custom-sound block. Everything else is typed.
+Generic is 0 in both trees: the panel memories and the voice records are typed since the second
+round (`panel_memory.inc`, `voice_record.inc`). The opaque entries are the residue runs above.
 
 ## Open questions
 
-- The panel-memory format (0xA0 / 0x90 bytes, the library's `func_4C02A0C4`): not traced.
+- The meaning of most panel-memory fields: the map gives each one's source offset in the 0x750-byte
+  panel-memory record, not what that offset holds.
 - The 0x42-byte dependency records (five kinds) and the 0x2C8 SOUND EDIT records: none in the
   factory sets, so only their strides are known.
-- The voice record (0x8E) and the custom-sound block's 0x27-byte header.
+- The voice record's single fields (0x1C sub-records, 0x23 element records) and the custom-sound
+  block's 0x27-byte header.
 - TCMP variation bytes `+0x01`, `+0x02`, `+0x18`, `+0x19`; the style record's two u16BE at
   `+0x70`; the pad record's 13 setting bytes beyond those named.
 - A reader of the 24-field part set-up: the field mapping is the table's order, unconfirmed.
