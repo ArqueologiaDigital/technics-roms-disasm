@@ -449,7 +449,7 @@ HdaeUiVar_HDDMENU_window:	.long	0xffffffff
 HdaeUiVar_HDDMENU_SETUP_TOOLS_selected:	.short	0x0000
 HdaeUiVar_HDDMENU_Go_LOAD_BY_NUM_selected:	.short	0x0000
 HdaeUiVar_HDDMENU_Go_FLS_SELECT_selected:	.short	0x0000
-HdaeUiVar_HDDMENU_AcScreenMenu_selected:	.short	0x0000
+HdaeUiVar_HDDMENU_COPY_FD_TO_HARD_DISK_selected:	.short	0x0000
 HdaeUiVar_HDDMENU_Go_OUTPUT_SETTING_selected:	.short	0x0000
 HdaeUiVar_HARD_DISK_OPT_str_adr:	.long	0x00708901
 HdaeUiVar_HARD_DISK_OPT_sel_num:	.short	0xffff
@@ -494,20 +494,20 @@ HdaeUiVar_PP_STATUS_en_paradraw:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P1_parent:	.long	0xffffffff
 HdaeUiVar_SETUP_TOOLS_P1_child:	.long	0xffffffff
 HdaeUiVar_SETUP_TOOLS_P1_PC_DATA_LINK_selected:	.short	0x0000
-HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_selected:	.short	0x0001
-HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_data:	.long	0x00000000
+HdaeUiVar_SETUP_TOOLS_P1_WRITE_PROTECT_selected:	.short	0x0001
+HdaeUiVar_SETUP_TOOLS_P1_WRITE_PROTECT_data:	.long	0x00000000
 HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_selected:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P1_QUICK_LD_MODE_data:	.long	0x00000000
 HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_selected:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P1_JUMP_AFTER_LD_data:	.long	0x00000000
-HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_selected:	.short	0x0000
-HdaeUiVar_SETUP_TOOLS_P1_AcRamEditBox_2_data:	.long	0x00000000
+HdaeUiVar_SETUP_TOOLS_P1_WRITE_CONFIRM_selected:	.short	0x0000
+HdaeUiVar_SETUP_TOOLS_P1_WRITE_CONFIRM_data:	.long	0x00000000
 HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_selected:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P1_LD_BY_NUM_M_data:	.long	0x00000000
 HdaeUiVar_SETUP_TOOLS_P1_LYRIC_SETTINGS_selected:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P2_parent:	.long	0xffffffff
 HdaeUiVar_SETUP_TOOLS_P2_child:	.long	0xffffffff
-HdaeUiVar_SETUP_TOOLS_P2_AcScreenMenu_selected:	.short	0x0000
+HdaeUiVar_SETUP_TOOLS_P2_SAVE_SETUP_selected:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P2_HD_AE_INFOS_selected:	.short	0x0000
 HdaeUiVar_SW_HD_FORMAT_selected:	.short	0x0000
 HdaeUiVar_SETUP_TOOLS_P2_Go_ABOUT_HELP_selected:	.short	0x0000
@@ -759,8 +759,8 @@ HdaeUiVar_LoadLyricFD_FDFileSelect_sel_num:	.short	0x0000
 HdaeUiVar_LoadLyricFD_FDFileSelect_sel_pos:	.short	0x0000
 HdaeUiVar_FD_PLEASE_window:	.long	0xffffffff
 HdaeUiVar_LyrSettings_window:	.long	0xffffffff
-HdaeUiVar_LyrSettings_AcRamEditBox_selected:	.short	0x0001
-HdaeUiVar_LyrSettings_AcRamEditBox_data:	.long	0x00000000
+HdaeUiVar_LyrSettings_Jump_after_Load_selected:	.short	0x0001
+HdaeUiVar_LyrSettings_Jump_after_Load_data:	.long	0x00000000
 HDAE5000_WindowGeometry_Init:
 HdaeUiVar_WriteIn_parent:	.long	0xffffffff
 HdaeUiVar_WriteIn_child:	.long	0xffffffff

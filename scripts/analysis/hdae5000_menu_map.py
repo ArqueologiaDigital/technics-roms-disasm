@@ -236,11 +236,32 @@ def describe(o, classes, by, with_caption=True):
         elif ch == "e" and v.startswith("ES_") and v != "ES_None":
             parts.append("switch %s" % v[3:])
         elif k == "index" and o["cls"].startswith("AcLanguageText"):
-            parts.append("text #%s" % v)
+            msg = LANGMSG.get(int(v, 0))
+            parts.append(('text %s' % msg) if msg else "text #%s (no message)" % v)
     return "; ".join(parts)
 
 
+LANGMSG = {}
+
+
+def load_langmsg(tree):
+    """{message number: its English text, quoted}: HDAE5000_LangMsg_<n>_EN in the data tables,
+    the texts HDAE5000_AcLanguageText1Proc draws for view index n."""
+    LANGMSG.clear()
+    lab = None
+    for ln in open(os.path.join(ROOT, tree, "hdae5000_data_tables.s"), "rb").read().decode("latin-1").split("\n"):
+        m = re.match(r"^HDAE5000_LangMsg_(\d+)_EN:", ln)
+        if m:
+            lab = int(m.group(1))
+            continue
+        m = re.match(r'^\s*\.asciz\s+("(?:[^"\\]|\\.)*")', ln)
+        if m and lab is not None:
+            LANGMSG[lab] = m.group(1)
+            lab = None
+
+
 def render(ver, tree, tag, classes):
+    load_langmsg(tree)
     objs, by = parse_tree(tree, classes)
     refs = code_refs(tree)
     opened = collections.defaultdict(list)
@@ -263,9 +284,10 @@ def render(ver, tree, tag, classes):
     w("objects that name it (an `AcScreenMenu.screen` button, an `IvExitScreen.screen` EXIT, an")
     w("`IvPageControl.window` page switch) and the routines whose code names its id. Names in")
     w("CAPITALS (and a few mixed-case ones) are the firmware's own resource names; the others were")
-    w("made up from the parent and the caption or class. `text #n` is entry n of the language text")
-    w("the object draws (AcLanguageText1, via `NAKA_APFUNC_LanguageTextReturn`); the texts are not in")
-    w("this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the firmware's")
+    w("made up from the parent and the caption, language text, destination or class. `text \"...\"`")
+    w("is the English text an AcLanguageText1 object draws: message `index` of")
+    w("HDAE5000_AcLanguageText1Proc's switch, `HDAE5000_LangMsg_<n>_EN` (German and French twins")
+    w("beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the LCD button the object answers to (its `editsw`, by the firmware's")
     w("`ES_*` names): Bottom1-8 under the display, Left1-5 / Right1-5 the side rows, top to bottom.")
     w("")
     w("## Index")

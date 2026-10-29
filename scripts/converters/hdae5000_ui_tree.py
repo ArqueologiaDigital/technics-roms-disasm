@@ -202,6 +202,15 @@ class Version:
         ram = [p for p in self.ptr if p < BASE]
         # first RAM record is 8 bytes after the WindowGeometry_Init label (four 0xffff words)
         self.ramb = min(ram) - (self.geom + 8 - self.img)
+        # the language texts AcLanguageText1 objects draw: message n (the view's `index`) is
+        # HDAE5000_LangMsg_<n>_EN / _DE / _FR, chosen by HDAE5000_AcLanguageText1Proc's message
+        # switch (HDAE5000_LangText_CaseTable) from the language its function names
+        # (LANENG00x / LANDEU00x / LANFRA00x, the first 8 characters compared)
+        self.langmsg = {}
+        for k, a in self.sym.items():
+            m = re.match(r"^HDAE5000_LangMsg_(\d+)_EN$", k)
+            if m:
+                self.langmsg[int(m.group(1))] = self.cstr(a).decode("latin-1")
         self.load_classes()
         self.load_objects()
 
@@ -353,10 +362,36 @@ class Version:
                                 "IvFixWin": "Win"}.get(o["cname"], "Go")
                         return "%s_%s" % (verb, t)
         if o["cname"].startswith("AcLanguageText"):
-            return "Text%d" % self.u16(o["a"] + flds["index"][0])
+            n = self.u16(o["a"] + flds["index"][0])
+            t = ident(self.langmsg.get(n, ""))[:24]
+            par = self.objs[o["super"]].get("name", "") if o["super"] != NONE else ""
+            if not t:
+                return "Text%d" % n
+            # the label of a button named after it, or after the screen it opens: just "Text"
+            if par.endswith(t) or (o["super"] != NONE and self.objs[o["super"]]["cname"] in
+                                   ("AcScreenMenu", "VwMenuBox", "AcIndexEditSw", "VwEditSwBox")
+                                   and "_Go_" in par):
+                return "Text"
+            return t
         if o["cname"] == "IvExitScreen":
             return "Exit"
+        # a button whose label is its language-text child: named after that text
+        k = o["i"] + 1
+        if o["sub"] == k and k < self.nobj:
+            c = self.objs[k]
+            if c["cname"].startswith("AcLanguageText"):
+                off = [f[0] for f in c["fields"] if f[1] == "index"][0]
+                t = ident(self.langmsg.get(self.u16(c["a"] + off), ""))
+                if t:
+                    return t[:24]
         return o["cname"]
+
+    def text_of(self, o):
+        """The English language text an AcLanguageText object draws, or None."""
+        if not o["cname"].startswith("AcLanguageText"):
+            return None
+        off = [f[0] for f in o["fields"] if f[1] == "index"][0]
+        return self.langmsg.get(self.u16(o["a"] + off))
 
     # ------------------------------------------------------------ spelling
     def best_label(self, a):
@@ -504,6 +539,7 @@ class Version:
                 lab = self.str_label(val)
                 args.append((fn + "_at", lab))
         o["args"] = args
+        o["text"] = self.text_of(o)
         # whatever the arena leaves over: explicit strings after the macro
         tail = []
         while pos < end:
@@ -946,7 +982,10 @@ def obj_line(c, o, indent):
         if d.get(p) == t:
             continue
         args.append("%s=%s" % (p, t))
-    return "%s%s\t%s" % (indent, o["cname"], ", ".join([o["name"]] + args))
+    line = "%s%s\t%s" % (indent, o["cname"], ", ".join([o["name"]] + args))
+    if o.get("text") is not None:
+        line += "\t; EN %s" % esc(o["text"].encode("latin-1"))
+    return line
 
 
 def caption_of(o):

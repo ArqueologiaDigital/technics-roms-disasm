@@ -9,9 +9,10 @@ tree), the RAM-object records in `hdae5000/hdae5000_init_data.s` and the class m
 objects that name it (an `AcScreenMenu.screen` button, an `IvExitScreen.screen` EXIT, an
 `IvPageControl.window` page switch) and the routines whose code names its id. Names in
 CAPITALS (and a few mixed-case ones) are the firmware's own resource names; the others were
-made up from the parent and the caption or class. `text #n` is entry n of the language text
-the object draws (AcLanguageText1, via `NAKA_APFUNC_LanguageTextReturn`); the texts are not in
-this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the firmware's
+made up from the parent and the caption, language text, destination or class. `text "..."`
+is the English text an AcLanguageText1 object draws: message `index` of
+HDAE5000_AcLanguageText1Proc's switch, `HDAE5000_LangMsg_<n>_EN` (German and French twins
+beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the LCD button the object answers to (its `editsw`, by the firmware's
 `ES_*` names): Bottom1-8 under the display, Left1-5 / Right1-5 the side rows, top to bottom.
 
 ## Index
@@ -107,20 +108,20 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `HDDMENU_SETUP_TOOLS` AcScreenMenu: "SETUP & TOOLS  "; switch Left2; opens [SETUPS_TOOLS](#setups_tools); icon idICON_i6
 - `HDDMENU_Go_LOAD_BY_NUM` AcScreenMenu: switch Right3; opens [LOAD_BY_NUM](#load_by_num); icon idICON_i172
-  - `HDDMENU_Go_LOAD_BY_NUM_Text6` AcLanguageText1: text #6
+  - `HDDMENU_Go_LOAD_BY_NUM_Text` AcLanguageText1: text "LOAD BY     NUMBER"
 - `HDDMENU_Go_FLS_SELECT` AcScreenMenu: switch Right4; opens [FLS_SELECT](#fls_select); icon idICON_i173
-  - `HDDMENU_Go_FLS_SELECT_Text7` AcLanguageText1: text #7
-- `HDDMENU_AcScreenMenu` AcScreenMenu: switch Left3; icon idICON_i113
-  - `HDDMENU_AcScreenMenu_Text3` AcLanguageText1: text #3
+  - `HDDMENU_Go_FLS_SELECT_Text` AcLanguageText1: text "SELECT FILE LOAD SCRIPT"
+- `HDDMENU_COPY_FD_TO_HARD_DISK` AcScreenMenu: switch Left3; icon idICON_i113
+  - `HDDMENU_COPY_FD_TO_HARD_DISK_Text` AcLanguageText1: text "COPY FD TO HARD DISK"
 - `HDDMENU_Go_OUTPUT_SETTING` AcScreenMenu: switch Left4; opens [OUTPUT_SETTING](#output_setting); icon idICON_i31
-  - `HDDMENU_Go_OUTPUT_SETTING_Text4` AcLanguageText1: text #4
+  - `HDDMENU_Go_OUTPUT_SETTING_Text` AcLanguageText1: text "OUTPUT SETTING"
 - `HARD_DISK_OPT` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_TitleInfo_Build`, `HDAE5000_HDAETitleFunc`
 - `HDDMENU_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_HdTitleEventCatch`
 - `HDDMENU_IvMainEditSw` IvMainEditSw: func `NAKA_MAINFUNC_HDDTitleSwCatch`
 - `HDDMENU_VwUserBitmap` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon`
 - `HDDMENU_Go_SELECT_DIR` AcScreenMenu: switch Right2; opens [SELECT_DIR](#select_dir); icon idICON_i171
-  - `HDDMENU_Go_SELECT_DIR_Text5` AcLanguageText1: text #5
-    - `HDDMENU_Go_SELECT_DIR_Text5_Text5` AcLanguageText1: text #5
+  - `HDDMENU_Go_SELECT_DIR_Text` AcLanguageText1: text "SELECT BY   NAME    "
+    - `HDDMENU_Go_SELECT_DIR_Text_SELECT_BY_NAME` AcLanguageText1: text "SELECT BY   NAME    "
 - `HDDMENU_Go_Tech_lyrics` AcScreenMenu: switch Right1; opens [Tech_lyrics](#tech_lyrics); icon idICON_i58
 - `HDDMENU_LYRICS_WINDOW` TextBox: "LYRICS WINDOW"
 
@@ -303,12 +304,12 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - `SETUP_TOOLS_P1_PC_DATA_LINK` AcScreenMenu: "PC DATA LINK"; switch Right4; opens [PC_DATA_LINK](#pc_data_link); icon idICON_i129
   - `SETUP_TOOLS_P1_PC_DATA_LINK_VwUserBitmap` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon`
 - `SETUP_TOOLS_P1_AcIndexWideES` AcIndexWideES: switch Bottom7; switch Bottom8
-- `SETUP_TOOLS_P1_AcRamEditBox` AcRamEditBox: switch Left2; func `NAKA_APFUNC_WriteProtectEditCheck`
-  - `SETUP_TOOLS_P1_AcRamEditBox_Text8` AcLanguageText1: text #8
+- `SETUP_TOOLS_P1_WRITE_PROTECT` AcRamEditBox: switch Left2; func `NAKA_APFUNC_WriteProtectEditCheck`
+  - `SETUP_TOOLS_P1_WRITE_PROTECT_Text` AcLanguageText1: text "WRITE PROTECT: "
 - `SETUP_TOOLS_P1_QUICK_LD_MODE` AcRamEditBox: "QUICK LD MODE:"; switch Left4; func `NAKA_APFUNC_QuickLoadModeEditCheck`
 - `SETUP_TOOLS_P1_JUMP_AFTER_LD` AcRamEditBox: "JUMP AFTER LD.:"; switch Right2; func `NAKA_APFUNC_JumpAfterLoadModeEditCheck`
-- `SETUP_TOOLS_P1_AcRamEditBox_2` AcRamEditBox: switch Left3; func `NAKA_APFUNC_WriteConfirmEditCheck`
-  - `SETUP_TOOLS_P1_AcRamEditBox_2_Text9` AcLanguageText1: text #9
+- `SETUP_TOOLS_P1_WRITE_CONFIRM` AcRamEditBox: switch Left3; func `NAKA_APFUNC_WriteConfirmEditCheck`
+  - `SETUP_TOOLS_P1_WRITE_CONFIRM_Text` AcLanguageText1: text "WRITE CONFIRM: "
 - `SETUP_TOOLS_P1_LD_BY_NUM_M` AcRamEditBox: "LD BY NUM. M.:"; switch Left5; func `NAKA_APFUNC_LoadByNumberModeEditCheck`
 - `SETUP_TOOLS_P1_LYRICS_OPTIONS` AcScreenMenu: "LYRICS OPTIONS"; switch Right3; opens [LyrSettings](#lyrsettings); icon idICON_i58
 
@@ -318,8 +319,8 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - opened by: `SETUPS_TOOLS_Page_SETUP_TOOLS_P2.window`
 - source: `hdae5000/hdae5000_ui_tree.s` line 386
 
-- `SETUP_TOOLS_P2_AcScreenMenu` AcScreenMenu: switch Left5; icon idICON_None
-  - `SETUP_TOOLS_P2_AcScreenMenu_Text11` AcLanguageText1: text #11
+- `SETUP_TOOLS_P2_SAVE_SETUP` AcScreenMenu: switch Left5; icon idICON_None
+  - `SETUP_TOOLS_P2_SAVE_SETUP_Text` AcLanguageText1: text "SAVE SETUP"
 - `SETUP_TOOLS_P2_HD_AE_INFOS` AcScreenMenu: "HD-AE INFOS  "; switch Right5; icon idICON_Default
   - `SETUP_TOOLS_P2_HD_AE_INFOS_VwUserBitmap` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon`
 - `SETUP_TOOLS_P2_IvMainEditSw` IvMainEditSw: func `NAKA_MAINFUNC_SetupP2SwCatch`
@@ -327,7 +328,7 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
   - `SW_HD_FORMAT_VwUserBitmap` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon`
 - `SETUP_TOOLS_P2_Go_ABOUT_HELP` AcScreenMenu: switch Right4; opens [ABOUT_HELP](#about_help); icon idICON_Default
   - `SETUP_TOOLS_P2_Go_ABOUT_HELP_VwUserBitmap` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon`
-  - `SETUP_TOOLS_P2_Go_ABOUT_HELP_Text10` AcLanguageText1: text #10
+  - `SETUP_TOOLS_P2_Go_ABOUT_HELP_Text` AcLanguageText1: text "ABOUT & HELP "
 
 ## OUTPUT_SETTING
 
@@ -341,10 +342,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - `OUTPUT_SETTING_AcRamEditBox` AcRamEditBox: switch Left2; func `NAKA_APFUNC_SeparateOutputModeCheck`
 - `OUTPUT_SETTING_AcRamEditBox_2` AcRamEditBox: switch Left3; func `NAKA_APFUNC_SeparateDrumPartCheck`
 - `OUTPUT_SETTING_AcRamEditBox_3` AcRamEditBox: switch Left4; func `NAKA_APFUNC_SeparateBassPartCheck`
-- `OUTPUT_SETTING_Text13` AcLanguageText1: text #13
-- `OUTPUT_SETTING_Text14` AcLanguageText1: text #14
-- `OUTPUT_SETTING_Text15` AcLanguageText1: text #15
-- `OUTPUT_SETTING_Text16` AcLanguageText1: text #16
+- `OUTPUT_SETTING_SEPARATE_OUTPUT_MODE` AcLanguageText1: text "SEPARATE OUTPUT MODE:"
+- `OUTPUT_SETTING_PART_SELECT_FOR_SEQ_DRUM` AcLanguageText1: text "PART SELECT FOR SEQ.DRUMS OUT:"
+- `OUTPUT_SETTING_PART_SELECT_FOR_SEQ_BASS` AcLanguageText1: text "PART SELECT FOR SEQ.BASS  OUT:"
+- `OUTPUT_SETTING_The_separate_outputs_can` AcLanguageText1: text "! The separate outputs cannot be controlled by the internal volume control."
 
 ## LOAD_BY_NUM
 
@@ -390,7 +391,7 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
 - `LBN_P1_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_LBNPage1SwCatch`
 - `LBN_P1_AcIndexWideES` AcIndexWideES: switch Bottom6; switch Bottom8
-- `LBN_P1_Text21` AcLanguageText1: text #21
+- `LBN_P1_Press_3_digits_for_direc` AcLanguageText1: text "Press 3 digits for directory and 2 digits for the file."
 
 ## LBN_P2
 
@@ -842,14 +843,14 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - named in code by: `HDAE5000_FILE_LOAD_Screen_Ev01EA000C`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1010
 
-- `ATTEN_DEL_DIR_VwWideESBox` VwWideESBox: switch Bottom1; switch Bottom2
-  - `ATTEN_DEL_DIR_VwWideESBox_Text200` AcLanguageText1: text #200
-- `ATTEN_DEL_DIR_VwWideESBox_2` VwWideESBox: switch Bottom7; switch Bottom8
-  - `ATTEN_DEL_DIR_VwWideESBox_2_Text201` AcLanguageText1: text #201
+- `ATTEN_DEL_DIR_YES` VwWideESBox: switch Bottom1; switch Bottom2
+  - `ATTEN_DEL_DIR_YES_Text` AcLanguageText1: text "YES"
+- `ATTEN_DEL_DIR_NO` VwWideESBox: switch Bottom7; switch Bottom8
+  - `ATTEN_DEL_DIR_NO_Text` AcLanguageText1: text "NO"
 - `ATTEN_DEL_DIR_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_AttenDelDirSwCatch`
-- `ATTEN_DEL_DIR_Text210` AcLanguageText1: text #210
-  - `ATTEN_DEL_DIR_Text210_Text211` AcLanguageText1: text #211
-  - `ATTEN_DEL_DIR_Text210_Text1` AcLanguageText1: text #1
+- `ATTEN_DEL_DIR_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_DEL_DIR_ATTENTION_Press_YES_for_confirmati` AcLanguageText1: text "Press YES for confirmation, NO to abort."
+  - `ATTEN_DEL_DIR_ATTENTION_Would_you_really_delete_` AcLanguageText1: text "Would you really delete the selected directory?"
 
 ## WAIT_DEL_DIR
 
@@ -870,11 +871,11 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - `ATTEN_DEL_FILE_VwWideESBox` VwWideESBox: switch Bottom1; switch Bottom2
 - `ATTEN_DEL_FILE_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_AttenDelFileSwCatch`
 - `ATTEN_DEL_FILE_VwWideESBox_2` VwWideESBox: switch Bottom7; switch Bottom8
-- `ATTEN_DEL_FILE_Text210` AcLanguageText1: text #210
-  - `ATTEN_DEL_FILE_Text210_Text211` AcLanguageText1: text #211
-  - `ATTEN_DEL_FILE_Text210_Text2` AcLanguageText1: text #2
-- `ATTEN_DEL_FILE_Text200` AcLanguageText1: text #200
-- `ATTEN_DEL_FILE_Text201` AcLanguageText1: text #201
+- `ATTEN_DEL_FILE_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_DEL_FILE_ATTENTION_Press_YES_for_confirmati` AcLanguageText1: text "Press YES for confirmation, NO to abort."
+  - `ATTEN_DEL_FILE_ATTENTION_Would_you_really_delete_` AcLanguageText1: text "Would you really delete the selected title?"
+- `ATTEN_DEL_FILE_YES` AcLanguageText1: text "YES"
+- `ATTEN_DEL_FILE_NO` AcLanguageText1: text "NO"
 
 ## ATTEN_OVER_FLS
 
@@ -884,13 +885,13 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1060
 
 - `ATTEN_OVER_FLS_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_FlsOverWrSwCatch`
-- `ATTEN_OVER_FLS_VwWideESBox` VwWideESBox: switch Bottom1; switch Bottom2
-  - `ATTEN_OVER_FLS_VwWideESBox_Text200` AcLanguageText1: text #200
-- `ATTEN_OVER_FLS_VwWideESBox_2` VwWideESBox: switch Bottom7; switch Bottom8
-  - `ATTEN_OVER_FLS_VwWideESBox_2_Text201` AcLanguageText1: text #201
-- `ATTEN_OVER_FLS_Text210` AcLanguageText1: text #210
-  - `ATTEN_OVER_FLS_Text210_Text211` AcLanguageText1: text #211
-  - `ATTEN_OVER_FLS_Text210_Text28` AcLanguageText1: text #28
+- `ATTEN_OVER_FLS_YES` VwWideESBox: switch Bottom1; switch Bottom2
+  - `ATTEN_OVER_FLS_YES_Text` AcLanguageText1: text "YES"
+- `ATTEN_OVER_FLS_NO` VwWideESBox: switch Bottom7; switch Bottom8
+  - `ATTEN_OVER_FLS_NO_Text` AcLanguageText1: text "NO"
+- `ATTEN_OVER_FLS_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_OVER_FLS_ATTENTION_Press_YES_for_confirmati` AcLanguageText1: text "Press YES for confirmation, NO to abort."
+  - `ATTEN_OVER_FLS_ATTENTION_You_are_going_to_overwri` AcLanguageText1: text "You are going to overwrite a FLS entry. Are you sure?"
 
 ## ATTEN_DEL_FLS2
 
@@ -900,14 +901,14 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1082
 
 - `ATTEN_DEL_FLS2_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_FlsDel2SwCatch`
-- `ATTEN_DEL_FLS2_VwWideESBox` VwWideESBox: switch Bottom1; switch Bottom2
-  - `ATTEN_DEL_FLS2_VwWideESBox_Text200` AcLanguageText1: text #200
-- `ATTEN_DEL_FLS2_VwWideESBox_2` VwWideESBox: switch Bottom7; switch Bottom8
-  - `ATTEN_DEL_FLS2_VwWideESBox_2_Text201` AcLanguageText1: text #201
-- `ATTEN_DEL_FLS2_Text210` AcLanguageText1: text #210
-  - `ATTEN_DEL_FLS2_Text210_Text211` AcLanguageText1: text #211
-  - `ATTEN_DEL_FLS2_Text210_Text27` AcLanguageText1: text #27
-  - `ATTEN_DEL_FLS2_Text210_Text61` AcLanguageText1: text #61
+- `ATTEN_DEL_FLS2_YES` VwWideESBox: switch Bottom1; switch Bottom2
+  - `ATTEN_DEL_FLS2_YES_Text` AcLanguageText1: text "YES"
+- `ATTEN_DEL_FLS2_NO` VwWideESBox: switch Bottom7; switch Bottom8
+  - `ATTEN_DEL_FLS2_NO_Text` AcLanguageText1: text "NO"
+- `ATTEN_DEL_FLS2_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_DEL_FLS2_ATTENTION_Press_YES_for_confirmati` AcLanguageText1: text "Press YES for confirmation, NO to abort."
+  - `ATTEN_DEL_FLS2_ATTENTION_You_are_going_to_delete_` AcLanguageText1: text "You are going to delete a FLS entry. Are you sure?"
+  - `ATTEN_DEL_FLS2_ATTENTION_All_following_entries_wi` AcLanguageText1: text "All following entries will be moved."
 
 ## WAIT_DEL_FILE
 
@@ -915,8 +916,8 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - named in code by: `HDAE5000_AttenDelFileSwCatch_Join`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1105
 
-- `WAIT_DEL_FILE_Text56` AcLanguageText1: text #56
-- `WAIT_DEL_FILE_Text49` AcLanguageText1: text #49
+- `WAIT_DEL_FILE_Delete_file_from_hard_di` AcLanguageText1: text "Delete file from hard disk:"
+- `WAIT_DEL_FILE_Please_wait` AcLanguageText1: text "Please wait ..."
 
 ## ATTEN_HD_FORMAT
 
@@ -926,11 +927,11 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - named in code by: `HDAE5000_SetupP2SwCatch`, `HDAE5000_AttenHDFormatSwCatch_OnCancel`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1117
 
-- `ATTEN_HD_FORMAT_TextBox` TextBox
-  - `ATTEN_HD_FORMAT_TextBox_Text24` AcLanguageText1: text #24
-  - `ATTEN_HD_FORMAT_TextBox_Text26` AcLanguageText1: text #26
-  - `ATTEN_HD_FORMAT_TextBox_Text25` AcLanguageText1: text #25
-  - `ATTEN_HD_FORMAT_TextBox_Text210` AcLanguageText1: text #210
+- `ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all` TextBox
+  - `ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all_Text` AcLanguageText1: text "HD FORMAT will erase all files at once."
+  - `ATTEN_After_your_code_input_al` AcLanguageText1: text "After your code input all data will be deleted irrevocable!"
+  - `ATTEN_Therefore_you_need_a_6_d` AcLanguageText1: text "Therefore you need a 6-digit key code. Please refer your owners manual chapter SETUP & TOOLS."
+  - `ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all_ATTENTION` AcLanguageText1: text "!ATTENTION!"
 - `ATTEN_HD_FORMAT_VwUserBitmap` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon`
 - `ATTEN_HD_FORMAT_CANCEL` VwWideESBox: "CANCEL"; switch Bottom7; switch Bottom8
 - `HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_AttenHDFormatSwCatch`
@@ -941,9 +942,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1135
 
-- `WAIT_HD_FORMAT_Text57` AcLanguageText1: text #57
-- `WAIT_HD_FORMAT_Text58` AcLanguageText1: text #58
-- `WAIT_HD_FORMAT_Text49` AcLanguageText1: text #49
+- `WAIT_HD_FORMAT_The_hard_disk_will_now_b` AcLanguageText1: text "The hard disk will now be formatted. This procedure can take about 2-3 minutes."
+- `WAIT_HD_FORMAT_We_recommend_to_turn_ON_` AcLanguageText1: text "We recommend to turn ON and OFF again the power after the complete format."
+- `WAIT_HD_FORMAT_Please_wait` AcLanguageText1: text "Please wait ..."
 
 ## SETUP_HDINFO
 
@@ -974,16 +975,16 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1169
 
 - `ATTEN_DEL_FLS1_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_FlsDel1SwCatch`
-- `ATTEN_DEL_FLS1_Text210` AcLanguageText1: text #210
-  - `ATTEN_DEL_FLS1_Text210_Text211` AcLanguageText1: text #211
-  - `ATTEN_DEL_FLS1_Text210_Text27` AcLanguageText1: text #27
-  - `ATTEN_DEL_FLS1_Text210_Text60` AcLanguageText1: text #60
-- `ATTEN_DEL_FLS1_VwWideESBox` VwWideESBox: switch Bottom1; switch Bottom2
-  - `ATTEN_DEL_FLS1_VwWideESBox_Text200` AcLanguageText1: text #200
-- `ATTEN_DEL_FLS1_VwWideESBox_2` VwWideESBox: switch Bottom1; switch Bottom2
-  - `ATTEN_DEL_FLS1_VwWideESBox_2_Text200` AcLanguageText1: text #200
-- `ATTEN_DEL_FLS1_VwWideESBox_3` VwWideESBox: switch Bottom7; switch Bottom8
-  - `ATTEN_DEL_FLS1_VwWideESBox_3_Text201` AcLanguageText1: text #201
+- `ATTEN_DEL_FLS1_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_DEL_FLS1_ATTENTION_Press_YES_for_confirmati` AcLanguageText1: text "Press YES for confirmation, NO to abort."
+  - `ATTEN_DEL_FLS1_ATTENTION_You_are_going_to_delete_` AcLanguageText1: text "You are going to delete a FLS entry. Are you sure?"
+  - `ATTEN_DEL_FLS1_ATTENTION_The_FLS_entry_remains_fr` AcLanguageText1: text "The FLS entry remains free."
+- `ATTEN_DEL_FLS1_YES` VwWideESBox: switch Bottom1; switch Bottom2
+  - `ATTEN_DEL_FLS1_YES_Text` AcLanguageText1: text "YES"
+- `ATTEN_DEL_FLS1_YES_2` VwWideESBox: switch Bottom1; switch Bottom2
+  - `ATTEN_DEL_FLS1_YES_2_YES` AcLanguageText1: text "YES"
+- `ATTEN_DEL_FLS1_NO` VwWideESBox: switch Bottom7; switch Bottom8
+  - `ATTEN_DEL_FLS1_NO_Text` AcLanguageText1: text "NO"
 
 ## ATTEN_OVER_FILE
 
@@ -993,13 +994,13 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1196
 
 - `ATTEN_OVER_FILE_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_WrConfirmEventCatch`
-- `ATTEN_OVER_FILE_VwWideESBox` VwWideESBox: switch Bottom1; switch Bottom2
-  - `ATTEN_OVER_FILE_VwWideESBox_Text200` AcLanguageText1: text #200
-- `ATTEN_OVER_FILE_VwWideESBox_2` VwWideESBox: switch Bottom7; switch Bottom8
-- `ATTEN_OVER_FILE_Text201` AcLanguageText1: text #201
-- `ATTEN_OVER_FILE_Text210` AcLanguageText1: text #210
-  - `ATTEN_OVER_FILE_Text210_Text67` AcLanguageText1: text #67
-  - `ATTEN_OVER_FILE_Text210_Text211` AcLanguageText1: text #211
+- `ATTEN_OVER_FILE_YES` VwWideESBox: switch Bottom1; switch Bottom2
+  - `ATTEN_OVER_FILE_YES_Text` AcLanguageText1: text "YES"
+- `ATTEN_OVER_FILE_VwWideESBox` VwWideESBox: switch Bottom7; switch Bottom8
+- `ATTEN_OVER_FILE_NO` AcLanguageText1: text "NO"
+- `ATTEN_OVER_FILE_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_OVER_FILE_ATTENTION_You_are_going_to_overwri` AcLanguageText1: text "You are going to overwrite an existing entry. Are you sure?"
+  - `ATTEN_OVER_FILE_ATTENTION_Press_YES_for_confirmati` AcLanguageText1: text "Press YES for confirmation, NO to abort."
 
 ## HDD_FLS_NAMING2
 
@@ -1023,11 +1024,11 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ATTEN_CPHD_WR_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_AttenCpToHDSwCatch`
 - `ATTEN_CPHD_WR_VwWideESBox` VwWideESBox: switch Bottom7; switch Bottom8
-- `ATTEN_CPHD_WR_TextBox` TextBox
-  - `ATTEN_CPHD_WR_TextBox_Text29` AcLanguageText1: text #29
-  - `ATTEN_CPHD_WR_TextBox_Text30` AcLanguageText1: text #30
-- `ATTEN_CPHD_WR_Text210` AcLanguageText1: text #210
-- `ATTEN_CPHD_WR_Text203` AcLanguageText1: text #203
+- `ATTEN_CPHD_WR_The_hard_disk_is_write_p` TextBox
+  - `ATTEN_CPHD_WR_The_hard_disk_is_write_p_Text` AcLanguageText1: text "The hard disk is write protected!"
+  - `ATTEN_Please_set_the_write_pro` AcLanguageText1: text "Please set the write protect mode to OFF."
+- `ATTEN_CPHD_WR_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+- `ATTEN_CPHD_WR_CANCEL` AcLanguageText1: text "CANCEL"
 
 ## ERR_HD_NOT_FMT
 
@@ -1035,10 +1036,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1247
 
-- `ERR_HD_NOT_FMT_TextBox` TextBox
-  - `ERR_HD_NOT_FMT_TextBox_Text31` AcLanguageText1: text #31
-- `ERR_HD_NOT_FMT_Text209` AcLanguageText1: text #209
-- `ERR_HD_NOT_FMT_Text212` AcLanguageText1: text #212
+- `ERR_HD_NOT_FMT_The_hard_disk_is_not_for` TextBox
+  - `ERR_HD_NOT_FMT_The_hard_disk_is_not_for_Text` AcLanguageText1: text "The hard disk is not formatted!"
+- `ERR_HD_NOT_FMT_SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+- `ERR_HD_NOT_FMT_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
 
 ## ERR_HD_SRAM
 
@@ -1047,9 +1048,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1260
 
 - `ERR_HD_SRAM_TextBox` TextBox
-- `ERR_HD_SRAM_Text32` AcLanguageText1: text #32
-- `ERR_HD_SRAM_Text209` AcLanguageText1: text #209
-- `ERR_HD_SRAM_Text212` AcLanguageText1: text #212
+- `ERR_HD_SRAM_Hard_disk_SRAM_error` AcLanguageText1: text "Hard disk SRAM error."
+- `ERR_HD_SRAM_SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+- `ERR_HD_SRAM_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
 
 ## ERR_HD_RESET
 
@@ -1058,9 +1059,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1271
 
 - `ERR_HD_RESET_TextBox` TextBox
-- `ERR_HD_RESET_Text33` AcLanguageText1: text #33
-- `ERR_HD_RESET_Text209` AcLanguageText1: text #209
-- `ERR_HD_RESET_Text212` AcLanguageText1: text #212
+- `ERR_HD_RESET_Hard_disk_reset_error` AcLanguageText1: text "Hard disk reset error."
+- `ERR_HD_RESET_SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+- `ERR_HD_RESET_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
 
 ## ERR_HD_READ
 
@@ -1068,10 +1069,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1282
 
-- `ERR_HD_READ_TextBox` TextBox
-  - `ERR_HD_READ_TextBox_Text34` AcLanguageText1: text #34
-- `ERR_HD_READ_Text209` AcLanguageText1: text #209
-- `ERR_HD_READ_Text212` AcLanguageText1: text #212
+- `ERR_HD_READ_Hard_disk_read_error` TextBox
+  - `ERR_HD_READ_Hard_disk_read_error_Text` AcLanguageText1: text "Hard disk read error."
+- `ERR_HD_READ_SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+- `ERR_HD_READ_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
 
 ## ERR_HD_ID_READ
 
@@ -1079,10 +1080,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1295
 
-- `ERR_HD_ID_READ_TextBox` TextBox
-  - `ERR_HD_ID_READ_TextBox_Text35` AcLanguageText1: text #35
-- `ERR_HD_ID_READ_Text209` AcLanguageText1: text #209
-- `ERR_HD_ID_READ_Text212` AcLanguageText1: text #212
+- `ERR_HD_ID_READ_Hard_disk_ID_read_error` TextBox
+  - `ERR_HD_ID_READ_Hard_disk_ID_read_error_Text` AcLanguageText1: text "Hard disk ID read error."
+- `ERR_HD_ID_READ_SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+- `ERR_HD_ID_READ_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
 
 ## ERR_HD_TRACK_0
 
@@ -1090,10 +1091,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1308
 
-- `ERR_HD_TRACK_0_TextBox` TextBox
-  - `ERR_HD_TRACK_0_TextBox_Text36` AcLanguageText1: text #36
-- `ERR_HD_TRACK_0_Text209` AcLanguageText1: text #209
-- `ERR_HD_TRACK_0_Text212` AcLanguageText1: text #212
+- `ERR_HD_TRACK_0_Hard_disk_track_0_error` TextBox
+  - `ERR_HD_TRACK_0_Hard_disk_track_0_error_Text` AcLanguageText1: text "Hard disk track 0 error."
+- `ERR_HD_TRACK_0_SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+- `ERR_HD_TRACK_0_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
 
 ## ERR_HD_FAT
 
@@ -1101,10 +1102,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1321
 
-- `ERR_HD_FAT_TextBox` TextBox
-  - `ERR_HD_FAT_TextBox_Text209` AcLanguageText1: text #209
-  - `ERR_HD_FAT_TextBox_Text212` AcLanguageText1: text #212
-  - `ERR_HD_FAT_TextBox_Text37` AcLanguageText1: text #37
+- `ERR_HD_FAT_SYSTEM_ERROR` TextBox
+  - `ERR_HD_FAT_SYSTEM_ERROR_Text` AcLanguageText1: text "!SYSTEM ERROR!"
+  - `ERR_HD_FAT_SYSTEM_ERROR_Please_call_your_dealer_` AcLanguageText1: text "Please call your dealer or service center."
+  - `ERR_HD_FAT_SYSTEM_ERROR_Hard_disk_FAT_read_error` AcLanguageText1: text "Hard disk FAT read error."
 
 ## ERR_HD_FSB
 
@@ -1112,10 +1113,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1334
 
-- `ERR_HD_FSB_TextBox` TextBox
-  - `ERR_HD_FSB_TextBox_Text212` AcLanguageText1: text #212
-  - `ERR_HD_FSB_TextBox_Text209` AcLanguageText1: text #209
-  - `ERR_HD_FSB_TextBox_Text38` AcLanguageText1: text #38
+- `ERR_HD_FSB_Please_call_your_dealer_` TextBox
+  - `ERR_HD_FSB_Please_call_your_dealer__Text` AcLanguageText1: text "Please call your dealer or service center."
+  - `ERR_HD_FSB_Please_call_your_dealer__SYSTEM_ERROR` AcLanguageText1: text "!SYSTEM ERROR!"
+  - `ERR_HD_FSB_Please_call_your_dealer__Hard_disk_FSB_read_error` AcLanguageText1: text "Hard disk FSB read error."
 
 ## ATTEN_CPFD_MARK
 
@@ -1125,11 +1126,11 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1348
 
 - `ATTEN_CPFD_MARK_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_AttenCpToMarkSwCatch`
-- `ATTEN_CPFD_MARK_VwWideESBox` VwWideESBox: switch Bottom7; switch Bottom8
-  - `ATTEN_CPFD_MARK_VwWideESBox_Text203` AcLanguageText1: text #203
-- `ATTEN_CPFD_MARK_TextBox` TextBox
-  - `ATTEN_CPFD_MARK_TextBox_Text210` AcLanguageText1: text #210
-  - `ATTEN_CPFD_MARK_TextBox_Text39` AcLanguageText1: text #39
+- `ATTEN_CPFD_MARK_CANCEL` VwWideESBox: switch Bottom7; switch Bottom8
+  - `ATTEN_CPFD_MARK_CANCEL_Text` AcLanguageText1: text "CANCEL"
+- `ATTEN_CPFD_MARK_ATTENTION` TextBox
+  - `ATTEN_CPFD_MARK_ATTENTION_Text` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_CPFD_MARK_ATTENTION_There_are_no_files_marke` AcLanguageText1: text "There are no files marked for copy to HD!"
 
 ## ABOUT_HELP
 
@@ -1143,19 +1144,19 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
   - `ABOUT_HELP_TextBox_Label` Label
   - `ABOUT_HELP_TextBox_Technosoft_CH_Samstagern` Label: "Technosoft, CH-Samstagern"
   - `ABOUT_HELP_TextBox_Pointstyle_CH_Buttisholz` Label: "Pointstyle, CH-Buttisholz"
-  - `ABOUT_HELP_TextBox_Text17` AcLanguageText1: text #17
+  - `ABOUT_HELP_TextBox_Hardware_and_software_de` AcLanguageText1: text "Hardware and software developement:"
 - `ABOUT_HELP_TextBox_2` TextBox
   - `ABOUT_HELP_TextBox_2_KEY_SOFT_SERVICE_CH_Sche` Label: "KEY SOFT SERVICE, CH-Schenkon"
   - `ABOUT_HELP_TextBox_2_Fax_41_41_922_03_15` Label: "Fax.  +41-41-922 03 15"
   - `ABOUT_HELP_TextBox_2_email_keysoftservice_blu` Label: "email:keysoftservice@bluewin.ch"
-  - `ABOUT_HELP_TextBox_2_Text18` AcLanguageText1: text #18
+  - `ABOUT_HELP_TextBox_2_Conception_marketing_sal` AcLanguageText1: text "Conception, marketing, sales and service:"
+- `ABOUT_HELP_All_rigths_reserved_by_t` TextBox
+  - `ABOUT_HELP_All_rigths_reserved_by_t_Text` AcLanguageText1: text "All rigths reserved by the called companies"
 - `ABOUT_HELP_TextBox_3` TextBox
-  - `ABOUT_HELP_TextBox_3_Text19` AcLanguageText1: text #19
-- `ABOUT_HELP_TextBox_4` TextBox
-  - `ABOUT_HELP_TextBox_4_Mr_T_Hamaguchi_and_Mr_M_` Label: "Mr. T.Hamaguchi and Mr. M.Kitajima"
-  - `ABOUT_HELP_TextBox_4_Text20` AcLanguageText1: text #20
+  - `ABOUT_HELP_TextBox_3_Mr_T_Hamaguchi_and_Mr_M_` Label: "Mr. T.Hamaguchi and Mr. M.Kitajima"
+  - `ABOUT_HELP_TextBox_3_Special_thanks_to` AcLanguageText1: text "Special thanks to:"
 - `ABOUT_HELP_Exit_SETUPS_TOOLS` IvExitScreen: opens [SETUPS_TOOLS](#setups_tools)
-- `ABOUT_HELP_Text10` AcLanguageText1: text #10
+- `ABOUT_HELP_Text` AcLanguageText1: text "ABOUT & HELP "
 
 ## WAIT_TR0_RECOVER
 
@@ -1163,8 +1164,8 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1401
 
-- `WAIT_TR0_RECOVER_Text59` AcLanguageText1: text #59
-- `WAIT_TR0_RECOVER_Text49` AcLanguageText1: text #49
+- `WAIT_TR0_RECOVER_Track_O_will_be_recovere` AcLanguageText1: text "Track O will be recovered:"
+- `WAIT_TR0_RECOVER_Please_wait` AcLanguageText1: text "Please wait ..."
 
 ## ERR_SAVE
 
@@ -1175,9 +1176,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ERR_SAVE_EXIT` IvExitScreen (RAM record) -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`, `HDAE5000_FlsEditScreen_OnHdaeSelectSave`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
 - `ERR_SAVE_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`, `HDAE5000_FlsEditScreen_OnHdaeSelectSave`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
-- `ERR_SAVE_TextBox` TextBox
-  - `ERR_SAVE_TextBox_Text41` AcLanguageText1: text #41
-- `ERR_SAVE_Text210` AcLanguageText1: text #210
+- `ERR_SAVE_Please_make_a_safety_bac` TextBox
+  - `ERR_SAVE_Please_make_a_safety_bac_Text` AcLanguageText1: text "Please make a safety backup of your data and call your service center."
+- `ERR_SAVE_ATTENTION` AcLanguageText1: text "!ATTENTION!"
 
 ## ERR_LOAD
 
@@ -1188,9 +1189,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ERR_LOAD_EXIT` IvExitScreen (RAM record) -- code: `HDAE5000_LoadSongWithUi`
 - `ERR_LOAD_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_LoadSongWithUi`
-- `ERR_LOAD_TextBox` TextBox
-  - `ERR_LOAD_TextBox_Text210` AcLanguageText1: text #210
-- `ERR_LOAD_Text41` AcLanguageText1: text #41
+- `ERR_LOAD_ATTENTION` TextBox
+  - `ERR_LOAD_ATTENTION_Text` AcLanguageText1: text "!ATTENTION!"
+- `ERR_LOAD_Please_make_a_safety_bac` AcLanguageText1: text "Please make a safety backup of your data and call your service center."
 
 ## ERR_NO_HK_DATA
 
@@ -1201,9 +1202,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ERR_NO_HK_DATA_Exit_CP_FD` IvExitScreen: opens [CP_FD](#cp_fd)
 - `ERR_NO_HK_DATA_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_CopyToHd_Execute`
-- `ERR_NO_HK_DATA_TextBox` TextBox
-  - `ERR_NO_HK_DATA_TextBox_Text210` AcLanguageText1: text #210
-  - `ERR_NO_HK_DATA_TextBox_Text42` AcLanguageText1: text #42
+- `ERR_NO_HK_DATA_ATTENTION` TextBox
+  - `ERR_NO_HK_DATA_ATTENTION_Text` AcLanguageText1: text "!ATTENTION!"
+  - `ERR_NO_HK_DATA_ATTENTION_The_data_on_the_disk_you` AcLanguageText1: text "The data on the disk you would like to copy to HD has no KN5000 format or some data are corrupted."
 
 ## ATTEN_FULL_DIR
 
@@ -1214,10 +1215,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ATTEN_FULL_DIR_Exit_CP_FD_DIRSEL` IvExitScreen: opens [CP_FD_DIRSEL](#cp_fd_dirsel)
 - `ATTEN_FULL_DIR_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_CopyToHDDirSelScreen`
-- `ATTEN_FULL_DIR_TextBox` TextBox
-  - `ATTEN_FULL_DIR_TextBox_Text210` AcLanguageText1: text #210
-  - `ATTEN_FULL_DIR_TextBox_Text43` AcLanguageText1: text #43
-  - `ATTEN_FULL_DIR_TextBox_Text44` AcLanguageText1: text #44
+- `ATTEN_FULL_DIR_ATTENTION` TextBox
+  - `ATTEN_FULL_DIR_ATTENTION_Text` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_FULL_DIR_ATTENTION_The_number_or_marked_son` AcLanguageText1: text "The number or marked songs cannot fit in the free space of the selected directory."
+  - `ATTEN_FULL_DIR_ATTENTION_Reduce_the_number_of_sel` AcLanguageText1: text "Reduce the number of selected songs or find a free directory."
 
 ## ATTEN_CP_UNNAMED
 
@@ -1228,10 +1229,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ATTEN_CP_UNNAMED_Exit_CP_FD_DIRSEL` IvExitScreen: opens [CP_FD_DIRSEL](#cp_fd_dirsel)
 - `ATTEN_CP_UNNAMED_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_CopyToHDDirSelScreen`
-- `ATTEN_CP_UNNAMED_TextBox` TextBox
-  - `ATTEN_CP_UNNAMED_TextBox_Text46` AcLanguageText1: text #46
-  - `ATTEN_CP_UNNAMED_TextBox_Text210` AcLanguageText1: text #210
-  - `ATTEN_CP_UNNAMED_TextBox_Text45` AcLanguageText1: text #45
+- `ATTEN_CP_UNNAMED_Please_use_a_named_direc` TextBox
+  - `ATTEN_CP_UNNAMED_Please_use_a_named_direc_Text` AcLanguageText1: text "Please use a named directory or create the new directory with EDIT first."
+  - `ATTEN_CP_UNNAMED_Please_use_a_named_direc_ATTENTION` AcLanguageText1: text "!ATTENTION!"
+  - `ATTEN_You_cannot_copy_files_so` AcLanguageText1: text "You cannot copy files/songs to an unnamed directory."
 
 ## DIR_OUT_RANGE
 
@@ -1241,9 +1242,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1490
 
 - `DIR_OUT_RANGE_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatchLBN` -- code: `HDAE5000_Lbn_TypeDigit`
-- `DIR_OUT_RANGE_TextBox` TextBox
-  - `DIR_OUT_RANGE_TextBox_Text47` AcLanguageText1: text #47
-- `DIR_OUT_RANGE_Text210` AcLanguageText1: text #210
+- `DIR_OUT_RANGE_The_DIR_number_is_out_of` TextBox
+  - `DIR_OUT_RANGE_The_DIR_number_is_out_of_Text` AcLanguageText1: text "The DIR number is out of range."
+- `DIR_OUT_RANGE_ATTENTION` AcLanguageText1: text "!ATTENTION!"
 
 ## FILE_OUT_RANGE
 
@@ -1253,9 +1254,9 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1504
 
 - `FILE_OUT_RANGE_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatchLBN` -- code: `HDAE5000_Lbn_TypeDigit`
-- `FILE_OUT_RANGE_TextBox` TextBox
-  - `FILE_OUT_RANGE_TextBox_Text210` AcLanguageText1: text #210
-- `FILE_OUT_RANGE_Text48` AcLanguageText1: text #48
+- `FILE_OUT_RANGE_ATTENTION` TextBox
+  - `FILE_OUT_RANGE_ATTENTION_Text` AcLanguageText1: text "!ATTENTION!"
+- `FILE_OUT_RANGE_The_file_number_is_out_o` AcLanguageText1: text "The file number is out of range."
 
 ## HD_PLEASE
 
@@ -1264,8 +1265,8 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - named in code by: `HDAE5000_SetupP2SwCatch`, `HDAE5000_FlsEditScreen_OnHdaeSelectSave`, `HDAE5000_FlsFileSelScreen_OnHdaeSelectOk`, `HDAE5000_FlsOverWrSwCatch_Join`, `HDAE5000_CopyToHDDirSelScreen`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_LoadSongWithUi`, `HDAE5000_SaveSongWithUi`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1521
 
-- `HD_PLEASE_TextBox` TextBox
-  - `HD_PLEASE_TextBox_Text49` AcLanguageText1: text #49
+- `HD_PLEASE_Please_wait` TextBox
+  - `HD_PLEASE_Please_wait_Text` AcLanguageText1: text "Please wait ..."
 
 ## ERR_HD_FORMAT
 
@@ -1276,10 +1277,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `ERR_HD_FORMAT_Exit_ATTEN_HD_FORMAT` IvExitScreen: opens [ATTEN_HD_FORMAT](#atten_hd_format)
 - `ERR_HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
-- `ERR_HD_FORMAT_TextBox` TextBox
-  - `ERR_HD_FORMAT_TextBox_Text51` AcLanguageText1: text #51
-  - `ERR_HD_FORMAT_TextBox_Text50` AcLanguageText1: text #50
-  - `ERR_HD_FORMAT_TextBox_Text52` AcLanguageText1: text #52
+- `ERR_HD_FORMAT_The_automatic_HD_format_` TextBox
+  - `ERR_HD_FORMAT_The_automatic_HD_format__Text` AcLanguageText1: text "The automatic HD format was not successful!"
+  - `ERR_HD_FORMAT_The_automatic_HD_format__FORMAT_ERROR` AcLanguageText1: text "!FORMAT ERROR!"
+  - `ERR_Please_try_once_more_ref` AcLanguageText1: text "Please try once more, refer your owners manual or ask your dealer/service center."
 
 ## AGAIN_HD_FORMAT
 
@@ -1290,10 +1291,10 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 
 - `AGAIN_HD_FORMAT_Exit_ATTEN_HD_FORMAT` IvExitScreen: opens [ATTEN_HD_FORMAT](#atten_hd_format)
 - `AGAIN_HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
-- `AGAIN_HD_FORMAT_TextBox` TextBox
-  - `AGAIN_HD_FORMAT_TextBox_Text53` AcLanguageText1: text #53
-  - `AGAIN_HD_FORMAT_TextBox_Text54` AcLanguageText1: text #54
-  - `AGAIN_HD_FORMAT_TextBox_Text55` AcLanguageText1: text #55
+- `AGAIN_HD_FORMAT_Input_error` TextBox
+  - `AGAIN_HD_FORMAT_Input_error_Text` AcLanguageText1: text "Input error!"
+  - `AGAIN_HD_FORMAT_Input_error_The_key_code_input_was_w` AcLanguageText1: text "The key code input was wrong!"
+  - `AGAIN_HD_FORMAT_Input_error_Please_try_once_more_ref` AcLanguageText1: text "Please try once more, refer your owners manual or ask your dealer/service center."
 
 ## SELECT_FILE_A_Z
 
@@ -1383,8 +1384,8 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - EXIT -> `TITLE_PS`; icon idICON_None
 - source: `hdae5000/hdae5000_ui_tree.s` line 1663
 
-- `FD_PLEASE_TextBox` TextBox
-  - `FD_PLEASE_TextBox_Text49` AcLanguageText1: text #49
+- `FD_PLEASE_Please_wait` TextBox
+  - `FD_PLEASE_Please_wait_Text` AcLanguageText1: text "Please wait ..."
 
 ## LyrSettings
 
@@ -1394,12 +1395,12 @@ this ROM. `switch` is the LCD button the object answers to (its `editsw`, by the
 - source: `hdae5000/hdae5000_ui_tree.s` line 1675
 
 - `LyrSettings_Exit_SETUPS_TOOLS` IvExitScreen: opens [SETUPS_TOOLS](#setups_tools)
-- `LyrSettings_AcRamEditBox` AcRamEditBox: switch Left2; func `NAKA_APFUNC_LyricJumpEditCheck`
-  - `LyrSettings_AcRamEditBox_Text64` AcLanguageText1: text #64
-- `LyrSettings_AcRamEditBox_2` AcRamEditBox: switch Left3; func `NAKA_APFUNC_LyricForeColorCheck`
-  - `LyrSettings_AcRamEditBox_2_Text65` AcLanguageText1: text #65
-- `LyrSettings_AcRamEditBox_3` AcRamEditBox: switch Left4; func `NAKA_APFUNC_LyricBackColorCheck`
-- `LyrSettings_Text66` AcLanguageText1: text #66
+- `LyrSettings_LYRICS_LOAD_MODE` AcRamEditBox: switch Left2; func `NAKA_APFUNC_LyricJumpEditCheck`
+  - `LyrSettings_LYRICS_LOAD_MODE_Text` AcLanguageText1: text "LYRICS LOAD MODE"
+- `LyrSettings_COLOR_ACTIV` AcRamEditBox: switch Left3; func `NAKA_APFUNC_LyricForeColorCheck`
+  - `LyrSettings_COLOR_ACTIV_Text` AcLanguageText1: text "COLOR ACTIV"
+- `LyrSettings_AcRamEditBox` AcRamEditBox: switch Left4; func `NAKA_APFUNC_LyricBackColorCheck`
+- `LyrSettings_COLOR_PASSIV` AcLanguageText1: text "COLOR PASSIV"
 
 ## WriteIn
 
