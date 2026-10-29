@@ -23,6 +23,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import events  # noqa: E402
 import panel_fields  # noqa: E402
+import spec_struct  # noqa: E402
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'analysis' / 'disk-format-probes'))
 import lsw_voice_selector_names as _voices  # noqa: E402
@@ -36,7 +37,7 @@ def sound_name(payload):
         return None
     return name
 
-INCLUDES = ['kn5000_files.inc', 'kn5000_panel.inc']
+INCLUDES = ['kn5000_files.inc', 'kn5000_panel.inc', 'kn5000_specs.inc']
 
 BOOT_NOTE = [
     'The KN5000 formatter writes these first 32 bytes: FDC_Format2HD_WriteBoot (v10/v9 0xf522f5)',
@@ -106,6 +107,10 @@ class Out:
             self.put('\t.fill\t%d, 1, 0x%02x\t; %s' % (len(b), b[0], what), len(b))
         else:
             self.inc(len(b), what)
+
+    def struct(self, st, b):
+        for line, n in st.lines(b):
+            self.put(line, n)
 
     def fill_or_bytes(self, b, what):
         if not b:
@@ -306,6 +311,7 @@ def describe_pmt(ctx):
 # ---------------------------------------------------------------------------------------------
 # TM: SOUND MEMORY, the 0x72aa-byte RAM image at 0x1e0000
 
+SS = spec_struct.structs()
 SOUND_RAM_MAGICS = (b'KN5000 SOUND RAM', b'KN3000 SOUND RAM', b'KN1500 SOUND RAM')
 
 
@@ -328,22 +334,26 @@ def describe_tm(ctx):
     o.comment('0x1e0000, 0x72aa bytes, between PreTmSave and PostTmSave; at boot the firmware compares')
     o.comment('the 16-byte header with "KN5000 SOUND RAM" and sends the image to sub-CPU 0x7800')
     o.comment('(SendPartDataBlock_ClearByte4).  40 records of 470 bytes follow it, the size of the')
-    o.comment('Flash section-7 small slots (Flash_CopyBlocksToSlots), each opening with a 16-byte')
-    o.comment('name; then one record named like a drum kit.  [INFERENCE] the 40 are the sound')
-    o.comment('memories: their names are sound names.  No parameter byte is identified.')
+    o.comment('Flash section-7 small slots (Flash_CopyBlocksToSlots): the sub-CPU\'s own 426-byte tone')
+    o.comment('record plus four 11-byte velocity-split records; then the kit record (128 user drum')
+    o.comment('instruments of 80 B) ending with the edit index and the image checksum.  Field map, with')
+    o.comment('evidence per field: notes/floppy-kn5000-2026-10-29/specs/tm_sound_record.json.')
     o.label('Header')
     o.ascii(d[:16], 'checked at boot')
     p = 16
     for k in range(40):
         nm = d[p:p + 16]
         o.label('Sound_%d' % (k + 1))
-        o.ascii(nm, 'name')
-        o.inc(454, 'sound %d parameters' % (k + 1))
+        o.struct(SS['tm_sound'], d[p:p + 470])
         p += 470
-    nm = d[p:p + 16]
     o.label('Kit')
-    o.ascii(nm, 'name')
-    o.inc(len(d) - p - 16, 'kit record (%d bytes)' % (len(d) - p - 16))
+    h, e, t = SS['tm_kit_head'], SS['tm_kit_entry'], SS['tm_kit_tail']
+    o.struct(h, d[p:p + h.size])
+    for n in range(128):
+        q = p + e.base + 80 * n
+        o.comment('drum instrument for note %d' % n)
+        o.struct(e, d[q:q + 80])
+    o.struct(t, d[p + t.base:p + t.base + t.size])
     return o.done()
 
 
@@ -500,7 +510,8 @@ def describe_rcm(ctx):
     o.comment('section number into the directory pointers on the way (Pack12BitValueWithBank 0xf1710c).')
     o.label('Header')
     o.ascii(d[:4], 'magic')
-    o.inc(0x3C, 'header +4..+0x3f (fields not established)')
+    o.raw('.long', ['0x%x' % x for x in struct.unpack_from('<15I', d, 4)], 60,
+          'header +4..+0x3f as u32 words (TODO: not named; FileIO_LoadRcmToFlash reads only the table at +0x40)')
     o.label('ChunkLengths')
     o.raw('.long', ['0x%x' % x for x in lens], 36, 'header, sections 0..6, unused (0xf400 is used)')
     o.fill_or_inc(d[0x64:0x400], 'rest of the header')
@@ -515,10 +526,22 @@ def describe_rcm(ctx):
             o.comment('Section 7, the block slot store (technics-docs custom-data-flash.md):')
             o.comment('"H\\0K\\0", slot counts at +8 / +0xa, owner maps at +0x10 / +0x50.')
             o.ascii(d[p:p + 4], 'magic')
-            o.inc(4, 'header +4..+7')
+            o.raw('.short', ['0x%04x' % x for x in struct.unpack_from('<2H', d, p + 4)], 4,
+                  'header +4..+7 (TODO: not named)')
             o.raw('.short', [str(x) for x in struct.unpack_from('<2H', d, p + 8)], 4,
                   'small slots, large slots')
-            o.fill_or_inc(d[p + 12:p + n], 'slot store body')
+            o.fill_or_bytes(d[p + 12:p + 0x10], 'header +0xc..+0xf (TODO: not named)')
+            o.fill_or_bytes(d[p + 0x10:p + 0x38], 'owner byte per small slot, 0 = free (Flash_WriteSlotOwnerMap)')
+            o.fill_or_bytes(d[p + 0x38:p + 0x50], 'between the owner maps (TODO: not named)')
+            o.fill_or_bytes(d[p + 0x50:p + 0x54], 'owner byte per large slot')
+            o.fill_or_bytes(d[p + 0x54:p + 0x410], 'up to the slots (TODO: not named)')
+            for k in range(40):
+                q = p + 0x410 + 470 * k
+                o.fill_or_bytes(d[q:q + 470], 'small slot %d (a sound-memory record, 470 B; erased here)' % k)
+            for k in range(4):
+                q = p + 0x4D80 + 10535 * k
+                o.fill_or_bytes(d[q:q + 10535], 'large slot %d (10,535 B; erased here)' % k)
+            o.fill_or_bytes(d[p + 0x4D80 + 4 * 10535:p + n], 'rest of the sector chunk')
         p += n
     return o.done()
 
@@ -534,6 +557,8 @@ def describe_sqt(ctx):
     if d[4] not in (0, 1) or len(d) < nslots * 0x800:
         return None
     o = Out(ctx)
+    o.comment('Slot fields: notes/floppy-kn5000-2026-10-29/specs/sqt_slot_header.json (RAM image of the')
+    o.comment('current-song record 0xf180; the +0xd0 track table gives each present track\'s first cell).')
     o.comment('SEQUENCER, file type 2.  Song-slot headers of 0x800 bytes (RAM SEQ_SONG_SLOTS 0xab000,')
     o.comment('10 slots), then the event memory as linked 256-byte cells.  +4 = 1: all 10 slots, as')
     o.comment('FileIO_SaveRegion2_ExtMem (v10 0xf87cac) writes them (0x5000, then the event memory')
@@ -545,13 +570,18 @@ def describe_sqt(ctx):
         o.ascii(d[b:b + 4], 'slot signature')
         o.raw('.byte', ['%d' % d[b + 4], '0x%02x' % d[b + 5], '0x%02x' % d[b + 6]], 3,
               'all-songs flag, signature')
-        o.inc(0xF9, 'slot +7..+0xff (fields not established)')
+        o.struct(SS['sqt_slot_a'], d[b + 7:b + 0x100])
         nm = d[b + 0x100:b + 0x110]
         if printable(nm):
             o.ascii(nm, 'song name')
         else:
             o.inc(16, 'song name field, not text')
-        o.inc(0x6F0, 'slot +0x110..+0x7ff (fields not established)')
+        hd, tl = SS['sqt_slot_b_head'], SS['sqt_slot_b_tail']
+        o.struct(hd, d[b + 0x110:b + 0x110 + hd.size])
+        pb, pn = tl.panel
+        emit_block(o, d, b + pb, b + pb + pn, 'PanelTlv_Block0_Layout',
+                   'The song\'s copy of panel block 0 (taken when the song is recorded)')
+        o.struct(tl, d[b + pb + pn:b + 0x800])
     p = nslots * 0x800
     o.label('Events')
     o.comment('Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the')

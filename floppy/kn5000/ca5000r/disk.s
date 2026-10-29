@@ -6,6 +6,7 @@
 	.include	"fat12.inc"
 	.include	"kn5000_files.inc"
 	.include	"kn5000_panel.inc"
+	.include	"kn5000_specs.inc"
 
 	.set	FAT12_BYTES_PER_SECTOR, 512
 	.set	FAT12_SECTORS_PER_CLUSTER, 1

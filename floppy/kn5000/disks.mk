@@ -19,4 +19,4 @@ kn5000_SHA1_ca5009  := f6eb9a37d37fc2d5cfe6f9c2eda409b32cae5c56
 kn5000_SHA1_ca5010  := afad80b7de4cb2ddc75cd4c656a3128cebd768a6
 kn5000_SHA1_mix5000 := 4a4ef711a7c97d573bbb4874ae2347e890429a51
 # Generated macro file the describers use (the panel record macros, from the firmware's lists).
-kn5000_PREGEN  := $(PYTHON) kn5000/panel_fields.py
+kn5000_PREGEN  := $(PYTHON) kn5000/panel_fields.py && $(PYTHON) kn5000/spec_struct.py
