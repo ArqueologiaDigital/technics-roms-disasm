@@ -297,6 +297,25 @@ class Gen:
             self.names.add(n)
             if not self.in_data(a):
                 self.extern.setdefault(a, n)
+        # the converted code's own function names (`# Name  (CPU 0x...)` headers) replace a made-up
+        # func_ / loc_ name the previous build's labels give the same address: the code was
+        # regenerated since (with new symbol-file names) and no longer defines the old one
+        # (a name the previous build put at another address -- the header gives the entry, the
+        # label sits on the prologue -- is not taken)
+        import glob as _glob
+        built = {}
+        for line in open(lab):
+            nm_, v_ = line.split()
+            built[nm_] = int(v_, 16)
+        hx = re.compile(r"^# (\w+)\s+\((?:lib )?CPU 0x([0-9a-fA-F]+)\)", re.M)
+        for f in _glob.glob(code_glob()):
+            for mo in hx.finditer(open(f, encoding="latin-1").read()):
+                a, n = int(mo.group(2), 16), mo.group(1)
+                if built.get(n, a) != a:
+                    continue
+                if re.fullmatch(r"(func|loc)_[0-9A-F]{8}", self.extern.get(a, "")) and n != self.extern[a]:
+                    self.extern[a] = n
+                    self.names.add(n)
         # names src/symbols.inc / src/program.s give addresses inside the data
         # region: kept as this region's labels (kn7asm checks they agree)
         self.fixed = {}

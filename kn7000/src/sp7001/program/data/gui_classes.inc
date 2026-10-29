@@ -13,7 +13,7 @@
 .equ NONE_ix, 0xFFFF
 .equ NOCLASS, 0xFFFFFFFF
 
-# class table record (ClassProc 0x4842A802: proc +0, parent +4, allsize +8, selfsize +10,
+# class table record (ClassProc 0x4842A804: proc +0, parent +4, allsize +8, selfsize +10,
 # name +12, propdata +16, propname +20); `id` is the class id the records hold
 .macro CLASS this, id, table, proc=0, parent=NOCLASS, allsize=0, selfsize=0, cname=0, sig=0, fields=0
 \this\():
@@ -6589,7 +6589,7 @@
 .endm
 
 # AcOtpRamBox: AcOtpRamBox < AcRamBox < PsParaBox < VwBox < Viewable; 52 bytes; own fields font:c
-.macro AcOtpRamBox this, super=NONE, sub=NONE, next=NONE, prev=NONE, flag=0, X=0, Y=0, W=0, H=0, color=0, border=0, index=0, font_AcOtpRamBox=0, fontcolor=0, align=0, func=0, data=0, font_AcOtpRamBox=0
+.macro AcOtpRamBox this, super=NONE, sub=NONE, next=NONE, prev=NONE, flag=0, X=0, Y=0, W=0, H=0, color=0, border=0, index=0, font=0, fontcolor=0, align=0, func=0, data=0, font_AcOtpRamBox=0
 \this\():
 	.long	CLASS_AcOtpRamBox
 	.word	\super\()_ix
@@ -6603,7 +6603,7 @@
 	.word	\border
 	.word	\index
 	.space	2
-	.long	\font_AcOtpRamBox
+	.long	\font
 	.word	\fontcolor
 	.word	\align
 	.long	\func

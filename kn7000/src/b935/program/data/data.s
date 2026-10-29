@@ -11,6 +11,8 @@
 .include "src/include/panel_memory.inc"
 .include "src/include/kn_panel_extra.inc"
 .include "src/include/data_tables.inc"
+.include "src/b935/program/data/data_structs.inc"
+.include "src/include/dsp_records.inc"
 .include "src/b935/program/data/rhythm_macros.inc"
 .include "src/b935/program/data/gui_ids.inc"
 .include "src/b935/program/data/gui_classes.inc"
@@ -21,4 +23,5 @@
 .include "src/b935/program/data/data_02.s"
 .include "src/b935/program/data/data_03.s"
 .include "src/b935/program/data/data_04.s"
+.include "src/b935/program/data/data_05.s"
 .org 0x3B8F6D
