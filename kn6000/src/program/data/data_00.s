@@ -24,8 +24,60 @@ doubles_4C176038:	# IEEE-754 doubles (lo word, hi word)
 	.space	128, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x1761A9, 0x1761AC
 
-Str_u_3:	.asciz "u\x1C"
-.incbin_range "baserom/kn6000_program.rom", 0x1761AF, 0x17627C
+Str_u_3:
+	.long	loc_4C001C75
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001C75
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001C0C
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001CDB
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001A40
+	.long	loc_4C001B0D
+	.long	loc_4C001C75
+	.long	loc_4C001C75
+	.long	loc_4C001C75
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001BBE
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001D2D
+	.long	loc_4C001B83
+	.long	loc_4C001C07
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001A99
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001B48
+	.long	func_4C00191A_entry_L45d
+	.long	func_4C00191A_entry_L45d
+	.long	loc_4C001C0C
+
 Str_C_5:	.asciz "C"
 data_4C17627E:
 	.space	1, 0x00
@@ -56,10 +108,63 @@ data_4C176298:
 Str_0x:	.asciz "0x"
 Str_0X:	.asciz "0X"
 	.align	4, 0xFF
-Str_empty_1002:	.asciz "&/"
-.incbin_range "baserom/kn6000_program.rom", 0x1762AB, 0x176378
+
+Str_empty_1002:
+	.long	loc_4C002F26
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002F40
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002ECE
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002E0D
+	.long	loc_4C002E62
+	.long	loc_4C002F26
+	.long	loc_4C002F12
+	.long	loc_4C002F40
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002E62
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002F56
+	.long	loc_4C002EAE
+	.long	loc_4C002EEE
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002E27
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002E88
+	.long	vsprintf_core_entry_L259
+	.long	vsprintf_core_entry_L259
+	.long	loc_4C002ECE
 data_4C176378:
 .incbin_range "baserom/kn6000_program.rom", 0x176378, 0x1763F8
+
 Str_Infinity_3:	.asciz "Infinity"
 	.align	4, 0xFF
 Str_Infinity_2:	.asciz "Infinity"
@@ -118,8 +223,8 @@ data_4C17668C:
 .incbin_range "baserom/kn6000_program.rom", 0x17668C, 0x17670C
 data_4C17670C:
 .incbin_range "baserom/kn6000_program.rom", 0x17670C, 0x17678C
-Str_empty_1239:	.asciz " "
-Str_empty_1238:	.asciz "_"
+Str_empty_1249:	.asciz " "
+Str_empty_1248:	.asciz "_"
 Str_0_26:	.asciz "0"
 Str_1_39:	.asciz "1"
 Str_2_38:	.asciz "2"
@@ -182,42 +287,42 @@ Str_w_3:	.asciz "w"
 Str_x_6:	.asciz "x"
 Str_y_5:	.asciz "y"
 Str_z_2:	.asciz "z"
-Str_empty_1237:	.asciz "!"
-Str_empty_1236:	.asciz "#"
-Str_empty_1235:	.asciz "$"
-Str_empty_1234:	.asciz "%"
-Str_empty_1233:	.asciz "&"
-Str_empty_1232:	.asciz "?"
+Str_empty_1247:	.asciz "!"
+Str_empty_1246:	.asciz "#"
+Str_empty_1245:	.asciz "$"
+Str_empty_1244:	.asciz "%"
+Str_empty_1243:	.asciz "&"
+Str_empty_1242:	.asciz "?"
 Str_40_4:	.asciz "~40"
 Str_5c_2:	.asciz "~5c"
-Str_empty_1231:	.asciz "^"
+Str_empty_1241:	.asciz "^"
 Str_22_2:	.asciz "~22"
 Str_27_2:	.asciz "~27"
-Str_empty_1230:	.asciz "`"
-Str_empty_1229:	.asciz ","
-Str_empty_1228:	.asciz "."
-Str_empty_1227:	.asciz ":"
-Str_empty_1226:	.asciz ";"
-Str_empty_1225:	.asciz "+"
-Str_empty_1224:	.asciz "-"
-Str_empty_1223:	.asciz "*"
-Str_empty_1222:	.asciz "/"
-Str_empty_1221:	.asciz "="
+Str_empty_1240:	.asciz "`"
+Str_empty_1239:	.asciz ","
+Str_empty_1238:	.asciz "."
+Str_empty_1237:	.asciz ":"
+Str_empty_1236:	.asciz ";"
+Str_empty_1235:	.asciz "+"
+Str_empty_1234:	.asciz "-"
+Str_empty_1233:	.asciz "*"
+Str_empty_1232:	.asciz "/"
+Str_empty_1231:	.asciz "="
 Str_8b_2:	.asciz "~8b"
 Str_8d_2:	.asciz "~8d"
-Str_empty_1220:	.asciz "("
-Str_empty_1219:	.asciz ")"
-Str_empty_1218:	.asciz "<"
-Str_empty_1217:	.asciz ">"
-Str_empty_1216:	.asciz "["
-Str_empty_1215:	.asciz "]"
-Str_empty_1214:	.asciz "{"
-Str_empty_1213:	.asciz "}"
-Str_empty_1212:	.asciz "|"
+Str_empty_1230:	.asciz "("
+Str_empty_1229:	.asciz ")"
+Str_empty_1228:	.asciz "<"
+Str_empty_1227:	.asciz ">"
+Str_empty_1226:	.asciz "["
+Str_empty_1225:	.asciz "]"
+Str_empty_1224:	.asciz "{"
+Str_empty_1223:	.asciz "}"
+Str_empty_1222:	.asciz "|"
 
 ptrs_4C176858:
-	.long	Str_empty_1239
-	.long	Str_empty_1238
+	.long	Str_empty_1249
+	.long	Str_empty_1248
 	.long	Str_0_26
 	.long	Str_1_39
 	.long	Str_2_38
@@ -280,17 +385,29 @@ ptrs_4C176858:
 	.long	Str_x_6
 	.long	Str_y_5
 	.long	Str_z_2
+	.long	Str_empty_1247
+	.long	Str_empty_1246
+	.long	Str_empty_1245
+	.long	Str_empty_1244
+	.long	Str_empty_1243
+	.long	Str_empty_1242
+	.long	Str_40_4
+	.long	Str_5c_2
+	.long	Str_empty_1241
+	.long	Str_22_2
+	.long	Str_27_2
+	.long	Str_empty_1240
+	.long	Str_empty_1239
+	.long	Str_empty_1238
 	.long	Str_empty_1237
 	.long	Str_empty_1236
 	.long	Str_empty_1235
 	.long	Str_empty_1234
 	.long	Str_empty_1233
 	.long	Str_empty_1232
-	.long	Str_40_4
-	.long	Str_5c_2
 	.long	Str_empty_1231
-	.long	Str_22_2
-	.long	Str_27_2
+	.long	Str_8b_2
+	.long	Str_8d_2
 	.long	Str_empty_1230
 	.long	Str_empty_1229
 	.long	Str_empty_1228
@@ -300,21 +417,9 @@ ptrs_4C176858:
 	.long	Str_empty_1224
 	.long	Str_empty_1223
 	.long	Str_empty_1222
-	.long	Str_empty_1221
-	.long	Str_8b_2
-	.long	Str_8d_2
-	.long	Str_empty_1220
-	.long	Str_empty_1219
-	.long	Str_empty_1218
-	.long	Str_empty_1217
-	.long	Str_empty_1216
-	.long	Str_empty_1215
-	.long	Str_empty_1214
-	.long	Str_empty_1213
-	.long	Str_empty_1212
 	.space	4, 0x00
 
-Str_empty_1211:	.asciz "_"
+Str_empty_1221:	.asciz "_"
 Str_0_25:	.asciz "0"
 Str_1_38:	.asciz "1"
 Str_2_37:	.asciz "2"
@@ -354,7 +459,7 @@ Str_Z_10:	.asciz "Z"
 	.align	4, 0xFF
 
 ptrs_4C176A28:
-	.long	Str_empty_1211
+	.long	Str_empty_1221
 	.long	Str_0_25
 	.long	Str_1_38
 	.long	Str_2_37
@@ -396,12 +501,12 @@ ptrs_4C176AC0:
 	.long	ptrs_4C176858
 	.long	ptrs_4C176A28
 
-Str_empty_1210:	.asciz " "
-Str_empty_1209:	.asciz "_"
+Str_empty_1220:	.asciz " "
+Str_empty_1219:	.asciz "_"
 
 ptrs_4C176ACC:
-	.long	Str_empty_1210
-	.long	Str_empty_1209
+	.long	Str_empty_1220
+	.long	Str_empty_1219
 
 Str_7f_3:	.asciz "~7f"
 Str_empty_970:	.asciz " "
@@ -604,7 +709,7 @@ data_4C176CC8:
 data_4C176CC9:
 	.space	1, 0x00
 
-Str_empty_1180:	.asciz "_"
+Str_empty_1190:	.asciz "_"
 Str_0_23:	.asciz "0"
 Str_1_36:	.asciz "1"
 Str_2_35:	.asciz "2"
@@ -633,7 +738,7 @@ ptrs_4C176CE4:
 	.long	data_4C176CC7
 	.long	data_4C176CC8
 	.long	data_4C176CC9
-	.long	Str_empty_1180
+	.long	Str_empty_1190
 	.long	Str_0_23
 	.long	Str_1_36
 	.long	Str_2_35
@@ -646,22 +751,22 @@ ptrs_4C176CE4:
 	.long	Str_9_13
 	.long	data_4C176CE0
 
-Str_empty_1208:	.asciz "!"
-Str_empty_1207:	.asciz "#"
-Str_empty_1206:	.asciz "$"
-Str_empty_1205:	.asciz "%"
-Str_empty_1204:	.asciz "&"
-Str_empty_1203:	.asciz "?"
+Str_empty_1218:	.asciz "!"
+Str_empty_1217:	.asciz "#"
+Str_empty_1216:	.asciz "$"
+Str_empty_1215:	.asciz "%"
+Str_empty_1214:	.asciz "&"
+Str_empty_1213:	.asciz "?"
 Str_40_3:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_1202:	.asciz "^"
+Str_empty_1212:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_1201:	.asciz "`"
+Str_empty_1211:	.asciz "`"
 data_4C176D6C:
 	.space	1, 0x00
-Str_empty_1200:	.asciz " "
-Str_empty_1199:	.asciz "_"
+Str_empty_1210:	.asciz " "
+Str_empty_1209:	.asciz "_"
 Str_0_24:	.asciz "0"
 Str_1_37:	.asciz "1"
 Str_2_36:	.asciz "2"
@@ -678,21 +783,21 @@ data_4C176D86:
 .incbin_range "baserom/kn6000_program.rom", 0x176D86, 0x176D88
 
 ptrs_4C176D88:
-	.long	Str_empty_1208
-	.long	Str_empty_1207
-	.long	Str_empty_1206
-	.long	Str_empty_1205
-	.long	Str_empty_1204
-	.long	Str_empty_1203
+	.long	Str_empty_1218
+	.long	Str_empty_1217
+	.long	Str_empty_1216
+	.long	Str_empty_1215
+	.long	Str_empty_1214
+	.long	Str_empty_1213
 	.long	Str_40_3
 	.long	Str_5c
-	.long	Str_empty_1202
+	.long	Str_empty_1212
 	.long	Str_22
 	.long	Str_27
-	.long	Str_empty_1201
+	.long	Str_empty_1211
 	.long	data_4C176D6C
-	.long	Str_empty_1200
-	.long	Str_empty_1199
+	.long	Str_empty_1210
+	.long	Str_empty_1209
 	.long	Str_0_24
 	.long	Str_1_37
 	.long	Str_2_36
@@ -706,15 +811,15 @@ ptrs_4C176D88:
 	.long	data_4C176D85
 	.long	data_4C176D86
 
-Str_empty_1198:	.asciz "("
-Str_empty_1197:	.asciz ")"
-Str_empty_1196:	.asciz "<"
-Str_empty_1195:	.asciz ">"
-Str_empty_1194:	.asciz "["
-Str_empty_1193:	.asciz "]"
-Str_empty_1192:	.asciz "{"
-Str_empty_1191:	.asciz "}"
-Str_empty_1190:	.asciz "|"
+Str_empty_1208:	.asciz "("
+Str_empty_1207:	.asciz ")"
+Str_empty_1206:	.asciz "<"
+Str_empty_1205:	.asciz ">"
+Str_empty_1204:	.asciz "["
+Str_empty_1203:	.asciz "]"
+Str_empty_1202:	.asciz "{"
+Str_empty_1201:	.asciz "}"
+Str_empty_1200:	.asciz "|"
 data_4C176E06:
 	.space	1, 0x00
 data_4C176E07:
@@ -723,15 +828,15 @@ data_4C176E08:
 	.space	1, 0x00
 data_4C176E09:
 	.space	1, 0x00
-Str_empty_1189:	.asciz ","
-Str_empty_1188:	.asciz "."
-Str_empty_1187:	.asciz ":"
-Str_empty_1186:	.asciz ";"
-Str_empty_1185:	.asciz "+"
-Str_empty_1184:	.asciz "-"
-Str_empty_1183:	.asciz "*"
-Str_empty_1182:	.asciz "/"
-Str_empty_1181:	.asciz "="
+Str_empty_1199:	.asciz ","
+Str_empty_1198:	.asciz "."
+Str_empty_1197:	.asciz ":"
+Str_empty_1196:	.asciz ";"
+Str_empty_1195:	.asciz "+"
+Str_empty_1194:	.asciz "-"
+Str_empty_1193:	.asciz "*"
+Str_empty_1192:	.asciz "/"
+Str_empty_1191:	.asciz "="
 Str_8b:	.asciz "~8b"
 Str_8d:	.asciz "~8d"
 data_4C176E24:
@@ -740,6 +845,20 @@ data_4C176E25:
 .incbin_range "baserom/kn6000_program.rom", 0x176E25, 0x176E28
 
 ptrs_4C176E28:
+	.long	Str_empty_1208
+	.long	Str_empty_1207
+	.long	Str_empty_1206
+	.long	Str_empty_1205
+	.long	Str_empty_1204
+	.long	Str_empty_1203
+	.long	Str_empty_1202
+	.long	Str_empty_1201
+	.long	Str_empty_1200
+	.long	data_4C176E06
+	.long	data_4C176E07
+	.long	data_4C176E08
+	.long	data_4C176E09
+	.long	Str_empty_1199
 	.long	Str_empty_1198
 	.long	Str_empty_1197
 	.long	Str_empty_1196
@@ -748,20 +867,6 @@ ptrs_4C176E28:
 	.long	Str_empty_1193
 	.long	Str_empty_1192
 	.long	Str_empty_1191
-	.long	Str_empty_1190
-	.long	data_4C176E06
-	.long	data_4C176E07
-	.long	data_4C176E08
-	.long	data_4C176E09
-	.long	Str_empty_1189
-	.long	Str_empty_1188
-	.long	Str_empty_1187
-	.long	Str_empty_1186
-	.long	Str_empty_1185
-	.long	Str_empty_1184
-	.long	Str_empty_1183
-	.long	Str_empty_1182
-	.long	Str_empty_1181
 	.long	Str_8b
 	.long	Str_8d
 	.long	data_4C176E24
@@ -775,8 +880,9 @@ ptrs_4C176E90:
 	.long	ptrs_4C176CE4
 data_4C176EA8:
 .incbin_range "baserom/kn6000_program.rom", 0x176EA8, 0x176EE8
-data_4C176EE8:
-.incbin_range "baserom/kn6000_program.rom", 0x176EE8, 0x177128
+
+Bitmap_UserBitmapCheck_Pixels:	# 24 x 24, 8 bit(s) a pixel, rows padded to even bytes: the bitmap UserBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_UserBitmapCheck_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_UserBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 24 24) from src/program/data/media/Bitmap_UserBitmapCheck_Pixels.png
 
 Jpeg_4C177128:	# a JPG file, 2183 bytes, 120 x 50
 	.incbin	"src/program/data/media/Jpeg_4C177128.jpg"
@@ -812,12 +918,12 @@ ptrs_4C177AD0:
 	.long	Str_PASSIVE
 	.long	Str_ACTIVE
 
-Str_OFF_139:	.asciz "OFF"
-Str_ON_99:	.asciz "ON "
+Str_OFF_140:	.asciz "OFF"
+Str_ON_100:	.asciz "ON "
 
 ptrs_4C177AE0:
-	.long	Str_OFF_139
-	.long	Str_ON_99
+	.long	Str_OFF_140
+	.long	Str_ON_100
 
 Str_empty_937:	.asciz "%"
 	.align	4, 0xFF
@@ -891,7 +997,7 @@ Str_Show:	.asciz "Show"
 	.align	4, 0xFF
 data_4C177BE0:
 .incbin_range "baserom/kn6000_program.rom", 0x177BE0, 0x177BE8
-Str_empty_1179:	.asciz " -"
+Str_empty_1189:	.asciz " -"
 Str_A_33:	.asciz " A"
 Str_B_17:	.asciz " B"
 Str_C_21:	.asciz " C"
@@ -908,7 +1014,7 @@ Str_10_9:	.asciz "10"
 	.align	4, 0xFF
 
 ptrs_4C177C14:
-	.long	Str_empty_1179
+	.long	Str_empty_1189
 	.long	Str_A_33
 	.long	Str_B_17
 	.long	Str_C_21
@@ -935,16 +1041,12 @@ Str_ACP3_2:	.asciz "ACP3"
 Str_ACP4_2:	.asciz "ACP4"
 Str_ACP5_2:	.asciz "ACP5"
 Str_BASS_12:	.asciz "BASS"
-Str_DRM1_2:	.asciz "DRM1"
-Str_DRM2_2:	.asciz "DRM2"
-Str_CHRD_2:	.asciz "CHRD"
-Str_RTBS:	.asciz "RTBS"
+.incbin_range "baserom/kn6000_program.rom", 0x177CFE, 0x177D12
 Str_PADS_15:	.asciz "PADS"
 Str_PADS_16:	.asciz "PADS"
-Str_CTRL_4:	.asciz "CTRL"
+.incbin_range "baserom/kn6000_program.rom", 0x177D1C, 0x177D21
 Str_METR:	.asciz "METR"
-Str_CFDR:	.asciz "CFDR"
-.incbin_range "baserom/kn6000_program.rom", 0x177D2B, 0x177D34
+.incbin_range "baserom/kn6000_program.rom", 0x177D26, 0x177D34
 data_4C177D34:
 .incbin_range "baserom/kn6000_program.rom", 0x177D34, 0x177F74
 data_4C177F74:
@@ -1136,12 +1238,12 @@ Str_04X_04X:	.asciz "%04X%04X  "
 Str_02X_02X_02X_02X_02X_02X_02X_02X:	.asciz "%02X %02X %02X %02X %02X %02X %02X %02X"
 Str_RGB_01X_01X_01X:	.asciz "RGB=%01X:%01X:%01X"
 	.align	4, 0xFF
-Str_OFF_136:	.asciz "OFF"
-Str_ON_96:	.asciz "ON "
+Str_OFF_139:	.asciz "OFF"
+Str_ON_99:	.asciz "ON "
 
 ptrs_4C1793E8:
-	.long	Str_OFF_136
-	.long	Str_ON_96
+	.long	Str_OFF_139
+	.long	Str_ON_99
 
 Str_RT1_3:	.asciz "RT1"
 Str_LFT_3:	.asciz "LFT"
@@ -1669,7 +1771,7 @@ Str_TRANSPOSE_A_80_2:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80_2:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80_2:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80_2:	.asciz "TRANSPOSE:C ~80"
-Str_empty_1178:	.asciz "             "
+Str_empty_1188:	.asciz "             "
 
 ptrs_4C179D4C:
 	.long	Str_TRANSPOSE_7fC_2
@@ -1697,19 +1799,47 @@ ptrs_4C179D4C:
 	.long	Str_TRANSPOSE_B_a0_80_2
 	.long	Str_TRANSPOSE_B_80_2
 	.long	Str_TRANSPOSE_C_80_2
-	.long	Str_empty_1178
+	.long	Str_empty_1188
 data_4C179DB4:
 .incbin_range "baserom/kn6000_program.rom", 0x179DB4, 0x179FB4
-data_4C179FB4:
-.incbin_range "baserom/kn6000_program.rom", 0x179FB4, 0x179FD8
-data_4C179FD8:
-.incbin_range "baserom/kn6000_program.rom", 0x179FD8, 0x179FFC
+ptrs_4C179FB4:
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+	.long	loc_4C00868E
+ptrs_4C179FD8:
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
+	.long	loc_4C0086B0
 data_4C179FFC:
 .incbin_range "baserom/kn6000_program.rom", 0x179FFC, 0x17A1FC
 data_4C17A1FC:
 .incbin_range "baserom/kn6000_program.rom", 0x17A1FC, 0x17A27C
-data_4C17A27C:
-.incbin_range "baserom/kn6000_program.rom", 0x17A27C, 0x17A2B0
+ptrs_4C17A27C:
+	.long	loc_4C00931A
+	.long	loc_4C00932D
+	.long	loc_4C009340
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
+	.long	loc_4C009353
 
 Str_empty_929:	.asciz " "
 .incbin_range "baserom/kn6000_program.rom", 0x17A2B2, 0x17A3B0
@@ -1731,14 +1861,69 @@ data_4C17A8B0:
 .incbin_range "baserom/kn6000_program.rom", 0x17A8B0, 0x17A930
 data_4C17A930:
 .incbin_range "baserom/kn6000_program.rom", 0x17A930, 0x17A9B0
-Str_empty_928:	.asciz "[\xF8"
-.incbin_range "baserom/kn6000_program.rom", 0x17A9B3, 0x17A9F4
-data_4C17A9F4:
-.incbin_range "baserom/kn6000_program.rom", 0x17A9F4, 0x17AA38
+
+Str_empty_928:
+	.long	loc_4C00F85B
+	.long	loc_4C00F873
+	.long	loc_4C00F888
+	.long	func_4C00F5EE_entry_L381
+	.long	loc_4C00F8C7
+	.long	loc_4C00F8DA
+	.long	loc_4C00F8ED
+	.long	loc_4C00F8FF
+	.long	loc_4C00F913
+	.long	loc_4C00F94F
+	.long	loc_4C00F961
+	.long	func_4C00F5EE_entry_L381
+	.long	loc_4C00F89D
+	.long	loc_4C00F8B2
+	.long	func_4C00F5EE_entry_L381
+	.long	loc_4C00F927
+	.long	loc_4C00F93B
+ptrs_4C17A9F4:
+	.long	loc_4C00FCAF
+	.long	loc_4C00FCDE
+	.long	loc_4C00FCF2
+	.long	loc_4C00FCAF
+	.long	loc_4C00FCDE
+	.long	loc_4C00FCF2
+	.long	loc_4C00FCAF
+	.long	loc_4C00FCF2
+	.long	loc_4C00FCDE
+	.long	loc_4C00FCDE
+	.long	loc_4C00FCF2
+	.long	loc_4C00FCAF
+	.long	loc_4C00FCDE
+	.long	loc_4C00FCF2
+	.long	loc_4C00FCAF
+	.long	loc_4C00FCF2
+	.long	loc_4C00FCDE
 data_4C17AA38:
 .incbin_range "baserom/kn6000_program.rom", 0x17AA38, 0x17AAB8
-data_4C17AAB8:
-.incbin_range "baserom/kn6000_program.rom", 0x17AAB8, 0x17AB14
+ptrs_4C17AAB8:
+	.long	loc_4C012534
+	.long	loc_4C01253C
+	.long	loc_4C012544
+	.long	loc_4C01254C
+	.long	loc_4C012554
+	.long	loc_4C012559
+	.long	loc_4C01255E
+	.long	loc_4C012562
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	DbMemoryDumpProc_L3c0
+	.long	loc_4C012566
 data_4C17AB14:
 .incbin_range "baserom/kn6000_program.rom", 0x17AB14, 0x17AB94
 data_4C17AB94:
@@ -1749,70 +1934,83 @@ data_4C17AE14:
 .incbin_range "baserom/kn6000_program.rom", 0x17AE14, 0x17B014
 data_4C17B014:
 .incbin_range "baserom/kn6000_program.rom", 0x17B014, 0x17B214
+
 Str_BM:	.asciz "BM"
 	.align	4, 0xFF
 data_4C17B218:
 .incbin_range "baserom/kn6000_program.rom", 0x17B218, 0x17B238
 data_4C17B238:
-.incbin_range "baserom/kn6000_program.rom", 0x17B238, 0x17B297
-	.space	515, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x17B49A, 0x17B4D7
-	.space	513, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x17B6D8, 0x17C1BB
-Str_fDF:	.asciz "fDF`"
-.incbin_range "baserom/kn6000_program.rom", 0x17C1C0, 0x17C1E0
+.incbin_range "baserom/kn6000_program.rom", 0x17B238, 0x17B258
+data_4C17B258:
+.incbin_range "baserom/kn6000_program.rom", 0x17B258, 0x17B298
+data_4C17B298:
+	.space	512, 0x00
+data_4C17B498:
+.incbin_range "baserom/kn6000_program.rom", 0x17B498, 0x17B4D8
+data_4C17B4D8:
+	.space	512, 0x00
+Str_empty_1187:	.asciz "*$\x1F"
+.incbin_range "baserom/kn6000_program.rom", 0x17B6DC, 0x17B718
+data_4C17B718:
+.incbin_range "baserom/kn6000_program.rom", 0x17B718, 0x17BF18
+data_4C17BF18:
+.incbin_range "baserom/kn6000_program.rom", 0x17BF18, 0x17BF58
+data_4C17BF58:
+.incbin_range "baserom/kn6000_program.rom", 0x17BF58, 0x17C1E0
 Str_DDB_DDfFd:	.asciz "\"DDB$DDfFd@"
 .incbin_range "baserom/kn6000_program.rom", 0x17C1EC, 0x17C230
 Str_DDB_DDfFd_2:	.asciz "\"DDB$DDfFd@"
-.incbin_range "baserom/kn6000_program.rom", 0x17C23C, 0x17C362
-Str_gs9_D:	.asciz "gs9\x99D\xAA"
-.incbin_range "baserom/kn6000_program.rom", 0x17C369, 0x17C656
-Str_s6c6f:	.asciz "\x88s6c6f"
-.incbin_range "baserom/kn6000_program.rom", 0x17C65D, 0x17C817
+.incbin_range "baserom/kn6000_program.rom", 0x17C23C, 0x17C817
 Str_3DdDI_DD:	.asciz "3DdDI\x94DD"
 .incbin_range "baserom/kn6000_program.rom", 0x17C820, 0x17C98C
 Str_tC4_fw_DC7s7_w_gvh_f_tGyfD:	.asciz "tC4@fw\"DC7s7\x88w\xAA\xA6gvh\x99f\x99\x97tGyfD"
 .incbin_range "baserom/kn6000_program.rom", 0x17C9A9, 0x17CA3F
 Str_f3D_tFc_fb_DGxf_D_dFd:	.asciz "f3D\xA7tFc\xAA\xAAfb$DGxf\x88D&dFd"
-Str_DfDDD:	.asciz "DfDDD@"
-.incbin_range "baserom/kn6000_program.rom", 0x17CA5D, 0x17CA96
+.incbin_range "baserom/kn6000_program.rom", 0x17CA56, 0x17CA96
 Str_3Dfb_DGxf_D_dFd:	.asciz "3Dfb$DGxf\x88D&dFd"
-Str_DfDDD_2:	.asciz "DfDDD@"
-.incbin_range "baserom/kn6000_program.rom", 0x17CAAD, 0x17CAE6
+.incbin_range "baserom/kn6000_program.rom", 0x17CAA6, 0x17CAE6
 Str_3Df_h_If3f4DC8D:	.asciz "3Df\xA2&h\x84If3f4DC8D"
-.incbin_range "baserom/kn6000_program.rom", 0x17CAF7, 0x17CB05
-Str_D_DFd:	.asciz "D\"$DFd"
-.incbin_range "baserom/kn6000_program.rom", 0x17CB0C, 0x17CC9C
+.incbin_range "baserom/kn6000_program.rom", 0x17CAF7, 0x17CC9C
 Str_DDFdDD_DDDDD3:	.asciz "DDFdDD\"\"DDDDD3"
-.incbin_range "baserom/kn6000_program.rom", 0x17CCAB, 0x17CCCF
-Str_DDC:	.asciz "\"\"$DDC\""
-.incbin_range "baserom/kn6000_program.rom", 0x17CCD7, 0x17CD1F
-Str_DDC_2:	.asciz "\"\"$DDC\""
-.incbin_range "baserom/kn6000_program.rom", 0x17CD27, 0x17CE51
+.incbin_range "baserom/kn6000_program.rom", 0x17CCAB, 0x17CE51
 Str_D_z_G_DB_ffgD_w_r_jfDf_b:	.asciz "D\x87z\xA4G\xAA\x99DB&ffgD\x88w\x87r&jfDf&b "
 .incbin_range "baserom/kn6000_program.rom", 0x17CE6C, 0x17CEA6
 Str_D_DB_ffgD_w_r_jfDf_b:	.asciz "D\"DB&ffgD\x88w\x87r&jfDf&b "
-.incbin_range "baserom/kn6000_program.rom", 0x17CEBC, 0x17D308
-Str_6gs7t:	.asciz "\x996gs7t"
-.incbin_range "baserom/kn6000_program.rom", 0x17D30F, 0x17D482
-Str_wfH_6f:	.asciz "wfH\x836f"
-.incbin_range "baserom/kn6000_program.rom", 0x17D489, 0x17D901
-Str_Ff_w:	.asciz "\x84Ff`\x99w"
-.incbin_range "baserom/kn6000_program.rom", 0x17D908, 0x17D998
+.incbin_range "baserom/kn6000_program.rom", 0x17CEBC, 0x17D998
 Str_f_gtDDDD_D:	.asciz "f\x99\x96gtDDDD$D@"
 .incbin_range "baserom/kn6000_program.rom", 0x17D9A5, 0x17DDA7
 Str_D_H_tDDwfGr:	.asciz "D\x99\x84H\x87tDDwfGr "
-.incbin_range "baserom/kn6000_program.rom", 0x17DDB5, 0x17DE41
-Str_DtDH_w:	.asciz "DtDH\x84w\x88"
-.incbin_range "baserom/kn6000_program.rom", 0x17DE49, 0x17DE91
+.incbin_range "baserom/kn6000_program.rom", 0x17DDB5, 0x17DE91
 Str_DtDH_w_2:	.asciz "DtDH\x84w\x88"
-.incbin_range "baserom/kn6000_program.rom", 0x17DE99, 0x17DED7
-	.space	513, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x17E0D8, 0x17E277
-	.space	513, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x17E478, 0x181E98
+.incbin_range "baserom/kn6000_program.rom", 0x17DE99, 0x17DED8
+data_4C17DED8:
+	.space	512, 0x00
+data_4C17E0D8:
+.incbin_range "baserom/kn6000_program.rom", 0x17E0D8, 0x17E118
+data_4C17E118:
+.incbin_range "baserom/kn6000_program.rom", 0x17E118, 0x17E238
+Str_empty_1186:	.asciz "("
+.incbin_range "baserom/kn6000_program.rom", 0x17E23A, 0x17E278
+data_4C17E278:
+	.space	512, 0x00
+Str_99:	.asciz "99\x84"
+.incbin_range "baserom/kn6000_program.rom", 0x17E47C, 0x17E4B8
+data_4C17E4B8:
+.incbin_range "baserom/kn6000_program.rom", 0x17E4B8, 0x1803F8
+data_4C1803F8:
+.incbin_range "baserom/kn6000_program.rom", 0x1803F8, 0x180438
+data_4C180438:
+.incbin_range "baserom/kn6000_program.rom", 0x180438, 0x180C38
+data_4C180C38:
+.incbin_range "baserom/kn6000_program.rom", 0x180C38, 0x180C78
+data_4C180C78:
+.incbin_range "baserom/kn6000_program.rom", 0x180C78, 0x181E98
 Str_D33D33_4DDDFfeVeUUUUVgwwwvgvwww_wfwfff_w:	.asciz "D33D33\"\"\"4DDDFfeVeUUUUVgwwwvgvwww\x88\x88\x88\x88\x99\x88\x88wfwfff\x88\x88wwvguUTDFh\x87vfh\x87t@"
-.incbin_range "baserom/kn6000_program.rom", 0x181EDA, 0x183316
+.incbin_range "baserom/kn6000_program.rom", 0x181EDA, 0x182BB8
+data_4C182BB8:
+.incbin_range "baserom/kn6000_program.rom", 0x182BB8, 0x182BF8
+data_4C182BF8:
+.incbin_range "baserom/kn6000_program.rom", 0x182BF8, 0x183316
 	.space	78, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x183364, 0x183366
 	.space	78, 0x00
@@ -1837,8 +2035,11 @@ Str_D33D33_4DDDFfeVeUUUUVgwwwvgvwww_wfwfff_w:	.asciz "D33D33\"\"\"4DDDFfeVeUUUUV
 .incbin_range "baserom/kn6000_program.rom", 0x183DD5, 0x183DDB
 	.space	75, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x183E26, 0x183E2A
-	.space	146, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x183EBC, 0x183F18
+	.space	142, 0x00
+data_4C183EB8:
+.incbin_range "baserom/kn6000_program.rom", 0x183EB8, 0x183EF8
+data_4C183EF8:
+.incbin_range "baserom/kn6000_program.rom", 0x183EF8, 0x183F18
 	.space	68, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x183F5C, 0x183F67
 	.space	70, 0x00
@@ -1863,17 +2064,21 @@ Str_D33D33_4DDDFfeVeUUUUVgwwwvgvwww_wfwfff_w:	.asciz "D33D33\"\"\"4DDDFfeVeUUUUV
 .incbin_range "baserom/kn6000_program.rom", 0x1849D6, 0x1849E0
 	.space	70, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x184A26, 0x184E96
-	.space	806, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x1851BC, 0x18587B
-	.space	785, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x185B8C, 0x1861E8
-	.space	720, 0x00
+	.space	802, 0x00
+
+Bitmap_4C01A689_Palette:	# 16 colours, 0x00BBGGRR (func_4C01A689: MT_GetBitmapPalette)
+	.long	0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00C0C0C0
+	.long	0x00400000, 0x000000FF, 0x0000FF00, 0x0000FFFF, 0x00FF0000, 0x00FF00FF, 0x00FFFF00, 0x00FFFFFF
+
+Bitmap_4C01A689_Pixels:	# 160 x 60, 4 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C01A689 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C01A689_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_4C01A689_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 160 60) from src/program/data/media/Bitmap_4C01A689_Pixels.png
 data_4C1864B8:
 .incbin_range "baserom/kn6000_program.rom", 0x1864B8, 0x186588
 data_4C186588:
 .incbin_range "baserom/kn6000_program.rom", 0x186588, 0x186688
 data_4C186688:
 .incbin_range "baserom/kn6000_program.rom", 0x186688, 0x186888
+
 Str_YZ:	.asciz "YZ"
 	.align	4, 0xFF
 Str_name_2:	.asciz "name"
@@ -1893,10 +2098,51 @@ Str_TITLE_s:	.asciz "TITLE : %s"
 	.align	4, 0xFF
 data_4C1868D0:
 .incbin_range "baserom/kn6000_program.rom", 0x1868D0, 0x1868EC
-data_4C1868EC:
-.incbin_range "baserom/kn6000_program.rom", 0x1868EC, 0x18693C
-data_4C18693C:
-.incbin_range "baserom/kn6000_program.rom", 0x18693C, 0x186994
+
+ptrs_4C1868EC:
+	.long	loc_4C01CD06
+	.long	loc_4C01CD0A
+	.long	loc_4C01CD43
+	.long	loc_4C01CD1D
+	.long	loc_4C01CD56
+	.long	ObjectProc_L2ce
+	.long	ObjectProc_L2ce
+	.long	loc_4C01CDA9
+	.long	loc_4C01CDBC
+	.long	loc_4C01CD69
+	.long	loc_4C01CE28
+	.long	loc_4C01CE5B
+	.long	loc_4C01CE93
+	.long	loc_4C01CECB
+	.long	loc_4C01CF03
+	.long	loc_4C01CF39
+	.long	loc_4C01CF4B
+	.long	loc_4C01CD30
+	.long	loc_4C01CF5D
+	.long	loc_4C01CF75
+ptrs_4C18693C:
+	.long	loc_4C01D2C9
+	.long	loc_4C01D2CD
+	.long	loc_4C01D2DE
+	.long	loc_4C01D30A
+	.long	loc_4C01D31B
+	.long	loc_4C01D34F
+	.long	loc_4C01D3D8
+	.long	loc_4C01D3F5
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	loc_4C01D4FE
+	.long	loc_4C01D52E
+	.long	loc_4C01D2FD
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	ClassProc_entry_L2d9
+	.long	loc_4C01D2EC
 data_4C186994:
 .incbin_range "baserom/kn6000_program.rom", 0x186994, 0x186A14
 data_4C186A14:
@@ -1924,6 +2170,7 @@ data_4C1870E8:
 .incbin_range "baserom/kn6000_program.rom", 0x1870E8, 0x1870EC
 data_4C1870EC:
 .incbin_range "baserom/kn6000_program.rom", 0x1870EC, 0x1870F0
+
 Str_bool_s_d:	.asciz "bool\x09%s%d"
 	.align	4, 0xFF
 Str_s_d_9:	.asciz "&%s%d"
@@ -2057,8 +2304,42 @@ data_4C187334:
 .incbin_range "baserom/kn6000_program.rom", 0x187334, 0x187338
 data_4C187338:
 .incbin_range "baserom/kn6000_program.rom", 0x187338, 0x18733C
-data_4C18733C:
-.incbin_range "baserom/kn6000_program.rom", 0x18733C, 0x1873C0
+
+ptrs_4C18733C:
+	.long	loc_4C023865
+	.long	loc_4C02387F
+	.long	loc_4C023869
+	.long	loc_4C02387F
+	.long	loc_4C0238E4
+	.long	loc_4C023836
+	.long	loc_4C023852
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	func_4C0237F6_entry_L15b
+	.long	loc_4C023858
+	.long	loc_4C02385C
+	.long	func_4C0237F6_entry_L15b
+	.long	loc_4C023861
+
 Str_MD_PS_2:	.asciz "_MD_PS"
 Str_MD_NORMAL_2:	.asciz "_MD_NORMAL"
 Str_MD_PROGRAM_2:	.asciz "_MD_PROGRAM"
@@ -4617,8 +4898,7 @@ Str_slide_bmp:	.asciz "slide.bmp"
 Str_slmove_bmp:	.asciz "slmove.bmp"
 Str_mixctr_bmp:	.asciz "mixctr.bmp"
 Str_mixpoint_bmp:	.asciz "mixpoint.bmp"
-Str_fwd_bmp:	.asciz "fwd.bmp"
-Str_bwd_bmp:	.asciz "bwd.bmp"
+.incbin_range "baserom/kn6000_program.rom", 0x18D1D4, 0x18D1E4
 Str_pause_bmp:	.asciz "pause.bmp"
 Str_start_bmp:	.asciz "start.bmp"
 Str_before_bmp:	.asciz "before.bmp"
@@ -5623,8 +5903,19 @@ Str_TT_MEMDUMP:	.asciz "TT_MEMDUMP"
 	.align	4, 0xFF
 Str_TT_DEBUG:	.asciz "TT_DEBUG"
 	.align	4, 0xFF
-data_4C18F9C8:
-.incbin_range "baserom/kn6000_program.rom", 0x18F9C8, 0x18F9F4
+
+ptrs_4C18F9C8:
+	.long	loc_4C02521C
+	.long	loc_4C024BC3
+	.long	loc_4C024C6D
+	.long	loc_4C024D39
+	.long	loc_4C024D98
+	.long	loc_4C024E60
+	.long	func_4C024EF7
+	.long	loc_4C02521C
+	.long	PanelRxState8
+	.long	loc_4C0250DA
+	.long	loc_4C02521C
 data_4C18F9F4:
 .incbin_range "baserom/kn6000_program.rom", 0x18F9F4, 0x18FA08
 data_4C18FA08:
@@ -5641,45 +5932,46 @@ data_4C18FBE8:
 .incbin_range "baserom/kn6000_program.rom", 0x18FBE8, 0x18FBFC
 data_4C18FBFC:
 .incbin_range "baserom/kn6000_program.rom", 0x18FBFC, 0x18FC10
-Str_empty_1154:	.asciz "\x10 "
+
+Str_empty_1162:	.asciz "\x10 "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC13, 0x18FC24
-Str_empty_1160:	.asciz "\x11 "
+Str_empty_1168:	.asciz "\x11 "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC27, 0x18FC38
-Str_empty_1155:	.asciz "\x12 "
+Str_empty_1163:	.asciz "\x12 "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC3B, 0x18FC4C
-Str_empty_1161:	.asciz "\x13 "
+Str_empty_1169:	.asciz "\x13 "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC4F, 0x18FC60
-Str_empty_1159:	.asciz "\x14 "
+Str_empty_1167:	.asciz "\x14 "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC63, 0x18FC74
-Str_empty_1164:	.asciz "  "
+Str_empty_1172:	.asciz "  "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC77, 0x18FC88
-Str_empty_1165:	.asciz "! "
+Str_empty_1173:	.asciz "! "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC8B, 0x18FC9C
-Str_empty_1163:	.asciz "\" "
+Str_empty_1171:	.asciz "\" "
 .incbin_range "baserom/kn6000_program.rom", 0x18FC9F, 0x18FCB0
-Str_empty_1162:	.asciz "# "
+Str_empty_1170:	.asciz "# "
 .incbin_range "baserom/kn6000_program.rom", 0x18FCB3, 0x18FCC4
-Str_empty_1156:	.asciz "% "
+Str_empty_1164:	.asciz "% "
 .incbin_range "baserom/kn6000_program.rom", 0x18FCC7, 0x18FCD8
-Str_empty_1157:	.asciz "@ "
+Str_empty_1165:	.asciz "@ "
 .incbin_range "baserom/kn6000_program.rom", 0x18FCDB, 0x18FCEC
 Str_C_18:	.asciz "C "
 .incbin_range "baserom/kn6000_program.rom", 0x18FCEF, 0x18FD00
 Str_A_30:	.asciz "A "
 .incbin_range "baserom/kn6000_program.rom", 0x18FD03, 0x18FE2C
-Str_empty_1158:	.asciz "\x8F "
+Str_empty_1166:	.asciz "\x8F "
 .incbin_range "baserom/kn6000_program.rom", 0x18FE2F, 0x190084
-Str_empty_1153:	.asciz "\"@"
+Str_empty_1161:	.asciz "\"@"
 .incbin_range "baserom/kn6000_program.rom", 0x190087, 0x190098
-Str_empty_1152:	.asciz "#@"
+Str_empty_1160:	.asciz "#@"
 .incbin_range "baserom/kn6000_program.rom", 0x19009B, 0x1900AC
-Str_empty_1151:	.asciz "$@"
+Str_empty_1159:	.asciz "$@"
 .incbin_range "baserom/kn6000_program.rom", 0x1900AF, 0x1900C0
-Str_empty_1150:	.asciz "%@"
+Str_empty_1158:	.asciz "%@"
 .incbin_range "baserom/kn6000_program.rom", 0x1900C3, 0x1900D4
-Str_empty_1149:	.asciz "&@"
+Str_empty_1157:	.asciz "&@"
 .incbin_range "baserom/kn6000_program.rom", 0x1900D7, 0x1900E8
-Str_empty_1148:	.asciz "'@"
+Str_empty_1156:	.asciz "'@"
 .incbin_range "baserom/kn6000_program.rom", 0x1900EB, 0x1903F4
 data_4C1903F4:
 .incbin_range "baserom/kn6000_program.rom", 0x1903F4, 0x190408
@@ -5719,23 +6011,23 @@ data_4C190688:
 .incbin_range "baserom/kn6000_program.rom", 0x190688, 0x19069C
 data_4C19069C:
 .incbin_range "baserom/kn6000_program.rom", 0x19069C, 0x1906B0
-Str_empty_1142:	.asciz " \x80"
+Str_empty_1150:	.asciz " \x80"
 .incbin_range "baserom/kn6000_program.rom", 0x1906B3, 0x1906D8
-Str_empty_1141:	.asciz "\"\x80"
+Str_empty_1149:	.asciz "\"\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x1906DB, 0x1906EC
-Str_empty_1140:	.asciz "$\x80"
+Str_empty_1148:	.asciz "$\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x1906EF, 0x190700
-Str_empty_1139:	.asciz "%\x80"
+Str_empty_1147:	.asciz "%\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190703, 0x190714
-Str_empty_1147:	.asciz "(\x80"
+Str_empty_1155:	.asciz "(\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190717, 0x190728
-Str_empty_1146:	.asciz ")\x80"
+Str_empty_1154:	.asciz ")\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x19072B, 0x19073C
-Str_empty_1145:	.asciz "*\x80"
+Str_empty_1153:	.asciz "*\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x19073F, 0x190764
-Str_empty_1144:	.asciz ",\x80"
+Str_empty_1152:	.asciz ",\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190767, 0x190780
-Str_empty_1143:	.asciz "-\x80"
+Str_empty_1151:	.asciz "-\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190783, 0x190794
 Str_0_22:	.asciz "0\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190797, 0x1907A8
@@ -5745,7 +6037,7 @@ Str_2_33:	.asciz "2\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x1907C3, 0x190800
 Str_empty_921:	.asciz "@\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190803, 0x190844
-Str_empty_1166:	.asciz "`\x80"
+Str_empty_1174:	.asciz "`\x80"
 .incbin_range "baserom/kn6000_program.rom", 0x190847, 0x19086C
 data_4C19086C:
 .incbin_range "baserom/kn6000_program.rom", 0x19086C, 0x190B90
@@ -5787,23 +6079,23 @@ data_4C190EFC:
 .incbin_range "baserom/kn6000_program.rom", 0x190EFC, 0x190F10
 data_4C190F10:
 .incbin_range "baserom/kn6000_program.rom", 0x190F10, 0x191384
-Str_empty_1177:	.asciz "\x80@ "
+Str_empty_1185:	.asciz "\x80@ "
 .incbin_range "baserom/kn6000_program.rom", 0x191388, 0x191398
-Str_empty_1176:	.asciz "\x81@ "
+Str_empty_1184:	.asciz "\x81@ "
 .incbin_range "baserom/kn6000_program.rom", 0x19139C, 0x1913AC
-Str_empty_1171:	.asciz "\x82@ "
+Str_empty_1179:	.asciz "\x82@ "
 .incbin_range "baserom/kn6000_program.rom", 0x1913B0, 0x1913C0
-Str_empty_1169:	.asciz "\x83@ "
+Str_empty_1177:	.asciz "\x83@ "
 .incbin_range "baserom/kn6000_program.rom", 0x1913C4, 0x1913D4
-Str_empty_1175:	.asciz "\x84@ "
+Str_empty_1183:	.asciz "\x84@ "
 .incbin_range "baserom/kn6000_program.rom", 0x1913D8, 0x1913E8
-Str_empty_1172:	.asciz "\x85@ "
+Str_empty_1180:	.asciz "\x85@ "
 .incbin_range "baserom/kn6000_program.rom", 0x1913EC, 0x1913FC
-Str_empty_1170:	.asciz "\x86@ "
+Str_empty_1178:	.asciz "\x86@ "
 .incbin_range "baserom/kn6000_program.rom", 0x191400, 0x191410
-Str_empty_1168:	.asciz "\x87@ "
+Str_empty_1176:	.asciz "\x87@ "
 .incbin_range "baserom/kn6000_program.rom", 0x191414, 0x191424
-Str_empty_1167:	.asciz "\x88@ "
+Str_empty_1175:	.asciz "\x88@ "
 .incbin_range "baserom/kn6000_program.rom", 0x191428, 0x1915F8
 Str_p_24:	.asciz "\x14 p"
 .incbin_range "baserom/kn6000_program.rom", 0x1915FC, 0x191604
@@ -5849,11 +6141,11 @@ Str_empty_917:	.asciz "["
 .incbin_range "baserom/kn6000_program.rom", 0x191AB2, 0x191AD8
 Str_empty_916:	.asciz "]"
 .incbin_range "baserom/kn6000_program.rom", 0x191ADA, 0x191AEC
-Str_empty_1174:	.asciz "^"
+Str_empty_1182:	.asciz "^"
 .incbin_range "baserom/kn6000_program.rom", 0x191AEE, 0x191B00
 Str_empty_915:	.asciz "_"
 .incbin_range "baserom/kn6000_program.rom", 0x191B02, 0x191B34
-Str_empty_1173:	.asciz "~"
+Str_empty_1181:	.asciz "~"
 .incbin_range "baserom/kn6000_program.rom", 0x191B36, 0x191BAC
 data_4C191BAC:
 .incbin_range "baserom/kn6000_program.rom", 0x191BAC, 0x191BC4
@@ -5873,21 +6165,21 @@ ptrs_4C193664:
 	.long	data_4C190EFC
 	.space	4, 0x00
 ptrs_4C193670:
-	.long	Str_empty_1177
+	.long	Str_empty_1185
 	.long	Str_empty_913
-	.long	Str_empty_1176
-	.long	Str_empty_1175
-	.long	Str_empty_1174
-	.long	Str_empty_1173
+	.long	Str_empty_1184
+	.long	Str_empty_1183
+	.long	Str_empty_1182
+	.long	Str_empty_1181
 	.space	4, 0x00
 ptrs_4C19368C:
-	.long	Str_empty_1172
+	.long	Str_empty_1180
 	.long	data_4C190F10
-	.long	Str_empty_1171
-	.long	Str_empty_1170
-	.long	Str_empty_1169
-	.long	Str_empty_1168
-	.long	Str_empty_1167
+	.long	Str_empty_1179
+	.long	Str_empty_1178
+	.long	Str_empty_1177
+	.long	Str_empty_1176
+	.long	Str_empty_1175
 	.space	4, 0x00
 data_4C1936AC:
 .incbin_range "baserom/kn6000_program.rom", 0x1936AC, 0x1938A4
@@ -5912,7 +6204,7 @@ data_4C1938F8:
 data_4C193900:
 .incbin_range "baserom/kn6000_program.rom", 0x193900, 0x193910
 ptrs_4C193910:
-	.long	Str_empty_1166
+	.long	Str_empty_1174
 	.long	Str_0_22
 	.space	4, 0x00
 data_4C19391C:
@@ -5943,36 +6235,36 @@ ptrs_4C193974:
 data_4C193980:
 .incbin_range "baserom/kn6000_program.rom", 0x193980, 0x193988
 ptrs_4C193988:
-	.long	Str_empty_1165
-	.long	Str_empty_1164
-	.long	Str_empty_1163
-	.long	Str_empty_1162
-	.long	Str_empty_1161
-	.long	Str_empty_1160
-	.long	Str_empty_1159
+	.long	Str_empty_1173
+	.long	Str_empty_1172
+	.long	Str_empty_1171
+	.long	Str_empty_1170
+	.long	Str_empty_1169
+	.long	Str_empty_1168
+	.long	Str_empty_1167
 	.space	4, 0x00
 ptrs_4C1939A8:
-	.long	Str_empty_1158
-	.long	Str_empty_1157
+	.long	Str_empty_1166
+	.long	Str_empty_1165
 	.space	4, 0x00
 ptrs_4C1939B4:
 	.long	Str_C_18
 	.long	Str_A_30
-	.long	Str_empty_1156
+	.long	Str_empty_1164
 	.space	4, 0x00
 ptrs_4C1939C4:
 	.long	data_4C18FBE8
 	.long	data_4C18FBFC
-	.long	Str_empty_1155
-	.long	Str_empty_1154
+	.long	Str_empty_1163
+	.long	Str_empty_1162
 .incbin_range "baserom/kn6000_program.rom", 0x1939D4, 0x193A54
 ptrs_4C193A54:
-	.long	Str_empty_1153
-	.long	Str_empty_1152
-	.long	Str_empty_1151
-	.long	Str_empty_1150
-	.long	Str_empty_1149
-	.long	Str_empty_1148
+	.long	Str_empty_1161
+	.long	Str_empty_1160
+	.long	Str_empty_1159
+	.long	Str_empty_1158
+	.long	Str_empty_1157
+	.long	Str_empty_1156
 	.space	4, 0x00
 
 Str_p_21:	.asciz "p"
@@ -5981,15 +6273,15 @@ data_4C193A78:
 .incbin_range "baserom/kn6000_program.rom", 0x193A78, 0x193AD0
 
 ptrs_4C193AD0:
-	.long	Str_empty_1147
-	.long	Str_empty_1146
-	.long	Str_empty_1145
+	.long	Str_empty_1155
+	.long	Str_empty_1154
+	.long	Str_empty_1153
 	.space	4, 0x00
 data_4C193AE0:
 .incbin_range "baserom/kn6000_program.rom", 0x193AE0, 0x193AE8
 ptrs_4C193AE8:
-	.long	Str_empty_1144
-	.long	Str_empty_1143
+	.long	Str_empty_1152
+	.long	Str_empty_1151
 	.space	4, 0x00
 data_4C193AF4:
 .incbin_range "baserom/kn6000_program.rom", 0x193AF4, 0x193AFC
@@ -6020,10 +6312,10 @@ data_4C193B4C:
 data_4C193B54:
 .incbin_range "baserom/kn6000_program.rom", 0x193B54, 0x193B5C
 ptrs_4C193B5C:
-	.long	Str_empty_1142
-	.long	Str_empty_1141
-	.long	Str_empty_1140
-	.long	Str_empty_1139
+	.long	Str_empty_1150
+	.long	Str_empty_1149
+	.long	Str_empty_1148
+	.long	Str_empty_1147
 	.space	4, 0x00
 data_4C193B70:
 .incbin_range "baserom/kn6000_program.rom", 0x193B70, 0x193B78
@@ -6257,54 +6549,359 @@ data_4C194184:
 .incbin_range "baserom/kn6000_program.rom", 0x194184, 0x19419C
 data_4C19419C:
 .incbin_range "baserom/kn6000_program.rom", 0x19419C, 0x1941A8
-data_4C1941A8:
-.incbin_range "baserom/kn6000_program.rom", 0x1941A8, 0x1941D8
-data_4C1941D8:
-.incbin_range "baserom/kn6000_program.rom", 0x1941D8, 0x194208
-data_4C194208:
-.incbin_range "baserom/kn6000_program.rom", 0x194208, 0x194238
-data_4C194238:
-.incbin_range "baserom/kn6000_program.rom", 0x194238, 0x194268
-data_4C194268:
-.incbin_range "baserom/kn6000_program.rom", 0x194268, 0x194298
-data_4C194298:
-.incbin_range "baserom/kn6000_program.rom", 0x194298, 0x1942C8
-data_4C1942C8:
-.incbin_range "baserom/kn6000_program.rom", 0x1942C8, 0x1942F8
-data_4C1942F8:
-.incbin_range "baserom/kn6000_program.rom", 0x1942F8, 0x194328
-data_4C194328:
-.incbin_range "baserom/kn6000_program.rom", 0x194328, 0x194394
-data_4C194394:
-.incbin_range "baserom/kn6000_program.rom", 0x194394, 0x1943C4
-data_4C1943C4:
-.incbin_range "baserom/kn6000_program.rom", 0x1943C4, 0x194430
-data_4C194430:
-.incbin_range "baserom/kn6000_program.rom", 0x194430, 0x194460
-data_4C194460:
-.incbin_range "baserom/kn6000_program.rom", 0x194460, 0x1944D8
+ptrs_4C1941A8:
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026114
+	.long	loc_4C026116
+	.long	loc_4C026116
+	.long	loc_4C026114
+ptrs_4C1941D8:
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261CF
+	.long	loc_4C0261D1
+	.long	loc_4C0261D1
+	.long	loc_4C0261CF
+ptrs_4C194208:
+	.long	loc_4C02628B
+	.long	loc_4C02628D
+	.long	loc_4C02628D
+	.long	loc_4C02628B
+	.long	loc_4C02628B
+	.long	loc_4C02628D
+	.long	loc_4C02628B
+	.long	loc_4C02628B
+	.long	loc_4C02628B
+	.long	loc_4C02628D
+	.long	loc_4C02628D
+	.long	loc_4C02628D
+ptrs_4C194238:
+	.long	loc_4C02639A
+	.long	loc_4C02639A
+	.long	loc_4C02639A
+	.long	loc_4C02639C
+	.long	loc_4C02639C
+	.long	loc_4C02639C
+	.long	loc_4C02639A
+	.long	loc_4C02639A
+	.long	loc_4C02639A
+	.long	loc_4C02639C
+	.long	loc_4C02639C
+	.long	loc_4C02639C
+ptrs_4C194268:
+	.long	loc_4C0264C4
+	.long	loc_4C0264C4
+	.long	loc_4C0264C4
+	.long	loc_4C0264C4
+	.long	loc_4C0264C4
+	.long	loc_4C0264C6
+	.long	loc_4C0264C6
+	.long	loc_4C0264C6
+	.long	loc_4C0264C4
+	.long	loc_4C0264C6
+	.long	loc_4C0264C6
+	.long	loc_4C0264C4
+ptrs_4C194298:
+	.long	loc_4C02654F
+	.long	loc_4C02654F
+	.long	loc_4C02654F
+	.long	loc_4C02654F
+	.long	loc_4C02654F
+	.long	loc_4C026551
+	.long	loc_4C026551
+	.long	loc_4C026551
+	.long	loc_4C02654F
+	.long	loc_4C026551
+	.long	loc_4C026551
+	.long	loc_4C02654F
+ptrs_4C1942C8:
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DA
+	.long	loc_4C0265DC
+ptrs_4C1942F8:
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+	.long	loc_4C026658
+ptrs_4C194328:
+	.long	loc_4C0266DE
+	.long	loc_4C0266EA
+	.long	loc_4C0266DE
+	.long	loc_4C0266F6
+	.long	loc_4C0266DE
+	.long	loc_4C026702
+	.long	loc_4C02670D
+	.long	loc_4C026718
+	.long	loc_4C026723
+	.long	loc_4C0266DE
+	.long	loc_4C02672E
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	func_4C0266B7_entry_La7
+	.long	loc_4C026739
+	.long	loc_4C026744
+	.long	loc_4C02674F
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	loc_4C0266F6
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	loc_4C0266DE
+	.long	loc_4C02675A
+ptrs_4C194394:
+	.long	loc_4C026D15
+	.long	loc_4C026D15
+	.long	loc_4C026D15
+	.long	loc_4C026D20
+	.long	loc_4C026D2B
+	.long	loc_4C026D15
+	.long	loc_4C026D36
+	.long	loc_4C026D36
+	.long	loc_4C026D41
+	.long	loc_4C026D4C
+	.long	func_4C026CF4_entry_L5c
+	.long	loc_4C026D15
+ptrs_4C1943C4:
+	.long	loc_4C026F3A
+	.long	loc_4C026F4A
+	.long	loc_4C026F3A
+	.long	loc_4C026F5A
+	.long	loc_4C026F6A
+	.long	loc_4C026F7A
+	.long	loc_4C026F8A
+	.long	loc_4C026F9A
+	.long	loc_4C026FAA
+	.long	loc_4C026FBA
+	.long	loc_4C026FCA
+	.long	loc_4C026FDA
+	.long	loc_4C026FEA
+	.long	loc_4C026FFA
+	.long	loc_4C02700A
+	.long	loc_4C02701A
+	.long	loc_4C02702A
+	.long	loc_4C02703A
+	.long	loc_4C02704A
+	.long	loc_4C02705A
+	.long	loc_4C02706A
+	.long	loc_4C027079
+	.long	loc_4C027088
+	.long	loc_4C027097
+	.long	loc_4C0270A6
+	.long	loc_4C0270B5
+	.long	loc_4C0270C4
+ptrs_4C194430:
+	.long	loc_4C028FF4
+	.long	func_4C028FCD_entry_Laa
+	.long	func_4C028FCD_entry_Laa
+	.long	loc_4C029005
+	.long	loc_4C029015
+	.long	loc_4C028FF4
+	.long	loc_4C029025
+	.long	loc_4C02902E
+	.long	loc_4C02903E
+	.long	loc_4C02904E
+	.long	loc_4C02905E
+	.long	loc_4C02906E
+ptrs_4C194460:
+	.long	loc_4C029631
+	.long	loc_4C029641
+	.long	loc_4C029651
+	.long	loc_4C029661
+	.long	loc_4C029671
+	.long	loc_4C029681
+	.long	loc_4C029691
+	.long	loc_4C0296A1
+	.long	loc_4C0296B1
+	.long	loc_4C0296C1
+	.long	func_4C029609_entry_L1ea
+	.long	loc_4C0296D1
+	.long	loc_4C0296E1
+	.long	loc_4C0296F1
+	.long	loc_4C029701
+	.long	loc_4C029711
+	.long	loc_4C029721
+	.long	loc_4C029731
+	.long	loc_4C029741
+	.long	loc_4C029751
+	.long	loc_4C029761
+	.long	loc_4C029771
+	.long	loc_4C029781
+	.long	loc_4C029791
+	.long	loc_4C0297A0
+	.long	loc_4C0297AF
+	.long	loc_4C0297BE
+	.long	loc_4C0297CD
+	.long	loc_4C0297DC
+	.long	loc_4C0297EB
 data_4C1944D8:
 .incbin_range "baserom/kn6000_program.rom", 0x1944D8, 0x194558
 data_4C194558:
 .incbin_range "baserom/kn6000_program.rom", 0x194558, 0x1945D8
-data_4C1945D8:
-.incbin_range "baserom/kn6000_program.rom", 0x1945D8, 0x194600
-data_4C194600:
-.incbin_range "baserom/kn6000_program.rom", 0x194600, 0x19466C
-data_4C19466C:
-.incbin_range "baserom/kn6000_program.rom", 0x19466C, 0x19469C
+ptrs_4C1945D8:
+	.long	loc_4C02B62C
+	.long	loc_4C02B63B
+	.long	loc_4C02B64A
+	.long	loc_4C02B659
+	.long	loc_4C02B667
+	.long	loc_4C02B675
+	.long	loc_4C02B683
+	.long	loc_4C02B691
+	.long	loc_4C02B69F
+	.long	loc_4C02B6AD
+ptrs_4C194600:
+	.long	loc_4C02BBAB
+	.long	loc_4C02BBBC
+	.long	loc_4C02BBCD
+	.long	loc_4C02BBDD
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	loc_4C02BBED
+	.long	loc_4C02BBFD
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	func_4C02BB84_entry_Lb2
+	.long	loc_4C02BC0D
+	.long	func_4C02BB84_entry_Lb2
+	.long	loc_4C02BC1D
+	.long	func_4C02BB84_entry_Lb2
+	.long	loc_4C02BBAB
+	.long	func_4C02BB84_entry_Lb2
+	.long	loc_4C02BC2D
+ptrs_4C19466C:
+	.long	loc_4C02C3BE
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	loc_4C02C3CF
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
+	.long	func_4C02C39D_entry_L3c
 data_4C19469C:
 .incbin_range "baserom/kn6000_program.rom", 0x19469C, 0x19489C
-data_4C19489C:
-.incbin_range "baserom/kn6000_program.rom", 0x19489C, 0x1948CC
-data_4C1948CC:
-.incbin_range "baserom/kn6000_program.rom", 0x1948CC, 0x194938
-data_4C194938:
-.incbin_range "baserom/kn6000_program.rom", 0x194938, 0x194968
-data_4C194968:
-.incbin_range "baserom/kn6000_program.rom", 0x194968, 0x194998
-data_4C194998:
-.incbin_range "baserom/kn6000_program.rom", 0x194998, 0x1949C0
+ptrs_4C19489C:
+	.long	loc_4C02CB38
+	.long	loc_4C02CB38
+	.long	loc_4C02CB38
+	.long	loc_4C02CB3D
+	.long	loc_4C02CB41
+	.long	loc_4C02CB38
+	.long	loc_4C02CB41
+	.long	loc_4C02CB3D
+	.long	loc_4C02CB3D
+	.long	loc_4C02CB3D
+	.long	loc_4C02CB41
+	.long	loc_4C02CB3D
+ptrs_4C1948CC:
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB15
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB19
+	.long	loc_4C02CB11
+	.long	loc_4C02CB1D
+	.long	loc_4C02CB11
+	.long	loc_4C02CB15
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB15
+	.long	loc_4C02CB15
+	.long	loc_4C02CB19
+	.long	loc_4C02CB19
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB15
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+	.long	loc_4C02CB11
+ptrs_4C194938:
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+	.long	loc_4C02CB70
+ptrs_4C194968:
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBEA
+	.long	loc_4C02CBEA
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+	.long	loc_4C02CBD1
+ptrs_4C194998:
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
+	.long	loc_4C02CC1B
 data_4C1949C0:
 .incbin_range "baserom/kn6000_program.rom", 0x1949C0, 0x194AC0
 data_4C194AC0:
@@ -6384,8 +6981,18 @@ data_4C195520:
 .incbin_range "baserom/kn6000_program.rom", 0x195620, 0x1956C4
 data_4C1956C4:
 .incbin_range "baserom/kn6000_program.rom", 0x1956C4, 0x1956CC
-data_4C1956CC:
-.incbin_range "baserom/kn6000_program.rom", 0x1956CC, 0x1956F4
+
+ptrs_4C1956CC:
+	.long	loc_4C03076B
+	.long	loc_4C030784
+	.long	loc_4C03079D
+	.long	loc_4C0307B5
+	.long	loc_4C0307CD
+	.long	loc_4C0307E4
+	.long	loc_4C0307FB
+	.long	loc_4C030812
+	.long	loc_4C030828
+	.long	loc_4C03083E
 data_4C1956F4:
 .incbin_range "baserom/kn6000_program.rom", 0x1956F4, 0x195704
 data_4C195704:
@@ -6400,6 +7007,7 @@ data_4C195757:
 .incbin_range "baserom/kn6000_program.rom", 0x195757, 0x19575C
 data_4C19575C:
 .incbin_range "baserom/kn6000_program.rom", 0x19575C, 0x19576C
+
 Str_empty_872:	.asciz "\xB0{"
 	.align	4, 0xFF
 Str_x_3:	.asciz "\xB0x"
@@ -6446,14 +7054,91 @@ data_4C195900:
 .incbin_range "baserom/kn6000_program.rom", 0x195900, 0x195980
 data_4C195980:
 .incbin_range "baserom/kn6000_program.rom", 0x195980, 0x195A80
-data_4C195A80:
-.incbin_range "baserom/kn6000_program.rom", 0x195A80, 0x195B7C
+
+ptrs_4C195A80:
+	.long	loc_4C034044
+	.long	loc_4C034044
+	.long	func_4C03400B_entry_L58
+	.long	loc_4C034044
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	loc_4C03404D
+	.long	loc_4C03404D
+	.long	loc_4C03404D
+	.long	loc_4C03404D
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	func_4C03400B_entry_L58
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C034056
+	.long	loc_4C03405F
+	.long	loc_4C03405F
 data_4C195B7C:
 .incbin_range "baserom/kn6000_program.rom", 0x195B7C, 0x195F7C
 data_4C195F7C:
 .incbin_range "baserom/kn6000_program.rom", 0x195F7C, 0x19637C
-data_4C19637C:
-.incbin_range "baserom/kn6000_program.rom", 0x19637C, 0x1963B8
+ptrs_4C19637C:
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036333
+	.long	loc_4C036378
+	.long	loc_4C036378
+	.long	loc_4C036378
+	.long	loc_4C036378
 data_4C1963B8:
 .incbin_range "baserom/kn6000_program.rom", 0x1963B8, 0x1963C0
 data_4C1963C0:
@@ -6467,7 +7152,9 @@ data_4C196420:
 data_4C196444:
 .incbin_range "baserom/kn6000_program.rom", 0x196444, 0x196468
 data_4C196468:
-.incbin_range "baserom/kn6000_program.rom", 0x196468, 0x196494
+.incbin_range "baserom/kn6000_program.rom", 0x196468, 0x19647C
+data_4C19647C:
+.incbin_range "baserom/kn6000_program.rom", 0x19647C, 0x196494
 data_4C196494:
 .incbin_range "baserom/kn6000_program.rom", 0x196494, 0x1964B4
 data_4C1964B4:
@@ -6478,6 +7165,7 @@ data_4C1964F4:
 .incbin_range "baserom/kn6000_program.rom", 0x1964F4, 0x196514
 data_4C196514:
 .incbin_range "baserom/kn6000_program.rom", 0x196514, 0x196534
+
 Str_P_18:	.asciz " P"
 .incbin_range "baserom/kn6000_program.rom", 0x196537, 0x196554
 Str_P_17:	.asciz "#P"
@@ -6871,7 +7559,9 @@ data_4C197C18:
 data_4C197C38:
 .incbin_range "baserom/kn6000_program.rom", 0x197C38, 0x197C4C
 data_4C197C4C:
-.incbin_range "baserom/kn6000_program.rom", 0x197C4C, 0x197CAC
+.incbin_range "baserom/kn6000_program.rom", 0x197C4C, 0x197C8C
+data_4C197C8C:
+.incbin_range "baserom/kn6000_program.rom", 0x197C8C, 0x197CAC
 data_4C197CAC:
 .incbin_range "baserom/kn6000_program.rom", 0x197CAC, 0x197CBC
 data_4C197CBC:
@@ -6884,40 +7574,329 @@ data_4C197CF8:
 .incbin_range "baserom/kn6000_program.rom", 0x197CF8, 0x197D08
 data_4C197D08:
 .incbin_range "baserom/kn6000_program.rom", 0x197D08, 0x197D18
-data_4C197D18:
-.incbin_range "baserom/kn6000_program.rom", 0x197D18, 0x197D6C
-data_4C197D6C:
-.incbin_range "baserom/kn6000_program.rom", 0x197D6C, 0x197DC0
-data_4C197DC0:
-.incbin_range "baserom/kn6000_program.rom", 0x197DC0, 0x197DF0
-data_4C197DF0:
-.incbin_range "baserom/kn6000_program.rom", 0x197DF0, 0x197E34
-data_4C197E34:
-.incbin_range "baserom/kn6000_program.rom", 0x197E34, 0x197E70
-data_4C197E70:
-.incbin_range "baserom/kn6000_program.rom", 0x197E70, 0x197EC0
+
+ptrs_4C197D18:
+	.long	loc_4C037A9F
+	.long	loc_4C037AA9
+	.long	loc_4C037AB3
+	.long	loc_4C037ABD
+	.long	loc_4C037AC7
+	.long	loc_4C037ACE
+	.long	loc_4C037ACE
+	.long	loc_4C037B22
+	.long	loc_4C037ACE
+	.long	loc_4C037ACE
+	.long	loc_4C037ACE
+	.long	loc_4C037AD1
+	.long	loc_4C037ADB
+	.long	loc_4C037AE5
+	.long	loc_4C037AEE
+	.long	loc_4C037AF7
+	.long	loc_4C037B00
+	.long	loc_4C037B09
+	.long	loc_4C037B12
+	.long	loc_4C037B1B
+	.long	loc_4C037B22
+ptrs_4C197D6C:
+	.long	loc_4C037C0C
+	.long	loc_4C037C15
+	.long	loc_4C037C1E
+	.long	loc_4C037C27
+	.long	loc_4C037C30
+	.long	loc_4C037C39
+	.long	loc_4C037C42
+	.long	loc_4C037C4B
+	.long	loc_4C037C54
+	.long	loc_4C037C5D
+	.long	loc_4C037C66
+	.long	loc_4C037C6E
+	.long	loc_4C037C76
+	.long	loc_4C037C7E
+	.long	loc_4C037C86
+	.long	loc_4C037C8E
+	.long	loc_4C037C96
+	.long	loc_4C037C9E
+	.long	loc_4C037CA6
+	.long	loc_4C037CAE
+	.long	loc_4C037CB6
+ptrs_4C197DC0:
+	.long	loc_4C03949F
+	.long	loc_4C0394A8
+	.long	loc_4C0394B0
+	.long	loc_4C0394B8
+	.long	loc_4C0394C0
+	.long	loc_4C0394C8
+	.long	loc_4C0394D0
+	.long	loc_4C0394D8
+	.long	loc_4C0394E0
+	.long	loc_4C0394E8
+	.long	loc_4C0394F0
+	.long	loc_4C0394F8
+ptrs_4C197DF0:
+	.long	loc_4C039F80
+	.long	loc_4C039F89
+	.long	loc_4C039F92
+	.long	loc_4C039F9B
+	.long	loc_4C039FA4
+	.long	loc_4C039FAD
+	.long	loc_4C039FB5
+	.long	loc_4C039FBD
+	.long	loc_4C039FC5
+	.long	loc_4C039FCD
+	.long	loc_4C039FD5
+	.long	loc_4C039FDD
+	.long	loc_4C039FE5
+	.long	loc_4C039FED
+	.long	loc_4C039FF5
+	.long	loc_4C039FFD
+	.long	loc_4C039F92
+ptrs_4C197E34:
+	.long	loc_4C03A975
+	.long	loc_4C03A97E
+	.long	loc_4C03A987
+	.long	loc_4C03A990
+	.long	loc_4C03A999
+	.long	loc_4C03A9A1
+	.long	loc_4C03A9A9
+	.long	loc_4C03A9B1
+	.long	loc_4C03A9B9
+	.long	loc_4C03A9C1
+	.long	loc_4C03A9C9
+	.long	loc_4C03A9D1
+	.long	loc_4C03A9D9
+	.long	loc_4C03A9E1
+	.long	loc_4C03A9E9
+ptrs_4C197E70:
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	func_4C03BD10_entry_L63
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
+	.long	loc_4C03BD44
 data_4C197EC0:
 .incbin_range "baserom/kn6000_program.rom", 0x197EC0, 0x197FC0
 data_4C197FC0:
 .incbin_range "baserom/kn6000_program.rom", 0x197FC0, 0x198040
 data_4C198040:
 .incbin_range "baserom/kn6000_program.rom", 0x198040, 0x198240
-data_4C198240:
-.incbin_range "baserom/kn6000_program.rom", 0x198240, 0x1982DC
-data_4C1982DC:
-.incbin_range "baserom/kn6000_program.rom", 0x1982DC, 0x1983B8
-data_4C1983B8:
-.incbin_range "baserom/kn6000_program.rom", 0x1983B8, 0x1983FC
-data_4C1983FC:
-.incbin_range "baserom/kn6000_program.rom", 0x1983FC, 0x1984BC
+ptrs_4C198240:
+	.long	loc_4C03C906
+	.long	loc_4C03C90F
+	.long	loc_4C03C918
+	.long	loc_4C03C96F
+	.long	loc_4C03C921
+	.long	loc_4C03C92A
+	.long	loc_4C03C933
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C93C
+	.long	loc_4C03C945
+	.long	loc_4C03C94E
+	.long	loc_4C03C96F
+	.long	loc_4C03C957
+	.long	loc_4C03C960
+	.long	loc_4C03C969
+ptrs_4C1982DC:
+	.long	loc_4C03C822
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C82B
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C834
+	.long	loc_4C03C83D
+	.long	loc_4C03C846
+	.long	loc_4C03C84F
+	.long	loc_4C03C858
+	.long	loc_4C03C861
+	.long	loc_4C03C86A
+	.long	loc_4C03C873
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C8E5
+	.long	loc_4C03C87C
+	.long	loc_4C03C885
+	.long	loc_4C03C88E
+	.long	loc_4C03C897
+	.long	loc_4C03C8A0
+	.long	loc_4C03C8A9
+	.long	loc_4C03C8B2
+	.long	loc_4C03C8BB
+	.long	loc_4C03C8C4
+	.long	loc_4C03C8CD
+	.long	loc_4C03C8D6
+	.long	loc_4C03C8DF
+ptrs_4C1983B8:
+	.long	loc_4C03C774
+	.long	loc_4C03C77D
+	.long	loc_4C03C786
+	.long	loc_4C03C78F
+	.long	loc_4C03C798
+	.long	loc_4C03C7A1
+	.long	loc_4C03C801
+	.long	loc_4C03C7AA
+	.long	loc_4C03C7B3
+	.long	loc_4C03C7BC
+	.long	loc_4C03C7C5
+	.long	loc_4C03C7CE
+	.long	loc_4C03C7D7
+	.long	loc_4C03C7E0
+	.long	loc_4C03C7E9
+	.long	loc_4C03C7F2
+	.long	loc_4C03C7FB
+ptrs_4C1983FC:
+	.long	loc_4C03C71C
+	.long	loc_4C03C756
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C96F
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C804
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+	.long	loc_4C03C8E8
+
 Str_9_11:	.asciz "9"
 .incbin_range "baserom/kn6000_program.rom", 0x1984BE, 0x1985BC
-data_4C1985BC:
-.incbin_range "baserom/kn6000_program.rom", 0x1985BC, 0x198638
+
+ptrs_4C1985BC:
+	.long	loc_4C03C434
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C4C1
+	.long	loc_4C03C43D
+	.long	loc_4C03C446
+	.long	loc_4C03C44F
+	.long	loc_4C03C458
+	.long	loc_4C03C461
+	.long	loc_4C03C46A
+	.long	loc_4C03C473
+	.long	loc_4C03C47C
+	.long	loc_4C03C485
+	.long	loc_4C03C48E
+	.long	loc_4C03C497
+	.long	loc_4C03C4A0
+	.long	loc_4C03C4A9
+	.long	loc_4C03C4B2
+	.long	loc_4C03C4BB
 data_4C198638:
 .incbin_range "baserom/kn6000_program.rom", 0x198638, 0x198738
 data_4C198738:
 .incbin_range "baserom/kn6000_program.rom", 0x198738, 0x1987B8
+
 Str_IK_5:	.asciz "IK "
 .incbin_range "baserom/kn6000_program.rom", 0x1987BC, 0x1987C8
 data_4C1987C8:
@@ -7036,8 +8015,17 @@ data_4C1999CC:
 .incbin_range "baserom/kn6000_program.rom", 0x1999CC, 0x199A5C
 data_4C199A5C:
 .incbin_range "baserom/kn6000_program.rom", 0x199A5C, 0x199AEC
-data_4C199AEC:
-.incbin_range "baserom/kn6000_program.rom", 0x199AEC, 0x199B10
+
+ptrs_4C199AEC:
+	.long	loc_4C0464BF
+	.long	loc_4C0464D5
+	.long	loc_4C0464EB
+	.long	loc_4C046501
+	.long	loc_4C046517
+	.long	loc_4C04652D
+	.long	loc_4C046543
+	.long	loc_4C046559
+	.long	loc_4C04656F
 data_4C199B10:
 	.space	2, 0x00
 data_4C199B12:
@@ -7046,16 +8034,98 @@ data_4C199B3C:
 .incbin_range "baserom/kn6000_program.rom", 0x199B3C, 0x199B40
 data_4C199B40:
 .incbin_range "baserom/kn6000_program.rom", 0x199B40, 0x199B44
-data_4C199B44:
-.incbin_range "baserom/kn6000_program.rom", 0x199B44, 0x199B8C
-data_4C199B8C:
-.incbin_range "baserom/kn6000_program.rom", 0x199B8C, 0x199BD4
-data_4C199BD4:
-.incbin_range "baserom/kn6000_program.rom", 0x199BD4, 0x199C1C
+ptrs_4C199B44:
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+	.long	loc_4C047351
+ptrs_4C199B8C:
+	.long	loc_4C047387
+	.long	loc_4C04739F
+	.long	loc_4C0473B8
+	.long	loc_4C0473D1
+	.long	loc_4C0473EA
+	.long	loc_4C04744E
+	.long	loc_4C047466
+	.long	loc_4C04747E
+	.long	loc_4C047496
+	.long	loc_4C0474AE
+	.long	loc_4C0474C5
+	.long	loc_4C0474DC
+	.long	loc_4C0474F3
+	.long	loc_4C04741C
+	.long	loc_4C047435
+	.long	loc_4C04750A
+	.long	loc_4C047403
+	.long	loc_4C047521
+ptrs_4C199BD4:
+	.long	loc_4C047586
+	.long	loc_4C047586
+	.long	loc_4C047586
+	.long	loc_4C047586
+	.long	loc_4C047586
+	.long	loc_4C047589
+	.long	loc_4C0475B0
+	.long	loc_4C0475EC
+	.long	loc_4C047628
+	.long	loc_4C047664
+	.long	loc_4C0476A0
+	.long	loc_4C0476DC
+	.long	loc_4C047718
+	.long	loc_4C047586
+	.long	loc_4C047586
+	.long	loc_4C047753
+	.long	loc_4C047586
+	.long	loc_4C04778D
 data_4C199C1C:
 .incbin_range "baserom/kn6000_program.rom", 0x199C1C, 0x199C9C
-data_4C199C9C:
-.incbin_range "baserom/kn6000_program.rom", 0x199C9C, 0x199D1C
+ptrs_4C199C9C:
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C047851
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	loc_4C0479C8
+	.long	PanelCtrlLatch00
+	.long	func_4C047895
+	.long	func_4C0478C6
+	.long	PanelCtrlLatch30
+	.long	func_4C047929
+	.long	func_4C04795E
+	.long	func_4C047993
+	.long	loc_4C0479C8
 data_4C199D1C:
 .incbin_range "baserom/kn6000_program.rom", 0x199D1C, 0x199E1C
 data_4C199E1C:
@@ -7069,27 +8139,117 @@ data_4C19A09C:
 data_4C19A11C:
 .incbin_range "baserom/kn6000_program.rom", 0x19A11C, 0x19A19C
 data_4C19A19C:
-.incbin_range "baserom/kn6000_program.rom", 0x19A19C, 0x19A41C
-data_4C19A41C:
-.incbin_range "baserom/kn6000_program.rom", 0x19A41C, 0x19A46C
+.incbin_range "baserom/kn6000_program.rom", 0x19A19C, 0x19A21C
+
+Str_empty_1146:	.asciz "@"
+.incbin_range "baserom/kn6000_program.rom", 0x19A21E, 0x19A41C
+
+ptrs_4C19A41C:
+	.long	loc_4C048E0A
+	.long	loc_4C048E0A
+	.long	loc_4C048E0A
+	.long	loc_4C048E0A
+	.long	loc_4C048E0A
+	.long	loc_4C048E0A
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048ECB
+	.long	loc_4C048E7C
+	.long	loc_4C048E7C
+	.long	loc_4C048E7C
+	.long	loc_4C048E7C
 data_4C19A46C:
 .incbin_range "baserom/kn6000_program.rom", 0x19A46C, 0x19A66C
 data_4C19A66C:
 .incbin_range "baserom/kn6000_program.rom", 0x19A66C, 0x19A76C
 data_4C19A76C:
 .incbin_range "baserom/kn6000_program.rom", 0x19A76C, 0x19A7EC
-data_4C19A7EC:
-.incbin_range "baserom/kn6000_program.rom", 0x19A7EC, 0x19A8B0
+ptrs_4C19A7EC:
+	.long	loc_4C048706
+	.long	loc_4C048716
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C048726
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C048736
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C048746
+	.long	loc_4C048756
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C048766
+	.long	loc_4C04877A
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C04878F
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C04879F
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C0487AF
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C0487BF
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C0487CF
+	.long	loc_4C0487F4
+	.long	loc_4C048833
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	func_4C0484C7_entry_L3e7
+	.long	loc_4C0488A3
 data_4C19A8B0:
 .incbin_range "baserom/kn6000_program.rom", 0x19A8B0, 0x19A930
 data_4C19A930:
 .incbin_range "baserom/kn6000_program.rom", 0x19A930, 0x19A9B0
-data_4C19A9B0:
-.incbin_range "baserom/kn6000_program.rom", 0x19A9B0, 0x19A9D4
+ptrs_4C19A9B0:
+	.long	loc_4C04A602
+	.long	loc_4C04A64E
+	.long	loc_4C04A69A
+	.long	loc_4C04A6E6
+	.long	loc_4C04A732
+	.long	loc_4C04A77E
+	.long	loc_4C04A7CA
+	.long	loc_4C04A816
+	.long	loc_4C04A860
 data_4C19A9D4:
 .incbin_range "baserom/kn6000_program.rom", 0x19A9D4, 0x19AA54
-data_4C19AA54:
-.incbin_range "baserom/kn6000_program.rom", 0x19AA54, 0x19AA84
+ptrs_4C19AA54:
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
+	.long	func_4C04B437_L1a
+	.long	func_4C04B437_L1a
+	.long	loc_4C04B44D
+	.long	loc_4C04B44D
 data_4C19AA84:
 .incbin_range "baserom/kn6000_program.rom", 0x19AA84, 0x19AB04
 data_4C19AB04:
@@ -7112,8 +8272,32 @@ data_4C19B2AC:
 .incbin_range "baserom/kn6000_program.rom", 0x19B2AC, 0x19B30C
 data_4C19B30C:
 .incbin_range "baserom/kn6000_program.rom", 0x19B30C, 0x19B334
-data_4C19B334:
-.incbin_range "baserom/kn6000_program.rom", 0x19B334, 0x19B394
+ptrs_4C19B334:
+	.long	loc_4C04D24B
+	.long	loc_4C04D253
+	.long	loc_4C04D258
+	.long	loc_4C04D258
+	.long	loc_4C04D25B
+	.long	loc_4C04D26B
+	.long	loc_4C04D27B
+	.long	loc_4C04D27B
+	.long	loc_4C04D2AC
+	.long	func_4C04D22D_La7
+	.long	func_4C04D22D_La7
+	.long	func_4C04D22D_La7
+	.long	func_4C04D22D_La7
+	.long	func_4C04D22D_La7
+	.long	func_4C04D22D_La7
+	.long	func_4C04D22D_La7
+	.long	loc_4C04D2AE
+	.long	loc_4C04D2AE
+	.long	loc_4C04D2B4
+	.long	loc_4C04D2BB
+	.long	loc_4C04D2C2
+	.long	loc_4C04D2C2
+	.long	loc_4C04D2D0
+	.long	loc_4C04D2D0
+
 Str_0_p_3:	.asciz "0 p"
 .incbin_range "baserom/kn6000_program.rom", 0x19B398, 0x19B400
 Str_0_p_2:	.asciz "0 p"
@@ -7214,10 +8398,65 @@ data_4C19BF34:
 .incbin_range "baserom/kn6000_program.rom", 0x19BF74, 0x19BF77
 	.space	69, 0xFF
 .incbin_range "baserom/kn6000_program.rom", 0x19BFBC, 0x19C034
-data_4C19C034:
-.incbin_range "baserom/kn6000_program.rom", 0x19C034, 0x19C0E0
-data_4C19C0E0:
-.incbin_range "baserom/kn6000_program.rom", 0x19C0E0, 0x19C114
+
+ptrs_4C19C034:
+	.long	loc_4C04E25A
+	.long	func_4C04E26B
+	.long	loc_4C04E2AB
+	.long	loc_4C04E2BC
+	.long	loc_4C04E2CD
+	.long	loc_4C04E2DE
+	.long	loc_4C04E2EF
+	.long	loc_4C04E300
+	.long	loc_4C04E311
+	.long	loc_4C04E322
+	.long	loc_4C04E333
+	.long	loc_4C04E344
+	.long	loc_4C04E355
+	.long	loc_4C04E366
+	.long	loc_4C04E377
+	.long	loc_4C04E388
+	.long	loc_4C04E399
+	.long	loc_4C04E3AA
+	.long	loc_4C04E3BB
+	.long	loc_4C04E3CC
+	.long	loc_4C04E3DD
+	.long	loc_4C04E3EE
+	.long	loc_4C04E3FF
+	.long	loc_4C04E410
+	.long	loc_4C04E421
+	.long	loc_4C04E432
+	.long	loc_4C04E443
+	.long	loc_4C04E454
+	.long	loc_4C04E465
+	.long	loc_4C04E476
+	.long	loc_4C04E487
+	.long	loc_4C04E498
+	.long	loc_4C04E4A9
+	.long	loc_4C04E4BA
+	.long	loc_4C04E4CB
+	.long	loc_4C04E4DC
+	.long	loc_4C04E4ED
+	.long	loc_4C04E4FE
+	.long	loc_4C04E50F
+	.long	loc_4C04E520
+	.long	loc_4C04E531
+	.long	loc_4C04E542
+	.long	loc_4C04E553
+ptrs_4C19C0E0:
+	.long	loc_4C04D402
+	.long	loc_4C04D40A
+	.long	loc_4C04D412
+	.long	loc_4C04D41A
+	.long	loc_4C04D42A
+	.long	loc_4C04D432
+	.long	loc_4C04D43A
+	.long	loc_4C04D442
+	.long	loc_4C04D44A
+	.long	loc_4C04D452
+	.long	func_4C04D3EE_L6c
+	.long	func_4C04D3EE_L6c
+	.long	loc_4C04D422
 data_4C19C114:
 .incbin_range "baserom/kn6000_program.rom", 0x19C114, 0x19C194
 data_4C19C194:
@@ -7246,22 +8485,77 @@ data_4C19C418:
 .incbin_range "baserom/kn6000_program.rom", 0x19C418, 0x19C498
 data_4C19C498:
 .incbin_range "baserom/kn6000_program.rom", 0x19C498, 0x19C4AC
-data_4C19C4AC:
-.incbin_range "baserom/kn6000_program.rom", 0x19C4AC, 0x19C4EC
+ptrs_4C19C4AC:
+	.long	loc_4C04F2F2
+	.long	loc_4C04F30A
+	.long	loc_4C04F322
+	.long	loc_4C04F33A
+	.long	loc_4C04F352
+	.long	loc_4C04F36A
+	.long	loc_4C04F382
+	.long	loc_4C04F39A
+	.long	loc_4C04F3B2
+	.long	loc_4C04F3CA
+	.long	loc_4C04F3E2
+	.long	loc_4C04F3F9
+	.long	loc_4C04F410
+	.long	loc_4C04F427
+	.long	loc_4C04F43E
+	.long	loc_4C04F455
+
 Str_empty_858:	.asciz "_\xDF?"
 .incbin_range "baserom/kn6000_program.rom", 0x19C4F0, 0x19C56C
 Str_empty_857:	.asciz "."
 .incbin_range "baserom/kn6000_program.rom", 0x19C56E, 0x19C5EC
-data_4C19C5EC:
-.incbin_range "baserom/kn6000_program.rom", 0x19C5EC, 0x19C620
-data_4C19C620:
-.incbin_range "baserom/kn6000_program.rom", 0x19C620, 0x19C654
+
+ptrs_4C19C5EC:
+	.long	loc_4C0503AD
+	.long	loc_4C0503B5
+	.long	loc_4C0503BD
+	.long	loc_4C0503C4
+	.long	loc_4C0503CB
+	.long	loc_4C0503D2
+	.long	loc_4C0503D9
+	.long	loc_4C0503E0
+	.long	loc_4C0503E7
+	.long	loc_4C0503EE
+	.long	loc_4C0503F5
+	.long	loc_4C0503FC
+	.long	loc_4C050403
+ptrs_4C19C620:
+	.long	loc_4C05042A
+	.long	loc_4C050432
+	.long	loc_4C05043A
+	.long	loc_4C050441
+	.long	loc_4C050448
+	.long	loc_4C05044F
+	.long	loc_4C050456
+	.long	loc_4C05045D
+	.long	loc_4C050464
+	.long	loc_4C05046B
+	.long	loc_4C050472
+	.long	loc_4C050479
+	.long	loc_4C050480
 data_4C19C654:
 .incbin_range "baserom/kn6000_program.rom", 0x19C654, 0x19C65C
 data_4C19C65C:
 .incbin_range "baserom/kn6000_program.rom", 0x19C65C, 0x19C6DC
-data_4C19C6DC:
-.incbin_range "baserom/kn6000_program.rom", 0x19C6DC, 0x19C714
+ptrs_4C19C6DC:
+	.long	loc_4C051C0D
+	.long	loc_4C051C0D
+	.long	loc_4C051C0D
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+	.long	loc_4C051C34
+	.long	func_4C051B09_entry_L14d
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+	.long	loc_4C051BFE
+
 Str_After_pressing_the_HELP_button_press_any:	.asciz "After pressing the HELP button, press any button on the panel and the screen will give you information about the button's use.Press the HELP button again, or the EXIT button to turn off the HELP function.~0dUse the buttons at the bottom of this screen to change the Help language and press OK.~0d"
 Str_Dr_cken_Sie_eine_beliebige_Taste_am_KN_u:	.asciz "Dr\xFCcken Sie eine beliebige Taste am KN und das Display gibt Ihnen Informationen \xFCber die Funktion der gew\xE4hlten Taste. Mit den Tasten HELP oder EXIT schalten Sie die HELP Funktion wieder aus.~0dVerwenden Sie die Tasten unter dem Display, um die gew\xFCnschte Sprache auszuw\xE4hlen und best\xE4tigen Sie mit OK.~0d"
 Str_Apr_s_avoir_mis_en_fonction_le_bouton_HE:	.asciz "Apr\xE8s avoir mis en fonction le bouton HELP, si vous pressez n'importe quel bouton du panneau de contr\xF4le, l'affichage vous informe sur la fonction assign\xE9e \xE0 celui -ci. Pour d\xE9sactiver cette aide en ligne, il vous suffit de presser \xE0 nouveau le bouton HELP ou EXIT.~0dA l'aide des boutons situ\xE9s en bas de l'affichage, vous pouvez s\xE9lectionner l'une des langues disponibles. Pour valider votre choix pressez OK.~0d"
@@ -7470,27 +8764,77 @@ data_4C19FF04:
 .incbin_range "baserom/kn6000_program.rom", 0x19FF04, 0x1A0304
 data_4C1A0304:
 .incbin_range "baserom/kn6000_program.rom", 0x1A0304, 0x1A0384
-data_4C1A0384:
-.incbin_range "baserom/kn6000_program.rom", 0x1A0384, 0x1A0450
+ptrs_4C1A0384:
+	.long	loc_4C053426
+	.long	loc_4C05342F
+	.long	loc_4C05343A
+	.long	loc_4C053445
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C053450
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C05345B
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C053466
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C053471
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C05347C
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C053487
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	HelpLang1Check_L1ac
+	.long	loc_4C053492
 ptrs_4C1A0450:
-	.long	data_4C369228
-	.long	data_4C369938
-	.long	data_4C39A7E0
-	.long	data_4C37EEE0
-	.long	data_4C359714
-	.long	data_4C32BDF4
-	.long	data_4C359724
-	.long	data_4C32BE14
-	.long	data_4C32BE04
-	.long	data_4C3596F4
-	.long	data_4C36160C
-	.long	data_4C36161C
-	.long	data_4C359958
-	.long	data_4C359968
-	.long	data_4C359704
-	.long	data_4C385064
-	.long	data_4C3855C4
-	.long	data_4C383028
+	.long	ptrs_4C369228
+	.long	ptrs_4C369938
+	.long	ptrs_4C39A7E0
+	.long	ptrs_4C37EEE0
+	.long	ptrs_4C359714
+	.long	ptrs_4C32BDE4+16
+	.long	ptrs_4C359724
+	.long	ptrs_4C32BDE4+48
+	.long	ptrs_4C32BDE4+32
+	.long	ptrs_4C3596F4
+	.long	ptrs_4C36160C
+	.long	ptrs_4C36161C
+	.long	ptrs_4C359958
+	.long	ptrs_4C359968
+	.long	ptrs_4C359704
+	.long	ptrs_4C385064
+	.long	ptrs_4C3855C0+4
+	.long	ptrs_4C382F8C+156
 	.space	4, 0x00
 data_4C1A049C:
 .incbin_range "baserom/kn6000_program.rom", 0x1A049C, 0x1A04AC
@@ -7559,7 +8903,9 @@ data_4C1A25C8:
 ptrs_4C1A25F4:
 	.long	func_4C05DA99
 	.long	func_4C05D96D
-.incbin_range "baserom/kn6000_program.rom", 0x1A25FC, 0x1A2614
+	.long	loc_4C05E1B0
+	.long	func_4C05E4BA
+	.space	16, 0x00
 data_4C1A2614:
 .incbin_range "baserom/kn6000_program.rom", 0x1A2614, 0x1A261C
 data_4C1A261C:
@@ -7573,7 +8919,9 @@ data_4C1A2634:
 ptrs_4C1A26B4:
 	.long	func_4C0543BA
 	.long	func_4C054345
-.incbin_range "baserom/kn6000_program.rom", 0x1A26BC, 0x1A26D4
+	.long	loc_4C05468F
+	.long	func_4C054743
+	.space	16, 0x00
 data_4C1A26D4:
 .incbin_range "baserom/kn6000_program.rom", 0x1A26D4, 0x1A26E0
 data_4C1A26E0:
@@ -11823,7 +13171,7 @@ Str_10k:	.asciz "  10k"
 Str_12_5k:	.asciz "12.5k"
 Str_16k:	.asciz "  16k"
 Str_20k:	.asciz "  20k"
-Str_empty_1138:	.asciz "     "
+Str_empty_1145:	.asciz "     "
 
 ptrs_4C1B62FC:
 	.long	Str_20
@@ -11857,7 +13205,7 @@ ptrs_4C1B62FC:
 	.long	Str_12_5k
 	.long	Str_16k
 	.long	Str_20k
-	.long	Str_empty_1138
+	.long	Str_empty_1145
 
 Str_empty_844:	.asciz "  -- "
 	.align	4, 0xFF
@@ -12006,13 +13354,13 @@ ptrs_4C1B6D54:
 Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
 	.align	4, 0xFF
 Str_empty_840:	.asciz "           "
-Str_empty_1137:	.asciz "        "
+Str_empty_1144:	.asciz "        "
 Str_FADE_IN_4:	.asciz "FADE IN "
 Str_FADE_OUT_4:	.asciz "FADE OUT"
 	.align	4, 0xFF
 
 ptrs_4C1B6DB8:
-	.long	Str_empty_1137
+	.long	Str_empty_1144
 	.long	Str_FADE_IN_4
 	.long	Str_FADE_OUT_4
 
@@ -12126,7 +13474,7 @@ ptrs_4C1B7040:
 Str_BANK_s_s:	.asciz "BANK %s: %s"
 Str_1d_s_2:	.asciz "%1d : %s"
 	.align	4, 0xFF
-Str_OFF_140:	.asciz "      OFF       "
+Str_OFF_141:	.asciz "      OFF       "
 Str_SOFT_PEDAL_2:	.asciz "   SOFT PEDAL   "
 Str_SOSTENUTO_PEDAL_2:	.asciz "SOSTENUTO PEDAL "
 Str_P_MEM_INCREMENT_4:	.asciz "P.MEM INCREMENT "
@@ -12181,12 +13529,12 @@ Str_BANK_s:	.asciz "BANK: %s"
 	.align	4, 0xFF
 Str_1d_s:	.asciz "%1d : %s"
 	.align	4, 0xFF
-Str_OFF_133:	.asciz "OFF"
-Str_ON_94:	.asciz "ON "
+Str_OFF_136:	.asciz "OFF"
+Str_ON_96:	.asciz "ON "
 
 ptrs_4C1B7550:
-	.long	Str_OFF_133
-	.long	Str_ON_94
+	.long	Str_OFF_136
+	.long	Str_ON_96
 .incbin_range "baserom/kn6000_program.rom", 0x1B7558, 0x1B756A
 
 Str_SOLO_LOAD:	.asciz "SOLO LOAD        "
@@ -12322,21 +13670,21 @@ ptrs_4C1B7880:
 	.long	Str_APC_8
 	.long	Str_CONTROL_9
 
-Str_empty_1136:	.asciz "     "
+Str_empty_1143:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7916, 0x1B7922
-Str_empty_1135:	.asciz "  \x95  "
+Str_empty_1142:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7928, 0x1B7934
-Str_empty_1134:	.asciz "  \x95  "
+Str_empty_1141:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B793A, 0x1B7946
-Str_empty_1133:	.asciz "  \x95  "
+Str_empty_1140:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B794C, 0x1B7958
-Str_empty_1132:	.asciz "  \x95  "
+Str_empty_1139:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B795E, 0x1B796A
-Str_empty_1131:	.asciz "     "
+Str_empty_1138:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7970, 0x1B797C
-Str_empty_1130:	.asciz "  \x95  "
+Str_empty_1137:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7982, 0x1B798E
-Str_empty_1129:	.asciz "     "
+Str_empty_1136:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7994, 0x1B79A0
 data_4C1B79A0:
 .incbin_range "baserom/kn6000_program.rom", 0x1B79A0, 0x1B79A6
@@ -12346,21 +13694,21 @@ data_4C1B79B2:
 .incbin_range "baserom/kn6000_program.rom", 0x1B79B2, 0x1B79B8
 Str_BASS2:	.asciz "BASS2"
 .incbin_range "baserom/kn6000_program.rom", 0x1B79BE, 0x1B79C4
-Str_empty_1128:	.asciz "     "
+Str_empty_1135:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B79CA, 0x1B79D6
-Str_empty_1127:	.asciz "     "
+Str_empty_1134:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B79DC, 0x1B79E8
-Str_empty_1126:	.asciz "  \x95  "
+Str_empty_1133:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B79EE, 0x1B79FA
-Str_empty_1125:	.asciz "  \x95  "
+Str_empty_1132:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A00, 0x1B7A0C
-Str_empty_1124:	.asciz "  \x95  "
+Str_empty_1131:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A12, 0x1B7A1E
-Str_empty_1123:	.asciz "     "
+Str_empty_1130:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A24, 0x1B7A30
-Str_empty_1122:	.asciz "  \x95  "
+Str_empty_1129:	.asciz "  \x95  "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A36, 0x1B7A42
-Str_empty_1121:	.asciz "     "
+Str_empty_1128:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A48, 0x1B7A54
 data_4C1B7A54:
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A54, 0x1B7A5A
@@ -12370,29 +13718,38 @@ data_4C1B7A66:
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A66, 0x1B7A6C
 Str_BASS2_2:	.asciz "BASS2"
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A72, 0x1B7A78
-Str_empty_1120:	.asciz "     "
+Str_empty_1127:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A7E, 0x1B7A8A
-Str_empty_1119:	.asciz "     "
+Str_empty_1126:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7A90, 0x1B7A9C
-Str_empty_1118:	.asciz "     "
+Str_empty_1125:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7AA2, 0x1B7AAE
-Str_empty_1117:	.asciz "     "
+Str_empty_1124:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7AB4, 0x1B7AC0
-Str_empty_1116:	.asciz "     "
+Str_empty_1123:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7AC6, 0x1B7AD2
-Str_empty_1115:	.asciz "     "
+Str_empty_1122:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7AD8, 0x1B7AE4
-Str_empty_1114:	.asciz "     "
+Str_empty_1121:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7AEA, 0x1B7AF6
-Str_empty_1113:	.asciz "     "
+Str_empty_1120:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7AFC, 0x1B7B08
-Str_empty_1112:	.asciz "     "
+Str_empty_1119:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7B0E, 0x1B7B1A
-Str_empty_1111:	.asciz "     "
+Str_empty_1118:	.asciz "     "
 .incbin_range "baserom/kn6000_program.rom", 0x1B7B20, 0x1B7B2C
 
 ptrs_4C1B7B2C:
+	.long	Str_empty_1143
+	.long	Str_empty_1142
+	.long	Str_empty_1141
+	.long	Str_empty_1140
+	.long	Str_empty_1139
+	.long	Str_empty_1138
+	.long	Str_empty_1137
 	.long	Str_empty_1136
+	.long	data_4C1B79A0
+	.long	data_4C1B79B2
 	.long	Str_empty_1135
 	.long	Str_empty_1134
 	.long	Str_empty_1133
@@ -12400,9 +13757,9 @@ ptrs_4C1B7B2C:
 	.long	Str_empty_1131
 	.long	Str_empty_1130
 	.long	Str_empty_1129
-	.long	data_4C1B79A0
-	.long	data_4C1B79B2
 	.long	Str_empty_1128
+	.long	data_4C1B7A54
+	.long	data_4C1B7A66
 	.long	Str_empty_1127
 	.long	Str_empty_1126
 	.long	Str_empty_1125
@@ -12410,18 +13767,9 @@ ptrs_4C1B7B2C:
 	.long	Str_empty_1123
 	.long	Str_empty_1122
 	.long	Str_empty_1121
-	.long	data_4C1B7A54
-	.long	data_4C1B7A66
 	.long	Str_empty_1120
 	.long	Str_empty_1119
 	.long	Str_empty_1118
-	.long	Str_empty_1117
-	.long	Str_empty_1116
-	.long	Str_empty_1115
-	.long	Str_empty_1114
-	.long	Str_empty_1113
-	.long	Str_empty_1112
-	.long	Str_empty_1111
 
 Str_GERMAN_7:	.asciz "GERMAN"
 Str_ITALIAN:	.asciz "ITALIAN"
@@ -12926,7 +14274,7 @@ Str_ATTACK_TIME_5:	.asciz "ATTACK TIME"
 Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn6000_program.rom", 0x1B8AC2, 0x1B8AC4
-Str_empty_1110:	.asciz "%"
+Str_empty_1117:	.asciz "%"
 .incbin_range "baserom/kn6000_program.rom", 0x1B8AC6, 0x1B8B71
 Str_VIBRATO_DEPTH_4:	.asciz "VIBRATO DEPTH"
 Str_VIBRATO_DELAY_4:	.asciz "VIBRATO DELAY"
@@ -12937,14 +14285,14 @@ Str_ATTACK_TIME_6:	.asciz "ATTACK TIME"
 Str_DECAY_TIME_3:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_7:	.asciz "RELEASE TIME"
 .incbin_range "baserom/kn6000_program.rom", 0x1B8BCE, 0x1B8BD0
-Str_empty_1109:	.asciz "%"
+Str_empty_1116:	.asciz "%"
 .incbin_range "baserom/kn6000_program.rom", 0x1B8BD2, 0x1B8C70
 
 ptrs_4C1B8C70:
 	.long	data_4C1B864C
-	.long	Str_empty_1110
+	.long	Str_empty_1117
 	.long	data_4C1B88C8
-	.long	Str_empty_1109
+	.long	Str_empty_1116
 data_4C1B8C80:
 .incbin_range "baserom/kn6000_program.rom", 0x1B8C80, 0x1B8D00
 ptrs_4C1B8D00:
@@ -14138,20 +15486,20 @@ Str_MUTE_KEYS_ON:	.asciz "  MUTE KEYS : ON  "
 Str_MUTE_KEYS_OFF:	.asciz "  MUTE KEYS : OFF "
 	.align	4, 0xFF
 Str_NX_SOUND_ON:	.asciz "   NX SOUND ON    "
-Str_empty_1108:	.asciz "        --        "
+Str_empty_1115:	.asciz "        --        "
 Str_GM_LEVEL2_ON:	.asciz "   GM LEVEL2 ON   "
-Str_empty_1107:	.asciz "        --        "
-Str_empty_1106:	.asciz "        --        "
-Str_empty_1105:	.asciz "        --        "
+Str_empty_1114:	.asciz "        --        "
+Str_empty_1113:	.asciz "        --        "
+Str_empty_1112:	.asciz "        --        "
 	.align	4, 0xFF
 
 ptrs_4C1C7084:
 	.long	Str_NX_SOUND_ON
-	.long	Str_empty_1108
+	.long	Str_empty_1115
 	.long	Str_GM_LEVEL2_ON
-	.long	Str_empty_1107
-	.long	Str_empty_1106
-	.long	Str_empty_1105
+	.long	Str_empty_1114
+	.long	Str_empty_1113
+	.long	Str_empty_1112
 data_4C1C709C:
 .incbin_range "baserom/kn6000_program.rom", 0x1C709C, 0x1C70A0
 
@@ -14237,8 +15585,19 @@ data_4C1C83A8:
 .incbin_range "baserom/kn6000_program.rom", 0x1C83A8, 0x1C8428
 data_4C1C8428:
 .incbin_range "baserom/kn6000_program.rom", 0x1C8428, 0x1C84A8
-data_4C1C84A8:
-.incbin_range "baserom/kn6000_program.rom", 0x1C84A8, 0x1C84D0
+
+ptrs_4C1C84A8:
+	.long	loc_4C07B830
+	.long	loc_4C07B83E
+	.long	loc_4C07B84C
+	.long	loc_4C07B85B
+	.long	loc_4C07B86B
+	.long	loc_4C07B87B
+	.long	loc_4C07B895
+	.long	loc_4C07B8A5
+	.long	loc_4C07B8B2
+	.long	loc_4C07B8BE
+
 Str_WRONG_SW_NUMBER_Sound_Name_ErrorSName_Er:	.asciz "WRONG SW NUMBER!Sound Name ErrorSName Error!!\xFF\xFF\xFF\xA0\xAC\xB8\xC4\xD0\xDC\xE8\xF4"
 .incbin_range "baserom/kn6000_program.rom", 0x1C8509, 0x1C8510
 data_4C1C8510:
@@ -14283,15 +15642,19 @@ Str_House_Shot:	.asciz "   House Shot   "
 data_4C1C8FE8:
 .incbin_range "baserom/kn6000_program.rom", 0x1C8FE8, 0x1C8FEC
 data_4C1C8FEC:
-.incbin_range "baserom/kn6000_program.rom", 0x1C8FEC, 0x1C907A
-Str_d_dPd:	.asciz "d<dPd(\n"
-.incbin_range "baserom/kn6000_program.rom", 0x1C9082, 0x1C90A3
+.incbin_range "baserom/kn6000_program.rom", 0x1C8FEC, 0x1C90A3
 	.space	243, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x1C9196, 0x1C9198
 Str_empty_786:	.asciz ">"
 .incbin_range "baserom/kn6000_program.rom", 0x1C919A, 0x1C9218
 data_4C1C9218:
-.incbin_range "baserom/kn6000_program.rom", 0x1C9218, 0x1C9250
+.incbin_range "baserom/kn6000_program.rom", 0x1C9218, 0x1C922C
+data_4C1C922C:
+.incbin_range "baserom/kn6000_program.rom", 0x1C922C, 0x1C9238
+data_4C1C9238:
+	.space	12, 0x00
+data_4C1C9244:
+.incbin_range "baserom/kn6000_program.rom", 0x1C9244, 0x1C9250
 data_4C1C9250:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9250, 0x1C9260
 data_4C1C9260:
@@ -14324,16 +15687,190 @@ data_4C1C9348:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9348, 0x1C9358
 data_4C1C9358:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9358, 0x1C937C
-data_4C1C937C:
-.incbin_range "baserom/kn6000_program.rom", 0x1C937C, 0x1C9434
-data_4C1C9434:
-.incbin_range "baserom/kn6000_program.rom", 0x1C9434, 0x1C94EC
-data_4C1C94EC:
-.incbin_range "baserom/kn6000_program.rom", 0x1C94EC, 0x1C953C
+
+ptrs_4C1C937C:
+	.long	loc_4C084814
+	.long	loc_4C08483F
+	.long	loc_4C08486A
+	.long	loc_4C084895
+	.long	loc_4C0848C2
+	.long	loc_4C0848EE
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C08491B
+	.long	loc_4C08496B
+	.long	loc_4C0849AF
+	.long	loc_4C0849AF
+	.long	loc_4C0849AF
+	.long	loc_4C0849AF
+	.long	loc_4C084A9A
+	.long	loc_4C084A9A
+	.long	loc_4C084A23
+ptrs_4C1C9434:
+	.long	loc_4C084ACB
+	.long	loc_4C084B1F
+	.long	loc_4C084B73
+	.long	loc_4C084BC7
+	.long	loc_4C084C1B
+	.long	loc_4C084C6F
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084CB0
+	.long	loc_4C084D54
+	.long	loc_4C084DA4
+	.long	loc_4C084DA4
+	.long	loc_4C084DA4
+	.long	loc_4C084DA4
+	.long	loc_4C084EF2
+	.long	loc_4C084EF2
+	.long	loc_4C084E4F
+ptrs_4C1C94EC:
+	.long	loc_4C085813
+	.long	loc_4C08581D
+	.long	loc_4C085827
+	.long	loc_4C085831
+	.long	loc_4C08583B
+	.long	loc_4C085845
+	.long	func_4C085763_entry_L1d4
+	.long	func_4C085763_entry_L1d4
+	.long	loc_4C08584F
+	.long	loc_4C085861
+	.long	loc_4C085873
+	.long	loc_4C085885
+	.long	loc_4C085897
+	.long	loc_4C0858A9
+	.long	func_4C085763_entry_L1d4
+	.long	func_4C085763_entry_L1d4
+	.long	loc_4C0858BB
+	.long	loc_4C0858DA
+	.long	loc_4C0858FB
+	.long	loc_4C08591B
 data_4C1C953C:
 .incbin_range "baserom/kn6000_program.rom", 0x1C953C, 0x1C993C
-data_4C1C993C:
-.incbin_range "baserom/kn6000_program.rom", 0x1C993C, 0x1C9A40
+ptrs_4C1C993C:
+	.long	loc_4C088A34
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	loc_4C088A3E
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	loc_4C088A48
+	.long	loc_4C088A63
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	loc_4C088A6D
+	.long	loc_4C088A77
+	.long	loc_4C088A81
+	.long	loc_4C088A9C
+	.long	loc_4C088AB7
+	.long	loc_4C088AD2
+	.long	loc_4C088AED
+	.long	loc_4C088AF7
+	.long	loc_4C088AFF
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	loc_4C088B07
+	.long	loc_4C088B0F
+	.long	loc_4C088B20
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	loc_4C088B31
+	.long	loc_4C088B40
+	.long	loc_4C088B54
+	.long	loc_4C088B63
+	.long	loc_4C088B72
+	.long	loc_4C088B81
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	func_4C088A13_entry_L224
+	.long	loc_4C088B95
+	.long	loc_4C088BA4
+	.long	loc_4C088BAE
+	.long	loc_4C088BB8
+	.long	loc_4C088BD3
+	.long	loc_4C088BED
+	.long	loc_4C088C00
+	.long	loc_4C088C0E
+	.long	loc_4C088C20
+	.long	loc_4C088C2E
 data_4C1C9A40:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9A40, 0x1C9A64
 data_4C1C9A64:
@@ -14343,8 +15880,19 @@ data_4C1C9A84:
 	.space	78, 0x96
 data_4C1C9B04:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9B04, 0x1C9B08
-data_4C1C9B08:
-.incbin_range "baserom/kn6000_program.rom", 0x1C9B08, 0x1C9B38
+ptrs_4C1C9B08:
+	.long	loc_4C08D4BA
+	.long	loc_4C08D4C4
+	.long	loc_4C08D4CF
+	.long	loc_4C08D4DA
+	.long	loc_4C08D4E4
+	.long	loc_4C08D4EE
+	.long	loc_4C08D4F8
+	.long	loc_4C08D502
+	.long	loc_4C08D50C
+	.long	loc_4C08D516
+	.long	loc_4C08D520
+	.long	loc_4C08D52A
 data_4C1C9B38:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9B38, 0x1C9B78
 data_4C1C9B78:
@@ -14365,6 +15913,7 @@ data_4C1C9C78:
 .incbin_range "baserom/kn6000_program.rom", 0x1C9C78, 0x1C9C91
 data_4C1C9C91:
 	.space	1, 0xFF
+
 Str_empty_784:	.asciz " "
 .incbin_range "baserom/kn6000_program.rom", 0x1C9C94, 0x1C9E94
 Str_empty_783:	.asciz "@"
@@ -14419,14 +15968,53 @@ Str_empty_780:	.asciz ">"
 .incbin_range "baserom/kn6000_program.rom", 0x1CA29E, 0x1CA31C
 Str_empty_779:	.asciz ">"
 .incbin_range "baserom/kn6000_program.rom", 0x1CA31E, 0x1CA39C
-data_4C1CA39C:
-.incbin_range "baserom/kn6000_program.rom", 0x1CA39C, 0x1CA3C0
-data_4C1CA3C0:
-.incbin_range "baserom/kn6000_program.rom", 0x1CA3C0, 0x1CA3E4
-data_4C1CA3E4:
-.incbin_range "baserom/kn6000_program.rom", 0x1CA3E4, 0x1CA414
-data_4C1CA414:
-.incbin_range "baserom/kn6000_program.rom", 0x1CA414, 0x1CA444
+
+ptrs_4C1CA39C:
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+	.long	loc_4C098B72
+ptrs_4C1CA3C0:
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+	.long	loc_4C098B09
+ptrs_4C1CA3E4:
+	.long	loc_4C0994E7
+	.long	loc_4C0994E7
+	.long	loc_4C0994E7
+	.long	loc_4C0994E7
+	.long	loc_4C099502
+	.long	loc_4C099502
+	.long	func_4C09948D_entry_Ldc
+	.long	loc_4C099502
+	.long	func_4C09948D_entry_Ldc
+	.long	func_4C09948D_entry_Ldc
+	.long	loc_4C099543
+	.long	loc_4C099543
+ptrs_4C1CA414:
+	.long	loc_4C0995C7
+	.long	loc_4C0995C7
+	.long	loc_4C0995C7
+	.long	loc_4C0995C7
+	.long	loc_4C0995E1
+	.long	loc_4C0995E1
+	.long	func_4C099573_entry_Ldf
+	.long	loc_4C0995E1
+	.long	func_4C099573_entry_Ldf
+	.long	func_4C099573_entry_Ldf
+	.long	loc_4C09961E
+	.long	loc_4C09961E
 data_4C1CA444:
 .incbin_range "baserom/kn6000_program.rom", 0x1CA444, 0x1CA4C4
 data_4C1CA4C4:
@@ -14471,6 +16059,7 @@ data_4C1CA55C:
 .incbin_range "baserom/kn6000_program.rom", 0x1CA55C, 0x1CA564
 data_4C1CA564:
 .incbin_range "baserom/kn6000_program.rom", 0x1CA564, 0x1CAEC0
+
 Str_Aa:	.asciz "Aa`@"
 .incbin_range "baserom/kn6000_program.rom", 0x1CAEC5, 0x1CB100
 Str_G_A:	.asciz "G_~A"
@@ -14478,11 +16067,7 @@ Str_G_A:	.asciz "G_~A"
 Str_A_I:	.asciz "A`~I"
 .incbin_range "baserom/kn6000_program.rom", 0x1CB115, 0x1CB51C
 data_4C1CB51C:
-.incbin_range "baserom/kn6000_program.rom", 0x1CB51C, 0x1CB900
-Str_B1m:	.asciz "B1m`"
-.incbin_range "baserom/kn6000_program.rom", 0x1CB905, 0x1CB9B8
-Str_B9nP:	.asciz "B9nP"
-.incbin_range "baserom/kn6000_program.rom", 0x1CB9BD, 0x1CC3F4
+.incbin_range "baserom/kn6000_program.rom", 0x1CB51C, 0x1CC3F4
 data_4C1CC3F4:
 .incbin_range "baserom/kn6000_program.rom", 0x1CC3F4, 0x1CC444
 data_4C1CC444:
@@ -14571,8 +16156,19 @@ data_4C1D22E0:
 .incbin_range "baserom/kn6000_program.rom", 0x1D240B, 0x1D2426
 	.space	288, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x1D2546, 0x1D2548
-data_4C1D2548:
-.incbin_range "baserom/kn6000_program.rom", 0x1D2548, 0x1D2574
+
+ptrs_4C1D2548:
+	.long	loc_4C09DCDA
+	.long	loc_4C09DCE0
+	.long	loc_4C09DCE6
+	.long	loc_4C09DCEC
+	.long	loc_4C09DCF2
+	.long	loc_4C09DCF8
+	.long	loc_4C09DCFE
+	.long	loc_4C09DD04
+	.long	loc_4C09DD0A
+	.long	loc_4C09DD11
+	.long	loc_4C09DD18
 data_4C1D2574:
 .incbin_range "baserom/kn6000_program.rom", 0x1D2574, 0x1D257C
 data_4C1D257C:
@@ -14587,6 +16183,7 @@ data_4C1D25A0:
 .incbin_range "baserom/kn6000_program.rom", 0x1D25A0, 0x1D25A8
 data_4C1D25A8:
 .incbin_range "baserom/kn6000_program.rom", 0x1D25A8, 0x1D25B4
+
 Str_empty_778:	.asciz "$%&'()*+,!\"#"
 .incbin_range "baserom/kn6000_program.rom", 0x1D25C1, 0x1D25C8
 data_4C1D25C8:
@@ -15620,34 +17217,32 @@ Str_TT_PMBKNAME:	.asciz "TT_PMBKNAME"
 Str_TT_VOCALIST:	.asciz "TT_VOCALIST"
 Str_TT_SNDCTLASS:	.asciz "TT_SNDCTLASS"
 	.align	4, 0xFF
-data_4C1D6A44:
-.incbin_range "baserom/kn6000_program.rom", 0x1D6A44, 0x1D7A4C
-data_4C1D7A4C:
-.incbin_range "baserom/kn6000_program.rom", 0x1D7A4C, 0x1D7A98
-data_4C1D7A98:
-.incbin_range "baserom/kn6000_program.rom", 0x1D7A98, 0x1D7AB0
-data_4C1D7AB0:
-.incbin_range "baserom/kn6000_program.rom", 0x1D7AB0, 0x1D7DB0
-Str_1_27:	.asciz "1)\x1A"
-.incbin_range "baserom/kn6000_program.rom", 0x1D7DB4, 0x1D7DF0
-data_4C1D7DF0:
-.incbin_range "baserom/kn6000_program.rom", 0x1D7DF0, 0x1DA0BB
-Str_EUTTD2:	.asciz "EUTTD2"
-.incbin_range "baserom/kn6000_program.rom", 0x1DA0C2, 0x1DA484
-Str_Www_0:	.asciz "Www\xC70"
-.incbin_range "baserom/kn6000_program.rom", 0x1DA48A, 0x1DA729
-Str_Wvgvd:	.asciz "Wvgvd"
-.incbin_range "baserom/kn6000_program.rom", 0x1DA72F, 0x1DA7B3
-Str_wwww1:	.asciz "'wwww1"
-.incbin_range "baserom/kn6000_program.rom", 0x1DA7BA, 0x1DC268
-data_4C1DC268:
-.incbin_range "baserom/kn6000_program.rom", 0x1DC268, 0x1DCC90
-data_4C1DCC90:
-.incbin_range "baserom/kn6000_program.rom", 0x1DCC90, 0x1DD6B8
+
+Bitmap_4C0A0012_Pixels:	# 296 x 108, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A0012 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A0012_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_4C0A0012_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 296 108) from src/program/data/media/Bitmap_4C0A0012_Pixels.png
+Bitmap_4C0A004D_Pixels:	# 17 x 19, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A004D answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A004D_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_4C0A004D_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 17 19) from src/program/data/media/Bitmap_4C0A004D_Pixels.png
+Bitmap_4C0A0087_Pixels:	# 10 x 12, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A0087 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A0087_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_4C0A0087_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 10 12) from src/program/data/media/Bitmap_4C0A0087_Pixels.png
+Bitmap_4C0A00C1_Pixels:	# 253 x 24, 1 bit(s) a pixel, rows padded to even bytes: the bitmap func_4C0A00C1 answers MT_GetBitmapData with (src/program/data/media/Bitmap_4C0A00C1_Pixels.png)
+	.incbin	"build/bitmaps/Bitmap_4C0A00C1_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 253 24) from src/program/data/media/Bitmap_4C0A00C1_Pixels.png
+
+Str_1_27:	# 16 colours, 0x00BBGGRR (BitmapKn6000: MT_GetBitmapPalette)
+	.long	0x001A2931, 0x003F515D, 0x005C6C78, 0x0079808A, 0x008A959E, 0x00A2A5AC, 0x00B6C1CA, 0x00D4D9DD
+	.long	0x00E9E6DE, 0x00F3F3DA, 0x00F3F7DA, 0x00FCFCD6, 0x00E9E6E7, 0x00FBFBDE, 0x00ECEEF3, 0x00F8FBF4
+
+BitmapKn6000_Pixels:	# 273 x 127, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapKn6000 answers MT_GetBitmapData with (src/program/data/media/BitmapKn6000_Pixels.png)
+	.incbin	"build/bitmaps/BitmapKn6000_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 273 127) from src/program/data/media/BitmapKn6000_Pixels.png
+	.align	4, 0xFF
+BitmapNx_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapNx answers MT_GetBitmapData with (src/program/data/media/BitmapNx_Pixels.png)
+	.incbin	"build/bitmaps/BitmapNx_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/BitmapNx_Pixels.png
+BitmapGm2_Pixels:	# 200 x 100, 1 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapGm2 answers MT_GetBitmapData with (src/program/data/media/BitmapGm2_Pixels.png)
+	.incbin	"build/bitmaps/BitmapGm2_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 200 100) from src/program/data/media/BitmapGm2_Pixels.png
 data_4C1DD6B8:
 .incbin_range "baserom/kn6000_program.rom", 0x1DD6B8, 0x1DD6C0
 data_4C1DD6C0:
 .incbin_range "baserom/kn6000_program.rom", 0x1DD6C0, 0x1DD6C4
+
 Str_PAGE_1_3:	.asciz "PAGE 1/3"
 Str_PAGE_2_3:	.asciz "PAGE 2/3"
 Str_PAGE_3_3:	.asciz "PAGE 3/3"
@@ -16062,12 +17657,12 @@ Str_RIGHT_1_INPUT_AUTO_PLAY_CHORD_INPUT_VELO_3:	.asciz " RIGHT 1 INPUT          
 	.align	4, 0xFF
 Str_RIGHT_1_INPUT_AUTO_PLAY_CHORD_INPUT_VELO_2:	.asciz " RIGHT 1 INPUT            :| AUTO PLAY CHORD INPUT    :| VELOCITY INPUT           :| VELOCITY FIXED VALUE     :|-| TECHNI-CHORD OUTPUT      :| TRANSPOSE OUTPUT         :| DRUM PATTERN OUTPUT      :| AUTO PLAY CHORD OUTPUT   :| AUTO OCTAVE SHIFT OUTPUT :"
 	.align	4, 0xFF
-Str_OFF_115:	.asciz " OFF "
-Str_ON_84:	.asciz " ON  "
+Str_OFF_133:	.asciz " OFF "
+Str_ON_94:	.asciz " ON  "
 
 ptrs_4C1DE774:
-	.long	Str_OFF_115
-	.long	Str_ON_84
+	.long	Str_OFF_133
+	.long	Str_ON_94
 
 Str_CONDUCTOR:	.asciz "CONDUCTOR"
 Str_DIRECT_2:	.asciz " DIRECT  "
@@ -16112,14 +17707,14 @@ Str_3d_203:	.asciz " %3d "
 	.align	4, 0xFF
 Str_PAGE:	.asciz "PAGE"
 	.align	4, 0xFF
-Str_empty_1104:	.asciz " "
+Str_empty_1111:	.asciz " "
 Str_NX_SOUND_2:	.asciz "NX SOUND "
 data_4C1DE838:
 .incbin_range "baserom/kn6000_program.rom", 0x1DE838, 0x1DE842
 Str_GM_LEVEL2:	.asciz "GM LEVEL2"
 
 ptrs_4C1DE84C:
-	.long	Str_empty_1104
+	.long	Str_empty_1111
 	.long	Str_NX_SOUND_2
 	.long	data_4C1DE838
 	.long	Str_GM_LEVEL2
@@ -16391,10 +17986,90 @@ Str_KN:	.asciz "KN"
 	.align	4, 0xFF
 data_4C1DF25C:
 .incbin_range "baserom/kn6000_program.rom", 0x1DF25C, 0x1DF2DC
-data_4C1DF2DC:
-.incbin_range "baserom/kn6000_program.rom", 0x1DF2DC, 0x1DF37C
-data_4C1DF37C:
-.incbin_range "baserom/kn6000_program.rom", 0x1DF37C, 0x1DF41C
+
+ptrs_4C1DF2DC:
+	.long	loc_4C0A09CB
+	.long	loc_4C0A0A2C
+	.long	loc_4C0A0A65
+	.long	loc_4C0A0A9E
+	.long	loc_4C0A0ADF
+	.long	loc_4C0A0B54
+	.long	loc_4C0A0BB6
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	loc_4C0A0C2F
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	VocalistGrid_L80e
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+	.long	loc_4C0A0CAD
+ptrs_4C1DF37C:
+	.long	loc_4C0A06DD
+	.long	loc_4C0A0740
+	.long	loc_4C0A0775
+	.long	loc_4C0A07AA
+	.long	loc_4C0A07E7
+	.long	loc_4C0A0858
+	.long	loc_4C0A08BA
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	loc_4C0A08BA
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	VocalistGrid_L47f
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+	.long	loc_4C0A0931
+
 Str_empty_764:	.asciz "@"
 .incbin_range "baserom/kn6000_program.rom", 0x1DF41E, 0x1DF49C
 data_4C1DF49C:
@@ -16407,14 +18082,42 @@ Str_empty_762:	.asciz " "
 .incbin_range "baserom/kn6000_program.rom", 0x1DF61E, 0x1DF69C
 data_4C1DF69C:
 .incbin_range "baserom/kn6000_program.rom", 0x1DF69C, 0x1DF71C
-data_4C1DF71C:
-.incbin_range "baserom/kn6000_program.rom", 0x1DF71C, 0x1DF744
+
+ptrs_4C1DF71C:
+	.long	loc_4C0A4C08
+	.long	loc_4C0A4C3E
+	.long	loc_4C0A4C74
+	.long	loc_4C0A4D78
+	.long	MidiInputGrid_La1e
+	.long	loc_4C0A4E38
+	.long	loc_4C0A4E6E
+	.long	loc_4C0A4EA4
+	.long	loc_4C0A4EDA
+	.long	loc_4C0A4F0F
 data_4C1DF744:
 .incbin_range "baserom/kn6000_program.rom", 0x1DF744, 0x1DF7C4
-data_4C1DF7C4:
-.incbin_range "baserom/kn6000_program.rom", 0x1DF7C4, 0x1DF7EC
-data_4C1DF7EC:
-.incbin_range "baserom/kn6000_program.rom", 0x1DF7EC, 0x1DF814
+ptrs_4C1DF7C4:
+	.long	loc_4C0A4728
+	.long	loc_4C0A473B
+	.long	loc_4C0A474E
+	.long	loc_4C0A4764
+	.long	MidiInputGrid_L2e5
+	.long	loc_4C0A47AC
+	.long	loc_4C0A47BF
+	.long	loc_4C0A47D2
+	.long	loc_4C0A47E5
+	.long	loc_4C0A47F8
+ptrs_4C1DF7EC:
+	.long	loc_4C0A45F4
+	.long	loc_4C0A4607
+	.long	loc_4C0A461A
+	.long	loc_4C0A4630
+	.long	MidiInputGrid_L1b1
+	.long	loc_4C0A4678
+	.long	loc_4C0A468B
+	.long	loc_4C0A469E
+	.long	loc_4C0A46B1
+	.long	loc_4C0A46C4
 data_4C1DF814:
 .incbin_range "baserom/kn6000_program.rom", 0x1DF814, 0x1DF914
 data_4C1DF914:
@@ -16425,6 +18128,7 @@ data_4C1DFA94:
 .incbin_range "baserom/kn6000_program.rom", 0x1DFA94, 0x1DFB14
 data_4C1DFB14:
 .incbin_range "baserom/kn6000_program.rom", 0x1DFB14, 0x1DFB94
+
 Str_SEQ_MENU:	.asciz "SEQ MENU"
 	.align	4, 0xFF
 
@@ -26191,8 +27895,18 @@ Str_TT_MSPGRPNAME:	.asciz "TT_MSPGRPNAME"
 	.align	4, 0xFF
 data_4C200E3C:
 .incbin_range "baserom/kn6000_program.rom", 0x200E3C, 0x200E40
-data_4C200E40:
-.incbin_range "baserom/kn6000_program.rom", 0x200E40, 0x200E64
+
+ptrs_4C200E40:
+	.long	loc_4C054588
+	.long	loc_4C0546B3
+	.long	func_4C054FB4
+	.long	func_4C05507E
+	.long	func_4C05517A
+	.long	loc_4C055292
+	.long	func_4C05521C
+	.long	func_4C054F71
+	.long	func_4C05502A
+
 Str_Unknown:	.asciz "Unknown!"
 	.align	4, 0xFF
 Str_Error:	.asciz "Error!"
@@ -26200,29 +27914,44 @@ Str_Error:	.asciz "Error!"
 data_4C200E78:
 .incbin_range "baserom/kn6000_program.rom", 0x200E78, 0x200EF8
 Str_BR:	.asciz "BR"
-Str_CENTER_8:	.asciz "CENTER"
-Str_CENTER_9:	.asciz "/CENTER"
-Str_FONT:	.asciz "FONT"
-Str_FONT_2:	.asciz "/FONT"
+Str_CENTER_9:	.asciz "CENTER"
+Str_CENTER_8:	.asciz "/CENTER"
+Str_FONT_2:	.asciz "FONT"
+Str_FONT:	.asciz "/FONT"
 Str_IMG:	.asciz "IMG"
 Str_SHOW:	.asciz "SHOW"
 Str_EXEC:	.asciz "EXEC"
-Str_ACT_2:	.asciz "ACT"
-Str_ACT_3:	.asciz "/ACT"
+Str_ACT_3:	.asciz "ACT"
+Str_ACT_2:	.asciz "/ACT"
 Str_PRESENTATION_3:	.asciz "PRESENTATION"
 Str_PRESENTATION_4:	.asciz "/PRESENTATION"
 Str_ACTION_3:	.asciz "ACTION"
 Str_ACTION_4:	.asciz "/ACTION"
 	.align	4, 0xFF
-data_4C200F58:
-.incbin_range "baserom/kn6000_program.rom", 0x200F58, 0x200F80
 
-names_4C200F80:
-	.long	Str_IMG, func_4C0AC2C9
-	.long	Str_SHOW, func_4C0AC3BC
-	.long	Str_EXEC, func_4C0ABD65
-	.long	Str_ACT_2, func_4C0ABF2E
-.incbin_range "baserom/kn6000_program.rom", 0x200FA0, 0x200FD0
+ptrs_4C200F58:
+	.long	Str_BR
+	.long	loc_4C0AC090
+	.long	Str_CENTER_9
+	.long	loc_4C0AC0AD
+	.long	Str_CENTER_8
+	.long	loc_4C0AC0EC
+	.long	Str_FONT_2
+	.long	func_4C0AC13B
+	.long	Str_FONT
+	.long	loc_4C0AC259
+	.long	Str_IMG
+	.long	func_4C0AC2C9
+	.long	Str_SHOW
+	.long	func_4C0AC3BC
+	.long	Str_EXEC
+	.long	func_4C0ABD65
+	.long	Str_ACT_3
+	.long	func_4C0ABF2E
+	.long	Str_ACT_2
+	.long	loc_4C0AC07A
+	.long	Str_PRESENTATION_3
+.incbin_range "baserom/kn6000_program.rom", 0x200FAC, 0x200FD0
 data_4C200FD0:
 	.space	1, 0x00
 data_4C200FD1:
@@ -26337,16 +28066,14 @@ data_4C201204:
 	.space	65, 0x00
 .incbin_range "baserom/kn6000_program.rom", 0x201245, 0x201248
 data_4C201248:
-.incbin_range "baserom/kn6000_program.rom", 0x201248, 0x201250
-
-Str_BMP_2:	.asciz ".BMP"
-Str_JPG:	.asciz ".JPG"
+.incbin_range "baserom/kn6000_program.rom", 0x201248, 0x20125A
 data_4C20125A:
 .incbin_range "baserom/kn6000_program.rom", 0x20125A, 0x201264
 data_4C201264:
 .incbin_range "baserom/kn6000_program.rom", 0x201264, 0x201268
 data_4C201268:
 .incbin_range "baserom/kn6000_program.rom", 0x201268, 0x20126C
+
 Str_PRESENTATION_2:	.asciz "<PRESENTATION>"
 Str_PRESENTATION:	.asciz "</PRESENTATION>"
 data_4C20128B:
@@ -26368,10 +28095,32 @@ Str_rb_43:	.asciz "rb"
 	.align	4, 0xFF
 Str_rb_42:	.asciz "rb"
 	.align	4, 0xFF
-data_4C2012E8:
-.incbin_range "baserom/kn6000_program.rom", 0x2012E8, 0x20130C
-data_4C20130C:
-.incbin_range "baserom/kn6000_program.rom", 0x20130C, 0x201340
+
+ptrs_4C2012E8:
+	.long	loc_4C0AC356
+	.long	loc_4C0AC363
+	.long	func_4C0AC2C9_La5
+	.long	func_4C0AC2C9_La5
+	.long	func_4C0AC2C9_La5
+	.long	func_4C0AC2C9_La5
+	.long	func_4C0AC2C9_La5
+	.long	func_4C0AC2C9_La5
+	.long	func_4C0AC2C9_La5
+ptrs_4C20130C:
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	loc_4C0ACB3F
+	.long	func_4C0ACB0B_entry_L4f
+
 Str_empty_761:	.asciz " "
 .incbin_range "baserom/kn6000_program.rom", 0x201342, 0x2013C0
 Str_Control_Preset:	.asciz "Control Preset"
@@ -26467,18 +28216,177 @@ data_4C2015F0:
 .incbin_range "baserom/kn6000_program.rom", 0x2015F0, 0x2015F4
 data_4C2015F4:
 .incbin_range "baserom/kn6000_program.rom", 0x2015F4, 0x2015F8
-data_4C2015F8:
-.incbin_range "baserom/kn6000_program.rom", 0x2015F8, 0x2016A4
-data_4C2016A4:
-.incbin_range "baserom/kn6000_program.rom", 0x2016A4, 0x201780
-data_4C201780:
-.incbin_range "baserom/kn6000_program.rom", 0x201780, 0x20184C
+
+ptrs_4C2015F8:
+	.long	loc_4C0AD723
+	.long	loc_4C0AD725
+	.long	loc_4C0AD725
+	.long	loc_4C0AD73C
+	.long	loc_4C0AD723
+	.long	loc_4C0AD723
+	.long	loc_4C0AD725
+	.long	loc_4C0AD753
+	.long	loc_4C0AD753
+ptrs_4C20161C:
+	.long	loc_4C0B1531
+	.long	loc_4C0B1511
+	.long	loc_4C0B1519
+	.long	loc_4C0B1541
+	.long	loc_4C0B1571
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	func_4C0B124D_entry_L325
+	.long	loc_4C0B14F0
+	.long	loc_4C0B14F9
+	.long	loc_4C0B1501
+	.long	loc_4C0B1509
+	.long	loc_4C0B1551
+	.long	loc_4C0B1521
+	.long	loc_4C0B1529
+	.long	loc_4C0B1561
+ptrs_4C2016A4:
+	.long	loc_4C0B12F3
+	.long	loc_4C0B12CF
+	.long	loc_4C0B12D8
+	.long	loc_4C0B1304
+	.long	loc_4C0B1395
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B13F1
+	.long	loc_4C0B13CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B13D6
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B13DF
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B13E8
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B12AB
+	.long	loc_4C0B12B4
+	.long	loc_4C0B12BD
+	.long	loc_4C0B12C6
+	.long	loc_4C0B1315
+	.long	loc_4C0B12E1
+	.long	loc_4C0B12EA
+	.long	loc_4C0B1326
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B1337
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B138C
+	.long	loc_4C0B147F
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14CD
+	.long	loc_4C0B1340
+	.long	loc_4C0B14CD
+	.long	loc_4C0B14C7
+ptrs_4C201780:
+	.long	loc_4C0B1618
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1648
+	.long	loc_4C0B1630
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1640
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1630
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1630
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1610
+	.long	loc_4C0B1610
+	.long	loc_4C0B1610
+	.long	loc_4C0B1610
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1618
+	.long	loc_4C0B1648
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	func_4C0B15E8_entry_L64
+	.long	loc_4C0B1638
+
 Str_empty_757:	.asciz "@"
 .incbin_range "baserom/kn6000_program.rom", 0x20184E, 0x2018CC
 data_4C2018CC:
 .incbin_range "baserom/kn6000_program.rom", 0x2018CC, 0x20194C
-data_4C20194C:
-.incbin_range "baserom/kn6000_program.rom", 0x20194C, 0x201970
+
+ptrs_4C20194C:
+	.long	loc_4C0B3F1D
+	.long	loc_4C0B3F1D
+	.long	loc_4C0B3F1D
+	.long	loc_4C0B3F1D
+	.long	loc_4C0B4406
+	.long	loc_4C0B4406
+	.long	loc_4C0B4406
+	.long	loc_4C0B3F1D
+	.long	loc_4C0B3F1D
+
 FnName_TtPadBankSel:	.asciz "TtPadBankSel"
 FnName_MainPAD_GetPadBankName:	.asciz "MainPAD_GetPadBankName"
 FnName_MainPAD_GetPadName:	.asciz "MainPAD_GetPadName"
@@ -26741,10 +28649,10 @@ Str_Ab:	.asciz "Ab"
 Str_A_23:	.asciz "A "
 Str_Bb:	.asciz "Bb"
 Str_B_9:	.asciz "B "
-Str_empty_1103:	.asciz "  "
-Str_empty_1102:	.asciz "  "
-Str_empty_1101:	.asciz "  "
-Str_empty_1100:	.asciz "  "
+Str_empty_1110:	.asciz "  "
+Str_empty_1109:	.asciz "  "
+Str_empty_1108:	.asciz "  "
+Str_empty_1107:	.asciz "  "
 
 ptrs_4C202C50:
 	.long	Str_C_12
@@ -26759,12 +28667,12 @@ ptrs_4C202C50:
 	.long	Str_A_23
 	.long	Str_Bb
 	.long	Str_B_9
-	.long	Str_empty_1103
-	.long	Str_empty_1102
-	.long	Str_empty_1101
-	.long	Str_empty_1100
+	.long	Str_empty_1110
+	.long	Str_empty_1109
+	.long	Str_empty_1108
+	.long	Str_empty_1107
 
-Str_OFF_97:	.asciz "OFF"
+Str_OFF_115:	.asciz "OFF"
 Str_ad_b8_2:	.asciz " ~ad~b8"
 Str_ad_2:	.asciz " ~ad "
 Str_ac_b8_2:	.asciz " ~ac~b8"
@@ -26774,7 +28682,7 @@ Str_ab_2:	.asciz " ~ab "
 Str_aa_2:	.asciz " ~aa "
 
 ptrs_4C202CC4:
-	.long	Str_OFF_97
+	.long	Str_OFF_115
 	.long	Str_ad_b8_2
 	.long	Str_ad_2
 	.long	Str_ac_b8_2
@@ -26816,9 +28724,16 @@ Str_CHD:	.asciz "CHD"
 Str_RTB:	.asciz "RTB"
 Str_PD1:	.asciz "PD1"
 Str_PD2:	.asciz "PD2"
-Str_empty_1099:	.asciz "   "
+Str_empty_1106:	.asciz "   "
 Str_MET:	.asciz "MET"
 Str_CDF:	.asciz "CDF"
+Str_empty_1105:	.asciz "   "
+Str_empty_1104:	.asciz "   "
+Str_empty_1103:	.asciz "   "
+Str_empty_1102:	.asciz "   "
+Str_empty_1101:	.asciz "   "
+Str_empty_1100:	.asciz "   "
+Str_empty_1099:	.asciz "   "
 Str_empty_1098:	.asciz "   "
 Str_empty_1097:	.asciz "   "
 Str_empty_1096:	.asciz "   "
@@ -26842,13 +28757,6 @@ Str_empty_1079:	.asciz "   "
 Str_empty_1078:	.asciz "   "
 Str_empty_1077:	.asciz "   "
 Str_empty_1076:	.asciz "   "
-Str_empty_1075:	.asciz "   "
-Str_empty_1074:	.asciz "   "
-Str_empty_1073:	.asciz "   "
-Str_empty_1072:	.asciz "   "
-Str_empty_1071:	.asciz "   "
-Str_empty_1070:	.asciz "   "
-Str_empty_1069:	.asciz "   "
 Str_APC_7:	.asciz "APC"
 Str_CTL_4:	.asciz "CTL"
 Str_RHY_2:	.asciz "RHY"
@@ -26885,9 +28793,16 @@ ptrs_4C202DF8:
 	.long	Str_RTB
 	.long	Str_PD1
 	.long	Str_PD2
-	.long	Str_empty_1099
+	.long	Str_empty_1106
 	.long	Str_MET
 	.long	Str_CDF
+	.long	Str_empty_1105
+	.long	Str_empty_1104
+	.long	Str_empty_1103
+	.long	Str_empty_1102
+	.long	Str_empty_1101
+	.long	Str_empty_1100
+	.long	Str_empty_1099
 	.long	Str_empty_1098
 	.long	Str_empty_1097
 	.long	Str_empty_1096
@@ -26911,13 +28826,6 @@ ptrs_4C202DF8:
 	.long	Str_empty_1078
 	.long	Str_empty_1077
 	.long	Str_empty_1076
-	.long	Str_empty_1075
-	.long	Str_empty_1074
-	.long	Str_empty_1073
-	.long	Str_empty_1072
-	.long	Str_empty_1071
-	.long	Str_empty_1070
-	.long	Str_empty_1069
 	.long	Str_APC_7
 	.long	Str_CTL_4
 	.long	Str_RHY_2
@@ -26941,7 +28849,15 @@ Str_PART_16_3:	.asciz "PART 16"
 Str_RIGHT1_8:	.asciz "RIGHT1 "
 Str_RIGHT2_8:	.asciz "RIGHT2 "
 Str_LEFT_10:	.asciz " LEFT  "
+Str_empty_1075:	.asciz "       "
+Str_empty_1074:	.asciz "       "
+Str_empty_1073:	.asciz "       "
+Str_empty_1072:	.asciz "       "
+Str_empty_1071:	.asciz "       "
+Str_empty_1070:	.asciz "       "
+Str_empty_1069:	.asciz "       "
 Str_empty_1068:	.asciz "       "
+Str_CHORD_10:	.asciz " CHORD "
 Str_empty_1067:	.asciz "       "
 Str_empty_1066:	.asciz "       "
 Str_empty_1065:	.asciz "       "
@@ -26949,7 +28865,6 @@ Str_empty_1064:	.asciz "       "
 Str_empty_1063:	.asciz "       "
 Str_empty_1062:	.asciz "       "
 Str_empty_1061:	.asciz "       "
-Str_CHORD_10:	.asciz " CHORD "
 Str_empty_1060:	.asciz "       "
 Str_empty_1059:	.asciz "       "
 Str_empty_1058:	.asciz "       "
@@ -26979,13 +28894,6 @@ Str_empty_1035:	.asciz "       "
 Str_empty_1034:	.asciz "       "
 Str_empty_1033:	.asciz "       "
 Str_empty_1032:	.asciz "       "
-Str_empty_1031:	.asciz "       "
-Str_empty_1030:	.asciz "       "
-Str_empty_1029:	.asciz "       "
-Str_empty_1028:	.asciz "       "
-Str_empty_1027:	.asciz "       "
-Str_empty_1026:	.asciz "       "
-Str_empty_1025:	.asciz "       "
 Str_APC_6:	.asciz "  APC  "
 Str_CONTROL_8:	.asciz "CONTROL"
 Str_RHYTHM_17:	.asciz "RHYTHM "
@@ -27010,7 +28918,15 @@ ptrs_4C20311C:
 	.long	Str_RIGHT1_8
 	.long	Str_RIGHT2_8
 	.long	Str_LEFT_10
+	.long	Str_empty_1075
+	.long	Str_empty_1074
+	.long	Str_empty_1073
+	.long	Str_empty_1072
+	.long	Str_empty_1071
+	.long	Str_empty_1070
+	.long	Str_empty_1069
 	.long	Str_empty_1068
+	.long	Str_CHORD_10
 	.long	Str_empty_1067
 	.long	Str_empty_1066
 	.long	Str_empty_1065
@@ -27018,7 +28934,6 @@ ptrs_4C20311C:
 	.long	Str_empty_1063
 	.long	Str_empty_1062
 	.long	Str_empty_1061
-	.long	Str_CHORD_10
 	.long	Str_empty_1060
 	.long	Str_empty_1059
 	.long	Str_empty_1058
@@ -27048,13 +28963,6 @@ ptrs_4C20311C:
 	.long	Str_empty_1034
 	.long	Str_empty_1033
 	.long	Str_empty_1032
-	.long	Str_empty_1031
-	.long	Str_empty_1030
-	.long	Str_empty_1029
-	.long	Str_empty_1028
-	.long	Str_empty_1027
-	.long	Str_empty_1026
-	.long	Str_empty_1025
 	.long	Str_APC_6
 	.long	Str_CONTROL_8
 	.long	Str_RHYTHM_17
@@ -27078,7 +28986,15 @@ Str_PART_16_2:	.asciz " PART 16 "
 Str_RIGHT1_7:	.asciz " RIGHT1  "
 Str_RIGHT2_7:	.asciz " RIGHT2  "
 Str_LEFT_9:	.asciz " LEFT    "
+Str_empty_1031:	.asciz "         "
+Str_empty_1030:	.asciz "         "
+Str_empty_1029:	.asciz "         "
+Str_empty_1028:	.asciz "         "
+Str_empty_1027:	.asciz "         "
+Str_empty_1026:	.asciz "         "
+Str_empty_1025:	.asciz "         "
 Str_empty_1024:	.asciz "         "
+Str_CHORD_9:	.asciz " CHORD   "
 Str_empty_1023:	.asciz "         "
 Str_empty_1022:	.asciz "         "
 Str_empty_1021:	.asciz "         "
@@ -27086,7 +29002,6 @@ Str_empty_1020:	.asciz "         "
 Str_empty_1019:	.asciz "         "
 Str_empty_1018:	.asciz "         "
 Str_empty_1017:	.asciz "         "
-Str_CHORD_9:	.asciz " CHORD   "
 Str_empty_1016:	.asciz "         "
 Str_empty_1015:	.asciz "         "
 Str_empty_1014:	.asciz "         "
@@ -27116,13 +29031,6 @@ Str_empty_990:	.asciz "         "
 Str_empty_989:	.asciz "         "
 Str_empty_988:	.asciz "         "
 Str_empty_987:	.asciz "         "
-Str_empty_986:	.asciz "         "
-Str_empty_985:	.asciz "         "
-Str_empty_984:	.asciz "         "
-Str_empty_983:	.asciz "         "
-Str_empty_982:	.asciz "         "
-Str_empty_981:	.asciz "         "
-Str_empty_980:	.asciz "         "
 Str_APC_5:	.asciz " APC     "
 Str_CONTROL_7:	.asciz " CONTROL "
 Str_RHYTHM_16:	.asciz " RHYTHM  "
@@ -27148,7 +29056,15 @@ ptrs_4C2034C8:
 	.long	Str_RIGHT1_7
 	.long	Str_RIGHT2_7
 	.long	Str_LEFT_9
+	.long	Str_empty_1031
+	.long	Str_empty_1030
+	.long	Str_empty_1029
+	.long	Str_empty_1028
+	.long	Str_empty_1027
+	.long	Str_empty_1026
+	.long	Str_empty_1025
 	.long	Str_empty_1024
+	.long	Str_CHORD_9
 	.long	Str_empty_1023
 	.long	Str_empty_1022
 	.long	Str_empty_1021
@@ -27156,7 +29072,6 @@ ptrs_4C2034C8:
 	.long	Str_empty_1019
 	.long	Str_empty_1018
 	.long	Str_empty_1017
-	.long	Str_CHORD_9
 	.long	Str_empty_1016
 	.long	Str_empty_1015
 	.long	Str_empty_1014
@@ -27186,13 +29101,6 @@ ptrs_4C2034C8:
 	.long	Str_empty_989
 	.long	Str_empty_988
 	.long	Str_empty_987
-	.long	Str_empty_986
-	.long	Str_empty_985
-	.long	Str_empty_984
-	.long	Str_empty_983
-	.long	Str_empty_982
-	.long	Str_empty_981
-	.long	Str_empty_980
 	.long	Str_APC_5
 	.long	Str_CONTROL_7
 	.long	Str_RHYTHM_16
@@ -27710,13 +29618,13 @@ Str_Vari4_PATTERN_4:	.asciz " Vari4 PATTERN "
 Str_Vari4_FILL_IN1_5:	.asciz " Vari4 FILL IN1"
 Str_Vari4_FILL_IN2_5:	.asciz " Vari4 FILL IN2"
 Str_INTRO1_maj_min:	.asciz " INTRO1 maj&min"
-Str_empty_979:	.asciz "    ------     "
+Str_empty_986:	.asciz "    ------     "
 Str_ENDING1_maj_min:	.asciz "ENDING1 maj&min"
-Str_empty_978:	.asciz "   -------     "
+Str_empty_985:	.asciz "   -------     "
 Str_INTRO2_maj_min:	.asciz " INTRO2 maj&min"
-Str_empty_977:	.asciz "    ------     "
+Str_empty_984:	.asciz "    ------     "
 Str_ENDING2_maj_min:	.asciz "ENDING2 maj&min"
-Str_empty_976:	.asciz "   -------     "
+Str_empty_983:	.asciz "   -------     "
 Str_ALL_32:	.asciz "      ALL      "
 Str_Vari1_PATTERN_3:	.asciz " Vari1 PATTERN "
 Str_Vari1_FILL_IN1_4:	.asciz " Vari1 FILL IN1"
@@ -27759,7 +29667,7 @@ Str_INTRO2_maj_3:	.asciz "INTRO2(maj)    "
 Str_INTRO2_min_3:	.asciz "INTRO2(min)    "
 Str_ENDING2_maj_3:	.asciz "ENDING2(maj)   "
 Str_ENDING2_min_3:	.asciz "ENDING2(min)   "
-Str_empty_975:	.asciz "               "
+Str_empty_982:	.asciz "               "
 
 ptrs_4C206610:
 	.long	Str_Vari1_PATTERN_4
@@ -27775,13 +29683,13 @@ ptrs_4C206610:
 	.long	Str_Vari4_FILL_IN1_5
 	.long	Str_Vari4_FILL_IN2_5
 	.long	Str_INTRO1_maj_min
-	.long	Str_empty_979
+	.long	Str_empty_986
 	.long	Str_ENDING1_maj_min
-	.long	Str_empty_978
+	.long	Str_empty_985
 	.long	Str_INTRO2_maj_min
-	.long	Str_empty_977
+	.long	Str_empty_984
 	.long	Str_ENDING2_maj_min
-	.long	Str_empty_976
+	.long	Str_empty_983
 	.long	Str_ALL_32
 	.long	Str_Vari1_PATTERN_3
 	.long	Str_Vari1_FILL_IN1_4
@@ -27824,7 +29732,7 @@ ptrs_4C206610:
 	.long	Str_INTRO2_min_3
 	.long	Str_ENDING2_maj_3
 	.long	Str_ENDING2_min_3
-	.long	Str_empty_975
+	.long	Str_empty_982
 
 Str_Vari1_PATTERN:	.asciz "Vari1 PATTERN "
 Str_Vari1_FILL_IN1_2:	.asciz "Vari1 FILL IN1"
@@ -27846,7 +29754,7 @@ Str_INTRO2_maj_2:	.asciz "INTRO2(maj)   "
 Str_INTRO2_min_2:	.asciz "INTRO2(min)   "
 Str_ENDING2_maj_2:	.asciz "ENDING2(maj)  "
 Str_ENDING2_min_2:	.asciz "ENDING2(min)  "
-Str_empty_974:	.asciz "              "
+Str_empty_981:	.asciz "              "
 	.align	4, 0xFF
 
 ptrs_4C206848:
@@ -27870,7 +29778,7 @@ ptrs_4C206848:
 	.long	Str_INTRO2_min_2
 	.long	Str_ENDING2_maj_2
 	.long	Str_ENDING2_min_2
-	.long	Str_empty_974
+	.long	Str_empty_981
 
 Str_empty_625:	.asciz "     ----     "
 	.align	4, 0xFF
@@ -27929,13 +29837,13 @@ Str_SOLO_50:	.asciz "-SOLO"
 Str_empty_623:	.asciz "     "
 Str_USER_BANK_1c:	.asciz "USER BANK: %1c"
 	.align	4, 0xFF
-Str_empty_973:	.asciz "    "
+Str_empty_980:	.asciz "    "
 Str_MUTE:	.asciz "MUTE"
 Str_REC_8:	.asciz "REC"
 	.align	4, 0xFF
 
 ptrs_4C206A34:
-	.long	Str_empty_973
+	.long	Str_empty_980
 	.long	Str_MUTE
 	.long	Str_REC_8
 
@@ -28127,7 +30035,8 @@ Str_empty_593:	.asciz "---"
 Str_3d_181:	.asciz "%3d"
 Str_SYNCHRO:	.asciz "SYNCHRO"
 Str_INSTANT:	.asciz "INSTANT"
-.incbin_range "baserom/kn6000_program.rom", 0x206F54, 0x206F5C
+Str_ON_84:	.asciz "ON "
+Str_OFF_97:	.asciz "OFF"
 Str_43_2d_32:	.asciz "~43~2d~32"
 Str_44_a0_bc:	.asciz "~44~a0~bc"
 Str_44_2d_32:	.asciz "~44~2d~32"
@@ -28387,14 +30296,14 @@ ptrs_4C20745C:
 	.long	Str_46_9e_38
 	.long	Str_47_38_20
 
-Str_empty_972:	.asciz "    "
+Str_empty_979:	.asciz "    "
 Str_PLAY_4:	.asciz "PLAY"
 Str_REC_7:	.asciz "REC"
 Str_PUNCH:	.asciz "PUNCH"
 Str_CLR_6:	.asciz "CLR"
 
 ptrs_4C207674:
-	.long	Str_empty_972
+	.long	Str_empty_979
 	.long	Str_PLAY_4
 	.long	Str_REC_7
 	.long	Str_PUNCH
@@ -28878,37 +30787,37 @@ Str_3s_s_V_3d_5d:	.asciz " %3s          %s V%3d %5d"
 	.align	4, 0xFF
 Str_3s_7:	.asciz " %3s                          "
 	.align	4, 0xFF
-Str_empty_971:	.asciz "   "
+Str_empty_978:	.asciz "   "
 data_4C20810C:
 .incbin_range "baserom/kn6000_program.rom", 0x20810C, 0x208110
-Str_empty_967:	.asciz " \xAD "
+Str_empty_977:	.asciz " \xAD "
 data_4C208114:
 .incbin_range "baserom/kn6000_program.rom", 0x208114, 0x208118
-Str_empty_966:	.asciz " \xAC "
+Str_empty_976:	.asciz " \xAC "
 data_4C20811C:
 .incbin_range "baserom/kn6000_program.rom", 0x20811C, 0x208120
-Str_empty_965:	.asciz " \xAB "
+Str_empty_975:	.asciz " \xAB "
 data_4C208124:
 .incbin_range "baserom/kn6000_program.rom", 0x208124, 0x208128
-Str_empty_964:	.asciz " \xAA "
-Str_empty_963:	.asciz " \xA6 "
-Str_empty_962:	.asciz " \xA1 "
+Str_empty_974:	.asciz " \xAA "
+Str_empty_973:	.asciz " \xA6 "
+Str_empty_972:	.asciz " \xA1 "
 Str_x2:	.asciz "\xA1x2"
 Str_x3:	.asciz "\xA1x3"
 Str_x4:	.asciz "\xA1x4"
 
 ptrs_4C208140:
-	.long	Str_empty_971
+	.long	Str_empty_978
 	.long	data_4C20810C
-	.long	Str_empty_967
+	.long	Str_empty_977
 	.long	data_4C208114
-	.long	Str_empty_966
+	.long	Str_empty_976
 	.long	data_4C20811C
-	.long	Str_empty_965
+	.long	Str_empty_975
 	.long	data_4C208124
-	.long	Str_empty_964
-	.long	Str_empty_963
-	.long	Str_empty_962
+	.long	Str_empty_974
+	.long	Str_empty_973
+	.long	Str_empty_972
 	.long	Str_x2
 	.long	Str_x3
 	.long	Str_x4
@@ -28964,7 +30873,7 @@ Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
-Str_empty_961:	.asciz "             "
+Str_empty_971:	.asciz "             "
 
 ptrs_4C208410:
 	.long	Str_TRANSPOSE_7fC
@@ -28992,7 +30901,7 @@ ptrs_4C208410:
 	.long	Str_TRANSPOSE_B_a0_80
 	.long	Str_TRANSPOSE_B_80
 	.long	Str_TRANSPOSE_C_80
-	.long	Str_empty_961
+	.long	Str_empty_971
 
 Str_s_SOUND_s:	.asciz " %s    SOUND       %s   "
 	.align	4, 0xFF
@@ -29312,12 +31221,48 @@ data_4C209BC8:
 .incbin_range "baserom/kn6000_program.rom", 0x209BC8, 0x209CC8
 data_4C209CC8:
 .incbin_range "baserom/kn6000_program.rom", 0x209CC8, 0x209D48
-data_4C209D48:
-.incbin_range "baserom/kn6000_program.rom", 0x209D48, 0x209D8C
+
+ptrs_4C209D48:
+	.long	loc_4C0B6A86
+	.long	loc_4C0B6ABD
+	.long	loc_4C0B6AD5
+	.long	loc_4C0B6A86
+	.long	loc_4C0B6ABD
+	.long	loc_4C0B6AD5
+	.long	loc_4C0B6A86
+	.long	loc_4C0B6AD5
+	.long	loc_4C0B6ABD
+	.long	loc_4C0B6ABD
+	.long	loc_4C0B6AD5
+	.long	loc_4C0B6A86
+	.long	loc_4C0B6ABD
+	.long	loc_4C0B6AD5
+	.long	loc_4C0B6A86
+	.long	loc_4C0B6AD5
+	.long	loc_4C0B6ABD
 data_4C209D8C:
 .incbin_range "baserom/kn6000_program.rom", 0x209D8C, 0x209E0C
-data_4C209E0C:
-.incbin_range "baserom/kn6000_program.rom", 0x209E0C, 0x209E5C
+ptrs_4C209E0C:
+	.long	loc_4C0BA4F4
+	.long	loc_4C0BA4F4
+	.long	loc_4C0BA4F4
+	.long	loc_4C0BA4F8
+	.long	loc_4C0BA4F8
+	.long	loc_4C0BA4F8
+	.long	loc_4C0BA506
+	.long	loc_4C0BA506
+	.long	loc_4C0BA506
+	.long	loc_4C0BA514
+	.long	loc_4C0BA514
+	.long	loc_4C0BA514
+	.long	loc_4C0BA51E
+	.long	loc_4C0BA51E
+	.long	loc_4C0BA522
+	.long	loc_4C0BA522
+	.long	loc_4C0BA527
+	.long	loc_4C0BA527
+	.long	loc_4C0BA52B
+	.long	loc_4C0BA52B
 data_4C209E5C:
 .incbin_range "baserom/kn6000_program.rom", 0x209E5C, 0x209F5C
 data_4C209F5C:
@@ -29512,24 +31457,67 @@ data_4C20CE5C:
 .incbin_range "baserom/kn6000_program.rom", 0x20CE5C, 0x20CEDC
 data_4C20CEDC:
 .incbin_range "baserom/kn6000_program.rom", 0x20CEDC, 0x20CF5C
-data_4C20CF5C:
-.incbin_range "baserom/kn6000_program.rom", 0x20CF5C, 0x20CF88
+ptrs_4C20CF5C:
+	.long	loc_4C0CC592
+	.long	loc_4C0CC5AE
+	.long	loc_4C0CC5CB
+	.long	loc_4C0CC5E8
+	.long	loc_4C0CC604
+	.long	loc_4C0CC61F
+	.long	loc_4C0CC63A
+	.long	loc_4C0CC655
+	.long	loc_4C0CC668
+	.long	AcNoteEditBoxProc_Le97
+	.long	AcNoteEditBoxProc_Le97
 data_4C20CF88:
 .incbin_range "baserom/kn6000_program.rom", 0x20CF88, 0x20D008
-data_4C20D008:
-.incbin_range "baserom/kn6000_program.rom", 0x20D008, 0x20D034
+ptrs_4C20D008:
+	.long	loc_4C0CD30E
+	.long	loc_4C0CD32A
+	.long	loc_4C0CD347
+	.long	loc_4C0CD364
+	.long	loc_4C0CD380
+	.long	loc_4C0CD39C
+	.long	loc_4C0CD3B7
+	.long	loc_4C0CD3D2
+	.long	loc_4C0CD3E5
+	.long	loc_4C0CD401
+	.long	loc_4C0CD41C
 data_4C20D034:
 .incbin_range "baserom/kn6000_program.rom", 0x20D034, 0x20D134
 data_4C20D134:
 .incbin_range "baserom/kn6000_program.rom", 0x20D134, 0x20D1B4
 data_4C20D1B4:
 .incbin_range "baserom/kn6000_program.rom", 0x20D1B4, 0x20D234
-data_4C20D234:
-.incbin_range "baserom/kn6000_program.rom", 0x20D234, 0x20D290
+ptrs_4C20D234:
+	.long	loc_4C0CF31E
+	.long	loc_4C0CF338
+	.long	loc_4C0CF352
+	.long	loc_4C0CF36C
+	.long	loc_4C0CF386
+	.long	loc_4C0CF3A0
+	.long	loc_4C0CF3BA
+	.long	loc_4C0CF3D4
+	.long	loc_4C0CF3EE
+	.long	loc_4C0CF421
+	.long	loc_4C0CF435
+	.long	loc_4C0CF45B
+	.long	loc_4C0CF46F
+	.long	loc_4C0CF489
+	.long	loc_4C0CF4A3
+	.long	loc_4C0CF4BD
+	.long	loc_4C0CF4D1
+	.long	loc_4C0CF4E5
+	.long	loc_4C0CF4FD
+	.long	loc_4C0CF516
+	.long	loc_4C0CF53F
+	.long	loc_4C0CF552
+	.long	loc_4C0CF565
 data_4C20D290:
 .incbin_range "baserom/kn6000_program.rom", 0x20D290, 0x20D390
 data_4C20D390:
 .incbin_range "baserom/kn6000_program.rom", 0x20D390, 0x20D790
+
 FnName_FE_Dummy:	.asciz "FE_Dummy"
 FnName_SeqPlayCycleTgl:	.asciz "SeqPlayCycleTgl"
 FnName_GridCheck_kotani:	.asciz "GridCheck_kotani"
@@ -30267,8 +32255,25 @@ data_4C20F45C:
 .incbin_range "baserom/kn6000_program.rom", 0x20F45C, 0x20F4DC
 data_4C20F4DC:
 .incbin_range "baserom/kn6000_program.rom", 0x20F4DC, 0x20F55C
-data_4C20F55C:
-.incbin_range "baserom/kn6000_program.rom", 0x20F55C, 0x20F5A0
+
+ptrs_4C20F55C:
+	.long	loc_4C0D36EE
+	.long	loc_4C0D378C
+	.long	loc_4C0D37E4
+	.long	loc_4C0D373D
+	.long	loc_4C0D3842
+	.long	loc_4C0D3880
+	.long	loc_4C0D38DE
+	.long	loc_4C0D391C
+	.long	NameGetFuncCall_entry_L458
+	.long	NameGetFuncCall_entry_L458
+	.long	NameGetFuncCall_entry_L458
+	.long	NameGetFuncCall_entry_L458
+	.long	NameGetFuncCall_entry_L458
+	.long	loc_4C0D3978
+	.long	loc_4C0D3A1F
+	.long	loc_4C0D3AC1
+	.long	loc_4C0D3AD6
 
 Str_EV_PAD_NAME:	.asciz "EV_PAD_NAME"
 Str_EV_CMP_DRAW:	.asciz "EV_CMP_DRAW"
@@ -30451,8 +32456,32 @@ FnName_AcFdemoScreenProc:	.asciz "AcFdemoScreenProc"
 FnName_AcPleaseWaitDemoProc:	.asciz "AcPleaseWaitDemoProc"
 FnName_IvDemofeature2Proc:	.asciz "IvDemofeature2Proc"
 .incbin_range "baserom/kn6000_program.rom", 0x21019A, 0x21019C
-data_4C21019C:
-.incbin_range "baserom/kn6000_program.rom", 0x21019C, 0x2101FC
+
+ptrs_4C21019C:
+	.long	loc_4C05DEED
+	.long	loc_4C05E1C2
+	.long	func_4C058C8B
+	.long	func_4C058DDA
+	.long	func_4C058EE1
+	.long	loc_4C058FE2
+	.long	func_4C058F6C
+	.long	func_4C059030
+	.long	loc_4C058994
+	.long	func_4C058D70
+	.long	loc_4C058A04
+	.long	loc_4C0589EF
+	.long	loc_4C054588
+	.long	loc_4C0546B3
+	.long	func_4C05B168
+	.long	func_4C05B2B3
+	.long	func_4C05B3BA
+	.long	loc_4C05B4BB
+	.long	func_4C05B445
+	.long	func_4C05B509
+	.long	func_4C05AE48
+	.long	func_4C05B24D
+	.long	loc_4C05AEC9
+	.long	loc_4C05AEB4
 data_4C2101FC:
 .incbin_range "baserom/kn6000_program.rom", 0x2101FC, 0x21020C
 data_4C21020C:
@@ -30463,11 +32492,12 @@ data_4C21022C:
 .incbin_range "baserom/kn6000_program.rom", 0x21022C, 0x210234
 data_4C210234:
 .incbin_range "baserom/kn6000_program.rom", 0x210234, 0x210276
-Str_empty_960:	.asciz "|               |               |               |               |"
+
+Str_empty_967:	.asciz "|               |               |               |               |"
 
 ptrs_4C2102B8:
 	.long	data_4C210234
-	.long	Str_empty_960
+	.long	Str_empty_967
 data_4C2102C0:
 .incbin_range "baserom/kn6000_program.rom", 0x2102C0, 0x2102D0
 data_4C2102D0:
@@ -30606,14 +32636,84 @@ data_4C210BB7:
 .incbin_range "baserom/kn6000_program.rom", 0x210BB7, 0x210BDC
 data_4C210BDC:
 .incbin_range "baserom/kn6000_program.rom", 0x210BDC, 0x210C5C
-data_4C210C5C:
-.incbin_range "baserom/kn6000_program.rom", 0x210C5C, 0x210CE8
-data_4C210CE8:
-.incbin_range "baserom/kn6000_program.rom", 0x210CE8, 0x210D74
+
+ptrs_4C210C5C:
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D812D
+	.long	loc_4C0D801B
+	.long	loc_4C0D801B
+	.long	loc_4C0D8052
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	func_4C0D7EF3_entry_L253
+	.long	loc_4C0D8089
+	.long	loc_4C0D8149
+	.long	loc_4C0D8149
+	.long	loc_4C0D8149
+ptrs_4C210CE8:
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D834F
+	.long	loc_4C0D82AC
+	.long	loc_4C0D82AC
+	.long	loc_4C0D82E5
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	loc_4C0D831A
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	func_4C0D821A_entry_L14e
+	.long	loc_4C0D836B
+	.long	loc_4C0D836B
+	.long	loc_4C0D836B
+	.long	loc_4C0D836B
 data_4C210D74:
 .incbin_range "baserom/kn6000_program.rom", 0x210D74, 0x210DF4
 data_4C210DF4:
 .incbin_range "baserom/kn6000_program.rom", 0x210DF4, 0x210DFC
+
 FnName_Ed1stOnSe:	.asciz "Ed1stOnSe"
 FnName_Ed2ndOnSe:	.asciz "Ed2ndOnSe"
 FnName_Ed3rdOnSe:	.asciz "Ed3rdOnSe"
@@ -35433,12 +37533,14 @@ Str_TT_SEDNAME:	.asciz "TT_SEDNAME"
 	.align	4, 0xFF
 Str_TT_SELFOVIEW:	.asciz "TT_SELFOVIEW"
 	.align	4, 0xFF
-data_4C21F330:
-.incbin_range "baserom/kn6000_program.rom", 0x21F330, 0x21F370
-data_4C21F370:
-	.space	106, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x21F3DA, 0x21F9A4
-	.space	108, 0x00
+
+BitmapKenbanSe_Palette:	# 16 colours, 0x00BBGGRR (BitmapKenbanSe: MT_GetBitmapPalette)
+	.long	0x00000000, 0x00000080, 0x00008000, 0x00008080, 0x00800000, 0x00800080, 0x00808000, 0x00C0C0C0
+	.long	0x00808080, 0x000000FF, 0x0000FF00, 0x0000FFFF, 0x00FF0000, 0x00FF00FF, 0x00FFFF00, 0x00FFFFFF
+
+BitmapKenbanSe_Pixels:	# 209 x 16, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapKenbanSe answers MT_GetBitmapData with (src/program/data/media/BitmapKenbanSe_Pixels.png)
+	.incbin	"build/bitmaps/BitmapKenbanSe_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 209 16) from src/program/data/media/BitmapKenbanSe_Pixels.png
+
 Str_MD_SOUNDEDIT_4:	.asciz "MD_SOUNDEDIT"
 	.align	4, 0xFF
 Str_MD_SOUNDEDIT_3:	.asciz "MD_SOUNDEDIT"
@@ -35744,13 +37846,25 @@ Str_empty_492:	.asciz "      "
 Str_BAL_9:	.asciz "  BAL "
 	.align	4, 0xFF
 Str_DETUNE_10:	.asciz "DETUNE"
-.incbin_range "baserom/kn6000_program.rom", 0x220227, 0x220240
+	.align	4, 0xFF
+Str_empty_966:	.asciz "       "
+Str_empty_965:	.asciz "       "
+Str_empty_964:	.asciz "     "
+	.align	4, 0xFF
 Str_DELAY_18:	.asciz "DELAY"
-.incbin_range "baserom/kn6000_program.rom", 0x220246, 0x220258
+	.align	4, 0xFF
+Str_empty_963:	.asciz "     "
+	.align	4, 0xFF
+Str_empty_962:	.asciz "     "
+	.align	4, 0xFF
 Str_INTENS:	.asciz "INTENS"
-.incbin_range "baserom/kn6000_program.rom", 0x22025F, 0x220268
+	.align	4, 0xFF
+Str_empty_961:	.asciz "      "
+	.align	4, 0xFF
 Str_INTENS_2:	.asciz "INTENS"
-.incbin_range "baserom/kn6000_program.rom", 0x22026F, 0x220278
+	.align	4, 0xFF
+Str_empty_960:	.asciz "      "
+	.align	4, 0xFF
 Str_REVERB_9:	.asciz "REVERB"
 	.align	4, 0xFF
 Str_empty_491:	.asciz "      "
@@ -36704,102 +38818,667 @@ Str_FIX:	.asciz " FIX"
 	.align	4, 0xFF
 data_4C221B0C:
 .incbin_range "baserom/kn6000_program.rom", 0x221B0C, 0x221B8C
-data_4C221B8C:
-.incbin_range "baserom/kn6000_program.rom", 0x221B8C, 0x221BC0
-data_4C221BC0:
-.incbin_range "baserom/kn6000_program.rom", 0x221BC0, 0x221BF4
+
+ptrs_4C221B8C:
+	.long	loc_4C0DD047
+	.long	loc_4C0DD05D
+	.long	loc_4C0DD073
+	.long	loc_4C0DD089
+	.long	loc_4C0DD09F
+	.long	loc_4C0DD0B5
+	.long	loc_4C0DD0CB
+	.long	loc_4C0DD0E0
+	.long	loc_4C0DD0F5
+	.long	loc_4C0DD10A
+	.long	loc_4C0DD11F
+	.long	loc_4C0DD134
+	.long	loc_4C0DD149
+ptrs_4C221BC0:
+	.long	loc_4C0DF4E7
+	.long	loc_4C0DF4FD
+	.long	loc_4C0DF513
+	.long	loc_4C0DF529
+	.long	loc_4C0DF53F
+	.long	loc_4C0DF555
+	.long	loc_4C0DF56B
+	.long	loc_4C0DF580
+	.long	loc_4C0DF595
+	.long	loc_4C0DF5AA
+	.long	loc_4C0DF5BF
+	.long	loc_4C0DF5D4
+	.long	loc_4C0DF5E9
 data_4C221BF4:
 .incbin_range "baserom/kn6000_program.rom", 0x221BF4, 0x221C74
-data_4C221C74:
-.incbin_range "baserom/kn6000_program.rom", 0x221C74, 0x221CA8
-data_4C221CA8:
-.incbin_range "baserom/kn6000_program.rom", 0x221CA8, 0x221CDC
-data_4C221CDC:
-.incbin_range "baserom/kn6000_program.rom", 0x221CDC, 0x221D10
-data_4C221D10:
-.incbin_range "baserom/kn6000_program.rom", 0x221D10, 0x221D44
-data_4C221D44:
-.incbin_range "baserom/kn6000_program.rom", 0x221D44, 0x221D78
-data_4C221D78:
-.incbin_range "baserom/kn6000_program.rom", 0x221D78, 0x221DAC
-data_4C221DAC:
-.incbin_range "baserom/kn6000_program.rom", 0x221DAC, 0x221DE0
-data_4C221DE0:
-.incbin_range "baserom/kn6000_program.rom", 0x221DE0, 0x221E14
-data_4C221E14:
-.incbin_range "baserom/kn6000_program.rom", 0x221E14, 0x221E48
-data_4C221E48:
-.incbin_range "baserom/kn6000_program.rom", 0x221E48, 0x221E7C
-data_4C221E7C:
-.incbin_range "baserom/kn6000_program.rom", 0x221E7C, 0x221EB0
-data_4C221EB0:
-.incbin_range "baserom/kn6000_program.rom", 0x221EB0, 0x221EE4
-data_4C221EE4:
-.incbin_range "baserom/kn6000_program.rom", 0x221EE4, 0x221F18
-data_4C221F18:
-.incbin_range "baserom/kn6000_program.rom", 0x221F18, 0x221F4C
-data_4C221F4C:
-.incbin_range "baserom/kn6000_program.rom", 0x221F4C, 0x221F80
-data_4C221F80:
-.incbin_range "baserom/kn6000_program.rom", 0x221F80, 0x221FB4
-data_4C221FB4:
-.incbin_range "baserom/kn6000_program.rom", 0x221FB4, 0x221FE8
-data_4C221FE8:
-.incbin_range "baserom/kn6000_program.rom", 0x221FE8, 0x22201C
-data_4C22201C:
-.incbin_range "baserom/kn6000_program.rom", 0x22201C, 0x222050
-data_4C222050:
-.incbin_range "baserom/kn6000_program.rom", 0x222050, 0x222084
-data_4C222084:
-.incbin_range "baserom/kn6000_program.rom", 0x222084, 0x2220B8
-data_4C2220B8:
-.incbin_range "baserom/kn6000_program.rom", 0x2220B8, 0x2220EC
-data_4C2220EC:
-.incbin_range "baserom/kn6000_program.rom", 0x2220EC, 0x222120
-data_4C222120:
-.incbin_range "baserom/kn6000_program.rom", 0x222120, 0x222154
-data_4C222154:
-.incbin_range "baserom/kn6000_program.rom", 0x222154, 0x222188
-data_4C222188:
-.incbin_range "baserom/kn6000_program.rom", 0x222188, 0x2221BC
-data_4C2221BC:
-.incbin_range "baserom/kn6000_program.rom", 0x2221BC, 0x2221F0
-data_4C2221F0:
-.incbin_range "baserom/kn6000_program.rom", 0x2221F0, 0x222224
-data_4C222224:
-.incbin_range "baserom/kn6000_program.rom", 0x222224, 0x222258
-data_4C222258:
-.incbin_range "baserom/kn6000_program.rom", 0x222258, 0x22228C
-data_4C22228C:
-.incbin_range "baserom/kn6000_program.rom", 0x22228C, 0x2222C0
-data_4C2222C0:
-.incbin_range "baserom/kn6000_program.rom", 0x2222C0, 0x2222F4
-data_4C2222F4:
-.incbin_range "baserom/kn6000_program.rom", 0x2222F4, 0x222328
-data_4C222328:
-.incbin_range "baserom/kn6000_program.rom", 0x222328, 0x22235C
-data_4C22235C:
-.incbin_range "baserom/kn6000_program.rom", 0x22235C, 0x222390
-data_4C222390:
-.incbin_range "baserom/kn6000_program.rom", 0x222390, 0x222460
-data_4C222460:
-.incbin_range "baserom/kn6000_program.rom", 0x222460, 0x222494
+ptrs_4C221C74:
+	.long	loc_4C0E0B92
+	.long	loc_4C0E0B92
+	.long	loc_4C0E0B92
+	.long	loc_4C0E0B92
+	.long	loc_4C0E0BBF
+	.long	loc_4C0E0BBF
+	.long	loc_4C0E0BEC
+	.long	loc_4C0E0C19
+	.long	loc_4C0E0C46
+	.long	loc_4C0E0C73
+	.long	DeffVal0Se_L2f7
+	.long	loc_4C0E0C9F
+	.long	loc_4C0E0C9F
+ptrs_4C221CA8:
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	loc_4C0E0AD8
+	.long	DeffVal0Se_L188
+	.long	loc_4C0E0B01
+	.long	loc_4C0E0B01
+ptrs_4C221CDC:
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+	.long	DeffVal0Se_Le1
+	.long	loc_4C0E0AA0
+	.long	loc_4C0E0AA0
+ptrs_4C221D10:
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A3A
+	.long	loc_4C0E0A53
+	.long	DeffVal0Se_Laf
+	.long	loc_4C0E0A6C
+	.long	loc_4C0E0A6C
+ptrs_4C221D44:
+	.long	loc_4C0E0EFE
+	.long	loc_4C0E0EFE
+	.long	loc_4C0E0EFE
+	.long	loc_4C0E0EFE
+	.long	loc_4C0E0F2B
+	.long	loc_4C0E0F2B
+	.long	loc_4C0E0F58
+	.long	loc_4C0E0F85
+	.long	loc_4C0E0FB2
+	.long	loc_4C0E0FDF
+	.long	DeffVal1Se_L33a
+	.long	loc_4C0E100B
+	.long	loc_4C0E100B
+ptrs_4C221D78:
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E4C
+	.long	loc_4C0E0E75
+	.long	loc_4C0E0E9F
+	.long	DeffVal1Se_L1cb
+	.long	loc_4C0E0E9F
+	.long	loc_4C0E0E9F
+ptrs_4C221DAC:
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DE3
+	.long	loc_4C0E0DFA
+	.long	loc_4C0E0E14
+	.long	DeffVal1Se_L12c
+	.long	loc_4C0E0E14
+	.long	loc_4C0E0E14
+ptrs_4C221DE0:
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D63
+	.long	loc_4C0E0D7C
+	.long	loc_4C0E0D96
+	.long	DeffVal1Se_Lc9
+	.long	loc_4C0E0DAF
+	.long	loc_4C0E0DAF
+ptrs_4C221E14:
+	.long	loc_4C0E13BE
+	.long	loc_4C0E13BE
+	.long	loc_4C0E13BE
+	.long	loc_4C0E13BE
+	.long	loc_4C0E13EB
+	.long	loc_4C0E13EB
+	.long	loc_4C0E1418
+	.long	loc_4C0E1445
+	.long	loc_4C0E1472
+	.long	loc_4C0E149F
+	.long	DeffVal2Se_L48e
+	.long	loc_4C0E14CB
+	.long	loc_4C0E14CB
+ptrs_4C221E48:
+	.long	loc_4C0E1225
+	.long	loc_4C0E1225
+	.long	loc_4C0E1225
+	.long	loc_4C0E1225
+	.long	loc_4C0E1250
+	.long	loc_4C0E1250
+	.long	loc_4C0E127A
+	.long	loc_4C0E130C
+	.long	loc_4C0E1335
+	.long	loc_4C0E135F
+	.long	DeffVal2Se_L31f
+	.long	loc_4C0E135F
+	.long	loc_4C0E135F
+ptrs_4C221E7C:
+	.long	loc_4C0E11A2
+	.long	loc_4C0E11A2
+	.long	loc_4C0E11A2
+	.long	loc_4C0E11A2
+	.long	loc_4C0E11BC
+	.long	loc_4C0E11BC
+	.long	loc_4C0E11BC
+	.long	loc_4C0E11BC
+	.long	loc_4C0E11D3
+	.long	loc_4C0E11ED
+	.long	DeffVal2Se_L199
+	.long	loc_4C0E11ED
+	.long	loc_4C0E11ED
+ptrs_4C221EB0:
+	.long	loc_4C0E10D5
+	.long	loc_4C0E10D5
+	.long	loc_4C0E10D5
+	.long	loc_4C0E10D5
+	.long	loc_4C0E10F0
+	.long	loc_4C0E10F0
+	.long	loc_4C0E1109
+	.long	loc_4C0E1122
+	.long	loc_4C0E113B
+	.long	loc_4C0E1155
+	.long	DeffVal2Se_L11c
+	.long	loc_4C0E116E
+	.long	loc_4C0E116E
+ptrs_4C221EE4:
+	.long	loc_4C0E16D3
+	.long	loc_4C0E16D3
+	.long	loc_4C0E16D3
+	.long	loc_4C0E16D3
+	.long	loc_4C0E1700
+	.long	loc_4C0E1700
+	.long	loc_4C0E172D
+	.long	loc_4C0E175A
+	.long	loc_4C0E1787
+	.long	loc_4C0E17B4
+	.long	DeffVal3Se_L2e2
+	.long	loc_4C0E17E0
+	.long	loc_4C0E17E0
+ptrs_4C221F18:
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	loc_4C0E165F
+	.long	DeffVal3Se_L174
+	.long	loc_4C0E1688
+	.long	loc_4C0E1688
+ptrs_4C221F4C:
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	loc_4C0E162D
+	.long	DeffVal3Se_L119
+	.long	DeffVal3Se_L119
+	.long	DeffVal3Se_L119
+ptrs_4C221F80:
+	.long	loc_4C0E1595
+	.long	loc_4C0E1595
+	.long	loc_4C0E1595
+	.long	loc_4C0E1595
+	.long	loc_4C0E1595
+	.long	loc_4C0E1595
+	.long	loc_4C0E15AE
+	.long	loc_4C0E15C7
+	.long	loc_4C0E15E0
+	.long	loc_4C0E15F9
+	.long	DeffVal3Se_Le7
+	.long	DeffVal3Se_Le7
+	.long	DeffVal3Se_Le7
+ptrs_4C221FB4:
+	.long	loc_4C0E19D8
+	.long	loc_4C0E19D8
+	.long	loc_4C0E19D8
+	.long	loc_4C0E19D8
+	.long	loc_4C0E1A05
+	.long	loc_4C0E1A05
+	.long	loc_4C0E1A31
+	.long	loc_4C0E1A31
+	.long	loc_4C0E1A31
+	.long	loc_4C0E1A31
+	.long	DeffVal4Se_L21f
+	.long	loc_4C0E1A31
+	.long	loc_4C0E1A31
+ptrs_4C221FE8:
+	.long	loc_4C0E193A
+	.long	loc_4C0E193A
+	.long	loc_4C0E193A
+	.long	loc_4C0E193A
+	.long	loc_4C0E1963
+	.long	loc_4C0E1963
+	.long	loc_4C0E198D
+	.long	loc_4C0E198D
+	.long	loc_4C0E198D
+	.long	loc_4C0E198D
+	.long	DeffVal4Se_L165
+	.long	loc_4C0E198D
+	.long	loc_4C0E198D
+ptrs_4C22201C:
+	.long	loc_4C0E18EE
+	.long	loc_4C0E18EE
+	.long	loc_4C0E18EE
+	.long	loc_4C0E18EE
+	.long	loc_4C0E1905
+	.long	loc_4C0E1905
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+	.long	DeffVal4Se_Le0
+ptrs_4C222050:
+	.long	loc_4C0E18A0
+	.long	loc_4C0E18A0
+	.long	loc_4C0E18A0
+	.long	loc_4C0E18A0
+	.long	loc_4C0E18B9
+	.long	loc_4C0E18B9
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+	.long	DeffVal4Se_L94
+ptrs_4C222084:
+	.long	loc_4C0E1BE1
+	.long	loc_4C0E1BE1
+	.long	loc_4C0E1BE1
+	.long	loc_4C0E1BE1
+	.long	loc_4C0E1C0D
+	.long	loc_4C0E1C0D
+	.long	loc_4C0E1C39
+	.long	loc_4C0E1C39
+	.long	loc_4C0E1C39
+	.long	loc_4C0E1C39
+	.long	DeffVal5Se_L1d6
+	.long	loc_4C0E1C39
+	.long	loc_4C0E1C39
+ptrs_4C2220B8:
+	.long	loc_4C0E1B58
+	.long	loc_4C0E1B58
+	.long	loc_4C0E1B58
+	.long	loc_4C0E1B58
+	.long	loc_4C0E1B6D
+	.long	loc_4C0E1B6D
+	.long	loc_4C0E1B96
+	.long	loc_4C0E1B96
+	.long	loc_4C0E1B96
+	.long	loc_4C0E1B96
+	.long	DeffVal5Se_L11d
+	.long	loc_4C0E1B96
+	.long	loc_4C0E1B96
+ptrs_4C2220EC:
+	.long	loc_4C0E1B24
+	.long	loc_4C0E1B24
+	.long	loc_4C0E1B24
+	.long	loc_4C0E1B24
+	.long	loc_4C0E1B26
+	.long	loc_4C0E1B26
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+	.long	DeffVal5Se_Lad
+ptrs_4C222120:
+	.long	loc_4C0E1AEE
+	.long	loc_4C0E1AEE
+	.long	loc_4C0E1AEE
+	.long	loc_4C0E1AEE
+	.long	loc_4C0E1AF0
+	.long	loc_4C0E1AF0
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+	.long	DeffVal5Se_L79
+ptrs_4C222154:
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E39
+	.long	loc_4C0E1E66
+	.long	loc_4C0E1E91
+ptrs_4C222188:
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1D9A
+	.long	loc_4C0E1DC4
+	.long	loc_4C0E1DD9
+ptrs_4C2221BC:
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D48
+	.long	loc_4C0E1D60
+	.long	loc_4C0E1D62
+ptrs_4C2221F0:
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1CF9
+	.long	loc_4C0E1D11
+	.long	loc_4C0E1D13
+ptrs_4C222224:
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+	.long	loc_4C0E2013
+ptrs_4C222258:
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+	.long	loc_4C0E1FB9
+ptrs_4C22228C:
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+	.long	loc_4C0E1F84
+ptrs_4C2222C0:
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+	.long	loc_4C0E1F4F
+ptrs_4C2222F4:
+	.long	loc_4C0E222D
+	.long	loc_4C0E222D
+	.long	loc_4C0E222D
+	.long	loc_4C0E222D
+	.long	loc_4C0E2243
+	.long	loc_4C0E2243
+	.long	loc_4C0E2258
+	.long	loc_4C0E226D
+	.long	loc_4C0E2282
+	.long	loc_4C0E2297
+	.long	DeffVal0SwSe_Lcc
+	.long	loc_4C0E22AC
+	.long	loc_4C0E22AC
+ptrs_4C222328:
+	.long	loc_4C0E2315
+	.long	loc_4C0E2315
+	.long	loc_4C0E2315
+	.long	loc_4C0E2315
+	.long	loc_4C0E232B
+	.long	loc_4C0E232B
+	.long	loc_4C0E2340
+	.long	loc_4C0E2355
+	.long	loc_4C0E236A
+	.long	loc_4C0E237F
+	.long	DeffVal1SwSe_Lcc
+	.long	loc_4C0E2394
+	.long	loc_4C0E2394
+ptrs_4C22235C:
+	.long	loc_4C0E23FD
+	.long	loc_4C0E23FD
+	.long	loc_4C0E23FD
+	.long	loc_4C0E23FD
+	.long	loc_4C0E2413
+	.long	loc_4C0E2413
+	.long	loc_4C0E2428
+	.long	loc_4C0E243D
+	.long	loc_4C0E2452
+	.long	loc_4C0E2467
+	.long	DeffVal2SwSe_Lcc
+	.long	loc_4C0E247C
+	.long	loc_4C0E247C
+ptrs_4C222390:
+	.long	loc_4C0E24E5
+	.long	loc_4C0E24E5
+	.long	loc_4C0E24E5
+	.long	loc_4C0E24E5
+	.long	loc_4C0E24FB
+	.long	loc_4C0E24FB
+	.long	loc_4C0E2510
+	.long	loc_4C0E2525
+	.long	loc_4C0E253A
+	.long	loc_4C0E254F
+	.long	DeffVal3SwSe_Lcc
+	.long	loc_4C0E2564
+	.long	loc_4C0E2564
+ptrs_4C2223C4:
+	.long	loc_4C0E25C6
+	.long	loc_4C0E25C6
+	.long	loc_4C0E25C6
+	.long	loc_4C0E25C6
+	.long	loc_4C0E25DB
+	.long	loc_4C0E25DB
+	.long	loc_4C0E25F0
+	.long	loc_4C0E25F0
+	.long	loc_4C0E25F0
+	.long	loc_4C0E25F0
+	.long	DeffVal4SwSe_L70
+	.long	loc_4C0E25F0
+	.long	loc_4C0E25F0
+ptrs_4C2223F8:
+	.long	loc_4C0E2652
+	.long	loc_4C0E2652
+	.long	loc_4C0E2652
+	.long	loc_4C0E2652
+	.long	loc_4C0E2667
+	.long	loc_4C0E2667
+	.long	loc_4C0E267C
+	.long	loc_4C0E267C
+	.long	loc_4C0E267C
+	.long	loc_4C0E267C
+	.long	DeffVal5SwSe_L70
+	.long	loc_4C0E267C
+	.long	loc_4C0E267C
+ptrs_4C22242C:
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26DE
+	.long	loc_4C0E26F3
+	.long	loc_4C0E2708
+ptrs_4C222460:
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
+	.long	loc_4C0E2767
 data_4C222494:
 .incbin_range "baserom/kn6000_program.rom", 0x222494, 0x222514
-data_4C222514:
-.incbin_range "baserom/kn6000_program.rom", 0x222514, 0x222540
-data_4C222540:
-.incbin_range "baserom/kn6000_program.rom", 0x222540, 0x22256C
-data_4C22256C:
-.incbin_range "baserom/kn6000_program.rom", 0x22256C, 0x222598
+ptrs_4C222514:
+	.long	loc_4C0E3DFC
+	.long	loc_4C0E3E09
+	.long	loc_4C0E3E77
+	.long	loc_4C0E3EDE
+	.long	loc_4C0E3FF2
+	.long	loc_4C0E4018
+	.long	loc_4C0E4040
+	.long	loc_4C0E4064
+	.long	loc_4C0E4090
+	.long	loc_4C0E40E3
+	.long	loc_4C0E4116
+ptrs_4C222540:
+	.long	loc_4C0E39FF
+	.long	loc_4C0E3A0B
+	.long	loc_4C0E3B2F
+	.long	ToneSelGridSe_L7f9
+	.long	loc_4C0E3C3F
+	.long	loc_4C0E3C61
+	.long	loc_4C0E3C86
+	.long	loc_4C0E3CAF
+	.long	loc_4C0E3D0E
+	.long	loc_4C0E3D2F
+	.long	loc_4C0E3D66
+ptrs_4C22256C:
+	.long	loc_4C0E361C
+	.long	loc_4C0E362A
+	.long	loc_4C0E3749
+	.long	ToneSelGridSe_L41b
+	.long	loc_4C0E3857
+	.long	loc_4C0E387E
+	.long	loc_4C0E38A3
+	.long	loc_4C0E38CD
+	.long	loc_4C0E392C
+	.long	loc_4C0E3952
+	.long	loc_4C0E3988
 data_4C222598:
 .incbin_range "baserom/kn6000_program.rom", 0x222598, 0x222618
-data_4C222618:
-.incbin_range "baserom/kn6000_program.rom", 0x222618, 0x22263C
-data_4C22263C:
-.incbin_range "baserom/kn6000_program.rom", 0x22263C, 0x222660
-data_4C222660:
-.incbin_range "baserom/kn6000_program.rom", 0x222660, 0x222684
+ptrs_4C222618:
+	.long	loc_4C0E453A
+	.long	loc_4C0E4547
+	.long	loc_4C0E45B2
+	.long	loc_4C0E45D4
+	.long	loc_4C0E45FA
+	.long	loc_4C0E4607
+	.long	loc_4C0E462F
+	.long	loc_4C0E4657
+	.long	loc_4C0E4680
+ptrs_4C22263C:
+	.long	loc_4C0E4375
+	.long	loc_4C0E4381
+	.long	loc_4C0E43A7
+	.long	loc_4C0E43C9
+	.long	loc_4C0E43EA
+	.long	loc_4C0E43F8
+	.long	loc_4C0E442F
+	.long	loc_4C0E446C
+	.long	loc_4C0E4490
+ptrs_4C222660:
+	.long	loc_4C0E41D3
+	.long	loc_4C0E41E0
+	.long	loc_4C0E4208
+	.long	loc_4C0E422E
+	.long	loc_4C0E4252
+	.long	loc_4C0E4260
+	.long	loc_4C0E4298
+	.long	loc_4C0E42D4
+	.long	loc_4C0E42FA
 data_4C222684:
 .incbin_range "baserom/kn6000_program.rom", 0x222684, 0x222704
 data_4C222704:
@@ -36808,78 +39487,306 @@ data_4C222784:
 .incbin_range "baserom/kn6000_program.rom", 0x222784, 0x222804
 data_4C222804:
 .incbin_range "baserom/kn6000_program.rom", 0x222804, 0x222884
-data_4C222884:
-.incbin_range "baserom/kn6000_program.rom", 0x222884, 0x2228B0
-data_4C2228B0:
-.incbin_range "baserom/kn6000_program.rom", 0x2228B0, 0x2228DC
-data_4C2228DC:
-.incbin_range "baserom/kn6000_program.rom", 0x2228DC, 0x222908
+ptrs_4C222884:
+	.long	loc_4C0E59D8
+	.long	loc_4C0E59E5
+	.long	loc_4C0E5A1F
+	.long	loc_4C0E5A54
+	.long	loc_4C0E5A8E
+	.long	loc_4C0E5AC7
+	.long	loc_4C0E5B01
+	.long	loc_4C0E5B37
+	.long	loc_4C0E5B71
+	.long	loc_4C0E5BA5
+	.long	loc_4C0E5BDB
+ptrs_4C2228B0:
+	.long	loc_4C0E57D4
+	.long	loc_4C0E57E0
+	.long	loc_4C0E5809
+	.long	loc_4C0E582B
+	.long	loc_4C0E5854
+	.long	loc_4C0E5876
+	.long	loc_4C0E589C
+	.long	loc_4C0E58BE
+	.long	loc_4C0E58E6
+	.long	loc_4C0E5907
+	.long	loc_4C0E5930
+ptrs_4C2228DC:
+	.long	loc_4C0E55EF
+	.long	loc_4C0E55FD
+	.long	loc_4C0E5623
+	.long	loc_4C0E5647
+	.long	loc_4C0E5671
+	.long	loc_4C0E5695
+	.long	loc_4C0E56BF
+	.long	loc_4C0E56E2
+	.long	loc_4C0E570A
+	.long	loc_4C0E572C
+	.long	loc_4C0E5754
 data_4C222908:
 .incbin_range "baserom/kn6000_program.rom", 0x222908, 0x222988
 data_4C222988:
 .incbin_range "baserom/kn6000_program.rom", 0x222988, 0x222A08
 data_4C222A08:
 .incbin_range "baserom/kn6000_program.rom", 0x222A08, 0x222A88
-data_4C222A88:
-.incbin_range "baserom/kn6000_program.rom", 0x222A88, 0x222AAC
-data_4C222AAC:
-.incbin_range "baserom/kn6000_program.rom", 0x222AAC, 0x222AD0
-data_4C222AD0:
-.incbin_range "baserom/kn6000_program.rom", 0x222AD0, 0x222AF4
+ptrs_4C222A88:
+	.long	loc_4C0E6B57
+	.long	loc_4C0E6B64
+	.long	loc_4C0E6B9C
+	.long	loc_4C0E6BD4
+	.long	loc_4C0E6C0C
+	.long	loc_4C0E6C44
+	.long	loc_4C0E6C7C
+	.long	loc_4C0E6CB4
+	.long	loc_4C0E6CEB
+ptrs_4C222AAC:
+	.long	loc_4C0E69B3
+	.long	loc_4C0E69BF
+	.long	loc_4C0E69E2
+	.long	loc_4C0E6A03
+	.long	loc_4C0E6A25
+	.long	loc_4C0E6A46
+	.long	loc_4C0E6A6A
+	.long	loc_4C0E6A8B
+	.long	loc_4C0E6AAF
+ptrs_4C222AD0:
+	.long	loc_4C0E6821
+	.long	loc_4C0E682F
+	.long	loc_4C0E6853
+	.long	loc_4C0E687A
+	.long	loc_4C0E68A2
+	.long	loc_4C0E68C6
+	.long	loc_4C0E68EC
+	.long	loc_4C0E6912
+	.long	loc_4C0E6934
 data_4C222AF4:
 .incbin_range "baserom/kn6000_program.rom", 0x222AF4, 0x222B74
-data_4C222B74:
-.incbin_range "baserom/kn6000_program.rom", 0x222B74, 0x222B98
-data_4C222B98:
-.incbin_range "baserom/kn6000_program.rom", 0x222B98, 0x222BBC
-data_4C222BBC:
-.incbin_range "baserom/kn6000_program.rom", 0x222BBC, 0x222BE0
+ptrs_4C222B74:
+	.long	loc_4C0E71C2
+	.long	loc_4C0E71CF
+	.long	loc_4C0E71F7
+	.long	loc_4C0E721B
+	.long	loc_4C0E7255
+	.long	loc_4C0E728F
+	.long	loc_4C0E72C9
+	.long	loc_4C0E7301
+	.long	loc_4C0E7338
+ptrs_4C222B98:
+	.long	loc_4C0E6FC4
+	.long	loc_4C0E6FD0
+	.long	loc_4C0E6FF6
+	.long	loc_4C0E701C
+	.long	loc_4C0E7049
+	.long	loc_4C0E707B
+	.long	loc_4C0E70A8
+	.long	loc_4C0E70CC
+	.long	loc_4C0E7106
+ptrs_4C222BBC:
+	.long	loc_4C0E6DEA
+	.long	loc_4C0E6DF8
+	.long	loc_4C0E6E21
+	.long	loc_4C0E6E4A
+	.long	loc_4C0E6E77
+	.long	loc_4C0E6EA8
+	.long	loc_4C0E6ED5
+	.long	loc_4C0E6F0F
+	.long	loc_4C0E6F49
 data_4C222BE0:
 .incbin_range "baserom/kn6000_program.rom", 0x222BE0, 0x222C60
 data_4C222C60:
 .incbin_range "baserom/kn6000_program.rom", 0x222C60, 0x222CE0
 data_4C222CE0:
 .incbin_range "baserom/kn6000_program.rom", 0x222CE0, 0x222D60
-data_4C222D60:
-.incbin_range "baserom/kn6000_program.rom", 0x222D60, 0x222D8C
-data_4C222D8C:
-.incbin_range "baserom/kn6000_program.rom", 0x222D8C, 0x222DB8
-data_4C222DB8:
-.incbin_range "baserom/kn6000_program.rom", 0x222DB8, 0x222DE4
+ptrs_4C222D60:
+	.long	loc_4C0E88A6
+	.long	loc_4C0E88B3
+	.long	loc_4C0E88ED
+	.long	loc_4C0E8922
+	.long	loc_4C0E895C
+	.long	loc_4C0E8995
+	.long	loc_4C0E89CF
+	.long	loc_4C0E8A05
+	.long	loc_4C0E8A3F
+	.long	loc_4C0E8A73
+	.long	loc_4C0E8AA9
+ptrs_4C222D8C:
+	.long	loc_4C0E86A2
+	.long	loc_4C0E86AE
+	.long	loc_4C0E86D7
+	.long	loc_4C0E86F9
+	.long	loc_4C0E8722
+	.long	loc_4C0E8744
+	.long	loc_4C0E876A
+	.long	loc_4C0E878C
+	.long	loc_4C0E87B4
+	.long	loc_4C0E87D5
+	.long	loc_4C0E87FE
+ptrs_4C222DB8:
+	.long	loc_4C0E84BD
+	.long	loc_4C0E84CB
+	.long	loc_4C0E84F1
+	.long	loc_4C0E8515
+	.long	loc_4C0E853F
+	.long	loc_4C0E8563
+	.long	loc_4C0E858D
+	.long	loc_4C0E85B0
+	.long	loc_4C0E85D8
+	.long	loc_4C0E85FA
+	.long	loc_4C0E8622
 data_4C222DE4:
 .incbin_range "baserom/kn6000_program.rom", 0x222DE4, 0x222E64
 data_4C222E64:
 .incbin_range "baserom/kn6000_program.rom", 0x222E64, 0x222EE4
-data_4C222EE4:
-.incbin_range "baserom/kn6000_program.rom", 0x222EE4, 0x222F10
-data_4C222F10:
-.incbin_range "baserom/kn6000_program.rom", 0x222F10, 0x222F3C
-data_4C222F3C:
-.incbin_range "baserom/kn6000_program.rom", 0x222F3C, 0x222F68
+ptrs_4C222EE4:
+	.long	loc_4C0E9791
+	.long	loc_4C0E979E
+	.long	loc_4C0E9816
+	.long	loc_4C0E983B
+	.long	loc_4C0E98B2
+	.long	loc_4C0E992B
+	.long	loc_4C0E997A
+	.long	loc_4C0E99CC
+	.long	loc_4C0E9A66
+	.long	loc_4C0E9A8B
+	.long	loc_4C0E9AB0
+ptrs_4C222F10:
+	.long	loc_4C0E9401
+	.long	loc_4C0E940E
+	.long	loc_4C0E9430
+	.long	loc_4C0E94C9
+	.long	loc_4C0E9569
+	.long	loc_4C0E962F
+	.long	loc_4C0E9651
+	.long	loc_4C0E9674
+	.long	loc_4C0E9696
+	.long	loc_4C0E96BA
+	.long	loc_4C0E96DF
+ptrs_4C222F3C:
+	.long	loc_4C0E909D
+	.long	loc_4C0E90AB
+	.long	loc_4C0E90CF
+	.long	loc_4C0E916A
+	.long	loc_4C0E9207
+	.long	loc_4C0E92CE
+	.long	loc_4C0E92F3
+	.long	loc_4C0E9315
+	.long	loc_4C0E9338
+	.long	loc_4C0E935E
+	.long	loc_4C0E9381
 data_4C222F68:
 .incbin_range "baserom/kn6000_program.rom", 0x222F68, 0x222FE8
-data_4C222FE8:
-.incbin_range "baserom/kn6000_program.rom", 0x222FE8, 0x223014
-data_4C223014:
-.incbin_range "baserom/kn6000_program.rom", 0x223014, 0x223040
-data_4C223040:
-.incbin_range "baserom/kn6000_program.rom", 0x223040, 0x22306C
+ptrs_4C222FE8:
+	.long	loc_4C0EA284
+	.long	loc_4C0EA291
+	.long	loc_4C0EA309
+	.long	loc_4C0EA32F
+	.long	loc_4C0EA3A7
+	.long	loc_4C0EA422
+	.long	loc_4C0EA471
+	.long	loc_4C0EA4C3
+	.long	loc_4C0EA55D
+	.long	loc_4C0EA582
+	.long	loc_4C0EA5A7
+ptrs_4C223014:
+	.long	loc_4C0E9EF0
+	.long	loc_4C0E9EFD
+	.long	loc_4C0E9F1F
+	.long	loc_4C0E9FB9
+	.long	loc_4C0EA05A
+	.long	loc_4C0EA122
+	.long	loc_4C0EA144
+	.long	loc_4C0EA167
+	.long	loc_4C0EA189
+	.long	loc_4C0EA1AD
+	.long	loc_4C0EA1D2
+ptrs_4C223040:
+	.long	loc_4C0E9B88
+	.long	loc_4C0E9B96
+	.long	loc_4C0E9BBA
+	.long	loc_4C0E9C56
+	.long	loc_4C0E9CF4
+	.long	loc_4C0E9DBD
+	.long	loc_4C0E9DE2
+	.long	loc_4C0E9E04
+	.long	loc_4C0E9E27
+	.long	loc_4C0E9E4D
+	.long	loc_4C0E9E70
 data_4C22306C:
 .incbin_range "baserom/kn6000_program.rom", 0x22306C, 0x2230EC
-data_4C2230EC:
-.incbin_range "baserom/kn6000_program.rom", 0x2230EC, 0x223118
-data_4C223118:
-.incbin_range "baserom/kn6000_program.rom", 0x223118, 0x223144
-data_4C223144:
-.incbin_range "baserom/kn6000_program.rom", 0x223144, 0x223170
+ptrs_4C2230EC:
+	.long	loc_4C0EAD7B
+	.long	loc_4C0EAD88
+	.long	loc_4C0EAE00
+	.long	loc_4C0EAE26
+	.long	loc_4C0EAE9E
+	.long	loc_4C0EAF19
+	.long	loc_4C0EAF68
+	.long	loc_4C0EAFBA
+	.long	loc_4C0EB054
+	.long	loc_4C0EB079
+	.long	loc_4C0EB09E
+ptrs_4C223118:
+	.long	loc_4C0EA9E7
+	.long	loc_4C0EA9F4
+	.long	loc_4C0EAA16
+	.long	loc_4C0EAAB0
+	.long	loc_4C0EAB51
+	.long	loc_4C0EAC19
+	.long	loc_4C0EAC3B
+	.long	loc_4C0EAC5E
+	.long	loc_4C0EAC80
+	.long	loc_4C0EACA4
+	.long	loc_4C0EACC9
+ptrs_4C223144:
+	.long	loc_4C0EA67F
+	.long	loc_4C0EA68D
+	.long	loc_4C0EA6B1
+	.long	loc_4C0EA74D
+	.long	loc_4C0EA7EB
+	.long	loc_4C0EA8B4
+	.long	loc_4C0EA8D9
+	.long	loc_4C0EA8FB
+	.long	loc_4C0EA91E
+	.long	loc_4C0EA944
+	.long	loc_4C0EA967
 data_4C223170:
 .incbin_range "baserom/kn6000_program.rom", 0x223170, 0x2231F0
-data_4C2231F0:
-.incbin_range "baserom/kn6000_program.rom", 0x2231F0, 0x22321C
-data_4C22321C:
-.incbin_range "baserom/kn6000_program.rom", 0x22321C, 0x223248
-data_4C223248:
-.incbin_range "baserom/kn6000_program.rom", 0x223248, 0x223274
+ptrs_4C2231F0:
+	.long	loc_4C0EB872
+	.long	loc_4C0EB87F
+	.long	loc_4C0EB8F7
+	.long	loc_4C0EB91D
+	.long	loc_4C0EB995
+	.long	loc_4C0EBA10
+	.long	loc_4C0EBA5F
+	.long	loc_4C0EBAB1
+	.long	loc_4C0EBB4B
+	.long	loc_4C0EBB70
+	.long	loc_4C0EBB95
+ptrs_4C22321C:
+	.long	loc_4C0EB4DE
+	.long	loc_4C0EB4EB
+	.long	loc_4C0EB50D
+	.long	loc_4C0EB5A7
+	.long	loc_4C0EB648
+	.long	loc_4C0EB710
+	.long	loc_4C0EB732
+	.long	loc_4C0EB755
+	.long	loc_4C0EB777
+	.long	loc_4C0EB79B
+	.long	loc_4C0EB7C0
+ptrs_4C223248:
+	.long	loc_4C0EB176
+	.long	loc_4C0EB184
+	.long	loc_4C0EB1A8
+	.long	loc_4C0EB244
+	.long	loc_4C0EB2E2
+	.long	loc_4C0EB3AB
+	.long	loc_4C0EB3D0
+	.long	loc_4C0EB3F2
+	.long	loc_4C0EB415
+	.long	loc_4C0EB43B
+	.long	loc_4C0EB45E
 data_4C223274:
 .incbin_range "baserom/kn6000_program.rom", 0x223274, 0x2232F4
 data_4C2232F4:
@@ -36898,26 +39805,99 @@ data_4C2235F4:
 .incbin_range "baserom/kn6000_program.rom", 0x2235F4, 0x223674
 data_4C223674:
 .incbin_range "baserom/kn6000_program.rom", 0x223674, 0x2236F4
-data_4C2236F4:
-.incbin_range "baserom/kn6000_program.rom", 0x2236F4, 0x223744
+ptrs_4C2236F4:
+	.long	loc_4C0F0E75
+	.long	loc_4C0F0E9B
+	.long	loc_4C0F0F0A
+	.long	loc_4C0F0F71
+	.long	loc_4C0F1375
+	.long	loc_4C0F13DE
+	.long	loc_4C0F1447
+	.long	loc_4C0F14B0
+	.long	loc_4C0F1519
+	.long	loc_4C0F1582
+	.long	loc_4C0F15EB
+	.long	loc_4C0F1654
+	.long	loc_4C0F16BD
+	.long	loc_4C0F1726
+	.long	loc_4C0F178F
+	.long	loc_4C0F17F8
+	.long	loc_4C0F1861
+	.long	loc_4C0F18CA
+	.long	loc_4C0F1933
+	.long	loc_4C0F199A
 data_4C223744:
 .incbin_range "baserom/kn6000_program.rom", 0x223744, 0x2237C4
 data_4C2237C4:
 .incbin_range "baserom/kn6000_program.rom", 0x2237C4, 0x223844
-data_4C223844:
-.incbin_range "baserom/kn6000_program.rom", 0x223844, 0x22386C
-data_4C22386C:
-.incbin_range "baserom/kn6000_program.rom", 0x22386C, 0x223894
-data_4C223894:
-.incbin_range "baserom/kn6000_program.rom", 0x223894, 0x2238BC
+ptrs_4C223844:
+	.long	loc_4C0F8E7F
+	.long	loc_4C0F8E8B
+	.long	loc_4C0F8F24
+	.long	loc_4C0F8FBA
+	.long	loc_4C0F915F
+	.long	loc_4C0F9199
+	.long	loc_4C0F921F
+	.long	loc_4C0F9289
+	.long	loc_4C0F92BE
+	.long	loc_4C0F92F9
+ptrs_4C22386C:
+	.long	loc_4C0F8A11
+	.long	loc_4C0F8A1B
+	.long	loc_4C0F8B5B
+	.long	DrumMainGridSe_L8dc
+	.long	loc_4C0F8C85
+	.long	loc_4C0F8CBD
+	.long	loc_4C0F8CF9
+	.long	loc_4C0F8D53
+	.long	loc_4C0F8D8A
+	.long	loc_4C0F8DC3
+ptrs_4C223894:
+	.long	loc_4C0F85B8
+	.long	loc_4C0F85C3
+	.long	loc_4C0F86F7
+	.long	DrumMainGridSe_L490
+	.long	loc_4C0F882F
+	.long	loc_4C0F8867
+	.long	loc_4C0F88A2
+	.long	loc_4C0F88FC
+	.long	loc_4C0F8936
+	.long	loc_4C0F8972
 data_4C2238BC:
 .incbin_range "baserom/kn6000_program.rom", 0x2238BC, 0x22393C
-data_4C22393C:
-.incbin_range "baserom/kn6000_program.rom", 0x22393C, 0x223964
-data_4C223964:
-.incbin_range "baserom/kn6000_program.rom", 0x223964, 0x22398C
-data_4C22398C:
-.incbin_range "baserom/kn6000_program.rom", 0x22398C, 0x2239B4
+ptrs_4C22393C:
+	.long	loc_4C0F9D58
+	.long	loc_4C0F9D63
+	.long	loc_4C0F9E40
+	.long	loc_4C0F9EE8
+	.long	loc_4C0F9FD8
+	.long	loc_4C0FA073
+	.long	loc_4C0FA129
+	.long	loc_4C0FA1DD
+	.long	loc_4C0FA216
+	.long	loc_4C0FA267
+ptrs_4C223964:
+	.long	loc_4C0F989A
+	.long	loc_4C0F98BD
+	.long	loc_4C0F9902
+	.long	loc_4C0F9997
+	.long	loc_4C0F9A2A
+	.long	loc_4C0F9A8D
+	.long	loc_4C0F9B5B
+	.long	loc_4C0F9C00
+	.long	loc_4C0F9C4F
+	.long	loc_4C0F9C9E
+ptrs_4C22398C:
+	.long	loc_4C0F93EA
+	.long	loc_4C0F940E
+	.long	loc_4C0F9453
+	.long	loc_4C0F9515
+	.long	loc_4C0F95A9
+	.long	loc_4C0F9613
+	.long	loc_4C0F96B8
+	.long	loc_4C0F975D
+	.long	loc_4C0F97AE
+	.long	loc_4C0F97FD
 data_4C2239B4:
 .incbin_range "baserom/kn6000_program.rom", 0x2239B4, 0x223A34
 data_4C223A34:
@@ -36926,3081 +39906,199 @@ data_4C223AB4:
 .incbin_range "baserom/kn6000_program.rom", 0x223AB4, 0x223B34
 data_4C223B34:
 .incbin_range "baserom/kn6000_program.rom", 0x223B34, 0x223BB4
-data_4C223BB4:
-.incbin_range "baserom/kn6000_program.rom", 0x223BB4, 0x223C6C
-data_4C223C6C:
-.incbin_range "baserom/kn6000_program.rom", 0x223C6C, 0x223D28
-data_4C223D28:
-.incbin_range "baserom/kn6000_program.rom", 0x223D28, 0x223DE4
-data_4C223DE4:
-.incbin_range "baserom/kn6000_program.rom", 0x223DE4, 0x223E40
-data_4C223E40:
-.incbin_range "baserom/kn6000_program.rom", 0x223E40, 0x223E78
-data_4C223E78:
-.incbin_range "baserom/kn6000_program.rom", 0x223E78, 0x223EAC
-FnName_R12OctaveFunc:	.asciz "R12OctaveFunc"
-FnName_MemoryToggleFunc:	.asciz "MemoryToggleFunc"
-FnName_OnbassToggleFunc:	.asciz "OnbassToggleFunc"
-FnName_LeftholdToggleFunc:	.asciz "LeftholdToggleFunc"
-FnName_IntroToggleFunc:	.asciz "IntroToggleFunc"
-FnName_TApcSel:	.asciz "TApcSel"
-FnName_AcAPCRadioBoxProc:	.asciz "AcAPCRadioBoxProc"
-FnName_ApcSelFunc:	.asciz "ApcSelFunc"
-FnName_SplitPoint:	.asciz "SplitPoint"
-FnName_StsSplitCheck:	.asciz "StsSplitCheck"
-FnName_TSplitSel:	.asciz "TSplitSel"
-FnName_TR12Octave:	.asciz "TR12Octave"
-FnName_EffEditGrid:	.asciz "EffEditGrid"
-FnName_EffEditGrid2:	.asciz "EffEditGrid2"
-FnName_EffNamingCheck:	.asciz "EffNamingCheck"
-FnName_BitmapKenban:	.asciz "BitmapKenban"
-FnName_ChordFinderROOT:	.asciz "ChordFinderROOT"
-FnName_ChordFinderTYPE:	.asciz "ChordFinderTYPE"
-FnName_INVERSION:	.asciz "INVERSION"
-FnName_APCselect:	.asciz "APCselect"
-FnName_ChordFinderListen:	.asciz "ChordFinderListen"
-FnName_TtChordFinder:	.asciz "TtChordFinder"
-FnName_ChordFinderStartFunc:	.asciz "ChordFinderStartFunc"
-FnName_EffectWrite:	.asciz "EffectWrite"
-FnName_DspUnitNumSel:	.asciz "DspUnitNumSel"
-FnName_DspUnitNumCheck:	.asciz "DspUnitNumCheck"
-FnName_RevDepEditFunc:	.asciz "RevDepEditFunc"
-FnName_DspDepEditFunc:	.asciz "DspDepEditFunc"
-FnName_EffFilterGrid:	.asciz "EffFilterGrid"
-FnName_AlocModeToggleFunc:	.asciz "AlocModeToggleFunc"
-FnName_EffAlocGrid:	.asciz "EffAlocGrid"
-FnName_AcUnitNameProc:	.asciz "AcUnitNameProc"
-FnName_EffAlocCatch:	.asciz "EffAlocCatch"
-FnName_EffDispCatch:	.asciz "EffDispCatch"
-FnName_EffDispGrid:	.asciz "EffDispGrid"
-FnName_EffSysSw:	.asciz "EffSysSw"
-FnName_EffApcSw:	.asciz "EffApcSw"
-FnName_EffDebugCatch:	.asciz "EffDebugCatch"
-FnName_EqFuncSel:	.asciz "EqFuncSel"
-FnName_EditExitCatchFunc:	.asciz "EditExitCatchFunc"
-FnName_MulSelExitCatchFunc:	.asciz "MulSelExitCatchFunc"
-FnName_EffEditUnitName:	.asciz "EffEditUnitName"
-FnName_EQGainEditCheck:	.asciz "EQGainEditCheck"
-FnName_EQFcEditCheck:	.asciz "EQFcEditCheck"
-FnName_EQQEditCheck:	.asciz "EQQEditCheck"
-FnName_EQSelFunc:	.asciz "EQSelFunc"
-FnName_EQFunc:	.asciz "EQFunc"
-FnName_EQToggleFunc:	.asciz "EQToggleFunc"
-FnName_EQOrigFunc:	.asciz "EQOrigFunc"
-FnName_MicSelFunc:	.asciz "MicSelFunc"
-FnName_MicPresetSelFunc:	.asciz "MicPresetSelFunc"
-FnName_MicEffEditCheck:	.asciz "MicEffEditCheck"
-FnName_MicRevEditCheck:	.asciz "MicRevEditCheck"
-FnName_MicEffToggleFunc:	.asciz "MicEffToggleFunc"
-FnName_MicRevToggleFunc:	.asciz "MicRevToggleFunc"
-FnName_MicEffMuteToggleFunc:	.asciz "MicEffMuteToggleFunc"
-FnName_HarmPartEditCheck:	.asciz "HarmPartEditCheck"
-FnName_BitmapSleq:	.asciz "BitmapSleq"
-.incbin_range "baserom/kn6000_program.rom", 0x2241DE, 0x2241E0
-Field_AcEffPage_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcEffExpGroup_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcEffVari_param2:	.asciz "param2"
-Field_AcEffVari_end:	.asciz ""
-Field_AcEffEditGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcEffEditGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcEffEditGridBox_func:	.asciz "func"
-Field_AcEffEditGridBox_end:	.asciz ""
-Field_AcEffOnOffBox_onoff:	.asciz "onoff"
-Field_AcEffOnOffBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcEffExpUsr_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcEffName_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcChordFinderBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcRamEditRoopBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcRamEditInvBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcKenbanBitmap_end:	.asciz ""
-	.align	4, 0xFF
-Field_PsCFInvisibleBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcVisibleLabel_end:	.asciz ""
-	.align	4, 0xFF
-Field_FilterTtlScreen_snd_title:	.asciz "snd_title"
-Field_FilterTtlScreen_snd_exit:	.asciz "snd_exit"
-Field_FilterTtlScreen_end:	.asciz ""
-Field_AcEffDispGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcEffDispGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcEffDispGridBox_func:	.asciz "func"
-Field_AcEffDispGridBox_end:	.asciz ""
-Field_AcEQEditBox_tate_index:	.asciz "tate_index"
-Field_AcEQEditBox_end:	.asciz ""
-Field_AcGainBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcUnitName_end:	.asciz ""
-	.align	4, 0xFF
-Field_EffTtlScreen_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcEffTitleMenu_end:	.asciz ""
-	.align	4, 0xFF
-Field_EffEditScreen_end:	.asciz ""
-	.align	4, 0xFF
-Field_EffNameScreen_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcMicFuncEditSw_select:	.asciz "select"
-Field_AcMicFuncEditSw_end:	.asciz ""
-Field_AcAPCRadioBox_end:	.asciz ""
-	.align	4, 0xFF
-ClassName_AcEffPage:	.asciz "AcEffPage"
-ClassSig_AcEffPage:	.asciz ""
-ClassName_AcEffExpGroup:	.asciz "AcEffExpGroup"
-ClassSig_AcEffExpGroup:	.asciz ""
-ClassName_AcEffVari:	.asciz "AcEffVari"
-ClassSig_AcEffVari:	.asciz "s"
-ClassName_AcEffEditGridBox:	.asciz "AcEffEditGridBox"
-ClassSig_AcEffEditGridBox:	.asciz "XXj"
-ClassName_AcEffOnOffBox:	.asciz "AcEffOnOffBox"
-ClassSig_AcEffOnOffBox:	.asciz "m"
-ClassName_AcEffExpUsr:	.asciz "AcEffExpUsr"
-ClassSig_AcEffExpUsr:	.asciz ""
-ClassName_AcEffName:	.asciz "AcEffName"
-ClassSig_AcEffName:	.asciz ""
-ClassName_AcChordFinderBox:	.asciz "AcChordFinderBox"
-ClassSig_AcChordFinderBox:	.asciz ""
-ClassName_AcRamEditRoopBox:	.asciz "AcRamEditRoopBox"
-ClassSig_AcRamEditRoopBox:	.asciz ""
-ClassName_AcRamEditInvBox:	.asciz "AcRamEditInvBox"
-ClassSig_AcRamEditInvBox:	.asciz ""
-ClassName_AcKenbanBitmap:	.asciz "AcKenbanBitmap"
-ClassSig_AcKenbanBitmap:	.asciz ""
-ClassName_PsCFInvisibleBox:	.asciz "PsCFInvisibleBox"
-ClassSig_PsCFInvisibleBox:	.asciz ""
-ClassName_AcVisibleLabel:	.asciz "AcVisibleLabel"
-ClassSig_AcVisibleLabel:	.asciz ""
-ClassName_FilterTtlScreen:	.asciz "FilterTtlScreen"
-ClassSig_FilterTtlScreen:	.asciz "Xa"
-ClassName_AcEffDispGridBox:	.asciz "AcEffDispGridBox"
-ClassSig_AcEffDispGridBox:	.asciz "XXj"
-ClassName_AcEQEditBox:	.asciz "AcEQEditBox"
-ClassSig_AcEQEditBox:	.asciz "A"
-ClassName_AcGainBox:	.asciz "AcGainBox"
-ClassSig_AcGainBox:	.asciz ""
-ClassName_AcUnitName:	.asciz "AcUnitName"
-ClassSig_AcUnitName:	.asciz ""
-ClassName_EffTtlScreen:	.asciz "EffTtlScreen"
-ClassSig_EffTtlScreen:	.asciz ""
-ClassName_AcEffTitleMenu:	.asciz "AcEffTitleMenu"
-ClassSig_AcEffTitleMenu:	.asciz ""
-ClassName_EffEditScreen:	.asciz "EffEditScreen"
-ClassSig_EffEditScreen:	.asciz ""
-ClassName_EffNameScreen:	.asciz "EffNameScreen"
-ClassSig_EffNameScreen:	.asciz ""
-ClassName_AcMicFuncEditSw:	.asciz "AcMicFuncEditSw"
-ClassSig_AcMicFuncEditSw:	.asciz "n"
-ClassName_AcAPCRadioBox:	.asciz "AcAPCRadioBox"
-ClassSig_AcAPCRadioBox:	.asciz ""
-
-Str_EV_WHOSELECTED_2:	.asciz "EV_WHOSELECTED"
-Str_EV_EFFDATA:	.asciz "EV_EFFDATA"
-Str_EV_NOTE_DRAW:	.asciz "EV_NOTE_DRAW"
-Str_EV_KENBAN_DRAW:	.asciz "EV_KENBAN_DRAW"
-Str_EV_EQSEL:	.asciz "EV_EQSEL"
-Str_EV_ALLPAINTEFFEXP:	.asciz "EV_ALLPAINTEFFEXP"
-Str_EV_MICSELWAIT:	.asciz "EV_MICSELWAIT"
-	.align	4, 0xFF
-
-Str_MT_DrawKey:	.asciz "MT_DrawKey"
-Str_MT_GetEff:	.asciz "MT_GetEff"
-Str_MT_PutEff:	.asciz "MT_PutEff"
-Str_MT_AddEff:	.asciz "MT_AddEff"
-Str_MT_ListenStart:	.asciz "MT_ListenStart"
-Str_MT_ListenEnd:	.asciz "MT_ListenEnd"
-Str_MT_ListenNew:	.asciz "MT_ListenNew"
-Str_MT_GetTateIndex:	.asciz "MT_GetTateIndex"
-Str_MT_CheckTateIndex:	.asciz "MT_CheckTateIndex"
-
-FnName_AcEffPageProc:	.asciz "AcEffPageProc"
-FnName_AcEffExpGroupProc:	.asciz "AcEffExpGroupProc"
-FnName_AcEffVariProc:	.asciz "AcEffVariProc"
-FnName_AcEffEditGridBoxProc:	.asciz "AcEffEditGridBoxProc"
-FnName_AcEffExpUsrProc:	.asciz "AcEffExpUsrProc"
-FnName_AcEffOnOffBoxProc:	.asciz "AcEffOnOffBoxProc"
-FnName_AcEffNameProc:	.asciz "AcEffNameProc"
-FnName_AcRamEditRoopBoxProc:	.asciz "AcRamEditRoopBoxProc"
-FnName_AcRamEditInvBoxProc:	.asciz "AcRamEditInvBoxProc"
-FnName_AcChordFinderBoxProc:	.asciz "AcChordFinderBoxProc"
-FnName_AcKenbanBitmapProc:	.asciz "AcKenbanBitmapProc"
-FnName_PsCFInvisibleBoxProc:	.asciz "PsCFInvisibleBoxProc"
-FnName_AcVisibleLabelProc:	.asciz "AcVisibleLabelProc"
-FnName_FilterTtlScreenProc:	.asciz "FilterTtlScreenProc"
-FnName_AcEffDispGridBoxProc:	.asciz "AcEffDispGridBoxProc"
-FnName_AcEQEditBoxProc:	.asciz "AcEQEditBoxProc"
-FnName_AcGainBoxProc:	.asciz "AcGainBoxProc"
-FnName_EffTtlScreenProc:	.asciz "EffTtlScreenProc"
-FnName_AcEffTitleMenuProc:	.asciz "AcEffTitleMenuProc"
-FnName_EffEditScreenProc:	.asciz "EffEditScreenProc"
-FnName_EffNameScreenProc:	.asciz "EffNameScreenProc"
-FnName_AcMicFuncEditSwProc:	.asciz "AcMicFuncEditSwProc"
-	.align	4, 0x00
-FnName_FreeSplitFunc:	.asciz "FreeSplitFunc"
-FnName_ApcTitleFunc:	.asciz "ApcTitleFunc"
-FnName_SDOctTitleFunc:	.asciz "SDOctTitleFunc"
-FnName_REVSELTitleFunc:	.asciz "REVSELTitleFunc"
-FnName_CHOSELTitleFunc:	.asciz "CHOSELTitleFunc"
-FnName_DSPSELTitleFunc:	.asciz "DSPSELTitleFunc"
-FnName_MULSELTitleFunc:	.asciz "MULSELTitleFunc"
-FnName_VCLSELTitleFunc:	.asciz "VCLSELTitleFunc"
-FnName_EQSELTitleFunc:	.asciz "EQSELTitleFunc"
-FnName_EffNamingTitleFunc:	.asciz "EffNamingTitleFunc"
-FnName_EffEditTitleFunc:	.asciz "EffEditTitleFunc"
-FnName_MainEffControl:	.asciz "MainEffControl"
-FnName_MainChangeReqEQ:	.asciz "MainChangeReqEQ"
-FnName_MainChordFinderListen:	.asciz "MainChordFinderListen"
-FnName_TEffFilter:	.asciz "TEffFilter"
-FnName_TEffAloc:	.asciz "TEffAloc"
-FnName_MicPresetStore:	.asciz "MicPresetStore"
-.incbin_range "baserom/kn6000_program.rom", 0x224769, 0x22476C
-Str_ALLOCATION:	.asciz "ALLOCATION"
-	.align	4, 0xFF
-
-	TtlScreen	Aloc, sub=AlocGridBox, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=Aloc_window, title=Str_ALLOCATION, icon=210	# title "ALLOCATION"
-
-Str_empty_56:	.asciz "  | "
-Str_SOUND_DSP_4_SOUND_DSP_5:	.asciz "SOUND DSP 4 :   |SOUND DSP 5 :   "
-	.align	4, 0xFF
-
-		AcGridBox	AlocGridBox, super=Aloc, next=Aloc_IndexWideES1, flag=VF_Const, X=112, Y=114, W=389, H=89, color=CL_WallPattern, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_White, row=2, col=2, selrow=AlocGridBox_selrow, selcol=AlocGridBox_selcol, pcol=AlocGridBox_pcol, prow=AlocGridBox_prow, crow=AlocGridBox_crow, fixedcol=Str_empty_56, fixedrow=Str_SOUND_DSP_4_SOUND_DSP_5, func=FN_EffAlocGrid	# fixedcol "  | "; fixedrow "SOUND DSP 4 :   |SOUND DSP 5 :   "
-		AcIndexWideES	Aloc_IndexWideES1, super=Aloc, next=AlocModeBox, prev=AlocGridBox, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=3
-
-Str_ALLOCATION_MODE_SEQUENCER:	.asciz "ALLOCATION MODE : SEQUENCER"
-Str_ALLOCATION_MODE_APC:	.asciz "ALLOCATION MODE :   APC    "
-
-		AcFuncToggle	AlocModeBox, super=Aloc, next=Aloc_IndexWideES2, prev=Aloc_IndexWideES1, flag=VF_Const, X=8, Y=36, W=319, H=26, font=4, stron=Str_ALLOCATION_MODE_SEQUENCER, stroff=Str_ALLOCATION_MODE_APC, onoff=AlocModeBox_onoff, editsw=ES_Left1, func=FN_AlocModeToggleFunc	# stron "ALLOCATION MODE : SEQUENCER"; stroff "ALLOCATION MODE :   APC    "
-		AcIndexWideES	Aloc_IndexWideES2, super=Aloc, next=Aloc_CatchEvent1, prev=AlocModeBox, flag=VF_Const, X=164, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom7, style=14
-		IvCatchEvent	Aloc_CatchEvent1, super=Aloc, prev=Aloc_IndexWideES2, flag=VF_Const|VF_InvisibleBox, X=152, Y=0, W=32, H=32, func=FN_EffAlocCatch
-
-Str_SOUND_LOAD_OPTION_3:	.asciz "SOUND LOAD OPTION"
-Str_SOUND_LOAD_OPTION_4:	.asciz "SOUND LOAD OPTION"
-
-	FilterTtlScreen	LoadFilter, sub=FilterGridBox, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=LoadFilter_window, title=Str_SOUND_LOAD_OPTION_3, icon=209, snd_title=Str_SOUND_LOAD_OPTION_4, snd_exit=TT_SDMENU	# title "SOUND LOAD OPTION"; snd_title "SOUND LOAD OPTION"
-
-Str_empty_57:	.asciz "   | "
-Str_SOUND_DSP_LOAD_SOLO_LOAD_PORTAMENTO_LOAD:	.asciz "SOUND DSP LOAD    :|SOLO LOAD         :|PORTAMENTO LOAD   :|CHORUS LOAD       :|CONTROLLERS RESET :"
-	.align	4, 0xFF
-
-		AcGridBox	FilterGridBox, super=LoadFilter, next=LoadFilter_IndexWideES1, flag=VF_Const, X=120, Y=54, W=465, H=153, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=5, col=2, selrow=FilterGridBox_selrow, selcol=FilterGridBox_selcol, pcol=FilterGridBox_pcol, prow=FilterGridBox_prow, crow=FilterGridBox_crow, fixedcol=Str_empty_57, fixedrow=Str_SOUND_DSP_LOAD_SOLO_LOAD_PORTAMENTO_LOAD, func=FN_EffFilterGrid	# fixedcol "   | "; fixedrow "SOUND DSP LOAD    :|SOLO LOAD         :|"
-		AcIndexWideES	LoadFilter_IndexWideES1, super=LoadFilter, next=LoadFilter_IndexWideES2, prev=FilterGridBox, flag=VF_Const, X=164, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom7, style=14
-		AcIndexWideES	LoadFilter_IndexWideES2, super=LoadFilter, prev=LoadFilter_IndexWideES1, flag=VF_Const, X=444, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom14, style=3
-
-Str_EFFECT_MIXING:	.asciz "EFFECT MIXING"
-	.align	4, 0xFF
-
-	TtlScreen	Mixing, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=Mixing_window, title=Str_EFFECT_MIXING, icon=1	# title "EFFECT MIXING"
-
-Str_EFFECT_EDIT:	.asciz "EFFECT EDIT"
-
-	EffEditScreen	EffectEdit, sub=EffectEdit_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PROGRAM, window=EffectEdit_window, title=Str_EFFECT_EDIT, icon=211	# title "EFFECT EDIT"
-		AcIndexWideES	EffectEdit_IndexWideES1, super=EffectEdit, next=EffectEdit_IndexWideES2, flag=VF_Const, X=500, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, editsw2=ES_Bottom15, style=3
-		AcIndexWideES	EffectEdit_IndexWideES2, super=EffectEdit, next=EffectEdit_CatchEvent1, prev=EffectEdit_IndexWideES1, flag=VF_Const, X=324, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom11, style=14
-		IvCatchEvent	EffectEdit_CatchEvent1, super=EffectEdit, next=EffEditGridBox, prev=EffectEdit_IndexWideES2, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_EditExitCatchFunc
-
-Str_PARAMETER_VALUE:	.asciz "       PARAMETER |      VALUE "
-Str_empty_58:	.asciz " |-|"
-
-		AcEffEditGridBox	EffEditGridBox, super=EffectEdit, next=EffectEdit_EffTitleMenu_NAMING, prev=EffectEdit_CatchEvent1, flag=VF_Const, X=291, Y=38, W=345, H=173, color=CL_WallPattern, border=BD_3D_UP2, font=1, fontcolor=CL_White, align=1, row=10, col=2, vertline=1, selrow=EffEditGridBox_selrow, selcol=EffEditGridBox_selcol, pcol=EffEditGridBox_pcol, prow=EffEditGridBox_prow, crow=EffEditGridBox_crow, fixedcol=Str_PARAMETER_VALUE, fixedrow=Str_empty_58, func=FN_EffEditGrid	# fixedcol "       PARAMETER |      VALUE "; fixedrow " |-|"
-
-Str_NAMING:	.asciz "NAMING"
-	.align	4, 0xFF
-
-		AcEffTitleMenu	EffectEdit_EffTitleMenu_NAMING, super=EffectEdit, sub=EffectEdit_Label_EFFECT_MEMORY_LIST, next=EffectEdit_EffName1, prev=EffEditGridBox, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_White, editsw=ES_Left2, selected=EffectEdit_EffTitleMenu_NAMING_selected, str=Str_NAMING, title=TT_FXNAME, icon=153	# str "NAMING"
-
-Str_EFFECT_MEMORY_LIST:	.asciz "EFFECT MEMORY LIST"
-	.align	4, 0xFF
-
-			VwLabel	EffectEdit_Label_EFFECT_MEMORY_LIST, super=EffectEdit_EffTitleMenu_NAMING, flag=VF_Const, X=114, Y=94, W=148, H=19, str=Str_EFFECT_MEMORY_LIST, font=1, fontcolor=CL_White	# str "EFFECT MEMORY LIST"
-		AcEffName	EffectEdit_EffName1, super=EffectEdit, next=EffectEdit_FuncEditSw1, prev=EffectEdit_EffTitleMenu_NAMING, flag=VF_Const, X=8, Y=38, W=252, H=32, color=CL_SilverB, border=BD_Double1, index=0xFFFF, font=1, fontcolor=CL_Black, align=1
-		AcFuncEditSw	EffectEdit_FuncEditSw1, super=EffectEdit, next=EffectEdit_Exit1, prev=EffectEdit_EffName1, flag=VF_Const, X=12, Y=208, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left5, func=FN_EffectWrite
-		IvExit	EffectEdit_Exit1, super=EffectEdit, next=EffectEdit_EffExpUsr1, prev=EffectEdit_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32
-		AcEffExpUsr	EffectEdit_EffExpUsr1, super=EffectEdit, next=EffectEdit_IndexEditSw1, prev=EffectEdit_Exit1, flag=VF_Const, X=52, Y=110, W=209, H=93, color=CL_WallPattern, border=BD_3D_UP2, index=5, font=1, fontcolor=CL_White, align=1, row=4, selected=EffectEdit_EffExpUsr1_selected
-		AcIndexEditSw	EffectEdit_IndexEditSw1, super=EffectEdit, next=EffectEdit_IndexEditSw2, prev=EffectEdit_EffExpUsr1, flag=VF_Const, X=8, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Left3, style=12
-		AcIndexEditSw	EffectEdit_IndexEditSw2, super=EffectEdit, next=EffectEdit_StrBox_WRITE, prev=EffectEdit_IndexEditSw1, flag=VF_Const, X=8, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=5, font=4, fontcolor=CL_Black, editsw=ES_Left4, style=13
-
-Str_WRITE_7:	.asciz "WRITE"
-	.align	4, 0xFF
-
-		VwStrBox	EffectEdit_StrBox_WRITE, super=EffectEdit, next=EffectEdit_UnitName1, prev=EffectEdit_IndexEditSw2, flag=VF_Const, X=8, Y=210, W=60, H=20, color=CL_Red, border=BD_Double1, index=0xFFFF, font=1, fontcolor=CL_White, str=Str_WRITE_7	# str "WRITE"
-		AcUnitName	EffectEdit_UnitName1, super=EffectEdit, prev=EffectEdit_StrBox_WRITE, flag=VF_Const, X=180, Y=4, W=240, H=24, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White
-
-Str_EFFECT_NAME:	.asciz "EFFECT NAME"
-
-	EffNameScreen	EffName, sub=EffName_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=EffName_window, title=Str_EFFECT_NAME, icon=153	# title "EFFECT NAME"
-		IvNaming	EffName_Naming1, super=EffName, next=EffName_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=159, Y=0, W=32, H=32, func=FN_EffNamingCheck
-		AcFuncEditSw	EffName_FuncEditSw1, super=EffName, next=EffName_CatchEvent1, prev=EffName_Naming1, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_EffNamingCheck
-		IvCatchEvent	EffName_CatchEvent1, super=EffName, next=EffName_Exit1, prev=EffName_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_EditExitCatchFunc
-		IvExit	EffName_Exit1, super=EffName, prev=EffName_CatchEvent1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32
-
-	AcNamingWindow	V_EffName_NamingWindow1, sub=V_EffName_NamingEditSw1, flag=VF_Const, X=160, Y=140, W=320, H=28, color=CL_WallPattern, border=BD_3D_UP1, index=0xFFFF, parent=V_EffName_NamingWindow1_parent, child=V_EffName_NamingWindow1_child
-		AcNamingEditSw	V_EffName_NamingEditSw1, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw2, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=13, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, sign=1, page=V_EffName_NamingEditSw1_page
-		AcNamingEditSw	V_EffName_NamingEditSw2, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw3, prev=V_EffName_NamingEditSw1, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=14, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, sign=1, page=V_EffName_NamingEditSw2_page
-		AcNamingEditSw	V_EffName_NamingEditSw3, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw4, prev=V_EffName_NamingEditSw2, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, sign=1, page=V_EffName_NamingEditSw3_page
-		AcNamingEditSw	V_EffName_NamingEditSw4, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw5, prev=V_EffName_NamingEditSw3, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=16, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, sign=1, page=V_EffName_NamingEditSw4_page
-		AcNamingEditSw	V_EffName_NamingEditSw5, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw6, prev=V_EffName_NamingEditSw4, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=17, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, sign=1, page=V_EffName_NamingEditSw5_page
-		AcNamingEditSw	V_EffName_NamingEditSw6, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw7, prev=V_EffName_NamingEditSw5, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=18, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, sign=1, page=V_EffName_NamingEditSw6_page
-		AcNamingEditSw	V_EffName_NamingEditSw7, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw8, prev=V_EffName_NamingEditSw6, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=19, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, sign=1, page=V_EffName_NamingEditSw7_page
-		AcNamingEditSw	V_EffName_NamingEditSw8, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw9, prev=V_EffName_NamingEditSw7, flag=VF_Const, X=324, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=20, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, sign=1, page=V_EffName_NamingEditSw8_page
-		AcNamingEditSw	V_EffName_NamingEditSw9, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw10, prev=V_EffName_NamingEditSw8, flag=VF_Const, X=364, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=21, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, sign=1, page=V_EffName_NamingEditSw9_page
-		AcNamingEditSw	V_EffName_NamingEditSw10, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw11, prev=V_EffName_NamingEditSw9, flag=VF_Const, X=404, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=22, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, sign=1, page=V_EffName_NamingEditSw10_page
-		AcNamingEditSw	V_EffName_NamingEditSw11, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw12, prev=V_EffName_NamingEditSw10, flag=VF_Const, X=444, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=23, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, sign=1, page=V_EffName_NamingEditSw11_page
-		AcNamingEditSw	V_EffName_NamingEditSw12, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw13, prev=V_EffName_NamingEditSw11, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=24, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, sign=1, page=V_EffName_NamingEditSw12_page
-		AcNamingEditSw	V_EffName_NamingEditSw13, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw14, prev=V_EffName_NamingEditSw12, flag=VF_Const, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=25, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, sign=1, page=V_EffName_NamingEditSw13_page
-		AcNamingEditSw	V_EffName_NamingEditSw14, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw15, prev=V_EffName_NamingEditSw13, flag=VF_Const, X=44, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, page=V_EffName_NamingEditSw14_page
-		AcNamingEditSw	V_EffName_NamingEditSw15, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw16, prev=V_EffName_NamingEditSw14, flag=VF_Const, X=84, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, page=V_EffName_NamingEditSw15_page
-		AcNamingEditSw	V_EffName_NamingEditSw16, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw17, prev=V_EffName_NamingEditSw15, flag=VF_Const, X=124, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, page=V_EffName_NamingEditSw16_page
-		AcNamingEditSw	V_EffName_NamingEditSw17, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw18, prev=V_EffName_NamingEditSw16, flag=VF_Const, X=164, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, page=V_EffName_NamingEditSw17_page
-		AcNamingEditSw	V_EffName_NamingEditSw18, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw19, prev=V_EffName_NamingEditSw17, flag=VF_Const, X=204, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, page=V_EffName_NamingEditSw18_page
-		AcNamingEditSw	V_EffName_NamingEditSw19, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw20, prev=V_EffName_NamingEditSw18, flag=VF_Const, X=244, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, page=V_EffName_NamingEditSw19_page
-		AcNamingEditSw	V_EffName_NamingEditSw20, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw21, prev=V_EffName_NamingEditSw19, flag=VF_Const, X=284, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, page=V_EffName_NamingEditSw20_page
-		AcNamingEditSw	V_EffName_NamingEditSw21, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw22, prev=V_EffName_NamingEditSw20, flag=VF_Const, X=324, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, page=V_EffName_NamingEditSw21_page
-		AcNamingEditSw	V_EffName_NamingEditSw22, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw23, prev=V_EffName_NamingEditSw21, flag=VF_Const, X=364, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=8, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, page=V_EffName_NamingEditSw22_page
-		AcNamingEditSw	V_EffName_NamingEditSw23, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw24, prev=V_EffName_NamingEditSw22, flag=VF_Const, X=404, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=9, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, page=V_EffName_NamingEditSw23_page
-		AcNamingEditSw	V_EffName_NamingEditSw24, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw25, prev=V_EffName_NamingEditSw23, flag=VF_Const, X=444, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, page=V_EffName_NamingEditSw24_page
-		AcNamingEditSw	V_EffName_NamingEditSw25, super=V_EffName_NamingWindow1, next=V_EffName_NamingEditSw26, prev=V_EffName_NamingEditSw24, flag=VF_Const, X=484, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=11, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, page=V_EffName_NamingEditSw25_page
-		AcNamingEditSw	V_EffName_NamingEditSw26, super=V_EffName_NamingWindow1, next=V_EffName_CursorBox1, prev=V_EffName_NamingEditSw25, flag=VF_Const, X=524, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=12, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, page=V_EffName_NamingEditSw26_page
-		PsCursorBox	V_EffName_CursorBox1, super=V_EffName_NamingWindow1, next=V_EffName_IndexEditSw1, prev=V_EffName_NamingEditSw26, flag=VF_Const, X=160, Y=70, W=320, H=44, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, cursor=V_EffName_CursorBox1_cursor
-		AcIndexEditSw	V_EffName_IndexEditSw1, super=V_EffName_NamingWindow1, sub=V_EffName_Label_INS, next=V_EffName_IndexEditSw2, prev=V_EffName_CursorBox1, flag=VF_Const, X=8, Y=38, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=104, font=4, fontcolor=CL_Black, editsw=ES_Left1
-
-Str_INS_2:	.asciz "INS"
-
-			VwLabel	V_EffName_Label_INS, super=V_EffName_IndexEditSw1, flag=VF_Const, X=9, Y=39, W=28, H=19, str=Str_INS_2, fontcolor=CL_Black	# str "INS"
-		AcIndexEditSw	V_EffName_IndexEditSw2, super=V_EffName_NamingWindow1, sub=V_EffName_Label_DEL, next=V_EffName_IndexEditSw3, prev=V_EffName_IndexEditSw1, flag=VF_Const, X=8, Y=81, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=105, font=4, fontcolor=CL_Black, editsw=ES_Left2
-
-Str_DEL_2:	.asciz "DEL"
-
-			VwLabel	V_EffName_Label_DEL, super=V_EffName_IndexEditSw2, flag=VF_Const, X=9, Y=82, W=28, H=19, str=Str_DEL_2, fontcolor=CL_Black	# str "DEL"
-		AcIndexEditSw	V_EffName_IndexEditSw3, super=V_EffName_NamingWindow1, sub=V_EffName_Label_CLR, next=V_EffName_IndexEditSw4, prev=V_EffName_IndexEditSw2, flag=VF_Const, X=601, Y=38, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=107, font=4, fontcolor=CL_Black, editsw=ES_Right1
-
-Str_CLR_2:	.asciz "CLR"
-
-			VwLabel	V_EffName_Label_CLR, super=V_EffName_IndexEditSw3, flag=VF_Const, X=602, Y=39, W=28, H=19, str=Str_CLR_2, fontcolor=CL_Black	# str "CLR"
-		AcIndexEditSw	V_EffName_IndexEditSw4, super=V_EffName_NamingWindow1, sub=V_EffName_Label_8d_8b, next=V_EffName_IndexEditSw5, prev=V_EffName_IndexEditSw3, flag=VF_Const, X=601, Y=81, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=106, font=4, fontcolor=CL_Black, editsw=ES_Right2
-
-Str_8d_8b_2:	.asciz "~8d ~8b"
-
-			VwLabel	V_EffName_Label_8d_8b, super=V_EffName_IndexEditSw4, flag=VF_Const, X=602, Y=82, W=28, H=19, str=Str_8d_8b_2, fontcolor=CL_Black	# str "~8d ~8b"
-		AcIndexEditSw	V_EffName_IndexEditSw5, super=V_EffName_NamingWindow1, next=V_EffName_IndexEditSw6, prev=V_EffName_IndexEditSw4, flag=VF_Const, X=564, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=102, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, style=15
-		AcIndexEditSw	V_EffName_IndexEditSw6, super=V_EffName_NamingWindow1, next=V_EffName_Label_POSITION, prev=V_EffName_IndexEditSw5, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=103, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=16
-
-Str_POSITION_2:	.asciz "POSITION"
-	.align	4, 0xFF
-
-		VwLabel	V_EffName_Label_POSITION, super=V_EffName_NamingWindow1, next=V_EffName_IndexToggle_ABC, prev=V_EffName_IndexEditSw6, flag=VF_Const, X=564, Y=198, W=68, H=19, str=Str_POSITION_2, fontcolor=CL_White	# str "POSITION"
-
-Str_ABC_3:	.asciz "ABC"
-Str_ABC_4:	.asciz "ABC"
-Str_123_3:	.asciz "123"
-Str_123_4:	.asciz "123"
-Str_SHIFT_3:	.asciz "SHIFT"
-	.align	4, 0xFF
-
-		VwLabel	V_EffName_Label_SHIFT, super=V_EffName_NamingWindow1, next=V_EffName_IndexPushSw1, prev=V_EffName_IndexToggle_123, flag=VF_Const, X=0, Y=198, W=44, H=19, str=Str_SHIFT_3, fontcolor=CL_White	# str "SHIFT"
-		AcIndexPushSw	V_EffName_IndexPushSw1, super=V_EffName_NamingWindow1, prev=V_EffName_Label_SHIFT, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=109, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, sw=V_EffName_IndexPushSw1_sw
-
-	AcNamingWindow	V_EffName_NamingWindow2, sub=V_EffName_NamingEditSw27, flag=VF_Const, X=160, Y=140, W=320, H=28, color=CL_WallPattern, border=BD_3D_UP1, index=0xFFFF, parent=V_EffName_NamingWindow2_parent, child=V_EffName_NamingWindow2_child
-		AcNamingEditSw	V_EffName_NamingEditSw27, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw28, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=13, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, sign=1, page=V_EffName_NamingEditSw27_page
-		AcNamingEditSw	V_EffName_NamingEditSw28, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw29, prev=V_EffName_NamingEditSw27, flag=VF_Const, X=84, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=14, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, sign=1, page=V_EffName_NamingEditSw28_page
-		AcNamingEditSw	V_EffName_NamingEditSw29, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw30, prev=V_EffName_NamingEditSw28, flag=VF_Const, X=124, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, sign=1, page=V_EffName_NamingEditSw29_page
-		AcNamingEditSw	V_EffName_NamingEditSw30, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw31, prev=V_EffName_NamingEditSw29, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=16, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, sign=1, page=V_EffName_NamingEditSw30_page
-		AcNamingEditSw	V_EffName_NamingEditSw31, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw32, prev=V_EffName_NamingEditSw30, flag=VF_Const, X=204, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=17, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, sign=1, page=V_EffName_NamingEditSw31_page
-		AcNamingEditSw	V_EffName_NamingEditSw32, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw33, prev=V_EffName_NamingEditSw31, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=18, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, sign=1, page=V_EffName_NamingEditSw32_page
-		AcNamingEditSw	V_EffName_NamingEditSw33, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw34, prev=V_EffName_NamingEditSw32, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=19, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, sign=1, page=V_EffName_NamingEditSw33_page
-		AcNamingEditSw	V_EffName_NamingEditSw34, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw35, prev=V_EffName_NamingEditSw33, flag=VF_Const, X=324, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=20, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, sign=1, page=V_EffName_NamingEditSw34_page
-		AcNamingEditSw	V_EffName_NamingEditSw35, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw36, prev=V_EffName_NamingEditSw34, flag=VF_Const, X=364, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=21, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, sign=1, page=V_EffName_NamingEditSw35_page
-		AcNamingEditSw	V_EffName_NamingEditSw36, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw37, prev=V_EffName_NamingEditSw35, flag=VF_Const, X=404, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=22, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, sign=1, page=V_EffName_NamingEditSw36_page
-		AcNamingEditSw	V_EffName_NamingEditSw37, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw38, prev=V_EffName_NamingEditSw36, flag=VF_Const, X=444, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=23, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, sign=1, page=V_EffName_NamingEditSw37_page
-		AcNamingEditSw	V_EffName_NamingEditSw38, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw39, prev=V_EffName_NamingEditSw37, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=24, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, sign=1, page=V_EffName_NamingEditSw38_page
-		AcNamingEditSw	V_EffName_NamingEditSw39, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw40, prev=V_EffName_NamingEditSw38, flag=VF_Const, X=524, Y=216, W=32, H=23, color=CL_Silver, border=BD_TrackSwDown, index=25, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, sign=1, page=V_EffName_NamingEditSw39_page
-		AcNamingEditSw	V_EffName_NamingEditSw40, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw41, prev=V_EffName_NamingEditSw39, flag=VF_Const, X=44, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, page=V_EffName_NamingEditSw40_page
-		AcNamingEditSw	V_EffName_NamingEditSw41, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw42, prev=V_EffName_NamingEditSw40, flag=VF_Const, X=84, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, page=V_EffName_NamingEditSw41_page
-		AcNamingEditSw	V_EffName_NamingEditSw42, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw43, prev=V_EffName_NamingEditSw41, flag=VF_Const, X=124, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, page=V_EffName_NamingEditSw42_page
-		AcNamingEditSw	V_EffName_NamingEditSw43, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw44, prev=V_EffName_NamingEditSw42, flag=VF_Const, X=164, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, page=V_EffName_NamingEditSw43_page
-		AcNamingEditSw	V_EffName_NamingEditSw44, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw45, prev=V_EffName_NamingEditSw43, flag=VF_Const, X=204, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, page=V_EffName_NamingEditSw44_page
-		AcNamingEditSw	V_EffName_NamingEditSw45, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw46, prev=V_EffName_NamingEditSw44, flag=VF_Const, X=244, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, page=V_EffName_NamingEditSw45_page
-		AcNamingEditSw	V_EffName_NamingEditSw46, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw47, prev=V_EffName_NamingEditSw45, flag=VF_Const, X=284, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, page=V_EffName_NamingEditSw46_page
-		AcNamingEditSw	V_EffName_NamingEditSw47, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw48, prev=V_EffName_NamingEditSw46, flag=VF_Const, X=324, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=7, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, page=V_EffName_NamingEditSw47_page
-		AcNamingEditSw	V_EffName_NamingEditSw48, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw49, prev=V_EffName_NamingEditSw47, flag=VF_Const, X=364, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=8, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, page=V_EffName_NamingEditSw48_page
-		AcNamingEditSw	V_EffName_NamingEditSw49, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw50, prev=V_EffName_NamingEditSw48, flag=VF_Const, X=404, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=9, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, page=V_EffName_NamingEditSw49_page
-		AcNamingEditSw	V_EffName_NamingEditSw50, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw51, prev=V_EffName_NamingEditSw49, flag=VF_Const, X=444, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, page=V_EffName_NamingEditSw50_page
-		AcNamingEditSw	V_EffName_NamingEditSw51, super=V_EffName_NamingWindow2, next=V_EffName_NamingEditSw52, prev=V_EffName_NamingEditSw50, flag=VF_Const, X=484, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=11, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, page=V_EffName_NamingEditSw51_page
-		AcNamingEditSw	V_EffName_NamingEditSw52, super=V_EffName_NamingWindow2, next=V_EffName_CursorBox2, prev=V_EffName_NamingEditSw51, flag=VF_Const, X=524, Y=192, W=32, H=23, color=CL_Silver, border=BD_TrackSwUp, index=12, font=4, fontcolor=CL_Black, editsw=ES_Bottom14, page=V_EffName_NamingEditSw52_page
-		PsCursorBox	V_EffName_CursorBox2, super=V_EffName_NamingWindow2, next=V_EffName_IndexEditSw7, prev=V_EffName_NamingEditSw52, flag=VF_Const, X=160, Y=70, W=320, H=44, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_White, cursor=V_EffName_CursorBox2_cursor
-		AcIndexEditSw	V_EffName_IndexEditSw7, super=V_EffName_NamingWindow2, sub=V_EffName_Label_INS2, next=V_EffName_IndexEditSw8, prev=V_EffName_CursorBox2, flag=VF_Const, X=8, Y=38, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=104, font=4, fontcolor=CL_Black, editsw=ES_Left1
-
-Str_INS_3:	.asciz "INS"
-
-			VwLabel	V_EffName_Label_INS2, super=V_EffName_IndexEditSw7, flag=VF_Const, X=9, Y=39, W=28, H=19, str=Str_INS_3, fontcolor=CL_Black	# str "INS"
-		AcIndexEditSw	V_EffName_IndexEditSw8, super=V_EffName_NamingWindow2, sub=V_EffName_Label_DEL2, next=V_EffName_IndexEditSw9, prev=V_EffName_IndexEditSw7, flag=VF_Const, X=8, Y=81, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=105, font=4, fontcolor=CL_Black, editsw=ES_Left2
-
-Str_DEL_3:	.asciz "DEL"
-
-			VwLabel	V_EffName_Label_DEL2, super=V_EffName_IndexEditSw8, flag=VF_Const, X=9, Y=82, W=28, H=19, str=Str_DEL_3, fontcolor=CL_Black	# str "DEL"
-		AcIndexEditSw	V_EffName_IndexEditSw9, super=V_EffName_NamingWindow2, sub=V_EffName_Label_CLR2, next=V_EffName_IndexEditSw10, prev=V_EffName_IndexEditSw8, flag=VF_Const, X=601, Y=38, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=107, font=4, fontcolor=CL_Black, editsw=ES_Right1
-
-Str_CLR_3:	.asciz "CLR"
-
-			VwLabel	V_EffName_Label_CLR2, super=V_EffName_IndexEditSw9, flag=VF_Const, X=602, Y=39, W=28, H=19, str=Str_CLR_3, fontcolor=CL_Black	# str "CLR"
-		AcIndexEditSw	V_EffName_IndexEditSw10, super=V_EffName_NamingWindow2, sub=V_EffName_Label_8d_8b2, next=V_EffName_IndexEditSw11, prev=V_EffName_IndexEditSw9, flag=VF_Const, X=601, Y=81, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=106, font=4, fontcolor=CL_Black, editsw=ES_Right2
-
-Str_8d_8b_3:	.asciz "~8d ~8b"
-
-			VwLabel	V_EffName_Label_8d_8b2, super=V_EffName_IndexEditSw10, flag=VF_Const, X=602, Y=82, W=28, H=19, str=Str_8d_8b_3, fontcolor=CL_Black	# str "~8d ~8b"
-		AcIndexEditSw	V_EffName_IndexEditSw11, super=V_EffName_NamingWindow2, next=V_EffName_IndexEditSw12, prev=V_EffName_IndexEditSw10, flag=VF_Const, X=564, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=102, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, style=15
-		AcIndexEditSw	V_EffName_IndexEditSw12, super=V_EffName_NamingWindow2, next=V_EffName_Label_POSITION2, prev=V_EffName_IndexEditSw11, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=103, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=16
-
-Str_POSITION_3:	.asciz "POSITION"
-	.align	4, 0xFF
-
-		VwLabel	V_EffName_Label_POSITION2, super=V_EffName_NamingWindow2, next=V_EffName_IndexToggle_ABC2, prev=V_EffName_IndexEditSw12, flag=VF_Const, X=564, Y=198, W=68, H=19, str=Str_POSITION_3, fontcolor=CL_White	# str "POSITION"
-
-Str_ABC_5:	.asciz "ABC"
-Str_ABC_6:	.asciz "ABC"
-Str_123_5:	.asciz "123"
-Str_123_6:	.asciz "123"
-Str_SHIFT_4:	.asciz "SHIFT"
-	.align	4, 0xFF
-
-		VwLabel	V_EffName_Label_SHIFT2, super=V_EffName_NamingWindow2, next=V_EffName_IndexPushSw2, prev=V_EffName_IndexToggle_1232, flag=VF_Const, X=0, Y=198, W=44, H=19, str=Str_SHIFT_4, fontcolor=CL_White	# str "SHIFT"
-		AcIndexPushSw	V_EffName_IndexPushSw2, super=V_EffName_NamingWindow2, prev=V_EffName_Label_SHIFT2, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=109, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, sw=V_EffName_IndexPushSw2_sw
-
-	AcNamingWindow	V_EffName_NamingWindow3, flag=VF_Const, X=160, Y=90, W=320, H=60, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, parent=V_EffName_NamingWindow3_parent, child=V_EffName_NamingWindow3_child
-
-Str_EFFECT_DEBUG:	.asciz "EFFECT DEBUG"
-	.align	4, 0xFF
-
-	TtlScreen	EffectDebug, sub=EffApcModeBox, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=EffectDebug_window, title=Str_EFFECT_DEBUG, icon=1	# title "EFFECT DEBUG"
-
-Str_TOTAL_MODE:	.asciz "TOTAL MODE"
-Str_SOUND_MODE:	.asciz "SOUND MODE"
-	.align	4, 0xFF
-
-		AcFuncToggle	EffApcModeBox, super=EffectDebug, next=EffSysModeBox, flag=VF_Const, X=497, Y=122, W=135, H=22, font=4, stron=Str_TOTAL_MODE, stroff=Str_SOUND_MODE, onoff=EffApcModeBox_onoff, editsw=ES_Right3, func=FN_EffApcSw	# stron "TOTAL MODE"; stroff "SOUND MODE"
-
-Str_SEQ_MODE:	.asciz "SEQ MODE"
-Str_APC_MODE:	.asciz "APC MODE"
-	.align	4, 0xFF
-
-		AcFuncToggle	EffSysModeBox, super=EffectDebug, next=EffectDebug_EffDispGridBox1, prev=EffApcModeBox, flag=VF_Const, X=497, Y=79, W=135, H=22, font=4, stron=Str_SEQ_MODE, stroff=Str_APC_MODE, onoff=EffSysModeBox_onoff, editsw=ES_Right2, func=FN_EffSysSw	# stron "SEQ MODE"; stroff "APC MODE"
-
-Str_UNIT_PART_OFF_ON_NUM_SUF_VARI:	.asciz "UNIT| PART |OFF/ON| NUM | SUF |VARI"
-Str_EFF1_EFF2_EFF3_EFF4_EFF5_REV_CHO_MLT_EQ:	.asciz "|-|EFF1|EFF2|EFF3|EFF4|EFF5|REV |CHO |MLT |EQ  |VREV"
-	.align	4, 0xFF
-
-		AcEffDispGridBox	EffectDebug_EffDispGridBox1, super=EffectDebug, next=EffectDebug_IndexWideES1, prev=EffSysModeBox, flag=VF_Const, X=4, Y=30, W=478, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, fontcolor=CL_White, row=12, col=6, vertline=1, selrow=EffectDebug_EffDispGridBox1_selrow, selcol=EffectDebug_EffDispGridBox1_selcol, pcol=EffectDebug_EffDispGridBox1_pcol, prow=EffectDebug_EffDispGridBox1_prow, crow=EffectDebug_EffDispGridBox1_crow, fixedcol=Str_UNIT_PART_OFF_ON_NUM_SUF_VARI, fixedrow=Str_EFF1_EFF2_EFF3_EFF4_EFF5_REV_CHO_MLT_EQ, func=FN_EffDispGrid	# fixedcol "UNIT| PART |OFF/ON| NUM | SUF |VARI"; fixedrow "|-|EFF1|EFF2|EFF3|EFF4|EFF5|REV |CHO |ML"
-		AcIndexWideES	EffectDebug_IndexWideES1, super=EffectDebug, next=EffectDebug_IndexWideES2, prev=EffectDebug_EffDispGridBox1, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=14
-		AcIndexWideES	EffectDebug_IndexWideES2, super=EffectDebug, next=EffectDebug_IndexWideES3, prev=EffectDebug_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
-		AcIndexWideES	EffectDebug_IndexWideES3, super=EffectDebug, next=EffectDebug_IndexWideES4, prev=EffectDebug_IndexWideES2, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
-		AcIndexWideES	EffectDebug_IndexWideES4, super=EffectDebug, next=EffectDebug_IndexWideES5, prev=EffectDebug_IndexWideES3, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=3
-		AcIndexWideES	EffectDebug_IndexWideES5, super=EffectDebug, next=EffectDebug_CatchEvent1, prev=EffectDebug_IndexWideES4, flag=VF_Const, X=404, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom12, style=3
-		IvCatchEvent	EffectDebug_CatchEvent1, super=EffectDebug, prev=EffectDebug_IndexWideES5, flag=VF_Const|VF_InvisibleBox, X=180, Y=0, W=32, H=32, func=FN_EffDispCatch
-
-Str_REVERB_EFFECT_2:	.asciz "REVERB & EFFECT"
-
-	TtlScreen	EffectMenu, sub=EffectMenu_TitleMenu_MULTI, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PROGRAM, window=EffectMenu_window, title=Str_REVERB_EFFECT_2, icon=206	# title "REVERB & EFFECT"
-
-Str_MULTI_3:	.asciz "MULTI"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_MULTI, super=EffectMenu, next=EffectMenu_TitleMenu_CHORUS, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=EffectMenu_TitleMenu_MULTI_selected, str=Str_MULTI_3, title=TT_FXMULTISEL, icon=66	# str "MULTI"
-
-Str_CHORUS_6:	.asciz "CHORUS"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_CHORUS, super=EffectMenu, next=EffectMenu_TitleMenu_REVERB, prev=EffectMenu_TitleMenu_MULTI, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=EffectMenu_TitleMenu_CHORUS_selected, str=Str_CHORUS_6, title=TT_FXCHOSEL, icon=207	# str "CHORUS"
-
-Str_REVERB_4:	.asciz "REVERB"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_REVERB, super=EffectMenu, next=EffectMenu_TitleMenu_MIC_REVERB_EFFECT, prev=EffectMenu_TitleMenu_CHORUS, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=EffectMenu_TitleMenu_REVERB_selected, str=Str_REVERB_4, title=TT_FXREVSEL, icon=23	# str "REVERB"
-
-Str_MIC_REVERB_EFFECT:	.asciz "MIC REVERB & EFFECT"
-
-		AcTitleMenu	EffectMenu_TitleMenu_MIC_REVERB_EFFECT, super=EffectMenu, next=EffectMenu_TitleMenu_SOUND_LOAD_OPTION, prev=EffectMenu_TitleMenu_REVERB, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=EffectMenu_TitleMenu_MIC_REVERB_EFFECT_selected, str=Str_MIC_REVERB_EFFECT, title=TT_FXMIC, icon=155	# str "MIC REVERB & EFFECT"
-
-Str_SOUND_LOAD_OPTION_5:	.asciz "SOUND LOAD OPTION"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_SOUND_LOAD_OPTION, super=EffectMenu, next=EffectMenu_TitleMenu_ALLOCATION, prev=EffectMenu_TitleMenu_MIC_REVERB_EFFECT, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=EffectMenu_TitleMenu_SOUND_LOAD_OPTION_selected, str=Str_SOUND_LOAD_OPTION_5, title=TT_FXLOADFILT, icon=209	# str "SOUND LOAD OPTION"
-
-Str_ALLOCATION_2:	.asciz "ALLOCATION"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_ALLOCATION, super=EffectMenu, next=EffectMenu_TitleMenu_MIXER, prev=EffectMenu_TitleMenu_SOUND_LOAD_OPTION, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=EffectMenu_TitleMenu_ALLOCATION_selected, str=Str_ALLOCATION_2, title=TT_FXALOC, icon=210	# str "ALLOCATION"
-
-Str_MIXER_3:	.asciz "MIXER"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_MIXER, super=EffectMenu, next=EffectMenu_ExitMode1, prev=EffectMenu_TitleMenu_ALLOCATION, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=EffectMenu_TitleMenu_MIXER_selected, str=Str_MIXER_3, title=TT_SDMIXER, icon=7	# str "MIXER"
-		IvExitMode	EffectMenu_ExitMode1, super=EffectMenu, next=EffectMenu_TitleMenu_EQUALIZER, prev=EffectMenu_TitleMenu_MIXER, flag=VF_Const|VF_InvisibleBox, X=156, Y=0, W=32, H=32, mode=MD_PROGRAM
-
-Str_EQUALIZER_2:	.asciz "EQUALIZER"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_EQUALIZER, super=EffectMenu, next=EffectMenu_TitleMenu_SOUND_DSP, prev=EffectMenu_ExitMode1, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right5, selected=EffectMenu_TitleMenu_EQUALIZER_selected, str=Str_EQUALIZER_2, title=TT_FXEQSEL, icon=13	# str "EQUALIZER"
-
-Str_SOUND_DSP_9:	.asciz "SOUND DSP"
-	.align	4, 0xFF
-
-		AcTitleMenu	EffectMenu_TitleMenu_SOUND_DSP, super=EffectMenu, next=EffectMenu_CatchEvent1, prev=EffectMenu_TitleMenu_EQUALIZER, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=EffectMenu_TitleMenu_SOUND_DSP_selected, str=Str_SOUND_DSP_9, title=TT_FXDSPSEL, icon=208	# str "SOUND DSP"
-		IvCatchEvent	EffectMenu_CatchEvent1, super=EffectMenu, prev=EffectMenu_TitleMenu_SOUND_DSP, flag=VF_Const|VF_InvisibleBox, X=188, Y=0, W=32, H=32, func=FN_EffDebugCatch
-
-Str_MULTI_EFFECT:	.asciz "MULTI EFFECT"
-	.align	4, 0xFF
-
-	EffTtlScreen	MultiSel, sub=MultiSel_EffPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=MultiSel_window, title=Str_MULTI_EFFECT, icon=66	# title "MULTI EFFECT"
-		AcEffPage	MultiSel_EffPage1, super=MultiSel, next=MultiSel_EffExpGroup1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=MultiSel_EffPage1_page
-		AcEffExpGroup	MultiSel_EffExpGroup1, super=MultiSel, next=MultiSel_IndexWideES1, prev=MultiSel_EffPage1, flag=VF_Const, X=216, Y=34, W=209, H=165, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=8, selected=MultiSel_EffExpGroup1_selected
-		AcIndexWideES	MultiSel_IndexWideES1, super=MultiSel, next=MultiSel_EffVari1, prev=MultiSel_EffExpGroup1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
-		AcEffVari	MultiSel_EffVari1, super=MultiSel, next=MultiSel_EffVari2, prev=MultiSel_IndexWideES1, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari1_caption, visible=MultiSel_EffVari1_visible, selected=MultiSel_EffVari1_selected, param2=MultiSel_EffVari1_param2
-		AcEffVari	MultiSel_EffVari2, super=MultiSel, next=MultiSel_EffVari3, prev=MultiSel_EffVari1, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari2_caption, visible=MultiSel_EffVari2_visible, selected=MultiSel_EffVari2_selected, param2=MultiSel_EffVari2_param2
-		AcEffVari	MultiSel_EffVari3, super=MultiSel, next=MultiSel_EffVari4, prev=MultiSel_EffVari2, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari3_caption, visible=MultiSel_EffVari3_visible, selected=MultiSel_EffVari3_selected, param2=MultiSel_EffVari3_param2
-		AcEffVari	MultiSel_EffVari4, super=MultiSel, next=MultiSel_EffVari5, prev=MultiSel_EffVari3, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari4_caption, visible=MultiSel_EffVari4_visible, selected=MultiSel_EffVari4_selected, param2=MultiSel_EffVari4_param2
-		AcEffVari	MultiSel_EffVari5, super=MultiSel, next=MultiSel_EffVari6, prev=MultiSel_EffVari4, flag=VF_Const, X=431, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Right1, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari5_caption, visible=MultiSel_EffVari5_visible, selected=MultiSel_EffVari5_selected, param2=MultiSel_EffVari5_param2
-		AcEffVari	MultiSel_EffVari6, super=MultiSel, next=MultiSel_EffVari7, prev=MultiSel_EffVari5, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari6_caption, visible=MultiSel_EffVari6_visible, selected=MultiSel_EffVari6_selected, param2=MultiSel_EffVari6_param2
-		AcEffVari	MultiSel_EffVari7, super=MultiSel, next=MultiSel_EffVari8, prev=MultiSel_EffVari6, flag=VF_Const, X=431, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari7_caption, visible=MultiSel_EffVari7_visible, selected=MultiSel_EffVari7_selected, param2=MultiSel_EffVari7_param2
-		AcEffVari	MultiSel_EffVari8, super=MultiSel, next=MultiSel_EffTitleMenu_DETAIL_EDIT, prev=MultiSel_EffVari7, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=MultiSel_EffVari8_caption, visible=MultiSel_EffVari8_visible, selected=MultiSel_EffVari8_selected, param2=MultiSel_EffVari8_param2
-
-Str_DETAIL_EDIT_2:	.asciz "DETAIL EDIT"
-
-		AcEffTitleMenu	MultiSel_EffTitleMenu_DETAIL_EDIT, super=MultiSel, next=MultiSel_CatchEvent1, prev=MultiSel_EffVari8, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=MultiSel_EffTitleMenu_DETAIL_EDIT_selected, str=Str_DETAIL_EDIT_2, title=TT_FXEDIT, icon=211	# str "DETAIL EDIT"
-		IvCatchEvent	MultiSel_CatchEvent1, super=MultiSel, prev=MultiSel_EffTitleMenu_DETAIL_EDIT, flag=VF_Const|VF_InvisibleBox, X=168, Y=0, W=32, H=32, func=FN_MulSelExitCatchFunc
-
-Str_MIC_REVERB_EFFECT_2:	.asciz "MIC REVERB & EFFECT"
-
-	EffTtlScreen	MicSel, sub=MicEffMuteToggle, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=MicSel_window, title=Str_MIC_REVERB_EFFECT_2, icon=155	# title "MIC REVERB & EFFECT"
-
-Str_MUTE_ON:	.asciz "MUTE:ON "
-Str_MUTE_OFF:	.asciz "MUTE:OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	MicEffMuteToggle, super=MicSel, next=MicSel_IndexWideES1, flag=VF_Const, X=458, Y=215, W=80, H=23, font=1, stron=Str_MUTE_ON, stroff=Str_MUTE_OFF, onoff=MicEffMuteToggle_onoff, editsw=ES_Bottom13, func=FN_MicEffMuteToggleFunc	# stron "MUTE:ON "; stroff "MUTE:OFF"
-		AcIndexWideES	MicSel_IndexWideES1, super=MicSel, next=MicSel_IndexWideES2, prev=MicEffMuteToggle, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=14
-		AcIndexWideES	MicSel_IndexWideES2, super=MicSel, next=MicSel_Label_HARMONIZER_PART, prev=MicSel_IndexWideES1, flag=VF_Const, X=364, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom11, style=3
-
-Str_HARMONIZER_PART:	.asciz "HARMONIZER PART:"
-	.align	4, 0xFF
-
-		VwLabel	MicSel_Label_HARMONIZER_PART, super=MicSel, next=MicRevToggle, prev=MicSel_IndexWideES2, flag=VF_Const, X=454, Y=170, W=132, H=19, str=Str_HARMONIZER_PART, font=1, fontcolor=CL_White	# str "HARMONIZER PART:"
-
-Str_MIC_REVERB_ON:	.asciz "MIC REVERB   : ON "
-Str_MIC_REVERB_OFF:	.asciz "MIC REVERB   : OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	MicRevToggle, super=MicSel, next=MicEffToggle, prev=MicSel_Label_HARMONIZER_PART, flag=VF_Const, X=453, Y=77, W=179, H=26, font=1, stron=Str_MIC_REVERB_ON, stroff=Str_MIC_REVERB_OFF, onoff=MicRevToggle_onoff, editsw=ES_Right2, func=FN_MicRevToggleFunc	# stron "MIC REVERB   : ON "; stroff "MIC REVERB   : OFF"
-
-Str_MULTI_EFFECT_ON:	.asciz "MULTI EFFECT : ON "
-Str_MULTI_EFFECT_OFF:	.asciz "MULTI EFFECT : OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	MicEffToggle, super=MicSel, next=HarmPartEdit, prev=MicRevToggle, flag=VF_Const, X=453, Y=34, W=179, H=26, font=1, stron=Str_MULTI_EFFECT_ON, stroff=Str_MULTI_EFFECT_OFF, onoff=MicEffToggle_onoff, editsw=ES_Right1, func=FN_MicEffToggleFunc	# stron "MULTI EFFECT : ON "; stroff "MULTI EFFECT : OFF"
-
-Str_empty_73:	.asciz ""
-	.align	4, 0xFF
-
-		AcMmmEditBox	HarmPartEdit, super=MicSel, next=MicSel_IndexWideES3, prev=MicEffToggle, flag=VF_Const, X=455, Y=186, W=181, H=26, color=CL_Silver, border=BD_3D_UP2, index=2, caption=Str_empty_73, font=1, fontcolor=CL_Black, length=16, editsw=ES_None, dial=1, selected=HarmPartEdit_selected, func=FN_HarmPartEditCheck, data=HarmPartEdit_data	# caption ""
-		AcIndexWideES	MicSel_IndexWideES3, super=MicSel, next=MicSel_CatchEvent1, prev=HarmPartEdit, flag=VF_Const, X=564, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, editsw2=ES_Bottom16, style=3
-		IvCatchEvent	MicSel_CatchEvent1, super=MicSel, next=MicSel_StrBox_MIC_REVERB_SETTING, prev=MicSel_IndexWideES3, flag=VF_Const|VF_InvisibleBox, X=254, Y=0, W=32, H=32, func=FN_MicSelFunc
-
-Str_MIC_REVERB_SETTING:	.asciz "MIC REVERB SETTING"
-	.align	4, 0xFF
-
-		VwStrBox	MicSel_StrBox_MIC_REVERB_SETTING, super=MicSel, next=EffEditGridBox2, prev=MicSel_CatchEvent1, flag=VF_Const, X=200, Y=64, W=166, H=24, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_MIC_REVERB_SETTING	# str "MIC REVERB SETTING"
-
-Str_PARAMETER_VALUE_2:	.asciz "  PARAMETER  |     VALUE     "
-Str_empty_74:	.asciz "  |-|"
-
-		AcEffEditGridBox	EffEditGridBox2, super=MicSel, next=MicSel_MicFuncEditSw1, prev=MicSel_StrBox_MIC_REVERB_SETTING, flag=VF_Const, X=190, Y=86, W=257, H=125, color=CL_WallPattern, border=BD_3D_UP2, font=1, fontcolor=CL_White, align=1, row=6, col=2, vertline=1, selrow=EffEditGridBox2_selrow, selcol=EffEditGridBox2_selcol, pcol=EffEditGridBox2_pcol, prow=EffEditGridBox2_prow, crow=EffEditGridBox2_crow, fixedcol=Str_PARAMETER_VALUE_2, fixedrow=Str_empty_74, func=FN_EffEditGrid2	# fixedcol "  PARAMETER  |     VALUE     "; fixedrow "  |-|"
-		AcMicFuncEditSw	MicSel_MicFuncEditSw1, super=MicSel, sub=MicSel_StrBox_Trumpet_1_Octave, next=MicSel_MicFuncEditSw2, prev=EffEditGridBox2, flag=VF_Const, X=8, Y=32, W=175, H=36, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw1_select
-
-Str_Trumpet_1_Octave:	.asciz "Trumpet (+ 1 Octave)"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_Trumpet_1_Octave, super=MicSel_MicFuncEditSw1, next=MicSel_StrBox_BRASS_SIMULATOR_1, flag=VF_Const, X=30, Y=52, W=140, H=12, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_Trumpet_1_Octave	# str "Trumpet (+ 1 Octave)"
-
-Str_BRASS_SIMULATOR_1:	.asciz " BRASS SIMULATOR 1"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_BRASS_SIMULATOR_1, super=MicSel_MicFuncEditSw1, prev=MicSel_StrBox_Trumpet_1_Octave, flag=VF_Const, X=12, Y=36, W=156, H=18, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_BRASS_SIMULATOR_1	# str " BRASS SIMULATOR 1"
-		AcMicFuncEditSw	MicSel_MicFuncEditSw2, super=MicSel, sub=MicSel_StrBox_BRASS_SIMULATOR_2, next=MicSel_MicFuncEditSw3, prev=MicSel_MicFuncEditSw1, flag=VF_Const, X=8, Y=75, W=175, H=36, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left2, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw2_select
-
-Str_BRASS_SIMULATOR_2:	.asciz " BRASS SIMULATOR 2"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_BRASS_SIMULATOR_2, super=MicSel_MicFuncEditSw2, next=MicSel_StrBox_Trumpet, flag=VF_Const, X=14, Y=80, W=152, H=16, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_BRASS_SIMULATOR_2	# str " BRASS SIMULATOR 2"
-
-Str_Trumpet:	.asciz "Trumpet"
-
-			VwStrBox	MicSel_StrBox_Trumpet, super=MicSel_MicFuncEditSw2, prev=MicSel_StrBox_BRASS_SIMULATOR_2, flag=VF_Const, X=30, Y=94, W=84, H=12, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_Trumpet	# str "Trumpet"
-		AcMicFuncEditSw	MicSel_MicFuncEditSw3, super=MicSel, sub=MicSel_StrBox_HARMONIZER_1, next=MicSel_MicFuncEditSw4, prev=MicSel_MicFuncEditSw2, flag=VF_Const, X=8, Y=118, W=175, H=34, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left3, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw3_select
-
-Str_HARMONIZER_1:	.asciz " HARMONIZER 1"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_HARMONIZER_1, super=MicSel_MicFuncEditSw3, next=MicSel_StrBox_SMF_Harmony_Track, flag=VF_Const, X=14, Y=122, W=136, H=16, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_HARMONIZER_1	# str " HARMONIZER 1"
-
-Str_SMF_Harmony_Track:	.asciz "SMF Harmony Track ->"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_SMF_Harmony_Track, super=MicSel_MicFuncEditSw3, prev=MicSel_StrBox_HARMONIZER_1, flag=VF_Const, X=28, Y=138, W=136, H=10, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_SMF_Harmony_Track	# str "SMF Harmony Track ->"
-		AcMicFuncEditSw	MicSel_MicFuncEditSw4, super=MicSel, sub=MicSel_StrBox_HARMONIZER_2, next=MicSel_EffTitleMenu_MULTI_EFFECT_SET, prev=MicSel_MicFuncEditSw3, flag=VF_Const, X=8, Y=161, W=175, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left4, func=FN_MicPresetSelFunc, select=MicSel_MicFuncEditSw4_select
-
-Str_HARMONIZER_2:	.asciz " HARMONIZER 2"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_HARMONIZER_2, super=MicSel_MicFuncEditSw4, next=MicSel_StrBox_Auto_Play_Chord, flag=VF_Const, X=14, Y=164, W=130, H=16, color=CL_WallPattern, index=0xFFFF, font=1, fontcolor=CL_White, align=1, str=Str_HARMONIZER_2	# str " HARMONIZER 2"
-
-Str_Auto_Play_Chord:	.asciz "Auto Play Chord ->"
-	.align	4, 0xFF
-
-			VwStrBox	MicSel_StrBox_Auto_Play_Chord, super=MicSel_MicFuncEditSw4, prev=MicSel_StrBox_HARMONIZER_2, flag=VF_Const, X=26, Y=178, W=130, H=10, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_Yellow, align=1, str=Str_Auto_Play_Chord	# str "Auto Play Chord ->"
-
-Str_MULTI_EFFECT_SET:	.asciz "MULTI EFFECT SET"
-	.align	4, 0xFF
-
-		AcEffTitleMenu	MicSel_EffTitleMenu_MULTI_EFFECT_SET, super=MicSel, prev=MicSel_MicFuncEditSw4, flag=VF_Const, X=8, Y=202, W=305, H=38, color=CL_Transparent, font=1, fontcolor=CL_White, editsw=ES_Left5, selected=MicSel_EffTitleMenu_MULTI_EFFECT_SET_selected, str=Str_MULTI_EFFECT_SET, title=TT_FXMULTISEL, icon=66	# str "MULTI EFFECT SET"
-
-Str_REVERB_5:	.asciz "REVERB"
-	.align	4, 0xFF
-
-	EffTtlScreen	RevSel, sub=RevSel_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=RevSel_window, title=Str_REVERB_5, icon=23	# title "REVERB"
-		AcIndexWideES	RevSel_IndexWideES1, super=RevSel, next=RevSel_EffExpGroup1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
-		AcEffExpGroup	RevSel_EffExpGroup1, super=RevSel, next=RevSel_EffVari1, prev=RevSel_IndexWideES1, flag=VF_Const, X=216, Y=34, W=209, H=165, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=8, selected=RevSel_EffExpGroup1_selected
-		AcEffVari	RevSel_EffVari1, super=RevSel, next=RevSel_EffVari2, prev=RevSel_EffExpGroup1, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=RevSel_EffVari1_caption, visible=RevSel_EffVari1_visible, selected=RevSel_EffVari1_selected, param2=RevSel_EffVari1_param2
-		AcEffVari	RevSel_EffVari2, super=RevSel, next=RevSel_EffVari3, prev=RevSel_EffVari1, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=RevSel_EffVari2_caption, visible=RevSel_EffVari2_visible, selected=RevSel_EffVari2_selected, param2=RevSel_EffVari2_param2
-		AcEffVari	RevSel_EffVari3, super=RevSel, next=RevSel_EffVari4, prev=RevSel_EffVari2, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=RevSel_EffVari3_caption, visible=RevSel_EffVari3_visible, selected=RevSel_EffVari3_selected, param2=RevSel_EffVari3_param2
-		AcEffVari	RevSel_EffVari4, super=RevSel, next=RevSel_EffVari5, prev=RevSel_EffVari3, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=RevSel_EffVari4_caption, visible=RevSel_EffVari4_visible, selected=RevSel_EffVari4_selected, param2=RevSel_EffVari4_param2
-		AcEffVari	RevSel_EffVari5, super=RevSel, next=RevSel_EffVari6, prev=RevSel_EffVari4, flag=VF_Const, X=431, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Right1, font=4, fontcolor=CL_Black, caption=RevSel_EffVari5_caption, visible=RevSel_EffVari5_visible, selected=RevSel_EffVari5_selected, param2=RevSel_EffVari5_param2
-		AcEffVari	RevSel_EffVari6, super=RevSel, next=RevSel_EffVari7, prev=RevSel_EffVari5, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=RevSel_EffVari6_caption, visible=RevSel_EffVari6_visible, selected=RevSel_EffVari6_selected, param2=RevSel_EffVari6_param2
-		AcEffVari	RevSel_EffVari7, super=RevSel, next=RevSel_EffVari8, prev=RevSel_EffVari6, flag=VF_Const, X=431, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=RevSel_EffVari7_caption, visible=RevSel_EffVari7_visible, selected=RevSel_EffVari7_selected, param2=RevSel_EffVari7_param2
-		AcEffVari	RevSel_EffVari8, super=RevSel, next=RevSel_EffPage1, prev=RevSel_EffVari7, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=RevSel_EffVari8_caption, visible=RevSel_EffVari8_visible, selected=RevSel_EffVari8_selected, param2=RevSel_EffVari8_param2
-		AcEffPage	RevSel_EffPage1, super=RevSel, next=RevSel_EffTitleMenu_DETAIL_EDIT, prev=RevSel_EffVari8, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=RevSel_EffPage1_page
-
-Str_DETAIL_EDIT_3:	.asciz "DETAIL EDIT"
-
-		AcEffTitleMenu	RevSel_EffTitleMenu_DETAIL_EDIT, super=RevSel, next=RevSel_IndexEditSw1, prev=RevSel_EffPage1, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=RevSel_EffTitleMenu_DETAIL_EDIT_selected, str=Str_DETAIL_EDIT_3, title=TT_FXEDIT, icon=211	# str "DETAIL EDIT"
-		AcIndexEditSw	RevSel_IndexEditSw1, super=RevSel, next=RevSel_IndexEditSw2, prev=RevSel_EffTitleMenu_DETAIL_EDIT, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=3
-		AcIndexEditSw	RevSel_IndexEditSw2, super=RevSel, next=RevSel_MmmEditBox_TOTAL_DEPTH, prev=RevSel_IndexEditSw1, flag=VF_Const, X=564, Y=216, W=32, H=23, color=CL_WallPattern, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, style=3
-
-Str_TOTAL_DEPTH:	.asciz "TOTAL DEPTH:"
-	.align	4, 0xFF
-
-		AcMmmEditBox	RevSel_MmmEditBox_TOTAL_DEPTH, super=RevSel, prev=RevSel_IndexEditSw2, flag=VF_Const, X=452, Y=206, W=144, H=34, color=CL_Silver, border=BD_Double1, index=15, caption=Str_TOTAL_DEPTH, font=1, fontcolor=CL_Black, align=1, length=4, editsw=ES_None, dial=1, selected=RevSel_MmmEditBox_TOTAL_DEPTH_selected, func=FN_RevDepEditFunc, data=RevSel_MmmEditBox_TOTAL_DEPTH_data	# caption "TOTAL DEPTH:"
-
-Str_REVERB_6:	.asciz "REVERB"
-	.align	4, 0xFF
-
-	TtlScreen	V_RevSel_TtlScreen_REVERB, sub=V_RevSel_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=V_RevSel_TtlScreen_REVERB_window, title=Str_REVERB_6, icon=1	# title "REVERB"
-		AcIndexWideES	V_RevSel_IndexWideES1, super=V_RevSel_TtlScreen_REVERB, sub=V_RevSel_EffTitleMenu_DETAIL_EDIT, next=V_RevSel_WindowPage1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
-
-Str_DETAIL_EDIT_4:	.asciz "DETAIL EDIT"
-
-			AcEffTitleMenu	V_RevSel_EffTitleMenu_DETAIL_EDIT, super=V_RevSel_IndexWideES1, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=V_RevSel_EffTitleMenu_DETAIL_EDIT_selected, str=Str_DETAIL_EDIT_4, title=TT_PS, icon=1	# str "DETAIL EDIT"
-		AcWindowPage	V_RevSel_WindowPage1, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffExpGroup1, prev=V_RevSel_IndexWideES1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=V_RevSel_WindowPage1_page, pagemin=1, pagemax=2
-		AcEffExpGroup	V_RevSel_EffExpGroup1, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari1, prev=V_RevSel_WindowPage1, flag=VF_Const, X=216, Y=34, W=209, H=165, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=8, selected=V_RevSel_EffExpGroup1_selected
-		AcEffVari	V_RevSel_EffVari1, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari2, prev=V_RevSel_EffExpGroup1, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari1_caption, visible=V_RevSel_EffVari1_visible, selected=V_RevSel_EffVari1_selected, param2=V_RevSel_EffVari1_param2
-		AcEffVari	V_RevSel_EffVari2, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari3, prev=V_RevSel_EffVari1, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari2_caption, visible=V_RevSel_EffVari2_visible, selected=V_RevSel_EffVari2_selected, param2=V_RevSel_EffVari2_param2
-		AcEffVari	V_RevSel_EffVari3, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari4, prev=V_RevSel_EffVari2, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari3_caption, visible=V_RevSel_EffVari3_visible, selected=V_RevSel_EffVari3_selected, param2=V_RevSel_EffVari3_param2
-		AcEffVari	V_RevSel_EffVari4, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari5, prev=V_RevSel_EffVari3, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari4_caption, visible=V_RevSel_EffVari4_visible, selected=V_RevSel_EffVari4_selected, param2=V_RevSel_EffVari4_param2
-		AcEffVari	V_RevSel_EffVari5, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari6, prev=V_RevSel_EffVari4, flag=VF_Const, X=431, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right1, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari5_caption, visible=V_RevSel_EffVari5_visible, selected=V_RevSel_EffVari5_selected, param2=V_RevSel_EffVari5_param2
-		AcEffVari	V_RevSel_EffVari6, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari7, prev=V_RevSel_EffVari5, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari6_caption, visible=V_RevSel_EffVari6_visible, selected=V_RevSel_EffVari6_selected, param2=V_RevSel_EffVari6_param2
-		AcEffVari	V_RevSel_EffVari7, super=V_RevSel_TtlScreen_REVERB, next=V_RevSel_EffVari8, prev=V_RevSel_EffVari6, flag=VF_Const, X=435, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari7_caption, visible=V_RevSel_EffVari7_visible, selected=V_RevSel_EffVari7_selected, param2=V_RevSel_EffVari7_param2
-		AcEffVari	V_RevSel_EffVari8, super=V_RevSel_TtlScreen_REVERB, prev=V_RevSel_EffVari7, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=V_RevSel_EffVari8_caption, visible=V_RevSel_EffVari8_visible, selected=V_RevSel_EffVari8_selected, param2=V_RevSel_EffVari8_param2
-
-Str_CHORUS_7:	.asciz "CHORUS"
-	.align	4, 0xFF
-
-	EffTtlScreen	ChoSel, sub=ChoSel_EffVari1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=ChoSel_window, title=Str_CHORUS_7, icon=207	# title "CHORUS"
-		AcEffVari	ChoSel_EffVari1, super=ChoSel, next=ChoSel_EffPage1, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari1_caption, visible=ChoSel_EffVari1_visible, selected=ChoSel_EffVari1_selected, param2=ChoSel_EffVari1_param2
-		AcEffPage	ChoSel_EffPage1, super=ChoSel, next=ChoSel_EffExpGroup1, prev=ChoSel_EffVari1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=ChoSel_EffPage1_page
-		AcEffExpGroup	ChoSel_EffExpGroup1, super=ChoSel, next=ChoSel_IndexWideES1, prev=ChoSel_EffPage1, flag=VF_Const, X=216, Y=34, W=209, H=165, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=8, selected=ChoSel_EffExpGroup1_selected
-		AcIndexWideES	ChoSel_IndexWideES1, super=ChoSel, next=ChoSel_EffVari2, prev=ChoSel_EffExpGroup1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
-		AcEffVari	ChoSel_EffVari2, super=ChoSel, next=ChoSel_EffVari3, prev=ChoSel_IndexWideES1, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari2_caption, visible=ChoSel_EffVari2_visible, selected=ChoSel_EffVari2_selected, param2=ChoSel_EffVari2_param2
-		AcEffVari	ChoSel_EffVari3, super=ChoSel, next=ChoSel_EffVari4, prev=ChoSel_EffVari2, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari3_caption, visible=ChoSel_EffVari3_visible, selected=ChoSel_EffVari3_selected, param2=ChoSel_EffVari3_param2
-		AcEffVari	ChoSel_EffVari4, super=ChoSel, next=ChoSel_EffVari5, prev=ChoSel_EffVari3, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari4_caption, visible=ChoSel_EffVari4_visible, selected=ChoSel_EffVari4_selected, param2=ChoSel_EffVari4_param2
-		AcEffVari	ChoSel_EffVari5, super=ChoSel, next=ChoSel_EffVari6, prev=ChoSel_EffVari4, flag=VF_Const, X=431, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Right1, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari5_caption, visible=ChoSel_EffVari5_visible, selected=ChoSel_EffVari5_selected, param2=ChoSel_EffVari5_param2
-		AcEffVari	ChoSel_EffVari6, super=ChoSel, next=ChoSel_EffVari7, prev=ChoSel_EffVari5, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari6_caption, visible=ChoSel_EffVari6_visible, selected=ChoSel_EffVari6_selected, param2=ChoSel_EffVari6_param2
-		AcEffVari	ChoSel_EffVari7, super=ChoSel, next=ChoSel_EffVari8, prev=ChoSel_EffVari6, flag=VF_Const, X=431, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari7_caption, visible=ChoSel_EffVari7_visible, selected=ChoSel_EffVari7_selected, param2=ChoSel_EffVari7_param2
-		AcEffVari	ChoSel_EffVari8, super=ChoSel, next=ChoSel_EffTitleMenu_DETAIL_EDIT, prev=ChoSel_EffVari7, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=ChoSel_EffVari8_caption, visible=ChoSel_EffVari8_visible, selected=ChoSel_EffVari8_selected, param2=ChoSel_EffVari8_param2
-
-Str_DETAIL_EDIT_5:	.asciz "DETAIL EDIT"
-
-		AcEffTitleMenu	ChoSel_EffTitleMenu_DETAIL_EDIT, super=ChoSel, prev=ChoSel_EffVari8, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=ChoSel_EffTitleMenu_DETAIL_EDIT_selected, str=Str_DETAIL_EDIT_5, title=TT_FXEDIT, icon=211	# str "DETAIL EDIT"
-
-Str_SOUND_DSP_10:	.asciz "SOUND DSP"
-	.align	4, 0xFF
-
-	EffTtlScreen	DSPSel, sub=DSPSel_EffPage1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_FXMENU, window=DSPSel_window, title=Str_SOUND_DSP_10, icon=208	# title "SOUND DSP"
-		AcEffPage	DSPSel_EffPage1, super=DSPSel, next=DSPSel_EffExpGroup1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=DSPSel_EffPage1_page
-		AcEffExpGroup	DSPSel_EffExpGroup1, super=DSPSel, next=DSPSel_IndexWideES1, prev=DSPSel_EffPage1, flag=VF_Const, X=216, Y=34, W=209, H=165, color=CL_WallPattern, border=BD_3D_UP2, font=4, fontcolor=CL_White, row=8, selected=DSPSel_EffExpGroup1_selected
-		AcIndexWideES	DSPSel_IndexWideES1, super=DSPSel, next=DSPSel_EffVari1, prev=DSPSel_EffExpGroup1, flag=VF_Const, X=244, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom10, style=3
-		AcEffVari	DSPSel_EffVari1, super=DSPSel, next=DSPSel_EffVari2, prev=DSPSel_IndexWideES1, flag=VF_Const, X=8, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, editsw=ES_Left1, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari1_caption, visible=DSPSel_EffVari1_visible, selected=DSPSel_EffVari1_selected, param2=DSPSel_EffVari1_param2
-		AcEffVari	DSPSel_EffVari2, super=DSPSel, next=DSPSel_EffVari3, prev=DSPSel_EffVari1, flag=VF_Const, X=8, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=1, editsw=ES_Left2, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari2_caption, visible=DSPSel_EffVari2_visible, selected=DSPSel_EffVari2_selected, param2=DSPSel_EffVari2_param2
-		AcEffVari	DSPSel_EffVari3, super=DSPSel, next=DSPSel_EffVari4, prev=DSPSel_EffVari2, flag=VF_Const, X=8, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=2, editsw=ES_Left3, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari3_caption, visible=DSPSel_EffVari3_visible, selected=DSPSel_EffVari3_selected, param2=DSPSel_EffVari3_param2
-		AcEffVari	DSPSel_EffVari4, super=DSPSel, next=DSPSel_EffVari5, prev=DSPSel_EffVari3, flag=VF_Const, X=8, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=3, editsw=ES_Left4, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari4_caption, visible=DSPSel_EffVari4_visible, selected=DSPSel_EffVari4_selected, param2=DSPSel_EffVari4_param2
-		AcEffVari	DSPSel_EffVari5, super=DSPSel, sub=DSPSel_EffVari6, next=DSPSel_EffVari7, prev=DSPSel_EffVari4, flag=VF_Const, X=431, Y=31, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=4, editsw=ES_Right1, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari5_caption, visible=DSPSel_EffVari5_visible, selected=DSPSel_EffVari5_selected, param2=DSPSel_EffVari5_param2
-			AcEffVari	DSPSel_EffVari6, super=DSPSel_EffVari5, flag=VF_Const, X=431, Y=117, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=6, editsw=ES_Right3, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari6_caption, visible=DSPSel_EffVari6_visible, selected=DSPSel_EffVari6_selected, param2=DSPSel_EffVari6_param2
-		AcEffVari	DSPSel_EffVari7, super=DSPSel, next=DSPSel_EffVari8, prev=DSPSel_EffVari5, flag=VF_Const, X=431, Y=74, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=5, editsw=ES_Right2, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari7_caption, visible=DSPSel_EffVari7_visible, selected=DSPSel_EffVari7_selected, param2=DSPSel_EffVari7_param2
-		AcEffVari	DSPSel_EffVari8, super=DSPSel, next=DSPSel_IndexEditSw1, prev=DSPSel_EffVari7, flag=VF_Const, X=431, Y=160, W=201, H=32, color=CL_Silver, border=BD_3D_UP2, index=7, editsw=ES_Right4, font=4, fontcolor=CL_Black, caption=DSPSel_EffVari8_caption, visible=DSPSel_EffVari8_visible, selected=DSPSel_EffVari8_selected, param2=DSPSel_EffVari8_param2
-		AcIndexEditSw	DSPSel_IndexEditSw1, super=DSPSel, next=DSPSel_RamBox1, prev=DSPSel_EffVari8, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, style=3
-		AcRamBox	DSPSel_RamBox1, super=DSPSel, next=DSPSel_IndexEditSw2, prev=DSPSel_IndexEditSw1, flag=VF_Const, X=216, Y=4, W=204, H=24, color=CL_TitleBar, index=0xFFFF, font=4, fontcolor=CL_White, func=FN_DspUnitNumCheck, data=DSPSel_RamBox1_data
-		AcIndexEditSw	DSPSel_IndexEditSw2, super=DSPSel, next=DSPSel_MmmEditBox_DEPTH, prev=DSPSel_RamBox1, flag=VF_Const, X=564, Y=216, W=32, H=23, color=CL_WallPattern, index=15, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, style=3
-
-Str_DEPTH_20:	.asciz "DEPTH: "
-
-		AcMmmEditBox	DSPSel_MmmEditBox_DEPTH, super=DSPSel, next=DSPSel_EffTitleMenu_EDIT, prev=DSPSel_IndexEditSw2, flag=VF_Const, X=471, Y=206, W=129, H=34, color=CL_Silver, border=BD_Double1, index=15, caption=Str_DEPTH_20, font=1, fontcolor=CL_Black, align=1, length=4, editsw=ES_None, dial=1, selected=DSPSel_MmmEditBox_DEPTH_selected, func=FN_DspDepEditFunc, data=DSPSel_MmmEditBox_DEPTH_data	# caption "DEPTH: "
-
-Str_EDIT:	.asciz "EDIT"
-	.align	4, 0xFF
-
-		AcEffTitleMenu	DSPSel_EffTitleMenu_EDIT, super=DSPSel, sub=DSPSel_FuncEditSw1, next=DSPSel_FuncEditSw2, prev=DSPSel_MmmEditBox_DEPTH, flag=VF_Const, X=8, Y=204, W=93, H=34, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=DSPSel_EffTitleMenu_EDIT_selected, str=Str_EDIT, title=TT_FXEDIT, icon=211	# str "EDIT"
-			AcFuncEditSw	DSPSel_FuncEditSw1, super=DSPSel_EffTitleMenu_EDIT, flag=VF_Const, X=204, Y=217, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, style=3, func=FN_DspUnitNumSel
-		AcFuncEditSw	DSPSel_FuncEditSw2, super=DSPSel, next=DSPSel_StrBox_PART, prev=DSPSel_EffTitleMenu_EDIT, flag=VF_Const, X=164, Y=216, W=32, H=23, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, style=3, func=FN_DspUnitNumSel
-
-Str_PART_3:	.asciz "PART"
-	.align	4, 0xFF
-
-		VwStrBox	DSPSel_StrBox_PART, super=DSPSel, prev=DSPSel_FuncEditSw2, flag=VF_Const, X=108, Y=208, W=92, H=32, color=CL_Silver, border=BD_Double1, index=0xFFFF, font=1, fontcolor=CL_Black, str=Str_PART_3	# str "PART"
-
-Str_EQUALIZER_3:	.asciz "EQUALIZER"
-	.align	4, 0xFF
-
-	TtlScreen	EqSel, sub=EqSel_FuncEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=2, exit=TT_FXMENU, window=EqSel_window, title=Str_EQUALIZER_3, icon=13	# title "EQUALIZER"
-		AcFuncEditSw	EqSel_FuncEditSw1, super=EqSel, next=EQGain, flag=VF_Const, X=244, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, style=14, func=FN_EqFuncSel
-		PsRadioBox	EQGain, super=EqSel, sub=EQGain_StrBox_GAIN, next=EQFC, prev=EqSel_FuncEditSw1, flag=VF_Const, X=235, Y=60, W=291, H=96, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_None, selected=EQGain_selected, tag=0xFFFF
-
-Str_GAIN_3:	.asciz "GAIN"
-	.align	4, 0xFF
-
-			VwStrBox	EQGain_StrBox_GAIN, super=EQGain, next=EQGain_EQEditBox1, flag=VF_Const, X=242, Y=100, W=46, H=18, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, str=Str_GAIN_3	# str "GAIN"
-
-Str_empty_75:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQGain_EQEditBox1, super=EQGain, next=EQGain_EQEditBox2, prev=EQGain_StrBox_GAIN, flag=VF_Const, X=320, Y=134, W=36, H=18, color=CL_Silver, index=10, caption=Str_empty_75, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox1_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox1_data	# caption ""
-
-Str_empty_76:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQGain_EQEditBox2, super=EQGain, next=EQGain_EQEditBox3, prev=EQGain_EQEditBox1, flag=VF_Const, X=360, Y=134, W=36, H=18, color=CL_Silver, index=11, caption=Str_empty_76, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox2_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox2_data	# caption ""
-
-Str_empty_77:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQGain_EQEditBox3, super=EQGain, next=EQGain_EQEditBox4, prev=EQGain_EQEditBox2, flag=VF_Const, X=400, Y=134, W=36, H=18, color=CL_Silver, index=12, caption=Str_empty_77, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox3_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox3_data	# caption ""
-
-Str_empty_78:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQGain_EQEditBox4, super=EQGain, next=EQGain_EQEditBox5, prev=EQGain_EQEditBox3, flag=VF_Const, X=440, Y=134, W=36, H=18, color=CL_Silver, index=13, caption=Str_empty_78, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox4_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox4_data	# caption ""
-
-Str_empty_79:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQGain_EQEditBox5, super=EQGain, next=EQGain_StrBox_dB, prev=EQGain_EQEditBox4, flag=VF_Const, X=480, Y=134, W=36, H=18, color=CL_Silver, index=14, caption=Str_empty_79, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQGain_EQEditBox5_selected, func=FN_EQGainEditCheck, data=EQGain_EQEditBox5_data	# caption ""
-
-Str_dB:	.asciz " (dB)"
-	.align	4, 0xFF
-
-			VwStrBox	EQGain_StrBox_dB, super=EQGain, next=EQGain_GainBox1, prev=EQGain_EQEditBox5, flag=VF_Const, X=246, Y=116, W=54, H=18, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, str=Str_dB	# str " (dB)"
-			AcGainBox	EQGain_GainBox1, super=EQGain, next=EQGain_GainBox2, prev=EQGain_StrBox_dB, flag=VF_Const, X=316, Y=74, W=40, H=60, color=CL_Silver, border=BD_3D_UP2, index=10, font=4, fontcolor=CL_Black, func=FN_EQGainEditCheck, data=EQGain_GainBox1_data
-			AcGainBox	EQGain_GainBox2, super=EQGain, next=EQGain_GainBox3, prev=EQGain_GainBox1, flag=VF_Const, X=356, Y=74, W=40, H=60, color=CL_Silver, border=BD_3D_UP2, index=11, font=4, fontcolor=CL_Black, func=FN_EQGainEditCheck, data=EQGain_GainBox2_data
-			AcGainBox	EQGain_GainBox3, super=EQGain, next=EQGain_GainBox4, prev=EQGain_GainBox2, flag=VF_Const, X=396, Y=74, W=40, H=60, color=CL_Silver, border=BD_3D_UP2, index=12, font=4, fontcolor=CL_Black, func=FN_EQGainEditCheck, data=EQGain_GainBox3_data
-			AcGainBox	EQGain_GainBox4, super=EQGain, next=EQGain_GainBox5, prev=EQGain_GainBox3, flag=VF_Const, X=436, Y=74, W=40, H=60, color=CL_Silver, border=BD_3D_UP2, index=13, font=4, fontcolor=CL_Black, func=FN_EQGainEditCheck, data=EQGain_GainBox4_data
-			AcGainBox	EQGain_GainBox5, super=EQGain, prev=EQGain_GainBox4, flag=VF_Const, X=476, Y=74, W=40, H=60, color=CL_Silver, border=BD_3D_UP2, index=14, font=4, fontcolor=CL_Black, func=FN_EQGainEditCheck, data=EQGain_GainBox5_data
-		PsRadioBox	EQFC, super=EqSel, sub=EQFC_StrBox_FC, next=EQQ, prev=EQGain, flag=VF_Const, X=235, Y=156, W=291, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_None, selected=EQFC_selected, tag=0xFFFF
-
-Str_FC_3:	.asciz "FC"
-	.align	4, 0xFF
-
-			VwStrBox	EQFC_StrBox_FC, super=EQFC, next=EQFC_EQEditBox1, flag=VF_Const, X=244, Y=162, W=30, H=18, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, align=1, str=Str_FC_3	# str "FC"
-
-Str_empty_80:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQFC_EQEditBox1, super=EQFC, next=EQFC_EQEditBox2, prev=EQFC_StrBox_FC, flag=VF_Const, X=320, Y=162, W=36, H=18, color=CL_Silver, index=10, caption=Str_empty_80, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox1_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox1_data, tate_index=1	# caption ""
-
-Str_empty_81:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQFC_EQEditBox2, super=EQFC, next=EQFC_EQEditBox3, prev=EQFC_EQEditBox1, flag=VF_Const, X=360, Y=162, W=36, H=18, color=CL_Silver, index=11, caption=Str_empty_81, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox2_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox2_data, tate_index=1	# caption ""
-
-Str_empty_82:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQFC_EQEditBox3, super=EQFC, next=EQFC_EQEditBox4, prev=EQFC_EQEditBox2, flag=VF_Const, X=400, Y=162, W=36, H=18, color=CL_Silver, index=12, caption=Str_empty_82, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox3_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox3_data, tate_index=1	# caption ""
-
-Str_empty_83:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQFC_EQEditBox4, super=EQFC, next=EQFC_EQEditBox5, prev=EQFC_EQEditBox3, flag=VF_Const, X=440, Y=162, W=36, H=18, color=CL_Silver, index=13, caption=Str_empty_83, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox4_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox4_data, tate_index=1	# caption ""
-
-Str_empty_84:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQFC_EQEditBox5, super=EQFC, next=EQFC_StrBox_Hz, prev=EQFC_EQEditBox4, flag=VF_Const, X=480, Y=162, W=36, H=18, color=CL_Silver, index=14, caption=Str_empty_84, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQFC_EQEditBox5_selected, func=FN_EQFcEditCheck, data=EQFC_EQEditBox5_data, tate_index=1	# caption ""
-
-Str_Hz_2:	.asciz " (Hz)"
-	.align	4, 0xFF
-
-			VwStrBox	EQFC_StrBox_Hz, super=EQFC, prev=EQFC_EQEditBox5, flag=VF_Const, X=266, Y=164, W=42, H=14, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, str=Str_Hz_2	# str " (Hz)"
-		PsRadioBox	EQQ, super=EqSel, sub=EQQ_StrBox_Q, next=EQOnOff, prev=EQFC, flag=VF_Const, X=235, Y=184, W=291, H=28, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_None, selected=EQQ_selected, tag=0xFFFF
-
-Str_Q:	.asciz "Q"
-	.align	4, 0xFF
-
-			VwStrBox	EQQ_StrBox_Q, super=EQQ, next=EQQ_EQEditBox1, flag=VF_Const, X=244, Y=190, W=26, H=18, color=CL_Silver, index=0xFFFF, fontcolor=CL_Black, align=1, str=Str_Q	# str "Q"
-
-Str_empty_85:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQQ_EQEditBox1, super=EQQ, next=EQQ_EQEditBox2, prev=EQQ_StrBox_Q, flag=VF_Const, X=360, Y=190, W=36, H=18, color=CL_Silver, index=11, caption=Str_empty_85, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQQ_EQEditBox1_selected, func=FN_EQQEditCheck, data=EQQ_EQEditBox1_data, tate_index=2	# caption ""
-
-Str_empty_86:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQQ_EQEditBox2, super=EQQ, next=EQQ_EQEditBox3, prev=EQQ_EQEditBox1, flag=VF_Const, X=400, Y=190, W=36, H=18, color=CL_Silver, index=12, caption=Str_empty_86, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQQ_EQEditBox2_selected, func=FN_EQQEditCheck, data=EQQ_EQEditBox2_data, tate_index=2	# caption ""
-
-Str_empty_87:	.asciz ""
-	.align	4, 0xFF
-
-			AcEQEditBox	EQQ_EQEditBox3, super=EQQ, next=EQQ_StrBox_Hz, prev=EQQ_EQEditBox2, flag=VF_Const, X=440, Y=190, W=36, H=18, color=CL_Silver, index=13, caption=Str_empty_87, font=3, fontcolor=CL_Black, length=5, editsw=ES_None, dial=1, selected=EQQ_EQEditBox3_selected, func=FN_EQQEditCheck, data=EQQ_EQEditBox3_data, tate_index=2	# caption ""
-
-Str_Hz_3:	.asciz " (Hz)"
-	.align	4, 0xFF
-
-			VwStrBox	EQQ_StrBox_Hz, super=EQQ, prev=EQQ_EQEditBox3, flag=VF_Const, X=266, Y=192, W=42, H=14, color=CL_Silver, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, str=Str_Hz_3	# str " (Hz)"
-
-Str_EQ_ON:	.asciz "EQ : ON "
-Str_EQ_OFF:	.asciz "EQ : OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	EQOnOff, super=EqSel, next=EqSel_IndexEditSw1, prev=EQQ, flag=VF_Const, X=553, Y=208, W=79, H=26, font=1, stron=Str_EQ_ON, stroff=Str_EQ_OFF, onoff=EQOnOff_onoff, editsw=ES_Right5, func=FN_EQToggleFunc	# stron "EQ : ON "; stroff "EQ : OFF"
-		AcIndexEditSw	EqSel_IndexEditSw1, super=EqSel, next=EqSel_IndexEditSw2, prev=EQOnOff, flag=VF_Const, X=324, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, style=3
-		AcIndexEditSw	EqSel_IndexEditSw2, super=EqSel, next=EqSel_IndexEditSw3, prev=EqSel_IndexEditSw1, flag=VF_Const, X=364, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=11, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, style=3
-		AcIndexEditSw	EqSel_IndexEditSw3, super=EqSel, next=EqSel_IndexEditSw4, prev=EqSel_IndexEditSw2, flag=VF_Const, X=404, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=12, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, style=3
-		AcIndexEditSw	EqSel_IndexEditSw4, super=EqSel, next=EqSel_IndexEditSw5, prev=EqSel_IndexEditSw3, flag=VF_Const, X=444, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=13, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, style=3
-		AcIndexEditSw	EqSel_IndexEditSw5, super=EqSel, next=EqSel_CatchEvent1, prev=EqSel_IndexEditSw4, flag=VF_Const, X=484, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=14, font=4, fontcolor=CL_Black, editsw=ES_Bottom13, style=3
-		IvCatchEvent	EqSel_CatchEvent1, super=EqSel, next=EQOrigSw, prev=EqSel_IndexEditSw5, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_EQFunc
-
-Str_ORIGINAL_3:	.asciz "ORIGINAL"
-	.align	4, 0xFF
-
-		AcMicFuncEditSw	EqSel_MicFuncEditSw1, super=EqSel, sub=EqSel_StrBox_Flat, next=EqSel_MicFuncEditSw2, prev=EQOrig, flag=VF_Const, X=8, Y=32, W=191, H=34, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw1_select
-
-Str_Flat:	.asciz "Flat"
-	.align	4, 0xFF
-
-			VwStrBox	EqSel_StrBox_Flat, super=EqSel_MicFuncEditSw1, flag=VF_Const, X=16, Y=38, W=176, H=24, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Flat	# str "Flat"
-		AcMicFuncEditSw	EqSel_MicFuncEditSw2, super=EqSel, sub=EqSel_StrBox_Make_Up, next=EqSel_MicFuncEditSw3, prev=EqSel_MicFuncEditSw1, flag=VF_Const, X=8, Y=75, W=191, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left2, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw2_select
-
-Str_Make_Up:	.asciz "Make Up"
-
-			VwStrBox	EqSel_StrBox_Make_Up, super=EqSel_MicFuncEditSw2, flag=VF_Const, X=14, Y=82, W=176, H=20, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Make_Up	# str "Make Up"
-		AcMicFuncEditSw	EqSel_MicFuncEditSw3, super=EqSel, sub=EqSel_StrBox_Radio, next=EqSel_MicFuncEditSw4, prev=EqSel_MicFuncEditSw2, flag=VF_Const, X=8, Y=118, W=191, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left3, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw3_select
-
-Str_Radio:	.asciz "Radio"
-	.align	4, 0xFF
-
-			VwStrBox	EqSel_StrBox_Radio, super=EqSel_MicFuncEditSw3, flag=VF_Const, X=16, Y=124, W=176, H=20, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Radio	# str "Radio"
-		AcMicFuncEditSw	EqSel_MicFuncEditSw4, super=EqSel, sub=EqSel_StrBox_Treble_Boost, next=EqSel_MicFuncEditSw5, prev=EqSel_MicFuncEditSw3, flag=VF_Const, X=8, Y=161, W=193, H=32, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left4, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw4_select
-
-Str_Treble_Boost:	.asciz "Treble Boost"
-	.align	4, 0xFF
-
-			VwStrBox	EqSel_StrBox_Treble_Boost, super=EqSel_MicFuncEditSw4, flag=VF_Const, X=14, Y=168, W=180, H=18, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_Treble_Boost	# str "Treble Boost"
-		AcMicFuncEditSw	EqSel_MicFuncEditSw5, super=EqSel, sub=EqSel_StrBox_No_Hi_Hat, prev=EqSel_MicFuncEditSw4, flag=VF_Const, X=8, Y=204, W=191, H=30, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left5, func=FN_EQSelFunc, select=EqSel_MicFuncEditSw5_select
-
-Str_No_Hi_Hat:	.asciz "No Hi Hat"
-	.align	4, 0xFF
-
-			VwStrBox	EqSel_StrBox_No_Hi_Hat, super=EqSel_MicFuncEditSw5, flag=VF_Const, X=14, Y=210, W=180, H=18, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, str=Str_No_Hi_Hat	# str "No Hi Hat"
-
-Str_SPLIT_POINT_SELECT:	.asciz "SPLIT POINT SELECT"
-	.align	4, 0xFF
-
-	TtlScreen	SplitSel, sub=SplitSel_MmmBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SplitSel_window, title=Str_SPLIT_POINT_SELECT, icon=158	# title "SPLIT POINT SELECT"
-		AcMmmBox	SplitSel_MmmBox1, super=SplitSel, next=SplitSel_ShowHide1, flag=VF_Const, X=276, Y=94, W=76, H=40, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_White, func=FN_SplitPoint, data=SplitSel_MmmBox1_data
-		IvShowHide	SplitSel_ShowHide1, super=SplitSel, next=SplitSel_Box1, prev=SplitSel_MmmBox1, flag=VF_Const|VF_InvisibleBox, X=552, Y=4, W=32, H=32, func=FN_TSplitSel
-		VwBox	SplitSel_Box1, super=SplitSel, next=SplitSel_LanguageText1, prev=SplitSel_ShowHide1, flag=VF_Const, X=124, Y=134, W=400, H=92, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
-		AcLanguageText	SplitSel_LanguageText1, super=SplitSel, prev=SplitSel_Box1, flag=VF_Const, X=128, Y=46, W=388, H=56, color=CL_WallPattern, index=0xFFFF, font=8, fontcolor=CL_Yellow, lines=3, func=FN_StsSplitCheck
-
-Str_APC_SELECT:	.asciz "APC SELECT"
-	.align	4, 0xFF
-
-	TtlScreen	ApcSel, sub=ApcOnbass, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=ApcSel_window, title=Str_APC_SELECT, icon=113	# title "APC SELECT"
-
-Str_ON_BASS_ON:	.asciz "ON BASS    : ON "
-Str_ON_BASS_OFF:	.asciz "ON BASS    : OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	ApcOnbass, super=ApcSel, next=ApcMemory, flag=VF_Const, X=401, Y=79, W=231, H=26, font=4, stron=Str_ON_BASS_ON, stroff=Str_ON_BASS_OFF, onoff=ApcOnbass_onoff, editsw=ES_Right2, func=FN_OnbassToggleFunc	# stron "ON BASS    : ON "; stroff "ON BASS    : OFF"
-
-Str_MEMORY_ON:	.asciz "MEMORY     : ON "
-Str_MEMORY_OFF:	.asciz "MEMORY     : OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	ApcMemory, super=ApcSel, next=ApcSel_ShowHide1, prev=ApcOnbass, flag=VF_Const, X=401, Y=36, W=231, H=26, font=4, stron=Str_MEMORY_ON, stroff=Str_MEMORY_OFF, onoff=ApcMemory_onoff, editsw=ES_Right1, func=FN_MemoryToggleFunc	# stron "MEMORY     : ON "; stroff "MEMORY     : OFF"
-		IvShowHide	ApcSel_ShowHide1, super=ApcSel, next=ApcLefthold, prev=ApcMemory, flag=VF_Const|VF_InvisibleBox, X=608, Y=0, W=32, H=32, func=FN_TApcSel
-
-Str_LEFT_HOLD_ON:	.asciz "LEFT HOLD  : ON "
-Str_LEFT_HOLD_OFF:	.asciz "LEFT HOLD  : OFF"
-	.align	4, 0xFF
-
-		AcFuncToggle	ApcLefthold, super=ApcSel, next=ApcSel_APCRadioBox_ONE_FINGER, prev=ApcSel_ShowHide1, flag=VF_Const, X=401, Y=122, W=231, H=26, font=4, stron=Str_LEFT_HOLD_ON, stroff=Str_LEFT_HOLD_OFF, onoff=ApcLefthold_onoff, editsw=ES_Right3, func=FN_LeftholdToggleFunc	# stron "LEFT HOLD  : ON "; stroff "LEFT HOLD  : OFF"
-
-Str_ONE_FINGER:	.asciz "ONE FINGER"
-	.align	4, 0xFF
-
-		AcAPCRadioBox	ApcSel_APCRadioBox_ONE_FINGER, super=ApcSel, next=ApcSel_APCRadioBox_FINGERED, prev=ApcLefthold, flag=VF_Const, X=8, Y=30, W=305, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=ApcSel_APCRadioBox_ONE_FINGER_selected, str=Str_ONE_FINGER	# str "ONE FINGER"
-
-Str_FINGERED:	.asciz "FINGERED"
-	.align	4, 0xFF
-
-		AcAPCRadioBox	ApcSel_APCRadioBox_FINGERED, super=ApcSel, next=ApcSel_APCRadioBox_PIANIST, prev=ApcSel_APCRadioBox_ONE_FINGER, flag=VF_Const, X=8, Y=73, W=305, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=ApcSel_APCRadioBox_FINGERED_selected, tag=1, str=Str_FINGERED	# str "FINGERED"
-
-Str_PIANIST:	.asciz "PIANIST"
-
-		AcAPCRadioBox	ApcSel_APCRadioBox_PIANIST, super=ApcSel, next=ApcSel_CatchEvent1, prev=ApcSel_APCRadioBox_FINGERED, flag=VF_Const, X=8, Y=116, W=305, H=34, color=CL_WallPattern, index=1, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=ApcSel_APCRadioBox_PIANIST_selected, tag=2, str=Str_PIANIST	# str "PIANIST"
-		IvCatchEvent	ApcSel_CatchEvent1, super=ApcSel, next=CountIntro, prev=ApcSel_APCRadioBox_PIANIST, flag=VF_Const|VF_InvisibleBox, X=576, Y=0, W=32, H=32, func=FN_ApcSelFunc
-
-Str_COUNT_INTRO_VOICE:	.asciz "COUNT INTRO : VOICE "
-Str_COUNT_INTRO_CLICK:	.asciz "COUNT INTRO : CLICK "
-	.align	4, 0xFF
-
-		AcFuncToggle	CountIntro, super=ApcSel, next=ApcSel_FuncEditSw1, prev=ApcSel_CatchEvent1, flag=VF_Const, X=8, Y=208, W=275, H=26, font=4, stron=Str_COUNT_INTRO_VOICE, stroff=Str_COUNT_INTRO_CLICK, onoff=CountIntro_onoff, editsw=ES_Left5, func=FN_IntroToggleFunc	# stron "COUNT INTRO : VOICE "; stroff "COUNT INTRO : CLICK "
-		AcFuncEditSw	ApcSel_FuncEditSw1, super=ApcSel, next=ApcSel_TitleMenu_CHORD_FINDER, prev=CountIntro, flag=VF_Const, X=593, Y=208, W=39, H=22, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right5, func=FN_ChordFinderStartFunc
-
-Str_CHORD_FINDER:	.asciz "CHORD FINDER"
-	.align	4, 0xFF
-
-		AcTitleMenu	ApcSel_TitleMenu_CHORD_FINDER, super=ApcSel, prev=ApcSel_FuncEditSw1, flag=VF_Const, X=327, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_None, selected=ApcSel_TitleMenu_CHORD_FINDER_selected, str=Str_CHORD_FINDER, title=TT_PS, icon=176	# str "CHORD FINDER"
-
-Str_CHORD_FINDER_2:	.asciz "CHORD FINDER"
-	.align	4, 0xFF
-
-	TtlScreen	ChdFdr, sub=ChdFdr_CFInvisibleBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_APCSEL, window=ChdFdr_window, title=Str_CHORD_FINDER_2, icon=176	# title "CHORD FINDER"
-		PsCFInvisibleBox	ChdFdr_CFInvisibleBox1, super=ChdFdr, next=ChdFdr_ShowHide1, flag=VF_Const|VF_InvisibleBox, X=340, Y=0, W=32, H=32
-		IvShowHide	ChdFdr_ShowHide1, super=ChdFdr, next=ChdFdr_Box1, prev=ChdFdr_CFInvisibleBox1, flag=VF_Const|VF_InvisibleBox, X=212, Y=0, W=32, H=32, func=FN_TtChordFinder
-		VwBox	ChdFdr_Box1, super=ChdFdr, sub=RootBox, next=InversionBox, prev=ChdFdr_ShowHide1, flag=VF_Const, X=12, Y=34, W=176, H=64, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
-
-Str_ROOT:	.asciz "ROOT:"
-	.align	4, 0xFF
-
-			AcRamEditRoopBox	RootBox, super=ChdFdr_Box1, next=TypeBox, flag=VF_Const, X=28, Y=42, W=135, H=22, color=CL_WallPattern, index=4, caption=Str_ROOT, font=1, fontcolor=CL_White, align=1, length=3, editsw=ES_None, dial=1, selected=RootBox_selected, func=FN_ChordFinderROOT, data=RootBox_data	# caption "ROOT:"
-
-Str_TYPE_16:	.asciz "TYPE:"
-	.align	4, 0xFF
-
-			AcRamEditBox	TypeBox, super=ChdFdr_Box1, prev=RootBox, flag=VF_Const, X=28, Y=70, W=135, H=20, color=CL_WallPattern, index=8, caption=Str_TYPE_16, font=1, fontcolor=CL_White, align=1, length=5, editsw=ES_None, dial=1, selected=TypeBox_selected, func=FN_ChordFinderTYPE, data=TypeBox_data	# caption "TYPE:"
-
-Str_INVERSION:	.asciz "INVERSION:"
-	.align	4, 0xFF
-
-		AcChordFinderBox	TypeListBox, super=ChdFdr, next=ApcModeEditSw, prev=InversionBox, flag=VF_Const, X=12, Y=106, W=324, H=84, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
-		AcIndexEditSw	ApcModeEditSw, super=ChdFdr, next=ApcModeBox, prev=TypeListBox, flag=VF_Const, X=593, Y=36, W=39, H=22, color=CL_WallPattern, index=6, font=4, fontcolor=CL_Black, editsw=ES_Right1
-
-Str_empty_237:	.asciz ""
-	.align	4, 0xFF
-
-		AcRamEditRoopBox	ApcModeBox, super=ChdFdr, next=ApcModeLabel, prev=ApcModeEditSw, flag=VF_Const, X=451, Y=34, W=181, H=30, color=CL_Silver, border=BD_3D_UP2, index=6, caption=Str_empty_237, font=1, fontcolor=CL_Black, length=11, editsw=ES_None, selected=ApcModeBox_selected, func=FN_APCselect, data=ApcModeBox_data	# caption ""
-
-Str_APC_MODE_2:	.asciz "APC MODE:"
-	.align	4, 0xFF
-
-		AcVisibleLabel	ApcModeLabel, super=ChdFdr, next=ROOTsw, prev=ApcModeBox, flag=VF_Const, X=370, Y=42, W=76, H=19, str=Str_APC_MODE_2, font=1, fontcolor=CL_White	# str "APC MODE:"
-		AcIndexWideES	ROOTsw, super=ChdFdr, next=TYPELeftsw, prev=ApcModeLabel, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
-		AcIndexWideES	TYPELeftsw, super=ChdFdr, next=TYPEUpDownsw, prev=ROOTsw, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=15
-		AcIndexWideES	TYPEUpDownsw, super=ChdFdr, next=InversionEditSw, prev=TYPELeftsw, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=14
-		AcIndexWideES	TYPERightsw, super=ChdFdr, next=ChdFdr_Label_ROOT, prev=InversionEditSw, flag=VF_Const, X=324, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom9, editsw2=ES_Bottom10, style=16
-
-Str_ROOT_2:	.asciz "ROOT"
-	.align	4, 0xFF
-
-		VwLabel	ChdFdr_Label_ROOT, super=ChdFdr, next=ChdFdr_Label_TYPE, prev=TYPERightsw, flag=VF_Const, X=104, Y=198, W=36, H=19, str=Str_ROOT_2, font=1, fontcolor=CL_White	# str "ROOT"
-
-Str_TYPE_17:	.asciz "TYPE"
-	.align	4, 0xFF
-
-		VwLabel	ChdFdr_Label_TYPE, super=ChdFdr, next=InversionLabel, prev=ChdFdr_Label_ROOT, flag=VF_Const, X=260, Y=198, W=36, H=19, str=Str_TYPE_17, font=1, fontcolor=CL_White	# str "TYPE"
-
-Str_INVERSION_2:	.asciz "INVERSION"
-	.align	4, 0xFF
-
-		AcKenbanBitmap	ChdFdr_KenbanBitmap1, super=ChdFdr, next=ChdFdr_Box2, prev=InversionLabel, flag=VF_Const, X=420, Y=116, W=171, H=54, func=FN_BitmapKenban
-		VwBox	ChdFdr_Box2, super=ChdFdr, next=ChdFdr_FuncEditSw1, prev=ChdFdr_KenbanBitmap1, flag=VF_Const, X=396, Y=102, W=216, H=84, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
-		AcFuncEditSw	ChdFdr_FuncEditSw1, super=ChdFdr, sub=ChdFdr_Label_81, next=ChdFdr_Line1, prev=ChdFdr_Box2, flag=VF_Const, X=564, Y=216, W=32, H=23, color=CL_WallPattern, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Bottom15, func=FN_ChordFinderListen
-
-Str_81_3:	.asciz "~81"
-
-			VwLabel	ChdFdr_Label_81, super=ChdFdr_FuncEditSw1, flag=VF_Const, X=573, Y=224, W=15, H=16, str=Str_81_3, font=4, fontcolor=CL_FireRedB	# str "~81"
-		VwLine	ChdFdr_Line1, super=ChdFdr, next=ChdFdr_Line2, prev=ChdFdr_FuncEditSw1, flag=VF_Const, X=198, Y=204, W=58, H=1, color=CL_White, linemode=1
-		VwLine	ChdFdr_Line2, super=ChdFdr, next=ChdFdr_Line3, prev=ChdFdr_Line1, flag=VF_Const, X=304, Y=204, W=58, H=1, color=CL_White, linemode=1
-		VwLine	ChdFdr_Line3, super=ChdFdr, next=ChdFdr_Line4, prev=ChdFdr_Line2, flag=VF_Const, X=361, Y=204, W=1, H=10, color=CL_White
-		VwLine	ChdFdr_Line4, super=ChdFdr, next=ChdFdr_Icon1, prev=ChdFdr_Line3, flag=VF_Const, X=198, Y=204, W=1, H=10, color=CL_White
-		VwIcon	ChdFdr_Icon1, super=ChdFdr, prev=ChdFdr_Line4, flag=VF_Const, X=567, Y=197, W=28, H=28, icon=182
-
-Str_R1_R2_OCTAVE:	.asciz "R1/R2 OCTAVE"
-	.align	4, 0xFF
-
-	TtlScreen	SdOct, sub=SdOct_MmmEditBox_OCTAVE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=SdOct_window, title=Str_R1_R2_OCTAVE, icon=157	# title "R1/R2 OCTAVE"
-
-Str_OCTAVE:	.asciz "OCTAVE :"
-	.align	4, 0xFF
-
-		AcMmmEditBox	SdOct_MmmEditBox_OCTAVE, super=SdOct, next=SdOct_IndexWideES1, flag=VF_Const, X=40, Y=70, W=545, H=106, color=CL_WallPattern, border=BD_3D_UP2, caption=Str_OCTAVE, font=4, fontcolor=CL_WhiteB, length=5, editsw=ES_None, dial=1, selected=SdOct_MmmEditBox_OCTAVE_selected, func=FN_R12OctaveFunc, data=SdOct_MmmEditBox_OCTAVE_data	# caption "OCTAVE :"
-		AcIndexWideES	SdOct_IndexWideES1, super=SdOct, next=SdOct_ShowHide1, prev=SdOct_MmmEditBox_OCTAVE, flag=VF_Const, X=404, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom13, style=3
-		IvShowHide	SdOct_ShowHide1, super=SdOct, prev=SdOct_IndexWideES1, flag=VF_Const|VF_InvisibleBox, X=180, Y=0, W=32, H=32, func=FN_TR12Octave
-
-RN_Aloc:	.asciz "Aloc"
-RN_AlocGridBox:	.asciz "AlocGridBox"
-RN_empty_2128:	.asciz ""
-RN_AlocModeBox:	.asciz "AlocModeBox"
-RN_empty_2129:	.asciz ""
-RN_empty_2130:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x228F0C, 0x228F10
-RN_LoadFilter:	.asciz "LoadFilter"
-RN_FilterGridBox:	.asciz "FilterGridBox"
-RN_empty_2131:	.asciz ""
-RN_empty_2132:	.asciz ""
-	.align	4, 0x00
-RN_Mixing:	.asciz "Mixing"
-	.align	4, 0x00
-RN_EffectEdit:	.asciz "EffectEdit"
-RN_empty_2133:	.asciz ""
-RN_empty_2134:	.asciz ""
-RN_empty_2135:	.asciz ""
-RN_EffEditGridBox:	.asciz "EffEditGridBox"
-RN_empty_2136:	.asciz ""
-RN_empty_2137:	.asciz ""
-RN_empty_2138:	.asciz ""
-RN_empty_2139:	.asciz ""
-RN_empty_2140:	.asciz ""
-RN_empty_2141:	.asciz ""
-RN_empty_2142:	.asciz ""
-RN_empty_2143:	.asciz ""
-RN_empty_2144:	.asciz ""
-RN_empty_2145:	.asciz ""
-	.align	4, 0x00
-RN_EffName:	.asciz "EffName"
-RN_empty_2146:	.asciz ""
-RN_empty_2147:	.asciz ""
-RN_empty_2148:	.asciz ""
-RN_empty_2149:	.asciz ""
-RN_empty_2150:	.asciz ""
-RN_empty_2151:	.asciz ""
-RN_empty_2152:	.asciz ""
-RN_empty_2153:	.asciz ""
-RN_empty_2154:	.asciz ""
-RN_empty_2155:	.asciz ""
-RN_empty_2156:	.asciz ""
-RN_empty_2157:	.asciz ""
-RN_empty_2158:	.asciz ""
-RN_empty_2159:	.asciz ""
-RN_empty_2160:	.asciz ""
-RN_empty_2161:	.asciz ""
-RN_empty_2162:	.asciz ""
-RN_empty_2163:	.asciz ""
-RN_empty_2164:	.asciz ""
-RN_empty_2165:	.asciz ""
-RN_empty_2166:	.asciz ""
-RN_empty_2167:	.asciz ""
-RN_empty_2168:	.asciz ""
-RN_empty_2169:	.asciz ""
-RN_empty_2170:	.asciz ""
-RN_empty_2171:	.asciz ""
-RN_empty_2172:	.asciz ""
-RN_empty_2173:	.asciz ""
-RN_empty_2174:	.asciz ""
-RN_empty_2175:	.asciz ""
-RN_empty_2176:	.asciz ""
-RN_empty_2177:	.asciz ""
-RN_empty_2178:	.asciz ""
-RN_empty_2179:	.asciz ""
-RN_empty_2180:	.asciz ""
-RN_empty_2181:	.asciz ""
-RN_empty_2182:	.asciz ""
-RN_empty_2183:	.asciz ""
-RN_empty_2184:	.asciz ""
-RN_empty_2185:	.asciz ""
-RN_empty_2186:	.asciz ""
-RN_empty_2187:	.asciz ""
-RN_empty_2188:	.asciz ""
-RN_empty_2189:	.asciz ""
-RN_empty_2190:	.asciz ""
-RN_empty_2191:	.asciz ""
-RN_empty_2192:	.asciz ""
-RN_empty_2193:	.asciz ""
-RN_empty_2194:	.asciz ""
-RN_empty_2195:	.asciz ""
-RN_empty_2196:	.asciz ""
-RN_empty_2197:	.asciz ""
-RN_empty_2198:	.asciz ""
-RN_empty_2199:	.asciz ""
-RN_empty_2200:	.asciz ""
-RN_empty_2201:	.asciz ""
-RN_empty_2202:	.asciz ""
-RN_empty_2203:	.asciz ""
-RN_empty_2204:	.asciz ""
-RN_empty_2205:	.asciz ""
-RN_empty_2206:	.asciz ""
-RN_empty_2207:	.asciz ""
-RN_empty_2208:	.asciz ""
-RN_empty_2209:	.asciz ""
-RN_empty_2210:	.asciz ""
-RN_empty_2211:	.asciz ""
-RN_empty_2212:	.asciz ""
-RN_empty_2213:	.asciz ""
-RN_empty_2214:	.asciz ""
-RN_empty_2215:	.asciz ""
-RN_empty_2216:	.asciz ""
-RN_empty_2217:	.asciz ""
-RN_empty_2218:	.asciz ""
-RN_empty_2219:	.asciz ""
-RN_empty_2220:	.asciz ""
-RN_empty_2221:	.asciz ""
-RN_empty_2222:	.asciz ""
-RN_empty_2223:	.asciz ""
-RN_empty_2224:	.asciz ""
-RN_empty_2225:	.asciz ""
-RN_empty_2226:	.asciz ""
-RN_empty_2227:	.asciz ""
-RN_empty_2228:	.asciz ""
-RN_empty_2229:	.asciz ""
-RN_empty_2230:	.asciz ""
-RN_empty_2231:	.asciz ""
-RN_empty_2232:	.asciz ""
-RN_empty_2233:	.asciz ""
-RN_empty_2234:	.asciz ""
-RN_empty_2235:	.asciz ""
-RN_empty_2236:	.asciz ""
-	.align	4, 0x00
-RN_EffectDebug:	.asciz "EffectDebug"
-RN_EffApcModeBox:	.asciz "EffApcModeBox"
-RN_EffSysModeBox:	.asciz "EffSysModeBox"
-RN_empty_2237:	.asciz ""
-RN_empty_2238:	.asciz ""
-RN_empty_2239:	.asciz ""
-RN_empty_2240:	.asciz ""
-RN_empty_2241:	.asciz ""
-RN_empty_2242:	.asciz ""
-RN_empty_2243:	.asciz ""
-	.align	4, 0x00
-RN_EffectMenu:	.asciz "EffectMenu"
-RN_empty_2455:	.asciz ""
-RN_empty_2456:	.asciz ""
-RN_empty_2457:	.asciz ""
-RN_empty_2458:	.asciz ""
-RN_empty_2459:	.asciz ""
-RN_empty_2460:	.asciz ""
-RN_empty_2461:	.asciz ""
-RN_empty_2462:	.asciz ""
-RN_empty_2463:	.asciz ""
-RN_empty_2464:	.asciz ""
-RN_empty_2465:	.asciz ""
-RN_MultiSel:	.asciz "MultiSel"
-RN_empty_2466:	.asciz ""
-RN_empty_2467:	.asciz ""
-RN_empty_2468:	.asciz ""
-RN_empty_2469:	.asciz ""
-RN_empty_2470:	.asciz ""
-RN_empty_2471:	.asciz ""
-RN_empty_2472:	.asciz ""
-RN_empty_2473:	.asciz ""
-RN_empty_2474:	.asciz ""
-RN_empty_2475:	.asciz ""
-RN_empty_2476:	.asciz ""
-RN_empty_2477:	.asciz ""
-RN_empty_2478:	.asciz ""
-RN_MicSel:	.asciz "MicSel"
-RN_MicEffMuteToggle:	.asciz "MicEffMuteToggle"
-RN_empty_2479:	.asciz ""
-RN_empty_2480:	.asciz ""
-RN_empty_2481:	.asciz ""
-RN_MicRevToggle:	.asciz "MicRevToggle"
-RN_MicEffToggle:	.asciz "MicEffToggle"
-RN_HarmPartEdit:	.asciz "HarmPartEdit"
-RN_empty_2482:	.asciz ""
-RN_empty_2483:	.asciz ""
-RN_empty_2484:	.asciz ""
-RN_EffEditGridBox2:	.asciz "EffEditGridBox2"
-RN_empty_2485:	.asciz ""
-RN_empty_2486:	.asciz ""
-RN_empty_2487:	.asciz ""
-RN_empty_2488:	.asciz ""
-RN_empty_2489:	.asciz ""
-RN_empty_2490:	.asciz ""
-RN_empty_2491:	.asciz ""
-RN_empty_2492:	.asciz ""
-RN_empty_2493:	.asciz ""
-RN_empty_2494:	.asciz ""
-RN_empty_2495:	.asciz ""
-RN_empty_2496:	.asciz ""
-RN_empty_2497:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x22907E, 0x229080
-RN_RevSel:	.asciz "RevSel"
-RN_empty_2498:	.asciz ""
-RN_empty_2499:	.asciz ""
-RN_empty_2500:	.asciz ""
-RN_empty_2501:	.asciz ""
-RN_empty_2502:	.asciz ""
-RN_empty_2503:	.asciz ""
-RN_empty_2504:	.asciz ""
-RN_empty_2505:	.asciz ""
-RN_empty_2506:	.asciz ""
-RN_empty_2507:	.asciz ""
-RN_empty_2508:	.asciz ""
-RN_empty_2509:	.asciz ""
-RN_empty_2510:	.asciz ""
-RN_empty_2511:	.asciz ""
-RN_empty_2512:	.asciz ""
-RN_empty_2513:	.asciz ""
-RN_empty_2514:	.asciz ""
-RN_empty_2515:	.asciz ""
-RN_empty_2516:	.asciz ""
-RN_empty_2517:	.asciz ""
-RN_empty_2518:	.asciz ""
-RN_empty_2519:	.asciz ""
-RN_empty_2520:	.asciz ""
-RN_empty_2521:	.asciz ""
-RN_empty_2522:	.asciz ""
-RN_empty_2523:	.asciz ""
-RN_empty_2524:	.asciz ""
-RN_empty_2525:	.asciz ""
-	.align	4, 0x00
-RN_ChoSel:	.asciz "ChoSel"
-RN_empty_2526:	.asciz ""
-RN_empty_2527:	.asciz ""
-RN_empty_2528:	.asciz ""
-RN_empty_2529:	.asciz ""
-RN_empty_2530:	.asciz ""
-RN_empty_2531:	.asciz ""
-RN_empty_2532:	.asciz ""
-RN_empty_2533:	.asciz ""
-RN_empty_2534:	.asciz ""
-RN_empty_2535:	.asciz ""
-RN_empty_2536:	.asciz ""
-RN_empty_2537:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x2290B7, 0x2290BC
-RN_DSPSel:	.asciz "DSPSel"
-RN_empty_2538:	.asciz ""
-RN_empty_2539:	.asciz ""
-RN_empty_2540:	.asciz ""
-RN_empty_2541:	.asciz ""
-RN_empty_2542:	.asciz ""
-RN_empty_2543:	.asciz ""
-RN_empty_2544:	.asciz ""
-RN_empty_2545:	.asciz ""
-RN_empty_2546:	.asciz ""
-RN_empty_2547:	.asciz ""
-RN_empty_2548:	.asciz ""
-RN_empty_2549:	.asciz ""
-RN_empty_2550:	.asciz ""
-RN_empty_2551:	.asciz ""
-RN_empty_2552:	.asciz ""
-RN_empty_2553:	.asciz ""
-RN_empty_2554:	.asciz ""
-RN_empty_2555:	.asciz ""
-RN_empty_2556:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x2290D6, 0x2290D8
-RN_EqSel:	.asciz "EqSel"
-RN_empty_2557:	.asciz ""
-RN_EQGain:	.asciz "EQGain"
-RN_empty_2558:	.asciz ""
-RN_empty_2559:	.asciz ""
-RN_empty_2560:	.asciz ""
-RN_empty_2561:	.asciz ""
-RN_empty_2562:	.asciz ""
-RN_empty_2563:	.asciz ""
-RN_empty_2564:	.asciz ""
-RN_empty_2565:	.asciz ""
-RN_empty_2566:	.asciz ""
-RN_empty_2567:	.asciz ""
-RN_empty_2568:	.asciz ""
-RN_empty_2569:	.asciz ""
-RN_EQFC:	.asciz "EQFC"
-RN_empty_2570:	.asciz ""
-RN_empty_2571:	.asciz ""
-RN_empty_2572:	.asciz ""
-RN_empty_2573:	.asciz ""
-RN_empty_2574:	.asciz ""
-RN_empty_2575:	.asciz ""
-RN_empty_2576:	.asciz ""
-RN_EQQ:	.asciz "EQQ"
-RN_empty_2577:	.asciz ""
-RN_empty_2578:	.asciz ""
-RN_empty_2579:	.asciz ""
-RN_empty_2580:	.asciz ""
-RN_empty_2581:	.asciz ""
-RN_EQOnOff:	.asciz "EQOnOff"
-RN_empty_2582:	.asciz ""
-RN_empty_2583:	.asciz ""
-RN_empty_2584:	.asciz ""
-RN_empty_2585:	.asciz ""
-RN_empty_2586:	.asciz ""
-RN_empty_2587:	.asciz ""
-RN_EQOrigSw:	.asciz "EQOrigSw"
-RN_EQOrig:	.asciz "EQOrig"
-RN_empty_2588:	.asciz ""
-RN_empty_2589:	.asciz ""
-RN_empty_2590:	.asciz ""
-RN_empty_2591:	.asciz ""
-RN_empty_2592:	.asciz ""
-RN_empty_2593:	.asciz ""
-RN_empty_2594:	.asciz ""
-RN_empty_2595:	.asciz ""
-RN_empty_2596:	.asciz ""
-RN_empty_2597:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x22912F, 0x229134
-RN_SplitSel:	.asciz "SplitSel"
-RN_empty_5009:	.asciz ""
-RN_empty_5010:	.asciz ""
-RN_empty_5011:	.asciz ""
-RN_empty_5012:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x229141, 0x229144
-RN_ApcSel:	.asciz "ApcSel"
-RN_ApcOnbass:	.asciz "ApcOnbass"
-RN_ApcMemory:	.asciz "ApcMemory"
-RN_empty_5013:	.asciz ""
-RN_ApcLefthold:	.asciz "ApcLefthold"
-RN_empty_5014:	.asciz ""
-RN_empty_5015:	.asciz ""
-RN_empty_5016:	.asciz ""
-RN_empty_5017:	.asciz ""
-RN_CountIntro:	.asciz "CountIntro"
-RN_empty_5018:	.asciz ""
-RN_empty_5019:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x22917D, 0x229180
-RN_ChdFdr:	.asciz "ChdFdr"
-RN_empty_5020:	.asciz ""
-RN_empty_5021:	.asciz ""
-RN_empty_5022:	.asciz ""
-RN_RootBox:	.asciz "RootBox"
-RN_TypeBox:	.asciz "TypeBox"
-RN_InversionBox:	.asciz "InversionBox"
-RN_TypeListBox:	.asciz "TypeListBox"
-RN_ApcModeEditSw:	.asciz "ApcModeEditSw"
-RN_ApcModeBox:	.asciz "ApcModeBox"
-RN_ApcModeLabel:	.asciz "ApcModeLabel"
-RN_ROOTsw:	.asciz "ROOTsw"
-RN_TYPELeftsw:	.asciz "TYPELeftsw"
-RN_TYPEUpDownsw:	.asciz "TYPEUpDownsw"
-RN_InversionEditSw:	.asciz "InversionEditSw"
-RN_TYPERightsw:	.asciz "TYPERightsw"
-RN_empty_5023:	.asciz ""
-RN_empty_5024:	.asciz ""
-RN_InversionLabel:	.asciz "InversionLabel"
-RN_empty_5025:	.asciz ""
-RN_empty_5026:	.asciz ""
-RN_empty_5027:	.asciz ""
-RN_empty_5028:	.asciz ""
-RN_empty_5029:	.asciz ""
-RN_empty_5030:	.asciz ""
-RN_empty_5031:	.asciz ""
-RN_empty_5032:	.asciz ""
-RN_empty_5033:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x22922E, 0x229230
-RN_SdOct:	.asciz "SdOct"
-RN_empty_5034:	.asciz ""
-RN_empty_5035:	.asciz ""
-RN_empty_5036:	.asciz ""
-.incbin_range "baserom/kn6000_program.rom", 0x229239, 0x22923C
-Str_MD_EFFECT:	.asciz "MD_EFFECT"
-	.align	4, 0xFF
-Str_TT_FXALOC:	.asciz "TT_FXALOC"
-	.align	4, 0xFF
-Str_TT_FXLOADFILT:	.asciz "TT_FXLOADFILT"
-	.align	4, 0xFF
-Str_TT_FXMIXING:	.asciz "TT_FXMIXING"
-Str_TT_FXEDIT:	.asciz "TT_FXEDIT"
-	.align	4, 0xFF
-Str_TT_FXNAME:	.asciz "TT_FXNAME"
-	.align	4, 0xFF
-Str_TT_FXDEBUG:	.asciz "TT_FXDEBUG"
-	.align	4, 0xFF
-Str_TT_FXMENU:	.asciz "TT_FXMENU"
-	.align	4, 0xFF
-Str_TT_FXREVSEL:	.asciz "TT_FXREVSEL"
-Str_TT_FXCHOSEL:	.asciz "TT_FXCHOSEL"
-Str_TT_FXMULTISEL:	.asciz "TT_FXMULTISEL"
-	.align	4, 0xFF
-Str_TT_FXDSPSEL:	.asciz "TT_FXDSPSEL"
-Str_TT_FXEQSEL:	.asciz "TT_FXEQSEL"
-	.align	4, 0xFF
-Str_TT_FXMIC:	.asciz "TT_FXMIC"
-	.align	4, 0xFF
-Str_TT_SPLITSEL:	.asciz "TT_SPLITSEL"
-Str_TT_APCSEL:	.asciz "TT_APCSEL"
-	.align	4, 0xFF
-Str_TT_CHDFDR:	.asciz "TT_CHDFDR"
-	.align	4, 0xFF
-Str_TT_SDOCT:	.asciz "TT_SDOCT"
-	.align	4, 0xFF
-data_4C22931C:
-.incbin_range "baserom/kn6000_program.rom", 0x22931C, 0x229EE4
-data_4C229EE4:
-.incbin_range "baserom/kn6000_program.rom", 0x229EE4, 0x22AAAC
-data_4C22AAAC:
-.incbin_range "baserom/kn6000_program.rom", 0x22AAAC, 0x22B674
-data_4C22B674:
-.incbin_range "baserom/kn6000_program.rom", 0x22B674, 0x22C23C
-data_4C22C23C:
-.incbin_range "baserom/kn6000_program.rom", 0x22C23C, 0x22CE04
-data_4C22CE04:
-.incbin_range "baserom/kn6000_program.rom", 0x22CE04, 0x22D9CC
-data_4C22D9CC:
-.incbin_range "baserom/kn6000_program.rom", 0x22D9CC, 0x22E594
-data_4C22E594:
-.incbin_range "baserom/kn6000_program.rom", 0x22E594, 0x22F15C
-data_4C22F15C:
-.incbin_range "baserom/kn6000_program.rom", 0x22F15C, 0x22FD24
-data_4C22FD24:
-.incbin_range "baserom/kn6000_program.rom", 0x22FD24, 0x2308EC
-data_4C2308EC:
-.incbin_range "baserom/kn6000_program.rom", 0x2308EC, 0x2314B4
-data_4C2314B4:
-.incbin_range "baserom/kn6000_program.rom", 0x2314B4, 0x23207C
-data_4C23207C:
-.incbin_range "baserom/kn6000_program.rom", 0x23207C, 0x232C44
-data_4C232C44:
-	.space	171, 0xFF
-.incbin_range "baserom/kn6000_program.rom", 0x232CEF, 0x232CF1
-	.space	169, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x232D9A, 0x234F35
-	.space	169, 0x00
-.incbin_range "baserom/kn6000_program.rom", 0x234FDE, 0x234FE0
-	.space	171, 0xFF
-.incbin_range "baserom/kn6000_program.rom", 0x23508B, 0x23508C
-Str_PART1_6:	.asciz "PART1    "
-Str_PART2_4:	.asciz "PART2    "
-Str_PART3_2:	.asciz "PART3    "
-Str_PART4_2:	.asciz "PART4    "
-Str_PART5_2:	.asciz "PART5    "
-Str_PART6_2:	.asciz "PART6    "
-Str_PART7_2:	.asciz "PART7    "
-Str_PART8_2:	.asciz "PART8    "
-Str_PART9_2:	.asciz "PART9    "
-Str_PART10_2:	.asciz "PART10   "
-Str_PART11_2:	.asciz "PART11   "
-Str_PART12_2:	.asciz "PART12   "
-Str_PART13_2:	.asciz "PART13   "
-Str_PART14_2:	.asciz "PART14   "
-Str_PART15_2:	.asciz "PART15   "
-Str_PART16_2:	.asciz "PART16   "
-Str_RIGHT1_6:	.asciz "RIGHT1   "
-Str_RIGHT2_6:	.asciz "RIGHT2   "
-Str_LEFT_8:	.asciz "LEFT     "
-Str_ACCOMP1_3:	.asciz "ACCOMP1  "
-Str_ACCOMP2_3:	.asciz "ACCOMP2  "
-Str_ACCOMP3_3:	.asciz "ACCOMP3  "
-Str_ACCOMP4_3:	.asciz "ACCOMP4  "
-Str_ACCOMP5_3:	.asciz "ACCOMP5  "
-Str_BASS_4:	.asciz "BASS     "
-Str_DRUM1_2:	.asciz "DRUM1    "
-Str_DRUM2_2:	.asciz "DRUM2    "
-Str_CHORD_6:	.asciz "CHORD    "
-Str_ROOT_BASS_2:	.asciz "ROOT BASS"
-Str_PAD1:	.asciz "PAD1     "
-Str_PAD2:	.asciz "PAD2     "
-	.align	4, 0xFF
-
-ptrs_4C2351C4:
-	.long	Str_PART1_6
-	.long	Str_PART2_4
-	.long	Str_PART3_2
-	.long	Str_PART4_2
-	.long	Str_PART5_2
-	.long	Str_PART6_2
-	.long	Str_PART7_2
-	.long	Str_PART8_2
-	.long	Str_PART9_2
-	.long	Str_PART10_2
-	.long	Str_PART11_2
-	.long	Str_PART12_2
-	.long	Str_PART13_2
-	.long	Str_PART14_2
-	.long	Str_PART15_2
-	.long	Str_PART16_2
-	.long	Str_RIGHT1_6
-	.long	Str_RIGHT2_6
-	.long	Str_LEFT_8
-	.long	Str_ACCOMP1_3
-	.long	Str_ACCOMP2_3
-	.long	Str_ACCOMP3_3
-	.long	Str_ACCOMP4_3
-	.long	Str_ACCOMP5_3
-	.long	Str_BASS_4
-	.long	Str_DRUM1_2
-	.long	Str_DRUM2_2
-	.long	Str_CHORD_6
-	.long	Str_ROOT_BASS_2
-	.long	Str_PAD1
-	.long	Str_PAD2
-
-Str_APC_TOTAL:	.asciz "APC TOTAL"
-	.align	4, 0xFF
-Str_2_22:	.asciz " - 2 "
-	.align	4, 0xFF
-Str_1_20:	.asciz " - 1 "
-	.align	4, 0xFF
-Str_0_13:	.asciz "   0 "
-	.align	4, 0xFF
-Str_1_19:	.asciz " + 1 "
-	.align	4, 0xFF
-Str_2_21:	.asciz " + 2 "
-	.align	4, 0xFF
-Str_0_12:	.asciz "   0 "
-	.align	4, 0xFF
-Str_CcEv_5:	.asciz "CcEv"
-	.align	4, 0xFF
-Str_Press_a_key_to_select_the_split_point_3:	.asciz "Press a key to select the split point."
-Str_Dr_cken_Sie_eine_Taste_um_den_Split_Punk:	.asciz "Dr\xFCcken Sie eine Taste um den Split-Punkt zu bestimmen."
-Str_Enfoncez_un_touche_pour_d_finir_le_point:	.asciz "Enfoncez un touche pour d\xE9finir le point de partage du clavier."
-Str_Presione_una_tecla_para_seleccionar_el_p:	.asciz "Presione una tecla para seleccionar el punto de divisi\xF3n."
-Str_Press_a_key_to_select_the_split_point_2:	.asciz "Press a key to select the split point."
-Str_Press_a_key_to_select_the_split_point:	.asciz "Press a key to select the split point."
-	.align	4, 0xFF
-
-ptrs_4C2353AC:
-	.long	Str_Press_a_key_to_select_the_split_point_3
-	.long	Str_Dr_cken_Sie_eine_Taste_um_den_Split_Punk
-	.long	Str_Enfoncez_un_touche_pour_d_finir_le_point
-	.long	Str_Presione_una_tecla_para_seleccionar_el_p
-	.long	Str_Press_a_key_to_select_the_split_point_2
-	.long	Str_Press_a_key_to_select_the_split_point
-
-Str_C_9:	.asciz "C "
-Str_D_a0_4:	.asciz "D~a0"
-Str_D_6:	.asciz "D "
-Str_E_a0_4:	.asciz "E~a0"
-Str_E_5:	.asciz "E "
-Str_F_5:	.asciz "F "
-Str_F_9e_4:	.asciz "F~9e"
-Str_G_5:	.asciz "G "
-Str_A_a0_4:	.asciz "A~a0"
-Str_A_20:	.asciz "A "
-Str_B_a0_4:	.asciz "B~a0"
-Str_B_7:	.asciz "B "
-	.align	4, 0xFF
-
-ptrs_4C2353F4:
-	.long	Str_C_9
-	.long	Str_D_a0_4
-	.long	Str_D_6
-	.long	Str_E_a0_4
-	.long	Str_E_5
-	.long	Str_F_5
-	.long	Str_F_9e_4
-	.long	Str_G_5
-	.long	Str_A_a0_4
-	.long	Str_A_20
-	.long	Str_B_a0_4
-	.long	Str_B_7
-ptrs_4C235424:
-	.long	data_4C22931C
-	.long	data_4C229EE4
-	.long	data_4C22AAAC
-	.long	data_4C22B674
-	.long	data_4C22C23C
-	.long	data_4C22CE04
-	.long	data_4C22D9CC
-	.long	data_4C22E594
-	.long	data_4C22F15C
-	.long	data_4C22FD24
-	.long	data_4C2308EC
-	.long	data_4C2314B4
-	.long	data_4C23207C
-data_4C235458:
-.incbin_range "baserom/kn6000_program.rom", 0x235458, 0x23545C
-
-Str_s_2d_2:	.asciz "%s%2d"
-	.align	4, 0xFF
-data_4C235464:
-.incbin_range "baserom/kn6000_program.rom", 0x235464, 0x2354E0
-
-doubles_4C2354E0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x4C0FE1B3, 0x403C3703	# 1914884
-	.long	0xFFFFFFFF, 0x413D3803	# 1.29805582e+11
-	.long	0xFFFFFFFF, 0x423E3903	# 0.000400007702
-	.long	0xFFFFFFFF, 0x3F3A3703	# 27.218811
-	.long	0xFFFFFFFF, 0x403B3803	# 1849604
-	.long	0xFFFFFFFF, 0x413C3903	# 1.25527392e+11
-	.long	0xFFFFFFFF, 0x423D3A03	# 6.3364638e-09
-	.long	0xFFFFFFFF, 0x3E3B3703	# 0.000430584885
-	.long	0xFFFFFFFF, 0x3F3C3803	# 29.2227173
-	.long	0xFFFFFFFF, 0x403D3903	# 1980932
-	.long	0xFFFFFFFF, 0x413E3A03	# 1.34134104e+11
-	.long	0xFFFFFFFF, 0x423F3B03	# 0.000430525281
-	.long	0xFFFFFFFF, 0x3F3C3703	# 29.218811
-	.long	0xFFFFFFFF, 0x403D3803	# 1980676
-	.long	0xFFFFFFFF, 0x413E3903	# 0.000399948098
-	.long	0xFFFFFFFF, 0x3F3A3603	# 27.2149048
-	.long	0xFFFFFFFF, 0x403B3703	# 1849348
-	.long	0xFFFFFFFF, 0x413C3803	# 1.25510615e+11
-	.long	0xFFFFFFFF, 0x423D3903	# 6.10363315e-09
-	.long	0xFFFFFFFF, 0x3E3A3703	# 0.000415326096
-	.long	0xFFFFFFFF, 0x3F3B3803	# 28.2227173
-	.long	0xFFFFFFFF, 0x403C3903	# 1915396
-	.long	0xFFFFFFFF, 0x413D3A03	# 1.29839137e+11
-	.long	0xFFFFFFFF, 0x423E3B03	# 28.2266235
-	.long	0xFFFFFFFF, 0x403C3A03	# 1915652
-	.long	0xFFFFFFFF, 0x413D3B03	# 1.29855914e+11
-	.long	0xFFFFFFFF, 0x423E3C03	# 0.00044578407
-	.long	0xFFFFFFFF, 0x3F3D3703	# 30.218811
-	.long	0xFFFFFFFF, 0x403E3803	# 2046212
-	.long	0xFFFFFFFF, 0x413F3903	# 1.39385635e+11
-	.long	0xFFFFFFFF, 0x42403A03	# 1783556
-	.long	0xFFFFFFFF, 0x413B3703	# 1.21198871e+11
-	.long	0xFFFFFFFF, 0x423C3803	# 8.22546367e+15
-.incbin_range "baserom/kn6000_program.rom", 0x2355E8, 0x2355F0
-doubles_4C2355F0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3A3803	# 0.000415385701
-	.long	0xFFFFFFFF, 0x3F3B3903	# 0.000430704094
-	.long	0xFFFFFFFF, 0x3F3C3A03	# 29.2305298
-	.long	0xFFFFFFFF, 0x403D3B03	# 1981444
-	.long	0xFFFFFFFF, 0x413E3C03	# 0.000445724465
-	.long	0xFFFFFFFF, 0x3F3D3603	# 30.2149048
-	.long	0xFFFFFFFF, 0x403E3703	# 2045956
-	.long	0xFFFFFFFF, 0x413F3803	# 1.3935208e+11
-	.long	0xFFFFFFFF, 0x42403903	# 1718020
-	.long	0xFFFFFFFF, 0x413A3703	# 1.16903903e+11
-	.long	0xFFFFFFFF, 0x423B3803	# 7.94398869e+15
-.incbin_range "baserom/kn6000_program.rom", 0x235648, 0x235664
-data_4C235664:
-.incbin_range "baserom/kn6000_program.rom", 0x235664, 0x2356C4
-data_4C2356C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2356C4, 0x2356F8
-doubles_4C2356F8:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3F, 0x3E3B3704	# 0.000430585118
-	.long	0xFFFFFF40, 0x3F3C3804	# 29.2227325
-	.long	0xFFFFFF41, 0x403D3904	# 1980933
-	.long	0xFFFFFF42, 0x413E3A04	# 1.3413417e+11
-	.long	0xFFFFFF43, 0x423F3B04	# 8.79171645e+15
-.incbin_range "baserom/kn6000_program.rom", 0x235720, 0x235724
-data_4C235724:
-.incbin_range "baserom/kn6000_program.rom", 0x235724, 0x235758
-doubles_4C235758:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3F, 0x3E3A3704	# 0.000415326329
-	.long	0xFFFFFF40, 0x3F3B3804	# 28.2227325
-	.long	0xFFFFFF41, 0x403C3904	# 1915397
-	.long	0xFFFFFF42, 0x413D3A04	# 1.29839202e+11
-	.long	0xFFFFFF43, 0x423E3B04	# 1.47532377e-18
-.incbin_range "baserom/kn6000_program.rom", 0x235780, 0x235784
-data_4C235784:
-.incbin_range "baserom/kn6000_program.rom", 0x235784, 0x2357E4
-data_4C2357E4:
-.incbin_range "baserom/kn6000_program.rom", 0x2357E4, 0x235818
-doubles_4C235818:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3C3703	# 0.000445843674
-	.long	0xFFFFFFFF, 0x3F3D3803	# 30.2227173
-	.long	0xFFFFFFFF, 0x403E3903	# 2046468
-	.long	0xFFFFFFFF, 0x413F3A03	# 1.39419189e+11
-	.long	0xFFFFFFFF, 0x42403B03	# 5.98944973e+20
-	.space	4, 0xFF
-data_4C235844:
-.incbin_range "baserom/kn6000_program.rom", 0x235844, 0x235870
-doubles_4C235870:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3A3603	# 0.000415266491
-	.long	0xFFFFFFFF, 0x3F3B3703	# 28.218811
-	.long	0xFFFFFFFF, 0x403C3803	# 1915140
-	.long	0xFFFFFFFF, 0x413D3903	# 1.2982236e+11
-	.long	0xFFFFFFFF, 0x423E3A03	# 8.79061264e+15
-.incbin_range "baserom/kn6000_program.rom", 0x235898, 0x2358A0
-doubles_4C2358A0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3F3C3603	# 29.2149048
-	.long	0xFFFFFFFF, 0x403D3703	# 1980420
-	.long	0xFFFFFFFF, 0x413E3803	# 0.000384689309
-	.long	0xFFFFFFFF, 0x3F393603	# 26.2149048
-	.long	0xFFFFFFFF, 0x403A3703	# 1783812
-	.long	0xFFFFFFFF, 0x413B3803	# 1.21215648e+11
-	.long	0xFFFFFFFF, 0x423C3903	# 9.31340508e-14
-.incbin_range "baserom/kn6000_program.rom", 0x2358D8, 0x2358E0
-doubles_4C2358E0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3B3803	# 0.00043064449
-	.long	0xFFFFFFFF, 0x3F3C3903	# 29.2266235
-	.long	0xFFFFFFFF, 0x403D3A03	# 1981188
-	.long	0xFFFFFFFF, 0x413E3B03	# 1.42111366e-18
-	.space	4, 0xFF
-data_4C235904:
-.incbin_range "baserom/kn6000_program.rom", 0x235904, 0x235920
-doubles_4C235920:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3F, 0x3E3B3904	# 0.000430704327
-	.long	0xFFFFFF40, 0x3F3C3A04	# 29.230545
-	.long	0xFFFFFF41, 0x403D3B04	# 6.56929799e-09
-	.long	0xFFFFFF42, 0x3E3C3704	# 0.000445843907
-	.long	0xFFFFFF41, 0x3F3D3804	# 30.2227325
-	.long	0xFFFFFF42, 0x403E3904	# 0.00040006754
-	.long	0xFFFFFF43, 0x3F3A3804	# 27.2227325
-	.long	0xFFFFFF41, 0x403B3904	# 1.42132542e-18
-.incbin_range "baserom/kn6000_program.rom", 0x235960, 0x235964
-data_4C235964:
-.incbin_range "baserom/kn6000_program.rom", 0x235964, 0x235980
-doubles_4C235980:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3F, 0x3E3C3804	# 0.000445903512
-	.long	0xFFFFFF40, 0x3F3D3904	# 30.2266388
-	.long	0xFFFFFF41, 0x403E3A04	# 0.000415266724
-	.long	0xFFFFFF42, 0x3F3B3704	# 1.31248169e-18
-.incbin_range "baserom/kn6000_program.rom", 0x2359A0, 0x2359C4
-data_4C2359C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2359C4, 0x235A00
-doubles_4C235A00:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF40, 0x3E3B3804	# 0.000430644723
-	.long	0xFFFFFF41, 0x3F3C3904	# 29.2266388
-	.long	0xFFFFFF42, 0x403D3A04	# 1981189
-	.long	0xFFFFFF43, 0x413E3B04	# 28.2109985
-	.long	0xFFFFFF44, 0x403C3603	# 1914628
-	.long	0xFFFFFFFF, 0x413D3703	# 1.29788805e+11
-	.long	0xFFFFFFFF, 0x423E3803	# 0.000384748913
-	.long	0xFFFFFFFF, 0x3F393703	# 26.218811
-	.long	0xFFFFFFFF, 0x403A3803	# 1784068
-	.long	0xFFFFFFFF, 0x413B3903	# 1.21232425e+11
-	.long	0xFFFFFFFF, 0x423C3A03	# 9.66867645e-14
-.incbin_range "baserom/kn6000_program.rom", 0x235A58, 0x235A60
-doubles_4C235A60:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3C3803	# 0.000445903279
-	.long	0xFFFFFFFF, 0x3F3D3903	# 30.2266235
-	.long	0xFFFFFFFF, 0x403E3A03	# 2046724
-	.long	0xFFFFFFFF, 0x413F3B03	# 28.2266388
-	.long	0xFFFFFFFF, 0x403C3A04	# 1915653
-	.long	0xFFFFFF42, 0x413D3B04	# 6.52263854e-38
-.incbin_range "baserom/kn6000_program.rom", 0x235A90, 0x235AC0
-doubles_4C235AC0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF41, 0x3E3C3804	# 0.000445903512
-	.long	0xFFFFFF42, 0x3F3D3904	# 6.1045462e-09
-	.long	0xFFFFFF43, 0x3E3A3804	# 0.000415385934
-	.long	0xFFFFFF40, 0x3F3B3904	# 1.47532377e-18
-.incbin_range "baserom/kn6000_program.rom", 0x235AE0, 0x235AE4
-data_4C235AE4:
-.incbin_range "baserom/kn6000_program.rom", 0x235AE4, 0x235B44
-data_4C235B44:
-.incbin_range "baserom/kn6000_program.rom", 0x235B44, 0x235BA4
-data_4C235BA4:
-.incbin_range "baserom/kn6000_program.rom", 0x235BA4, 0x235C04
-data_4C235C04:
-.incbin_range "baserom/kn6000_program.rom", 0x235C04, 0x235C64
-data_4C235C64:
-.incbin_range "baserom/kn6000_program.rom", 0x235C64, 0x235CB0
-doubles_4C235CB0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF40, 0x3E3C3A04	# 0.000446022721
-	.long	0xFFFFFF41, 0x3F3D3B04	# 0.000461341115
-	.long	0xFFFFFF42, 0x3F3E3C04	# 31.2383575
-	.long	0xFFFFFF43, 0x403F3D04	# 2128906
-	.long	0xFFFFFF44, 0x41403E04	# 1.48143473e+11
-	.long	0xFFFFFF45, 0x42413F04	# 1.02738796e+16
-.incbin_range "baserom/kn6000_program.rom", 0x235CE0, 0x235D24
-data_4C235D24:
-.incbin_range "baserom/kn6000_program.rom", 0x235D24, 0x235D60
-doubles_4C235D60:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3B3803	# 0.00043064449
-	.long	0xFFFFFFFF, 0x3F3C3903	# 29.2266235
-	.long	0xFFFFFFFF, 0x403D3A03	# 1981188
-	.long	0xFFFFFFFF, 0x413E3B03	# 3.05487349e-28
-	.space	4, 0xFF
-data_4C235D84:
-.incbin_range "baserom/kn6000_program.rom", 0x235D84, 0x235DA0
-doubles_4C235DA0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3F, 0x3E3C3804	# 0.000445903512
-	.long	0xFFFFFF40, 0x3F3D3904	# 30.2266388
-	.long	0xFFFFFF41, 0x403E3A04	# 0.000415266724
-	.long	0xFFFFFF42, 0x3F3B3704	# 1.31248169e-18
-.incbin_range "baserom/kn6000_program.rom", 0x235DC0, 0x235DE4
-data_4C235DE4:
-.incbin_range "baserom/kn6000_program.rom", 0x235DE4, 0x235DF0
-doubles_4C235DF0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E383603	# 0.000384748913
-	.long	0xFFFFFFFF, 0x3F393703	# 26.218811
-	.long	0xFFFFFFFF, 0x403A3803	# 1784068
-	.long	0xFFFFFFFF, 0x413B3903	# 1.21232425e+11
-	.long	0xFFFFFFFF, 0x423C3A03	# 9.66867645e-14
-.incbin_range "baserom/kn6000_program.rom", 0x235E18, 0x235E20
-doubles_4C235E20:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E3C3803	# 0.000445903279
-	.long	0xFFFFFFFF, 0x3F3D3903	# 30.2266235
-	.long	0xFFFFFFFF, 0x403E3A03	# 2046724
-	.long	0xFFFFFFFF, 0x413F3B03	# 1.83660576e-23
-	.space	4, 0xFF
-data_4C235E44:
-.incbin_range "baserom/kn6000_program.rom", 0x235E44, 0x235E58
-doubles_4C235E58:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3E, 0x3E393704	# 0.00040006754
-	.long	0xFFFFFF3F, 0x3F3A3804	# 27.2227325
-	.long	0xFFFFFF40, 0x403B3904	# 1849861
-	.long	0xFFFFFF41, 0x413C3A04	# 1.25544235e+11
-	.long	0xFFFFFF42, 0x423D3B04	# 8.51024147e+15
-.incbin_range "baserom/kn6000_program.rom", 0x235E80, 0x235EA4
-data_4C235EA4:
-.incbin_range "baserom/kn6000_program.rom", 0x235EA4, 0x235EE0
-doubles_4C235EE0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF42, 0x3E3B3804	# 0.000430644723
-	.long	0xFFFFFF43, 0x3F3C3904	# 29.2266388
-	.long	0xFFFFFF44, 0x403D3A04	# 1981189
-	.long	0xFFFFFF45, 0x413E3B04	# 5.86807403e-09
-	.long	0xFFFFFF46, 0x3E393403	# 0.000399888493
-	.long	0xFFFFFFFF, 0x3F3A3503	# 27.2109985
-	.long	0xFFFFFFFF, 0x403B3603	# 1849092
-	.long	0xFFFFFFFF, 0x413C3703	# 1.25493838e+11
-	.long	0xFFFFFFFF, 0x423D3803	# 8.50693864e+15
-.incbin_range "baserom/kn6000_program.rom", 0x235F28, 0x235F64
-data_4C235F64:
-.incbin_range "baserom/kn6000_program.rom", 0x235F64, 0x235FB8
-doubles_4C235FB8:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF43, 0x3E3D3B04	# 6.10090467e-09
-	.long	0xFFFFFF44, 0x3E3A3403	# 0.000415147282
-	.long	0xFFFFFFFF, 0x3F3B3503	# 28.2109985
-	.long	0xFFFFFFFF, 0x403C3603	# 1914628
-	.long	0xFFFFFFFF, 0x413D3703	# 1.29788805e+11
-	.long	0xFFFFFFFF, 0x423E3803	# 8.78841362e+15
-.incbin_range "baserom/kn6000_program.rom", 0x235FE8, 0x236024
-data_4C236024:
-.incbin_range "baserom/kn6000_program.rom", 0x236024, 0x236028
-doubles_4C236028:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF40, 0x3E3D3B04	# 0.000461341115
-	.long	0xFFFFFF41, 0x3F3E3C04	# 31.2383575
-	.long	0xFFFFFF42, 0x403F3D04	# 2128906
-	.long	0xFFFFFF43, 0x41403E04	# 1.48143473e+11
-	.long	0xFFFFFF44, 0x42413F04	# 1.02738796e+16
-.incbin_range "baserom/kn6000_program.rom", 0x236050, 0x236080
-doubles_4C236080:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF3F, 0x3F3C3A04	# 29.230545
-	.long	0xFFFFFF40, 0x403D3B04	# 1981445
-	.long	0xFFFFFF41, 0x413E3C04	# 1.34167724e+11
-	.long	0xFFFFFF42, 0x423F3D04	# 9.14358165e+15
-.incbin_range "baserom/kn6000_program.rom", 0x2360A0, 0x2360E4
-data_4C2360E4:
-.incbin_range "baserom/kn6000_program.rom", 0x2360E4, 0x236144
-data_4C236144:
-.incbin_range "baserom/kn6000_program.rom", 0x236144, 0x236190
-doubles_4C236190:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFF44, 0x3E3C3A04	# 0.000446022721
-	.long	0xFFFFFF45, 0x3F3D3B04	# 30.2344666
-	.long	0xFFFFFF46, 0x403E3C05	# 2047238
-	.long	0xFFFF4644, 0x413F3D05	# 1.38182562e-47
-.incbin_range "baserom/kn6000_program.rom", 0x2361B0, 0x236204
-data_4C236204:
-.incbin_range "baserom/kn6000_program.rom", 0x236204, 0x236240
-doubles_4C236240:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF413E, 0x3E3C3805	# 0.000445903745
-	.long	0xFFFF423F, 0x3F3D3905	# 30.2266541
-	.long	0xFFFF4340, 0x403E3A05	# 2046726
-	.long	0xFFFF4441, 0x413F3B05	# 1.42111449e-18
-.incbin_range "baserom/kn6000_program.rom", 0x236260, 0x236264
-data_4C236264:
-.incbin_range "baserom/kn6000_program.rom", 0x236264, 0x236270
-doubles_4C236270:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF4240, 0x3E3C3905	# 0.000445963349
-	.long	0xFFFF4341, 0x3F3D3A05	# 30.2305603
-	.long	0xFFFF4442, 0x403E3B05	# 2046982
-	.long	0xFFFF4543, 0x413F3C05	# 1.3948656e+11
-	.long	0xFFFF4644, 0x42403D05	# 9.50434789e-43
-.incbin_range "baserom/kn6000_program.rom", 0x236298, 0x2362C4
-data_4C2362C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2362C4, 0x236300
-doubles_4C236300:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF413F, 0x3E3C3805	# 0.000445903745
-	.long	0xFFFF4240, 0x3F3D3905	# 30.2266541
-	.long	0xFFFF4341, 0x403E3A05	# 2046726
-	.long	0xFFFF4442, 0x413F3B05	# 3.92335683e+25
-.incbin_range "baserom/kn6000_program.rom", 0x236320, 0x236324
-data_4C236324:
-.incbin_range "baserom/kn6000_program.rom", 0x236324, 0x236348
-doubles_4C236348:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFFFFFF, 0x3E393303	# 0.000399828888
-	.long	0xFFFFFFFF, 0x3F3A3403	# 27.2070923
-	.long	0xFFFFFFFF, 0x403B3503	# 1848836
-	.long	0xFFFFFFFF, 0x413C3603	# 1.25477061e+11
-	.long	0xFFFFFFFF, 0x423D3703	# 8.50583913e+15
-.incbin_range "baserom/kn6000_program.rom", 0x236370, 0x236384
-data_4C236384:
-.incbin_range "baserom/kn6000_program.rom", 0x236384, 0x236390
-doubles_4C236390:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF413E, 0x3E3C3B05	# 0.000446082558
-	.long	0xFFFF423F, 0x3F3D3C05	# 30.2383728
-	.long	0xFFFF4340, 0x403E3D05	# 2047494
-	.long	0xFFFF4441, 0x413F3E05	# 1.39553669e+11
-	.long	0xFFFF4542, 0x42403F05	# 9.71093824e+15
-.incbin_range "baserom/kn6000_program.rom", 0x2363B8, 0x2363E4
-data_4C2363E4:
-.incbin_range "baserom/kn6000_program.rom", 0x2363E4, 0x2363F0
-doubles_4C2363F0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF4140, 0x3E3C3B05	# 0.000446082558
-	.long	0xFFFF4241, 0x3F3D3C05	# 30.2383728
-	.long	0xFFFF4342, 0x403E3D05	# 2047494
-	.long	0xFFFF4443, 0x413F3E05	# 1.39553669e+11
-	.long	0xFFFF4544, 0x42403F05	# 9.71093824e+15
-.incbin_range "baserom/kn6000_program.rom", 0x236418, 0x236444
-data_4C236444:
-.incbin_range "baserom/kn6000_program.rom", 0x236444, 0x236460
-doubles_4C236460:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF4341, 0x3E3C3B05	# 0.000446082558
-	.long	0xFFFF4442, 0x3F3D3C05	# 30.2383728
-	.long	0xFFFF4543, 0x403E3D05	# 2047494
-	.long	0xFFFF4644, 0x413F3E05	# 1.3820929e-47
-.incbin_range "baserom/kn6000_program.rom", 0x236480, 0x2364A4
-data_4C2364A4:
-.incbin_range "baserom/kn6000_program.rom", 0x2364A4, 0x2364B0
-doubles_4C2364B0:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF413E, 0x3E3C3A05	# 0.000446022954
-	.long	0xFFFF423F, 0x3F3D3B05	# 30.2344666
-	.long	0xFFFF4340, 0x403E3C05	# 2047238
-	.long	0xFFFF4441, 0x413F3D05	# 1.39520115e+11
-	.long	0xFFFF4542, 0x42403E05	# 9.70873921e+15
-.incbin_range "baserom/kn6000_program.rom", 0x2364D8, 0x236504
-data_4C236504:
-.incbin_range "baserom/kn6000_program.rom", 0x236504, 0x236510
-doubles_4C236510:	# IEEE-754 doubles (lo word, hi word)
-	.long	0xFFFF4140, 0x3E3C3A05	# 0.000446022954
-	.long	0xFFFF4241, 0x3F3D3B05	# 30.2344666
-	.long	0xFFFF4342, 0x403E3C05	# 2047238
-	.long	0xFFFF4443, 0x413F3D05	# 1.39520115e+11
-	.long	0xFFFF4544, 0x42403E05	# 9.70873921e+15
-.incbin_range "baserom/kn6000_program.rom", 0x236538, 0x236564
-data_4C236564:
-.incbin_range "baserom/kn6000_program.rom", 0x236564, 0x23657D
-data_4C23657D:
-.incbin_range "baserom/kn6000_program.rom", 0x23657D, 0x236596
-data_4C236596:
-.incbin_range "baserom/kn6000_program.rom", 0x236596, 0x2365B7
-data_4C2365B7:
-.incbin_range "baserom/kn6000_program.rom", 0x2365B7, 0x2365D0
-data_4C2365D0:
-.incbin_range "baserom/kn6000_program.rom", 0x2365D0, 0x2365E9
-data_4C2365E9:
-.incbin_range "baserom/kn6000_program.rom", 0x2365E9, 0x2365F2
-data_4C2365F2:
-.incbin_range "baserom/kn6000_program.rom", 0x2365F2, 0x2365FB
-data_4C2365FB:
-.incbin_range "baserom/kn6000_program.rom", 0x2365FB, 0x23661C
-data_4C23661C:
-.incbin_range "baserom/kn6000_program.rom", 0x23661C, 0x236625
-data_4C236625:
-.incbin_range "baserom/kn6000_program.rom", 0x236625, 0x23662E
-data_4C23662E:
-.incbin_range "baserom/kn6000_program.rom", 0x23662E, 0x236647
-data_4C236647:
-.incbin_range "baserom/kn6000_program.rom", 0x236647, 0x236668
-data_4C236668:
-.incbin_range "baserom/kn6000_program.rom", 0x236668, 0x236689
-data_4C236689:
-.incbin_range "baserom/kn6000_program.rom", 0x236689, 0x236692
-data_4C236692:
-.incbin_range "baserom/kn6000_program.rom", 0x236692, 0x2366AB
-data_4C2366AB:
-.incbin_range "baserom/kn6000_program.rom", 0x2366AB, 0x2366BC
-data_4C2366BC:
-.incbin_range "baserom/kn6000_program.rom", 0x2366BC, 0x2366DD
-data_4C2366DD:
-.incbin_range "baserom/kn6000_program.rom", 0x2366DD, 0x2366FE
-data_4C2366FE:
-.incbin_range "baserom/kn6000_program.rom", 0x2366FE, 0x23671F
-data_4C23671F:
-.incbin_range "baserom/kn6000_program.rom", 0x23671F, 0x236740
-data_4C236740:
-.incbin_range "baserom/kn6000_program.rom", 0x236740, 0x236749
-data_4C236749:
-.incbin_range "baserom/kn6000_program.rom", 0x236749, 0x236754
-data_4C236754:
-.incbin_range "baserom/kn6000_program.rom", 0x236754, 0x236765
-data_4C236765:
-.incbin_range "baserom/kn6000_program.rom", 0x236765, 0x23676E
-data_4C23676E:
-.incbin_range "baserom/kn6000_program.rom", 0x23676E, 0x236787
-data_4C236787:
-.incbin_range "baserom/kn6000_program.rom", 0x236787, 0x236798
-data_4C236798:
-.incbin_range "baserom/kn6000_program.rom", 0x236798, 0x2367A1
-data_4C2367A1:
-.incbin_range "baserom/kn6000_program.rom", 0x2367A1, 0x2367AA
-data_4C2367AA:
-.incbin_range "baserom/kn6000_program.rom", 0x2367AA, 0x2367BB
-data_4C2367BB:
-.incbin_range "baserom/kn6000_program.rom", 0x2367BB, 0x2367D4
-data_4C2367D4:
-.incbin_range "baserom/kn6000_program.rom", 0x2367D4, 0x2367ED
-data_4C2367ED:
-.incbin_range "baserom/kn6000_program.rom", 0x2367ED, 0x236816
-data_4C236816:
-.incbin_range "baserom/kn6000_program.rom", 0x236816, 0x23683F
-data_4C23683F:
-.incbin_range "baserom/kn6000_program.rom", 0x23683F, 0x236868
-data_4C236868:
-.incbin_range "baserom/kn6000_program.rom", 0x236868, 0x236891
-data_4C236891:
-.incbin_range "baserom/kn6000_program.rom", 0x236891, 0x2368AA
-data_4C2368AA:
-.incbin_range "baserom/kn6000_program.rom", 0x2368AA, 0x2368C3
-data_4C2368C3:
-.incbin_range "baserom/kn6000_program.rom", 0x2368C3, 0x2368CC
-data_4C2368CC:
-.incbin_range "baserom/kn6000_program.rom", 0x2368CC, 0x2368D5
-data_4C2368D5:
-.incbin_range "baserom/kn6000_program.rom", 0x2368D5, 0x2368DE
-data_4C2368DE:
-.incbin_range "baserom/kn6000_program.rom", 0x2368DE, 0x2368E7
-data_4C2368E7:
-.incbin_range "baserom/kn6000_program.rom", 0x2368E7, 0x2368F0
-data_4C2368F0:
-.incbin_range "baserom/kn6000_program.rom", 0x2368F0, 0x2368F9
-data_4C2368F9:
-.incbin_range "baserom/kn6000_program.rom", 0x2368F9, 0x236902
-data_4C236902:
-.incbin_range "baserom/kn6000_program.rom", 0x236902, 0x23690B
-data_4C23690B:
-.incbin_range "baserom/kn6000_program.rom", 0x23690B, 0x236914
-data_4C236914:
-.incbin_range "baserom/kn6000_program.rom", 0x236914, 0x236920
-
-Str_0_11:	.asciz "0"
-.incbin_range "baserom/kn6000_program.rom", 0x236922, 0x236B60
-Str_Maj:	.asciz " Maj "
-Str_min:	.asciz " min "
-Str_7_7:	.asciz "  7  "
-Str_min7:	.asciz "min7 "
-Str_m7_a05:	.asciz "m7~a05 "
-Str_6_16:	.asciz "  6  "
-Str_m6:	.asciz " m6  "
-Str_Maj7:	.asciz "Maj7 "
-Str_sus4:	.asciz "sus4 "
-Str_aug:	.asciz " aug "
-Str_m_a05:	.asciz " m~a05 "
-Str_7sus4:	.asciz "7sus4"
-Str_aug7:	.asciz "aug7 "
-Str_dim:	.asciz " dim "
-Str_a05:	.asciz " ~a05  "
-Str_7_a05:	.asciz " 7~a05 "
-Str_mM7:	.asciz " mM7 "
-Str_M7_a05:	.asciz "M7~a05 "
-Str_M7_9e5:	.asciz "M7~9e5 "
-Str_mM7_a05:	.asciz "mM7~a05"
-Str_add9:	.asciz "add9 "
-Str_madd9:	.asciz "madd9"
-Str_69:	.asciz " 69  "
-Str_m69:	.asciz " m69 "
-Str_79:	.asciz " 79  "
-Str_7_a09:	.asciz " 7~a09 "
-Str_7_9e9:	.asciz " 7~9e9 "
-Str_m79:	.asciz " m79 "
-Str_M79:	.asciz " M79 "
-Str_9_9e5:	.asciz " 9~9e5 "
-Str_7_9e11_2:	.asciz "7~9e11 "
-Str_m711:	.asciz "m711 "
-Str_7_9e11:	.asciz "+7~9e11"
-Str_13_5:	.asciz " 13  "
-Str_a0913:	.asciz "~a0913 "
-Str_9e913:	.asciz "~9e913 "
-Str_a013:	.asciz " ~a013 "
-Str_a09_a013:	.asciz "~a09~a013"
-Str_9e9_a013:	.asciz "~9e9~a013"
-
-ptrs_4C236C70:
-	.long	Str_Maj
-	.long	Str_min
-	.long	Str_7_7
-	.long	Str_min7
-	.long	Str_m7_a05
-	.long	Str_6_16
-	.long	Str_m6
-	.long	Str_Maj7
-	.long	Str_sus4
-	.long	Str_aug
-	.long	Str_m_a05
-	.long	Str_7sus4
-	.long	Str_aug7
-	.long	Str_dim
-	.long	Str_a05
-	.long	Str_7_a05
-	.long	Str_mM7
-	.long	Str_M7_a05
-	.long	Str_M7_9e5
-	.long	Str_mM7_a05
-	.long	Str_add9
-	.long	Str_madd9
-	.long	Str_69
-	.long	Str_m69
-	.long	Str_79
-	.long	Str_7_a09
-	.long	Str_7_9e9
-	.long	Str_m79
-	.long	Str_M79
-	.long	Str_9_9e5
-	.long	Str_7_9e11_2
-	.long	Str_m711
-	.long	Str_7_9e11
-	.long	Str_13_5
-	.long	Str_a0913
-	.long	Str_9e913
-	.long	Str_a013
-	.long	Str_a09_a013
-	.long	Str_9e9_a013
-data_4C236D0C:
-	.space	16, 0x00
-
-Str_C_8:	.asciz "C "
-Str_D_a0_3:	.asciz "D~a0"
-Str_D_5:	.asciz "D "
-Str_E_a0_3:	.asciz "E~a0"
-Str_E_4:	.asciz "E "
-Str_F_4:	.asciz "F "
-Str_F_9e_3:	.asciz "F~9e"
-Str_G_4:	.asciz "G "
-Str_A_a0_3:	.asciz "A~a0"
-Str_A_19:	.asciz "A "
-Str_B_a0_3:	.asciz "B~a0"
-Str_B_6:	.asciz "B "
-	.align	4, 0xFF
-
-ptrs_4C236D4C:
-	.long	Str_C_8
-	.long	Str_D_a0_3
-	.long	Str_D_5
-	.long	Str_E_a0_3
-	.long	Str_E_4
-	.long	Str_F_4
-	.long	Str_F_9e_3
-	.long	Str_G_4
-	.long	Str_A_a0_3
-	.long	Str_A_19
-	.long	Str_B_a0_3
-	.long	Str_B_6
-
-Str_FINGERED_2:	.asciz " FINGERED  "
-Str_PIANIST_2:	.asciz "  PIANIST  "
-
-ptrs_4C236D94:
-	.long	Str_FINGERED_2
-	.long	Str_PIANIST_2
-data_4C236D9C:
-.incbin_range "baserom/kn6000_program.rom", 0x236D9C, 0x236DA4
-data_4C236DA4:
-.incbin_range "baserom/kn6000_program.rom", 0x236DA4, 0x236DAC
-
-Str_95_2:	.asciz "~95"
-Str_TYPICAL:	.asciz "TYPICAL"
-Str_ROOT_3:	.asciz "ROOT   "
-Str_1st_10:	.asciz "1st    "
-Str_2nd_10:	.asciz "2nd    "
-Str_3rd_8:	.asciz "3rd    "
-Str_4th_8:	.asciz "4th    "
-
-ptrs_4C236DE0:
-	.long	Str_TYPICAL
-	.long	Str_ROOT_3
-	.long	Str_1st_10
-	.long	Str_2nd_10
-	.long	Str_3rd_8
-	.long	Str_4th_8
-data_4C236DF8:
-	.space	16, 0x00
-data_4C236E08:
-.incbin_range "baserom/kn6000_program.rom", 0x236E08, 0x236E20
-data_4C236E20:
-.incbin_range "baserom/kn6000_program.rom", 0x236E20, 0x236E24
-data_4C236E24:
-	.space	16, 0x00
-data_4C236E34:
-	.space	16, 0x00
-
-Str_empty_357:	.asciz "@"
-.incbin_range "baserom/kn6000_program.rom", 0x236E46, 0x236EC4
-Str_empty_356:	.asciz "@"
-.incbin_range "baserom/kn6000_program.rom", 0x236EC6, 0x236F44
-data_4C236F44:
-.incbin_range "baserom/kn6000_program.rom", 0x236F44, 0x236FC4
-data_4C236FC4:
-.incbin_range "baserom/kn6000_program.rom", 0x236FC4, 0x237084
-	.space	64, 0xF9
-.incbin_range "baserom/kn6000_program.rom", 0x2370C4, 0x237184
-Str_3d_21:	.asciz "%3d"
-Str_3d_20:	.asciz "%3d"
-Str_s_49:	.asciz "%s"
-	.align	4, 0xFF
-Str_empty_355:	.asciz " |-|"
-	.align	4, 0xFF
-Str_TYPE_18:	.asciz " TYPE              |"
-	.align	4, 0xFF
-Str_97:	.asciz "~97 "
-	.align	4, 0xFF
-Str_96_2:	.asciz "~96 "
-	.align	4, 0xFF
-Str_empty_354:	.asciz "  "
-	.align	4, 0xFF
-data_4C2371C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2371C4, 0x2371E8
-data_4C2371E8:
-	.space	8, 0x00
-data_4C2371F0:
-.incbin_range "baserom/kn6000_program.rom", 0x2371F0, 0x237214
-data_4C237214:
-	.space	8, 0x00
-Str_8s:	.asciz "%8s"
-Str_REVERB_8:	.asciz "REVERB"
-	.align	4, 0xFF
-Str_MULTI_4:	.asciz "MULTI"
-	.align	4, 0xFF
-Str_SOUND_DSP_13:	.asciz "SOUND DSP"
-	.align	4, 0xFF
-Str_VOCAL_REVERB:	.asciz "VOCAL REVERB"
-	.align	4, 0xFF
-Str_EQ:	.asciz "EQ"
-	.align	4, 0xFF
-Str_CHORUS_9:	.asciz "CHORUS"
-	.align	4, 0xFF
-Str_2d:	.asciz "%2d:"
-	.align	4, 0xFF
-Str_OFF_38:	.asciz "OFF"
-Str_ON_29:	.asciz "ON "
-
-ptrs_4C237268:
-	.long	Str_OFF_38
-	.long	Str_ON_29
-
-Str_NAME_5:	.asciz "NAME: "
-	.align	4, 0xFF
-Str_P_7:	.asciz " P"
-.incbin_range "baserom/kn6000_program.rom", 0x23727B, 0x23728C
-Str_P_6:	.asciz " P"
-.incbin_range "baserom/kn6000_program.rom", 0x23728F, 0x2372A0
-data_4C2372A0:
-.incbin_range "baserom/kn6000_program.rom", 0x2372A0, 0x2372AC
-data_4C2372AC:
-	.space	8, 0x00
-Str_ON_28:	.asciz " ON  "
-	.align	4, 0xFF
-Str_OFF_37:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_27:	.asciz " ON  "
-	.align	4, 0xFF
-Str_OFF_36:	.asciz " OFF "
-	.align	4, 0xFF
-data_4C2372D4:
-.incbin_range "baserom/kn6000_program.rom", 0x2372D4, 0x2372E0
-data_4C2372E0:
-	.space	8, 0x00
-Str_empty_353:	.asciz "  ----   "
-	.align	4, 0xFF
-Str_empty_352:	.asciz "  ----   "
-	.align	4, 0xFF
-Str_empty_351:	.asciz "  ----   "
-	.align	4, 0xFF
-Str_empty_350:	.asciz "  ----   "
-	.align	4, 0xFF
-Str_empty_349:	.asciz "  ----   "
-	.align	4, 0xFF
-Str_empty_348:	.asciz "  ----   "
-	.align	4, 0xFF
-data_4C237330:
-.incbin_range "baserom/kn6000_program.rom", 0x237330, 0x23733C
-data_4C23733C:
-.incbin_range "baserom/kn6000_program.rom", 0x23733C, 0x237348
-data_4C237348:
-	.space	8, 0x00
-Str_TOTAL_6:	.asciz " TOTAL "
-Str_s_48:	.asciz " %s "
-	.align	4, 0xFF
-Str_s_47:	.asciz " %s "
-	.align	4, 0xFF
-Str_TOTAL_5:	.asciz " TOTAL "
-Str_s_46:	.asciz " %s "
-	.align	4, 0xFF
-Str_OFF_35:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_26:	.asciz " ON  "
-	.align	4, 0xFF
-Str_0x_02x_8:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_0x_02x_7:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_1d:	.asciz " %1d "
-	.align	4, 0xFF
-Str_0x_02x_6:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_0x_02x_5:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_OFF_34:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_25:	.asciz " ON  "
-	.align	4, 0xFF
-Str_OFF_33:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_24:	.asciz " ON  "
-	.align	4, 0xFF
-Str_TOTAL_4:	.asciz " TOTAL "
-Str_s_45:	.asciz " %s "
-	.align	4, 0xFF
-Str_empty_347:	.asciz "  -----  "
-	.align	4, 0xFF
-Str_empty_346:	.asciz "  ---    "
-	.align	4, 0xFF
-Str_OFF_32:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_23:	.asciz " ON  "
-	.align	4, 0xFF
-Str_OFF_31:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_22:	.asciz " ON  "
-	.align	4, 0xFF
-Str_OFF_30:	.asciz " OFF "
-	.align	4, 0xFF
-Str_ON_21:	.asciz " ON  "
-	.align	4, 0xFF
-Str_empty_345:	.asciz "  ---    "
-	.align	4, 0xFF
-Str_0x_02x_4:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_0x_02x_3:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_0x_02x_2:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_0x_02x:	.asciz "0x%02x"
-	.align	4, 0xFF
-Str_d_11:	.asciz " %d "
-	.align	4, 0xFF
-Str_empty_344:	.asciz " - "
-data_4C237460:
-.incbin_range "baserom/kn6000_program.rom", 0x237460, 0x237474
-Str_CcEv_4:	.asciz "CcEv"
-	.align	4, 0xFF
-data_4C23747C:
-.incbin_range "baserom/kn6000_program.rom", 0x23747C, 0x2374E4
-Str_CcEv_3:	.asciz "CcEv"
-	.align	4, 0xFF
-Str_ON_20:	.asciz "ON "
-Str_OFF_29:	.asciz "OFF"
-Str_ON_19:	.asciz "ON "
-Str_OFF_28:	.asciz "OFF"
-data_4C2374FC:
-.incbin_range "baserom/kn6000_program.rom", 0x2374FC, 0x23757C
-data_4C23757C:
-.incbin_range "baserom/kn6000_program.rom", 0x23757C, 0x2375FC
-data_4C2375FC:
-.incbin_range "baserom/kn6000_program.rom", 0x2375FC, 0x237624
-data_4C237624:
-.incbin_range "baserom/kn6000_program.rom", 0x237624, 0x23764C
-data_4C23764C:
-.incbin_range "baserom/kn6000_program.rom", 0x23764C, 0x2376CC
-data_4C2376CC:
-.incbin_range "baserom/kn6000_program.rom", 0x2376CC, 0x2376F4
-data_4C2376F4:
-.incbin_range "baserom/kn6000_program.rom", 0x2376F4, 0x23771C
-data_4C23771C:
-.incbin_range "baserom/kn6000_program.rom", 0x23771C, 0x237744
-data_4C237744:
-.incbin_range "baserom/kn6000_program.rom", 0x237744, 0x23776C
-data_4C23776C:
-.incbin_range "baserom/kn6000_program.rom", 0x23776C, 0x237794
-data_4C237794:
-.incbin_range "baserom/kn6000_program.rom", 0x237794, 0x237894
-data_4C237894:
-.incbin_range "baserom/kn6000_program.rom", 0x237894, 0x2378BC
-data_4C2378BC:
-.incbin_range "baserom/kn6000_program.rom", 0x2378BC, 0x2378E4
-data_4C2378E4:
-.incbin_range "baserom/kn6000_program.rom", 0x2378E4, 0x23790C
-data_4C23790C:
-.incbin_range "baserom/kn6000_program.rom", 0x23790C, 0x237934
-data_4C237934:
-.incbin_range "baserom/kn6000_program.rom", 0x237934, 0x237968
-FnName_SystemInitOkFunc:	.asciz "SystemInitOkFunc"
-FnName_SystemInitMDFunc:	.asciz "SystemInitMDFunc"
-FnName_AttnLngCheck:	.asciz "AttnLngCheck"
-FnName_SysSureLngCheck:	.asciz "SysSureLngCheck"
-FnName_SureLngCheck:	.asciz "SureLngCheck"
-FnName_SysIniNoFunc:	.asciz "SysIniNoFunc"
-FnName_SysIniYesFunc:	.asciz "SysIniYesFunc"
-FnName_CtlIniLngCheck:	.asciz "CtlIniLngCheck"
-FnName_TouchSenseFunc:	.asciz "TouchSenseFunc"
-FnName_TchSensGridCheck:	.asciz "TchSensGridCheck"
-FnName_TouchFilter:	.asciz "TouchFilter"
-FnName_MSAFilter:	.asciz "MSAFilter"
-FnName_PmemNormLngCheck:	.asciz "PmemNormLngCheck"
-FnName_PmemExpLngCheck:	.asciz "PmemExpLngCheck"
-FnName_PmExpFilter1GridCheck:	.asciz "PmExpFilter1GridCheck"
-FnName_PmExpFilter2GridCheck:	.asciz "PmExpFilter2GridCheck"
-FnName_PmExpFilter:	.asciz "PmExpFilter"
-FnName_PmemModeFilter:	.asciz "PmemModeFilter"
-FnName_FadeSetGridCheck:	.asciz "FadeSetGridCheck"
-FnName_FadeIOFilter:	.asciz "FadeIOFilter"
-FnName_DispTimeSetGridCheck:	.asciz "DispTimeSetGridCheck"
-FnName_DispTimeSetOKFunc:	.asciz "DispTimeSetOKFunc"
-FnName_FSWAssGridCheck:	.asciz "FSWAssGridCheck"
-FnName_FSWAssGridFilter:	.asciz "FSWAssGridFilter"
-FnName_WallHomeEditCheck:	.asciz "WallHomeEditCheck"
-FnName_WallMenuEditCheck:	.asciz "WallMenuEditCheck"
-FnName_WallOthEditCheck:	.asciz "WallOthEditCheck"
-FnName_WallSetOKFunc:	.asciz "WallSetOKFunc"
-FnName_WallPresetCheck:	.asciz "WallPresetCheck"
-FnName_WallSetBitmapCheck:	.asciz "WallSetBitmapCheck"
-FnName_ParaLoadOptGridCheck:	.asciz "ParaLoadOptGridCheck"
-FnName_ParaLoadOptOKFunc:	.asciz "ParaLoadOptOKFunc"
-FnName_FDCstopBitmapCheck:	.asciz "FDCstopBitmapCheck"
-FnName_SineWaveFilter:	.asciz "SineWaveFilter"
-FnName_DataProtectGridCheck:	.asciz "DataProtectGridCheck"
-FnName_DataProtectOKFunc:	.asciz "DataProtectOKFunc"
-FnName_InOutTestFilter:	.asciz "InOutTestFilter"
-FnName_RomTestRunFunc:	.asciz "RomTestRunFunc"
-FnName_RamTestRunFunc:	.asciz "RamTestRunFunc"
-FnName_DeviceTestRunFunc:	.asciz "DeviceTestRunFunc"
-FnName_TestMode4RunFunc:	.asciz "TestMode4RunFunc"
-FnName_TestMode4StopFunc:	.asciz "TestMode4StopFunc"
-FnName_WaveRomTestRunFunc:	.asciz "WaveRomTestRunFunc"
-FnName_TestRgbwbRunFunc:	.asciz "TestRgbwbRunFunc"
-FnName_TestCrosstarlRunFunc:	.asciz "TestCrosstarlRunFunc"
-FnName_TestSampleRunFunc:	.asciz "TestSampleRunFunc"
-FnName_TestContrastRunFunc:	.asciz "TestContrastRunFunc"
-FnName_LangSetOKFunc:	.asciz "LangSetOKFunc"
-FnName_LangSetMenuCheck:	.asciz "LangSetMenuCheck"
-FnName_LangSetChkFunc:	.asciz "LangSetChkFunc"
-FnName_AcIndexWideToggleFunc:	.asciz "AcIndexWideToggleFunc"
-FnName_CusMemOKFunc:	.asciz "CusMemOKFunc"
-FnName_HelpMenuCheck:	.asciz "HelpMenuCheck"
-FnName_HelpLang1Check:	.asciz "HelpLang1Check"
-FnName_HelpLang2Check:	.asciz "HelpLang2Check"
-FnName_HelpLang3Check:	.asciz "HelpLang3Check"
-FnName_HelpLang4Check:	.asciz "HelpLang4Check"
-FnName_HelpLangMenuCheck:	.asciz "HelpLangMenuCheck"
-FnName_PrgMenuSelect:	.asciz "PrgMenuSelect"
-FnName_APCModeSelect:	.asciz "APCModeSelect"
-FnName_WallSetHideFunc:	.asciz "WallSetHideFunc"
-FnName_DataPrtHideFunc:	.asciz "DataPrtHideFunc"
-FnName_LangSetHideFunc:	.asciz "LangSetHideFunc"
-FnName_CusPanModeHideFunc:	.asciz "CusPanModeHideFunc"
-FnName_HelpShowHideFunc:	.asciz "HelpShowHideFunc"
-FnName_LEDHideOffFunc:	.asciz "LEDHideOffFunc"
-FnName_InitShowHideFunc:	.asciz "InitShowHideFunc"
-FnName_BoardRomTestRunFunc:	.asciz "BoardRomTestRunFunc"
-	.align	4, 0x00
-Field_AcFSWAssGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcFSWAssGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcFSWAssGridBox_func:	.asciz "func"
-Field_AcFSWAssGridBox_end:	.asciz ""
-Field_SineWaveWindow_func:	.asciz "func"
-Field_SineWaveWindow_font:	.asciz "font"
-Field_SineWaveWindow_fontcolor:	.asciz "fontcolor"
-Field_SineWaveWindow_nowswno:	.asciz "nowswno"
-Field_SineWaveWindow_oldswno:	.asciz "oldswno"
-Field_SineWaveWindow_end:	.asciz ""
-	.align	4, 0xFF
-Field_PmemModeBox_func:	.asciz "func"
-Field_PmemModeBox_font:	.asciz "font"
-Field_PmemModeBox_fontcolo:	.asciz "fontcolo"
-Field_PmemModeBox_newpmemmode:	.asciz "newpmemmode"
-Field_PmemModeBox_oldpmemmode:	.asciz "oldpmemmode"
-Field_PmemModeBox_end:	.asciz ""
-Field_MSAModeBox_func:	.asciz "func"
-Field_MSAModeBox_font:	.asciz "font"
-Field_MSAModeBox_fontcolo:	.asciz "fontcolo"
-Field_MSAModeBox_newmsamode:	.asciz "newmsamode"
-Field_MSAModeBox_oldmsamode:	.asciz "oldmsamode"
-Field_MSAModeBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcPmExpFilterGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcPmExpFilterGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcPmExpFilterGridBox_func:	.asciz "func"
-Field_AcPmExpFilterGridBox_end:	.asciz ""
-Field_AcFadeSetGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcFadeSetGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcFadeSetGridBox_func:	.asciz "func"
-Field_AcFadeSetGridBox_end:	.asciz ""
-Field_AcDispTimeSetGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcDispTimeSetGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcDispTimeSetGridBox_func:	.asciz "func"
-Field_AcDispTimeSetGridBox_end:	.asciz ""
-Field_AcParaLoadOptGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcParaLoadOptGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcParaLoadOptGridBox_func:	.asciz "func"
-Field_AcParaLoadOptGridBox_end:	.asciz ""
-Field_AcItimatuWindow_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcTchSensGridBox_fixedcol:	.asciz "fixedcol"
-Field_AcTchSensGridBox_fixedrow:	.asciz "fixedrow"
-Field_AcTchSensGridBox_func:	.asciz "func"
-Field_AcTchSensGridBox_end:	.asciz ""
-Field_AcTestMenuPage_pagemin:	.asciz "pagemin"
-Field_AcTestMenuPage_pagemax:	.asciz "pagemax"
-Field_AcTestMenuPage_end:	.asciz ""
-	.align	4, 0xFF
-Field_InOutTestWindow_func:	.asciz "func"
-Field_InOutTestWindow_font:	.asciz "font"
-Field_InOutTestWindow_fontcolor:	.asciz "fontcolor"
-Field_InOutTestWindow_nowswno:	.asciz "nowswno"
-Field_InOutTestWindow_oldswno:	.asciz "oldswno"
-Field_InOutTestWindow_end:	.asciz ""
-	.align	4, 0xFF
-Field_AcIndexWideToggle_index:	.asciz "index"
-Field_AcIndexWideToggle_tag:	.asciz "tag"
-Field_AcIndexWideToggle_func:	.asciz "func"
-Field_AcIndexWideToggle_end:	.asciz ""
-Field_CusMemModeBox_func:	.asciz "func"
-Field_CusMemModeBox_font:	.asciz "font"
-Field_CusMemModeBox_fontcolo:	.asciz "fontcolo"
-Field_CusMemModeBox_end:	.asciz ""
-Field_PsHelpTblBox_func:	.asciz "func"
-Field_PsHelpTblBox_end:	.asciz ""
-	.align	4, 0xFF
-Field_TestMode8Box_func:	.asciz "func"
-Field_TestMode8Box_font:	.asciz "font"
-Field_TestMode8Box_fontcolo:	.asciz "fontcolo"
-Field_TestMode8Box_end:	.asciz ""
-Field_AcWindowPageInit_pagemin:	.asciz "pagemin"
-Field_AcWindowPageInit_pagemax:	.asciz "pagemax"
-Field_AcWindowPageInit_end:	.asciz ""
-	.align	4, 0xFF
-Field_BoardTestWindow_func:	.asciz "func"
-Field_BoardTestWindow_font:	.asciz "font"
-Field_BoardTestWindow_fontcolor:	.asciz "fontcolor"
-Field_BoardTestWindow_end:	.asciz ""
-	.align	4, 0xFF
-ClassName_AcFSWAssGridBox:	.asciz "AcFSWAssGridBox"
-ClassSig_AcFSWAssGridBox:	.asciz "XXj"
-ClassName_SineWaveWindow:	.asciz "SineWaveWindow"
-ClassSig_SineWaveWindow:	.asciz "kc^nn"
-ClassName_PmemModeBox:	.asciz "PmemModeBox"
-ClassSig_PmemModeBox:	.asciz "kc^nn"
-ClassName_MSAModeBox:	.asciz "MSAModeBox"
-ClassSig_MSAModeBox:	.asciz "kc^nn"
-ClassName_AcPmExpFilterGridBox:	.asciz "AcPmExpFilterGridBox"
-ClassSig_AcPmExpFilterGridBox:	.asciz "XXj"
-ClassName_AcFadeSetGridBox:	.asciz "AcFadeSetGridBox"
-ClassSig_AcFadeSetGridBox:	.asciz "XXj"
-ClassName_AcDispTimeSetGridBox:	.asciz "AcDispTimeSetGridBox"
-ClassSig_AcDispTimeSetGridBox:	.asciz "XXj"
-ClassName_AcParaLoadOptGridBox:	.asciz "AcParaLoadOptGridBox"
-ClassSig_AcParaLoadOptGridBox:	.asciz "XXj"
-ClassName_AcItimatuWindow:	.asciz "AcItimatuWindow"
-ClassSig_AcItimatuWindow:	.asciz ""
-ClassName_AcTchSensGridBox:	.asciz "AcTchSensGridBox"
-ClassSig_AcTchSensGridBox:	.asciz "XXj"
-ClassName_AcTestMenuPage:	.asciz "AcTestMenuPage"
-ClassSig_AcTestMenuPage:	.asciz "AA"
-ClassName_InOutTestWindow:	.asciz "InOutTestWindow"
-ClassSig_InOutTestWindow:	.asciz "kc^nn"
-ClassName_AcIndexWideToggle:	.asciz "AcIndexWideToggle"
-ClassSig_AcIndexWideToggle:	.asciz "AAj"
-ClassName_CusMemModeBox:	.asciz "CusMemModeBox"
-ClassSig_CusMemModeBox:	.asciz "kc^"
-ClassName_PsHelpTblBox:	.asciz "PsHelpTblBox"
-ClassSig_PsHelpTblBox:	.asciz "j"
-ClassName_TestMode8Box:	.asciz "TestMode8Box"
-ClassSig_TestMode8Box:	.asciz "kc^"
-ClassName_AcWindowPageInit:	.asciz "AcWindowPageInit"
-ClassSig_AcWindowPageInit:	.asciz "AA"
-ClassName_BoardTestWindow:	.asciz "BoardTestWindow"
-ClassSig_BoardTestWindow:	.asciz "kc^"
-	.align	4, 0xFF
-
-Str_EV_TESTDISK:	.asciz "EV_TESTDISK"
-Str_EV_LSWDATA:	.asciz "EV_LSWDATA"
-Str_EV_TEST4:	.asciz "EV_TEST4"
-
-Str_MT_SvariIni:	.asciz "MT_SvariIni"
-Str_MT_SvariSet:	.asciz "MT_SvariSet"
-Str_MT_KEYINFO:	.asciz "MT_KEYINFO"
-Str_MT_KEYINFO1:	.asciz "MT_KEYINFO1"
-Str_MT_KEYINFO2:	.asciz "MT_KEYINFO2"
-Str_MT_KEYINFO3:	.asciz "MT_KEYINFO3"
-Str_MT_KEYINFO4:	.asciz "MT_KEYINFO4"
-Str_MT_KEYINFO5:	.asciz "MT_KEYINFO5"
-Str_MT_KEYINFO6:	.asciz "MT_KEYINFO6"
-Str_MT_KEYINFO7:	.asciz "MT_KEYINFO7"
-Str_MT_KEYINFO8:	.asciz "MT_KEYINFO8"
-Str_MT_KEYINFO9:	.asciz "MT_KEYINFO9"
-Str_MT_MICCK:	.asciz "MT_MICCK"
-Str_MT_NOTEOFF:	.asciz "MT_NOTEOFF"
-Str_MT_SYSINI:	.asciz "MT_SYSINI"
-Str_MT_FLASHWRITE:	.asciz "MT_FLASHWRITE"
-Str_MT_FLASHLOAD:	.asciz "MT_FLASHLOAD"
-Str_MT_WALLINI:	.asciz "MT_WALLINI"
-Str_MT_DISKCKRUN:	.asciz "MT_DISKCKRUN"
-Str_MT_DISKCKSTOP:	.asciz "MT_DISKCKSTOP"
-Str_MT_RGBWB:	.asciz "MT_RGBWB"
-Str_MT_CROSSTALK:	.asciz "MT_CROSSTALK"
-Str_MT_SAMPLE:	.asciz "MT_SAMPLE"
-Str_MT_CONTRAST:	.asciz "MT_CONTRAST"
-Str_MT_MD8INI:	.asciz "MT_MD8INI"
-Str_MT_ENGLISH:	.asciz "MT_ENGLISH"
-Str_MT_FRENCH:	.asciz "MT_FRENCH"
-Str_MT_GERMAN:	.asciz "MT_GERMAN"
-Str_MT_SPANISH:	.asciz "MT_SPANISH"
-Str_MT_GetLang:	.asciz "MT_GetLang"
-Str_MT_SetLang:	.asciz "MT_SetLang"
-Str_MT_ChkLang:	.asciz "MT_ChkLang"
-Str_MT_ChkToggleEditSw:	.asciz "MT_ChkToggleEditSw"
-Str_MT_HELPSET:	.asciz "MT_HELPSET"
-	.align	4, 0xFF
-
-FnName_AcFSWAssGridBoxProc:	.asciz "AcFSWAssGridBoxProc"
-FnName_SineWaveWindowProc:	.asciz "SineWaveWindowProc"
-FnName_PmemModeBoxProc:	.asciz "PmemModeBoxProc"
-FnName_MSAModeBoxProc:	.asciz "MSAModeBoxProc"
-FnName_AcPmExpFilterGridBoxProc:	.asciz "AcPmExpFilterGridBoxProc"
-FnName_AcFadeSetGridBoxProc:	.asciz "AcFadeSetGridBoxProc"
-FnName_AcDispTimeSetGridBoxProc:	.asciz "AcDispTimeSetGridBoxProc"
-FnName_AcParaLoadOptGridBoxProc:	.asciz "AcParaLoadOptGridBoxProc"
-FnName_AcTchSensGridBoxProc:	.asciz "AcTchSensGridBoxProc"
-FnName_AcItimatuWindowProc:	.asciz "AcItimatuWindowProc"
-FnName_AcTestMenuPageProc:	.asciz "AcTestMenuPageProc"
-FnName_InOutTestWindowProc:	.asciz "InOutTestWindowProc"
-FnName_AcIndexWideToggleProc:	.asciz "AcIndexWideToggleProc"
-FnName_CusMemModeBoxProc:	.asciz "CusMemModeBoxProc"
-FnName_PsHelpTblBoxProc:	.asciz "PsHelpTblBoxProc"
-FnName_TestMode8BoxProc:	.asciz "TestMode8BoxProc"
-FnName_AcWindowPageInitProc:	.asciz "AcWindowPageInitProc"
-FnName_BoardTestWindowProc:	.asciz "BoardTestWindowProc"
-.incbin_range "baserom/kn6000_program.rom", 0x23840D, 0x238410
-FnName_RhyStopFunc:	.asciz "RhyStopFunc"
-FnName_MainSvariIni:	.asciz "MainSvariIni"
-FnName_MainSvariSet:	.asciz "MainSvariSet"
-FnName_MainSysControl:	.asciz "MainSysControl"
-FnName_TEST2FUNC:	.asciz "TEST2FUNC"
-FnName_TEST3FUNC:	.asciz "TEST3FUNC"
-FnName_TEST4FUNC:	.asciz "TEST4FUNC"
-FnName_TEST5FUNC:	.asciz "TEST5FUNC"
-FnName_TEST6FUNC:	.asciz "TEST6FUNC"
-FnName_TEST7FUNC:	.asciz "TEST7FUNC"
-FnName_MainTimeFlashFunc:	.asciz "MainTimeFlashFunc"
-FnName_MainWallSetFlashFunc:	.asciz "MainWallSetFlashFunc"
-FnName_MainFlashFunc:	.asciz "MainFlashFunc"
-FnName_MainDtPrtFlashFunc:	.asciz "MainDtPrtFlashFunc"
-FnName_TestModeFunc:	.asciz "TestModeFunc"
-FnName_RomTestFunc:	.asciz "RomTestFunc"
-FnName_RamTestFunc:	.asciz "RamTestFunc"
-FnName_DeviceTestFunc:	.asciz "DeviceTestFunc"
-FnName_TestDiskFunc:	.asciz "TestDiskFunc"
-FnName_WaveRomTestFunc:	.asciz "WaveRomTestFunc"
-FnName_TestRgbwbFunc:	.asciz "TestRgbwbFunc"
-FnName_TestCrosstalkFunc:	.asciz "TestCrosstalkFunc"
-FnName_TestSampleFunc:	.asciz "TestSampleFunc"
-FnName_TestContrastFunc:	.asciz "TestContrastFunc"
-FnName_LangSetFlashFunc:	.asciz "LangSetFlashFunc"
-FnName_TestMICFunc:	.asciz "TestMICFunc"
-FnName_LangSetChkMain:	.asciz "LangSetChkMain"
-FnName_FadeInOutTitleFunc:	.asciz "FadeInOutTitleFunc"
-FnName_MSATitleFunc:	.asciz "MSATitleFunc"
-FnName_PmemModeTitleFunc:	.asciz "PmemModeTitleFunc"
-FnName_CustomPanelFlashFunc:	.asciz "CustomPanelFlashFunc"
-FnName_HelpMainFunc:	.asciz "HelpMainFunc"
-FnName_TestMode8Func:	.asciz "TestMode8Func"
-FnName_HelpMenuFunc:	.asciz "HelpMenuFunc"
-FnName_MainNoteOff:	.asciz "MainNoteOff"
-FnName_BoardTestFunc:	.asciz "BoardTestFunc"
-	.align	4, 0x00
-Str_CONTROL_MENU:	.asciz "CONTROL MENU"
-	.align	4, 0xFF
-
-	TtlScreen	controlmenu, sub=controlmenu_TitleMenu_INITIAL, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PROGRAM, window=controlmenu_window, title=Str_CONTROL_MENU, icon=147	# title "CONTROL MENU"
-
-Str_INITIAL:	.asciz "INITIAL"
-
-		AcTitleMenu	controlmenu_TitleMenu_INITIAL, super=controlmenu, next=controlmenu_TitleMenu_FOOT_CONTROLLERS, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=controlmenu_TitleMenu_INITIAL_selected, str=Str_INITIAL, title=TT_CTINIT, icon=14	# str "INITIAL"
-
-Str_FOOT_CONTROLLERS:	.asciz "FOOT CONTROLLERS"
-	.align	4, 0xFF
-
-		AcTitleMenu	controlmenu_TitleMenu_FOOT_CONTROLLERS, super=controlmenu, next=controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, prev=controlmenu_TitleMenu_INITIAL, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=controlmenu_TitleMenu_FOOT_CONTROLLERS_selected, str=Str_FOOT_CONTROLLERS, title=TT_CTFSWAS, icon=129	# str "FOOT CONTROLLERS"
-
-Str_OVERALL_TOUCH_SENSITIVITY:	.asciz "OVERALL TOUCH SENSITIVITY"
-	.align	4, 0xFF
-
-		AcTitleMenu	controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, super=controlmenu, next=controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, prev=controlmenu_TitleMenu_FOOT_CONTROLLERS, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT_selected, str=Str_OVERALL_TOUCH_SENSITIVITY, title=TT_CTTOUCH, icon=10	# str "OVERALL TOUCH SENSITIVITY"
-
-Str_MUSIC_STYLE_ARRANGER_MODE:	.asciz "MUSIC STYLE ARRANGER MODE"
-	.align	4, 0xFF
-
-		AcTitleMenu	controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, super=controlmenu, next=controlmenu_TitleMenu_PANEL_MEMORY_MODE, prev=controlmenu_TitleMenu_OVERALL_TOUCH_SENSIT, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER_selected, str=Str_MUSIC_STYLE_ARRANGER_MODE, title=TT_MSAMODE, icon=50	# str "MUSIC STYLE ARRANGER MODE"
-
-Str_PANEL_MEMORY_MODE:	.asciz "PANEL MEMORY MODE"
-	.align	4, 0xFF
-
-		AcTitleMenu	controlmenu_TitleMenu_PANEL_MEMORY_MODE, super=controlmenu, next=controlmenu_TitleMenu_FADE_IN_OUT_SETTING, prev=controlmenu_TitleMenu_MUSIC_STYLE_ARRANGER, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=controlmenu_TitleMenu_PANEL_MEMORY_MODE_selected, str=Str_PANEL_MEMORY_MODE, title=TT_CTPMMD, icon=49	# str "PANEL MEMORY MODE"
-
-Str_FADE_IN_OUT_SETTING:	.asciz "FADE IN/OUT SETTING"
-
-		AcTitleMenu	controlmenu_TitleMenu_FADE_IN_OUT_SETTING, super=controlmenu, next=controlmenu_ExitMode1, prev=controlmenu_TitleMenu_PANEL_MEMORY_MODE, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=controlmenu_TitleMenu_FADE_IN_OUT_SETTING_selected, str=Str_FADE_IN_OUT_SETTING, title=TT_FADEINOUT, icon=156	# str "FADE IN/OUT SETTING"
-		IvExitMode	controlmenu_ExitMode1, super=controlmenu, prev=controlmenu_TitleMenu_FADE_IN_OUT_SETTING, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
-
-Str_INITIAL_2:	.asciz "INITIAL"
-
-	TtlScreen	initial, sub=initial_LanguageText1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=initial_window, title=Str_INITIAL_2, icon=14	# title "INITIAL"
-		AcLanguageText	initial_LanguageText1, super=initial, next=initial_FuncEditSw1, flag=VF_Const, X=24, Y=76, W=270, H=120, color=CL_WallPattern, index=0xFFFF, font=9, fontcolor=CL_Yellow, alignment=1, lines=6, func=FN_CtlIniLngCheck
-		AcFuncEditSw	initial_FuncEditSw1, super=initial, next=initial_ShowHide1, prev=initial_LanguageText1, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_SystemInitOkFunc
-		IvShowHide	initial_ShowHide1, super=initial, sub=initial_SpecWin1, prev=initial_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_SystemInitMDFunc
-			IvSpecWin	initial_SpecWin1, super=initial_ShowHide1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, spec0=V_initial_Window1_id, spec1=V_initial_Window1_id, spec2=V_initial_Window1_id, spec3=V_initial_Window1_id, spec4=V_initial_Window1_id, spec5=V_initial_Window1_id, spec6=V_initial_Window1_id, spec7=V_initial_Window1_id
-
-	Window	V_initial_Window1, sub=SYSINIKIND1, flag=VF_Const, X=316, Y=30, W=200, H=187, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, parent=V_initial_Window1_parent, child=V_initial_Window1_child
-
-Str_PERFORMANCE_CURRENT_PANEL_PART_SETTING_M:	.asciz "PERFORMANCE      |  CURRENT PANEL  |    PART SETTING |    MIDI SETTING |  PANEL MEMORY   |  COMPOSER       |  SEQUENCER      |  SOUND MEMORY   |  EFFECT MEMORY  |  PADS USER      "
-
-		AcListBox	SYSINIKIND1, super=V_initial_Window1, next=V_initial_IndexWideES1, flag=VF_Const, X=316, Y=30, W=200, H=187, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, align=1, row=10, selected=SYSINIKIND1_selected, list=Str_PERFORMANCE_CURRENT_PANEL_PART_SETTING_M, dial=1	# list "PERFORMANCE      |  CURRENT PANEL  |    "
-		AcIndexWideES	V_initial_IndexWideES1, super=V_initial_Window1, prev=SYSINIKIND1, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=14
-
-Str_INITIAL_3:	.asciz "INITIAL"
-
-	TtlScreen	SYSINISURE, sub=SYSINISURE_Box1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTINIT, window=SYSINISURE_window, title=Str_INITIAL_3, icon=14	# title "INITIAL"
-		VwBox	SYSINISURE_Box1, super=SYSINISURE, sub=SYSINISURE_LanguageText1, next=SYSINISURE_FuncEditSw1, flag=VF_Const, X=160, Y=58, W=330, H=150, color=CL_Red, border=BD_3D_UP2, index=0xFFFF
-			AcLanguageText	SYSINISURE_LanguageText1, super=SYSINISURE_Box1, next=SYSINISURE_LanguageText2, flag=VF_Const, X=216, Y=66, W=220, H=30, color=CL_Red, index=0xFFFF, font=10, fontcolor=CL_WhiteB, lines=1, func=FN_AttnLngCheck
-			AcLanguageText	SYSINISURE_LanguageText2, super=SYSINISURE_Box1, next=SYSINISURE_LanguageText3, prev=SYSINISURE_LanguageText1, flag=VF_Const, X=176, Y=94, W=310, H=90, color=CL_Red, index=0xFFFF, font=9, fontcolor=CL_WhiteB, alignment=1, lines=5, func=FN_SysSureLngCheck
-			AcLanguageText	SYSINISURE_LanguageText3, super=SYSINISURE_Box1, prev=SYSINISURE_LanguageText2, flag=VF_Const, X=164, Y=182, W=320, H=22, color=CL_Red, index=0xFFFF, font=9, fontcolor=CL_WhiteB, lines=1, func=FN_SureLngCheck
-		AcFuncEditSw	SYSINISURE_FuncEditSw1, super=SYSINISURE, next=SYSINISURE_FuncEditSw2, prev=SYSINISURE_Box1, flag=VF_Const, X=593, Y=82, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=9, func=FN_SysIniYesFunc
-		AcFuncEditSw	SYSINISURE_FuncEditSw2, super=SYSINISURE, next=SYSINISURE_ShowHide1, prev=SYSINISURE_FuncEditSw1, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=10, func=FN_SysIniNoFunc
-		IvShowHide	SYSINISURE_ShowHide1, super=SYSINISURE, prev=SYSINISURE_FuncEditSw2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_InitShowHideFunc
-
-Str_FOOT_CONTROLLERS_2:	.asciz "FOOT CONTROLLERS"
-	.align	4, 0xFF
-
-	TtlScreen	fswcon, sub=fswcon_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=fswcon_window, title=Str_FOOT_CONTROLLERS_2, icon=129	# title "FOOT CONTROLLERS"
-		AcIndexWideES	fswcon_IndexWideES1, super=fswcon, next=fswcon_IndexWideES2, flag=VF_Const, X=124, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom7, style=14
-		AcIndexWideES	fswcon_IndexWideES2, super=fswcon, next=fswcon_FSWAssGridBox1, prev=fswcon_IndexWideES1, flag=VF_Const, X=364, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom13, style=3
-
-Str_CONTROLLER_FUNCTION:	.asciz "CONTROLLER|FUNCTION"
-Str_FOOT_SWITCH_1_FOOT_SWITCH_2_FOOT_CONT_SW:	.asciz "|-|FOOT SWITCH 1|FOOT SWITCH 2|FOOT CONT. SW 1|FOOT CONT. SW 2|FOOT CONT. SW 3|FOOT CONT. SW 4|EXPRESS. PEDAL|"
-	.align	4, 0xFF
-
-		AcFSWAssGridBox	fswcon_FSWAssGridBox1, super=fswcon, next=fswcon_ShowHide1, prev=fswcon_IndexWideES2, flag=VF_Const, X=76, Y=30, W=481, H=176, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, vertline=1, selrow=fswcon_FSWAssGridBox1_selrow, selcol=fswcon_FSWAssGridBox1_selcol, pcol=fswcon_FSWAssGridBox1_pcol, prow=fswcon_FSWAssGridBox1_prow, crow=fswcon_FSWAssGridBox1_crow, fixedcol=Str_CONTROLLER_FUNCTION, fixedrow=Str_FOOT_SWITCH_1_FOOT_SWITCH_2_FOOT_CONT_SW, func=FN_FSWAssGridCheck	# fixedcol "CONTROLLER|FUNCTION"; fixedrow "|-|FOOT SWITCH 1|FOOT SWITCH 2|FOOT CONT"
-		IvShowHide	fswcon_ShowHide1, super=fswcon, prev=fswcon_FSWAssGridBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_FSWAssGridFilter
-
-Str_OVERALL_TOUCH_SENSITIVITY_2:	.asciz "OVERALL TOUCH SENSITIVITY"
-	.align	4, 0xFF
-
-	TtlScreen	tssen, sub=tssen_ShowHide1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=tssen_window, title=Str_OVERALL_TOUCH_SENSITIVITY_2, icon=10	# title "OVERALL TOUCH SENSITIVITY"
-		IvShowHide	tssen_ShowHide1, super=tssen, next=tssen_TchSensGridBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_TouchFilter
-
-Str_empty_50:	.asciz "      |    "
-Str_VELOCITY_SENSE_ON_OFF_CURVE_THRESHOLD:	.asciz "|-|VELOCITY SENSE|-||-|ON/OFF|CURVE|THRESHOLD|"
-	.align	4, 0xFF
-
-		AcTchSensGridBox	tssen_TchSensGridBox1, super=tssen, sub=tssen_Label_INITIAL_TOUCH, next=tssen_IndexWideES1, prev=tssen_ShowHide1, flag=VF_Const, X=112, Y=34, W=430, H=170, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, selrow=tssen_TchSensGridBox1_selrow, selcol=tssen_TchSensGridBox1_selcol, pcol=tssen_TchSensGridBox1_pcol, prow=tssen_TchSensGridBox1_prow, crow=tssen_TchSensGridBox1_crow, fixedcol=Str_empty_50, fixedrow=Str_VELOCITY_SENSE_ON_OFF_CURVE_THRESHOLD, func=FN_TchSensGridCheck	# fixedcol "      |    "; fixedrow "|-|VELOCITY SENSE|-||-|ON/OFF|CURVE|THRE"
-
-Str_INITIAL_TOUCH:	.asciz "INITIAL TOUCH"
-	.align	4, 0xFF
-
-			VwLabel	tssen_Label_INITIAL_TOUCH, super=tssen_TchSensGridBox1, next=tssen_Label_AFTER_TOUCH, flag=VF_Const, X=250, Y=42, W=147, H=19, str=Str_INITIAL_TOUCH, font=4, fontcolor=CL_Yellow	# str "INITIAL TOUCH"
-
-Str_AFTER_TOUCH_3:	.asciz "AFTER TOUCH"
-
-			VwLabel	tssen_Label_AFTER_TOUCH, super=tssen_TchSensGridBox1, prev=tssen_Label_INITIAL_TOUCH, flag=VF_Const, X=262, Y=102, W=125, H=19, str=Str_AFTER_TOUCH_3, font=4, fontcolor=CL_Yellow	# str "AFTER TOUCH"
-		AcIndexWideES	tssen_IndexWideES1, super=tssen, next=tssen_IndexWideES2, prev=tssen_TchSensGridBox1, flag=VF_Const, X=164, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom8, style=14
-		AcIndexWideES	tssen_IndexWideES2, super=tssen, prev=tssen_IndexWideES1, flag=VF_Const, X=404, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom13, style=3
-
-Str_MUSIC_STYLE_ARRANGER_MODE_2:	.asciz "MUSIC STYLE ARRANGER MODE"
-	.align	4, 0xFF
-
-	TtlScreen	msamode, sub=msamode_MenuBox_RHYTHM, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=msamode_window, title=Str_MUSIC_STYLE_ARRANGER_MODE_2, icon=50	# title "MUSIC STYLE ARRANGER MODE"
-
-Str_RHYTHM_7:	.asciz "       RHYTHM"
-	.align	4, 0xFF
-
-		VwMenuBox	msamode_MenuBox_RHYTHM, super=msamode, next=msamode_MenuBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=msamode_MenuBox_RHYTHM_selected, str=Str_RHYTHM_7	# str "       RHYTHM"
-
-Str_SOUND_RHYTHM:	.asciz "    SOUND & RHYTHM"
-	.align	4, 0xFF
-
-		VwMenuBox	msamode_MenuBox_SOUND_RHYTHM, super=msamode, next=msamode_MenuBox_PANEL_MEMORY, prev=msamode_MenuBox_RHYTHM, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=msamode_MenuBox_SOUND_RHYTHM_selected, str=Str_SOUND_RHYTHM	# str "    SOUND & RHYTHM"
-
-Str_PANEL_MEMORY:	.asciz "     PANEL MEMORY"
-	.align	4, 0xFF
-
-		VwMenuBox	msamode_MenuBox_PANEL_MEMORY, super=msamode, next=msamode_MSAModeBox1, prev=msamode_MenuBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=msamode_MenuBox_PANEL_MEMORY_selected, str=Str_PANEL_MEMORY	# str "     PANEL MEMORY"
-		MSAModeBox	msamode_MSAModeBox1, super=msamode, next=msamode_ShowHide1, prev=msamode_MenuBox_PANEL_MEMORY, flag=VF_Const, X=632, Y=233, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=32888, newmsamode=msamode_MSAModeBox1_newmsamode, oldmsamode=msamode_MSAModeBox1_oldmsamode
-		IvShowHide	msamode_ShowHide1, super=msamode, prev=msamode_MSAModeBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, func=FN_MSAFilter
-
-	Window	MSAsanple, sub=MSAsanple_EditBox_RHYTHM, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=MSAsanple_parent, child=MSAsanple_child
-
-Str_RHYTHM_8:	.asciz "  RHYTHM"
-	.align	4, 0xFF
-
-		PsEditBox	MSAsanple_EditBox_RHYTHM, super=MSAsanple, sub=MSAsanple_Frame1, next=MSAsanple_EditBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=76, W=305, H=34, color=CL_WallPattern, index=0xFFFF, caption=Str_RHYTHM_8, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_Left2, dial=1, selected=MSAsanple_EditBox_RHYTHM_selected	# caption "  RHYTHM"
-			VwFrame	MSAsanple_Frame1, super=MSAsanple_EditBox_RHYTHM, flag=VF_Const, X=16, Y=78, W=220, H=30, frame=1, width=2, color=CL_Selected
-
-Str_SOUND_RHYTHM_2:	.asciz "  SOUND & RHYTHM"
-	.align	4, 0xFF
-
-		PsEditBox	MSAsanple_EditBox_SOUND_RHYTHM, super=MSAsanple, next=MSAsanple_EditBox_PANEL_MEMORY, prev=MSAsanple_EditBox_RHYTHM, flag=VF_Const, X=8, Y=118, W=305, H=34, color=CL_WallPattern, index=0xFFFF, caption=Str_SOUND_RHYTHM_2, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_Left3, dial=1, selected=MSAsanple_EditBox_SOUND_RHYTHM_selected	# caption "  SOUND & RHYTHM"
-
-Str_PANEL_MEMORY_2:	.asciz "  PANEL MEMORY"
-	.align	4, 0xFF
-
-		PsEditBox	MSAsanple_EditBox_PANEL_MEMORY, super=MSAsanple, prev=MSAsanple_EditBox_SOUND_RHYTHM, flag=VF_Const, X=8, Y=160, W=305, H=34, color=CL_WallPattern, index=0xFFFF, caption=Str_PANEL_MEMORY_2, font=4, fontcolor=CL_White, align=1, length=4, editsw=ES_Left4, dial=1, selected=MSAsanple_EditBox_PANEL_MEMORY_selected	# caption "  PANEL MEMORY"
-
-Str_PANEL_MEMORY_MODE_2:	.asciz "PANEL MEMORY MODE"
-	.align	4, 0xFF
-
-	TtlScreen	V29_TtlScreen_PANEL_MEMORY_MODE, sub=V29_PageControl1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=V29_TtlScreen_PANEL_MEMORY_MODE_window, title=Str_PANEL_MEMORY_MODE_2, icon=49	# title "PANEL MEMORY MODE"
-		IvPageControl	V29_PageControl1, super=V29_TtlScreen_PANEL_MEMORY_MODE, sub=V29_PageControl2, next=V29_WindowPage1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=1, window=PMEM_page1_id
-			IvPageControl	V29_PageControl2, super=V29_PageControl1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, page=2, window=PMEM_page2_id
-		AcWindowPage	V29_WindowPage1, super=V29_TtlScreen_PANEL_MEMORY_MODE, prev=V29_PageControl1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=V29_WindowPage1_page, pagemin=1, pagemax=2
-
-	Window	PMEM_page1, sub=PMEM_page1_LanguageText1, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=PMEM_page1_parent, child=PMEM_page1_child
-		AcLanguageText	PMEM_page1_LanguageText1, super=PMEM_page1, next=PMEM_page1_LanguageText2, flag=VF_Const, X=4, Y=150, W=580, H=60, color=CL_WallPattern, index=0xFFFF, font=5, fontcolor=CL_Yellow, alignment=1, lines=1, func=FN_PmemExpLngCheck
-		AcLanguageText	PMEM_page1_LanguageText2, super=PMEM_page1, next=PMEM_page1_PmemModeBox1, prev=PMEM_page1_LanguageText1, flag=VF_Const, X=4, Y=78, W=580, H=30, color=CL_WallPattern, index=0xFFFF, font=5, fontcolor=CL_Yellow, alignment=1, lines=1, func=FN_PmemNormLngCheck
-		PmemModeBox	PMEM_page1_PmemModeBox1, super=PMEM_page1, next=PMEM_page1_MenuBox_NORMAL, prev=PMEM_page1_LanguageText2, flag=VF_Const, X=632, Y=232, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=32888, newpmemmode=PMEM_page1_PmemModeBox1_newpmemmode, oldpmemmode=PMEM_page1_PmemModeBox1_oldpmemmode
-
-Str_NORMAL:	.asciz "  NORMAL"
-	.align	4, 0xFF
-
-		VwMenuBox	PMEM_page1_MenuBox_NORMAL, super=PMEM_page1, next=PMEM_page1_MenuBox_EXPAND, prev=PMEM_page1_PmemModeBox1, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=PMEM_page1_MenuBox_NORMAL_selected, str=Str_NORMAL	# str "  NORMAL"
-
-Str_EXPAND:	.asciz "  EXPAND"
-	.align	4, 0xFF
-
-		VwMenuBox	PMEM_page1_MenuBox_EXPAND, super=PMEM_page1, next=PMEM_page1_ShowHide1, prev=PMEM_page1_MenuBox_NORMAL, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=PMEM_page1_MenuBox_EXPAND_selected, str=Str_EXPAND	# str "  EXPAND"
-		IvShowHide	PMEM_page1_ShowHide1, super=PMEM_page1, prev=PMEM_page1_MenuBox_EXPAND, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_PmemModeFilter
-
-	Window	PMEM_page2, sub=PMEM_page2_GridBox1, flag=VF_Const, X=0, Y=28, W=640, H=212, color=CL_WallPattern, index=0xFFFF, parent=PMEM_page2_parent, child=PMEM_page2_child
-
-Str_FILTER_TYPE_ON_OFF:	.asciz "   FILTER TYPE   |  ON/OFF "
-Str_RHYTHM_SELECTION_TEMPO_APC_MEMORY_SPLIT:	.asciz "|-|RHYTHM SELECTION|TEMPO|APC & MEMORY|SPLIT POINT|TRANSPOSE|FOOT CONT. SETTING|SOUND CONTROLLERS|FADE IN/OUT SETTING|R1/R2 OCTAVE"
-	.align	4, 0xFF
-
-		AcGridBox	PMEM_page2_GridBox1, super=PMEM_page2, sub=PMEM_page2_IndexWideES1, next=PMEM_page2_GridBox2, flag=VF_Const, X=12, Y=32, W=278, H=208, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=1, fontcolor=CL_White, row=12, col=2, vertline=1, selrow=PMEM_page2_GridBox1_selrow, selcol=PMEM_page2_GridBox1_selcol, pcol=PMEM_page2_GridBox1_pcol, prow=PMEM_page2_GridBox1_prow, crow=PMEM_page2_GridBox1_crow, fixedcol=Str_FILTER_TYPE_ON_OFF, fixedrow=Str_RHYTHM_SELECTION_TEMPO_APC_MEMORY_SPLIT, func=FN_PmExpFilter1GridCheck	# fixedcol "   FILTER TYPE   |  ON/OFF "; fixedrow "|-|RHYTHM SELECTION|TEMPO|APC & MEMORY|S"
-			AcIndexWideES	PMEM_page2_IndexWideES1, super=PMEM_page2_GridBox1, next=PMEM_page2_IndexWideES2, flag=VF_Const, X=44, Y=217, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, editsw2=ES_Bottom4, style=3
-			AcIndexWideES	PMEM_page2_IndexWideES2, super=PMEM_page2_GridBox1, next=PMEM_page2_Box1, prev=PMEM_page2_IndexWideES1, flag=VF_Const, X=204, Y=217, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=3, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom7, style=11
-			VwBox	PMEM_page2_Box1, super=PMEM_page2_GridBox1, sub=PMEM_page2_Label_EXPAND_MODE_FILTER, prev=PMEM_page2_IndexWideES2, flag=VF_Const, X=32, Y=4, W=200, H=24, color=CL_Olive, index=0xFFFF
-
-Str_EXPAND_MODE_FILTER:	.asciz "EXPAND MODE FILTER"
-	.align	4, 0xFF
-
-				VwLabel	PMEM_page2_Label_EXPAND_MODE_FILTER, super=PMEM_page2_Box1, flag=VF_Const, X=32, Y=6, W=202, H=19, str=Str_EXPAND_MODE_FILTER, font=4, fontcolor=CL_White	# str "EXPAND MODE FILTER"
-
-Str_FILTER_TYPE_ON_OFF_2:	.asciz "   FILTER TYPE   |  ON/OFF "
-Str_VOCALIST_MIDI_REVERB_CHORUS_MULTI_EFFECT:	.asciz "|-|VOCALIST|MIDI|REVERB & CHORUS|MULTI EFFECT|MIC|EQUALIZER|PART1-16 SETTING|KEY SCALE|PAD BANK"
-
-		AcGridBox	PMEM_page2_GridBox2, super=PMEM_page2, sub=PMEM_page2_IndexWideES3, next=PMEM_page2_ShowHide1, prev=PMEM_page2_GridBox1, flag=VF_Const, X=330, Y=32, W=278, H=208, color=CL_WallPattern, border=BD_3D_UP2, index=3, font=1, fontcolor=CL_White, row=12, col=2, vertline=1, selrow=PMEM_page2_GridBox2_selrow, selcol=PMEM_page2_GridBox2_selcol, pcol=PMEM_page2_GridBox2_pcol, prow=PMEM_page2_GridBox2_prow, crow=PMEM_page2_GridBox2_crow, fixedcol=Str_FILTER_TYPE_ON_OFF_2, fixedrow=Str_VOCALIST_MIDI_REVERB_CHORUS_MULTI_EFFECT, func=FN_PmExpFilter2GridCheck	# fixedcol "   FILTER TYPE   |  ON/OFF "; fixedrow "|-|VOCALIST|MIDI|REVERB & CHORUS|MULTI E"
-			AcIndexWideES	PMEM_page2_IndexWideES3, super=PMEM_page2_GridBox2, next=PMEM_page2_IndexWideES4, flag=VF_Const, X=524, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=3, fontcolor=CL_Black, editsw=ES_Bottom14, editsw2=ES_Bottom15, style=11
-			AcIndexWideES	PMEM_page2_IndexWideES4, super=PMEM_page2_GridBox2, prev=PMEM_page2_IndexWideES3, flag=VF_Const, X=364, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom10, editsw2=ES_Bottom12, style=3
-		IvShowHide	PMEM_page2_ShowHide1, super=PMEM_page2, prev=PMEM_page2_GridBox2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_PmExpFilter
-
-Str_FADE_IN_OUT_SETTING_2:	.asciz "FADE IN/OUT SETTING"
-
-	TtlScreen	fadeinout, sub=fadeinout_FadeSetGridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CTMENU, window=fadeinout_window, title=Str_FADE_IN_OUT_SETTING_2, icon=156	# title "FADE IN/OUT SETTING"
-
-Str_empty_51:	.asciz "   |  "
-Str_Time_Time_Auto_reset_Rhythm_Auto_stop_SE:	.asciz " |    Time                 :||    Time                 :|    Auto reset           :|    Rhythm Auto stop     :|    SEQ Auto stop        :"
-	.align	4, 0xFF
-
-		AcFadeSetGridBox	fadeinout_FadeSetGridBox1, super=fadeinout, sub=fadeinout_Label_FADE_IN, next=fadeinout_IndexWideES1, flag=VF_Const, X=80, Y=34, W=481, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=7, col=2, selrow=fadeinout_FadeSetGridBox1_selrow, selcol=fadeinout_FadeSetGridBox1_selcol, pcol=fadeinout_FadeSetGridBox1_pcol, prow=fadeinout_FadeSetGridBox1_prow, crow=fadeinout_FadeSetGridBox1_crow, fixedcol=Str_empty_51, fixedrow=Str_Time_Time_Auto_reset_Rhythm_Auto_stop_SE, func=FN_FadeSetGridCheck	# fixedcol "   |  "; fixedrow " |    Time                 :||    Time  "
-
-Str_FADE_IN:	.asciz "FADE IN"
-
-			VwLabel	fadeinout_Label_FADE_IN, super=fadeinout_FadeSetGridBox1, next=fadeinout_Label_FADE_OUT, flag=VF_Const, X=94, Y=42, W=81, H=19, str=Str_FADE_IN, font=4, fontcolor=CL_Yellow	# str "FADE IN"
-
-Str_FADE_OUT:	.asciz "FADE OUT"
-	.align	4, 0xFF
-
-			VwLabel	fadeinout_Label_FADE_OUT, super=fadeinout_FadeSetGridBox1, prev=fadeinout_Label_FADE_IN, flag=VF_Const, X=94, Y=94, W=92, H=19, str=Str_FADE_OUT, font=4, fontcolor=CL_Yellow	# str "FADE OUT"
-		AcIndexWideES	fadeinout_IndexWideES1, super=fadeinout, next=fadeinout_IndexWideES2, prev=fadeinout_FadeSetGridBox1, flag=VF_Const, X=164, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom7, style=14
-		AcIndexWideES	fadeinout_IndexWideES2, super=fadeinout, next=fadeinout_ShowHide1, prev=fadeinout_IndexWideES1, flag=VF_Const, X=404, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom11, editsw2=ES_Bottom13, style=3
-		IvShowHide	fadeinout_ShowHide1, super=fadeinout, prev=fadeinout_IndexWideES2, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_FadeIOFilter
-
-Str_DATA_PROTECTION:	.asciz "DATA PROTECTION"
-
-	TtlScreen	writeprt, sub=writeprt_GridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=writeprt_window, title=Str_DATA_PROTECTION, icon=190	# title "DATA PROTECTION"
-
-Str_ITEM_ON_OFF:	.asciz "    ITEM    |ON/OFF"
-Str_FOOT_CONTROLLERS_SETTING_TOTAL_EQUALIZER:	.asciz "|-|FOOT CONTROLLERS SETTING|TOTAL EQUALIZER|INITIAL TOUCH SENSITIVITY|AFTER TOUCH SENSITIVITY|MIC SETTING|SOUND CONTROLLER MODE|PANEL MEMORY EXP. FILTER"
-	.align	4, 0xFF
-
-		AcGridBox	writeprt_GridBox1, super=writeprt, next=writeprt_IndexWideES1, flag=VF_Const, X=80, Y=30, W=481, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, vertline=1, selrow=writeprt_GridBox1_selrow, selcol=writeprt_GridBox1_selcol, pcol=writeprt_GridBox1_pcol, prow=writeprt_GridBox1_prow, crow=writeprt_GridBox1_crow, fixedcol=Str_ITEM_ON_OFF, fixedrow=Str_FOOT_CONTROLLERS_SETTING_TOTAL_EQUALIZER, func=FN_DataProtectGridCheck	# fixedcol "    ITEM    |ON/OFF"; fixedrow "|-|FOOT CONTROLLERS SETTING|TOTAL EQUALI"
-		AcIndexWideES	writeprt_IndexWideES1, super=writeprt, next=writeprt_IndexWideES2, prev=writeprt_GridBox1, flag=VF_Const, X=164, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom8, style=3
-		AcIndexWideES	writeprt_IndexWideES2, super=writeprt, next=writeprt_FuncEditSw1, prev=writeprt_IndexWideES1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=3, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, style=11
-		AcFuncEditSw	writeprt_FuncEditSw1, super=writeprt, next=writeprt_ShowHide1, prev=writeprt_IndexWideES2, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_DataProtectOKFunc
-		IvShowHide	writeprt_ShowHide1, super=writeprt, prev=writeprt_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_DataPrtHideFunc
-
-Str_CUSTOMIZE_MENU:	.asciz "CUSTOMIZE MENU"
-	.align	4, 0xFF
-
-	TtlScreen	cusmenu, sub=cusmenu_TitleMenu_HOME_PAGE_SETTING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_PROGRAM, window=cusmenu_window, title=Str_CUSTOMIZE_MENU, icon=187	# title "CUSTOMIZE MENU"
-
-Str_HOME_PAGE_SETTING_2:	.asciz "HOME PAGE SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_HOME_PAGE_SETTING, super=cusmenu, next=cusmenu_TitleMenu_FAVORITES_SETTING, flag=VF_Const, X=8, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left1, selected=cusmenu_TitleMenu_HOME_PAGE_SETTING_selected, str=Str_HOME_PAGE_SETTING_2, title=TT_CTHOMEPAGE, icon=188	# str "HOME PAGE SETTING"
-
-Str_FAVORITES_SETTING_2:	.asciz "FAVORITES SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_FAVORITES_SETTING, super=cusmenu, next=cusmenu_TitleMenu_DISPLAY_TIME_OUT, prev=cusmenu_TitleMenu_HOME_PAGE_SETTING, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=cusmenu_TitleMenu_FAVORITES_SETTING_selected, str=Str_FAVORITES_SETTING_2, title=TT_CTFAVORITE, icon=189	# str "FAVORITES SETTING"
-
-Str_DISPLAY_TIME_OUT:	.asciz "DISPLAY TIME OUT"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_DISPLAY_TIME_OUT, super=cusmenu, next=cusmenu_TitleMenu_WALLPAPER_SETTING, prev=cusmenu_TitleMenu_FAVORITES_SETTING, flag=VF_Const, X=8, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left3, selected=cusmenu_TitleMenu_DISPLAY_TIME_OUT_selected, str=Str_DISPLAY_TIME_OUT, title=TT_CSDISTIM, icon=148	# str "DISPLAY TIME OUT"
-
-Str_WALLPAPER_SETTING:	.asciz "WALLPAPER SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_WALLPAPER_SETTING, super=cusmenu, next=cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, prev=cusmenu_TitleMenu_DISPLAY_TIME_OUT, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=cusmenu_TitleMenu_WALLPAPER_SETTING_selected, str=Str_WALLPAPER_SETTING, title=TT_CSWPAPER, icon=133	# str "WALLPAPER SETTING"
-
-Str_MIDI_SETTING_LOAD_OPTION:	.asciz "MIDI SETTING LOAD OPTION"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, super=cusmenu, next=cusmenu_TitleMenu_LANGUAGE_SETTING, prev=cusmenu_TitleMenu_WALLPAPER_SETTING, flag=VF_Const, X=327, Y=28, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right1, selected=cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP_selected, str=Str_MIDI_SETTING_LOAD_OPTION, title=TT_CSMIDISET, icon=136	# str "MIDI SETTING LOAD OPTION"
-
-Str_LANGUAGE_SETTING:	.asciz "LANGUAGE SETTING"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_LANGUAGE_SETTING, super=cusmenu, next=cusmenu_TitleMenu_DISK_PREFERENCES, prev=cusmenu_TitleMenu_MIDI_SETTING_LOAD_OP, flag=VF_Const, X=327, Y=114, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right3, selected=cusmenu_TitleMenu_LANGUAGE_SETTING_selected, str=Str_LANGUAGE_SETTING, title=TT_CSLANSET, icon=191	# str "LANGUAGE SETTING"
-
-Str_DISK_PREFERENCES:	.asciz "DISK PREFERENCES"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_DISK_PREFERENCES, super=cusmenu, next=cusmenu_TitleMenu_DATA_PROTECTION, prev=cusmenu_TitleMenu_LANGUAGE_SETTING, flag=VF_Const, X=327, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right4, selected=cusmenu_TitleMenu_DISK_PREFERENCES_selected, str=Str_DISK_PREFERENCES, title=TT_DKSETUP, icon=151	# str "DISK PREFERENCES"
-
-Str_DATA_PROTECTION_2:	.asciz "DATA PROTECTION"
-
-		AcTitleMenu	cusmenu_TitleMenu_DATA_PROTECTION, super=cusmenu, next=cusmenu_ExitMode1, prev=cusmenu_TitleMenu_DISK_PREFERENCES, flag=VF_Const, X=327, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Right2, selected=cusmenu_TitleMenu_DATA_PROTECTION_selected, str=Str_DATA_PROTECTION_2, title=TT_WRITEPRT, icon=190	# str "DATA PROTECTION"
-		IvExitMode	cusmenu_ExitMode1, super=cusmenu, next=cusmenu_TitleMenu_CUSTOM_PANEL_MODE, prev=cusmenu_TitleMenu_DATA_PROTECTION, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, mode=MD_PROGRAM
-
-Str_CUSTOM_PANEL_MODE:	.asciz "CUSTOM PANEL MODE"
-	.align	4, 0xFF
-
-		AcTitleMenu	cusmenu_TitleMenu_CUSTOM_PANEL_MODE, super=cusmenu, prev=cusmenu_ExitMode1, flag=VF_Const, X=8, Y=200, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left5, selected=cusmenu_TitleMenu_CUSTOM_PANEL_MODE_selected, str=Str_CUSTOM_PANEL_MODE, title=TT_CSCUSMEM, icon=192	# str "CUSTOM PANEL MODE"
-
-Str_CUSTOM_PANEL_MODE_2:	.asciz "CUSTOM PANEL MODE"
-	.align	4, 0xFF
-
-	TtlScreen	custommem, sub=custommem_CusMemModeBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=custommem_window, title=Str_CUSTOM_PANEL_MODE_2, icon=192	# title "CUSTOM PANEL MODE"
-		CusMemModeBox	custommem_CusMemModeBox1, super=custommem, next=custommem_MenuBox_PANEL_MEMORY, flag=VF_Const, X=633, Y=233, W=7, H=7, color=CL_WallPattern, index=0xFFFF, func=FN_DefaultFunction, fontcolo=44
-
-Str_PANEL_MEMORY_3:	.asciz "  PANEL MEMORY"
-	.align	4, 0xFF
-
-		VwMenuBox	custommem_MenuBox_PANEL_MEMORY, super=custommem, next=custommem_MenuBox_ALL_PANEL, prev=custommem_CusMemModeBox1, flag=VF_Const, X=8, Y=71, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left2, selected=custommem_MenuBox_PANEL_MEMORY_selected, str=Str_PANEL_MEMORY_3	# str "  PANEL MEMORY"
-
-Str_ALL_PANEL:	.asciz "  ALL PANEL"
-
-		VwMenuBox	custommem_MenuBox_ALL_PANEL, super=custommem, next=custommem_FuncEditSw1, prev=custommem_MenuBox_PANEL_MEMORY, flag=VF_Const, X=8, Y=157, W=305, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_White, editsw=ES_Left4, selected=custommem_MenuBox_ALL_PANEL_selected, str=Str_ALL_PANEL	# str "  ALL PANEL"
-		AcFuncEditSw	custommem_FuncEditSw1, super=custommem, next=custommem_ShowHide1, prev=custommem_MenuBox_ALL_PANEL, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CusMemOKFunc
-		IvShowHide	custommem_ShowHide1, super=custommem, prev=custommem_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_CusPanModeHideFunc
-
-Str_DISPLAY_TIME_OUT_2:	.asciz "DISPLAY TIME OUT"
-	.align	4, 0xFF
-
-	TtlScreen	distim, sub=distim_DispTimeSetGridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=distim_window, title=Str_DISPLAY_TIME_OUT_2, icon=148	# title "DISPLAY TIME OUT"
-
-Str_empty_53:	.asciz "  | "
-Str_SAVE_REMINDER_COMPLETED_MESSAGE_ARE_YOU:	.asciz "|-|SAVE REMINDER|'COMPLETED' MESSAGE|ARE YOU SURE?|ERROR MESSAGE|SOUND/RHYTHM SELECT|EASY SETTING"
-	.align	4, 0xFF
-
-		AcDispTimeSetGridBox	distim_DispTimeSetGridBox1, super=distim, sub=distim_Label_DISPLAY_TYPE, next=distim_IndexWideES1, flag=VF_Const, X=80, Y=30, W=481, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=8, col=2, vertline=1, selrow=distim_DispTimeSetGridBox1_selrow, selcol=distim_DispTimeSetGridBox1_selcol, pcol=distim_DispTimeSetGridBox1_pcol, prow=distim_DispTimeSetGridBox1_prow, crow=distim_DispTimeSetGridBox1_crow, fixedcol=Str_empty_53, fixedrow=Str_SAVE_REMINDER_COMPLETED_MESSAGE_ARE_YOU, func=FN_DispTimeSetGridCheck	# fixedcol "  | "; fixedrow "|-|SAVE REMINDER|'COMPLETED' MESSAGE|ARE"
-
-Str_DISPLAY_TYPE:	.asciz "DISPLAY TYPE"
-	.align	4, 0xFF
-
-			VwLabel	distim_Label_DISPLAY_TYPE, super=distim_DispTimeSetGridBox1, next=distim_Label_TIME, flag=VF_Const, X=170, Y=38, W=136, H=19, str=Str_DISPLAY_TYPE, font=4, fontcolor=CL_Yellow	# str "DISPLAY TYPE"
-
-Str_TIME_7:	.asciz "TIME"
-	.align	4, 0xFF
-
-			VwLabel	distim_Label_TIME, super=distim_DispTimeSetGridBox1, prev=distim_Label_DISPLAY_TYPE, flag=VF_Const, X=450, Y=38, W=48, H=19, str=Str_TIME_7, font=4, fontcolor=CL_Yellow	# str "TIME"
-		AcIndexWideES	distim_IndexWideES1, super=distim, next=distim_IndexWideES2, prev=distim_DispTimeSetGridBox1, flag=VF_Const, X=164, Y=216, W=152, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom8, style=14
-		AcIndexWideES	distim_IndexWideES2, super=distim, next=distim_FuncEditSw1, prev=distim_IndexWideES1, flag=VF_Const, X=444, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=3, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom13, style=3
-		AcFuncEditSw	distim_FuncEditSw1, super=distim, prev=distim_IndexWideES2, flag=VF_Const, X=593, Y=166, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_DispTimeSetOKFunc
-
-Str_WALLPAPER_SETTING_2:	.asciz "WALLPAPER SETTING"
-	.align	4, 0xFF
-
-	TtlScreen	wallpaper, sub=wallpaper_RamEditBox_PRESET, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=wallpaper_window, title=Str_WALLPAPER_SETTING_2, icon=133	# title "WALLPAPER SETTING"
-
-Str_PRESET:	.asciz " PRESET"
-
-		AcRamEditBox	wallpaper_RamEditBox_PRESET, super=wallpaper, next=wallpaper_IndexEditSw1, flag=VF_Const, X=328, Y=74, W=255, H=34, color=CL_WallPattern, border=BD_3D_UP2, index=2, caption=Str_PRESET, font=4, fontcolor=CL_White, align=1, length=10, editsw=ES_None, dial=1, selected=wallpaper_RamEditBox_PRESET_selected, func=FN_WallPresetCheck, data=wallpaper_RamEditBox_PRESET_data	# caption " PRESET"
-		AcIndexEditSw	wallpaper_IndexEditSw1, super=wallpaper, next=wallpaper_IndexWideES1, prev=wallpaper_RamEditBox_PRESET, flag=VF_Const, X=593, Y=79, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=1
-		AcIndexWideES	wallpaper_IndexWideES1, super=wallpaper, next=wallpaper_IndexEditSw2, prev=wallpaper_IndexEditSw1, flag=VF_Const, X=164, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom7, style=3
-		AcIndexEditSw	wallpaper_IndexEditSw2, super=wallpaper, next=wallpaper_FuncEditSw1, prev=wallpaper_IndexWideES1, flag=VF_Const, X=593, Y=122, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=2, font=4, fontcolor=CL_Black, editsw=ES_Right3, style=2
-		AcFuncEditSw	wallpaper_FuncEditSw1, super=wallpaper, next=wallpaper_Label_PRESET, prev=wallpaper_IndexEditSw2, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_WallSetOKFunc
-
-Str_PRESET_2:	.asciz "PRESET"
-	.align	4, 0xFF
-
-		VwLabel	wallpaper_Label_PRESET, super=wallpaper, next=wallpaper_Label_VALUE, prev=wallpaper_FuncEditSw1, flag=VF_Const, X=586, Y=106, W=52, H=19, str=Str_PRESET_2, fontcolor=CL_White	# str "PRESET"
-
-Str_VALUE:	.asciz "VALUE"
-	.align	4, 0xFF
-
-		VwLabel	wallpaper_Label_VALUE, super=wallpaper, next=wallpaper_RamEditBox1, prev=wallpaper_Label_PRESET, flag=VF_Const, X=198, Y=202, W=44, H=19, str=Str_VALUE, font=1, fontcolor=CL_White	# str "VALUE"
-
-Str_empty_54:	.asciz "              :"
-
-		AcRamEditBox	wallpaper_RamEditBox1, super=wallpaper, sub=wallpaper_Label_SOUND_RHYTHM_SELECT, next=wallpaper_RamEditBox_MENU_PAGE, prev=wallpaper_Label_VALUE, flag=VF_Const, X=8, Y=73, W=305, H=34, color=CL_WallPattern, index=1, caption=Str_empty_54, font=4, fontcolor=CL_White, align=1, length=12, editsw=ES_Left2, dial=1, selected=wallpaper_RamEditBox1_selected, func=FN_WallHomeEditCheck, data=wallpaper_RamEditBox1_data	# caption "              :"
-
-Str_SOUND_RHYTHM_SELECT:	.asciz "SOUND&RHYTHM SELECT"
-
-			VwLabel	wallpaper_Label_SOUND_RHYTHM_SELECT, super=wallpaper_RamEditBox1, next=wallpaper_Label_HOME_PAGE, flag=VF_Const, X=9, Y=86, W=156, H=19, str=Str_SOUND_RHYTHM_SELECT, fontcolor=CL_White	# str "SOUND&RHYTHM SELECT"
-
-Str_HOME_PAGE:	.asciz "HOME PAGE/"
-	.align	4, 0xFF
-
-			VwLabel	wallpaper_Label_HOME_PAGE, super=wallpaper_RamEditBox1, prev=wallpaper_Label_SOUND_RHYTHM_SELECT, flag=VF_Const, X=9, Y=74, W=84, H=19, str=Str_HOME_PAGE, fontcolor=CL_White	# str "HOME PAGE/"
-
-Str_MENU_PAGE:	.asciz "MENU PAGE     :"
-
-		AcRamEditBox	wallpaper_RamEditBox_MENU_PAGE, super=wallpaper, next=wallpaper_RamEditBox_OTHER, prev=wallpaper_RamEditBox1, flag=VF_Const, X=8, Y=116, W=305, H=34, color=CL_WallPattern, index=1, caption=Str_MENU_PAGE, font=4, fontcolor=CL_White, align=1, length=12, editsw=ES_Left3, dial=1, selected=wallpaper_RamEditBox_MENU_PAGE_selected, func=FN_WallMenuEditCheck, data=wallpaper_RamEditBox_MENU_PAGE_data	# caption "MENU PAGE     :"
-
-Str_OTHER:	.asciz "OTHER         :"
-
-		AcRamEditBox	wallpaper_RamEditBox_OTHER, super=wallpaper, next=wallpaper_WallPreview1, prev=wallpaper_RamEditBox_MENU_PAGE, flag=VF_Const, X=8, Y=159, W=305, H=34, color=CL_WallPattern, index=1, caption=Str_OTHER, font=4, fontcolor=CL_White, align=1, length=12, editsw=ES_Left4, dial=1, selected=wallpaper_RamEditBox_OTHER_selected, func=FN_WallOthEditCheck, data=wallpaper_RamEditBox_OTHER_data	# caption "OTHER         :"
-		AcWallPreview	wallpaper_WallPreview1, super=wallpaper, next=wallpaper_ShowHide1, prev=wallpaper_RamEditBox_OTHER, flag=VF_Const, X=328, Y=110, W=255, H=125, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF
-		IvShowHide	wallpaper_ShowHide1, super=wallpaper, prev=wallpaper_WallPreview1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_WallSetHideFunc
-
-Str_MIDI_SETTING_LOAD_OPTION_2:	.asciz "MIDI SETTING LOAD OPTION"
-	.align	4, 0xFF
-
-	TtlScreen	MIDIset, sub=MIDIset_ParaLoadOptGridBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=MIDIset_window, title=Str_MIDI_SETTING_LOAD_OPTION_2, icon=136	# title "MIDI SETTING LOAD OPTION"
-
-Str_empty_55:	.asciz "   | "
-Str_From_Registration_file_From_Sequencer_so:	.asciz " |-|   From Registration file    :|   From Sequencer song       :|-| |-|   GM2 mode is ON            :|   NX SOUND mode is ON       :"
-
-		AcParaLoadOptGridBox	MIDIset_ParaLoadOptGridBox1, super=MIDIset, sub=MIDIset_Label_Load_MIDI_Parameters, next=MIDIset_IndexWideES1, flag=VF_Const, X=92, Y=34, W=480, H=181, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=4, fontcolor=CL_White, row=9, col=2, selrow=MIDIset_ParaLoadOptGridBox1_selrow, selcol=MIDIset_ParaLoadOptGridBox1_selcol, pcol=MIDIset_ParaLoadOptGridBox1_pcol, prow=MIDIset_ParaLoadOptGridBox1_prow, crow=MIDIset_ParaLoadOptGridBox1_crow, fixedcol=Str_empty_55, fixedrow=Str_From_Registration_file_From_Sequencer_so, func=FN_ParaLoadOptGridCheck	# fixedcol "   | "; fixedrow " |-|   From Registration file    :|   Fr"
-
-Str_Load_MIDI_Parameters:	.asciz "Load MIDI Parameters?"
-	.align	4, 0xFF
-
-			VwLabel	MIDIset_Label_Load_MIDI_Parameters, super=MIDIset_ParaLoadOptGridBox1, next=MIDIset_Label_Use_these_setting_wh, flag=VF_Const, X=186, Y=42, W=235, H=19, str=Str_Load_MIDI_Parameters, font=4, fontcolor=CL_Yellow	# str "Load MIDI Parameters?"
-
-Str_Use_these_setting_when:	.asciz "Use these setting when:"
-
-			VwLabel	MIDIset_Label_Use_these_setting_wh, super=MIDIset_ParaLoadOptGridBox1, prev=MIDIset_Label_Load_MIDI_Parameters, flag=VF_Const, X=186, Y=130, W=257, H=19, str=Str_Use_these_setting_when, font=4, fontcolor=CL_Yellow	# str "Use these setting when:"
-		AcIndexWideES	MIDIset_IndexWideES1, super=MIDIset, next=MIDIset_IndexWideES2, prev=MIDIset_ParaLoadOptGridBox1, flag=VF_Const, X=204, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom8, style=14
-		AcIndexWideES	MIDIset_IndexWideES2, super=MIDIset, next=MIDIset_FuncEditSw1, prev=MIDIset_IndexWideES1, flag=VF_Const, X=444, Y=216, W=112, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom12, editsw2=ES_Bottom14, style=3
-		AcFuncEditSw	MIDIset_FuncEditSw1, super=MIDIset, prev=MIDIset_IndexWideES2, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_ParaLoadOptOKFunc
-
-Str_LANGUAGE_SETTING_2:	.asciz "LANGUAGE SETTING"
-	.align	4, 0xFF
-
-	TtlScreen	langset, sub=LangMenu, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_CUSMENU, window=langset_window, title=Str_LANGUAGE_SETTING_2, icon=191	# title "LANGUAGE SETTING"
-		AcLanguageText	LangMenu, super=langset, next=langset_FuncEditSw1, flag=VF_Const, X=76, Y=82, W=500, H=60, color=CL_WallPattern, index=0xFFFF, font=9, fontcolor=CL_Yellow, alignment=1, lines=3, func=FN_LangSetMenuCheck
-		AcFuncEditSw	langset_FuncEditSw1, super=langset, next=langset_IndexWideToggle_ENGLISH, prev=LangMenu, flag=VF_Const, X=593, Y=165, W=39, H=22, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_LangSetOKFunc
-
-Str_ENGLISH:	.asciz "ENGLISH"
-Str_ENGLISH_2:	.asciz "ENGLISH"
-
-		AcIndexWideToggle	langset_IndexWideToggle_ENGLISH, super=langset, next=langset_IndexWideToggle_GERMAN, prev=langset_FuncEditSw1, flag=VF_Const, X=4, Y=216, W=152, H=23, font=4, stron=Str_ENGLISH, stroff=Str_ENGLISH_2, onoff=langset_IndexWideToggle_ENGLISH_onoff, editsw=ES_Bottom1, editsw2=ES_Bottom4, func=FN_AcIndexWideToggleFunc	# stron "ENGLISH"; stroff "ENGLISH"
-
-Str_GERMAN:	.asciz "GERMAN"
-Str_GERMAN_2:	.asciz "GERMAN"
-	.align	4, 0xFF
-
-		AcIndexWideToggle	langset_IndexWideToggle_GERMAN, super=langset, next=langset_IndexWideToggle_FRENCH, prev=langset_IndexWideToggle_ENGLISH, flag=VF_Const, X=164, Y=216, W=152, H=23, font=4, stron=Str_GERMAN, stroff=Str_GERMAN_2, onoff=langset_IndexWideToggle_GERMAN_onoff, editsw=ES_Bottom5, editsw2=ES_Bottom8, tag=1, func=FN_AcIndexWideToggleFunc	# stron "GERMAN"; stroff "GERMAN"
-
-Str_FRENCH:	.asciz "FRENCH"
-Str_FRENCH_2:	.asciz "FRENCH"
-	.align	4, 0xFF
-
-		AcIndexWideToggle	langset_IndexWideToggle_FRENCH, super=langset, next=langset_IndexWideToggle_SPANISH, prev=langset_IndexWideToggle_GERMAN, flag=VF_Const, X=324, Y=216, W=152, H=23, font=4, stron=Str_FRENCH, stroff=Str_FRENCH_2, onoff=langset_IndexWideToggle_FRENCH_onoff, editsw=ES_Bottom9, editsw2=ES_Bottom12, tag=2, func=FN_AcIndexWideToggleFunc	# stron "FRENCH"; stroff "FRENCH"
-
-Str_SPANISH:	.asciz "SPANISH"
-Str_SPANISH_2:	.asciz "SPANISH"
-
-		AcIndexWideToggle	langset_IndexWideToggle_SPANISH, super=langset, next=langset_ShowHide1, prev=langset_IndexWideToggle_FRENCH, flag=VF_Const, X=484, Y=216, W=152, H=23, font=4, stron=Str_SPANISH, stroff=Str_SPANISH_2, onoff=langset_IndexWideToggle_SPANISH_onoff, editsw=ES_Bottom13, editsw2=ES_Bottom16, tag=3, func=FN_AcIndexWideToggleFunc	# stron "SPANISH"; stroff "SPANISH"
-		IvShowHide	langset_ShowHide1, super=langset, prev=langset_IndexWideToggle_SPANISH, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_LangSetHideFunc
-
-	Window	LangSetWin, sub=LangSetWin_IndexWideToggle_ENGLISH, flag=VF_Const, X=2, Y=215, W=636, H=24, color=CL_WallPattern, index=0xFFFF, parent=LangSetWin_parent, child=LangSetWin_child
-
-Str_ENGLISH_3:	.asciz "ENGLISH"
-Str_ENGLISH_4:	.asciz "ENGLISH"
+ptrs_4C223BB4:
+	.long	loc_4C0FC620
+	.long	loc_4C0FC624
+	.long	loc_4C0FC629
+	.long	loc_4C0FC62E
+	.long	loc_4C0FC633
+	.long	loc_4C0FC638
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	loc_4C0FC656
+	.long	loc_4C0FC68C
+	.long	loc_4C0FC65B
+	.long	loc_4C0FC690
+	.long	loc_4C0FC660
+	.long	loc_4C0FC694
+	.long	loc_4C0FC665
+	.long	loc_4C0FC698
+	.long	loc_4C0FC66A
+	.long	loc_4C0FC69C
+	.long	loc_4C0FC66F
+	.long	loc_4C0FC6A0
+	.long	loc_4C0FC674
+	.long	loc_4C0FC6A4
+	.long	loc_4C0FC678
+	.long	loc_4C0FC6A8
+	.long	loc_4C0FC67C
+	.long	loc_4C0FC6AC
+	.long	loc_4C0FC680
+	.long	loc_4C0FC6B0
+	.long	loc_4C0FC684
+	.long	loc_4C0FC6B4
+	.long	loc_4C0FC688
+	.long	loc_4C0FC6B8
+	.long	loc_4C0FC63D
+	.long	loc_4C0FC642
+	.long	loc_4C0FC647
+	.long	loc_4C0FC64C
+	.long	func_4C0FC524_entry_L196
+	.long	func_4C0FC524_entry_L196
+	.long	loc_4C0FC651
+ptrs_4C223C6C:
+	.long	loc_4C0FC54A
+	.long	loc_4C0FC54F
+	.long	loc_4C0FC554
+	.long	loc_4C0FC559
+	.long	loc_4C0FC55E
+	.long	loc_4C0FC563
+	.long	loc_4C0FC568
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC586
+	.long	loc_4C0FC5C2
+	.long	loc_4C0FC58B
+	.long	loc_4C0FC5C7
+	.long	loc_4C0FC590
+	.long	loc_4C0FC5CC
+	.long	loc_4C0FC595
+	.long	loc_4C0FC5D1
+	.long	loc_4C0FC59A
+	.long	loc_4C0FC5D6
+	.long	loc_4C0FC59F
+	.long	loc_4C0FC5DB
+	.long	loc_4C0FC5A4
+	.long	loc_4C0FC5E0
+	.long	loc_4C0FC5A9
+	.long	loc_4C0FC5E5
+	.long	loc_4C0FC5AE
+	.long	loc_4C0FC5EA
+	.long	loc_4C0FC5B3
+	.long	loc_4C0FC5EF
+	.long	loc_4C0FC5B8
+	.long	loc_4C0FC5F4
+	.long	loc_4C0FC5BD
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC56D
+	.long	loc_4C0FC572
+	.long	loc_4C0FC577
+	.long	loc_4C0FC57C
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC5F9
+	.long	loc_4C0FC581
+ptrs_4C223D28:
+	.long	loc_4C0FC70F
+	.long	loc_4C0FC723
+	.long	loc_4C0FC737
+	.long	loc_4C0FC74B
+	.long	loc_4C0FC75F
+	.long	loc_4C0FC773
+	.long	loc_4C0FC787
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	loc_4C0FC79B
+	.long	loc_4C0FC7AF
+	.long	loc_4C0FC7C3
+	.long	loc_4C0FC7D7
+	.long	loc_4C0FC7EB
+	.long	loc_4C0FC7FF
+	.long	loc_4C0FC813
+	.long	loc_4C0FC827
+	.long	loc_4C0FC83B
+	.long	loc_4C0FC84F
+	.long	loc_4C0FC863
+	.long	loc_4C0FC877
+	.long	loc_4C0FC88B
+	.long	loc_4C0FC89F
+	.long	loc_4C0FC8B3
+	.long	loc_4C0FC8C7
+	.long	loc_4C0FC8DB
+	.long	loc_4C0FC8EF
+	.long	loc_4C0FC903
+	.long	loc_4C0FC917
+	.long	loc_4C0FC92B
+	.long	loc_4C0FC93F
+	.long	loc_4C0FC953
+	.long	loc_4C0FC967
+	.long	loc_4C0FC97B
+	.long	loc_4C0FC98E
+	.long	loc_4C0FC9A1
+	.long	loc_4C0FC9B4
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	func_4C0FC6F2_entry_L2e5
+	.long	loc_4C0FC9C7
+ptrs_4C223DE4:
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+	.long	func_4C0FC9EE_L19
+	.long	loc_4C0FCA04
+ptrs_4C223E40:
+	.long	loc_4C0FCEB7
+	.long	loc_4C0FCEBA
+	.long	loc_4C0FCEBE
+	.long	loc_4C0FCEC2
+	.long	loc_4C0FCEC6
+	.long	loc_4C0FCECA
+	.long	loc_4C0FCECE
+	.long	loc_4C0FCED2
+	.long	loc_4C0FCED6
+	.long	loc_4C0FCEDA
+	.long	loc_4C0FCEDE
+	.long	loc_4C0FCEE2
+	.long	func_4C0FCE92_entry_L55
+	.long	loc_4C0FCEE6
+ptrs_4C223E78:
+	.long	loc_4C0FCF05
+	.long	loc_4C0FCF08
+	.long	loc_4C0FCF0C
+	.long	loc_4C0FCF10
+	.long	loc_4C0FCF14
+	.long	loc_4C0FCF18
+	.long	loc_4C0FCF1C
+	.long	loc_4C0FCF20
+	.long	loc_4C0FCF24
+	.long	loc_4C0FCF28
+	.long	loc_4C0FCF34
+	.long	loc_4C0FCF2C
+	.long	loc_4C0FCF30

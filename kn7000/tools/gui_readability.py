@@ -158,7 +158,8 @@ def main():
             tot = sum(len(b["objects"]) for b in milk_model.Model(
                 rom_path=os.path.join(tree, G.P["rom"]), src_glob=G.code_glob(),
                 sym_paths=[os.path.join(tree, f) for f in G.P["syms"]],
-                label_paths=[os.path.join(tree, G.OUTDIR, "labels.sym")]).blocks.values())
+                label_paths=[os.path.join(tree, G.OUTDIR, "labels.sym"),
+                             os.path.join(tree, G.OUTDIR, "gui_code_ids.inc")]).blocks.values())
         except (Exception, SystemExit) as e:   # noqa: BLE001 -- the reference image may be absent
             print(f"(no object total for {t}: {e})", file=sys.stderr)
         r = census(tree, top, tot, lo, hi, ram)

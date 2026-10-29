@@ -46,7 +46,14 @@ DATA_DIR := src/program/data
 DATA     := --data-src $(DATA_DIR)/data.s:$(DATA_LO):$(DATA_HI)
 # the procedures the MILK function tables name (gen_data_s.py writes it; README.md "Symbols")
 FN_SYM   := $(wildcard $(DATA_DIR)/functions.sym)
+# the MILK ids the data defines, which the code's mov / cmp immediates are spelled with
+IDS      := $(if $(wildcard $(DATA_DIR)/gui_code_ids.inc),--ids $(DATA_DIR)/gui_code_ids.inc)
 DATA_FILES := $(wildcard $(DATA_DIR)/*.s $(DATA_DIR)/*.inc $(DATA_DIR)/media/*) src/constants.inc
+# The bitmap resources are indexed PNGs in $(DATA_DIR)/media/ (gen_data_s.py bitmaps());
+# ../kn7000/tools/table_png.py turns them back into the bytes the data .incbins from build/bitmaps/.
+BITMAP_PNGS := $(wildcard $(DATA_DIR)/media/*.png)
+# the KN7000 includes the typed demo songs use (kn_song.inc, panel_memory.inc ...)
+SHARED_INCS := $(wildcard ../kn7000/src/include/*.inc)
 
 .PHONY: all baserom build verify ported-names symbols program-src data-src data-and-code-src constants gui-map verify-gui-map clean distclean
 .DELETE_ON_ERROR:
@@ -77,7 +84,12 @@ baserom/.dir:
 	@mkdir -p baserom && touch $@
 
 # ---- build ---------------------------------------------------------------------
-build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py baserom/$(ROM)
+build/bitmaps/.stamp: $(BITMAP_PNGS) $(TOOLS)/table_png.py
+	@mkdir -p build/bitmaps
+	$(PYTHON) $(TOOLS)/table_png.py build --out-dir build/bitmaps --src-root $(DATA_DIR)/media $(BITMAP_PNGS)
+	@touch $@
+
+build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(SHARED_INCS) build/bitmaps/.stamp $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py baserom/$(ROM)
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@
 
@@ -99,7 +111,7 @@ symbols $(MODEL).sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) --reflection-tables \
 	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc --labels-inc src/labels.inc \
-	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(DATA) \
+	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(DATA) $(IDS) --decode-gaps \
 	    --title $(TITLE) --title 'Panasonic MN10300, linked at 0x4C000000. See README.md.'
 
 # ---- the data region as typed source (README.md, "The data") ---------------------

@@ -87,7 +87,7 @@ for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E
                         prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
                         labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
                         base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
-                        functions_sym=True)
+                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True)
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 
@@ -98,6 +98,10 @@ def configure(name):
     global RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN, RAMINIT_OFF, RAMINIT_END, RAM_MNBASE
     PROFILE, P = name, PROFILES[name]
     KN7 = os.path.normpath(os.path.join(KN7_DIR, P.get("root", ".")))
+    # kn7000/'s shared includes as a source of the profile's tree names them
+    # (kn7asm has one include base: the tree's own directory)
+    global SHARED
+    SHARED = "" if KN7 == KN7_DIR else os.path.relpath(KN7_DIR, KN7) + "/"
     BASE = P.get("base", 0x48400000)
     MM.configure(base=BASE, sig_size=P.get("sig"), scheme=P.get("scheme", "kn7000"), sigmap=P.get("sigmap", {}))
     ROMQ = f'"{P["rom"]}"'
@@ -166,7 +170,8 @@ class Gen:
     def __init__(self):
         self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=code_glob(),
                           sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
-                          label_paths=[os.path.join(KN7, OUTDIR, "labels.sym")])
+                          label_paths=[os.path.join(KN7, OUTDIR, "labels.sym"),
+                                       os.path.join(KN7, OUTDIR, "gui_code_ids.inc")])
         m = self.m
         self.rom = m.rom
         self.items = {}               # file offset -> Item
@@ -994,7 +999,8 @@ class Gen:
                 tables.append(ws)
         rec_tab = next((t for t in tables if any(z.get(w, b"")[:4] == b"ZZZZ" for w in t)), None)
         for a, out in z.items():
-            if out[:4] == b"ZZZZ" and len(out) % 0x8E0 == 0:
+            # (the SX-KN6000 / KN6500's song record is 0x870 bytes: floppy/tools/kd/kn_sqt.py)
+            if out[:4] == b"ZZZZ" and (len(out) % 0x8E0 == 0 or (P.get("scheme") == "naka" and len(out) % 0x870 == 0)):
                 self.zkind[a] = "record"
             elif out[16:18] == b"@\x12" and is_text(out[:16]):
                 self.zkind[a] = "panel"
@@ -1097,7 +1103,7 @@ class Gen:
         kind = self.zkind[it.start]
         what = {"record": "song record", "events": "event memory", "panel": "panel-memory bank"}[kind]
         return [f"{it.label}:\t# {self.zname.get(it.start, '')}: its {what}, {len(out)} bytes, stored as a zlib "
-                f"stream of {n} bytes (inflated by func_48533758); kn7asm compresses it at level {level} "
+                f"stream of {n} bytes (inflated by {'func_48533758' if P.get('scheme', 'kn7000') == 'kn7000' else 'the program'}); kn7asm compresses it at level {level} "
                 "(Python's zlib reproduces the firmware's stream byte-exactly)",
                 f"\t.zlib\t{level}"] + lines + ["\t.endzlib"]
 
@@ -1148,6 +1154,90 @@ class Gen:
                  lambda g, it, fn=fn, n=n, ext=ext, desc=desc: [
                      f"{it.label}:\t# a {ext.upper()} file, {n} bytes" + (f", {desc}" if desc else ""),
                      f'\t.incbin\t"{OUTDIR}/media/{fn}"'])
+
+    # -- bitmap resources (SX-KN6000 / KN6500) ------------------------------------
+    BITMAP_METHODS = {"MT_GetBitmapData": "data", "MT_GetBitmapWidth": "w", "MT_GetBitmapHeight": "h",
+                      "MT_GetBitmapPalette": "pal", "MT_GetBitCount": "bits"}
+
+    def bitmaps(self):
+        """(`bitmaps` profiles) The bitmap resources: procedures that answer the
+        ResMethod ids MT_GetBitmapData / Width / Height / Palette / GetBitCount
+        (`cmp <id>, d1 / beq L` ... `L: mov <value>, d0`; BitmapKn6000, BitmapNx,
+        UserBitmapCheck ... in the KN6000 v7.1) give each bitmap's pixels, size,
+        depth and palette.  The pixels, rows padded to an even byte count (that
+        is the room every one of them has before the next referenced address),
+        become an indexed PNG in <data dir>/media/ (tools/table_png.py format
+        `pk D W H`), which the build turns back into the bytes; a palette is 16
+        (4-bit) or 256 entries of 0x00BBGGRR, typed."""
+        import table_png as TP
+        ids = {v: k for k, v in self.ev_name.items()}
+        meth = {ids[n]: f for n, f in self.BITMAP_METHODS.items() if n in ids}
+        if len(meth) < 4:
+            return
+        by_name = {n: a for a, n in self.extern.items()}
+        by_name.update(self.prev_data_label)
+        by_name.update({n: a for a, n in self.fixed.items()})
+        by_name.update({n: i for i, n in self.ev_name.items()})
+
+        def val(t):
+            t = t.strip()
+            try:
+                return int(t, 0)
+            except ValueError:
+                b, _, k = t.partition("+")
+                return by_name[b] + int(k or 0) if b in by_name else None
+        import glob
+        found = []
+        for f in sorted(glob.glob(code_glob())):
+            func, body = None, []
+            for line in open(f, encoding="latin-1").read().split("\n") + ["END:"]:
+                mo = re.match(r"^([A-Za-z_]\w*):", line)
+                if mo and not re.search(r"_L[0-9a-f]+_*$|_entry$", mo.group(1)):
+                    if func and len(body) < 400:
+                        txt = "\n".join(body)
+                        r = {}
+                        for c, lab in re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt):
+                            k = meth.get(val(c))
+                            m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
+                            if k and m2:
+                                r[k] = val(m2.group(1)) if m2.group(1) else 0
+                        if r.get("data") and r.get("w") and r.get("h") and r.get("bits") in (1, 2, 4, 8):
+                            found.append((func, r))
+                    func, body = mo.group(1), []
+                body.append(line)
+        pal_of = {}
+        for func, r in found:
+            a, w, h, depth = r["data"], r["w"], r["h"], r["bits"]
+            n = TP.pk_stride(depth, w) * h
+            if not self.in_data(a) or not self.free(a, n):
+                print(f"gen_data_s: bitmap of {func} at {a:#x} ({n} bytes) not free; not typed")
+                continue
+            base = func if func.startswith("Bitmap") else "Bitmap_" + re.sub(r"^func_", "", func)
+            lab = self.name_at(a, f"{base}_Pixels")
+            pal = None
+            p = r.get("pal")
+            if p and self.in_data(p) and depth <= 8:
+                np_ = 1 << depth
+                if p in pal_of or self.free(p, 4 * np_):
+                    vals = [self.m.u32(p + 4 * i) for i in range(np_)]
+                    pal = [(v & 0xFF, (v >> 8) & 0xFF, (v >> 16) & 0xFF) for v in vals]
+                    if p not in pal_of:
+                        pal_of[p] = vals
+                        self.add(p, 4 * np_, self.name_at(p, f"{base}_Palette"), "palette",
+                                 lambda g, it, vals=vals, func=func: [
+                                     f"{it.label}:\t# {len(vals)} colours, 0x00BBGGRR ({func}: MT_GetBitmapPalette)"]
+                                 + [f"\t.long\t" + ", ".join(f"0x{v:08X}" for v in vals[i:i + 8]) for i in range(0, len(vals), 8)])
+            fmt = f"pk {depth} {w} {h}"
+            fn = f"{lab}.png"
+            raw = self.rom[self.off(a):self.off(a) + n]
+            png = TP.to_png(fmt, raw, pal)
+            self.media_files[fn] = png
+            self.add(a, n, lab, "bitmap",
+                     lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth: [
+                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel, rows padded to even bytes: the bitmap"
+                         f" {func} answers MT_GetBitmapData with ({OUTDIR}/media/{fn})",
+                         f'\t.incbin\t"build/bitmaps/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f"../kn7000/tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
     # -- text, doubles and name / value tables in what is left -------------------
     def name_value_tables(self):
@@ -1211,11 +1301,23 @@ class Gen:
             bs = rom[o:e - 1]
             if not is_text(bs) or sum(1 for c in bs if 0x41 <= c <= 0x7A) < 3:
                 continue
+            if P.get("text_strict") and self.fake_text(bs):
+                continue
             if o > R1_END and rom[o - 1] not in (0x00, 0xFF) and not self.claimed[o - 1]:
                 continue
             a = self.addr_of(o)
             if self.free(a, e - o) and not self.pointerish(o, e - 1):
                 self.str_item(a, "Str_" + (sanitize(bs.decode("latin-1"), 40) or "text"), "text")
+
+    @staticmethod
+    def fake_text(bs):
+        """(`text_strict` profiles) A short printable run that is most likely pixels or
+        packed numbers, not text: under 8 characters with no vowel ("HPPd", "N QZ"), or
+        a letter three times in a row in a run under 12 ("PPP@", "wwww1").  Such runs in
+        the SX-KN6000's bitmaps and tables would otherwise become Str_ labels."""
+        if len(bs) < 8 and not re.search(rb"[AEIOUaeiou]", bs):
+            return True
+        return len(bs) < 12 and re.search(rb"([A-Za-z])\1\1", bs) is not None
 
     def doubles(self):
         """Runs (>= 4) of 8-aligned IEEE-754 doubles of plausible magnitude
@@ -1326,9 +1428,9 @@ class Gen:
             "# tools/milk_model.py for what each structure is and the firmware code that reads it.",
             "",
             '.include "src/constants.inc"',
-            '.include "src/include/kn_song.inc"',
-            '.include "src/include/panel_memory.inc"',
-            '.include "src/include/kn_panel_extra.inc"',
+            f'.include "{SHARED}src/include/kn_song.inc"',
+            f'.include "{SHARED}src/include/panel_memory.inc"',
+            f'.include "{SHARED}src/include/kn_panel_extra.inc"',
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
@@ -1378,12 +1480,40 @@ class Gen:
             if (i >> 16) in (5, 6):
                 ev.append(f".equ {n}, 0x{i:08X}")
         self.write(os.path.join(outdir, "gui_event_ids.inc"), hdr + ev)
+        if P.get("code_ids"):
+            self.write(os.path.join(outdir, "gui_code_ids.inc"), hdr + self.code_ids_inc())
         # stale parts
         for fn in os.listdir(os.path.join(KN7, outdir)):
             mo = re.fullmatch(r"data_(\d\d)\.s", fn)
             if mo and int(mo.group(1)) >= len(parts):
                 os.remove(os.path.join(KN7, outdir, fn))
         return len(parts)
+
+    def code_ids_inc(self):
+        """(`code_ids` profiles) Every MILK id the data names, as .equ lines for the code
+        generator (gen_image_s.py --ids): event and method ids (EV_ / MT_, all ResEvent /
+        ResMethod tables), function ids (FN_), title and mode ids (TT_ / MD_), class ids
+        (CLASS_) and the ids of the objects of Viewable tables 1..0xFF (<object>_id; table
+        0's ids are below 0x10000 and could be any number).  The data computes the same
+        values from its tables (IDNAME, CLASS, OBJ); the code's `mov` / `cmp` immediates
+        that equal one are spelled with its name."""
+        out = ["# The MILK ids the typed data defines, GENERATED by tools/gen_data_s.py for the code",
+               "# (tools/gen_image_s.py --ids): id = (registry slot << 16) | index.  The data's IDNAME /",
+               "# CLASS / OBJ macros and gui_ids.inc define the same names with the same values.", ""]
+        seen = {}
+        groups = [("events and methods", self.ev_name), ("functions", self.fn_name),
+                  ("titles and modes", {i: n for i, n in self.id_name.items()}),
+                  ("classes", self.cls_id),
+                  ("objects", {i: n + "_id" for i, n in self.obj_by_id.items() if i >> 16})]
+        for title, d in groups:
+            out.append(f"# {title}")
+            for i, n in sorted(d.items()):
+                if i < 0x10000 or i in seen:
+                    continue
+                seen[i] = n
+                out.append(f".equ {n}, 0x{i:08X}")
+            out.append("")
+        return out
 
     def write_functions_sym(self, rel):
         """(`functions_sym` profiles) The procedures the MILK Function / ApFunction /
@@ -1502,6 +1632,8 @@ class Gen:
             self.palette()
         self.rhythm()
         self.media()
+        if P.get("bitmaps"):
+            self.bitmaps()
         self.code_refs()
         self.typed_refs()
         self.name_value_tables()

@@ -8,3 +8,6 @@
 ;
 ; ---- start-up ----------------------------------------------------------------
 0x4C0002E3  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5000778C, clears 0x50006F8C (+0xCCCE4) and 0x50200000 (+0xB8000), copies .data 0x4C3ED870 -> 0x50000010 (0x6F7C bytes), writes the jmp vectors at 0x90000000
+;
+; ---- data ---------------------------------------------------------------------
+0x4C359AC0  TechnicsRhythmsResource    ; the built-in "Technics Rhythms" style resource (IC18's format, one style " 8 Beat 1"): the fallback the style module stores to data_50005900 when the table ROM's resource does not check (KN6000 v7.1: func_4C0557E9); typed by ../kn7000/tools/program_rhythm.py
