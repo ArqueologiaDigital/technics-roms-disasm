@@ -8,3 +8,8 @@
 ;
 ; ---- start-up ----------------------------------------------------------------
 0x4C0002E3  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5000778C, clears 0x50006F8C (+0xCCCE4) and 0x50200000 (+0xB8000), copies .data 0x4C3ED870 -> 0x50000010 (0x6F7C bytes), writes the jmp vectors at 0x90000000
+;
+; ---- data ---------------------------------------------------------------------
+0x4C359AC0  TechnicsRhythmsResource    ; the built-in "Technics Rhythms" style resource (IC18's format, one style " 8 Beat 1"): the fallback the style module stores to data_50005900 when the table ROM's resource does not check (KN6000 v7.1: func_4C0557E9); typed by ../kn7000/tools/program_rhythm.py
+0x4C3E5FD4  ToneRecordDirectory        ; the built-in tone / voice records, one u32 pointer per record index: func_4C07C26A reads it (`mov ToneRecordDirectory, a0 / asl2 d0 / mov (d0, a0), a0`) when func_4C07CF02 does not answer 1 (otherwise the archive loaded in RAM, 0x50033BF8); typed by ../kn7000/tools/gen_data_s.py tones()
+0x4C32BE24  FactoryPanelMemory         ; the factory PANEL MEMORY banks (13 x 8 memories, the .PMT bank layout): func_4C03D431 copies the .PMT header and 0x2D8D0 bytes from here to the backup RAM 0x840007C2 / 0x840007D2; typed by ../kn7000/tools/gen_data_s.py panel_banks()

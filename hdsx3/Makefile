@@ -36,9 +36,22 @@ CODE     := --code 0x80:0x3ded6
 SYMRANGE := --code-range 0x80:0x3ded6
 # The XAPR header: the signature, then the entry vectors; and the second XAPR
 # signature, at the end of the image, which header word +0x04 points at.
-TYPED    := --text 0x0:0x4 --long-table 0x4:0x80 --text 0xb655c:0xb6560 --reflection-tables
+TYPED    := --decode-gaps --text 0x0:0x4 --long-table 0x4:0x80 --text 0xb655c:0xb6560 --fill 0xb6560:0xc0000 \
+            --reflection-tables
+# The data region (file 0x3ded6..0xb655c) is typed source, src/program/data/, generated
+# by ../kn7000/tools/gen_data_s.py --profile hdsx3 (make data-src): the plug-in's own
+# MILK classes and widget records (on the SX-KN6000's classes, read from ../kn6000),
+# its function / event / method tables, strings and pictures.  Its labels.sym names the
+# code's data addresses; data-and-code-src runs both generators to a fixpoint.
+DATA_LO  := 0x3ded6
+DATA_HI  := 0xb655c
+DATA_DIR := src/program/data
+DATA     := --data-src $(DATA_DIR)/data.s:$(DATA_LO):$(DATA_HI)
+FN_SYM   := $(wildcard $(DATA_DIR)/functions.sym)
+DATA_FILES := $(wildcard $(DATA_DIR)/*.s $(DATA_DIR)/*.inc $(DATA_DIR)/media/*) ../kn6000/src/constants.inc
 
 .PHONY: all baserom build verify ported-names symbols program-src clean distclean
+.PHONY: data-src data-and-code-src gui-map verify-gui-map
 .DELETE_ON_ERROR:
 
 all: verify
@@ -59,7 +72,8 @@ baserom/.dir:
 	@mkdir -p baserom && touch $@
 
 # ---- build ---------------------------------------------------------------------
-build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py baserom/$(ROM)
+build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py \
+              baserom/$(ROM)
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@
 
@@ -78,11 +92,26 @@ symbols $(MODEL).sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
-	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) $(TYPED) \
-	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym --inc src/symbols.inc --labels-inc src/labels.inc \
+	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) $(TYPED) $(DATA) \
+	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc \
+	    --labels-inc src/labels.inc \
 	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt \
 	    --title 'KN6000/KN6500 expansion-board XAPR plug-in (sx6-113 update, EXTAPR.SLD) - byte-exact.' \
 	    --title 'Panasonic MN10300, linked at 0x97800000. See README.md.'
+
+# ---- the typed data region (../kn7000/tools/gen_data_s.py) ------------------------
+# It reads the SX-KN6000's model (../kn6000: its reference image, make -C ../kn6000
+# baserom, and its source), whose classes the plug-in's records use.
+data-src: $(TOOLS)/gen_data_s.py $(TOOLS)/milk_model.py baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/gen_data_s.py --profile $(MODEL)
+data-and-code-src: baserom/$(ROM)
+	$(TOOLS)/regen_sibling_data_and_code.sh $(MODEL) "$(MAKE) program-src UNIDASM=$(UNIDASM)"
+
+# The menu map, generated from the data region's source (../kn7000/tools/gui_menu_map.py).
+gui-map:
+	$(PYTHON) $(TOOLS)/gui_menu_map.py --profile $(MODEL)
+verify-gui-map:
+	@$(PYTHON) $(TOOLS)/gui_menu_map.py --profile $(MODEL) --check
 
 # ---- names carried over from the KN7000 where a routine is the same code ---------
 # port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)

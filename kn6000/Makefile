@@ -38,8 +38,24 @@ ROM_SHA1 := fa4cdb0618c18cdd549f067a388cabe3ecb8f9d4
 CODE     := --code 0x0:0x10 --code 0x80:0x176037 --code 0x3f47ec:0x3f77e7
 SYMRANGE := --code-range 0x0:0x10 --code-range 0x80:0x176037 --code-range 0x3f47ec:0x3f77e7
 TITLE    := 'Technics SX-KN6000 program flash image (update v7.1) - byte-exact.'
+# The data region between the application's code and the MILK kernel, typed by
+# ../kn7000/tools/gen_data_s.py --profile kn6000 (src/program/data/, README.md "The data").
+DATA_LO  := 0x176037
+DATA_HI  := 0x3f47ec
+DATA_DIR := src/program/data
+DATA     := --data-src $(DATA_DIR)/data.s:$(DATA_LO):$(DATA_HI)
+# the procedures the MILK function tables name (gen_data_s.py writes it; README.md "Symbols")
+FN_SYM   := $(wildcard $(DATA_DIR)/functions.sym)
+# the MILK ids the data defines, which the code's mov / cmp immediates are spelled with
+IDS      := $(if $(wildcard $(DATA_DIR)/gui_code_ids.inc),--ids $(DATA_DIR)/gui_code_ids.inc)
+DATA_FILES := $(wildcard $(DATA_DIR)/*.s $(DATA_DIR)/*.inc $(DATA_DIR)/media/*) src/constants.inc
+# The bitmap resources are indexed PNGs in $(DATA_DIR)/media/ (gen_data_s.py bitmaps());
+# ../kn7000/tools/table_png.py turns them back into the bytes the data .incbins from build/bitmaps/.
+BITMAP_PNGS := $(wildcard $(DATA_DIR)/media/*.png)
+# the KN7000 includes the typed demo songs use (kn_song.inc, panel_memory.inc ...)
+SHARED_INCS := $(wildcard ../kn7000/src/include/*.inc)
 
-.PHONY: all baserom build verify ported-names symbols program-src clean distclean
+.PHONY: all baserom build verify ported-names symbols program-src data-src data-and-code-src constants gui-map verify-gui-map clean distclean
 .DELETE_ON_ERROR:
 
 all: verify
@@ -68,7 +84,12 @@ baserom/.dir:
 	@mkdir -p baserom && touch $@
 
 # ---- build ---------------------------------------------------------------------
-build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py baserom/$(ROM)
+build/bitmaps/.stamp: $(BITMAP_PNGS) $(TOOLS)/table_png.py
+	@mkdir -p build/bitmaps
+	$(PYTHON) $(TOOLS)/table_png.py build --out-dir build/bitmaps --src-root $(DATA_DIR)/media $(BITMAP_PNGS)
+	@touch $@
+
+build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(SHARED_INCS) build/bitmaps/.stamp $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py baserom/$(ROM)
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@
 
@@ -89,9 +110,30 @@ symbols $(MODEL).sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) --reflection-tables \
-	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym --inc src/symbols.inc --labels-inc src/labels.inc \
-	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt \
+	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc --labels-inc src/labels.inc \
+	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(DATA) $(IDS) --decode-gaps \
 	    --title $(TITLE) --title 'Panasonic MN10300, linked at 0x4C000000. See README.md.'
+
+# ---- the data region as typed source (README.md, "The data") ---------------------
+# gen_data_s.py reads the converted code (the MILK registrations, the data addresses it
+# names) and writes $(DATA_DIR)/; gen_image_s.py names the code's data addresses with
+# its labels.sym.  data-and-code-src runs the two alternately until labels.sym stops
+# changing (../kn7000/tools/regen_sibling_data_and_code.sh).  The committed files are
+# the result; the build does not need this.
+constants src/constants.inc: $(TOOLS)/gen_constants.py baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/gen_constants.py baserom/$(ROM) --base $(BASE) --scan 0x180000:0x1a0000 \
+	    --model SX-KN6000 --inc src/constants.inc
+data-src: $(TOOLS)/gen_data_s.py $(TOOLS)/milk_model.py src/constants.inc baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/gen_data_s.py --profile $(MODEL)
+data-and-code-src: src/constants.inc baserom/$(ROM)
+	$(TOOLS)/regen_sibling_data_and_code.sh $(MODEL) "$(MAKE) program-src UNIDASM=$(UNIDASM)"
+
+# The GUI menu map (notes/gui-menu-map.md), generated from the typed data region's
+# source by ../kn7000/tools/gui_menu_map.py; verify-gui-map fails when it is stale.
+gui-map:
+	$(PYTHON) $(TOOLS)/gui_menu_map.py --profile $(MODEL)
+verify-gui-map:
+	@$(PYTHON) $(TOOLS)/gui_menu_map.py --profile $(MODEL) --check
 
 # ---- names carried over from the KN7000 where a routine is the same code ---------
 # port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)

@@ -74,24 +74,82 @@ PROFILES = {
                          "kn7000_sp7001_exports.sym"],
                    labels="build/kn7000_program_sp7001.labels", r1=0x1864F4, pal=0x326760, end=0x3BA785),
 }
+# The SX-KN6000 (v7.1) and SX-KN6500 (v1.3) program flash images, the same MILK
+# framework linked at 0x4C000000 (../kn6000, ../kn6500).  Their extra keys: `root`,
+# the tree the paths are relative to (default kn7000/); `code`, the converted code
+# (default <src>/*.s: there, gen_image_s.py's single src/program.s); `base`, the link
+# base; `scheme`, the registry layout (milk_model.SCHEMES: "naka", 0x20 slots per
+# kind); `sigmap`, its propdata type characters in the KN7000's alphabet
+# (milk_model.SIGMAP_NAKA: with it selfsize and allsize agree for all 449 / 451
+# classes, milk_model --check); `labels` may be .equ includes.  `pal` None: no palette.
+for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E44C)):
+    PROFILES[_m] = dict(root=f"../{_m}", rom=f"baserom/{_m}_program.rom", src="src/program", code="src/program.s",
+                        prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
+                        labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
+                        base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
+                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True)
+# The SX-KN2400 / SX-KN2600 (program v1.1): the KN7000's registry layout (16 slots
+# per block) and alphabet; data first in the image (file 0x0F, after the boot
+# vectors, to the MILK kernel's code at 0x1E427C).
+PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", src="src/program",
+                          code="src/program.s", prog="src/program.s",
+                          syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
+                          labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
+                          model="KN2400", functions_sym=True,
+                          # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
+                          # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
+                          inflate="func_486D4A2A")
+# The KN6000 / KN6500 expansion board's XAPR plug-in (sx6-113, the HD-SX6's; folder
+# hdsx3): code first, then its data, then erased flash.  It runs on the SX-KN6000:
+# its records use the KN6000's classes (`host`) and its own (registry slot 0x168), it
+# calls the KN6000's routines through the host's Function table (milk_model
+# HOST_CALLS), and its initialised RAM is copied from 0x978B3E84 to 0x97910000
+# (0x26D8 bytes, func_97800082, the XAPR header's first code vector's loop).
+PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="src/program",
+                         code="src/program.s", prog="src/program.s",
+                         syms=["hdsx3.sym", "hdsx3_manual.sym", "hdsx3_ported.sym"],
+                         labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
+                         base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
+                         functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
+                         raminit=(0x978B3E84, 0x97910000, 0x26D8))
 PROFILE = "941"
+KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 
 
 def configure(name):
     """Bind the module's layout constants to program build `name`."""
-    global PROFILE, P, ROMQ, R1_END, PALETTE, DATA_END, OUTDIR
+    global PROFILE, P, ROMQ, R1_END, PALETTE, DATA_END, OUTDIR, KN7, BASE
     global RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN, RAMINIT_OFF, RAMINIT_END, RAM_MNBASE
     PROFILE, P = name, PROFILES[name]
+    KN7 = os.path.normpath(os.path.join(KN7_DIR, P.get("root", ".")))
+    # kn7000/'s shared includes as a source of the profile's tree names them
+    # (kn7asm has one include base: the tree's own directory)
+    global SHARED
+    SHARED = "" if KN7 == KN7_DIR else os.path.relpath(KN7_DIR, KN7) + "/"
+    BASE = P.get("base", 0x48400000)
+    MM.configure(base=BASE, sig_size=P.get("sig"), scheme=P.get("scheme", "kn7000"), sigmap=P.get("sigmap", {}),
+                 host_calls={})
     ROMQ = f'"{P["rom"]}"'
     R1_END = P["r1"]             # end of code region 1 (file offset)
     PALETTE = P["pal"]           # display palette, 512 x u32
     DATA_END = P["end"]          # the library image starts here (gen_program_s LIB_FILE_BASE)
     OUTDIR = P["src"] + "/data"
-    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = MM.find_raminit(os.path.join(KN7, P["src"], "*.s"))
+    RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = P.get("raminit") or MM.find_raminit(code_glob())
     MM.RAMINIT_ROM, MM.RAMINIT_RAM, MM.RAMINIT_LEN = RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN
     RAMINIT_OFF = RAMINIT_ROM - BASE
     RAMINIT_END = RAMINIT_OFF + RAMINIT_LEN
     RAM_MNBASE = RAMINIT_RAM - RAMINIT_OFF   # .mnbase that makes the image's labels RAM addresses
+
+
+def code_glob():
+    """The converted code of the profile's build (a glob)."""
+    return os.path.join(KN7, P.get("code", P["src"] + "/*.s"))
+
+
+def sym_addr(name, default=None):
+    """`0xADDR` of a routine of this build, by its name, for the comments."""
+    a = MM.read_syms([os.path.join(KN7, f) for f in P["syms"]])[1].get(name)
+    return f"0x{a:08X}" if a is not None else (default or "?")
 
 
 def sanitize(text, maxlen=40):
@@ -133,10 +191,43 @@ class Item:
         self.comment = None
 
 
+def host_model(name):
+    """(the Model of host profile `name`, {offset: routine name} of its Function
+    table at registry slot 0x100, which a plug-in calls through); the module is
+    bound to the current profile again afterwards."""
+    cur = PROFILE
+    configure(name)
+    hm = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=code_glob(),
+                  sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
+                  label_paths=[os.path.join(KN7, OUTDIR, "labels.sym")])
+    r = hm.by_slot[0x100]
+    calls = {}
+    for i in range(r["count"]):
+        a = hm.u32(r["table"] + 4 * i)
+        calls[4 * i] = hm.sym_by_addr.get(a) or f"func_{a:08X}"
+    # the host's title, mode and function ids, by name (read while it is configured)
+    ids = {i: sanitize(nm or f"ID_{i:X}", 60) for d in (hm.titles, hm.modes) for i, (nm, _a, _c) in d.items()}
+    for slot, r in hm.by_slot.items():
+        nr = hm.by_slot.get(MM.names_slot(slot))
+        if r.get("kind") not in ("Function", "ApFunction", "MainFunction") or not nr:
+            continue
+        for i in range(min(r["count"], nr["count"])):
+            nm = hm.cstr(hm.u32(nr["table"] + 4 * i))
+            if nm:
+                ids.setdefault((slot << 16) | i, "FN_" + sanitize(nm, 60))
+    hm.id_names = ids
+    configure(cur)
+    return hm, calls
+
+
 class Gen:
     def __init__(self):
-        self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=os.path.join(KN7, P["src"], "*.s"),
-                          sym_paths=[os.path.join(KN7, f) for f in P["syms"]])
+        self.host, self.host_calls = (host_model(P["host"]) if P.get("host") else (None, {}))
+        MM.HOST_CALLS = dict(self.host_calls)
+        self.m = MM.Model(rom_path=os.path.join(KN7, P["rom"]), src_glob=code_glob(),
+                          sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
+                          label_paths=[os.path.join(KN7, OUTDIR, "labels.sym"),
+                                       os.path.join(KN7, OUTDIR, "gui_code_ids.inc")], host=self.host)
         m = self.m
         self.rom = m.rom
         self.items = {}               # file offset -> Item
@@ -148,16 +239,33 @@ class Gen:
         self._load_names()
         self.refs = set()             # CPU addresses referred to (need a label)
         self.code_targets = set()     # code addresses the typed data names loc_<ADDR>
+        self.host_ids, self.host_used = self.host_id_names(), set()
+
+    def host_id_names(self):
+        """(a plug-in) {id: name} of the host firmware's titles, modes and Function /
+        ApFunction / MainFunction entries (its records name host titles in `exit`
+        and host functions in `func` / `main_func`); gui_ids.inc equates those used."""
+        if self.host is None:
+            return {}
+        return {i: (n if n not in self.names else n + "_HOST") for i, n in self.host.id_names.items()}
 
     # -- names ---------------------------------------------------------------
     def _load_names(self):
         m = self.m
-        lab = os.path.join(KN7, P["labels"])
-        if not os.path.exists(lab):
-            sys.exit(f"gen_data_s: {P['labels']} missing: build this program first")
+        labs = P["labels"] if isinstance(P["labels"], list) else [P["labels"]]
+        pairs = []
+        for lf in labs:
+            lab = os.path.join(KN7, lf)
+            if not os.path.exists(lab):
+                sys.exit(f"gen_data_s: {lf} missing: build this program first")
+            for line in open(lab):
+                mo = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
+                if mo:
+                    pairs.append((mo.group(1), mo.group(2)))
+                elif not lf.endswith(".inc") and line.strip():
+                    pairs.append(tuple(line.split()))
         self.prev_data_label = {}       # name -> address of the previous build's data labels
-        for line in open(lab):
-            n, v = line.split()
+        for n, v in pairs:
             a = int(v, 16)
             if self.in_data(a):
                 self.prev_data_label[n] = a
@@ -185,7 +293,7 @@ class Gen:
         import glob
         nx = re.compile(r"\b([A-Za-z_]\w*)\b")
         self.code_names = set()
-        for f in glob.glob(os.path.join(KN7, P["src"], "*.s")):
+        for f in glob.glob(code_glob()):
             for line in open(f, encoding="latin-1"):
                 self.code_names.update(nx.findall(line.split("#", 1)[0]))
         for n, a in self.prev_data_label.items():
@@ -197,12 +305,12 @@ class Gen:
             if mo and self.in_data(int(mo.group(2), 16)):
                 self.fixed.setdefault(int(mo.group(2), 16), mo.group(1))
                 self.names.add(mo.group(1))
-        for line in open(os.path.join(KN7, "src", "constants.inc")):
+        for line in open(os.path.join(KN7, P.get("constants", "src/constants.inc"))):
             mo = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
             if mo:
                 self.names.add(mo.group(1))
         self.const = collections.defaultdict(dict)    # prefix -> value -> name
-        for line in open(os.path.join(KN7, "src", "constants.inc")):
+        for line in open(os.path.join(KN7, P.get("constants", "src/constants.inc"))):
             mo = re.match(r"\.equ\s+(([A-Z]+)_\w+),\s*(0x[0-9A-Fa-f]+)", line)
             if mo:
                 self.const[mo.group(2)].setdefault(int(mo.group(3), 16), mo.group(1))
@@ -314,8 +422,10 @@ class Gen:
         self.blockname = {}
         for bid, (nm, _a, _c) in m.otblocks.items():
             self.blockname[(bid & 0xFFFF) * 16] = nm[4:] if nm and nm.startswith("OTB_") else f"BLK{bid & 0xFFFF:02d}"
+        if MM.SCHEME == "naka":
+            self.naka_block_names()
         for slot in m.by_slot:
-            self.blockname.setdefault(slot & ~0xF, f"BLK{slot >> 4:02d}")
+            self.blockname.setdefault(MM.block_key(slot), f"BLK{slot >> 4:02d}")
         self.class_names()
         self.gui_ids()
         self.gui_class_tables()
@@ -324,7 +434,31 @@ class Gen:
         self.gui_objects()
 
     def bname(self, slot):
-        return self.blockname[slot & ~0xF]
+        return self.blockname[MM.block_key(slot)]
+
+    def naka_block_names(self):
+        """NAKA scheme: a module's tables (0x1000 | N) are named after the routine
+        that registers them (InitializeUser07 -> User07); a Viewable table V after
+        its first root object's ResName (V_<name>), else V<V>."""
+        m = self.m
+        for slot, r in sorted(m.by_slot.items()):
+            k = MM.block_key(slot)
+            if k & 0x1000 and k not in self.blockname:
+                fn = re.sub(r"_entry.*$", "", r["func"] or "")
+                self.blockname[k] = fn[len("Initialize"):] if fn.startswith("Initialize") else f"Module{k & 0x1F:02d}"
+        taken = set()
+        for slot, r in sorted(m.by_slot.items()):
+            if r["kind"] != "Viewable" or slot in self.blockname:
+                continue
+            nr = m.by_slot.get(MM.names_slot(slot))
+            nm = None
+            if nr and nr["count"]:
+                nm = m.cstr(m.u32(nr["table"]))
+            n = f"V_{sanitize(nm, 40)}" if nm and sanitize(nm) else f"V{slot:02X}"
+            if n in taken:
+                n = f"{n}_{slot:02X}"
+            taken.add(n)
+            self.blockname[slot] = n
 
     @staticmethod
     def cid_value(cid):
@@ -386,7 +520,7 @@ class Gen:
 
             def render(g, it, ks=ks, slot=slot, tlabel=tlabel):
                 out = [f"# {len(ks)} classes; a class id is ({slot:#x} << 16) | its index here (ClassProc"
-                       " 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)",
+                       f" {sym_addr('ClassProc', '0x4842A802')} reads entry id & 0xFFFF, 0x18 bytes each)",
                        f".equ {tlabel}_SLOT, {slot:#x}"]
                 out.append(f"{it.label}:")
                 for k in ks:
@@ -394,7 +528,7 @@ class Gen:
                     out.append(f"\tCLASS\t{g.cls_label[k.id]}, {g.cls_id[k.id]}, {tlabel}, proc={g.ref(k.proc)}, "
                                f"parent={par}, allsize={k.allsize}, selfsize={k.selfsize}, "
                                f"cname={g.ref(k.name_ptr)}, sig={g.ref(k.propdata_ptr)}, fields={g.ref(k.propname_ptr)}"
-                               + (f"\t# {''.join(f'{n}:{c} ' for c, n in zip(k.propdata, k.propnames)).strip()}"
+                               + (f"\t# {''.join(f'{n}:{c} ' for c, n in zip(k.propdata_raw, k.propnames)).strip()}"
                                   if k.propdata else ""))
                 return out
             self.add(r["table"], 24 * r["count"], tlabel, "class table", render, slot)
@@ -407,7 +541,7 @@ class Gen:
         m = self.m
         self.ev_name = {}
         for slot, r in sorted(m.by_slot.items()):
-            if r["kind"] not in ("Event", "Method"):
+            if r["kind"] not in ("Event", "Method", "ResEvent", "ResMethod"):
                 continue
             bn = self.bname(slot)
             tab = self.name_at(r["table"], f"{bn}_{r['kind']}s")
@@ -433,10 +567,11 @@ class Gen:
     def gui_function_tables(self):
         m = self.m
         self.fn_name = {}
+        self.fn_code = {}             # code address -> the name its Function table gives it
         for slot, r in sorted(m.by_slot.items()):
-            if r["kind"] not in ("Function", "ApFunction", "MainFunction") or slot % 16 not in (1, 2, 3):
+            if r["kind"] not in ("Function", "ApFunction", "MainFunction") or not MM.is_fn_table(slot):
                 continue
-            nr = m.by_slot.get(slot + 8)
+            nr = m.by_slot.get(MM.names_slot(slot))
             bn = self.bname(slot)
             tab = self.name_at(r["table"], f"{bn}_{r['kind']}s")
             ents = []
@@ -446,13 +581,15 @@ class Gen:
                 s = m.cstr(np_) if np_ else None
                 idn = self.uniq("FN_" + sanitize(s or f"{bn}_{r['kind']}_{i}", 60))
                 self.fn_name[(slot << 16) | i] = idn
+                if s and code:
+                    self.fn_code.setdefault(code, s)
                 if np_:
                     self.str_item(np_, "FnName_" + sanitize(s or "", 60), "function name")
                 ents.append((idn, code, np_, s))
 
             def render(g, it, ents=ents, slot=slot, kind=r["kind"]):
                 out = [f"# {len(ents)} {kind} procedures; a function id is ({slot:#x} << 16) | its index"
-                       f" (the names are the parallel table at slot {slot + 8:#x})", f"{it.label}:"]
+                       f" (the names are the parallel table at slot {MM.names_slot(slot):#x})", f"{it.label}:"]
                 for idn, code, _np, s in ents:
                     out.append(f"\tIDNAME\t{idn}, {g.ref(code)}, {it.label}, {slot:#x}")
                 return out
@@ -557,6 +694,8 @@ class Gen:
                 self.obj_depth[(slot, i)] = d
         for slot, b in sorted(m.blocks.items()):
             objs = b["objects"]
+            if not objs:            # an empty table (KN6000: `clr d0` count): the code's label only
+                continue
             bn = self.bname(slot)
             vt, rn = b["viewable"], b["resname"]
             tlabel = self.name_at(vt["table"], f"{bn}_Viewables")
@@ -588,7 +727,7 @@ class Gen:
         for slot, b in sorted(m.blocks.items()):
             for i, o in enumerate(b["objects"]):
                 for f in m.layout[o.klass.id]:
-                    v = o.values[f.name]
+                    v = o.fvalues[f.off]
                     if f.sig == "X" and v and m.inrom(v):
                         s = m.cstr(v)
                         self.str_item(v, "Str_" + (sanitize(s, 40) or "empty"), "widget text", slot)
@@ -606,8 +745,8 @@ class Gen:
         comments = []
         objs = m.blocks[slot]["objects"]
         for f in self.macro_fields(k.id):
-            v = o.values[f.name]
-            p = self.param[k.id][f.name]
+            v = o.fvalues[f.off]
+            p = self.param[k.id][f.off]
             if f.name in ("super", "sub", "next", "prev") and f.sig == "[":
                 if v != NONE16:
                     args.append(f"{p}={self.obj_label[(slot, v)]}")
@@ -617,7 +756,8 @@ class Gen:
             if f.sig == "P":
                 b = m.bytes_at(o.addr + f.off, 8)
                 x1, y1, x2, y2 = (int.from_bytes(b[j:j + 2], "little", signed=True) for j in (0, 2, 4, 6))
-                args.append(f"X={x1}, Y={y1}, W={x2 - x1 + 1}, H={y2 - y1 + 1}")
+                q = self.rect_prefix[k.id][f.off]
+                args.append(f"{q}X={x1}, {q}Y={y1}, {q}W={x2 - x1 + 1}, {q}H={y2 - y1 + 1}")
                 continue
             if v == 0 and f.sig not in ("]", "e"):
                 continue
@@ -655,6 +795,9 @@ class Gen:
                 return self.obj_by_id[v] + "_id"
             if v in self.fn_name:
                 return self.fn_name[v]
+            if v in self.host_ids:
+                self.host_used.add(v)
+                return self.host_ids[v]
             return f"0x{v:X}"
         if f.size == 4 and v >= 0x80000000:
             return f"0x{v:X}"
@@ -684,7 +827,7 @@ class Gen:
         """One macro per class used by a record: its parameters are the class
         chain's field names, its body the record's bytes in field order."""
         m = self.m
-        self.macro, self.param = {}, {}
+        self.macro, self.param, self.rect_prefix = {}, {}, {}
         used = set()
         for b in m.blocks.values():
             for o in b["objects"]:
@@ -697,20 +840,24 @@ class Gen:
                 mname = "W_" + mname
             self.macro[cid] = mname
             fields = m.layout[cid]
-            pnames, params, seen = {}, [], set()
+            # parameters per field (by offset: a subclass may declare a field name
+            # again); the first rect is X / Y / W / H, a further one <field>_X ...
+            pnames, params, seen, rp = {}, [], set(), {}
             for f in fields:
                 pn = sanitize(f.name) or "f"
                 if pn in self.RESERVED or pn in seen:
                     pn = f"{pn}_{f.cls.name}" if f"{pn}_{f.cls.name}" not in seen else f"{pn}_{f.off}"
                     pn = sanitize(pn)
                 seen.add(pn)
-                pnames[f.name] = pn
-            self.param[cid] = pnames
+                pnames[f.off] = pn
+                if f.sig == "P":
+                    rp[f.off] = "" if not rp else f"{pn}_"
+            self.param[cid], self.rect_prefix[cid] = pnames, rp
             plist = ["this"]
             body = ["\\this\\():"]
             off = 0
             for f in fields:
-                pn = pnames[f.name]
+                pn = pnames[f.off]
                 if f.off > off:
                     body.append(f"\t.space\t{f.off - off}")
                 off = f.off + f.size
@@ -720,8 +867,9 @@ class Gen:
                     plist.append(f"{pn}=NONE")
                     body.append(f"\t.word\t\\{pn}\\()_ix")
                 elif f.sig == "P":
-                    plist += ["X=0", "Y=0", "W=0", "H=0"]
-                    body.append("\t.word\t\\X, \\Y, \\X + \\W - 1, \\Y + \\H - 1")
+                    q = rp[f.off]
+                    plist += [f"{q}X=0", f"{q}Y=0", f"{q}W=0", f"{q}H=0"]
+                    body.append(f"\t.word\t\\{q}X, \\{q}Y, \\{q}X + \\{q}W - 1, \\{q}Y + \\{q}H - 1")
                 else:
                     plist.append(f"{pn}=0")
                     d = {1: ".byte", 2: ".word", 4: ".long"}[f.size]
@@ -730,7 +878,7 @@ class Gen:
                 body.append(f"\t.space\t{k.allsize - off}")
             chain = " < ".join(c.name for c in reversed(m.chain(cid)) if c.name != "Object")
             lines += [f"# {k.name}: {chain}; {k.allsize} bytes"
-                      + (f"; own fields {''.join(f'{n}:{c} ' for c, n in zip(k.propdata, k.propnames)).strip()}"
+                      + (f"; own fields {''.join(f'{n}:{c} ' for c, n in zip(k.propdata_raw, k.propnames)).strip()}"
                          if k.propdata else ""),
                       f".macro {mname} " + ", ".join(plist)] + body + [".endm", ""]
         self.macro_lines = lines
@@ -775,12 +923,12 @@ class Gen:
     def code_refs(self):
         """Every data-region address the converted code names as an immediate."""
         import glob
-        rx = re.compile(r"\b0x(4[89][0-9a-fA-F]{6}|500[0-7][0-9a-fA-F]{4})\b")
+        rx = re.compile(r"\b0x([0-9a-fA-F]{8})\b")      # in_data() decides
         # the code names a data address it refers to by the label the previous
         # generation gave it (gen_program_s.py reads labels.sym), or as a number
         nx = re.compile(r"\b([A-Za-z_]\w*)(?:\+(\d+))?")
         self.readers = collections.defaultdict(list)   # address -> [(function, cpu, load, signed)]
-        for f in sorted(glob.glob(os.path.join(KN7, P["src"], "*.s"))):
+        for f in sorted(glob.glob(code_glob())):
             self.scan_readers(open(f, encoding="latin-1").read().split("\n"))
             for line in open(f, encoding="latin-1"):
                 code = line.split("#", 1)[0]
@@ -862,7 +1010,8 @@ class Gen:
                 continue
             vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=signed) for i in range(n)]
             kind = ("s" if signed else "u") + str(8 * w)
-            readers = sorted({(r[0], r[1], r[2]) for r in rd if r[3] == w}, key=lambda r: (r[1] or 0))
+            # (ties broken by function and instruction: a set's order changes from run to run)
+            readers = sorted({(r[0], r[1], r[2]) for r in rd if r[3] == w}, key=lambda r: (r[1] or 0, r[0] or "", r[2]))
             fn = next((r[0] for r in sorted(rd, key=lambda r: r[1] or 0) if r[0]), None)
             base = (re.sub(r"_entry$", "", fn) + "_Table") if fn else f"tab_{a:08X}"
             self.add(a, w * n, self.name_at(a, base), "reader table",
@@ -1035,7 +1184,8 @@ class Gen:
                 tables.append(ws)
         rec_tab = next((t for t in tables if any(z.get(w, b"")[:4] == b"ZZZZ" for w in t)), None)
         for a, out in z.items():
-            if out[:4] == b"ZZZZ" and len(out) % 0x8E0 == 0:
+            # (the SX-KN6000 / KN6500's song record is 0x870 bytes: floppy/tools/kd/kn_sqt.py)
+            if out[:4] == b"ZZZZ" and (len(out) % 0x8E0 == 0 or (P.get("scheme") == "naka" and len(out) % 0x870 == 0)):
                 self.zkind[a] = "record"
             elif out[16:18] == b"@\x12" and is_text(out[:16]):
                 self.zkind[a] = "panel"
@@ -1138,7 +1288,7 @@ class Gen:
         kind = self.zkind[it.start]
         what = {"record": "song record", "events": "event memory", "panel": "panel-memory bank"}[kind]
         return [f"{it.label}:\t# {self.zname.get(it.start, '')}: its {what}, {len(out)} bytes, stored as a zlib "
-                f"stream of {n} bytes (inflated by func_48533758); kn7asm compresses it at level {level} "
+                f"stream of {n} bytes (inflated by {P.get('inflate', 'func_48533758' if P.get('scheme', 'kn7000') == 'kn7000' else 'the program')}); kn7asm compresses it at level {level} "
                 "(Python's zlib reproduces the firmware's stream byte-exactly)",
                 f"\t.zlib\t{level}"] + lines + ["\t.endzlib"]
 
@@ -1189,6 +1339,205 @@ class Gen:
                  lambda g, it, fn=fn, n=n, ext=ext, desc=desc: [
                      f"{it.label}:\t# a {ext.upper()} file, {n} bytes" + (f", {desc}" if desc else ""),
                      f'\t.incbin\t"{OUTDIR}/media/{fn}"'])
+
+    # -- the built-in tone / voice records (SX-KN6000 / KN6500) -----------------------
+    def tones(self):
+        """(`tones` profiles) ToneRecordDirectory (a manual-symbol name): the program's own
+        table of tone and voice records, one u32 pointer per record index.  The KN6000's
+        func_4C07C26A turns a record index into a record address: from the loaded archive
+        in RAM (0x50033BF8 / 0x50033BC8) when func_4C07CF02 answers 1, else from this
+        directory (`mov ToneRecordDirectory, a0 / asl2 d0 / mov (d0, a0), a0`).  The
+        records it lists lie back to back, so each one's size is the distance to the
+        next; three shapes occur (src/include/voice_record.inc):
+          tone        0x54-byte head (16-character name, SOUND_HEAD) + n x 0x7A units
+                      (SOUND_MOD), n = 1..4
+          TABLE tone  class 0x40 at +0x10: the 16-character name, a 0x17-byte head and
+                      128 three-byte note entries (TgNoteOnTableTone reads +0x27 + note x 3)
+          voice       a 13-character name and three bytes (VOICE_HEAD_TAIL), then one or
+                      two 0x1C-byte sub-records (VOICE_SUB)
+        A record of any other size stays as it is (none in the KN6000 v7.1)."""
+        a0 = self.m.sym_by_name.get("ToneRecordDirectory")
+        if a0 is None or not self.in_data(a0):
+            return
+        m = self.m
+        ptrs = []
+        while self.in_data(m.u32(a0 + 4 * len(ptrs))) and self.free(a0 + 4 * len(ptrs), 4):
+            ptrs.append(m.u32(a0 + 4 * len(ptrs)))
+        targets = sorted(set(ptrs))
+        recs = {}
+        for i, a in enumerate(targets):
+            nxt = targets[i + 1] if i + 1 < len(targets) else None
+            if nxt is None or nxt - a > 0x400:     # the end of a run: the directory follows, or nothing
+                nxt = a0 if a < a0 <= a + 0x400 else None
+            if nxt is None:
+                continue
+            n = nxt - a
+            raw = self.rom[self.off(a):self.off(a) + n]
+            name16 = raw[:16]
+            shape = None
+            if n >= 0x54 + 0x7A and (n - 0x54) % 0x7A == 0 and all(0x20 <= c < 0x7F for c in name16):
+                shape = ("tone", (n - 0x54) // 0x7A)
+            elif n == 0x27 + 3 * 128 and raw[0x10] & 0xC0 == 0x40 and all(0x20 <= c < 0x7F for c in name16):
+                shape = ("table", 128)
+            elif n in (16 + 0x1C, 16 + 2 * 0x1C) and all(0x20 <= c < 0x7F for c in raw[:13]):
+                shape = ("voice", (n - 16) // 0x1C)
+            if shape and self.free(a, n):
+                recs[a] = (n, shape, raw)
+        used = set()
+        names = {}
+        for a, (n, shape, raw) in sorted(recs.items()):
+            nm = raw[:13 if shape[0] == "voice" else 16].decode("latin-1")
+            lab = self.name_at(a, ("Voice_" if shape[0] == "voice" else "Tone_") + (sanitize(nm, 30) or "unnamed"))
+            names[a] = lab
+
+            def render(g, it, raw=raw, shape=shape, nm=nm):
+                kind, k = shape
+                hx = lambda bs: ", ".join(f"0x{x:02x}" for x in bs)
+                if kind == "tone":
+                    out = [f"{it.label}:\t# tone record, {k} unit(s)", f'\t.ascii\t"{c_escape(raw[:16])}"',
+                           f"\tSOUND_HEAD\t{hx(raw[0x10:0x54])}"]
+                    out += [f"\tSOUND_MOD\t{hx(raw[0x54 + 0x7A * j:0x54 + 0x7A * (j + 1)])}" for j in range(k)]
+                elif kind == "table":
+                    out = [f"{it.label}:\t# TABLE tone record: one entry per note (TgNoteOnTableTone)",
+                           f'\t.ascii\t"{c_escape(raw[:16])}"', f"\ttone_head_table\t{hx(raw[0x10:0x27])}"]
+                    out += [f"\ttone_note\t{hx(raw[0x27 + 3 * j:0x2A + 3 * j])}\t# note {j}" for j in range(128)]
+                else:
+                    out = [f"{it.label}:\t# voice record, {k} sub-record(s)", f'\t.ascii\t"{c_escape(raw[:13])}"',
+                           f"\tVOICE_HEAD_TAIL\t{hx(raw[13:16])}"]
+                    out += [f"\tVOICE_SUB\t{hx(raw[16 + 0x1C * j:16 + 0x1C * (j + 1)])}" for j in range(k)]
+                return out
+            self.add(a, n, lab, "tone record", render)
+        self.label_at[a0] = self.fixed.get(a0, "ToneRecordDirectory")
+        self.add(a0, 4 * len(ptrs), self.label_at[a0], "tone directory",
+                 lambda g, it, ptrs=ptrs: [f"{it.label}:\t# {len(ptrs)} record pointers by record index (func_4C07C26A)"]
+                 + [f"\t.long\t{g.ref(p)}\t# {i}" for i, p in enumerate(ptrs)])
+        self.tone_macros = True
+        print(f"gen_data_s: tone directory {len(ptrs)} entries, {len(recs)} records typed")
+
+    # -- the factory panel memories (SX-KN6000) -------------------------------------
+    def panel_banks(self):
+        """FactoryPanelMemory (a manual-symbol name): the factory PANEL MEMORY banks, the
+        .PMT bank layout (floppy/tools/kd/kn_panel.py): per bank its 16-character name and
+        8 memories, each a tag / length list ended by FF FF.  The KN6000's func_4C03D431
+        copies the 16-byte .PMT header and then 0x2D8D0 bytes from here to the backup RAM
+        (0x840007C2 / 0x840007D2, memcpy): the factory reset of the panel memories.  The
+        banks are typed with the floppy describer's PMR_ lines, as the demo songs' banks."""
+        a = self.m.sym_by_name.get("FactoryPanelMemory")
+        if a is None or not self.in_data(a):
+            return
+        sys.path.insert(0, os.path.join(KN7_DIR, "..", "floppy", "tools", "kd"))
+        sys.path.insert(0, os.path.join(KN7_DIR, "..", "floppy", "tools"))
+        import kn_panel
+        rom, o0 = self.rom, self.off(a)
+        o, L, banks = o0, [], 0
+        while all(0x20 <= c < 0x7F for c in rom[o:o + 16]) and rom[o + 16:o + 18] == b"@\x12":
+            name, q, mem = rom[o:o + 16], o + 16, []
+            for k in range(8):
+                recs, e = kn_panel.block(rom, q)
+                if recs is None or not recs or recs[0][1] != 0x40:
+                    break
+                mem.append((recs, q, e))
+                q = e
+            if len(mem) != 8:
+                break
+            L += [f"# bank {banks + 1}: {name.decode('latin-1').strip()!r}", "\t.ascii\t" + kn_panel.s_esc(name)]
+            for k, (recs, _q, _e) in enumerate(mem):
+                L += kn_panel.block_lines(rom, recs, f"memory {k + 1}")
+            banks += 1
+            o = q
+        if not banks or not self.free(a, o - o0):
+            return
+        lines = self.kn7(L, b"")
+        self.label_at[a] = "FactoryPanelMemory"
+        self.add(a, o - o0, "FactoryPanelMemory", "panel banks",
+                 lambda g, it, lines=lines, banks=banks: [
+                     f"{it.label}:\t# {banks} banks x 8 PANEL MEMORY records, the .PMT bank layout (func_4C03D431"
+                     " copies them to the backup RAM)"] + lines)
+        print(f"gen_data_s: factory panel memory, {banks} banks")
+
+    # -- bitmap resources (SX-KN6000 / KN6500) ------------------------------------
+    BITMAP_METHODS = {"MT_GetBitmapData": "data", "MT_GetBitmapWidth": "w", "MT_GetBitmapHeight": "h",
+                      "MT_GetBitmapPalette": "pal", "MT_GetBitCount": "bits"}
+
+    def bitmaps(self):
+        """(`bitmaps` profiles) The bitmap resources: procedures that answer the
+        ResMethod ids MT_GetBitmapData / Width / Height / Palette / GetBitCount
+        (`cmp <id>, d1 / beq L` ... `L: mov <value>, d0`; BitmapKn6000, BitmapNx,
+        UserBitmapCheck ... in the KN6000 v7.1) give each bitmap's pixels, size,
+        depth and palette.  The pixels, rows padded to an even byte count (that
+        is the room every one of them has before the next referenced address),
+        become an indexed PNG in <data dir>/media/ (tools/table_png.py format
+        `pk D W H`), which the build turns back into the bytes; a palette is 16
+        (4-bit) or 256 entries of 0x00BBGGRR, typed."""
+        import table_png as TP
+        ids = {v: k for k, v in self.ev_name.items()}
+        meth = {ids[n]: f for n, f in self.BITMAP_METHODS.items() if n in ids}
+        if len(meth) < 4:
+            return
+        by_name = {n: a for a, n in self.extern.items()}
+        by_name.update(self.prev_data_label)
+        by_name.update({n: a for a, n in self.fixed.items()})
+        by_name.update({n: i for i, n in self.ev_name.items()})
+
+        def val(t):
+            t = t.strip()
+            try:
+                return int(t, 0)
+            except ValueError:
+                b, _, k = t.partition("+")
+                return by_name[b] + int(k or 0) if b in by_name else None
+        import glob
+        found = []
+        for f in sorted(glob.glob(code_glob())):
+            func, body = None, []
+            for line in open(f, encoding="latin-1").read().split("\n") + ["END:"]:
+                mo = re.match(r"^([A-Za-z_]\w*):", line)
+                if mo and not re.search(r"_L[0-9a-f]+_*$|_entry$", mo.group(1)):
+                    if func and len(body) < 400:
+                        txt = "\n".join(body)
+                        r = {}
+                        for c, lab in re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt):
+                            k = meth.get(val(c))
+                            m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
+                            if k and m2:
+                                r[k] = val(m2.group(1)) if m2.group(1) else 0
+                        if r.get("data") and r.get("w") and r.get("h") and r.get("bits") in (1, 2, 4, 8):
+                            found.append((func, r))
+                    func, body = mo.group(1), []
+                body.append(line)
+        pal_of = {}
+        for func, r in found:
+            a, w, h, depth = r["data"], r["w"], r["h"], r["bits"]
+            n = TP.pk_stride(depth, w) * h
+            if not self.in_data(a) or not self.free(a, n):
+                print(f"gen_data_s: bitmap of {func} at {a:#x} ({n} bytes) not free; not typed")
+                continue
+            base = func if func.startswith("Bitmap") else "Bitmap_" + re.sub(r"^func_", "", func)
+            lab = self.name_at(a, f"{base}_Pixels")
+            pal = None
+            p = r.get("pal")
+            if p and self.in_data(p) and depth <= 8:
+                np_ = 1 << depth
+                if p in pal_of or self.free(p, 4 * np_):
+                    vals = [self.m.u32(p + 4 * i) for i in range(np_)]
+                    pal = [(v & 0xFF, (v >> 8) & 0xFF, (v >> 16) & 0xFF) for v in vals]
+                    if p not in pal_of:
+                        pal_of[p] = vals
+                        self.add(p, 4 * np_, self.name_at(p, f"{base}_Palette"), "palette",
+                                 lambda g, it, vals=vals, func=func: [
+                                     f"{it.label}:\t# {len(vals)} colours, 0x00BBGGRR ({func}: MT_GetBitmapPalette)"]
+                                 + [f"\t.long\t" + ", ".join(f"0x{v:08X}" for v in vals[i:i + 8]) for i in range(0, len(vals), 8)])
+            fmt = f"pk {depth} {w} {h}"
+            fn = f"{lab}.png"
+            raw = self.rom[self.off(a):self.off(a) + n]
+            png = TP.to_png(fmt, raw, pal)
+            self.media_files[fn] = png
+            self.add(a, n, lab, "bitmap",
+                     lambda g, it, fn=fn, fmt=fmt, func=func, w=w, h=h, depth=depth: [
+                         f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel, rows padded to even bytes: the bitmap"
+                         f" {func} answers MT_GetBitmapData with ({OUTDIR}/media/{fn})",
+                         f'\t.incbin\t"build/bitmaps/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f"../kn7000/tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
     # -- text, doubles and name / value tables in what is left -------------------
     def name_value_tables(self):
@@ -1306,11 +1655,23 @@ class Gen:
             bs = rom[o:e - 1]
             if not is_text(bs) or sum(1 for c in bs if 0x41 <= c <= 0x7A) < 3:
                 continue
+            if P.get("text_strict") and self.fake_text(bs):
+                continue
             if o > R1_END and rom[o - 1] not in (0x00, 0xFF) and not self.claimed[o - 1]:
                 continue
             a = self.addr_of(o)
             if self.free(a, e - o) and not self.pointerish(o, e - 1):
                 self.str_item(a, "Str_" + (sanitize(bs.decode("latin-1"), 40) or "text"), "text")
+
+    @staticmethod
+    def fake_text(bs):
+        """(`text_strict` profiles) A short printable run that is most likely pixels or
+        packed numbers, not text: under 8 characters with no vowel ("HPPd", "N QZ"), or
+        a letter three times in a row in a run under 12 ("PPP@", "wwww1").  Such runs in
+        the SX-KN6000's bitmaps and tables would otherwise become Str_ labels."""
+        if len(bs) < 8 and not re.search(rb"[AEIOUaeiou]", bs):
+            return True
+        return len(bs) < 12 and re.search(rb"([A-Za-z])\1\1", bs) is not None
 
     def doubles(self):
         """Runs (>= 4) of 8-aligned IEEE-754 doubles of plausible magnitude
@@ -1420,11 +1781,13 @@ class Gen:
             "# after code region 1; the library image follows.  See tools/gen_data_s.py and",
             "# tools/milk_model.py for what each structure is and the firmware code that reads it.",
             "",
-            '.include "src/constants.inc"',
-            '.include "src/include/kn_song.inc"',
-            '.include "src/include/panel_memory.inc"',
-            '.include "src/include/kn_panel_extra.inc"',
-            '.include "src/include/data_tables.inc"',
+            f'.include "{P.get("constants", "src/constants.inc")}"',
+            f'.include "{SHARED}src/include/kn_song.inc"',
+            f'.include "{SHARED}src/include/panel_memory.inc"',
+            *([f'.include "{SHARED}src/include/voice_record.inc"', f'.include "{OUTDIR}/tone_macros.inc"']
+              if self.tone_macros else []),
+            f'.include "{SHARED}src/include/kn_panel_extra.inc"',
+            f'.include "{SHARED}src/include/data_tables.inc"',
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
@@ -1446,6 +1809,8 @@ class Gen:
         for a, n in sorted(self.label_at.items()):
             sym.append(f"0x{a:08X}  {n}  {sizes.get(a, 0)}")
         self.write(os.path.join(outdir, "labels.sym"), sym)
+        if P.get("functions_sym"):
+            self.write_functions_sym(os.path.join(outdir, "functions.sym"))
         md = os.path.join(KN7, outdir, "media")
         os.makedirs(md, exist_ok=True)
         for fn, bs in sorted(self.media_files.items()):
@@ -1455,6 +1820,20 @@ class Gen:
             if fn not in self.media_files:
                 os.remove(os.path.join(md, fn))
         self.write(os.path.join(outdir, "gui_ids.inc"), hdr + self.ids_inc())
+        if self.tone_macros:
+            self.write(os.path.join(outdir, "tone_macros.inc"), hdr + [
+                "# A TABLE tone's head after its name and its per-note entries: the same macros as",
+                "# kn7000/src/table/style_macros.inc (that file also holds style macros whose names the",
+                "# rhythm resource's macros take), GENERATED by tools/gen_data_s.py.",
+                "# TgNoteOnTableTone (KN7000 lib 0x4C03600D) reads the entry at +0x27 + note x 3: it",
+                "# enables up to two synth layers.",
+                ".macro tone_head_table class, b11, b12, b13, b14, b15, b16, b17, b18, b19, b1a, b1b, b1c, b1d, b1e, b1f, b20, b21, b22, b23, b24, b25, b26",
+                "\t.byte\t\\class, \\b11, \\b12, \\b13, \\b14, \\b15, \\b16, \\b17, \\b18, \\b19, \\b1a, \\b1b, \\b1c, \\b1d, \\b1e, \\b1f",
+                "\t.byte\t\\b20, \\b21, \\b22, \\b23, \\b24, \\b25, \\b26",
+                ".endm",
+                ".macro tone_note a, b, c",
+                "\t.byte\t\\a, \\b, \\c",
+                ".endm"])
         self.write(os.path.join(outdir, "rhythm_macros.inc"), hdr + [
             "# The style-record and event macros of src/ic18/rhythm.s (tools/gen_ic18_rhythm_s.py), copied",
             "# verbatim by tools/gen_data_s.py for the program's own Technics Rhythms resource; do not edit.",
@@ -1480,7 +1859,10 @@ class Gen:
                "# tools/gen_program_s.py names them in `mov IMM, dN` / `cmp IMM, dN`.  The tables compute",
                "# the same values from their entries' positions, and the code's bytes check them.", ""]
         seen = set()
-        for title, d in (("titles, modes, OT blocks", self.id_name),
+        # (siblings, NAKA layout: their event and method ids are in the ResEvent / ResMethod
+        # tables of every module, slots 0x180.., not in gui_event_ids.inc's slots 5 / 6)
+        evs = ((("events and methods", self.ev_name),) if P.get("scheme") == "naka" else ())
+        for title, d in evs + (("titles, modes, OT blocks", self.id_name),
                          ("classes", {self.cid_value(c): n for c, n in self.cls_id.items()}),
                          ("functions", self.fn_name),
                          ("objects", {i: n + "_id" for i, n in self.obj_by_id.items() if i >> 16})):
@@ -1498,6 +1880,27 @@ class Gen:
             if mo and int(mo.group(1)) >= len(parts):
                 os.remove(os.path.join(KN7, outdir, fn))
         return len(parts)
+
+    def write_functions_sym(self, rel):
+        """(`functions_sym` profiles) The procedures the MILK Function / ApFunction /
+        MainFunction tables name, as a symbol file for the code generator
+        (gen_image_s.py --sym): the firmware's own name for each code address, from
+        the parallel name table (slot + 0x200), where the build's symbol files give
+        that address none.  A name another address already has is not used."""
+        m = self.m
+        used = set(m.sym_by_name)
+        out = ["; Procedures named by the MILK Function / ApFunction / MainFunction tables of " + PROFILE + ",",
+               "; GENERATED by tools/gen_data_s.py from the tables the InitializeUserNN routines register",
+               "; (code pointer table + its parallel name table); only addresses no other symbol file names."]
+        rows = []
+        for a, nm in sorted(self.fn_code.items()):
+            if a in m.sym_by_addr or self.in_data(a) or not BASE <= a < BASE + len(self.rom):
+                continue
+            if not re.fullmatch(r"[A-Za-z_]\w*", nm) or nm in used:
+                continue
+            used.add(nm)
+            rows.append(f"0x{a:08X}  {nm}")
+        self.write(rel, out + rows)
 
     STRING_KINDS = {"string", "text", "class name", "class sig", "field name", "event name", "method name",
                     "function name", "resource name", "widget text"}
@@ -1539,7 +1942,7 @@ class Gen:
             ".equ NONE_ix, 0xFFFF",
             ".equ NOCLASS, 0xFFFFFFFF",
             "",
-            "# class table record (ClassProc 0x4842A802: proc +0, parent +4, allsize +8, selfsize +10,",
+            f"# class table record (ClassProc {sym_addr('ClassProc', '0x4842A802')}: proc +0, parent +4, allsize +8, selfsize +10,",
             "# name +12, propdata +16, propname +20); `id` is the class id the records hold",
             ".macro CLASS this, id, table, proc=0, parent=NOCLASS, allsize=0, selfsize=0, cname=0, sig=0, fields=0",
             "\\this\\():",
@@ -1563,13 +1966,33 @@ class Gen:
             "\t.equ\t\\id, (\\slot << 16) | ((\\id\\()_at - \\table) / 4)",
             "\t.long\t\\value",
             ".endm",
-            ""] + self.macro_lines
+            ""] + self.host_class_ids() + self.macro_lines
+
+    def host_class_ids(self):
+        """(a plug-in) `.equ` lines for the host firmware's classes this image's
+        classes derive from and its records are instances of: their ids are the
+        host's registry (`P["host"]`), not tables of this image."""
+        m = self.m
+        if m.host is None:
+            return []
+        own = set()
+        for slot, r in m.by_slot.items():
+            if r["kind"] == "Class":
+                own |= {(slot << 16) | k for k in range(r["count"])}
+        used = set()
+        for cid in list(own) + [o.klass.id for b in m.blocks.values() for o in b["objects"] if o.klass]:
+            used |= {k.id for k in m.chain(cid)}
+        rows = [f".equ {self.cls_id[c]}, 0x{c:08X}\t# {m.classes[c].name}" for c in sorted(used - own)]
+        return [f"# The {P['host'].upper()}'s classes this image's classes derive from and its records use:",
+                f"# their ids are the host's (its class tables, ../{P['host']}/src/program/data/)."] + rows + [""]
 
     def ids_inc(self):
         m = self.m
         out = ["# The OT-block, title and mode ids, GENERATED by tools/gen_data_s.py from the start-up code's",
-               "# RegisterOTBlock (0x484317D1), RegisterTitle (0x48431836) and RegisterMode (0x484317EC) calls:",
-               "# id = (registry slot << 16) | index, slot 0xC OT blocks, 0xF titles, 0xE modes; each name is",
+               f"# RegisterOTBlock ({sym_addr('RegisterOTBlock', '-')}), RegisterTitle ({sym_addr('RegisterTitle')})"
+               f" and RegisterMode ({sym_addr('RegisterMode')}) calls:",
+               f"# id = (registry slot << 16) | index, slot 0x{MM.SCHEMES[MM.SCHEME]['otb_slot'] or 0:X} OT blocks,"
+               f" 0x{MM.SCHEMES[MM.SCHEME]['title_slot']:X} titles, 0x{MM.SCHEMES[MM.SCHEME]['mode_slot']:X} modes; each name is",
                "# the string the call registers.", ""]
         for title, d in (("OT blocks", m.otblocks), ("titles", m.titles), ("modes", m.modes)):
             out.append(f"# {len(d)} {title}")
@@ -1580,6 +2003,9 @@ class Gen:
                     extra = f"\t# screen {self.obj_by_id.get(scr, hex(scr) if isinstance(scr, int) else '?')}"
                 out.append(f".equ {self.id_name[i]}, 0x{i:08X}{extra}")
             out.append("")
+        if self.host_used:
+            out += [f"# the {P['host'].upper()}'s titles and functions this image's records name (the host's ids)"]
+            out += [f".equ {self.host_ids[i]}, 0x{i:08X}" for i in sorted(self.host_used)] + [""]
         return out
 
     @staticmethod
@@ -1590,9 +2016,16 @@ class Gen:
     def run(self, outdir):
         self.rhythm_macros = []
         self.gui()
-        self.palette()
+        if PALETTE is not None:
+            self.palette()
         self.rhythm()
+        self.tone_macros = False
+        if P.get("tones"):
+            self.tones()
+            self.panel_banks()
         self.media()
+        if P.get("bitmaps"):
+            self.bitmaps()
         self.code_refs()
         self.typed_refs()
         self.name_value_tables()

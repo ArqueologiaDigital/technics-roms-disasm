@@ -87,6 +87,12 @@ def rows(b, w=16):
     return ['\t.byte\t' + ', '.join(str(x) for x in b[k:k + w]) for k in range(0, len(b), w)]
 
 
+# The song record's length by its model signature (+5, +6): KN6000 01 0A, KN7000 01 0D (the disks), and
+# 01 0E, the SX-KN2400 / KN2600's 8 built-in demo songs (measured in its program image, v1.1: 0x8E0 bytes, the
+# panel memory at +0x140 parses as on the KN7000).
+RECORD_LEN = {b'\x01\x0a': 0x870, b'\x01\x0d': 0x8E0, b'\x01\x0e': 0x8E0}
+
+
 def typer1(ctx, part, p, ref, lab):
     """Part 1: the song records.  +0x00 "ZZZZ", +0x04 the 10-song flag, +0x05 the model signature,
     +0x09 the file stem (as the KN5000 slot's +0x09, floppy/kn5000 sqt_slot_header.json), +0xD0 the track
@@ -97,7 +103,7 @@ def typer1(ctx, part, p, ref, lab):
     0x50, 0x51 and the start of 0x60, without their tag bytes).  The other bytes are not traced and are spelled
     as bytes with their offsets."""
     import kn_panel
-    rl = {b'\x01\x0a': 0x870, b'\x01\x0d': 0x8E0}.get(p[5:7])
+    rl = RECORD_LEN.get(p[5:7])
     if part != 1 or p[:4] != b'ZZZZ' or not rl or len(p) % rl:
         return None
     L = ['\t.include\t"kn_song.inc"', '\t.include\t"panel_memory.inc"', '',
@@ -136,7 +142,7 @@ def typer1(ctx, part, p, ref, lab):
 
 def typer2(ctx, part, p2, ref, lab, p1):
     """Part 2: the event cells; p1 is part 1 (for the track directories)."""
-    rl = {b'\x01\x0a': 0x870, b'\x01\x0d': 0x8E0}.get(p1[5:7])
+    rl = RECORD_LEN.get(p1[5:7])
     if part != 2 or not rl or len(p2) % 256:
         return None
     n = len(p2) // 256

@@ -66,7 +66,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 KN7 = os.path.dirname(HERE)
-BASE = 0x48400000
+BASE = 0x48400000          # CPU address of file offset 0 (tools/gen_data_s.py sets a sibling's)
 NONE16 = 0xFFFF
 # The initialised work-RAM image: ResetEntry (CPU 0x4840FF7E, the loop at
 # loc_48410068) copies 0x7F34 bytes from ROM 0x487B0B78 to RAM 0x50000010
@@ -80,7 +80,7 @@ def find_raminit(src_glob):
     build's converted code: `mov N, d1 / cmp 0, d1 / ble ... / mov SRC, a0 /
     mov 0x50000010, a1`."""
     rx = re.compile(r"mov\s+(0x[0-9a-fA-F]+), d1\n\s+cmp\s+0, d1\n\s+ble\s+\S+\n"
-                    r"\s+mov\s+(0x48[0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])), a1\n")
+                    r"\s+mov\s+(0x4[89cC][0-9a-fA-F]{6}), a0\n\s+mov\s+(0x5000001[0-9a-fA-F]|\w+_(5000001[0-9a-fA-F])), a1\n")
     # (the destination is a number, or, once the data region is typed, its label <kind>_<ADDR>)
     for f in sorted(glob.glob(src_glob)):
         m = rx.search(open(f, encoding="latin-1").read())
@@ -88,6 +88,82 @@ def find_raminit(src_glob):
             dst = int(m.group(4), 16) if m.group(4) else int(m.group(3), 16)
             return int(m.group(2), 16), dst, int(m.group(1), 16)
     sys.exit(f"milk_model: no initialised-RAM copy loop in {src_glob}")
+
+
+# THE REGISTRY SCHEMES.  The KN7000 groups each block's tables at slots 16*N + k
+# (above).  The SX-KN6000 / SX-KN6500 (and the KN5000's NAKA, nakarest_objtab_map.py)
+# group them by kind instead, 0x20 or 0x100 slots per kind, N the module:
+#     0x000 + V  Viewable      (V = any of 0x00..0xFF: one table per screen group)
+#     0x100 + N  Function      0x120 + N ApFunction    0x140 + N MainFunction
+#     0x160 + N  Class         0x180 + N ResEvent      0x1A0 + N ResMethod
+#     0x1C0 SupportClass, 0x1E0 Mode, 0x1F0 Title (one each)
+#     0x200 + V  ResName (parallel to Viewable V); 0x300 + N, 0x320 + N, 0x340 + N
+#                the name tables parallel to the three function tables
+# Evidence (KN6000 v7.1): RegisterObjectTable (CPU 0x4C01D198) copies the 16-byte
+# record to 0x5024BE58 + 16 * slot, slot <= 0x35F; InitializeUserNN (0x4C... per
+# module) makes the calls; the kind is the name of the class the record carries
+# (0x0160000K, an entry of the root class table at slot 0x160).  An id is again
+# (slot << 16) | index.
+SCHEMES = {
+    "kn7000": dict(names_delta=8, title_slot=0xF, mode_slot=0xE, otb_slot=0xC),
+    "naka": dict(names_delta=0x200, title_slot=0x1F0, mode_slot=0x1E0, otb_slot=None),
+}
+SCHEME = "kn7000"
+# THE TYPE CHARACTERS of the SX-KN6000 / KN6500 (and, by SIG_SIZE, the KN5000) are the
+# KN7000's with two shifts: the older firmware has no '\\' (the flag type is ']'), so
+# its ']' '^' '_' are the KN7000's '\\' ']' '^', and its 'm'..'w' are the KN7000's
+# 'l'..'v'.  Evidence: every field that a same-named class of both firmwares
+# declares (591 pairs, KN6000 v7.1 against KN7000 941) maps one way only
+# (../../kn6000/notes/data-region-probes/sigmap.py).  Only the KN6000's 'l' (the
+# `user` field of Mode and Title, no widget record) has no KN7000 twin.  A Klass's
+# `propdata` is translated to the KN7000's characters, so the layout and every
+# reader of a field's type see one alphabet; `propdata_raw` is the ROM's string.
+SIGMAP_NAKA = {"]": "\\", "^": "]", "_": "^", "m": "l", "n": "m", "r": "q", "s": "r", "t": "s",
+               "u": "t", "v": "u", "w": "v"}
+SIGMAP = {}
+
+
+def configure(base=None, sig_size=None, scheme=None, sigmap=None, host_calls=None):
+    """Bind the module to another MILK image: its link base, the byte sizes of
+    the propdata type characters that differ from the KN7000's (a dict of
+    overrides), its registry scheme (SCHEMES) and the translation of its type
+    characters to the KN7000's (SIGMAP_NAKA)."""
+    global BASE, SCHEME, SIGMAP, HOST_CALLS
+    if host_calls is not None:
+        HOST_CALLS = dict(host_calls)
+    if base is not None:
+        BASE = base
+    if sig_size:
+        SIG_SIZE.update(sig_size)
+    if scheme is not None:
+        SCHEME = scheme
+    if sigmap is not None:
+        SIGMAP = dict(sigmap)
+
+
+def names_slot(slot):
+    """The slot of the table parallel to `slot` that holds its names."""
+    return slot + SCHEMES[SCHEME]["names_delta"]
+
+
+def block_key(slot):
+    """The block a registry slot belongs to: KN7000, its 16-slot block; NAKA, the
+    Viewable table itself for 0x000..0x0FF and its ResName table 0x200..0x2FF,
+    else the module N (0x1000 | N) of a function / class / event / method table."""
+    if SCHEME == "kn7000":
+        return slot & ~0xF
+    if slot < 0x100:
+        return slot
+    if 0x200 <= slot < 0x300:
+        return slot - 0x200
+    return 0x1000 | (slot & 0x1F)
+
+
+def is_fn_table(slot):
+    """A Function / ApFunction / MainFunction table (not its names)."""
+    if SCHEME == "kn7000":
+        return slot % 16 in (1, 2, 3)
+    return 0x100 <= slot < 0x160
 
 # byte size of each propdata type character (see Model._solve_sizes)
 SIG_SIZE = {"I": 4, "B": 2, "X": 4, "A": 2, "j": 4, "m": 4, "n": 4, "r": 4, "f": 1, "e": 2,
@@ -115,9 +191,16 @@ def read_syms(paths):
 
 
 REG_CALLS = ("RegisterObjectTable", "RegisterOTBlock", "RegisterTitle", "RegisterMode")
+# A plug-in (an XAPR image the host firmware runs) calls the host's routines through
+# the host's registered Function table: `mov (HOST_REGISTRY), aN / mov (0x100C, aN),
+# aN / mov (OFF, aN), aM / calls (aM)` reads entry OFF / 4 of the table at registry
+# slot 0x100 (the registry is 16-byte records, +0xC the table) -- HD-SX3 / HD-SX6:
+# OFF 0xEC = RegisterObjectTable, 0x278 = RegisterTitle of the SX-KN6000.  HOST_CALLS
+# maps OFF to the host routine's name (configure(host_calls=...)).
+HOST_CALLS = {}
 
 
-def parse_calls(src_glob, by_name):
+def parse_calls(src_glob, by_name, mem=None):
     """Every call of a REG_CALLS function in the converted code, with the
     values a small register / stack tracker sees before it over the
     straight-line code of its function: `mov IMM, Rn`, `mov Rm, Rn`,
@@ -136,16 +219,45 @@ def parse_calls(src_glob, by_name):
         regval, stack, func = {}, {}, None
         for i, l in enumerate(open(f, encoding="latin-1").read().split("\n")):
             m = re.match(r"^([A-Za-z_]\w*):", l)
-            if m and not m.group(1).startswith("loc_") and not m.group(1).endswith("_entry"):
+            # a function label resets the tracker; a branch label (loc_..., and
+            # gen_image_s.py's <entry>_L<hex>) does not
+            if m and not m.group(1).startswith("loc_") and not m.group(1).endswith("_entry") \
+                    and not re.search(r"_L[0-9a-f]+_*$", m.group(1)):
                 func = m.group(1)
                 regval, stack = {}, {}
             m = re.match(r"\s+mov\s+sp, (a\d)$", l)
             if m:
                 regval[m.group(1)] = ("sp", 0)
                 continue
-            m = re.match(r"\s+add\s+(-?0x[0-9a-fA-F]+|-?\d+), (a\d)$", l)
-            if m and isinstance(regval.get(m.group(2)), tuple):
+            m = re.match(r"\s+add\s+(-?0x[0-9a-fA-F]+|-?\d+), ([ad]\d)$", l)
+            if m and isinstance(regval.get(m.group(2)), tuple) and regval[m.group(2)][0] == "sp":
                 regval[m.group(2)] = ("sp", regval[m.group(2)][1] + int(m.group(1), 0))
+                continue
+            # (KN6000) a count loaded from the halfword the table's module keeps
+            # beside it, `movhu (ADDR), dN`, and an argument pointer reloaded from
+            # the stack, `mov (OFF, sp), aN`
+            m = re.match(r"\s+(movhu|mov)\s+\((0x[0-9a-fA-F]{8}|[A-Za-z_]\w*(?:\+\d+)?)\), ([ad]\d)$", l)
+            if m:
+                a = val(m.group(2).split("+")[0])
+                if a is not None and "+" in m.group(2):
+                    a += int(m.group(2).split("+")[1])
+                regval[m.group(3)] = mem(a, 2 if m.group(1) == "movhu" else 4) if mem and a is not None else None
+                continue
+            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), sp\), ([ad]\d)$", l)
+            if m:
+                regval[m.group(2)] = stack.get(int(m.group(1), 0))
+                continue
+            # (a plug-in) a host routine loaded from the host's Function table
+            m = re.match(r"\s+mov\s+\((0x[0-9a-fA-F]+|\d+), a\d\), (a\d)$", l) if HOST_CALLS else None
+            if m:
+                regval[m.group(2)] = ("host", HOST_CALLS.get(int(m.group(1), 0)))
+                continue
+            m = re.match(r"\s+calls\s+\((a\d)\)$", l) if HOST_CALLS else None
+            if m and isinstance(regval.get(m.group(1)), tuple) and regval[m.group(1)][0] == "host" \
+                    and regval[m.group(1)][1] in REG_CALLS:
+                calls.append(dict(call=regval[m.group(1)][1], d0=regval.get("d0"), d1=regval.get("d1"),
+                                  a0=regval.get("a0"), a1=regval.get("a1"), stack=dict(stack),
+                                  func=func, file=os.path.relpath(f, KN7), line=i + 1))
                 continue
             m = re.match(r"\s+mov\s+(\S+), (d\d|a\d)$", l)
             if m:
@@ -194,7 +306,8 @@ class Klass:
         (self.proc, self.parent, self.allsize, self.selfsize,
          self.name_ptr, self.propdata_ptr, self.propname_ptr) = rec
         self.name = model.cstr(self.name_ptr)
-        self.propdata = model.cstr(self.propdata_ptr) if self.propdata_ptr else ""
+        self.propdata_raw = model.cstr(self.propdata_ptr) if self.propdata_ptr else ""
+        self.propdata = "".join(SIGMAP.get(c, c) for c in self.propdata_raw)
         n = len(self.propdata)
         self.propname_ptrs = ([model.u32(self.propname_ptr + 4 * i) for i in range(n + 1)]
                               if self.propname_ptr else [])
@@ -206,11 +319,15 @@ class Obj:
 
     def __init__(self, block, index, addr, klass, name):
         self.block, self.index, self.addr, self.klass, self.name = block, index, addr, klass, name
-        self.values = {}     # field name -> value
+        self.values = {}     # field name -> value (the first field of that name)
+        self.fvalues = {}    # field offset -> value (every field)
 
 
 class Model:
-    def __init__(self, rom_path=None, src_glob=None, sym_paths=None, label_paths=None):
+    def __init__(self, rom_path=None, src_glob=None, sym_paths=None, label_paths=None, host=None):
+        # host: the Model of the firmware a plug-in runs on; the plug-in's records
+        # use the host's classes (and its own, which derive from them)
+        self.host = host
         rom_path = rom_path or os.path.join(KN7, "baserom", "kn7000_program.rom")
         self.rom = open(rom_path, "rb").read()
         self.end = BASE + len(self.rom)
@@ -233,24 +350,37 @@ class Model:
                 os.path.join(ddir, "labels.sym")]:
             if os.path.exists(lp):
                 for line in open(lp):
+                    mo = re.match(r"\.equ\s+(\w+),\s*(0x[0-9A-Fa-f]+)", line)
+                    if mo:          # (an .equ include: gen_data_s.py's gui_code_ids.inc)
+                        names.setdefault(mo.group(1), int(mo.group(2), 16))
+                        continue
                     f = line.split()
-                    if len(f) >= 2 and not line.startswith(";"):
+                    if len(f) >= 2 and not line.startswith(("#", ";")):
                         a, n = (f[0], f[1]) if f[0].startswith("0x") else (f[1], f[0])
                         names.setdefault(n, int(a, 16))
-        self.calls = parse_calls(src_glob, names)
+        self.calls = parse_calls(src_glob, names, mem=self._mem)
         self.regs = parse_registrations(self.calls)
-        self._named_ids()
         self.by_slot = {}
         for r in self.regs:
             if None in (r["cls"], r["count"], r["table"], r["slot"]):
                 continue
+            # (KN6000: InitializeObjectTable first registers every slot empty, table 0)
+            if not r["table"]:
+                continue
             self.by_slot.setdefault(r["slot"], r)
+        self._named_ids()
         self._classes()
         self._solve_sizes()
         self._layouts()
         self._objects()
 
     # -- bytes ---------------------------------------------------------------
+    def _mem(self, a, size):
+        """The initial value of the `size`-byte word at CPU address a, or None."""
+        if not self.inrom(a):
+            return None
+        return int.from_bytes(self.bytes_at(a, size), "little")
+
     @staticmethod
     def rom_addr(a):
         """The ROM address holding the initial value of CPU address `a` (`a`
@@ -289,16 +419,17 @@ class Model:
         into the Mode table (slot 0xE, 0x10 bytes each)).  An id is again
         (slot << 16) | index: {id: (name, name string address, call)}."""
         self.otblocks, self.titles, self.modes = {}, {}, {}
+        sch = SCHEMES[SCHEME]
         for c in self.calls:
             if not isinstance(c["d0"], int) or not isinstance(c["a0"], int):
                 continue
             nm = self.cstr(c["a0"])
-            if c["call"] == "RegisterOTBlock":
-                self.otblocks[0xC0000 | c["d0"]] = (nm, c["a0"], c)
+            if c["call"] == "RegisterOTBlock" and sch["otb_slot"] is not None:
+                self.otblocks[(sch["otb_slot"] << 16) | c["d0"]] = (nm, c["a0"], c)
             elif c["call"] == "RegisterTitle":
-                self.titles[0xF0000 | c["d0"]] = (nm, c["a0"], c)
+                self.titles[(sch["title_slot"] << 16) | c["d0"]] = (nm, c["a0"], c)
             elif c["call"] == "RegisterMode":
-                self.modes[0xE0000 | c["d0"]] = (nm, c["a0"], c)
+                self.modes[(sch["mode_slot"] << 16) | c["d0"]] = (nm, c["a0"], c)
 
     # -- classes -------------------------------------------------------------
     def _classes(self):
@@ -306,10 +437,17 @@ class Model:
         # the class tables: the registrations whose class is Class (an entry of
         # block 0's own class table, found as the registration at slot 4 whose
         # class id names entry 4 of itself)
-        c = self.by_slot.get(4)
-        if c is None:
-            sys.exit("milk_model: no class table registered at slot 4")
-        self.CLASS_ID = c["cls"]
+        # (NAKA scheme: the root class table is at slot 0x160 and its id 0x01600004
+        # names entry 4 of itself in the same way)
+        if self.host is not None:
+            # a plug-in registers its class tables with the host's Class class
+            self.classes = dict(self.host.classes)
+            self.CLASS_ID = self.host.CLASS_ID
+        else:
+            c = next((r for s, r in sorted(self.by_slot.items()) if r["cls"] >> 16 == s), None)
+            if c is None:
+                sys.exit("milk_model: no class table registered at the slot its own class id names")
+            self.CLASS_ID = c["cls"]
         for slot, r in sorted(self.by_slot.items()):
             if r["cls"] != self.CLASS_ID:
                 continue
@@ -383,7 +521,7 @@ class Model:
         for slot, r in sorted(self.by_slot.items()):
             if r["kind"] != "Viewable":
                 continue
-            names_r = self.by_slot.get(slot + 8)
+            names_r = self.by_slot.get(names_slot(slot))
             names = []
             if names_r and names_r["kind"] == "ResName":
                 names = [self.cstr(self.u32(names_r["table"] + 4 * i)) for i in range(names_r["count"])]
@@ -395,7 +533,11 @@ class Model:
                 o = Obj(slot, i, p, k, names[i] if i < len(names) else None)
                 if k is not None and self.layout.get(cid):
                     for f in self.layout[cid]:
-                        o.values[f.name] = int.from_bytes(self.bytes_at(p + f.off, f.size), "little")
+                        v = int.from_bytes(self.bytes_at(p + f.off, f.size), "little")
+                        # a field name a subclass declares again (HD-SX3 KssNamingWindow's
+                        # second `index`): `values` keeps the first, `fvalues` every field
+                        o.values.setdefault(f.name, v)
+                        o.fvalues[f.off] = v
                 objs.append(o)
             self.blocks[slot] = dict(slot=slot, viewable=r, resname=names_r, objects=objs,
                                      init=r["func"])

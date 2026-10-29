@@ -35,9 +35,24 @@ ROM_SHA1 := 39163ea892baf8ad11419c29fe58cc536bef9ca7
 # a table of words at 0x1e41c8-0x1e427c) to 0x3285be; and the code linked for work RAM at
 # 0x50120000, which runs from 0x3285be to the 24-byte trailer at the end of the
 # image (README.md, "Layout"). The data comes first in this image.
-CODE     := --code 0x0:0x10 --code 0x1e427c:0x3285be --code 0x3285be:0x3965bb:0x50120000
+CODE     := --code 0x0:0xf --code 0x1e427c:0x3285be --code 0x3285be:0x3965b8:0x50120000
+
+# The data region (file 0x0f..0x1e427c) is typed source, src/program/data/, generated
+# by ../kn7000/tools/gen_data_s.py --profile kn2400 (make data-src): the MILK classes,
+# widget records, reflection tables, strings and media.  Its labels.sym names the
+# code's data addresses.  data-and-code-src runs both generators to a fixpoint.
+# --decode-gaps disassembles the code no traced path reaches; the 27 bytes after the
+# RAM-linked code (RamCodeTrailer, kn2400_manual.sym) are typed rows.
+DATA_LO  := 0xf
+DATA_HI  := 0x1e427c
+DATA_DIR := src/program/data
+DATA     := --decode-gaps --text 0x3965b8:0x3965bf --long-table 0x3965bf:0x3965d3 \
+            --data-src $(DATA_DIR)/data.s:$(DATA_LO):$(DATA_HI)
+FN_SYM   := $(wildcard $(DATA_DIR)/functions.sym)
+DATA_FILES := $(wildcard $(DATA_DIR)/*.s $(DATA_DIR)/*.inc $(DATA_DIR)/media/*) src/constants.inc
 
 .PHONY: all baserom build verify ported-names verify-kn2600 symbols program-src clean distclean
+.PHONY: data-src constants data-and-code-src gui-map verify-gui-map
 .DELETE_ON_ERROR:
 
 all: verify
@@ -66,7 +81,8 @@ baserom/.dir:
 	@mkdir -p baserom && touch $@
 
 # ---- build ---------------------------------------------------------------------
-build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py baserom/$(ROM)
+build/$(ROM): src/program.s src/symbols.inc src/labels.inc $(DATA_FILES) $(TOOLS)/kn7asm.py $(TOOLS)/mn10300_asm.py \
+              baserom/$(ROM)
 	@mkdir -p build
 	$(ASM) src/program.s -I . -o $@
 
@@ -95,12 +111,29 @@ symbols kn2400.sym src/symbols.inc: $(TOOLS)/gen_symbols.py baserom/$(ROM)
 
 # ---- regenerate src/program.s (needs unidasm) ------------------------------------
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
-	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base 0x48400000 $(CODE) --reflection-tables \
-	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym --inc src/symbols.inc --labels-inc src/labels.inc \
-	    --out src/program.s \
+	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base 0x48400000 $(CODE) --reflection-tables $(DATA) \
+	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc \
+	    --labels-inc src/labels.inc --out src/program.s \
 	    --unidasm $(UNIDASM) --stats notes/conversion-stats.txt \
 	    --title 'Technics SX-KN2400 / SX-KN2600 program flash image (update v1.1) - byte-exact.' \
 	    --title 'Panasonic MN10300, linked at 0x48400000. See README.md.'
+
+# ---- the typed data region (../kn7000/tools/gen_data_s.py) ------------------------
+# constants: the MILK framework's own {name, value} tables (CL_ BD_ ES_ VF_ ...), at
+# file 0x15000..0x17000 in this image.
+constants src/constants.inc: $(TOOLS)/gen_constants.py baserom/$(ROM)
+	$(PYTHON) $(TOOLS)/gen_constants.py baserom/$(ROM) --base $(BASE) --scan 0x15000:0x17000 \
+	    --model SX-KN2400/KN2600 --inc src/constants.inc > /dev/null
+data-src: $(TOOLS)/gen_data_s.py $(TOOLS)/milk_model.py baserom/$(ROM) src/constants.inc
+	$(PYTHON) $(TOOLS)/gen_data_s.py --profile $(MODEL)
+data-and-code-src: src/constants.inc baserom/$(ROM)
+	$(TOOLS)/regen_sibling_data_and_code.sh $(MODEL) "$(MAKE) program-src UNIDASM=$(UNIDASM)"
+
+# The menu map, generated from the data region's source (../kn7000/tools/gui_menu_map.py).
+gui-map:
+	$(PYTHON) $(TOOLS)/gui_menu_map.py --profile $(MODEL)
+verify-gui-map:
+	@$(PYTHON) $(TOOLS)/gui_menu_map.py --profile $(MODEL) --check
 
 # ---- names carried over from the KN7000 where a routine is the same code ---------
 # port_names_by_code.py compares each unnamed entry with the KN7000 (program 941)
