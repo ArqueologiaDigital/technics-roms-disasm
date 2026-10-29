@@ -2,5 +2,10 @@
 
 ; 03FOLKS2.TM -- 29696 bytes, clusters 618..675.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_03FOLKS2_TM:	.incbin	"ca5000r.img", 0x51200, 29696
+; A sound RAM image of another model (the KN5000 imports it: its loader accepts
+; the "KN3000 SOUND RAM" / "KN1500 SOUND RAM" headers, SendPartDataBlock_InitVal4).
+; Its 29696-byte layout is not established.
+F_03FOLKS2_TM_Header:
+	.ascii	"KN3000 SOUND RAM"	; model signature
+	; census: opaque -- unknown-dump: a foreign model's sound RAM layout, not decoded (only the KN5000's own 0x72aa-byte image is typed here)
+	.incbin	"03FOLKS2.tm", 0x10, 29680	; body

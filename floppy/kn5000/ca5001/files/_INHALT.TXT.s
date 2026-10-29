@@ -2,5 +2,20 @@
 
 ; _INHALT.TXT -- 406 bytes, clusters 2..2.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca5001.img", 0x4200, 406
+; Plain text, CR LF line ends: the disk's table of contents, read by people, not by
+; the instrument (no KN5000 file type is .TXT: FileIO_TypeExtensions, v10 0xea0340).
+; Bytes above 0x7e are code page 437/850 (0xe4 = a umlaut).
+F__INHALT_TXT_Text:
+	.ascii	"***************\015\012"
+	.ascii	"* I N H A L T *\015\012"
+	.ascii	"***************\015\012"
+	.ascii	"\015\012"
+	.ascii	"CA-5001 Volksmusik\015\012"
+	.ascii	"------------------\015\012"
+	.ascii	"\015\012"
+	.ascii	"01. POLKA 1:  Trad. Polka,    Modern Polka,   Volksmusik\015\012"
+	.ascii	"02. POLKA 2:  Oberkrainer,    Quick Polka,    Polka Pop\015\012"
+	.ascii	"03. MARSCH 1: Dt. Marsch 4/4, Dt. Marsch 6/8, Pop Marsch\015\012"
+	.ascii	"04. MARSCH 2: US Marsch 4/4,  US Marsch 6/8,  Egerl\344nder\015\012"
+	.ascii	"05. WALZER:   Trad. Walzer,   Musette,        Drehorgel\015\012"
+	.ascii	"06. Polka Pop Demo-Song"

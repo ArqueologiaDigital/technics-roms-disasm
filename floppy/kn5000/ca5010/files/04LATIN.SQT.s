@@ -2,5 +2,19 @@
 
 ; 04LATIN.SQT -- 2048 bytes, clusters 1396..1399.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_04LATIN_SQT:	.incbin	"ca5010.img", 0xb2600, 2048
+; SEQUENCER, file type 2.  Song-slot headers of 0x800 bytes (RAM SEQ_SONG_SLOTS 0xab000,
+; 10 slots), then the event memory as linked 256-byte cells.  +4 = 1: all 10 slots, as
+; FileIO_SaveRegion2_ExtMem (v10 0xf87cac) writes them (0x5000, then the event memory
+; from 0xb0000 for the size SeqSavePre returns); +4 = 0: one song.  "01 08" at +5 is
+; the signature HD-AE5000 checks (technics-docs hdae5000-filesystem.md).
+F_04LATIN_SQT_Song_1:
+	.ascii	"ZZZZ"	; slot signature
+	.byte	0, 0x01, 0x08	; all-songs flag, signature
+	.incbin	"04LATIN.sqt", 0x7, 249	; slot +7..+0xff (fields not established)
+	.ascii	"________________"	; song name
+	.incbin	"04LATIN.sqt", 0x110, 1776	; slot +0x110..+0x7ff (fields not established)
+F_04LATIN_SQT_Events:
+; Event cells: +0 flags, +1 PREV, +3 NEXT (one-based), 251 bytes of events (the
+; demo-song grammar; analysis/disk-format-probes/disk_seq_chains.py).  A chain starts at
+; a cell whose PREV is 0 and byte 0 is not 0; which track each chain is, the slot header
+; says somewhere not yet established.  Byte-0 = 0 cells are the free list.

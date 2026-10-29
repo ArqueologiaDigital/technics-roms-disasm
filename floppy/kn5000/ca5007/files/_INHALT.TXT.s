@@ -2,5 +2,20 @@
 
 ; _INHALT.TXT -- 424 bytes, clusters 1588..1588.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca5007.img", 0xca600, 424
+; Plain text, CR LF line ends: the disk's table of contents, read by people, not by
+; the instrument (no KN5000 file type is .TXT: FileIO_TypeExtensions, v10 0xea0340).
+; Bytes above 0x7e are code page 437/850 (0xe4 = a umlaut).
+F__INHALT_TXT_Text:
+	.ascii	"***************\015\012"
+	.ascii	"* I N H A L T *\015\012"
+	.ascii	"***************\015\012"
+	.ascii	"\015\012"
+	.ascii	"CA-5007 Rockin' Days\015\012"
+	.ascii	"--------------------\015\012"
+	.ascii	"\015\012"
+	.ascii	"01. ROCK:        Hard Rock,    Classic Rock,    Hard R&R\015\012"
+	.ascii	"02. ROCK'N'ROLL: Big Band R&R, Combo R&R,       Soul R&R\015\012"
+	.ascii	"03. SHUFFLE:     Shuffle Band, Surfing Shuffle, Soul Shuffle\015\012"
+	.ascii	"04. BOOGIE:      Piano Boogie, Combo Boogie,    Boogie Rock\015\012"
+	.ascii	"05. TWIST:       Piano Twist,  Organ Twist,     Twist Combo\015\012"
+	.ascii	"06. Rock'n'Roll Demo-Song"

@@ -2,5 +2,183 @@
 
 ; 01SCHLGR.PMT -- 76976 bytes, clusters 1596..1746.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_01SCHLGR_PMT:	.incbin	"ca5006.img", 0xcb600, 76976
+; PANEL MEMORY, file type 1.  FileIO_SaveRegion1_VRAM (v10 0xf87b88) writes RAM 0x1ed350
+; up to 0x200000 (all 80 memories), or the size at 0x1ed350 + 13 (one bank), between
+; PrePmSave and PostPmSave.  Each memory is a panel block 0 (960 B = 0x3c0) at
+; 0x1ed400 + 960 * n, the record list of PanelTlv_Block0_Layout.
+F_01SCHLGR_PMT_Header:
+	.ascii	"HK "	; signature
+	.fill	10, 1, 0x00	; header +3..+0x0c
+	.short	960	; bytes per memory (read through 0x1ed350 + 13)
+	.byte	80	; memories in this file
+F_01SCHLGR_PMT_BankNames:
+	.ascii	"16 Bt. Schlager "	; bank 1 name
+	.ascii	" 8 Bt. Schlager "	; bank 2 name
+	.ascii	" Happy Schlager "	; bank 3 name
+	.ascii	"Jazz&Rock Organ "	; bank 4 name
+	.ascii	"Church & Theatre"	; bank 5 name
+	.ascii	"Light Orchestra "	; bank 6 name
+	.ascii	"  Split Sounds  "	; bank 7 name
+	.ascii	"Layer Production"	; bank 8 name
+	.ascii	" Special DSP FX "	; bank 9 name
+	.ascii	"     World      "	; bank 10 name
+F_01SCHLGR_PMT_Memory_1_1:
+	.incbin	"01SCHLGR.pmt", 0xb0, 960	; bank 1 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_2:
+	.incbin	"01SCHLGR.pmt", 0x470, 960	; bank 1 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_3:
+	.incbin	"01SCHLGR.pmt", 0x830, 960	; bank 1 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_4:
+	.incbin	"01SCHLGR.pmt", 0xbf0, 960	; bank 1 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_5:
+	.incbin	"01SCHLGR.pmt", 0xfb0, 960	; bank 1 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_6:
+	.incbin	"01SCHLGR.pmt", 0x1370, 960	; bank 1 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_7:
+	.incbin	"01SCHLGR.pmt", 0x1730, 960	; bank 1 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_1_8:
+	.incbin	"01SCHLGR.pmt", 0x1af0, 960	; bank 1 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_1:
+	.incbin	"01SCHLGR.pmt", 0x1eb0, 960	; bank 2 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_2:
+	.incbin	"01SCHLGR.pmt", 0x2270, 960	; bank 2 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_3:
+	.incbin	"01SCHLGR.pmt", 0x2630, 960	; bank 2 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_4:
+	.incbin	"01SCHLGR.pmt", 0x29f0, 960	; bank 2 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_5:
+	.incbin	"01SCHLGR.pmt", 0x2db0, 960	; bank 2 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_6:
+	.incbin	"01SCHLGR.pmt", 0x3170, 960	; bank 2 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_7:
+	.incbin	"01SCHLGR.pmt", 0x3530, 960	; bank 2 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_2_8:
+	.incbin	"01SCHLGR.pmt", 0x38f0, 960	; bank 2 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_1:
+	.incbin	"01SCHLGR.pmt", 0x3cb0, 960	; bank 3 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_2:
+	.incbin	"01SCHLGR.pmt", 0x4070, 960	; bank 3 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_3:
+	.incbin	"01SCHLGR.pmt", 0x4430, 960	; bank 3 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_4:
+	.incbin	"01SCHLGR.pmt", 0x47f0, 960	; bank 3 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_5:
+	.incbin	"01SCHLGR.pmt", 0x4bb0, 960	; bank 3 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_6:
+	.incbin	"01SCHLGR.pmt", 0x4f70, 960	; bank 3 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_7:
+	.incbin	"01SCHLGR.pmt", 0x5330, 960	; bank 3 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_3_8:
+	.incbin	"01SCHLGR.pmt", 0x56f0, 960	; bank 3 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_1:
+	.incbin	"01SCHLGR.pmt", 0x5ab0, 960	; bank 4 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_2:
+	.incbin	"01SCHLGR.pmt", 0x5e70, 960	; bank 4 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_3:
+	.incbin	"01SCHLGR.pmt", 0x6230, 960	; bank 4 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_4:
+	.incbin	"01SCHLGR.pmt", 0x65f0, 960	; bank 4 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_5:
+	.incbin	"01SCHLGR.pmt", 0x69b0, 960	; bank 4 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_6:
+	.incbin	"01SCHLGR.pmt", 0x6d70, 960	; bank 4 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_7:
+	.incbin	"01SCHLGR.pmt", 0x7130, 960	; bank 4 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_4_8:
+	.incbin	"01SCHLGR.pmt", 0x74f0, 960	; bank 4 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_1:
+	.incbin	"01SCHLGR.pmt", 0x78b0, 960	; bank 5 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_2:
+	.incbin	"01SCHLGR.pmt", 0x7c70, 960	; bank 5 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_3:
+	.incbin	"01SCHLGR.pmt", 0x8030, 960	; bank 5 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_4:
+	.incbin	"01SCHLGR.pmt", 0x83f0, 960	; bank 5 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_5:
+	.incbin	"01SCHLGR.pmt", 0x87b0, 960	; bank 5 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_6:
+	.incbin	"01SCHLGR.pmt", 0x8b70, 960	; bank 5 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_7:
+	.incbin	"01SCHLGR.pmt", 0x8f30, 960	; bank 5 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_5_8:
+	.incbin	"01SCHLGR.pmt", 0x92f0, 960	; bank 5 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_1:
+	.incbin	"01SCHLGR.pmt", 0x96b0, 960	; bank 6 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_2:
+	.incbin	"01SCHLGR.pmt", 0x9a70, 960	; bank 6 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_3:
+	.incbin	"01SCHLGR.pmt", 0x9e30, 960	; bank 6 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_4:
+	.incbin	"01SCHLGR.pmt", 0xa1f0, 960	; bank 6 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_5:
+	.incbin	"01SCHLGR.pmt", 0xa5b0, 960	; bank 6 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_6:
+	.incbin	"01SCHLGR.pmt", 0xa970, 960	; bank 6 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_7:
+	.incbin	"01SCHLGR.pmt", 0xad30, 960	; bank 6 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_6_8:
+	.incbin	"01SCHLGR.pmt", 0xb0f0, 960	; bank 6 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_1:
+	.incbin	"01SCHLGR.pmt", 0xb4b0, 960	; bank 7 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_2:
+	.incbin	"01SCHLGR.pmt", 0xb870, 960	; bank 7 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_3:
+	.incbin	"01SCHLGR.pmt", 0xbc30, 960	; bank 7 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_4:
+	.incbin	"01SCHLGR.pmt", 0xbff0, 960	; bank 7 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_5:
+	.incbin	"01SCHLGR.pmt", 0xc3b0, 960	; bank 7 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_6:
+	.incbin	"01SCHLGR.pmt", 0xc770, 960	; bank 7 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_7:
+	.incbin	"01SCHLGR.pmt", 0xcb30, 960	; bank 7 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_7_8:
+	.incbin	"01SCHLGR.pmt", 0xcef0, 960	; bank 7 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_1:
+	.incbin	"01SCHLGR.pmt", 0xd2b0, 960	; bank 8 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_2:
+	.incbin	"01SCHLGR.pmt", 0xd670, 960	; bank 8 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_3:
+	.incbin	"01SCHLGR.pmt", 0xda30, 960	; bank 8 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_4:
+	.incbin	"01SCHLGR.pmt", 0xddf0, 960	; bank 8 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_5:
+	.incbin	"01SCHLGR.pmt", 0xe1b0, 960	; bank 8 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_6:
+	.incbin	"01SCHLGR.pmt", 0xe570, 960	; bank 8 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_7:
+	.incbin	"01SCHLGR.pmt", 0xe930, 960	; bank 8 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_8_8:
+	.incbin	"01SCHLGR.pmt", 0xecf0, 960	; bank 8 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_1:
+	.incbin	"01SCHLGR.pmt", 0xf0b0, 960	; bank 9 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_2:
+	.incbin	"01SCHLGR.pmt", 0xf470, 960	; bank 9 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_3:
+	.incbin	"01SCHLGR.pmt", 0xf830, 960	; bank 9 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_4:
+	.incbin	"01SCHLGR.pmt", 0xfbf0, 960	; bank 9 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_5:
+	.incbin	"01SCHLGR.pmt", 0xffb0, 960	; bank 9 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_6:
+	.incbin	"01SCHLGR.pmt", 0x10370, 960	; bank 9 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_7:
+	.incbin	"01SCHLGR.pmt", 0x10730, 960	; bank 9 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_9_8:
+	.incbin	"01SCHLGR.pmt", 0x10af0, 960	; bank 9 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_1:
+	.incbin	"01SCHLGR.pmt", 0x10eb0, 960	; bank 10 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_2:
+	.incbin	"01SCHLGR.pmt", 0x11270, 960	; bank 10 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_3:
+	.incbin	"01SCHLGR.pmt", 0x11630, 960	; bank 10 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_4:
+	.incbin	"01SCHLGR.pmt", 0x119f0, 960	; bank 10 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_5:
+	.incbin	"01SCHLGR.pmt", 0x11db0, 960	; bank 10 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_6:
+	.incbin	"01SCHLGR.pmt", 0x12170, 960	; bank 10 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_7:
+	.incbin	"01SCHLGR.pmt", 0x12530, 960	; bank 10 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_01SCHLGR_PMT_Memory_10_8:
+	.incbin	"01SCHLGR.pmt", 0x128f0, 960	; bank 10 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)

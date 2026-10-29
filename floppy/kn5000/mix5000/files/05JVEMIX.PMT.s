@@ -2,5 +2,39 @@
 
 ; 05JVEMIX.PMT -- 7856 bytes, clusters 545..560.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_05JVEMIX_PMT:	.incbin	"mix5000.img", 0x48000, 7856
+; PANEL MEMORY, file type 1.  FileIO_SaveRegion1_VRAM (v10 0xf87b88) writes RAM 0x1ed350
+; up to 0x200000 (all 80 memories), or the size at 0x1ed350 + 13 (one bank), between
+; PrePmSave and PostPmSave.  Each memory is a panel block 0 (960 B = 0x3c0) at
+; 0x1ed400 + 960 * n, the record list of PanelTlv_Block0_Layout.
+F_05JVEMIX_PMT_Header:
+	.ascii	"HK "	; signature
+	.fill	10, 1, 0x00	; header +3..+0x0c
+	.short	960	; bytes per memory (read through 0x1ed350 + 13)
+	.byte	8	; memories in this file
+F_05JVEMIX_PMT_BankNames:
+	.ascii	" Jive Conny-Mix "	; bank 1 name
+	.ascii	"                "	; bank 2 name
+	.ascii	"                "	; bank 3 name
+	.ascii	"Jazz&Rock Organ "	; bank 4 name
+	.ascii	"Church & Theatre"	; bank 5 name
+	.ascii	"Light Orchestra "	; bank 6 name
+	.ascii	"  Split Sounds  "	; bank 7 name
+	.ascii	"Layer Production"	; bank 8 name
+	.ascii	" Special DSP FX "	; bank 9 name
+	.ascii	"     World      "	; bank 10 name
+F_05JVEMIX_PMT_Memory_1_1:
+	.incbin	"05JVEMIX.pmt", 0xb0, 960	; bank 1 memory 1: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_2:
+	.incbin	"05JVEMIX.pmt", 0x470, 960	; bank 1 memory 2: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_3:
+	.incbin	"05JVEMIX.pmt", 0x830, 960	; bank 1 memory 3: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_4:
+	.incbin	"05JVEMIX.pmt", 0xbf0, 960	; bank 1 memory 4: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_5:
+	.incbin	"05JVEMIX.pmt", 0xfb0, 960	; bank 1 memory 5: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_6:
+	.incbin	"05JVEMIX.pmt", 0x1370, 960	; bank 1 memory 6: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_7:
+	.incbin	"05JVEMIX.pmt", 0x1730, 960	; bank 1 memory 7: the 46 records of PanelTlv_Block0_Layout (checked)
+F_05JVEMIX_PMT_Memory_1_8:
+	.incbin	"05JVEMIX.pmt", 0x1af0, 960	; bank 1 memory 8: the 46 records of PanelTlv_Block0_Layout (checked)

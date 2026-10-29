@@ -2,5 +2,15 @@
 
 ; DP_GREEN.BMP -- 77878 bytes, clusters 1379..1531.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F_DP_GREEN_BMP:	.incbin	"idd5000.img", 0xb0400, 77878
+; A Windows BMP, 8 bpp.  The KN5000 writes and reads this form itself: CaptureLcd
+; (v10 0xfaf030) emits bfSize 0x13036 = 77,878 bytes (320 x 240, 256-entry palette) and
+; Gfx_LoadSplashBMP (v10 0xfae86d) loads it as the LCD wallpaper into Custom Data Flash
+; 0x3c0000 (technics-docs custom-data-flash.md).  Header fields as stored.
+F_DP_GREEN_BMP_FileHeader:
+	bmp_file_header	77878, 0, 0, 1078
+F_DP_GREEN_BMP_InfoHeader:
+	bmp_info_header	320, 240, 1, 8, 0, 76800, 0, 0, 256, 256
+F_DP_GREEN_BMP_Palette:
+	.incbin	"DP_GREEN.bmp", 54, 1024	; palette: 256 BGR0 entries
+F_DP_GREEN_BMP_Pixels:
+	.incbin	"DP_GREEN.bmp", 1078, 76800	; pixels: 320 x 240, bottom-up rows

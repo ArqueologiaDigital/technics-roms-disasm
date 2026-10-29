@@ -2,5 +2,20 @@
 
 ; _INHALT.TXT -- 394 bytes, clusters 1721..1721.
 
-; No describer for this kind yet: the bytes are the reference image's.
-F__INHALT_TXT:	.incbin	"ca5005.img", 0xdb000, 394
+; Plain text, CR LF line ends: the disk's table of contents, read by people, not by
+; the instrument (no KN5000 file type is .TXT: FileIO_TypeExtensions, v10 0xea0340).
+; Bytes above 0x7e are code page 437/850 (0xe4 = a umlaut).
+F__INHALT_TXT_Text:
+	.ascii	"***************\015\012"
+	.ascii	"* I N H A L T *\015\012"
+	.ascii	"***************\015\012"
+	.ascii	"\015\012"
+	.ascii	"CA-5005 LATIN\015\012"
+	.ascii	"-------------\015\012"
+	.ascii	"\015\012"
+	.ascii	"01. SAMBA:     Samba,         Samba Draws,   Modern Samba\015\012"
+	.ascii	"02. BOSSANOVA: Bossa Band,    Fast Bossa,    Modern Bossa\015\012"
+	.ascii	"03. BEACH:     Fox Hawaii,    Rhumba Hawaii, Beach Beguine\015\012"
+	.ascii	"04. CARIBBEAN: Swingy Reggae, Modern Reggae, Calypso\015\012"
+	.ascii	"05. BALLROOM:  Cha Cha,       Tango,         Beguine\015\012"
+	.ascii	"06: Bossanova Demo-Song"
