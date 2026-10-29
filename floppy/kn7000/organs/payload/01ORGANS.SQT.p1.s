@@ -40,12 +40,16 @@ P_01ORGANS_SQT_p1_Song1:
 	sq_track	0x00, 65535	; track 14
 	sq_track	0x4f, 65535	; track 15
 	sq_track	0x63, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 79, 114, 103, 97, 110, 32, 66, 108, 117, 101, 115, 32, 32, 32
 	.byte	255, 255, 1, 125, 255, 255, 0, 0, 94, 49, 221, 125, 125, 215, 0, 129
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"  Organ Blues   "
 	PMR_NAME_TAIL	0, 0
@@ -92,12 +96,14 @@ P_01ORGANS_SQT_p1_Song1:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 25, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 243, 114, 247, 255
-	.byte	48, 24, 0, 0, 250, 255, 255, 255, 136, 4, 0, 0, 239, 203, 255, 255
-	.byte	32, 48, 0, 0, 255, 239, 255, 255, 0, 2, 0, 0, 215, 247, 255, 255
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 25, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	0, 0, 243, 114, 247, 255, 48, 24, 0, 0, 250, 255, 255, 255, 136, 4
+	.byte	0, 0, 239, 203, 255, 255, 32, 48, 0, 0, 255, 239, 255, 255, 0, 2
+	.byte	0, 0, 215, 247, 255, 255
 
 P_01ORGANS_SQT_p1_Song2:
 	.ascii	"ZZZZ"
@@ -132,12 +138,16 @@ P_01ORGANS_SQT_p1_Song2:
 	sq_track	0x7f, 65535	; track 14
 	sq_track	0x00, 65535	; track 15
 	sq_track	0x0b, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 79, 114, 103, 97, 110, 32, 83, 104, 111, 119, 116, 105, 109, 101, 32
 	.byte	255, 255, 1, 0, 255, 255, 0, 0, 4, 32, 0, 0, 247, 251, 223, 255
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	" Organ Showtime "
 	PMR_NAME_TAIL	0, 0
@@ -184,12 +194,14 @@ P_01ORGANS_SQT_p1_Song2:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 29, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 227, 197, 255, 207
-	.byte	24, 56, 0, 16, 231, 203, 255, 207, 24, 24, 0, 32, 211, 207, 255, 255
-	.byte	12, 60, 0, 4, 227, 207, 251, 255, 44, 44, 0, 32, 227, 198, 239, 255
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 29, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	0, 32, 227, 197, 255, 207, 24, 56, 0, 16, 231, 203, 255, 207, 24, 24
+	.byte	0, 32, 211, 207, 255, 255, 12, 60, 0, 4, 227, 207, 251, 255, 44, 44
+	.byte	0, 32, 227, 198, 239, 255
 
 P_01ORGANS_SQT_p1_Song3:
 	.ascii	"ZZZZ"
@@ -224,12 +236,16 @@ P_01ORGANS_SQT_p1_Song3:
 	sq_track	0x77, 65535	; track 14
 	sq_track	0x00, 65535	; track 15
 	sq_track	0x67, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 32, 79, 114, 103, 97, 110, 32, 80, 111, 112, 32, 32, 32, 32
 	.byte	255, 255, 1, 0, 255, 255, 0, 0, 44, 36, 0, 8, 207, 255, 255, 255
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"   Organ Pop    "
 	PMR_NAME_TAIL	0, 0
@@ -276,12 +292,14 @@ P_01ORGANS_SQT_p1_Song3:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 33, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 251, 211, 255, 215
-	.byte	44, 46, 0, 8, 115, 211, 223, 247, 24, 46, 44, 16, 247, 207, 239, 255
-	.byte	12, 20, 0, 66, 197, 65, 251, 255, 220, 12, 12, 28, 243, 243, 239, 231
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 33, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	0, 32, 251, 211, 255, 215, 44, 46, 0, 8, 115, 211, 223, 247, 24, 46
+	.byte	44, 16, 247, 207, 239, 255, 12, 20, 0, 66, 197, 65, 251, 255, 220, 12
+	.byte	12, 28, 243, 243, 239, 231
 
 P_01ORGANS_SQT_p1_Song4:
 	.ascii	"ZZZZ"
@@ -316,12 +334,16 @@ P_01ORGANS_SQT_p1_Song4:
 	sq_track	0x7f, 65535	; track 14
 	sq_track	0x00, 65535	; track 15
 	sq_track	0x07, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 79, 114, 103, 97, 110, 32, 66, 97, 108, 108, 97, 100, 32, 32
 	.byte	255, 255, 1, 32, 255, 255, 0, 0, 53, 38, 0, 0, 151, 227, 231, 231
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"  Organ Ballad  "
 	PMR_NAME_TAIL	0, 0
@@ -368,12 +390,14 @@ P_01ORGANS_SQT_p1_Song4:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 37, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 190, 186, 247, 77, 192, 193
-	.byte	16, 16, 60, 63, 239, 197, 208, 67, 32, 48, 252, 253, 247, 203, 194, 194
-	.byte	4, 56, 189, 252, 147, 205, 131, 66, 4, 180, 61, 252, 147, 203, 129, 192
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 37, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	190, 186, 247, 77, 192, 193, 16, 16, 60, 63, 239, 197, 208, 67, 32, 48
+	.byte	252, 253, 247, 203, 194, 194, 4, 56, 189, 252, 147, 205, 131, 66, 4, 180
+	.byte	61, 252, 147, 203, 129, 192
 
 P_01ORGANS_SQT_p1_Song5:
 	.ascii	"ZZZZ"
@@ -408,12 +432,16 @@ P_01ORGANS_SQT_p1_Song5:
 	sq_track	0x02, 65535	; track 14
 	sq_track	0x7d, 65535	; track 15
 	sq_track	0x4e, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 79, 114, 103, 97, 110, 32, 66, 111, 115, 115, 97, 32, 32, 32
 	.byte	255, 255, 1, 124, 255, 255, 0, 0, 36, 16, 61, 254, 197, 223, 131, 66
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"  Organ Bossa   "
 	PMR_NAME_TAIL	0, 0
@@ -460,12 +488,14 @@ P_01ORGANS_SQT_p1_Song5:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 41, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 191, 187, 255, 195, 42, 1
-	.byte	12, 53, 63, 122, 243, 231, 128, 2, 28, 114, 127, 223, 255, 163, 64, 193
-	.byte	12, 40, 127, 245, 251, 139, 192, 195, 52, 48, 61, 62, 243, 204, 131, 131
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 41, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	191, 187, 255, 195, 42, 1, 12, 53, 63, 122, 243, 231, 128, 2, 28, 114
+	.byte	127, 223, 255, 163, 64, 193, 12, 40, 127, 245, 251, 139, 192, 195, 52, 48
+	.byte	61, 62, 243, 204, 131, 131
 
 P_01ORGANS_SQT_p1_Song6:
 	.ascii	"ZZZZ"
@@ -500,12 +530,16 @@ P_01ORGANS_SQT_p1_Song6:
 	sq_track	0x42, 65535	; track 14
 	sq_track	0x37, 65535	; track 15
 	sq_track	0x5b, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 79, 114, 103, 97, 110, 32, 70, 111, 120, 116, 114, 111, 116, 32, 32
 	.byte	255, 255, 1, 126, 255, 255, 0, 0, 114, 188, 124, 252, 231, 217, 195, 67
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	" Organ Foxtrot  "
 	PMR_NAME_TAIL	0, 0
@@ -552,12 +586,14 @@ P_01ORGANS_SQT_p1_Song6:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 45, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 163, 72, 0, 0
-	.byte	61, 191, 255, 191, 178, 207, 0, 2, 60, 184, 255, 254, 251, 81, 0, 2
-	.byte	16, 8, 223, 253, 227, 103, 0, 4, 77, 148, 125, 253, 246, 79, 192, 2
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 45, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	255, 255, 163, 72, 0, 0, 61, 191, 255, 191, 178, 207, 0, 2, 60, 184
+	.byte	255, 254, 251, 81, 0, 2, 16, 8, 223, 253, 227, 103, 0, 4, 77, 148
+	.byte	125, 253, 246, 79, 192, 2
 
 P_01ORGANS_SQT_p1_Song7:
 	.ascii	"ZZZZ"
@@ -592,12 +628,16 @@ P_01ORGANS_SQT_p1_Song7:
 	sq_track	0x46, 65535	; track 14
 	sq_track	0x1d, 65535	; track 15
 	sq_track	0x12, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 79, 114, 103, 97, 110, 32, 66, 101, 103, 117, 105, 110, 101, 32, 32
 	.byte	255, 255, 1, 124, 255, 255, 0, 0, 12, 41, 249, 255, 235, 195, 0, 3
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	" Organ Beguine  "
 	PMR_NAME_TAIL	0, 0
@@ -644,12 +684,14 @@ P_01ORGANS_SQT_p1_Song7:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 49, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 253, 195, 134, 2, 2
-	.byte	229, 242, 255, 255, 243, 143, 0, 2, 61, 174, 191, 255, 131, 152, 2, 0
-	.byte	188, 60, 223, 255, 226, 213, 0, 0, 109, 12, 125, 255, 139, 214, 2, 1
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 49, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	255, 253, 195, 134, 2, 2, 229, 242, 255, 255, 243, 143, 0, 2, 61, 174
+	.byte	191, 255, 131, 152, 2, 0, 188, 60, 223, 255, 226, 213, 0, 0, 109, 12
+	.byte	125, 255, 139, 214, 2, 1
 
 P_01ORGANS_SQT_p1_Song8:
 	.ascii	"ZZZZ"
@@ -684,12 +726,16 @@ P_01ORGANS_SQT_p1_Song8:
 	sq_track	0x00, 65535	; track 14
 	sq_track	0x7f, 65535	; track 15
 	sq_track	0x5b, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 79, 114, 103, 97, 110, 32, 87, 97, 108, 116, 122, 32, 32, 32
 	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"  Organ Waltz   "
 	PMR_NAME_TAIL	0, 0
@@ -736,12 +782,14 @@ P_01ORGANS_SQT_p1_Song8:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 53, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 97, 223, 255, 223
-	.byte	36, 20, 8, 0, 219, 235, 255, 255, 20, 16, 20, 0, 223, 249, 255, 247
-	.byte	12, 48, 0, 0, 241, 239, 255, 255, 32, 96, 0, 0, 253, 255, 255, 255
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 53, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	4, 0, 97, 223, 255, 223, 36, 20, 8, 0, 219, 235, 255, 255, 20, 16
+	.byte	20, 0, 223, 249, 255, 247, 12, 48, 0, 0, 241, 239, 255, 255, 32, 96
+	.byte	0, 0, 253, 255, 255, 255
 
 P_01ORGANS_SQT_p1_Song9:
 	.ascii	"ZZZZ"
@@ -776,12 +824,16 @@ P_01ORGANS_SQT_p1_Song9:
 	sq_track	0x7f, 65535	; track 14
 	sq_track	0x00, 65535	; track 15
 	sq_track	0x4b, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 79, 114, 103, 97, 110, 32, 83, 97, 109, 98, 97, 32, 32, 32
 	.byte	255, 255, 1, 0, 255, 255, 0, 0, 36, 48, 0, 0, 255, 239, 255, 255
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	" Klaus & Ethel  "
 	PMR_NAME_TAIL	0, 0
@@ -828,12 +880,14 @@ P_01ORGANS_SQT_p1_Song9:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 59, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 211, 223, 255, 255
-	.byte	8, 168, 0, 24, 246, 207, 255, 239, 0, 54, 0, 0, 235, 233, 255, 247
-	.byte	16, 64, 0, 0, 231, 183, 255, 255, 60, 32, 0, 0, 243, 115, 255, 255
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 59, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	4, 0, 211, 223, 255, 255, 8, 168, 0, 24, 246, 207, 255, 239, 0, 54
+	.byte	0, 0, 235, 233, 255, 247, 16, 64, 0, 0, 231, 183, 255, 255, 60, 32
+	.byte	0, 0, 243, 115, 255, 255
 
 P_01ORGANS_SQT_p1_Song10:
 	.ascii	"ZZZZ"
@@ -868,12 +922,16 @@ P_01ORGANS_SQT_p1_Song10:
 	sq_track	0x77, 65535	; track 14
 	sq_track	0x00, 65535	; track 15
 	sq_track	0x47, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	32, 32, 79, 114, 103, 97, 110, 32, 77, 97, 114, 99, 104, 32, 32, 32
 	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 223, 143, 255, 255
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"  Organ March   "
 	PMR_NAME_TAIL	0, 0
@@ -920,12 +978,14 @@ P_01ORGANS_SQT_p1_Song10:
 	PMR_48_30	63, 16, 182, 0, 147, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 61, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3
-	.byte	0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 16, 211, 199, 231, 223
-	.byte	25, 61, 8, 0, 199, 233, 223, 223, 12, 52, 16, 52, 211, 207, 219, 255
-	.byte	36, 26, 8, 4, 151, 67, 247, 207, 39, 184, 0, 32, 211, 11, 255, 247
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 61, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 0, 3, 0, 0, 16, 17, 18, 19, 20, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	48, 16, 211, 199, 231, 223, 25, 61, 8, 0, 199, 233, 223, 223, 12, 52
+	.byte	16, 52, 211, 207, 219, 255, 36, 26, 8, 4, 151, 67, 247, 207, 39, 184
+	.byte	0, 32, 211, 11, 255, 247
 
 	.if	(. - P_01ORGANS_SQT_p1) - 22720
 	.error	"01ORGANS.SQT part 1: the payload is not 22720 bytes"

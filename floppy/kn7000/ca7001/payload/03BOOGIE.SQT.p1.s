@@ -40,12 +40,16 @@ P_03BOOGIE_SQT_p1_Song1:
 	sq_track	0x04, 65535	; track 14
 	sq_track	0x00, 65535	; track 15
 	sq_track	0x00, 65535	; track 16
-; +0x100..+0x13F, not traced
+; +0x100..+0x11F, not traced
 	.byte	95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95
 	.byte	255, 255, 1, 0, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x120..+0x8DF / +0x86F: the song's settings bank, an image of backup SRAM 0x84000000 + (offset - 0x120):
+; GetM3Sqf / PutM3Sqf (kind 1) address a parameter at Rec8E0Field120Ptr(0) + (block - 0x84000000)
+; (lib func_4C01F153 / func_4C01F200, mode bit 0; KN7000).  +0x120..+0x13F mirror 0x84000000..0x8400001F,
+; which no parameter record covers
 	.byte	90, 90, 0, 0, 74, 75, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-; the song's panel memory (+0x140): 43 records
+; the song's panel memory (+0x140, the image of the live record 0x84000020): 43 records
 	PMR_NAME_HEAD
 	.ascii	"                "
 	PMR_NAME_TAIL	0, 0
@@ -92,12 +96,14 @@ P_03BOOGIE_SQT_p1_Song1:
 	PMR_48_30	63, 16, 182, 0, 64, 150, 136, 144, 145, 179, 0, 0, 0, 0, 0, 0, 130, 1, 0, 129, 0, 10, 74, 0, 0, 0, 0, 0, 63, 35
 	PMR_47_14	192, 0, 4, 197, 0, 0, 8, 252, 255, 17, 0, 0, 0, 80
 	PMR_END
-; +0x890..+0x8DF, not traced
-	.byte	82, 40, 64, 0, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 178, 3
-	.byte	0, 4, 16, 17, 18, 127, 19, 0, 3, 4, 20, 19, 8, 7, 25, 24
-	.byte	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 251, 255, 191, 255
-	.byte	0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 247, 223, 255, 255
-	.byte	0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 191, 255, 255, 255
+; +0x890: the image of 0x84000770, block 0x52 (as a panel record)
+	PMR_52_40	64, 0, 0, 32, 127, 0, 0, 223, 34, 158, 31, 0, 178, 3, 0, 4, 16, 17, 18, 127, 19, 0, 3, 4, 20, 19, 8, 7, 25, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+; +0x8BA..+0x8DF: the image of 0x8400079A.. (blocks 0x50 at +0x8BC, 0x51 at +0x8C6, 0x60 at +0x8D6 on the KN7000;
+; payload offsets, from the block table 0x4858D44C), whose tag / length bytes the song copy does
+; not keep (measured)
+	.byte	0, 8, 251, 255, 191, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0
+	.byte	0, 0, 247, 223, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0
+	.byte	0, 0, 191, 255, 255, 255
 
 	.if	(. - P_03BOOGIE_SQT_p1) - 2272
 	.error	"03BOOGIE.SQT part 1: the payload is not 2272 bytes"
