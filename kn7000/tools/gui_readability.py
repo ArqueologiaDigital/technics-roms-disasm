@@ -48,6 +48,7 @@ TREES = {
 SIBLINGS = {
     "kn6000": ("../kn6000", "src/program.s", "kn6000"),
     "kn6500": ("../kn6500", "src/program.s", "kn6500"),
+    "kn2400": ("../kn2400", "src/program.s", "kn2400"),
 }
 ID_RE = re.compile(r"=\s*(0x[0-9A-Fa-f]+)\b")      # a record field given as hex ...
 ADDR_RE = re.compile(r"\b0x(?:48|4[Cc]|50)[0-9A-Fa-f]{6}\b")

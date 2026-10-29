@@ -219,6 +219,18 @@ def find_tables(data, ident_offsets):
         if read_u32(data, name_off - 4) != 0:
             continue
         code_off = name_off - 4 - 4 * n_names
+        # The two arrays have one length N and start-aligned indices.  A name that
+        # is not an identifier ends the name run early (n_names < N): then the code
+        # array, which ends at the NUL, is longer than the run, and its start is
+        # where the run of code pointers before the NUL begins, not N - n_names
+        # entries further on.  (KN2400 SDFM MainFunctions, names 0x485CFC18: 111
+        # entries, an identifier run of 90; registered by InitializeBlock33 with
+        # count 111 and the code array 0x485CFA58.)
+        k = name_off - 8
+        while k >= 0 and _is_code(read_u32(data, k)):
+            k -= 4
+        if (name_off - 8 - k) // 4 > n_names:
+            code_off = k + 4
         if code_off < 0:
             continue
         codes = [read_u32(data, code_off + 4 * k) for k in range(n_names)]
