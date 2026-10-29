@@ -22,8 +22,21 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import events  # noqa: E402
+import panel_fields  # noqa: E402
 
-INCLUDES = ['kn5000_files.inc']
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / 'analysis' / 'disk-format-probes'))
+import lsw_voice_selector_names as _voices  # noqa: E402
+_TDROM = (pathlib.Path(__file__).resolve().parents[2] / 'original_ROMs' / 'kn5000_table_data.rom').read_bytes()
+
+
+def sound_name(payload):
+    try:
+        name, _tone = _voices.option_name(_TDROM, payload[1] & 7, payload[0])
+    except Exception:
+        return None
+    return name
+
+INCLUDES = ['kn5000_files.inc', 'kn5000_panel.inc']
 
 BOOT_NOTE = [
     'The KN5000 formatter writes these first 32 bytes: FDC_Format2HD_WriteBoot (v10/v9 0xf522f5)',
@@ -93,6 +106,12 @@ class Out:
             self.put('\t.fill\t%d, 1, 0x%02x\t; %s' % (len(b), b[0], what), len(b))
         else:
             self.inc(len(b), what)
+
+    def fill_or_bytes(self, b, what):
+        if not b:
+            return
+        for line, n in events.raw_lines(b, what):
+            self.put(line, n)
 
     def done(self):
         assert self.pos == len(self.ctx.data), (self.ctx.path, self.pos, len(self.ctx.data))
@@ -207,25 +226,25 @@ def emit_block(o, d, start, end, blkname, title):
                   (title, k, len(want), blkname))
         o.comment('block, [INFERENCE]: the v5..v10 lists are all the same).')
     q = start
+    recs = []
     for i in range(k):
         t, n = want[i]
-        if t == 0xFF:
-            o.raw('panel_tlv', ['0xff', '0xff'], 2, 'end of block')
-        else:
-            o.raw('panel_tlv', ['0x%02x' % t, str(n)], 2, 'part %d' % t if t <= 0x16 else 'record %d' % i)
-            o.inc(n, 'tag 0x%02x payload' % t)
+        recs.append((q, t, n, True))
         q += 2 if t == 0xFF else 2 + n
     if k < len(want):
-        recs, stop = tlv_records(d, q, end)
-        if recs:
-            for (r, t, n) in recs:
-                if t == 0xFF and n == 0xFF:
-                    o.raw('panel_tlv', ['0xff', '0xff'], 2, 'end of block')
-                else:
-                    o.raw('panel_tlv', ['0x%02x' % t, str(n)], 2, 'not in the v10 list at this position')
-                    o.inc(n, 'tag 0x%02x payload' % t)
+        more, stop = tlv_records(d, q, end)
+        if more:
+            recs += [(r, t, n, False) for (r, t, n) in more]
             q = stop
-    o.fill_or_inc(d[q:end], 'rest of the block')
+    for (r, t, n, inlist) in recs:
+        if t == 0xFF and n == 0xFF:
+            o.raw('panel_tlv', ['0xff', '0xff'], 2, 'end of block')
+            continue
+        pay = d[r + 2:r + 2 + n]
+        line = panel_fields.record_line(t, n, pay, sound_name(pay) if t in panel_fields.PART_TAGS and n == 24 else None) \
+            if inlist else None
+        o.put(line or panel_fields.raw_line(t, n, pay), 2 + n)
+    o.fill_or_bytes(d[q:end], 'rest of the block')
     return True
 
 
@@ -277,15 +296,10 @@ def describe_pmt(ctx):
             o.ascii(nm, 'bank %d name' % (k + 1))
         else:
             o.inc(16, 'bank %d name field' % (k + 1))
-    want = layout()['PanelTlv_Block0_Layout']
     for k in range(count):
         base = 0xB0 + k * slot
-        m, _ = match_layout(d, base, base + slot, want)
         o.label('Memory_%d_%d' % (k // 8 + 1, k % 8 + 1))
-        o.inc(slot, 'bank %d memory %d: %s' % (
-            k // 8 + 1, k % 8 + 1,
-            'the %d records of PanelTlv_Block0_Layout (checked)' % m if m == len(want) else
-            'opens with the first %d records of PanelTlv_Block0_Layout (checked)' % m))
+        emit_block(o, d, base, base + slot, 'PanelTlv_Block0_Layout', 'Bank %d memory %d' % (k // 8 + 1, k % 8 + 1))
     return o.done()
 
 

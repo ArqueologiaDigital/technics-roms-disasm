@@ -9,7 +9,8 @@
 #
 # Interface and conventions: floppy/README.md.  A model is a directory <model>/ with a
 # disks.mk that sets  <model>_DISKS, <model>_LIST, <model>_SHA1_<disk>  and optionally
-# <model>_ZIPDIR, <model>_FORMATS (see kn5000/disks.mk).  Adding a model = one disks.mk and
+# <model>_ZIPDIR, <model>_FORMATS, <model>_PREGEN (a command run before
+# the generator, e.g. to write the model's generated macro files; see kn5000/disks.mk).  Adding a model = one disks.mk and
 # one word in MODELS.
 
 PROJECTS_ROOT ?= $(HOME)/compartilhado
@@ -54,6 +55,7 @@ build/$(1)/%.img: build/$(1)/%.o $$(LLVM_OBJCOPY)
 refs-$(1): $$(foreach d,$$($(1)_DISKS),$(1)/baserom/$$(d).img)
 
 src-$(1): refs-$(1) tools/fat12_to_s.py tools/fat12lib.py $$($(1)_FORMATS)
+	$$($(1)_PREGEN)
 	for d in $$($(1)_DISKS); do \
 	  $$(PYTHON) tools/fat12_to_s.py $(1)/baserom/$$$$d.img $(1)/$$$$d --ref $$$$d.img \
 	    --title "$$$$d: MAME softlist $$($(1)_LIST)" $$(if $$($(1)_FORMATS),--formats $$($(1)_FORMATS)) \
