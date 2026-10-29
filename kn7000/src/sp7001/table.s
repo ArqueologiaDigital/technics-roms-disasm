@@ -16,7 +16,7 @@
 .equ TABLE_ROM_BASE, 0x48000000
 .mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)
 
-# 151 symbols referenced by the plug-in source (CPU addresses)
+# 156 symbols referenced by the plug-in source (CPU addresses)
 .equ XaprHeader, 0x483E8000
 .equ XapSlotDefault, 0x483E803C
 .equ func_483E803E, 0x483E803E
@@ -73,16 +73,19 @@
 .equ Ap_Ce_Debug, 0x483EB336
 .equ Ap_Ce_Dialog, 0x483EB528
 .equ func_483EB6A4_entry, 0x483EB6A7
+.equ func_483EB967, 0x483EB967
 .equ func_483EB967_entry, 0x483EB96A
 .equ func_483EB9E8_entry, 0x483EB9EB
 .equ func_483EBAC0_entry, 0x483EBAC3
 .equ func_483EBBA8_entry, 0x483EBBAB
 .equ func_483EBC0F_entry, 0x483EBC12
+.equ func_483EBCC9, 0x483EBCC9
 .equ func_483EBCC9_entry, 0x483EBCCC
 .equ func_483EBD8F_entry, 0x483EBD92
 .equ func_483EBE84, 0x483EBE84
 .equ func_483EBF26_entry, 0x483EBF29
 .equ func_483EBFC2_entry, 0x483EBFC5
+.equ func_483EC03A, 0x483EC03A
 .equ func_483EC03A_entry, 0x483EC03D
 .equ func_483EC079_entry, 0x483EC07C
 .equ func_483EC184, 0x483EC184
@@ -139,7 +142,9 @@
 .equ func_483EED2F, 0x483EED2F
 .equ func_483EED42, 0x483EED42
 .equ func_483EED5E_entry, 0x483EED61
+.equ func_483EEDFD, 0x483EEDFD
 .equ func_483EEDFD_entry, 0x483EEE00
+.equ func_483EEE4D, 0x483EEE4D
 .equ func_483EEE4D_entry, 0x483EEE50
 .equ func_483EEEF9_entry, 0x483EEEFC
 .equ KssBuildParam1, 0x483EEF21
@@ -35283,19 +35288,61 @@ TableRomImageEnd:
 .incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F783E, 0x3F88F0
 # KssStrPluginCtrl  (CPU 0x483F88F0)
     .byte 0x50, 0x6C, 0x75, 0x67, 0x69, 0x6E, 0x43, 0x74, 0x72, 0x6C, 0x00   # "PluginCtrl"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F88FB, 0x3F8900
+    .asciz "BASE"
 # KssStrMr7  (CPU 0x483F8900)
     .byte 0x6D, 0x72, 0x37, 0x00   # "mr7"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F8904, 0x3F892C
+    .asciz "MIDI2TLX"
+    .asciz "bwa"
+    .asciz "DATALINK"
+    .asciz "8he"
+    .asciz "BASEEXT"
+    .asciz "nn2"
+    .space 2, 0xFF
 # KssActivationFilePath  (CPU 0x483F892C)
     .byte 0x43, 0x3A, 0x5C, 0x54, 0x45, 0x43, 0x48, 0x4E, 0x49, 0x43, 0x53, 0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x43, 0x54, 0x44, 0x56, 0x31, 0x30, 0x4B, 0x4C, 0x2E, 0x43, 0x44, 0x46, 0x00   # "C:\TECHNICS\DATA\CTDV10KL.CDF"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F894A, 0x3F89A8
+    .space 2, 0xFF
+    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
+    .space 2, 0xFF
+    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
+    .asciz "rb"
+    .space 3, 0xFF
+    .asciz "Reading password file"
+    .space 2, 0xFF
 # KssMsgPluginReleased  (CPU 0x483F89A8)
     .byte 0x50, 0x6C, 0x75, 0x67, 0x69, 0x6E, 0x20, 0x27, 0x25, 0x73, 0x27, 0x2C, 0x20, 0x69, 0x64, 0x20, 0x25, 0x69, 0x2C, 0x20, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6C, 0x20, 0x25, 0x73, 0x2C, 0x20, 0x69, 0x73, 0x20, 0x72, 0x65, 0x6C, 0x65, 0x61, 0x73, 0x65, 0x64, 0x00   # "Plugin '%s', id %i, serial %s, is released"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F89D3, 0x3F89D4
+    .space 1, 0xFF
 # KssMsgPluginWrongPw  (CPU 0x483F89D4)
     .byte 0x50, 0x6C, 0x75, 0x67, 0x69, 0x6E, 0x20, 0x27, 0x25, 0x73, 0x27, 0x2C, 0x20, 0x69, 0x64, 0x20, 0x25, 0x69, 0x2C, 0x20, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6C, 0x20, 0x25, 0x73, 0x2C, 0x20, 0x69, 0x73, 0x20, 0x68, 0x61, 0x73, 0x20, 0x57, 0x52, 0x4F, 0x4E, 0x47, 0x20, 0x50, 0x41, 0x53, 0x53, 0x57, 0x4F, 0x52, 0x54, 0x20, 0x69, 0x6E, 0x20, 0x70, 0x61, 0x73, 0x73, 0x66, 0x69, 0x6C, 0x65, 0x21, 0x00   # "Plugin '%s', id %i, serial %s, is has WRONG PASSWORT in passfile!"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F8A16, 0x3F8B74
+    .space 2, 0xFF
+    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
+    .asciz "wb"
+    .space 3, 0xFF
+    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
+    .asciz "wb"
+    .space 3, 0xFF
+    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
+    .space 2, 0xFF
+    .asciz "PluginLoad id=%i"
+    .space 3, 0xFF
+    .asciz "Plugin not realeased"
+    .space 3, 0xFF
+    .asciz "%i"
+    .space 1, 0xFF
+    .asciz "rb"
+    .space 1, 0xFF
+    .asciz "Plugin not loaded because id %i != suspected id %i"
+    .space 1, 0xFF
+    .asciz "Compile id's dont match: base=%i != baseext=%i"
+    .space 1, 0xFF
+    .asciz "PluginLoad id=%i successfull"
+    .space 3, 0xFF
+    .asciz "A:\\%s.XAP"
+    .space 2, 0xFF
+    .asciz "%s\\%s.XAP"
+    .asciz "C:\\TECHNICS\\DATA"
+    .space 1, 0xFF
+    .asciz "Plugin not Loaded"
+    .space 2, 0xFF
 # KssKeystreamRecords  (CPU 0x483F8B74)
 #   27 static keystream records, 20 base-35 chars + NUL each (stride 0x15); the key's first char selects the pair used
     .byte 0x75, 0x69, 0x75, 0x65, 0x6B, 0x69, 0x70, 0x68, 0x62, 0x38, 0x34, 0x38, 0x6A, 0x35, 0x67, 0x75, 0x6D, 0x32, 0x68, 0x74, 0x00   # "uiuekiphb848j5gum2ht"
@@ -35325,7 +35372,221 @@ TableRomImageEnd:
     .byte 0x6B, 0x74, 0x6B, 0x39, 0x64, 0x39, 0x66, 0x72, 0x61, 0x70, 0x62, 0x35, 0x6A, 0x35, 0x67, 0x75, 0x34, 0x71, 0x72, 0x73, 0x00   # "ktk9d9frapb5j5gu4qrs"
     .byte 0x6A, 0x35, 0x67, 0x75, 0x6E, 0x69, 0x75, 0x68, 0x75, 0x6D, 0x34, 0x39, 0x75, 0x69, 0x75, 0x65, 0x6B, 0x74, 0x6B, 0x39, 0x00   # "j5guniuhum49uiuektk9"
     .byte 0x6D, 0x32, 0x68, 0x74, 0x31, 0x62, 0x76, 0x71, 0x67, 0x61, 0x70, 0x32, 0x36, 0x75, 0x63, 0x66, 0x6A, 0x35, 0x67, 0x75, 0x00   # "m2ht1bvqgap26ucfj5gu"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F8DAB, 0x3F9070
+    .space 1, 0xFF
+    .space 12, 0x00
+    .long AcKssListProc
+    .byte 0x12   # data (CPU 0x483F8DBC)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8DBE)
+    .space 1, 0x00
+    .word 0x0070, 0x0050   # UTF-16 "pP"
+    .long 0x483EFA8D
+    .long 0x483EFA48
+    .long 0x483EF804
+    .long PsKssTextBoxProc
+    .byte 0x1D   # data (CPU 0x483F8DD4)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8DD6)
+    .space 1, 0x00
+    .word 0x0040   # UTF-16 "@"
+    .byte 0x18   # data (CPU 0x483F8DDA)
+    .space 1, 0x00
+    .long 0x483EFA97
+    .long 0x483EFA65
+    .long 0x483EF8AC
+    .long KssBgScreenProc
+    .word 0x0041   # UTF-16 "A"
+    .byte 0x04   # data (CPU 0x483F8DEE)
+    .space 1, 0x00
+    .word 0x0034   # UTF-16 "4"
+    .byte 0x0C   # data (CPU 0x483F8DF2)
+    .space 1, 0x00
+    .long 0x483EFAA4
+    .long 0x483EFA6C
+    .long 0x483EF8E0
+    .long DbKssMemoProc
+    .byte 0x12   # data (CPU 0x483F8E04)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8E06)
+    .space 1, 0x00
+    .word 0x002C   # UTF-16 ","
+    .byte 0x0C   # data (CPU 0x483F8E0A)
+    .space 1, 0x00
+    .long 0x483EFAB0
+    .long 0x483EFA70
+    .long 0x483EF90C
+    .long AcKssScreenMenuProc
+    .byte 0x01   # data (CPU 0x483F8E1C)
+    .space 1, 0x00
+    .byte 0xF4, 0x02, 0x48   # data (CPU 0x483F8E1E)
+    .space 1, 0x00
+    .byte 0x08   # data (CPU 0x483F8E22)
+    .space 1, 0x00
+    .long 0x483EFABA
+    .long 0x483EFA74
+    .long 0x483EF92C
+    .long AcKssEditBoxProc
+    .byte 0x1D   # data (CPU 0x483F8E34)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8E36)
+    .space 1, 0x00
+    .word 0x0054, 0x002C   # UTF-16 "T,"
+    .long 0x483EFACA
+    .long 0x483EFA77
+    .long 0x483EF9CC
+    .long AcKssNamingWindowProc
+    .word 0x0043   # UTF-16 "C"
+    .byte 0x04   # data (CPU 0x483F8E4E)
+    .space 1, 0x00
+    .word 0x002C   # UTF-16 ","
+    .space 2, 0x00
+    .long 0x483EFAD7
+    .long 0x483EFA85
+    .long 0x483EFA08
+    .long IvKssNamingProc
+    .byte 0x15   # data (CPU 0x483F8E64)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8E66)
+    .space 1, 0x00
+    .byte 0x1C   # data (CPU 0x483F8E68)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8E6A)
+    .space 1, 0x00
+    .long 0x483EFAE9
+    .long 0x483EFA86
+    .long 0x483EFA14
+    .long AcKssNamingEditSwProc
+    .word 0x0020   # UTF-16 " "
+    .byte 0x04   # data (CPU 0x483F8E7E)
+    .space 1, 0x00
+    .word 0x0034   # UTF-16 "4"
+    .byte 0x08   # data (CPU 0x483F8E82)
+    .space 1, 0x00
+    .long 0x483EFAF5
+    .long 0x483EFA88
+    .long 0x483EFA28
+    .long KssXLyricsBoxProc
+    .byte 0x12   # data (CPU 0x483F8E94)
+    .space 1, 0x00
+    .byte 0x04   # data (CPU 0x483F8E96)
+    .space 1, 0x00
+    .word 0x0024   # UTF-16 "$"
+    .byte 0x04   # data (CPU 0x483F8E9A)
+    .space 1, 0x00
+    .long 0x483EFB07
+    .long 0x483EFA8B
+    .long 0x483EFA40
+    .space 24, 0x00
+    .long 0x483EFB18
+    .long 0x483EFB2B
+    .long 0x483EFB3A
+    .long 0x483EFB47
+    .long 0x483EFB55
+    .long 0x483EFB64
+    .long 0x483EFB73
+    .long 0x483EFB85
+    .long 0x483EFB8E
+    .long 0x483EFB9D
+    .long 0x483EFBA9
+    .long 0x483EFBB8
+    .long 0x483EFBC6
+    .long 0x483EFBD1
+    .long 0x483EFBE1
+    .long 0x483EFBEF
+    .space 5, 0x00
+    .byte 0xFC, 0x3E, 0x48   # data (CPU 0x483F8F05)
+    .long 0x483EFC0D
+    .long 0x483EFC1B
+    .long 0x483EFC2B
+    .long 0x483EFC3B
+    .long 0x483EFC4E
+    .long 0x483EFC61
+    .long 0x483EFC6C
+    .long 0x483EFC77
+    .long 0x483EFC86
+    .long 0x483EFC96
+    .long 0x483EFCA6
+    .long 0x483EFCB9
+    .long 0x483EFCC3
+    .long 0x483EFCCD
+    .long 0x483EFCDD
+    .long 0x483EFCEE
+    .space 1, 0xFF
+    .byte 0xFC, 0x3E, 0x48   # data (CPU 0x483F8F49)
+    .long 0x483EFD0F
+    .long 0x483EFD1F
+    .long 0x483EFD32
+    .long 0x483EFD44
+    .long 0x483EFD51
+    .long 0x483EFD5A
+    .long 0x483EFD6B
+    .long 0x483EFD74
+    .long 0x483EFD7F
+    .long 0x483EFD8A
+    .long 0x483EFD96
+    .long 0x483EFDA0
+    .long 0x483EFDAE
+    .long 0x483EFDC6
+    .long 0x483EFDDC
+    .long 0x483EFDF2
+    .long 0x483EFE09
+    .long 0x483EFE17
+    .long 0x483EFE26
+    .long 0x483EFE36
+    .long 0x483EFE48
+    .long 0x483EFE5A
+    .long 0x483EFE6F
+    .long 0x483EFE81
+    .long 0x483EFE98
+    .long 0x483EFEAE
+    .long 0x483EFEC3
+    .long 0x483EFED6
+    .long 0x483EFEEA
+    .long 0x483EFEFD
+    .long 0x483EFF11
+    .long 0x483EFF21
+    .long 0x483EFF31
+    .long 0x483EFF4A
+    .long 0x483EFF61
+    .long 0x483EFF73
+    .long 0x483EFF85
+    .long 0x483EFF97
+    .long 0x483EFFB2
+    .long 0x483EFFC0
+    .long 0x483EFFCC
+    .long 0x483EFFE4
+    .long 0x483EFFFC
+    .long 0x483F0016
+    .word 0x002F   # UTF-16 "/"
+    .asciz "?HF"
+    .asciz "?H]"
+    .asciz "?H|"
+    .byte 0x3F, 0x48   # data (CPU 0x483F900A)
+    .long 0x483F0095
+    .long 0x483F00B6
+    .long 0x483F00D4
+    .long 0x483F00F4
+    .long 0x483F010D
+    .long 0x483F0124
+    .long 0x483F013B
+    .long 0x483F0151
+    .long 0x483F016D
+    .long 0x483F017D
+    .long 0x483F0193
+    .long 0x483F01A8
+    .long 0x483F01B6
+    .long 0x483F01D0
+    .long 0x483F01E8
+    .long 0x483F01FB
+    .long 0x483F020D
+    .long 0x483F021D
+    .long 0x483F022E
+    .long 0x483F0239
+    .long 0x483F0244
+    .long 0x483F024F
+    .long 0x483F025A
+    .long 0x483F0265
+    .space 4, 0x00
 # MILK reflection table: 10 code pointers, NUL, 10 name pointers (CPU 0x483F9070)
     .long AcKssListProc
     .long PsKssTextBoxProc
@@ -35348,7 +35609,7 @@ TableRomImageEnd:
     .long 0x483F02E8   # -> "IvKssNamingProc"
     .long 0x483F02F8   # -> "AcKssNamingEditSwProc"
     .long 0x483F030E   # -> "KssXLyricsBoxProc"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F90C4, 0x3F90C8
+    .long 0x483F0320
 # MILK reflection table: 25 code pointers, NUL, 25 name pointers (CPU 0x483F90C8)
     .long ApTestProc
     .long Ap_CE_Main

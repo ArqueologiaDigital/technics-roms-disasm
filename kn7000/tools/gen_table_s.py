@@ -645,6 +645,108 @@ def emit_code(d, base, clo, chi, starts, names, notes, ROMQ, used):
     return B, nconv, nfail
 
 
+def _asm_str(bs):
+    return "".join("\\" + chr(c) if chr(c) in '"\\' else chr(c) if 0x20 <= c < 0x7F else f"\\x{c:02x}"
+                   for c in bs)
+
+
+def typed_gap(d, lo, hi, base, ptr_ok, nm_or_hex):
+    """The bytes d[lo:hi] between recognised strings and pointer tables, as typed rows:
+    0x00/0xFF fill as .space, NUL-terminated text as .asciz, UTF-16LE character tables
+    (the C runtime's and the naming dialogs' character sets) as .word rows, 4-aligned
+    pointers into the image as .long, 8-aligned IEEE doubles (the printf/strtod power
+    tables) as .long lo, hi with the value, anything else as a commented .byte row.
+    -> None when more than a tenth of the gap (and over 16 bytes) is not understood:
+    the caller then keeps the gap a passthrough, which the census still counts."""
+    out, o, unknown = [], lo, 0
+
+    def printable(c):
+        return 0x20 <= c < 0x7F
+
+    def is_double(p):
+        if p % 4 or p + 8 > hi:
+            return False
+        v = struct.unpack_from("<d", d, p)[0]
+        return v == v and 1e-300 < abs(v) < 1e300 and float(f"{v:.15g}") == v
+
+    while o < hi:
+        b = d[o]
+        cls = d[o + 1:o + 129]
+        if o + 129 <= hi and b == 0 and cls[0x20] == 0xA0 and cls[0x30] == 0x8C and cls[0x41] == 0x89 \
+                and cls[0x61] == 0x8A and cls[0] == 0x10:
+            out.append("    # the C runtime's character-class table (ctype): an entry for EOF, then one")
+            out.append("    # per character 0x00-0x7F: 0x10 control, 0x30 control + space, 0xA0 blank,")
+            out.append("    # 0xC0 punctuation, 0x8C digit, 0x89 / 0x81 upper (hex / other), 0x8A / 0x82 lower")
+            out.append("    .byte 0x00   # EOF")
+            for i in range(0, 128, 16):
+                out.append(f"    .byte {hexbytes(cls[i:i + 16])}   # 0x{i:02x}-0x{i + 15:02x}")
+            o += 129
+            continue
+        if b in (0x00, 0xFF):
+            e = o
+            while e < hi and d[e] == b:
+                if b == 0 and is_double(e):
+                    break                    # a double's zero low bytes are not fill
+                e += 1
+            if e == o:                       # a double starts right here
+                e = o + 8
+                lo32, hi32 = struct.unpack_from("<II", d, o)
+                out.append(f"    .long 0x{lo32:08X}, 0x{hi32:08X}   # double {struct.unpack_from('<d', d, o)[0]:.15g}")
+                o = e
+                continue
+            out.append(f"    .space {e - o}, 0x{b:02X}")
+            o = e
+            continue
+        e = o
+        while e < hi and printable(d[e]):
+            e += 1
+        if e - o >= 2 and e < hi and d[e] == 0:
+            out.append(f'    .asciz "{_asm_str(d[o:e])}"')
+            o = e + 1
+            continue
+        if True:
+            e = o
+            while e + 2 <= hi and printable(d[e]) and d[e + 1] == 0:
+                e += 2
+            if e - o >= 2:
+                chars = d[o:e:2]
+                for i in range(0, len(chars), 16):
+                    seg = chars[i:i + 16]
+                    out.append(f"    .word {', '.join(f'0x{c:04X}' for c in seg)}   "
+                               f"# UTF-16 \"{_asm_str(seg).replace('#', '?')}\"")
+                o = e
+                continue
+        if o % 4 == 0 and o + 8 <= hi:
+            if is_double(o):
+                rows = []
+                while is_double(o) or (o % 4 == 0 and o + 8 <= hi and   # inside a table: any finite value
+                                       1e-300 < abs(struct.unpack_from("<d", d, o)[0]) < 1e300):
+                    v = struct.unpack_from("<d", d, o)[0]
+                    lo32, hi32 = struct.unpack_from("<II", d, o)
+                    rows.append(f"    .long 0x{lo32:08X}, 0x{hi32:08X}   # double {v!r}")
+                    o += 8
+                out += rows
+                continue
+        if o % 4 == 0 and o + 4 <= hi and ptr_ok(struct.unpack_from("<I", d, o)[0]):
+            out.append(f"    .long {nm_or_hex(struct.unpack_from('<I', d, o)[0])}")
+            o += 4
+            continue
+        if o % 4 == 0 and o + 4 <= hi and 0 < struct.unpack_from("<I", d, o)[0] < 0x10000:
+            out.append(f"    .long 0x{struct.unpack_from('<I', d, o)[0]:08X}")
+            o += 4
+            continue
+        e = o + 1
+        while e < hi and d[e] not in (0x00, 0xFF) and not (e % 4 == 0 and e + 4 <= hi and
+                                                            ptr_ok(struct.unpack_from("<I", d, e)[0])):
+            e += 1
+        out.append(f"    .byte {hexbytes(d[o:e])}   # data (CPU 0x{base + o:08X})")
+        unknown += e - o
+        o = e
+    if unknown > 16 and unknown * 10 > hi - lo:
+        return None                          # mostly not understood: the caller keeps it raw
+    return out
+
+
 def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
     """Returns (body lines, extra header-comment lines) for the XAPR plug-in."""
     syms = load_syms(a.sym)
@@ -727,11 +829,13 @@ def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
         if o < cur:
             continue
         if cur < o:
-            B.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{o:06X}")
+            B.extend(typed_gap(d, cur, o, BASE, lambda w: BASE + plo <= w < BASE + phi, nm_or_hex)
+                     or [f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{o:06X}"])
         B += rows
         cur = end
     if cur < foot:
-        B.append(f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{foot:06X}")
+        B.extend(typed_gap(d, cur, foot, BASE, lambda w: BASE + plo <= w < BASE + phi, nm_or_hex)
+                 or [f".incbin_range {ROMQ}, 0x{cur:06X}, 0x{foot:06X}"])
     B += [f"# XaprFooter  (CPU 0x{BASE + foot:08X})",
           f"    .byte {hexbytes(d[foot:phi])}   # '{text(d[foot:phi])}' magic (checked by PlugInProbe)"]
 
