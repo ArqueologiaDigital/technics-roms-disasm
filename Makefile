@@ -35,6 +35,7 @@ CLANG=$(LLVM_BIN)/clang
 .PHONY: verify-v8-reference verify-hdae5000-v201-reference verify-subprogram-update-images
 .PHONY: kn7000 kn7000-clean gate-kn7000
 .PHONY: kn2400 kn6000 kn6500 hdsx3 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3
+.PHONY: floppy gate-floppy
 .PHONY: mn10300-siblings-clean
 .PHONY: llvm-convert llvm-convert-all asl-all gallery issues rom-status website dispatch-census semantic-score doc-quality
 .SECONDARY:
@@ -124,7 +125,13 @@ mn10300-siblings-clean:
 	$(MAKE) -C kn6500 clean
 	$(MAKE) -C hdsx3 clean
 
-everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3
+# floppy/: FAT12 diskette images rebuilt from typed source (floppy/README.md).
+floppy:
+	$(MAKE) -C floppy all
+gate-floppy:
+	$(MAKE) -C floppy gate
+
+everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3 floppy
 
 # ⚠ assert_images_assemble.py runs FIRST and asks the assembler directly, from
 # each root source.  The byte gate reads `make`'s answer and therefore inherits
@@ -170,7 +177,7 @@ verify-subprogram-update-images:
 gate-wsa1:
 	cd wsa1 && python3 scripts/analysis/assert_byte_identical.py
 
-gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3
+gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hdsx3 gate-floppy
 	@# A stale object compares green forever: assert the assembler is a
 	@# prerequisite of every image before believing either byte gate.
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py

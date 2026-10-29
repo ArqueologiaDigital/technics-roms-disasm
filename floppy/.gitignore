@@ -1,0 +1,4 @@
+# Reference images (copied from the softlist zips by make, SHA-1 checked) and build output.
+*/baserom/
+build/
+__pycache__/
