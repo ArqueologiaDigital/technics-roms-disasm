@@ -1414,12 +1414,31 @@ rebuilt_ROMs/kn5000_custom_data.llvm.rom: rebuilt_ROMs/kn5000_custom_data.llvm.e
 # repository like v8's).  `make` copies it, git-ignored, from the private romset
 # and refuses a copy whose SHA-1 differs; override the source with
 #   make KN5000_IC307_REF=/path/to/kn5000_waveform_rom.ic307 ...
-# The PCM bodies are `.incbin`s of that copy (census: opaque -- pcm); the
-# directory, the parameter records, the alignment and the 0xFF tails are typed
-# source.  Notes: notes/waveform-ic307-2026-10-29/README.md.
+# The directory, the parameter records, the alignment and the 0xFF tails are
+# typed source.  Each PCM item is a WAV file in waveform/wav/ (git-ignored, like
+# the reference: dump bytes stay out of the public repository); `make
+# waveform-wav` extracts any missing WAV from the reference copy, and
+# scripts/build/pcm_wav.py turns the WAVs into the raw items waveform/build/pcm/
+# that the source `.incbin`s.  The manifest waveform/wav_manifest.tsv says where
+# each item is and how it is encoded.  Notes: notes/waveform-ic307-2026-10-29/
+# README.md and notes/media-files-2026-10-30/README.md.
 KN5000_IC307_REF  ?= $(PROJECTS_ROOT)/technics_romsets/kn5000/kn5000_waveform_rom.ic307
 KN5000_IC307_SHA1 := 4b511bff6625f4655cabd96a263bf548d2ef4bf7
 WAVEFORM_SRC = $(wildcard waveform/*.s waveform/*.inc)
+IC307_WAV_MANIFEST := waveform/wav_manifest.tsv
+
+waveform/wav/.extracted: original_ROMs/kn5000_waveform_rom.ic307 $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
+	python3 scripts/build/pcm_wav.py extract --missing $(IC307_WAV_MANIFEST) $< waveform/wav
+	@touch $@
+
+waveform/build/pcm/.built: waveform/wav/.extracted $(wildcard waveform/wav/*.wav) $(IC307_WAV_MANIFEST) scripts/build/pcm_wav.py
+	python3 scripts/build/pcm_wav.py build --ref original_ROMs/kn5000_waveform_rom.ic307 $(IC307_WAV_MANIFEST) waveform/wav waveform/build/pcm
+	@touch $@
+
+# re-extract the WAVs that are missing (an edited WAV is never overwritten)
+waveform-wav: original_ROMs/kn5000_waveform_rom.ic307
+	python3 scripts/build/pcm_wav.py extract --missing $(IC307_WAV_MANIFEST) $< waveform/wav
+	@touch waveform/wav/.extracted
 
 original_ROMs/kn5000_waveform_rom.ic307:
 	@if [ ! -f "$(KN5000_IC307_REF)" ]; then \
@@ -1437,9 +1456,9 @@ verify-ic307-reference: original_ROMs/kn5000_waveform_rom.ic307
 	 if [ "$$got" = "$(KN5000_IC307_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_IC307_SHA1)"; \
 	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_IC307_SHA1)"; exit 1; fi
 
-rebuilt_ROMs/kn5000_waveform_ic307.llvm.o: $(WAVEFORM_SRC) original_ROMs/kn5000_waveform_rom.ic307 $(LLVM_MC)
+rebuilt_ROMs/kn5000_waveform_ic307.llvm.o: $(WAVEFORM_SRC) waveform/build/pcm/.built $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
-	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I waveform -I original_ROMs -o $@ waveform/kn5000_waveform_ic307.s
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I waveform -I waveform/build -o $@ waveform/kn5000_waveform_ic307.s
 
 rebuilt_ROMs/kn5000_waveform_ic307.llvm.elf: rebuilt_ROMs/kn5000_waveform_ic307.llvm.o waveform/waveform.ld
 	$(LLVM_LLD) -T waveform/waveform.ld -o $@ $<
@@ -1452,7 +1471,8 @@ gate: verify-ic307-reference
 clean: clean-waveform
 clean-waveform:
 	rm -f rebuilt_ROMs/kn5000_waveform_ic307.llvm.*
-.PHONY: verify-ic307-reference clean-waveform
+	rm -rf waveform/build
+.PHONY: verify-ic307-reference clean-waveform waveform-wav
 
 # ============================================================================
 # LLVM conversion targets (regenerate .s from ASL sources)

@@ -18,8 +18,14 @@
 ;               entry's wave start (1495 of 1495), then [flags:8][value:8]
 ;               words -- WaveSplit / WaveSeq, waveform_macros.inc.
 ;               Zero fill up to the next 16-byte boundary.
-;   ...         signed 16-bit little-endian PCM, one labelled .incbin of the
-;               git-ignored reference image per distinct wave start (1413).
+;   ...         PCM, one labelled item per distinct wave start (1413), each
+;               included from its WAV file waveform/wav/<label>.wav through
+;               scripts/build/pcm_wav.py (git-ignored; `make waveform-wav`
+;               extracts them from the reference image).  IC307 is the Y chip
+;               of a word-interleaved pair (the KN7000's wave ROMs hold 1,342
+;               of its items in their Y chips), so an item is every other word
+;               of a recording: signed 16-bit little-endian samples, or two
+;               signed 8-bit samples per word (notes/media-files-2026-10-30).
 ;   end         0xFF fill: 128 B on pages 0-2, 64 B on page 3.
 ;
 ; RECORDING SELECTORS.  A tone-database zone record's +0 word (class << 12) +
