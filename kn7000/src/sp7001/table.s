@@ -9,20 +9,22 @@
 # 0x200, then 84 asset segments. Segment names and comments come from
 # tools/table_segments.py; the JPEG segments are files in src/table/.
 # Reference image: kn7000_table_sp7001.rom, SHA-1 482e73af2c84a257ebc835292943cb159b6d1d07.
-# Plug-in: 141 code chunks converted to MN10300 assembly.
+# Plug-in: 141 code chunks converted to MN10300 assembly; its data is typed (src/sp7001/plugin/data/).
 
 .include "src/table/style_macros.inc"   # the style format's record and event macros
 
 .equ TABLE_ROM_BASE, 0x48000000
 .mnbase 0x48000000   # CPU address of output offset 0 (for PC-relative ops)
 
-# 158 symbols referenced by the plug-in source (CPU addresses)
-.equ XaprHeader, 0x483E8000
+# 334 symbols referenced by the plug-in source (CPU addresses)
 .equ XapSlotDefault, 0x483E803C
 .equ func_483E803E, 0x483E803E
+.equ func_483E8071, 0x483E8071
 .equ func_483E8071_entry, 0x483E8074
 .equ XapSlot10, 0x483E8303
 .equ ApTestProc, 0x483E850F
+.equ loc_483E8512, 0x483E8512
+.equ func_483E856E, 0x483E856E
 .equ func_483E856E_entry, 0x483E8571
 .equ AcKssScreenMenuProc, 0x483E85AD
 .equ AcKssEditBoxProc, 0x483E85CB
@@ -55,125 +57,299 @@
 .equ XapSlot0C, 0x483E88FE
 .equ DbKssMemoProc, 0x483E8A08
 .equ KssBgScreenProc, 0x483E9060
+.equ loc_483E9192, 0x483E9192
+.equ func_483E9194, 0x483E9194
 .equ func_483E9194_entry, 0x483E9197
+.equ loc_483E9340, 0x483E9340
+.equ func_483E9342, 0x483E9342
 .equ func_483E9342_entry, 0x483E9345
-.equ func_483E94F1, 0x483E94F1
-.equ func_483E94F9, 0x483E94F9
+.equ loc_483E94F1, 0x483E94F1
+.equ loc_483E94F9, 0x483E94F9
+.equ func_483E9503, 0x483E9503
 .equ func_483E9503_entry, 0x483E9506
+.equ func_483E9522, 0x483E9522
 .equ func_483E9522_entry, 0x483E9525
+.equ func_483E9540, 0x483E9540
 .equ func_483E9540_entry, 0x483E9543
+.equ loc_483E9596, 0x483E9596
+.equ func_483E95C5, 0x483E95C5
 .equ func_483E95C5_entry, 0x483E95C8
 .equ PsKssTextBoxProc, 0x483E9611
 .equ Ap_CE_Main, 0x483E9B62
 .equ KssActivationOkHandler, 0x483E9E1C
 .equ Ap_Ce_StartUp, 0x483EA0A6
+.equ loc_483EB162, 0x483EB162
+.equ loc_483EB17E, 0x483EB17E
+.equ loc_483EB19A, 0x483EB19A
+.equ loc_483EB1A3, 0x483EB1A3
+.equ loc_483EB1CC, 0x483EB1CC
+.equ loc_483EB1E8, 0x483EB1E8
+.equ loc_483EB204, 0x483EB204
+.equ loc_483EB220, 0x483EB220
+.equ loc_483EB24D, 0x483EB24D
+.equ func_483EB2DD, 0x483EB2DD
 .equ func_483EB2DD_entry, 0x483EB2E0
+.equ func_483EB2FD, 0x483EB2FD
 .equ func_483EB2FD_entry, 0x483EB300
 .equ func_483EB327, 0x483EB327
 .equ Ap_Ce_Debug, 0x483EB336
 .equ Ap_Ce_Dialog, 0x483EB528
+.equ loc_483EB5A1, 0x483EB5A1
+.equ loc_483EB5E3, 0x483EB5E3
+.equ loc_483EB624, 0x483EB624
+.equ loc_483EB662, 0x483EB662
+.equ loc_483EB680, 0x483EB680
+.equ loc_483EB6A2, 0x483EB6A2
+.equ func_483EB6A4, 0x483EB6A4
 .equ func_483EB6A4_entry, 0x483EB6A7
-.equ func_483EB967, 0x483EB967
+.equ loc_483EB95F, 0x483EB95F
+.equ loc_483EB967, 0x483EB967
 .equ func_483EB967_entry, 0x483EB96A
+.equ func_483EB9E8, 0x483EB9E8
 .equ func_483EB9E8_entry, 0x483EB9EB
+.equ func_483EBAC0, 0x483EBAC0
 .equ func_483EBAC0_entry, 0x483EBAC3
+.equ loc_483EBBA6, 0x483EBBA6
+.equ func_483EBBA8, 0x483EBBA8
 .equ func_483EBBA8_entry, 0x483EBBAB
+.equ loc_483EBC0D, 0x483EBC0D
+.equ func_483EBC0F, 0x483EBC0F
 .equ func_483EBC0F_entry, 0x483EBC12
-.equ func_483EBCC9, 0x483EBCC9
+.equ loc_483EBCC9, 0x483EBCC9
 .equ func_483EBCC9_entry, 0x483EBCCC
+.equ loc_483EBD8D, 0x483EBD8D
+.equ func_483EBD8F, 0x483EBD8F
 .equ func_483EBD8F_entry, 0x483EBD92
+.equ loc_483EBE1E, 0x483EBE1E
+.equ loc_483EBE82, 0x483EBE82
 .equ func_483EBE84, 0x483EBE84
+.equ loc_483EBF24, 0x483EBF24
+.equ func_483EBF26, 0x483EBF26
 .equ func_483EBF26_entry, 0x483EBF29
+.equ loc_483EBFC0, 0x483EBFC0
+.equ func_483EBFC2, 0x483EBFC2
 .equ func_483EBFC2_entry, 0x483EBFC5
-.equ func_483EC03A, 0x483EC03A
+.equ loc_483EBFF2, 0x483EBFF2
+.equ loc_483EC03A, 0x483EC03A
 .equ func_483EC03A_entry, 0x483EC03D
+.equ loc_483EC077, 0x483EC077
+.equ func_483EC079, 0x483EC079
 .equ func_483EC079_entry, 0x483EC07C
 .equ func_483EC184, 0x483EC184
+.equ func_483EC1BE, 0x483EC1BE
 .equ func_483EC1BE_entry, 0x483EC1C1
+.equ loc_483EC486, 0x483EC486
+.equ func_483EC488, 0x483EC488
 .equ func_483EC488_entry, 0x483EC48B
+.equ loc_483EC56D, 0x483EC56D
+.equ loc_483EC58F, 0x483EC58F
+.equ loc_483EC5BA, 0x483EC5BA
+.equ loc_483EC5EF, 0x483EC5EF
+.equ loc_483EC62E, 0x483EC62E
+.equ loc_483EC677, 0x483EC677
+.equ loc_483EC6CA, 0x483EC6CA
+.equ loc_483EC727, 0x483EC727
+.equ loc_483EC78E, 0x483EC78E
+.equ loc_483EC897, 0x483EC897
+.equ func_483EC899, 0x483EC899
 .equ func_483EC899_entry, 0x483EC89C
+.equ loc_483EC9BB, 0x483EC9BB
+.equ func_483EC9BD, 0x483EC9BD
 .equ func_483EC9BD_entry, 0x483EC9C0
+.equ loc_483ECA04, 0x483ECA04
+.equ func_483ECA06, 0x483ECA06
 .equ func_483ECA06_entry, 0x483ECA09
+.equ loc_483ECA4D, 0x483ECA4D
 .equ func_483ECA4F, 0x483ECA4F
+.equ loc_483ECB76, 0x483ECB76
+.equ loc_483ECB8D, 0x483ECB8D
+.equ func_483ECB8F, 0x483ECB8F
 .equ func_483ECB8F_entry, 0x483ECB92
+.equ loc_483ECC07, 0x483ECC07
+.equ loc_483ECC6B, 0x483ECC6B
 .equ KssPad16, 0x483ECC6D
-.equ func_483ECCD4, 0x483ECCD4
+.equ loc_483ECC8C, 0x483ECC8C
+.equ loc_483ECCD4, 0x483ECCD4
+.equ loc_483ECCDC, 0x483ECCDC
+.equ loc_483ECCFD, 0x483ECCFD
+.equ func_483ECCFF, 0x483ECCFF
 .equ func_483ECCFF_entry, 0x483ECD02
+.equ loc_483ECD5D, 0x483ECD5D
+.equ loc_483ECD83, 0x483ECD83
+.equ func_483ECDF5, 0x483ECDF5
 .equ func_483ECDF5_entry, 0x483ECDF8
+.equ loc_483ED264, 0x483ED264
+.equ func_483ED266, 0x483ED266
 .equ func_483ED266_entry, 0x483ED269
+.equ loc_483ED2D0, 0x483ED2D0
+.equ func_483ED2D2, 0x483ED2D2
 .equ func_483ED2D2_entry, 0x483ED2D5
+.equ loc_483ED343, 0x483ED343
+.equ func_483ED345, 0x483ED345
 .equ func_483ED345_entry, 0x483ED348
+.equ loc_483ED393, 0x483ED393
+.equ func_483ED395, 0x483ED395
 .equ func_483ED395_entry, 0x483ED398
+.equ loc_483ED43A, 0x483ED43A
+.equ func_483ED43C, 0x483ED43C
 .equ func_483ED43C_entry, 0x483ED43F
+.equ loc_483ED488, 0x483ED488
+.equ func_483ED48A, 0x483ED48A
 .equ func_483ED48A_entry, 0x483ED48D
-.equ func_483ED4EE, 0x483ED4EE
+.equ loc_483ED4EE, 0x483ED4EE
 .equ func_483ED4EE_entry, 0x483ED4F1
-.equ func_483ED51F, 0x483ED51F
+.equ loc_483ED51F, 0x483ED51F
+.equ loc_483ED524, 0x483ED524
+.equ loc_483ED553, 0x483ED553
+.equ loc_483ED562, 0x483ED562
+.equ func_483ED564, 0x483ED564
 .equ func_483ED564_entry, 0x483ED567
+.equ loc_483ED5C9, 0x483ED5C9
+.equ func_483ED5CB, 0x483ED5CB
 .equ func_483ED5CB_entry, 0x483ED5CE
+.equ loc_483ED643, 0x483ED643
+.equ loc_483ED660, 0x483ED660
+.equ loc_483ED69E, 0x483ED69E
+.equ loc_483ED6B2, 0x483ED6B2
+.equ loc_483ED6C0, 0x483ED6C0
+.equ loc_483ED6F1, 0x483ED6F1
+.equ loc_483ED728, 0x483ED728
+.equ loc_483ED736, 0x483ED736
+.equ loc_483ED74A, 0x483ED74A
+.equ loc_483ED75E, 0x483ED75E
+.equ loc_483ED770, 0x483ED770
+.equ loc_483ED77E, 0x483ED77E
 .equ func_483ED783, 0x483ED783
+.equ loc_483ED797, 0x483ED797
+.equ loc_483ED7B5, 0x483ED7B5
+.equ loc_483ED7D3, 0x483ED7D3
+.equ loc_483ED7F1, 0x483ED7F1
+.equ loc_483ED80F, 0x483ED80F
+.equ loc_483ED82D, 0x483ED82D
+.equ loc_483ED84B, 0x483ED84B
+.equ loc_483ED869, 0x483ED869
+.equ loc_483ED887, 0x483ED887
+.equ loc_483ED8A3, 0x483ED8A3
 .equ func_483ED8A9, 0x483ED8A9
+.equ loc_483ED8E0, 0x483ED8E0
+.equ loc_483ED8F0, 0x483ED8F0
+.equ func_483ED8F2, 0x483ED8F2
 .equ func_483ED8F2_entry, 0x483ED8F5
+.equ loc_483ED971, 0x483ED971
+.equ func_483ED973, 0x483ED973
 .equ func_483ED973_entry, 0x483ED976
+.equ loc_483ED9C5, 0x483ED9C5
+.equ func_483ED9C7, 0x483ED9C7
 .equ func_483ED9C7_entry, 0x483ED9CA
+.equ loc_483EDA25, 0x483EDA25
+.equ func_483EDA27, 0x483EDA27
 .equ func_483EDA27_entry, 0x483EDA2A
+.equ loc_483EDA95, 0x483EDA95
+.equ func_483EDA97, 0x483EDA97
 .equ func_483EDA97_entry, 0x483EDA9A
+.equ loc_483EDB11, 0x483EDB11
+.equ func_483EDB13, 0x483EDB13
 .equ func_483EDB13_entry, 0x483EDB16
-.equ func_483EDB4B, 0x483EDB4B
+.equ loc_483EDB4B, 0x483EDB4B
 .equ func_483EDB4B_entry, 0x483EDB4E
-.equ func_483EDB56, 0x483EDB56
-.equ func_483EDB6E, 0x483EDB6E
+.equ loc_483EDB56, 0x483EDB56
+.equ loc_483EDB6E, 0x483EDB6E
+.equ loc_483EDB86, 0x483EDB86
+.equ loc_483EDBAD, 0x483EDBAD
+.equ loc_483EDBD0, 0x483EDBD0
 .equ func_483EDBD2, 0x483EDBD2
+.equ loc_483EDC3A, 0x483EDC3A
 .equ func_483EDC3C, 0x483EDC3C
+.equ loc_483EDC9D, 0x483EDC9D
+.equ loc_483EDCC8, 0x483EDCC8
 .equ func_483EDCCA, 0x483EDCCA
+.equ loc_483EDD14, 0x483EDD14
+.equ loc_483EDD42, 0x483EDD42
+.equ loc_483EDD67, 0x483EDD67
 .equ func_483EDD69, 0x483EDD69
+.equ loc_483EDDC4, 0x483EDDC4
+.equ loc_483EDDE3, 0x483EDDE3
+.equ loc_483EDDF1, 0x483EDDF1
+.equ loc_483EDE4A, 0x483EDE4A
+.equ loc_483EDE68, 0x483EDE68
+.equ loc_483EDE76, 0x483EDE76
+.equ loc_483EDE8A, 0x483EDE8A
+.equ loc_483EDE9E, 0x483EDE9E
+.equ loc_483EDEB0, 0x483EDEB0
+.equ loc_483EDEC6, 0x483EDEC6
 .equ func_483EDECD, 0x483EDECD
+.equ func_483EDF0A, 0x483EDF0A
 .equ func_483EDF0A_entry, 0x483EDF0D
+.equ func_483EE0AE, 0x483EE0AE
 .equ func_483EE0AE_entry, 0x483EE0B1
 .equ func_483EE0FF, 0x483EE0FF
+.equ loc_483EE113, 0x483EE113
+.equ loc_483EE117, 0x483EE117
+.equ loc_483EE11B, 0x483EE11B
+.equ loc_483EE11F, 0x483EE11F
+.equ loc_483EE123, 0x483EE123
+.equ loc_483EE296, 0x483EE296
+.equ loc_483EE2F9, 0x483EE2F9
+.equ func_483EE2FB, 0x483EE2FB
 .equ func_483EE2FB_entry, 0x483EE2FE
+.equ loc_483EE370, 0x483EE370
+.equ func_483EE372, 0x483EE372
 .equ func_483EE372_entry, 0x483EE375
+.equ loc_483EE3CB, 0x483EE3CB
+.equ func_483EE3CD, 0x483EE3CD
 .equ func_483EE3CD_entry, 0x483EE3D0
+.equ loc_483EE426, 0x483EE426
+.equ loc_483EE4A3, 0x483EE4A3
+.equ func_483EE4A5, 0x483EE4A5
 .equ func_483EE4A5_entry, 0x483EE4A8
 .equ func_483EE52B, 0x483EE52B
+.equ loc_483EE693, 0x483EE693
 .equ func_483EE699, 0x483EE699
+.equ loc_483EE85B, 0x483EE85B
+.equ func_483EE85D, 0x483EE85D
 .equ func_483EE85D_entry, 0x483EE860
+.equ loc_483EE8E4, 0x483EE8E4
 .equ KssPasswordCheck, 0x483EE8E9
+.equ loc_483EE91C, 0x483EE91C
 .equ KssActivationApply, 0x483EE921
+.equ loc_483EEAA7, 0x483EEAA7
 .equ KssPluginLoad, 0x483EEAA9
-.equ func_483EED2F, 0x483EED2F
-.equ func_483EED42, 0x483EED42
+.equ loc_483EED2F, 0x483EED2F
+.equ loc_483EED42, 0x483EED42
+.equ loc_483EED5C, 0x483EED5C
+.equ func_483EED5E, 0x483EED5E
 .equ func_483EED5E_entry, 0x483EED61
-.equ func_483EEDFD, 0x483EEDFD
+.equ loc_483EEDFD, 0x483EEDFD
 .equ func_483EEDFD_entry, 0x483EEE00
-.equ func_483EEE4D, 0x483EEE4D
+.equ loc_483EEE4D, 0x483EEE4D
 .equ func_483EEE4D_entry, 0x483EEE50
+.equ func_483EEEF9, 0x483EEEF9
 .equ func_483EEEF9_entry, 0x483EEEFC
 .equ KssBuildParam1, 0x483EEF21
+.equ func_483EEF23, 0x483EEF23
 .equ KssBuildParam1_entry, 0x483EEF26
+.equ func_483EEF5E, 0x483EEF5E
 .equ func_483EEF5E_entry, 0x483EEF61
 .equ KssKeyCompare, 0x483EF0AF
+.equ func_483EF161, 0x483EF161
 .equ func_483EF161_entry, 0x483EF164
 .equ KssKeyTransform, 0x483EF1AD
 .equ func_483EF1F1, 0x483EF1F1
 .equ KssKeyCharTransform, 0x483EF234
 .equ KssHash275, 0x483EF275
 .equ KssKeyStripDashes, 0x483EF2F7
+.equ func_483EF329, 0x483EF329
 .equ func_483EF329_entry, 0x483EF32C
+.equ func_483EF368, 0x483EF368
 .equ func_483EF368_entry, 0x483EF36B
 .equ func_483EF37F, 0x483EF37F
 .equ func_483EF3E7, 0x483EF3E7
+.equ func_483EF42F, 0x483EF42F
 .equ func_483EF42F_entry, 0x483EF432
 .equ func_483EF48F, 0x483EF48F
 .equ func_483EF4EC, 0x483EF4EC
+.equ func_483EF50B, 0x483EF50B
 .equ func_483EF50B_entry, 0x483EF50E
-.equ KssMsgWrongPassword, 0x483F782C
-.equ KssStrPluginCtrl, 0x483F88F0
-.equ KssStrMr7, 0x483F8900
-.equ KssActivationFilePath, 0x483F892C
-.equ KssMsgPluginReleased, 0x483F89A8
-.equ KssMsgPluginWrongPw, 0x483F89D4
-.equ KssKeystreamRecords, 0x483F8B74
 .equ XaprFooter, 0x483FB59C
 
 # ---- the offset directory ----
@@ -24217,7 +24393,7 @@ TableRomImageEnd:
     mov     0xa48, d1
     cmp     0, d1
     ble     0x483e8052
-    mov     0x50299498, a0
+    mov     KssWorkRam, a0
     clr     d0
     mov     d0, (a0)
     inc4    a0
@@ -24226,8 +24402,8 @@ TableRomImageEnd:
     mov     0x1498, d1
     cmp     0, d1
     ble     0x483e806d
-    mov     0x483fa104, a0
-    mov     0x50298000, a1
+    mov     KssRamImage, a0
+    mov     Main_window, a1
     mov     (a0), d0
     inc4    a0
     mov     d0, (a1)
@@ -24241,13 +24417,13 @@ TableRomImageEnd:
 # func_483E8071_entry:   (register-save `call` entry)
     mov     0x00040004, d0
     mov     d0, (0x1c, sp)
-    mov     (0x50299298), d0
+    mov     (KssFrameworkObj), d0
     mov     0x1c, a2
     add     d0, a2
     mov     (a2), a0
     mov     0xa, d3
     mov     (0x174, a0), a1
-    mov     0x483f8db8, d0
+    mov     PLUG_Classes, d0
     mov     a1, (0x20, sp)
     movhu   d3, (0x24, sp)
     mov     d0, (0x28, sp)
@@ -24260,16 +24436,16 @@ TableRomImageEnd:
     calls   (a1)
     mov     0x00040009, d0
     mov     d0, (0x1c, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x10, d0
     mov     (0x1c, a0), a0
     mov     0x00040001, d2
     mov     (0x130, a0), a1
     mov     a1, (0x20, sp)
     movhu   d0, (0x24, sp)
-    mov     0x483f8ec0, d0
+    mov     PLUG_Events, d0
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f5, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
@@ -24277,44 +24453,44 @@ TableRomImageEnd:
     calls   (a1)
     mov     0x0004000a, d0
     mov     d0, (0x1c, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x5a, d0
     mov     (0x1c, a0), a0
     mov     (0x134, a0), a1
     mov     a1, (0x20, sp)
     movhu   d0, (0x24, sp)
-    mov     0x483f8f04, d0
+    mov     PLUG_Methods, d0
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f6, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
     mov     a3, a0
     calls   (a1)
     mov     d2, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f9070, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_Functions, d0
     mov     (0x1c, a0), a0
     mov     (0x250, a0), a1
     mov     a1, (0x20, sp)
     movhu   d3, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f1, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
     mov     a3, a0
     calls   (a1)
     mov     d2, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f909c, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_FunctionNames, d0
     mov     (0x1c, a0), a0
     mov     0x19, d2
     mov     (0x250, a0), a1
     mov     a1, (0x20, sp)
     movhu   d3, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f9, d0
     mov     (0x1c, a0), a0
     mov     0x00040002, d3
@@ -24322,29 +24498,29 @@ TableRomImageEnd:
     mov     a3, a0
     calls   (a1)
     mov     d3, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f90c8, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_ApFunctions, d0
     mov     (0x1c, a0), a0
     mov     (0x254, a0), a1
     mov     a1, (0x20, sp)
     movhu   d2, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f2, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
     mov     a3, a0
     calls   (a1)
     mov     d3, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f9130, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_ApFunctionNames, d0
     mov     (0x1c, a0), a0
     mov     0x00040003, d3
     mov     (0x254, a0), a1
     mov     a1, (0x20, sp)
     movhu   d2, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2fa, d0
     mov     (0x1c, a0), a0
     mov     1, d2
@@ -24352,28 +24528,28 @@ TableRomImageEnd:
     mov     a3, a0
     calls   (a1)
     mov     d3, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f9198, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_MainFunctions, d0
     mov     (0x1c, a0), a0
     mov     (0x258, a0), a1
     mov     a1, (0x20, sp)
     movhu   d2, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f3, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
     mov     a3, a0
     calls   (a1)
     mov     d3, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f91a0, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_MainFunctionNames, d0
     mov     (0x1c, a0), a0
     mov     (0x258, a0), a1
     mov     a1, (0x20, sp)
     movhu   d2, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2fb, d0
     mov     (0x1c, a0), a0
     mov     0x1df, d2
@@ -24382,14 +24558,14 @@ TableRomImageEnd:
     calls   (a1)
     mov     0x00040011, d0
     mov     d0, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f91a8, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_Viewables, d0
     mov     (0x1c, a0), a0
     mov     (0x290, a0), a1
     mov     a1, (0x20, sp)
     movhu   d2, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f0, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
@@ -24397,27 +24573,27 @@ TableRomImageEnd:
     calls   (a1)
     mov     0x00040010, d0
     mov     d0, (0x1c, sp)
-    mov     (0x50299298), a0
-    mov     0x483f9928, d0
+    mov     (KssFrameworkObj), a0
+    mov     PLUG_ResNames, d0
     mov     (0x1c, a0), a0
     mov     (0x154, a0), a1
     mov     a1, (0x20, sp)
     movhu   d2, (0x24, sp)
     mov     d0, (0x28, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f8, d0
     mov     (0x1c, a0), a0
     mov     (0xec, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x2f, d0
     mov     (0x1c, a0), a0
-    mov     0x483f7409, a1
+    mov     Str_iapplug, a1
     mov     (0x28c, a0), a2
-    mov     0x483f7400, a0
+    mov     Str_OTB_PLUG, a0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f00000, d0
     mov     (0x1c, a0), a0
     mov     0x00020000, d1
@@ -24426,7 +24602,7 @@ TableRomImageEnd:
     mov     0x000c002f, d0
     mov     d0, (0x14, sp)
     mov     0x13f, d0
-    mov     0x483f7414, a0
+    mov     Str_TT_PLUGIN, a0
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x3c
 # XapSlot10  (CPU 0x483E8303)
@@ -24477,7 +24653,7 @@ TableRomImageEnd:
     mov     -1, d0
     ret     [d2], 0x18
     call    func_483E95C5_entry, 0, 0x14
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -24491,7 +24667,7 @@ TableRomImageEnd:
     extbu   d0
     cmp     0xa, d0
     bne     0x483e83cd
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x13f, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -24508,7 +24684,7 @@ TableRomImageEnd:
     bne     0x483e83e5
     mov     -1, d0
     ret     [d2], 0x18
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     7, d0
     mov     (0x118, a0), a0
     calls   (a0)
@@ -24531,13 +24707,13 @@ TableRomImageEnd:
     mov     -1, d0
     bra     0x483e846b
     mov     0x02f00013, d2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x13f, d0
     mov     (0x1c, a0), a0
     clr     d1
     mov     (0x5c4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -24557,7 +24733,7 @@ TableRomImageEnd:
     ret     [d2], 0x18
     movm    [d2,a2,a3], (sp)
     add     -0x24, sp
-    mov     0x483f7428, a1
+    mov     XapSlot10_Table, a1
     mov     sp, a0
     add     0x18, a0
     mov     -0xa, d1
@@ -24568,20 +24744,20 @@ TableRomImageEnd:
     inc     a0
     inc     d1
     lne
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     clr     d1
     mov     (0x2e4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f743b, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_rb_4, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f7434, a0
+    mov     Str_C_ttt, a0
     calls   (a2)
     mov     a0, a3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, a1
     mov     (0x2e1c, a0), a0
     mov     8, d0
@@ -24592,17 +24768,17 @@ TableRomImageEnd:
     mov     d2, a0
     mov     1, d1
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2e8, a0), a1
-    mov     0x483f7440, a0
+    mov     Str_DATA, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2e8, a0), a1
     mov     d2, a0
@@ -24611,6 +24787,7 @@ TableRomImageEnd:
 # ApTestProc  (CPU 0x483E850F)
     clr     d0
     rets
+# loc_483E8512:   (label)
     add     -0x1c, sp
     cmp     0x5000b, d1
     bne     0x483e8569
@@ -24620,19 +24797,19 @@ TableRomImageEnd:
     cmp     3, a0
     beq     0x483e854a
     bra     0x483e8569
-    mov     (0x50299040), a0
-    mov     0x483f7448, a1
+    mov     (ptr_50299040), a0
+    mov     Str_AC_NEW_TITLE, a1
     mov     a0, (0x18, sp)
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0x1fa, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     bra     0x483e8569
-    mov     (0x50299040), a0
-    mov     0x483f7458, a1
+    mov     (ptr_50299040), a0
+    mov     Str_AC_OLD_TITLE, a1
     mov     a0, (0x18, sp)
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0x1fe, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
@@ -24650,7 +24827,7 @@ TableRomImageEnd:
     mov     (0x34, sp), d0
     bra     0x483e85aa
     mov     (0x34, sp), d0
-    call    func_483EED2F, 0, 0
+    call    loc_483EED2F, 0, 0
     cmp     0, d0
     beq     0x483e8595
     mov     (0x30, sp), a0
@@ -24659,7 +24836,7 @@ TableRomImageEnd:
     mov     d3, d0
     calls   (a2)
     bra     0x483e85aa
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d1
     mov     (0x1c, a0), a0
     mov     d3, d0
@@ -24675,7 +24852,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (8, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24686,7 +24863,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0xc, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24697,7 +24874,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (4, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24708,7 +24885,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x18, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24719,7 +24896,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24730,7 +24907,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x20, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24741,7 +24918,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x24, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24752,7 +24929,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x44, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24763,7 +24940,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x48, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24774,7 +24951,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x50, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24785,7 +24962,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x4c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24796,7 +24973,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x54, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24807,7 +24984,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x58, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24818,7 +24995,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x5c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24829,7 +25006,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x14c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24840,7 +25017,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x168, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24851,7 +25028,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x16c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24862,7 +25039,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x198, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24873,7 +25050,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x19c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24884,7 +25061,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1bc, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24895,7 +25072,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x134, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24906,7 +25083,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x138, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24917,7 +25094,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x13c, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24928,7 +25105,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1cc, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24939,7 +25116,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1d0, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24950,7 +25127,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1d4, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24961,7 +25138,7 @@ TableRomImageEnd:
     mov     3, d2
     mov     a0, (0x10, sp)
     mov     d2, (0x14, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1d8, a0), a0
     call    func_483E856E_entry, [d2,d3,a2], 0x20
     ret     [d2], 0x20
@@ -24971,7 +25148,7 @@ TableRomImageEnd:
     mov     a0, (0x10, sp)
     call    func_483E803E, 0, 0
     mov     (0x10, sp), d0
-    mov     d0, (0x50299298)
+    mov     d0, (KssFrameworkObj)
     call    func_483E8071_entry, [d2,d3,a2,a3], 0x3c
     ret     0, 8
 # XapSlot0C  (CPU 0x483E88FE)
@@ -24982,23 +25159,23 @@ TableRomImageEnd:
     cmp     0, d0
     bne     0x483e890f
     ret     [d2,d3,a2], 0x24
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x164, a0), a0
     mov     (a0), d0
     cmp     -1, d0
     bne     0x483e8921
     jmp     0x483e89b2
-    mov     (0x50299044), d1
+    mov     (ptr_50299044), d1
     mov     d1, d0
     inc     d0
-    mov     d0, (0x50299044)
+    mov     d0, (ptr_50299044)
     ext     d1
     mov     0x10, d0
     div     d0, d1
     mov     mdr, d1
     cmp     0, d1
     bne     0x483e89b2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     sp, a1
     mov     (0x2e1c, a0), a0
     add     0x16, a1
@@ -25019,42 +25196,42 @@ TableRomImageEnd:
     add     d0, d2
     mov     2, d0
     add     d2, d0
-    mov     d0, (0x502994a0)
-    movhu   (0x5029949e), d2
+    mov     d0, (KssWorkRam+0x8)
+    movhu   (KssWorkRam+0x6), d2
     extbu   d1
     inc     d1
     mov     d1, d0
     extbu   d0
     cmp     d0, d2
-    mov     0x5029949c, a2
+    mov     KssWorkRam+0x4, a2
     beq     0x483e89b2
     extbu   d1
-    movhu   d1, (0x5029949e)
+    movhu   d1, (KssWorkRam+0x6)
     movhu   (0x14, sp), d0
     mov     0x02f50007, d1
-    movhu   d0, (0x5029949c)
-    mov     (0x50299298), a0
+    movhu   d0, (KssWorkRam+0x4)
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x12c, a0), a1
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x164, a0), a0
     mov     (a0), d0
     mov     a2, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x150, a0), a0
     calls   (a0)
-    movbu   d0, (0x50299498)
-    movbu   (0x50299498), d1
-    movbu   (0x50299499), d0
+    movbu   d0, (KssWorkRam)
+    movbu   (KssWorkRam), d1
+    movbu   (KssWorkRam+0x1), d0
     cmp     d0, d1
     beq     0x483e8a05
-    movbu   (0x50299498), d0
+    movbu   (KssWorkRam), d0
     cmp     0, d1
-    movbu   d0, (0x50299499)
+    movbu   d0, (KssWorkRam+0x1)
     bne     0x483e8a05
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f50004, d1
@@ -25098,18 +25275,18 @@ TableRomImageEnd:
     bne     0x483e8a7b
     jmp     0x483e902e
     jmp     0x483e904a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x74, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x6c, sp), d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     a0, a2
     mov     (0x2e1c, a1), a0
     add     0x28, a2
@@ -25119,7 +25296,7 @@ TableRomImageEnd:
     mov     (a2), a1
     mov     0x28, d0
     mov     a0, (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
@@ -25127,7 +25304,7 @@ TableRomImageEnd:
     mov     (a1), a1
     mov     a0, (0xc, a1)
     mov     (a2), a0
-    mov     0x50299dcc, a1
+    mov     KssWorkRam+0x934, a1
     mov     (a0), a0
     mov     (0xc, a0), a0
     call    func_483EDBD2, [a2,a3], 8
@@ -25161,7 +25338,7 @@ TableRomImageEnd:
     mov     0x000600b6, d1
     mov     (a0), a0
     movhu   d0, (0x14, a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     (0x108, a0), a1
@@ -25173,13 +25350,13 @@ TableRomImageEnd:
     mov     (a0), a0
     movhu   d0, (0x14, a0)
     ret     [d2,d3,a2,a3], 0x64
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x74, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x6c, sp), d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
@@ -25190,13 +25367,13 @@ TableRomImageEnd:
     movhu   d0, (8, a0)
     clr     d0
     ret     [d2,d3,a2,a3], 0x64
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x74, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x6c, sp), d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
@@ -25206,7 +25383,7 @@ TableRomImageEnd:
     mov     (a0), a0
     movhu   d0, (8, a0)
     ret     [d2,d3,a2,a3], 0x64
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
@@ -25220,7 +25397,7 @@ TableRomImageEnd:
     beq     0x483e8bd0
     clr     d0
     ret     [d2,d3,a2,a3], 0x64
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d1
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
@@ -25333,7 +25510,7 @@ TableRomImageEnd:
     add     d2, d0
     add     -1, d0
     movhu   d0, (0x34, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2e0, a0), a1
     mov     sp, a0
@@ -25402,7 +25579,7 @@ TableRomImageEnd:
     cmp     d0, d3
     bne     0x483e8d42
     mov     1, d1
-    mov     0x483f7474, a0
+    mov     Str_buffer_overflow_increase_PREF_MEMO_BUF_S, a0
     and     d2, d1
     bne     0x483e8d61
     mov     (a3), a0
@@ -25416,7 +25593,7 @@ TableRomImageEnd:
     calls   (a1)
     cmp     0, a0
     bne     0x483e8d6b
-    mov     0x483f74cc, a0
+    mov     Str_null_2, a0
     mov     (a3), a1
     clr     d1
     mov     (a1), a1
@@ -25431,7 +25608,7 @@ TableRomImageEnd:
     exth    d1
     cmp     d2, d1
     blt     0x483e8d76
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     0xf7, d0
     mov     (0x1c, a1), a1
     clr     d1
@@ -25476,27 +25653,27 @@ TableRomImageEnd:
     jmp     0x483e8d31
     clr     d0
     ret     [d2,d3,a2,a3], 0x64
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x74, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x6c, sp), d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
     mov     (0x6c, sp), d0
     mov     a0, a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     add     0x28, a2
     mov     (0x1c, a0), a0
     mov     (0x2e0, a0), a1
     mov     sp, a0
     add     0x4c, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     3, d0
     mov     (0x1c, a0), a0
     mov     (0x15c, a0), a0
@@ -25534,18 +25711,18 @@ TableRomImageEnd:
     clr     d0
     ret     [d2,d3,a2,a3], 0x64
     mov     (0x74, sp), a3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     a3, (0x10, sp)
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x6c, sp), d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
     mov     a0, a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     add     0x28, a2
     mov     (0x1c, a0), a1
     clr     d0
@@ -25721,7 +25898,7 @@ TableRomImageEnd:
     exth    d0
     cmp     d0, d1
     beq     0x483e902b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x000600b2, d1
@@ -25731,7 +25908,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     bra     0x483e905d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
@@ -25741,7 +25918,7 @@ TableRomImageEnd:
     mov     (0x74, sp), a0
     mov     a0, (0xc, a1)
     bra     0x483e905d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x74, sp), a0
@@ -25770,7 +25947,7 @@ TableRomImageEnd:
     bne     0x483e90a3
     jmp     0x483e9154
     jmp     0x483e917c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x00040021, d0
     mov     (0x1c, a0), a0
     mov     0x00060024, d1
@@ -25778,8 +25955,8 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     d3, d0
     calls   (a0)
-    mov     d0, (0x502994a4)
-    mov     (0x50299298), a0
+    mov     d0, (KssWorkRam+0xC)
+    mov     (KssFrameworkObj), a0
     mov     d2, d1
     mov     (0x1c, a0), a0
     mov     d3, d0
@@ -25789,18 +25966,18 @@ TableRomImageEnd:
     calls   (a1)
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x34, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d3, d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     movhu   (0x18, a0), d0
     mov     (0x1c, a1), a1
     exth    d0
@@ -25809,7 +25986,7 @@ TableRomImageEnd:
     calls   (a1)
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x34, sp), a0
@@ -25818,20 +25995,20 @@ TableRomImageEnd:
     clr     d0
     bra     0x483e918f
     mov     (0x34, sp), d0
-    mov     d0, (0x502994a4)
+    mov     d0, (KssWorkRam+0xC)
     clr     d0
     bra     0x483e918f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
     mov     (0x30, a0), d0
     bra     0x483e918f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     a0, a2
     mov     (0x2e1c, a1), a1
     mov     (0x34, sp), a0
@@ -25840,50 +26017,51 @@ TableRomImageEnd:
     calls   (a3)
     clr     d0
     bra     0x483e918f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x34, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x24
+# loc_483E9192:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483E9194  (CPU 0x483E9194)
     add     -0x30, sp
 # func_483E9194_entry:   (register-save `call` entry)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f74ec, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d_7, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f74e0, a0
+    mov     Str_C_TECHNICS_6, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483e920a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     0x483f74f0, d0
+    mov     Str_s_not_found_3, d0
     mov     d0, (8, sp)
-    mov     0x483f74ff, d0
+    mov     Str_C_TECHNICS_5, d0
     mov     d0, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x5029904c), d0
+    mov     (ptr_5029904C), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x54, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     -2, d0
     ret     [d2,a2,a3], 0x3c
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     sp, a3
     mov     (0x2e1c, a1), a1
     add     0x1c, a3
@@ -25891,45 +26069,45 @@ TableRomImageEnd:
     calls   (a1)
     clr     d2
     jmp     0x483e92b2
-    mov     (0x50299298), a0
-    mov     0x483f750c, d0
+    mov     (KssFrameworkObj), a0
+    mov     Str_s_03i_2, d0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a0
     mov     a3, (8, sp)
     mov     d0, (0xc, sp)
-    mov     0x483f7514, d0
+    mov     Str_C_TECHNICS_4, d0
     mov     d0, (0x10, sp)
     mov     d2, d0
     inc     d0
     mov     d0, (0x14, sp)
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f7520, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d_6, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
     mov     a3, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483e929e
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     0x483f7524, d0
+    mov     Str_s_not_found_2, d0
     mov     d0, (8, sp)
     mov     a3, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x5029904c), d0
+    mov     (ptr_5029904C), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x60, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     ret     [d2,a2,a3], 0x3c
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     add     0xef, d2
     mov     (0x2e1c, a1), a1
     mov     (0x2dc, a1), a1
@@ -25937,72 +26115,73 @@ TableRomImageEnd:
     cmp     0xf0, d2
     bge     0x483e92bb
     jmp     0x483e9221
-    mov     (0x50299298), a0
-    mov     0x483f7545, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d_5, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f7534, a0
+    mov     Str_C_TECHNICS_DATA_5, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483e931c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     0x483f7548, d0
+    mov     Str_s_not_found, d0
     mov     d0, (8, sp)
-    mov     0x483f7557, d0
+    mov     Str_C_TECHNICS_DATA_4, d0
     mov     d0, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x5029904c), d0
+    mov     (ptr_5029904C), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x6a, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     bra     0x483e933d
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
     mov     (0x2dc, a1), a1
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
     clr     d0
     ret     [d2,a2,a3], 0x3c
+# loc_483E9340:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483E9342  (CPU 0x483E9342)
     add     -0x2c, sp
 # func_483E9342_entry:   (register-save `call` entry)
-    mov     (0x5029904c), a0
+    mov     (ptr_5029904C), a0
     mov     1, d0
-    mov     a0, (0x502992c8)
-    mov     (0x50299298), a0
+    mov     a0, (ptrs_502992C8)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f7574, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d_4, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f7568, a0
+    mov     Str_C_TECHNICS_3, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483e93c2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x310, a0), a1
-    mov     0x483f7578, a0
+    mov     Str_C_TECHNICS_2, a0
     calls   (a1)
     exth    d0
     cmp     0, d0
@@ -26010,10 +26189,10 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0x84, d1
-    mov     (0x5029904c), a1
+    mov     (ptr_5029904C), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,a2,a3], 0x38
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
     mov     (0x2dc, a1), a1
     calls   (a1)
@@ -26021,32 +26200,32 @@ TableRomImageEnd:
     mov     sp, a3
     add     0x18, a3
     jmp     0x483e9466
-    mov     (0x50299298), a0
-    mov     0x483f7584, d0
+    mov     (KssFrameworkObj), a0
+    mov     Str_s_03i, d0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a0
     mov     a3, (8, sp)
     mov     d0, (0xc, sp)
-    mov     0x483f758c, d0
+    mov     Str_C_TECHNICS, d0
     mov     d0, (0x10, sp)
     mov     d2, d0
     inc     d0
     mov     d0, (0x14, sp)
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f7598, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d_3, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
     mov     a3, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483e9455
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x310, a0), a1
     mov     a3, a0
@@ -26057,10 +26236,10 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0x8f, d1
-    mov     (0x5029904c), a1
+    mov     (ptr_5029904C), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,a2,a3], 0x38
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
     mov     (0x2dc, a1), a1
     calls   (a1)
@@ -26068,23 +26247,23 @@ TableRomImageEnd:
     cmp     0xf0, d2
     bge     0x483e946f
     jmp     0x483e93d9
-    mov     (0x50299298), a0
-    mov     0x483f75ad, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d_2, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f759c, a0
+    mov     Str_C_TECHNICS_DATA_3, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483e94ce
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x310, a0), a1
-    mov     0x483f75b0, a0
+    mov     Str_C_TECHNICS_DATA_2, a0
     calls   (a1)
     exth    d0
     cmp     0, d0
@@ -26092,33 +26271,33 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0x99, d1
-    mov     (0x5029904c), a1
+    mov     (ptr_5029904C), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483e94ee
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
     mov     (0x2dc, a1), a1
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
     ret     [d2,a2,a3], 0x38
-# func_483E94F1  (CPU 0x483E94F1)
-    mov     d0, (0x50299050)
+# loc_483E94F1  (CPU 0x483E94F1)
+    mov     d0, (word_50299050)
     rets
-# func_483E94F9  (CPU 0x483E94F9)
-    mov     (0x50299050), d0
+# loc_483E94F9  (CPU 0x483E94F9)
+    mov     (word_50299050), d0
     rets
     movm    [a2], (sp)
 # func_483E9503  (CPU 0x483E9503)
     add     -0x10, sp
 # func_483E9503_entry:   (register-save `call` entry)
-    mov     (0x50299298), a2
+    mov     (KssFrameworkObj), a2
     mov     a0, a1
     mov     (0x2e1c, a2), a2
-    mov     0x502994a8, a0
+    mov     KssWorkRam+0x10, a0
     mov     (0x340, a2), a2
     calls   (a2)
     ret     [a2], 0x14
@@ -26126,10 +26305,10 @@ TableRomImageEnd:
 # func_483E9522  (CPU 0x483E9522)
     add     -0x10, sp
 # func_483E9522_entry:   (register-save `call` entry)
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
     mov     (0x340, a1), a2
-    mov     0x502994a8, a1
+    mov     KssWorkRam+0x10, a1
     calls   (a2)
     ret     [a2], 0x14
     movm    [a2,a3], (sp)
@@ -26137,7 +26316,7 @@ TableRomImageEnd:
     add     -0x14, sp
 # func_483E9540_entry:   (register-save `call` entry)
     mov     a0, a3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x483ffffc, a1
     mov     (0x2e1c, a0), a0
     mov     4, d0
@@ -26146,32 +26325,33 @@ TableRomImageEnd:
     calls   (a2)
     clr     d0
     movbu   d0, (4, a3)
-    mov     (0x50299298), a0
-    mov     0x483f75c4, a1
+    mov     (KssFrameworkObj), a0
+    mov     word_483F75C4, a1
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
     mov     a3, a0
     calls   (a2)
     cmp     0, d0
     bne     0x483e9593
-    mov     (0x50299298), a0
-    mov     0x483f75cc, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_0000_2, a1
     mov     (0x2e1c, a0), a0
     mov     (0x340, a0), a2
     mov     a3, a0
     calls   (a2)
     ret     [a2,a3], 0x1c
+# loc_483E9596:   (label)
     movm    [a2,a3], (sp)
     add     -0x18, sp
     mov     sp, a2
     add     0x10, a2
     mov     a2, a0
     call    func_483E9540_entry, [a2,a3], 0x1c
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     a2, a0
     mov     (0x2e1c, a1), a1
     mov     (0x354, a1), a3
-    mov     0x483f75d4, a1
+    mov     Str_0000, a1
     calls   (a3)
     mov     d0, d1
     clr     d0
@@ -26182,7 +26362,7 @@ TableRomImageEnd:
 # func_483E95C5  (CPU 0x483E95C5)
     add     -0x14, sp
 # func_483E95C5_entry:   (register-save `call` entry)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x1c, a0), a0
     mov     0x02f60019, d1
@@ -26193,7 +26373,7 @@ TableRomImageEnd:
     call    func_483EB327, 0, 0
     cmp     0, d0
     bne     0x483e960e
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60018, d1
@@ -26229,13 +26409,13 @@ TableRomImageEnd:
     bne     0x483e966a
     jmp     0x483e9b2d
     jmp     0x483e9b46
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x48c, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
@@ -26245,13 +26425,13 @@ TableRomImageEnd:
     mov     d0, (a0)
     clr     d0
     jmp     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x48c, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
@@ -26261,7 +26441,7 @@ TableRomImageEnd:
     mov     d0, (a0)
     clr     d0
     jmp     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x48c, sp), a0
@@ -26269,21 +26449,21 @@ TableRomImageEnd:
     calls   (a1)
     clr     d0
     jmp     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x48c, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
     clr     d0
-    mov     d0, (0x50299054)
+    mov     d0, (word_50299054)
     mov     (0x3c, a0), a0
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (a0), d0
     mov     (0x1c, a1), a1
     mov     0x000600b4, d1
@@ -26293,23 +26473,23 @@ TableRomImageEnd:
     calls   (a1)
     clr     d0
     jmp     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     d0, (0x10, sp)
     mov     d2, d0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
     mov     a0, (0x38, sp)
-    mov     (0x50299054), d0
+    mov     (word_50299054), d0
     cmp     0, d0
     beq     0x483e977a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x000600b2, d1
@@ -26318,13 +26498,13 @@ TableRomImageEnd:
     mov     d2, d0
     calls   (a0)
     mov     1, d0
-    mov     d0, (0x50299054)
+    mov     d0, (word_50299054)
     mov     (0x38, sp), a0
     mov     (0x48c, sp), a3
     mov     (0x3c, a0), a0
     mov     d2, d0
     mov     a3, (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d2
     mov     (0x1c, a0), a0
     mov     (0x2e0, a0), a1
@@ -26383,14 +26563,14 @@ TableRomImageEnd:
     sub     d1, d0
     inc     d0
     mov     d0, (0x4c, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x36c, a0), a1
     mov     a3, a0
     calls   (a1)
     cmp     0x3ff, d0
     bcs     0x483e9842
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, a1
     mov     (0x2e1c, a0), a0
     mov     (0x344, a0), a2
@@ -26404,7 +26584,7 @@ TableRomImageEnd:
     clr     d0
     movbu   d0, (0x45f, sp)
     bra     0x483e985c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, a1
     mov     (0x2e1c, a0), a0
     mov     (0x340, a0), a2
@@ -26446,7 +26626,7 @@ TableRomImageEnd:
     movbu   (a2), d2
     clr     d0
     movbu   d0, (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x16c, a0), a1
     mov     (0x38, sp), a0
@@ -26503,7 +26683,7 @@ TableRomImageEnd:
     cmp     0, d0
     bne     0x483e9906
     jmp     0x483e9863
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x38, sp), d0
     mov     (0x1c, a0), a0
     add     0x20, d0
@@ -26675,7 +26855,7 @@ TableRomImageEnd:
     mov     d2, d1
     call    func_483EE3CD_entry, [d2,d3,a2,a3], 0x48
     bra     0x483e9ac9
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0xf7, d1
     mov     (0x1c, a0), a0
     mov     (0xdc, a0), a3
@@ -26715,7 +26895,7 @@ TableRomImageEnd:
     jmp     0x483e9a05
     clr     d0
     bra     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
@@ -26726,7 +26906,7 @@ TableRomImageEnd:
     mov     a1, (a0)
     clr     d0
     bra     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
@@ -26734,7 +26914,7 @@ TableRomImageEnd:
     clr     d0
     mov     a1, (0x28, a0)
     bra     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x2d4, a0), a0
     calls   (a0)
@@ -26742,7 +26922,7 @@ TableRomImageEnd:
     movhu   d0, (0x24, a0)
     clr     d0
     bra     0x483e9b5b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x48c, sp), a0
@@ -26753,9 +26933,9 @@ TableRomImageEnd:
 # Ap_CE_Main  (CPU 0x483E9B62)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x74, sp
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     d0, d2
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     cmp     0x60079, d1
     beq     0x483e9bea
     cmp     0x50001, d1
@@ -26790,21 +26970,21 @@ TableRomImageEnd:
     jmp     0x483ea090
     mov     1, d0
     ret     [d2,d3,a2,a3], 0x84
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x94, sp), a2
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     a2, (0x10, sp)
     calls   (a0)
-    mov     (0x5029905c), d0
+    mov     (ptr_5029905C), d0
     cmp     1, d0
     bne     0x483e9c16
-    mov     (0x502996b4), d0
+    mov     (KssWorkRam+0x21C), d0
     cmp     3, d0
     beq     0x483e9c43
     mov     0x02f60028, d0
-    mov     d0, (0x50299060)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299060)
+    mov     (KssFrameworkObj), a0
     mov     0x02f0014d, d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -26817,7 +26997,7 @@ TableRomImageEnd:
     add     0x40, a2
     mov     a2, a0
     call    func_483E9540_entry, [a2,a3], 0x1c
-    mov     0x483f75e4, d0
+    mov     Str_soft_serial_x_x_x_x_s, d0
     mov     d0, (8, sp)
     movbu   (0x40, sp), d0
     extb    d0
@@ -26833,15 +27013,15 @@ TableRomImageEnd:
     mov     d0, (0x18, sp)
     mov     a2, (0x1c, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x50299058), d0
+    mov     (ptr_50299058), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x76, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     clr     d0
-    call    func_483EED42, 0, 0
+    call    loc_483EED42, 0, 0
     cmp     0, d0
     bne     0x483e9cde
     mov     sp, a3
@@ -26850,17 +27030,17 @@ TableRomImageEnd:
     clr     d0
     movbu   d0, (0x5b, sp)
     call    func_483EED5E_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x50299298), a0
-    mov     0x50299584, a2
+    mov     (KssFrameworkObj), a0
+    mov     KssWorkRam+0xEC, a2
     mov     (0x2e1c, a0), a0
-    mov     0x483f7604, d0
+    mov     Str_Ihre_pers_nliche_Nummer_ist_s_Senden_Sie, d0
     mov     (0x334, a0), a0
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
     mov     a3, (0x10, sp)
     calls   (a0)
     mov     d2, (0x18, sp)
-    mov     0x483f76e4, a0
+    mov     Str_PLUG_iN_nicht_freigegeben, a0
     mov     a2, a1
     mov     0xd, d0
     mov     d0, (0x1c, sp)
@@ -26870,20 +27050,20 @@ TableRomImageEnd:
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     clr     d0
-    call    func_483EED42, 0, 0
+    call    loc_483EED42, 0, 0
     cmp     0, d0
     bne     0x483e9d07
     mov     d2, (0x18, sp)
     mov     0x12, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f7700, a0
-    mov     0x483f772f, a1
+    mov     Str_Updateversion_kann_nicht_freigeschalten, a0
+    mov     Str_Sie_haben_ihre_PLUG_iN_noch_nicht_freige, a1
     mov     0x18, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     clr     d0
     mov     (0x120, a0), a2
     mov     (0x118, a0), a0
@@ -26892,7 +27072,7 @@ TableRomImageEnd:
     clr     d0
     calls   (a2)
     mov     a0, (0x34, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     0x10, d0
     mov     (0x120, a0), a2
     mov     (0x118, a0), a0
@@ -26901,7 +27081,7 @@ TableRomImageEnd:
     mov     0x10, d0
     calls   (a2)
     mov     a0, (0x30, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     7, d0
     mov     (0x120, a0), a2
     mov     (0x118, a0), a0
@@ -26910,7 +27090,7 @@ TableRomImageEnd:
     mov     7, d0
     calls   (a2)
     mov     a0, (0x2c, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     0xb, d0
     mov     (0x120, a0), a2
     mov     (0x118, a0), a0
@@ -26922,13 +27102,13 @@ TableRomImageEnd:
     add     0x3c, a1
     mov     sp, a3
     mov     a0, d3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x320, a0), a2
     mov     sp, a0
     add     0x38, a0
     calls   (a2)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x110, a0), a1
     mov     (0x3c, sp), d0
     mov     sp, a0
@@ -26937,17 +27117,17 @@ TableRomImageEnd:
     mov     d2, a0
     mov     4, d1
     calls   (a1)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     add     0x68, a3
     mov     (0x110, a0), a1
     mov     (0x38, sp), d0
     mov     a3, a0
     mov     4, d1
     calls   (a1)
-    mov     (0x50299298), a0
-    mov     0x502994bc, a2
+    mov     (KssFrameworkObj), a0
+    mov     KssWorkRam+0x24, a2
     mov     (0x2e1c, a0), a0
-    mov     0x483f7802, d0
+    mov     Str_11s_11s_11s_11s_11s_11s_11s, d0
     mov     (0x334, a0), a1
     mov     a2, (8, sp)
     mov     d0, (0xc, sp)
@@ -26960,10 +27140,10 @@ TableRomImageEnd:
     mov     d3, (0x1c, sp)
     mov     d2, (0x20, sp)
     mov     a3, (0x24, sp)
-    mov     0x483f7800, d0
+    mov     Str_empty_49, d0
     mov     d0, (0x28, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f00010, d0
     mov     (0x1c, a0), a1
     mov     0x02f00010, d1
@@ -26974,7 +27154,7 @@ TableRomImageEnd:
     mov     a2, (0x18, sp)
     clr     d0
     calls   (a1)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     clr     d0
     mov     (0x38, a0), a0
     calls   (a0)
@@ -26985,40 +27165,40 @@ TableRomImageEnd:
     clr     d0
     mov     a2, a0
     call    KssPasswordCheck, [d2,a2,a3], 0x40
-    mov     (0x502992c4), d1
+    mov     (KssActivationStatus), d1
     cmp     0, d1
     bne     0x483e9e32
     jmp     0x483e9eb0
     cmp     1, d1
     bne     0x483e9e56
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0xc1, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483e9e93
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0xc1, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d1
-    mov     d1, (0x502992c4)
+    mov     d1, (KssActivationStatus)
     mov     d1, d0
     cmp     d0, d1
     beq     0x483e9eb0
     mov     0xc2, d0
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     call    func_483EC03A_entry, 0, 0x1c
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
@@ -27027,16 +27207,16 @@ TableRomImageEnd:
     mov     a2, a0
     clr     d0
     call    KssActivationApply, [d2,d3,a2,a3], 0x44
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483e9edc
     mov     0xc5, d0
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     call    func_483EC03A_entry, 0, 0x1c
     call    func_483EBCC9_entry, 0, 0x20
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -27050,13 +27230,13 @@ TableRomImageEnd:
     mov     0x11, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f782c, a0
-    mov     0x483f783e, a1
+    mov     KssMsgWrongPassword, a0
+    mov     Str_Der_eingegebene_Passwortcode_ist_nicht_k, a1
     mov     0x18, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -27065,14 +27245,14 @@ TableRomImageEnd:
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     (0x94, sp), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     a2, (0x10, sp)
     calls   (a0)
     cmp     1, a2
     bne     0x483e9f5b
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x180, a0), a0
     calls   (a0)
     clr     d0
@@ -27080,12 +27260,12 @@ TableRomImageEnd:
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
     mov     (0x94, sp), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     a2, (0x10, sp)
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x000d0024, d0
     mov     (0x1c, a0), a0
     mov     0x00060029, d1
@@ -27094,7 +27274,7 @@ TableRomImageEnd:
     calls   (a0)
     cmp     0x17, d0
     bne     0x483e9fa5
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -27118,11 +27298,11 @@ TableRomImageEnd:
     and     d0, d2
     cmp     1, d2
     bne     0x483e9ffe
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     3, d0
     mov     (0x28, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -27132,7 +27312,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     ret     [d2,d3,a2,a3], 0x84
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -27143,7 +27323,7 @@ TableRomImageEnd:
     and     d0, d2
     cmp     0x10, d2
     bne     0x483ea03b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -27152,7 +27332,7 @@ TableRomImageEnd:
     mov     0x02f00154, d0
     calls   (a0)
     bra     0x483ea04e
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -27163,7 +27343,7 @@ TableRomImageEnd:
     and     d0, d2
     cmp     0x10, d2
     bne     0x483ea077
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -27172,7 +27352,7 @@ TableRomImageEnd:
     mov     0x02f00000, d0
     calls   (a0)
     bra     0x483ea08a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -27182,7 +27362,7 @@ TableRomImageEnd:
     bra     0x483ea0a3
     clr     d0
     bra     0x483ea0a3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x94, sp), a0
@@ -27192,9 +27372,9 @@ TableRomImageEnd:
 # Ap_Ce_StartUp  (CPU 0x483EA0A6)
     movm    [d2,a2,a3], (sp)
     add     -0x120, sp
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     d0, d2
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     cmp     0x60079, d1
     bne     0x483ea0c4
     jmp     0x483ea1cf
@@ -27273,14 +27453,14 @@ TableRomImageEnd:
     jmp     0x483eb2c0
     mov     1, d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
     mov     (0x13c, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d1
     mov     (0x1c, a0), a0
     mov     0x02f50003, d0
@@ -27293,10 +27473,10 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299060), d1
+    mov     (ptr_50299060), d1
     cmp     -1, d1
     beq     0x483ea22a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -27304,25 +27484,25 @@ TableRomImageEnd:
     mov     d2, d0
     calls   (a0)
     mov     -1, d0
-    mov     d0, (0x50299060)
+    mov     d0, (ptr_50299060)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299064), d0
+    mov     (ptr_50299064), d0
     cmp     0, d0
     bne     0x483ea263
     call    func_483EB967_entry, 0, 0x14
     cmp     0, d0
     beq     0x483ea25b
-    mov     0x483f78a4, d0
+    mov     Str_MainDebugInit_failed, d0
     mov     d0, (8, sp)
     call    func_483EBC0F_entry, [d2,a2], 0x1c
     mov     -1, d0
     jmp     0x483eb2d6
     mov     1, d0
-    mov     d0, (0x50299064)
-    mov     (0x50299058), a0
-    mov     (0x50299068), d0
-    mov     a0, (0x502992c8)
+    mov     d0, (ptr_50299064)
+    mov     (ptr_50299058), a0
+    mov     (ptr_50299068), d0
+    mov     a0, (ptrs_502992C8)
     cmp     0, d0
     bne     0x483ea2a2
     call    func_483ECB8F_entry, [d2,a2,a3], 0x1c
@@ -27330,19 +27510,19 @@ TableRomImageEnd:
     call    func_483EE2FB_entry, [d2,d3], 0x1c
     cmp     0, d0
     beq     0x483ea29a
-    mov     0x483f78bc, d0
+    mov     Str_ConstructPs2Objects_failed, d0
     mov     d0, (8, sp)
     call    func_483EBC0F_entry, [d2,a2], 0x1c
     mov     -1, d0
     jmp     0x483eb2d6
     mov     1, d0
-    mov     d0, (0x50299068)
-    mov     (0x502996b4), d0
+    mov     d0, (ptr_50299068)
+    mov     (KssWorkRam+0x21C), d0
     cmp     0, d0
     bne     0x483ea2b3
     mov     1, d0
-    call    func_483E94F1, 0, 0
-    mov     (0x50299298), a0
+    call    loc_483E94F1, 0, 0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60029, d1
@@ -27359,7 +27539,7 @@ TableRomImageEnd:
     bne     0x483ea2e0
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002b, d1
@@ -27369,10 +27549,10 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x502996b4), d0
+    mov     (KssWorkRam+0x21C), d0
     cmp     2, d0
     bne     0x483ea324
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002e, d1
@@ -27386,7 +27566,7 @@ TableRomImageEnd:
     cmp     0, d0
     bne     0x483ea336
     clr     d0
-    mov     d0, (0x502996b0)
+    mov     d0, (KssWorkRam+0x218)
     bra     0x483ea378
     cmp     -2, d0
     bne     0x483ea359
@@ -27394,8 +27574,8 @@ TableRomImageEnd:
     mov     0xb, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f78d8, a0
-    mov     0x483f7908, a1
+    mov     Str_Es_wurde_kein_PLUG_iN_auf_der_SD_Card_ge, a0
+    mov     Str_Wollen_Sie_dieses_installieren, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
@@ -27404,16 +27584,16 @@ TableRomImageEnd:
     mov     0xb, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f7928, a0
-    mov     0x483f7960, a1
+    mov     Str_Nur_Teile_des_PLUG_iN_wurden_auf_der_SD, a0
+    mov     Str_Wollen_Sie_eine_neue_PLUG_iN_Installatio, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x502996b4), d0
+    mov     (KssWorkRam+0x21C), d0
     cmp     0, d0
     bne     0x483ea39d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002c, d1
@@ -27422,7 +27602,7 @@ TableRomImageEnd:
     mov     d2, d0
     calls   (a0)
     bra     0x483ea3b6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60030, d1
@@ -27432,41 +27612,41 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x5029906c), d0
+    mov     (ptr_5029906C), d0
     cmp     0, d0
     beq     0x483ea3c7
     jmp     0x483ea465
     call    func_483EE4A5_entry, [d2], 0x10
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ea3d9
     jmp     0x483ea45d
     cmp     1, d0
     bne     0x483ea3fd
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x208, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea43a
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x208, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -27476,8 +27656,8 @@ TableRomImageEnd:
     clr     d0
     jmp     0x483eb2d6
     mov     1, d0
-    mov     d0, (0x5029906c)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_5029906C)
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002d, d1
@@ -27487,38 +27667,38 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299070), d0
+    mov     (KssBaseExtLoadedLatch), d0
     cmp     0, d0
     beq     0x483ea48f
     jmp     0x483ea628
     mov     3, d0
     call    KssPluginLoad, [d2,d3,a2,a3], 0x10
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ea4a3
     jmp     0x483ea620
     cmp     4, d0
     beq     0x483ea4aa
     jmp     0x483ea532
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x21f, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x502996b0), d0
+    mov     d0, (KssActivationStatus)
+    mov     (KssWorkRam+0x218), d0
     cmp     0, d0
     beq     0x483ea513
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60033, d1
@@ -27531,84 +27711,84 @@ TableRomImageEnd:
     mov     7, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f79c8, a0
-    mov     0x483f79fb, a1
+    mov     Str_BaseExt_xap_wurde_auf_der_SD_Card_nicht, a0
+    mov     Str_Bitte_legen_Sie_die_richtige_Diskette_Ta_3, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     0xb, d0
     bne     0x483ea599
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x22c, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     6, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f7a3c, a0
-    mov     0x483f7a70, a1
+    mov     Str_Die_BaseExt_xap_entspricht_nicht_dem_PLU, a0
+    mov     Str_Bitte_legen_Sie_die_richtige_Diskette_Ta_2, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     1, d0
     bne     0x483ea5bd
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x236, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea5fa
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x236, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     8, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f7ab0, a0
-    mov     0x483f7af2, a1
+    mov     Str_Die_BaseExt_xap_Datei_kann_nicht_von_der, a0
+    mov     Str_Bitte_legen_Sie_die_richtige_Diskette_Ta, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     mov     1, d0
-    mov     d0, (0x50299070)
-    mov     (0x50299074), d0
+    mov     d0, (KssBaseExtLoadedLatch)
+    mov     (ptr_50299074), d0
     cmp     0, d0
     bne     0x483ea662
     mov     3, d0
     call    func_483EE2FB_entry, [d2,d3], 0x1c
     cmp     0, d0
     beq     0x483ea65a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60038, d1
@@ -27619,8 +27799,8 @@ TableRomImageEnd:
     clr     d0
     jmp     0x483eb2d6
     mov     1, d0
-    mov     d0, (0x50299074)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299074)
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002f, d1
@@ -27630,41 +27810,41 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299078), d0
+    mov     (ptr_50299078), d0
     cmp     0, d0
     beq     0x483ea68c
     jmp     0x483ea74c
     call    func_483EC899_entry, [a2], 0x1c
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ea69e
     jmp     0x483ea722
     cmp     1, d0
     bne     0x483ea6c2
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x25a, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea6ff
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x25a, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -27673,17 +27853,17 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x108, a0), a2
-    call    func_483ECCD4, 0, 0
+    call    loc_483ECCD4, 0, 0
     mov     a0, (0x10, sp)
     mov     0x02f00011, d0
     mov     0x0006007a, d1
     calls   (a2)
     mov     1, d0
-    mov     d0, (0x50299078)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299078)
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60030, d1
@@ -27693,36 +27873,36 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     clr     d0
     mov     (0x68, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ea782
     jmp     0x483ea960
     cmp     4, d0
     beq     0x483ea789
     jmp     0x483ea80e
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x26f, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x502996b0), d0
+    mov     d0, (KssActivationStatus)
+    mov     (KssWorkRam+0x218), d0
     cmp     0, d0
     beq     0x483ea7f2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60034, d1
@@ -27734,102 +27914,102 @@ TableRomImageEnd:
     mov     d2, (0x18, sp)
     clr     d0
     mov     d0, (0x1c, sp)
-    mov     0x483f7b34, a0
-    mov     0x483f7b62, a1
+    mov     Str_Der_FSB_wurde_auf_der_SD_Card_nicht_gefu, a0
+    mov     Str_Soll_ein_neuer_FSB_erstellt_werden_Dadur_3, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     7, d0
     bne     0x483ea874
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x27c, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     4, d0
     mov     d0, (0x1c, sp)
     clr     d0
-    mov     0x483f7bcc, a0
-    mov     0x483f7bf7, a1
+    mov     Str_Der_FSB_ist_besch_digt_oder_nicht_korrek, a0
+    mov     Str_Soll_ein_neuer_FSB_erstellt_werden_Dadur_2, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     9, d0
     bne     0x483ea8da
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x286, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     0xa, d0
     mov     d0, (0x1c, sp)
     clr     d0
-    mov     0x483f7c60, a0
-    mov     0x483f7c8e, a1
+    mov     Str_Die_C_L_S_ist_besch_digt_oder_nicht_korr, a0
+    mov     Str_Soll_eine_neue_C_L_S_erstellt_werden_Dad, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     1, d0
     bne     0x483ea8fe
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x290, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ea93b
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x290, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     4, d0
     mov     d0, (0x1c, sp)
     clr     d0
-    mov     0x483f7ce0, a0
-    mov     0x483f7d03, a1
+    mov     Str_Der_FSB_kann_nicht_geladen_werden, a0
+    mov     Str_Soll_ein_neuer_FSB_erstellt_werden_Dadur, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60031, d1
@@ -27839,35 +28019,35 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x128, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ea996
     jmp     0x483eab0e
     cmp     4, d0
     beq     0x483ea99d
     jmp     0x483eaa24
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x2a8, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x502996b0), d0
+    mov     d0, (KssActivationStatus)
+    mov     (KssWorkRam+0x218), d0
     cmp     0, d0
     beq     0x483eaa06
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60035, d1
@@ -27880,65 +28060,65 @@ TableRomImageEnd:
     mov     1, d0
     mov     d0, (0x1c, sp)
     clr     d0
-    mov     0x483f7d6c, a0
-    mov     0x483f7d93, a1
+    mov     Str_Die_SETTING_Datei_ist_nicht_vorhanden, a0
+    mov     Str_Soll_eine_Neue_erstellt_werden_2, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     8, d0
     bne     0x483eaa8a
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x2b4, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     3, d0
     mov     d0, (0x1c, sp)
     clr     d0
-    mov     0x483f7db4, a0
-    mov     0x483f7de2, a1
+    mov     Str_Die_SETTING_Datei_ist_besch_digt_oder_fa, a0
+    mov     Str_Soll_eine_Neue_erstellt_werden, a1
     mov     9, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
     cmp     1, d0
     bne     0x483eaaae
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x2bd, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eaaeb
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x2bd, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -27948,10 +28128,10 @@ TableRomImageEnd:
     clr     d0
     jmp     0x483eb2d6
     clr     d0
-    call    func_483EED42, 0, 0
+    call    loc_483EED42, 0, 0
     cmp     0, d0
     bne     0x483eab33
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60032, d1
@@ -27960,7 +28140,7 @@ TableRomImageEnd:
     mov     d2, d0
     calls   (a0)
     bra     0x483eab4c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60039, d1
@@ -27971,46 +28151,46 @@ TableRomImageEnd:
     clr     d0
     jmp     0x483eb2d6
     call    func_483EE699, [d2,d3,a2,a3], 0x94
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eab62
     jmp     0x483eabe8
     cmp     1, d0
     bne     0x483eab86
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x2d1, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eabc3
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x2d1, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     0x10, d0
     mov     d0, (0x1c, sp)
     clr     d0
-    mov     0x483f7e04, a0
-    mov     0x483f7e29, a1
+    mov     Str_Dies_ist_keine_MASTER_START_SD_Card, a0
+    mov     Str_ACHTUNG_Sofern_es_sich_NICHT_um_Ihre_ers, a1
     mov     0x19, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60039, d1
@@ -28020,16 +28200,16 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x502996b4), d0
+    mov     (KssWorkRam+0x21C), d0
     cmp     0, d0
     bne     0x483eac1d
     clr     d0
-    call    func_483E94F1, 0, 0
+    call    loc_483E94F1, 0, 0
     mov     1, d0
-    mov     d0, (0x5029905c)
+    mov     d0, (ptr_5029905C)
     mov     3, d0
-    mov     d0, (0x502996b4)
-    mov     (0x50299298), a0
+    mov     d0, (KssWorkRam+0x21C)
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -28058,28 +28238,28 @@ TableRomImageEnd:
     exth    d0
     cmp     0, d0
     bge     0x483eacbb
-    mov     0x483f7f44, d1
+    mov     Str_MT_Main_CopyBaseExtXap_err_i, d1
     mov     d1, (8, sp)
     mov     d0, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x50299058), d0
+    mov     (ptr_50299058), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x30c, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     d2, (0x18, sp)
     mov     5, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f7f64, a0
-    mov     0x483f7f8b, a1
+    mov     Str_BaseExt_xap_kann_nicht_kopiert_werden, a0
+    mov     Str_Haben_Sie_die_richtige_Diskette_Table2_2, a1
     mov     0x18, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002d, d1
@@ -28090,51 +28270,51 @@ TableRomImageEnd:
     clr     d0
     jmp     0x483eb2d6
     call    func_483E9342_entry, [d2,a2,a3], 0x38
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eacea
     jmp     0x483ead70
     cmp     1, d0
     bne     0x483ead0e
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x322, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ead4b
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x322, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     mov     d2, (0x18, sp)
     mov     0xc, d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f7fc4, a0
-    mov     0x483f7ff7, a1
+    mov     Str_Es_kann_kein_neues_PLUG_iN_System_erstel, a0
+    mov     Str_empty_51, a1
     mov     d0, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x502996b4), d0
+    mov     (KssWorkRam+0x21C), d0
     cmp     0, d0
     mov     1, d0
-    mov     d0, (0x502996b0)
+    mov     d0, (KssWorkRam+0x218)
     bne     0x483ead9d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f6002c, d1
@@ -28143,7 +28323,7 @@ TableRomImageEnd:
     mov     d2, d0
     calls   (a0)
     bra     0x483eadb6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60030, d1
@@ -28153,40 +28333,40 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     1, d0
     mov     (0x70, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eadd4
     jmp     0x483eae58
     cmp     1, d0
     bne     0x483eadf8
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x33c, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eae35
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x33c, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -28195,7 +28375,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60031, d1
@@ -28205,39 +28385,39 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1e8, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eae8e
     jmp     0x483eaf12
     cmp     1, d0
     bne     0x483eaeb2
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x34c, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eaeef
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x34c, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -28246,40 +28426,40 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     clr     d0
     mov     (0x6c, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eaf2b
     jmp     0x483eafaf
     cmp     1, d0
     bne     0x483eaf4f
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x353, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eaf8c
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x353, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -28288,7 +28468,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60031, d1
@@ -28298,39 +28478,39 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x130, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eafe5
     jmp     0x483eb069
     cmp     1, d0
     bne     0x483eb009
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x363, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eb046
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x363, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -28339,7 +28519,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60032, d1
@@ -28350,36 +28530,36 @@ TableRomImageEnd:
     clr     d0
     jmp     0x483eb2d6
     call    func_483EE85D_entry, [a2], 0x1c
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483eb098
     jmp     0x483eb11c
     cmp     1, d0
     bne     0x483eb0bc
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x373, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483eb0f9
-    mov     (0x50299058), a0
+    mov     (ptr_50299058), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x373, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
-    mov     (0x50299298), a0
+    mov     d0, (KssActivationStatus)
+    mov     (KssFrameworkObj), a0
     mov     0x02f60038, d1
     mov     (0x1c, a0), a0
     mov     (0x10c, a0), a0
@@ -28388,7 +28568,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     jmp     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60032, d1
@@ -28405,14 +28585,15 @@ TableRomImageEnd:
     and     d2, d1
     cmp     0, d1
     bcc     0x483eb150
-    jmp     0x483eb24d
+    jmp     loc_483EB24D
     cmp     0x10, d1
     bls     0x483eb157
-    jmp     0x483eb24d
+    jmp     loc_483EB24D
     asl2    d1
-    mov     0x483f7ff8, a0
+    mov     ptrs_483F7FF8, a0
     mov     (d1, a0), a0
     jmp     (a0)
+# loc_483EB162:   (label)
     and     d2, d0
     cmp     0x10, d0
     bne     0x483eb175
@@ -28422,6 +28603,7 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB17E:   (label)
     and     d2, d0
     cmp     1, d0
     bne     0x483eb191
@@ -28431,9 +28613,11 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB19A:   (label)
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB1A3:   (label)
     mov     d0, d1
     and     d2, d1
     cmp     0x10, d1
@@ -28450,6 +28634,7 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB1CC:   (label)
     and     d2, d0
     cmp     1, d0
     bne     0x483eb1df
@@ -28459,6 +28644,7 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB1E8:   (label)
     and     d2, d0
     cmp     1, d0
     bne     0x483eb1fb
@@ -28468,6 +28654,7 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB204:   (label)
     and     d2, d0
     cmp     1, d0
     bne     0x483eb217
@@ -28477,6 +28664,7 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB220:   (label)
     and     d2, d0
     cmp     1, d0
     bne     0x483eb233
@@ -28491,29 +28679,30 @@ TableRomImageEnd:
     call    func_483EB2DD_entry, 0, 0x10
     clr     d0
     jmp     0x483eb2d6
+# loc_483EB24D:   (label)
     mov     0x02f60038, d0
     call    func_483EB2FD_entry, 0, 0x14
     clr     d0
     bra     0x483eb2d6
     mov     (0x13c, sp), d0
-    mov     d0, (0x502996b4)
+    mov     d0, (KssWorkRam+0x21C)
     clr     d0
     bra     0x483eb2d6
     mov     (0x13c, sp), d0
-    mov     d0, (0x50299060)
+    mov     d0, (ptr_50299060)
     clr     d0
     bra     0x483eb2d6
     clr     d0
-    mov     d0, (0x5029905c)
+    mov     d0, (ptr_5029905C)
     bra     0x483eb2d6
     mov     (0x13c, sp), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     a2, (0x10, sp)
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x000d0024, d0
     mov     (0x1c, a0), a0
     mov     0x00060029, d1
@@ -28527,7 +28716,7 @@ TableRomImageEnd:
     bra     0x483eb2d6
     clr     d0
     bra     0x483eb2d6
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a1
@@ -28540,8 +28729,8 @@ TableRomImageEnd:
     add     -0x10, sp
 # func_483EB2DD_entry:   (register-save `call` entry)
     clr     d0
-    mov     d0, (0x5029905c)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_5029905C)
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -28551,8 +28740,8 @@ TableRomImageEnd:
 # func_483EB2FD  (CPU 0x483EB2FD)
     add     -0x14, sp
 # func_483EB2FD_entry:   (register-save `call` entry)
-    mov     d0, (0x50299060)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299060)
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -28562,7 +28751,7 @@ TableRomImageEnd:
     calls   (a0)
     ret     0, 0x14
 # func_483EB327  (CPU 0x483EB327)
-    mov     (0x5029905c), d1
+    mov     (ptr_5029905C), d1
     clr     d0
     cmp     1, d1
     bne     0x483eb334
@@ -28571,10 +28760,10 @@ TableRomImageEnd:
 # Ap_Ce_Debug  (CPU 0x483EB336)
     movm    [d2,d3,a2], (sp)
     add     -0x20, sp
-    mov     (0x5029907c), a0
+    mov     (ptr_5029907C), a0
     mov     d0, (0x34, sp)
     mov     d1, d3
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     cmp     0x60079, d3
     beq     0x483eb368
     cmp     0x50005, d3
@@ -28586,12 +28775,12 @@ TableRomImageEnd:
     mov     1, d0
     ret     [d2,d3,a2], 0x2c
     mov     (0x3c, sp), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a0
     mov     a2, (0x10, sp)
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x000d0024, d0
     mov     (0x1c, a0), a0
     mov     0x00060029, d1
@@ -28614,7 +28803,7 @@ TableRomImageEnd:
     mov     0xf, d0
     and     d2, d0
     mov     d0, (0x1c, sp)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     d2, d0
     asr     4, d0
     mov     d0, a2
@@ -28622,7 +28811,7 @@ TableRomImageEnd:
     mov     a2, d0
     mov     (0x1c, sp), d1
     calls   (a0)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     d0, d3
     mov     (0xbc, a0), a0
     exthu   d3
@@ -28632,16 +28821,16 @@ TableRomImageEnd:
     mov     a2, d0
     mov     (0x1c, sp), d1
     calls   (a0)
-    mov     (0x502992c4), d1
+    mov     (KssActivationStatus), d1
     cmp     0, d1
     beq     0x483eb40e
     mov     0x12b, d0
-    mov     (0x5029907c), a0
+    mov     (ptr_5029907C), a0
     call    func_483EC03A_entry, 0, 0x1c
     call    func_483EBCC9_entry, 0, 0x20
     clr     d0
     ret     [d2,d3,a2], 0x2c
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     exthu   d3
     mov     (0xc0, a0), a0
     mov     d3, (0x10, sp)
@@ -28650,11 +28839,11 @@ TableRomImageEnd:
     mov     a2, d0
     mov     (0x1c, sp), d1
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483eb446
     mov     0x12d, d0
-    mov     (0x5029907c), a0
+    mov     (ptr_5029907C), a0
     call    func_483EC03A_entry, 0, 0x1c
     call    func_483EBCC9_entry, 0, 0x20
     clr     d0
@@ -28667,21 +28856,21 @@ TableRomImageEnd:
     ret     [d2,d3,a2], 0x2c
     clr     d0
     mov     0x138, d1
-    mov     (0x5029907c), a0
+    mov     (ptr_5029907C), a0
     call    func_483EC079_entry, [d2,d3,a2,a3], 0x2c
-    mov     (0x5029907c), a0
-    mov     0x483f8048, a1
+    mov     (ptr_5029907C), a0
+    mov     Str_Done, a1
     mov     a0, (0x18, sp)
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0x139, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     ret     [d2,d3,a2], 0x2c
-    call    func_483E94F9, 0, 0
+    call    loc_483E94F9, 0, 0
     cmp     0, d0
     bne     0x483eb4ac
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -28690,7 +28879,7 @@ TableRomImageEnd:
     mov     0x02f00000, d0
     calls   (a0)
     bra     0x483eb4bf
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
@@ -28708,14 +28897,14 @@ TableRomImageEnd:
     and     0xffff, d2
     cmp     1, d2
     bne     0x483eb4ee
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x104, d0
     mov     (0x1c, a0), a0
     clr     d1
     mov     (0x5c4, a0), a0
     calls   (a0)
     bra     0x483eb50c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -28725,7 +28914,7 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     bra     0x483eb525
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d3, d1
     mov     (0x1c, a0), a0
     mov     (0xe4, a0), a2
@@ -28750,14 +28939,14 @@ TableRomImageEnd:
     mov     1, d0
     ret     [d2,d3,a2], 0x20
     mov     (0x30, sp), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d3, d0
     mov     (0x1c, a0), a0
     mov     d2, d1
     mov     (0xe4, a0), a0
     mov     a2, (0x10, sp)
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x000d0024, d0
     mov     (0x1c, a0), a0
     mov     0x00060029, d1
@@ -28773,60 +28962,64 @@ TableRomImageEnd:
     mov     2, d1
     sub     d1, d0
     asl2    d0
-    mov     0x483f8094, a0
+    mov     ptrs_483F8094, a0
     mov     (d0, a0), a0
     jmp     (a0)
-    mov     (0x502996c4), d0
+# loc_483EB5A1:   (label)
+    mov     (KssWorkRam+0x22C), d0
     cmp     0, d0
     bne     0x483eb5ae
     jmp     0x483eb68a
-    mov     (0x50299298), a0
-    mov     (0x502996c4), d0
+    mov     (KssFrameworkObj), a0
+    mov     (KssWorkRam+0x22C), d0
     mov     (0x1c, a0), a0
-    mov     (0x502996bc), d1
+    mov     (KssWorkRam+0x224), d1
     mov     (0x10c, a0), a1
     asl     16, d1
     and     0xffff, d0
     or      d0, d1
     mov     d1, (0x10, sp)
-    mov     (0x50299088), d0
+    mov     (ptr_50299088), d0
     mov     0x02f60009, d1
     calls   (a1)
     jmp     0x483eb68a
-    mov     (0x502996c8), d0
+# loc_483EB5E3:   (label)
+    mov     (KssWorkRam+0x230), d0
     cmp     0, d0
     bne     0x483eb5f0
     jmp     0x483eb68a
-    mov     (0x50299298), a0
-    mov     (0x502996c8), d0
+    mov     (KssFrameworkObj), a0
+    mov     (KssWorkRam+0x230), d0
     mov     (0x1c, a0), a0
-    mov     (0x502996bc), d1
+    mov     (KssWorkRam+0x224), d1
     mov     (0x10c, a0), a1
     asl     16, d1
     and     0xffff, d0
     or      d0, d1
     mov     d1, (0x10, sp)
-    mov     (0x50299088), d0
+    mov     (ptr_50299088), d0
     mov     0x02f60009, d1
     calls   (a1)
     bra     0x483eb68a
-    mov     (0x502996cc), d0
+# loc_483EB624:   (label)
+    mov     (KssWorkRam+0x234), d0
     cmp     0, d0
     beq     0x483eb68a
-    mov     (0x50299298), a0
-    mov     (0x502996cc), d0
+    mov     (KssFrameworkObj), a0
+    mov     (KssWorkRam+0x234), d0
     mov     (0x1c, a0), a0
-    mov     (0x502996bc), d1
+    mov     (KssWorkRam+0x224), d1
     mov     (0x10c, a0), a1
     asl     16, d1
     and     0xffff, d0
     or      d0, d1
     mov     d1, (0x10, sp)
-    mov     (0x50299088), d0
+    mov     (ptr_50299088), d0
     mov     0x02f60009, d1
     calls   (a1)
     bra     0x483eb68a
-    mov     (0x50299298), a0
+# loc_483EB662:   (label)
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -28834,10 +29027,11 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     0x02f0012e, d0
     calls   (a0)
+# loc_483EB680:   (label)
     bra     0x483eb68a
-    mov     (0x50299084), d0
+    mov     (ptr_50299084), d0
     bra     0x483eb69f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d1
     mov     (0x1c, a0), a0
     mov     d3, d0
@@ -28846,31 +29040,32 @@ TableRomImageEnd:
     mov     a0, (0x10, sp)
     calls   (a1)
     ret     [d2,d3,a2], 0x20
+# loc_483EB6A2:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EB6A4  (CPU 0x483EB6A4)
     add     -0x20, sp
 # func_483EB6A4_entry:   (register-save `call` entry)
     mov     a1, a3
-    mov     (0x50299080), a1
+    mov     (ptr_50299080), a1
     mov     a0, (0x3c, sp)
     mov     d1, a2
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     clr     d0
     bra     0x483eb6d2
     mov     d0, d1
     asl2    d1
     mov     sp, a0
     add     0x14, a0
-    mov     0x483f805c, d2
+    mov     Str_empty_52, d2
     mov     d2, (d1, a0)
     clr     d2
-    mov     0x502996c4, a0
+    mov     KssWorkRam+0x22C, a0
     mov     d2, (d1, a0)
     inc     d0
     cmp     3, d0
     blt     0x483eb6bb
     clr     d3
-    mov     d3, (0x502996c0)
+    mov     d3, (KssWorkRam+0x228)
     mov     1, d0
     mov     1, a0
     bra     0x483eb6f4
@@ -28879,7 +29074,7 @@ TableRomImageEnd:
     and     d2, d1
     beq     0x483eb6f2
     inc     d3
-    mov     d3, (0x502996c0)
+    mov     d3, (KssWorkRam+0x228)
     add     d2, a0
     cmp     a2, a0
     ble     0x483eb6e3
@@ -28905,7 +29100,7 @@ TableRomImageEnd:
     jmp     0x483eb79e
     mov     d2, d1
     asl2    d1
-    mov     0x502996c4, a0
+    mov     KssWorkRam+0x22C, a0
     mov     d0, (d1, a0)
     cmp     1, d0
     beq     0x483eb74a
@@ -28922,28 +29117,28 @@ TableRomImageEnd:
     cmp     0x40, d0
     beq     0x483eb786
     bra     0x483eb790
-    mov     0x483f8060, a0
+    mov     Str_OK_8, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f8064, a0
+    mov     Str_YES, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f8068, a0
+    mov     Str_NO, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f806c, a0
+    mov     Str_CANCEL_3, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f8074, a0
+    mov     Str_RETRY, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f807c, a0
+    mov     Str_IGNORE, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f8084, a0
+    mov     Str_DEBUG_2, a0
     mov     a0, (d1, a1)
     bra     0x483eb798
-    mov     0x483f808c, a0
+    mov     Str_ERROR_2, a0
     mov     a0, (d1, a1)
     inc     d2
     cmp     2, d3
@@ -28954,15 +29149,15 @@ TableRomImageEnd:
     bgt     0x483eb7a6
     jmp     0x483eb719
     mov     (0x4c, sp), d0
-    mov     d0, (0x502996bc)
+    mov     d0, (KssWorkRam+0x224)
     mov     (0x48, sp), d0
-    mov     d0, (0x50299088)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299088)
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x114, a0), a0
     calls   (a0)
-    mov     d0, (0x50299084)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299084)
+    mov     (KssFrameworkObj), a0
     clr     d1
     mov     (0x1c, a0), a0
     mov     (0x108, a0), a0
@@ -28971,16 +29166,16 @@ TableRomImageEnd:
     calls   (a0)
     cmp     -1, d0
     beq     0x483eb80b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00060047, d1
     mov     (0x108, a0), a0
     mov     d0, (0x10, sp)
-    mov     (0x50299084), d0
+    mov     (ptr_50299084), d0
     calls   (a0)
-    mov     d0, (0x50299084)
-    mov     (0x50299298), a0
+    mov     d0, (ptr_50299084)
+    mov     (KssFrameworkObj), a0
     mov     0x02f00147, d0
     mov     (0x1c, a0), a0
     mov     0x000600b4, d1
@@ -28988,14 +29183,14 @@ TableRomImageEnd:
     mov     (0x3c, sp), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f00148, d0
     mov     (0x1c, a0), a0
     mov     0x000600b4, d1
     mov     (0x10c, a0), a1
     mov     a3, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x14, sp), d0
     mov     (0x1c, a0), a0
     mov     0x000600b4, d1
@@ -29003,7 +29198,7 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     0x02f00149, d0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x18, sp), d0
     mov     (0x1c, a0), a0
     mov     0x000600b4, d1
@@ -29011,7 +29206,7 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     0x02f0014a, d0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, sp), d0
     mov     (0x1c, a0), a0
     mov     0x000600b4, d1
@@ -29019,50 +29214,50 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     0x02f0014b, d0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f00149, d0
     mov     (0x1c, a0), a0
     mov     1, d1
     mov     (0x2a4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f0014a, d0
     mov     (0x1c, a0), a0
     mov     1, d1
     mov     (0x2a4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f0014b, d0
     mov     (0x1c, a0), a0
     mov     1, d1
     mov     (0x2a4, a0), a0
     calls   (a0)
-    mov     (0x502996c0), d0
+    mov     (KssWorkRam+0x228), d0
     cmp     1, d0
     beq     0x483eb8f9
     cmp     2, d0
     beq     0x483eb927
     bra     0x483eb93d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f00149, d0
     mov     (0x1c, a0), a0
     clr     d1
     mov     (0x2a4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f0014b, d0
     mov     (0x1c, a0), a0
     clr     d1
     mov     (0x2a4, a0), a0
     calls   (a0)
     bra     0x483eb93d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x02f0014a, d0
     mov     (0x1c, a0), a0
     clr     d1
     mov     (0x2a4, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -29072,26 +29267,27 @@ TableRomImageEnd:
     calls   (a0)
     clr     d0
     ret     [d2,d3,a2,a3], 0x30
-    mov     (0x50299084), d0
+# loc_483EB95F:   (label)
+    mov     (ptr_50299084), d0
     rets
-# func_483EB967  (CPU 0x483EB967)
+# loc_483EB967  (CPU 0x483EB967)
     add     -0x14, sp
 # func_483EB967_entry:   (register-save `call` entry)
     call    func_483EB9E8_entry, [d2,a2], 0x28
     cmp     0, d0
     beq     0x483eb985
-    mov     0x483f80d8, d0
+    mov     Str_Cant_alloc_init_Buffers, d0
     mov     d0, (8, sp)
     call    func_483EBC0F_entry, [d2,a2], 0x1c
     mov     -1, d0
     ret     0, 0x14
-    mov     (0x502996d8), a0
+    mov     (KssWorkRam+0x240), a0
     mov     0x100, d0
     mov     0x483ecb76, a1
     call    func_483EC184, 0, 0
     cmp     0, d0
     beq     0x483eb9ae
-    mov     0x483f80f0, d0
+    mov     Str_Cant_initialize_logger_module, d0
     mov     d0, (8, sp)
     call    func_483EBC0F_entry, [d2,a2], 0x1c
     mov     -1, d0
@@ -29099,7 +29295,7 @@ TableRomImageEnd:
     call    func_483EBAC0_entry, [d2,d3,a2], 0x30
     cmp     0, d0
     beq     0x483eb9c8
-    mov     0x483f8110, d0
+    mov     Str_Cant_intialize_loggers, d0
     mov     d0, (8, sp)
     call    func_483EBC0F_entry, [d2,a2], 0x1c
     mov     -1, d0
@@ -29107,7 +29303,7 @@ TableRomImageEnd:
     call    func_483EBE84, [d2], 4
     cmp     0, d0
     beq     0x483eb9e2
-    mov     0x483f8128, d0
+    mov     Str_Cant_initialize_excption_module, d0
     mov     d0, (8, sp)
     call    func_483EBC0F_entry, [d2,a2], 0x1c
     mov     -1, d0
@@ -29118,66 +29314,66 @@ TableRomImageEnd:
 # func_483EB9E8  (CPU 0x483EB9E8)
     add     -0x20, sp
 # func_483EB9E8_entry:   (register-save `call` entry)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x200, d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
-    mov     a0, (0x502996d4)
+    mov     a0, (KssWorkRam+0x23C)
     cmp     0, a0
     bne     0x483eba0d
     mov     -1, d0
     ret     [d2,a2], 0x28
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x100, d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
-    mov     a0, (0x502996d8)
+    mov     a0, (KssWorkRam+0x240)
     cmp     0, a0
     bne     0x483eba2f
     mov     -1, d0
     ret     [d2,a2], 0x28
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x200, d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
-    mov     a0, (0x502996dc)
+    mov     a0, (KssWorkRam+0x244)
     cmp     0, a0
     bne     0x483eba50
     mov     -1, d0
     bra     0x483ebabb
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x1000, d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
-    mov     a0, (0x502996e0)
+    mov     a0, (KssWorkRam+0x248)
     cmp     0, a0
     bne     0x483eba71
     mov     -1, d0
     bra     0x483ebabb
-    mov     0x50299d98, a2
+    mov     KssWorkRam+0x900, a2
     mov     1, d0
     mov     d0, (0x18, sp)
     clr     d0
     mov     d0, (0x1c, sp)
     mov     a2, a0
-    mov     (0x502996dc), a1
+    mov     (KssWorkRam+0x244), a1
     mov     0x200, d0
     clr     d1
     call    func_483ED8F2_entry, [d2,d3,a2,a3], 0x1c
     mov     d0, d2
-    mov     0x50299e28, a0
+    mov     KssWorkRam+0x990, a0
     mov     a2, a1
     call    func_483EDBD2, [a2,a3], 8
     or      d0, d2
     mov     1, d0
     mov     d0, (0x18, sp)
     mov     d0, (0x1c, sp)
-    mov     0x50299dcc, a0
-    mov     (0x502996e0), a1
+    mov     KssWorkRam+0x934, a0
+    mov     (KssWorkRam+0x248), a1
     mov     0x1000, d0
     mov     1, d1
     call    func_483ED8F2_entry, [d2,d3,a2,a3], 0x1c
@@ -29187,97 +29383,98 @@ TableRomImageEnd:
 # func_483EBAC0  (CPU 0x483EBAC0)
     add     -0x24, sp
 # func_483EBAC0_entry:   (register-save `call` entry)
-    mov     0x483f8163, d0
+    mov     Str_Std_Log, d0
     mov     d0, (0x14, sp)
     mov     0x483ebba6, a2
     mov     a2, (0x1c, sp)
     clr     d0
     mov     d0, (0x20, sp)
-    mov     0x50299e00, a0
-    mov     0x483f8148, a1
+    mov     KssWorkRam+0x968, a0
+    mov     Str_P_5s_F_14s_L_4i_m, a1
     mov     5, d0
     mov     2, d1
     call    func_483EC1BE_entry, [d2,d3,a2,a3], 0x48
     mov     d0, d3
-    mov     0x483f8186, d0
+    mov     Str_Exception1, d0
     mov     d0, (0x14, sp)
     mov     0x483ed9c5, d0
     mov     d0, (0x1c, sp)
-    mov     0x50299d98, d0
+    mov     KssWorkRam+0x900, d0
     mov     d0, (0x20, sp)
-    mov     0x50299cf8, a0
-    mov     0x483f816c, a1
+    mov     KssWorkRam+0x860, a0
+    mov     Str_F_14s_L_4i_m, a1
     mov     5, d0
     mov     1, d1
     call    func_483EC1BE_entry, [d2,d3,a2,a3], 0x48
     or      d0, d3
-    mov     0x483f8197, d0
+    mov     Str_Exception2, d0
     mov     d0, (0x14, sp)
     mov     a2, (0x1c, sp)
     clr     d0
     mov     d0, (0x20, sp)
-    mov     0x50299d20, a0
-    mov     0x483f8194, a1
+    mov     KssWorkRam+0x888, a0
+    mov     Str_m, a1
     mov     5, d0
     mov     2, d1
     call    func_483EC1BE_entry, [d2,d3,a2,a3], 0x48
     or      d0, d3
-    mov     0x483f81be, d0
+    mov     Str_Exception3, d0
     mov     d0, (0x14, sp)
     mov     a2, (0x1c, sp)
     clr     d0
     mov     d0, (0x20, sp)
-    mov     0x50299d48, a0
-    mov     0x483f81a4, a1
+    mov     KssWorkRam+0x8B0, a0
+    mov     Str_EXCPT_F_14s_L_4i_m, a1
     mov     5, d0
     mov     2, d1
     call    func_483EC1BE_entry, [d2,d3,a2,a3], 0x48
     or      d0, d3
-    mov     0x483f81e6, d0
+    mov     Str_Bug, d0
     mov     d0, (0x14, sp)
     mov     a2, (0x1c, sp)
     clr     d0
     mov     d0, (0x20, sp)
-    mov     0x50299d70, a0
-    mov     0x483f81cc, a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     Str_BUG_F_14s_L_4i_m, a1
     mov     5, d0
     mov     2, d1
     call    func_483EC1BE_entry, [d2,d3,a2,a3], 0x48
     mov     d0, d2
-    mov     0x483f81ec, a0
+    mov     Str_Welcome_to_Sensorflo_s_Debug_System, a0
     mov     2, d0
     call    func_483EBBA8_entry, [d2,a2,a3], 0x20
-    mov     0x483f8210, a0
+    mov     Str_empty_48, a0
     mov     2, d0
     call    func_483EBBA8_entry, [d2,a2,a3], 0x20
     mov     d3, d0
     or      d2, d0
     ret     [d2,d3,a2], 0x30
+# loc_483EBBA6:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483EBBA8  (CPU 0x483EBBA8)
     add     -0x14, sp
 # func_483EBBA8_entry:   (register-save `call` entry)
-    mov     (0x50299dcc), a2
+    mov     (KssWorkRam+0x934), a2
     mov     a0, a1
     mov     (4, a2), a2
-    mov     0x50299dcc, a3
+    mov     KssWorkRam+0x934, a3
     mov     a3, a0
     mov     d0, d2
     calls   (a2)
-    mov     (0x50299dcc), a0
-    mov     0x483f8234, a1
+    mov     (KssWorkRam+0x934), a0
+    mov     word_483F8234, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     cmp     1, d2
     ble     0x483ebbec
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x114, a0), a0
     calls   (a0)
     cmp     0x2f0012e, d0
     bne     0x483ebc0a
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x000600b2, d1
@@ -29286,6 +29483,7 @@ TableRomImageEnd:
     mov     0x02f0012f, d0
     calls   (a0)
     ret     [d2,a2,a3], 0x20
+# loc_483EBC0D:   (label)
     movm    [d2,a2], (sp)
 # func_483EBC0F  (CPU 0x483EBC0F)
     add     -0x14, sp
@@ -29295,40 +29493,40 @@ TableRomImageEnd:
     add     0x24, d2
     add     4, d2
     mov     3, d0
-    call    func_483EED2F, 0, 0
+    call    loc_483EED2F, 0, 0
     cmp     0, d0
     beq     0x483ebc3b
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x24, sp), a1
     mov     (0x234, a0), a2
     mov     d2, d0
-    mov     (0x502996d4), a0
+    mov     (KssWorkRam+0x23C), a0
     calls   (a2)
     bra     0x483ebc5b
-    mov     (0x50299298), a0
-    mov     0x483f8238, d0
+    mov     (KssFrameworkObj), a0
+    mov     Str_vsprintf_not_loaded_yet, d0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996d4), a0
+    mov     (KssWorkRam+0x23C), a0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     calls   (a1)
-    mov     (0x502996d4), a0
+    mov     (KssWorkRam+0x23C), a0
     mov     0xa, d1
     movbu   d1, (d0, a0)
-    mov     (0x502996d4), a0
+    mov     (KssWorkRam+0x23C), a0
     inc     d0
     clr     d1
     movbu   d1, (d0, a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     -1, d0
     mov     (0x1c, a0), a0
     mov     0x0005001d, d1
     mov     (0x108, a0), a1
-    mov     (0x502996d4), a0
+    mov     (KssWorkRam+0x23C), a0
     mov     a0, (0x10, sp)
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x000600b4, d1
@@ -29336,81 +29534,82 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     -1, d0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x104, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x84, a0), a0
     calls   (a0)
     ret     [d2,a2], 0x1c
-# func_483EBCC9  (CPU 0x483EBCC9)
+# loc_483EBCC9  (CPU 0x483EBCC9)
     add     -0x20, sp
 # func_483EBCC9_entry:   (register-save `call` entry)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ebcd9
     jmp     0x483ebd53
     cmp     1, d0
     bne     0x483ebcfd
-    mov     (0x5029908c), a0
+    mov     (ptr_5029908C), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x502992bc), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (ptr_502992BC), a1
     mov     0x109, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ebd3a
-    mov     (0x5029908c), a0
+    mov     (ptr_5029908C), a0
     mov     1, d0
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x502992c0), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (ptr_502992C0), a1
     mov     0x109, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x502992d4), d0
-    mov     0x50299d98, a0
-    mov     d0, (0x502992d0)
-    call    func_483EDB6E, 0, 0
+    mov     (ptr_502992D4), d0
+    mov     KssWorkRam+0x900, a0
+    mov     d0, (ptr_502992D0)
+    call    loc_483EDB6E, 0, 0
     add     -1, d0
-    mov     d0, (0x502992d4)
+    mov     d0, (ptr_502992D4)
     clr     d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     beq     0x483ebd53
     mov     0x10a, d0
-    mov     (0x5029908c), a0
+    mov     (ptr_5029908C), a0
     call    func_483EC03A_entry, 0, 0x1c
     bra     0x483ebd8a
     mov     2, d0
     mov     0x10b, d1
-    mov     (0x5029908c), a0
+    mov     (ptr_5029908C), a0
     call    func_483EC079_entry, [d2,d3,a2,a3], 0x2c
     mov     0x02f00137, d0
     mov     d0, (0x18, sp)
     clr     d0
     mov     d0, (0x1c, sp)
     mov     1, d0
-    mov     0x483f8250, a0
-    mov     0x483f8263, a1
+    mov     Str_Unbekannter_Fehler, a0
+    mov     Str_Dr_cken_Sie_OK_um_zur_Hauptseite_zu_wech, a1
     mov     0x41, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     mov     1, d0
-    call    func_483E94F1, 0, 0
+    call    loc_483E94F1, 0, 0
     ret     0, 0x20
+# loc_483EBD8D:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483EBD8F  (CPU 0x483EBD8F)
     add     -0x18, sp
 # func_483EBD8F_entry:   (register-save `call` entry)
-    mov     (0x502996d0), d0
+    mov     (KssWorkRam+0x238), d0
     mov     0, a0
     inc     d0
     cmp     2, d0
     bge     0x483ebda1
     mov     d0, a0
     mov     a0, d0
-    mov     d0, (0x502996d0)
-    mov     (0x502996d4), d1
+    mov     d0, (KssWorkRam+0x238)
+    mov     (KssWorkRam+0x23C), d1
     asl     8, d0
     add     d0, d1
     mov     d1, a3
@@ -29419,18 +29618,18 @@ TableRomImageEnd:
     add     0x2c, d2
     add     4, d2
     mov     3, d0
-    call    func_483EED2F, 0, 0
+    call    loc_483EED2F, 0, 0
     cmp     0, d0
     beq     0x483ebdd9
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x2c, sp), a1
     mov     (0x234, a0), a2
     mov     a3, a0
     mov     d2, d0
     calls   (a2)
     bra     0x483ebdf3
-    mov     (0x50299298), a0
-    mov     0x483f8294, d0
+    mov     (KssFrameworkObj), a0
+    mov     Str_debug_out_of_order, d0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a0
     mov     a3, (8, sp)
@@ -29438,8 +29637,8 @@ TableRomImageEnd:
     calls   (a0)
     cmp     0x100, d0
     blt     0x483ebe1a
-    mov     (0x50299298), a0
-    mov     0x483f82a8, d1
+    mov     (KssFrameworkObj), a0
+    mov     Str_rsprintf_buf_too_small_i_i, d1
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a0
     mov     a3, (8, sp)
@@ -29450,68 +29649,71 @@ TableRomImageEnd:
     calls   (a0)
     mov     a3, a0
     ret     [d2,a2,a3], 0x24
+# loc_483EBE1E:   (label)
     add     -0x10, sp
-    mov     (0x5029908c), a0
-    mov     a0, (0x502992c8)
+    mov     (ptr_5029908C), a0
+    mov     a0, (ptrs_502992C8)
     call    func_483ED8A9, [a2,a3], 0x94
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ebe4c
     mov     0x15c, d0
-    mov     (0x5029908c), a0
+    mov     (ptr_5029908C), a0
     call    func_483EC03A_entry, 0, 0x1c
     bra     0x483ebe7f
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x78, a0), a0
     calls   (a0)
     cmp     0, d0
     beq     0x483ebe7f
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x100, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ebe7f
     mov     0x15f, d0
-    mov     (0x5029908c), a0
+    mov     (ptr_5029908C), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     0, 0x10
+# loc_483EBE82:   (label)
     movm    [d2], (sp)
 # func_483EBE84  (CPU 0x483EBE84)
     clr     d1
     bra     0x483ebe98
     mov     d1, d0
     asl2    d0
-    mov     0x483f84c0, d2
-    mov     0x50299e50, a0
+    mov     Str_UNKNOWN_TYPE, d2
+    mov     KssWorkRam+0x9B8, a0
     mov     d2, (d0, a0)
     inc     d1
     cmp     0xd, d1
     blt     0x483ebe87
-    mov     0x483f84d0, d0
-    mov     d0, (0x50299e54)
-    mov     0x483f8508, d0
-    mov     d0, (0x50299e50)
-    mov     0x483f8510, d0
-    mov     d0, (0x50299e58)
-    mov     0x483f8514, d0
-    mov     d0, (0x50299e60)
-    mov     0x483f8524, d0
-    mov     d0, (0x50299e5c)
-    mov     0x483f852c, d0
-    mov     d0, (0x50299e64)
-    mov     0x483f8534, d0
-    mov     d0, (0x50299e68)
-    mov     0x483f8544, d0
-    mov     d0, (0x50299e6c)
-    mov     0x483f8550, d0
-    mov     d0, (0x50299e70)
-    mov     0x483f855c, d0
-    mov     d0, (0x50299e78)
-    mov     0x483f8564, d0
-    mov     d0, (0x50299e7c)
+    mov     Str_A_new_excaption_was_thrown_beore_an_old, d0
+    mov     d0, (KssWorkRam+0x9BC)
+    mov     Str_NONE, d0
+    mov     d0, (KssWorkRam+0x9B8)
+    mov     Str_IO, d0
+    mov     d0, (KssWorkRam+0x9C0)
+    mov     Str_IO_FILENOTFOUND, d0
+    mov     d0, (KssWorkRam+0x9C8)
+    mov     Str_IO_NOSD, d0
+    mov     d0, (KssWorkRam+0x9C4)
+    mov     Str_IO_FULL, d0
+    mov     d0, (KssWorkRam+0x9CC)
+    mov     Str_FSB_NOTLOADED, d0
+    mov     d0, (KssWorkRam+0x9D0)
+    mov     Str_FSB_CORRUPT, d0
+    mov     d0, (KssWorkRam+0x9D4)
+    mov     Str_MUP_CORRUPT, d0
+    mov     d0, (KssWorkRam+0x9D8)
+    mov     Str_MEMMORY, d0
+    mov     d0, (KssWorkRam+0x9E0)
+    mov     Str_PLUGIN_VERSION, d0
+    mov     d0, (KssWorkRam+0x9E4)
     clr     d0
     retf    [d2], 4
+# loc_483EBF24:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EBF26  (CPU 0x483EBF26)
     add     -0x1c, sp
@@ -29519,11 +29721,11 @@ TableRomImageEnd:
     mov     d1, d3
     mov     a1, a3
     mov     d0, d2
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ebf6a
-    mov     (0x483f82e4), d0
-    mov     0x50299e50, a1
+    mov     (Str_Hthrown_s), d0
+    mov     KssWorkRam+0x9B8, a1
     mov     d0, (8, sp)
     mov     d2, d0
     asl2    d0
@@ -29533,22 +29735,22 @@ TableRomImageEnd:
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
     mov     a0, a1
     mov     a3, (0x18, sp)
-    mov     0x50299cf8, a0
+    mov     KssWorkRam+0x860, a0
     mov     d3, d1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     d2, (0x502992c4)
+    mov     d2, (KssActivationStatus)
     bra     0x483ebfbd
     cmp     1, d0
     beq     0x483ebfa8
-    mov     0x50299d70, a2
+    mov     KssWorkRam+0x8D8, a2
     mov     a1, (0x18, sp)
     mov     a2, a0
-    mov     0x483f8574, a1
+    mov     Str_Can_t_throw_exception_while_an_old_one_i, a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     a3, (0x18, sp)
-    mov     0x483f85a8, a1
+    mov     Str_Printing_uncatched_exception_throwing_ne, a1
     mov     1, d0
     mov     d3, d1
     mov     a2, a0
@@ -29558,20 +29760,21 @@ TableRomImageEnd:
     mov     d3, d1
     call    func_483EC079_entry, [d2,d3,a2,a3], 0x2c
     mov     1, d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     bra     0x483ebfbd
     mov     a3, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     0x483f85d8, a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     Str_Can_t_throw_exception_while_a_bug_is_unc, a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     ret     [d2,d3,a2,a3], 0x2c
+# loc_483EBFC0:   (label)
     movm    [d2,a2], (sp)
 # func_483EBFC2  (CPU 0x483EBFC2)
     add     -0x1c, sp
 # func_483EBFC2_entry:   (register-save `call` entry)
     mov     d0, d2
-    mov     (0x483f82f4), d0
+    mov     (Str_Hcan_t_throw_bug_while_a_bug_exception_i), d0
     mov     a1, a2
     mov     d0, (8, sp)
     mov     a0, (0xc, sp)
@@ -29580,14 +29783,15 @@ TableRomImageEnd:
     mov     a2, (0x18, sp)
     mov     d2, d1
     mov     1, d0
-    mov     0x50299d70, a0
+    mov     KssWorkRam+0x8D8, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     1, d0
-    mov     d0, (0x502992c4)
+    mov     d0, (KssActivationStatus)
     ret     [d2,a2], 0x24
+# loc_483EBFF2:   (label)
     add     -0x1c, sp
     mov     d0, d1
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     bne     0x483ec003
     clr     d0
@@ -29595,38 +29799,39 @@ TableRomImageEnd:
     cmp     1, d0
     bne     0x483ec020
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x483f8384), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (Str_d_Hcan_t_enter_func_exception_uncatched), a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     bra     0x483ec037
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x483f83b0), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (Str_Hprinting_exception_throwing_new_bug), a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     -1, d0
     ret     0, 0x1c
-# func_483EC03A  (CPU 0x483EC03A)
+# loc_483EC03A  (CPU 0x483EC03A)
     add     -0x1c, sp
 # func_483EC03A_entry:   (register-save `call` entry)
     mov     d0, d1
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     1, d0
     bne     0x483ec05f
     mov     a0, (0x18, sp)
-    mov     0x50299d70, a0
-    mov     (0x483f833c), a1
+    mov     KssWorkRam+0x8D8, a0
+    mov     (Str_0_Hforwarded), a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ec074
     mov     a0, (0x18, sp)
-    mov     0x50299cf8, a0
-    mov     (0x483f834c), a1
+    mov     KssWorkRam+0x860, a0
+    mov     (Str_Hstack_trace), a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     ret     0, 0x1c
+# loc_483EC077:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EC079  (CPU 0x483EC079)
     add     -0x1c, sp
@@ -29634,16 +29839,16 @@ TableRomImageEnd:
     mov     d1, (0x38, sp)
     mov     a0, a3
     mov     d0, d2
-    mov     0x50299d98, a2
+    mov     KssWorkRam+0x900, a2
     mov     a2, a0
-    call    func_483EDB6E, 0, 0
+    call    loc_483EDB6E, 0, 0
     mov     d0, d3
     add     -1, d3
     mov     a2, a0
-    call    func_483EDB56, 0, 0
+    call    loc_483EDB56, 0, 0
     cmp     1, d2
     bne     0x483ec0ad
-    mov     (0x502992d8), d0
+    mov     (ptr_502992D8), d0
     mov     d0, d2
     inc     d2
     cmp     0, d0
@@ -29652,13 +29857,13 @@ TableRomImageEnd:
     bra     0x483ec10b
     cmp     2, d2
     bne     0x483ec0f4
-    mov     (0x502992d4), d1
+    mov     (ptr_502992D4), d1
     cmp     d3, d1
     bne     0x483ec0d7
     cmp     0, d3
     blt     0x483ec0d7
-    mov     (0x502992d0), d1
-    mov     (0x502992d8), d0
+    mov     (ptr_502992D0), d1
+    mov     (ptr_502992D8), d0
     inc     d1
     mov     d1, d2
     cmp     d0, d1
@@ -29668,7 +29873,7 @@ TableRomImageEnd:
     mov     0xffff6ade, d2
     cmp     0, d3
     blt     0x483ec10b
-    mov     (0x502992d8), d0
+    mov     (ptr_502992D8), d0
     inc     d1
     mov     d1, d2
     cmp     d0, d1
@@ -29691,60 +29896,60 @@ TableRomImageEnd:
     clr     d2
     cmp     d3, d2
     ble     0x483ec116
-    mov     d3, (0x502992d8)
+    mov     d3, (ptr_502992D8)
     bra     0x483ec181
     cmp     0, d2
     blt     0x483ec181
     mov     a3, (0x18, sp)
     mov     (0x38, sp), d1
-    mov     0x50299d48, a0
-    mov     (0x483f8360), a1
+    mov     KssWorkRam+0x8B0, a0
+    mov     (Str_P_Hcan_t_enter_func_bug_uncatched), a1
     mov     1, d0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x50299e28), a0
+    mov     (KssWorkRam+0x990), a0
     mov     d2, d0
     mov     (0x28, a0), a1
-    mov     0x50299e28, a3
+    mov     KssWorkRam+0x990, a3
     mov     a3, a0
     calls   (a1)
     bra     0x483ec16b
-    mov     (0x50299e28), a0
+    mov     (KssWorkRam+0x990), a0
     mov     (8, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x50299090), d0
+    mov     (ptrs_50299090), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     1, d0
     mov     0x118, d1
-    mov     0x50299d20, a0
+    mov     KssWorkRam+0x888, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
-    mov     (0x50299e28), a0
+    mov     (KssWorkRam+0x990), a0
     mov     (4, a0), a1
     mov     a3, a0
     calls   (a1)
     cmp     0, d0
     bne     0x483ec146
-    mov     d3, (0x502992d8)
+    mov     d3, (ptr_502992D8)
     ret     [d2,d3,a2,a3], 0x2c
 # func_483EC184  (CPU 0x483EC184)
     mov     a0, (8, sp)
     mov     a1, a0
-    mov     (0x502990b0), a1
+    mov     (ptr_502990B0), a1
     cmp     0, a1
     beq     0x483ec195
     mov     -1, d0
     rets
     mov     1, d1
-    mov     d1, (0x502990b0)
+    mov     d1, (ptr_502990B0)
     cmp     0, a0
     bne     0x483ec1a5
     mov     -1, d0
     rets
     mov     (8, sp), d1
-    mov     a0, (0x502996e4)
-    mov     d1, (0x502996e8)
-    mov     d0, (0x502996ec)
+    mov     a0, (KssWorkRam+0x24C)
+    mov     d1, (KssWorkRam+0x250)
+    mov     d0, (KssWorkRam+0x254)
     clr     d0
     rets
     movm    [d2,d3,a2,a3], (sp)
@@ -29788,10 +29993,10 @@ TableRomImageEnd:
     mov     (0x5c, sp), a0
     mov     d0, a1
     mov     a0, (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x36c, a0), a1
     mov     a3, a0
@@ -29893,19 +30098,19 @@ TableRomImageEnd:
     inc     a1
     jmp     0x483ec3aa
     mov     (0x14, sp), a0
-    mov     0x483f8630, a2
+    mov     Str_i_4, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
     bra     0x483ec358
     mov     (0x1c, sp), a0
-    mov     0x483f8634, a2
+    mov     Str_s_5, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
     bra     0x483ec358
     mov     (0x18, sp), a0
-    mov     0x483f8638, a2
+    mov     Str_s_4, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
@@ -29913,28 +30118,28 @@ TableRomImageEnd:
     movbu   d2, (0x34, sp)
     extb    d2
     inc     d2
-    mov     0x483f863c, a2
+    mov     Str_s_3, a2
     bra     0x483ec358
     mov     (0x10, sp), a0
-    mov     0x483f8640, a2
+    mov     Str_i_3, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
     bra     0x483ec358
     mov     (0x24, sp), a0
-    mov     0x483f8644, a2
+    mov     Str_i_2, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
     bra     0x483ec358
     mov     (0x28, sp), a0
-    mov     0x483f8648, a2
+    mov     Str_s_2, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
     bra     0x483ec358
     mov     (0x20, sp), a0
-    mov     0x483f864c, a2
+    mov     Str_s, a2
     movbu   d2, (a0)
     extb    d2
     inc     d2
@@ -29958,7 +30163,7 @@ TableRomImageEnd:
     inc     a3
     movbu   d0, (a1)
     mov     a3, (0x54, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a1, d3
     mov     (0x2e1c, a0), a0
     inc     d3
@@ -29966,7 +30171,7 @@ TableRomImageEnd:
     mov     d3, a0
     mov     a2, a1
     calls   (a3)
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a0
     mov     (0x36c, a0), a1
     mov     a2, a0
@@ -29985,7 +30190,7 @@ TableRomImageEnd:
     mov     (0x2c, sp), a0
     mov     d2, d0
     movbu   d2, (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     extb    d0
     mov     (0x2e1c, a0), a0
     inc     d0
@@ -30062,7 +30267,7 @@ TableRomImageEnd:
     mov     (a1), d0
     cmp     0, d0
     beq     0x483ec466
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a2
     mov     (a1), a0
@@ -30072,7 +30277,7 @@ TableRomImageEnd:
     mov     (a2), d0
     cmp     0, d0
     beq     0x483ec481
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     (a2), a0
@@ -30080,6 +30285,7 @@ TableRomImageEnd:
     clr     d0
     mov     d0, (a3)
     ret     [a2,a3], 0x14
+# loc_483EC486:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EC488  (CPU 0x483EC488)
     add     -0x38, sp
@@ -30088,11 +30294,11 @@ TableRomImageEnd:
     mov     d0, (0x58, sp)
     mov     a1, (0x54, sp)
     mov     a0, d3
-    mov     0x483f8650, d0
+    mov     Str_empty_53, d0
     mov     d0, (0x30, sp)
     cmp     0, a1
     bne     0x483ec4a7
-    mov     0x483f8654, d0
+    mov     Str_null, d0
     mov     d0, (0x54, sp)
     mov     d3, a1
     movbu   (0x25, a1), d1
@@ -30133,7 +30339,7 @@ TableRomImageEnd:
     mov     (0x58, sp), d0
     extb    d1
     asl2    d0
-    add     0x50299098, d0
+    add     ptrs_50299098, d0
     asl2    d1
     mov     d0, (d1, a0)
     mov     d2, a0
@@ -30165,10 +30371,10 @@ TableRomImageEnd:
     extb    d0
     cmp     d0, d1
     bge     0x483ec551
-    mov     (0x502996e4), a0
+    mov     (KssWorkRam+0x24C), a0
     cmp     0, a0
     bne     0x483ec53f
-    mov     (0x502996e4), a0
+    mov     (KssWorkRam+0x24C), a0
     calls   (a0)
     mov     d0, (0x34, sp)
     bra     0x483ec542
@@ -30192,23 +30398,25 @@ TableRomImageEnd:
     ble     0x483ec562
     jmp     0x483ec7fe
     asl2    d0
-    mov     0x483f8698, a0
+    mov     ptrs_483F8698, a0
     mov     (d0, a0), a0
     jmp     (a0)
-    mov     (0x50299298), a0
+# loc_483EC56D:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
     mov     a0, (0xc, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC58F:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30220,10 +30428,11 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC5BA:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30240,10 +30449,11 @@ TableRomImageEnd:
     mov     d0, (0x14, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC5EF:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30265,10 +30475,11 @@ TableRomImageEnd:
     mov     d0, (0x18, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC62E:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30295,10 +30506,11 @@ TableRomImageEnd:
     mov     d0, (0x1c, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC677:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30330,10 +30542,11 @@ TableRomImageEnd:
     mov     d0, (0x20, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC6CA:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30370,10 +30583,11 @@ TableRomImageEnd:
     mov     d0, (0x24, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC727:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30415,10 +30629,11 @@ TableRomImageEnd:
     mov     d0, (0x28, sp)
     calls   (a1)
     jmp     0x483ec80c
-    mov     (0x50299298), a0
+# loc_483EC78E:   (label)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d3, a0
     mov     (0x10, a0), a0
@@ -30466,16 +30681,16 @@ TableRomImageEnd:
     calls   (a1)
     bra     0x483ec80c
     mov     0x19, d0
-    mov     0x483f865c, d1
-    mov     d1, (0x502996e8)
-    mov     (0x502996ec), d1
+    mov     Str_Log_Error_me_ListSize, d1
+    mov     d1, (KssWorkRam+0x250)
+    mov     (KssWorkRam+0x254), d1
     cmp     d1, d0
     blt     0x483ec839
-    mov     (0x50299298), a0
-    mov     0x483f8678, d2
+    mov     (KssFrameworkObj), a0
+    mov     Str_Log_Log_buf_too_small_i_i, d2
     mov     (0x2e1c, a0), a0
     mov     (0x334, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     a0, (8, sp)
     mov     d2, (0xc, sp)
     mov     d0, (0x10, sp)
@@ -30494,36 +30709,37 @@ TableRomImageEnd:
     bra     0x483ec894
     mov     d3, a0
     mov     (4, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     calls   (a1)
     bra     0x483ec894
     mov     d3, a0
     mov     (4, a0), a1
-    mov     (0x502996e8), a0
+    mov     (KssWorkRam+0x250), a0
     mov     (0x58, sp), d0
     calls   (a1)
     bra     0x483ec894
     mov     d3, a0
     mov     (4, a0), a2
     mov     (8, a0), a0
-    mov     (0x502996e8), a1
+    mov     (KssWorkRam+0x250), a1
     calls   (a2)
     bra     0x483ec894
     mov     d3, a0
     mov     (4, a0), a2
     mov     (8, a0), a0
-    mov     (0x502996e8), a1
+    mov     (KssWorkRam+0x250), a1
     mov     (0x58, sp), d0
     calls   (a2)
     ret     [d2,d3,a2,a3], 0x48
+# loc_483EC897:   (label)
     movm    [a2], (sp)
 # func_483EC899  (CPU 0x483EC899)
     add     -0x18, sp
 # func_483EC899_entry:   (register-save `call` entry)
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     mov     0x2e1c, a1
-    mov     a0, (0x502992c8)
-    mov     (0x50299298), d0
+    mov     a0, (ptrs_502992C8)
+    mov     (KssFrameworkObj), d0
     add     d0, a1
     mov     (a1), a0
     mov     (0x328, a0), a2
@@ -30531,72 +30747,73 @@ TableRomImageEnd:
     mov     (0x1dc, a0), a0
     calls   (a0)
     calls   (a2)
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x64, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ec8e8
     mov     0x46, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [a2], 0x1c
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1dc, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ec90e
     mov     0x47, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [a2], 0x1c
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     0x1a, d0
     mov     (0x10, a0), a2
     mov     (0xa8, a0), a1
     mov     (0xa4, a0), d1
-    mov     0x50299eb8, a0
+    mov     KssWorkRam+0xA20, a0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ec943
     mov     0x49, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [a2], 0x1c
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     0x10, d0
     mov     (0x10, a0), a2
     mov     (0xb0, a0), a1
     mov     (0xa0, a0), d1
-    mov     0x50299ea0, a0
+    mov     KssWorkRam+0xA08, a0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ec977
     mov     0x4b, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     bra     0x483ec9b8
-    mov     (0x50299edc), a0
+    mov     (KssWorkRam+0xA44), a0
     mov     (0x1a0, a0), a0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ec99c
     mov     0x4c, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     bra     0x483ec9b8
     call    func_483EE372_entry, [d2], 0x18
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ec9b8
     mov     0x4d, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [a2], 0x1c
+# loc_483EC9BB:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EC9BD  (CPU 0x483EC9BD)
     add     -0x18, sp
@@ -30613,7 +30830,7 @@ TableRomImageEnd:
     cmp     d3, d2
     bgt     0x483ec9d4
     mov     d2, d3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d3, d1
     mov     (0x2e1c, a0), a0
     mov     (0x3c, sp), a1
@@ -30634,6 +30851,7 @@ TableRomImageEnd:
     bgt     0x483ec9cd
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x28
+# loc_483ECA04:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483ECA06  (CPU 0x483ECA06)
     add     -0x18, sp
@@ -30650,7 +30868,7 @@ TableRomImageEnd:
     cmp     d3, d2
     bgt     0x483eca1d
     mov     d2, d3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d3, d1
     mov     (0x2e1c, a0), a0
     mov     (0x3c, sp), a1
@@ -30671,6 +30889,7 @@ TableRomImageEnd:
     bgt     0x483eca16
     mov     a3, d0
     ret     [d2,d3,a2,a3], 0x28
+# loc_483ECA4D:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483ECA4F  (CPU 0x483ECA4F)
     add     -0x130, sp
@@ -30681,9 +30900,9 @@ TableRomImageEnd:
     mov     d0, (0x20, sp)
     mov     0, a3
     mov     a3, (0x18, sp)
-    mov     (0x502990b4), a0
-    mov     a0, (0x502992c8)
-    mov     (0x50299298), a0
+    mov     (ptr_502990B4), a0
+    mov     a0, (ptrs_502992C8)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x12c, a0), a2
     mov     a1, a0
@@ -30694,8 +30913,8 @@ TableRomImageEnd:
     bge     0x483eca8d
     mov     0x8d, a3
     jmp     0x483ecb27
-    mov     (0x50299298), a0
-    mov     0x483f87c0, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_rb_3, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
     mov     (0x14c, sp), a0
@@ -30705,8 +30924,8 @@ TableRomImageEnd:
     bne     0x483ecab1
     mov     0x92, a3
     bra     0x483ecb27
-    mov     (0x50299298), a0
-    mov     0x483f87c4, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_wb_3, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
     mov     (0x148, sp), a0
@@ -30716,7 +30935,7 @@ TableRomImageEnd:
     bne     0x483ecad5
     mov     0x97, a3
     bra     0x483ecb27
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x1000, d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
@@ -30756,17 +30975,17 @@ TableRomImageEnd:
     mov     (0x18, sp), d0
     cmp     0, d0
     beq     0x483ecb3f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     d0, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
     mov     (0x20, sp), a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
     mov     (0x1c, sp), a0
@@ -30780,55 +30999,58 @@ TableRomImageEnd:
     clr     d0
     add     0x130, sp
     ret     [d2,d3,a2,a3], 0x10
+# loc_483ECB76:   (label)
     add     -8, sp
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x1dc, a0), a0
     calls   (a0)
     add     d0, d0
     ret     0, 8
+# loc_483ECB8D:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483ECB8F  (CPU 0x483ECB8F)
     add     -0x10, sp
 # func_483ECB8F_entry:   (register-save `call` entry)
-    mov     (0x502990b4), a0
-    mov     0x50299e84, a3
-    mov     a0, (0x502992c8)
+    mov     (ptr_502990B4), a0
+    mov     KssWorkRam+0x9EC, a3
+    mov     a0, (ptrs_502992C8)
     mov     a3, a0
-    mov     (0x483fa100), d0
+    mov     (word_483FA100), d0
     call    func_483ED266_entry, [d2,d3,a2], 0x20
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     clr     d2
     cmp     d2, d0
     beq     0x483ecbfb
     mov     0xd2, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     bra     0x483ecc04
-    mov     (0x50299e84), a0
+    mov     (KssWorkRam+0x9EC), a0
     mov     d2, d0
     mov     (4, a0), a2
     asl2    d0
-    mov     0x483fa0a8, a0
+    mov     func_483ECB8F_Table, a0
     mov     (d0, a0), a1
     mov     a3, a0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ecbfa
     mov     0xd4, d0
-    mov     (0x502990b4), a0
+    mov     (ptr_502990B4), a0
     call    func_483EC03A_entry, 0, 0x1c
     bra     0x483ecc04
     inc     d2
-    mov     (0x483fa100), d0
+    mov     (word_483FA100), d0
     cmp     d0, d2
     blt     0x483ecbca
     ret     [d2,a2,a3], 0x1c
+# loc_483ECC07:   (label)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
     mov     a0, (0x34, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d0, a2
     mov     (0x2e1c, a0), a0
     mov     0x400, d0
@@ -30841,7 +31063,7 @@ TableRomImageEnd:
     cmp     d2, a2
     bgt     0x483ecc31
     mov     a2, d2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d1
     mov     (0x2e1c, a0), a0
     mov     (0x34, sp), a1
@@ -30857,13 +31079,14 @@ TableRomImageEnd:
     bra     0x483ecc68
     cmp     0, a2
     bgt     0x483ecc28
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     (0x18, sp), a0
     calls   (a1)
     mov     d3, d0
     ret     [d2,d3,a2,a3], 0x2c
+# loc_483ECC6B:   (label)
     movm    [d2], (sp)
 # KssPad16  (CPU 0x483ECC6D)
 #   (buf, fill = 0x20, n = 0x10): from the first NUL, right-pad with spaces to 16 chars
@@ -30884,6 +31107,7 @@ TableRomImageEnd:
     cmp     0, d1
     bgt     0x483ecc80
     retf    [d2], 4
+# loc_483ECC8C:   (label)
     movm    [a2], (sp)
     mov     d0, a2
     bra     0x483eccb7
@@ -30925,9 +31149,10 @@ TableRomImageEnd:
     bne     0x483eccc4
     clr     d0
     retf    [a2], 4
-# func_483ECCD4  (CPU 0x483ECCD4)
-    mov     0x483f87c8, a0
+# loc_483ECCD4  (CPU 0x483ECCD4)
+    mov     Str_Aug_23_2003_20_56_19, a0
     rets
+# loc_483ECCDC:   (label)
     bra     0x483eccf4
     movbu   (a0), d0
     extb    d0
@@ -30947,20 +31172,21 @@ TableRomImageEnd:
     cmp     0, d0
     bne     0x483eccde
     rets
+# loc_483ECCFD:   (label)
     movm    [d2,d3,a2], (sp)
 # func_483ECCFF  (CPU 0x483ECCFF)
     add     -0x20, sp
 # func_483ECCFF_entry:   (register-save `call` entry)
-    mov     (0x50299298), a0
-    mov     0x483f87e4, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_d, a1
     mov     (0x2e1c, a0), a0
     mov     d1, d3
     mov     (0x2d0, a0), a2
-    mov     0x483f87e0, a0
+    mov     Str_C, a0
     mov     d0, d2
     calls   (a2)
     mov     a0, a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
     mov     a2, a0
@@ -30976,18 +31202,19 @@ TableRomImageEnd:
     mov     d2, (0x18, sp)
     mov     d3, (0x1c, sp)
     clr     d0
-    mov     0x483f87e8, a0
-    mov     0x483f8809, a1
+    mov     Str_Es_ist_keine_SD_Card_im_Schacht, a0
+    mov     Str_Bitte_setzen_Sie_eine_SD_Card_ein_schlie, a1
     mov     0x18, d1
     call    func_483EB6A4_entry, [d2,d3,a2,a3], 0x30
     clr     d0
     ret     [d2,d3,a2], 0x2c
+# loc_483ECD5D:   (label)
     movm    [a2], (sp)
     add     -0x10, sp
-    mov     (0x50299298), a2
+    mov     (KssFrameworkObj), a2
     mov     a0, a1
     mov     (0x2e1c, a2), a2
-    mov     0x483f8860, a0
+    mov     Str_73298125, a0
     mov     (0x354, a2), a2
     calls   (a2)
     mov     d0, d1
@@ -30996,8 +31223,9 @@ TableRomImageEnd:
     bne     0x483ecd80
     mov     1, d0
     ret     [a2], 0x14
+# loc_483ECD83:   (label)
     add     -0x24, sp
-    mov     0x483f886c, a1
+    mov     func_483ECCFF_Table, a1
     mov     sp, a0
     add     0x14, a0
     mov     -0x10, d1
@@ -31008,7 +31236,7 @@ TableRomImageEnd:
     inc     a0
     inc     d1
     lne
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     sp, a1
     mov     (0x1c, a0), a0
     mov     a1, d1
@@ -31018,15 +31246,15 @@ TableRomImageEnd:
     mov     0x00e30047, d0
     clr     d1
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x11c, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0x11c, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x00e00423, d0
     mov     (0x1c, a0), a0
     mov     0x00050001, d1
@@ -31039,8 +31267,8 @@ TableRomImageEnd:
 # func_483ECDF5_entry:   (register-save `call` entry)
     mov     a1, (0x30, sp)
     mov     a0, a3
-    mov     (0x502990b8), a0
-    mov     a0, (0x502992c8)
+    mov     (ptr_502990B8), a0
+    mov     a0, (ptrs_502992C8)
     mov     (a3), a0
     mov     (0x20, a0), a1
     mov     a3, a0
@@ -31049,76 +31277,76 @@ TableRomImageEnd:
     beq     0x483ece25
     mov     0, a0
     mov     0x1d, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0ac), a1
+    mov     (ptr_483FA0AC), a1
     mov     (8, a0), a2
     mov     a3, a0
     clr     d0
     calls   (a2)
-    mov     (0x502992c4), d0
-    mov     0x483fa0a8, d3
+    mov     (KssActivationStatus), d0
+    mov     func_483ECB8F_Table, d3
     cmp     0, d0
     beq     0x483ece54
     mov     0x1e, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0b4), a1
+    mov     (ptr_483FA0B4), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ece7c
     mov     0x1f, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0a8), a1
+    mov     (func_483ECB8F_Table), a1
     mov     (8, a0), a2
     mov     a3, a0
     clr     d0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ecea5
     mov     0x20, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0b0), a1
+    mov     (ptr_483FA0B0), a1
     mov     (8, a0), a2
     mov     a3, a0
     mov     2, d0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ececf
     mov     0x21, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0b8), a1
+    mov     (ptr_483FA0B8), a1
     mov     (8, a0), a2
     mov     a3, a0
     mov     4, d0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     clr     d2
     cmp     d2, d0
     beq     0x483ecf2f
     mov     0x22, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, d0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
@@ -31135,7 +31363,7 @@ TableRomImageEnd:
     beq     0x483ecf2e
     mov     0, a0
     mov     0x24, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     inc     d2
@@ -31149,7 +31377,7 @@ TableRomImageEnd:
     beq     0x483ecf51
     mov     0, a0
     mov     0x27, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
@@ -31157,11 +31385,11 @@ TableRomImageEnd:
     mov     (0x10, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ecf75
     mov     0x28, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
@@ -31169,11 +31397,11 @@ TableRomImageEnd:
     mov     (0x10, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ecf99
     mov     0x29, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
@@ -31181,14 +31409,14 @@ TableRomImageEnd:
     mov     (0x10, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ecfbc
     mov     0x2a, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
@@ -31196,16 +31424,16 @@ TableRomImageEnd:
     mov     (0x14, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x483fa0ac), a1
+    mov     (ptr_483FA0AC), a1
     calls   (a2)
     cmp     0, d0
     beq     0x483ecff1
     mov     0, a0
     mov     0x2b, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
@@ -31213,67 +31441,67 @@ TableRomImageEnd:
     mov     (0x14, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x483fa0b4), a1
+    mov     (ptr_483FA0B4), a1
     calls   (a2)
     cmp     0, d0
     beq     0x483ed027
     mov     0, a0
     mov     0x2c, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0a8), a1
+    mov     (func_483ECB8F_Table), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ed04f
     mov     0x2e, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0bc), a1
+    mov     (ptr_483FA0BC), a1
     mov     (0xc, a0), a2
     mov     a3, a0
     clr     d0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ed078
     mov     0x2f, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0c0), a1
+    mov     (ptr_483FA0C0), a1
     mov     (0xc, a0), a2
     mov     a3, a0
     mov     1, d0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ed0a2
     mov     0x30, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (a3), a0
-    mov     (0x483fa0c4), a1
+    mov     (ptrs_483FA0C4), a1
     mov     (0xc, a0), a2
     mov     a3, a0
     mov     2, d0
     calls   (a2)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ed0cc
     mov     0x31, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
@@ -31281,16 +31509,16 @@ TableRomImageEnd:
     mov     (0x14, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x483fa0bc), a1
+    mov     (ptr_483FA0BC), a1
     calls   (a2)
     cmp     0, d0
     beq     0x483ed101
     mov     0, a0
     mov     0x32, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
@@ -31298,16 +31526,16 @@ TableRomImageEnd:
     mov     (0x14, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x483fa0c0), a1
+    mov     (ptr_483FA0C0), a1
     calls   (a2)
     cmp     0, d0
     beq     0x483ed137
     mov     0, a0
     mov     0x33, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     2, d0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
@@ -31315,13 +31543,13 @@ TableRomImageEnd:
     mov     (0x14, a0), a1
     mov     a3, a0
     calls   (a1)
-    mov     (0x483fa0c4), a1
+    mov     (ptrs_483FA0C4), a1
     calls   (a2)
     cmp     0, d0
     beq     0x483ed16d
     mov     0, a0
     mov     0x34, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
@@ -31331,11 +31559,11 @@ TableRomImageEnd:
     mov     (0x28, a0), a1
     mov     (0x30, sp), a0
     calls   (a1)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ed195
     mov     0x38, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
@@ -31344,11 +31572,11 @@ TableRomImageEnd:
     mov     (0x28, a0), a1
     mov     (0x30, sp), a0
     calls   (a1)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ed214
     mov     0x39, d0
-    mov     (0x502990b8), a0
+    mov     (ptr_502990B8), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
@@ -31360,13 +31588,13 @@ TableRomImageEnd:
     beq     0x483ed1db
     mov     0, a0
     mov     0x3c, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
     mov     (0x30, sp), a0
     mov     (a0), a0
     mov     (8, a0), a1
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x354, a0), a2
     mov     (0x30, sp), a0
@@ -31381,7 +31609,7 @@ TableRomImageEnd:
     beq     0x483ed213
     mov     0, a0
     mov     0x3d, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483ed261
     inc     d2
@@ -31401,7 +31629,7 @@ TableRomImageEnd:
     beq     0x483ed243
     mov     0, a0
     mov     0x40, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483ed261
     mov     (0x30, sp), a0
@@ -31413,18 +31641,19 @@ TableRomImageEnd:
     beq     0x483ed261
     mov     0, a0
     mov     0x41, d0
-    mov     (0x502990b8), a1
+    mov     (ptr_502990B8), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x24
+# loc_483ED264:   (label)
     movm    [d2,d3,a2], (sp)
 # func_483ED266  (CPU 0x483ED266)
     add     -0x14, sp
 # func_483ED266_entry:   (register-save `call` entry)
     mov     a0, a2
-    mov     (0x502990bc), a0
+    mov     (ptr_502990BC), a0
     mov     d0, d2
-    mov     a0, (0x502992c8)
-    mov     (0x50299298), a0
+    mov     a0, (ptrs_502992C8)
+    mov     (KssFrameworkObj), a0
     asl2    d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a1
@@ -31437,7 +31666,7 @@ TableRomImageEnd:
     bne     0x483ed2ac
     mov     0, a0
     mov     0x68, d0
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483ed2cd
     mov     (a1), a0
@@ -31448,7 +31677,7 @@ TableRomImageEnd:
     inc     d1
     cmp     d2, d1
     blt     0x483ed2a4
-    mov     0x502990c0, d0
+    mov     ptrs_502990C0, d0
     mov     d0, (a2)
     mov     d2, (0xc, a2)
     clr     d0
@@ -31459,13 +31688,14 @@ TableRomImageEnd:
     mov     d0, (0x14, a2)
     mov     d0, (0x18, a2)
     ret     [d2,d3,a2], 0x20
+# loc_483ED2D0:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483ED2D2  (CPU 0x483ED2D2)
     add     -0x14, sp
 # func_483ED2D2_entry:   (register-save `call` entry)
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     a0, a3
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     4, d2
     add     a3, d2
     mov     d2, a0
@@ -31488,7 +31718,7 @@ TableRomImageEnd:
     mov     (a2), d0
     cmp     0, d0
     beq     0x483ed328
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (a2), d0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
@@ -31507,14 +31737,15 @@ TableRomImageEnd:
     mov     d2, a0
     mov     d0, (a0)
     ret     [d2,a2,a3], 0x20
+# loc_483ED343:   (label)
     movm    [a2,a3], (sp)
 # func_483ED345  (CPU 0x483ED345)
     add     -0x14, sp
 # func_483ED345_entry:   (register-save `call` entry)
     mov     a1, a3
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     cmp     0, a3
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     bne     0x483ed367
     mov     0, a0
     mov     0x92, d0
@@ -31542,15 +31773,16 @@ TableRomImageEnd:
     call    func_483ED783, 0, 0
     clr     d0
     ret     [a2,a3], 0x1c
+# loc_483ED393:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483ED395  (CPU 0x483ED395)
     add     -0x1c, sp
 # func_483ED395_entry:   (register-save `call` entry)
     mov     a1, (0x3c, sp)
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     a0, (0x34, sp)
     mov     d0, a2
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     cmp     0, a2
     blt     0x483ed3b6
     mov     a0, a3
@@ -31583,7 +31815,7 @@ TableRomImageEnd:
     mov     (a3), d0
     cmp     d0, a2
     bge     0x483ed420
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a2, d2
     mov     (0x2e1c, a0), a0
     asl2    d2
@@ -31619,15 +31851,16 @@ TableRomImageEnd:
     call    func_483ED783, 0, 0
     clr     d0
     ret     [d2,d3,a2,a3], 0x2c
+# loc_483ED43A:   (label)
     movm    [a2,a3], (sp)
 # func_483ED43C  (CPU 0x483ED43C)
     add     -0x14, sp
 # func_483ED43C_entry:   (register-save `call` entry)
     mov     a1, a3
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     a0, a2
     mov     d0, d1
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     cmp     0, d1
     blt     0x483ed458
     mov     (0x10, a2), d0
@@ -31652,14 +31885,15 @@ TableRomImageEnd:
     call    func_483ED783, 0, 0
     clr     d0
     ret     [a2,a3], 0x1c
+# loc_483ED488:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483ED48A  (CPU 0x483ED48A)
     add     -0x18, sp
 # func_483ED48A_entry:   (register-save `call` entry)
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     a0, (0x30, sp)
     mov     d0, a2
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     cmp     0, a2
     blt     0x483ed4a9
     mov     a0, a3
@@ -31671,7 +31905,7 @@ TableRomImageEnd:
     mov     0xc4, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483ed4eb
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a2, d1
     mov     (0x2e1c, a0), a0
     asl2    d1
@@ -31699,12 +31933,12 @@ TableRomImageEnd:
     mov     (0x30, sp), a0
     call    func_483ED783, 0, 0
     ret     [d2,d3,a2,a3], 0x28
-# func_483ED4EE  (CPU 0x483ED4EE)
+# loc_483ED4EE  (CPU 0x483ED4EE)
     add     -0x14, sp
 # func_483ED4EE_entry:   (register-save `call` entry)
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     d0, d1
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     cmp     0, d1
     blt     0x483ed508
     mov     (0x10, a0), d0
@@ -31719,16 +31953,17 @@ TableRomImageEnd:
     asl2    d1
     mov     (d1, a0), a0
     ret     0, 0x14
-# func_483ED51F  (CPU 0x483ED51F)
+# loc_483ED51F  (CPU 0x483ED51F)
     mov     (0x10, a0), d0
     rets
+# loc_483ED524:   (label)
     movm    [a2,a3], (sp)
     add     -0x10, sp
     mov     a0, a3
-    mov     (0x502990bc), a0
+    mov     (ptr_502990BC), a0
     mov     0x1c, d0
-    mov     a0, (0x502992c8)
-    mov     (0x50299298), a0
+    mov     a0, (ptrs_502992C8)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
@@ -31737,19 +31972,21 @@ TableRomImageEnd:
     call    func_483ED564_entry, [a2,a3], 0x1c
     mov     a2, a0
     ret     [a2,a3], 0x18
+# loc_483ED553:   (label)
     add     -0xc, sp
     clr     d0
     mov     d0, (0x10, a0)
     call    func_483ED783, 0, 0
     ret     0, 0xc
+# loc_483ED562:   (label)
     movm    [a2,a3], (sp)
 # func_483ED564  (CPU 0x483ED564)
     add     -0x14, sp
 # func_483ED564_entry:   (register-save `call` entry)
     mov     a1, a3
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     a0, a2
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     (4, a3), d0
     cmp     0xf34e32bb, d0
     beq     0x483ed58c
@@ -31758,7 +31995,7 @@ TableRomImageEnd:
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483ed5c6
     mov     0x18, a1
-    mov     0x502990f0, d0
+    mov     ptrs_502990F0, d0
     mov     d0, (a2)
     add     a3, a1
     clr     d0
@@ -31784,13 +32021,14 @@ TableRomImageEnd:
     mov     a2, (a3)
     mov     a2, (a1)
     ret     [a2,a3], 0x1c
+# loc_483ED5C9:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483ED5CB  (CPU 0x483ED5CB)
     add     -0x14, sp
 # func_483ED5CB_entry:   (register-save `call` entry)
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     a0, a3
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     4, d2
     add     a3, d2
     mov     d2, a0
@@ -31840,9 +32078,10 @@ TableRomImageEnd:
     mov     d2, a0
     mov     d0, (a0)
     ret     [d2,a2,a3], 0x20
-    mov     (0x502990bc), a1
+# loc_483ED643:   (label)
+    mov     (ptr_502990BC), a1
     clr     d0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     (8, a0), a1
     mov     (0xc, a0), a0
     mov     (0x10, a0), a0
@@ -31850,11 +32089,12 @@ TableRomImageEnd:
     bge     0x483ed65e
     mov     1, d0
     rets
+# loc_483ED660:   (label)
     movm    [a2,a3], (sp)
     add     -0x14, sp
-    mov     (0x502990bc), a3
+    mov     (ptr_502990BC), a3
     mov     8, a2
-    mov     a3, (0x502992c8)
+    mov     a3, (ptrs_502992C8)
     add     a0, a2
     add     0xc, a0
     mov     (a0), a1
@@ -31877,6 +32117,7 @@ TableRomImageEnd:
     mov     (8, a0), a0
     mov     (d1, a0), a0
     ret     [a2,a3], 0x1c
+# loc_483ED69E:   (label)
     mov     8, a1
     add     a0, a1
     mov     (0xc, a0), a0
@@ -31887,15 +32128,17 @@ TableRomImageEnd:
     bge     0x483ed6b0
     mov     (a1), d0
     rets
+# loc_483ED6B2:   (label)
     add     -0x10, sp
     mov     (0xc, a0), a0
     call    func_483ED4EE_entry, 0, 0x14
     ret     0, 0x10
+# loc_483ED6C0:   (label)
     movm    [a2], (sp)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     cmp     0, d0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     blt     0x483ed6df
     mov     (0xc, a0), a2
     mov     (0x10, a2), a2
@@ -31907,11 +32150,12 @@ TableRomImageEnd:
     bra     0x483ed6ee
     mov     d0, (8, a0)
     ret     [a2], 0x18
+# loc_483ED6F1:   (label)
     movm    [d2,a2], (sp)
     add     -0x14, sp
-    mov     (0x502990bc), a2
+    mov     (ptr_502990BC), a2
     cmp     0, d0
-    mov     a2, (0x502992c8)
+    mov     a2, (ptrs_502992C8)
     blt     0x483ed715
     mov     8, a1
     add     a0, a1
@@ -31930,10 +32174,12 @@ TableRomImageEnd:
     add     d0, d1
     mov     d1, (a1)
     ret     [d2,a2], 0x1c
+# loc_483ED728:   (label)
     add     -0x10, sp
     mov     (0xc, a0), a0
     call    func_483ED345_entry, [a2,a3], 0x1c
     ret     0, 0x10
+# loc_483ED736:   (label)
     movm    [a2], (sp)
     add     -0x14, sp
     mov     (0xc, a0), a2
@@ -31941,6 +32187,7 @@ TableRomImageEnd:
     mov     a2, a0
     call    func_483ED395_entry, [d2,d3,a2,a3], 0x2c
     ret     [a2], 0x18
+# loc_483ED74A:   (label)
     movm    [a2], (sp)
     add     -0x14, sp
     mov     (0xc, a0), a2
@@ -31948,16 +32195,19 @@ TableRomImageEnd:
     mov     a2, a0
     call    func_483ED43C_entry, [a2,a3], 0x1c
     ret     [a2], 0x18
+# loc_483ED75E:   (label)
     add     -0x10, sp
     mov     (0xc, a0), a1
     mov     (8, a0), d0
     mov     a1, a0
     call    func_483ED48A_entry, [d2,d3,a2,a3], 0x28
     ret     0, 0x10
+# loc_483ED770:   (label)
     add     -0xc, sp
     mov     (0xc, a0), a0
-    call    func_483ED51F, 0, 0
+    call    loc_483ED51F, 0, 0
     ret     0, 0xc
+# loc_483ED77E:   (label)
     mov     (0xc, a0), a0
     rets
 # func_483ED783  (CPU 0x483ED783)
@@ -31970,77 +32220,87 @@ TableRomImageEnd:
     bne     0x483ed788
     clr     d0
     rets
+# loc_483ED797:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1a2, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED7B5:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1a6, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED7D3:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1aa, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED7F1:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1ae, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED80F:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1b2, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED82D:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1b6, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     0, a0
     ret     0, 0x14
+# loc_483ED84B:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1ba, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED869:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1be, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     mov     -1, d0
     ret     0, 0x14
+# loc_483ED887:   (label)
     add     -0x14, sp
-    mov     (0x502990bc), a1
+    mov     (ptr_502990BC), a1
     mov     0, a0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     mov     0x1c2, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     0, 0x14
+# loc_483ED8A3:   (label)
     movm    [a2,a3], (sp)
     add     -0x8c, sp
 # func_483ED8A9  (CPU 0x483ED8A9)
@@ -32069,12 +32329,14 @@ TableRomImageEnd:
     mov     a3, a0
     call    func_483ED2D2_entry, [d2,a2,a3], 0x20
     ret     [a2,a3], 0x94
+# loc_483ED8E0:   (label)
     add     -0x20, sp
     clr     d1
     mov     d1, (0x18, sp)
     mov     d1, (0x1c, sp)
     call    func_483ED8F2_entry, [d2,d3,a2,a3], 0x1c
     ret     0, 0x20
+# loc_483ED8F0:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483ED8F2  (CPU 0x483ED8F2)
     add     -0xc, sp
@@ -32089,7 +32351,7 @@ TableRomImageEnd:
     ret     [d2,d3,a2,a3], 0x1c
     cmp     0xffffffff, a1
     bne     0x483ed92f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
     calls   (a0)
@@ -32108,7 +32370,7 @@ TableRomImageEnd:
     mov     a3, (a1)
     clr     d0
     mov     d0, (0x10, a2)
-    mov     0x5029913c, d0
+    mov     ptrs_5029913C, d0
     mov     d0, (a2)
     mov     d2, (0xc, a2)
     mov     a3, (0x14, a2)
@@ -32128,6 +32390,7 @@ TableRomImageEnd:
     mov     d0, (4, a2)
     clr     d0
     ret     [d2,d3,a2,a3], 0x1c
+# loc_483ED971:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483ED973  (CPU 0x483ED973)
     add     -0xc, sp
@@ -32149,7 +32412,7 @@ TableRomImageEnd:
     mov     (a2), d0
     cmp     0, d0
     beq     0x483ed9ac
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     (a2), a0
@@ -32165,6 +32428,7 @@ TableRomImageEnd:
     mov     d2, a0
     mov     d0, (a0)
     ret     [d2,a2,a3], 0x18
+# loc_483ED9C5:   (label)
     movm    [a2,a3], (sp)
 # func_483ED9C7  (CPU 0x483ED9C7)
     add     -0x24, sp
@@ -32214,6 +32478,7 @@ TableRomImageEnd:
     bra     0x483eda22
     clr     d0
     ret     [a2,a3], 0x2c
+# loc_483EDA25:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EDA27  (CPU 0x483EDA27)
     add     -0x24, sp
@@ -32272,6 +32537,7 @@ TableRomImageEnd:
     bra     0x483eda92
     clr     d0
     ret     [d2,d3,a2,a3], 0x34
+# loc_483EDA95:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EDA97  (CPU 0x483EDA97)
     add     -0x24, sp
@@ -32337,6 +32603,7 @@ TableRomImageEnd:
     bra     0x483edb0e
     clr     d0
     ret     [d2,d3,a2,a3], 0x34
+# loc_483EDB11:   (label)
     movm    [a2,a3], (sp)
 # func_483EDB13  (CPU 0x483EDB13)
     add     -0x10, sp
@@ -32364,12 +32631,12 @@ TableRomImageEnd:
     add     -1, d0
     mov     d0, (a3)
     ret     [a2,a3], 0x18
-# func_483EDB4B  (CPU 0x483EDB4B)
+# loc_483EDB4B  (CPU 0x483EDB4B)
     add     -0x10, sp
 # func_483EDB4B_entry:   (register-save `call` entry)
     call    func_483EDECD, [d2], 4
     ret     0, 0x10
-# func_483EDB56  (CPU 0x483EDB56)
+# loc_483EDB56  (CPU 0x483EDB56)
     cmp     0, a0
     beq     0x483edb65
     mov     (4, a0), d0
@@ -32379,7 +32646,7 @@ TableRomImageEnd:
     rets
     mov     (0x28, a0), d0
     rets
-# func_483EDB6E  (CPU 0x483EDB6E)
+# loc_483EDB6E  (CPU 0x483EDB6E)
     cmp     0, a0
     beq     0x483edb7d
     mov     (4, a0), d0
@@ -32389,6 +32656,7 @@ TableRomImageEnd:
     rets
     mov     (0x18, a0), d0
     rets
+# loc_483EDB86:   (label)
     add     -0xc, sp
     cmp     0, a0
     beq     0x483edbaa
@@ -32402,10 +32670,11 @@ TableRomImageEnd:
     mov     a1, (0x14, a0)
     call    func_483EE0FF, 0, 0
     ret     0, 0xc
+# loc_483EDBAD:   (label)
     movm    [a2,a3], (sp)
     add     -0x10, sp
     mov     a0, a3
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x28, d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a0
@@ -32415,6 +32684,7 @@ TableRomImageEnd:
     call    func_483EDBD2, [a2,a3], 8
     mov     a2, a0
     ret     [a2,a3], 0x18
+# loc_483EDBD0:   (label)
     movm    [a2,a3], (sp)
 # func_483EDBD2  (CPU 0x483EDBD2)
     mov     a0, a2
@@ -32429,7 +32699,7 @@ TableRomImageEnd:
     bra     0x483edc37
     mov     0xa378bc12, d0
     mov     d0, (4, a2)
-    mov     0x5029916c, d0
+    mov     ptrs_5029916C, d0
     mov     d0, (a2)
     clr     d0
     mov     d0, (8, a2)
@@ -32462,6 +32732,7 @@ TableRomImageEnd:
     mov     a2, (a3)
     clr     d0
     retf    [a2,a3], 8
+# loc_483EDC3A:   (label)
     movm    [d2,a2,a3], (sp)
 # func_483EDC3C  (CPU 0x483EDC3C)
     mov     a0, a3
@@ -32512,6 +32783,7 @@ TableRomImageEnd:
     mov     d2, a0
     mov     d0, (a0)
     retf    [d2,a2,a3], 0xc
+# loc_483EDC9D:   (label)
     cmp     0, a0
     beq     0x483edcb3
     mov     (4, a0), d0
@@ -32530,6 +32802,7 @@ TableRomImageEnd:
     bge     0x483edcc6
     mov     1, d0
     rets
+# loc_483EDCC8:   (label)
     movm    [a2,a3], (sp)
 # func_483EDCCA  (CPU 0x483EDCCA)
     cmp     0, a0
@@ -32571,6 +32844,7 @@ TableRomImageEnd:
     lne
     mov     (a3), a0
     retf    [a2,a3], 8
+# loc_483EDD14:   (label)
     cmp     0, a0
     beq     0x483edd2a
     mov     (4, a0), d0
@@ -32591,6 +32865,7 @@ TableRomImageEnd:
     beq     0x483edd40
     mov     (a1), d0
     rets
+# loc_483EDD42:   (label)
     cmp     0, a0
     beq     0x483edd58
     mov     (4, a0), d0
@@ -32607,6 +32882,7 @@ TableRomImageEnd:
     blt     0x483edd65
     mov     1, d0
     rets
+# loc_483EDD67:   (label)
     movm    [a2,a3], (sp)
 # func_483EDD69  (CPU 0x483EDD69)
     cmp     0, a0
@@ -32659,6 +32935,7 @@ TableRomImageEnd:
     mov     d0, (a1)
     mov     (a3), a0
     retf    [a2,a3], 8
+# loc_483EDDC4:   (label)
     cmp     0, a0
     beq     0x483eddda
     mov     (4, a0), d0
@@ -32671,10 +32948,12 @@ TableRomImageEnd:
     rets
     mov     (0x10, a0), d0
     rets
+# loc_483EDDE3:   (label)
     add     -0x10, sp
     mov     (0x18, a0), a0
     call    func_483EDB4B_entry, 0, 0x10
     ret     0, 0x10
+# loc_483EDDF1:   (label)
     movm    [d2,a2], (sp)
     add     -0x10, sp
     mov     d0, d2
@@ -32714,6 +32993,7 @@ TableRomImageEnd:
     mov     -1, d0
     mov     d0, (0x10, a2)
     ret     [d2,a2], 0x18
+# loc_483EDE4A:   (label)
     movm    [a2,a3], (sp)
     add     -0xc, sp
     mov     d0, a2
@@ -32728,10 +33008,12 @@ TableRomImageEnd:
     cmp     0, a1
     bgt     0x483ede54
     ret     [a2,a3], 0x14
+# loc_483EDE68:   (label)
     add     -0x10, sp
     mov     (0x18, a0), a0
     call    func_483ED9C7_entry, [a2,a3], 0x2c
     ret     0, 0x10
+# loc_483EDE76:   (label)
     movm    [a2], (sp)
     add     -0x14, sp
     mov     (0x18, a0), a2
@@ -32739,6 +33021,7 @@ TableRomImageEnd:
     mov     a2, a0
     call    func_483EDA27_entry, [d2,d3,a2,a3], 0x34
     ret     [a2], 0x18
+# loc_483EDE8A:   (label)
     movm    [a2], (sp)
     add     -0x14, sp
     mov     (0x18, a0), a2
@@ -32746,20 +33029,23 @@ TableRomImageEnd:
     mov     a2, a0
     call    func_483EDA97_entry, [d2,d3,a2,a3], 0x34
     ret     [a2], 0x18
+# loc_483EDE9E:   (label)
     add     -0x10, sp
     mov     (0x18, a0), a1
     mov     (8, a0), d0
     mov     a1, a0
     call    func_483EDB13_entry, [a2,a3], 0x18
     ret     0, 0x10
+# loc_483EDEB0:   (label)
     add     -0xc, sp
     cmp     0, a0
     bne     0x483edebb
     mov     -1, d0
     bra     0x483edec3
     mov     (0x18, a0), a0
-    call    func_483EDB6E, 0, 0
+    call    loc_483EDB6E, 0, 0
     ret     0, 0xc
+# loc_483EDEC6:   (label)
     mov     (0x18, a0), a0
     rets
     movm    [d2], (sp)
@@ -32828,7 +33114,7 @@ TableRomImageEnd:
     mov     d0, (a0)
     mov     (0x48, sp), a0
     mov     d0, (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x36c, a0), a1
     mov     (0x44, sp), a0
@@ -32866,7 +33152,7 @@ TableRomImageEnd:
     mov     (a1), d2
     clr     d3
     bra     0x483edfb4
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x36c, a0), a1
     mov     d2, a0
@@ -32887,7 +33173,7 @@ TableRomImageEnd:
     ret     [d2,d3,a2,a3], 0x34
     cmp     a2, d3
     ble     0x483edf8d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     sub     d3, a3
     mov     (0x2e1c, a0), a0
     mov     (0x33c, a0), d0
@@ -32920,7 +33206,7 @@ TableRomImageEnd:
     sub     a3, d0
     cmp     0, d0
     ble     0x483ee016
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x20, sp), a2
     mov     (0x2e1c, a0), a0
     add     a3, a2
@@ -32933,7 +33219,7 @@ TableRomImageEnd:
     mov     a2, a0
     mov     d1, a2
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x44, sp), a1
     mov     (0x2e1c, a0), a0
     mov     (0x340, a0), a2
@@ -33035,12 +33321,12 @@ TableRomImageEnd:
     bls     0x483ee0c7
     mov     -1, d0
     bra     0x483ee0fc
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x36c, a0), a1
     mov     a2, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d0, d2
     mov     (0x2e1c, a0), a0
     inc     d2
@@ -33069,14 +33355,19 @@ TableRomImageEnd:
     bne     0x483ee104
     clr     d0
     rets
+# loc_483EE113:   (label)
     mov     -1, d0
     rets
+# loc_483EE117:   (label)
     mov     -1, d0
     rets
+# loc_483EE11B:   (label)
     mov     -1, d0
     rets
+# loc_483EE11F:   (label)
     mov     -1, d0
     rets
+# loc_483EE123:   (label)
     rets
     movm    [d2,d3,a2,a3], (sp)
     add     -0x154, sp
@@ -33129,62 +33420,62 @@ TableRomImageEnd:
     mov     a3, a1
     call    func_483EDBD2, [a2,a3], 8
     mov     (0x20, sp), a0
-    mov     (0x483fa0a8), a1
+    mov     (func_483ECB8F_Table), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     0x483f889c, a1
+    mov     word_483F889C, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     (0x483fa0ac), a1
+    mov     (ptr_483FA0AC), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     0x483f88a0, a1
+    mov     word_483F88A0, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     (0x483fa0b0), a1
+    mov     (ptr_483FA0B0), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     0x483f88a4, a1
+    mov     word_483F88A4, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     (0x483fa0b4), a1
+    mov     (ptr_483FA0B4), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     0x483f88a8, a1
+    mov     word_483F88A8, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     (0x483fa0b8), a1
+    mov     (ptr_483FA0B8), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     0x483f88ac, a1
+    mov     word_483F88AC, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     (0x483fa0bc), a1
+    mov     (ptr_483FA0BC), a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
     mov     (0x20, sp), a0
-    mov     0x483f88b0, a1
+    mov     word_483F88B0, a1
     mov     (4, a0), a2
     mov     a3, a0
     calls   (a2)
@@ -33227,8 +33518,9 @@ TableRomImageEnd:
     blt     0x483ee27a
     add     0x154, sp
     ret     [d2,d3,a2,a3], 0x10
+# loc_483EE296:   (label)
     movm    [d2,d3], (sp)
-    mov     (0x502991c0), d1
+    mov     (ptr_502991C0), d1
     cmp     0, d1
     bne     0x483ee2bd
     clr     d2
@@ -33236,13 +33528,13 @@ TableRomImageEnd:
     mov     d2, d1
     asl2    d1
     clr     d3
-    mov     0x502996f0, a0
+    mov     KssWorkRam+0x258, a0
     mov     d3, (d1, a0)
     inc     d2
     cmp     0x78, d2
     bcs     0x483ee2a5
     mov     1, d1
-    mov     d1, (0x502991c0)
+    mov     d1, (ptr_502991C0)
     mov     d0, a0
     sub     0x2f00000, a0
     mov     a0, d0
@@ -33257,7 +33549,7 @@ TableRomImageEnd:
     bra     0x483ee2f6
     asl2    d0
     mov     d0, a1
-    add     0x502996f0, a1
+    add     KssWorkRam+0x258, a1
     mov     (a1), d0
     mov     1, d2
     asl     d1, d2
@@ -33270,16 +33562,17 @@ TableRomImageEnd:
     mov     d0, (a1)
     clr     d0
     retf    [d2,d3], 8
+# loc_483EE2F9:   (label)
     movm    [d2,d3], (sp)
 # func_483EE2FB  (CPU 0x483EE2FB)
     add     -0x14, sp
 # func_483EE2FB_entry:   (register-save `call` entry)
-    mov     (0x502991bc), a0
+    mov     (ptr_502991BC), a0
     mov     d0, d3
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     mov     0x02f00000, d2
     bra     0x483ee364
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60013, d1
@@ -33289,7 +33582,7 @@ TableRomImageEnd:
     calls   (a0)
     cmp     d3, d0
     bne     0x483ee363
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60000, d1
@@ -33297,11 +33590,11 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     d2, d0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ee363
     mov     0x7a, d0
-    mov     (0x502991bc), a0
+    mov     (ptr_502991BC), a0
     call    func_483EC03A_entry, 0, 0x1c
     mov     -1, d0
     bra     0x483ee36d
@@ -33310,15 +33603,16 @@ TableRomImageEnd:
     bcs     0x483ee313
     clr     d0
     ret     [d2,d3], 0x1c
+# loc_483EE370:   (label)
     movm    [d2], (sp)
 # func_483EE372  (CPU 0x483EE372)
     add     -0x14, sp
 # func_483EE372_entry:   (register-save `call` entry)
-    mov     (0x502991bc), a0
+    mov     (ptr_502991BC), a0
     mov     0x02f00000, d2
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     bra     0x483ee3bf
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x1c, a0), a0
     mov     0x02f60001, d1
@@ -33326,11 +33620,11 @@ TableRomImageEnd:
     mov     d0, (0x10, sp)
     mov     d2, d0
     calls   (a0)
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ee3be
     mov     0x89, d0
-    mov     (0x502991bc), a0
+    mov     (ptr_502991BC), a0
     call    func_483EC03A_entry, 0, 0x1c
     mov     -1, d0
     bra     0x483ee3c8
@@ -33339,6 +33633,7 @@ TableRomImageEnd:
     bcs     0x483ee389
     clr     d0
     ret     [d2], 0x18
+# loc_483EE3CB:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EE3CD  (CPU 0x483EE3CD)
     add     -0x38, sp
@@ -33346,7 +33641,7 @@ TableRomImageEnd:
     movhu   d1, (0x60, sp)
     mov     a1, (0x54, sp)
     mov     a0, (0x50, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d0, d3
     mov     (0x2e1c, a0), a0
     mov     (0x338, a0), a2
@@ -33358,7 +33653,7 @@ TableRomImageEnd:
     mov     (0x50, sp), a1
     mov     8, d0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x338, a0), a2
     mov     sp, a0
@@ -33375,9 +33670,10 @@ TableRomImageEnd:
     bgt     0x483ee426
     mov     d3, d0
     asl2    d0
-    mov     0x483f88c0, a0
+    mov     ptrs_483F88C0, a0
     mov     (d0, a0), a0
     jmp     (a0)
+# loc_483EE426:   (label)
     movhu   (0x34, sp), d0
     exth    d0
     inc     d0
@@ -33403,7 +33699,7 @@ TableRomImageEnd:
     inc     d0
     movhu   d0, (0x2e, sp)
     mov     (0x58, sp), a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, a0), a0
     mov     (0xdc, a0), a3
     mov     a2, (0x10, sp)
@@ -33418,7 +33714,7 @@ TableRomImageEnd:
     mov     (0x24, sp), a1
     exth    d1
     calls   (a3)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0xf7, d0
     mov     (0x1c, a0), a0
     mov     (0xdc, a0), a3
@@ -33433,20 +33729,21 @@ TableRomImageEnd:
     calls   (a3)
     ret     [d2,d3,a2,a3], 0x48
     rets
+# loc_483EE4A3:   (label)
     movm    [d2], (sp)
 # func_483EE4A5  (CPU 0x483EE4A5)
     add     -0xc, sp
 # func_483EE4A5_entry:   (register-save `call` entry)
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     mov     5, d0
-    mov     a0, (0x502992c8)
-    mov     d0, (0x502992e0)
+    mov     a0, (ptrs_502992C8)
+    mov     d0, (word_502992E0)
     clr     d1
     bra     0x483ee4d0
     mov     d1, d0
     asl2    d0
     mov     0x483eeea5, d2
-    mov     0x502998ec, a0
+    mov     KssWorkRam+0x454, a0
     mov     d2, (d0, a0)
     inc     d1
     cmp     0x100, d1
@@ -33455,15 +33752,15 @@ TableRomImageEnd:
     bra     0x483ee502
     mov     d1, d0
     asl2    d0
-    mov     0x502998ec, d2
-    mov     0x50299ed0, a0
+    mov     KssWorkRam+0x454, d2
+    mov     KssWorkRam+0xA38, a0
     mov     d2, (d0, a0)
     mov     0x34, d0
     nop
     nop
     mul     d1, d0
     mov     d0, a0
-    add     0x502991c8, a0
+    add     ptrs_502991C8, a0
     clr     d0
     mov     d0, (0x2c, a0)
     mov     d0, (0x30, a0)
@@ -33472,46 +33769,46 @@ TableRomImageEnd:
     cmp     4, d1
     blt     0x483ee4d9
     mov     1, d2
-    mov     d2, (0x502991f8)
+    mov     d2, (ptr_502991F8)
     clr     d0
-    movbu   d0, (0x502991d4)
+    movbu   d0, (ptr_502991D4)
     mov     0x502991ee, a0
     call    func_483E9540_entry, [a2,a3], 0x1c
-    mov     d2, (0x502998e8)
+    mov     d2, (KssWorkRam+0x450)
     ret     [d2], 0x10
     movm    [d2,d3,a2,a3], (sp)
 # func_483EE52B  (CPU 0x483EE52B)
     add     -0x124, sp
     mov     a1, (0x140, sp)
     mov     a0, a3
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     clr     d0
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     mov     d0, (a3)
     mov     (0x140, sp), a0
     mov     d0, (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     sp, a1
     mov     (0x2e1c, a0), a0
     add     0x18, a1
     mov     (0x12c, a0), a2
-    mov     0x483f892c, a0
+    mov     KssActivationFilePath, a0
     calls   (a2)
     cmp     0, d0
     bge     0x483ee590
     mov     4, d0
-    mov     0x483f894c, a0
+    mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF_5, a0
     mov     0x98, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     jmp     0x483ee68c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x134, a0), a0
     calls   (a0)
@@ -33530,11 +33827,11 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0x9d, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     jmp     0x483ee68c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x1c, sp), d0
     mov     (0x2e1c, a0), a0
     mov     (0x13c, a0), a1
@@ -33545,15 +33842,15 @@ TableRomImageEnd:
     mov     0xa, d0
     mov     0, a0
     mov     0xa0, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     mov     -1, d0
     jmp     0x483ee68c
-    mov     (0x50299298), a0
-    mov     0x483f898a, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_rb_2, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f896c, a0
+    mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF_4, a0
     calls   (a2)
     mov     a0, a2
     cmp     0, a2
@@ -33565,12 +33862,12 @@ TableRomImageEnd:
     mov     d2, a0
     call    func_483ECA06_entry, [d2,d3,a2,a3], 0x28
     mov     d0, d2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a1
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
     mov     a2, a0
@@ -33580,14 +33877,14 @@ TableRomImageEnd:
     mov     (0x1c, sp), a1
     cmp     a1, d2
     beq     0x483ee67f
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (a3), d0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     d0, a0
     calls   (a1)
     mov     2, d0
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     mov     0, a0
     mov     0xab, d1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
@@ -33602,14 +33899,15 @@ TableRomImageEnd:
     clr     d0
     add     0x124, sp
     ret     [d2,d3,a2,a3], 0x10
+# loc_483EE693:   (label)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x84, sp
 # func_483EE699  (CPU 0x483EE699)
-    mov     (0x502991c4), a0
-    mov     0x483f8990, a1
-    mov     a0, (0x502992c8)
+    mov     (ptr_502991C4), a0
+    mov     Str_Reading_password_file, a1
+    mov     a0, (ptrs_502992C8)
     mov     a0, (0x18, sp)
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     mov     2, d0
     mov     0xc7, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
@@ -33618,14 +33916,14 @@ TableRomImageEnd:
     mov     sp, a1
     add     0x30, a1
     call    func_483EE52B, [d2,d3,a2,a3], 0x10
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ee6e3
     mov     0xc8, d0
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x94
-    mov     (0x50299298), d0
+    mov     (KssFrameworkObj), d0
     mov     0x2e1c, a1
     add     d0, a1
     mov     (a1), a0
@@ -33665,7 +33963,7 @@ TableRomImageEnd:
     nop
     nop
     mul     d1, d0
-    add     0x502991c8, d0
+    add     ptrs_502991C8, d0
     clr     d2
     mov     d0, a0
     mov     d2, (0x2c, a0)
@@ -33691,17 +33989,17 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0xd5, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x94
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     inc     a1
     mov     (0x2e1c, a0), a0
     mov     0x13, d0
     mov     (0x344, a0), a2
     mov     (0x24, sp), a0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     0x34, d0
     mov     (0x2e1c, a0), a0
     nop
@@ -33709,7 +34007,7 @@ TableRomImageEnd:
     mul     d3, d0
     mov     (0x344, a0), d2
     mov     d0, a3
-    add     0x502991c8, a3
+    add     ptrs_502991C8, a3
     mov     a3, a2
     inc4    a2
     mov     (a2), d1
@@ -33728,7 +34026,7 @@ TableRomImageEnd:
     beq     0x483ee803
     mov     2, d0
     mov     d0, (0x2c, a3)
-    mov     0x483f89a8, d0
+    mov     KssMsgPluginReleased, d0
     mov     d0, (8, sp)
     mov     (a3), d0
     mov     d0, (0xc, sp)
@@ -33736,17 +34034,17 @@ TableRomImageEnd:
     mov     (0x20, sp), d0
     mov     d0, (0x14, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x502991c4), d0
+    mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0xdb, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     bra     0x483ee837
     mov     1, d0
     mov     d0, (0x2c, a3)
-    mov     0x483f89d4, d0
+    mov     KssMsgPluginWrongPw, d0
     mov     d0, (8, sp)
     mov     (a3), d0
     mov     d0, (0xc, sp)
@@ -33754,12 +34052,12 @@ TableRomImageEnd:
     mov     (0x20, sp), d0
     mov     d0, (0x14, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x502991c4), d0
+    mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0xe1, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     (0x1c, sp), d0
     inc     d0
@@ -33769,32 +34067,33 @@ TableRomImageEnd:
     cmp     d0, d1
     bge     0x483ee846
     jmp     0x483ee752
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     (0x2c, sp), a0
     calls   (a1)
     ret     [d2,d3,a2,a3], 0x94
+# loc_483EE85B:   (label)
     movm    [a2], (sp)
 # func_483EE85D  (CPU 0x483EE85D)
     add     -0x18, sp
 # func_483EE85D_entry:   (register-save `call` entry)
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     mov     1, d0
-    mov     a0, (0x502992c8)
-    mov     (0x50299298), a0
+    mov     a0, (ptrs_502992C8)
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f8a36, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_wb_2, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f8a18, a0
+    mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF_3, a0
     calls   (a2)
     cmp     0, a0
     bne     0x483ee8c1
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
@@ -33802,19 +34101,20 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0xf4, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483ee8e1
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     (0x2e1c, a1), a1
     mov     (0x2dc, a1), a1
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
     ret     [a2], 0x1c
+# loc_483EE8E4:   (label)
     movm    [d2,a2,a3], (sp)
     add     -0x34, sp
 # KssPasswordCheck  (CPU 0x483EE8E9)
@@ -33834,7 +34134,7 @@ TableRomImageEnd:
     nop
     nop
     mul     d0, d2
-    add     0x502991c8, d2
+    add     ptrs_502991C8, d2
     mov     d2, a0
     mov     (4, a0), d1
     mov     (0x4c, sp), a0
@@ -33842,14 +34142,15 @@ TableRomImageEnd:
     mov     a3, a1
     call    KssKeyCompare, [d2,d3,a2,a3], 0x5c
     ret     [d2,a2,a3], 0x40
+# loc_483EE91C:   (label)
     movm    [d2,d3,a2,a3], (sp)
     add     -0x34, sp
 # KssActivationApply  (CPU 0x483EE921)
 #   activation apply: re-validates through KssKeyCompare and sets 0x502992C4
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     mov     a0, (0x50, sp)
     mov     d0, (0x4c, sp)
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     cmp     0, d0
     blt     0x483ee939
     cmp     4, d0
@@ -33863,7 +34164,7 @@ TableRomImageEnd:
     bne     0x483ee962
     mov     0, a0
     mov     0x119, d0
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     ret     [d2,d3,a2,a3], 0x44
     mov     (0x4c, sp), d0
@@ -33872,7 +34173,7 @@ TableRomImageEnd:
     nop
     nop
     mul     d1, d0
-    add     0x502991c8, d0
+    add     ptrs_502991C8, d0
     mov     d0, a0
     mov     2, d1
     mov     d1, (0x2c, a0)
@@ -33880,11 +34181,11 @@ TableRomImageEnd:
     add     0x18, a0
     add     0x1c, a1
     call    func_483EE52B, [d2,d3,a2,a3], 0x10
-    mov     (0x502992c4), d0
+    mov     (KssActivationStatus), d0
     cmp     0, d0
     beq     0x483ee99d
     mov     0x11d, d0
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     call    func_483EC03A_entry, 0, 0x1c
     ret     [d2,d3,a2,a3], 0x44
     mov     0, a3
@@ -33902,7 +34203,7 @@ TableRomImageEnd:
     extb    d0
     cmp     d1, d0
     bne     0x483ee9cc
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     inc     a0
     mov     (0x2e1c, a1), a1
     mov     0x13, d0
@@ -33914,29 +34215,29 @@ TableRomImageEnd:
     mov     (0x1c, sp), d0
     cmp     d0, d3
     blt     0x483ee9a2
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
-    mov     0x483f8a5a, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_wb, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
-    mov     0x483f8a3c, a0
+    mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF_2, a0
     calls   (a2)
     mov     a0, d2
     cmp     0, d2
     bne     0x483eea2e
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
     mov     4, d0
-    mov     0x483f8a60, a0
+    mov     Str_C_TECHNICS_DATA_CTDV10KL_CDF, a0
     mov     0x12b, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x44
     mov     1, d0
@@ -33954,7 +34255,7 @@ TableRomImageEnd:
     mov     (0x4c, sp), d0
     mov     sp, a3
     movbu   d0, (0x20, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     add     0x20, a3
     mov     (0x2e1c, a0), a0
     mov     (0x50, sp), a1
@@ -33968,37 +34269,38 @@ TableRomImageEnd:
     mov     1, d0
     mov     0x14, d1
     call    func_483EC9BD_entry, [d2,d3,a2,a3], 0x28
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x138, a0), a1
     mov     (0x18, sp), a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
     mov     d2, a0
     calls   (a1)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
     ret     [d2,d3,a2,a3], 0x44
+# loc_483EEAA7:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # KssPluginLoad  (CPU 0x483EEAA9)
 #   (d3 = plug-in id) logs 'PluginLoad id=%i', opens the .XAP (A:\%s.XAP / %s\%s.XAP), rejects files over 0x1D000 bytes, reads exactly 0x1D000 bytes to 0x5029B000, calls 0x5029B000 (a0 = framework object, a1 = 0x502992E4, d0/d1 -> compile id / plug-in id), checks the id and the compile id ('Compile id's dont match: base=%i != baseext=%i'), then registers the handle in 0x50299ED0[id]
     add     -0x194, sp
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     mov     d0, d3
-    mov     a0, (0x502992c8)
-    mov     0x483f8a80, d0
+    mov     a0, (ptrs_502992C8)
+    mov     Str_PluginLoad_id_i, d0
     mov     d0, (8, sp)
     mov     d3, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x502991c4), d0
+    mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
-    mov     0x50299e00, a2
+    mov     KssWorkRam+0x968, a2
     mov     a2, a0
     mov     2, d0
     mov     0x154, d1
@@ -34009,17 +34311,17 @@ TableRomImageEnd:
     blt     0x483eeafe
     mov     0, a0
     mov     0x156, d0
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     jmp     0x483eed28
     mov     d3, d0
-    call    func_483EED42, 0, 0
+    call    loc_483EED42, 0, 0
     cmp     0, d0
     bne     0x483eeb28
     cmp     3, d3
     beq     0x483eeb28
-    mov     (0x502991c4), a0
-    mov     0x483f8a94, a1
+    mov     (ptr_502991C4), a0
+    mov     Str_Plugin_not_realeased, a1
     mov     a0, (0x18, sp)
     mov     a2, a0
     mov     3, d0
@@ -34031,12 +34333,12 @@ TableRomImageEnd:
     mov     d3, d0
     mov     a3, a0
     call    func_483EEE4D_entry, 0, 0x18
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     1, d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     sp, a1
     mov     (0x2e1c, a0), a0
     add     0x88, a1
@@ -34047,29 +34349,29 @@ TableRomImageEnd:
     bge     0x483eeb71
     mov     4, d0
     mov     0x164, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     mov     a3, a0
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x2e1c, a0), a0
     mov     (0x134, a0), a0
     calls   (a0)
     mov     (0x8c, sp), d0
     cmp     0x1d000, d0
     bls     0x483eebaf
-    mov     0x483f8aac, d0
+    mov     Str_i, d0
     mov     d0, (8, sp)
     mov     (0x8c, sp), d0
     mov     d0, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
     mov     2, d0
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     mov     0x166, d1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
-    mov     (0x50299298), a0
-    mov     0x483f8ab0, a1
+    mov     (KssFrameworkObj), a0
+    mov     Str_rb, a1
     mov     (0x2e1c, a0), a0
     mov     (0x2d0, a0), a2
     mov     a3, a0
@@ -34079,7 +34381,7 @@ TableRomImageEnd:
     bne     0x483eebdf
     mov     4, d0
     mov     0x16a, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     mov     a3, a0
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
@@ -34088,7 +34390,7 @@ TableRomImageEnd:
     mov     1, d0
     mov     0x0001d000, d1
     call    func_483ECA06_entry, [d2,d3,a2,a3], 0x28
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d0, d2
     mov     (0x2e1c, a0), a0
     mov     (0x2dc, a0), a1
@@ -34099,7 +34401,7 @@ TableRomImageEnd:
     mov     2, d0
     mov     0, a0
     mov     0x172, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     jmp     0x483eed28
     mov     sp, a2
@@ -34107,57 +34409,57 @@ TableRomImageEnd:
     add     0x1c, d0
     mov     a2, d1
     add     0x20, d1
-    mov     (0x50299298), a0
-    mov     0x502992e4, a1
+    mov     (KssFrameworkObj), a0
+    mov     ptr_502992E4, a1
     mov     0x5029b000, a2
     calls   (a2)
     mov     (0x20, sp), d0
     mov     a0, a2
     cmp     d3, d0
     beq     0x483eec67
-    mov     0x483f8ab4, d1
+    mov     Str_Plugin_not_loaded_because_id_i_suspected, d1
     mov     d1, (8, sp)
     mov     d0, (0xc, sp)
     mov     d3, (0x10, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
     mov     0x185, d0
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBFC2_entry, [d2,a2], 0x24
     jmp     0x483eed28
     mov     (0x1c, sp), d0
     call    func_483EEEF9_entry, 0, 0xc
     cmp     0, d0
     bne     0x483eecb8
-    mov     0x483f8ae8, d0
+    mov     Str_Compile_id_s_dont_match_base_i_baseext_i, d0
     mov     d0, (8, sp)
-    mov     (0x502992dc), d0
+    mov     (word_502992DC), d0
     mov     d0, (0xc, sp)
     mov     (0x1c, sp), d0
     mov     d0, (0x10, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x502991c4), d0
+    mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     3, d0
     mov     0x18d, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     mov     0xb, d0
     mov     0, a0
     mov     0x18e, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483eed28
-    mov     0x50299ed0, a1
+    mov     KssWorkRam+0xA38, a1
     mov     d3, d0
     asl2    d0
     mov     a2, (d0, a1)
-    mov     d3, (0x502992e0)
+    mov     d3, (word_502992E0)
     mov     0x34, d0
     nop
     nop
     mul     d3, d0
-    add     0x502991c8, d0
+    add     ptrs_502991C8, d0
     mov     1, d1
     mov     d0, a2
     mov     d1, (0x30, a2)
@@ -34167,61 +34469,62 @@ TableRomImageEnd:
     beq     0x483eeceb
     mov     d1, d0
     asl2    d0
-    mov     0x502998ec, d2
+    mov     KssWorkRam+0x454, d2
     mov     d2, (d0, a1)
     inc     d1
     cmp     4, d1
     blt     0x483eecde
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     clr     d0
     mov     (0x2e1c, a0), a0
     mov     (0x78, a0), a0
     calls   (a0)
-    mov     0x483f8b18, d0
+    mov     Str_PluginLoad_id_i_successfull, d0
     mov     d0, (8, sp)
     mov     d3, (0xc, sp)
     call    func_483EBD8F_entry, [d2,a2,a3], 0x24
-    mov     (0x502991c4), d0
+    mov     (ptr_502991C4), d0
     mov     a0, a1
     mov     d0, (0x18, sp)
     mov     2, d0
     mov     0x19e, d1
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     add     0x194, sp
     ret     [d2,d3,a2,a3], 0x10
-# func_483EED2F  (CPU 0x483EED2F)
+# loc_483EED2F  (CPU 0x483EED2F)
     mov     0x34, d1
     nop
     nop
     mul     d0, d1
     mov     d1, a0
-    add     0x502991c8, a0
+    add     ptrs_502991C8, a0
     mov     (0x30, a0), d0
     rets
-# func_483EED42  (CPU 0x483EED42)
+# loc_483EED42  (CPU 0x483EED42)
     mov     0x34, d1
     nop
     nop
     mul     d1, d0
     mov     d0, a0
-    add     0x502991c8, a0
+    add     ptrs_502991C8, a0
     mov     (0x2c, a0), d1
     clr     d0
     cmp     2, d1
     bne     0x483eed5a
     mov     1, d0
     rets
+# loc_483EED5C:   (label)
     movm    [d2,d3,a2,a3], (sp)
 # func_483EED5E  (CPU 0x483EED5E)
     add     -0x38, sp
 # func_483EED5E_entry:   (register-save `call` entry)
     mov     d0, d2
-    mov     (0x502998d0), d0
+    mov     (KssWorkRam+0x438), d0
     mov     a0, d3
-    mov     (0x502991c4), a0
+    mov     (ptr_502991C4), a0
     cmp     0, d0
-    mov     a0, (0x502992c8)
+    mov     a0, (ptrs_502992C8)
     bne     0x483eede2
     mov     sp, a2
     add     0x18, a2
@@ -34236,7 +34539,7 @@ TableRomImageEnd:
     nop
     nop
     mul     d0, d2
-    add     0x502991c8, d2
+    add     ptrs_502991C8, d2
     mov     d2, a0
     mov     (4, a0), a1
     add     0x26, d2
@@ -34249,31 +34552,31 @@ TableRomImageEnd:
     mov     0xc, d0
     mov     0, a0
     mov     0x1c2, d1
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     call    func_483EBF26_entry, [d2,d3,a2,a3], 0x2c
     bra     0x483eedfa
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d3, a1
     mov     (0x2e1c, a0), a0
     mov     (0x340, a0), a2
-    mov     0x502998d4, a0
+    mov     KssWorkRam+0x43C, a0
     calls   (a2)
     mov     1, d0
-    mov     d0, (0x502998d0)
+    mov     d0, (KssWorkRam+0x438)
     bra     0x483eedfa
-    mov     (0x50299298), a0
-    mov     0x502998d4, a1
+    mov     (KssFrameworkObj), a0
+    mov     KssWorkRam+0x43C, a1
     mov     (0x2e1c, a0), a0
     mov     (0x340, a0), a2
     mov     d3, a0
     calls   (a2)
     ret     [d2,d3,a2,a3], 0x48
-# func_483EEDFD  (CPU 0x483EEDFD)
+# loc_483EEDFD  (CPU 0x483EEDFD)
     add     -0x14, sp
 # func_483EEDFD_entry:   (register-save `call` entry)
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     cmp     0, d0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     blt     0x483eee14
     cmp     4, d0
     blt     0x483eee20
@@ -34281,8 +34584,8 @@ TableRomImageEnd:
     mov     0x1d2, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483eee4a
-    mov     (0x50299298), a1
-    mov     0x483f8b38, d1
+    mov     (KssFrameworkObj), a1
+    mov     Str_A_s_XAP, d1
     mov     (0x2e1c, a1), a1
     mov     (0x334, a1), a1
     mov     a0, (8, sp)
@@ -34291,17 +34594,17 @@ TableRomImageEnd:
     nop
     nop
     mul     d1, d0
-    mov     0x502991c8, a0
+    mov     ptrs_502991C8, a0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
     calls   (a1)
     ret     0, 0x14
-# func_483EEE4D  (CPU 0x483EEE4D)
+# loc_483EEE4D  (CPU 0x483EEE4D)
     add     -0x18, sp
 # func_483EEE4D_entry:   (register-save `call` entry)
-    mov     (0x502991c4), a1
+    mov     (ptr_502991C4), a1
     cmp     0, d0
-    mov     a1, (0x502992c8)
+    mov     a1, (ptrs_502992C8)
     blt     0x483eee64
     cmp     4, d0
     blt     0x483eee70
@@ -34309,35 +34612,35 @@ TableRomImageEnd:
     mov     0x1dc, d0
     call    func_483EBFC2_entry, [d2,a2], 0x24
     bra     0x483eeea2
-    mov     (0x50299298), a1
-    mov     0x483f8b44, d1
+    mov     (KssFrameworkObj), a1
+    mov     Str_s_s_XAP, d1
     mov     (0x2e1c, a1), a1
     mov     (0x334, a1), a1
     mov     a0, (8, sp)
     mov     d1, (0xc, sp)
-    mov     0x483f8b4e, d1
+    mov     Str_C_TECHNICS_DATA, d1
     mov     d1, (0x10, sp)
     mov     0x34, d1
     nop
     nop
     mul     d1, d0
-    mov     0x502991c8, a0
+    mov     ptrs_502991C8, a0
     mov     (d0, a0), d0
     mov     d0, (0x14, sp)
     calls   (a1)
     ret     0, 0x18
     add     -0x1c, sp
-    mov     (0x502991c4), a0
-    mov     0x483f8b60, a1
+    mov     (ptr_502991C4), a0
+    mov     Str_Plugin_not_Loaded, a1
     mov     a0, (0x18, sp)
-    mov     0x50299e00, a0
+    mov     KssWorkRam+0x968, a0
     mov     1, d0
     mov     0x1e6, d1
     call    func_483EC488_entry, [d2,d3,a2,a3], 0x48
     ret     0, 0x1c
     movm    [a2], (sp)
     add     -0x10, sp
-    mov     (0x50299298), a1
+    mov     (KssFrameworkObj), a1
     mov     0x34, d1
     mov     (0x2e1c, a1), a1
     nop
@@ -34345,7 +34648,7 @@ TableRomImageEnd:
     mul     d0, d1
     mov     (0x354, a1), a2
     mov     d1, a1
-    add     0x502991c8, a1
+    add     ptrs_502991C8, a1
     mov     (4, a1), a1
     calls   (a2)
     mov     d0, d1
@@ -34357,10 +34660,10 @@ TableRomImageEnd:
 # func_483EEEF9  (CPU 0x483EEEF9)
     add     -0xc, sp
 # func_483EEEF9_entry:   (register-save `call` entry)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d0, d1
     mov     (0x2e1c, a0), a0
-    mov     (0x502992dc), d0
+    mov     (word_502992DC), d0
     mov     (0x330, a0), a0
     sub     d0, d1
     mov     d1, d0
@@ -34378,7 +34681,7 @@ TableRomImageEnd:
     add     -0x2c, sp
 # KssBuildParam1_entry:   (register-save `call` entry)
     mov     a1, (0x40, sp)
-    mov     (0x50299298), a2
+    mov     (KssFrameworkObj), a2
     mov     a0, a1
     mov     (0x2e1c, a2), a2
     mov     sp, a3
@@ -34406,7 +34709,7 @@ TableRomImageEnd:
     mov     d1, (0x4c, sp)
     mov     d0, (0x48, sp)
     mov     a0, (0x40, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a1, a3
     mov     (0x2e1c, a0), a0
     mov     (0x324, a0), a0
@@ -34417,7 +34720,7 @@ TableRomImageEnd:
     mov     mdr, d0
     add     0x61, d0
     movbu   d0, (0x14, sp)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, a1
     mov     (0x2e1c, a0), a0
     mov     3, d0
@@ -34429,7 +34732,7 @@ TableRomImageEnd:
     inc     d2
     mov     d2, a0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     add     3, d2
     mov     (0x2e1c, a0), a0
     mov     (0x40, sp), a1
@@ -34437,7 +34740,7 @@ TableRomImageEnd:
     mov     d2, a0
     mov     8, d0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x48, sp), a1
     mov     (0x2e1c, a0), a0
     mov     4, d0
@@ -34449,7 +34752,7 @@ TableRomImageEnd:
     mov     a0, a1
     clr     d0
     movbu   d0, (0x27, sp)
-    mov     (0x50299494), d0
+    mov     (ptr_50299494), d0
     call    func_483EF161_entry, [d2,a2,a3], 0x20
     cmp     0, d0
     beq     0x483eefeb
@@ -34472,9 +34775,9 @@ TableRomImageEnd:
     call    KssKeyStripDashes, [d2,a2,a3], 0x24
     mov     a3, a0
     mov     a0, a1
-    mov     (0x50299494), d0
+    mov     (ptr_50299494), d0
     call    KssKeyTransform, [d2,a2,a3], 0x20
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, a1
     mov     (0x2e1c, a0), a0
     inc     a1
@@ -34482,7 +34785,7 @@ TableRomImageEnd:
     mov     d3, a0
     mov     3, d0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, a1
     mov     (0x2e1c, a0), a0
     inc4    a1
@@ -34490,7 +34793,7 @@ TableRomImageEnd:
     mov     (0x44, sp), a0
     mov     8, d0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     add     0xc, a3
     mov     (0x2e1c, a0), a0
     mov     a3, a1
@@ -34557,13 +34860,13 @@ TableRomImageEnd:
     ret     [d2,d3,a2,a3], 0x5c
     mov     a3, a0
     mov     a0, a1
-    mov     (0x50299494), d0
+    mov     (ptr_50299494), d0
     call    KssKeyTransform, [d2,a2,a3], 0x20
     cmp     0, d0
     beq     0x483ef0ed
     clr     d0
     bra     0x483ef15c
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     a3, d2
     mov     (0x2e1c, a0), a0
     inc     d2
@@ -34575,7 +34878,7 @@ TableRomImageEnd:
     mov     d2, a1
     mov     3, d0
     calls   (a3)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     sp, a3
     mov     (0x2e1c, a0), a0
     add     0x40, a3
@@ -34585,7 +34888,7 @@ TableRomImageEnd:
     add     d2, a1
     mov     8, d0
     calls   (a2)
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x68, sp), a1
     mov     (0x2e1c, a0), a0
     mov     8, d0
@@ -34594,7 +34897,7 @@ TableRomImageEnd:
     calls   (a2)
     cmp     0, d0
     bne     0x483ef15b
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     (0x6c, sp), a1
     mov     (0x2e1c, a0), a0
     mov     3, d0
@@ -34850,7 +35153,7 @@ TableRomImageEnd:
     mov     a0, a2
     mov     0, a3
     bra     0x483ef31d
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     d2, a1
     mov     (0x2e1c, a0), a0
     mov     4, d0
@@ -34876,7 +35179,7 @@ TableRomImageEnd:
     mov     a0, a2
     mov     0, a3
     bra     0x483ef358
-    mov     (0x50299298), a0
+    mov     (KssFrameworkObj), a0
     mov     4, d0
     mov     (0x2e1c, a0), a1
     mov     a2, a0
@@ -35284,387 +35587,9 @@ TableRomImageEnd:
     nop
     ret     [d2,d3,a2,a3], 0x18
 
-# ---- plug-in data: strings, widget/descriptor tables ----
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3EF6C5, 0x3F782C
-# KssMsgWrongPassword  (CPU 0x483F782C)
-    .byte 0x46, 0x61, 0x6C, 0x73, 0x63, 0x68, 0x65, 0x73, 0x20, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6F, 0x72, 0x74, 0x00   # "Falsches Passwort"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F783E, 0x3F88F0
-# KssStrPluginCtrl  (CPU 0x483F88F0)
-    .byte 0x50, 0x6C, 0x75, 0x67, 0x69, 0x6E, 0x43, 0x74, 0x72, 0x6C, 0x00   # "PluginCtrl"
-    .asciz "BASE"
-# KssStrMr7  (CPU 0x483F8900)
-    .byte 0x6D, 0x72, 0x37, 0x00   # "mr7"
-    .asciz "MIDI2TLX"
-    .asciz "bwa"
-    .asciz "DATALINK"
-    .asciz "8he"
-    .asciz "BASEEXT"
-    .asciz "nn2"
-    .space 2, 0xFF
-# KssActivationFilePath  (CPU 0x483F892C)
-    .byte 0x43, 0x3A, 0x5C, 0x54, 0x45, 0x43, 0x48, 0x4E, 0x49, 0x43, 0x53, 0x5C, 0x44, 0x41, 0x54, 0x41, 0x5C, 0x43, 0x54, 0x44, 0x56, 0x31, 0x30, 0x4B, 0x4C, 0x2E, 0x43, 0x44, 0x46, 0x00   # "C:\TECHNICS\DATA\CTDV10KL.CDF"
-    .space 2, 0xFF
-    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
-    .space 2, 0xFF
-    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
-    .asciz "rb"
-    .space 3, 0xFF
-    .asciz "Reading password file"
-    .space 2, 0xFF
-# KssMsgPluginReleased  (CPU 0x483F89A8)
-    .byte 0x50, 0x6C, 0x75, 0x67, 0x69, 0x6E, 0x20, 0x27, 0x25, 0x73, 0x27, 0x2C, 0x20, 0x69, 0x64, 0x20, 0x25, 0x69, 0x2C, 0x20, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6C, 0x20, 0x25, 0x73, 0x2C, 0x20, 0x69, 0x73, 0x20, 0x72, 0x65, 0x6C, 0x65, 0x61, 0x73, 0x65, 0x64, 0x00   # "Plugin '%s', id %i, serial %s, is released"
-    .space 1, 0xFF
-# KssMsgPluginWrongPw  (CPU 0x483F89D4)
-    .byte 0x50, 0x6C, 0x75, 0x67, 0x69, 0x6E, 0x20, 0x27, 0x25, 0x73, 0x27, 0x2C, 0x20, 0x69, 0x64, 0x20, 0x25, 0x69, 0x2C, 0x20, 0x73, 0x65, 0x72, 0x69, 0x61, 0x6C, 0x20, 0x25, 0x73, 0x2C, 0x20, 0x69, 0x73, 0x20, 0x68, 0x61, 0x73, 0x20, 0x57, 0x52, 0x4F, 0x4E, 0x47, 0x20, 0x50, 0x41, 0x53, 0x53, 0x57, 0x4F, 0x52, 0x54, 0x20, 0x69, 0x6E, 0x20, 0x70, 0x61, 0x73, 0x73, 0x66, 0x69, 0x6C, 0x65, 0x21, 0x00   # "Plugin '%s', id %i, serial %s, is has WRONG PASSWORT in passfile!"
-    .space 2, 0xFF
-    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
-    .asciz "wb"
-    .space 3, 0xFF
-    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
-    .asciz "wb"
-    .space 3, 0xFF
-    .asciz "C:\\TECHNICS\\DATA\\CTDV10KL.CDF"
-    .space 2, 0xFF
-    .asciz "PluginLoad id=%i"
-    .space 3, 0xFF
-    .asciz "Plugin not realeased"
-    .space 3, 0xFF
-    .asciz "%i"
-    .space 1, 0xFF
-    .asciz "rb"
-    .space 1, 0xFF
-    .asciz "Plugin not loaded because id %i != suspected id %i"
-    .space 1, 0xFF
-    .asciz "Compile id's dont match: base=%i != baseext=%i"
-    .space 1, 0xFF
-    .asciz "PluginLoad id=%i successfull"
-    .space 3, 0xFF
-    .asciz "A:\\%s.XAP"
-    .space 2, 0xFF
-    .asciz "%s\\%s.XAP"
-    .asciz "C:\\TECHNICS\\DATA"
-    .space 1, 0xFF
-    .asciz "Plugin not Loaded"
-    .space 2, 0xFF
-# KssKeystreamRecords  (CPU 0x483F8B74)
-#   27 static keystream records, 20 base-35 chars + NUL each (stride 0x15); the key's first char selects the pair used
-    .byte 0x75, 0x69, 0x75, 0x65, 0x6B, 0x69, 0x70, 0x68, 0x62, 0x38, 0x34, 0x38, 0x6A, 0x35, 0x67, 0x75, 0x6D, 0x32, 0x68, 0x74, 0x00   # "uiuekiphb848j5gum2ht"
-    .byte 0x37, 0x70, 0x34, 0x66, 0x73, 0x6F, 0x68, 0x67, 0x33, 0x39, 0x39, 0x75, 0x64, 0x62, 0x36, 0x31, 0x75, 0x69, 0x75, 0x65, 0x00   # "7p4fsohg399udb61uiue"
-    .byte 0x64, 0x62, 0x36, 0x31, 0x6E, 0x6C, 0x65, 0x6B, 0x75, 0x77, 0x62, 0x62, 0x6C, 0x35, 0x71, 0x70, 0x37, 0x70, 0x34, 0x66, 0x00   # "db61nlekuwbbl5qp7p4f"
-    .byte 0x6C, 0x35, 0x71, 0x70, 0x6C, 0x39, 0x37, 0x68, 0x6C, 0x6D, 0x70, 0x62, 0x71, 0x63, 0x39, 0x39, 0x64, 0x62, 0x36, 0x31, 0x00   # "l5qpl97hlmpbqc99db61"
-    .byte 0x71, 0x63, 0x39, 0x39, 0x67, 0x6F, 0x70, 0x71, 0x70, 0x33, 0x33, 0x76, 0x36, 0x65, 0x66, 0x64, 0x6C, 0x35, 0x71, 0x70, 0x00   # "qc99gopqp33v6efdl5qp"
-    .byte 0x36, 0x65, 0x66, 0x64, 0x34, 0x73, 0x39, 0x69, 0x6F, 0x69, 0x69, 0x72, 0x66, 0x71, 0x6D, 0x6C, 0x71, 0x63, 0x39, 0x39, 0x00   # "6efd4s9ioiirfqmlqc99"
-    .byte 0x66, 0x71, 0x6D, 0x6C, 0x66, 0x65, 0x76, 0x6A, 0x69, 0x6A, 0x38, 0x67, 0x6B, 0x33, 0x6B, 0x6C, 0x36, 0x65, 0x66, 0x64, 0x00   # "fqmlfevjij8gk3kl6efd"
-    .byte 0x6B, 0x33, 0x6B, 0x6C, 0x61, 0x67, 0x76, 0x74, 0x6C, 0x36, 0x6C, 0x6D, 0x6F, 0x67, 0x32, 0x62, 0x66, 0x71, 0x6D, 0x6C, 0x00   # "k3klagvtl6lmog2bfqml"
-    .byte 0x6F, 0x67, 0x32, 0x62, 0x36, 0x75, 0x39, 0x77, 0x77, 0x35, 0x71, 0x75, 0x75, 0x38, 0x75, 0x67, 0x6B, 0x33, 0x6B, 0x6C, 0x00   # "og2b6u9ww5quu8ugk3kl"
-    .byte 0x75, 0x38, 0x75, 0x67, 0x62, 0x6C, 0x6B, 0x64, 0x6D, 0x6A, 0x31, 0x6D, 0x36, 0x72, 0x33, 0x32, 0x6F, 0x67, 0x32, 0x62, 0x00   # "u8ugblkdmj1m6r32og2b"
-    .byte 0x36, 0x72, 0x33, 0x32, 0x64, 0x34, 0x37, 0x70, 0x31, 0x34, 0x73, 0x75, 0x37, 0x6A, 0x38, 0x67, 0x75, 0x38, 0x75, 0x67, 0x00   # "6r32d47p14su7j8gu8ug"
-    .byte 0x37, 0x6A, 0x38, 0x67, 0x67, 0x69, 0x70, 0x69, 0x39, 0x63, 0x75, 0x61, 0x37, 0x6A, 0x38, 0x67, 0x36, 0x72, 0x33, 0x32, 0x00   # "7j8ggipi9cua7j8g6r32"
-    .byte 0x65, 0x72, 0x6E, 0x37, 0x76, 0x66, 0x61, 0x37, 0x6C, 0x62, 0x6F, 0x6E, 0x65, 0x72, 0x6E, 0x37, 0x37, 0x6A, 0x38, 0x67, 0x00   # "ern7vfa7lbonern77j8g"
-    .byte 0x6D, 0x67, 0x66, 0x73, 0x37, 0x75, 0x31, 0x69, 0x32, 0x6F, 0x6C, 0x6A, 0x39, 0x37, 0x73, 0x71, 0x65, 0x72, 0x6E, 0x37, 0x00   # "mgfs7u1i2olj97sqern7"
-    .byte 0x39, 0x37, 0x73, 0x71, 0x70, 0x32, 0x37, 0x39, 0x32, 0x64, 0x6F, 0x37, 0x6D, 0x76, 0x6D, 0x65, 0x6D, 0x67, 0x66, 0x73, 0x00   # "97sqp2792do7mvmemgfs"
-    .byte 0x6D, 0x76, 0x6D, 0x65, 0x77, 0x38, 0x34, 0x34, 0x6E, 0x6A, 0x6B, 0x38, 0x6A, 0x38, 0x6F, 0x67, 0x39, 0x37, 0x73, 0x71, 0x00   # "mvmew844njk8j8og97sq"
-    .byte 0x6A, 0x38, 0x6F, 0x67, 0x77, 0x6C, 0x70, 0x68, 0x68, 0x65, 0x63, 0x75, 0x6D, 0x6A, 0x32, 0x6B, 0x6D, 0x76, 0x6D, 0x65, 0x00   # "j8ogwlphhecumj2kmvme"
-    .byte 0x6D, 0x6A, 0x32, 0x6B, 0x67, 0x68, 0x75, 0x6D, 0x34, 0x63, 0x64, 0x6B, 0x66, 0x72, 0x68, 0x68, 0x6A, 0x38, 0x6F, 0x67, 0x00   # "mj2kghum4cdkfrhhj8og"
-    .byte 0x66, 0x72, 0x68, 0x68, 0x70, 0x6B, 0x75, 0x35, 0x64, 0x39, 0x39, 0x77, 0x38, 0x6A, 0x74, 0x68, 0x6D, 0x6A, 0x32, 0x6B, 0x00   # "frhhpku5d99w8jthmj2k"
-    .byte 0x38, 0x6A, 0x74, 0x68, 0x67, 0x66, 0x66, 0x36, 0x37, 0x36, 0x6C, 0x6B, 0x77, 0x68, 0x6A, 0x71, 0x66, 0x72, 0x68, 0x68, 0x00   # "8jthgff676lkwhjqfrhh"
-    .byte 0x77, 0x68, 0x6A, 0x71, 0x68, 0x73, 0x6D, 0x31, 0x39, 0x62, 0x35, 0x36, 0x34, 0x72, 0x6C, 0x72, 0x38, 0x6A, 0x74, 0x68, 0x00   # "whjqhsm19b564rlr8jth"
-    .byte 0x34, 0x72, 0x6C, 0x72, 0x74, 0x61, 0x72, 0x61, 0x33, 0x70, 0x37, 0x73, 0x66, 0x67, 0x66, 0x71, 0x77, 0x68, 0x6A, 0x71, 0x00   # "4rlrtara3p7sfgfqwhjq"
-    .byte 0x66, 0x67, 0x66, 0x71, 0x6C, 0x33, 0x39, 0x69, 0x70, 0x6B, 0x75, 0x72, 0x34, 0x71, 0x72, 0x73, 0x34, 0x72, 0x6C, 0x72, 0x00   # "fgfql39ipkur4qrs4rlr"
-    .byte 0x34, 0x71, 0x72, 0x73, 0x6E, 0x77, 0x61, 0x61, 0x76, 0x67, 0x31, 0x68, 0x6B, 0x74, 0x6B, 0x39, 0x66, 0x67, 0x66, 0x71, 0x00   # "4qrsnwaavg1hktk9fgfq"
-    .byte 0x6B, 0x74, 0x6B, 0x39, 0x64, 0x39, 0x66, 0x72, 0x61, 0x70, 0x62, 0x35, 0x6A, 0x35, 0x67, 0x75, 0x34, 0x71, 0x72, 0x73, 0x00   # "ktk9d9frapb5j5gu4qrs"
-    .byte 0x6A, 0x35, 0x67, 0x75, 0x6E, 0x69, 0x75, 0x68, 0x75, 0x6D, 0x34, 0x39, 0x75, 0x69, 0x75, 0x65, 0x6B, 0x74, 0x6B, 0x39, 0x00   # "j5guniuhum49uiuektk9"
-    .byte 0x6D, 0x32, 0x68, 0x74, 0x31, 0x62, 0x76, 0x71, 0x67, 0x61, 0x70, 0x32, 0x36, 0x75, 0x63, 0x66, 0x6A, 0x35, 0x67, 0x75, 0x00   # "m2ht1bvqgap26ucfj5gu"
-    .space 1, 0xFF
-    .space 12, 0x00
-    .long AcKssListProc
-    .byte 0x12   # data (CPU 0x483F8DBC)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8DBE)
-    .space 1, 0x00
-    .word 0x0070, 0x0050   # UTF-16 "pP"
-    .long 0x483EFA8D
-    .long 0x483EFA48
-    .long 0x483EF804
-    .long PsKssTextBoxProc
-    .byte 0x1D   # data (CPU 0x483F8DD4)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8DD6)
-    .space 1, 0x00
-    .word 0x0040   # UTF-16 "@"
-    .byte 0x18   # data (CPU 0x483F8DDA)
-    .space 1, 0x00
-    .long 0x483EFA97
-    .long 0x483EFA65
-    .long 0x483EF8AC
-    .long KssBgScreenProc
-    .word 0x0041   # UTF-16 "A"
-    .byte 0x04   # data (CPU 0x483F8DEE)
-    .space 1, 0x00
-    .word 0x0034   # UTF-16 "4"
-    .byte 0x0C   # data (CPU 0x483F8DF2)
-    .space 1, 0x00
-    .long 0x483EFAA4
-    .long 0x483EFA6C
-    .long 0x483EF8E0
-    .long DbKssMemoProc
-    .byte 0x12   # data (CPU 0x483F8E04)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8E06)
-    .space 1, 0x00
-    .word 0x002C   # UTF-16 ","
-    .byte 0x0C   # data (CPU 0x483F8E0A)
-    .space 1, 0x00
-    .long 0x483EFAB0
-    .long 0x483EFA70
-    .long 0x483EF90C
-    .long AcKssScreenMenuProc
-    .byte 0x01   # data (CPU 0x483F8E1C)
-    .space 1, 0x00
-    .byte 0xF4, 0x02, 0x48   # data (CPU 0x483F8E1E)
-    .space 1, 0x00
-    .byte 0x08   # data (CPU 0x483F8E22)
-    .space 1, 0x00
-    .long 0x483EFABA
-    .long 0x483EFA74
-    .long 0x483EF92C
-    .long AcKssEditBoxProc
-    .byte 0x1D   # data (CPU 0x483F8E34)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8E36)
-    .space 1, 0x00
-    .word 0x0054, 0x002C   # UTF-16 "T,"
-    .long 0x483EFACA
-    .long 0x483EFA77
-    .long 0x483EF9CC
-    .long AcKssNamingWindowProc
-    .word 0x0043   # UTF-16 "C"
-    .byte 0x04   # data (CPU 0x483F8E4E)
-    .space 1, 0x00
-    .word 0x002C   # UTF-16 ","
-    .space 2, 0x00
-    .long 0x483EFAD7
-    .long 0x483EFA85
-    .long 0x483EFA08
-    .long IvKssNamingProc
-    .byte 0x15   # data (CPU 0x483F8E64)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8E66)
-    .space 1, 0x00
-    .byte 0x1C   # data (CPU 0x483F8E68)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8E6A)
-    .space 1, 0x00
-    .long 0x483EFAE9
-    .long 0x483EFA86
-    .long 0x483EFA14
-    .long AcKssNamingEditSwProc
-    .word 0x0020   # UTF-16 " "
-    .byte 0x04   # data (CPU 0x483F8E7E)
-    .space 1, 0x00
-    .word 0x0034   # UTF-16 "4"
-    .byte 0x08   # data (CPU 0x483F8E82)
-    .space 1, 0x00
-    .long 0x483EFAF5
-    .long 0x483EFA88
-    .long 0x483EFA28
-    .long KssXLyricsBoxProc
-    .byte 0x12   # data (CPU 0x483F8E94)
-    .space 1, 0x00
-    .byte 0x04   # data (CPU 0x483F8E96)
-    .space 1, 0x00
-    .word 0x0024   # UTF-16 "$"
-    .byte 0x04   # data (CPU 0x483F8E9A)
-    .space 1, 0x00
-    .long 0x483EFB07
-    .long 0x483EFA8B
-    .long 0x483EFA40
-    .space 24, 0x00
-    .long 0x483EFB18
-    .long 0x483EFB2B
-    .long 0x483EFB3A
-    .long 0x483EFB47
-    .long 0x483EFB55
-    .long 0x483EFB64
-    .long 0x483EFB73
-    .long 0x483EFB85
-    .long 0x483EFB8E
-    .long 0x483EFB9D
-    .long 0x483EFBA9
-    .long 0x483EFBB8
-    .long 0x483EFBC6
-    .long 0x483EFBD1
-    .long 0x483EFBE1
-    .long 0x483EFBEF
-    .space 5, 0x00
-    .byte 0xFC, 0x3E, 0x48   # data (CPU 0x483F8F05)
-    .long 0x483EFC0D
-    .long 0x483EFC1B
-    .long 0x483EFC2B
-    .long 0x483EFC3B
-    .long 0x483EFC4E
-    .long 0x483EFC61
-    .long 0x483EFC6C
-    .long 0x483EFC77
-    .long 0x483EFC86
-    .long 0x483EFC96
-    .long 0x483EFCA6
-    .long 0x483EFCB9
-    .long 0x483EFCC3
-    .long 0x483EFCCD
-    .long 0x483EFCDD
-    .long 0x483EFCEE
-    .space 1, 0xFF
-    .byte 0xFC, 0x3E, 0x48   # data (CPU 0x483F8F49)
-    .long 0x483EFD0F
-    .long 0x483EFD1F
-    .long 0x483EFD32
-    .long 0x483EFD44
-    .long 0x483EFD51
-    .long 0x483EFD5A
-    .long 0x483EFD6B
-    .long 0x483EFD74
-    .long 0x483EFD7F
-    .long 0x483EFD8A
-    .long 0x483EFD96
-    .long 0x483EFDA0
-    .long 0x483EFDAE
-    .long 0x483EFDC6
-    .long 0x483EFDDC
-    .long 0x483EFDF2
-    .long 0x483EFE09
-    .long 0x483EFE17
-    .long 0x483EFE26
-    .long 0x483EFE36
-    .long 0x483EFE48
-    .long 0x483EFE5A
-    .long 0x483EFE6F
-    .long 0x483EFE81
-    .long 0x483EFE98
-    .long 0x483EFEAE
-    .long 0x483EFEC3
-    .long 0x483EFED6
-    .long 0x483EFEEA
-    .long 0x483EFEFD
-    .long 0x483EFF11
-    .long 0x483EFF21
-    .long 0x483EFF31
-    .long 0x483EFF4A
-    .long 0x483EFF61
-    .long 0x483EFF73
-    .long 0x483EFF85
-    .long 0x483EFF97
-    .long 0x483EFFB2
-    .long 0x483EFFC0
-    .long 0x483EFFCC
-    .long 0x483EFFE4
-    .long 0x483EFFFC
-    .long 0x483F0016
-    .long 0x483F002F
-    .long 0x483F0046
-    .long 0x483F005D
-    .long 0x483F007C
-    .long 0x483F0095
-    .long 0x483F00B6
-    .long 0x483F00D4
-    .long 0x483F00F4
-    .long 0x483F010D
-    .long 0x483F0124
-    .long 0x483F013B
-    .long 0x483F0151
-    .long 0x483F016D
-    .long 0x483F017D
-    .long 0x483F0193
-    .long 0x483F01A8
-    .long 0x483F01B6
-    .long 0x483F01D0
-    .long 0x483F01E8
-    .long 0x483F01FB
-    .long 0x483F020D
-    .long 0x483F021D
-    .long 0x483F022E
-    .long 0x483F0239
-    .long 0x483F0244
-    .long 0x483F024F
-    .long 0x483F025A
-    .long 0x483F0265
-    .space 4, 0x00
-# MILK reflection table: 10 code pointers, NUL, 10 name pointers (CPU 0x483F9070)
-    .long AcKssListProc
-    .long PsKssTextBoxProc
-    .long KssBgScreenProc
-    .long DbKssMemoProc
-    .long AcKssScreenMenuProc
-    .long AcKssEditBoxProc
-    .long AcKssNamingWindowProc
-    .long IvKssNamingProc
-    .long AcKssNamingEditSwProc
-    .long KssXLyricsBoxProc
-    .long 0
-    .long 0x483F0270   # -> "AcKssListProc"
-    .long 0x483F027E   # -> "PsKssTextBoxProc"
-    .long 0x483F028F   # -> "KssBgScreenProc"
-    .long 0x483F029F   # -> "DbKssMemoProc"
-    .long 0x483F02AD   # -> "AcKssScreenMenuProc"
-    .long 0x483F02C1   # -> "AcKssEditBoxProc"
-    .long 0x483F02D2   # -> "AcKssNamingWindowProc"
-    .long 0x483F02E8   # -> "IvKssNamingProc"
-    .long 0x483F02F8   # -> "AcKssNamingEditSwProc"
-    .long 0x483F030E   # -> "KssXLyricsBoxProc"
-    .long 0x483F0320
-# MILK reflection table: 25 code pointers, NUL, 25 name pointers (CPU 0x483F90C8)
-    .long ApTestProc
-    .long Ap_CE_Main
-    .long Ap_Ce_StartUp
-    .long Ap_Ce_Debug
-    .long Ap_Ce_Dialog
-    .long Ap_Ce_SelDir
-    .long Ap_Lst_SelDir
-    .long Ap_Lst_WinSelSong
-    .long Ap_Ce_WinSelSong
-    .long Ap_Ce_WinSfxSelect
-    .long Ap_Ce_WinSettings1
-    .long Ap_Ce_WinSettings2
-    .long Ap_Eb_WinSettings
-    .long Ap_Ce_WinNamingHistory
-    .long Ap_Ce_JukeBox
-    .long Ap_Ce_WinLoadSave
-    .long Ap_Ce_Fd2Sd
-    .long Ap_Lst_Fd2Sd
-    .long Ap_Ce_WinAlphaSort
-    .long Ap_Lst_WinAlphaSort
-    .long Ap_Ce_WinLbn
-    .long Ap_Ce_ClsDir
-    .long Ap_Lst_ClsDir
-    .long Ap_Ce_Cls
-    .long Ap_Lst_Cls
-    .long 0
-    .long 0x483F0324   # -> "ApTestProc"
-    .long 0x483F032F   # -> "Ap_CE_Main"
-    .long 0x483F033A   # -> "Ap_Ce_StartUp"
-    .long 0x483F0348   # -> "Ap_Ce_Debug"
-    .long 0x483F0354   # -> "Ap_Ce_Dialog"
-    .long 0x483F0361   # -> "Ap_Ce_SelDir"
-    .long 0x483F036E   # -> "Ap_Lst_SelDir"
-    .long 0x483F037C   # -> "Ap_Lst_WinSelSong"
-    .long 0x483F038E   # -> "Ap_Ce_WinSelSong"
-    .long 0x483F039F   # -> "Ap_Ce_WinSfxSelect"
-    .long 0x483F03B2   # -> "Ap_Ce_WinSettings1"
-    .long 0x483F03C5   # -> "Ap_Ce_WinSettings2"
-    .long 0x483F03D8   # -> "Ap_Eb_WinSettings"
-    .long 0x483F03EA   # -> "Ap_Ce_WinNamingHistory"
-    .long 0x483F0401   # -> "Ap_Ce_JukeBox"
-    .long 0x483F040F   # -> "Ap_Ce_WinLoadSave"
-    .long 0x483F0421   # -> "Ap_Ce_Fd2Sd"
-    .long 0x483F042D   # -> "Ap_Lst_Fd2Sd"
-    .long 0x483F043A   # -> "Ap_Ce_WinAlphaSort"
-    .long 0x483F044D   # -> "Ap_Lst_WinAlphaSort"
-    .long 0x483F0461   # -> "Ap_Ce_WinLbn"
-    .long 0x483F046E   # -> "Ap_Ce_ClsDir"
-    .long 0x483F047B   # -> "Ap_Lst_ClsDir"
-    .long 0x483F0489   # -> "Ap_Ce_Cls"
-    .long 0x483F0493   # -> "Ap_Lst_Cls"
-.incbin_range "baserom/kn7000_table_sp7001.rom", 0x3F9194, 0x3FB59C
+# ---- plug-in data: its MILK GUI (classes, Viewable tables, widget records), strings,
+# reflection tables and initialised RAM: GENERATED by tools/gen_data_s.py --profile sp7001plugin
+.include "src/sp7001/plugin/data/data.s"
 # XaprFooter  (CPU 0x483FB59C)
     .byte 0x58, 0x41, 0x50, 0x52   # 'XAPR' magic (checked by PlugInProbe)
 
