@@ -602,9 +602,9 @@ class Reader:
             dead = op in ("bra", "jmp", "ret", "retf", "rets", "rti") or (self.ext and op == "lra")
             if self.callee and op == "jmp" and args and args[0].startswith("("):
                 ijmp = {k: v for k, v in st.items() if not k.startswith("#") and (
-                    (k.startswith("sp:") and v and addrs_of(v[0]) is not None) or
+                    (k.startswith("sp:") and v and addrs_of(v[0])) or
                     (not k.startswith("sp:") and v is not None and (
-                        addrs_of(v) is not None or (v[0] in "PD" and v[1][0] == "param"))))}
+                        addrs_of(v) or (v[0] in "PD" and v[1][0] == "param"))))}
             if self.callee:
                 # (callee) a branch back to a label above, or a hardware loop's Lcc back to its setlb:
                 # a parameter pointer stepped since then is stepped by a loop
@@ -760,7 +760,7 @@ class Reader:
                 v = st.get("sp:" + ms.group(1))
                 st[dst] = v[0] if v and v[1] == WIDTH[op] else None
                 if not self.ext and st[dst] is not None and not (
-                        addrs_of(st[dst]) is not None or (st[dst][0] in "PD" and st[dst][1][0] == "param")):
+                        addrs_of(st[dst]) or (st[dst][0] in "PD" and st[dst][1][0] == "param")):
                     # (callee without ext: the siblings) a slot gives back only what the callee walk
                     # needs, a data address or a parameter; a pointer loaded from a field, an index,
                     # is not carried (the full rule of ext changes what the siblings' other passes see)

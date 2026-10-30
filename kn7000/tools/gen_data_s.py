@@ -1660,6 +1660,42 @@ class Gen:
             i -= 1
         return False
 
+    def indexed_tails(self):
+        """(callee) After the passes that type by readers: a pointed record whose kind the code also
+        reads a word of at a computed offset (`mov (d0, a0), a0`) and that the free words right after
+        it continue as addresses of this region (or 0): those words are the array the code indexes,
+        written `.long Label`.  (The callee walk finds fixed reads of such records' first words, so
+        their kind is no longer the "fields, then rows the code indexes" of ptr_records' tail: the
+        HD-SX3's names_978A31BC_p0, 13 string pointers of which the reads cover 7.)"""
+        import data_structs as DS
+        n = 0
+        for t, size, lab, g in getattr(self, "_indexed_records", ()):
+            o = self.off(t) + size
+            e = o
+            while o % 4 == 0 and e + 4 <= DATA_END and self.free(self.addr_of(e), 4):
+                v = int.from_bytes(self.rom[e:e + 4], "little")
+                if v and not self.in_data(v):
+                    break
+                e += 4
+            vals = [int.from_bytes(self.rom[k:k + 4], "little") for k in range(o, e, 4)]
+            while vals and vals[-1] == 0:
+                vals.pop()
+            if not any(vals):
+                continue
+            for v in vals:
+                if v:
+                    self.refs.add(v)
+            rd = DS.cite([a for _o, a in g.accs if a.inner == -1], 2)
+            a = self.addr_of(o)
+            self.add(a, 4 * len(vals), self.name_at(a, f"{lab}_Tail"), "pointer run",
+                     lambda gen, it, vals=vals, lab=lab, rd=rd: [
+                         f"{it.label}:\t# {len(vals)} pointers after {lab}: the array its kind's computed-offset"
+                         f" read indexes ({rd}) runs on past the fields the code reads at fixed offsets"
+                         f" [INFERENCE: every word 0 or an address of this region]"]
+                     + [f"\t.long\t{gen.ref(v)}" for v in vals])
+            n += 1
+        print(f"gen_data_s: {n} indexed record tails")
+
     def ptr_records(self, only_arg=False):
         """Records a pointer leads to: for every pointer the code loads from a
         typed field or table entry and then reads through (data_readers' ("ptr",
@@ -1706,6 +1742,7 @@ class Gen:
         self.build_index()
         self._lmemo, self._tmemo = {}, {}
         self._arg_fill = getattr(self, "_arg_fill", set())
+        self._indexed_records = getattr(self, "_indexed_records", [])
         targets = self.field_targets
         # kinds: fields whose targets overlap are one kind
         flds = [f for f in by_fld if targets(f)]
@@ -1857,6 +1894,8 @@ class Gen:
                             size = e_ - o_
                             g.arg_tail[t] = (w_, sg_)
                 self.add(t, size, lab, "pointed record", lambda gen, it, g=g: gen.render_pointed(it, g))
+                if not tail and any(a.inner == -1 and a.width == 4 for a in accs):
+                    self._indexed_records.append((t, size, lab, g))
 
     def _item_of(self, a):
         import bisect
@@ -3947,6 +3986,7 @@ class Gen:
             # (lane callee-walk) the blocks a caller hands a routine, typed by what it reads through them;
             # then what a span arg_reserve() kept for a record that did not fit, as before
             self.ptr_records(only_arg=True)
+            self.indexed_tails()
             self._arg_spans = []
             self.reader_tables()
             if P.get("structs"):
