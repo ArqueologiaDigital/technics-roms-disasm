@@ -592,7 +592,14 @@ baserom/kn7000_ic18_boot.bin:
 	echo "$(IC18_BOOT_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/kn7000_ic18_boot.bin: src/ic18/boot.s tools/kn7asm.py tools/mn10300_asm.py
+# the boot ROM's 8x16 font is the PNG sheet src/ic18/media/FontGlyphs8x16.png (lane media-files)
+IC18_PNGS := $(wildcard src/ic18/media/*.png)
+build/ic18_png/.stamp: $(IC18_PNGS) tools/table_png.py
+	@mkdir -p build/ic18_png
+	$(PYTHON) tools/table_png.py build --out-dir build/ic18_png --src-root src/ic18/media $(IC18_PNGS)
+	@touch $@
+
+build/kn7000_ic18_boot.bin: src/ic18/boot.s tools/kn7asm.py tools/mn10300_asm.py build/ic18_png/.stamp
 	@mkdir -p build
 	$(ASM) src/ic18/boot.s -I . -o $@
 
@@ -627,7 +634,7 @@ baserom/kn7000_ic18.rom:
 	echo "$(IC18_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/kn7000_ic18.bin: $(IC18_SRC) tools/kn7asm.py tools/mn10300_asm.py
+build/kn7000_ic18.bin: $(IC18_SRC) tools/kn7asm.py tools/mn10300_asm.py build/ic18_png/.stamp
 	@mkdir -p build
 	$(ASM) src/ic18/ic18.s -I . -o $@ --labels build/kn7000_ic18.labels
 

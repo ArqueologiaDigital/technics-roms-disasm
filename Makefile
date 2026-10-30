@@ -1247,9 +1247,12 @@ HDAE_IMAGE_SRC     := $(shell find hdae5000/images    -name '*.png' 2>/dev/null)
 indexed-images:
 	python3 scripts/build/indexed_images.py build
 	python3 scripts/build/mono_images.py build
+	python3 scripts/build/se_bitmaps.py build
 
 hdae5000-images:
 	python3 scripts/build/hdae5000_images.py build
+# HDAE5000_Bitmap_Button01 comes from its PNG through indexed_images.py (lane media-files)
+hdae5000-images: indexed-images
 
 # The wallpapers are built from their committed PNGs the same way; see
 # scripts/build/indexed_images.py, whose `verify` asserts the round trip.
