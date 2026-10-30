@@ -23,4 +23,5 @@
 .include "src/program/data/data_02.s"
 .include "src/program/data/data_03.s"
 .include "src/program/data/data_04.s"
+.include "src/program/data/data_05.s"
 .org 0x1E427C

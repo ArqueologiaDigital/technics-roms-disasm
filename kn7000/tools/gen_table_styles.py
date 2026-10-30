@@ -275,7 +275,7 @@ def rhythms_copy(d, s, e, label, sub_names):
     return B
 
 
-def technics_pads(d, s, e, label, jpg_dir, build):
+def technics_pads(d, s, e, label, jpg_dir, build, inline=False):
     """Segment 4, "Technics Pads": the built-in PERFORMANCE PAD bank.  Same resource
     shape as "Technics Rhythms": TechnicsPadsResourceParse (0x48433F4A) checks the
     16-byte name and reads the u24BE offsets at +0x18 (count block; its u16 at +2 is the
@@ -283,7 +283,8 @@ def technics_pads(d, s, e, label, jpg_dir, build):
     table -> 0x50034C30).  func_4843443E looks a pad up: index entry < count = pad n,
     0x8000 + n = entry n, 0x4000 + n = pad n of the resource at 0x50034C38 (none here);
     a pad table entry is a u24BE offset from the resource.  Each pad goes to its own
-    include file src/table/pads/<Name>.s."""
+    include file src/table/pads/<Name>.s; with `inline` (a program image's own copy,
+    tools/gen_data_s.py pads()) the pads' lines follow the table instead."""
     if d[s:s + 16] != b"Technics Pads   " or d[s + 16:s + 0x18] != bytes(8):
         raise SystemExit(f"{label}: unexpected header")
     o_cnt, o_idx, o_tab = (u24be(d, s + x) for x in (0x18, 0x1B, 0x1E))
@@ -351,8 +352,14 @@ def technics_pads(d, s, e, label, jpg_dir, build):
             vals = [hx(f[0]), str(f[1]), hx(f[2]), hx(f[3]), hx(f[4])] + [str(x) for x in f[5:]]
             L.append(f"\tstyle_part\t{', '.join(vals)}\t# set-up {p}")
         L += [f"\tpad_events\t{v}", f"{v}_Events:\t\t# {bars} bars of {beats} beats, {S} bytes"]
-        L += event_lines(d, st, st + S, f"{label} pad {k}", bars * beats)
+        # (inline: a program's copy, whose pads may stop a beat marker short -- the KN6000 v7.1's pad 3
+        # has 15 for 4 x 4; the grammar is still checked)
+        L += event_lines(d, st, st + S, f"{label} pad {k}", None if inline else bars * beats)
         L.append(f"\tvar_end\t{v}")
+        if inline:
+            B += [""] + L[3:4] + L[6:]
+            pos = st + S
+            continue
         rel = f"pads/{v[4:]}.s"
         path = os.path.join(jpg_dir, rel)
         text = "\n".join(L) + "\n"

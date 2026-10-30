@@ -165,25 +165,29 @@ vsprintf_core_entry_Lc8_Table:
 	.long	vsprintf_core_entry_L259
 	.long	vsprintf_core_entry_L259
 	.long	loc_978080B1
-data_9783E4DC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E4DC, 0x03E55C
 
-Str_C_2:	.asciz "C"
-data_9783E55E:
-	.space	1, 0x00
-data_9783E55F:
-	.align	4, 0x00
-data_9783E560:
-	.space	1, 0x00
-data_9783E561:
-	.space	1, 0x00
-data_9783E562:
-	.space	1, 0x00
-data_9783E563:
-	.align	4, 0x00
+func_9780836B_entry_L10_Records:	# 17 x REC_func_9780836B_entry_L10_Records (8 bytes each); read by func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`; func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f	# [0]
+	REC_func_9780836B_entry_L10_Records	f0=49, p4=loc_978083C3
+	REC_func_9780836B_entry_L10_Records	f0=33, p4=loc_978083F3
+	REC_func_9780836B_entry_L10_Records	f0=1, p4=loc_978083FB
+	REC_func_9780836B_entry_L10_Records	f0=36, p4=loc_978083CB
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f	# [8]
+	REC_func_9780836B_entry_L10_Records	f0=105, p4=loc_978083DB
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	f0=44, p4=loc_978083D3
+	REC_func_9780836B_entry_L10_Records	f0=109, p4=loc_978083E3
+	REC_func_9780836B_entry_L10_Records	f0=46, p4=loc_978083BB
+	REC_func_9780836B_entry_L10_Records	f0=77, p4=loc_978083EB
+	REC_func_9780836B_entry_L10_Records	f0=67	# [16]
 data_9783E564:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E564, 0x03E568
+
 Str_C:	.asciz "C"
 Str_empty_441:	.asciz "."
 data_9783E56C:
@@ -6181,17 +6185,12 @@ ptrs_978A0140:
 
 Str_ok_F:	.asciz "ok(F)"
 Str_failed_F:	.asciz "failed(F)"
-
-ptrs_978A0158:
-	.long	Str_ok_F
-	.long	Str_failed_F
-
-Str_ok_S:	.asciz "ok(S)"
+# census: opaque -- unknown-dump: 14 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0158, 0x0A0166
 Str_failed_S:	.asciz "failed(S)"
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0170, 0x0A0178
 
-ptrs_978A0170:
-	.long	Str_ok_S
-	.long	Str_failed_S
 KssTimerShowProc_L68_Table:
 	.long	ptrs_9789F1D8
 	.long	ptrs_9789F210
@@ -6205,8 +6204,8 @@ KssTimerShowProc_L259_Table:
 KssTimerShowProc_L310_Table:
 	.long	ptrs_978A012C
 	.long	ptrs_978A0140
-	.long	ptrs_978A0158
-	.long	ptrs_978A0170
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A01A0, 0x0A01A8
 
 Str_My_HardDisk:	.asciz "My HardDisk"
 Str_Partition_1:	.asciz "Partition 1"
@@ -11068,22 +11067,24 @@ Str_rb:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x9780851A `mov (0x10, a1), a0`; localeconv 0x9780851A `mov (0x14, a1), a0`; localeconv 0x9780851A `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	p0=Str_C_2, p4=data_9783E55E, p8=data_9783E55F, p12=data_9783E560, p16=data_9783E561, p20=data_9783E562, p24=data_9783E563, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	p0=func_9780836B_entry_L10_Records+128, p4=func_9780836B_entry_L10_Records+130, p8=func_9780836B_entry_L10_Records+131, p12=func_9780836B_entry_L10_Records+132, p16=func_9780836B_entry_L10_Records+133, p20=func_9780836B_entry_L10_Records+134, p24=func_9780836B_entry_L10_Records+135, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x9780851A `mov (0xc, a1), a0`; localeconv 0x9780851A `mov (4, a1), a0`; localeconv 0x9780851A `mov (8, a1), a0`
 	REC_localeconv_Records_2	p0=Str_C, p4=Str_empty_441, p8=data_9783E56C, p12=data_9783E56D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 5 x u32, 0..2542003825; read by localeconv 0x9780851A: `mov (localeconv_Table), d0`
 	tab_u32	0, 0, 2542003825, 1, 2542003568
+PfOutField_entry_L56_Var:	# 3 x u32, 1069128089..2576980378; read by PfOutField_entry_L56 0x97808240: `mov (PfOutField_entry_L56_Var), a0`; PfParseWidthPrecSize_entry_L65 0x9780847E: `mov (PfOutField_entry_L56_Var), d0` ...
+	tab_u32	2542003568, 2576980378, 1069128089
+PfDoubleToDecimal_entry_L3a3_Var:	# 2 x u32, 0..1075052544; read by PfDoubleToDecimal_entry : `mov	(a0), d0`
+	tab_u32	0, 1075052544
+PfDoubleToDecimal_entry_L1e1_Var:	# 2 x u32, 1070810131..1352628735; read by PfDoubleToDecimal_entry : `mov	(a0), d0`; PfDoubleToDecimal_entry : `mov	(a0), d2`
+	tab_u32	1352628735, 1070810131
 
-PfOutField_entry_L56_Var:	# u32, a constant; read / written by PfOutField_entry_L56 0x97808240: `mov (PfOutField_entry_L56_Var), a0`; PfParseWidthPrecSize_entry_L65 0x9780847E: `mov (PfOutField_entry_L56_Var), d0` ...
-	.long	0x9783e570
+PfDoubleToDecimal_entry_L290_Records:	# 1 x REC_PfDoubleToDecimal_entry_L290_Records (8 bytes each); read by PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1` (+3)
+	REC_PfDoubleToDecimal_entry_L290_Records	f4=0x3FF00000
 
-doubles_978AFD80:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x9999999A, 0x3FB99999	# 5
-	.long	0x00000000, 0x40140000	# 0.301029996
-	.long	0x509F79FF, 0x3FD34413	# 1
-	.long	0x00000000, 0x3FF00000	# 10
+doubles_978AFDA0:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x00000000, 0x40240000	# 100
 	.long	0x00000000, 0x40590000	# 1000
 	.long	0x00000000, 0x408F4000	# 10000
@@ -13174,18 +13175,12 @@ V_HDD_MAIN_MENU_ResNames:
 .mnbase 0x9785C17C   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
 
 
-func_97805FD0_L26_Var:	# u8, initial value of a RAM variable; read / written by func_97805FD0_L26 0x97805FF6: `movbu d0, (func_97805FD0_L26_Var)`; func_978063F3 0x978063F3: `movbu (func_97805FD0_L26_Var), d0` ...
-	.byte	0
+func_97805FD0_L26_Var:	# 4 x REC_func_97805FD0_L26_Var (4 bytes each); read by func_97800082_L2a 0x978000AC `mov d0, (a1)`; func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)` (+4)
+	REC_func_97805FD0_L26_Var	x2="\xFF\xFF"
+	REC_func_97805FD0_L26_Var	x2="\x00\x00"
+	REC_func_97805FD0_L26_Var	x2="\x00\x00"
+	REC_func_97805FD0_L26_Var	f0=1, x2="\x00\x00"
 
-func_978060B7_entry_L24_Table:	# 3 x u8, 0..255; read by func_978060B7_entry_L24 0x978060DE: `movbu d0, (func_978060B7_entry_L24_Table)`
-	tab_u8	0, 255, 255
-
-func_97805F89_entry_L28_Var:	# u32, initial value of a RAM variable; read / written by func_97805F89_entry_L28 0x97805FB4: `mov d0, (func_97805F89_entry_L28_Var)`; func_97805FD0_Lbd 0x9780608D: `mov d0, (func_97805F89_entry_L28_Var)` ...
-	.long	0
-func_97805F89_entry_L28_Var_2:	# u32, initial value of a RAM variable; read / written by func_97805F89_entry_L28 0x97805FB4: `mov d0, (func_97805F89_entry_L28_Var_2)`; func_978060B7_entry_Ld5 0x9780618F: `mov d0, (func_97805F89_entry_L28_Var_2)`
-	.long	0
-func_97802884_entry_Lcc_Var:	# u32, initial value of a RAM variable; read / written by func_97802884_entry_Lcc 0x97802953: `mov (func_97802884_entry_Lcc_Var), d0`; func_97802A33_entry_Lcc 0x97802B02: `mov d0, (func_97802884_entry_Lcc_Var)`
-	.long	1
 func_97805272_entry_L25_Var:	# u32, initial value of a RAM variable; read / written by func_97805272_entry_L25 0x9780529C: `mov (func_97805272_entry_L25_Var), d0`; func_97805272_entry_L57 0x978052CE: `mov d0, (func_97805272_entry_L25_Var)` ...
 	.long	0xffffffff
 func_978074EE_Var:	# u32, initial value of a RAM variable; read / written by func_978074EE 0x978074EE: `mov d0, (func_978074EE_Var)`; func_97807514 0x97807514: `mov (func_978074EE_Var), d1` ...
@@ -14367,7 +14362,7 @@ names_979113BC:
 func_978341C0_Var:	# u32, initial value of a RAM variable; read / written by func_978341C0 0x978341C0: `mov (func_978341C0_Var), d0`; func_978341C0_entry_L71 0x97834234: `mov d0, (func_978341C0_Var)`
 	.long	0
 
-func_97834719_Table:	# 12 x REC_func_97834719_Table (12 bytes each); read by func_9783403D 0x9783403D `call func_97834109_entry, 0, 0x18`; func_97834719_entry_L2a 0x97834745 `call func_9783403D_entry, [d3], 0x18`; func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1` (+1)
+func_97834719_Table:	# 12 x REC_func_97834719_Table (12 bytes each); read by func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`; func_9783403D 0x9783403D `call func_97834109_entry, 0, 0x18` (+1)
 	REC_func_97834719_Table	p0=Str_FONT, x4="\x03\x00\x00\x00", p8=func_978343AC	# [0]
 	REC_func_97834719_Table	p0=Str_P_4, x4="\x01\x00\x00\x00", p8=loc_9783439E
 	REC_func_97834719_Table	p0=Str_BR, x4="\x02\x00\x00\x00", p8=loc_97834382

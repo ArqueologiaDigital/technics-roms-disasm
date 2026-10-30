@@ -62,6 +62,11 @@ WIDTH = {"mov": 4, "movhu": 2, "movbu": 1}
 # the bytes of a string or block, not fields of a record, so it is not carried into the caller
 LIBC = re.compile(r"(str|mem|sprintf|vsprintf|Lib(Div|Mul|Mod))")
 
+# A local label: loc_<ADDR> (the KN7000 programs' gen_program_s.py), <function>_L<hex> (the siblings'
+# gen_image_s.py: KN6000, KN6500, KN2400, the HD-SX3 plug-in); a function's own labels, not functions.
+LOCAL = re.compile(r"^loc_|_L[0-9a-f]+_*$")
+SIB_LOCAL = re.compile(r"_L[0-9a-f]+_*$")
+
 Access = collections.namedtuple("Access", "key off width signed rw func cpu insn extra inner bound")
 
 
@@ -103,14 +108,36 @@ def _num(t):
 class Reader:
     """The accesses of one program build's converted code."""
 
-    def __init__(self, src_glob, labels, in_data):
+    def __init__(self, src_glob, labels, in_data, distinct=False):
         self.in_data = in_data          # CPU address -> bool
+        self.distinct = distinct
         self.labels = labels            # name -> CPU address (data and code)
         self.accesses = []
         self.calls = collections.Counter()
-        for f in sorted(glob.glob(src_glob)):
-            self.walk(open(f, encoding="latin-1").read().split("\n"))
-        self.resolve_params()
+        self.rets = collections.defaultdict(list)     # function -> its a0 at each return
+        self.ret_val = {}
+        files = [open(f, encoding="latin-1").read().split("\n") for f in sorted(glob.glob(src_glob))]
+        for lines in files:
+            self.walk(lines)
+        if distinct:
+            # (siblings) a function that returns the same record address in a0 on every path
+            # (an accessor: `mov 0x18, d0 / mulu d2, d0 / add Table, a0 / ret`) gives its callers
+            # that value: walk again with it
+            # (or one of a few: func_48641CCD picks one of the KN2400's two style tables; the
+            # callers' reads through it are then reads of each, "U" below)
+            self.ret_val = {}
+            for f, v in self.rets.items():
+                alts = tuple(sorted(set(v), key=repr))
+                if alts and all(x is not None and x[0] in "AI" for x in alts) and len(alts) <= 4:
+                    self.ret_val[f] = alts[0] if len(alts) == 1 else ("U", alts)
+            if self.ret_val:
+                self.accesses, self.calls = [], collections.Counter()
+                for lines in files:
+                    self.walk(lines)
+        if distinct:
+            self.resolve_params_distinct()
+        else:
+            self.resolve_params()
         # what is left relative to a parameter nobody passes a data address in is not data evidence
         self.accesses = [a for a in self.accesses if not self.rooted(a.key)]
 
@@ -178,6 +205,54 @@ class Reader:
             if not new:
                 break
             self.accesses += new
+
+    @staticmethod
+    def sig(a):
+        """An access without its call constants (a dict): what makes two of them the same."""
+        return (a.key, a.off, a.width, a.signed, a.rw, a.func, a.cpu, a.insn,
+                a.extra if a.extra is None or a.extra[0] == "via" else a.extra[0], a.inner, a.bound)
+
+    def resolve_params_distinct(self, rounds=4):
+        """resolve_params, keeping each resulting access once and joining only what the last
+        round added (new calls with every callee access, every call with the new callee
+        accesses).  The siblings' converted code (KN2400 above all) passes parameters on through
+        so many calls that the pairwise version does not fit in memory."""
+        seen = {self.sig(a) for a in self.accesses}
+        all_roots = collections.defaultdict(list)
+        all_calls = []
+
+        def split(accs):
+            roots, calls = collections.defaultdict(list), []
+            for a in accs:
+                rt = self.root_of(a.key)
+                if rt is not None:
+                    roots[rt].append(a)
+                if a.rw.startswith("arg") and a.extra and a.extra[0] != "via" and not LIBC.match(a.extra[0]):
+                    calls.append(a)
+            return roots, calls
+        new_roots, new_calls = split(self.accesses)
+        for _r in range(rounds):
+            for k, v in new_roots.items():
+                all_roots[k] += v
+            all_calls += new_calls
+            out = []
+            for calls, roots in ((new_calls, all_roots), (all_calls, new_roots)):
+                for c in calls:
+                    root = ("param", c.extra[0], c.rw.split()[1])
+                    for x in roots.get(root, ()):
+                        r = self.rebase(x.key, x.off, root, c.key, c.off)
+                        if r is None:
+                            continue
+                        y = x._replace(key=r[0], off=r[1],
+                                       extra=x.extra if x.rw.startswith("arg") else ("via", c.func, c.cpu))
+                        sg = self.sig(y)
+                        if sg not in seen:
+                            seen.add(sg)
+                            out.append(y)
+            if not out:
+                break
+            self.accesses += out
+            new_roots, new_calls = split(out)
 
     # -- operands ----------------------------------------------------------------
     def addr_of(self, tok):
@@ -269,6 +344,7 @@ class Reader:
         st = {}
         pending = {}             # forward-branch target -> the state the branches carried there
         func, cpu = None, None
+        site = None              # (siblings) the label an access is cited under: the function or its _L<hex>
         dead = False             # the previous instruction never falls through
         last_load = {}           # register -> index into self.accesses of the load that set it
         for ln in lines:
@@ -281,8 +357,14 @@ class Reader:
             ml = re.match(r"^([A-Za-z_.$][\w.$]*):", code)
             if ml:
                 n = ml.group(1)
-                if not n.startswith("loc_") and not n.endswith("_entry"):
+                if SIB_LOCAL.search(n):
+                    # (a sibling's local label) cited under its own name and address
+                    site = n
+                    a = self.labels.get(n)
+                    cpu = a if a is not None else cpu
+                if not LOCAL.search(n) and not n.endswith("_entry"):
                     func, last_load = n, {}
+                    site = n
                     # the arguments: a pointer in a0 / a1 / d0 / d1 is followed into the
                     # callers (resolve_params)
                     # (a data register may as well hold an index: "D", a pointer only when used as one)
@@ -298,7 +380,11 @@ class Reader:
                     if dead:
                         st, last_load = (dict(came) if came is not None else {}), {}
                     elif came is not None:
+                        a0 = (st.get("a0"), came.get("a0"))
                         st = {k: v for k, v in st.items() if came.get(k) == v}
+                        if self.distinct and a0[0] != a0[1] and all(v is not None and v[0] in "AI" for v in a0):
+                            # (siblings) a0 is one of two record addresses here: kept for the return value
+                            st["a0"] = ("U", a0)
                 dead = False
                 code = code[ml.end():].strip()
                 if not code:
@@ -307,7 +393,7 @@ class Reader:
             op = parts[0]
             args = [x.strip() for x in self.split_args(parts[1])] if len(parts) > 1 else []
             dead = op in ("bra", "jmp", "ret", "retf", "rets", "rti")
-            if (op.startswith("b") or op == "jmp") and args and args[0].startswith("loc_") and op not in (
+            if (op.startswith("b") or op == "jmp") and args and LOCAL.search(args[0]) and op not in (
                     "btst", "bset", "bclr"):
                 t = args[0]
                 snap = {k: v for k, v in st.items() if not k.startswith("#cmp")}
@@ -315,7 +401,10 @@ class Reader:
                     pass                  # (the bound is applied by step below, on both paths)
                 prev = pending.get(t)
                 pending[t] = snap if prev is None else {k: v for k, v in prev.items() if snap.get(k) == v}
-            self.step(op, args, st, last_load, func, cpu, code.strip())
+            if op in ("ret", "retf", "rets"):
+                v = st.get("a0")
+                self.rets[func] += list(v[1]) if v is not None and v[0] == "U" else [v]
+            self.step(op, args, st, last_load, site or func, cpu, code.strip())
 
     @staticmethod
     def split_args(s):
@@ -379,6 +468,15 @@ class Reader:
         if pc and op in self.LESS:
             st["#b" + pc[0]] = pc[1] + self.LESS[op]
             return
+        if op in WIDTH and len(args) == 2 and any(st.get(r) and st[r][0] == "U" for r in REGS):
+            # (siblings) a register holding one of several record addresses: the access is one of each
+            ur = next(r for r in REGS if st.get(r) and st[r][0] == "U")
+            if ur in "".join(args):
+                for alt in st[ur][1][1:]:
+                    s2 = dict(st)
+                    s2[ur] = alt
+                    self.step(op, args, s2, {}, func, cpu, insn)
+                st[ur] = st[ur][1][0]
         if op in WIDTH and len(args) == 2:
             src, dst = args
             w = WIDTH[op]
@@ -504,6 +602,8 @@ class Reader:
             for r in SCRATCH:
                 st[r] = None
                 last_load.pop(r, None)
+            if tgt in self.ret_val:
+                st["a0"] = self.ret_val[tgt]
             return
         if op in ("movm", "ret", "retf", "rets", "rti"):
             return

@@ -44,8 +44,10 @@ vsprintf_core_Table:	# 52 x u32, 1343363968..1343364356; read by vsprintf_core_e
 	tab_u32	1343364249, 1343364229, 1343364275, 1343364356, 1343364053, 1343364356, 1343364356, 1343364356	# [32]
 	tab_u32	1343364356, 1343364297, 1343364129, 1343364193, 1343364356, 1343364356, 1343363994, 1343364356	# [40]
 	tab_u32	1343364091, 1343364356, 1343364356, 1343364161	# [48]
-data_484002CC:
-.incbin_range "baserom/kn2400_program.rom", 0x0002CC, 0x00034C
+
+PfParseSpec_entry_L10_Records:	# 1 x REC_PfParseSpec_entry_L10_Records (8 bytes each); read by PfParseSpec_entry_L10 0x50121F10 `mov (a0), d0`; PfParseSpec_entry_L41 0x50121F41 `mov (a0), d0`; PfParseSpec_entry_L46 0x50121F46 `mov (4, a0), a0`
+	REC_PfParseSpec_entry_L10_Records	p4=PfParseSpec_entry_L8f
+.incbin_range "baserom/kn2400_program.rom", 0x0002D4, 0x00034C
 
 Str_C_7:	.asciz "C"
 data_4840034E:
@@ -63,8 +65,8 @@ data_48400353:
 data_48400354:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x000354, 0x000358
-Str_C_27:	.asciz "C"
-Str_empty_800:	.asciz "."
+Str_C_28:	.asciz "C"
+Str_empty_797:	.asciz "."
 data_4840035C:
 	.space	1, 0x00
 data_4840035D:
@@ -81,14 +83,41 @@ PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal 0x50122BB0: 
 	tab_u32	1, 0, 0, 0, 0
 LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero : `mov	(a0), d1`
 	tab_u32	0, 0
-data_484003A0:
-.incbin_range "baserom/kn2400_program.rom", 0x0003A0, 0x0003B4
-data_484003B4:
-.incbin_range "baserom/kn2400_program.rom", 0x0003B4, 0x0003C0
-data_484003C0:
-	.space	12, 0x00
-data_484003CC:
-.incbin_range "baserom/kn2400_program.rom", 0x0003CC, 0x0003FC
+func_5018D239_Table:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
+	tab_u32	0, 1
+
+func_5018D239_Var:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
+	.long	0x50123f57
+
+func_5018D239_Table_2:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
+	tab_u16	3, 0
+
+func_5018D239_Var_2:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
+	.long	3072
+func_5018CA20_Var:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table:	# 2 x u16, 0..0; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	0, 0
+
+func_5018CA20_Var_2:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	1
+func_5018CA20_Var_3:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_2:	# 2 x u16, 0..0; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	0, 0
+
+func_5018CA20_Var_4:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	0
+func_5018CA20_Var_5:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_3:	# 2 x u16, 0..0; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	0, 0
+func_5018CA20_Table_4:	# 10 x u32, 1..4294901760; read by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	tab_u32	1, 16843009, 16843009, 16843009, 16843009, 16843009, 16843009, 65793	# [0]
+	tab_u32	65792, 4294901760	# [8]
 TgModCurveSquareScale_Table:	# 8 x s16, -20..255; read by TgModCurveSquareScale 0x501243DD: `movhu	(d1, a0), d0`
 	tab_s16	-16, -8, 0, 8, 16, -20, 0, 255
 data_4840040C:
@@ -150,200 +179,200 @@ func_50129E91_Table_2:	# 9 x u32, 1343397690..1343397690; read by func_50129E91_
 	tab_u32	1343397690, 1343397690, 1343397690, 1343397690, 1343397690, 1343397690, 1343397690, 1343397690	# [0]
 	tab_u32	1343397690	# [8]
 
-func_5012AD4E_entry_L18_Records:	# 128 x REC_func_5012AD4E_entry_L18_Records (8 bytes each); read by func_5012AD4E_entry_L18 0x5012AD6B `mov (a0), d0`
-	REC_func_5012AD4E_entry_L18_Records	f0=128, x4="T\xB3\x12P"	# [0]
-	REC_func_5012AD4E_entry_L18_Records	f0=1, x4="\x9C\xAD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=129, x4="b\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=130, x4="\x83\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=132, x4="\x91\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=5, x4="\xAA\xAD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=6, x4="\xC1\xAD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=7, x4="\xEA\xAD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=133, x4="\x9F\xB3\x12P"	# [8]
-	REC_func_5012AD4E_entry_L18_Records	f0=134, x4="\xAD\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=10, x4="\x0B\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=11, x4="4\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=12, x4="U\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=13, x4="l\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=135, x4="\xBB\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=136, x4="\xC9\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=16, x4="z\xAE\x12P"	# [16]
-	REC_func_5012AD4E_entry_L18_Records	f0=17, x4="\x88\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=137, x4="\xEA\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=138, x4="\xF8\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=141, x4="\x06\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=144, x4="'\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=147, x4="H\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=148, x4="V\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"	# [24]
-	REC_func_5012AD4E_entry_L18_Records	f0=153, x4="d\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=154, x4="\x96\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=155, x4="\xD3\xB4\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=156, x4="\x1C\xB5\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=157, x4="t\xB5\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=158, x4="\x82\xB5\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=160, x4="\xBA\xB5\x12P"	# [32]
-	REC_func_5012AD4E_entry_L18_Records	f0=161, x4="\xCB\xB5\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=162, x4="\xDD\xB5\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=163, x4="\xEF\xB5\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=164, x4="\x01\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=165, x4="\x13\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=38, x4="\x96\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=166, x4="%\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=167, x4="7\xB6\x12P"	# [40]
-	REC_func_5012AD4E_entry_L18_Records	f0=168, x4="I\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=169, x4="[\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=170, x4="m\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=44, x4="\xBF\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=45, x4="\xD6\xAE\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=171, x4="\x7F\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=176, x4="\x91\xB6\x12P"	# [48]
-	REC_func_5012AD4E_entry_L18_Records	f0=177, x4="\xC5\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=178, x4="\xFC\xB6\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=179, x4="0\xB7\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=180, x4="f\xB7\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=181, x4="\x99\xB7\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=182, x4="\xD1\xB7\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=183, x4="\x05\xB8\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=184, x4="=\xB8\x12P"	# [56]
-	REC_func_5012AD4E_entry_L18_Records	f0=185, x4="q\xB8\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=186, x4="\xA7\xB8\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=187, x4="\xDB\xB8\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=188, x4="\x12\xB9\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=189, x4="E\xB9\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=190, x4="\x83\xB9\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=64, x4="\xE4\xAE\x12P"	# [64]
-	REC_func_5012AD4E_entry_L18_Records	f0=65, x4="\x06\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=66, x4="p\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=67, x4="~\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=195, x4="\xC1\xB9\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=196, x4="\x0E\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=197, x4="&\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=71, x4="\x8C\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=72, x4="\xAD\xAF\x12P"	# [72]
-	REC_func_5012AD4E_entry_L18_Records	f0=73, x4="\xD0\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=74, x4="\xDE\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=75, x4="\xFF\xAF\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=76, x4="\x0D\xB0\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=77, x4="p\xB0\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=78, x4="i\xB1\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=198, x4="=\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=80, x4="w\xB1\x12P"	# [80]
-	REC_func_5012AD4E_entry_L18_Records	f0=81, x4="\x85\xB1\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=82, x4="\x94\xB1\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=83, x4="\xA2\xB1\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=200, x4="U\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=201, x4="z\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=210, x4="\x92\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=211, x4="\xC7\xBA\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=212, x4="\xFD\xBA\x12P"	# [88]
-	REC_func_5012AD4E_entry_L18_Records	f0=213, x4="2\xBB\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=214, x4="g\xBB\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=91, x4="\xB1\xB1\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=92, x4="\xE6\xB1\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=93, x4="%\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=94, x4="b\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=95, x4="y\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=215, x4="\x9D\xBB\x12P"	# [96]
-	REC_func_5012AD4E_entry_L18_Records	f0=216, x4="\xD2\xBB\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=98, x4="\xB5\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=99, x4="\xC3\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=217, x4="\x07\xBC\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=218, x4="=\xBC\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=219, x4="r\xBC\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=220, x4="\xA7\xBC\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=221, x4="\xDC\xBC\x12P"	# [104]
-	REC_func_5012AD4E_entry_L18_Records	f0=222, x4="\x12\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=223, x4="G\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=224, x4="y\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=225, x4="\xAC\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"	# [112]
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=120, x4="\xD1\xB2\x12P"	# [120]
-	REC_func_5012AD4E_entry_L18_Records	f0=121, x4="\xDC\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=123, x4="\xE7\xB2\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	x4="\xDA\xBD\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=126, x4=")\xB3\x12P"
-	REC_func_5012AD4E_entry_L18_Records	f0=127, x4="?\xB3\x12P"
-func_5012CBB6_entry_L10_Records:	# 64 x REC_func_5012CBB6_entry_L10_Records (8 bytes each); read by func_5012CBB6_entry_L10 0x5012CBCB `mov (a0), d1`
-	REC_func_5012CBB6_entry_L10_Records	f0=64, x4="\xE7\xCD\x12P"	# [0]
-	REC_func_5012CBB6_entry_L10_Records	f0=1, x4="\xE8\xCB\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=66, x4="\xF6\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=72, x4="X\xCE\x12P"	# [8]
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=12, x4="\xF2\xCB\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"	# [16]
-	REC_func_5012CBB6_entry_L10_Records	f0=17, x4="\xFC\xCB\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=18, x4="\x17\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=24, x4="!\xCC\x12P"	# [24]
-	REC_func_5012CBB6_entry_L10_Records	f0=25, x4="+\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=26, x4="5\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=27, x4="P\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=28, x4="k\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=29, x4="\x86\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=30, x4="\xA1\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=31, x4="\xAB\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=32, x4="\xB3\xCC\x12P"	# [32]
-	REC_func_5012CBB6_entry_L10_Records	f0=33, x4="\xBB\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=35, x4="\xC5\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=40, x4="\xCD\xCC\x12P"	# [40]
-	REC_func_5012CBB6_entry_L10_Records	f0=41, x4="\xDC\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=42, x4="\xF0\xCC\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=43, x4="\x03\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=44, x4="\x16\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=45, x4="%\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=46, x4="9\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"	# [48]
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=56, x4="L\xCD\x12P"	# [56]
-	REC_func_5012CBB6_entry_L10_Records	f0=57, x4="z\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=58, x4="\x84\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=59, x4="\x8E\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=60, x4="\xA9\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=61, x4="\xC4\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	f0=62, x4="\xD8\xCD\x12P"
-	REC_func_5012CBB6_entry_L10_Records	x4="\x82\xCE\x12P"
+func_5012AD4E_entry_L18_Records:	# 128 x REC_func_5012AD4E_entry_L18_Records (8 bytes each); read by func_5012AD4E_entry_L18 0x5012AD6B `mov (a0), d0`; func_5012AD4E_entry_L41 0x5012AD94 `mov (a0), d0`; func_5012AD4E_entry_L44 0x5012AD97 `mov (4, a0), a0`
+	REC_func_5012AD4E_entry_L18_Records	f0=128, f4=0x5012B354	# [0]
+	REC_func_5012AD4E_entry_L18_Records	f0=1, f4=0x5012AD9C
+	REC_func_5012AD4E_entry_L18_Records	f0=129, f4=0x5012B362
+	REC_func_5012AD4E_entry_L18_Records	f0=130, f4=0x5012B383
+	REC_func_5012AD4E_entry_L18_Records	f0=132, f4=0x5012B391
+	REC_func_5012AD4E_entry_L18_Records	f0=5, f4=0x5012ADAA
+	REC_func_5012AD4E_entry_L18_Records	f0=6, f4=0x5012ADC1
+	REC_func_5012AD4E_entry_L18_Records	f0=7, f4=0x5012ADEA
+	REC_func_5012AD4E_entry_L18_Records	f0=133, f4=0x5012B39F	# [8]
+	REC_func_5012AD4E_entry_L18_Records	f0=134, f4=0x5012B3AD
+	REC_func_5012AD4E_entry_L18_Records	f0=10, f4=0x5012AE0B
+	REC_func_5012AD4E_entry_L18_Records	f0=11, f4=0x5012AE34
+	REC_func_5012AD4E_entry_L18_Records	f0=12, f4=0x5012AE55
+	REC_func_5012AD4E_entry_L18_Records	f0=13, f4=0x5012AE6C
+	REC_func_5012AD4E_entry_L18_Records	f0=135, f4=0x5012B3BB
+	REC_func_5012AD4E_entry_L18_Records	f0=136, f4=0x5012B3C9
+	REC_func_5012AD4E_entry_L18_Records	f0=16, f4=0x5012AE7A	# [16]
+	REC_func_5012AD4E_entry_L18_Records	f0=17, f4=0x5012AE88
+	REC_func_5012AD4E_entry_L18_Records	f0=137, f4=0x5012B3EA
+	REC_func_5012AD4E_entry_L18_Records	f0=138, f4=0x5012B3F8
+	REC_func_5012AD4E_entry_L18_Records	f0=141, f4=0x5012B406
+	REC_func_5012AD4E_entry_L18_Records	f0=144, f4=0x5012B427
+	REC_func_5012AD4E_entry_L18_Records	f0=147, f4=0x5012B448
+	REC_func_5012AD4E_entry_L18_Records	f0=148, f4=0x5012B456
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA	# [24]
+	REC_func_5012AD4E_entry_L18_Records	f0=153, f4=0x5012B464
+	REC_func_5012AD4E_entry_L18_Records	f0=154, f4=0x5012B496
+	REC_func_5012AD4E_entry_L18_Records	f0=155, f4=0x5012B4D3
+	REC_func_5012AD4E_entry_L18_Records	f0=156, f4=0x5012B51C
+	REC_func_5012AD4E_entry_L18_Records	f0=157, f4=0x5012B574
+	REC_func_5012AD4E_entry_L18_Records	f0=158, f4=0x5012B582
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f0=160, f4=0x5012B5BA	# [32]
+	REC_func_5012AD4E_entry_L18_Records	f0=161, f4=0x5012B5CB
+	REC_func_5012AD4E_entry_L18_Records	f0=162, f4=0x5012B5DD
+	REC_func_5012AD4E_entry_L18_Records	f0=163, f4=0x5012B5EF
+	REC_func_5012AD4E_entry_L18_Records	f0=164, f4=0x5012B601
+	REC_func_5012AD4E_entry_L18_Records	f0=165, f4=0x5012B613
+	REC_func_5012AD4E_entry_L18_Records	f0=38, f4=0x5012AE96
+	REC_func_5012AD4E_entry_L18_Records	f0=166, f4=0x5012B625
+	REC_func_5012AD4E_entry_L18_Records	f0=167, f4=0x5012B637	# [40]
+	REC_func_5012AD4E_entry_L18_Records	f0=168, f4=0x5012B649
+	REC_func_5012AD4E_entry_L18_Records	f0=169, f4=0x5012B65B
+	REC_func_5012AD4E_entry_L18_Records	f0=170, f4=0x5012B66D
+	REC_func_5012AD4E_entry_L18_Records	f0=44, f4=0x5012AEBF
+	REC_func_5012AD4E_entry_L18_Records	f0=45, f4=0x5012AED6
+	REC_func_5012AD4E_entry_L18_Records	f0=171, f4=0x5012B67F
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f0=176, f4=0x5012B691	# [48]
+	REC_func_5012AD4E_entry_L18_Records	f0=177, f4=0x5012B6C5
+	REC_func_5012AD4E_entry_L18_Records	f0=178, f4=0x5012B6FC
+	REC_func_5012AD4E_entry_L18_Records	f0=179, f4=0x5012B730
+	REC_func_5012AD4E_entry_L18_Records	f0=180, f4=0x5012B766
+	REC_func_5012AD4E_entry_L18_Records	f0=181, f4=0x5012B799
+	REC_func_5012AD4E_entry_L18_Records	f0=182, f4=0x5012B7D1
+	REC_func_5012AD4E_entry_L18_Records	f0=183, f4=0x5012B805
+	REC_func_5012AD4E_entry_L18_Records	f0=184, f4=0x5012B83D	# [56]
+	REC_func_5012AD4E_entry_L18_Records	f0=185, f4=0x5012B871
+	REC_func_5012AD4E_entry_L18_Records	f0=186, f4=0x5012B8A7
+	REC_func_5012AD4E_entry_L18_Records	f0=187, f4=0x5012B8DB
+	REC_func_5012AD4E_entry_L18_Records	f0=188, f4=0x5012B912
+	REC_func_5012AD4E_entry_L18_Records	f0=189, f4=0x5012B945
+	REC_func_5012AD4E_entry_L18_Records	f0=190, f4=0x5012B983
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f0=64, f4=0x5012AEE4	# [64]
+	REC_func_5012AD4E_entry_L18_Records	f0=65, f4=0x5012AF06
+	REC_func_5012AD4E_entry_L18_Records	f0=66, f4=0x5012AF70
+	REC_func_5012AD4E_entry_L18_Records	f0=67, f4=0x5012AF7E
+	REC_func_5012AD4E_entry_L18_Records	f0=195, f4=0x5012B9C1
+	REC_func_5012AD4E_entry_L18_Records	f0=196, f4=0x5012BA0E
+	REC_func_5012AD4E_entry_L18_Records	f0=197, f4=0x5012BA26
+	REC_func_5012AD4E_entry_L18_Records	f0=71, f4=0x5012AF8C
+	REC_func_5012AD4E_entry_L18_Records	f0=72, f4=0x5012AFAD	# [72]
+	REC_func_5012AD4E_entry_L18_Records	f0=73, f4=0x5012AFD0
+	REC_func_5012AD4E_entry_L18_Records	f0=74, f4=0x5012AFDE
+	REC_func_5012AD4E_entry_L18_Records	f0=75, f4=0x5012AFFF
+	REC_func_5012AD4E_entry_L18_Records	f0=76, f4=0x5012B00D
+	REC_func_5012AD4E_entry_L18_Records	f0=77, f4=0x5012B070
+	REC_func_5012AD4E_entry_L18_Records	f0=78, f4=0x5012B169
+	REC_func_5012AD4E_entry_L18_Records	f0=198, f4=0x5012BA3D
+	REC_func_5012AD4E_entry_L18_Records	f0=80, f4=0x5012B177	# [80]
+	REC_func_5012AD4E_entry_L18_Records	f0=81, f4=0x5012B185
+	REC_func_5012AD4E_entry_L18_Records	f0=82, f4=0x5012B194
+	REC_func_5012AD4E_entry_L18_Records	f0=83, f4=0x5012B1A2
+	REC_func_5012AD4E_entry_L18_Records	f0=200, f4=0x5012BA55
+	REC_func_5012AD4E_entry_L18_Records	f0=201, f4=0x5012BA7A
+	REC_func_5012AD4E_entry_L18_Records	f0=210, f4=0x5012BA92
+	REC_func_5012AD4E_entry_L18_Records	f0=211, f4=0x5012BAC7
+	REC_func_5012AD4E_entry_L18_Records	f0=212, f4=0x5012BAFD	# [88]
+	REC_func_5012AD4E_entry_L18_Records	f0=213, f4=0x5012BB32
+	REC_func_5012AD4E_entry_L18_Records	f0=214, f4=0x5012BB67
+	REC_func_5012AD4E_entry_L18_Records	f0=91, f4=0x5012B1B1
+	REC_func_5012AD4E_entry_L18_Records	f0=92, f4=0x5012B1E6
+	REC_func_5012AD4E_entry_L18_Records	f0=93, f4=0x5012B225
+	REC_func_5012AD4E_entry_L18_Records	f0=94, f4=0x5012B262
+	REC_func_5012AD4E_entry_L18_Records	f0=95, f4=0x5012B279
+	REC_func_5012AD4E_entry_L18_Records	f0=215, f4=0x5012BB9D	# [96]
+	REC_func_5012AD4E_entry_L18_Records	f0=216, f4=0x5012BBD2
+	REC_func_5012AD4E_entry_L18_Records	f0=98, f4=0x5012B2B5
+	REC_func_5012AD4E_entry_L18_Records	f0=99, f4=0x5012B2C3
+	REC_func_5012AD4E_entry_L18_Records	f0=217, f4=0x5012BC07
+	REC_func_5012AD4E_entry_L18_Records	f0=218, f4=0x5012BC3D
+	REC_func_5012AD4E_entry_L18_Records	f0=219, f4=0x5012BC72
+	REC_func_5012AD4E_entry_L18_Records	f0=220, f4=0x5012BCA7
+	REC_func_5012AD4E_entry_L18_Records	f0=221, f4=0x5012BCDC	# [104]
+	REC_func_5012AD4E_entry_L18_Records	f0=222, f4=0x5012BD12
+	REC_func_5012AD4E_entry_L18_Records	f0=223, f4=0x5012BD47
+	REC_func_5012AD4E_entry_L18_Records	f0=224, f4=0x5012BD79
+	REC_func_5012AD4E_entry_L18_Records	f0=225, f4=0x5012BDAC
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA	# [112]
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f0=120, f4=0x5012B2D1	# [120]
+	REC_func_5012AD4E_entry_L18_Records	f0=121, f4=0x5012B2DC
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f0=123, f4=0x5012B2E7
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f4=0x5012BDDA
+	REC_func_5012AD4E_entry_L18_Records	f0=126, f4=0x5012B329
+	REC_func_5012AD4E_entry_L18_Records	f0=127, f4=0x5012B33F
+func_5012CBB6_entry_L10_Records:	# 64 x REC_func_5012CBB6_entry_L10_Records (8 bytes each); read by func_5012CBB6_entry_L10 0x5012CBCB `mov (a0), d1`; func_5012CBB6_entry_L28 0x5012CBE3 `mov (4, a0), a0`
+	REC_func_5012CBB6_entry_L10_Records	f0=64, f4=0x5012CDE7	# [0]
+	REC_func_5012CBB6_entry_L10_Records	f0=1, f4=0x5012CBE8
+	REC_func_5012CBB6_entry_L10_Records	f0=66, f4=0x5012CDF6
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f0=72, f4=0x5012CE58	# [8]
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f0=12, f4=0x5012CBF2
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82	# [16]
+	REC_func_5012CBB6_entry_L10_Records	f0=17, f4=0x5012CBFC
+	REC_func_5012CBB6_entry_L10_Records	f0=18, f4=0x5012CC17
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f0=24, f4=0x5012CC21	# [24]
+	REC_func_5012CBB6_entry_L10_Records	f0=25, f4=0x5012CC2B
+	REC_func_5012CBB6_entry_L10_Records	f0=26, f4=0x5012CC35
+	REC_func_5012CBB6_entry_L10_Records	f0=27, f4=0x5012CC50
+	REC_func_5012CBB6_entry_L10_Records	f0=28, f4=0x5012CC6B
+	REC_func_5012CBB6_entry_L10_Records	f0=29, f4=0x5012CC86
+	REC_func_5012CBB6_entry_L10_Records	f0=30, f4=0x5012CCA1
+	REC_func_5012CBB6_entry_L10_Records	f0=31, f4=0x5012CCAB
+	REC_func_5012CBB6_entry_L10_Records	f0=32, f4=0x5012CCB3	# [32]
+	REC_func_5012CBB6_entry_L10_Records	f0=33, f4=0x5012CCBB
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f0=35, f4=0x5012CCC5
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f0=40, f4=0x5012CCCD	# [40]
+	REC_func_5012CBB6_entry_L10_Records	f0=41, f4=0x5012CCDC
+	REC_func_5012CBB6_entry_L10_Records	f0=42, f4=0x5012CCF0
+	REC_func_5012CBB6_entry_L10_Records	f0=43, f4=0x5012CD03
+	REC_func_5012CBB6_entry_L10_Records	f0=44, f4=0x5012CD16
+	REC_func_5012CBB6_entry_L10_Records	f0=45, f4=0x5012CD25
+	REC_func_5012CBB6_entry_L10_Records	f0=46, f4=0x5012CD39
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82	# [48]
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
+	REC_func_5012CBB6_entry_L10_Records	f0=56, f4=0x5012CD4C	# [56]
+	REC_func_5012CBB6_entry_L10_Records	f0=57, f4=0x5012CD7A
+	REC_func_5012CBB6_entry_L10_Records	f0=58, f4=0x5012CD84
+	REC_func_5012CBB6_entry_L10_Records	f0=59, f4=0x5012CD8E
+	REC_func_5012CBB6_entry_L10_Records	f0=60, f4=0x5012CDA9
+	REC_func_5012CBB6_entry_L10_Records	f0=61, f4=0x5012CDC4
+	REC_func_5012CBB6_entry_L10_Records	f0=62, f4=0x5012CDD8
+	REC_func_5012CBB6_entry_L10_Records	f4=0x5012CE82
 
 TgDrawbarToneRecInit_Table:	# 36 x u8, 0..255; read by TgDrawbarToneRecInit_entry : `movbu	(a1), d0`
 	tab_u8	127, 127, 127, 127, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -490,22 +519,14 @@ func_5013C9B1_Table:	# 257 x u16, 64..256; read by func_5013C9B1 0x5013C9B1: `mo
 	tab_u16	244, 244, 245, 246, 247, 247, 248, 249, 250, 250, 251, 252	# [240]
 	tab_u16	253, 253, 254, 255, 256	# [252]
 	.align	4, 0xFF	# pad after func_5013C9B1_Table
-
-func_5013DF45_entry_Led_Records:	# 13 x REC_func_5013DF45_entry_Led_Records (16 bytes each); read by func_5013DF45_entry_Led 0x5013E037 `call func_5013CDFB_entry, [d2], 4`; func_5013DF45_entry_Led 0x5013E037 `mov (a1), d0`
-	REC_func_5013DF45_entry_Led_Records	f0=0x7001628, x4="\x00\x0F\x00\x00P\xB1\x00\x00\x7F\x00\x00\x00"	# [0]
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x7F\xFC\x00\x00\x00\x7F\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x7F\xF1\x00\x00\x7F\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00P\xB1\x00\x00\x7F\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF001628, x4="\x00\x0F\x00\x00P\xB1\x00\x00\x7F\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"	# [8]
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF000F00, x4="\x00\x0F\x00\x00\x7F\xFD\x00\x00\x00\x7F\x00\x00"
-	REC_func_5013DF45_entry_Led_Records	f0=0xF002600, x4="\x00\x0F\x00\x00\x00\xFF\x00\x00\x00\x00\x00\x00"
-
+func_5013DF45_entry_Led_Records:	# 52 x u32, 0..251667968; read by func_5013DF45_entry_Led 0x5013E037: `mov	(a1), d0`
+	tab_u32	117446184, 3840, 45392, 127, 251662080, 3840, 64639, 32512	# [0]
+	tab_u32	251662080, 3840, 61823, 127, 251662080, 3840, 65280, 0	# [8]
+	tab_u32	251662080, 3840, 65280, 0, 251662080, 3840, 65280, 0	# [16]
+	tab_u32	251662080, 3840, 45392, 127, 251663912, 3840, 45392, 127	# [24]
+	tab_u32	251662080, 3840, 65280, 0, 251662080, 3840, 65280, 0	# [32]
+	tab_u32	251662080, 3840, 65280, 0, 251662080, 3840, 64895, 32512	# [40]
+	tab_u32	251667968, 3840, 65280, 0	# [48]
 TgVoiceRecordReset_Table:	# 66 x u32, 0..4286644095; read by TgVoiceRecordReset 0x5013CEC2: `mov	(a1), d1`; func_5013DF45_entry_L64 0x5013DFAE: `mov	(a1), d0`
 	tab_u32	4286644095, 4278255360, 2147548928, 4278255360, 4278255360, 65280, 4278255360, 4278255360	# [0]
 	tab_u32	65280, 64, 0, 0, 0, 0, 0, 512	# [8]
@@ -533,40 +554,40 @@ TgVoiceEgSegParamGet_Table:	# 4 x u8, 64..255; read by TgVoiceEgSegParamGet_entr
 TgVoiceEgSegFlagTest_Table:	# 4 x u8, 4..255; read by TgVoiceEgSegFlagTest_entry : `movbu	(d0, a0), d0`
 	tab_u8	8, 4, 255, 255
 
-TgPartProgramHandlerDispatch_Records:	# 16 x REC_TgPartProgramHandlerDispatch_Records (8 bytes each); read by TgPartProgramHandlerDispatch 0x50140CEB `mov (a0), d0`
-	REC_TgPartProgramHandlerDispatch_Records	f0=62, x4=";\x0D\x14P"	# [0]
-	REC_TgPartProgramHandlerDispatch_Records	f0=1, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=63, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=81, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=33, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	x4="Z\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=22, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=23, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=104, x4=";\x0D\x14P"	# [8]
-	REC_TgPartProgramHandlerDispatch_Records	f0=9, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=90, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=91, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	x4="Z\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=61, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=30, x4=";\x0D\x14P"
-	REC_TgPartProgramHandlerDispatch_Records	f0=31, x4=";\x0D\x14P"
-TgPartProgramApply_entry_L15_Records:	# 16 x REC_TgPartProgramApply_entry_L15_Records (8 bytes each); read by TgPartProgramApply_entry_L15 0x50140D8F `mov (a0), d0`
-	REC_TgPartProgramApply_entry_L15_Records	f0=62, x4="\xC7\x0D\x14P"	# [0]
-	REC_TgPartProgramApply_entry_L15_Records	f0=1, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=63, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=81, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=33, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	x4="\xE1\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=22, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=23, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=104, x4="\xC7\x0D\x14P"	# [8]
-	REC_TgPartProgramApply_entry_L15_Records	f0=9, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=90, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=91, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	x4="\xE1\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=61, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=30, x4="\xC7\x0D\x14P"
-	REC_TgPartProgramApply_entry_L15_Records	f0=31, x4="\xC7\x0D\x14P"
+TgPartProgramHandlerDispatch_Records:	# 16 x REC_TgPartProgramHandlerDispatch_Records (8 bytes each); read by TgPartProgramHandlerDispatch 0x50140CEB `mov (a0), d0`; TgPartProgramHandlerDispatch_L48 0x50140D33 `mov (a0), d0`; TgPartProgramHandlerDispatch_L4b 0x50140D36 `mov (4, a0), a0`
+	REC_TgPartProgramHandlerDispatch_Records	f0=62, f4=0x50140D3B	# [0]
+	REC_TgPartProgramHandlerDispatch_Records	f0=1, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=63, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=81, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=33, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f4=0x50140D5A
+	REC_TgPartProgramHandlerDispatch_Records	f0=22, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=23, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=104, f4=0x50140D3B	# [8]
+	REC_TgPartProgramHandlerDispatch_Records	f0=9, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=90, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=91, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f4=0x50140D5A
+	REC_TgPartProgramHandlerDispatch_Records	f0=61, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=30, f4=0x50140D3B
+	REC_TgPartProgramHandlerDispatch_Records	f0=31, f4=0x50140D3B
+TgPartProgramApply_entry_L15_Records:	# 16 x REC_TgPartProgramApply_entry_L15_Records (8 bytes each); read by TgPartProgramApply_entry_L15 0x50140D8F `mov (a0), d0`; TgPartProgramApply_entry_L45 0x50140DBF `mov (a0), d0`; TgPartProgramApply_entry_L48 0x50140DC2 `mov (4, a0), a0`
+	REC_TgPartProgramApply_entry_L15_Records	f0=62, f4=0x50140DC7	# [0]
+	REC_TgPartProgramApply_entry_L15_Records	f0=1, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=63, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=81, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=33, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f4=0x50140DE1
+	REC_TgPartProgramApply_entry_L15_Records	f0=22, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=23, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=104, f4=0x50140DC7	# [8]
+	REC_TgPartProgramApply_entry_L15_Records	f0=9, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=90, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=91, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f4=0x50140DE1
+	REC_TgPartProgramApply_entry_L15_Records	f0=61, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=30, f4=0x50140DC7
+	REC_TgPartProgramApply_entry_L15_Records	f0=31, f4=0x50140DC7
 
 TgPartEgRampBuild_Table:	# 12 x u32, 1343496963..1343497118; read by TgPartEgRampBuild_entry_L16c 0x501422F7: `mov	(d0, a0), a0`
 	tab_u32	1343496963, 1343496963, 1343496963, 1343496963, 1343496993, 1343496993, 1343497118, 1343496993	# [0]
@@ -585,9 +606,9 @@ func_5014320B_Table:	# 36 x u8, 0..255; read by func_5014320B_entry : `movbu	(d2
 	tab_u8	1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 255	# [32]
 
-func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 bytes each); read by func_5014320B_entry_L83 0x50143293 `call func_501430C5_entry, [d2,a2], 8`; func_5014320B_entry_L83 0x50143293 `mov (a0), a1`
-	REC_func_5014320B_entry_L83_Records	p0=data_4852BA40, x4="\x00\x03\x00\x00"	# [0]
-	REC_func_5014320B_entry_L83_Records	p0=data_4852BA40, x4="\x00\x03\x00\x00"
+func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 bytes each); read by func_5014320B_entry_L83 0x50143293 `mov (a0), a1`; func_5014320B_entry_L83 0x50143293 `call func_501430C5_entry, [d2,a2], 8`
+	REC_func_5014320B_entry_L83_Records	p0=func_5014320B_entry_L83_Records_p0_0, x4="\x00\x03\x00\x00"	# [0]
+	REC_func_5014320B_entry_L83_Records	p0=func_5014320B_entry_L83_Records_p0_0, x4="\x00\x03\x00\x00"
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x04\x00\x00"
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x05\x00\x00"
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x05\x00\x00"
@@ -604,140 +625,167 @@ func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 b
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x06\x00\x00"
 # census: opaque -- unknown-dump: 192 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0018E4, 0x0019A4
-data_484019A4:
-.incbin_range "baserom/kn2400_program.rom", 0x0019A4, 0x0019F4
 
-Str_empty_799:	.asciz ","
+func_5014A95C_Records_p0_0:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=4, x4="\x00\x00\n\x00(\x00,\x01B\x08\xFF\x00"
+# census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0019B4, 0x0019F4
+
+Str_empty_796:	.asciz ","
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0019F6, 0x001A14
-Str_empty_797:	.asciz "@"
+Str_empty_795:	.asciz "@"
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001A16, 0x001A34
-data_48401A34:
-# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001A34, 0x001A58
-data_48401A58:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001A58, 0x001A68
+
+func_5014A95C_Records_p0_1:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=128, x4="\x00\x00\x09\x00\x00\x00\x18\x00R\x01\x7F\x00"
+# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001A44, 0x001A58
+func_5014A95C_Records_p0_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=130, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x00@\x06"
 data_48401A68:
 .incbin_range "baserom/kn2400_program.rom", 0x001A68, 0x001A74
 
-func_5014474E_Table:	# 4 x u8, 0..82; read by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`
-	tab_u8	82, 3, 1, 0
-data_48401A78:
-# census: opaque -- unknown-dump: 28 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001A78, 0x001A94
-data_48401A94:
-# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001A94, 0x001AC4
+func_5014474E_Var:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`
+	.byte	82
+func_5014474E_entry_L1e_Var:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`
+	.byte	3
+func_5014474E_entry_L1e_Var_2:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1`
+	.byte	1
+func_5014474E_entry_L40_Var:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`
+	.byte	0
 
-Str_empty_796:	.asciz "\x11 "
+func_5014A95C_Records_p0_3:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=161, x4="\x00\x00\x00\x00\x01\x00\x03\x00R\x03p\x04"
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001A88, 0x001A94
+func_5014A95C_Records_p0_4:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=8192, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x03\x01\x00"
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001AA4, 0x001AC4
+
+Str_empty_793:	.asciz "\x11 "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001AC7, 0x001AD4
-Str_empty_795:	.asciz "\x12 "
+Str_empty_792:	.asciz "\x12 "
 # census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001AD7, 0x001B04
-Str_empty_793:	.asciz "  "
+Str_empty_791:	.asciz "  "
 # census: opaque -- unknown-dump: 45 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B07, 0x001B34
-Str_empty_792:	.asciz "# "
+Str_empty_790:	.asciz "# "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B37, 0x001B44
-Str_empty_791:	.asciz "% "
+Str_empty_788:	.asciz "% "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B47, 0x001B54
-Str_empty_790:	.asciz "@ "
+Str_empty_787:	.asciz "@ "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B57, 0x001B64
-Str_C_26:	.asciz "C "
+Str_C_27:	.asciz "C "
 # census: opaque -- unknown-dump: 61 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B67, 0x001BA4
-Str_empty_788:	.asciz "\x81 "
+Str_empty_786:	.asciz "\x81 "
 # census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001BA7, 0x001BD4
-Str_empty_787:	.asciz "\x84 "
+Str_empty_785:	.asciz "\x84 "
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001BD7, 0x001BF4
-Str_empty_786:	.asciz "\x86 "
+Str_empty_784:	.asciz "\x86 "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001BF7, 0x001C04
-Str_empty_785:	.asciz "\x87 "
+Str_empty_769:	.asciz "\x87 "
 # census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001C07, 0x001C34
-Str_empty_784:	.asciz "\x8C "
+Str_empty_768:	.asciz "\x8C "
 # census: opaque -- unknown-dump: 77 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001C37, 0x001C84
-Str_empty_769:	.asciz "\x91 "
+Str_empty_767:	.asciz "\x91 "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001C87, 0x001C94
-Str_empty_768:	.asciz "\x92 "
+Str_empty_766:	.asciz "\x92 "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001C97, 0x001CA4
-Str_empty_767:	.asciz "\x93 "
+Str_empty_752:	.asciz "\x93 "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001CA7, 0x001CB4
-Str_empty_766:	.asciz "\x94 "
+Str_empty_751:	.asciz "\x94 "
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001CB7, 0x001CD4
-Str_empty_752:	.asciz "\x99 "
+Str_empty_748:	.asciz "\x99 "
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001CD7, 0x001CE4
-data_48401CE4:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001CE4, 0x001CF4
-data_48401CF4:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001CF4, 0x001D04
-data_48401D04:
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001D04, 0x001D24
-data_48401D24:
-# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001D24, 0x001D44
-data_48401D44:
-# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001D44, 0x001D64
-data_48401D64:
-# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001D64, 0x001D84
-data_48401D84:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001D84, 0x001D94
-data_48401D94:
-# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001D94, 0x001DB4
-Str_P_22:	.asciz "\nP"
+
+func_5014A95C_Records_p0_5:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=16384, x4="\x00\x00\x17\x00\x00\x00\xC8\x00H\x02\xFF\x00"
+func_5014A95C_Records_p0_6:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=16386, x4="\x00\x00\x17\x00\x00\x00\xC8\x00H\x04\xFF\x00"
+func_5014A95C_Records_p0_7:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=16387, x4="\x00\x00\x17\x00\x00\x00\xC8\x00H\x05\xFF\x00"
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001D14, 0x001D24
+func_5014A95C_Records_p0_8:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=20481, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07\x02\x01"
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001D34, 0x001D44
+func_5014A95C_Records_p0_9:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=20483, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07\x08\x03"
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001D54, 0x001D64
+func_5014A95C_Records_p0_10:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=20485, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07 \x05"
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001D74, 0x001D84
+func_5014A95C_Records_p0_11:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=20487, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07\x80\x07"
+func_5014A95C_Records_p0_12:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=20488, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x08\x01\x00"
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001DA4, 0x001DB4
+
+Str_P_28:	.asciz "\nP"
 # census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001DB7, 0x001DD4
-Str_P_21:	.asciz "\x0CP"
+Str_P_22:	.asciz "\x0CP"
 # census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001DD7, 0x001DF4
-Str_P_20:	.asciz "\x0EP"
+Str_P_21:	.asciz "\x0EP"
 # census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001DF7, 0x001E24
-Str_P_18:	.asciz "\x11P"
+Str_P_20:	.asciz "\x11P"
 # census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E27, 0x001E54
-Str_P_17:	.asciz "\x15P"
+Str_P_18:	.asciz "\x15P"
 # census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E57, 0x001E74
-Str_P_16:	.asciz "!P"
+Str_P_17:	.asciz "!P"
 # census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E77, 0x001E94
-Str_P_15:	.asciz "#P"
+Str_P_16:	.asciz "#P"
 # census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E97, 0x001EB4
 Str_AP:	.asciz "AP"
 # census: opaque -- unknown-dump: 61 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001EB7, 0x001EF4
-data_48401EF4:
-# census: opaque -- unknown-dump: 48 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x001EF4, 0x001F24
-Str_empty_751:	.asciz "@`"
+
+func_5014A95C_Records_p0_13:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=24581, x4="\x00\x00\x00\x00\x00\x00\x01\x00D\x07\x02\x01"
+# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x001F04, 0x001F24
+
+Str_empty_747:	.asciz "@`"
 # census: opaque -- unknown-dump: 373 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001F27, 0x00209C
 data_4840209C:
-.incbin_range "baserom/kn2400_program.rom", 0x00209C, 0x0020AE
+.incbin_range "baserom/kn2400_program.rom", 0x00209C, 0x0020A6
+
+func_50147586_entry_L10_Var:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_2:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000afd2
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0020AC, 0x0020AE
 
 func_50147586_Table:	# 78 x u8, 0..213; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0, 4, 128, 0, 0, 1, 0, 0, 0, 0, 0, 127, 0, 211, 175	# [0]
@@ -745,42 +793,66 @@ func_50147586_Table:	# 78 x u8, 0..213; read by func_50147586 0x50147586: `movbu
 	tab_u8	127, 0, 212, 175, 0, 80, 127, 0, 1, 0, 7, 128, 0, 0, 1, 0	# [32]
 	tab_u8	0, 0, 0, 0, 1, 0, 213, 175, 0, 80, 127, 0, 1, 0, 8, 128	# [48]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 68, 8, 127, 0	# [64]
-data_484020FC:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0020FC, 0x00210C
-data_4840210C:
-# census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00210C, 0x002154
-data_48402154:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002154, 0x002164
 
-Str_empty_748:	.asciz " \x80"
+func_5014A95C_Records_p0_14:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32777, x4="\x00\x00\x00\x00\x00\x00\x01\x00D\x08\x80\x07"
+func_5014A95C_Records_p0_15:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32780, x4="\x00\x00\x00\x00\x00\x00\x7F\x00R\x04\x7F\x00"
+# census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00211C, 0x002154
+func_5014A95C_Records_p0_16:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32784, x4="\x00\x00\x00\x00\x00\x00\x7F\x00L\x01\x7F\x00"
+
+Str_empty_746:	.asciz " \x80"
 # census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002167, 0x002194
-Str_empty_747:	.asciz "(\x80"
+Str_empty_745:	.asciz "(\x80"
 # census: opaque -- unknown-dump: 73 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002197, 0x0021E0
-Str_empty_746:	.asciz "-\x80"
+Str_empty_744:	.asciz "-\x80"
 # census: opaque -- unknown-dump: 13 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0021E3, 0x0021F0
 Str_0_29:	.asciz "0\x80"
-# census: opaque -- unknown-dump: 7 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0021F3, 0x0021FA
+# census: opaque -- unknown-dump: 5 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0021F3, 0x0021F8
 
-func_50146A9C_Table:	# 3 x s16, 1..516; read by func_50146A9C 0x50146A9C: `movhu (a0), d0`; func_50146A9C 0x50146A9C: `movhu (a0), d1`
-	tab_s16	1, 68, 516
+func_50146A9C_entry_L15_Var:	# s16, a constant; read / written by func_50146A9C_entry_L15 0x50146AB6: `movhu (a0), d0`; func_50146A9C_entry_L15 0x50146AB6: `movhu (a0), d1`
+	.word	0
+func_50146A9C_Var:	# s16, a constant; read / written by func_50146A9C 0x50146A9C: `movhu (a0), d0`; func_50146A9C 0x50146A9C: `movhu (a0), d1`
+	.word	1
+func_5014474E_Var_2:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`
+	.byte	68
+func_5014474E_entry_L1e_Var_3:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`
+	.byte	0
+func_5014474E_entry_L1e_Var_4:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	4
+func_5014474E_entry_L40_Var_2:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_50146A9C_entry_L21 0x50146AC2: `movbu (0xf, a2), d2`
+	.byte	2
 
 Str_1_40:	.asciz "1\x80"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002203, 0x002212
+# census: opaque -- unknown-dump: 7 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002203, 0x00220A
+
+func_50147586_entry_L10_Var_3:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	1
+func_50147586_entry_L10_Var_4:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b4ae
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002210, 0x002212
 
 func_50147586_Table_2:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0
 
 Str_2_40:	.asciz "2\x80"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002217, 0x002226
+# census: opaque -- unknown-dump: 7 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002217, 0x00221E
+
+func_50147586_entry_L10_Var_5:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	1
+func_50147586_entry_L10_Var_6:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b4ad
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002224, 0x002226
 
 func_50147586_Table_3:	# 34 x u8, 0..255; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0, 51, 128, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 82, 13	# [0]
@@ -801,54 +873,56 @@ func_501448AB_Table_2:	# 42 x u8, 0..255; read by func_501448AB 0x501448AB: `mov
 	tab_u8	0, 0, 255, 0, 1, 0, 66, 128, 0, 0, 1, 0, 4, 0, 0, 0	# [16]
 	tab_u8	33, 0, 0, 0, 0, 0, 255, 0, 1, 0	# [32]
 
-Str_empty_745:	.asciz "`\x80"
+Str_empty_743:	.asciz "`\x80"
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002283, 0x0022A0
-data_484022A0:
-# census: opaque -- unknown-dump: 100 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0022A0, 0x002304
-data_48402304:
-# census: opaque -- unknown-dump: 120 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002304, 0x00237C
-data_4840237C:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00237C, 0x002394
-data_48402394:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002394, 0x0023A4
-data_484023A4:
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0023A4, 0x0023C4
-data_484023C4:
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0023C4, 0x0023E4
-data_484023E4:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0023E4, 0x0023F4
-data_484023F4:
-# census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0023F4, 0x00242C
-data_4840242C:
-# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00242C, 0x00244C
-data_4840244C:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00244C, 0x00245C
-data_4840245C:
-# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00245C, 0x0024BC
-data_484024BC:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0024BC, 0x0024CC
-data_484024CC:
-.incbin_range "baserom/kn2400_program.rom", 0x0024CC, 0x0024DA
 
-func_501464C6_Table:	# 2 x u8, 0..127; read by func_501464C6 0x501464C6: `movbu (a3), d1`; func_501464C6 0x501464C6: `movbu (a3), d2`
-	tab_u8	127, 0
+func_5014A95C_Records_p0_17:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32896, x4="\x00\x00\x00\x00\x00\x00\x01\x00B\x04@\x06"
+# census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0022B0, 0x002304
+func_5014A95C_Records_p0_18:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32912, x4="\x00\x00\x00\x00\x00\x00\x02\x00G\x0B\x03\x00"
+# census: opaque -- unknown-dump: 104 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002314, 0x00237C
+func_5014A95C_Records_p0_19:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32913, x4="\x00\x00\x02\x00\x00\x00\xFF\x00G\x0C\xFF\x00"
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00238C, 0x002394
+func_5014A95C_Records_p0_20:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=32914, x4="\x00\x00\x00\x00\x01\x00\x7F\x00G\x0D\xFF\x00"
+func_5014A95C_Records_p0_21:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=40960, x4="\x00\x00\x0F\x00\x00\x00\xFF\xFFL\x02\x7F\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0023B4, 0x0023C4
+func_5014A95C_Records_p0_22:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=41216, x4="\x00\x00\x0F\x00\x00\x00\xFF\xFFL\x04\x7F\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0023D4, 0x0023E4
+func_5014A95C_Records_p0_23:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=41472, x4="\x00\x00\x1C\x00\x00\x00\xFF\xFFL\x06\x7F\x00"
+func_5014A95C_Records_p0_24:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=41728, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFFL\x08\xFF\x00"
+# census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002404, 0x00242C
+func_5014A95C_Records_p0_25:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=41984, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFFL\n\xFF\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00243C, 0x00244C
+func_5014A95C_Records_p0_26:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=41986, x4="\x00\x00\x00\x00\x00\x00\x7F\x00J\x03\x7F\x00"
+func_5014A95C_Records_p0_27:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=42240, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFFL\x0C\xFF\x00"
+# census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00246C, 0x0024BC
+func_5014A95C_Records_p0_28:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=45072, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00R\x10\xFF\x00"
+func_5014A95C_Records_p0_29:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=45076, x4="\x00\x00\x10\x00\x00\x00\xFF\xFFL\x0E\x7F\x00"
 data_484024DC:
 .incbin_range "baserom/kn2400_program.rom", 0x0024DC, 0x0024F0
 
-Str_empty_744:	.asciz " \xB0"
+Str_empty_742:	.asciz " \xB0"
 # census: opaque -- unknown-dump: 13 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0024F3, 0x002500
 Str_empty_1261:	.asciz "$\xB0"
@@ -857,7 +931,7 @@ Str_empty_1261:	.asciz "$\xB0"
 Str_empty_1260:	.asciz "%\xB0"
 # census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002513, 0x002524
-Str_0_28:	.asciz "0\xB0"
+Str_0_27:	.asciz "0\xB0"
 # census: opaque -- unknown-dump: 13 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002527, 0x002534
 Str_4_33:	.asciz "4\xB0"
@@ -866,27 +940,32 @@ Str_4_33:	.asciz "4\xB0"
 Str_5_27:	.asciz "5\xB0"
 # census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002547, 0x002568
-data_48402568:
-# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002568, 0x002598
-data_48402598:
-# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002598, 0x0025C8
-data_484025C8:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0025C8, 0x0025D8
-data_484025D8:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0025D8, 0x0025E8
-data_484025E8:
-# census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0025E8, 0x002628
-data_48402628:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002628, 0x002640
-data_48402640:
-# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002640, 0x002708
+
+func_5014A95C_Records_p0_30:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=49156, x4="\x00\x00\x13\x00\x00\x00\x03\x00B\x070\x04"
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002578, 0x002598
+func_5014A95C_Records_p0_31:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=49282, x4="\x00\x00\x00\x00\x00\x00\x01\x00B\x03\x10\x04"
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0025A8, 0x0025C8
+func_5014A95C_Records_p0_32:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=49284, x4="\x00\x00\x16\x00\x00\x00\x01\x00A\x03\x01\x00"
+func_5014A95C_Records_p0_33:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=53248, x4="\x00\x00\x00\x00\x00\x00\x01\x00B\x05\x02\x01"
+func_5014A95C_Records_p0_34:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=53249, x4="\x00\x00\x00\x00\x00\x00\x03\x00B\x06\x0F\x00"
+# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0025F8, 0x002628
+func_5014A95C_Records_p0_35:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=53258, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x0D\x02\x01"
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002638, 0x002640
+func_5014A95C_Records_p0_36:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=57345, x4="\x00\x00\x00\x00\x00\x00\x7F\x00F\x00\x7F\x00"
+# census: opaque -- unknown-dump: 184 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002650, 0x002708
+
 Str_1_37:	.asciz "1\xE0"
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00270B, 0x002728
@@ -899,186 +978,345 @@ Str_5_22:	.asciz "5\xE0"
 Str_7_10:	.asciz "7\xE0"
 # census: opaque -- unknown-dump: 13 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00276B, 0x002778
-Str_8_11:	.asciz "8\xE0"
+Str_8_12:	.asciz "8\xE0"
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00277B, 0x002798
-Str_empty_743:	.asciz ":\xE0"
+Str_empty_734:	.asciz ":\xE0"
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00279B, 0x0027B8
-Str_empty_742:	.asciz "<\xE0"
+Str_empty_709:	.asciz "<\xE0"
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0027BB, 0x0027D8
-Str_empty_734:	.asciz ">\xE0"
+Str_empty_708:	.asciz ">\xE0"
 # census: opaque -- unknown-dump: 65 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0027DB, 0x00281C
-data_4840281C:
-# census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x00281C, 0x002844
-data_48402844:
-# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002844, 0x002864
+
+func_5014A95C_Records_p0_37:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=61697, x4="\x00\x00\x02\x00\x00\x00\xFF\x00C\x00\xFF\x00"
+# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00282C, 0x002844
+func_5014A95C_Records_p0_38:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200010, x4="\x00\x00\x00\x00\x00\x00\x03\x00\x00\x06\x03\x00"
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002854, 0x002864
 data_48402864:
 .incbin_range "baserom/kn2400_program.rom", 0x002864, 0x002874
-Str_empty_709:	.asciz "\\"
+
+Str_empty_707:	.asciz "\\"
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002876, 0x002894
 Str_empty_1259:	.asciz "_"
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002896, 0x00289E
+# census: opaque -- unknown-dump: 6 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002896, 0x00289C
 
-func_5014542B_Table:	# 3 x s16, 1..2816; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	1, 2816, 1920
-data_484028A4:
-# census: opaque -- unknown-dump: 52 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0028A4, 0x0028D8
-data_484028D8:
-# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0028D8, 0x0028F0
-data_484028F0:
-# census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0028F0, 0x002930
-data_48402930:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002930, 0x002940
-data_48402940:
-# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002940, 0x002970
-data_48402970:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002970, 0x002980
-data_48402980:
-# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002980, 0x0029B0
-data_484029B0:
-# census: opaque -- unknown-dump: 304 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0029B0, 0x002AE0
-data_48402AE0:
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002AE0, 0x002AF0
-data_48402AF0:
-# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002AF0, 0x002B20
+func_5014542B_entry_L19_Var:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	1
+func_5014474E_Var_3:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_5:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	11
+func_5014474E_entry_L1e_Var_6:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	128
+func_5014474E_entry_L40_Var_3:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	.byte	7
 
-Str_empty_708:	.asciz " @ "
+func_5014A95C_Records_p0_39:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200080, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00\"\x0F\x00"
+# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0028B4, 0x0028D8
+func_5014A95C_Records_p0_40:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200089, x4="\x00\x00\x1A\x00\x00\x00\x0F\x00\x10$\xF0\x04"
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0028E8, 0x0028F0
+func_5014A95C_Records_p0_41:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x20008A, x4="\x00\x00\x1A\x00\x00\x00\x0F\x00\x10%\x0F\x00"
+# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002900, 0x002930
+func_5014A95C_Records_p0_42:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200091, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00&\xF0\x04"
+func_5014A95C_Records_p0_43:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200092, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00'\x0F\x00"
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002950, 0x002970
+func_5014A95C_Records_p0_44:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200095, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00(\xF0\x04"
+func_5014A95C_Records_p0_45:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200096, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00)\x0F\x00"
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002990, 0x0029B0
+func_5014A95C_Records_p0_46:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x200099, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00*\x10\x04"
+# census: opaque -- unknown-dump: 288 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0029C0, 0x002AE0
+func_5014A95C_Records_p0_47:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x204000, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00: \x05"
+func_5014A95C_Records_p0_48:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x204001, x4="\x00\x00\x02\x00\x00\x00\xFF\x00\x00;\xFF\x00"
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002B00, 0x002B20
+
+Str_empty_706:	.asciz " @ "
 # census: opaque -- unknown-dump: 60 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002B24, 0x002B60
-Str_empty_707:	.asciz "%@ "
+Str_empty_705:	.asciz "%@ "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002B64, 0x002B70
-Str_empty_706:	.asciz "&@ "
+Str_empty_704:	.asciz "&@ "
 # census: opaque -- unknown-dump: 44 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002B74, 0x002BA0
-Str_empty_705:	.asciz "\x82@ "
+Str_empty_703:	.asciz "\x82@ "
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002BA4, 0x002BB0
-Str_empty_704:	.asciz "\x83@ "
+Str_empty_702:	.asciz "\x83@ "
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002BB4, 0x002BC0
-Str_empty_703:	.asciz "\x84@ "
+Str_empty_701:	.asciz "\x84@ "
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002BC4, 0x002BD0
-Str_empty_702:	.asciz "\x85@ "
-# census: opaque -- unknown-dump: 452 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002BD4, 0x002D98
+Str_empty_700:	.asciz "\x85@ "
+# census: opaque -- unknown-dump: 148 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002BD4, 0x002C68
+
+data_48402DAC_p0_0:	# REC_data_48402DAC_p0 (4 bytes)
+	REC_data_48402DAC_p0	f0=0x600008
+# census: opaque -- unknown-dump: 300 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002C6C, 0x002D98
+
 Str_p_48:	.asciz "\x14 p"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002D9C, 0x002DA4
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002D9C, 0x002DA0
+
+func_50148F7D_entry_L21_Var:	# u32, a constant; read / written by func_50148F7D_entry_L21 0x50148FA3: `mov (8, a2), d0`
+	.long	0x48401a34
+
 Str_p_47:	.asciz "\x15 p"
-# census: opaque -- unknown-dump: 216 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002DA8, 0x002E80
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002DA8, 0x002DAC
+
+func_5014906F_entry_L1f_Table:	# 53 x u32, 6..1212166680; read by func_5014906F_entry_L1f 0x50149093: `mov (8, a2), a2`
+	tab_u32	1212165224, 7348256, 6, 7348257, 65539, 1212163544, 7348258, 524291	# [0]
+	tab_u32	1212163560, 1212163596, 7348259, 589827, 1212163560, 1212163576, 7348272, 655363	# [8]
+	tab_u32	1212163640, 7348273, 65539, 1212163680, 7348274, 6, 7348275, 6	# [16]
+	tab_u32	7348288, 6, 7348320, 65539, 1212162404, 7348321, 2097155, 1212164212	# [24]
+	tab_u32	7348322, 65539, 1212164228, 7348323, 65539, 1212162468, 7348324, 65539	# [32]
+	tab_u32	1212162452, 7348328, 1310723, 1212166320, 7348329, 2162691, 1212166680, 7348330	# [40]
+	tab_u32	1703939, 1212166352, 7348331, 1703939, 1212166372	# [48]
+
 Str_l_p_2:	.asciz "l p"
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002E84, 0x002E8C
 Str_m_p_2:	.asciz "m p"
-# census: opaque -- unknown-dump: 284 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002E90, 0x002FAC
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002E90, 0x002E94
+
+func_50149247_entry_L21_Table:	# 70 x u32, 0..1212166744; read by func_50149247_entry_L21 0x5014926D: `mov (8, a2), d0`
+	tab_u32	1212162560, 7348334, 1703939, 1212162580, 7348352, 6, 7348353, 786435	# [0]
+	tab_u32	1212160404, 7348354, 851971, 0, 7348355, 917507, 1212162616, 7348356	# [8]
+	tab_u32	983043, 1212162600, 7348357, 1048579, 1212163432, 7348358, 65539, 1212166744	# [16]
+	tab_u32	7348384, 6, 7348385, 6, 7348386, 65539, 1212162720, 7348387	# [24]
+	tab_u32	1900547, 1212160616, 7348388, 6, 7348390, 1114115, 1212162688, 7348391	# [32]
+	tab_u32	6, 7348392, 6, 7348393, 1179651, 1212163448, 7348394, 1376259	# [40]
+	tab_u32	1212164244, 7348395, 1441795, 1212163276, 7348398, 6, 7348399, 1703939	# [48]
+	tab_u32	1212162580, 7348400, 6, 7348401, 6, 7348402, 6, 7348403	# [56]
+	tab_u32	6, 7348411, 6, 7372800, 6, 0	# [64]
 data_48402FAC:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x002FAC, 0x002FB4
-data_48402FB4:
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x002FB4, 0x002FBC
-data_48402FBC:
-.incbin_range "baserom/kn2400_program.rom", 0x002FBC, 0x002FCE
+
+func_5014A95C_Records_p0_49:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x900000, x4="\x05\x00\x00\x00\x01\x00\xB0\x00\x01\x00\x00\x00"
+	.space	2, 0x00
+
+func_50147586_entry_L10_Var_7:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_8:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000afd6
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002FCC, 0x002FCE
 
 func_50147586_Table_4:	# 58 x u8, 0..248; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0, 2, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127, 0, 248, 175	# [0]
 	tab_u8	0, 80, 127, 0, 1, 0, 4, 0, 176, 0, 1, 0, 0, 0, 0, 0	# [16]
 	tab_u8	127, 0, 26, 176, 0, 80, 127, 0, 1, 0, 5, 0, 176, 0, 0, 0	# [32]
 	tab_u8	0, 0, 0, 0, 127, 0, 0, 15, 127, 0	# [48]
-data_48403008:
-.incbin_range "baserom/kn2400_program.rom", 0x003008, 0x003012
-func_5014542B_Table_2:	# 3 x s16, 127..768; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 768, 127
-data_48403018:
-.incbin_range "baserom/kn2400_program.rom", 0x003018, 0x003022
-func_5014542B_Table_3:	# 3 x s16, 127..7168; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 7168, 127
+
+func_5014A95C_Records_p0_50:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xB00007, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x03\x7F\x00"
+func_5014A95C_Records_p0_51:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xB0000A, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x1C\x7F\x00"
 data_48403028:
-.incbin_range "baserom/kn2400_program.rom", 0x003028, 0x00303A
+.incbin_range "baserom/kn2400_program.rom", 0x003028, 0x003032
+
+func_50147586_entry_L10_Var_9:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_10:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b03c
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x003038, 0x00303A
+
 func_50147586_Table_5:	# 18 x u8, 0..255; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0, 12, 0, 176, 0, 0, 0, 17, 0, 0, 0, 255, 255, 76, 14	# [0]
 	tab_u8	255, 0	# [16]
 data_4840304C:
 .incbin_range "baserom/kn2400_program.rom", 0x00304C, 0x003060
 data_48403060:
-.incbin_range "baserom/kn2400_program.rom", 0x003060, 0x003072
+.incbin_range "baserom/kn2400_program.rom", 0x003060, 0x00306A
+
+func_50147586_entry_L10_Var_11:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_12:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b064
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x003070, 0x003072
+
 func_50147586_Table_6:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0
 data_48403074:
-.incbin_range "baserom/kn2400_program.rom", 0x003074, 0x003086
+.incbin_range "baserom/kn2400_program.rom", 0x003074, 0x00307E
+
+func_50147586_entry_L10_Var_13:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_14:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b086
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x003084, 0x003086
+
 func_50147586_Table_7:	# 42 x u8, 0..202; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0, 18, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127, 0, 168, 176	# [0]
 	tab_u8	0, 80, 127, 0, 1, 0, 19, 0, 176, 0, 1, 0, 0, 0, 0, 0	# [16]
 	tab_u8	127, 0, 202, 176, 0, 80, 127, 0, 1, 0	# [32]
 
 Str_empty_1254:	.asciz "@"
-# census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030B2, 0x0030C0
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030B2, 0x0030B8
+
+func_501447AF_entry_L40_Var:	# s16, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movhu (8, a3), d1`
+	.word	0
+func_501447AF_entry_L40_Var_2:	# s16, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movhu (0xa, a3), d1`
+	.word	127
+func_501447AF_Var:	# u8, a constant; read / written by func_501447AF 0x501447AF: `movbu (0xc, a3), d1`; func_5014552F_entry_L93 0x501455C7: `movbu (0xc, a2), d3`
+	.byte	0
+func_501447AF_entry_L1e_Var:	# u8, a constant; read / written by func_501447AF_entry_L1e 0x501447D2: `movbu (0xd, a3), d2`; func_5014552F_entry_L96 0x501455CA: `movbu (0xd, a2), d1`
+	.byte	4
+func_501447AF_entry_L1e_Var_2:	# u8, a constant; read / written by func_501447AF_entry_L1e 0x501447D2: `movbu (a2), d0`; func_501447AF_entry_L40 0x501447F4: `movbu (a2), d1` ...
+	.byte	8
+func_501447AF_entry_L40_Var_3:	# u8, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movbu (0xf, a3), d1`; func_5014552F_entry_L12 0x50145546: `movbu (0xf, a2), d0`
+	.byte	3
+
 Str_A_44:	.asciz "A"
-# census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030C2, 0x0030D0
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030C2, 0x0030C8
+
+func_501447AF_entry_L40_Var_4:	# s16, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movhu (8, a3), d1`
+	.word	0
+func_501447AF_entry_L40_Var_5:	# s16, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movhu (0xa, a3), d1`
+	.word	127
+func_501447AF_Var_2:	# u8, a constant; read / written by func_501447AF 0x501447AF: `movbu (0xc, a3), d1`; func_5014552F_entry_L93 0x501455C7: `movbu (0xc, a2), d3`
+	.byte	0
+func_501447AF_entry_L1e_Var_3:	# u8, a constant; read / written by func_501447AF_entry_L1e 0x501447D2: `movbu (0xd, a3), d2`; func_5014552F_entry_L96 0x501455CA: `movbu (0xd, a2), d1`
+	.byte	15
+func_501447AF_entry_L1e_Var_4:	# u8, a constant; read / written by func_501447AF_entry_L1e 0x501447D2: `movbu (a2), d0`; func_501447AF_entry_L40 0x501447F4: `movbu (a2), d1` ...
+	.byte	128
+func_501447AF_entry_L40_Var_6:	# u8, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movbu (0xf, a3), d1`; func_5014552F_entry_L12 0x50145546: `movbu (0xf, a2), d0`
+	.byte	7
+
 Str_B_23:	.asciz "B"
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030D2, 0x0030E2
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030D2, 0x0030DA
+
+func_50147586_entry_L10_Var_15:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_16:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b10e
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030E0, 0x0030E2
 
 func_50147586_Table_8:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0
 
 Str_C_42:	.asciz "C"
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030E6, 0x0030F6
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030E6, 0x0030EE
+
+func_50147586_entry_L10_Var_17:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_50147586_entry_L10_Var_18:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+	.long	0x5000b130
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030F4, 0x0030F6
 
 func_50147586_Table_9:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0
 
 Str_G_23:	.asciz "G"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030FA, 0x003102
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030FA, 0x003100
 
-func_5014542B_Table_4:	# 3 x s16, 127..4096; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 4096, 127
+func_5014542B_entry_L19_Var_2:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_2:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_4:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_7:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	16
+func_5014474E_entry_L1e_Var_8:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
+func_5014474E_entry_L40_Var_4:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	.byte	0
 
 Str_H_13:	.asciz "H"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00310A, 0x003112
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00310A, 0x003110
 
-func_5014542B_Table_5:	# 3 x s16, 127..4352; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 4352, 127
+func_5014542B_entry_L19_Var_3:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_3:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_5:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_9:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	17
+func_5014474E_entry_L1e_Var_10:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
+func_5014474E_entry_L40_Var_5:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	.byte	0
 
 Str_I_9:	.asciz "I"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00311A, 0x003122
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00311A, 0x003120
 
-func_5014542B_Table_6:	# 3 x s16, 127..4608; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 4608, 127
+func_5014542B_entry_L19_Var_4:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_4:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_6:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_11:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	18
+func_5014474E_entry_L1e_Var_12:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
+func_5014474E_entry_L40_Var_6:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	.byte	0
 
 Str_J_8:	.asciz "J"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00312A, 0x003132
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00312A, 0x003130
 
-func_5014542B_Table_7:	# 3 x s16, 127..4864; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 4864, 127
+func_5014542B_entry_L19_Var_5:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_5:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_7:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_13:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	19
+func_5014474E_entry_L1e_Var_14:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
+func_5014474E_entry_L40_Var_7:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	.byte	0
 
 Str_K_8:	.asciz "K"
 # census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -1092,68 +1330,118 @@ Str_M_8:	.asciz "M"
 Str_N_8:	.asciz "N"
 # census: opaque -- unknown-dump: 46 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00316A, 0x003198
-Str_P_13:	.asciz "P"
+Str_P_15:	.asciz "P"
 # census: opaque -- unknown-dump: 22 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00319A, 0x0031B0
 Str_Q_7:	.asciz "Q"
 # census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0031B2, 0x0031C0
-Str_R_7:	.asciz "R"
+Str_R_6:	.asciz "R"
 # census: opaque -- unknown-dump: 22 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0031C2, 0x0031D8
 Str_S_6:	.asciz "S"
 # census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0031DA, 0x0031E8
 Str_empty_1258:	.asciz "["
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0031EA, 0x0031F2
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0031EA, 0x0031F0
 
-func_5014542B_Table_8:	# 11 x s16, 0..3584; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 3584, 127, 92, 176, 0, 0, 0, 127, 3072, 127
+func_5014542B_entry_L19_Var_6:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_6:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_8:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_15:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	14
+func_5014474E_entry_L1e_Var_16:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
+
+func_5014474E_entry_L40_Table:	# 17 x u8, 0..176; read by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	tab_u8	0, 92, 0, 176, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 12, 127	# [0]
+	tab_u8	0	# [16]
 
 Str_empty_1257:	.asciz "]"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00320A, 0x003212
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00320A, 0x003210
 
-func_5014542B_Table_9:	# 3 x s16, 127..3328; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 3328, 127
+func_5014542B_entry_L19_Var_7:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_7:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_9:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_17:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	13
+func_5014474E_entry_L1e_Var_18:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
+func_5014474E_entry_L40_Var_8:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	.byte	0
 
 Str_empty_1251:	.asciz "^"
-# census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00321A, 0x003228
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00321A, 0x003220
+
+func_501447AF_entry_L40_Var_7:	# s16, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movhu (8, a3), d1`
+	.word	0
+func_501447AF_entry_L40_Var_8:	# s16, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movhu (0xa, a3), d1`
+	.word	127
+func_501447AF_Var_3:	# u8, a constant; read / written by func_501447AF 0x501447AF: `movbu (0xc, a3), d1`; func_5014552F_entry_L93 0x501455C7: `movbu (0xc, a2), d3`
+	.byte	0
+func_501447AF_entry_L1e_Var_5:	# u8, a constant; read / written by func_501447AF_entry_L1e 0x501447D2: `movbu (0xd, a3), d2`; func_5014552F_entry_L96 0x501455CA: `movbu (0xd, a2), d1`
+	.byte	4
+func_501447AF_entry_L1e_Var_6:	# u8, a constant; read / written by func_501447AF_entry_L1e 0x501447D2: `movbu (a2), d0`; func_501447AF_entry_L40 0x501447F4: `movbu (a2), d1` ...
+	.byte	64
+func_501447AF_entry_L40_Var_9:	# u8, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movbu (0xf, a3), d1`; func_5014552F_entry_L12 0x50145546: `movbu (0xf, a2), d0`
+	.byte	6
+
 Str_empty_1256:	.asciz "_"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00322A, 0x003232
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00322A, 0x003230
 
-func_5014542B_Table_10:	# 19 x s16, 0..2816; read by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
-	tab_s16	127, 2816, 127, 120, 176, 6, 0, 121, 176, 6, 0, 123	# [0]
-	tab_s16	176, 6, 0, 124, 176, 6, 0	# [12]
+func_5014542B_entry_L19_Var_8:	# s16, a constant; read / written by func_5014542B_entry_L19 0x50145449: `movhu (a0), d0`; func_5014542B_entry_L19 0x50145449: `movhu (a0), d2`
+	.word	0
+func_5014542B_Var_8:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
+	.word	127
+func_5014474E_Var_10:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+	.byte	0
+func_5014474E_entry_L1e_Var_19:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+	.byte	11
+func_5014474E_entry_L1e_Var_20:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+	.byte	127
 
-Str_empty_701:	.asciz "~"
+func_5014474E_entry_L40_Table_2:	# 33 x u8, 0..176; read by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+	tab_u8	0, 120, 0, 176, 0, 6, 0, 0, 0, 121, 0, 176, 0, 6, 0, 0	# [0]
+	tab_u8	0, 123, 0, 176, 0, 6, 0, 0, 0, 124, 0, 176, 0, 6, 0, 0	# [16]
+	tab_u8	0	# [32]
+
+Str_empty_699:	.asciz "~"
 # census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00325A, 0x003268
-data_48403268:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x003268, 0x003278
-data_48403278:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x003278, 0x003288
-data_48403288:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x003288, 0x003298
-data_48403298:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x003298, 0x0032A8
-data_484032A8:
-# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0032A8, 0x0032B8
-data_484032B8:
-.incbin_range "baserom/kn2400_program.rom", 0x0032B8, 0x0032CA
+
+func_5014A95C_Records_p0_52:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xB08000, x4="\x00\x00\x00\x00\x00\x00\x0C\x00\x00\x1F\x7F\x00"
+func_5014A95C_Records_p0_53:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xB08001, x4="\x00\x00\x18\x00\x00\x00\xFF\x00\x00\x1E\xFF\x00"
+func_5014A95C_Records_p0_54:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xB08002, x4="\x00\x00\x00\x00(\x00X\x00\x00\x1D\x7F\x00"
+func_5014A95C_Records_p0_55:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xB08005, x4="\x00\x00\x14\x00\x00\x00\x7F\x0C\x00 \x7F\x00"
+func_5014A95C_Records_p0_56:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xC00000, x4="\x00\x00\x06\x00\x00\x00\xFF\x00\x00\x00\x7F\x00"
+func_5014A95C_Records_p0_57:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xD00000, x4="\x01\x00\x00\x00\x00\x00\x7F\x00R\xB1\x00P"
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0032C8, 0x0032CA
 
 func_50147586_Table_10:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	1, 0
-data_484032CC:
-.incbin_range "baserom/kn2400_program.rom", 0x0032CC, 0x0032DE
+
+func_5014A95C_Records_p0_58:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0xE00000, x4="\x01\x00\x00\x00\x00\x00\x7F\x7Ft\xB1\x00P"
+# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0032DC, 0x0032DE
+
 func_50147586_Table_11:	# 3890 x u8, 0..252; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
 	tab_u8	2, 0, 104, 25, 64, 72, 0, 0, 0, 0, 128, 25, 64, 72, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 148, 25, 64, 72, 0, 0	# [16]
@@ -1399,24 +1687,29 @@ func_50147586_Table_11:	# 3890 x u8, 0..252; read by func_50147586 0x50147586: `
 	tab_u8	0, 0, 88, 65, 64, 72, 1, 1, 0, 0, 96, 65, 64, 72, 1, 3	# [3856]
 	tab_u8	0, 0, 120, 65, 64, 72, 1, 1, 0, 0, 128, 65, 64, 72, 1, 2	# [3872]
 	tab_u8	0, 0	# [3888]
-data_48404210:
-# census: opaque -- unknown-dump: 36 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x004210, 0x004234
+
+func_5014A95C_Records_p0_59:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x48404190, x4="\x01\x10\x00\x004(@H\x00\x00\x00\x00"
+# census: opaque -- unknown-dump: 20 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x004220, 0x004234
 	.space	108, 0x00
 # census: opaque -- unknown-dump: 508 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0042A0, 0x00449C
 	.space	92, 0x00
 # census: opaque -- unknown-dump: 448 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0044F8, 0x0046B8
-data_484046B8:
-# census: opaque -- unknown-dump: 216 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0046B8, 0x004790
-data_48404790:
-# census: opaque -- unknown-dump: 1024 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x004790, 0x004B90
-data_48404B90:
-# census: opaque -- unknown-dump: 396 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x004B90, 0x004D1C
+func_5014A95C_Records_p0_60:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x48404690, x4="\x01\x05\x00\x00\x00,@H\x00\x00\x00\x00"
+# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0046C8, 0x004790
+func_5014A95C_Records_p0_61:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x48404780, x4="\x01\x02\x00\x00\xAC,@H\x00\x00\x00\x00"
+# census: opaque -- unknown-dump: 1008 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0047A0, 0x004B90
+func_5014A95C_Records_p0_62:	# REC_func_5014A95C_Records_p0 (16 bytes)
+	REC_func_5014A95C_Records_p0	f0=0x48404B48, x4="\x01\x09\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+# census: opaque -- unknown-dump: 380 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x004BA0, 0x004D1C
 	.space	68, 0x00
 # census: opaque -- unknown-dump: 264 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x004D60, 0x004E68
@@ -1424,236 +1717,236 @@ data_48404E68:
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x004E68, 0x004E70
 
-func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by func_5014A95C 0x5014A95C `mov (a1), d1`
-	REC_func_5014A95C_Records	p0=data_48404210, x4="\x01\x01\x00\x00"	# [0]
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484046B8, x4="\x01\x01\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48404790, x4="\x01\x01\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48404B90, x4="\x01\x01\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402FAC, x4="\x00\x00\x00\x00"	# [8]
-	REC_func_5014A95C_Records	p0=data_48402FB4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48404E68, x4="\x01\x01\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484032A8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484032B8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484032CC, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484032A8, x4="\x00\x00\x00\x00"	# [16]
-	REC_func_5014A95C_Records	p0=data_48403008, x4="4(@H"
-	REC_func_5014A95C_Records	x4="\x80+@H"
-	REC_func_5014A95C_Records	p0=Str_empty_1254, x4="\x90+@H"
-	REC_func_5014A95C_Records	p0=Str_empty_703, x4="\x182@H"
-	REC_func_5014A95C_Records	p0=Str_empty_701, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_702, x4="T(@H"
-	REC_func_5014A95C_Records	p0=Str_empty_705, x4="\xE0+@H"
-	REC_func_5014A95C_Records	p0=Str_empty_704, x4="\x00\x00\x00\x00"	# [24]
-	REC_func_5014A95C_Records	p0=data_48402844, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_1256, x4="\x94(@H"
-	REC_func_5014A95C_Records	x4="\xF81@H"
-	REC_func_5014A95C_Records	p0=Str_empty_709, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_1257, x4="\x84(@H"
-	REC_func_5014A95C_Records	x4="\xE81@H"
-	REC_func_5014A95C_Records	x4="\xF8/@H"	# [32]
-	REC_func_5014A95C_Records	p0=Str_A_44, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_G_23, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_H_13, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_I_9, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_J_8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_K_8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_L_10, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_M_8, x4="\x00\x00\x00\x00"	# [40]
-	REC_func_5014A95C_Records	p0=Str_N_8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_P_13, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_Q_7, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_R_7, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_S_6, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48403018, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48403288, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48403278, x4="\x00\x00\x00\x00"	# [48]
-	REC_func_5014A95C_Records	p0=data_48403268, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48403298, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484028A4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\xC0(@H"
-	REC_func_5014A95C_Records	p0=data_484028D8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484028F0, x4="\x08)@H"
-	REC_func_5014A95C_Records	x4=" )@H"
-	REC_func_5014A95C_Records	p0=data_48402930, x4="\x00\x00\x00\x00"	# [56]
-	REC_func_5014A95C_Records	p0=data_48402940, x4="P)@H"
-	REC_func_5014A95C_Records	x4="`)@H"
-	REC_func_5014A95C_Records	p0=data_48402970, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402980, x4="\x90)@H"
-	REC_func_5014A95C_Records	x4="\xA0)@H"
-	REC_func_5014A95C_Records	p0=data_484029B0, x4="\xC0)@H"
-	REC_func_5014A95C_Records	x4="\xD0)@H"
-	REC_func_5014A95C_Records	x4="\xE0)@H"	# [64]
-	REC_func_5014A95C_Records	x4="\xF0)@H"
-	REC_func_5014A95C_Records	x4="\x00*@H"
-	REC_func_5014A95C_Records	x4="\x10*@H"
-	REC_func_5014A95C_Records	x4=" *@H"
-	REC_func_5014A95C_Records	x4="0*@H"
-	REC_func_5014A95C_Records	x4="@*@H"
-	REC_func_5014A95C_Records	x4="P*@H"
-	REC_func_5014A95C_Records	x4="`*@H"	# [72]
-	REC_func_5014A95C_Records	x4="p*@H"
-	REC_func_5014A95C_Records	x4="\x80*@H"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x08+@H"
-	REC_func_5014A95C_Records	p0=data_48402AE0, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402AF0, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_708, x4="0+@H"
-	REC_func_5014A95C_Records	x4="P+@H"	# [80]
-	REC_func_5014A95C_Records	p0=Str_empty_707, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="@+@H"
-	REC_func_5014A95C_Records	p0=Str_empty_706, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_751, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_1262, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484025C8, x4="\xB8%@H"
-	REC_func_5014A95C_Records	x4="8\"@H"	# [88]
-	REC_func_5014A95C_Records	x4="X%@H"
-	REC_func_5014A95C_Records	x4="x%@H"
-	REC_func_5014A95C_Records	p0=data_48402598, x4="\xA8%@H"
-	REC_func_5014A95C_Records	x4="\x88%@H"
-	REC_func_5014A95C_Records	p0=data_484022A0, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484025D8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484025E8, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402568, x4="\x00\x00\x00\x00"	# [96]
-	REC_func_5014A95C_Records	p0=data_484019A4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_4840281C, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_745, x4="\xF0!@H"
-	REC_func_5014A95C_Records	x4="\x90\"@H"
-	REC_func_5014A95C_Records	x4="\x94\x19@H"
-	REC_func_5014A95C_Records	x4="\xEC\"@H"
-	REC_func_5014A95C_Records	x4="\xC0\"@H"
-	REC_func_5014A95C_Records	x4="\xC4\x1E@H"	# [104]
-	REC_func_5014A95C_Records	x4="\xD4\x1E@H"
-	REC_func_5014A95C_Records	x4="\xE4\x1E@H"
-	REC_func_5014A95C_Records	p0=data_48401EF4, x4="\x04\x1F@H"
-	REC_func_5014A95C_Records	x4="\xEC @H"
-	REC_func_5014A95C_Records	p0=data_484020FC, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\xF8&@H"
-	REC_func_5014A95C_Records	p0=Str_8_11, x4="\x00\x00\x00\x00"	# [112]
-	REC_func_5014A95C_Records	p0=Str_1_37, x4="\x88'@H"
-	REC_func_5014A95C_Records	x4="\x18'@H"
-	REC_func_5014A95C_Records	p0=Str_empty_743, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_3_29, x4="\xA8'@H"
-	REC_func_5014A95C_Records	x4="8'@H"
-	REC_func_5014A95C_Records	p0=Str_empty_742, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_5_22, x4="\xC8'@H"
-	REC_func_5014A95C_Records	x4="X'@H"	# [120]
-	REC_func_5014A95C_Records	p0=Str_empty_734, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_7_10, x4="\xE8'@H"
-	REC_func_5014A95C_Records	x4="\xA4\x1E@H"
-	REC_func_5014A95C_Records	p0=Str_AP, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402640, x4="P&@H"
-	REC_func_5014A95C_Records	x4="p&@H"
-	REC_func_5014A95C_Records	x4="\x14\x1B@H"
-	REC_func_5014A95C_Records	p0=Str_empty_793, x4="$\x1B@H"	# [128]
-	REC_func_5014A95C_Records	p0=Str_empty_792, x4="\xE4\x1A@H"
-	REC_func_5014A95C_Records	p0=Str_empty_796, x4="\xF4\x1A@H"
-	REC_func_5014A95C_Records	x4="d\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_790, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_C_26, x4="t\x1B@H"
-	REC_func_5014A95C_Records	p0=Str_empty_791, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401A94, x4="\xA4\x1A@H"
-	REC_func_5014A95C_Records	p0=Str_empty_795, x4="\xB4\x1A@H"	# [136]
-	REC_func_5014A95C_Records	x4="\x84\x1B@H"
-	REC_func_5014A95C_Records	x4="D\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_784, x4="t\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_768, x4="\x94\x1B@H"
-	REC_func_5014A95C_Records	p0=Str_empty_788, x4="\xB4\x1B@H"
-	REC_func_5014A95C_Records	p0=Str_empty_766, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_785, x4="$\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_787, x4="\xE4\x1B@H"	# [144]
-	REC_func_5014A95C_Records	p0=Str_empty_786, x4="\x14\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_767, x4="\xC4\x1B@H"
-	REC_func_5014A95C_Records	x4="T\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_769, x4="\xC4\x1C@H"
-	REC_func_5014A95C_Records	p0=Str_empty_752, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402304, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_4840237C, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402394, x4="\x00\x00\x00\x00"	# [152]
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401CE4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401CF4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401D04, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"	# [160]
-	REC_func_5014A95C_Records	p0=Str_empty_747, x4="\xA4!@H"
-	REC_func_5014A95C_Records	x4="<$@H"
-	REC_func_5014A95C_Records	x4="\xC8!@H"
-	REC_func_5014A95C_Records	p0=Str_empty_746, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_4840244C, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"	# [168]
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_748, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48402154, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484023A4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484023C4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484023E4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484023F4, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_4840242C, x4="\x00\x00\x00\x00"	# [176]
-	REC_func_5014A95C_Records	p0=data_4840245C, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484024CC, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_1261, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_4_33, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x0C$@H"
-	REC_func_5014A95C_Records	x4="\x1C$@H"
-	REC_func_5014A95C_Records	x4="l$@H"	# [184]
-	REC_func_5014A95C_Records	x4="|$@H"
-	REC_func_5014A95C_Records	x4="\x8C$@H"
-	REC_func_5014A95C_Records	x4="\x9C$@H"
-	REC_func_5014A95C_Records	x4="\xAC$@H"
-	REC_func_5014A95C_Records	x4="h\x19@H"
-	REC_func_5014A95C_Records	x4="\xB4\x19@H"
-	REC_func_5014A95C_Records	x4="\xC4\x19@H"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"	# [192]
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\xE4\x19@H"
-	REC_func_5014A95C_Records	p0=Str_empty_799, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401A58, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401A34, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="h\x1A@H"
-	REC_func_5014A95C_Records	p0=data_48401A78, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_4840210C, x4="\x1C!@H"	# [200]
-	REC_func_5014A95C_Records	x4="\x14\x1D@H"
-	REC_func_5014A95C_Records	p0=data_48401D24, x4="4\x1D@H"
-	REC_func_5014A95C_Records	p0=data_48401D44, x4="T\x1D@H"
-	REC_func_5014A95C_Records	p0=data_48401D64, x4="t\x1D@H"
-	REC_func_5014A95C_Records	p0=data_48401D84, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_48401D94, x4="\xA4\x1D@H"
-	REC_func_5014A95C_Records	p0=Str_P_22, x4="\xC4\x1D@H"
-	REC_func_5014A95C_Records	p0=Str_P_21, x4="\xE4\x1D@H"	# [208]
-	REC_func_5014A95C_Records	p0=Str_P_20, x4="\x04\x1E@H"
-	REC_func_5014A95C_Records	x4="\x14\x1E@H"
-	REC_func_5014A95C_Records	p0=Str_P_18, x4="D\x1E@H"
-	REC_func_5014A95C_Records	p0=Str_P_17, x4="4\x1E@H"
-	REC_func_5014A95C_Records	x4="d\x1E@H"
-	REC_func_5014A95C_Records	p0=Str_P_16, x4="\x84\x1E@H"
-	REC_func_5014A95C_Records	p0=Str_P_15, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_797, x4="$\x1A@H"	# [216]
-	REC_func_5014A95C_Records	x4="(\"@H"
-	REC_func_5014A95C_Records	p0=data_48402628, x4="`&@H"
-	REC_func_5014A95C_Records	x4="\x14\x1F@H"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=data_484024BC, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_empty_744, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	p0=Str_0_28, x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"	# [224]
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
-	REC_func_5014A95C_Records	x4="\x00\x00\x00\x00"
+func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by func_5014A95C 0x5014A95C `mov (a1), d1`; func_5014A95C_entry_L20 0x5014A97E `mov (a1), a0`; func_5014A95C_entry_L20 0x5014A97E `movbu (4, a1), d1` (+2)
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_59, f4=1, f5=1, x6="\x00\x00"	# [0]
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_60, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_61, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_62, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=data_48402FAC, x6="\x00\x00"	# [8]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_49, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=data_48404E68, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_56, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_57, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_58, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_56, x6="\x00\x00"	# [16]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_50, f4=52, f5=40, x6="@H"
+	REC_func_5014A95C_Records	f4=128, f5=43, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_1254, f4=144, f5=43, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_701, f4=24, f5=50, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_699, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_700, f4=84, f5=40, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_703, f4=224, f5=43, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_702, x6="\x00\x00"	# [24]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_38, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_1256, f4=148, f5=40, x6="@H"
+	REC_func_5014A95C_Records	f4=248, f5=49, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_707, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_1257, f4=132, f5=40, x6="@H"
+	REC_func_5014A95C_Records	f4=232, f5=49, x6="@H"
+	REC_func_5014A95C_Records	f4=248, f5=47, x6="@H"	# [32]
+	REC_func_5014A95C_Records	p0=Str_A_44, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_G_23, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_H_13, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_I_9, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_J_8, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_K_8, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_L_10, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_M_8, x6="\x00\x00"	# [40]
+	REC_func_5014A95C_Records	p0=Str_N_8, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_P_15, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_Q_7, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_R_6, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_S_6, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_51, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_54, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_53, x6="\x00\x00"	# [48]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_52, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_55, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_39, x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=192, f5=40, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_40, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_41, f4=8, f5=41, x6="@H"
+	REC_func_5014A95C_Records	f4=32, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_42, x6="\x00\x00"	# [56]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_43, f4=80, f5=41, x6="@H"
+	REC_func_5014A95C_Records	f4=96, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_44, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_45, f4=144, f5=41, x6="@H"
+	REC_func_5014A95C_Records	f4=160, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_46, f4=192, f5=41, x6="@H"
+	REC_func_5014A95C_Records	f4=208, f5=41, x6="@H"
+	REC_func_5014A95C_Records	f4=224, f5=41, x6="@H"	# [64]
+	REC_func_5014A95C_Records	f4=240, f5=41, x6="@H"
+	REC_func_5014A95C_Records	f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=16, f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=32, f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=48, f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=64, f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=80, f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=96, f5=42, x6="@H"	# [72]
+	REC_func_5014A95C_Records	f4=112, f5=42, x6="@H"
+	REC_func_5014A95C_Records	f4=128, f5=42, x6="@H"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=8, f5=43, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_47, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_48, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_706, f4=48, f5=43, x6="@H"
+	REC_func_5014A95C_Records	f4=80, f5=43, x6="@H"	# [80]
+	REC_func_5014A95C_Records	p0=Str_empty_705, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=64, f5=43, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_704, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_747, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_1262, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_32, f4=184, f5=37, x6="@H"
+	REC_func_5014A95C_Records	f4=56, f5=34, x6="@H"	# [88]
+	REC_func_5014A95C_Records	f4=88, f5=37, x6="@H"
+	REC_func_5014A95C_Records	f4=120, f5=37, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_31, f4=168, f5=37, x6="@H"
+	REC_func_5014A95C_Records	f4=136, f5=37, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_17, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_33, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_34, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_30, x6="\x00\x00"	# [96]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_0, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_37, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_743, f4=240, f5=33, x6="@H"
+	REC_func_5014A95C_Records	f4=144, f5=34, x6="@H"
+	REC_func_5014A95C_Records	f4=148, f5=25, x6="@H"
+	REC_func_5014A95C_Records	f4=236, f5=34, x6="@H"
+	REC_func_5014A95C_Records	f4=192, f5=34, x6="@H"
+	REC_func_5014A95C_Records	f4=196, f5=30, x6="@H"	# [104]
+	REC_func_5014A95C_Records	f4=212, f5=30, x6="@H"
+	REC_func_5014A95C_Records	f4=228, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_13, f4=4, f5=31, x6="@H"
+	REC_func_5014A95C_Records	f4=236, f5=32, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_14, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=248, f5=38, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_8_12, x6="\x00\x00"	# [112]
+	REC_func_5014A95C_Records	p0=Str_1_37, f4=136, f5=39, x6="@H"
+	REC_func_5014A95C_Records	f4=24, f5=39, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_734, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_3_29, f4=168, f5=39, x6="@H"
+	REC_func_5014A95C_Records	f4=56, f5=39, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_709, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_5_22, f4=200, f5=39, x6="@H"
+	REC_func_5014A95C_Records	f4=88, f5=39, x6="@H"	# [120]
+	REC_func_5014A95C_Records	p0=Str_empty_708, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_7_10, f4=232, f5=39, x6="@H"
+	REC_func_5014A95C_Records	f4=164, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_AP, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_36, f4=80, f5=38, x6="@H"
+	REC_func_5014A95C_Records	f4=112, f5=38, x6="@H"
+	REC_func_5014A95C_Records	f4=20, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_791, f4=36, f5=27, x6="@H"	# [128]
+	REC_func_5014A95C_Records	p0=Str_empty_790, f4=228, f5=26, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_793, f4=244, f5=26, x6="@H"
+	REC_func_5014A95C_Records	f4=100, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_787, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_C_27, f4=116, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_788, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_4, f4=164, f5=26, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_792, f4=180, f5=26, x6="@H"	# [136]
+	REC_func_5014A95C_Records	f4=132, f5=27, x6="@H"
+	REC_func_5014A95C_Records	f4=68, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_768, f4=116, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_766, f4=148, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_786, f4=180, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_751, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_769, f4=36, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_785, f4=228, f5=27, x6="@H"	# [144]
+	REC_func_5014A95C_Records	p0=Str_empty_784, f4=20, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_752, f4=196, f5=27, x6="@H"
+	REC_func_5014A95C_Records	f4=84, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_767, f4=196, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_748, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_18, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_19, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_20, x6="\x00\x00"	# [152]
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_5, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_6, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_7, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"	# [160]
+	REC_func_5014A95C_Records	p0=Str_empty_745, f4=164, f5=33, x6="@H"
+	REC_func_5014A95C_Records	f4=60, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=200, f5=33, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_744, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_26, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"	# [168]
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_746, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_16, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_21, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_22, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_23, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_24, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_25, x6="\x00\x00"	# [176]
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_27, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_29, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_1261, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_4_33, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=12, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=28, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=108, f5=36, x6="@H"	# [184]
+	REC_func_5014A95C_Records	f4=124, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=140, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=156, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=172, f5=36, x6="@H"
+	REC_func_5014A95C_Records	f4=104, f5=25, x6="@H"
+	REC_func_5014A95C_Records	f4=180, f5=25, x6="@H"
+	REC_func_5014A95C_Records	f4=196, f5=25, x6="@H"
+	REC_func_5014A95C_Records	x6="\x00\x00"	# [192]
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=228, f5=25, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_empty_796, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_2, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_1, x6="\x00\x00"
+	REC_func_5014A95C_Records	f4=104, f5=26, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_3, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_15, f4=28, f5=33, x6="@H"	# [200]
+	REC_func_5014A95C_Records	f4=20, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_8, f4=52, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_9, f4=84, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_10, f4=116, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_11, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_12, f4=164, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_P_28, f4=196, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_P_22, f4=228, f5=29, x6="@H"	# [208]
+	REC_func_5014A95C_Records	p0=Str_P_21, f4=4, f5=30, x6="@H"
+	REC_func_5014A95C_Records	f4=20, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_P_20, f4=68, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_P_18, f4=52, f5=30, x6="@H"
+	REC_func_5014A95C_Records	f4=100, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_P_17, f4=132, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=Str_P_16, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_795, f4=36, f5=26, x6="@H"	# [216]
+	REC_func_5014A95C_Records	f4=40, f5=34, x6="@H"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_35, f4=96, f5=38, x6="@H"
+	REC_func_5014A95C_Records	f4=20, f5=31, x6="@H"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_28, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_empty_742, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=Str_0_27, x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"	# [224]
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
+	REC_func_5014A95C_Records	x6="\x00\x00"
 data_48405598:
 	.space	4, 0x00
 
@@ -1960,8 +2253,16 @@ func_50148A41_Table_2:	# 2 x u8, 1..2; read by func_50148A41_entry : `movbu	(d1,
 func_5014AD97_Table:	# 11 x u16, 0..40; read by func_5014AD97_L36 0x5014ADCD: `movhu	(d1, a1), d2`
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_5014AD97_Table
-data_484059F8:
-.incbin_range "baserom/kn2400_program.rom", 0x0059F8, 0x005A04
+
+func_5018CA20_Var_6:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_5:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_7:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	1
+
 func_501440A5_Table:	# 12 x u32, 1343504595..1343504597; read by func_501440A5_entry_L1c 0x501440C6: `mov	(d0, a0), a0`
 	tab_u32	1343504595, 1343504595, 1343504595, 1343504595, 1343504595, 1343504595, 1343504595, 1343504595	# [0]
 	tab_u32	1343504595, 1343504597, 1343504597, 1343504595	# [8]
@@ -2108,96 +2409,25 @@ func_5014AB10_Table:	# 10 x u32, 1343531814..1343531814; read by func_5014AB10 0
 	tab_u32	1343531814, 1343531814, 1343531814, 1343531814, 1343531814, 1343531814, 1343531814, 1343531814	# [0]
 	tab_u32	1343531814, 1343531814	# [8]
 
-func_5014AF95_entry_L1a_Records:	# 32 x REC_func_5014AF95_entry_L1a_Records (8 bytes each); read by func_5014AF95_entry_L1a 0x5014AFB4 `mov (a0), d1`
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"	# [0]
-	REC_func_5014AF95_entry_L1a_Records	f0=1, x4="I\xB0\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=130, x4="\xE4\xAF\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=129, x4="3\xB1\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=71, x4="4\xB5\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=7, x4="7\xB6\x14P"	# [8]
-	REC_func_5014AF95_entry_L1a_Records	f0=73, x4="\xB9\xB6\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=74, x4="\xB2\xB4\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=10, x4="\xB6\xB5\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=72, x4=":\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=13, x4="-\xB3\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=16, x4="\xA9\xB1\x14P"	# [16]
-	REC_func_5014AF95_entry_L1a_Records	f0=17, x4="+\xB2\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=182, x4="\xAD\xB0\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=183, x4="\xCF\xB0\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"	# [24]
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=91, x4="\xAF\xB3\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=93, x4="0\xB4\x14P"
-	REC_func_5014AF95_entry_L1a_Records	x4="\xB8\xB7\x14P"
-	REC_func_5014AF95_entry_L1a_Records	f0=95, x4="\xAC\xB2\x14P"
-data_484062CC:
-.incbin_range "baserom/kn2400_program.rom", 0x0062CC, 0x00634C
+func_5014AF95_entry_L1a_Records:	# 1 x REC_func_5014AF95_entry_L1a_Records (8 bytes each); read by func_5014AF95_entry_L1a 0x5014AFB4 `mov (a0), d1`; func_5014AF95_entry_L42 0x5014AFDC `mov (a0), d1`; func_5014AF95_entry_L45 0x5014AFDF `mov (4, a0), a0`
+	REC_func_5014AF95_entry_L1a_Records	p4=func_5014AF95_entry_L81e
+.incbin_range "baserom/kn2400_program.rom", 0x0061D4, 0x0062CC
+func_5014BED0_entry_L44_Records:	# 1 x REC_func_5014BED0_entry_L44_Records (8 bytes each); read by func_5014BED0_entry_L44 0x5014BF19 `mov (a0), d0`; func_5014BED0_entry_L66 0x5014BF3B `mov (a0), d0`; func_5014BED0_entry_L69 0x5014BF3E `mov (4, a0), a0`
+	REC_func_5014BED0_entry_L44_Records	p4=func_5014BED0_entry_L104
+.incbin_range "baserom/kn2400_program.rom", 0x0062D4, 0x00634C
 
 func_5014D807_Table:	# 16 x u8, 3..18; read by func_5014D807_entry : `movbu	(d0, a0), d0`
 	tab_u8	16, 17, 18, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 
-func_5014CCDF_Records:	# 16 x REC_func_5014CCDF_Records (8 bytes each); read by func_5014CCDF 0x5014CCDF `mov (a0), d1`
-	REC_func_5014CCDF_Records	x4="6\xCD\x14P"	# [0]
-	REC_func_5014CCDF_Records	f0=1, x4="\x1E\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=97, x4="#\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=113, x4="(\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=33, x4="-\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=129, x4="-\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=145, x4="-\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=177, x4="-\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=193, x4="-\xCD\x14P"	# [8]
-	REC_func_5014CCDF_Records	f0=209, x4="-\xCD\x14P"
-	REC_func_5014CCDF_Records	f0=225, x4="-\xCD\x14P"
-	REC_func_5014CCDF_Records	x4="6\xCD\x14P"
-	REC_func_5014CCDF_Records	x4="6\xCD\x14P"
-	REC_func_5014CCDF_Records	x4="6\xCD\x14P"
-	REC_func_5014CCDF_Records	x4="6\xCD\x14P"
-	REC_func_5014CCDF_Records	x4="6\xCD\x14P"
-func_5014CD3B_Records:	# 16 x REC_func_5014CD3B_Records (8 bytes each); read by func_5014CD3B 0x5014CD3B `mov (a0), d1`
-	REC_func_5014CD3B_Records	x4="\x9C\xCD\x14P"	# [0]
-	REC_func_5014CD3B_Records	f0=1, x4="x\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=97, x4="\x80\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=113, x4="\x88\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=33, x4="\x90\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=129, x4="\x90\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=145, x4="\x90\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=177, x4="\x90\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=193, x4="\x90\xCD\x14P"	# [8]
-	REC_func_5014CD3B_Records	f0=209, x4="\x90\xCD\x14P"
-	REC_func_5014CD3B_Records	f0=225, x4="\x90\xCD\x14P"
-	REC_func_5014CD3B_Records	x4="\x9C\xCD\x14P"
-	REC_func_5014CD3B_Records	x4="\x9C\xCD\x14P"
-	REC_func_5014CD3B_Records	x4="\x9C\xCD\x14P"
-	REC_func_5014CD3B_Records	x4="\x9C\xCD\x14P"
-	REC_func_5014CD3B_Records	x4="\x9C\xCD\x14P"
-func_5014D4C5_L25_Records:	# 16 x REC_func_5014D4C5_L25_Records (8 bytes each); read by func_5014D4C5_L25 0x5014D4EA `mov (a0), d0`
-	REC_func_5014D4C5_L25_Records	x4="\x03\xD8\x14P"	# [0]
-	REC_func_5014D4C5_L25_Records	f0=1, x4="r\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=2, x4="\x1F\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=3, x4="\"\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=33, x4="\xAE\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=34, x4="\xAE\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=16449, x4="\xAE\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=65, x4="\xEC\xD5\x14P"
-	REC_func_5014D4C5_L25_Records	f0=67, x4="\xEC\xD5\x14P"	# [8]
-	REC_func_5014D4C5_L25_Records	f0=0x1FBFC1, x4=")\xD6\x14P"
-	REC_func_5014D4C5_L25_Records	f0=0x1FBFC2, x4="\xAF\xD6\x14P"
-	REC_func_5014D4C5_L25_Records	f0=0x5F7FC6, x4="^\xD7\x14P"
-	REC_func_5014D4C5_L25_Records	f0=0x5F8FC1, x4="\x99\xD7\x14P"
-	REC_func_5014D4C5_L25_Records	f0=0x5F8FC2, x4="\xA2\xD7\x14P"
-	REC_func_5014D4C5_L25_Records	f0=0x6FA067, x4="\xE9\xD7\x14P"
-	REC_func_5014D4C5_L25_Records	x4="\x03\xD8\x14P"
+func_5014CCDF_Records:	# 1 x REC_func_5014CCDF_Records (8 bytes each); read by func_5014CCDF 0x5014CCDF `mov (a0), d1`; func_5014CCDF_entry_L35 0x5014CD16 `mov (a0), d1`; func_5014CCDF_entry_L38 0x5014CD19 `mov (4, a0), a0`
+	REC_func_5014CCDF_Records	p4=func_5014CCDF_entry_L55
+.incbin_range "baserom/kn2400_program.rom", 0x006364, 0x0063DC
+func_5014CD3B_Records:	# 1 x REC_func_5014CD3B_Records (8 bytes each); read by func_5014CD3B 0x5014CD3B `mov (a0), d1`; func_5014CD3B_entry_L33 0x5014CD70 `mov (a0), d1`; func_5014CD3B_entry_L36 0x5014CD73 `mov (4, a0), a0`
+	REC_func_5014CD3B_Records	p4=func_5014CD3B_entry_L5f
+.incbin_range "baserom/kn2400_program.rom", 0x0063E4, 0x00645C
+func_5014D4C5_L25_Records:	# 1 x REC_func_5014D4C5_L25_Records (8 bytes each); read by func_5014D4C5_L25 0x5014D4EA `mov (a0), d0`; func_5014D4C5_L52 0x5014D517 `mov (a0), d0`; func_5014D4C5_L55 0x5014D51A `mov (4, a0), a0`
+	REC_func_5014D4C5_L25_Records	p4=func_5014D4C5_L33e
+.incbin_range "baserom/kn2400_program.rom", 0x006464, 0x0064DC
 
 Str_ZZ_2:	.asciz "ZZ"
 # census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -2289,23 +2519,9 @@ func_5014E6D4_Table:	# 10 x u32, 1343547157..1343547371; read by func_5014E6D4_L
 	tab_u32	1343547157, 1343547182, 1343547206, 1343547231, 1343547256, 1343547279, 1343547302, 1343547325	# [0]
 	tab_u32	1343547349, 1343547371	# [8]
 
-func_50150302_entry_L16_Records:	# 16 x REC_func_50150302_entry_L16_Records (8 bytes each); read by func_50150302_entry_L16 0x5015031D `mov (a0), d0`
-	REC_func_50150302_entry_L16_Records	x4="\x99\x03\x15P"	# [0]
-	REC_func_50150302_entry_L16_Records	f0=1, x4="Q\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=33, x4="Y\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=97, x4="a\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=113, x4="i\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=129, x4="q\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=145, x4="q\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=177, x4="y\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=193, x4="\x81\x03\x15P"	# [8]
-	REC_func_50150302_entry_L16_Records	f0=209, x4="\x89\x03\x15P"
-	REC_func_50150302_entry_L16_Records	f0=225, x4="\x91\x03\x15P"
-	REC_func_50150302_entry_L16_Records	x4="\x99\x03\x15P"
-	REC_func_50150302_entry_L16_Records	x4="\x99\x03\x15P"
-	REC_func_50150302_entry_L16_Records	x4="\x99\x03\x15P"
-	REC_func_50150302_entry_L16_Records	x4="\x99\x03\x15P"
-	REC_func_50150302_entry_L16_Records	x4="\x99\x03\x15P"
+func_50150302_entry_L16_Records:	# 1 x REC_func_50150302_entry_L16_Records (8 bytes each); read by func_50150302_entry_L16 0x5015031D `mov (a0), d0`; func_50150302_entry_L42 0x50150349 `mov (a0), d0`; func_50150302_entry_L45 0x5015034C `mov (4, a0), a0`
+	REC_func_50150302_entry_L16_Records	p4=func_50150302_entry_L92
+.incbin_range "baserom/kn2400_program.rom", 0x006F6C, 0x006FE4
 
 func_50150961_Table:	# 8 x u16, 0..19276; read by func_50150961 0x50150961: `movhu	(a1), d0`
 	tab_u16	19276, 71, 0, 0, 0, 0, 1872, 24
@@ -2387,142 +2603,80 @@ func_50152B5B_Table:	# 23 x u32, 1343564661..1343565119; read by func_50152B5B_L
 	tab_u32	1343564873, 1343564957, 1343564961, 1343564985, 1343564989, 1343564993, 1343564997, 1343565001	# [8]
 	tab_u32	1343565113, 1343565116, 1343565025, 1343565047, 1343565069, 1343565119, 1343565091	# [16]
 
-func_5015350E_entry_Lb62_Records:	# 64 x REC_func_5015350E_entry_Lb62_Records (8 bytes each); read by func_5015350E_entry_Lb62 0x50154075 `mov (a0), d0`
-	REC_func_5015350E_entry_Lb62_Records	f0=64, x4="\xE6A\x15P"	# [0]
-	REC_func_5015350E_entry_Lb62_Records	f0=1, x4="\xAB@\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=65, x4="\x1CB\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=66, x4="'B\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=4, x4="\xCC@\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=5, x4="\xED@\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=67, x4="HB\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=7, x4="\xF8@\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=71, x4="iB\x15P"	# [8]
-	REC_func_5015350E_entry_Lb62_Records	f0=72, x4="\x8AB\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=10, x4="\x19A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=11, x4=":A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=12, x4="[A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=13, x4="[A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=73, x4="\xABB\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=74, x4="\xCCB\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=16, x4="bA\x15P"	# [16]
-	REC_func_5015350E_entry_Lb62_Records	f0=17, x4="\x83A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=18, x4="\xA4A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=19, x4="\xC5A\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=75, x4="\xEDB\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=76, x4="\x0EC\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=77, x4="/C\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=78, x4="PC\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=80, x4="qC\x15P"	# [24]
-	REC_func_5015350E_entry_Lb62_Records	f0=81, x4="qC\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=82, x4="qC\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=83, x4="qC\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=91, x4="|C\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=92, x4="\x87C\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=93, x4="\xA8C\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=94, x4="\xB3C\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=95, x4="\xBEC\x15P"	# [32]
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"	# [40]
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"	# [48]
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=120, x4="\xC9C\x15P"	# [56]
-	REC_func_5015350E_entry_Lb62_Records	f0=121, x4="\xEAC\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=123, x4="\x0BD\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=124, x4=")D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	f0=126, x4="+D\x15P"
-	REC_func_5015350E_entry_Lb62_Records	x4="5D\x15P"
+func_5015350E_entry_Lb62_Records:	# 64 x REC_func_5015350E_entry_Lb62_Records (8 bytes each); read by func_5015350E_entry_Lb62 0x50154075 `mov (a0), d0`; func_5015350E_entry_Lb90 0x501540A3 `mov (a0), d0`; func_5015350E_entry_Lb93 0x501540A6 `mov (4, a0), a0`
+	REC_func_5015350E_entry_Lb62_Records	f0=64, f4=0x501541E6	# [0]
+	REC_func_5015350E_entry_Lb62_Records	f0=1, f4=0x501540AB
+	REC_func_5015350E_entry_Lb62_Records	f0=65, f4=0x5015421C
+	REC_func_5015350E_entry_Lb62_Records	f0=66, f4=0x50154227
+	REC_func_5015350E_entry_Lb62_Records	f0=4, f4=0x501540CC
+	REC_func_5015350E_entry_Lb62_Records	f0=5, f4=0x501540ED
+	REC_func_5015350E_entry_Lb62_Records	f0=67, f4=0x50154248
+	REC_func_5015350E_entry_Lb62_Records	f0=7, f4=0x501540F8
+	REC_func_5015350E_entry_Lb62_Records	f0=71, f4=0x50154269	# [8]
+	REC_func_5015350E_entry_Lb62_Records	f0=72, f4=0x5015428A
+	REC_func_5015350E_entry_Lb62_Records	f0=10, f4=0x50154119
+	REC_func_5015350E_entry_Lb62_Records	f0=11, f4=0x5015413A
+	REC_func_5015350E_entry_Lb62_Records	f0=12, f4=0x5015415B
+	REC_func_5015350E_entry_Lb62_Records	f0=13, f4=0x5015415B
+	REC_func_5015350E_entry_Lb62_Records	f0=73, f4=0x501542AB
+	REC_func_5015350E_entry_Lb62_Records	f0=74, f4=0x501542CC
+	REC_func_5015350E_entry_Lb62_Records	f0=16, f4=0x50154162	# [16]
+	REC_func_5015350E_entry_Lb62_Records	f0=17, f4=0x50154183
+	REC_func_5015350E_entry_Lb62_Records	f0=18, f4=0x501541A4
+	REC_func_5015350E_entry_Lb62_Records	f0=19, f4=0x501541C5
+	REC_func_5015350E_entry_Lb62_Records	f0=75, f4=0x501542ED
+	REC_func_5015350E_entry_Lb62_Records	f0=76, f4=0x5015430E
+	REC_func_5015350E_entry_Lb62_Records	f0=77, f4=0x5015432F
+	REC_func_5015350E_entry_Lb62_Records	f0=78, f4=0x50154350
+	REC_func_5015350E_entry_Lb62_Records	f0=80, f4=0x50154371	# [24]
+	REC_func_5015350E_entry_Lb62_Records	f0=81, f4=0x50154371
+	REC_func_5015350E_entry_Lb62_Records	f0=82, f4=0x50154371
+	REC_func_5015350E_entry_Lb62_Records	f0=83, f4=0x50154371
+	REC_func_5015350E_entry_Lb62_Records	f0=91, f4=0x5015437C
+	REC_func_5015350E_entry_Lb62_Records	f0=92, f4=0x50154387
+	REC_func_5015350E_entry_Lb62_Records	f0=93, f4=0x501543A8
+	REC_func_5015350E_entry_Lb62_Records	f0=94, f4=0x501543B3
+	REC_func_5015350E_entry_Lb62_Records	f0=95, f4=0x501543BE	# [32]
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435	# [40]
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435	# [48]
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f0=120, f4=0x501543C9	# [56]
+	REC_func_5015350E_entry_Lb62_Records	f0=121, f4=0x501543EA
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f0=123, f4=0x5015440B
+	REC_func_5015350E_entry_Lb62_Records	f0=124, f4=0x50154429
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
+	REC_func_5015350E_entry_Lb62_Records	f0=126, f4=0x5015442B
+	REC_func_5015350E_entry_Lb62_Records	f4=0x50154435
 
 func_5015350E_Table:	# 20 x u32, 1343569079..1343569266; read by func_5015350E_entry_L797 0x50153CAA: `mov	(d0, a0), a0`
 	tab_u32	1343569079, 1343569079, 1343569079, 1343569079, 1343569079, 1343569079, 1343569266, 1343569266	# [0]
 	tab_u32	1343569266, 1343569266, 1343569266, 1343569266, 1343569266, 1343569266, 1343569266, 1343569266	# [8]
 	tab_u32	1343569191, 1343569191, 1343569191, 1343569191	# [16]
 
-func_5015350E_entry_L50a_Records:	# 64 x REC_func_5015350E_entry_L50a_Records (8 bytes each); read by func_5015350E_entry_L50a 0x50153A1D `mov (a0), d0`
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"	# [0]
-	REC_func_5015350E_entry_L50a_Records	f0=1, x4="S:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=193, x4="\x1C;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=194, x4=":;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=195, x4="X;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=196, x4="v;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=197, x4="\x94;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=198, x4="\xB2;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=199, x4="\xD0;\x15P"	# [8]
-	REC_func_5015350E_entry_L50a_Records	f0=137, x4="\xFB:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=138, x4="\xFB:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=139, x4="\xFB:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=140, x4="\xFB:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=200, x4="\xEE;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=201, x4="\x0C<\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=202, x4="*<\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=203, x4="H<\x15P"	# [16]
-	REC_func_5015350E_entry_L50a_Records	f0=17, x4="q:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=18, x4="\x92:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=145, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=146, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=147, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=148, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=149, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=150, x4="\x06;\x15P"	# [24]
-	REC_func_5015350E_entry_L50a_Records	f0=151, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=152, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=153, x4="\x06;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=92, x4="\xCF:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=93, x4="\xDA:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=94, x4="\xE5:\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=154, x4="\x11;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=96, x4="\xF0:\x15P"	# [32]
-	REC_func_5015350E_entry_L50a_Records	f0=155, x4="\x11;\x15P"
-	REC_func_5015350E_entry_L50a_Records	f0=204, x4="f<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"	# [40]
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"	# [48]
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"	# [56]
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
-	REC_func_5015350E_entry_L50a_Records	x4="\x84<\x15P"
+func_5015350E_entry_L50a_Records:	# 1 x REC_func_5015350E_entry_L50a_Records (8 bytes each); read by func_5015350E_entry_L50a 0x50153A1D `mov (a0), d0`; func_5015350E_entry_L538 0x50153A4B `mov (a0), d0`; func_5015350E_entry_L53b 0x50153A4E `mov (4, a0), a0`
+	REC_func_5015350E_entry_L50a_Records	p4=func_5015350E_entry_L771
+.incbin_range "baserom/kn2400_program.rom", 0x007460, 0x007658
 
 func_5015350E_Table_2:	# 38 x u32, 1343568130..1343568229; read by func_5015350E_entry_L3e2 0x501538F5: `mov	(d0, a0), a0`
 	tab_u32	1343568130, 1343568229, 1343568229, 1343568229, 1343568141, 1343568152, 1343568229, 1343568229	# [0]
@@ -2531,39 +2685,9 @@ func_5015350E_Table_2:	# 38 x u32, 1343568130..1343568229; read by func_5015350E
 	tab_u32	1343568229, 1343568229, 1343568229, 1343568229, 1343568229, 1343568229, 1343568229, 1343568229	# [24]
 	tab_u32	1343568196, 1343568229, 1343568229, 1343568229, 1343568207, 1343568218	# [32]
 
-func_5015350E_entry_L30a_Records:	# 32 x REC_func_5015350E_entry_L30a_Records (8 bytes each); read by func_5015350E_entry_L30a 0x5015381D `mov (a0), d0`
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"	# [0]
-	REC_func_5015350E_entry_L30a_Records	f0=1, x4="R8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=257, x4="j8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=513, x4="\x828\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=769, x4="\x8D8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1025, x4="\xA38\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1026, x4="\xAE8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1027, x4="\xAE8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1281, x4="\xB98\x15P"	# [8]
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"	# [16]
-	REC_func_5015350E_entry_L30a_Records	f0=17, x4="Z8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=18, x4="]8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=273, x4="r8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=274, x4="u8\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=785, x4="\x988\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=786, x4="\x988\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1297, x4="\xC48\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1298, x4="\xC48\x15P"	# [24]
-	REC_func_5015350E_entry_L30a_Records	f0=1299, x4="\xC48\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1300, x4="\xC48\x15P"
-	REC_func_5015350E_entry_L30a_Records	f0=1301, x4="\xC48\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
-	REC_func_5015350E_entry_L30a_Records	x4="\xCF8\x15P"
+func_5015350E_entry_L30a_Records:	# 1 x REC_func_5015350E_entry_L30a_Records (8 bytes each); read by func_5015350E_entry_L30a 0x5015381D `mov (a0), d0`; func_5015350E_entry_L337 0x5015384A `mov (a0), d0`; func_5015350E_entry_L33a 0x5015384D `mov (4, a0), a0`
+	REC_func_5015350E_entry_L30a_Records	p4=func_5015350E_entry_L3bc
+.incbin_range "baserom/kn2400_program.rom", 0x0076F8, 0x0077F0
 
 func_5015350E_Table_3:	# 49 x u32, 1343567575..1343567864; read by func_5015350E_entry_L1b7 0x501536CA: `mov	(d0, a0), a0`
 	tab_u32	1343567575, 1343567590, 1343567864, 1343567605, 1343567864, 1343567620, 1343567635, 1343567650	# [0]
@@ -2574,62 +2698,20 @@ func_5015350E_Table_3:	# 49 x u32, 1343567575..1343567864; read by func_5015350E
 	tab_u32	1343567826, 1343567834, 1343567864, 1343567864, 1343567864, 1343567864, 1343567864, 1343567837	# [40]
 	tab_u32	1343567849	# [48]
 
-func_5015350E_entry_L6c_Records:	# 16 x REC_func_5015350E_entry_L6c_Records (8 bytes each); read by func_5015350E_entry_L6c 0x5015357F `mov (a0), d0`
-	REC_func_5015350E_entry_L6c_Records	x4="\xD69\x15P"	# [0]
-	REC_func_5015350E_entry_L6c_Records	f0=1, x4="\xB05\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=33, x4="\xF85\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=65, x4="\xFC5\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=81, x4="\xFF5\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=97, x4="\xA46\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=129, x4="\xAB6\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=161, x4="\xFF7\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=177, x4="\xD68\x15P"	# [8]
-	REC_func_5015350E_entry_L6c_Records	f0=193, x4="l9\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=209, x4="l9\x15P"
-	REC_func_5015350E_entry_L6c_Records	f0=225, x4="s9\x15P"
-	REC_func_5015350E_entry_L6c_Records	x4="\xD69\x15P"
-	REC_func_5015350E_entry_L6c_Records	x4="\xD69\x15P"
-	REC_func_5015350E_entry_L6c_Records	x4="\xD69\x15P"
-	REC_func_5015350E_entry_L6c_Records	x4="\xD69\x15P"
-func_5015350E_entry_L21_Records:	# 16 x REC_func_5015350E_entry_L21_Records (8 bytes each); read by func_5015350E_entry_L21 0x50153534 `mov (a0), d0`
-	REC_func_5015350E_entry_L21_Records	x4="\x81D\x15P"	# [0]
-	REC_func_5015350E_entry_L21_Records	f0=1, x4="e5\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=33, x4="\xDD9\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=97, x4="6>\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=113, x4="\n?\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=129, x4="\x11?\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=145, x4=";?\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=177, x4="p?\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=193, x4=";D\x15P"	# [8]
-	REC_func_5015350E_entry_L21_Records	f0=209, x4="ED\x15P"
-	REC_func_5015350E_entry_L21_Records	f0=225, x4="\\D\x15P"
-	REC_func_5015350E_entry_L21_Records	x4="\x81D\x15P"
-	REC_func_5015350E_entry_L21_Records	x4="\x81D\x15P"
-	REC_func_5015350E_entry_L21_Records	x4="\x81D\x15P"
-	REC_func_5015350E_entry_L21_Records	x4="\x81D\x15P"
-	REC_func_5015350E_entry_L21_Records	x4="\x81D\x15P"
+func_5015350E_entry_L6c_Records:	# 1 x REC_func_5015350E_entry_L6c_Records (8 bytes each); read by func_5015350E_entry_L6c 0x5015357F `mov (a0), d0`; func_5015350E_entry_L95 0x501535A8 `mov (a0), d0`; func_5015350E_entry_L98 0x501535AB `mov (4, a0), a0`
+	REC_func_5015350E_entry_L6c_Records	p4=func_5015350E_entry_L4c3
+.incbin_range "baserom/kn2400_program.rom", 0x0078BC, 0x007934
+func_5015350E_entry_L21_Records:	# 1 x REC_func_5015350E_entry_L21_Records (8 bytes each); read by func_5015350E_entry_L21 0x50153534 `mov (a0), d0`; func_5015350E_entry_L4a 0x5015355D `mov (a0), d0`; func_5015350E_entry_L4d 0x50153560 `mov (4, a0), a0`
+	REC_func_5015350E_entry_L21_Records	p4=func_5015350E_entry_Lf6e
+.incbin_range "baserom/kn2400_program.rom", 0x00793C, 0x0079B4
 
 func_50155E95_Table:	# 9 x u32, 1343577863..1343578879; read by func_50155E95_entry_L60 0x50155EFA: `mov	(d0, a0), a0`
 	tab_u32	1343577863, 1343577990, 1343578117, 1343578244, 1343578371, 1343578498, 1343578625, 1343578752	# [0]
 	tab_u32	1343578879	# [8]
 
-func_50156A88_entry_L21_Records:	# 16 x REC_func_50156A88_entry_L21_Records (8 bytes each); read by func_50156A88_entry_L21 0x50156AAE `mov (a0), d0`
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"	# [0]
-	REC_func_50156A88_entry_L21_Records	f0=1, x4="\xE5j\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=2, x4="\xE5j\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=242, x4="\x19k\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=243, x4="\x19k\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=513, x4="Ok\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=514, x4="Ok\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=515, x4="Ok\x15P"
-	REC_func_50156A88_entry_L21_Records	f0=516, x4="Ok\x15P"	# [8]
-	REC_func_50156A88_entry_L21_Records	f0=517, x4="Ok\x15P"
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"
-	REC_func_50156A88_entry_L21_Records	x4="\x88k\x15P"
+func_50156A88_entry_L21_Records:	# 1 x REC_func_50156A88_entry_L21_Records (8 bytes each); read by func_50156A88_entry_L21 0x50156AAE `mov (a0), d0`; func_50156A88_entry_L50 0x50156ADD `mov (a0), d0`; func_50156A88_entry_L53 0x50156AE0 `mov (4, a0), a0`
+	REC_func_50156A88_entry_L21_Records	p4=func_50156A88_entry_Lfb
+.incbin_range "baserom/kn2400_program.rom", 0x0079E0, 0x007A58
 
 func_50157128_Table:	# 12 x u32, 1343582526..1343582530; read by func_50157128 0x50157128: `mov	(d0, a0), a0`
 	tab_u32	1343582526, 1343582526, 1343582526, 1343582526, 1343582526, 1343582526, 1343582526, 1343582526	# [0]
@@ -2639,32 +2721,123 @@ func_501574C3_Table:	# 32 x u32, 1..2147483648; read by func_501574C3_L6 0x50157
 	tab_u32	256, 512, 1024, 2048, 4096, 8192, 16384, 32768	# [8]
 	tab_u32	65536, 131072, 262144, 524288, 1048576, 2097152, 4194304, 8388608	# [16]
 	tab_u32	16777216, 33554432, 67108864, 134217728, 268435456, 536870912, 1073741824, 2147483648	# [24]
-func_50157736_Table:	# 81 x u8, 0..255; read by func_50157736_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 127, 1, 1, 127, 2, 2, 127, 3, 3, 255, 4, 4, 223, 6	# [0]
-	tab_u8	5, 3, 11, 6, 255, 12, 7, 255, 13, 8, 255, 14, 9, 127, 15, 10	# [16]
-	tab_u8	255, 24, 11, 127, 25, 12, 127, 26, 13, 127, 27, 14, 127, 28, 15, 127	# [32]
-	tab_u8	29, 16, 127, 30, 17, 255, 34, 18, 15, 36, 19, 255, 37, 20, 255, 38	# [48]
-	tab_u8	21, 255, 39, 22, 255, 40, 23, 255, 41, 24, 255, 42, 25, 63, 0, 0	# [64]
-	tab_u8	255	# [80]
-func_50157736_Table_2:	# 21 x u8, 0..255; read by func_50157736_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 127, 1, 1, 127, 2, 2, 127, 4, 3, 64, 7, 4, 48, 8	# [0]
-	tab_u8	5, 255, 9, 6, 1	# [16]
-func_50157736_Table_3:	# 9 x u8, 0..255; read by func_50157736_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 7, 3, 1, 1, 4, 2, 255
-func_50157736_Table_4:	# 42 x u8, 0..136; read by func_50157736_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 136, 1, 1, 127, 2, 2, 127, 3, 3, 127, 4, 4, 127, 5	# [0]
-	tab_u8	5, 127, 6, 6, 127, 7, 7, 63, 14, 8, 127, 15, 9, 127, 16, 10	# [16]
-	tab_u8	127, 17, 11, 127, 18, 12, 127, 19, 13, 127	# [32]
-func_50157736_Table_5:	# 12 x u8, 0..255; read by func_50157736_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 4, 3, 1, 255, 4, 2, 15, 8, 3, 255
-func_50157736_Table_6:	# 11 x u8, 0..255; read by func_50157736_entry : `movbu	(a1), d0`
-	tab_u8	0, 0, 255, 1, 1, 255, 5, 0, 255, 255, 255
 
-func_50157E10_entry_L3_Records_p4_0:	# REC_func_50157E10_entry_L3_Records_p4 (995 bytes)
-	REC_func_50157E10_entry_L3_Records_p4	f0=255, x1="\x03\x00\xFF } \x03\x01\xFF } \x03\x02\xFF } \x03\x03\xFF } \x03\x04\xFF } \x03\x05\xFF } \x03\x06\xFF } \x03\x07\xFF } \x03\x08\xFF } \x03\x09\xFF } \x03\n\xFF } \x03\x0B\xFF } \x03\x0C\xFF } \x03\x0D\xFF } \x03\x0D\xFF } \x03\x0F\xFF } \x06\x10\x06\x11\xFF\x00\x00\x7F\x00\x01\x7F\x00\x02\x7F\x00\x03\xFF\x00\x04\xFF\x00\x05\xFF\x00\x06\x03\x06\x07\x06\x08\x06\x09\x06\n\x00\x0B\xFF\x00\x0C\xFF\x00\x0D\xFF\x00\x0E\x7F\x00\x0F\xFF\x00\x10\x7F\x00\x11\x7F\x00\x12\x7F\x00\x13\x7F\x00\x14\x7F\x00\x15\x7F\x00\x16\x7F\x00\x17\x7F\x00\x18\x7F\x03\x18\x7F\x00xl\x00\x19\x7F\x03\x19\x7F(X@\x00\x1A\x7F\x03\x1A\x7F\x00x\x1C\x00\x1B\x7F\x03\x1B\x7F(X@\x00\x1C\x7F\x00\x1D\x7F\x03\x1D\x7F(X@\x00\x1E\xFF\x00\x1F\x7F\x03\x1F\x7F\x00\x0C\x02\x00 \x7F\x00!\x7F\x00\"\x0F\x03\"\x0F\x00\x01\x00\x00#\x07\x03#\x07\x00\x07\x00\x00$\xFF\x04$\x0F\x06\n\x00\x04$\xF0`\xA0\x00\x00%\xFF\x04%\x0F\x06\n\x00\x04%\xF0`\xA0\x00\x00&\xFF\x03&\x0F\x00\x08\x00\x03&\xF0\x00\x80\x00\x00'\xFF\x03'\x0F\x00\x08\x00\x03'\xF0\x00\x80\x00\x00(\xFF\x03(\x0F\x00\x08\x00\x03(\xF0\x00\x80\x00\x00)\xFF\x03)\x0F\x00\x08\x00\x03)\xF0\x00\x80\x00\x00*?\x03*\x0F\x00\x08\x00\x06+\x00,\xFF\x00-\xFF\x00.\xFF\x00/\xFF\x000\xFF\x001\xFF\x002\xFF\x003\xFF\x004\xFF\x005\xFF\x006\xFF\x007\xFF\x008\xFF\x009\xFF\x00:'\x03:\x07\x00\x06\x03\x00;\xFF\x04;\xFF\x10\xFE\xFF\x00<\xFF\x00=\x7F\x00>\x7F\x00?\xFF\x00@\xFF\x00A\xFF\x00B\xFF\x00C\x1F\x06D\x06E\x06F\x06G\xFF\x00\x00\xFF\x00\x01\xFF\x00\x02'\x03\x02\x07\x00\x06\x03\x00\x03\xFF\x04\x03\xFF\x10\xFE\xFF\xFF\x00\x00\xFF\x04\x00\xFF\x10\xFE\xFF\x06\x01\xFF\x00\x00\xFF\x00\x01\x1F\x03\x01\x1F\x00\x11\x00\x00\x02\x7F\x03\x02\x7F\x00c\x00\x00\x03\xF7\x03\x03\xF0\x00\xB0\x00\x00\x04\xC0\x00\x05\x7F\x00\x06\xFF\x00\x07\xFF\xFF\x00\x00\xC1\x00\x01\x7F\x03\x01\x7F\x00cc\x00\x02\xFF\x00\x03\x7F\xFF\x00\x00\x7F\x00\x01\x7F\x00\x02\x7F\x00\x03?\x03\x03\x0F\x00\x05\x00\x00\x04O\x03\x04\x0F\x00\x05\x00\x00\x05\x02\x00\x06\x0F\x03\x06\x0F\x00\x03\x00\x00\x070\x00\x08\xFF\x00\x09\x01\x06\n\x06\x0B\x06\x0C\x06\x0D\xFF\x00\x00\x07\x06\x01\x06\x02\x00\x03\x03\x03\x04\xFF(X@\x06\x05\x06\x06\x06\x07\xFF\x00\x00\xA0\x00\x01\x7F\x00\x02\x7F\x00\x03\x7F\x00\x04\x7F\x00\x05\x7F\x00\x06\x7F\x00\x07?\x00\x08\xFF\x00\x09\x7F\x00\n\xFF\x00\x0B\x7F\x00\x0C\xFF\x00\x0D\x7F\x00\x0E\x7F\x00\x0F\x7F\x00\x10\x7F\x00\x11\x7F\x00\x12\x7F\x00\x13\x7F\x00\x14\x7F\x00\x15\x7F\x00\x16\x7F\x00\x17\x7F\x06\x18\x06\x19\x06\x1A\x06\x1B\x06\x1C\x06\x1D\xFF\x00\x00\xFF\x00\x01\xFF\x06\x02\x06\x03\x00\x04\xFF\x00\x05\xFF\x00\x06\xFF\x00\x07\xFF\x00\x08\xFF\x00\x09\xFF\x00\n\xFF\x00\x0B\xFF\x00\x0C\xFF\x00\x0D\xFF\xFF\x00\x00\x07\x00\x01\x7F\x00\x02\xFF\x03\x02\xFF4L@\x00\x03\xFF\x04\x03\xFF\x13\xFE\xFF\x00\x04\x0F\x03\x04\x0F\x00\x0D\x07\x00\x05\xFF\x03\x05\xFF\x01\x10\x02\x00\x06\xFF\x03\x06\xFF\x01\x10\x04\x00\x07\x07\x00\x08\xFF\x00\x09\x7F\x06\n\x06\x0B\x00\x0C\xFF\x00\x0D\xFF\x00\x0E\xFF\x00\x0F\xFF\x00\x10\xFF\x00\x11\xFF\x00\x12\xFF\x00\x13\xFF\xFF\x00\x00\xFF\x00\x01\xFF\x00\x02\x02\x06\x03\xFF\x00\x00\x03\x06\x01\xFF\x00\x00?\x00\x01\x10\x00\x02\xFF\x03\x02\xFF\xB6\xB7\xB6\x06\x03\x00\x04\xFF\x00\x05\xFF\x00\x06\xFF\x00\x07\xFF\x00\x08\xFF\x00\x09\xFF\x06\n\x06\x0B\x06\x0C\x06\x0D\x06\x0E\x06\x0F\x05\x10\x82\x05\x11\x01\x06\x12\x05\x13\x81\x06\x14\x00\x15\xFF\x00\x16\xFF\x06\x17\x06\x18\x06\x19\x06\x1A\x06\x1B\x00\x1C?\x00\x1D?\xFF\x00\x00\xFF\x00\x01\x0C\x00\x02\x1D\x03\x02\x18\x00\x08\x00\x00\x03\xC5\x06\x04\x06\x05\x00\x06\x08\x00\x07\xFC\x00\x08\xFF\x00\x09q\x06\n\x00\x0B\x03\x03\x0B\x03\x00\x02\x00\x00\x0C\xFF\x00\x0D\xFF\xFF"
-data_48407F9B:
-# census: opaque -- unknown-dump: 113 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x007F9B, 0x00800C
+func_50157736_Table:	# 27 x REC_func_50157736_Table (3 bytes each); read by func_50157736_entry_L10 0x5015774B `movbu (1, a1), d0`; func_50157736_entry_L10 0x5015774B `movbu (a0), d0`; func_50157736_entry_L10 0x5015774B `movbu (a1), d0` (+8)
+	REC_func_50157736_Table	f2=127	# [0]
+	REC_func_50157736_Table	f0=1, f1=1, f2=127
+	REC_func_50157736_Table	f0=2, f1=2, f2=127
+	REC_func_50157736_Table	f0=3, f1=3, f2=255
+	REC_func_50157736_Table	f0=4, f1=4, f2=223
+	REC_func_50157736_Table	f0=6, f1=5, f2=3
+	REC_func_50157736_Table	f0=11, f1=6, f2=255
+	REC_func_50157736_Table	f0=12, f1=7, f2=255
+	REC_func_50157736_Table	f0=13, f1=8, f2=255	# [8]
+	REC_func_50157736_Table	f0=14, f1=9, f2=127
+	REC_func_50157736_Table	f0=15, f1=10, f2=255
+	REC_func_50157736_Table	f0=24, f1=11, f2=127
+	REC_func_50157736_Table	f0=25, f1=12, f2=127
+	REC_func_50157736_Table	f0=26, f1=13, f2=127
+	REC_func_50157736_Table	f0=27, f1=14, f2=127
+	REC_func_50157736_Table	f0=28, f1=15, f2=127
+	REC_func_50157736_Table	f0=29, f1=16, f2=127	# [16]
+	REC_func_50157736_Table	f0=30, f1=17, f2=255
+	REC_func_50157736_Table	f0=34, f1=18, f2=15
+	REC_func_50157736_Table	f0=36, f1=19, f2=255
+	REC_func_50157736_Table	f0=37, f1=20, f2=255
+	REC_func_50157736_Table	f0=38, f1=21, f2=255
+	REC_func_50157736_Table	f0=39, f1=22, f2=255
+	REC_func_50157736_Table	f0=40, f1=23, f2=255
+	REC_func_50157736_Table	f0=41, f1=24, f2=255	# [24]
+	REC_func_50157736_Table	f0=42, f1=25, f2=63
+	REC_func_50157736_Table	f2=255
+func_50157736_Table_2:	# 7 x REC_func_50157736_Table_2 (3 bytes each); read by func_50157736_entry_Le4 0x5015781F `movbu (1, a1), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d0`; func_50157736_entry_Le4 0x5015781F `movbu (a0), d2` (+2)
+	REC_func_50157736_Table_2	f2=127
+	REC_func_50157736_Table_2	f0=1, f1=1, f2=127
+	REC_func_50157736_Table_2	f0=2, f1=2, f2=127
+	REC_func_50157736_Table_2	f0=4, f1=3, f2=64
+	REC_func_50157736_Table_2	f0=7, f1=4, f2=48
+	REC_func_50157736_Table_2	f0=8, f1=5, f2=255
+	REC_func_50157736_Table_2	f0=9, f1=6, f2=1
+func_50157736_Table_3:	# 3 x REC_func_50157736_Table_3 (3 bytes each); read by func_50157736_entry_L12f 0x5015786A `movbu (1, a1), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a0), d0`; func_50157736_entry_L12f 0x5015786A `movbu (a1), d0` (+2)
+	REC_func_50157736_Table_3	f2=7
+	REC_func_50157736_Table_3	f0=3, f1=1, f2=1
+	REC_func_50157736_Table_3	f0=4, f1=2, f2=255
+func_50157736_Table_4:	# 14 x REC_func_50157736_Table_4 (3 bytes each); read by func_50157736_entry_L181 0x501578BC `movbu (1, a1), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d0`; func_50157736_entry_L181 0x501578BC `movbu (a0), d2` (+2)
+	REC_func_50157736_Table_4	f2=136	# [0]
+	REC_func_50157736_Table_4	f0=1, f1=1, f2=127
+	REC_func_50157736_Table_4	f0=2, f1=2, f2=127
+	REC_func_50157736_Table_4	f0=3, f1=3, f2=127
+	REC_func_50157736_Table_4	f0=4, f1=4, f2=127
+	REC_func_50157736_Table_4	f0=5, f1=5, f2=127
+	REC_func_50157736_Table_4	f0=6, f1=6, f2=127
+	REC_func_50157736_Table_4	f0=7, f1=7, f2=63
+	REC_func_50157736_Table_4	f0=14, f1=8, f2=127	# [8]
+	REC_func_50157736_Table_4	f0=15, f1=9, f2=127
+	REC_func_50157736_Table_4	f0=16, f1=10, f2=127
+	REC_func_50157736_Table_4	f0=17, f1=11, f2=127
+	REC_func_50157736_Table_4	f0=18, f1=12, f2=127
+	REC_func_50157736_Table_4	f0=19, f1=13, f2=127
+func_50157736_Table_5:	# 4 x REC_func_50157736_Table_5 (3 bytes each); read by func_50157736_entry_L1d2 0x5015790D `movbu (1, a1), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d0`; func_50157736_entry_L1d2 0x5015790D `movbu (a0), d2` (+2)
+	REC_func_50157736_Table_5	f2=4
+	REC_func_50157736_Table_5	f0=3, f1=1, f2=255
+	REC_func_50157736_Table_5	f0=4, f1=2, f2=15
+	REC_func_50157736_Table_5	f0=8, f1=3, f2=255
+func_50157736_Table_6:	# 3 x REC_func_50157736_Table_6 (3 bytes each); read by func_50157736_entry_L222 0x5015795D `movbu (1, a1), d0`; func_50157736_entry_L222 0x5015795D `movbu (a0), d0`; func_50157736_entry_L222 0x5015795D `movbu (a1), d0` (+3)
+	REC_func_50157736_Table_6	f2=255
+	REC_func_50157736_Table_6	f0=1, f1=1, f2=255
+	REC_func_50157736_Table_6	f0=5, f2=255
+	.align	4, 0xFF	# pad after func_50157736_Table_6
+data_48407BB8:
+	.space	1, 0xFF
+
+func_50157E37_Records_p4_0:	# REC_func_50157E37_Records_p4 (8 bytes)
+	REC_func_50157E37_Records_p4	f0=3, f2=255, f3=32, f4=125, f5=32, x6="\x03\x01"
+# census: opaque -- unknown-dump: 93 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x007BC1, 0x007C1E
+data_48407C1E:
+# census: opaque -- unknown-dump: 346 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007C1E, 0x007D78
+data_48407D78:
+# census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007D78, 0x007D91
+data_48407D91:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007D91, 0x007D9D
+data_48407D9D:
+# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007D9D, 0x007DC8
+data_48407DC8:
+# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007DC8, 0x007DDB
+data_48407DDB:
+# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007DDB, 0x007E14
+data_48407E14:
+# census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007E14, 0x007E2B
+data_48407E2B:
+# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007E2B, 0x007E80
+data_48407E80:
+# census: opaque -- unknown-dump: 41 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007E80, 0x007EA9
+data_48407EA9:
+# census: opaque -- unknown-dump: 89 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007EA9, 0x007F02
+data_48407F02:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007F02, 0x007F0E
+data_48407F0E:
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007F0E, 0x007F14
+data_48407F14:
+# census: opaque -- unknown-dump: 83 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007F14, 0x007F67
+data_48407F67:
+# census: opaque -- unknown-dump: 52 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x007F67, 0x007F9B
+func_50157E10_entry_L3_Records_p4_0:	# REC_func_50157E10_entry_L3_Records_p4 (113 bytes)
+	REC_func_50157E10_entry_L3_Records_p4	f2=64, f4=1, f5=127, x6="\x03\x01\x7F\x00\x18\x00\x06\x02\x00\x03q\x00\x04\xFF\x06\x05\x06\x06\x00\x07\xFF\x00\x08\xFF\x00\x09\x9F\x00\n\x1F\x06\x0B\x06\x0C\x00\x0D\xC3\x00\x0E\x07\x03\x0E\x07\x00\x04\x00\x00\x0F\x07\x05\x10\x10\x05\x11\x11\x05\x12\x12\x05\x13\xFF\x05\x14\xFF\x06\x15\x05\x16\xFF\x05\x18\xFF\x05\x17\xFF\x05\x19\xFF\x06\x1A\x06\x1B\x06\x1C\x06\x1D\x06\x1E\x06\x1F\x06 \x06!\x06\"\x06#\x06$\x06%\x06&\x06'\xFF"
 data_4840800C:
 # census: opaque -- unknown-dump: 25 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x00800C, 0x008025
@@ -2677,26 +2850,71 @@ data_48408058:
 data_48408096:
 # census: opaque -- unknown-dump: 50 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008096, 0x0080C8
-data_484080C8:
-.incbin_range "baserom/kn2400_program.rom", 0x0080C8, 0x0082D8
 
+func_50157E37_Records:	# 44 x REC_func_50157E37_Records (12 bytes each); read by func_50157E37 0x50157E37 `mov (4, a1), a2`; func_50157E37 0x50157E37 `mov (a1), d0`; func_50157FC6 0x50157FC6 `mov (a1), d1` (+2)
+	REC_func_50157E37_Records	p4=func_50157E37_Records_p4_0, f8=64, f9=18, x10="\x00\x00"	# [0]
+	REC_func_50157E37_Records	f0=20, p4=data_48407C1E, f8=16, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=94, p4=data_48407C1E, f8=17, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=168, p4=data_48407C1E, f8=18, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=242, p4=data_48407D78, f8=19, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=248, p4=data_48407D78, f8=20, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=254, p4=data_48407D78, f8=21, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=260, p4=data_48407D78, f8=22, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=266, p4=data_48407D78, f8=23, f9=4, x10="\x00\x00"	# [8]
+	REC_func_50157E37_Records	f0=272, p4=data_48407D78, f8=24, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=278, p4=data_48407D78, f8=25, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=284, p4=data_48407D78, f8=26, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=290, p4=data_48407C1E, f8=27, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=364, p4=data_48407C1E, f8=28, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=438, p4=data_48407C1E, f8=31, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=512, p4=data_48407C1E, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=586, p4=data_48407C1E, f8=1, f9=72, x10="\x00\x00"	# [16]
+	REC_func_50157E37_Records	f0=660, p4=data_48407C1E, f8=2, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=734, p4=data_48407C1E, f8=3, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=808, p4=data_48407C1E, f8=4, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=882, p4=data_48407C1E, f8=5, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=956, p4=data_48407C1E, f8=6, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1030, p4=data_48407C1E, f8=7, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1104, p4=data_48407C1E, f8=8, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1178, p4=data_48407C1E, f8=9, f9=72, x10="\x00\x00"	# [24]
+	REC_func_50157E37_Records	f0=1252, p4=data_48407C1E, f8=10, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1326, p4=data_48407C1E, f8=11, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1400, p4=data_48407C1E, f8=12, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1474, p4=data_48407C1E, f8=13, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1548, p4=data_48407C1E, f8=14, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1622, p4=data_48407C1E, f8=15, f9=72, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1696, p4=data_48407D91, f8=67, f9=2, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1700, p4=data_48407D9D, f8=75, f9=8, x10="\x00\x00"	# [32]
+	REC_func_50157E37_Records	f0=1710, p4=data_48407DC8, f8=74, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1716, p4=data_48407DDB, f8=66, f9=14, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1732, p4=data_48407E14, f8=65, f9=8, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1742, p4=data_48407E2B, f8=76, f9=30, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1774, p4=data_48407E80, f8=77, f9=14, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1790, p4=data_48407EA9, f8=68, f9=20, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1812, p4=data_48407F02, f8=70, f9=4, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1818, p4=data_48407F0E, f8=69, f9=2, x10="\x00\x00"	# [40]
+	REC_func_50157E37_Records	f0=1822, p4=data_48407F14, f8=72, f9=30, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1854, p4=data_48407F67, f8=71, f9=14, x10="\x00\x00"
+	REC_func_50157E37_Records	f0=1870, p4=data_48407BB8, f8=255, f9=255, x10="\x00\x00"
 func_50157E10_entry_L3_Records:	# 8 x REC_func_50157E10_entry_L3_Records (12 bytes each); read by func_50157E10_entry_L3 0x50157E18 `call func_50157E37_entry, [d2,a2,a3], 0x1c`; func_50157E37 0x50157E37 `mov (4, a1), a2`; func_50157E37 0x50157E37 `mov (a1), d0` (+4)
-	REC_func_50157E10_entry_L3_Records	f0=1872, p4=data_48407F9B, f8=82, f9=40, x10="\x00\x00"
+	REC_func_50157E10_entry_L3_Records	f0=1872, p4=func_50157E10_entry_L3_Records_p4_0, f8=82, f9=40, x10="\x00\x00"
 	REC_func_50157E10_entry_L3_Records	f0=1914, p4=data_4840800C, f8=80, f9=8, x10="\x00\x00"
 	REC_func_50157E10_entry_L3_Records	f0=1924, p4=data_48408025, f8=81, f9=14, x10="\x00\x00"
 	REC_func_50157E10_entry_L3_Records	f0=1940, p4=data_48408058, f8=96, f9=22, x10="\x00\x00"
 	REC_func_50157E10_entry_L3_Records	f0=1964, p4=data_48408058, f8=97, f9=22, x10="\x00\x00"
 	REC_func_50157E10_entry_L3_Records	f0=1988, p4=data_48408058, f8=98, f9=22, x10="\x00\x00"
 	REC_func_50157E10_entry_L3_Records	f0=2012, p4=data_48408096, f8=104, f9=16, x10="\x00\x00"
-	REC_func_50157E10_entry_L3_Records	f0=2030, p4=func_50157E10_entry_L3_Records_p4_0, f8=255, f9=255, x10="\x00\x00"
+	REC_func_50157E10_entry_L3_Records	f0=2030, p4=data_48407BB8, f8=255, f9=255, x10="\x00\x00"
 func_50157CF2_Table:	# 5 x REC_func_50157CF2_Table (8 bytes each); read by func_50157CF2 0x50157CF2 `mov (a1), a0`; func_50157CF2 0x50157CF2 `mov (a1), a3`; func_50157CF2 0x50157CF2 `movbu (4, a1), d0`
 	REC_func_50157CF2_Table	f0=0x50298760, f4=251, x5="\x00\x00\x00"
 	REC_func_50157CF2_Table	f0=0x50298773, f4=128, x5="\x00\x00\x00"
 	REC_func_50157CF2_Table	f0=0x50298775, f4=254, x5="\x00\x00\x00"
 	REC_func_50157CF2_Table	f0=0x5029877F, f4=63, x5="\x00\x00\x00"
 	REC_func_50157CF2_Table	f0=0x5029879F, x5="\x00\x00\x00"
-data_48408360:
-	.space	8, 0x00
+
+func_5018C248_Table:	# 2 x u32, 0..0; read by func_5018C248 0x5018C248: `mov (a3), d2`
+	tab_u32	0, 0
+
 func_50158AE6_Table:	# 3 x REC_func_50158AE6_Table (8 bytes each); read by func_50158AE6_entry_L5 0x50158AF0 `mov (d0, a0), a0`; func_50158AE6_entry_L1f 0x50158B0A `movbu (4, a0), d1`
 	REC_func_50158AE6_Table	f0=0x500213D4, f4=3, x5="\x00\x00\x00"
 	REC_func_50158AE6_Table	f0=0x500213D5, f4=3, x5="\x00\x00\x00"
@@ -2723,9 +2941,9 @@ func_50158AE6_Table_7:	# 2 x REC_func_50158AE6_Table_7 (8 bytes each); read by f
 func_501591CF_Table:	# 11 x u32, 1343591012..1343592791; read by func_501591CF 0x501591CF: `mov	(d0, a0), d1`; func_5015920F_L18 0x50159227: `mov	(d0, a0), d1`
 	tab_u32	1343592791, 1343591012, 1343591184, 1343591417, 1343591512, 1343591728, 1343591879, 1343592791	# [0]
 	tab_u32	1343592166, 1343592459, 1343592791	# [8]
-func_5015A256_Table:	# 5 x u32, 127..1342313031; read by func_5015A256 : `mov	(a1), d0`
+func_5015A256_Table:	# 5 x u32, 127..1342313031; read by func_5015A256_Le 0x5015A264: `mov	(a1), d0`
 	tab_u32	1342312904, 1342313031, 1342312904, 1342312904, 127
-func_5015A270_Table:	# 5 x u32, 127..1342313179; read by func_5015A270 : `mov	(a1), d0`
+func_5015A270_Table:	# 5 x u32, 127..1342313179; read by func_5015A270_Le 0x5015A27E: `mov	(a1), d0`
 	tab_u32	1342313052, 1342313179, 1342313052, 1342313052, 127
 func_5015A386_Table:	# 32 x u32, 1342313461..1342313472; read by func_5015A386 0x5015A386: `mov	(d1, a0), d0`
 	tab_u32	1342313472, 1342313472, 1342313472, 1342313472, 1342313472, 1342313472, 1342313472, 1342313472	# [0]
@@ -2798,8 +3016,12 @@ func_5015A3AE_Table_6:	# 128 x u8, 0..127; read by func_5015A3AE_entry : `movbu	
 	tab_u8	80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95	# [80]
 	tab_u8	96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111	# [96]
 	tab_u8	112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127	# [112]
-data_484088B4:
-.incbin_range "baserom/kn2400_program.rom", 0x0088B4, 0x0088C0
+
+func_5015A55E_L25_Records:	# 3 x REC_func_5015A55E_L25_Records (4 bytes each); read by func_5015A55E_L25 0x5015A583 `movbu (a1), d0`
+	REC_func_5015A55E_L25_Records	f0=23, x1="\x00\x00\x00"
+	REC_func_5015A55E_L25_Records	f0=25, x1="\x00\x00\x00"
+	REC_func_5015A55E_L25_Records	f0=26, x1="\x00\x00\x00"
+
 func_5015A790_Table:	# 128 x u8, a sparse map by index: 25 entries set, the rest 0xFF (none); read by func_5015A790 : `movbu	(d1, a0), d0`
 	map8	0, 7
 	map8	1, 8
@@ -2831,7 +3053,7 @@ func_5015A790_Table:	# 128 x u8, a sparse map by index: 25 entries set, the rest
 	map8	118, 24
 	map_none8	9	# [119..127]
 
-Str_p_43:	.asciz "@ p"
+Str_p_42:	.asciz "@ p"
 # census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008944, 0x008994
 data_48408994:
@@ -2843,10 +3065,10 @@ data_48408A00:
 data_48408A6C:
 # census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008A6C, 0x008AD8
-Str_p_42:	.asciz "\x85 p"
+Str_p_41:	.asciz "\x85 p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008ADC, 0x008B38
-Str_p_41:	.asciz "\xA3 p"
+Str_p_40:	.asciz "\xA3 p"
 # census: opaque -- unknown-dump: 68 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008B3C, 0x008B80
 Str_0_p_7:	.asciz "0 p"
@@ -2864,7 +3086,7 @@ data_48408C88:
 data_48408CF4:
 # census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008CF4, 0x008D54
-Str_p_40:	.asciz "\x09 p"
+Str_p_39:	.asciz "\x09 p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008D58, 0x008DB4
 data_48408DB4:
@@ -2873,22 +3095,22 @@ data_48408DB4:
 data_48408E20:
 # census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008E20, 0x008E8C
-Str_p_39:	.asciz "\" p"
+Str_p_38:	.asciz "\" p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008E90, 0x008EEC
-Str_p_38:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x008EF0, 0x008F28
 Str_p_37:	.asciz "\x10 p"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x008EF0, 0x008F28
+Str_p_36:	.asciz "\x10 p"
+# census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008F2C, 0x008F64
-Str_p_36:	.asciz "\x11 p"
+Str_p_8:	.asciz "\x11 p"
 # census: opaque -- unknown-dump: 44 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008F68, 0x008F94
-Str_p_8:	.asciz "@ p"
+Str_p_7:	.asciz "@ p"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008F98, 0x008FD0
-Str_p_7:	.asciz "@ p"
+Str_p_6:	.asciz "@ p"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008FD4, 0x00900C
 data_4840900C:
@@ -2915,30 +3137,30 @@ data_48409090:
 data_4840909C:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x00909C, 0x0090A8
-Str_p_6:	.asciz "\xBB p"
+Str_p_5:	.asciz "\xBB p"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0090AC, 0x0090C0
 
 func_5015A8CC_entry_L21_Table:
-	.long	Str_p_43
+	.long	Str_p_42
 	.long	data_48408994
 	.long	data_48408A00
 	.long	data_48408A6C
-	.long	Str_p_42
 	.long	Str_p_41
+	.long	Str_p_40
 	.long	Str_0_p_7
 	.long	Str_h_p_2
 	.long	data_48408C1C
 	.long	data_48408C88
 	.long	data_48408CF4
-	.long	Str_p_40
+	.long	Str_p_39
 	.long	data_48408DB4
 	.long	data_48408E20
-	.long	Str_p_39
 	.long	Str_p_38
 	.long	Str_p_37
 	.long	Str_p_36
 	.long	Str_p_8
+	.long	Str_p_7
 	.long	data_4840900C
 	.long	data_48409024
 	.long	data_4840903C
@@ -2946,27 +3168,27 @@ func_5015A8CC_entry_L21_Table:
 	.long	data_48409078
 	.long	data_48409090
 	.long	data_4840909C
-	.long	Str_p_6
+	.long	Str_p_5
 func_5015A8CC_entry_L3f_Table:
-	.long	Str_p_43
+	.long	Str_p_42
 	.long	data_48408994
 	.long	data_48408A00
 	.long	data_48408A6C
-	.long	Str_p_42
 	.long	Str_p_41
+	.long	Str_p_40
 	.long	Str_0_p_7
 	.long	Str_h_p_2
 	.long	data_48408C1C
 	.long	data_48408C88
 	.long	data_48408CF4
-	.long	Str_p_40
+	.long	Str_p_39
 	.long	data_48408DB4
 	.long	data_48408E20
-	.long	Str_p_39
 	.long	Str_p_38
 	.long	Str_p_37
 	.long	Str_p_36
-	.long	Str_p_7
+	.long	Str_p_8
+	.long	Str_p_6
 	.long	data_4840900C
 	.long	data_48409024
 	.long	data_48409054
@@ -2974,7 +3196,7 @@ func_5015A8CC_entry_L3f_Table:
 	.long	data_48409078
 	.long	data_48409090
 	.long	data_4840909C
-	.long	Str_p_6
+	.long	Str_p_5
 
 Str_h_p:	.asciz "h p"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -3004,8 +3226,8 @@ Str_m_p:	.asciz "m p"
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0091DC, 0x0091E0
 Str_i_p:	.asciz "i p"
-Str_0_30:	.asciz "0"
-	.align	4, 0x00	# pad after Str_0_30
+Str_0_28:	.asciz "0"
+	.align	4, 0x00	# pad after Str_0_28
 Str_a_p:	.asciz "a p"
 Str_2_37:	.asciz "2"
 	.align	4, 0x00	# pad after Str_2_37
@@ -3161,9 +3383,9 @@ Str_x_9:	.asciz "\xB0x"
 Str_y_6:	.asciz "\xB0y"
 	.align	4, 0xFF	# pad after Str_y_6
 
-func_5015F550_Table:	# 8 x u32, 0..2139062016; read by func_5015F550 : `mov	(a1), d0`
+func_5015F550_Table:	# 8 x u32, 0..2139062016; read by func_5015F550_La 0x5015F55A: `mov	(a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 2139062016, 127, 0
-func_5015F566_Table:	# 8 x u32, 0..16777215; read by func_5015F566 : `mov	(a1), d0`
+func_5015F566_Table:	# 8 x u32, 0..16777215; read by func_5015F566_La 0x5015F570: `mov	(a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 0, 0, 0
 func_5015F9E8_Table:	# 4 x u8, 0..255; read by func_5015F9E8_entry : `movbu	(d1, a0), d1`
 	tab_u8	0, 1, 2, 255
@@ -3679,10 +3901,10 @@ data_4840B278:
 data_4840B298:
 .incbin_range "baserom/kn2400_program.rom", 0x00B298, 0x00B2AC
 
-func_50165678_Table:	# 16 x u32, 0..16777215; read by func_50165678 : `mov	(a1), d0`
+func_50165678_Table:	# 16 x u32, 0..16777215; read by func_50165678_La 0x50165682: `mov	(a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u32	0, 0, 0, 0, 512, 0, 0, 0	# [8]
-func_5016568E_Table:	# 8 x u32, 0..16777215; read by func_5016568E : `mov	(a1), d0`
+func_5016568E_Table:	# 8 x u32, 0..16777215; read by func_5016568E_La 0x50165698: `mov	(a1), d0`
 	tab_u32	16777215, 0, 0, 0, 0, 0, 0, 0
 func_501666A5_Table:	# 16 x u8, 0..10; read by func_501666A5_entry : `movbu	(d0, a1), d0`
 	tab_u8	5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4
@@ -3791,9 +4013,14 @@ func_5017097A_entry_L12_Table:	# 16 x u8, 11..255; read by func_5017097A_entry_L
 
 Str_Technics_Pads_2:	.asciz "Technics Pads   "
 	.align	4, 0xFF	# pad after Str_Technics_Pads_2
-Str_nnddd:	.asciz "nnddd"
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00C63A, 0x00C657
+
+func_5017250F_Table:	# 5 x u8, 100..110; read by func_5017250F_entry : `movbu	(d3, a0), d2`
+	tab_u8	110, 110, 100, 100, 100
+
+func_50172DEE_entry_L15_Records:	# 3 x REC_func_50172DEE_entry_L15_Records (10 bytes each); read by func_50172DEE_entry_L15 0x50172E05 `movbu (d1, a2), d3`
+	REC_func_50172DEE_entry_L15_Records	x1="\x01\x02\x03\x0C\x0D\x0E\x0F\x10\x11"
+	REC_func_50172DEE_entry_L15_Records	f0=4, x1="\x05\x06\x07\x12\x13\x14\x15\x16\x17"
+	REC_func_50172DEE_entry_L15_Records	f0=8, x1="\x09\n\x0B\x18\x19\x1A\x1B\x1C\x1D"
 
 func_50172649_Table:	# 30 x u8, 0..58; read by func_50172649_entry : `movbu	(d3, a0), d0`; func_50172CE8_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 3, 6, 9, 20, 23, 26, 29, 40, 43, 46, 49, 12, 16, 1, 2	# [0]
@@ -3832,43 +4059,29 @@ MemStyleSlotImport_Table:	# 20 x u8, 0..2; read by MemStyleSlotImport_entry : `m
 MemStyleLegacyBlockUpconvert_Table:	# 29 x u8, 0..19; read by MemStyleLegacyBlockUpconvert_entry : `movbu	(d2, a2), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 13, 14	# [0]
 	tab_u8	15, 15, 12, 12, 13, 14, 15, 15, 16, 16, 17, 18, 19	# [16]
-MemStyleLegacyBlockUpconvert_Table_2:	# 3 x u8, 19..255; read by MemStyleLegacyBlockUpconvert 0x50172F41: `movbu (MemStyleLegacyBlockUpconvert_Table_2), d1`
+MemStyleLegacyBlockUpconvert_Table_2:	# 3 x u8, 19..255; read by MemStyleLegacyBlockUpconvert 0x50172F41: `movbu (MemStyleLegacyBlockUpconvert_Table_2), d1`; MemStyleLegacyBlockUpconvert_entry_L2d 0x50172F73: `movbu (d2, a2), d0`
 	tab_u8	19, 255, 255
 
-func_5017285F_entry_L1e_Records:	# 16 x REC_func_5017285F_entry_L1e_Records (8 bytes each); read by func_5017285F_entry_L1e 0x50172882 `mov (a0), d0`
-	REC_func_5017285F_entry_L1e_Records	x4="\xD9*\x17P"	# [0]
-	REC_func_5017285F_entry_L1e_Records	f0=1, x4="\xB6(\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=2, x4="\xFC(\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=3, x4="\x93)\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=49, x4="\xC2)\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=66, x4="\x01*\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=67, x4="\"*\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=68, x4="D*\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=69, x4="f*\x17P"	# [8]
-	REC_func_5017285F_entry_L1e_Records	f0=70, x4="\x88*\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=71, x4="\xA8*\x17P"
-	REC_func_5017285F_entry_L1e_Records	f0=72, x4="\xBB*\x17P"
-	REC_func_5017285F_entry_L1e_Records	x4="\xD9*\x17P"
-	REC_func_5017285F_entry_L1e_Records	x4="\xD9*\x17P"
-	REC_func_5017285F_entry_L1e_Records	x4="\xD9*\x17P"
-	REC_func_5017285F_entry_L1e_Records	x4="\xD9*\x17P"
-func_50172AEA_Table:	# 16 x REC_func_50172AEA_Table (8 bytes each); read by func_50172AEA_entry_Le5 0x50172BD4 `mov (a0), d0`
-	REC_func_50172AEA_Table	f0=16, x4="\",\x17P"	# [0]
-	REC_func_50172AEA_Table	f0=1, x4="\x06,\x17P"
-	REC_func_50172AEA_Table	f0=17, x4="7,\x17P"
-	REC_func_50172AEA_Table	f0=3, x4="\x1F,\x17P"
-	REC_func_50172AEA_Table	f0=81, x4="K,\x17P"
-	REC_func_50172AEA_Table	f0=82, x4="K,\x17P"
-	REC_func_50172AEA_Table	f0=83, x4="K,\x17P"
-	REC_func_50172AEA_Table	f0=84, x4="K,\x17P"
-	REC_func_50172AEA_Table	f0=85, x4="K,\x17P"	# [8]
-	REC_func_50172AEA_Table	f0=86, x4="K,\x17P"
-	REC_func_50172AEA_Table	f0=87, x4="K,\x17P"
-	REC_func_50172AEA_Table	x4="_,\x17P"
-	REC_func_50172AEA_Table	x4="_,\x17P"
-	REC_func_50172AEA_Table	x4="_,\x17P"
-	REC_func_50172AEA_Table	x4="_,\x17P"
-	REC_func_50172AEA_Table	x4="_,\x17P"
+func_5017285F_entry_L1e_Records:	# 1 x REC_func_5017285F_entry_L1e_Records (8 bytes each); read by func_5017285F_entry_L1e 0x50172882 `mov (a0), d0`; func_5017285F_entry_L4a 0x501728AE `mov (a0), d0`; func_5017285F_entry_L4d 0x501728B1 `mov (4, a0), a0`
+	REC_func_5017285F_entry_L1e_Records	p4=func_5017285F_entry_L275
+.incbin_range "baserom/kn2400_program.rom", 0x00C734, 0x00C7AC
+func_50172AEA_Table:	# 16 x REC_func_50172AEA_Table (8 bytes each); read by func_50172AEA_entry_Le5 0x50172BD4 `mov (a0), d0`; func_50172AEA_entry_L10f 0x50172BFE `mov (a0), d0`; func_50172AEA_entry_L112 0x50172C01 `mov (4, a0), a0`
+	REC_func_50172AEA_Table	f0=16, f4=0x50172C22	# [0]
+	REC_func_50172AEA_Table	f0=1, f4=0x50172C06
+	REC_func_50172AEA_Table	f0=17, f4=0x50172C37
+	REC_func_50172AEA_Table	f0=3, f4=0x50172C1F
+	REC_func_50172AEA_Table	f0=81, f4=0x50172C4B
+	REC_func_50172AEA_Table	f0=82, f4=0x50172C4B
+	REC_func_50172AEA_Table	f0=83, f4=0x50172C4B
+	REC_func_50172AEA_Table	f0=84, f4=0x50172C4B
+	REC_func_50172AEA_Table	f0=85, f4=0x50172C4B	# [8]
+	REC_func_50172AEA_Table	f0=86, f4=0x50172C4B
+	REC_func_50172AEA_Table	f0=87, f4=0x50172C4B
+	REC_func_50172AEA_Table	f4=0x50172C5F
+	REC_func_50172AEA_Table	f4=0x50172C5F
+	REC_func_50172AEA_Table	f4=0x50172C5F
+	REC_func_50172AEA_Table	f4=0x50172C5F
+	REC_func_50172AEA_Table	f4=0x50172C5F
 
 MemStyleVarRecInit_Table:	# 20 x u8, 0..1; read by MemStyleVarRecInit_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1	# [0]
@@ -3878,39 +4091,39 @@ func_50173924_Table:	# 8 x u32, 0..7; read by func_50173924 0x50173924: `mov	(-0
 func_50173949_Table:	# 8 x u32, 19..26; read by func_50173949 0x50173949: `mov	(d0, a0), d0`
 	tab_u32	25, 24, 19, 20, 21, 22, 23, 26
 
-func_50173BF4_entry_L54_Records:	# 32 x REC_func_50173BF4_entry_L54_Records (8 bytes each); read by func_50173BF4_entry_L54 0x50173C4D `mov (a0), d0`
-	REC_func_50173BF4_entry_L54_Records	f0=57248, x4="\xF8=\x17P"	# [0]
-	REC_func_50173BF4_entry_L54_Records	f0=48993, x4="\x80<\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=53090, x4="\xE8<\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=53091, x4="\xF7<\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=0x701F84, x4="\x06=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=48997, x4="\xD9<\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=53092, x4="\x1D=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=49121, x4=",=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=49122, x4="9=\x17P"	# [8]
-	REC_func_50173BF4_entry_L54_Records	f0=1, x4="F=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=44897, x4="_=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=53099, x4="U=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=44966, x4="t=\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"	# [16]
-	REC_func_50173BF4_entry_L54_Records	f0=17, x4="U=\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=44982, x4="\xB9=\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"
-	REC_func_50173BF4_entry_L54_Records	x4="\x09>\x17P"	# [24]
-	REC_func_50173BF4_entry_L54_Records	f0=57241, x4="\xF8=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=57242, x4="\xF8=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=57243, x4="\xF8=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=57244, x4="\xF8=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=57245, x4="\xF8=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=57246, x4="\xF8=\x17P"
-	REC_func_50173BF4_entry_L54_Records	f0=57247, x4="\xF8=\x17P"
+func_50173BF4_entry_L54_Records:	# 32 x REC_func_50173BF4_entry_L54_Records (8 bytes each); read by func_50173BF4_entry_L54 0x50173C4D `mov (a0), d0`; func_50173BF4_entry_L7f 0x50173C78 `mov (a0), d0`; func_50173BF4_entry_L82 0x50173C7B `mov (4, a0), a0`
+	REC_func_50173BF4_entry_L54_Records	f0=57248, f4=0x50173DF8	# [0]
+	REC_func_50173BF4_entry_L54_Records	f0=48993, f4=0x50173C80
+	REC_func_50173BF4_entry_L54_Records	f0=53090, f4=0x50173CE8
+	REC_func_50173BF4_entry_L54_Records	f0=53091, f4=0x50173CF7
+	REC_func_50173BF4_entry_L54_Records	f0=0x701F84, f4=0x50173D06
+	REC_func_50173BF4_entry_L54_Records	f0=48997, f4=0x50173CD9
+	REC_func_50173BF4_entry_L54_Records	f0=53092, f4=0x50173D1D
+	REC_func_50173BF4_entry_L54_Records	f0=49121, f4=0x50173D2C
+	REC_func_50173BF4_entry_L54_Records	f0=49122, f4=0x50173D39	# [8]
+	REC_func_50173BF4_entry_L54_Records	f0=1, f4=0x50173D46
+	REC_func_50173BF4_entry_L54_Records	f0=44897, f4=0x50173D5F
+	REC_func_50173BF4_entry_L54_Records	f0=53099, f4=0x50173D55
+	REC_func_50173BF4_entry_L54_Records	f0=44966, f4=0x50173D74
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09	# [16]
+	REC_func_50173BF4_entry_L54_Records	f0=17, f4=0x50173D55
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f0=44982, f4=0x50173DB9
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09
+	REC_func_50173BF4_entry_L54_Records	f4=0x50173E09	# [24]
+	REC_func_50173BF4_entry_L54_Records	f0=57241, f4=0x50173DF8
+	REC_func_50173BF4_entry_L54_Records	f0=57242, f4=0x50173DF8
+	REC_func_50173BF4_entry_L54_Records	f0=57243, f4=0x50173DF8
+	REC_func_50173BF4_entry_L54_Records	f0=57244, f4=0x50173DF8
+	REC_func_50173BF4_entry_L54_Records	f0=57245, f4=0x50173DF8
+	REC_func_50173BF4_entry_L54_Records	f0=57246, f4=0x50173DF8
+	REC_func_50173BF4_entry_L54_Records	f0=57247, f4=0x50173DF8
 
 func_50173EDC_Table:	# 44 x u8, 0..255; read by func_50173EDC : `movbu	(d0, a0), d0`; func_50173F49_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0	# [0]
@@ -3931,23 +4144,23 @@ func_50175548_Table:	# 4 x u8, 29..255; read by func_50175548_entry : `movbu	(d0
 Str_SEQ_6:	.asciz "      SEQ       "
 	.align	4, 0xFF	# pad after Str_SEQ_6
 
-func_50175A42_Table:	# 16 x REC_func_50175A42_Table (8 bytes each); read by func_50175A42_entry_Lb6 0x50175AFD `mov (a0), d0`
-	REC_func_50175A42_Table	x4="q\\\x17P"	# [0]
-	REC_func_50175A42_Table	f0=1, x4="6[\x17P"
-	REC_func_50175A42_Table	f0=0x200002, x4="\x98[\x17P"
-	REC_func_50175A42_Table	f0=0x200041, x4="\x98[\x17P"
-	REC_func_50175A42_Table	f0=0x300001, x4="\xCA[\x17P"
-	REC_func_50175A42_Table	f0=0x400001, x4="\x11\\\x17P"
-	REC_func_50175A42_Table	f0=0x500001, x4="<\\\x17P"
-	REC_func_50175A42_Table	x4="q\\\x17P"
-	REC_func_50175A42_Table	x4="q\\\x17P"	# [8]
-	REC_func_50175A42_Table	x4="q\\\x17P"
-	REC_func_50175A42_Table	x4="q\\\x17P"
-	REC_func_50175A42_Table	f0=0x20000B, x4="\x98[\x17P"
-	REC_func_50175A42_Table	f0=0x20000C, x4="\x98[\x17P"
-	REC_func_50175A42_Table	x4="q\\\x17P"
-	REC_func_50175A42_Table	x4="q\\\x17P"
-	REC_func_50175A42_Table	f0=0x20005F, x4="\x98[\x17P"
+func_50175A42_Table:	# 16 x REC_func_50175A42_Table (8 bytes each); read by func_50175A42_entry_Lb6 0x50175AFD `mov (a0), d0`; func_50175A42_entry_Le7 0x50175B2E `mov (a0), d0`; func_50175A42_entry_Lea 0x50175B31 `mov (4, a0), a0`
+	REC_func_50175A42_Table	f4=0x50175C71	# [0]
+	REC_func_50175A42_Table	f0=1, f4=0x50175B36
+	REC_func_50175A42_Table	f0=0x200002, f4=0x50175B98
+	REC_func_50175A42_Table	f0=0x200041, f4=0x50175B98
+	REC_func_50175A42_Table	f0=0x300001, f4=0x50175BCA
+	REC_func_50175A42_Table	f0=0x400001, f4=0x50175C11
+	REC_func_50175A42_Table	f0=0x500001, f4=0x50175C3C
+	REC_func_50175A42_Table	f4=0x50175C71
+	REC_func_50175A42_Table	f4=0x50175C71	# [8]
+	REC_func_50175A42_Table	f4=0x50175C71
+	REC_func_50175A42_Table	f4=0x50175C71
+	REC_func_50175A42_Table	f0=0x20000B, f4=0x50175B98
+	REC_func_50175A42_Table	f0=0x20000C, f4=0x50175B98
+	REC_func_50175A42_Table	f4=0x50175C71
+	REC_func_50175A42_Table	f4=0x50175C71
+	REC_func_50175A42_Table	f0=0x20005F, f4=0x50175B98
 
 func_5017644C_Table:
 	.long	func_5017051B
@@ -3955,12 +4168,12 @@ func_5017644C_Table:
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00CA74, 0x00CA8C
 
-func_501793B9_entry_L175_Table:	# 12 x u8, 0..255; read by func_501793B9_entry_L175 0x50179533: `movbu (d0, a0), d0`
+func_501793B9_entry_L175_Table:	# 12 x u8, 0..255; read by func_501793B9_entry_L175 0x50179533: `movbu (d0, a0), d0`; func_501793B9_entry_L213 0x501795D1: `movbu (d0, a0), d0`
 	tab_u8	0, 0, 0, 1, 2, 3, 4, 5, 6, 255, 255, 255
 func_5017A308_entry_L12_Table:	# 16 x u8, 11..255; read by func_5017A308_entry_L12 0x5017A31F: `movbu (a0), d0`; func_5017A308_entry_L12 0x5017A31F: `movbu (a0), d1`
 	tab_u8	11, 127, 127, 127, 127, 127, 127, 127, 127, 12, 127, 127, 127, 127, 127, 255
 
-func_5017C1FB_entry_L56_Records:	# 8 x REC_func_5017C1FB_entry_L56_Records (96 bytes each); read by func_5017C1FB_entry_L56 0x5017C256 `movbu (d1, a1), d3`
+func_5017C1FB_entry_L56_Records:	# 8 x REC_func_5017C1FB_entry_L56_Records (96 bytes each); read by func_5017C1FB_entry_L56 0x5017C256 `movbu (d1, a1), d3`; func_5017C1FB_entry_La2 0x5017C2A2 `calls (a0)`
 	REC_func_5017C1FB_entry_L56_Records	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95
 	REC_func_5017C1FB_entry_L56_Records	0, 0, 0, 0, 8, 8, 8, 8, 8, 8, 8, 8, 16, 16, 16, 16, 16, 16, 16, 16, 24, 24, 24, 24, 24, 24, 24, 24, 32, 32, 32, 32, 32, 32, 32, 32, 40, 40, 40, 40, 40, 40, 40, 40, 48, 48, 48, 48, 48, 48, 48, 48, 56, 56, 56, 56, 56, 56, 56, 56, 64, 64, 64, 64, 64, 64, 64, 64, 72, 72, 72, 72, 72, 72, 72, 72, 80, 80, 80, 80, 80, 80, 80, 80, 88, 88, 88, 88, 88, 88, 88, 88, 127, 127, 127, 127
 	REC_func_5017C1FB_entry_L56_Records	0, 0, 0, 0, 0, 0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 36, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 127, 127, 127, 127, 127, 127
@@ -3969,8 +4182,23 @@ func_5017C1FB_entry_L56_Records:	# 8 x REC_func_5017C1FB_entry_L56_Records (96 b
 	REC_func_5017C1FB_entry_L56_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127
 	REC_func_5017C1FB_entry_L56_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127
 	REC_func_5017C1FB_entry_L56_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127, 127
-data_4840CDA8:
-.incbin_range "baserom/kn2400_program.rom", 0x00CDA8, 0x00CE28
+func_5017C9E5_entry_Lb6_Records:	# 16 x REC_func_5017C9E5_entry_Lb6_Records (8 bytes each); read by func_5017C9E5_entry_Lb6 0x5017CAA0 `mov (a0), d0`; func_5017C9E5_entry_Lde 0x5017CAC8 `mov (a0), d0`; func_5017C9E5_entry_Le1 0x5017CACB `mov (4, a0), a0`
+	REC_func_5017C9E5_entry_Lb6_Records	f4=0x5017CB58	# [0]
+	REC_func_5017C9E5_entry_Lb6_Records	f0=1, f4=0x5017CB1A
+	REC_func_5017C9E5_entry_Lb6_Records	f0=82, f4=0x5017CB04
+	REC_func_5017C9E5_entry_Lb6_Records	f4=0x5017CB58
+	REC_func_5017C9E5_entry_Lb6_Records	f0=84, f4=0x5017CB0F
+	REC_func_5017C9E5_entry_Lb6_Records	f0=85, f4=0x5017CAF9
+	REC_func_5017C9E5_entry_Lb6_Records	f4=0x5017CB58
+	REC_func_5017C9E5_entry_Lb6_Records	f0=0xFFFF7, f4=0x5017CAD0
+	REC_func_5017C9E5_entry_Lb6_Records	f0=32759, f4=0x5017CB25	# [8]
+	REC_func_5017C9E5_entry_Lb6_Records	f0=73, f4=0x5017CB30
+	REC_func_5017C9E5_entry_Lb6_Records	f0=74, f4=0x5017CB39
+	REC_func_5017C9E5_entry_Lb6_Records	f0=71, f4=0x5017CB44
+	REC_func_5017C9E5_entry_Lb6_Records	f0=72, f4=0x5017CB4F
+	REC_func_5017C9E5_entry_Lb6_Records	f4=0x5017CB58
+	REC_func_5017C9E5_entry_Lb6_Records	f4=0x5017CB58
+	REC_func_5017C9E5_entry_Lb6_Records	f4=0x5017CB58
 
 Str_ZZZLKG:	.asciz "ZZZLKG"
 	.align	4, 0xAA	# pad after Str_ZZZLKG
@@ -3984,23 +4212,26 @@ data_4840CE44:
 
 func_5017D426_Table:	# 8 x u8, 0..7; read by func_5017D426_entry : `movbu	(d1, a1), d0`; func_5017D490_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 2, 3, 4, 5, 6, 7, 1
-func_5017CF95_Ld_Table:	# 71 x u32, 0..4279507224; read by func_5017CF95_Ld 0x5017CFA2: `mov	(-0x4c, a0), d0`
+func_5017CF95_Ld_Table:	# 19 x u32, 0..55116105; read by func_5017CF95_Ld 0x5017CFA2: `mov	(-0x4c, a0), d0`
 	tab_u32	3, 4, 5, 6, 7, 2, 0, 1	# [0]
 	tab_u32	35520798, 35586335, 36569390, 38011204, 54723396, 36372779, 55116105, 38142537	# [8]
-	tab_u32	36438316, 35848740, 52757284, 37486908, 34472206, 34537743, 37683519, 23528295	# [16]
-	tab_u32	40305510, 40370536, 39846240, 23266144, 37224760, 21692995, 54592065, 36503853	# [24]
-	tab_u32	23462748, 23331405, 36307242, 35389724, 35455261, 36634927, 53477686, 36700465	# [32]
-	tab_u32	37552445, 36766000, 36963126, 37617982, 34406660, 50594314, 37290297, 17891600	# [40]
-	tab_u32	18022674, 37421371, 25231744, 25362818, 27328928, 25493892, 25624966, 27460002	# [48]
-	tab_u32	25756040, 25887114, 27591076, 67305984, 101320711, 235735823, 353637138, 421009174	# [56]
-	tab_u32	303108111, 235737875, 68092674, 134283269, 202049289, 387323156, 4279507224	# [64]
+	tab_u32	36438316, 35848740, 52757284	# [16]
+# census: opaque -- unknown-dump: 160 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00CEB0, 0x00CF50
 
-func_5017D6C1_entry_L9_Records:	# 5 x REC_func_5017D6C1_entry_L9_Records (12 bytes each); read by func_5017D6C1_entry_L9 0x5017D6CF `mov (a1), d1`; func_5017D71D_entry_La 0x5017D729 `mov (a1), d0`
-	REC_func_5017D6C1_entry_L9_Records	x0="\x00\x00\x00\x00"
-	REC_func_5017D6C1_entry_L9_Records	x0="\x00\x00\x00\x00"
-	REC_func_5017D6C1_entry_L9_Records	x0="\x00\x00\x00\x00"
-	REC_func_5017D6C1_entry_L9_Records	x0="\x11\x14\x06\x00", p4=func_5017CF95_Ld_Table+32, p8=func_5017CF95_Ld_Table+236
-	REC_func_5017D6C1_entry_L9_Records	x0="\x17\x1B\x06\x00", p8=func_5017CF95_Ld_Table+256
+func_5017D6C1_entry_L9_Records_p8_0:	# REC_func_5017D6C1_entry_L9_Records_p8 (20 bytes)
+	REC_func_5017D6C1_entry_L9_Records_p8	x0="\x00\x02\x03\x04\x07\x08\n\x06\x0F\x0B\x0D\x0E\x12\x13\x14\x15\x16\x17\x18\x19"
+func_5017D6C1_entry_L9_Records_p8_1:	# REC_func_5017D6C1_entry_L9_Records_p8 (20 bytes)
+	REC_func_5017D6C1_entry_L9_Records_p8	x0="\x0F\x10\x11\x12\x13\x13\x0D\x0E\x02\x03\x0F\x04\x05\x00\x01\x08\x09\x07\x0B\x0C"
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00CF78, 0x00CF80
+
+func_5017D6C1_entry_L9_Records:	# 5 x REC_func_5017D6C1_entry_L9_Records (12 bytes each); read by func_5017D6C1_entry_L9 0x5017D6CF `mov (a1), d1`; func_5017D6C1_entry_L21 0x5017D6E7 `movbu (a0), d2`; func_5017D6C1_entry_L29 0x5017D6EF `movbu (a0), d2` (+6)
+	REC_func_5017D6C1_entry_L9_Records	x3="\x00"
+	REC_func_5017D6C1_entry_L9_Records	x3="\x00"
+	REC_func_5017D6C1_entry_L9_Records	x3="\x00"
+	REC_func_5017D6C1_entry_L9_Records	f0=17, f1=20, f2=6, x3="\x00", p4=func_5017CF95_Ld_Table+32, p8=func_5017D6C1_entry_L9_Records_p8_0
+	REC_func_5017D6C1_entry_L9_Records	f0=23, f1=27, f2=6, x3="\x00", p8=func_5017D6C1_entry_L9_Records_p8_1
 func_5017D671_entry_L37_Records:	# 2 x REC_func_5017D671_entry_L37_Records (48 bytes each); read by func_5017D671_entry_L37 0x5017D6AA `mov (d1, a0), d1`
 	REC_func_5017D671_entry_L37_Records	1048576, 1048832, 1049088, 1049344, 1048577, 1048833, 1049089, 1049345, 1048578, 1048834, 1049090, 1049346
 	REC_func_5017D671_entry_L37_Records	1049600, 1049856, 1049601, 1049857, 1049602, 1049858, 1048576, 1048576, 1048576, 1048576, 1048576, 1048576
@@ -4013,7 +4244,7 @@ func_5017D625_entry_L27_Records:	# 8 x REC_func_5017D625_entry_L27_Records (48 b
 	REC_func_5017D625_entry_L27_Records	2097164, 2097164, 2097164, 2097164, 2097165, 2097165, 2097165, 2097165, 2097166, 2097166, 2097166, 2097166
 	REC_func_5017D625_entry_L27_Records	2097167, 2097167, 2097167, 2097167, 2097168, 2097168, 2097168, 2097168, 2097169, 2097169, 2097169, 2097169
 	REC_func_5017D625_entry_L27_Records	2097170, 2097170, 2097170, 2097170, 2097171, 2097171, 2097171, 2097171, 2097152, 2097152, 2097152, 2097152
-func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by func_5017DAC4 0x5017DAC4 `movbu (1, a0), d3`; func_5017DCBF 0x5017DCBF `movbu (d0, a2), d1`
+func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by func_5017DAC4 0x5017DAC4 `movbu (1, a0), d3`; func_5017DCBF 0x5017DCBF `movbu (d0, a2), d1`; func_4860A351 0x4860A351 `call func_4860ABA6_entry, [d2], 0x18` (+6)
 	REC_func_5017DCBF_Table	f0=176, f1=255	# [0]
 	REC_func_5017DCBF_Table	f0=176, f1=7
 	REC_func_5017DCBF_Table	f0=192
@@ -4040,9 +4271,23 @@ func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by func
 	REC_func_5017DCBF_Table	f0=176, f1=13
 	REC_func_5017DCBF_Table	f0=176, f1=71	# [24]
 	REC_func_5017DCBF_Table	f0=176, f1=74
-data_4840D1D0:
-.incbin_range "baserom/kn2400_program.rom", 0x00D1D0, 0x00D1EA
 
+func_5017DCBF_entry_L48_Table:	# 2 x u8, 255..255; read by func_5017DCBF_entry_L48 0x5017DD0C: `movbu (d3, a1), d3`; func_5017DCBF_entry_L5d 0x5017DD21: `movbu (d3, a1), d2`
+	tab_u8	255, 255
+
+func_5017DCBF_entry_L2b_Var:	# u8, a constant; read / written by func_5017DCBF_entry_L2b 0x5017DCEF: `movbu (2, a1), d2`
+	.byte	255
+func_5017DCBF_entry_L2b_Var_2:	# u8, a constant; read / written by func_5017DCBF_entry_L2b 0x5017DCEF: `movbu (3, a1), d0`
+	.byte	255
+
+func_5017DCBF_entry_L2b_Table:	# 15 x u8, 0..255; read by func_5017DCBF_entry_L2b 0x5017DCEF: `movbu (4, a1), d0`
+	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 127, 0
+
+func_5017DCBF_entry_L71_Var:	# u8, a constant; read / written by func_5017DCBF_entry_L71 0x5017DD35: `movbu (0x13, a1), d2`
+	.byte	0
+
+func_5017DCBF_entry_L71_Table:	# 6 x u8, 64..64; read by func_5017DCBF_entry_L71 0x5017DD35: `movbu (0x14, a1), d0`
+	tab_u8	64, 64, 64, 64, 64, 64
 func_5017DAA3_Table:	# 128 x u8, a sparse map by index: 20 entries set, the rest 0xFF (none); read by func_5017DAA3 : `movbu	(d0, a0), d0`
 	map_none8	1	# [0..0]
 	map8	1, 16
@@ -4111,23 +4356,23 @@ func_5017E2AD_entry_Lcd_Records:	# 6 x REC_func_5017E2AD_entry_Lcd_Records (17 b
 	REC_func_5017E2AD_entry_Lcd_Records	s0="000 Phrase  \x00\xFF\xFF\xFF", x16=" "
 	REC_func_5017E2AD_entry_Lcd_Records	s0="KN5000 Phrase  \x00", x16="\xFF"
 	.align	4, 0xFF	# pad after func_5017E2AD_entry_Lcd_Records
-func_5017DF39_Table:	# 16 x REC_func_5017DF39_Table (8 bytes each); read by func_5017DF39_entry_Ld3 0x5017E011 `mov (a0), d0`
-	REC_func_5017DF39_Table	f0=16, x4="d\xE0\x17P"	# [0]
-	REC_func_5017DF39_Table	f0=1, x4="F\xE0\x17P"
-	REC_func_5017DF39_Table	f0=17, x4="w\xE0\x17P"
-	REC_func_5017DF39_Table	f0=3, x4="a\xE0\x17P"
-	REC_func_5017DF39_Table	f0=18, x4="\x8A\xE0\x17P"
-	REC_func_5017DF39_Table	f0=64, x4="\x9D\xE0\x17P"
-	REC_func_5017DF39_Table	f0=81, x4="\xAF\xE0\x17P"
-	REC_func_5017DF39_Table	f0=82, x4="\xAF\xE0\x17P"
-	REC_func_5017DF39_Table	f0=83, x4="\xAF\xE0\x17P"	# [8]
-	REC_func_5017DF39_Table	f0=84, x4="\xAF\xE0\x17P"
-	REC_func_5017DF39_Table	f0=85, x4="\xAF\xE0\x17P"
-	REC_func_5017DF39_Table	f0=86, x4="\xAF\xE0\x17P"
-	REC_func_5017DF39_Table	f0=87, x4="\xAF\xE0\x17P"
-	REC_func_5017DF39_Table	x4="\xC1\xE0\x17P"
-	REC_func_5017DF39_Table	x4="\xC1\xE0\x17P"
-	REC_func_5017DF39_Table	x4="\xC1\xE0\x17P"
+func_5017DF39_Table:	# 16 x REC_func_5017DF39_Table (8 bytes each); read by func_5017DF39_entry_Ld3 0x5017E011 `mov (a0), d0`; func_5017DF39_entry_L100 0x5017E03E `mov (a0), d0`; func_5017DF39_entry_L103 0x5017E041 `mov (4, a0), a0`
+	REC_func_5017DF39_Table	f0=16, f4=0x5017E064	# [0]
+	REC_func_5017DF39_Table	f0=1, f4=0x5017E046
+	REC_func_5017DF39_Table	f0=17, f4=0x5017E077
+	REC_func_5017DF39_Table	f0=3, f4=0x5017E061
+	REC_func_5017DF39_Table	f0=18, f4=0x5017E08A
+	REC_func_5017DF39_Table	f0=64, f4=0x5017E09D
+	REC_func_5017DF39_Table	f0=81, f4=0x5017E0AF
+	REC_func_5017DF39_Table	f0=82, f4=0x5017E0AF
+	REC_func_5017DF39_Table	f0=83, f4=0x5017E0AF	# [8]
+	REC_func_5017DF39_Table	f0=84, f4=0x5017E0AF
+	REC_func_5017DF39_Table	f0=85, f4=0x5017E0AF
+	REC_func_5017DF39_Table	f0=86, f4=0x5017E0AF
+	REC_func_5017DF39_Table	f0=87, f4=0x5017E0AF
+	REC_func_5017DF39_Table	f4=0x5017E0C1
+	REC_func_5017DF39_Table	f4=0x5017E0C1
+	REC_func_5017DF39_Table	f4=0x5017E0C1
 data_4840D3D4:
 .incbin_range "baserom/kn2400_program.rom", 0x00D3D4, 0x00D3D7
 
@@ -4139,23 +4384,23 @@ func_50180F38_Var_2:	# u8, a constant; read / written by func_50180F38 0x50180F3
 func_50180F38_Table:	# 3 x u8, 0..255; read by func_50180F38 0x50180F38: `movbu (3, a0), d0`
 	tab_u8	0, 255, 255
 
-TempoSyncSetDispatch_L5c_Records:	# 16 x REC_TempoSyncSetDispatch_L5c_Records (8 bytes each); read by TempoSyncSetDispatch_L5c 0x50184BAB `mov (a0), d0`
-	REC_TempoSyncSetDispatch_L5c_Records	f0=4064, x4="\x18L\x18P"	# [0]
-	REC_TempoSyncSetDispatch_L5c_Records	f0=1, x4="\xE1K\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=2, x4="\xEFK\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=18, x4="\nL\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=4065, x4="\x18L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=4066, x4="\x18L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=134, x4="\xFDK\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=4067, x4="\x18L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"	# [8]
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	x4="(L\x18P"
-	REC_TempoSyncSetDispatch_L5c_Records	f0=4063, x4="\x18L\x18P"
+TempoSyncSetDispatch_L5c_Records:	# 16 x REC_TempoSyncSetDispatch_L5c_Records (8 bytes each); read by TempoSyncSetDispatch_L5c 0x50184BAB `mov (a0), d0`; TempoSyncSetDispatch_L8a 0x50184BD9 `mov (a0), d0`; TempoSyncSetDispatch_L8d 0x50184BDC `mov (4, a0), a0`
+	REC_TempoSyncSetDispatch_L5c_Records	f0=4064, f4=0x50184C18	# [0]
+	REC_TempoSyncSetDispatch_L5c_Records	f0=1, f4=0x50184BE1
+	REC_TempoSyncSetDispatch_L5c_Records	f0=2, f4=0x50184BEF
+	REC_TempoSyncSetDispatch_L5c_Records	f0=18, f4=0x50184C0A
+	REC_TempoSyncSetDispatch_L5c_Records	f0=4065, f4=0x50184C18
+	REC_TempoSyncSetDispatch_L5c_Records	f0=4066, f4=0x50184C18
+	REC_TempoSyncSetDispatch_L5c_Records	f0=134, f4=0x50184BFD
+	REC_TempoSyncSetDispatch_L5c_Records	f0=4067, f4=0x50184C18
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28	# [8]
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28
+	REC_TempoSyncSetDispatch_L5c_Records	f4=0x50184C28
+	REC_TempoSyncSetDispatch_L5c_Records	f0=4063, f4=0x50184C18
 
 Str_empty_1216:	.asciz "{\xDA"
 # census: opaque -- unknown-dump: 41 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -4305,24 +4550,98 @@ doubles_4840DE50:	# IEEE-754 doubles (lo word, hi word)
 
 func_485E8EDD_entry_L15_Table:	# 4 x u8, 1..4; read by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a1), d0`
 	tab_u8	1, 2, 3, 4
-data_4840E044:
-.incbin_range "baserom/kn2400_program.rom", 0x00E044, 0x00E058
-data_4840E058:
-.incbin_range "baserom/kn2400_program.rom", 0x00E058, 0x00E06C
-data_4840E06C:
-.incbin_range "baserom/kn2400_program.rom", 0x00E06C, 0x00E078
-data_4840E078:
-.incbin_range "baserom/kn2400_program.rom", 0x00E078, 0x00E084
-data_4840E084:
-.incbin_range "baserom/kn2400_program.rom", 0x00E084, 0x00E090
-data_4840E090:
-.incbin_range "baserom/kn2400_program.rom", 0x00E090, 0x00E09C
-data_4840E09C:
-.incbin_range "baserom/kn2400_program.rom", 0x00E09C, 0x00E0A8
-data_4840E0A8:
-.incbin_range "baserom/kn2400_program.rom", 0x00E0A8, 0x00E0C0
-data_4840E0C0:
-.incbin_range "baserom/kn2400_program.rom", 0x00E0C0, 0x00E0D8
+func_5018D239_Table_3:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
+	tab_u32	0, 1
+
+func_5018D239_Var_3:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
+	.long	0x485ebdae
+
+func_5018D239_Table_4:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
+	tab_u16	3, 0
+
+func_5018D239_Var_4:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
+	.long	0x10000
+
+func_5018D239_Table_5:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
+	tab_u32	0, 1
+
+func_5018D239_Var_5:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
+	.long	0x485f93b0
+
+func_5018D239_Table_6:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
+	tab_u16	3, 0
+
+func_5018D239_Var_6:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
+	.long	6144
+func_5018CA20_Var_8:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_6:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_9:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	0
+func_5018CA20_Var_10:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_7:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_11:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	0
+func_5018CA20_Var_12:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_8:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_13:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	1
+func_5018CA20_Var_14:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_9:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_15:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	1
+func_5018CA20_Var_16:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_10:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_17:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	1
+
+func_5018CA75_entry_L52_Table:	# 2 x u32, 0..1; read by func_5018CA75_entry_L52 0x5018CACC: `mov (a3), d0`
+	tab_u32	0, 1
+
+func_5018CA75_entry_L52_Var:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (8, a3), a0`
+	.long	0x485ebbbe
+func_5018CA75_entry_L52_Var_2:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (0xc, a3), d1`
+	.long	1
+
+func_5018CA75_entry_L52_Table_2:	# 2 x u16, 0..0; read by func_5018CA75_entry_L52 0x5018CACC: `movhu (a3), d1`
+	tab_u16	0, 0
+
+func_5018CA75_entry_L52_Var_3:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (4, a3), d0`
+	.long	1
+
+func_5018CA75_entry_L52_Table_3:	# 2 x u32, 0..1; read by func_5018CA75_entry_L52 0x5018CACC: `mov (a3), d0`
+	tab_u32	0, 1
+
+func_5018CA75_entry_L52_Var_4:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (8, a3), a0`
+	.long	0x485ebebb
+func_5018CA75_entry_L52_Var_5:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (0xc, a3), d1`
+	.long	1
+
+func_5018CA75_entry_L52_Table_4:	# 2 x u16, 0..0; read by func_5018CA75_entry_L52 0x5018CACC: `movhu (a3), d1`
+	tab_u16	0, 0
+
+func_5018CA75_entry_L52_Var_6:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (4, a3), d0`
+	.long	24
+
 IndexSwEventHandler_Table:	# 32 x u32, 1..2147483648; read by IndexSwEventHandler 0x485EC0F8: `mov	(d0, a3), d1`; IndexSwEventHandler_entry_L50 0x485EC14D: `mov	(d0, a3), d0` ...
 	tab_u32	1, 2, 4, 8, 16, 32, 64, 128	# [0]
 	tab_u32	256, 512, 1024, 2048, 4096, 8192, 16384, 32768	# [8]
@@ -4332,17 +4651,10 @@ func_485EC2FF_Table:	# 15 x u32, 4294967289..4294967294; read by func_485EC2FF 0
 	tab_u32	4294967289, 4294967289, 4294967289, 4294967289, 4294967289, 4294967290, 4294967290, 4294967290	# [0]
 	tab_u32	4294967291, 4294967291, 4294967291, 4294967292, 4294967292, 4294967293, 4294967294	# [8]
 .incbin_range "baserom/kn2400_program.rom", 0x00E194, 0x00E1DC
-
-func_485EC6C8_Table:	# 4 x REC_func_485EC6C8_Table (8 bytes each); read by func_485EC6C8_entry_L20 0x485EC6ED `mov (4, a0), d2`; func_485EC6C8_entry_L20 0x485EC6ED `mov (d1, a0), d2`; func_485EC6C8_entry_L1c0 0x485EC88D `mov (4, a0), d3` (+1)
-	REC_func_485EC6C8_Table	
-	REC_func_485EC6C8_Table	f0=1, f4=1
-	REC_func_485EC6C8_Table	f0=1
-	REC_func_485EC6C8_Table	f4=1
-func_485ECA02_Table:	# 4 x REC_func_485ECA02_Table (8 bytes each); read by func_485ECA02_entry_L6c 0x485ECA73 `mov (4, a0), d1`; func_485ECA02_entry_L6c 0x485ECA73 `mov (d1, a0), d2`; func_485ECA02_entry_L31b 0x485ECD22 `mov (4, a0), d2` (+1)
-	REC_func_485ECA02_Table	f4=1
-	REC_func_485ECA02_Table	f0=1
-	REC_func_485ECA02_Table	f0=1, f4=1
-	REC_func_485ECA02_Table	
+func_485EC6C8_Table:	# 8 x u32, 0..1; read by func_485EC6C8_entry : `mov	(d0, a0), d2`; func_485EC6C8_entry : `mov	(d1, a0), d2`
+	tab_u32	0, 0, 1, 1, 1, 0, 0, 1
+func_485ECA02_Table:	# 8 x u32, 0..1; read by func_485ECA02_entry : `mov	(d1, a0), d2`
+	tab_u32	0, 1, 1, 0, 1, 1, 0, 0
 
 Str_LCDCAP_02d_BMP_2:	.asciz "LCDCAP%02d.BMP"
 	.align	4, 0xFF	# pad after Str_LCDCAP_02d_BMP_2
@@ -4370,8 +4682,15 @@ Str_BM_2:	.asciz "BM"
 
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry : `movbu	(d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
-data_4840E294:
-.incbin_range "baserom/kn2400_program.rom", 0x00E294, 0x00E2A0
+
+func_5018CA20_Var_18:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_11:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_19:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	1
 
 Str_604:	.asciz "604"
 
@@ -4640,7 +4959,7 @@ Str_SD_3:	.asciz "SD"
 Str_SEQ_7:	.asciz "SEQ"
 	.align	4, 0xFF	# pad after Str_SEQ_7
 
-AcMixerVolProc_Table:	# 39 x REC_AcMixerVolProc_Table (16 bytes each); read by SetMmmFilter 0x485F3EF0 `call MainDeleteSpecificEvent_entry, [d2], 0x1c`; AcMixerVolProc_L51 0x485F715A `call SetMmmFilter_entry, [d2], 0x18`; AcMixerVolProc_L51 0x485F715A `mov (0xc, a0), d0` (+8)
+AcMixerVolProc_Table:	# 39 x REC_AcMixerVolProc_Table (16 bytes each); read by AcMixerVolProc_L51 0x485F715A `mov (0xc, a0), d0`; AcMixerVolProc_L51 0x485F715A `mov (4, a0), d1`; AcMixerVolProc_L51 0x485F715A `mov (8, a2), d0` (+29)
 	REC_AcMixerVolProc_Table	p0=Str_PT1_2, f4=0xB00007, f8=0x200000	# [0]
 	REC_AcMixerVolProc_Table	p0=Str_PT2_2, f4=0xB00007, f8=0x200000
 	REC_AcMixerVolProc_Table	p0=Str_PT3_2, f4=0xB00007, f8=0x200000
@@ -4847,8 +5166,8 @@ Str_P_9_2:	.asciz "P 9"
 Str_P10:	.asciz "P10"
 Str_P11:	.asciz "P11"
 Str_P12_2:	.asciz "P12"
-Str_P_5_3:	.asciz "P 5"
-Str_P_6_3:	.asciz "P 6"
+Str_P_5_2:	.asciz "P 5"
+Str_P_6_2:	.asciz "P 6"
 Str_P_7_2:	.asciz "P 7"
 Str_P_4_3:	.asciz "P 4"
 Str_DRM:	.asciz "DRM"
@@ -4871,8 +5190,8 @@ PsTrackSwitchProc_L34c_Table:
 	.long	Str_P10
 	.long	Str_P11
 	.long	Str_P12_2
-	.long	Str_P_5_3
-	.long	Str_P_6_3
+	.long	Str_P_5_2
+	.long	Str_P_6_2
 	.long	Str_P_7_2
 	.long	Str_P_4_3
 
@@ -4947,18 +5266,18 @@ Str_Caption:	.asciz "Caption:"
 	.align	4, 0xFF	# pad after Str_Caption
 data_48410C00:
 	.space	1, 0x00
-Str_C_25:	.asciz "C"
+Str_C_26:	.asciz "C"
 Str_D_1_a0:	.asciz "D>1~a0"
-Str_D_13:	.asciz "D"
+Str_D_14:	.asciz "D"
 Str_E_1_a0:	.asciz "E>1~a0"
-Str_E_12:	.asciz "E"
-Str_F_12:	.asciz "F"
+Str_E_13:	.asciz "E"
+Str_F_13:	.asciz "F"
 Str_F_1_9e:	.asciz "F>1~9e"
-Str_G_11:	.asciz "G"
+Str_G_12:	.asciz "G"
 Str_A_1_a0:	.asciz "A>1~a0"
-Str_A_25:	.asciz "A"
+Str_A_26:	.asciz "A"
 Str_B_1_a0:	.asciz "B>1~a0"
-Str_B_14:	.asciz "B"
+Str_B_15:	.asciz "B"
 data_48410C32:
 	.space	1, 0x00
 data_48410C33:
@@ -4969,18 +5288,18 @@ data_48410C34:
 
 AcChordBoxProc_L132_Table:
 	.long	data_48410C00
-	.long	Str_C_25
+	.long	Str_C_26
 	.long	Str_D_1_a0
-	.long	Str_D_13
+	.long	Str_D_14
 	.long	Str_E_1_a0
-	.long	Str_E_12
-	.long	Str_F_12
+	.long	Str_E_13
+	.long	Str_F_13
 	.long	Str_F_1_9e
-	.long	Str_G_11
+	.long	Str_G_12
 	.long	Str_A_1_a0
-	.long	Str_A_25
+	.long	Str_A_26
 	.long	Str_B_1_a0
-	.long	Str_B_14
+	.long	Str_B_15
 	.long	data_48410C32
 	.long	data_48410C33
 	.long	data_48410C34
@@ -5384,71 +5703,9 @@ AcTransposeBoxProc_Leb_Table:
 	.long	func_485F8ECE_Table+230
 	.long	func_485F8ECE_Table+238
 
-GetClientBox2_entry_L36_Records:	# 64 x REC_GetClientBox2_entry_L36_Records (8 bytes each); read by GetClientBox2_entry_L36 0x485EE4C1 `mov (a0), d0`
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"	# [0]
-	REC_GetClientBox2_entry_L36_Records	f0=193, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=194, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=3, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=4, x4="\xF7\xE4^H"
-	REC_GetClientBox2_entry_L36_Records	f0=196, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=6, x4="\xFC\xE4^H"
-	REC_GetClientBox2_entry_L36_Records	f0=198, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=200, x4="\x11\xE5^H"	# [8]
-	REC_GetClientBox2_entry_L36_Records	f0=201, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=202, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=11, x4="\xF7\xE4^H"
-	REC_GetClientBox2_entry_L36_Records	f0=12, x4="\xF2\xE4^H"
-	REC_GetClientBox2_entry_L36_Records	f0=203, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=204, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=205, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=10, x4="\x11\xE5^H"	# [16]
-	REC_GetClientBox2_entry_L36_Records	f0=17, x4="\x11\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=18, x4="\xF7\xE4^H"
-	REC_GetClientBox2_entry_L36_Records	f0=132, x4="\x16\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=133, x4="S\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=136, x4="\x90\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=137, x4="\xAE\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=5, x4="\n\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=2, x4="\x1F\xE6^H"	# [24]
-	REC_GetClientBox2_entry_L36_Records	f0=195, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=197, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=199, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=7, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=8, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=9, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=16, x4="\x1F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=206, x4="\x1F\xE6^H"	# [32]
-	REC_GetClientBox2_entry_L36_Records	f0=129, x4="$\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=161, x4="B\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=130, x4="a\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=164, x4="4\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=165, x4="q\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=162, x4="\x7F\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=131, x4="\x9E\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=168, x4="\xCC\xE5^H"	# [40]
-	REC_GetClientBox2_entry_L36_Records	f0=169, x4="\xEB\xE5^H"
-	REC_GetClientBox2_entry_L36_Records	f0=163, x4="\xBC\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=134, x4="\xDA\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=135, x4="\xF7\xE6^H"
-	REC_GetClientBox2_entry_L36_Records	f0=166, x4="\x14\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	f0=167, x4="2\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	f0=1, x4="P\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"	# [48]
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"	# [56]
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
-	REC_GetClientBox2_entry_L36_Records	x4="Q\xE7^H"
+GetClientBox2_entry_L36_Records:	# 1 x REC_GetClientBox2_entry_L36_Records (8 bytes each); read by GetClientBox2_entry_L36 0x485EE4C1 `mov (a0), d0`; GetClientBox2_entry_L5f 0x485EE4EA `mov (a0), d0`; GetClientBox2_entry_L62 0x485EE4ED `mov (4, a0), a0`
+	REC_GetClientBox2_entry_L36_Records	p4=GetClientBox2_entry_L2c6
+.incbin_range "baserom/kn2400_program.rom", 0x011320, 0x011518
 
 BoxLeftCheck_Table:	# 9 x u32, 1214179390..1214179390; read by BoxLeftCheck 0x485EE824: `mov	(d0, a0), a0`
 	tab_u32	1214179390, 1214179390, 1214179390, 1214179390, 1214179390, 1214179390, 1214179390, 1214179390	# [0]
@@ -5457,311 +5714,164 @@ BoxRightCheck_Table:	# 9 x u32, 1214179424..1214179424; read by BoxRightCheck 0x
 	tab_u32	1214179424, 1214179424, 1214179424, 1214179424, 1214179424, 1214179424, 1214179424, 1214179424	# [0]
 	tab_u32	1214179424	# [8]
 
-GroupBoxProc_L1e_Records:	# 64 x REC_GroupBoxProc_L1e_Records (8 bytes each); read by GroupBoxProc_L1e 0x485EE886 `mov (a0), d0`
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"	# [0]
-	REC_GroupBoxProc_L1e_Records	f0=1, x4="\x15\xE9^H"
-	REC_GroupBoxProc_L1e_Records	f0=2, x4="p\xE9^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=5, x4="\xBB\xEB^H"
-	REC_GroupBoxProc_L1e_Records	f0=6, x4="y\xEA^H"
-	REC_GroupBoxProc_L1e_Records	f0=7, x4="\x12\xEB^H"
-	REC_GroupBoxProc_L1e_Records	f0=8, x4="\xAF\xE9^H"	# [8]
-	REC_GroupBoxProc_L1e_Records	f0=0x10089, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1008A, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1008B, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=12, x4="\xBD\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=13, x4="\xCB\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=14, x4="\xD9\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1008C, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1008F, x4="\xFE\xE8^H"	# [16]
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x10096, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x10097, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=23, x4="\xC5\xE9^H"	# [24]
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1009B, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1009D, x4="u\xF0^H"
-	REC_GroupBoxProc_L1e_Records	f0=30, x4="\x96\xEE^H"
-	REC_GroupBoxProc_L1e_Records	f0=31, x4="l\xED^H"
-	REC_GroupBoxProc_L1e_Records	f0=32, x4="\xE7\xE8^H"	# [32]
-	REC_GroupBoxProc_L1e_Records	f0=0x1009F, x4="u\xF0^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x100A0, x4="u\xF0^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1009E, x4="u\xF0^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x100A4, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x100A1, x4="y\xF0^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x100A5, x4="\xA5\xF0^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x100A8, x4="\xFE\xE8^H"	# [40]
-	REC_GroupBoxProc_L1e_Records	f0=40, x4="/\xEF^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1006E, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1006F, x4="\xFE\xE8^H"
-	REC_GroupBoxProc_L1e_Records	f0=46, x4="\xF7\xF0^H"	# [48]
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"	# [56]
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1007B, x4="j\xF0^H"
-	REC_GroupBoxProc_L1e_Records	f0=0x1007C, x4="b\xF0^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-	REC_GroupBoxProc_L1e_Records	x4="\x12\xF1^H"
-ScreenProc_L1d_Records:	# 16 x REC_ScreenProc_L1d_Records (8 bytes each); read by ScreenProc_L1d 0x485EF350 `mov (a0), d0`
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"	# [0]
-	REC_ScreenProc_L1d_Records	f0=1, x4="\x87\xF3^H"
-	REC_ScreenProc_L1d_Records	f0=2, x4="\xB4\xF4^H"
-	REC_ScreenProc_L1d_Records	f0=0x100B2, x4="\x02\xF5^H"
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"
-	REC_ScreenProc_L1d_Records	f0=5, x4="\x0D\xF5^H"
-	REC_ScreenProc_L1d_Records	f0=0x10046, x4="\xA9\xF5^H"
-	REC_ScreenProc_L1d_Records	f0=0x10045, x4="\xC9\xF5^H"
-	REC_ScreenProc_L1d_Records	f0=56, x4="\xDF\xF4^H"	# [8]
-	REC_ScreenProc_L1d_Records	f0=0x10048, x4="\xBB\xF5^H"
-	REC_ScreenProc_L1d_Records	f0=0x10047, x4="\xCC\xF5^H"
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"
-	REC_ScreenProc_L1d_Records	x4="\xD0\xF5^H"
+GroupBoxProc_L1e_Records:	# 1 x REC_GroupBoxProc_L1e_Records (8 bytes each); read by GroupBoxProc_L1e 0x485EE886 `mov (a0), d0`; GroupBoxProc_L4d 0x485EE8B5 `mov (a0), d0`; GroupBoxProc_L50 0x485EE8B8 `mov (4, a0), a0`
+	REC_GroupBoxProc_L1e_Records	p4=GroupBoxProc_L8aa
+.incbin_range "baserom/kn2400_program.rom", 0x011568, 0x011760
+ScreenProc_L1d_Records:	# 1 x REC_ScreenProc_L1d_Records (8 bytes each); read by ScreenProc_L1d 0x485EF350 `mov (a0), d0`; ScreenProc_L4c 0x485EF37F `mov (a0), d0`; ScreenProc_L4f 0x485EF382 `mov (4, a0), a0`
+	REC_ScreenProc_L1d_Records	p4=ScreenProc_L29d
+.incbin_range "baserom/kn2400_program.rom", 0x011768, 0x0117E0
 
 func_485EF5E0_Table:	# 13 x u32, 1214182904..1214182961; read by func_485EF5E0 0x485EF5E0: `mov	(d1, a0), a0`
 	tab_u32	1214182904, 1214182923, 1214182942, 1214182961, 1214182961, 1214182961, 1214182961, 1214182961	# [0]
 	tab_u32	1214182961, 1214182961, 1214182961, 1214182961, 1214182961	# [8]
 
-WindowProc_L20_Records:	# 32 x REC_WindowProc_L20_Records (8 bytes each); read by WindowProc_L20 0x485EFBF4 `mov (a0), d0`
-	REC_WindowProc_L20_Records	f0=32, x4="^\xFE^H"	# [0]
-	REC_WindowProc_L20_Records	f0=1, x4="+\xFC^H"
-	REC_WindowProc_L20_Records	f0=2, x4="\xF9\xFC^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	f0=0x10045, x4="\xA7\xFD^H"
-	REC_WindowProc_L20_Records	f0=0x10046, x4="\xC9\xFD^H"
-	REC_WindowProc_L20_Records	f0=0x10047, x4="\xBA\xFD^H"
-	REC_WindowProc_L20_Records	f0=0x10048, x4="\xDC\xFD^H"	# [8]
-	REC_WindowProc_L20_Records	f0=0x10088, x4="\xEB\xFD^H"
-	REC_WindowProc_L20_Records	f0=8, x4="\x04\xFE^H"
-	REC_WindowProc_L20_Records	f0=5, x4="p\xFE^H"
-	REC_WindowProc_L20_Records	f0=12, x4="^\xFE^H"
-	REC_WindowProc_L20_Records	f0=13, x4="^\xFE^H"
-	REC_WindowProc_L20_Records	f0=14, x4="^\xFE^H"
-	REC_WindowProc_L20_Records	f0=6, x4="p\xFE^H"
-	REC_WindowProc_L20_Records	f0=7, x4="p\xFE^H"	# [16]
-	REC_WindowProc_L20_Records	f0=40, x4="p\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	f0=23, x4="^\xFE^H"
-	REC_WindowProc_L20_Records	f0=56, x4="\x04\xFE^H"	# [24]
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	f0=59, x4="^\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-	REC_WindowProc_L20_Records	f0=30, x4="^\xFE^H"
-	REC_WindowProc_L20_Records	x4="\xE4\xFE^H"
-PsRadioBoxProc_L1d_Records:	# 16 x REC_PsRadioBoxProc_L1d_Records (8 bytes each); read by PsRadioBoxProc_L1d 0x485F0F81 `mov (a0), d0`
-	REC_PsRadioBoxProc_L1d_Records	f0=0x100B0, x4="\x10\x10_H"	# [0]
-	REC_PsRadioBoxProc_L1d_Records	f0=32, x4="W\x11_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=1, x4="\xA4\x11_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=15, x4="\xEF\x11_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=30, x4=")\x12_H"
-	REC_PsRadioBoxProc_L1d_Records	x4="C\x13_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x10046, x4="y\x12_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x10036, x4="\xE7\x12_H"
-	REC_PsRadioBoxProc_L1d_Records	x4="C\x13_H"	# [8]
-	REC_PsRadioBoxProc_L1d_Records	x4="C\x13_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x100AA, x4="\xFB\x12_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x100AB, x4="\xEE\x12_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x100EA, x4="6\x13_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x1004D, x4="\x09\x13_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x100AE, x4="\xB7\x0F_H"
-	REC_PsRadioBoxProc_L1d_Records	f0=0x100AF, x4="\n\x11_H"
-PsListBoxProc_L1d_Records:	# 16 x REC_PsListBoxProc_L1d_Records (8 bytes each); read by PsListBoxProc_L1d 0x485F13A1 `mov (a0), d0`
-	REC_PsListBoxProc_L1d_Records	f0=0x10090, x4="\xD9\x15_H"	# [0]
-	REC_PsListBoxProc_L1d_Records	f0=0x10091, x4="\"\x14_H"
-	REC_PsListBoxProc_L1d_Records	f0=1, x4="`\x18_H"
-	REC_PsListBoxProc_L1d_Records	f0=0x10061, x4="\x83\x18_H"
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	f0=0x10027, x4="\x95\x18_H"
-	REC_PsListBoxProc_L1d_Records	f0=0x10017, x4="\xC5\x18_H"	# [8]
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	f0=0x1008B, x4="\xE5\x18_H"
-	REC_PsListBoxProc_L1d_Records	f0=0x1008C, x4="\xD7\x18_H"
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	x4="\xF4\x18_H"
-	REC_PsListBoxProc_L1d_Records	f0=0x1008F, x4="\xD8\x13_H"
-PsGridBoxProc_L28_Records:	# 32 x REC_PsGridBoxProc_L28_Records (8 bytes each); read by PsGridBoxProc_L28 0x485F1B75 `mov (a0), d0`
-	REC_PsGridBoxProc_L28_Records	f0=0x10080, x4="Z%_H"	# [0]
-	REC_PsGridBoxProc_L28_Records	f0=1, x4="\xAF\x1B_H"
-	REC_PsGridBoxProc_L28_Records	f0=2, x4="\x17\x1C_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x10081, x4="\xC1&_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x10082, x4="H'_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x10083, x4="\x15(_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x10085, x4="4(_H"
-	REC_PsGridBoxProc_L28_Records	f0=36, x4="g(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"	# [8]
-	REC_PsGridBoxProc_L28_Records	f0=9, x4="\x83\x1C_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x100AE, x4="\xBD(_H"
-	REC_PsGridBoxProc_L28_Records	f0=15, x4="\xF8$_H"
-	REC_PsGridBoxProc_L28_Records	f0=16, x4="\xF8$_H"	# [16]
-	REC_PsGridBoxProc_L28_Records	f0=17, x4="\xF8$_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x100B2, x4=",\x1F_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x100B3, x4="\xB7\"_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x100B4, x4="\x85\x1F_H"
-	REC_PsGridBoxProc_L28_Records	f0=18, x4="\xF8$_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x100AF, x4="\xAD(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"	# [24]
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	x4="\xCE(_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x1007E, x4="\x1E'_H"
-	REC_PsGridBoxProc_L28_Records	f0=0x1007F, x4="3'_H"
-AcGridBoxProc_L1d_Records:	# 16 x REC_AcGridBoxProc_L1d_Records (8 bytes each); read by AcGridBoxProc_L1d 0x485F2907 `mov (a0), d0`
-	REC_AcGridBoxProc_L1d_Records	f0=16, x4="\x9B*_H"	# [0]
-	REC_AcGridBoxProc_L1d_Records	f0=1, x4="=)_H"
-	REC_AcGridBoxProc_L1d_Records	f0=17, x4="\xAD)_H"
-	REC_AcGridBoxProc_L1d_Records	f0=18, x4="\x9B*_H"
-	REC_AcGridBoxProc_L1d_Records	f0=0x1007F, x4="\x9E+_H"
-	REC_AcGridBoxProc_L1d_Records	f0=20, x4="\xB5+_H"
-	REC_AcGridBoxProc_L1d_Records	f0=21, x4="\xB5+_H"
-	REC_AcGridBoxProc_L1d_Records	f0=0x10081, x4="\xDA+_H"
-	REC_AcGridBoxProc_L1d_Records	x4="\xF4+_H"	# [8]
-	REC_AcGridBoxProc_L1d_Records	x4="\xF4+_H"
-	REC_AcGridBoxProc_L1d_Records	x4="\xF4+_H"
-	REC_AcGridBoxProc_L1d_Records	x4="\xF4+_H"
-	REC_AcGridBoxProc_L1d_Records	x4="\xF4+_H"
-	REC_AcGridBoxProc_L1d_Records	x4="\xF4+_H"
-	REC_AcGridBoxProc_L1d_Records	f0=0x1007E, x4="\x87+_H"
-	REC_AcGridBoxProc_L1d_Records	f0=15, x4="\xAD)_H"
-PsEditBoxProc_L1e_Records:	# 32 x REC_PsEditBoxProc_L1e_Records (8 bytes each); read by PsEditBoxProc_L1e 0x485F2CC1 `mov (a0), d0`
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"	# [0]
-	REC_PsEditBoxProc_L1e_Records	f0=1, x4="\x82-_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	f0=36, x4="\x1E3_H"
-	REC_PsEditBoxProc_L1e_Records	f0=5, x4="\xFD0_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100C6, x4="\xE30_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"	# [8]
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x1004A, x4="\xF8,_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100AE, x4="\x9B3_H"
-	REC_PsEditBoxProc_L1e_Records	f0=15, x4="\xB21_H"
-	REC_PsEditBoxProc_L1e_Records	f0=16, x4="h2_H"	# [16]
-	REC_PsEditBoxProc_L1e_Records	f0=0x10051, x4="_3_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100B2, x4="\xEC-_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100B3, x4="\x1C/_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100B4, x4="U/_H"
-	REC_PsEditBoxProc_L1e_Records	f0=19, x4="d1_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100AF, x4="\x8D3_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x100EE, x4="\xAA3_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"	# [24]
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x1003A, x4="\xDB0_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	f0=0x1003C, x4="B3_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-	REC_PsEditBoxProc_L1e_Records	x4="\xB83_H"
-AcNumEditBoxProc_L1c_Records:	# 16 x REC_AcNumEditBoxProc_L1c_Records (8 bytes each); read by AcNumEditBoxProc_L1c 0x485F3647 `mov (a0), d0`
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"	# [0]
-	REC_AcNumEditBoxProc_L1c_Records	f0=1, x4="\\8_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=2, x4="\x0B9_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=3, x4="\x078_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=0x100A4, x4="}6_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=0x10054, x4="\xF67_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=4, x4="\xB18_H"
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"	# [8]
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=0x1002C, x4="\x9E6_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=0x1002D, x4="\x077_H"
-	REC_AcNumEditBoxProc_L1c_Records	x4="e9_H"
-	REC_AcNumEditBoxProc_L1c_Records	f0=0x1002F, x4="+7_H"
-AcMmmEditBoxProc_L1d_Records:	# 16 x REC_AcMmmEditBoxProc_L1d_Records (8 bytes each); read by AcMmmEditBoxProc_L1d 0x485F3991 `mov (a0), d0`
-	REC_AcMmmEditBoxProc_L1d_Records	f0=16, x4="\x8D<_H"	# [0]
-	REC_AcMmmEditBoxProc_L1d_Records	f0=1, x4="\xC89_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=17, x4="X;_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=18, x4="\"<_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=20, x4="\xED:_H"
-	REC_AcMmmEditBoxProc_L1d_Records	x4="q=_H"
-	REC_AcMmmEditBoxProc_L1d_Records	x4="q=_H"
-	REC_AcMmmEditBoxProc_L1d_Records	x4="q=_H"
-	REC_AcMmmEditBoxProc_L1d_Records	x4="q=_H"	# [8]
-	REC_AcMmmEditBoxProc_L1d_Records	f0=9, x4="\xA7:_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=0x1003A, x4="\xF99_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=0x1003B, x4="&:_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=41, x4="\xF8<_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=0x1003D, x4="i:_H"
-	REC_AcMmmEditBoxProc_L1d_Records	x4="q=_H"
-	REC_AcMmmEditBoxProc_L1d_Records	f0=15, x4="\xBD;_H"
-AcRamEditBoxProc_L1e_Records:	# 16 x REC_AcRamEditBoxProc_L1e_Records (8 bytes each); read by AcRamEditBoxProc_L1e 0x485F3F3E `mov (a0), d0`
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"	# [0]
-	REC_AcRamEditBoxProc_L1e_Records	f0=1, x4="x@_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=0x10032, x4="`?_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=0x10033, x4="\xA4?_H"
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=0x10035, x4="\x0E@_H"
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=7, x4="\x8EA_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=8, x4="hB_H"	# [8]
-	REC_AcRamEditBoxProc_L1e_Records	f0=9, x4="$A_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=10, x4="\xF8A_H"
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"
-	REC_AcRamEditBoxProc_L1e_Records	f0=13, x4="\xC1@_H"
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"
-	REC_AcRamEditBoxProc_L1e_Records	x4="\xD7B_H"
-PsEditSwBoxProc_L1d_Records:	# 16 x REC_PsEditSwBoxProc_L1d_Records (8 bytes each); read by PsEditSwBoxProc_L1d 0x485F4DD7 `mov (a0), d0`
-	REC_PsEditSwBoxProc_L1d_Records	x4="\x91O_H"	# [0]
-	REC_PsEditSwBoxProc_L1d_Records	f0=1, x4="\x0DN_H"
-	REC_PsEditSwBoxProc_L1d_Records	x4="\x91O_H"
-	REC_PsEditSwBoxProc_L1d_Records	x4="\x91O_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=84, x4="\x94N_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=117, x4="\x1AO_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=118, x4="\x0CO_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=181, x4="mO_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=24, x4="YN_H"	# [8]
-	REC_PsEditSwBoxProc_L1d_Records	f0=121, x4="\x15N_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=106, x4="FO_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=123, x4="LN_H"
-	REC_PsEditSwBoxProc_L1d_Records	f0=182, x4="zO_H"
-	REC_PsEditSwBoxProc_L1d_Records	x4="\x91O_H"
-	REC_PsEditSwBoxProc_L1d_Records	x4="\x91O_H"
-	REC_PsEditSwBoxProc_L1d_Records	x4="\x91O_H"
+WindowProc_L20_Records:	# 32 x REC_WindowProc_L20_Records (8 bytes each); read by WindowProc_L20 0x485EFBF4 `mov (a0), d0`; WindowProc_L4f 0x485EFC23 `mov (a0), d0`; WindowProc_L52 0x485EFC26 `mov (4, a0), a0`
+	REC_WindowProc_L20_Records	f0=32, f4=0x485EFE5E	# [0]
+	REC_WindowProc_L20_Records	f0=1, f4=0x485EFC2B
+	REC_WindowProc_L20_Records	f0=2, f4=0x485EFCF9
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f0=0x10045, f4=0x485EFDA7
+	REC_WindowProc_L20_Records	f0=0x10046, f4=0x485EFDC9
+	REC_WindowProc_L20_Records	f0=0x10047, f4=0x485EFDBA
+	REC_WindowProc_L20_Records	f0=0x10048, f4=0x485EFDDC	# [8]
+	REC_WindowProc_L20_Records	f0=0x10088, f4=0x485EFDEB
+	REC_WindowProc_L20_Records	f0=8, f4=0x485EFE04
+	REC_WindowProc_L20_Records	f0=5, f4=0x485EFE70
+	REC_WindowProc_L20_Records	f0=12, f4=0x485EFE5E
+	REC_WindowProc_L20_Records	f0=13, f4=0x485EFE5E
+	REC_WindowProc_L20_Records	f0=14, f4=0x485EFE5E
+	REC_WindowProc_L20_Records	f0=6, f4=0x485EFE70
+	REC_WindowProc_L20_Records	f0=7, f4=0x485EFE70	# [16]
+	REC_WindowProc_L20_Records	f0=40, f4=0x485EFE70
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f0=23, f4=0x485EFE5E
+	REC_WindowProc_L20_Records	f0=56, f4=0x485EFE04	# [24]
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f0=59, f4=0x485EFE5E
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+	REC_WindowProc_L20_Records	f0=30, f4=0x485EFE5E
+	REC_WindowProc_L20_Records	f4=0x485EFEE4
+PsRadioBoxProc_L1d_Records:	# 16 x REC_PsRadioBoxProc_L1d_Records (8 bytes each); read by PsRadioBoxProc_L1d 0x485F0F81 `mov (a0), d0`; PsRadioBoxProc_L4b 0x485F0FAF `mov (a0), d0`; PsRadioBoxProc_L4e 0x485F0FB2 `mov (4, a0), a0`
+	REC_PsRadioBoxProc_L1d_Records	f0=0x100B0, f4=0x485F1010	# [0]
+	REC_PsRadioBoxProc_L1d_Records	f0=32, f4=0x485F1157
+	REC_PsRadioBoxProc_L1d_Records	f0=1, f4=0x485F11A4
+	REC_PsRadioBoxProc_L1d_Records	f0=15, f4=0x485F11EF
+	REC_PsRadioBoxProc_L1d_Records	f0=30, f4=0x485F1229
+	REC_PsRadioBoxProc_L1d_Records	f4=0x485F1343
+	REC_PsRadioBoxProc_L1d_Records	f0=0x10046, f4=0x485F1279
+	REC_PsRadioBoxProc_L1d_Records	f0=0x10036, f4=0x485F12E7
+	REC_PsRadioBoxProc_L1d_Records	f4=0x485F1343	# [8]
+	REC_PsRadioBoxProc_L1d_Records	f4=0x485F1343
+	REC_PsRadioBoxProc_L1d_Records	f0=0x100AA, f4=0x485F12FB
+	REC_PsRadioBoxProc_L1d_Records	f0=0x100AB, f4=0x485F12EE
+	REC_PsRadioBoxProc_L1d_Records	f0=0x100EA, f4=0x485F1336
+	REC_PsRadioBoxProc_L1d_Records	f0=0x1004D, f4=0x485F1309
+	REC_PsRadioBoxProc_L1d_Records	f0=0x100AE, f4=0x485F0FB7
+	REC_PsRadioBoxProc_L1d_Records	f0=0x100AF, f4=0x485F110A
+PsListBoxProc_L1d_Records:	# 16 x REC_PsListBoxProc_L1d_Records (8 bytes each); read by PsListBoxProc_L1d 0x485F13A1 `mov (a0), d0`; PsListBoxProc_L4c 0x485F13D0 `mov (a0), d0`; PsListBoxProc_L4f 0x485F13D3 `mov (4, a0), a0`
+	REC_PsListBoxProc_L1d_Records	f0=0x10090, f4=0x485F15D9	# [0]
+	REC_PsListBoxProc_L1d_Records	f0=0x10091, f4=0x485F1422
+	REC_PsListBoxProc_L1d_Records	f0=1, f4=0x485F1860
+	REC_PsListBoxProc_L1d_Records	f0=0x10061, f4=0x485F1883
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f0=0x10027, f4=0x485F1895
+	REC_PsListBoxProc_L1d_Records	f0=0x10017, f4=0x485F18C5	# [8]
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f0=0x1008B, f4=0x485F18E5
+	REC_PsListBoxProc_L1d_Records	f0=0x1008C, f4=0x485F18D7
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f4=0x485F18F4
+	REC_PsListBoxProc_L1d_Records	f0=0x1008F, f4=0x485F13D8
+PsGridBoxProc_L28_Records:	# 32 x REC_PsGridBoxProc_L28_Records (8 bytes each); read by PsGridBoxProc_L28 0x485F1B75 `mov (a0), d0`; PsGridBoxProc_L5a 0x485F1BA7 `mov (a0), d0`; PsGridBoxProc_L5d 0x485F1BAA `mov (4, a0), a0`
+	REC_PsGridBoxProc_L28_Records	f0=0x10080, f4=0x485F255A	# [0]
+	REC_PsGridBoxProc_L28_Records	f0=1, f4=0x485F1BAF
+	REC_PsGridBoxProc_L28_Records	f0=2, f4=0x485F1C17
+	REC_PsGridBoxProc_L28_Records	f0=0x10081, f4=0x485F26C1
+	REC_PsGridBoxProc_L28_Records	f0=0x10082, f4=0x485F2748
+	REC_PsGridBoxProc_L28_Records	f0=0x10083, f4=0x485F2815
+	REC_PsGridBoxProc_L28_Records	f0=0x10085, f4=0x485F2834
+	REC_PsGridBoxProc_L28_Records	f0=36, f4=0x485F2867
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE	# [8]
+	REC_PsGridBoxProc_L28_Records	f0=9, f4=0x485F1C83
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f0=0x100AE, f4=0x485F28BD
+	REC_PsGridBoxProc_L28_Records	f0=15, f4=0x485F24F8
+	REC_PsGridBoxProc_L28_Records	f0=16, f4=0x485F24F8	# [16]
+	REC_PsGridBoxProc_L28_Records	f0=17, f4=0x485F24F8
+	REC_PsGridBoxProc_L28_Records	f0=0x100B2, f4=0x485F1F2C
+	REC_PsGridBoxProc_L28_Records	f0=0x100B3, f4=0x485F22B7
+	REC_PsGridBoxProc_L28_Records	f0=0x100B4, f4=0x485F1F85
+	REC_PsGridBoxProc_L28_Records	f0=18, f4=0x485F24F8
+	REC_PsGridBoxProc_L28_Records	f0=0x100AF, f4=0x485F28AD
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE	# [24]
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f4=0x485F28CE
+	REC_PsGridBoxProc_L28_Records	f0=0x1007E, f4=0x485F271E
+	REC_PsGridBoxProc_L28_Records	f0=0x1007F, f4=0x485F2733
+AcGridBoxProc_L1d_Records:	# 16 x REC_AcGridBoxProc_L1d_Records (8 bytes each); read by AcGridBoxProc_L1d 0x485F2907 `mov (a0), d0`; AcGridBoxProc_L4b 0x485F2935 `mov (a0), d0`; AcGridBoxProc_L4e 0x485F2938 `mov (4, a0), a0`
+	REC_AcGridBoxProc_L1d_Records	f0=16, f4=0x485F2A9B	# [0]
+	REC_AcGridBoxProc_L1d_Records	f0=1, f4=0x485F293D
+	REC_AcGridBoxProc_L1d_Records	f0=17, f4=0x485F29AD
+	REC_AcGridBoxProc_L1d_Records	f0=18, f4=0x485F2A9B
+	REC_AcGridBoxProc_L1d_Records	f0=0x1007F, f4=0x485F2B9E
+	REC_AcGridBoxProc_L1d_Records	f0=20, f4=0x485F2BB5
+	REC_AcGridBoxProc_L1d_Records	f0=21, f4=0x485F2BB5
+	REC_AcGridBoxProc_L1d_Records	f0=0x10081, f4=0x485F2BDA
+	REC_AcGridBoxProc_L1d_Records	f4=0x485F2BF4	# [8]
+	REC_AcGridBoxProc_L1d_Records	f4=0x485F2BF4
+	REC_AcGridBoxProc_L1d_Records	f4=0x485F2BF4
+	REC_AcGridBoxProc_L1d_Records	f4=0x485F2BF4
+	REC_AcGridBoxProc_L1d_Records	f4=0x485F2BF4
+	REC_AcGridBoxProc_L1d_Records	f4=0x485F2BF4
+	REC_AcGridBoxProc_L1d_Records	f0=0x1007E, f4=0x485F2B87
+	REC_AcGridBoxProc_L1d_Records	f0=15, f4=0x485F29AD
+PsEditBoxProc_L1e_Records:	# 1 x REC_PsEditBoxProc_L1e_Records (8 bytes each); read by PsEditBoxProc_L1e 0x485F2CC1 `mov (a0), d0`; PsEditBoxProc_L4d 0x485F2CF0 `mov (a0), d0`; PsEditBoxProc_L50 0x485F2CF3 `mov (4, a0), a0`
+	REC_PsEditBoxProc_L1e_Records	p4=PsEditBoxProc_L715
+.incbin_range "baserom/kn2400_program.rom", 0x011B9C, 0x011C94
+AcNumEditBoxProc_L1c_Records:	# 1 x REC_AcNumEditBoxProc_L1c_Records (8 bytes each); read by AcNumEditBoxProc_L1c 0x485F3647 `mov (a0), d0`; AcNumEditBoxProc_L4a 0x485F3675 `mov (a0), d0`; AcNumEditBoxProc_L4d 0x485F3678 `mov (4, a0), a0`
+	REC_AcNumEditBoxProc_L1c_Records	p4=AcNumEditBoxProc_L33a
+.incbin_range "baserom/kn2400_program.rom", 0x011C9C, 0x011D14
+AcMmmEditBoxProc_L1d_Records:	# 16 x REC_AcMmmEditBoxProc_L1d_Records (8 bytes each); read by AcMmmEditBoxProc_L1d 0x485F3991 `mov (a0), d0`; AcMmmEditBoxProc_L4c 0x485F39C0 `mov (a0), d0`; AcMmmEditBoxProc_L4f 0x485F39C3 `mov (4, a0), a0`
+	REC_AcMmmEditBoxProc_L1d_Records	f0=16, f4=0x485F3C8D	# [0]
+	REC_AcMmmEditBoxProc_L1d_Records	f0=1, f4=0x485F39C8
+	REC_AcMmmEditBoxProc_L1d_Records	f0=17, f4=0x485F3B58
+	REC_AcMmmEditBoxProc_L1d_Records	f0=18, f4=0x485F3C22
+	REC_AcMmmEditBoxProc_L1d_Records	f0=20, f4=0x485F3AED
+	REC_AcMmmEditBoxProc_L1d_Records	f4=0x485F3D71
+	REC_AcMmmEditBoxProc_L1d_Records	f4=0x485F3D71
+	REC_AcMmmEditBoxProc_L1d_Records	f4=0x485F3D71
+	REC_AcMmmEditBoxProc_L1d_Records	f4=0x485F3D71	# [8]
+	REC_AcMmmEditBoxProc_L1d_Records	f0=9, f4=0x485F3AA7
+	REC_AcMmmEditBoxProc_L1d_Records	f0=0x1003A, f4=0x485F39F9
+	REC_AcMmmEditBoxProc_L1d_Records	f0=0x1003B, f4=0x485F3A26
+	REC_AcMmmEditBoxProc_L1d_Records	f0=41, f4=0x485F3CF8
+	REC_AcMmmEditBoxProc_L1d_Records	f0=0x1003D, f4=0x485F3A69
+	REC_AcMmmEditBoxProc_L1d_Records	f4=0x485F3D71
+	REC_AcMmmEditBoxProc_L1d_Records	f0=15, f4=0x485F3BBD
+AcRamEditBoxProc_L1e_Records:	# 1 x REC_AcRamEditBoxProc_L1e_Records (8 bytes each); read by AcRamEditBoxProc_L1e 0x485F3F3E `mov (a0), d0`; AcRamEditBoxProc_L3b 0x485F3F5B `mov (4, a0), a0`
+	REC_AcRamEditBoxProc_L1e_Records	p4=AcRamEditBoxProc_L3b7
+# census: opaque -- unknown-dump: 120 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x011D9C, 0x011E14
+PsEditSwBoxProc_L1d_Records:	# 1 x REC_PsEditSwBoxProc_L1d_Records (8 bytes each); read by PsEditSwBoxProc_L1d 0x485F4DD7 `mov (a0), d0`; PsEditSwBoxProc_L4b 0x485F4E05 `mov (a0), d0`; PsEditSwBoxProc_L4e 0x485F4E08 `mov (4, a0), a0`
+	REC_PsEditSwBoxProc_L1d_Records	p4=PsEditSwBoxProc_L1d7
+.incbin_range "baserom/kn2400_program.rom", 0x011E1C, 0x011E94
 
 func_485F4FA1_Table:	# 17 x u32, 1214206429..1214206705; read by func_485F4FA1_entry_L22f 0x485F51D2: `mov	(d0, a0), a0`
 	tab_u32	1214206429, 1214206451, 1214206472, 1214206705, 1214206535, 1214206554, 1214206573, 1214206591	# [0]
@@ -5772,77 +5882,56 @@ AcIndexEditSwProc_Table:	# 17 x u32, 1214207425..1214207492; read by AcIndexEdit
 	tab_u32	1214207472, 1214207472, 1214207492, 1214207425, 1214207472, 1214207492, 1214207425, 1214207492	# [8]
 	tab_u32	1214207472	# [16]
 
-PsToggleBoxProc_L1c_Records:	# 16 x REC_PsToggleBoxProc_L1c_Records (8 bytes each); read by PsToggleBoxProc_L1c 0x485F5CE8 `mov (a0), d0`
-	REC_PsToggleBoxProc_L1c_Records	x4="\xB5`_H"	# [0]
-	REC_PsToggleBoxProc_L1c_Records	f0=1, x4="\xDA__H"
-	REC_PsToggleBoxProc_L1c_Records	x4="\xB5`_H"
-	REC_PsToggleBoxProc_L1c_Records	f0=83, x4="\x0F`_H"
-	REC_PsToggleBoxProc_L1c_Records	f0=180, x4="\x92`_H"
-	REC_PsToggleBoxProc_L1c_Records	f0=117, x4="\x85`_H"
-	REC_PsToggleBoxProc_L1c_Records	f0=181, x4="\x9F`_H"
-	REC_PsToggleBoxProc_L1c_Records	f0=23, x4="b__H"
-	REC_PsToggleBoxProc_L1c_Records	f0=120, x4="\x1F]_H"	# [8]
-	REC_PsToggleBoxProc_L1c_Records	f0=41, x4="\x9D__H"
-	REC_PsToggleBoxProc_L1c_Records	f0=122, x4="k]_H"
-	REC_PsToggleBoxProc_L1c_Records	f0=40, x4="\x00`_H"
-	REC_PsToggleBoxProc_L1c_Records	x4="\xB5`_H"
-	REC_PsToggleBoxProc_L1c_Records	x4="\xB5`_H"
-	REC_PsToggleBoxProc_L1c_Records	x4="\xB5`_H"
-	REC_PsToggleBoxProc_L1c_Records	x4="\xB5`_H"
-AcMixerVolProc_L1f_Records:	# 16 x REC_AcMixerVolProc_L1f_Records (8 bytes each); read by AcMixerVolProc_L1f 0x485F7128 `mov (a0), d0`
-	REC_AcMixerVolProc_L1f_Records	f0=0x100EF, x4="\xABx_H"	# [0]
-	REC_AcMixerVolProc_L1f_Records	f0=1, x4="_q_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x100B2, x4="\xAAq_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x10051, x4="\x0Fx_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x100B4, x4="=r_H"
-	REC_AcMixerVolProc_L1f_Records	f0=20, x4="\xD3t_H"
-	REC_AcMixerVolProc_L1f_Records	f0=5, x4="\x90u_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x100A2, x4="\x8Dx_H"
-	REC_AcMixerVolProc_L1f_Records	f0=40, x4="cw_H"	# [8]
-	REC_AcMixerVolProc_L1f_Records	f0=0x100D9, x4="\xF1s_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x10058, x4="\xF9w_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x100E8, x4="?x_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x1003A, x4="bx_H"
-	REC_AcMixerVolProc_L1f_Records	x4="\xFCx_H"
-	REC_AcMixerVolProc_L1f_Records	f0=0x100EE, x4="\x9Dx_H"
-	REC_AcMixerVolProc_L1f_Records	f0=31, x4="\x8Ev_H"
-VwIconListProc_L1c_Records:	# 16 x REC_VwIconListProc_L1c_Records (8 bytes each); read by VwIconListProc_L1c 0x485F8606 `mov (a0), d0`
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"	# [0]
-	REC_VwIconListProc_L1c_Records	f0=1, x4="\xD2\x88_H"
-	REC_VwIconListProc_L1c_Records	f0=2, x4="\xF3\x88_H"
-	REC_VwIconListProc_L1c_Records	f0=3, x4="\xD2\x88_H"
-	REC_VwIconListProc_L1c_Records	f0=0x100A4, x4="=\x86_H"
-	REC_VwIconListProc_L1c_Records	f0=0x10054, x4="\xC2\x88_H"
-	REC_VwIconListProc_L1c_Records	f0=0x100A6, x4="^\x86_H"
-	REC_VwIconListProc_L1c_Records	f0=4, x4="\xF3\x88_H"
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"	# [8]
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"
-	REC_VwIconListProc_L1c_Records	f0=0x1002D, x4="\x13\x88_H"
-	REC_VwIconListProc_L1c_Records	x4="\x14\x89_H"
-	REC_VwIconListProc_L1c_Records	f0=0x1002F, x4="7\x88_H"
-PsVariSelectProc_L1d_Records:	# 16 x REC_PsVariSelectProc_L1d_Records (8 bytes each); read by PsVariSelectProc_L1d 0x485F8940 `mov (a0), d0`
-	REC_PsVariSelectProc_L1d_Records	x4="\xE8\x8B_H"	# [0]
-	REC_PsVariSelectProc_L1d_Records	f0=17, x4="\xA8\x8A_H"
-	REC_PsVariSelectProc_L1d_Records	f0=1, x4="\xB7\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=3, x4="j\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=84, x4="\x03\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=117, x4="\x90\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=118, x4="\x83\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=181, x4="\xDB\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=24, x4="\xD4\x8A_H"	# [8]
-	REC_PsVariSelectProc_L1d_Records	f0=121, x4="w\x89_H"
-	REC_PsVariSelectProc_L1d_Records	f0=105, x4="\x16\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=123, x4="\xB2\x89_H"
-	REC_PsVariSelectProc_L1d_Records	f0=106, x4="?\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	f0=141, x4="\xC9\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	x4="\xE8\x8B_H"
-	REC_PsVariSelectProc_L1d_Records	x4="\xE8\x8B_H"
-data_4841211C:
-.incbin_range "baserom/kn2400_program.rom", 0x01211C, 0x01231C
+PsToggleBoxProc_L1c_Records:	# 1 x REC_PsToggleBoxProc_L1c_Records (8 bytes each); read by PsToggleBoxProc_L1c 0x485F5CE8 `mov (a0), d0`; PsToggleBoxProc_L4b 0x485F5D17 `mov (a0), d0`; PsToggleBoxProc_L4e 0x485F5D1A `mov (4, a0), a0`
+	REC_PsToggleBoxProc_L1c_Records	p4=PsToggleBoxProc_L3e9
+.incbin_range "baserom/kn2400_program.rom", 0x011F24, 0x011F9C
+AcMixerVolProc_L1f_Records:	# 16 x REC_AcMixerVolProc_L1f_Records (8 bytes each); read by AcMixerVolProc_L1f 0x485F7128 `mov (a0), d0`; AcMixerVolProc_L4e 0x485F7157 `mov (a0), d0`; AcMixerVolProc_L51 0x485F715A `mov (4, a0), a0`
+	REC_AcMixerVolProc_L1f_Records	f0=0x100EF, f4=0x485F78AB	# [0]
+	REC_AcMixerVolProc_L1f_Records	f0=1, f4=0x485F715F
+	REC_AcMixerVolProc_L1f_Records	f0=0x100B2, f4=0x485F71AA
+	REC_AcMixerVolProc_L1f_Records	f0=0x10051, f4=0x485F780F
+	REC_AcMixerVolProc_L1f_Records	f0=0x100B4, f4=0x485F723D
+	REC_AcMixerVolProc_L1f_Records	f0=20, f4=0x485F74D3
+	REC_AcMixerVolProc_L1f_Records	f0=5, f4=0x485F7590
+	REC_AcMixerVolProc_L1f_Records	f0=0x100A2, f4=0x485F788D
+	REC_AcMixerVolProc_L1f_Records	f0=40, f4=0x485F7763	# [8]
+	REC_AcMixerVolProc_L1f_Records	f0=0x100D9, f4=0x485F73F1
+	REC_AcMixerVolProc_L1f_Records	f0=0x10058, f4=0x485F77F9
+	REC_AcMixerVolProc_L1f_Records	f0=0x100E8, f4=0x485F783F
+	REC_AcMixerVolProc_L1f_Records	f0=0x1003A, f4=0x485F7862
+	REC_AcMixerVolProc_L1f_Records	f4=0x485F78FC
+	REC_AcMixerVolProc_L1f_Records	f0=0x100EE, f4=0x485F789D
+	REC_AcMixerVolProc_L1f_Records	f0=31, f4=0x485F768E
+VwIconListProc_L1c_Records:	# 1 x REC_VwIconListProc_L1c_Records (8 bytes each); read by VwIconListProc_L1c 0x485F8606 `mov (a0), d0`; VwIconListProc_L4b 0x485F8635 `mov (a0), d0`; VwIconListProc_L4e 0x485F8638 `mov (4, a0), a0`
+	REC_VwIconListProc_L1c_Records	p4=VwIconListProc_L32a
+.incbin_range "baserom/kn2400_program.rom", 0x012024, 0x01209C
+PsVariSelectProc_L1d_Records:	# 1 x REC_PsVariSelectProc_L1d_Records (8 bytes each); read by PsVariSelectProc_L1d 0x485F8940 `mov (a0), d0`; PsVariSelectProc_L4c 0x485F896F `mov (a0), d0`; PsVariSelectProc_L4f 0x485F8972 `mov (4, a0), a0`
+	REC_PsVariSelectProc_L1d_Records	p4=PsVariSelectProc_L2c5
+.incbin_range "baserom/kn2400_program.rom", 0x0120A4, 0x01211C
 
+DrawIcons_Impl_entry_L52_Table:	# 240 x u16, 0..65534; read by DrawIcons_Impl_entry_L52 0x485FB9BD: `movhu	(d0, a3), d0`
+	tab_u16	0, 256, 512, 768, 1024, 1280, 1536, 1792, 63488, 63744, 64000, 64256	# [0]
+	tab_u16	64512, 64768, 65024, 65280, 1, 257, 513, 769, 1025, 1281, 1537, 1793	# [12]
+	tab_u16	63489, 63745, 64001, 64257, 64513, 64769, 65025, 65281, 2, 258, 514, 770	# [24]
+	tab_u16	1026, 1282, 1538, 1794, 63490, 63746, 64002, 64258, 64514, 64770, 65026, 65282	# [36]
+	tab_u16	3, 259, 515, 771, 1027, 1283, 1539, 1795, 63491, 63747, 64003, 64259	# [48]
+	tab_u16	64515, 64771, 65027, 65283, 4, 260, 516, 772, 1028, 1284, 1540, 1796	# [60]
+	tab_u16	63492, 63748, 64004, 64260, 64516, 64772, 65028, 65284, 5, 261, 517, 773	# [72]
+	tab_u16	1029, 1285, 1541, 1797, 63493, 63749, 64005, 64261, 64517, 64773, 65029, 65285	# [84]
+	tab_u16	6, 262, 518, 774, 1030, 1286, 1542, 1798, 63494, 63750, 64006, 64262	# [96]
+	tab_u16	64518, 64774, 65030, 65286, 7, 263, 519, 775, 1031, 1287, 1543, 1799	# [108]
+	tab_u16	63495, 63751, 64007, 64263, 64519, 64775, 65031, 65287, 248, 504, 760, 1016	# [120]
+	tab_u16	1272, 1528, 1784, 2040, 63736, 63992, 64248, 64504, 64760, 65016, 65272, 65528	# [132]
+	tab_u16	249, 505, 761, 1017, 1273, 1529, 1785, 2041, 63737, 63993, 64249, 64505	# [144]
+	tab_u16	64761, 65017, 65273, 65529, 250, 506, 762, 1018, 1274, 1530, 1786, 2042	# [156]
+	tab_u16	63738, 63994, 64250, 64506, 64762, 65018, 65274, 65530, 251, 507, 763, 1019	# [168]
+	tab_u16	1275, 1531, 1787, 2043, 63739, 63995, 64251, 64507, 64763, 65019, 65275, 65531	# [180]
+	tab_u16	252, 508, 764, 1020, 1276, 1532, 1788, 2044, 63740, 63996, 64252, 64508	# [192]
+	tab_u16	64764, 65020, 65276, 65532, 253, 509, 765, 1021, 1277, 1533, 1789, 2045	# [204]
+	tab_u16	63741, 63997, 64253, 64509, 64765, 65021, 65277, 65533, 254, 510, 766, 1022	# [216]
+	tab_u16	1278, 1534, 1790, 2046, 63742, 63998, 64254, 64510, 64766, 65022, 65278, 65534	# [228]
+# census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0122FC, 0x01231C
 DrawBitmapSPFast16_Impl_Table:	# 256 x u16, 8224..12079; read by DrawBitmapSPFast16_Impl_entry_L58 0x485FC1D6: `movhu	(d0, a0), d0`; DrawBitmapSPFast16_Impl_entry_L99 0x485FC217: `movhu	(d0, a1), d1` ...
 	tab_u16	8224, 8480, 8736, 8992, 9248, 9504, 9760, 10016, 10272, 10528, 10784, 11040	# [0]
 	tab_u16	11296, 11552, 11808, 12064, 8225, 8481, 8737, 8993, 9249, 9505, 9761, 10017	# [12]
@@ -5866,8 +5955,29 @@ DrawBitmapSPFast16_Impl_Table:	# 256 x u16, 8224..12079; read by DrawBitmapSPFas
 	tab_u16	9262, 9518, 9774, 10030, 10286, 10542, 10798, 11054, 11310, 11566, 11822, 12078	# [228]
 	tab_u16	8239, 8495, 8751, 9007, 9263, 9519, 9775, 10031, 10287, 10543, 10799, 11055	# [240]
 	tab_u16	11311, 11567, 11823, 12079	# [252]
-data_4841251C:
-.incbin_range "baserom/kn2400_program.rom", 0x01251C, 0x01271C
+func_485FF641_entry_L97_Table:	# 256 x u16, 57568..61423; read by func_485FF641_entry_L97 0x485FF6DD: `movhu	(d0, a0), d0`; func_485FF641_entry_Lcb 0x485FF711: `movhu	(d0, a0), d0`
+	tab_u16	57568, 57824, 58080, 58336, 58592, 58848, 59104, 59360, 59616, 59872, 60128, 60384	# [0]
+	tab_u16	60640, 60896, 61152, 61408, 57569, 57825, 58081, 58337, 58593, 58849, 59105, 59361	# [12]
+	tab_u16	59617, 59873, 60129, 60385, 60641, 60897, 61153, 61409, 57570, 57826, 58082, 58338	# [24]
+	tab_u16	58594, 58850, 59106, 59362, 59618, 59874, 60130, 60386, 60642, 60898, 61154, 61410	# [36]
+	tab_u16	57571, 57827, 58083, 58339, 58595, 58851, 59107, 59363, 59619, 59875, 60131, 60387	# [48]
+	tab_u16	60643, 60899, 61155, 61411, 57572, 57828, 58084, 58340, 58596, 58852, 59108, 59364	# [60]
+	tab_u16	59620, 59876, 60132, 60388, 60644, 60900, 61156, 61412, 57573, 57829, 58085, 58341	# [72]
+	tab_u16	58597, 58853, 59109, 59365, 59621, 59877, 60133, 60389, 60645, 60901, 61157, 61413	# [84]
+	tab_u16	57574, 57830, 58086, 58342, 58598, 58854, 59110, 59366, 59622, 59878, 60134, 60390	# [96]
+	tab_u16	60646, 60902, 61158, 61414, 57575, 57831, 58087, 58343, 58599, 58855, 59111, 59367	# [108]
+	tab_u16	59623, 59879, 60135, 60391, 60647, 60903, 61159, 61415, 57576, 57832, 58088, 58344	# [120]
+	tab_u16	58600, 58856, 59112, 59368, 59624, 59880, 60136, 60392, 60648, 60904, 61160, 61416	# [132]
+	tab_u16	57577, 57833, 58089, 58345, 58601, 58857, 59113, 59369, 59625, 59881, 60137, 60393	# [144]
+	tab_u16	60649, 60905, 61161, 61417, 57578, 57834, 58090, 58346, 58602, 58858, 59114, 59370	# [156]
+	tab_u16	59626, 59882, 60138, 60394, 60650, 60906, 61162, 61418, 57579, 57835, 58091, 58347	# [168]
+	tab_u16	58603, 58859, 59115, 59371, 59627, 59883, 60139, 60395, 60651, 60907, 61163, 61419	# [180]
+	tab_u16	57580, 57836, 58092, 58348, 58604, 58860, 59116, 59372, 59628, 59884, 60140, 60396	# [192]
+	tab_u16	60652, 60908, 61164, 61420, 57581, 57837, 58093, 58349, 58605, 58861, 59117, 59373	# [204]
+	tab_u16	59629, 59885, 60141, 60397, 60653, 60909, 61165, 61421, 57582, 57838, 58094, 58350	# [216]
+	tab_u16	58606, 58862, 59118, 59374, 59630, 59886, 60142, 60398, 60654, 60910, 61166, 61422	# [228]
+	tab_u16	57583, 57839, 58095, 58351, 58607, 58863, 59119, 59375, 59631, 59887, 60143, 60399	# [240]
+	tab_u16	60655, 60911, 61167, 61423	# [252]
 
 Str_BM:	.asciz "BM"
 	.align	4, 0xFF	# pad after Str_BM
@@ -5886,118 +5996,58 @@ data_48412760:
 data_484127A0:
 	.space	512, 0x00
 
-func_485FF57A_entry_L57_Records:	# 13 x REC_func_485FF57A_entry_L57_Records (16 bytes each); read by func_485FF57A_entry_L57 0x485FF5D6 `call GetPaletteRGB, 0, 0`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (0xc, a0), d0`; func_485FF7D5_entry_L65 0x485FF83F `mov (8, a2), d1`
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"	# [0]
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"	# [8]
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, x4=" \x00 \x00", p8=data_48412760, f12=23, x14="\x00\x00"
-func_485FDD4C_entry_L554_Records:	# 32 x REC_func_485FDD4C_entry_L554_Records (8 bytes each); read by func_485FDD4C_entry_L554 0x485FE2A5 `mov (a0), d0`
-	REC_func_485FDD4C_entry_L554_Records	f0=157, x4="\x8C\xE3_H"	# [0]
-	REC_func_485FDD4C_entry_L554_Records	f0=1, x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=2, x4="\x0D\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=3, x4="\x18\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=4, x4="#\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=5, x4=".\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=126, x4="\x9D\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=158, x4="\xAE\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=127, x4="\xBF\xE3_H"	# [8]
-	REC_func_485FDD4C_entry_L554_Records	f0=128, x4="\xCE\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=129, x4="\xDE\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=130, x4="\xEE\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=159, x4="\xFE\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=160, x4="\x0D\xE4_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=161, x4="\x1D\xE4_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=162, x4="-\xE4_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"	# [16]
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"	# [24]
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	x4="\x03\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=123, x4="9\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=155, x4="I\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=124, x4="Y\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=156, x4="j\xE3_H"
-	REC_func_485FDD4C_entry_L554_Records	f0=125, x4="{\xE3_H"
-func_485FDD4C_Records:	# 64 x REC_func_485FDD4C_Records (8 bytes each); read by func_485FDD4C 0x485FDD4C `mov (a0), d0`
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"	# [0]
-	REC_func_485FDD4C_Records	f0=1, x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	f0=2, x4="\xDA\xDD_H"
-	REC_func_485FDD4C_Records	f0=3, x4="\xDA\xDD_H"
-	REC_func_485FDD4C_Records	f0=4, x4="\xDA\xDD_H"
-	REC_func_485FDD4C_Records	f0=5, x4="\xC8\xDD_H"
-	REC_func_485FDD4C_Records	f0=6, x4="\xB6\xDD_H"
-	REC_func_485FDD4C_Records	f0=194, x4="\x03\xDF_H"
-	REC_func_485FDD4C_Records	f0=196, x4="\x03\xDF_H"	# [8]
-	REC_func_485FDD4C_Records	f0=193, x4="\x05\xDF_H"
-	REC_func_485FDD4C_Records	f0=195, x4="\x05\xDF_H"
-	REC_func_485FDD4C_Records	f0=198, x4="\xE1\xDF_H"
-	REC_func_485FDD4C_Records	f0=200, x4="\xE1\xDF_H"
-	REC_func_485FDD4C_Records	f0=197, x4="\xE3\xDF_H"
-	REC_func_485FDD4C_Records	f0=199, x4="\xE3\xDF_H"
-	REC_func_485FDD4C_Records	f0=7, x4="\xE3\xE0_H"
-	REC_func_485FDD4C_Records	f0=129, x4="\xE3\xE0_H"	# [16]
-	REC_func_485FDD4C_Records	f0=8, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=9, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=10, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=11, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=12, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=130, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=131, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=132, x4="\xC0\xE2_H"	# [24]
-	REC_func_485FDD4C_Records	f0=133, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=134, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=135, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=136, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=137, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=13, x4="\x88\xE7_H"
-	REC_func_485FDD4C_Records	f0=14, x4="\xEC\xE7_H"
-	REC_func_485FDD4C_Records	f0=15, x4="\xEC\xE7_H"	# [32]
-	REC_func_485FDD4C_Records	f0=161, x4="\xE3\xE0_H"
-	REC_func_485FDD4C_Records	f0=162, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=163, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=164, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=165, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=166, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=167, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=168, x4="\xC0\xE2_H"	# [40]
-	REC_func_485FDD4C_Records	f0=169, x4="\xC0\xE2_H"
-	REC_func_485FDD4C_Records	f0=16, x4="\xEC\xE7_H"
-	REC_func_485FDD4C_Records	f0=17, x4="\xEC\xE7_H"
-	REC_func_485FDD4C_Records	f0=18, x4="\xEC\xE7_H"
-	REC_func_485FDD4C_Records	f0=202, x4="\x8D\xE9_H"
-	REC_func_485FDD4C_Records	f0=203, x4="\x8D\xE9_H"
-	REC_func_485FDD4C_Records	f0=204, x4="\xBA\xEC_H"
-	REC_func_485FDD4C_Records	f0=205, x4=":\xEF_H"	# [48]
-	REC_func_485FDD4C_Records	f0=201, x4="\xC5\xF1_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"	# [56]
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
-	REC_func_485FDD4C_Records	x4="\xA7\xDD_H"
+func_485FF57A_entry_L57_Records:	# 13 x REC_func_485FF57A_entry_L57_Records (16 bytes each); read by func_485FF57A_entry_L57 0x485FF5D6 `mov (a2), a1`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (0xc, a0), d0`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (a3), d1` (+8)
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"	# [0]
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"	# [8]
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+func_485FDD4C_entry_L554_Records:	# 32 x REC_func_485FDD4C_entry_L554_Records (8 bytes each); read by func_485FDD4C_entry_L554 0x485FE2A5 `mov (a0), d0`; func_485FDD4C_entry_L5aa 0x485FE2FB `mov (a0), d0`; func_485FDD4C_entry_L5ad 0x485FE2FE `mov (4, a0), a0`
+	REC_func_485FDD4C_entry_L554_Records	f0=157, f4=0x485FE38C	# [0]
+	REC_func_485FDD4C_entry_L554_Records	f0=1, f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f0=2, f4=0x485FE30D
+	REC_func_485FDD4C_entry_L554_Records	f0=3, f4=0x485FE318
+	REC_func_485FDD4C_entry_L554_Records	f0=4, f4=0x485FE323
+	REC_func_485FDD4C_entry_L554_Records	f0=5, f4=0x485FE32E
+	REC_func_485FDD4C_entry_L554_Records	f0=126, f4=0x485FE39D
+	REC_func_485FDD4C_entry_L554_Records	f0=158, f4=0x485FE3AE
+	REC_func_485FDD4C_entry_L554_Records	f0=127, f4=0x485FE3BF	# [8]
+	REC_func_485FDD4C_entry_L554_Records	f0=128, f4=0x485FE3CE
+	REC_func_485FDD4C_entry_L554_Records	f0=129, f4=0x485FE3DE
+	REC_func_485FDD4C_entry_L554_Records	f0=130, f4=0x485FE3EE
+	REC_func_485FDD4C_entry_L554_Records	f0=159, f4=0x485FE3FE
+	REC_func_485FDD4C_entry_L554_Records	f0=160, f4=0x485FE40D
+	REC_func_485FDD4C_entry_L554_Records	f0=161, f4=0x485FE41D
+	REC_func_485FDD4C_entry_L554_Records	f0=162, f4=0x485FE42D
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303	# [16]
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303	# [24]
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f4=0x485FE303
+	REC_func_485FDD4C_entry_L554_Records	f0=123, f4=0x485FE339
+	REC_func_485FDD4C_entry_L554_Records	f0=155, f4=0x485FE349
+	REC_func_485FDD4C_entry_L554_Records	f0=124, f4=0x485FE359
+	REC_func_485FDD4C_entry_L554_Records	f0=156, f4=0x485FE36A
+	REC_func_485FDD4C_entry_L554_Records	f0=125, f4=0x485FE37B
+func_485FDD4C_Records:	# 2 x REC_func_485FDD4C_Records (8 bytes each); read by func_485FDD4C 0x485FDD4C `mov (a0), d0`; func_485FDD4C_entry_L4e 0x485FDD9F `mov (a0), d0`; func_485FDD4C_entry_L51 0x485FDDA2 `mov (4, a0), a0`
+	REC_func_485FDD4C_Records	p4=func_485FDD4C_entry_L56
+	REC_func_485FDD4C_Records	f0=1, p4=func_485FDD4C_entry_L56
+# census: opaque -- unknown-dump: 496 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x012B80, 0x012D70
 
 Str_YZ:	.asciz "YZ"
 	.align	4, 0xFF	# pad after Str_YZ
@@ -6029,158 +6079,159 @@ ClassProc_Table:	# 22 x u32, 1214259123..1214259784; read by ClassProc_entry_L32
 	tab_u32	1214259784, 1214259784, 1214259784, 1214259784, 1214259784, 1214259688, 1214259736, 1214259175	# [8]
 	tab_u32	1214259784, 1214259784, 1214259784, 1214259784, 1214259784, 1214259158	# [16]
 
-ModeProc_L41_Records:	# 16 x REC_ModeProc_L41_Records (8 bytes each); read by ModeProc_L41 0x486025DC `mov (a0), d0`
-	REC_ModeProc_L41_Records	x4="e*`H"	# [0]
-	REC_ModeProc_L41_Records	f0=0x10021, x4="%&`H"
-	REC_ModeProc_L41_Records	f0=0x10022, x4="=&`H"
-	REC_ModeProc_L41_Records	f0=0x10023, x4="G&`H"
-	REC_ModeProc_L41_Records	f0=0x10024, x4="l&`H"
-	REC_ModeProc_L41_Records	f0=0x10005, x4="\x1B&`H"
-	REC_ModeProc_L41_Records	f0=65526, x4="\x12&`H"
-	REC_ModeProc_L41_Records	f0=0x10026, x4="S&`H"
-	REC_ModeProc_L41_Records	f0=0x10025, x4="|&`H"	# [8]
-	REC_ModeProc_L41_Records	f0=49, x4="\xEB&`H"
-	REC_ModeProc_L41_Records	f0=2, x4=";'`H"
-	REC_ModeProc_L41_Records	f0=0x1000B, x4="_&`H"
-	REC_ModeProc_L41_Records	f0=0x100CC, x4="\x8C&`H"
-	REC_ModeProc_L41_Records	f0=1, x4="+*`H"
-	REC_ModeProc_L41_Records	x4="e*`H"
-	REC_ModeProc_L41_Records	f0=0x100BF, x4="\x9E&`H"
-MainTitleControl_L28_Records:	# 16 x REC_MainTitleControl_L28_Records (8 bytes each); read by MainTitleControl_L28 0x48602E03 `mov (a0), d0`
-	REC_MainTitleControl_L28_Records	f0=0x100E0, x4="l0`H"	# [0]
-	REC_MainTitleControl_L28_Records	f0=1, x4="\x9C/`H"
-	REC_MainTitleControl_L28_Records	f0=2, x4="9.`H"
-	REC_MainTitleControl_L28_Records	f0=3, x4="\x9D.`H"
-	REC_MainTitleControl_L28_Records	f0=4, x4="\xF6.`H"
-	REC_MainTitleControl_L28_Records	f0=0x100A1, x4="\xCB/`H"
-	REC_MainTitleControl_L28_Records	f0=22, x4="I/`H"
-	REC_MainTitleControl_L28_Records	f0=0x100D3, x4="\xF30`H"
-	REC_MainTitleControl_L28_Records	f0=0x10092, x4="\xFF0`H"	# [8]
-	REC_MainTitleControl_L28_Records	f0=0x100D4, x4=">1`H"
-	REC_MainTitleControl_L28_Records	x4="J1`H"
-	REC_MainTitleControl_L28_Records	x4="J1`H"
-	REC_MainTitleControl_L28_Records	x4="J1`H"
-	REC_MainTitleControl_L28_Records	f0=0x100CD, x4="\xB40`H"
-	REC_MainTitleControl_L28_Records	x4="J1`H"
-	REC_MainTitleControl_L28_Records	x4="J1`H"
-TitleProc_L43_Records:	# 64 x REC_TitleProc_L43_Records (8 bytes each); read by TitleProc_L43 0x486031CA `mov (a0), d0`
-	REC_TitleProc_L43_Records	f0=0x100C0, x4="\x982`H"	# [0]
-	REC_TitleProc_L43_Records	f0=1, x4="\x0E<`H"
-	REC_TitleProc_L43_Records	f0=0x100C1, x4="N=`H"
-	REC_TitleProc_L43_Records	f0=3, x4="\xE52`H"
-	REC_TitleProc_L43_Records	f0=4, x4="\x185`H"
-	REC_TitleProc_L43_Records	f0=0x10005, x4="\n2`H"
-	REC_TitleProc_L43_Records	f0=0x100C2, x4="q=`H"
-	REC_TitleProc_L43_Records	f0=0x10080, x4="\x02>`H"
-	REC_TitleProc_L43_Records	f0=0x10081, x4="\x90?`H"	# [8]
-	REC_TitleProc_L43_Records	f0=0x10082, x4="\xE2?`H"
-	REC_TitleProc_L43_Records	f0=0x10085, x4="7@`H"
-	REC_TitleProc_L43_Records	f0=0x1000B, x4="e2`H"
-	REC_TitleProc_L43_Records	f0=0x100CB, x4="\xEC=`H"
-	REC_TitleProc_L43_Records	f0=0x100C3, x4="B@`H"
-	REC_TitleProc_L43_Records	f0=0x100C4, x4="}@`H"
-	REC_TitleProc_L43_Records	f0=0x100C6, x4="\xB6@`H"
-	REC_TitleProc_L43_Records	f0=0x1008C, x4="\xCB@`H"	# [16]
-	REC_TitleProc_L43_Records	f0=0x10091, x4="\xCA?`H"
-	REC_TitleProc_L43_Records	f0=0x100D2, x4="\xFE<`H"
-	REC_TitleProc_L43_Records	f0=0x1008D, x4="\xCB@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	f0=22, x4="+:`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"	# [24]
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	f0=0x1009A, x4="V?`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	f0=0x1009E, x4="\xCB@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"	# [32]
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	f0=0x10062, x4="\x94=`H"
-	REC_TitleProc_L43_Records	f0=0x10063, x4="\xD8=`H"
-	REC_TitleProc_L43_Records	f0=0x10064, x4="p>`H"
-	REC_TitleProc_L43_Records	f0=0x10065, x4="\x01?`H"
-	REC_TitleProc_L43_Records	f0=0x10026, x4="T2`H"
-	REC_TitleProc_L43_Records	f0=0x10027, x4="\x172`H"
-	REC_TitleProc_L43_Records	f0=0x10028, x4="32`H"	# [40]
-	REC_TitleProc_L43_Records	f0=0x10029, x4="A2`H"
-	REC_TitleProc_L43_Records	f0=0x1002A, x4="x2`H"
-	REC_TitleProc_L43_Records	f0=0x1002B, x4="\x882`H"
-	REC_TitleProc_L43_Records	f0=0x10066, x4="\x1B@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"	# [48]
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	f0=65526, x4="\x012`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"	# [56]
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	x4="\xDE@`H"
-	REC_TitleProc_L43_Records	f0=0x100BE, x4="|<`H"
-	REC_TitleProc_L43_Records	f0=0x1007F, x4="\xCB>`H"
-ViewableProc_entry_L19_Records:	# 32 x REC_ViewableProc_entry_L19_Records (8 bytes each); read by ViewableProc_entry_L19 0x4860431B `mov (a0), d0`
-	REC_ViewableProc_entry_L19_Records	f0=0x10000, x4="RC`H"	# [0]
-	REC_ViewableProc_entry_L19_Records	f0=1, x4="mC`H"
-	REC_ViewableProc_entry_L19_Records	f0=2, x4="mC`H"
-	REC_ViewableProc_entry_L19_Records	x4="\x85I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x10024, x4=".F`H"
-	REC_ViewableProc_entry_L19_Records	x4="\x85I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100A6, x4="\xB7F`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100C7, x4="\"H`H"
-	REC_ViewableProc_entry_L19_Records	x4="\x85I`H"	# [8]
-	REC_ViewableProc_entry_L19_Records	f0=9, x4="\xDCC`H"
-	REC_ViewableProc_entry_L19_Records	x4="\x85I`H"
-	REC_ViewableProc_entry_L19_Records	x4="\x85I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x1004C, x4="PG`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x1008D, x4="\"F`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100EE, x4="\x1EI`H"
-	REC_ViewableProc_entry_L19_Records	f0=47, x4="vD`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x1000F, x4="\x82E`H"	# [16]
-	REC_ViewableProc_entry_L19_Records	f0=0x10050, x4="\xB9G`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x1004F, x4="\x8BH`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100EF, x4="$I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100F0, x4="$I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x10015, x4="\x13E`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x10016, x4="/E`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x10036, x4="\x8DE`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x10037, x4="\xB1E`H"	# [24]
-	REC_ViewableProc_entry_L19_Records	f0=0x10038, x4="\xD6E`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x10039, x4="\xFDE`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100B2, x4="\x82I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100B4, x4="\x82I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100B3, x4="\x82I`H"
-	REC_ViewableProc_entry_L19_Records	f0=0x100B6, x4="\x82I`H"
-	REC_ViewableProc_entry_L19_Records	x4="\x85I`H"
+ModeProc_L41_Records:	# 1 x REC_ModeProc_L41_Records (8 bytes each); read by ModeProc_L41 0x486025DC `mov (a0), d0`; ModeProc_L6f 0x4860260A `mov (a0), d0`; ModeProc_L72 0x4860260D `mov (4, a0), a0`
+	REC_ModeProc_L41_Records	p4=ModeProc_L4ca
+.incbin_range "baserom/kn2400_program.rom", 0x012E84, 0x012EFC
+MainTitleControl_L28_Records:	# 16 x REC_MainTitleControl_L28_Records (8 bytes each); read by MainTitleControl_L28 0x48602E03 `mov (a0), d0`; MainTitleControl_L56 0x48602E31 `mov (a0), d0`; MainTitleControl_L59 0x48602E34 `mov (4, a0), a0`
+	REC_MainTitleControl_L28_Records	f0=0x100E0, f4=0x4860306C	# [0]
+	REC_MainTitleControl_L28_Records	f0=1, f4=0x48602F9C
+	REC_MainTitleControl_L28_Records	f0=2, f4=0x48602E39
+	REC_MainTitleControl_L28_Records	f0=3, f4=0x48602E9D
+	REC_MainTitleControl_L28_Records	f0=4, f4=0x48602EF6
+	REC_MainTitleControl_L28_Records	f0=0x100A1, f4=0x48602FCB
+	REC_MainTitleControl_L28_Records	f0=22, f4=0x48602F49
+	REC_MainTitleControl_L28_Records	f0=0x100D3, f4=0x486030F3
+	REC_MainTitleControl_L28_Records	f0=0x10092, f4=0x486030FF	# [8]
+	REC_MainTitleControl_L28_Records	f0=0x100D4, f4=0x4860313E
+	REC_MainTitleControl_L28_Records	f4=0x4860314A
+	REC_MainTitleControl_L28_Records	f4=0x4860314A
+	REC_MainTitleControl_L28_Records	f4=0x4860314A
+	REC_MainTitleControl_L28_Records	f0=0x100CD, f4=0x486030B4
+	REC_MainTitleControl_L28_Records	f4=0x4860314A
+	REC_MainTitleControl_L28_Records	f4=0x4860314A
+TitleProc_L43_Records:	# 64 x REC_TitleProc_L43_Records (8 bytes each); read by TitleProc_L43 0x486031CA `mov (a0), d0`; TitleProc_L72 0x486031F9 `mov (a0), d0`; TitleProc_L75 0x486031FC `mov (4, a0), a0`
+	REC_TitleProc_L43_Records	f0=0x100C0, f4=0x48603298	# [0]
+	REC_TitleProc_L43_Records	f0=1, f4=0x48603C0E
+	REC_TitleProc_L43_Records	f0=0x100C1, f4=0x48603D4E
+	REC_TitleProc_L43_Records	f0=3, f4=0x486032E5
+	REC_TitleProc_L43_Records	f0=4, f4=0x48603518
+	REC_TitleProc_L43_Records	f0=0x10005, f4=0x4860320A
+	REC_TitleProc_L43_Records	f0=0x100C2, f4=0x48603D71
+	REC_TitleProc_L43_Records	f0=0x10080, f4=0x48603E02
+	REC_TitleProc_L43_Records	f0=0x10081, f4=0x48603F90	# [8]
+	REC_TitleProc_L43_Records	f0=0x10082, f4=0x48603FE2
+	REC_TitleProc_L43_Records	f0=0x10085, f4=0x48604037
+	REC_TitleProc_L43_Records	f0=0x1000B, f4=0x48603265
+	REC_TitleProc_L43_Records	f0=0x100CB, f4=0x48603DEC
+	REC_TitleProc_L43_Records	f0=0x100C3, f4=0x48604042
+	REC_TitleProc_L43_Records	f0=0x100C4, f4=0x4860407D
+	REC_TitleProc_L43_Records	f0=0x100C6, f4=0x486040B6
+	REC_TitleProc_L43_Records	f0=0x1008C, f4=0x486040CB	# [16]
+	REC_TitleProc_L43_Records	f0=0x10091, f4=0x48603FCA
+	REC_TitleProc_L43_Records	f0=0x100D2, f4=0x48603CFE
+	REC_TitleProc_L43_Records	f0=0x1008D, f4=0x486040CB
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f0=22, f4=0x48603A2B
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE	# [24]
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f0=0x1009A, f4=0x48603F56
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f0=0x1009E, f4=0x486040CB
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE	# [32]
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f0=0x10062, f4=0x48603D94
+	REC_TitleProc_L43_Records	f0=0x10063, f4=0x48603DD8
+	REC_TitleProc_L43_Records	f0=0x10064, f4=0x48603E70
+	REC_TitleProc_L43_Records	f0=0x10065, f4=0x48603F01
+	REC_TitleProc_L43_Records	f0=0x10026, f4=0x48603254
+	REC_TitleProc_L43_Records	f0=0x10027, f4=0x48603217
+	REC_TitleProc_L43_Records	f0=0x10028, f4=0x48603233	# [40]
+	REC_TitleProc_L43_Records	f0=0x10029, f4=0x48603241
+	REC_TitleProc_L43_Records	f0=0x1002A, f4=0x48603278
+	REC_TitleProc_L43_Records	f0=0x1002B, f4=0x48603288
+	REC_TitleProc_L43_Records	f0=0x10066, f4=0x4860401B
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE	# [48]
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f0=65526, f4=0x48603201
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE	# [56]
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f4=0x486040DE
+	REC_TitleProc_L43_Records	f0=0x100BE, f4=0x48603C7C
+	REC_TitleProc_L43_Records	f0=0x1007F, f4=0x48603ECB
+ViewableProc_entry_L19_Records:	# 32 x REC_ViewableProc_entry_L19_Records (8 bytes each); read by ViewableProc_entry_L19 0x4860431B `mov (a0), d0`; ViewableProc_entry_L48 0x4860434A `mov (a0), d0`; ViewableProc_entry_L4b 0x4860434D `mov (4, a0), a0`
+	REC_ViewableProc_entry_L19_Records	f0=0x10000, f4=0x48604352	# [0]
+	REC_ViewableProc_entry_L19_Records	f0=1, f4=0x4860436D
+	REC_ViewableProc_entry_L19_Records	f0=2, f4=0x4860436D
+	REC_ViewableProc_entry_L19_Records	f4=0x48604985
+	REC_ViewableProc_entry_L19_Records	f0=0x10024, f4=0x4860462E
+	REC_ViewableProc_entry_L19_Records	f4=0x48604985
+	REC_ViewableProc_entry_L19_Records	f0=0x100A6, f4=0x486046B7
+	REC_ViewableProc_entry_L19_Records	f0=0x100C7, f4=0x48604822
+	REC_ViewableProc_entry_L19_Records	f4=0x48604985	# [8]
+	REC_ViewableProc_entry_L19_Records	f0=9, f4=0x486043DC
+	REC_ViewableProc_entry_L19_Records	f4=0x48604985
+	REC_ViewableProc_entry_L19_Records	f4=0x48604985
+	REC_ViewableProc_entry_L19_Records	f0=0x1004C, f4=0x48604750
+	REC_ViewableProc_entry_L19_Records	f0=0x1008D, f4=0x48604622
+	REC_ViewableProc_entry_L19_Records	f0=0x100EE, f4=0x4860491E
+	REC_ViewableProc_entry_L19_Records	f0=47, f4=0x48604476
+	REC_ViewableProc_entry_L19_Records	f0=0x1000F, f4=0x48604582	# [16]
+	REC_ViewableProc_entry_L19_Records	f0=0x10050, f4=0x486047B9
+	REC_ViewableProc_entry_L19_Records	f0=0x1004F, f4=0x4860488B
+	REC_ViewableProc_entry_L19_Records	f0=0x100EF, f4=0x48604924
+	REC_ViewableProc_entry_L19_Records	f0=0x100F0, f4=0x48604924
+	REC_ViewableProc_entry_L19_Records	f0=0x10015, f4=0x48604513
+	REC_ViewableProc_entry_L19_Records	f0=0x10016, f4=0x4860452F
+	REC_ViewableProc_entry_L19_Records	f0=0x10036, f4=0x4860458D
+	REC_ViewableProc_entry_L19_Records	f0=0x10037, f4=0x486045B1	# [24]
+	REC_ViewableProc_entry_L19_Records	f0=0x10038, f4=0x486045D6
+	REC_ViewableProc_entry_L19_Records	f0=0x10039, f4=0x486045FD
+	REC_ViewableProc_entry_L19_Records	f0=0x100B2, f4=0x48604982
+	REC_ViewableProc_entry_L19_Records	f0=0x100B4, f4=0x48604982
+	REC_ViewableProc_entry_L19_Records	f0=0x100B3, f4=0x48604982
+	REC_ViewableProc_entry_L19_Records	f0=0x100B6, f4=0x48604982
+	REC_ViewableProc_entry_L19_Records	f4=0x48604985
 
-u2d_Table_2:	# 24 x u8, 0..215; read by u2d 0x486054DA: `movbu (a0), d2`
-	tab_u8	33, 41, 44, 46, 58, 59, 63, 93, 125, 161, 163, 161, 215, 161, 162, 161	# [0]
-	tab_u8	166, 161, 188, 161, 171, 161, 172, 0	# [16]
-u2d_Table_3:	# 41 x u8, 0..217; read by u2d 0x486054DA: `movbu (a0), d2`
-	tab_u8	161, 162, 161, 163, 161, 164, 161, 165, 161, 166, 161, 169, 161, 170, 161, 171	# [0]
-	tab_u8	161, 172, 161, 179, 161, 180, 161, 181, 161, 182, 161, 185, 161, 188, 161, 203	# [16]
-	tab_u8	161, 207, 161, 209, 161, 215, 161, 217, 0	# [32]
-u2d_Table_4:	# 6 x u8, 0..214; read by u2d 0x486054DA: `movbu (a0), d2`
-	tab_u8	40, 91, 123, 161, 214, 0
-u2d_Table_5:	# 269 x u8, 0..255; read by u2d 0x486054DA: `movbu (a0), d2`
-	tab_u8	161, 202, 161, 206, 161, 208, 161, 214, 161, 216, 0, 255, 255, 32, 32, 32	# [0]
-	tab_u8	32, 32, 32, 32, 32, 32, 40, 40, 40, 40, 40, 32, 32, 32, 32, 32	# [16]
-	tab_u8	32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 72, 16, 16	# [32]
-	tab_u8	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 132, 132, 132	# [48]
-	tab_u8	132, 132, 132, 132, 132, 132, 132, 16, 16, 16, 16, 16, 16, 16, 129, 129	# [64]
-	tab_u8	129, 129, 129, 129, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [80]
-	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 16, 16, 16, 16, 16, 16, 130, 130	# [96]
-	tab_u8	130, 130, 130, 130, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [112]
-	tab_u8	2, 2, 2, 2, 2, 2, 2, 2, 16, 16, 16, 16, 32, 0, 0, 0	# [128]
+u2d_Table_2:	# u8, a constant; read / written by u2d 0x486054DA: `movbu (a0), d2`
+	.byte	33
+
+u2d_entry_L26_Table:	# 23 x u8, 0..215; read by u2d_entry_L26 0x48605502: `movbu (a3), d0`; u2d_entry_L3f 0x4860551B: `movbu (a3), d1`
+	tab_u8	41, 44, 46, 58, 59, 63, 93, 125, 161, 163, 161, 215, 161, 162, 161, 166	# [0]
+	tab_u8	161, 188, 161, 171, 161, 172, 0	# [16]
+
+u2d_Table_3:	# u8, a constant; read / written by u2d 0x486054DA: `movbu (a0), d2`
+	.byte	161
+
+u2d_entry_L26_Table_2:	# 40 x u8, 0..217; read by u2d_entry_L26 0x48605502: `movbu (a3), d0`; u2d_entry_L3f 0x4860551B: `movbu (a3), d1`
+	tab_u8	162, 161, 163, 161, 164, 161, 165, 161, 166, 161, 169, 161, 170, 161, 171, 161	# [0]
+	tab_u8	172, 161, 179, 161, 180, 161, 181, 161, 182, 161, 185, 161, 188, 161, 203, 161	# [16]
+	tab_u8	207, 161, 209, 161, 215, 161, 217, 0	# [32]
+
+u2d_Table_4:	# u8, a constant; read / written by u2d 0x486054DA: `movbu (a0), d2`
+	.byte	40
+
+u2d_entry_L26_Table_3:	# 5 x u8, 0..214; read by u2d_entry_L26 0x48605502: `movbu (a3), d0`; u2d_entry_L3f 0x4860551B: `movbu (a3), d1`
+	tab_u8	91, 123, 161, 214, 0
+
+u2d_Table_5:	# u8, a constant; read / written by u2d 0x486054DA: `movbu (a0), d2`
+	.byte	161
+
+u2d_entry_L26_Table_4:	# 268 x u8, 0..255; read by u2d_entry_L26 0x48605502: `movbu (a3), d0`; u2d_entry_L3f 0x4860551B: `movbu (a3), d1`
+	tab_u8	202, 161, 206, 161, 208, 161, 214, 161, 216, 0, 255, 255, 32, 32, 32, 32	# [0]
+	tab_u8	32, 32, 32, 32, 32, 40, 40, 40, 40, 40, 32, 32, 32, 32, 32, 32	# [16]
+	tab_u8	32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 72, 16, 16, 16	# [32]
+	tab_u8	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 132, 132, 132, 132	# [48]
+	tab_u8	132, 132, 132, 132, 132, 132, 16, 16, 16, 16, 16, 16, 16, 129, 129, 129	# [64]
+	tab_u8	129, 129, 129, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# [80]
+	tab_u8	1, 1, 1, 1, 1, 1, 1, 16, 16, 16, 16, 16, 16, 130, 130, 130	# [96]
+	tab_u8	130, 130, 130, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2	# [112]
+	tab_u8	2, 2, 2, 2, 2, 2, 2, 16, 16, 16, 16, 32, 0, 0, 0, 0	# [128]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
@@ -6188,7 +6239,7 @@ u2d_Table_5:	# 269 x u8, 0..255; read by u2d 0x486054DA: `movbu (a0), d2`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [256]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [256]
 ConvertStrings_Table:	# 256 x u8, 0..12; read by CalcTotalWidth_entry : `movbu	(d1, a0), d1`; ConvertStringsEx : `movbu	(d0, a2), d0` ...
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
@@ -10503,10 +10554,26 @@ Text_i108_bmp:	# 130 strings of 8 characters, NUL-terminated
 	.asciz	"i237.bmp"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01BB42, 0x01BB44
-data_4841BB44:
-.incbin_range "baserom/kn2400_program.rom", 0x01BB44, 0x01BB58
-data_4841BB58:
-.incbin_range "baserom/kn2400_program.rom", 0x01BB58, 0x01BB64
+
+func_5018D239_Table_7:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
+	tab_u32	0, 1
+
+func_5018D239_Var_7:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
+	.long	0x4871ef31
+
+func_5018D239_Table_8:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
+	tab_u16	3, 0
+
+func_5018D239_Var_8:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
+	.long	24576
+func_5018CA20_Var_20:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+	.long	0
+
+func_5018CA20_Table_12:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
+	tab_u16	8, 0
+
+func_5018CA20_Var_21:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+	.long	0
 
 func_4860982E_Table:	# 10 x u32, 1214290018..1214290156; read by func_4860982E_entry_L23 0x48609856: `mov	(d0, a0), a0`
 	tab_u32	1214290032, 1214290059, 1214290109, 1214290124, 1214290140, 1214290071, 1214290156, 1214290096	# [0]
@@ -10535,302 +10602,240 @@ func_4860AA14_Table:	# 128 x u8, 0..127; read by func_4860AA14 : `movbu	(d0, a0)
 	tab_u8	114, 115, 115, 115, 116, 116, 117, 117, 118, 118, 119, 119, 119, 120, 120, 121	# [96]
 	tab_u8	121, 122, 122, 122, 123, 123, 124, 124, 124, 125, 125, 126, 126, 126, 127, 127	# [112]
 
-func_4860A351_Records:	# 32 x REC_func_4860A351_Records (8 bytes each); read by func_4860A351 0x4860A351 `mov (a0), d0`
-	REC_func_4860A351_Records	f0=32, x4="\xA8\xA3`H"	# [0]
-	REC_func_4860A351_Records	f0=1, x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=33, x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=2, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=63, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=64, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=34, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"	# [8]
-	REC_func_4860A351_Records	f0=9, x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=10, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=105, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"	# [16]
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=82, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=23, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=24, x4="\xA8\xA3`H"	# [24]
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=91, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=92, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	x4="\x9B\xA3`H"
-	REC_func_4860A351_Records	f0=62, x4="\xA8\xA3`H"
-	REC_func_4860A351_Records	f0=31, x4="\xA8\xA3`H"
-func_4860A461_Records:	# 32 x REC_func_4860A461_Records (8 bytes each); read by func_4860A461 0x4860A461 `mov (a0), d0`
-	REC_func_4860A461_Records	f0=32, x4="\x06\xA5`H"	# [0]
-	REC_func_4860A461_Records	f0=1, x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=33, x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=2, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=63, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=64, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=34, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"	# [8]
-	REC_func_4860A461_Records	f0=9, x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=10, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=105, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"	# [16]
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=82, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=23, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=24, x4="\x06\xA5`H"	# [24]
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=91, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=92, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	x4="\xAB\xA4`H"
-	REC_func_4860A461_Records	f0=62, x4="\x06\xA5`H"
-	REC_func_4860A461_Records	f0=31, x4="\x06\xA5`H"
-func_4860A530_Records:	# 32 x REC_func_4860A530_Records (8 bytes each); read by func_4860A530 0x4860A530 `mov (a0), d0`
-	REC_func_4860A530_Records	f0=32, x4="\x82\xA5`H"	# [0]
-	REC_func_4860A530_Records	f0=1, x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=33, x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=2, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=63, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=64, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=34, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"	# [8]
-	REC_func_4860A530_Records	f0=9, x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=10, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=105, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"	# [16]
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=82, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=23, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=24, x4="\x82\xA5`H"	# [24]
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=91, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=92, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	x4="{\xA5`H"
-	REC_func_4860A530_Records	f0=62, x4="\x82\xA5`H"
-	REC_func_4860A530_Records	f0=31, x4="\x82\xA5`H"
-func_4860A588_Records:	# 32 x REC_func_4860A588_Records (8 bytes each); read by func_4860A588 0x4860A588 `mov (a0), d0`
-	REC_func_4860A588_Records	f0=32, x4="\xDA\xA5`H"	# [0]
-	REC_func_4860A588_Records	f0=1, x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=33, x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=2, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=63, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=64, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=34, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"	# [8]
-	REC_func_4860A588_Records	f0=9, x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=10, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=105, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"	# [16]
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=82, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=23, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=24, x4="\xDA\xA5`H"	# [24]
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=91, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=92, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	x4="\xD3\xA5`H"
-	REC_func_4860A588_Records	f0=62, x4="\xDA\xA5`H"
-	REC_func_4860A588_Records	f0=31, x4="\xDA\xA5`H"
-func_4860A5E1_Records:	# 32 x REC_func_4860A5E1_Records (8 bytes each); read by func_4860A5E1 0x4860A5E1 `mov (a0), d0`
-	REC_func_4860A5E1_Records	f0=32, x4=":\xA6`H"	# [0]
-	REC_func_4860A5E1_Records	f0=1, x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=33, x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=2, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=63, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=64, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=34, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"	# [8]
-	REC_func_4860A5E1_Records	f0=9, x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=10, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=105, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"	# [16]
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=82, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=23, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=24, x4=":\xA6`H"	# [24]
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=91, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=92, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	x4="+\xA6`H"
-	REC_func_4860A5E1_Records	f0=62, x4=":\xA6`H"
-	REC_func_4860A5E1_Records	f0=31, x4=":\xA6`H"
-func_4860A640_Records:	# 32 x REC_func_4860A640_Records (8 bytes each); read by func_4860A640 0x4860A640 `mov (a0), d1`
-	REC_func_4860A640_Records	f0=32, x4="\xB7\xA6`H"	# [0]
-	REC_func_4860A640_Records	f0=1, x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=33, x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=2, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=63, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=64, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=34, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"	# [8]
-	REC_func_4860A640_Records	f0=9, x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=10, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=105, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"	# [16]
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=82, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=23, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=24, x4="\xB7\xA6`H"	# [24]
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=91, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=92, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	x4="\x80\xA6`H"
-	REC_func_4860A640_Records	f0=62, x4="\xB7\xA6`H"
-	REC_func_4860A640_Records	f0=31, x4="\xB7\xA6`H"
-func_4860A6EA_Records:	# 32 x REC_func_4860A6EA_Records (8 bytes each); read by func_4860A6EA 0x4860A6EA `mov (a0), d0`
-	REC_func_4860A6EA_Records	f0=32, x4="H\xA7`H"	# [0]
-	REC_func_4860A6EA_Records	f0=1, x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=33, x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=2, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=63, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=64, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=34, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"	# [8]
-	REC_func_4860A6EA_Records	f0=9, x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=10, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=105, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"	# [16]
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=82, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=23, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=24, x4="H\xA7`H"	# [24]
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=91, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=92, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	x4="5\xA7`H"
-	REC_func_4860A6EA_Records	f0=62, x4="H\xA7`H"
-	REC_func_4860A6EA_Records	f0=31, x4="H\xA7`H"
-func_4860A75C_Records:	# 64 x REC_func_4860A75C_Records (8 bytes each); read by func_4860A75C 0x4860A75C `mov (a0), d1`
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"	# [0]
-	REC_func_4860A75C_Records	f0=1, x4="\x93\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"	# [8]
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=78, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=79, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=80, x4="\xA2\xA7`H"	# [16]
-	REC_func_4860A75C_Records	f0=17, x4="\x97\xA7`H"
-	REC_func_4860A75C_Records	f0=18, x4="\x97\xA7`H"
-	REC_func_4860A75C_Records	f0=81, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=82, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=83, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=84, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=85, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=86, x4="\xA2\xA7`H"	# [24]
-	REC_func_4860A75C_Records	f0=25, x4="\x9B\xA7`H"
-	REC_func_4860A75C_Records	f0=26, x4="\x9B\xA7`H"
-	REC_func_4860A75C_Records	f0=87, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=88, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=89, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=90, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=91, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=92, x4="\xA2\xA7`H"	# [32]
-	REC_func_4860A75C_Records	f0=33, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=34, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=35, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=36, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=37, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=93, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=39, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=40, x4="\x9F\xA7`H"	# [40]
-	REC_func_4860A75C_Records	f0=41, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=42, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=43, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=44, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=45, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=94, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=47, x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	f0=48, x4="\x9F\xA7`H"	# [48]
-	REC_func_4860A75C_Records	f0=95, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=96, x4="\xA2\xA7`H"
-	REC_func_4860A75C_Records	f0=97, x4="\xA6\xA7`H"
-	REC_func_4860A75C_Records	f0=98, x4="\xA6\xA7`H"
-	REC_func_4860A75C_Records	f0=105, x4="\xAA\xA7`H"
-	REC_func_4860A75C_Records	f0=106, x4="\xAA\xA7`H"
-	REC_func_4860A75C_Records	f0=107, x4="\xAA\xA7`H"
-	REC_func_4860A75C_Records	f0=108, x4="\xAA\xA7`H"	# [56]
-	REC_func_4860A75C_Records	f0=121, x4="\xAE\xA7`H"
-	REC_func_4860A75C_Records	f0=122, x4="\xAE\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
-	REC_func_4860A75C_Records	x4="\x9F\xA7`H"
+func_4860A351_Records:	# 32 x REC_func_4860A351_Records (8 bytes each); read by func_4860A351 0x4860A351 `mov (a0), d0`; func_4860A351_entry_L3d 0x4860A393 `mov (a0), d0`; func_4860A351_entry_L40 0x4860A396 `mov (4, a0), a0`
+	REC_func_4860A351_Records	f0=32, f4=0x4860A3A8	# [0]
+	REC_func_4860A351_Records	f0=1, f4=0x4860A39B
+	REC_func_4860A351_Records	f0=33, f4=0x4860A39B
+	REC_func_4860A351_Records	f0=2, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=63, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=64, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=34, f4=0x4860A3A8
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B	# [8]
+	REC_func_4860A351_Records	f0=9, f4=0x4860A39B
+	REC_func_4860A351_Records	f0=10, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=105, f4=0x4860A3A8
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B	# [16]
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f0=82, f4=0x4860A3A8
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f0=23, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=24, f4=0x4860A3A8	# [24]
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f0=91, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=92, f4=0x4860A3A8
+	REC_func_4860A351_Records	f4=0x4860A39B
+	REC_func_4860A351_Records	f0=62, f4=0x4860A3A8
+	REC_func_4860A351_Records	f0=31, f4=0x4860A3A8
+func_4860A461_Records:	# 32 x REC_func_4860A461_Records (8 bytes each); read by func_4860A461 0x4860A461 `mov (a0), d0`; func_4860A461_entry_L3d 0x4860A4A3 `mov (a0), d0`; func_4860A461_entry_L40 0x4860A4A6 `mov (4, a0), a0`
+	REC_func_4860A461_Records	f0=32, f4=0x4860A506	# [0]
+	REC_func_4860A461_Records	f0=1, f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=33, f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=2, f4=0x4860A506
+	REC_func_4860A461_Records	f0=63, f4=0x4860A506
+	REC_func_4860A461_Records	f0=64, f4=0x4860A506
+	REC_func_4860A461_Records	f0=34, f4=0x4860A506
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB	# [8]
+	REC_func_4860A461_Records	f0=9, f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=10, f4=0x4860A506
+	REC_func_4860A461_Records	f0=105, f4=0x4860A506
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB	# [16]
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=82, f4=0x4860A506
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=23, f4=0x4860A506
+	REC_func_4860A461_Records	f0=24, f4=0x4860A506	# [24]
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=91, f4=0x4860A506
+	REC_func_4860A461_Records	f0=92, f4=0x4860A506
+	REC_func_4860A461_Records	f4=0x4860A4AB
+	REC_func_4860A461_Records	f0=62, f4=0x4860A506
+	REC_func_4860A461_Records	f0=31, f4=0x4860A506
+func_4860A530_Records:	# 32 x REC_func_4860A530_Records (8 bytes each); read by func_4860A530 0x4860A530 `mov (a0), d0`; func_4860A530_L43 0x4860A573 `mov (a0), d0`; func_4860A530_L46 0x4860A576 `mov (4, a0), a0`
+	REC_func_4860A530_Records	f0=32, f4=0x4860A582	# [0]
+	REC_func_4860A530_Records	f0=1, f4=0x4860A57B
+	REC_func_4860A530_Records	f0=33, f4=0x4860A57B
+	REC_func_4860A530_Records	f0=2, f4=0x4860A582
+	REC_func_4860A530_Records	f0=63, f4=0x4860A582
+	REC_func_4860A530_Records	f0=64, f4=0x4860A582
+	REC_func_4860A530_Records	f0=34, f4=0x4860A582
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B	# [8]
+	REC_func_4860A530_Records	f0=9, f4=0x4860A57B
+	REC_func_4860A530_Records	f0=10, f4=0x4860A582
+	REC_func_4860A530_Records	f0=105, f4=0x4860A582
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B	# [16]
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f0=82, f4=0x4860A582
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f0=23, f4=0x4860A582
+	REC_func_4860A530_Records	f0=24, f4=0x4860A582	# [24]
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f0=91, f4=0x4860A582
+	REC_func_4860A530_Records	f0=92, f4=0x4860A582
+	REC_func_4860A530_Records	f4=0x4860A57B
+	REC_func_4860A530_Records	f0=62, f4=0x4860A582
+	REC_func_4860A530_Records	f0=31, f4=0x4860A582
+func_4860A588_Records:	# 32 x REC_func_4860A588_Records (8 bytes each); read by func_4860A588 0x4860A588 `mov (a0), d0`; func_4860A588_L43 0x4860A5CB `mov (a0), d0`; func_4860A588_L46 0x4860A5CE `mov (4, a0), a0`
+	REC_func_4860A588_Records	f0=32, f4=0x4860A5DA	# [0]
+	REC_func_4860A588_Records	f0=1, f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=33, f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=2, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=63, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=64, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=34, f4=0x4860A5DA
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3	# [8]
+	REC_func_4860A588_Records	f0=9, f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=10, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=105, f4=0x4860A5DA
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3	# [16]
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=82, f4=0x4860A5DA
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=23, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=24, f4=0x4860A5DA	# [24]
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=91, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=92, f4=0x4860A5DA
+	REC_func_4860A588_Records	f4=0x4860A5D3
+	REC_func_4860A588_Records	f0=62, f4=0x4860A5DA
+	REC_func_4860A588_Records	f0=31, f4=0x4860A5DA
+func_4860A5E1_Records:	# 32 x REC_func_4860A5E1_Records (8 bytes each); read by func_4860A5E1 0x4860A5E1 `mov (a0), d0`; func_4860A5E1_L42 0x4860A623 `mov (a0), d0`; func_4860A5E1_L45 0x4860A626 `mov (4, a0), a0`
+	REC_func_4860A5E1_Records	f0=32, f4=0x4860A63A	# [0]
+	REC_func_4860A5E1_Records	f0=1, f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=33, f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=2, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=63, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=64, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=34, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B	# [8]
+	REC_func_4860A5E1_Records	f0=9, f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=10, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=105, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B	# [16]
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=82, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=23, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=24, f4=0x4860A63A	# [24]
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=91, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=92, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f4=0x4860A62B
+	REC_func_4860A5E1_Records	f0=62, f4=0x4860A63A
+	REC_func_4860A5E1_Records	f0=31, f4=0x4860A63A
+func_4860A640_Records:	# 32 x REC_func_4860A640_Records (8 bytes each); read by func_4860A640 0x4860A640 `mov (a0), d1`; func_4860A640_entry_L33 0x4860A678 `mov (a0), d1`; func_4860A640_entry_L36 0x4860A67B `mov (4, a0), a0`
+	REC_func_4860A640_Records	f0=32, f4=0x4860A6B7	# [0]
+	REC_func_4860A640_Records	f0=1, f4=0x4860A680
+	REC_func_4860A640_Records	f0=33, f4=0x4860A680
+	REC_func_4860A640_Records	f0=2, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=63, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=64, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=34, f4=0x4860A6B7
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680	# [8]
+	REC_func_4860A640_Records	f0=9, f4=0x4860A680
+	REC_func_4860A640_Records	f0=10, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=105, f4=0x4860A6B7
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680	# [16]
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f0=82, f4=0x4860A6B7
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f0=23, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=24, f4=0x4860A6B7	# [24]
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f0=91, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=92, f4=0x4860A6B7
+	REC_func_4860A640_Records	f4=0x4860A680
+	REC_func_4860A640_Records	f0=62, f4=0x4860A6B7
+	REC_func_4860A640_Records	f0=31, f4=0x4860A6B7
+func_4860A6EA_Records:	# 32 x REC_func_4860A6EA_Records (8 bytes each); read by func_4860A6EA 0x4860A6EA `mov (a0), d0`; func_4860A6EA_entry_L3e 0x4860A72D `mov (a0), d0`; func_4860A6EA_entry_L41 0x4860A730 `mov (4, a0), a0`
+	REC_func_4860A6EA_Records	f0=32, f4=0x4860A748	# [0]
+	REC_func_4860A6EA_Records	f0=1, f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=33, f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=2, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=63, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=64, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=34, f4=0x4860A748
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735	# [8]
+	REC_func_4860A6EA_Records	f0=9, f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=10, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=105, f4=0x4860A748
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735	# [16]
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=82, f4=0x4860A748
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=23, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=24, f4=0x4860A748	# [24]
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=91, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=92, f4=0x4860A748
+	REC_func_4860A6EA_Records	f4=0x4860A735
+	REC_func_4860A6EA_Records	f0=62, f4=0x4860A748
+	REC_func_4860A6EA_Records	f0=31, f4=0x4860A748
+func_4860A75C_Records:	# 1 x REC_func_4860A75C_Records (8 bytes each); read by func_4860A75C 0x4860A75C `mov (a0), d1`; func_4860A75C_L2f 0x4860A78B `mov (a0), d1`; func_4860A75C_L32 0x4860A78E `mov (4, a0), a0`
+	REC_func_4860A75C_Records	p4=func_4860A75C_L43
+.incbin_range "baserom/kn2400_program.rom", 0x01C3D4, 0x01C5CC
 
 func_4860AAA0_Table:	# 4 x u8, 1..64; read by func_4860AAA0_entry : `movbu	(d0, a2), d0`
 	tab_u8	1, 4, 16, 64
@@ -10861,8 +10866,11 @@ func_4860BF82_Table:	# 36 x u8, 0..255; read by func_4860BF82_entry : `movbu	(a1
 Str_House_Shot:	.asciz "   House Shot   "
 	.align	4, 0xFF	# pad after Str_House_Shot
 
-SndCmdStreamWrite_Table_2:	# 4 x u8, 3..240; read by SndCmdStreamWrite 0x50123A20: `movbu (a2), d2`
-	tab_u8	3, 240, 43, 127
+SndCmdStreamWrite_Table_2:	# u8, a constant; read / written by SndCmdStreamWrite 0x50123A20: `movbu (a2), d2`
+	.byte	3
+
+SndCmdStreamWrite_entry_L51_Table:	# 3 x u8, 43..240; read by SndCmdStreamWrite_entry_L51 0x50123A76: `movbu (a2), d0`
+	tab_u8	240, 43, 127
 func_4860C784_Table:	# 428 x u8, 0..255; read by func_4860C784_entry : `movbu	(a2), d0`
 	tab_u8	32, 32, 32, 32, 73, 110, 105, 116, 105, 97, 108, 32, 32, 32, 32, 32	# [0]
 	tab_u8	16, 1, 0, 0, 85, 129, 64, 85, 5, 64, 85, 0, 64, 0, 0, 64	# [16]
@@ -10892,23 +10900,23 @@ func_4860C784_Table:	# 428 x u8, 0..255; read by func_4860C784_entry : `movbu	(a
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [400]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255	# [416]
 
-func_4860D94F_Records:	# 16 x REC_func_4860D94F_Records (8 bytes each); read by func_4860D94F 0x4860D94F `mov (a0), d0`
-	REC_func_4860D94F_Records	f0=62, x4="\xA7\xD9`H"	# [0]
-	REC_func_4860D94F_Records	f0=1, x4="\x8F\xD9`H"
-	REC_func_4860D94F_Records	f0=2, x4="\x8F\xD9`H"
-	REC_func_4860D94F_Records	f0=3, x4="\x8B\xD9`H"
-	REC_func_4860D94F_Records	f0=67, x4="\x8B\xD9`H"
-	REC_func_4860D94F_Records	f0=18, x4="\x9D\xD9`H"
-	REC_func_4860D94F_Records	f0=19, x4="\x9D\xD9`H"
-	REC_func_4860D94F_Records	f0=65, x4="\x9D\xD9`H"
-	REC_func_4860D94F_Records	f0=66, x4="\x9D\xD9`H"	# [8]
-	REC_func_4860D94F_Records	f0=36, x4="\xA2\xD9`H"
-	REC_func_4860D94F_Records	f0=63, x4="\xA7\xD9`H"
-	REC_func_4860D94F_Records	x4="\xAC\xD9`H"
-	REC_func_4860D94F_Records	f0=60, x4="\x94\xD9`H"
-	REC_func_4860D94F_Records	f0=61, x4="\x98\xD9`H"
-	REC_func_4860D94F_Records	f0=46, x4="\x8F\xD9`H"
-	REC_func_4860D94F_Records	f0=47, x4="\x8F\xD9`H"
+func_4860D94F_Records:	# 16 x REC_func_4860D94F_Records (8 bytes each); read by func_4860D94F 0x4860D94F `mov (a0), d0`; func_4860D94F_entry_L32 0x4860D983 `mov (a0), d0`; func_4860D94F_entry_L35 0x4860D986 `mov (4, a0), a0`
+	REC_func_4860D94F_Records	f0=62, f4=0x4860D9A7	# [0]
+	REC_func_4860D94F_Records	f0=1, f4=0x4860D98F
+	REC_func_4860D94F_Records	f0=2, f4=0x4860D98F
+	REC_func_4860D94F_Records	f0=3, f4=0x4860D98B
+	REC_func_4860D94F_Records	f0=67, f4=0x4860D98B
+	REC_func_4860D94F_Records	f0=18, f4=0x4860D99D
+	REC_func_4860D94F_Records	f0=19, f4=0x4860D99D
+	REC_func_4860D94F_Records	f0=65, f4=0x4860D99D
+	REC_func_4860D94F_Records	f0=66, f4=0x4860D99D	# [8]
+	REC_func_4860D94F_Records	f0=36, f4=0x4860D9A2
+	REC_func_4860D94F_Records	f0=63, f4=0x4860D9A7
+	REC_func_4860D94F_Records	f4=0x4860D9AC
+	REC_func_4860D94F_Records	f0=60, f4=0x4860D994
+	REC_func_4860D94F_Records	f0=61, f4=0x4860D998
+	REC_func_4860D94F_Records	f0=46, f4=0x4860D98F
+	REC_func_4860D94F_Records	f0=47, f4=0x4860D98F
 
 func_4860E685_Table:	# 11 x u32, 1214310128..1214310190; read by func_4860E685_entry_L48 0x4860E6CF: `mov	(d1, a0), a0`
 	tab_u32	1214310128, 1214310134, 1214310140, 1214310146, 1214310152, 1214310158, 1214310164, 1214310170	# [0]
@@ -10939,39 +10947,39 @@ func_4860FEA7_Table:	# 3 x u16, 0..0; read by func_4860FEA7 0x4860FEA7: `movhu	(
 	tab_u16	0, 0, 0
 	.align	4, 0xFF	# pad after func_4860FEA7_Table
 
-func_4860E7A9_entry_L1b_Records:	# 32 x REC_func_4860E7A9_entry_L1b_Records (8 bytes each); read by func_4860E7A9_entry_L1b 0x4860E7C9 `mov (a0), d0`
-	REC_func_4860E7A9_entry_L1b_Records	f0=0x601000, x4="\xF8\xE7`H"	# [0]
-	REC_func_4860E7A9_entry_L1b_Records	f0=0x601001, x4="\x02\xE8`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=49280, x4=":\xE8`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=49281, x4=":\xE8`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=49282, x4="d\xE8`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=0x600005, x4="\x0F\xE8`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=49285, x4="\xEE\xE8`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=32832, x4="K\xE9`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=49283, x4="n\xE9`H"	# [8]
-	REC_func_4860E7A9_entry_L1b_Records	f0=49284, x4="q\xE9`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=0x600000, x4="\x89\xE9`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=53248, x4="\xA2\xE9`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=53249, x4="\x10\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=53250, x4="\x10\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=53251, x4="\x10\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=3, x4="(\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=1, x4="V\xEA`H"	# [16]
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	f0=32818, x4="\xE8\xE9`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"	# [24]
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
-	REC_func_4860E7A9_entry_L1b_Records	x4="\xF3\xEA`H"
+func_4860E7A9_entry_L1b_Records:	# 32 x REC_func_4860E7A9_entry_L1b_Records (8 bytes each); read by func_4860E7A9_entry_L1b 0x4860E7C9 `mov (a0), d0`; func_4860E7A9_entry_L42 0x4860E7F0 `mov (a0), d0`; func_4860E7A9_entry_L45 0x4860E7F3 `mov (4, a0), a0`
+	REC_func_4860E7A9_entry_L1b_Records	f0=0x601000, f4=0x4860E7F8	# [0]
+	REC_func_4860E7A9_entry_L1b_Records	f0=0x601001, f4=0x4860E802
+	REC_func_4860E7A9_entry_L1b_Records	f0=49280, f4=0x4860E83A
+	REC_func_4860E7A9_entry_L1b_Records	f0=49281, f4=0x4860E83A
+	REC_func_4860E7A9_entry_L1b_Records	f0=49282, f4=0x4860E864
+	REC_func_4860E7A9_entry_L1b_Records	f0=0x600005, f4=0x4860E80F
+	REC_func_4860E7A9_entry_L1b_Records	f0=49285, f4=0x4860E8EE
+	REC_func_4860E7A9_entry_L1b_Records	f0=32832, f4=0x4860E94B
+	REC_func_4860E7A9_entry_L1b_Records	f0=49283, f4=0x4860E96E	# [8]
+	REC_func_4860E7A9_entry_L1b_Records	f0=49284, f4=0x4860E971
+	REC_func_4860E7A9_entry_L1b_Records	f0=0x600000, f4=0x4860E989
+	REC_func_4860E7A9_entry_L1b_Records	f0=53248, f4=0x4860E9A2
+	REC_func_4860E7A9_entry_L1b_Records	f0=53249, f4=0x4860EA10
+	REC_func_4860E7A9_entry_L1b_Records	f0=53250, f4=0x4860EA10
+	REC_func_4860E7A9_entry_L1b_Records	f0=53251, f4=0x4860EA10
+	REC_func_4860E7A9_entry_L1b_Records	f0=3, f4=0x4860EA28
+	REC_func_4860E7A9_entry_L1b_Records	f0=1, f4=0x4860EA56	# [16]
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f0=32818, f4=0x4860E9E8
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3	# [24]
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
+	REC_func_4860E7A9_entry_L1b_Records	f4=0x4860EAF3
 
 func_4860EF90_Table_2:	# 10 x u32, 1214312448..1214313111; read by func_4860EF90_entry_L60 0x4860EFF5: `mov	(d0, a0), a0`
 	tab_u32	1214312448, 1214312473, 1214312661, 1214313010, 1214313111, 1214312661, 1214312540, 1214312519	# [0]
@@ -11030,60 +11038,46 @@ func_48611410_Table:	# 35 x u32, 1214321824..1214322017; read by func_48611410_e
 	tab_u32	1214322017, 1214322017, 1214322017, 1214321934, 1214322017, 1214322017, 1214322017, 1214322015	# [24]
 	tab_u32	1214322015, 1214322015, 1214322015	# [32]
 
-func_48612AD1_L3d_Records:	# 16 x REC_func_48612AD1_L3d_Records (8 bytes each); read by func_48612AD1_L3d 0x48612B0E `mov (a0), d1`
-	REC_func_48612AD1_L3d_Records	x4="~-aH"	# [0]
-	REC_func_48612AD1_L3d_Records	f0=0xBFE001, x4="J+aH"
-	REC_func_48612AD1_L3d_Records	f0=24705, x4="\xF2+aH"
-	REC_func_48612AD1_L3d_Records	f0=41089, x4="\x17,aH"
-	REC_func_48612AD1_L3d_Records	f0=41090, x4="\x17,aH"
-	REC_func_48612AD1_L3d_Records	f0=41093, x4="S+aH"
-	REC_func_48612AD1_L3d_Records	f0=0x202086, x4="B+aH"
-	REC_func_48612AD1_L3d_Records	f0=0x202005, x4="u+aH"
-	REC_func_48612AD1_L3d_Records	f0=17, x4="9,aH"	# [8]
-	REC_func_48612AD1_L3d_Records	f0=24633, x4="B+aH"
-	REC_func_48612AD1_L3d_Records	f0=18, x4="\xA6,aH"
-	REC_func_48612AD1_L3d_Records	f0=19, x4="\xCF,aH"
-	REC_func_48612AD1_L3d_Records	f0=2, x4="\xF8,aH"
-	REC_func_48612AD1_L3d_Records	f0=1, x4="5-aH"
-	REC_func_48612AD1_L3d_Records	x4="~-aH"
-	REC_func_48612AD1_L3d_Records	f0=0xAFE07F, x4="M-aH"
+func_48612AD1_L3d_Records:	# 1 x REC_func_48612AD1_L3d_Records (8 bytes each); read by func_48612AD1_L3d 0x48612B0E `mov (a0), d1`; func_48612AD1_L69 0x48612B3A `mov (a0), d1`; func_48612AD1_L6c 0x48612B3D `mov (4, a0), a0`
+	REC_func_48612AD1_L3d_Records	p4=func_48612AD1_L2ad
+.incbin_range "baserom/kn2400_program.rom", 0x01CFF0, 0x01D068
 
 func_486145B3_Table:	# 8 x u8, 0..255; read by func_486145B3_entry : `movbu	(a1), d0`
 	tab_u8	2, 0, 1, 0, 0, 0, 255, 255
 
-func_48615F2D_entry_L5b_Records:	# 32 x REC_func_48615F2D_entry_L5b_Records (8 bytes each); read by func_48615F2D_entry_L5b 0x48615F8B `mov (a0), d1`
-	REC_func_48615F2D_entry_L5b_Records	f0=96, x4="\xCC_aH"	# [0]
-	REC_func_48615F2D_entry_L5b_Records	f0=1, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=2, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=3, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=97, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=4, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=66, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=5, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=65, x4="\xCC_aH"	# [8]
-	REC_func_48615F2D_entry_L5b_Records	f0=163, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"	# [16]
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=182, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"	# [24]
-	REC_func_48615F2D_entry_L5b_Records	x4="\xD0_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=90, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=91, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=92, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=93, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=94, x4="\xCC_aH"
-	REC_func_48615F2D_entry_L5b_Records	f0=95, x4="\xCC_aH"
+func_48615F2D_entry_L5b_Records:	# 32 x REC_func_48615F2D_entry_L5b_Records (8 bytes each); read by func_48615F2D_entry_L5b 0x48615F8B `mov (a0), d1`; func_48615F2D_entry_L94 0x48615FC4 `mov (a0), d1`; func_48615F2D_entry_L97 0x48615FC7 `mov (4, a0), a0`
+	REC_func_48615F2D_entry_L5b_Records	f0=96, f4=0x48615FCC	# [0]
+	REC_func_48615F2D_entry_L5b_Records	f0=1, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=2, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=3, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=97, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=4, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=66, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=5, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=65, f4=0x48615FCC	# [8]
+	REC_func_48615F2D_entry_L5b_Records	f0=163, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0	# [16]
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f0=182, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0	# [24]
+	REC_func_48615F2D_entry_L5b_Records	f4=0x48615FD0
+	REC_func_48615F2D_entry_L5b_Records	f0=90, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=91, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=92, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=93, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=94, f4=0x48615FCC
+	REC_func_48615F2D_entry_L5b_Records	f0=95, f4=0x48615FCC
 
 func_48615F2D_Table:	# 42 x u32, 1214341000..1214341003; read by func_48615F2D_entry_L37 0x48615F67: `mov	(d0, a0), a0`
 	tab_u32	1214341000, 1214341000, 1214341000, 1214341000, 1214341000, 1214341000, 1214341000, 1214341000	# [0]
@@ -11099,28 +11093,14 @@ func_48616DA5_Table:	# 16 x u8, 3..18; read by func_48616DA5_entry : `movbu	(d0,
 func_48616DD2_Table:	# 16 x u8, 0..15; read by func_48616DD2_entry : `movbu	(d0, a0), d0`; func_48616DD2_entry : `movbu	(d0, a0), d1`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 
-func_4861932D_entry_L20_Records:	# 16 x REC_func_4861932D_entry_L20_Records (8 bytes each); read by func_4861932D_entry_L20 0x48619352 `mov (a0), d0`
-	REC_func_4861932D_entry_L20_Records	x4="\x17\x94aH"	# [0]
-	REC_func_4861932D_entry_L20_Records	f0=145, x4="\x82\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=129, x4="\x97\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=177, x4="\xA1\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=193, x4="\xC5\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=1, x4="\xCE\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=209, x4="\xD8\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=225, x4="\xE1\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=33, x4="\xEA\x93aH"	# [8]
-	REC_func_4861932D_entry_L20_Records	f0=113, x4="\xF4\x93aH"
-	REC_func_4861932D_entry_L20_Records	f0=97, x4="\xFE\x93aH"
-	REC_func_4861932D_entry_L20_Records	x4="\x17\x94aH"
-	REC_func_4861932D_entry_L20_Records	x4="\x17\x94aH"
-	REC_func_4861932D_entry_L20_Records	x4="\x17\x94aH"
-	REC_func_4861932D_entry_L20_Records	x4="\x17\x94aH"
-	REC_func_4861932D_entry_L20_Records	x4="\x17\x94aH"
-func_48619B24_Records:	# 4 x REC_func_48619B24_Records (8 bytes each); read by func_48619B24 0x48619B24 `mov (a0), d1`
-	REC_func_48619B24_Records	f0=0x702020, x4="f\x9BaH"
-	REC_func_48619B24_Records	f0=45073, x4="b\x9BaH"
-	REC_func_48619B24_Records	f0=45089, x4="b\x9BaH"
-	REC_func_48619B24_Records	f0=45105, x4="b\x9BaH"
+func_4861932D_entry_L20_Records:	# 1 x REC_func_4861932D_entry_L20_Records (8 bytes each); read by func_4861932D_entry_L20 0x48619352 `mov (a0), d0`; func_4861932D_entry_L48 0x4861937A `mov (a0), d0`; func_4861932D_entry_L4b 0x4861937D `mov (4, a0), a0`
+	REC_func_4861932D_entry_L20_Records	p4=func_4861932D_entry_Le5
+.incbin_range "baserom/kn2400_program.rom", 0x01D250, 0x01D2C8
+func_48619B24_Records:	# 4 x REC_func_48619B24_Records (8 bytes each); read by func_48619B24 0x48619B24 `mov (a0), d1`; func_48619B24_entry_L34 0x48619B5A `mov (a0), d1`; func_48619B24_entry_L37 0x48619B5D `mov (4, a0), a0`
+	REC_func_48619B24_Records	f0=0x702020, f4=0x48619B66
+	REC_func_48619B24_Records	f0=45073, f4=0x48619B62
+	REC_func_48619B24_Records	f0=45089, f4=0x48619B62
+	REC_func_48619B24_Records	f0=45105, f4=0x48619B62
 # census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01D2E8, 0x01D348
 
@@ -11216,39 +11196,39 @@ func_48620E7C_Table:
 	.long	func_4861ED5D_Table+124
 	.long	func_4861ED5D_Table+28
 
-func_4862246A_entry_L23_Records:	# 32 x REC_func_4862246A_entry_L23_Records (8 bytes each); read by func_4862246A_entry_L23 0x48622490 `mov (a0), d1`
-	REC_func_4862246A_entry_L23_Records	f0=96, x4="\xE4$bH"	# [0]
-	REC_func_4862246A_entry_L23_Records	f0=65, x4="\xC1$bH"
-	REC_func_4862246A_entry_L23_Records	f0=66, x4="\xC8$bH"
-	REC_func_4862246A_entry_L23_Records	f0=97, x4="\xD6$bH"
-	REC_func_4862246A_entry_L23_Records	f0=4, x4="\x06%bH"
-	REC_func_4862246A_entry_L23_Records	f0=5, x4="\x06%bH"
-	REC_func_4862246A_entry_L23_Records	f0=1, x4="\x06%bH"
-	REC_func_4862246A_entry_L23_Records	f0=2, x4="\x06%bH"
-	REC_func_4862246A_entry_L23_Records	f0=3, x4="\x06%bH"	# [8]
-	REC_func_4862246A_entry_L23_Records	f0=163, x4="\x0F%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"	# [16]
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	f0=182, x4="\xC8$bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"	# [24]
-	REC_func_4862246A_entry_L23_Records	x4="\x16%bH"
-	REC_func_4862246A_entry_L23_Records	f0=90, x4="\xEB$bH"
-	REC_func_4862246A_entry_L23_Records	f0=91, x4="\xF4$bH"
-	REC_func_4862246A_entry_L23_Records	f0=92, x4="\xFD$bH"
-	REC_func_4862246A_entry_L23_Records	f0=93, x4="\xEB$bH"
-	REC_func_4862246A_entry_L23_Records	f0=94, x4="\xCF$bH"
-	REC_func_4862246A_entry_L23_Records	f0=95, x4="\xDD$bH"
+func_4862246A_entry_L23_Records:	# 32 x REC_func_4862246A_entry_L23_Records (8 bytes each); read by func_4862246A_entry_L23 0x48622490 `mov (a0), d1`; func_4862246A_entry_L4c 0x486224B9 `mov (a0), d1`; func_4862246A_entry_L4f 0x486224BC `mov (4, a0), a0`
+	REC_func_4862246A_entry_L23_Records	f0=96, f4=0x486224E4	# [0]
+	REC_func_4862246A_entry_L23_Records	f0=65, f4=0x486224C1
+	REC_func_4862246A_entry_L23_Records	f0=66, f4=0x486224C8
+	REC_func_4862246A_entry_L23_Records	f0=97, f4=0x486224D6
+	REC_func_4862246A_entry_L23_Records	f0=4, f4=0x48622506
+	REC_func_4862246A_entry_L23_Records	f0=5, f4=0x48622506
+	REC_func_4862246A_entry_L23_Records	f0=1, f4=0x48622506
+	REC_func_4862246A_entry_L23_Records	f0=2, f4=0x48622506
+	REC_func_4862246A_entry_L23_Records	f0=3, f4=0x48622506	# [8]
+	REC_func_4862246A_entry_L23_Records	f0=163, f4=0x4862250F
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516	# [16]
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f0=182, f4=0x486224C8
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516	# [24]
+	REC_func_4862246A_entry_L23_Records	f4=0x48622516
+	REC_func_4862246A_entry_L23_Records	f0=90, f4=0x486224EB
+	REC_func_4862246A_entry_L23_Records	f0=91, f4=0x486224F4
+	REC_func_4862246A_entry_L23_Records	f0=92, f4=0x486224FD
+	REC_func_4862246A_entry_L23_Records	f0=93, f4=0x486224EB
+	REC_func_4862246A_entry_L23_Records	f0=94, f4=0x486224CF
+	REC_func_4862246A_entry_L23_Records	f0=95, f4=0x486224DD
 
 func_48623EDF_Table:	# 36 x u32, 1214398208..1214398264; read by func_48623EDF 0x48623EDF: `mov	(d1, a0), a0`
 	tab_u32	1214398208, 1214398264, 1214398215, 1214398264, 1214398257, 1214398250, 1214398257, 1214398257	# [0]
@@ -11281,7 +11261,7 @@ Str_s_d_3:	.asciz "%s : %d"
 func_48627D9C_Table:	# 4 x u32, 11534346..11567106; read by func_48627D9C 0x48627D9C: `mov	(d0, a0), d0`; func_48628275 0x48628275: `mov	(d0, a0), d0` ...
 	tab_u32	11534346, 11567106, 11567105, 11567104
 
-func_4862BF3C_Records:	# 7 x REC_func_4862BF3C_Records (4 bytes each); read by func_4862BF3C 0x4862BF3C `call func_4862BEDB_entry, [d2,d3,a2], 0x18`; func_4862BF3C 0x4862BF3C `movbu (2, a0), d0`; func_4862BF3C 0x4862BF3C `movbu (3, a0), d1` (+3)
+func_4862BF3C_Records:	# 7 x REC_func_4862BF3C_Records (4 bytes each); read by func_4862BF3C 0x4862BF3C `movbu (2, a0), d0`; func_4862BF3C 0x4862BF3C `movbu (3, a0), d1`; func_4862C104 0x4862C104 `movbu (1, a0), d0` (+5)
 	REC_func_4862BF3C_Records	
 	REC_func_4862BF3C_Records	f1=4, f2=96, f3=4
 	REC_func_4862BF3C_Records	f1=3, f2=96, f3=3
@@ -11321,65 +11301,65 @@ func_4862B1CF_Table:	# 5 x u32, 1214427640..1214427756; read by func_4862B1CF_L1
 func_4862CC04_Table:	# 16 x u8, 0..12; read by func_4862CC04_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 5, 6, 7, 11, 3, 4, 0, 0, 12, 0, 0, 0, 0, 0
 
-func_48627EB3_entry_L1b_Records:	# 32 x REC_func_48627EB3_entry_L1b_Records (8 bytes each); read by func_48627EB3_entry_L1b 0x48627ED0 `mov (a0), d1`
-	REC_func_48627EB3_entry_L1b_Records	f0=0xDFFFFD, x4="H\x7FbH"	# [0]
-	REC_func_48627EB3_entry_L1b_Records	f0=1, x4="=\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xAFFFFE, x4="R\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=32767, x4="\x88\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00004, x4="\x01\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00044, x4="[\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00045, x4="d\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00007, x4="\x0B\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00047, x4="\x15\x7FbH"	# [8]
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00046, x4="m\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00008, x4="\x91\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=32771, x4="\x9A\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=32773, x4="\xA3\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"	# [16]
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB00058, x4="\x7F\x7FbH"	# [24]
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB0005A, x4="v\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	x4="\xAC\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB07FFD, x4="4\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB07FFE, x4="*\x7FbH"
-	REC_func_48627EB3_entry_L1b_Records	f0=0xB07FFF, x4="\x1F\x7FbH"
-func_48627FB2_Records:	# 4 x REC_func_48627FB2_Records (8 bytes each); read by func_48627FB2 0x48627FB2 `mov (a0), d1`
-	REC_func_48627FB2_Records	f0=0xAFFFFE, x4="\xF6\x7FbH"
-	REC_func_48627FB2_Records	f0=32767, x4="\xF6\x7FbH"
-	REC_func_48627FB2_Records	f0=0xDFFFFD, x4="\xFD\x7FbH"
-	REC_func_48627FB2_Records	f0=32771, x4="\xF6\x7FbH"
+func_48627EB3_entry_L1b_Records:	# 32 x REC_func_48627EB3_entry_L1b_Records (8 bytes each); read by func_48627EB3_entry_L1b 0x48627ED0 `mov (a0), d1`; func_48627EB3_entry_L44 0x48627EF9 `mov (a0), d1`; func_48627EB3_entry_L47 0x48627EFC `mov (4, a0), a0`
+	REC_func_48627EB3_entry_L1b_Records	f0=0xDFFFFD, f4=0x48627F48	# [0]
+	REC_func_48627EB3_entry_L1b_Records	f0=1, f4=0x48627F3D
+	REC_func_48627EB3_entry_L1b_Records	f0=0xAFFFFE, f4=0x48627F52
+	REC_func_48627EB3_entry_L1b_Records	f0=32767, f4=0x48627F88
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00004, f4=0x48627F01
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00044, f4=0x48627F5B
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00045, f4=0x48627F64
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00007, f4=0x48627F0B
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00047, f4=0x48627F15	# [8]
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00046, f4=0x48627F6D
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00008, f4=0x48627F91
+	REC_func_48627EB3_entry_L1b_Records	f0=32771, f4=0x48627F9A
+	REC_func_48627EB3_entry_L1b_Records	f0=32773, f4=0x48627FA3
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC	# [16]
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB00058, f4=0x48627F7F	# [24]
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB0005A, f4=0x48627F76
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f4=0x48627FAC
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB07FFD, f4=0x48627F34
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB07FFE, f4=0x48627F2A
+	REC_func_48627EB3_entry_L1b_Records	f0=0xB07FFF, f4=0x48627F1F
+func_48627FB2_Records:	# 4 x REC_func_48627FB2_Records (8 bytes each); read by func_48627FB2 0x48627FB2 `mov (a0), d1`; func_48627FB2_entry_L3a 0x48627FEE `mov (a0), d1`; func_48627FB2_entry_L3d 0x48627FF1 `mov (4, a0), a0`
+	REC_func_48627FB2_Records	f0=0xAFFFFE, f4=0x48627FF6
+	REC_func_48627FB2_Records	f0=32767, f4=0x48627FF6
+	REC_func_48627FB2_Records	f0=0xDFFFFD, f4=0x48627FFD
+	REC_func_48627FB2_Records	f0=32771, f4=0x48627FF6
 # census: opaque -- unknown-dump: 224 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01DF94, 0x01E074
-func_48628025_Records:	# 4 x REC_func_48628025_Records (8 bytes each); read by func_48628025 0x48628025 `mov (a0), d0`
-	REC_func_48628025_Records	f0=0xAFFFFE, x4="y\x80bH"
-	REC_func_48628025_Records	f0=32767, x4="y\x80bH"
-	REC_func_48628025_Records	f0=0xDFFFFD, x4="\x82\x80bH"
-	REC_func_48628025_Records	f0=32771, x4="y\x80bH"
+func_48628025_Records:	# 4 x REC_func_48628025_Records (8 bytes each); read by func_48628025 0x48628025 `mov (a0), d0`; func_48628025_entry_L47 0x48628071 `mov (a0), d0`; func_48628025_entry_L4a 0x48628074 `mov (4, a0), a0`
+	REC_func_48628025_Records	f0=0xAFFFFE, f4=0x48628079
+	REC_func_48628025_Records	f0=32767, f4=0x48628079
+	REC_func_48628025_Records	f0=0xDFFFFD, f4=0x48628082
+	REC_func_48628025_Records	f0=32771, f4=0x48628079
 # census: opaque -- unknown-dump: 224 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01E094, 0x01E174
-func_486280AA_Records:	# 4 x REC_func_486280AA_Records (8 bytes each); read by func_486280AA 0x486280AA `mov (a0), d1`
-	REC_func_486280AA_Records	f0=0xAFFFFE, x4="\xEE\x80bH"
-	REC_func_486280AA_Records	f0=1, x4="\xEE\x80bH"
-	REC_func_486280AA_Records	f0=32767, x4="\xEE\x80bH"
-	REC_func_486280AA_Records	f0=32771, x4="\xEE\x80bH"
+func_486280AA_Records:	# 4 x REC_func_486280AA_Records (8 bytes each); read by func_486280AA 0x486280AA `mov (a0), d1`; func_486280AA_entry_L3a 0x486280E6 `mov (a0), d1`; func_486280AA_entry_L3d 0x486280E9 `mov (4, a0), a0`
+	REC_func_486280AA_Records	f0=0xAFFFFE, f4=0x486280EE
+	REC_func_486280AA_Records	f0=1, f4=0x486280EE
+	REC_func_486280AA_Records	f0=32767, f4=0x486280EE
+	REC_func_486280AA_Records	f0=32771, f4=0x486280EE
 # census: opaque -- unknown-dump: 224 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01E194, 0x01E274
-func_48629232_entry_L24_Records:	# 4 x REC_func_48629232_entry_L24_Records (8 bytes each); read by func_48629232_entry_L24 0x4862925B `mov (a0), d0`
-	REC_func_48629232_entry_L24_Records	f0=0x8FFFFD, x4="\xB1\x92bH"
-	REC_func_48629232_entry_L24_Records	f0=1, x4="\x9D\x92bH"
-	REC_func_48629232_entry_L24_Records	f0=0xBFFFFD, x4="\xBA\x92bH"
-	REC_func_48629232_entry_L24_Records	f0=32771, x4="\x9D\x92bH"
+func_48629232_entry_L24_Records:	# 4 x REC_func_48629232_entry_L24_Records (8 bytes each); read by func_48629232_entry_L24 0x4862925B `mov (a0), d0`; func_48629232_entry_L5e 0x48629295 `mov (a0), d0`; func_48629232_entry_L61 0x48629298 `mov (4, a0), a0`
+	REC_func_48629232_entry_L24_Records	f0=0x8FFFFD, f4=0x486292B1
+	REC_func_48629232_entry_L24_Records	f0=1, f4=0x4862929D
+	REC_func_48629232_entry_L24_Records	f0=0xBFFFFD, f4=0x486292BA
+	REC_func_48629232_entry_L24_Records	f0=32771, f4=0x4862929D
 # census: opaque -- unknown-dump: 224 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01E294, 0x01E374
 
@@ -11453,7 +11433,7 @@ Str_C_34:	.asciz "C:\\"
 Str_d_19:	.asciz "d"
 	.align	4, 0xFF	# pad after Str_d_19
 
-func_48632F74_entry_Lbc_Records:	# 2 x REC_func_48632F74_entry_Lbc_Records (4 bytes each); read by func_48632F74_entry_Lbc 0x48633032 `call memcpy_entry, [a2,a3], 8`
+func_48632F74_entry_Lbc_Records:	# 2 x REC_func_48632F74_entry_Lbc_Records (4 bytes each); read by func_48632F74_entry_Lbc 0x48633032 `call memcpy_entry, [a2,a3], 8`; func_48632F74_entry_L139 0x486330AF `call memcpy_entry, [a2,a3], 8`
 	REC_func_48632F74_entry_Lbc_Records	s0="\xF8\xFF\xFF\x00"
 	REC_func_48632F74_entry_Lbc_Records	s0="\xF8\xFF\xFF\xFF"
 data_4841E508:
@@ -11822,69 +11802,39 @@ data_4842192C:
 .incbin_range "baserom/kn2400_program.rom", 0x02192C, 0x021B1C
 Str_Basic_Chord_100:	.asciz "Basic Chord 100%"
 	.align	4, 0xFF	# pad after Str_Basic_Chord_100
-data_48421B30:
-# census: opaque -- unknown-dump: 4900 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x021B30, 0x022E54
-	.space	288, 0x00
-# census: opaque -- unknown-dump: 732 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x022F74, 0x023250
-data_48423250:
-# census: opaque -- unknown-dump: 5908 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x023250, 0x024964
-Str_HardRock_Chord:	.asciz "HardRock Chord"
-	.align	4, 0xFF	# pad after Str_HardRock_Chord
-data_48424974:
-# census: opaque -- unknown-dump: 5908 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x024974, 0x026088
-Str_Chord_CEGB:	.asciz "Chord CEGB "
-data_48426094:
-# census: opaque -- unknown-dump: 4900 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x026094, 0x0273B8
-	.space	289, 0x00
-# census: opaque -- unknown-dump: 719 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0274D9, 0x0277A8
-Str_Chord_CDEG:	.asciz "Chord CDEG   "
-	.align	4, 0xFF	# pad after Str_Chord_CDEG
-data_484277B8:
-# census: opaque -- unknown-dump: 4900 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x0277B8, 0x028ADC
-	.space	289, 0x00
-# census: opaque -- unknown-dump: 719 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x028BFD, 0x028ECC
-Str_Chord_DEGB:	.asciz "Chord DEGB "
-data_48428ED8:
-# census: opaque -- unknown-dump: 4900 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x028ED8, 0x02A1FC
-	.space	289, 0x00
-# census: opaque -- unknown-dump: 719 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x02A31D, 0x02A5EC
-Str_Chord_CEGA:	.asciz "Chord CEGA "
-data_4842A5F8:
-# census: opaque -- unknown-dump: 4900 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x02A5F8, 0x02B91C
-	.space	289, 0x00
-# census: opaque -- unknown-dump: 719 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x02BA3D, 0x02BD0C
-Str_Chord_ADGC:	.asciz "Chord ADGC "
-data_4842BD18:
-# census: opaque -- unknown-dump: 4899 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x02BD18, 0x02D03B
-	.space	289, 0x00
-# census: opaque -- unknown-dump: 732 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x02D15C, 0x02D438
-data_4842D438:
-# census: opaque -- unknown-dump: 4899 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x02D438, 0x02E75B
-	.space	290, 0x00
-# census: opaque -- unknown-dump: 731 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x02E87D, 0x02EB58
+
+func_50173EF8_L9_Records_p4_0:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=Str_Basic_Chord_100, x4="\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x02\x01\x00\x02\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x02\x01\x00\xFE\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x02\x01\x00\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x01\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFE\xFD\xFC\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x00\xFF\xFE\xFE\xFD\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFC\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\xFD\xFC\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFD\xFD\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x03\x02\x01\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x03\x02\x01\x00\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x04\x03\x02\x01\x00\x00\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x02\x01\x01\x00\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x02\x02\x01\x00\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x03\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\xFC\x02\x01\x00\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\xFB\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFB\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\x02\x01\x00\xFF\x00\xFE\xFF\xFE\xFD\xFC\xFB\x01\x00\xFF\x01\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFC\xFB\x01\x00\xFF\x01\x00\x00\xFF\xFE\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFB\x01\x00\x00\xFF\x01\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFB\x01\x01\x00\xFF\x01\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFB\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\xFC\xFB\x01\x00\xFF\x01\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x02\x01\x00\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFE\xFD\xFC\x01\x00\xFF\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x00\xFF\xFE\xFD\x00\x00\xFF\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFE\xFD\xFD\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\xFE\xFD\x00\xFF\xFE\xFD\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFD\x03\x02\x01\x00\x03\x02\x01\x02\x01\x00\xFF\xFE\x04\x03\x02\x01\x04\x03\x02\x03\x02\x01\x00\xFF\x05\x04\x03\x02\x05\x04\x03\x04\x03\x02\x01\x00\x06\x05\x04\x03\x06\x05\x04\x05\x04\x03\x02\x01\xFB\xFE\xFD\xFC\xFB\xFC\xFB\xFA\xFF\xFE\xFD\xFC\xFC\xFF\xFE\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFD\x00\xFF\xFE\xFD\xFE\xFD\xFC\x01\x00\xFF\xFE\xFE\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x03\x02\x01\x00\x02\x01\x00\x02\x01\x00\xFF\xFE\x04\x03\x02\x01\x03\x02\x01\x03\x02\x01\x00\xFF\x05\x04\x03\x02\x04\x03\x02\x04\x03\x02\x01\x00\x06\x05\x04\x03\x05\x04\x03\x05\x04\x03\x02\x01\xFB\xFD\xFC\xFB\xFA\xFC\xFB\xFA\xFF\xFE\xFD\xFC\xFC\xFE\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\x01\x00\xFF\xFE\xFF\xFE\x00\xFF\xFE\xFD\xFE\xFD\xFC\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\xFE\xFD\xFC\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\xFC\x02\x02\x01\x00\xFF\x01\x00\xFF\x00\xFD\xFE\xFD\xFC\xFC\x02\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFE\xFD\xFD\xFC\x02\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFE\xFE\xFD\xFC\x02\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x02\x01\x00\x02\xFE\x00\xFF\xFE\xFE\xFD\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFE\xFD\xFC\x02\x01\x00\xFF\xFD\x01\x00\xFF\xFE\xFD\xFE\xFD\x01\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\xFE\xFD\xFE\xFD\x01\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFD\xFE\xFD\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\xFE\xFD\xFE\xFD\xFD\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\xFE\xFE\xFD\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\xFD\xFE\xFD\x01\x00\xFF\x03\xFD\x01\x00\xFF\xFF\xFE\xFD\xFE\xFD\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\xFE\xFD\x01\x00\xFF\xFE\xFD\x01\x01\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x03\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x03\x02\x01\x00\x02\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x02\x01\x00\x02\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x03\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x03\x02\x01\x00\x02\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x03\x02\x01\x02\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\x03\x02\x01\x00\x01\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x02\x01\x00\xFE\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x02\x01\x00\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\x01\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x02\xFD\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\x03\x02\x01\x00\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x03\x02\x01\x00\x00\x00\xFF\xFE\xFD\x02\x01\x00\x04\x03\x02\x01\x00\x01\x00\xFF\xFE\x03\xFC\x01\x05\xFF\x03\x02\x01\x02\x00\x00\xFF\x04\xFD\xFC\x06\x00\xFF\x03\x02\x03\x01\x00\x00\x05\xFE\xFD\x07\x01\x00\xFF\x03\x04\x02\x01\x00\x06\xFF\xFE\x08\xFC\x01\x00\xFF\xF9\x03\x02\x01\xFB\x00\xFF\xFD\xFD\xFC\x01\x00\xFA\xFF\x03\x02\xFC\x00\x00\xFE\xFE\xFD\xFC\x01\xFB\x00\xFF\x03\xFD\x01\x00\xFF\xFF\xFE\xFD\xFC\xFC\x01\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\x03\x02\x01\x00\x00\xFF\xFE\xFC\xFB\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x00\xFD\xFE\xFD\xFC\x00\xFF\xFE\xFD\x02\xFB\x00\x01\xFE\xFD\xFE\xFD\x01\xFC\xFF\xFE\x03\xFC\xFB\x02\xFF\xFE\xFD\xFE\x02\xFD\xFC\xFF\x04\xFD\xFC\x03\x00\xFF\xFE\xFD\x03\xFE\xFD\xFC\x05\xFE\xFD\x04\xFB\x00\xFF\xFE\xF8\xFD\xFE\xFD\xFA\xFF\xFE\xF9\xFC\xFB\x00\xFF\xF9\xFE\xFD\xFE\xFB\xFC\xFF\xFA\xFD\xFC\xFB\x00\xFA\xFF\xFE\xFD\xFC\xFD\xFC\xFB\xFE\xFD\xFC\xFB\xFB\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFE\xFD\xFF\xFE\xFD\xFC\x03\x02\x01\x00\x00\xFF\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x03\x02\x01\x00\x00\x00\xFF\xFE\xFD\xFF\xFE\xFD\x04\x03\x02\x01\x00\x01\x00\xFF\xFE\x00\xFF\xFE\x05\xFC\x03\x02\x01\x02\x00\x00\xFF\x01\xFD\xFF\x06\xFD\xFC\x03\x02\x03\x01\x00\x00\x02\xFE\xFD\x07\xFE\xFD\xFC\x03\x04\x02\x01\x00\x03\xFF\xFE\x08\xFF\xFE\xFD\xFC\x05\x03\x02\x01\x04\x00\xFF\x09\xFD\xFF\xFE\xFD\xFA\xFC\x03\x02\xF9\x00\x00\xFE\xFE\xFD\xFF\xFE\xFB\xFD\xFC\x03\xFA\x01\x00\xFF\xFF\xFE\xFD\xFF\xFC\xFE\xFD\xFC\xFB\x02\x01\x00\x00\xFF\xFE\xFD\xFD\xFF\xFE\xFD\xFC\x03\x02\x01\x00\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\x03\x02\x01\x00\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x04\x03\x02\x01\x00\x01\x00\xFF\xFE\x02\x01\x00\x05\xFE\x03\x02\x01\x02\x00\x00\xFF\x03\xFD\x01\x06\xFF\xFE\x03\x02\x03\x01\x00\x00\x04\xFE\xFD\x07\x00\xFF\xFE\x03\x04\x02\x01\x00\x05\xFF\xFE\x08\x01\x00\xFF\xFE\x05\x03\x02\x01\x06\x00\xFF\x09\xFD\x01\x00\xFF\xFA\xFE\x03\x02\xFB\x00\x00\xFE\xFE\xFD\x01\x00\xFB\xFF\xFE\x03\xFC\x01\x00\xFF\xFF\xFE\xFD\x01\xFC\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\xFE\xFD\xFD\x01\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\xFE\xFE\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x02\x01\x00\x03\x02\x01\x00\xFF\x01\x00\xFF\xFE\x03\xFC\x01\x04\xFF\x02\x01\x00\x02\xFF\x00\xFF\x04\xFD\xFC\x05\x00\xFF\x02\x01\x03\x00\xFF\x00\x05\xFE\xFD\x06\x01\x00\xFF\x02\x04\x01\x00\xFF\x06\xFF\xFE\x07\xFC\x01\x00\xFF\x05\x02\x01\x00\x07\x00\xFF\x08\xFD\xFC\x01\x00\xFA\xFF\x02\x01\xFC\xFF\x00\xFD\xFE\xFD\xFC\x01\xFB\x00\xFF\x02\xFD\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\xFF\xFE\xFD\x03\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x04\xFC\x02\x01\x00\x02\xFF\x00\xFF\x01\xFD\xFF\x05\xFD\xFC\x02\x01\x03\x00\xFF\x00\x02\xFE\xFD\x06\xFE\xFD\xFC\x02\x04\x01\x00\xFF\x03\xFF\xFE\x07\xFF\xFE\xFD\xFC\x05\x02\x01\x00\x04\x00\xFF\x08\xFD\xFF\xFE\xFD\xFA\xFC\x02\x01\xF9\xFF\x00\xFD\xFE\xFD\xFF\xFE\xFB\xFD\xFC\x02\xFA\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFC\xFE\xFD\xFC\xFB\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x03\x02\x01\x02\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\xFE\x03\x03\x02\x01\x00\x03\x02\x01\x02\x01\x00\xFF\xFE\x04\x03\x02\x01\x04\x03\x02\x03\x00\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\x03\x02\x01\x00\x01\x00\x00\xFF\xFE\x03\x02\x01\x00\x03\x02\x01\x00\x01\x01\x00\xFF\xFE\x03\x02\x01\x04\x03\x02\x01\x00\x00\x01\x00\xFF\x02\x03\x02\x01\x00\x03\x02\x01\x01\x00\x01\x00\x03\xFE\x03\x02\x01\x00\x03\x02\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x00\x03\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x00\x03\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x03\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x03\x03\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\x03\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\xFE\xFD\x03\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\xFE\xFD\x03\x02\x01\x00\x01\x00\xFF\x01\x00\xFD\xFF\xFE\xFD\xFC\x02\x01\x00\x01\x00\xFF\x01\xFE\x00\xFF\xFE\xFD\x03\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\xFE\xFD\x03\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\xFE\xFD\x03\x02\x01\x00\x01\xFF\x00\xFF\x01\xFD\xFF\xFE\xFD\x03\x02\x01\x00\x00\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x03\x02\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x03\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\xFD\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\xFD\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\xFD\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFC\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\xFE\x01\xFD\x00\xFF\xFE\xFD\x03\x02\x01\x00\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\xFD\x03\x02\x01\x00\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\xFD\x03\x02\x01\x00\x00\xFF\xFF\xFE\x01\xFC\xFF\xFE\xFD\x03\x02\x01\x00\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\xFD\x03\x02Keep near C\x00"
+func_50173EF8_L9_Records_p4_1:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_0+5908, x4="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFE\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFF\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFF\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x00\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x01\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x02\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFF\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x02\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFD\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x02\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFE\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFF\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x02\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFD\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFE\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFF\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x00\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x02\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFE\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFF\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x01\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFF\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x02\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFF\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFD\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x02\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x03\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFD\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFF\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x02\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x02\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFF\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x00\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x01\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x02\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x02\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFF\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x02\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFE\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFF\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x02\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFE\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFF\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x00\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x02\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFD\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFF\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x02\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x02\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x02\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x03\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFD\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFE\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFF\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x00\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x02\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x02\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x00\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x01\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x02\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x02\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFF\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x01\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFE\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x02\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFE\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x01\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x02\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFD\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x01\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x02\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFE\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\xFF\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x00\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x01\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x02\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFE\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFF\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x00\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\xFF\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x00\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\x01\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFE\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFF\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x01\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFD\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFF\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\x00\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFF\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x01\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\x01\xFD\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\xFE\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\xFF\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x04\x00\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x05\x01\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFA\xFE\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFB\xFF\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\xFC\x00\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\xFD\x00\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\xFE\x01\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFFHardRock Cho"
+
+Str_rd:	.asciz "rd"
+	.align	4, 0xFF	# pad after Str_rd
+
+func_50173EF8_L9_Records_p4_2:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_1+5908, x4="\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x04\x03\x02\x01\x00\x01\x02\x01\x01\x00\xFF\xFE\x05\x04\x03\x02\x01\x00\x03\x02\x02\x01\x00\xFF\x06\x05\x04\x03\x02\x01\x04\x03\x03\x02\x01\x00\x07\x06\x05\x04\x03\x02\x05\x04\x00\x01\x02\x01\x00\xFF\xFE\xFD\xFC\x03\x02\x01\x01\x00\x03\x02\x01\x00\xFF\xFE\xFD\x04\x03\x02\x02\x01\x04\x03\x02\x01\x00\xFF\xFE\x05\x04\x03\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x06\x05\x04\x04\x03\x06\x05\x04\x03\x02\x01\x00\x07\x06\x05\x05\x04\x07\x06\x05\x04\x03\x02\x01\x08\x07\x06\xFE\xFD\xFC\xFB\x02\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x03\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x04\x03\x02\x01\x00\x01\x02\x01\x01\x00\xFF\xFE\x05\x04\x03\x02\x01\x00\x03\x02\x02\x01\x00\xFF\x06\x05\x04\x03\x02\x01\x04\x03\x03\x02\x01\x00\x07\x06\x05\x04\x03\x02\x05\x04\x00\x01\x02\x01\x00\xFF\xFE\xFD\xFC\x03\x02\x01\x01\x00\x03\x02\x01\x00\xFF\xFE\xFD\x04\x03\x02\x02\x01\x04\x03\x02\x01\x00\xFF\xFE\x05\x04\x03\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x06\x05\x04\x04\x03\x06\x05\x04\x03\x02\x01\x00\x07\x06\x05\x05\x04\x07\x06\x05\x04\x03\x02\x01\x08\x07\x06\xFE\xFD\xFC\xFB\x02\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x03\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x04\x03\x02\x01\x00\x01\x02\x01\x01\x00\xFF\xFE\x05\x04\x03\x02\x01\x00\x03\x02\x02\x01\x00\xFF\x06\x05\x04\x03\x02\x01\x04\x03\x03\x02\x01\x00\x07\x06\x05\x04\x03\x02\x05\x04\x00\x01\x02\x01\x00\xFF\xFE\xFD\xFC\x03\x02\x01\x01\x00\x03\x02\x01\x00\xFF\xFE\xFD\x04\x03\x02\x02\x01\x04\x03\x02\x01\x00\xFF\xFE\x05\x04\x03\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x06\x05\x04\x04\x03\x06\x05\x04\x03\x02\x01\x00\x07\x06\x05\x05\x04\x07\x06\x05\x04\x03\x02\x01\x08\x07\x06\xFE\xFD\xFC\xFB\x02\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x03\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x04\x03\x02\x01\x00\x01\x02\x01\x01\x00\xFF\xFE\x05\x04\x03\x02\x01\x00\x03\x02\x02\x01\x00\xFF\x06\x05\x04\x03\x02\x01\x04\x03\x03\x02\x01\x00\x07\x06\x05\x04\x03\x02\x05\x04\x00\x01\x02\x01\x00\xFF\xFE\xFD\xFC\x03\x02\x01\x01\x00\x03\x02\x01\x00\xFF\xFE\xFD\x04\x03\x02\x02\x01\x04\x03\x02\x01\x00\xFF\xFE\x05\x04\x03\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x06\x05\x04\x04\x03\x06\x05\x04\x03\x02\x01\x00\x07\x06\x05\x05\x04\x07\x06\x05\x04\x03\x02\x01\x08\x07\x06\xFE\xFD\xFC\xFB\x02\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x03\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x04\x03\x02\x01\x00\xFF\x04\x03\x03\x02\x01\x00\x05\x04\x03\x02\x01\x00\x05\x04\xFE\xFD\x02\x01\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x04\x03\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x04\x03\x02\x02\x01\x06\x05\x04\x03\x02\x01\x00\x05\x04\x03\x03\x02\x07\x06\x05\x04\x03\x02\x01\x06\x05\x04\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x04\x03\x02\x01\x00\x01\x02\x01\x01\x00\xFF\xFE\x05\x04\x03\x02\x01\x00\x03\x02\x02\x01\x00\xFF\x06\x05\x04\x03\x02\x01\x04\x03\x03\x02\x01\x00\x07\x06\x05\x04\x03\x02\x05\x04\x00\x01\x02\x01\x00\xFF\xFE\xFD\xFC\x03\x02\x01\x01\x00\x03\x02\x01\x00\xFF\xFE\xFD\x04\x03\x02\x02\x01\x04\x03\x02\x01\x00\xFF\xFE\x05\x04\x03\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x06\x05\x04\x04\x03\x06\x05\x04\x03\x02\x01\x00\x07\x06\x05\x05\x04\x07\x06\x05\x04\x03\x02\x01\x08\x07\x06\xFE\xFD\xFC\xFB\x02\x01\x00\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFC\x03\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\x05\x04\x03\x02\x01\x00\x04\x03\x03\x02\x01\x00\x06\x05\x04\x03\x02\x01\x05\x04\xFF\xFE\x02\x01\x00\xFF\xFE\xFD\xFC\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFD\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x05\x04\x03\x02\x01\x00\xFF\x05\x04\x03\x03\x02\x06\x05\x04\x03\x02\x01\x00\x06\x05\x04\x04\x03\x07\x06\x05\x04\x03\x02\x01\x07\x06\x05\xFE\xFD\xFC\xFB\x01\x00\xFF\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFD\xFC\x02\x01\x00\xFF\xFE\xFD\x01\x00Chord CEGB \x00"
+func_50173EF8_L9_Records_p4_3:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_2+5908, x4="\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x01\x00\x00\xFE\xFE\x01\xFC\xFF\x01\x00\xFC\xFF\xFE\x01\x00\xFF\xFF\xFE\xFD\x00\xFF\x01\xFD\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\xFF\xFE\x01\x00\xFC\xFF\x01\x00\xFC\xFE\x01\xFC\x00\xFF\xFE\xFC\xFD\x00\xFF\x01\xFD\xFF\xFE\xFD\x00\x00\xFF\xFD\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFE\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\x01\xFD\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x00\xFF\x00\xFD\xFE\x01\xFC\xFF\x01\x00\xFC\xFF\x01\x00\xFF\xFE\xFF\xFE\xFD\x00\xFF\x01\xFD\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\x01\xFC\x00\xFF\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x00\xFD\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x02\x01\x02\x00\x00\xFF\x02\x01\x00\x02\x01\x00\xFF\x02\x03\x01\x00\x00\x03\xFE\x01\x03\xFF\x01\x00\x03\x04\x02\x01\x00\x04\xFF\xFE\x04\x00\xFF\x01\x04\x05\xFF\x02\x01\x05\x00\xFF\x05\x01\x00\xFF\x05\x06\x00\xFF\x02\x06\x00\x00\x06\xFE\x01\x00\x06\x07\x01\x00\xFF\x07\x01\x00\x07\xFF\xFE\x01\x07\xFC\xFF\x01\x00\xFC\x02\x01\xFC\x00\xFF\xFE\xFC\xFD\x00\xFF\x01\xFD\xFF\x02\xFD\x00\x00\xFF\xFD\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFE\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x03\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x02\x01\x00\x02\xFE\x00\xFF\x02\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x02\x02\xFE\x00\xFF\x02\x01\x00\x04\xFE\x02\x01\x03\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\xFD\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\xFD\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\xFD\x00\xFF\x01\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\xFD\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x02\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x02\x03\x01\x00\x00\x02\x01\x00\x03\xFE\x01\x00\x03\x04\xFE\x01\x00\x03\xFF\x01\x04\xFF\xFE\x01\x04\x05\xFF\xFE\x01\x04\x00\xFF\x05\x00\xFF\xFE\x05\x06\x00\xFF\xFE\x05\x00\x00\x06\x01\x00\xFF\x06\x07\x01\x00\xFF\x06\x01\x00\x07\xFF\x01\x00\x07\xFC\xFE\x01\x00\xFB\xFE\x01\xFC\x00\xFF\x01\xFC\xFD\xFF\xFE\x01\xFC\xFF\xFE\xFD\x00\x00\xFF\xFD\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\x00\xFE\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\xFF\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\xFF\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\xFF\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x00\xFF\x00\xFF\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x00\xFF\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x03\x03\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x00\x00\x03\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x01\x03\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x01\x03\x00\xFF\x02\x01\x00\xFF\xFE\x03\x03\x02\x01\x01\x03\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x03\x02\x01\x00\x03\x00\xFF\x02\x01\x00\xFF\xFF\xFE\x03\x02\x01\x01\x03\x00\xFF\x02\x01\x00\x00\xFF\xFE\x03\x02\x01\x01\x03\x00\xFF\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\x03\x00\xFF\x02\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x03\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x03\x00\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x02\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x03\x03\x02\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x01\x03\x02\x00\xFF\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x03\x02\x00\xFF\x02\x01\x00\xFF\xFE\x03\x03\x02\x01\x03\x02\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x03\x02\x01\x03\x02\x00\xFF\x02\x01\x00\xFF\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\x02\x01\x00\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\x02\x02\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x03\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x00\x04\x04\x03\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x00\x00\x04\x03\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x01\x00\x04\x03\x00\xFF\x02\x01\x00\xFF\x03\x02\x02\x01\x00\x04\x03\x00\xFF\x02\x01\x00\xFF\x03\x03\x02\x01\x00\x04\x03\x00\xFF\x02\x01\x00\xFF\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\x02\x01\x00\x00\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\x02\x01\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\x02\x02\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\xFF\x02\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x00\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\x03\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\x00\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x01\x01\x00\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x02\x01\x00\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x03\x02\x01\x00\x03\x00\xFF\x01\x00\xFF\xFE\x04\x04\x03\x02\x01\x00\x03\x00\xFF\x01\x00\xFF\xFE\xFE\x04\x03\x02\x01\x00\x03\x00\xFF\x01\x00\xFF\xFF\xFE\x04\x03\x02\x01\x00\x03\x00\xFF\x01\x00\x00\xFF\xFE\x04\x03\x02\x01\x00\x03\x00\xFF\x01\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\x03\x00\xFF\xFF\x01\x00\xFF\xFE\x04\x03\x02\x01\x00\x03\x00\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x03\x03\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x03\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\x03\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\x03\x00\xFF\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x03\x00\xFF\x01\x00\xFF\xFE\x03\x03\x02\x01\x00\xFF\x03\x00\xFF\x01\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\x03\x00\xFF\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\x03\x00\xFF\x01\x00\x00\xFF\xFE\x03\x02\x01\x00\xFF\x03\x00\xFF\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x03\x00\xFF\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x03\x00\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\xFD\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\xFD\xFD\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\xFD\x01\x00\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\xFE\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\x02\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\x02\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\x02\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x02\x01\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x02\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFE\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFE\xFD\xFC\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\x00\xFE\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFC\x00\x01\xFF\xFE\xFE\xFF\xFC\xFD\x00\xFB\xFE\xFD\x01\x02\x00\xFF\xFE\x00\xFD\xFC\x01\xFC\xFB\xFE\x02\x03\xFC\x00\xFF\x01\xFE\xFD\x02\xFD\xFC\xFB\x03\x04\xFD\xFC\x00\x02\xFE\xFE\x03\xFC\xFD\xFC\x04\x05\xFE\xFD\xFC\x03\xFF\xFE\x04\xFD\xFC\xFD\x05\xFA\xFB\xFE\xFD\xF8\x00\xFF\xF9\xFE\xFD\xFC\xFA\xFB\xFC\xFB\xFE\xF9\xFC\x00\xFA\xFE\xFE\xFD\xFB\xFC\xFD\xFC\xFB\xFA\xFD\xFC\xFB\xFF\xFE\xFE\xFC\xFD\xFC\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\x03\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFF\xFE\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\xFF\xFE\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\xFF\xFE\x03\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\xFF\xFE\x03\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x03\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\xFF\xFE\x03\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\xFF\xFE\x03\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\x03\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\x03\x00\xFE\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\x00\xFE\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\x01\xFF\xFE\xFE\x00\xFF\xFE\x00\xFC\xFE\xFD\x01\x02\x00\xFF\xFE\x01\xFD\xFF\x01\xFD\xFC\xFE\x02\x03\xFC\x00\xFF\x02\xFE\xFD\x02\xFE\xFD\xFC\x03\x04\xFD\xFC\x00\x03\xFE\xFE\x03\xFF\xFE\xFD\x04\x05\xFE\xFD\xFC\x04\xFF\xFE\x04\xFD\xFF\xFE\x05\xFA\xFC\xFE\xFD\xF9\x00\xFF\xF9\xFE\xFD\xFF\xFA\xFB\xFD\xFC\xFE\xFA\xFC\x00\xFA\xFE\xFE\xFD\xFB\xFC\xFE\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFE\xFC\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFB\x00\xFF\x00\xFE\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFB\x00\x01\xFF\xFE\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x01\x02\x00\xFF\xFE\x00\xFD\xFE\x00\xFC\xFE\xFD\x02\x03\xFB\x00\xFF\x01\xFE\xFD\x01\xFD\xFC\xFE\x03\x04\xFC\xFB\x00\x02\xFE\xFE\x02\xFE\xFD\xFC\x04\x05\xFD\xFC\xFB\x03\xFF\xFE\x03\xFD\xFE\xFD\x05\xFA\xFE\xFD\xFC\xF8\x00\xFF\xF8\xFE\xFD\xFE\xFA\xFB\xFC\xFE\xFD\xF9\xFB\x00\xF9\xFE\xFE\xFD\xFB\xFC\xFD\xFC\xFE\xFA\xFC\xFB\xFA\xFF\xFE\xFE\xFC\xFD\xFE\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFF\xFE\x00\xFD\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFF\x01\xFE\xFD\xFE\xFF\xFE\xFD\x00\xFF\xFE\xFD\x00\x02\xFF\xFE\xFD\x00\xFD\xFE\x01\xFC\xFF\xFE\x01\x03\xFC\xFF\xFE\x01\xFE\xFD\x02\xFD\xFC\xFF\x02\x04\xFD\xFC\xFF\x02\xFD\xFE\x03\xFE\xFD\xFC\x03\x05\xFE\xFD\xFC\x03\xFE\xFD\x04\xFD\xFE\xFD\x04\xFA\xFF\xFE\xFD\xF8\xFF\xFE\xF9\xFE\xFD\xFE\xF9\xFB\xFC\xFF\xFE\xF9\xFC\xFF\xFA\xFD\xFE\xFD\xFA\xFC\xFD\xFC\xFF\xFA\xFD\xFC\xFB\xFE\xFD\xFE\xFB\xFD\xFE\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFF\xFE\x00\xFD\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFF\x01\xFE\xFD\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\x02\xFF\xFE\xFD\x01\xFD\xFF\x01\xFD\xFF\xFE\x01\x03\xFC\xFF\xFE\x02\xFE\xFD\x02\xFE\xFD\xFF\x02\x04\xFD\xFC\xFF\x03\xFD\xFE\x03\xFF\xFE\xFD\x03\x05\xFE\xFD\xFC\x04\xFE\xFD\x04\xFD\xFF\xFE\x04\xFA\xFF\xFE\xFD\xF9\xFF\xFE\xF9\xFE\xFD\xFF\xF9\xFB\xFD\xFF\xFE\xFA\xFC\xFF\xFA\xFD\xFE\xFD\xFA\xFC\xFE\xFD\xFF\xFB\xFD\xFC\xFB\xFE\xFD\xFE\xFB\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFB\xFF\xFE\xFD\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFB\xFF\xFE\x00\xFD\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFB\xFF\x01\xFE\xFD\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\x02\xFF\xFE\xFD\x00\xFD\xFE\x00\xFC\xFE\xFD\x01\x03\xFB\xFF\xFE\x01\xFE\xFD\x01\xFD\xFC\xFE\x02\x04\xFC\xFB\xFF\x02\xFD\xFE\x02\xFE\xFD\xFC\x03\x05\xFD\xFC\xFB\x03\xFE\xFD\x03\xFD\xFE\xFD\x04\xFA\xFE\xFD\xFC\xF8\xFF\xFE\xF8\xFE\xFD\xFE\xF9\xFB\xFC\xFE\xFD\xF9\xFB\xFF\xF9\xFD\xFE\xFD\xFA\xFC\xFD\xFC\xFE\xFA\xFC\xFB\xFA\xFE\xFD\xFE\xFB\xFD\xFE\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\x02\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFF\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\xFF\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\xFF\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x00\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\x00\xFF\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFC\x00\xFF\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFC\x00\xFF\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFE\xFD\xFC\x00\xFF\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFF\xFE\xFD\xFC\x00\xFF\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFF\xFE\xFD\xFC\x00\xFF\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFF\xFE\xFD\xFC\x00\xFF\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\xFF\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\xFF\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\xFF\x00\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\xFF\xFF\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFF\xFE\xFF\xFC\xFC\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFF\xFE\xFD\xFD\xFC\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFF\xFE\xFE\xFF\xFC\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFF\xFF\xFE\xFF\xFC\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFC\xFF\xFE\xFF\xFC\x00\xFF\x00\xFF\xFE\xFE\xFD\xFD\xFC\xFF\xFE\xFD\xFC\x00\xFF\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFF\xFE\xFF\xFC\x00\xFF\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFF\xFE\xFF\xFC\x00\xFF\x00\xFF\xFF\xFE\xFE\xFD\xFC\xFF\xFE\xFD\xFC\x00\xFF\x00\x00\xFF\xFE\xFE\xFD\xFC\xFF\xFE\xFF\xFC\x00\xFF\xFF\x00\xFF\xFE\xFE\xFD\xFC\xFF\xFE\xFF\xFC\x00Chord CDEG  "
+
+Str_text_3:	.asciz " "
+	.align	4, 0xFF	# pad after Str_text_3
+
+func_50173EF8_L9_Records_p4_4:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_3+5908, x4="\x00\xFF\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\x02\x02\x01\x02\xFF\x02\xFF\x00\x02\x01\x00\xFF\xFE\x03\x02\x03\x00\x03\x00\xFF\x03\xFF\x01\x00\xFF\x04\xFE\x04\x01\x04\xFF\x00\x04\x00\xFF\x01\x00\x00\xFF\x03\x02\x03\x00\xFF\x02\xFF\x00\xFF\x01\x01\x00\x04\xFE\x04\x01\x00\x03\x00\xFF\x00\xFF\x02\x01\x05\xFF\x05\x02\x01\x04\xFF\x00\xFF\x00\x00\xFF\x01\x00\x04\xFE\x02\x03\x00\xFF\x00\xFF\x01\x00\x02\x01\x05\xFF\xFE\x04\x01\x00\xFF\x00\x00\xFF\x00\xFF\x01\x00\xFF\x03\x02\x01\x00\xFF\x01\x00\x01\x00\x02\x01\x00\x04\xFE\x02\x01\x00\x00\xFF\x02\x01\x03\x02\x01\x03\x02\x01\x00\xFF\xFF\x00\xFF\x02\x01\x03\x02\x01\x03\x02\x01\x00\x00\xFF\x00\xFF\x02\x01\x03\x02\x01\x03\x02\x01\xFE\x00\xFF\x00\xFF\x02\x01\x00\x02\x01\x03\x02\xFF\x01\x00\xFF\x00\xFF\x02\x01\x03\x02\x01\x03\x00\x02\x01\x00\x01\x00\xFF\x02\x01\x03\x02\x01\x01\x03\x02\x01\x02\xFF\x00\x03\x02\x01\x03\x02\xFF\x01\x00\x02\x01\x00\xFF\x00\xFF\x02\x01\x03\x00\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x01\x03\x02\x01\x03\x02\x01\x02\xFF\x00\xFF\x02\xFE\x01\x00\x02\x01\x03\x02\x01\x00\xFF\x00\xFF\xFF\x02\x01\x03\x02\x01\x03\x02\x01\x00\xFF\x00\x00\xFF\x02\x01\x03\x02\x01\x04\x03\x02\x01\x00\x01\x00\x03\x02\x04\x03\x02\x05\x04\x03\x02\x01\x02\x00\x04\xFF\x05\x01\x03\x06\x01\x04\x03\x02\x03\x01\x05\x00\x06\x02\x01\x07\x02\x01\x04\x03\x04\x02\x06\x00\x07\xFF\x02\x08\x03\x02\x01\x04\x05\x03\x07\x01\x08\x00\xFF\x09\x01\x03\x02\x01\x06\x04\x08\x02\x09\x00\x00\n\x02\x01\x03\x02\x07\x01\x09\x03\n\x01\x00\x0B\xFF\x02\x01\x03\xFC\x02\xFE\x04\xFF\x02\x01\x00\x00\xFF\x02\x01\xFD\x03\xFF\x01\x00\x03\x02\x01\x00\x00\xFF\x02\xFE\x01\x00\x02\x01\x04\x03\x02\x01\x00\x00\xFF\xFF\x02\x01\x03\x02\x01\x04\x03\x02\x01\x00\x00\x00\xFF\x02\x01\x04\x03\x02\x05\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x05\x04\x03\x02\x02\x01\x00\xFF\x02\x01\x04\x03\x02\x05\x04\x03\x03\x02\x01\x00\xFF\x02\x01\x04\x03\x02\x05\x04\x00\x03\x02\x01\x00\xFF\x02\x01\x04\x03\x02\x05\x01\x04\x03\x02\x01\x00\xFF\x02\x01\x04\x03\x02\x02\x05\x04\x03\x02\x01\x00\xFF\x02\x01\x04\x03\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x02\x01\x04\x04\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x02\x01\x01\x04\x03\x02\x05\x04\x03\x02\x01\x00\xFF\x02\x02\x01\x04\x03\x02\x05\x04\x03\x02\x01\x00\xFF\xFF\x02\x01\x04\x03\x02\x05\x04\x03\x02\x01\x00\x00\xFF\x01\x00\x03\x02\x01\x05\x04\x03\x02\x01\x01\x00\x02\x01\x04\x03\x02\x06\x05\x04\x03\x02\x02\x01\x03\xFF\x05\x00\x03\x07\x01\x05\x04\x03\xFE\x02\x01\x00\x02\x01\x00\x03\x02\x01\x05\x04\xFF\x03\x02\x01\x03\xFF\x01\x04\x03\x02\x01\x05\x00\x04\x03\x02\x04\x00\xFF\x05\x00\x03\x02\x01\x01\x05\x04\x03\x05\x01\x00\x06\x01\x00\x03\x02\xFE\x01\x00\x04\x03\x02\x01\x03\xFF\x01\x00\x03\xFF\x02\x01\x05\x04\x03\x02\x04\x00\xFF\x01\x00\x00\x03\x02\x01\x05\x04\x03\x05\x01\x00\xFF\x01\x01\x00\x03\x02\x06\x05\x04\x06\x02\x01\x00\xFF\x02\x01\x04\x03\x07\x01\x05\x07\x03\x02\x01\x00\x00\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x00\x01\x01\x00\x02\x01\x04\x03\x02\x04\x03\x02\x01\x00\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x01\x00\x01\x00\x02\x01\x00\x03\x02\x01\x03\x02\x02\x01\x02\x01\x03\xFF\x01\x04\x03\x02\x01\x03\x00\x02\x01\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x01\x03\x02\x01\x02\x01\x00\x02\x01\x00\x03\x02\x02\x01\x03\x02\x03\x00\x01\x03\xFF\x01\x00\x03\xFF\x02\x01\x03\x02\x01\x00\xFF\x00\xFF\x01\x00\x00\x03\x02\x01\x03\x02\x01\x02\x01\x00\xFF\x01\x01\x00\x03\x02\x04\x03\x02\x03\x00\x01\x00\xFF\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x00\x01\x00\x00\xFF\x01\x00\x02\x01\x00\x02\x01\x00\xFF\x01\x01\x00\x02\x01\x03\x02\x01\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\x02\x01\x00\x02\x01\x00\x00\xFF\x01\x00\x02\x01\x00\x02\x01\x00\x02\x01\x01\x00\x02\x01\x03\xFF\x01\x03\x02\x01\x00\x02\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x02\x01\x00\x00\x02\x01\x00\x02\x01\x00\x02\x01\x00\x02\x01\x01\x00\x02\x01\x03\xFF\x01\x03\xFF\x01\x00\x02\xFF\x01\x00\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\x02\x01\x00\x02\x01\x00\x02\x01\x00\xFF\x01\x01\x00\x02\x01\x03\x02\x01\x03\xFF\x01\x00\xFF\xFF\x01\x00\x02\x01\x00\x02\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\x02\x01\x00\x03\x02\x01\x00\x01\x01\x00\xFF\x01\x00\x02\x01\x00\x03\x02\x01\x00\x00\x01\x00\xFF\x01\x00\x02\x01\x00\x03\x02\x01\x01\x00\x01\x00\xFF\x01\x00\x02\x01\x00\x03\x02\x02\x01\x00\x01\x00\xFF\x01\x00\x02\x01\x00\x03\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x02\x01\x00\x00\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x02\x01\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x02\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x00\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x01\x01\x00\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\x02\x01\x00\x03\x02\x01\x00\x01\x00\x00\xFF\x01\x00\x03\x02\x01\x04\x03\x02\x01\x00\x01\x00\x02\x01\x04\x03\x02\x05\x04\x03\x02\x01\x02\x00\x03\xFF\x05\x00\x03\x06\x01\x04\x03\x02\x03\x01\x04\x00\x06\x01\x00\x07\x02\x01\x04\x03\x04\x02\x05\x00\x07\xFF\x01\x08\x03\x02\x01\x04\x05\x03\x06\x01\x08\x00\xFF\x09\x00\x03\x02\x01\x06\x04\x07\x02\x09\x00\x00\n\x01\x00\x03\x02\x07\x01\x08\x03\n\x01\x00\x0B\xFF\x01\x00\x03\xFC\x02\xFD\x04\xFF\x02\x01\x00\x00\xFF\x01\x00\xFD\x03\xFE\x01\x00\x03\x02\x01\x00\x00\xFF\x01\xFE\x00\xFF\x02\x01\x04\x03\x02\x01\x00\x00\xFF\xFF\x01\x00\x03\x02\x01\x04\x03\x02\x01\x00\x00\x00\xFF\x03\x02\x03\x02\x01\x03\x02\x01\x00\x01\x01\x00\xFF\x03\x02\x03\x02\x01\x03\x02\x01\x00\x00\x01\x00\xFF\x03\x02\x03\x02\x01\x03\x02\x01\x01\x00\x01\x00\xFF\x03\x02\x03\x02\x01\x03\x02\x02\x01\x00\x01\x00\xFF\x03\x02\x03\x02\x01\x03\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x03\x02\x01\x01\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x03\x02\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x03\x03\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x03\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x03\x03\x02\x03\x02\x01\x03\x02\x01\x00\x01\x00\xFF\xFF\x03\x02\x03\x02\x01\x03\x02\x01\x00\x01\x00\x00\xFF\x02\x01\x03\x02\x01\x02\x01\x00\x02\x01\x01\x00\xFF\x02\x01\x03\x02\x01\x02\x01\x00\x02\x02\x01\x00\xFF\x02\x01\x03\x02\x01\x02\x01\x00\x00\x02\x01\x00\xFF\x02\x01\x03\x02\x01\x02\x01\x01\x00\x02\x01\x00\xFF\x02\x01\x03\x02\x01\x02\x02\x01\x00\x02\x01\x00\xFF\x02\x01\x03\x02\x01\x01\x02\x01\x00\x02\x01\x00\xFF\x02\x01\x03\x02\x02\x01\x02\x01\x00\x02\x01\x00\xFF\x02\x01\x03\x03\x02\x01\x02\x01\x00\x02\x01\x00\xFF\x02\x01\x01\x03\x02\x01\x02\x01\x00\x02\x01\x00\xFF\x02\x02\x01\x03\x02\x01\x02\x01\x00\x02\x01\x00\xFF\xFF\x02\x01\x03\x02\x01\x02\x01\x00\x02\x01\x00\x00\xFF\x02\x01\x04\x03\x02\x03\x02\x01\x00\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x03\x02\x01\x00\x00\x01\x00\xFF\x02\x01\x04\x03\x02\x03\x02\x01\x01\x00\x01\x00\xFF\x02\x01\x04\x03\x02\x03\x02\x02\x01\x00\x01\x00\xFF\x02\x01\x04\x03\x02\x03\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x04\x03\x02\x02\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x04\x03\x03\x02\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x04\x04\x03\x02\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x01\x04\x03\x02\x03\x02\x01\x00\x01\x00\xFF\x02\x02\x01\x04\x03\x02\x03\x02\x01\x00\x01\x00\xFF\xFF\x02\x01\x04\x03\x02\x03\x02\x01\x00\x01\x00\x00\xFF\x02\x01\x02\x01\x00\x05\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x05\x04\x03\x02\x02\x01\x00\xFF\x02\x01\x02\x01\x00\x05\x04\x03\xFD\x02\x01\x00\xFF\x02\x01\x00\x01\x00\x05\x04\xFE\x03\x02\x01\x00\xFF\x02\x01\x02\x01\x00\x05\xFF\x04\x03\x02\x01\x00\xFF\x02\x01\x02\x01\x00\x00\x05\x04\x03\x02\x01\x00\xFF\x02\x01\x02\x01\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x02\x01\x02\x02\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x02\x01\x01\x02\x01\x00\x05\x04\x03\x02\x01\x00\xFF\x02\x02\x01\x02\x01\x00\x05\x04\x03\x02\x01\x00\xFF\xFF\x02\x01\x02\x01\x00\x05\x04\x03\x02\x01\x00\x00\xFF\x03\x02\x02\x01\x00\x03\x02\x01\x00\x01\x01\x00\xFF\x03\x02\x02\x01\x00\x03\x02\x01\x00\x00\x01\x00\xFF\x03\x02\x02\x01\x00\x03\x02\x01\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x00\x03\x02\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x00\x03\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x00\x00\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x03\x03\x02\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\xFF\x03\x02\x02\x01\x00\x03\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x03\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFE\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\xFF\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\x00\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x01\x00\x00\xFF\x03\x02\x06\x05\x04\x06\x05\x04\x03\x01\x01\x00\xFF\x03\x02\x06\x05\x04\x06\x05\x04\x03\x03\x01\x00\xFF\x03\x02\x06\x05\x04\x06\x05\x04\x04\x03\x01\x00\xFF\x03\x02\x06\x05\x04\x06\x05\x05\x04\x03\x01\x00\xFF\x03\x02\x06\x05\x04\x06\x06\x05\x04\x03\x01\x00\xFF\x03\x02\x06\x05\x04\x04\x06\x05\x04\x03\x01\x00\xFF\x03\x02\x06\x05\x05\x04\x06\x05\x04\x03\x01\x00\xFF\x03\x02\x06\x06\x05\x04\x06\x05\x04\x03\x01\x00\xFF\x03\x02\x02\x06\x05\x04\x06\x05\x04\x03\x01\x00\xFF\x03\x03\x02\x06\x05\x04\x06\x05\x04\x03\x01\x00\xFF\xFF\x03\x02\x06\x05\x04\x06\x05\x04\x03\x01\x00\xFF\xFE\x00\xFF\x00\xFF\x01\x00\xFF\xFF\x01\x00\x00\xFF\xFE\x00\xFF\x00\xFF\x01\x00\xFF\xFF\x01\x01\x00\xFF\xFE\x00\xFF\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\x00\xFF\x01\x00\xFF\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\x00\xFF\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\x00\xFF\x01\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\x00\xFF\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\x00\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x00\xFF\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\x00\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\x03\x02\x01\x02\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\x03\x02\x01\x02\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\x03\x02\x01\x02\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\x03\x02\x01\x02\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\x03\x02\x01\x02\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x03\x02\x01\x01\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x03\x02\x02\x01\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x03\x03\x02\x01\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\x03\x02\x01\x02\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\x03\x02\x01\x02\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\x03\x02\x01\x02\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\x01\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\x01\x00\x06\x05\x04\x07\x06\x05\x04\x03\x03\x00\xFF\x01\x00\x06\x05\x04\x07\x06\x05\x04\x04\x03\x00\xFF\x01\x00\x06\x05\x04\x07\x06\x05\x05\x04\x03\x00\xFF\x01\x00\x06\x05\x04\x07\x06\x02\x05\x04\x03\x02\xFF\x01\x00\x06\x05\x04\x07\x00\x06\x01\x04\x03\x00\xFF\x01\x00\x06\x05\x04\x04\x07\x06\x05\x04\x03\x00\xFF\x01\x00\x06\x05\x05\x04\x07\x06\x05\x04\x03\x00\xFF\x01\x00\x06\x06\x05\x04\x07\x06\x05\x04\x03\x00\xFF\x01\x00\x00\x06\x05\x04\x07\x06\x05\x04\x03\x00\xFF\x01\x01\x00\x06\x05\x04\x07\x06\x05\x04\x03\x00\xFF\xFF\x01\x00\x06\x05\x04\x07\x06\x05\x04\x03\x00\x00\xFF\x01\x00\x05\x04\x03\x07\x06\x05\x04\x01\x01\x00\xFF\x01\x00\x05\x04\x03\x07\x06\x05\x04\x04\x01\x00\xFF\x01\x00\x05\x04\x03\x07\x06\x05\x05\x04\x01\x00\xFF\x01\x00\x05\x04\x03\x07\x06\x06\x05\x04\x01\x00\xFF\x01\x00\x05\x04\x03\x07\x07\x06\x05\x04\x01\x00\xFF\x01\x00\x05\x04\x03\x03\x07\x06\x05\x04\x01\x00\xFF\x01\x00\x05\x04\x04\x03\x07\x06\x05\x04\x01\x00\xFF\x01\x00\x05\x05\x04\x03\x07\x06\x05\x04\x01\x00\xFF\x01\x00\x00\x05\x04\x03\x07\x06\x05\x04\x01\x00\xFF\x01\x01\x00\x05\x04\x03\x07\x06\x05\x04\x01\x00\xFF\xFF\x01\x00\x05\x04\x03\x07\x06\x05\x04\x01\x00\x00\xFF\xFE\x00\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x03\x00\x01\x02\xFF\x00\xFF\xFE\xFE\x02\x01\x00\xFF\xFE\x00\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\x00\xFF\xFE\x02\x01\x00\xFF\x03\x00\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFE\xFE\x00\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x00\x01\x01\x00\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x00\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x01\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x03\x02\x02\x01\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x03\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x01\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x03\x02\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x03\x03\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x00\x03\x02\x01\x03\x02\x01\x00\x01\x00\xFF\x01\x01\x00\x03\x02\x01\x03\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\x03\x02\x01\x03\x02\x01\x00\x01\x00\x00\xFF\x02\x01\x02\x01\x00\x04\x03\x02\x01\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x04\x03\x02\x01\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x04\x03\x02\x02\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x04\x03\x03\x02\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x04\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x00\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x02\x01\x01\x00\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x02\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x01\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFF\x02\x02\x01\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFF\xFF\x02\x01\x02\x01\x00\x04\x03\x02\x01\x01\x00\x00\xFF\x02\x01\x04\x03\x02\x04\x03\x02\x01\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x04\x03\x02\x01\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x04\x03\x02\x02\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x04\x03\x03\x02\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x04\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x02\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x04\x03\x03\x02\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x04\x04\x03\x02\x04\x03\x02\x01\x01\x00\xFF\x02\x01\x01\x04\x03\x02\x04\x03\x02\x01\x01\x00\xFF\x02\x02\x01\x04\x03\x02\x04\x03\x02\x01\x01\x00\xFF\xFF\x02\x01\x04\x03\x02\x04\x03\x02\x01\x01\x00\x00\xFF\x01\x00\x02\x01\x00\x04\x03\x02\x01\x01\x01\x00\xFF\x01\x00\x02\x01\x00\x04\x03\x02\x01\x01\x01\x00\xFF\x01\x00\x02\x01\x00\x04\x03\x02\x02\x01\x01\x00\xFF\x01\x00\x02\x01\x00\x04\x03\x03\x02\x01\x01\x00\xFF\x01\x00\x02\x01\x00\x04\x04\x03\x02\x01\x01\x00\xFF\x01\x00\x02\x01\x00\x00\x04\x03\x02\x01\x01\x00\xFF\x01\x00\x02\x01\x01\x00\x04\x03\x02\x01\x01\x00\xFF\x01\x00\x02\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFF\x01\x00\x00\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFF\x01\x01\x00\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFF\xFF\x01\x00\x02\x01\x00\x04\x03\x02\x01\x01\x00\xFE\xFF\xFE\xFD\x00\xFF\xFE\x02\x01\x00\x02\x01\xFF\xFE\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x02\x00\x01\x00\xFF\x02\xFD\x00\x04\xFE\x02\x01\x00\x01\x02\x01\xFE\x03\xFE\xFD\x05\xFF\xFE\x02\x01\x02\x00\x02\x01\x04\xFF\xFE\x06\x00\xFF\xFE\x02\x03\x01\x03\x02\x05\xFE\xFF\x07\xFD\x00\xFF\xFE\x04\x02\x04\x00\x06\x01\xFE\x08\xFE\xFD\x00\xFF\x05\xFE\x05\x01\x07\x02\x01\x09\xFF\xFE\xFD\x00\x00\xFF\xFA\x02\xFC\x00\x02\xFE\xFE\xFF\xFE\xFD\xFB\x00\xFB\xFE\xFD\x01\x00\xFF\x01\xFE\xFF\xFE\xFC\xFD\xFC\xFF\xFE\x02\x01\x00\x02\x01\xFE\xFF\xFD\xFE\xFD\x00\xFF\xFE\x02\x01\x00\x02\x01\xFE\x00\xFF\x02\x01\x04\x03\x02\x07\x06\x05\x04\x01\x01\x00\xFF\x02\x01\x04\x03\x02\x07\x06\x05\x04\x04\x01\x00\xFF\x02\x01\x04\x03\x02\x07\x06\x05\x05\x04\x01\x00\xFF\x02\x01\x04\x03\x02\x07\x06\x06\x05\x04\x01\x00\xFF\x02\x01\x04\x03\x02\x07\x07\x06\x05\x04\x01\x00\xFF\x02\x01\x04\x03\x02\x02\x07\x06\x05\x04\x01\x00\xFF\x02\x01\x04\x03\x03\x02\x07\x06\x05\x04\x01\x00\xFF\x02\x01\x04\x04\x03\x02\x07\x06\x05\x04\x01\x00\xFF\x02\x01\x01\x04\x03\x02\x07\x06\x05\x04\x01\x00\xFF\x02\x02\x01\x04\x03\x02\x07\x06\x05\x04\x01\x00\xFF\xFF\x02\x01\x04\x03\x02\x07\x06\x05\x04\x01\x00\xFE\xFD\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFF\xFF\xFE\x00\xFF\x01\x00\xFF\x03\x02\x01\x00\xFF\x00\xFF\x01\xFD\x02\xFE\x00\x04\xFE\x02\x01\x00\x01\xFF\x02\xFE\x03\xFF\xFE\x05\xFF\xFE\x02\x01\x02\x00\x03\xFF\x04\xFD\xFF\x06\x00\xFF\xFE\x02\x03\x01\x04\xFF\x05\xFE\xFD\x07\xFE\x00\xFF\xFE\x04\x02\x05\x00\x06\xFF\xFE\x08\xFF\xFE\x00\xFF\x05\xFE\x06\x01\x07\xFF\xFF\x09\xFD\xFF\xFE\x00\xFA\xFF\xFB\x02\xFC\x00\xFF\xFE\xFE\xFD\xFF\xFE\xFB\x00\xFC\xFE\xFD\x01\x00\xFF\xFF\xFE\xFD\xFF\xFC\xFE\xFD\xFF\xFE\x02\x01\x00\xFF\xFF\xFE\xFD\xFD\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFF\xFE\xFE\xFD\xFE\xFD\xFF\xFE\xFD\x02\x01\x00\x00\xFF\xFF\xFE\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x00\x00\xFF\x00\xFD\x01\xFD\xFF\x04\xFD\x02\x01\x00\x01\x00\x01\xFE\x02\xFE\xFD\x05\xFE\xFD\x02\x01\x02\x00\x02\xFF\x03\xFD\xFE\x06\xFF\xFE\xFD\x02\x03\x01\x03\x00\x04\xFE\xFD\x07\xFD\xFF\xFE\xFD\x04\x02\x04\x00\x05\xFF\xFE\x08\xFE\xFD\xFF\xFE\x05\xFD\x05\x01\x06\x00\xFF\x09\xFD\xFE\xFD\xFF\xFA\xFE\xFA\x02\xFB\x00\x00\xFE\xFE\xFD\xFE\xFD\xFB\xFF\xFB\xFD\xFC\x01\x00\xFF\xFF\xFE\xFD\xFE\xFC\xFD\xFC\xFE\xFD\x02\x01\x00\x00\xFF\xFE\xFD\xFD\xFE\xFD\xFF\xFE\xFD\x02\x01\x00\x00\xFF\xFE\xFE\xFD\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\x00\xFD\x02\xFD\x00\x03\xFE\x01\x00\xFF\x01\x00\x01\xFE\x03\xFE\xFD\x04\xFF\xFE\x01\x00\x02\xFF\x02\xFF\x04\xFD\xFE\x05\x00\xFF\xFE\x01\x03\x00\x03\x00\x05\xFE\xFD\x06\xFD\x00\xFF\xFE\x04\x01\x04\xFF\x06\xFF\xFE\x07\xFE\xFD\x00\xFF\x05\xFE\x05\x00\x07\x00\xFF\x08\xFD\xFE\xFD\x00\xFA\xFF\xFA\x01\xFC\xFF\x00\xFD\xFE\xFD\xFE\xFD\xFB\x00\xFB\xFE\xFD\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFC\xFD\xFC\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x00\x00\xFF\x01\xFD\x02\xFE\x00\x03\xFE\x01\x00\xFF\x01\x00\x02\xFE\x03\xFF\xFE\x04\xFF\xFE\x01\x00\x02\xFF\x03\xFF\x04\xFD\xFF\x05\x00\xFF\xFE\x01\x03\x00\x04\x00\x05\xFE\xFD\x06\xFE\x00\xFF\xFE\x04\x01\x05\xFF\x06\xFF\xFE\x07\xFF\xFE\x00\xFF\x05\xFE\x06\x00\x07\x00\xFF\x08\xFD\xFF\xFE\x00\xFA\xFF\xFB\x01\xFC\xFF\x00\xFD\xFE\xFD\xFF\xFE\xFB\x00\xFC\xFE\xFD\x00\xFF\xFE\xFF\xFE\xFD\xFF\xFC\xFE\xFD\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x00\x00\xFF\x00\xFF\x01\xFD\xFF\x03\xFD\x01\x00\xFF\x01\x00\x01\xFE\x02\xFE\xFD\x04\xFE\xFD\x01\x00\x02\xFF\x02\xFF\x03\xFF\xFE\x05\xFF\xFE\xFD\x01\x03\x00\x03\x00\x04\xFE\xFF\x06\xFD\xFF\xFE\xFD\x04\x01\x04\xFF\x05\xFF\xFE\x07\xFE\xFD\xFF\xFE\x05\xFD\x05\x00\x06\x00\xFF\x08\xFF\xFE\xFD\xFF\xFA\xFE\xFA\x01\xFB\xFF\x00\xFD\xFE\xFF\xFE\xFD\xFB\xFF\xFB\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFF\xFE\xFC\xFD\xFC\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\xFF\xFD\xFE\xFD\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\x02\x01\x02\x01\x00\x03\x02\x01\x00\x01\x01\x00\xFF\x02\x01\x02\x01\x00\x03\x02\x01\x00\x00\x01\x00\xFF\x02\x01\x02\x01\x00\x03\x02\x01\x01\x00\x01\x00\xFF\x02\x01\x02\x01\x00\x03\x02\x02\x01\x00\x01\x00\xFF\x02\x01\x02\x01\x00\x03\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x02\x01\x00\x00\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x02\x01\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x02\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x02\x01\x01\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\x02\x02\x01\x02\x01\x00\x03\x02\x01\x00\x01\x00\xFF\xFF\x02\x01\x02\x01\x00\x03\x02\x01\x00\x01\x00\x00\xFF\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x01\x01\x00\xFF\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x00\x01\x00\xFF\x01\x00\x01\x00\xFF\x03\x02\x01\x01\x00\x01\x00\xFF\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x00\x01\x00\xFF\x01\x00\x01\x00\xFF\x03\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x01\x00\xFF\xFF\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x01\x00\x00\xFF\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x01\x01\x00\xFF\x03\x02\x01\x00\x01\x00\xFF\x01\x00\x00\x01\x00\xFF\x03\x02\x01\x00\x01\x00\xFF\x01\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x01\x00\x00\xFF\x04\x03\x04\x03\x02\x03\x02\x01\x00\x01\x01\x00\xFF\x04\x03\x04\x03\x02\x03\x02\x01\x00\x00\x01\x00\xFF\x04\x03\x04\x03\x02\x03\x02\x01\x01\x00\x01\x00\xFF\x04\x03\x04\x03\x02\x03\x02\x02\x01\x00\x01\x00\xFF\x04\x03\x04\x03\x02\x03\x03\x02\x01\x00\x01\x00\xFF\x04\x03\x04\x03\x02\x02\x03\x02\x01\x00\x01\x00\xFF\x04\x03\x04\x03\x03\x02\x03\x02\x01\x00\x01\x00\xFF\x04\x03\x04\x04\x03\x02\x03\x02\x01\x00\x01\x00\xFF\x04\x03\x03\x04\x03\x02\x03\x02\x01\x00\x01\x00\xFF\x04\x04\x03\x04\x03\x02\x03\x02\x01\x00\x01\x00\xFF\xFF\x04\x03\x04\x03\x02\x03\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x02\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\xFF\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x01\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\xFD\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\xFE\xFD\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x01\x00\xFF\x00\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x01\x00\xFF\xFF\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\xFD\x01\x00Chord DEGB \x00"
+func_50173EF8_L9_Records_p4_5:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_4+5908, x4="\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\x02\xFE\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFD\x01\x00\xFF\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\xFE\xFD\x00\xFF\x01\x00\xFF\x00\xFF\x01\xFD\x00\xFF\xFE\x01\x00\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x02\x01\x00\x01\x00\xFF\xFF\x01\xFD\xFF\xFE\x01\x00\xFF\x01\x00\x01\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x02\x01\x00\xFF\x01\x00\xFD\x01\xFD\xFF\xFE\xFD\x00\x02\x01\xFD\x00\x01\xFE\xFF\xFE\x00\xFF\xFE\x01\x00\x02\xFE\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x02\x01\x03\x02\x01\x03\x02\x01\x00\x03\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x02\x01\x02\x01\x00\x02\x01\x00\xFF\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\x03\x02\x01\x02\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\x01\xFD\xFF\xFE\x00\xFF\xFE\x01\x00\x01\xFE\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x01\x00\xFF\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\x00\xFF\x02\x01\x00\x02\x01\x00\xFF\x02\xFE\x01\x01\x00\x03\xFE\x01\x03\xFF\x01\x00\x03\xFF\xFE\x02\x00\x04\xFF\xFE\x04\x00\xFF\x01\x04\x00\xFF\x03\x01\x05\x00\xFF\x05\x01\x00\xFF\x05\x01\x00\x04\xFE\x06\x00\x00\x06\xFE\x01\x00\x06\xFF\x01\x05\xFF\x07\x01\x00\x07\xFF\xFE\x01\x07\x00\xFF\xFA\x00\xFC\xFE\x01\xFC\x00\xFF\xFE\xFC\x01\x00\xFB\x01\xFD\xFF\xFE\xFD\x00\x00\xFF\xFD\xFE\x01\xFC\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFE\xFF\xFE\xFD\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x03\xFE\x02\xFC\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x02\x01\x00\x02\xFE\x00\xFF\x02\xFE\x01\xFC\xFF\xFE\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\xFE\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x02\xFF\xFE\x00\xFF\x02\x01\x00\x04\xFE\x02\x01\x03\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\x01\x00\xFF\x01\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\x02\x01\x00\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\x02\x01\x00\x02\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\xFE\xFD\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\xFD\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFF\x01\xFD\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\xFD\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\x01\xFD\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x02\xFE\x01\x01\x00\x02\xFE\x00\x03\xFE\x01\x00\x03\xFF\xFE\x02\x00\x03\xFF\xFE\x04\xFF\xFE\x01\x04\x00\xFF\x03\x01\x04\x00\xFF\x05\x00\xFF\xFE\x05\x01\x00\x04\xFE\x05\x00\x00\x06\xFE\x00\xFF\x06\xFE\x01\x05\xFF\x06\x01\x00\x07\xFF\xFE\x00\x07\xFF\xFE\xFA\x00\xFB\xFE\x01\xFC\x00\xFF\xFE\xFC\x00\xFF\xFB\x01\xFC\xFF\xFE\xFD\x00\x00\xFF\xFD\xFE\x00\xFC\xFE\xFD\x00\xFF\xFE\x01\x00\x00\xFE\xFF\xFE\xFD\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x04\x03\x03\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x04\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x01\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x02\x01\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x03\x02\x01\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x03\x02\x01\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x03\x02\x01\x04\x03\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x03\x02\x01\x04\x03\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x03\x02\x01\x04\x03\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x03\x02\x01\x04\x03\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x04\x03\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x02\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x03\x03\x02\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x01\x03\x02\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x02\x01\x03\x02\x00\xFF\xFE\x01\x00\xFF\xFE\x03\x03\x02\x01\x03\x02\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x03\x02\x01\x03\x02\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x04\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x00\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x01\x00\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x02\x01\x00\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\x01\x00\x00\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\x01\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\xFE\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x00\xFF\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x04\x03\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFD\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x04\x03\x02\x01\x04\x03\x03\x00\xFF\xFE\x00\xFF\xFE\x04\x03\x02\x01\x04\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x04\x03\x02\x01\x01\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x04\x03\x02\x02\x01\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x04\x03\x03\x02\x01\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x04\x04\x03\x02\x01\x04\x03\x00\xFF\xFE\x00\xFF\xFE\xFE\x04\x03\x02\x01\x04\x03\x00\xFF\xFE\x00\xFF\xFF\xFE\x04\x03\x02\x01\x04\x03\x00\xFF\xFE\x00\x00\xFF\xFE\x04\x03\x02\x01\x04\x03\x00\xFF\xFE\xFE\x00\xFF\xFE\x04\x03\x02\x01\x04\x03\x00\xFF\xFF\xFE\x00\xFF\xFE\x04\x03\x02\x01\x04\x03\x00\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x04\x03\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x04\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x00\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x01\x00\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x02\x01\x00\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\x00\xFF\xFE\xFE\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\x00\xFF\xFF\xFE\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\x00\x00\xFF\xFE\x03\x02\x01\x00\x04\x03\x00\xFF\xFE\xFE\x00\xFF\xFE\x03\x02\x01\x00\x04\x03\x00\xFF\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x04\x03\x00\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x02\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\x00\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\x02\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFF\x00\xFF\xFE\xFD\x01\x00\x00\xFF\xFE\xFD\x03\x02\x01\x03\x02\x01\x03\x04\x04\x00\xFF\xFE\xFD\x03\x02\x01\x03\x02\x01\x00\x03\x04\x00\xFF\xFE\xFD\x03\x02\x01\x03\x02\x01\x01\x03\x04\x00\xFF\xFE\xFD\x03\x02\x01\x03\x02\x02\x01\x00\x04\x00\xFF\xFE\xFD\x03\x02\x01\x03\x03\x02\x01\x03\x04\x00\xFF\xFE\xFD\x03\x02\x01\x01\x03\x02\x01\x00\x04\x00\xFF\xFE\xFD\x03\x02\x02\x01\x03\x02\x01\x03\x04\x00\xFF\xFE\xFD\x03\x03\x02\x01\x03\x02\x01\x03\x04\x00\xFF\xFE\xFD\xFD\x03\x02\x01\x03\x02\x01\x00\x04\x00\xFF\xFE\xFE\xFD\x03\x02\x01\x03\x02\x01\x03\x04\x00\xFF\xFF\xFE\xFD\x03\x02\x01\x03\x02\x01\x03\x04\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x02\x01\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x02\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFE\xFD\xFC\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\xFF\xFE\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\x01\x00\x00\xFF\xFF\xFE\xFF\xFC\xFD\x00\xFF\xFE\xFD\x01\x01\x00\x00\xFE\x00\xFD\xFC\x01\xFC\xFF\xFE\x02\xFD\x01\x01\xFF\x01\xFE\xFD\x02\xFD\xFC\xFF\x03\xFE\xFD\x02\x00\x02\xFE\xFE\x03\xFC\xFD\xFC\x04\xFF\xFE\x03\x01\x03\xFF\xFE\x04\xFD\xFC\xFD\x05\xFC\xFF\xF8\xFD\xF8\x00\xFF\xF9\xFE\xFD\xFC\xFA\xFD\xFC\xF9\xFE\xF9\x01\x00\xFA\xFE\xFE\xFD\xFB\xFC\xFD\xFA\xFF\xFA\xFD\x01\xFB\xFF\xFE\xFE\xFC\xFD\xFC\xFB\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x04\x03\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x04\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\xFF\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\xFF\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\xFF\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\xFF\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\xFF\x04\x03\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\xFF\x04\x03\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\xFF\x04\x03\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\xFF\x04\x03\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x04\x03\x00\xFF\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFF\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x00\x00\xFF\xFF\xFF\x00\xFC\xFE\x00\xFC\xFE\xFD\x01\xFC\x00\x00\xFE\x01\xFD\xFC\x01\xFD\xFC\xFE\x02\xFD\xFC\x01\xFF\x02\xFF\xFD\x02\xFE\xFD\xFC\x03\xFE\xFD\x02\x00\x03\xFE\xFF\x03\xFC\xFE\xFD\x04\xFC\xFE\x03\xFC\x04\xFF\xFE\x04\xFD\xFC\xFE\x05\xFD\xFC\xF8\xFD\xF9\x00\xFF\xF9\xFF\xFD\xFC\xFA\xFE\xFD\xF9\xFE\xFA\xFC\x00\xFA\xFE\xFF\xFD\xFB\xFC\xFE\xFA\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFF\xFC\xFD\xFC\xFB\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFE\xFD\xFC\x01\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFD\xFC\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x01\x00\x00\xFF\xFF\xFE\xFF\xFC\xFD\xFF\xFE\xFD\xFC\x01\x01\x00\x00\xFE\x00\xFD\xFC\x00\xFC\xFE\xFD\x02\xFC\x01\x01\xFF\x01\xFE\xFD\x01\xFD\xFC\xFE\x03\xFD\xFC\x02\x00\x02\xFE\xFE\x02\xFC\xFD\xFC\x04\xFE\xFD\x03\x01\x03\xFF\xFE\x03\xFD\xFC\xFD\x05\xFC\xFE\xF8\xFC\xF8\x00\xFF\xF8\xFE\xFD\xFC\xFA\xFD\xFC\xF9\xFD\xF9\x01\x00\xF9\xFE\xFE\xFD\xFB\xFC\xFD\xFA\xFE\xFA\xFC\x01\xFA\xFF\xFE\xFE\xFC\xFD\xFC\xFB\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFD\xFE\xFD\xFC\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFE\xFD\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFF\xFF\xFE\xFF\xFE\xFF\xFC\xFD\x00\xFB\xFE\xFD\x00\xFC\xFF\x00\xFD\x00\xFD\xFC\x01\xFC\xFB\xFE\x01\xFD\xFC\x01\xFE\x01\xFE\xFD\x02\xFD\xFC\xFB\x02\xFE\xFD\x02\xFF\x02\xFD\xFE\x03\xFC\xFD\xFC\x03\xFB\xFE\x03\xFC\x03\xFE\xFD\x04\xFD\xFC\xFD\x04\xFC\xFB\xF8\xFD\xF8\xFF\xFE\xF9\xFE\xFD\xFC\xF9\xFD\xFC\xF9\xFE\xF9\xFC\xFF\xFA\xFD\xFE\xFD\xFA\xFC\xFD\xFA\xFB\xFA\xFD\xFC\xFB\xFE\xFD\xFE\xFB\xFD\xFC\xFB\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\xFF\xFE\xFD\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\xFF\xFE\xFE\xFD\xFE\xFD\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFF\xFF\xFE\xFF\xFE\x00\xFC\xFE\x00\xFC\xFE\xFD\x00\xFC\xFF\x00\xFD\x01\xFD\xFC\x01\xFD\xFC\xFE\x01\xFD\xFC\x01\xFE\x02\xFE\xFD\x02\xFE\xFD\xFC\x02\xFE\xFD\x02\xFF\x03\xFD\xFE\x03\xFC\xFE\xFD\x03\xFC\xFE\x03\xFC\x04\xFE\xFD\x04\xFD\xFC\xFE\x04\xFD\xFC\xF8\xFD\xF9\xFF\xFE\xF9\xFE\xFD\xFC\xF9\xFE\xFD\xF9\xFE\xFA\xFC\xFF\xFA\xFD\xFE\xFD\xFA\xFC\xFE\xFA\xFC\xFB\xFD\xFC\xFB\xFE\xFD\xFE\xFB\xFD\xFC\xFB\xFD\xFC\xFE\xFD\xFC\xFF\xFE\xFD\xFC\xFE\xFD\xFC\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFD\xFD\xFE\xFD\xFC\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFF\xFE\xFF\xFC\xFD\xFF\xFE\xFD\xFC\x00\x00\xFF\x00\xFD\x00\xFD\xFC\x00\xFC\xFE\xFD\x01\xFC\x00\x01\xFE\x01\xFE\xFD\x01\xFD\xFC\xFE\x02\xFD\xFC\x02\xFF\x02\xFD\xFE\x02\xFC\xFD\xFC\x03\xFE\xFD\x03\x00\x03\xFE\xFD\x03\xFD\xFC\xFD\x04\xFC\xFE\xF8\xFC\xF8\xFF\xFE\xF8\xFE\xFD\xFC\xF9\xFD\xFC\xF9\xFD\xF9\x00\xFF\xF9\xFD\xFE\xFD\xFA\xFC\xFD\xFA\xFE\xFA\xFC\x00\xFA\xFE\xFD\xFE\xFB\xFD\xFC\xFB\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFC\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x02\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x03\x02\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\xFE\x03\x02\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00Chord CEGA \x00"
+func_50173EF8_L9_Records_p4_6:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_5+5908, x4="\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x02\x01\x02\xFF\x00\x03\xFF\x01\x00\x03\xFE\x01\x03\xFF\x03\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x02\x01\x00\x02\xFF\x00\xFF\x01\x00\xFF\x02\x01\x03\xFF\x01\x03\x00\xFF\x00\x02\x01\x00\x03\xFE\x04\x00\xFF\x02\x01\x00\xFF\x00\xFF\x01\x00\xFF\x02\x01\x00\x03\xFF\x01\x00\x01\x00\xFF\x01\x00\x03\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\x03\xFE\x01\x00\x02\x01\x00\x01\x00\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x00\xFF\xFE\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\xFE\x00\xFF\x00\xFD\xFE\x01\xFC\xFF\xFE\x00\xFF\xFF\x01\x00\xFF\xFE\xFF\xFE\xFD\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\x03\x02\x01\x02\x00\x00\xFF\x02\x01\x00\x02\x01\x04\xFF\x02\x03\x01\x00\x00\x03\xFE\x01\x03\xFF\x05\x00\xFF\x04\x02\x01\x00\x04\xFF\xFE\x04\x00\x06\x01\x00\x05\xFF\x02\x01\x05\x00\xFF\x05\x01\x07\xFF\x01\x06\x00\xFF\x02\x06\x00\x00\x06\xFE\x08\x00\xFF\x07\x01\x00\xFF\x07\x01\x00\x07\xFF\x09\x01\x00\xFC\xFF\x01\x00\xFC\x02\x01\xFC\x00\xFE\xFE\x01\xFD\x00\xFF\x01\xFD\xFF\x02\xFD\x00\xFF\xFF\xFE\xFE\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x03\x02\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x03\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\x04\x03\x02\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x05\xFF\x03\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x03\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\x01\x00\x03\xFE\x01\x01\x00\xFF\x03\x02\x01\x00\x02\x01\x04\xFF\xFE\xFE\x01\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x03\x02\x01\x00\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x03\xFF\x01\x01\x00\xFF\xFE\x01\x00\xFF\x03\x02\x04\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x04\x03\x05\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x02\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\x01\x00\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x03\x02\x01\x02\x00\x00\xFF\x01\x00\xFF\x02\x01\x04\xFF\x02\x03\x01\x00\x00\x02\xFE\x00\x03\xFE\x05\x00\xFF\x04\x02\x01\x00\x03\xFF\xFE\x04\xFF\x06\x01\x00\x05\xFF\x02\x01\x04\x00\xFF\x05\x00\x07\xFE\x01\x06\x00\xFF\x02\x05\x00\x00\x06\xFE\x08\xFF\xFE\x07\x01\x00\xFF\x06\x01\x00\x07\xFF\x09\x00\xFF\xFC\xFE\x01\x00\xFB\x02\x01\xFC\x00\xFE\xFE\x00\xFD\xFF\xFE\x01\xFC\xFF\x02\xFD\x00\xFF\xFF\xFE\xFE\x00\xFF\xFE\xFD\x00\xFF\xFE\x01\x00\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\x02\x01\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x03\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x05\x04\x03\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x05\x04\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x05\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x01\x01\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x02\x02\x01\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\x03\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFF\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\x01\x00\x00\xFF\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\x01\x01\x00\xFF\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\xFE\x01\x00\xFF\x03\x02\x01\x05\x04\x03\x00\xFF\xFF\xFE\x01\x00\xFF\x03\x02\x01\x05\x04\x03\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x05\x04\x03\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x05\x04\x04\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x05\x05\x04\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x02\x02\x05\x04\x03\x00\xFF\x01\x00\xFF\xFE\x04\x03\x03\x02\x05\x04\x03\x00\xFF\x01\x00\xFF\xFE\x04\x04\x03\x02\x05\x04\x03\x00\xFF\x01\x00\xFF\xFE\xFE\x04\x03\x02\x05\x04\x03\x00\xFF\x01\x00\xFF\xFF\xFE\x04\x03\x02\x05\x04\x03\x00\xFF\x01\x00\x00\xFF\xFE\x04\x03\x02\x05\x04\x03\x00\xFF\x01\x01\x00\xFF\xFE\x04\x03\x02\x05\x04\x03\x00\xFF\xFF\x01\x00\xFF\xFE\x04\x03\x02\x05\x04\x03\x00\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x05\x04\x03\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x05\x04\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x05\x05\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x01\x05\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x02\x01\x05\x04\x03\x00\xFF\xFE\x00\xFF\xFE\x03\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\x00\xFF\xFE\xFE\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\x00\xFF\xFF\xFE\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\x00\x00\xFF\xFE\x03\x02\x01\x05\x04\x03\x00\xFF\xFE\xFE\x00\xFF\xFE\x03\x02\x01\x05\x04\x03\x00\xFF\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x05\x04\x03\x00\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x03\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x03\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\x03\x02\x01\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\x03\x02\x01\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x03\x02\x01\x00\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x03\x02\x01\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x03\x02\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x03\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x03\x02\x01\x00\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x03\x02\x01\x00\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x03\x02\x01\x00\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x03\x02\x01\x00\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x03\x02\x01\x00\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x02\x01\x00\x00\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\xFF\xFF\xFE\xFD\xFE\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFF\xFE\x02\x01\x00\x01\xFF\xFF\xFE\xFF\xFE\xFD\x00\xFF\x03\xFD\x01\x02\x00\xFF\xFF\x00\xFD\xFE\x01\xFC\x04\xFE\xFD\x03\x01\x00\xFF\x01\xFE\xFD\x02\xFD\x05\xFF\xFE\x04\xFD\x01\x00\x02\xFF\xFE\x03\xFE\x06\xFC\xFF\x05\xFE\xFD\x01\x03\xFF\xFF\x04\xFD\x07\xFD\xFC\xFA\xFF\xFE\xFD\xF8\x00\xFF\xF9\xFE\xFC\xFE\xFD\xFB\xFC\xFF\xFE\xF9\x01\x00\xFA\xFF\xFD\xFD\xFE\xFC\xFD\xFC\xFF\xFA\xFD\x01\xFB\xFF\xFE\xFE\xFD\xFD\xFE\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x05\x04\x03\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x05\x04\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x05\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\x05\x04\x03\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\x05\x04\x03\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\x05\x04\x03\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\x05\x04\x03\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\x05\x04\x03\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\x05\x04\x03\x00\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\x00\xFF\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\xFC\x00\xFF\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFC\xFE\xFD\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFC\xFE\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFC\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFD\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFD\xFC\xFB\xFD\xFC\x01\x00\xFF\x00\xFE\xFE\xFD\xFE\xFD\xFC\xFE\xFD\x02\xFB\x00\x01\xFF\xFE\xFE\xFF\xFC\xFD\xFF\xFB\x03\xFC\xFB\x02\x00\xFF\xFE\x00\xFD\xFC\x00\xFC\x04\xFD\xFC\x03\xFB\x00\xFF\x01\xFE\xFD\x01\xFD\x05\xFB\xFD\x04\xFC\xFB\x00\x02\xFE\xFE\x02\xFC\x06\xFC\xFB\x05\xFD\xFC\xFB\x03\xFF\xFE\x03\xFD\x07\xFD\xFC\xFA\xFB\xFD\xFC\xF8\x00\xFF\xF8\xFE\xFC\xFC\xFD\xFB\xFC\xFB\xFD\xF9\xFB\x00\xF9\xFE\xFD\xFD\xFC\xFC\xFD\xFC\xFB\xFA\xFC\xFB\xFA\xFF\xFE\xFE\xFD\xFD\xFC\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFD\xFC\xFB\xFD\xFC\x00\xFF\xFE\x00\xFD\xFE\xFD\xFE\xFD\xFC\xFE\xFD\x01\xFB\xFF\x01\xFE\xFD\xFE\xFF\xFC\xFD\xFF\xFB\x02\xFC\xFB\x02\xFF\xFE\xFD\x00\xFD\xFC\x00\xFC\x03\xFD\xFC\x03\xFB\xFF\xFE\x01\xFE\xFD\x01\xFD\x04\xFB\xFD\x04\xFC\xFB\xFF\x02\xFD\xFE\x02\xFC\x05\xFC\xFB\x05\xFD\xFC\xFB\x03\xFE\xFD\x03\xFD\x06\xFD\xFC\xFA\xFB\xFD\xFC\xF8\xFF\xFE\xF8\xFE\xFB\xFC\xFD\xFB\xFC\xFB\xFD\xF9\xFB\xFF\xF9\xFD\xFC\xFD\xFC\xFC\xFD\xFC\xFB\xFA\xFC\xFB\xFA\xFE\xFD\xFE\xFD\xFD\xFC\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFE\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFE\xFD\xFC\xFE\xFD\x00\xFF\xFE\x00\xFD\xFE\xFD\xFF\xFE\xFD\xFF\xFE\x01\xFC\xFF\x01\xFE\xFD\xFE\x00\xFC\xFE\x00\xFC\x02\xFD\xFC\x02\xFF\xFE\xFD\x01\xFD\xFC\x01\xFD\x03\xFE\xFD\x03\xFC\xFF\xFE\x02\xFE\xFD\x02\xFE\x04\xFC\xFE\x04\xFD\xFC\xFF\x03\xFD\xFE\x03\xFC\x05\xFD\xFC\x05\xFE\xFD\xFC\x04\xFE\xFD\x04\xFD\x06\xFE\xFD\xFA\xFC\xFE\xFD\xF9\xFF\xFE\xF9\xFE\xFB\xFC\xFE\xFB\xFD\xFC\xFE\xFA\xFC\xFF\xFA\xFD\xFC\xFD\xFC\xFC\xFE\xFD\xFC\xFB\xFD\xFC\xFB\xFE\xFD\xFE\xFD\xFD\xFC\xFE\xFD\xFC\xFE\xFD\xFC\xFF\xFE\xFD\xFE\xFE\xFD\xFC\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFF\xFE\xFD\xFC\xFD\xFC\xFB\xFD\xFC\x00\xFF\xFE\x00\xFD\xFE\xFD\xFE\xFD\xFC\xFE\xFD\x01\xFB\xFF\x01\xFE\xFD\xFE\xFF\xFC\xFD\xFF\xFB\x02\xFC\xFB\x02\xFF\xFE\xFD\x00\xFD\xFC\x00\xFC\x03\xFD\xFC\x03\xFB\xFF\xFE\x01\xFE\xFD\x01\xFD\x04\xFB\xFD\x04\xFC\xFB\xFF\x02\xFD\xFE\x02\xFC\x05\xFC\xFB\x05\xFD\xFC\xFB\x03\xFE\xFD\x03\xFD\x06\xFD\xFC\xFA\xFB\xFD\xFC\xF8\xFF\xFE\xF8\xFE\xFB\xFC\xFD\xFB\xFC\xFB\xFD\xF9\xFB\xFF\xF9\xFD\xFC\xFD\xFC\xFC\xFD\xFC\xFB\xFA\xFC\xFB\xFA\xFE\xFD\xFE\xFD\xFD\xFC\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFE\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\xFD\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\xFD\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\xFD\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x00\xFF\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x00\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\x00\xFF\xFE\xFD\x01\x00\xFF\x00\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x02\x02\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x03\x03\x02\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\xFE\x03\x02\x01\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\xFE\x03\x02\x01\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFE\xFD\xFC\x00\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\x00Chord ADGC \x00"
+func_50173EF8_L9_Records_p4_7:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_6+5908, x4="\x00\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x01\x01\x00\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x02\x01\x02\xFF\x00\xFF\xFE\x02\x01\x02\xFF\x00\xFE\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x03\x00\xFF\xFF\x00\x02\x01\x00\xFF\x00\xFF\xFE\x04\x01\x00\x00\xFF\x03\xFF\x01\x00\xFF\x00\xFF\x05\x02\x01\x01\x00\x04\x00\xFF\x01\x00\x01\x00\x06\xFE\x02\xFB\x01\x00\xFF\x00\xFF\x01\xFD\xFF\x00\xFF\xFE\xFC\x02\x01\x00\xFF\x00\xFF\xFE\x00\x01\x00\xFF\xFD\xFE\x02\x01\x00\xFF\x00\xFF\x01\x02\xFF\x00\xFE\xFF\x03\x02\x01\x00\xFF\x00\xFF\x03\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x01\x00\xFD\x01\x00\xFF\x00\xFF\xFE\xFD\xFF\x01\x00\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x00\xFF\xFE\x03\xFF\x01\x00\x00\x03\xFD\x01\x00\xFF\x00\xFF\x04\xFD\xFF\x01\x01\x04\xFF\xFD\x01\x00\x01\x00\x05\xFE\xFD\x02\xFF\x05\x00\xFF\xFD\x01\x02\xFF\x06\xFF\xFE\x03\xFD\x06\x01\x00\xFF\xFD\x03\x00\x07\x00\xFF\xFD\xFE\xFD\xFF\x01\x00\xFF\xFD\x01\xFC\xFF\x00\xFE\xFF\xFE\xFD\xFF\x01\x00\xFE\xFD\xFD\x00\xFF\xFF\x00\xFF\xFE\xFD\xFF\x01\xFF\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\xFD\xFF\x00\x00\xFF\xFD\x01\x01\x00\x01\x00\xFF\xFE\xFD\x01\x01\x00\xFF\xFD\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\x03\x02\x01\x00\xFF\x03\x02\x01\x00\x02\x01\x00\x04\x03\x02\x01\x01\x04\xFE\x02\x01\x00\x02\x01\x05\xFF\x03\x02\x02\x05\xFF\xFE\x02\x01\x03\x02\x06\x00\xFF\x03\x03\x06\x01\xFF\xFE\x02\x04\x00\x07\x01\x00\x04\xFF\x07\x02\x01\xFF\xFE\x05\x01\x08\x02\x01\x05\x00\x08\x03\x02\x01\xFF\x06\x02\x09\x00\x02\x06\x01\x09\xFF\x03\x02\x01\x07\xFE\n\x01\x00\xFB\x02\xFE\x00\xFF\x03\x02\xFC\xFF\xFF\x02\x01\xFC\x00\xFF\x01\x00\xFF\x03\xFD\x01\x00\xFE\x02\xFD\x01\x00\x02\x01\x00\xFF\xFE\x02\x01\xFF\xFE\xFE\x02\x01\x00\x02\x01\x00\xFF\x03\x02\x01\xFF\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x03\x03\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x00\x03\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x01\x00\x03\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x02\x01\x00\x03\x02\x01\x00\xFF\x02\x01\x00\xFF\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\x02\x01\x00\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\x02\x01\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\x02\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x01\x00\x02\x01\x00\xFF\x02\x01\x00\x04\x03\x02\x02\x01\x03\xFF\x01\x00\xFF\x02\x01\x05\xFF\x03\xFE\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\xFF\x03\x02\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\x01\x00\x03\x02\x01\x01\x00\x04\x03\x02\x01\x00\x02\x01\x04\xFF\x02\xFE\x01\x00\xFF\x03\x02\x01\x00\xFF\x01\x00\xFF\xFF\x02\x01\x00\xFF\x03\x02\x01\x00\x02\x01\x00\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x03\xFF\x01\x01\x00\x03\x02\x01\x00\xFF\x03\x02\x04\x00\xFF\x02\x01\x04\xFF\x02\x01\x00\x04\x03\x05\x01\x00\xFE\xFD\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x04\x03\x02\xFD\x01\x00\xFD\x01\x00\xFF\xFE\x01\x03\xFF\x03\xFE\x02\x01\xFE\xFD\x01\x00\xFF\x02\x04\x00\xFF\xFF\x03\x02\x01\xFE\xFD\x01\x00\xFF\x05\x01\x00\xFC\xFF\x01\x02\x01\xFE\xFD\xFE\x00\x03\x02\x01\xFD\x00\x02\x03\x02\x01\xFE\xFF\x01\x04\xFF\x02\xFB\x01\x00\xFF\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFC\x02\x01\x00\xFF\x03\x02\xFF\xFE\x02\x01\x00\xFD\xFF\x02\x01\x00\xFF\x03\x00\x01\x03\xFD\x01\xFC\x00\xFF\x02\x01\x00\xFF\xFE\x02\x01\xFE\xFD\xFD\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\xFE\xFD\xFF\x01\x00\xFF\x01\x00\xFF\x01\x03\xFF\x01\xFE\x00\x02\x01\x00\xFF\x01\x00\xFF\x04\x00\xFF\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\x05\x01\x00\xFD\xFF\x01\x00\xFF\x01\x00\xFF\x01\x03\xFF\x01\xFE\x00\x02\x01\x00\xFF\x01\x00\xFF\x04\x00\xFF\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\x05\x01\x00\xFD\xFF\x01\x00\xFF\x01\x00\xFF\x01\x03\xFF\x01\xFE\x00\x02\x01\x00\xFF\x01\x00\xFF\x04\x00\xFF\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\x05\x01\x00\xFD\xFF\x01\x00\xFF\x01\x00\xFF\x01\x03\xFF\x01\xFE\x00\x02\x01\x00\xFF\x01\x00\xFF\x04\x00\xFF\xFC\x01\x00\xFF\x01\x00\xFF\xFE\x00\x05\x01\x00\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x01\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x02\x01\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x03\x03\x02\x01\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x03\x02\x01\xFE\xFD\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x03\x02\x01\xFE\xFD\x01\x00\xFF\x01\x00\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x01\x00\xFF\x01\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x01\x00\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x01\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\xFD\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFF\xFE\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x04\x03\x02\x01\x01\x03\xFE\x01\x00\xFF\x02\x01\x05\xFF\x03\x02\x02\x04\xFF\xFE\x01\x00\x03\x02\x06\x00\xFF\x03\x03\x05\x01\xFF\xFE\x01\x04\xFF\x07\x01\x00\x04\xFF\x06\x02\x01\xFF\xFE\x05\x00\x08\x02\x01\x05\x00\x07\x03\x02\x01\xFF\x06\x01\x09\xFF\x02\x06\x01\x08\xFF\x03\x02\x01\x07\xFE\n\x00\xFF\xFB\x02\xFD\x00\xFF\x03\x02\xFC\xFF\xFF\x01\x00\xFC\xFF\xFE\x01\x00\xFF\x03\xFD\x01\x00\xFE\x01\xFD\x00\xFF\x02\x01\x00\xFF\xFE\x02\x01\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\xFF\xFE\xFD\x03\x02\x01\x02\x01\x00\xFF\x03\x02\x01\x01\xFE\xFD\x03\x02\x01\x02\x01\x00\xFF\x03\x02\x02\x01\xFE\xFD\x03\x02\x01\x02\x01\x00\xFF\x03\x03\x02\x01\xFE\xFD\x03\x02\x01\x02\x01\x00\xFF\xFF\x03\x02\x01\xFE\xFD\x03\x02\x01\x02\x01\x00\x00\xFF\x03\x02\x01\xFE\xFD\x03\x02\x01\x02\x01\x01\x00\xFF\x03\x02\x01\xFE\xFD\x03\x02\x01\x02\x02\x01\x00\xFF\x03\x02\x01\xFE\xFD\x03\x02\x01\x01\x02\x01\x00\xFF\x03\x02\x01\xFE\xFD\x03\x02\x02\x01\x02\x01\x00\xFF\x03\x02\x01\xFE\xFD\x03\x03\x02\x01\x02\x01\x00\xFF\x03\x02\x01\xFE\xFD\xFD\x03\x02\x01\x02\x01\x00\xFF\x03\x02\x01\xFE\xFD\xFC\x02\x01\x00\x02\x01\x00\xFF\x03\x02\x01\x01\xFD\xFC\x02\x01\x00\x02\x01\x00\xFF\x03\x02\x02\x01\xFD\xFC\x02\x01\x00\x02\x01\x00\xFF\x03\x03\x02\x01\xFD\xFC\x02\x01\x00\x02\x01\x00\xFF\xFF\x03\x02\x01\xFD\xFC\x02\x01\x00\x02\x01\x00\x00\xFF\x03\x02\x01\xFD\xFC\x02\x01\x00\x02\x01\x01\x00\xFF\x03\x02\x01\xFD\xFC\x02\x01\x00\x02\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\x02\x01\x00\x00\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\x02\x01\x01\x00\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\x02\x02\x01\x00\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\xFC\x02\x01\x00\x02\x01\x00\xFF\x03\x02\x01\xFD\xFE\xFD\x02\x01\x00\x03\x02\x01\xFF\x03\x02\x01\x01\xFE\xFD\x02\x01\x00\x03\x02\x01\x00\x03\x02\x02\x01\xFE\xFD\x02\x01\x00\x03\x02\x01\xFF\x03\x03\x02\x01\xFE\xFD\x02\x01\x00\x03\x02\x01\xFF\x00\x03\x02\x01\xFE\xFD\x02\x01\x00\x03\x02\x01\x01\xFF\x03\x02\x01\xFE\xFD\x02\x01\x00\x03\x02\x02\x01\x00\x03\x02\x01\xFE\xFD\x02\x01\x00\x03\x03\x02\x01\xFF\x03\x02\x01\xFE\xFD\x02\x01\x00\x00\x03\x02\x01\xFF\x03\x02\x01\xFE\xFD\x02\x01\x01\x00\x03\x02\x01\xFF\x03\x02\x01\xFE\xFD\x02\x02\x01\x00\x03\x02\x01\xFF\x03\x02\x01\xFE\xFD\xFD\x02\x01\x00\x03\x02\x01\x00\x03\x02\x01\xFE\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\x03\x03\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\xFE\x03\x02\x01\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x02\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x00\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x01\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x02\x01\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFE\x03\x03\x02\x01\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFE\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\x01\x00\xFF\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\x01\x00\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\x01\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\x00\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\xFE\xFD\xFD\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\xFE\x02\x01\x02\x01\x00\x05\x04\x03\x02\x03\x02\x01\x01\x02\x01\x02\x01\x00\x05\x04\x03\x02\x03\x02\x02\x01\x02\x01\x02\x01\x00\x05\x04\x03\x02\x03\x03\x02\x01\x02\x01\x02\x01\x00\x05\x04\x03\x02\x02\x03\x02\x01\x02\x01\x02\x01\x00\x05\x04\x03\x03\x02\x03\x02\x01\x02\x01\x02\x01\x00\x05\x04\x04\x03\x02\x03\x02\x01\x02\x01\x02\x01\x00\x05\x05\x04\x03\x02\x03\x02\x01\x02\x01\x02\x01\x00\x00\x05\x04\x03\x02\x03\x02\x01\x02\x01\x02\x01\x01\x00\x05\x04\x03\x02\x03\x02\x01\x02\x01\x02\x02\x01\x00\x05\x04\x03\x02\x03\x02\x01\x02\x01\x01\x02\x01\x00\x05\x04\x03\x02\x03\x02\x01\x02\x01\x00\x02\x01\x00\x05\x04\x03\x02\x03\x02\x01\x01\x01\x00\x02\x01\x00\x05\x04\x03\x02\x03\x02\x02\x01\x01\x00\x02\x01\x00\x05\x04\x03\x02\x03\x03\x02\x01\x01\x00\x02\x01\x00\x05\x04\x03\x02\x02\x03\x02\x01\x01\x00\x02\x01\x00\x05\x04\x03\x03\x02\x03\x02\x01\x01\x00\x02\x01\x00\x05\x04\x04\x03\x02\x03\x02\x01\x01\x00\x02\x01\x00\x05\x05\x04\x03\x02\x03\x02\x01\x01\x00\x02\x01\x00\x00\x05\x04\x03\x02\x03\x02\x01\x01\x00\x02\x01\x01\x00\x05\x04\x03\x02\x03\x02\x01\x01\x00\x02\x02\x01\x00\x05\x04\x03\x02\x03\x02\x01\x01\x00\x00\x02\x01\x00\x05\x04\x03\x02\x03\x02\x01\x01\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\x05\x04\x02\x03\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\x05\x04\x04\x02\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\x05\x05\x04\x03\xFF\xFE\x02\x01\x00\x02\x01\x00\xFF\xFF\x05\x04\x02\xFF\xFE\x02\x01\x00\x02\x01\x00\x00\xFF\x05\x04\x02\xFF\xFE\x02\x01\x00\x02\x01\x01\x00\xFF\x05\x04\x02\xFF\xFE\x02\x01\x00\x02\x02\x01\x00\xFF\x05\x04\x02\xFF\xFE\x02\x01\x00\x00\x02\x01\x00\xFF\x05\x04\x03\xFF\xFE\x02\x01\x01\x00\x02\x01\x00\xFF\x05\x04\x02\xFF\xFE\x02\x02\x01\x00\x02\x01\x00\xFF\x05\x04\x03\xFF\xFE\xFE\x02\x01\x00\x02\x01\x00\xFF\x05\x04\x02\xFF\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFC\x03\x02\x01\x01\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFC\x03\x02\x02\x01\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFC\x03\x03\x02\x01\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFC\xFC\x03\x02\x01\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFC\x03\x02\x01\xFD\xFC\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFC\x03\x02\x01\xFD\xFC\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFC\x03\x02\x01\xFD\xFC\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFC\x03\x02\x01\xFD\xFC\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFC\x03\x02\x01\xFD\xFC\x00\x00\xFF\xFE\xFF\xFE\xFD\xFC\x03\x02\x01\xFD\xFC\xFC\x00\xFF\xFE\xFF\xFE\xFD\xFC\x03\x02\x01\xFD\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x01\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x02\x01\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\x03\x03\x02\x01\xFD\xFC\x01\x00\xFF\x02\x01\x00\xFF\xFF\x03\x02\x01\xFD\xFC\x01\x00\xFF\x02\x01\x00\x00\xFF\x03\x02\x01\xFD\xFC\x01\x00\xFF\x02\x01\x01\x00\xFF\x03\x02\x01\xFD\xFC\x01\x00\xFF\x02\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\x01\x00\xFF\xFF\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\x01\x00\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\x01\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\xFD\xFC\xFC\x01\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\xFD\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x03\x03\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\xFE\x03\x02\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x00\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x03\x02\x01\x01\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x03\x02\x02\x01\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x03\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\x04\x03\x02\x02\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\x04\x03\x03\x02\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\x04\x04\x03\x02\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\xFE\x04\x03\x02\x03\x02\x01\x02\x01\x01\x00\xFF\xFF\xFE\x04\x03\x02\x03\x02\x01\x02\x01\x01\x00\x00\xFF\xFE\x04\x03\x02\x03\x02\x01\x02\x01\x01\x01\x00\xFF\xFE\x04\x03\x02\x03\x02\x01\x02\x01\x01\x01\x00\xFF\xFE\x04\x03\x02\x03\x02\x01\x02\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x01\x01\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x02\x01\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\x03\x02\x01\x01\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\x03\x02\x02\x01\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\x03\x03\x02\x01\x03\x02\x01\x02\x01\x01\x00\xFF\xFE\xFE\x03\x02\x01\x03\x02\x01\x02\x01\x01\x00\xFF\xFF\xFE\x03\x02\x01\x03\x02\x01\x02\x01\x01\x00\x00\xFF\xFE\x03\x02\x01\x03\x02\x01\x02\x01\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x01\x02\x01\x01\x01\x00\xFF\xFE\x03\x02\x01\x03\x02\x01\x02\x00\xFF\x03\x02\x01\x02\x01\x00\xFF\x03\x02\x01\x01\x00\xFF\x03\x02\x01\x02\xFF\x00\xFF\x03\x02\x02\x01\x00\xFF\x03\x02\x01\x00\x01\x00\xFF\x03\x03\x02\x01\x00\xFF\x03\x02\x01\x02\x01\x00\xFF\xFF\x03\x02\x01\x00\xFF\x03\x02\x01\x02\x01\x00\x00\xFF\x03\x02\x01\x00\xFF\xFE\x02\x01\x02\x01\x01\x00\xFF\x03\x02\x01\x00\xFF\x03\x02\x01\x02\x02\x01\x00\xFF\x03\x02\x01\x00\xFF\x03\x02\x01\x01\x02\x01\x00\xFF\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x02\x01\x00\xFF\x03\x02\x01\x00\xFF\x03\x03\x02\x03\x02\x01\x00\xFF\x03\x02\x01\x00\xFF\xFF\x03\x02\x01\x02\x01\x00\xFF\x03\x02\x01\x00\x03\x02\x05\x04\x03\x02\x04\x03\x02\x03\x02\x01\x01\x03\x02\x05\x04\x03\x02\x04\x03\x02\x03\x02\x02\x01\x03\x02\x05\x04\x03\x02\x04\x03\x02\x03\x03\x02\x01\x03\x02\x05\x04\x03\x02\x04\x03\x02\x02\x03\x02\x01\x03\x02\x05\x04\x03\x02\x04\x03\x03\x02\x03\x02\x01\x03\x02\x05\x04\x03\x02\x04\x04\x03\x02\x03\x02\x01\x03\x02\x05\x04\x03\x02\x02\x04\x03\x02\x03\x02\x01\x03\x02\x05\x04\x03\x03\x02\x04\x03\x02\x03\x02\x01\x03\x02\x05\x04\x04\x03\x02\x04\x03\x02\x03\x02\x01\x03\x02\x05\x05\x04\x03\x02\x04\x03\x02\x03\x02\x01\x03\x02\x02\x05\x04\x03\x02\x04\x03\x02\x03\x02\x01\x03\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\x01\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x02\x01\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\x03\x03\x02\x01\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFE\xFE\x03\x02\x01\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\xFE\x03\x02\x01\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\x01\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x02\x01\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x03\x03\x02\x01\xFF\xFE\x02\x01\x00\xFF\x02\x01\x00\x00\x03\x02\x01\xFF\xFE\x02\x01\x00\xFF\x02\x01\x01\x00\x03\x02\x01\xFF\xFE\x02\x01\x00\xFF\x02\x02\x01\x00\x03\x02\x01\xFF\xFE\x02\x01\x00\xFF\xFF\x02\x01\x00\x03\x02\x01\xFF\xFE\x02\x01\x00\x00\xFF\x02\x01\x00\x03\x02\x01\xFF\xFE\x02\x01\x01\x00\xFF\x02\x01\x00\x03\x02\x01\xFF\xFE\x02\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\xFF\xFE\xFE\x02\x01\x00\xFF\x02\x01\x00\x03\x02\x01\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x01\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x02\x01\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x03\x03\x02\x01\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFE\xFE\x03\x02\x01\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\xFE\x03\x02\x01\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\xFF\x00\xFF\x02\x01\x00\xFF\x03\x02\x01\x01\x00\xFF\x01\x00\x03\x02\x01\x00\xFF\x03\x02\x02\x01\x00\x02\xFF\x04\xFF\x02\x01\x00\x04\x03\x03\x01\x01\x03\x00\x05\x00\xFF\x02\x01\x05\xFF\x04\x02\x01\x04\x01\x06\xFF\x00\xFF\x02\x06\x00\x05\x03\x02\x05\x01\x07\x00\xFF\x00\xFF\x07\x01\x06\xFF\x03\x06\x02\x08\x01\x00\xFF\x00\x08\x02\x07\x00\xFF\x07\x03\x09\x01\x01\x00\xFF\x09\xFF\x08\x01\x00\xFC\xFF\xFE\x02\x01\x01\x00\xFE\x00\xFD\x02\x01\xFD\x00\xFF\x03\x02\x01\x01\xFF\xFF\xFE\xFF\x02\xFE\x01\x00\xFF\x03\x02\x01\x00\x00\xFF\x00\xFF\xFF\x02\x01\x00\xFF\x03\x02\x01\x01\x00\xFF\x00\x02\x01\x02\x01\x00\x03\x02\x01\x00\x03\x02\x01\x01\x02\x01\x02\x01\x00\x03\x02\x01\x00\x03\x02\x02\x01\x02\x01\x02\x01\x00\x03\x02\x01\x00\x03\x03\x02\x01\x02\x01\x02\x01\x00\x03\x02\x01\x00\x00\x03\x02\x01\x02\x01\x02\x01\x00\x03\x02\x01\x01\x00\x03\x02\x01\x02\x01\x02\x01\x00\x03\x02\x02\x01\x00\x03\x02\x01\x02\x01\x02\x01\x00\x03\x03\x02\x01\x00\x03\x02\x01\x02\x01\x02\x01\x00\x00\x03\x02\x01\x00\x03\x02\x01\x02\x01\x02\x01\x01\x00\x03\x02\x01\x00\x03\x02\x01\x02\x01\x02\x02\x01\x00\x03\x02\x01\x00\x03\x02\x01\x02\x01\x01\x02\x01\x00\x03\x02\x01\x00\x03\x02\x01\x02\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFD\x00\xFF\xFE\xFD\xFF\xFE\xFD\x02\x01\x00\xFF\xFF\x01\xFC\xFF\xFE\xFD\xFF\xFE\x03\xFC\x01\x00\x00\x02\xFD\xFC\xFF\xFE\x00\xFF\x04\xFD\xFC\x01\x01\x03\xFF\xFD\xFC\xFF\x01\xFD\x05\xFE\xFD\x02\xFC\x04\x00\xFF\xFD\xFC\x02\xFE\x06\xFF\xFE\x03\xFD\x05\x01\x00\xFF\xFD\x03\xFF\x07\xFD\xFF\x04\xFE\x06\xFC\x01\x00\xFF\x04\xFC\x08\xFE\xFD\xF9\xFF\xFB\xFD\xFC\x01\x00\xF9\xFD\xFD\xFF\xFE\xFA\xFD\xFC\xFE\xFD\xFC\x01\xFA\xFF\xFE\xFC\xFF\xFB\xFE\xFD\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFD\xFC\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x01\x00\xFF\xFD\x00\xFF\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\x01\x00\x02\x01\x00\xFF\xFE\x03\x02\x02\x01\x00\x02\xFF\x03\xFF\x01\x00\xFF\x04\x03\x03\x01\x01\x03\x00\x04\x00\xFF\x01\x00\x05\xFE\x04\x02\x01\x04\x01\x05\xFF\x00\xFF\x01\x06\xFF\x05\x03\x02\x05\x01\x06\x00\xFF\x00\xFF\x07\x00\x06\xFE\x03\x06\x02\x07\x01\x00\xFF\x00\x08\x01\x07\xFF\xFE\x07\x03\x08\x01\x01\x00\xFF\x09\xFF\x08\x00\xFF\xFC\xFE\xFD\x02\x01\x01\x00\xFE\x00\xFD\x01\x00\xFD\xFF\xFE\x03\x02\x01\x01\xFF\xFF\xFE\xFF\x01\xFE\x00\xFF\xFE\x03\x02\x01\x00\x00\xFF\x00\xFF\xFF\x01\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\x00\x00\xFF\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\x03\x02\x01\x00\xFF\x02\x01\x02\x01\x00\x02\xFF\x04\xFF\x02\x01\x00\x03\x02\x03\x00\x01\x03\x00\x05\x00\xFF\x02\x01\x04\xFF\x04\x01\x00\x04\x01\x06\xFF\x00\xFF\x02\x05\x00\x05\x02\x01\x05\x00\x07\x00\xFF\x00\xFF\x06\x01\x06\xFF\x02\x06\x01\x08\x01\x00\xFF\x00\x07\x02\x07\x00\xFF\x07\x02\x09\x00\x01\x00\xFF\x08\xFF\x08\x01\x00\xFC\xFF\xFE\x01\x00\x01\x00\xFD\x00\xFD\x02\x01\xFD\x00\xFF\x02\x01\x00\x01\xFE\xFF\xFE\xFF\x02\xFE\x01\x00\xFF\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFF\x02\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFC\xFB\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x01\x00\xFF\xFD\xFC\x00\xFF\xFE\xFD\xFF\xFE\xFD\x02\x01\x00\xFE\xFF\x01\xFB\xFF\xFE\xFD\xFF\xFE\x03\xFC\x01\xFF\x00\x02\xFC\xFB\xFF\xFE\x00\xFF\x04\xFD\xFC\x00\x01\x03\xFF\xFC\xFB\xFF\x01\xFD\x05\xFE\xFD\x01\xFC\x04\x00\xFF\xFC\xFB\x02\xFE\x06\xFF\xFE\x02\xFD\x05\x01\x00\xFF\xFC\x03\xFF\x07\xFD\xFF\x03\xFE\x06\xFC\x01\x00\xFF\x04\xFB\x08\xFE\xFD\xF8\xFF\xFB\xFD\xFC\x01\x00\xF9\xFC\xFD\xFF\xFE\xF9\xFD\xFC\xFE\xFD\xFC\x01\xFA\xFF\xFE\xFB\xFF\xFA\xFE\xFD\xFF\xFE\xFD\xFC\xFB\x00\xFF\xFC\xFB\xFB\xFF\xFE\xFD\xFF\xFE\xFD\xFC\x01\x00\xFF\xFC\x00\xFF\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\x02\x01\x00\xFF\xFE\x02\x01\x02\x01\x00\x02\xFF\x03\xFF\x01\x00\xFF\x03\x02\x03\x00\x01\x03\x00\x04\x00\xFF\x01\x00\x04\xFE\x04\x01\x00\x04\x01\x05\xFF\x00\xFF\x01\x05\xFF\x05\x02\x01\x05\x00\x06\x00\xFF\x00\xFF\x06\x00\x06\xFE\x02\x06\x01\x07\x01\x00\xFF\x00\x07\x01\x07\xFF\xFE\x07\x02\x08\x00\x01\x00\xFF\x08\xFF\x08\x00\xFF\xFC\xFE\xFD\x01\x00\x01\x00\xFD\x00\xFD\x01\x00\xFD\xFF\xFE\x02\x01\x00\x01\xFE\xFF\xFE\xFF\x01\xFE\x00\xFF\xFE\x02\x01\x00\xFF\x00\xFF\x00\xFF\xFF\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\x01\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x02\x01\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x03\x03\x02\x01\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFE\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\xFF\x00\xFF\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\xFF\x00\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\xFF\xFF\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x00\x00\xFF\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x01\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\xFE\xFD\x02\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\xFE\xFD\xFD\x02\x01\x00\xFF\x00\xFF\xFE\x03\x02\x01\xFE\xFE\xFD\x01\x00\xFF\xFE\xFF\xFE\xFD\x03\x02\x01\x01\xFE\xFD\x01\x00\xFF\xFE\xFF\xFE\xFD\x03\x02\x02\x01\xFE\xFD\x01\x00\xFF\xFE\xFF\xFE\xFD\x03\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFE\xFF\xFE\xFD\xFD\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFE\xFF\xFE\xFE\xFD\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFE\xFF\xFF\xFE\xFD\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFE\xFE\xFF\xFE\xFD\x03\x02\x01\xFE\xFD\x01\x00\xFF\xFF\xFE\xFF\xFE\xFD\x03\x02\x01\xFE\xFD\x01\x00\x00\xFF\xFE\xFF\xFE\xFD\x03\x02\x01\xFE\xFD\x01\x01\x00\xFF\xFE\xFF\xFE\xFD\x03\x02\x01\xFE\xFD\xFD\x01\x00\xFF\xFE\xFF\xFE\xFD\x03\x02\x01\xFE\xFE\xFD\x04\x03\x02\x01\x02\x01\x00\x03\x02\x01\x01\xFE\xFD\x04\x03\x02\x01\x02\x01\x00\x03\x02\x02\x01\xFE\xFD\x04\x03\x02\x01\x02\x01\x00\x03\x03\x02\x01\xFE\xFD\x04\x03\x02\x01\x02\x01\x00\x00\x03\x02\x01\xFE\xFD\x04\x03\x02\x01\x02\x01\x01\x00\x03\x02\x01\xFE\xFD\x04\x03\x02\x01\x02\x02\x01\x00\x03\x02\x01\xFE\xFD\x04\x03\x02\x01\x01\x02\x01\x00\x03\x02\x01\xFE\xFD\x04\x03\x02\x02\x01\x02\x01\x00\x03\x02\x01\xFE\xFD\x04\x03\x03\x02\x01\x02\x01\x00\x03\x02\x01\xFE\xFD\x04\x04\x03\x02\x01\x02\x01\x00\x03\x02\x01\xFE\xFD\xFD\x04\x03\x02\x01\x02\x01\x00\x03\x02\x01\xFE\xFB\xFA\x00\xFF\xFE\xFD\xFE\xFD\xFC\x03\x02\x01\x01\xFB\xFA\x00\xFF\xFE\xFD\xFE\xFD\xFC\x03\x02\x02\x01\xFB\xFA\x00\xFF\xFE\xFD\xFE\xFD\xFC\x03\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFD\xFE\xFD\xFC\xFC\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFD\xFE\xFD\xFD\xFC\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFD\xFE\xFE\xFD\xFC\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFD\xFD\xFE\xFD\xFC\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFE\xFD\xFC\x03\x02\x01\xFB\xFA\x00\xFF\xFF\xFE\xFD\xFE\xFD\xFC\x03\x02\x01\xFB\xFA\x00\x00\xFF\xFE\xFD\xFE\xFD\xFC\x03\x02\x01\xFB\xFA\xFA\x00\xFF\xFE\xFD\xFE\xFD\xFC\x03\x02\x01\xFB\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFC\xFB\x03\x02\x01\x01\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFC\xFB\x03\x02\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFC\xFB\x03\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFC\xFB\xFB\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFC\xFC\xFB\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFD\xFD\xFC\xFB\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFB\x03\x02\x01\xFB\xFA\x00\xFF\xFE\xFE\xFE\xFD\xFC\xFB\x03\x02\x01\xFB\xFA\x00\xFF\xFF\xFE\xFE\xFD\xFC\xFB\x03\x02\x01\xFB\xFA\x00\x00\xFF\xFE\xFE\xFD\xFC\xFB\x03\x02\x01\xFB\xFA\xFA\x00\xFF\xFE\xFE\xFD\xFC\xFB\x03\x02\x01\xFBChord EGAD \x00"
+func_50173EF8_L9_Records_p4_8:	# REC_func_50173EF8_L9_Records_p4 (5920 bytes)
+	REC_func_50173EF8_L9_Records_p4	p0=func_50173EF8_L9_Records_p4_7+5908, x4="\x02\x01\x00\x01\x00\xFF\x01\x00\x01\x00\xFF\xFE\xFE\x02\xFC\x00\xFF\x00\xFF\xFE\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x02\x01\x00\x02\x01\x02\x01\x00\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\x02\x01\x00\x00\x01\xFE\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\x01\x00\xFF\xFE\x02\x01\x02\x01\x00\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\x02\x01\x02\x01\x00\x04\xFE\x04\x01\x00\x00\x01\xFE\xFF\xFE\x00\x01\xFE\xFF\xFE\x02\x01\x01\x00\xFF\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\xFE\xFC\xFB\xFB\xFA\xFD\xFC\xFB\xFC\xFB\x00\xFF\xFF\xFE\xFC\xFB\xFB\xFA\xFD\xFC\xFB\xFC\xFB\x00\x00\xFF\xFD\xFC\xFC\xFB\xFA\xFD\xFC\xFD\xFC\xFB\xFB\x00\xFE\xFE\xFD\xFB\xFB\xFE\xFD\xFE\xFB\xFC\xFC\xFB\xFF\xFF\xFE\xFC\xFB\xFF\xFA\xFF\xFC\xFB\xFB\xFC\x00\x00\xFF\xFE\xFC\x00\xFB\x00\xFD\xFC\xFC\xFB\x01\xFB\x00\xFF\xFE\x01\xFB\x01\xFA\xFD\xFD\xFC\xFB\xFC\xF5\x00\xFF\xF8\xFC\xFB\xFB\xFA\xFA\xFD\xFC\xFB\xF6\xFB\x00\xF9\xFE\xFC\xFB\xFB\xFB\xFA\xFD\xFC\xF7\xFC\xFB\xFA\xFF\xFD\xFC\xFB\xFB\xFB\xFE\xFD\xF8\xFB\xFC\xFB\x00\xFE\xFE\xFC\xFC\xFB\xFF\xFA\xF9\xFC\xFB\xFC\xFB\xFF\xFF\xFE\x02\x01\xFD\xFE\xFC\xFC\x01\xFD\xFF\xFE\xFF\xFE\xFE\x02\xFE\xFD\xFD\xFC\xFC\xFE\xFD\xFF\xFE\xFF\xFF\xFE\xFF\x01\xFE\xFE\xFC\xFF\x01\x00\xFF\xFE\xFE\xFF\x00\x02\xFF\xFD\xFE\x00\xFC\x01\xFD\xFF\xFF\xFE\x01\xFE\x00\x01\xFD\x01\xFC\x02\x01\xFD\xFD\xFF\x02\xFF\x01\x02\x01\x02\xFE\x03\xFC\x01\x01\xFD\x03\xFE\x02\xFE\x02\x03\xFD\x04\xFC\xFC\xFC\x01\x04\xFF\x03\xFF\xFE\x04\x01\x05\xFE\xFC\xFC\xFC\xF9\xFD\xF8\xFE\xFF\xF9\x02\xFA\xFD\xFE\xFE\xFC\xFA\x01\xF9\xFF\xFE\xFA\xFE\xFB\x01\xFD\xFD\xFE\xFB\xFC\xFA\xFD\xFF\xFB\xFF\xFC\x02\x01\x01\xFD\xFC\xFC\xFB\x01\xFD\xFC\xFE\xFD\xFE\x02\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFF\xFE\x01\x00\xFF\xFE\x01\x00\xFF\xFE\x01\x00\x00\xFF\xFE\x00\xFC\xFE\xFD\xFC\xFF\xFE\x02\x01\x01\x00\xFF\xFE\xFD\xFC\xFE\xFD\xFC\xFF\xFE\x02\x02\x01\x00\xFF\xFE\x00\xFC\xFE\xFD\x00\xFF\xFE\xFE\x02\xFC\x00\xFA\xFE\x00\xFC\xFE\xFD\xFC\xFF\xFF\xFE\xFD\x01\xFB\xFF\xFE\xFD\xFC\xFE\xFD\xFC\xFC\xFF\xFE\x02\xFC\x00\xFF\xFE\x00\xFF\xFE\xFD\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\xFE\x00\xFC\xFE\xFE\xFD\xFC\xFF\xFA\x02\x01\xFB\xFF\xFE\x00\xFC\xFC\xFE\xFD\xFC\xFB\xFE\x02\xFC\x00\xFF\xFE\x00\x00\xFC\xFE\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\xFD\xFC\xFF\xFE\x02\x01\x00\xFF\xFF\xFE\x00\xFC\xFE\xFD\xFC\xFF\xFE\x02\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x02\x01\x00\x00\xFF\xFE\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\x02\x01\x00\x00\xFF\xFE\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\x01\x00\xFF\xFF\xFE\xFD\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x01\x00\xFF\xFF\xFE\xFD\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFB\x00\xFC\x01\x00\xFC\x01\xFD\xFF\x01\x01\x00\xFC\xFE\xFD\xFF\x01\xFD\xFF\xFE\x00\xFF\xFF\x01\xFA\xFF\xFB\x00\xFF\xFB\x00\xFC\x01\x00\x00\xFF\xFB\x00\xFC\xFE\x00\xFC\x01\xFD\xFF\x01\x01\x00\xFC\x01\xFD\xFF\xFE\xFD\xFF\xFE\x00\xFF\xFF\x01\xFA\xFF\xFB\x00\xFF\xFB\x00\xFC\x01\x00\x00\xFF\xFB\x00\xFC\x01\x00\xFC\xFE\xFD\xFF\x01\x01\x00\xFC\x01\xFD\xFF\x01\xFD\xFF\xFE\x00\xFF\xFF\x01\xFA\xFF\xFB\x00\xFF\xFB\x00\xFC\xFE\x00\x00\xFF\xFB\x00\xFC\x01\x00\xFC\x01\xFD\xFF\xFE\xFE\x00\xFC\x01\xFD\xFF\x01\xFD\xFF\xFE\x00\xFF\xFF\xFE\xFA\xFF\xFB\x00\xFF\xFB\x00\xFC\x01\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFE\xFD\xFC\xFC\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFF\xFE\xFD\xFD\xFC\xFF\xFF\xFE\xFD\xFC\xFE\xFD\x00\xFB\xFE\xFE\xFD\x00\xFF\xFF\xFD\xFD\xFF\xFB\x01\xFC\xFB\xFB\xFE\x01\xFC\x00\xFF\xFD\x00\xFC\x02\xFD\xFC\xFC\xFB\x02\xFD\x01\xFF\xFF\x01\xFD\x03\xFB\xFD\xFD\xFC\x03\xFE\x02\xFC\xFF\x02\xFD\x04\xFC\xFB\xFB\xFD\x04\xFB\x03\xFD\xFC\x03\xFF\x05\xFD\xFC\xFC\xFB\xF9\xFC\xF8\xFE\xFD\xF8\xFF\xFA\xFD\xFD\xFD\xFC\xFA\xFD\xF9\xFB\xFE\xF9\xFC\xFB\xFF\xFD\xFD\xFD\xFB\xFB\xFA\xFC\xFB\xFA\xFD\xFC\xFF\xFF\xFF\xFD\xFC\xFC\xFB\xFD\xFC\xFB\xFE\xFD\xFC\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x02\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x02\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFD\xFC\x01\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x00\xFF\x01\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\xFF\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x00\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\x01\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\xFF\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x00\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x01\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x00\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x01\x01\x00\x01\x00\xFF\x01\x00\xFF\x02\x01\x00\x02\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\x01\x00\xFF\xFE\xFE\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\x01\x00\xFF\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\x01\x00\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\x01\x01\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFE\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFB\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFC\xFB\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\xFD\xFD\xFC\xFB\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x00\x00\xFD\xFC\xFB\xFE\xFD\x01\x00\xFF\xFE\x02\x01\x01\x00\xFD\xFC\xFB\xFE\xFD\x01\x00\xFF\xFE\x02\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\xFF\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\x00\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFE\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\xFF\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\x00\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFE\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\xFF\xFF\xFE\x00\xFF\xFE\x00\xFF\xFE\x03\x02\x01\x00\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x01\x00\xFF\xFF\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x01\x00\x00\xFF\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x01\x01\x00\xFF\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\xFB\x01\x00\xFF\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFC\xFB\x01\x00\xFF\x02\x01\x00\xFD\xFC\xFB\xFD\xFD\xFC\xFB\x01\x00\xFF\x02\x01\x00\xFD\xFC\xFB\xFB\xFD\xFC\xFB\x01\x00\xFF\x02\x01\x00\xFD\xFC\xFC\xFB\xFD\xFC\xFB\x01\x00\xFF\x02\x01\x00\xFD\xFD\xFC\xFB\xFD\xFC\xFB\x01\x00\xFF\x02\x01\x00\x00\xFD\xFC\xFB\xFD\xFC\xFB\x01\x00\xFF\x02\x01\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x01\x00\xFF\x02\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\xFE\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x00\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\xFB\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFD\xFC\xFC\xFB\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFD\xFD\xFC\xFB\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFB\xFB\xFD\xFC\xFB\x00\xFF\xFE\x02\x01\x00\xFD\xFC\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\x02\x01\x00\xFD\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\x02\x01\x00\x00\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\x02\x01\x01\x00\xFD\xFC\xFB\xFD\xFC\xFB\x00\xFF\xFE\x02\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x03\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x00\xFF\xFF\x03\x02\x01\x00\xFF\xFE\x02\x01\x02\x01\x00\x00\xFF\xFE\x02\x01\x00\xFF\xFE\x02\x01\x00\x01\x01\x00\xFF\x03\x02\x01\x00\xFF\xFE\x02\x01\x00\x00\x01\x00\xFF\x03\x02\x01\x00\xFF\x03\x02\x01\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x04\xFE\x02\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x00\xFF\xFE\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x00\xFF\xFF\xFE\x02\x01\x00\x01\x00\xFF\x03\x02\x01\x00\x03\x02\x01\xFD\xFC\xFB\xFE\xFD\xFC\x01\x00\xFF\xFF\x03\x02\x01\xFD\xFC\xFB\xFE\xFD\x02\x01\x00\x00\xFF\x03\x02\xFE\xFD\xFC\xFF\xFE\x03\xFC\x01\x01\x00\x04\x03\xFF\x01\xFD\x00\xFB\x04\xFD\xFC\xFC\x01\x05\xFF\x00\x02\x01\x01\xFC\x05\xFE\xFD\xFD\xFC\x06\x00\x01\x03\x02\x02\xFD\x06\xFB\xFE\xFE\xFD\x07\x01\x02\xFF\x03\x03\x01\x07\xFC\xFB\xFB\xFE\x08\xFC\x03\x00\xFF\x04\x02\x08\xFD\xFC\xFC\xFB\xFD\xFD\xF8\x01\x00\xF9\x03\xFD\x01\xFD\xFD\xFC\xFE\xFE\xF9\xFC\x01\xFA\xFF\xFE\x02\x01\x01\xFD\xFF\xFB\xFA\xFD\xFC\xFB\x00\xFF\x03\x02\x02\x01\x00\xFC\xFB\xFE\xFD\xFC\x01\x00\xFF\x03\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFD\xFC\xFB\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFD\xFC\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFD\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFC\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFD\xFC\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFE\xFD\xFC\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFB\xFE\xFD\xFC\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFC\xFB\xFE\xFD\xFC\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFD\xFC\xFB\xFF\xFE\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFD\xFC\xFB\xFF\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFD\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFE\xFD\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFC\xFB\xFE\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFC\xFB\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFC\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFE\xFE\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFF\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFD\xFC\xFB\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFD\xFC\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFD\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFB\xFB\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFC\xFC\xFB\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFD\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFD\xFC\xFB\xFF\xFE\xFE\xFD\xFD\xFC\xFB\xFD\xFC\xFB\xFD\xFC\xFB\xFF\x00\xFF\xFE\xFB\xFA\xF9\xFE\xFD\xFC\x00\xFF\xFE\xFE\x00\xFF\xFE\xFB\xFA\xF9\xFE\xFD\x01\x00\xFF\xFF\xFE\x00\xFF\xFC\xFB\xFA\xFF\xFE\x02\xFC\x00\x00\xFF\x01\x00\xFD\xFE\xFB\x00\xF9\x03\xFD\xFC\xFC\x00\x02\xFE\xFE\xFF\xFE\x01\xFA\x04\xFE\xFD\xFD\xFC\x03\xFF\xFF\x00\xFF\x02\xFB\x05\xF9\xFE\xFE\xFD\x04\x00\x00\xFE\x00\x03\xFE\x06\xFA\xF9\xF9\xFE\x05\xFC\x01\xFF\xFE\x04\xFF\x07\xFB\xFA\xFA\xF9\xFA\xFD\xF6\x00\xFF\xF9\x00\xFC\xFE\xFB\xFB\xFA\xFB\xFE\xF7\xFC\x00\xFA\xFE\xFD\xFF\xFE\xFE\xFB\xFC\xF9\xF8\xFD\xFC\xFB\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFA\xF9\xFE\xFD\xFC\x00\xFF\xFE\x00\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\xFD\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFE\xFD\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFF\xFE\xFD\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\xFC\xFC\xFF\xFE\xFD\x02\x01\x00\xFD\xFC\xFB\xFE\xFD\xFD\xFC\xFF\xFE\xFD\x02\x01\x00\xFD\xFC\xFB\xFE\xFE\xFD\xFC\xFF\xFE\xFD\x02\x01\x00\xFD\xFC\xFB\xFB\xFE\xFD\xFC\xFF\xFE\xFD\x02\x01\x00\xFD\xFC\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\x02\x01\x00\xFD\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\x02\x01\x00\x00\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\x02\x01\x01\x00\xFD\xFC\xFB\xFE\xFD\xFC\xFF\xFE\xFD\x02\x01\x00\xFF\xFB\xFA\xF9\xFE\xFD\xFC\x00\xFF\xFE\xFE\x01\x00\xFF\xFB\xFA\xF9\xFE\xFD\x01\x00\xFF\xFF\xFE\x01\x00\xFC\xFB\xFA\xFF\xFE\x02\xFC\x00\x00\xFF\x02\x01\xFD\xFF\xFB\x00\xF9\x03\xFD\xFC\xFC\x00\x03\xFE\xFE\x00\xFF\x01\xFA\x04\xFE\xFD\xFD\xFC\x04\xFF\xFF\x01\x00\x02\xFB\x05\xF9\xFE\xFE\xFD\x05\x00\x00\xFE\x01\x03\xFF\x06\xFA\xF9\xF9\xFE\x06\xFC\x01\xFF\xFE\x04\x00\x07\xFB\xFA\xFA\xF9\xFB\xFD\xF6\x00\xFF\xF9\x01\xFC\xFF\xFB\xFB\xFA\xFC\xFE\xF7\xFC\x00\xFA\xFE\xFD\x00\xFF\xFF\xFB\xFD\xF9\xF8\xFD\xFC\xFB\xFF\xFE\x01\x00\x00\xFF\xFE\xFA\xF9\xFE\xFD\xFC\x00\xFF\xFE\x01\x00\xFF\xFE\xFB\xFA\xF9\xFE\xFD\xFC\x00\xFF\xFE\xFE\x00\xFF\xFE\xFB\xFA\xF9\xFE\xFD\x01\x00\xFF\xFF\xFE\x00\xFF\xFC\xFB\xFA\xFF\xFE\x02\xFC\x00\x00\xFF\x01\x00\xFD\xFE\xFB\x00\xF9\x03\xFD\xFC\xFC\x00\x02\xFE\xFE\xFF\xFE\x01\xFA\x04\xFE\xFD\xFD\xFC\x03\xFF\xFF\x00\xFF\x02\xFB\x05\xF9\xFE\xFE\xFD\x04\x00\x00\xFE\x00\x03\xFE\x06\xFA\xF9\xF9\xFE\x05\xFC\x01\xFF\xFE\x04\xFF\x07\xFB\xFA\xFA\xF9\xFA\xFD\xF6\x00\xFF\xF9\x00\xFC\xFE\xFB\xFB\xFA\xFB\xFE\xF7\xFC\x00\xFA\xFE\xFD\xFF\xFE\xFE\xFB\xFC\xF9\xF8\xFD\xFC\xFB\xFF\xFE\x00\xFF\xFF\xFE\xFD\xFA\xF9\xFE\xFD\xFC\x00\xFF\xFE\x00\x00\xFF\xFE\xFB\xFA\xF9\xFE\xFD\xFC\xFF\xFE\xFD\xFD\x00\xFF\xFE\xFB\xFA\xF9\xFE\xFD\x00\xFF\xFE\xFE\xFD\x00\xFF\xFC\xFB\xFA\xFF\xFE\x01\xFC\xFF\xFF\xFE\x01\x00\xFD\xFE\xFB\x00\xF9\x02\xFD\xFC\xFC\xFF\x02\xFD\xFE\xFF\xFE\x01\xFA\x03\xFE\xFD\xFD\xFC\x03\xFE\xFF\x00\xFF\x02\xFB\x04\xF9\xFE\xFE\xFD\x04\xFF\x00\xFD\x00\x03\xFE\x05\xFA\xF9\xF9\xFE\x05\xFC\x01\xFE\xFD\x04\xFF\x06\xFB\xFA\xFA\xF9\xFA\xFD\xF6\xFF\xFE\xF9\x00\xFB\xFE\xFB\xFB\xFA\xFB\xFE\xF7\xFC\xFF\xFA\xFD\xFC\xFF\xFE\xFE\xFB\xFC\xF9\xF8\xFD\xFC\xFB\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFA\xF9\xFE\xFD\xFC\xFF\xFE\xFD\x00\x01\x00\xFF\xFB\xFA\xF9\xFE\xFD\xFC\xFF\xFE\xFD\xFD\x01\x00\xFF\xFB\xFA\xF9\xFE\xFD\x00\xFF\xFE\xFE\xFD\x01\x00\xFC\xFB\xFA\xFF\xFE\x01\xFC\xFF\xFF\xFE\x02\x01\xFD\xFF\xFB\x00\xF9\x02\xFD\xFC\xFC\xFF\x03\xFD\xFE\x00\xFF\x01\xFA\x03\xFE\xFD\xFD\xFC\x04\xFE\xFF\x01\x00\x02\xFB\x04\xF9\xFE\xFE\xFD\x05\xFF\x00\xFD\x01\x03\xFF\x05\xFA\xF9\xF9\xFE\x06\xFC\x01\xFE\xFD\x04\x00\x06\xFB\xFA\xFA\xF9\xFB\xFD\xF6\xFF\xFE\xF9\x01\xFB\xFF\xFB\xFB\xFA\xFC\xFE\xF7\xFC\xFF\xFA\xFD\xFC\x00\xFF\xFF\xFB\xFD\xF9\xF8\xFD\xFC\xFB\xFE\xFD\x01\x00\x00\xFF\xFE\xFA\xF9\xFE\xFD\xFC\xFF\xFE\xFD\x01\x00\xFF\xFE\xFB\xFA\xF9\xFD\xFC\xFB\xFF\xFE\xFD\xFD\x00\xFF\xFE\xFB\xFA\xF9\xFD\xFC\x00\xFF\xFE\xFE\xFD\x00\xFF\xFC\xFB\xFA\xFE\xFD\x01\xFB\xFF\xFF\xFE\x01\x00\xFD\xFE\xFB\xFF\xF9\x02\xFC\xFB\xFB\xFF\x02\xFD\xFE\xFF\xFE\x00\xFA\x03\xFD\xFC\xFC\xFB\x03\xFE\xFF\x00\xFF\x01\xFB\x04\xF9\xFD\xFD\xFC\x04\xFF\x00\xFD\x00\x02\xFE\x05\xFA\xF9\xF9\xFD\x05\xFB\x01\xFE\xFD\x03\xFF\x06\xFB\xFA\xFA\xF9\xFA\xFC\xF6\xFF\xFE\xF8\x00\xFB\xFE\xFB\xFB\xFA\xFB\xFD\xF7\xFB\xFF\xF9\xFD\xFC\xFF\xFE\xFE\xFB\xFC\xF9\xF8\xFC\xFB\xFA\xFE\xFD\x00\xFF\xFF\xFE\xFD\xFA\xF9\xFD\xFC\xFB\xFF\xFE\xFD\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\xFF\xFF\xFE\x01\x00\xFF\x00\xFF\xFE\x01\x00\xFF\x00\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFF\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFE\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\xFF\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\x00\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFE\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFF\xFF\xFE\x00\xFF\xFE\xFF\xFE\xFD\x01\x00\xFF\x00\xFE\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFD\xFE\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFB\x00\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFB\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFC\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFD\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFC\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFD\xFD\xFC\xFD\xFC\xFB\x00\xFF\xFE\xFF\xFE\xFD\xFE\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFB\xFA\xF9\xF9\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFB\xFA\xFA\xF9\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFB\xFB\xFA\xF9\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xFB\xFA\xF9\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFB\xFA\xFB\xFA\xF9\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFC\xFB\xFA\xFB\xFA\xF9\xFB\xFA\xF9\xFD\xFC\xFB\xFB\xFC\xFB\xFA\xFB\xFA\xF9\xFB\xFA\xF9\xFD\xFC\xFC\xFB\xFC\xFB\xFA\xFB\xFA\xF9\xFB\xFA\xF9\xFD\xFD\xFC\xFB\xFC\xFB\xFA\xFB\xFA\xF9\xFB\xFA\xF9\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFB\xFA\xF9\xFB\xFA\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFB\xFA\xF9\xFB\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xF9\xF8\xF8\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xF9\xF9\xF8\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFB\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xFD\xFC\xFB\xFC\xFC\xFB\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xFD\xFC\xFB\xFB\xFC\xFB\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xFD\xFC\xFC\xFB\xFC\xFB\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xFD\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xF9\xF8\xFB\xFA\xF9\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xF9\xF8\xFB\xFA\xFA\xF9\xFD\xFC\xFB\xFC\xFB\xFA\xFA\xF9\xF8\xFBChord CEAD \x00"
 data_4842EB58:
 # census: opaque -- unknown-dump: 4900 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x02EB58, 0x02FE7C
 	.space	289, 0x00
 # census: opaque -- unknown-dump: 719 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x02FF9D, 0x03026C
-
 data_4854B750_p0_p36_0:	# REC_data_4854B750_p0_p36 (4 bytes)
 	REC_data_4854B750_p0_p36	x0="\x04\x00\x00\x04"
 # census: opaque -- unknown-dump: 2440 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -11957,10 +11907,22 @@ Str_incompatible_version:	.asciz "incompatible version"
 .incbin_range "baserom/kn2400_program.rom", 0x03108D, 0x031090
 Str_1_0_4_8:	.asciz "1.0.4"
 	.align	4, 0xFF	# pad after Str_1_0_4_8
-data_48431098:
-.incbin_range "baserom/kn2400_program.rom", 0x031098, 0x0310AC
-data_484310AC:
-	.space	8, 0x00
+
+func_5018D239_Table_9:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
+	tab_u32	0, 1
+
+func_5018D239_Var_9:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
+	.long	0x4863a2c6
+
+func_5018D239_Table_10:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
+	tab_u16	3, 0
+
+func_5018D239_Var_10:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
+	.long	10240
+
+func_5018C16D_Table:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
+	tab_u32	0, 0
+
 Str_LKG_3:	.asciz "LKG"
 
 func_4863AAF8_Table:	# 68 x u8, 0..255; read by func_4863AAF8_entry : `movbu	(a1), d1`
@@ -12253,39 +12215,9 @@ func_4863ABB9_Table_2:	# 10 x u32, 1214491621..1214491669; read by func_4863ABB9
 	tab_u32	1214491621, 1214491621, 1214491621, 1214491621, 1214491621, 1214491621, 1214491621, 1214491621	# [0]
 	tab_u32	1214491669, 1214491621	# [8]
 
-func_4863AC46_entry_L24_Records:	# 32 x REC_func_4863AC46_entry_L24_Records (8 bytes each); read by func_4863AC46_entry_L24 0x4863AC6F `mov (a0), d1`
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"	# [0]
-	REC_func_4863AC46_entry_L24_Records	f0=1, x4="\xA1\xACcH"
-	REC_func_4863AC46_entry_L24_Records	f0=2, x4="\x9E\xACcH"
-	REC_func_4863AC46_entry_L24_Records	f0=3, x4="\xAD\xACcH"
-	REC_func_4863AC46_entry_L24_Records	f0=4, x4="/\xAEcH"
-	REC_func_4863AC46_entry_L24_Records	f0=5, x4="\xDD\xADcH"
-	REC_func_4863AC46_entry_L24_Records	f0=6, x4="\xD3\xADcH"
-	REC_func_4863AC46_entry_L24_Records	f0=7, x4="X\xAEcH"
-	REC_func_4863AC46_entry_L24_Records	f0=8, x4="\xD7\xAEcH"	# [8]
-	REC_func_4863AC46_entry_L24_Records	f0=9, x4="\xCC\xAFcH"
-	REC_func_4863AC46_entry_L24_Records	f0=10, x4="\x09\xB0cH"
-	REC_func_4863AC46_entry_L24_Records	f0=11, x4="\xF3\xB0cH"
-	REC_func_4863AC46_entry_L24_Records	f0=12, x4="\xF0\xB1cH"
-	REC_func_4863AC46_entry_L24_Records	f0=13, x4="\xA3\xADcH"
-	REC_func_4863AC46_entry_L24_Records	f0=14, x4="2\xAEcH"
-	REC_func_4863AC46_entry_L24_Records	f0=100, x4="\x90\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"	# [16]
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	f0=50, x4="\x92\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"	# [24]
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
-	REC_func_4863AC46_entry_L24_Records	x4="\xB3\xB2cH"
+func_4863AC46_entry_L24_Records:	# 1 x REC_func_4863AC46_entry_L24_Records (8 bytes each); read by func_4863AC46_entry_L24 0x4863AC6F `mov (a0), d1`; func_4863AC46_entry_L4b 0x4863AC96 `mov (a0), d1`; func_4863AC46_entry_L4e 0x4863AC99 `mov (4, a0), a0`
+	REC_func_4863AC46_entry_L24_Records	p4=func_4863AC46_entry_L668
+.incbin_range "baserom/kn2400_program.rom", 0x0319B4, 0x031AAC
 
 func_4863C389_Table:	# 11 x u32, 1214497788..1214498113; read by func_4863C389_entry_L63 0x4863C3F1: `mov	(d0, a0), a0`
 	tab_u32	1214497804, 1214497935, 1214497935, 1214497935, 1214497935, 1214498113, 1214498113, 1214497900	# [0]
@@ -12387,23 +12319,9 @@ func_4863DC10_Table:	# 11 x u32, 1214503972..1214504052; read by func_4863DC10 0
 	tab_u32	1214503972, 1214503980, 1214504020, 1214504028, 1214504036, 1214504044, 1214504052, 1214504004	# [0]
 	tab_u32	1214503996, 1214503988, 1214504012	# [8]
 
-func_4863DC81_Ld_Records:	# 16 x REC_func_4863DC81_Ld_Records (8 bytes each); read by func_4863DC81_Ld 0x4863DC8E `mov (a0), d1`
-	REC_func_4863DC81_Ld_Records	x4="\xEF\xDCcH"	# [0]
-	REC_func_4863DC81_Ld_Records	f0=81, x4="\xC7\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=17, x4="\xCB\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=1, x4="\xCF\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=3, x4="\xD3\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=4, x4="\xD7\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=5, x4="\xDB\xDCcH"
-	REC_func_4863DC81_Ld_Records	x4="\xEF\xDCcH"
-	REC_func_4863DC81_Ld_Records	x4="\xEF\xDCcH"	# [8]
-	REC_func_4863DC81_Ld_Records	f0=9, x4="\xDF\xDCcH"
-	REC_func_4863DC81_Ld_Records	x4="\xEF\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=11, x4="\xE3\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=12, x4="\xE7\xDCcH"
-	REC_func_4863DC81_Ld_Records	f0=13, x4="\xEB\xDCcH"
-	REC_func_4863DC81_Ld_Records	x4="\xEF\xDCcH"
-	REC_func_4863DC81_Ld_Records	x4="\xEF\xDCcH"
+func_4863DC81_Ld_Records:	# 1 x REC_func_4863DC81_Ld_Records (8 bytes each); read by func_4863DC81_Ld 0x4863DC8E `mov (a0), d1`; func_4863DC81_L3e 0x4863DCBF `mov (a0), d1`; func_4863DC81_L41 0x4863DCC2 `mov (4, a0), a0`
+	REC_func_4863DC81_Ld_Records	p4=func_4863DC81_L6e
+.incbin_range "baserom/kn2400_program.rom", 0x032174, 0x0321EC
 
 func_4863DCF4_Table:	# 12 x u32, 1214504202..1214504287; read by func_4863DCF4 0x4863DCF4: `mov	(d0, a0), a0`
 	tab_u32	1214504202, 1214504219, 1214504287, 1214504236, 1214504253, 1214504270, 1214504287, 1214504287	# [0]
@@ -18669,91 +18587,91 @@ Str_empty_1179:	.asciz "          "
 Str_3d_227:	.asciz "       %3d"
 	.align	4, 0xFF	# pad after Str_3d_227
 
-AcCategoryStrBoxProc_L1d_Records:	# 16 x REC_AcCategoryStrBoxProc_L1d_Records (8 bytes each); read by AcCategoryStrBoxProc_L1d 0x4863EDA6 `mov (a0), d0`
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=0x1500000, x4="\x02\xEEcH"	# [0]
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=1, x4="\xDD\xEDcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=17, x4="E\xEEcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=18, x4="E\xEEcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=16, x4="E\xEEcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=0x1500001, x4="$\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"	# [8]
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=9, x4="#\xEEcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=0x1003A, x4="_\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	x4="p\xEFcH"
-	REC_AcCategoryStrBoxProc_L1d_Records	f0=15, x4="E\xEEcH"
-AcAlpStyleListBoxProc_L1d_Records:	# 16 x REC_AcAlpStyleListBoxProc_L1d_Records (8 bytes each); read by AcAlpStyleListBoxProc_L1d 0x4863F9EA `mov (a0), d0`
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500000, x4="k\xFAcH"	# [0]
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=1, x4="!\xFAcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=17, x4="\xC5\xFAcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=18, x4="\xC5\xFAcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=16, x4="\xC5\xFAcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500002, x4="\xAC\xFBcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500003, x4="\xAC\xFBcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500001, x4="4\xFCcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	x4="y\xFCcH"	# [8]
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=9, x4="\x8C\xFAcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1003A, x4="o\xFCcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	x4="y\xFCcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	x4="y\xFCcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	x4="y\xFCcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	x4="y\xFCcH"
-	REC_AcAlpStyleListBoxProc_L1d_Records	f0=15, x4="\xC5\xFAcH"
-AcEraStyleListBoxProc_L1d_Records:	# 16 x REC_AcEraStyleListBoxProc_L1d_Records (8 bytes each); read by AcEraStyleListBoxProc_L1d 0x48640362 `mov (a0), d0`
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500000, x4="\x99\x03dH"	# [0]
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=1, x4="\xF5\x03dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=17, x4="?\x04dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=18, x4="?\x04dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=16, x4="?\x04dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500002, x4="&\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500003, x4="&\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500001, x4="\xAE\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	x4="\xF3\x05dH"	# [8]
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=9, x4="\xBA\x03dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1003A, x4="\xE9\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	x4="\xF3\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	x4="\xF3\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	x4="\xF3\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	x4="\xF3\x05dH"
-	REC_AcEraStyleListBoxProc_L1d_Records	f0=15, x4="?\x04dH"
-AcCustomListBoxProc_L1c_Records:	# 16 x REC_AcCustomListBoxProc_L1c_Records (8 bytes each); read by AcCustomListBoxProc_L1c 0x48640894 `mov (a0), d0`
-	REC_AcCustomListBoxProc_L1c_Records	f0=0x1500000, x4="\x07\x09dH"	# [0]
-	REC_AcCustomListBoxProc_L1c_Records	f0=1, x4="(\x09dH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=17, x4="\xAE\x09dH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=0x100A3, x4="\xCA\x08dH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=0x100B4, x4="\xE9\x08dH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=18, x4="\xAD\ndH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=16, x4="\xAD\ndH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=0x1500001, x4="\xAA\x0BdH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=0x100B3, x4="\x02\x0CdH"	# [8]
-	REC_AcCustomListBoxProc_L1c_Records	x4="\x05\x0CdH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=0x1003A, x4="\xF8\x0BdH"
-	REC_AcCustomListBoxProc_L1c_Records	x4="\x05\x0CdH"
-	REC_AcCustomListBoxProc_L1c_Records	x4="\x05\x0CdH"
-	REC_AcCustomListBoxProc_L1c_Records	x4="\x05\x0CdH"
-	REC_AcCustomListBoxProc_L1c_Records	x4="\x05\x0CdH"
-	REC_AcCustomListBoxProc_L1c_Records	f0=15, x4="\xAE\x09dH"
-AcCustomStyleListBoxProc_L1f_Records:	# 16 x REC_AcCustomStyleListBoxProc_L1f_Records (8 bytes each); read by AcCustomStyleListBoxProc_L1f 0x48640C8F `mov (a0), d0`
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x1500000, x4="\n\x0DdH"	# [0]
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=1, x4="C\x0DdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=17, x4="=\x0EdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x100A3, x4="\xC7\x0CdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x100B3, x4="\xE9\x0CdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x100B4, x4="\xE9\x0CdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=18, x4="\x98\x0FdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=16, x4="\x98\x0FdH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x1500001, x4="\xD8\x10dH"	# [8]
-	REC_AcCustomStyleListBoxProc_L1f_Records	x4="/\x11dH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x1003A, x4="%\x11dH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	x4="/\x11dH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	x4="/\x11dH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	x4="/\x11dH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	x4="/\x11dH"
-	REC_AcCustomStyleListBoxProc_L1f_Records	f0=15, x4="=\x0EdH"
+AcCategoryStrBoxProc_L1d_Records:	# 16 x REC_AcCategoryStrBoxProc_L1d_Records (8 bytes each); read by AcCategoryStrBoxProc_L1d 0x4863EDA6 `mov (a0), d0`; AcCategoryStrBoxProc_L4c 0x4863EDD5 `mov (a0), d0`; AcCategoryStrBoxProc_L4f 0x4863EDD8 `mov (4, a0), a0`
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=0x1500000, f4=0x4863EE02	# [0]
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=1, f4=0x4863EDDD
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=17, f4=0x4863EE45
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=18, f4=0x4863EE45
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=16, f4=0x4863EE45
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=0x1500001, f4=0x4863EF24
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70	# [8]
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=9, f4=0x4863EE23
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=0x1003A, f4=0x4863EF5F
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70
+	REC_AcCategoryStrBoxProc_L1d_Records	f4=0x4863EF70
+	REC_AcCategoryStrBoxProc_L1d_Records	f0=15, f4=0x4863EE45
+AcAlpStyleListBoxProc_L1d_Records:	# 16 x REC_AcAlpStyleListBoxProc_L1d_Records (8 bytes each); read by AcAlpStyleListBoxProc_L1d 0x4863F9EA `mov (a0), d0`; AcAlpStyleListBoxProc_L4c 0x4863FA19 `mov (a0), d0`; AcAlpStyleListBoxProc_L4f 0x4863FA1C `mov (4, a0), a0`
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500000, f4=0x4863FA6B	# [0]
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=1, f4=0x4863FA21
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=17, f4=0x4863FAC5
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=18, f4=0x4863FAC5
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=16, f4=0x4863FAC5
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500002, f4=0x4863FBAC
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500003, f4=0x4863FBAC
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1500001, f4=0x4863FC34
+	REC_AcAlpStyleListBoxProc_L1d_Records	f4=0x4863FC79	# [8]
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=9, f4=0x4863FA8C
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=0x1003A, f4=0x4863FC6F
+	REC_AcAlpStyleListBoxProc_L1d_Records	f4=0x4863FC79
+	REC_AcAlpStyleListBoxProc_L1d_Records	f4=0x4863FC79
+	REC_AcAlpStyleListBoxProc_L1d_Records	f4=0x4863FC79
+	REC_AcAlpStyleListBoxProc_L1d_Records	f4=0x4863FC79
+	REC_AcAlpStyleListBoxProc_L1d_Records	f0=15, f4=0x4863FAC5
+AcEraStyleListBoxProc_L1d_Records:	# 16 x REC_AcEraStyleListBoxProc_L1d_Records (8 bytes each); read by AcEraStyleListBoxProc_L1d 0x48640362 `mov (a0), d0`; AcEraStyleListBoxProc_L4c 0x48640391 `mov (a0), d0`; AcEraStyleListBoxProc_L4f 0x48640394 `mov (4, a0), a0`
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500000, f4=0x48640399	# [0]
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=1, f4=0x486403F5
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=17, f4=0x4864043F
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=18, f4=0x4864043F
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=16, f4=0x4864043F
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500002, f4=0x48640526
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500003, f4=0x48640526
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1500001, f4=0x486405AE
+	REC_AcEraStyleListBoxProc_L1d_Records	f4=0x486405F3	# [8]
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=9, f4=0x486403BA
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=0x1003A, f4=0x486405E9
+	REC_AcEraStyleListBoxProc_L1d_Records	f4=0x486405F3
+	REC_AcEraStyleListBoxProc_L1d_Records	f4=0x486405F3
+	REC_AcEraStyleListBoxProc_L1d_Records	f4=0x486405F3
+	REC_AcEraStyleListBoxProc_L1d_Records	f4=0x486405F3
+	REC_AcEraStyleListBoxProc_L1d_Records	f0=15, f4=0x4864043F
+AcCustomListBoxProc_L1c_Records:	# 16 x REC_AcCustomListBoxProc_L1c_Records (8 bytes each); read by AcCustomListBoxProc_L1c 0x48640894 `mov (a0), d0`; AcCustomListBoxProc_L4a 0x486408C2 `mov (a0), d0`; AcCustomListBoxProc_L4d 0x486408C5 `mov (4, a0), a0`
+	REC_AcCustomListBoxProc_L1c_Records	f0=0x1500000, f4=0x48640907	# [0]
+	REC_AcCustomListBoxProc_L1c_Records	f0=1, f4=0x48640928
+	REC_AcCustomListBoxProc_L1c_Records	f0=17, f4=0x486409AE
+	REC_AcCustomListBoxProc_L1c_Records	f0=0x100A3, f4=0x486408CA
+	REC_AcCustomListBoxProc_L1c_Records	f0=0x100B4, f4=0x486408E9
+	REC_AcCustomListBoxProc_L1c_Records	f0=18, f4=0x48640AAD
+	REC_AcCustomListBoxProc_L1c_Records	f0=16, f4=0x48640AAD
+	REC_AcCustomListBoxProc_L1c_Records	f0=0x1500001, f4=0x48640BAA
+	REC_AcCustomListBoxProc_L1c_Records	f0=0x100B3, f4=0x48640C02	# [8]
+	REC_AcCustomListBoxProc_L1c_Records	f4=0x48640C05
+	REC_AcCustomListBoxProc_L1c_Records	f0=0x1003A, f4=0x48640BF8
+	REC_AcCustomListBoxProc_L1c_Records	f4=0x48640C05
+	REC_AcCustomListBoxProc_L1c_Records	f4=0x48640C05
+	REC_AcCustomListBoxProc_L1c_Records	f4=0x48640C05
+	REC_AcCustomListBoxProc_L1c_Records	f4=0x48640C05
+	REC_AcCustomListBoxProc_L1c_Records	f0=15, f4=0x486409AE
+AcCustomStyleListBoxProc_L1f_Records:	# 16 x REC_AcCustomStyleListBoxProc_L1f_Records (8 bytes each); read by AcCustomStyleListBoxProc_L1f 0x48640C8F `mov (a0), d0`; AcCustomStyleListBoxProc_L4f 0x48640CBF `mov (a0), d0`; AcCustomStyleListBoxProc_L52 0x48640CC2 `mov (4, a0), a0`
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x1500000, f4=0x48640D0A	# [0]
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=1, f4=0x48640D43
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=17, f4=0x48640E3D
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x100A3, f4=0x48640CC7
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x100B3, f4=0x48640CE9
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x100B4, f4=0x48640CE9
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=18, f4=0x48640F98
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=16, f4=0x48640F98
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x1500001, f4=0x486410D8	# [8]
+	REC_AcCustomStyleListBoxProc_L1f_Records	f4=0x4864112F
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=0x1003A, f4=0x48641125
+	REC_AcCustomStyleListBoxProc_L1f_Records	f4=0x4864112F
+	REC_AcCustomStyleListBoxProc_L1f_Records	f4=0x4864112F
+	REC_AcCustomStyleListBoxProc_L1f_Records	f4=0x4864112F
+	REC_AcCustomStyleListBoxProc_L1f_Records	f4=0x4864112F
+	REC_AcCustomStyleListBoxProc_L1f_Records	f0=15, f4=0x48640E3D
 
 func_48641FDB_Table:	# 8 x u8, 1..255; read by func_48641FDB_entry : `movbu	(a1), d0`
 	tab_u8	240, 126, 127, 9, 1, 247, 255, 255
@@ -18812,12 +18730,23 @@ func_48642B9F_Table_2:
 	.long	func_48642B9F_entry_L3f
 # census: opaque -- unknown-dump: 60 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x046B54, 0x046B90
-data_48446B90:
-.incbin_range "baserom/kn2400_program.rom", 0x046B90, 0x046BA4
-data_48446BA4:
-	.space	8, 0x00
-data_48446BAC:
-	.space	8, 0x00
+
+func_5018D239_Table_11:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
+	tab_u32	0, 1
+
+func_5018D239_Var_11:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
+	.long	0x48644927
+
+func_5018D239_Table_12:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
+	tab_u16	3, 0
+
+func_5018D239_Var_12:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
+	.long	3072
+
+func_5018C16D_Table_2:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
+	tab_u32	0, 0
+func_5018C16D_Table_3:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
+	tab_u32	0, 0
 
 Str_empty_1177:	.asciz "\xFF/"
 	.align	4, 0xFF	# pad after Str_empty_1177
@@ -18830,7 +18759,7 @@ func_486453AE_Table:	# 8 x u8, 0..255; read by func_486453AE_entry : `movbu	(a1)
 Str_rb_48:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_48
 
-func_48645921_Table:	# 33 x u32, 0..2692784255; read by func_48645921 : `mov	(a1), d0`; func_48645A34 : `mov	(a1), d0`
+func_48645921_Table:	# 33 x u32, 0..2692784255; read by func_48645921_L20 0x48645941: `mov	(a1), d0`; func_48645A34_L20 0x48645A54: `mov	(a1), d0`
 	tab_u32	2692784255, 2130771839, 2147549055, 2130706432, 2130706432, 0, 2130706432, 2130706432	# [0]
 	tab_u32	0, 32576, 0, 0, 0, 0, 0, 512	# [8]
 	tab_u32	131072, 614399, 0, 162304, 31232, 0, 0, 0	# [16]
@@ -19080,40 +19009,40 @@ Text_Rock_Pop:	# 10 strings of 16 characters, NUL-terminated
 	.asciz	"Latin & World   "
 	.align	4, 0xFF	# pad after Text_Rock_Pop
 
-Str_1_21:	.asciz "1"
-Str_2_22:	.asciz "2"
-Str_3_19:	.asciz "3"
-Str_5_12:	.asciz "5"
-Str_6_12:	.asciz "6"
-Str_7_3:	.asciz "7"
-Str_8_4:	.asciz "8"
-Str_9_3:	.asciz "9"
-Str_A_4:	.asciz "A"
-Str_B_4:	.asciz "B"
-Str_C_5:	.asciz "C"
-Str_D_3:	.asciz "D"
-Str_E_2:	.asciz "E"
-Str_F_3:	.asciz "F"
-Str_G_2:	.asciz "G"
-Str_H_3:	.asciz "H"
-Str_I_2:	.asciz "I"
-Str_J_2:	.asciz "J"
-Str_K_2:	.asciz "K"
-Str_L_3:	.asciz "L"
-Str_M_2:	.asciz "M"
-Str_N_2:	.asciz "N"
-Str_O_2:	.asciz "O"
-Str_P_5:	.asciz "P"
-Str_Q_3:	.asciz "Q"
-Str_R_3:	.asciz "R"
-Str_S_2:	.asciz "S"
-Str_T_3:	.asciz "T"
-Str_U_2:	.asciz "U"
-Str_V_2:	.asciz "V"
-Str_W_2:	.asciz "W"
-Str_Y_2:	.asciz "Y"
-Str_Z_2:	.asciz "Z"
-	.align	4, 0xFF	# pad after Str_Z_2
+Str_1_36:	.asciz "1"
+Str_2_36:	.asciz "2"
+Str_3_28:	.asciz "3"
+Str_5_21:	.asciz "5"
+Str_6_17:	.asciz "6"
+Str_7_9:	.asciz "7"
+Str_8_11:	.asciz "8"
+Str_9_8:	.asciz "9"
+Str_A_25:	.asciz "A"
+Str_B_14:	.asciz "B"
+Str_C_25:	.asciz "C"
+Str_D_13:	.asciz "D"
+Str_E_12:	.asciz "E"
+Str_F_12:	.asciz "F"
+Str_G_11:	.asciz "G"
+Str_H_7:	.asciz "H"
+Str_I_6:	.asciz "I"
+Str_J_5:	.asciz "J"
+Str_K_5:	.asciz "K"
+Str_L_7:	.asciz "L"
+Str_M_7:	.asciz "M"
+Str_N_5:	.asciz "N"
+Str_O_5:	.asciz "O"
+Str_P_14:	.asciz "P"
+Str_Q_6:	.asciz "Q"
+Str_R_5:	.asciz "R"
+Str_S_5:	.asciz "S"
+Str_T_7:	.asciz "T"
+Str_U_5:	.asciz "U"
+Str_V_5:	.asciz "V"
+Str_W_5:	.asciz "W"
+Str_Y_6:	.asciz "Y"
+Str_Z_5:	.asciz "Z"
+	.align	4, 0xFF	# pad after Str_Z_5
 
 Text_Hippie_Piano:	# 729 strings of 16 characters, NUL-terminated
 	.asciz	"Hippie Piano    "
@@ -20054,40 +19983,40 @@ Text_Rock_Pop_2:	# 10 strings of 16 characters, NUL-terminated
 	.asciz	"Latin & World   "
 	.align	4, 0xFF	# pad after Text_Rock_Pop_2
 
-Str_1_20:	.asciz "1"
-Str_2_21:	.asciz "2"
-Str_3_18:	.asciz "3"
-Str_5_11:	.asciz "5"
-Str_6_11:	.asciz "6"
-Str_7_2:	.asciz "7"
-Str_8_2:	.asciz "8"
-Str_9_2:	.asciz "9"
-Str_A_3:	.asciz "A"
-Str_B_3:	.asciz "B"
-Str_C_4:	.asciz "C"
-Str_D:	.asciz "D"
-Str_E:	.asciz "E"
-Str_F_2:	.asciz "F"
-Str_G:	.asciz "G"
-Str_H:	.asciz "H"
-Str_I:	.asciz "I"
-Str_J:	.asciz "J"
-Str_K:	.asciz "K"
-Str_L:	.asciz "L"
-Str_M:	.asciz "M"
-Str_N:	.asciz "N"
-Str_O:	.asciz "O"
-Str_P_2:	.asciz "P"
-Str_Q_2:	.asciz "Q"
-Str_R_2:	.asciz "R"
-Str_S:	.asciz "S"
-Str_T:	.asciz "T"
-Str_U:	.asciz "U"
-Str_V:	.asciz "V"
-Str_W:	.asciz "W"
-Str_Y:	.asciz "Y"
-Str_Z:	.asciz "Z"
-	.align	4, 0xFF	# pad after Str_Z
+Str_1_35:	.asciz "1"
+Str_2_35:	.asciz "2"
+Str_3_27:	.asciz "3"
+Str_5_18:	.asciz "5"
+Str_6_16:	.asciz "6"
+Str_7_8:	.asciz "7"
+Str_8_10:	.asciz "8"
+Str_9_7:	.asciz "9"
+Str_A_24:	.asciz "A"
+Str_B_13:	.asciz "B"
+Str_C_24:	.asciz "C"
+Str_D_12:	.asciz "D"
+Str_E_11:	.asciz "E"
+Str_F_11:	.asciz "F"
+Str_G_10:	.asciz "G"
+Str_H_6:	.asciz "H"
+Str_I_5:	.asciz "I"
+Str_J_4:	.asciz "J"
+Str_K_4:	.asciz "K"
+Str_L_6:	.asciz "L"
+Str_M_6:	.asciz "M"
+Str_N_4:	.asciz "N"
+Str_O_4:	.asciz "O"
+Str_P_13:	.asciz "P"
+Str_Q_5:	.asciz "Q"
+Str_R_4:	.asciz "R"
+Str_S_4:	.asciz "S"
+Str_T_6:	.asciz "T"
+Str_U_4:	.asciz "U"
+Str_V_4:	.asciz "V"
+Str_W_4:	.asciz "W"
+Str_Y_5:	.asciz "Y"
+Str_Z_4:	.asciz "Z"
+	.align	4, 0xFF	# pad after Str_Z_4
 
 Text_Hippie_Piano_2:	# 689 strings of 16 characters, NUL-terminated
 	.asciz	"Hippie Piano    "
@@ -21162,8 +21091,12 @@ DbModeEditBoxProc_L79_Table:
 	.long	Str_ON_73
 
 Str_02d_s_3:	.asciz "%02d:%s"
-data_4844F2EC:
-	.space	4, 0x00
+
+Draw2BpFile_entry_L1e_Var:	# u16, a constant; read / written by Draw2BpFile_entry_L1e 0x485FFA2F: `movhu (a2), d0`
+	.word	0
+Draw2BpFile_entry_L1e_Var_2:	# u16, a constant; read / written by Draw2BpFile_entry_L1e 0x485FFA2F: `movhu (2, a2), d0`
+	.word	0
+
 Str_rb_47:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_47
 Str_02d_s_2:	.asciz "%02d:%s"
@@ -21308,101 +21241,101 @@ Str_TT_NAMING:	.asciz "TT_NAMING"
 	.align	4, 0xFF	# pad after Str_TT_NAMING
 Str_ABC_123:	.asciz "ABC...123..."
 Str_abc_123:	.asciz "abc...123..."
-Str_empty_700:	.asciz " !#$%&?.... "
-	.align	4, 0xFF	# pad after Str_empty_700
+Str_empty_698:	.asciz " !#$%&?.... "
+	.align	4, 0xFF	# pad after Str_empty_698
 
 AcNamingWindowProc_Ld27_Table:
 	.long	Str_ABC_123
 	.long	Str_abc_123
-	.long	Str_empty_700
+	.long	Str_empty_698
 
-Str_A_24:	.asciz "A"
-Str_B_13:	.asciz "B"
-Str_C_24:	.asciz "C"
-Str_D_12:	.asciz "D"
-Str_E_11:	.asciz "E"
-Str_F_11:	.asciz "F"
-Str_G_10:	.asciz "G"
-Str_H_7:	.asciz "H"
-Str_I_6:	.asciz "I"
-Str_J_5:	.asciz "J"
-Str_K_5:	.asciz "K"
-Str_L_7:	.asciz "L"
-Str_M_7:	.asciz "M"
-Str_N_5:	.asciz "N"
-Str_O_5:	.asciz "O"
+Str_A_23:	.asciz "A"
+Str_B_12:	.asciz "B"
+Str_C_23:	.asciz "C"
+Str_D_11:	.asciz "D"
+Str_E_10:	.asciz "E"
+Str_F_10:	.asciz "F"
+Str_G_9:	.asciz "G"
+Str_H_5:	.asciz "H"
+Str_I_4:	.asciz "I"
+Str_J_3:	.asciz "J"
+Str_K_3:	.asciz "K"
+Str_L_5:	.asciz "L"
+Str_M_5:	.asciz "M"
+Str_N_3:	.asciz "N"
+Str_O_3:	.asciz "O"
 Str_P_12:	.asciz "P"
-Str_Q_6:	.asciz "Q"
-Str_R_6:	.asciz "R"
-Str_S_5:	.asciz "S"
-Str_T_7:	.asciz "T"
-Str_U_5:	.asciz "U"
-Str_V_5:	.asciz "V"
-Str_W_5:	.asciz "W"
+Str_Q_4:	.asciz "Q"
+Str_R_3:	.asciz "R"
+Str_S_3:	.asciz "S"
+Str_T_5:	.asciz "T"
+Str_U_3:	.asciz "U"
+Str_V_3:	.asciz "V"
+Str_W_3:	.asciz "W"
 Str_X_7:	.asciz "X"
-Str_Y_6:	.asciz "Y"
-Str_Z_5:	.asciz "Z"
-Str_empty_699:	.asciz "_"
-Str_0_27:	.asciz "0"
-Str_1_36:	.asciz "1"
-Str_2_36:	.asciz "2"
-Str_3_28:	.asciz "3"
+Str_Y_4:	.asciz "Y"
+Str_Z_3:	.asciz "Z"
+Str_empty_697:	.asciz "_"
+Str_0_26:	.asciz "0"
+Str_1_34:	.asciz "1"
+Str_2_34:	.asciz "2"
+Str_3_26:	.asciz "3"
 Str_4_28:	.asciz "4"
-Str_5_21:	.asciz "5"
-Str_6_18:	.asciz "6"
-Str_7_9:	.asciz "7"
-Str_8_10:	.asciz "8"
-Str_9_8:	.asciz "9"
+Str_5_17:	.asciz "5"
+Str_6_15:	.asciz "6"
+Str_7_7:	.asciz "7"
+Str_8_9:	.asciz "8"
+Str_9_6:	.asciz "9"
 Str_SPC_2:	.asciz "SPC"
 data_4844F90E:
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x04F90E, 0x04F910
 
 ptrs_4844F910:
-	.long	Str_A_24
-	.long	Str_B_13
-	.long	Str_C_24
-	.long	Str_D_12
-	.long	Str_E_11
-	.long	Str_F_11
-	.long	Str_G_10
-	.long	Str_H_7
-	.long	Str_I_6
-	.long	Str_J_5
-	.long	Str_K_5
-	.long	Str_L_7
-	.long	Str_M_7
-	.long	Str_N_5
-	.long	Str_O_5
+	.long	Str_A_23
+	.long	Str_B_12
+	.long	Str_C_23
+	.long	Str_D_11
+	.long	Str_E_10
+	.long	Str_F_10
+	.long	Str_G_9
+	.long	Str_H_5
+	.long	Str_I_4
+	.long	Str_J_3
+	.long	Str_K_3
+	.long	Str_L_5
+	.long	Str_M_5
+	.long	Str_N_3
+	.long	Str_O_3
 	.long	Str_P_12
-	.long	Str_Q_6
-	.long	Str_R_6
-	.long	Str_S_5
-	.long	Str_T_7
-	.long	Str_U_5
-	.long	Str_V_5
-	.long	Str_W_5
+	.long	Str_Q_4
+	.long	Str_R_3
+	.long	Str_S_3
+	.long	Str_T_5
+	.long	Str_U_3
+	.long	Str_V_3
+	.long	Str_W_3
 	.long	Str_X_7
-	.long	Str_Y_6
-	.long	Str_Z_5
-	.long	Str_empty_699
-	.long	Str_0_27
-	.long	Str_1_36
-	.long	Str_2_36
-	.long	Str_3_28
+	.long	Str_Y_4
+	.long	Str_Z_3
+	.long	Str_empty_697
+	.long	Str_0_26
+	.long	Str_1_34
+	.long	Str_2_34
+	.long	Str_3_26
 	.long	Str_4_28
-	.long	Str_5_21
-	.long	Str_6_18
-	.long	Str_7_9
-	.long	Str_8_10
-	.long	Str_9_8
+	.long	Str_5_17
+	.long	Str_6_15
+	.long	Str_7_7
+	.long	Str_8_9
+	.long	Str_9_6
 	.long	Str_SPC_2
 	.long	data_4844F90E
 
 Str_a_3:	.asciz "a"
-Str_b_3:	.asciz "b"
-Str_c_3:	.asciz "c"
-Str_d_4:	.asciz "d"
+Str_b_2:	.asciz "b"
+Str_c_2:	.asciz "c"
+Str_d_5:	.asciz "d"
 Str_e_2:	.asciz "e"
 Str_f_2:	.asciz "f"
 Str_g_2:	.asciz "g"
@@ -21410,13 +21343,13 @@ Str_h_4:	.asciz "h"
 Str_i_2:	.asciz "i"
 Str_j_2:	.asciz "j"
 Str_k_2:	.asciz "k"
-Str_l_7:	.asciz "l"
+Str_l_6:	.asciz "l"
 Str_m_2:	.asciz "m"
 Str_n_2:	.asciz "n"
 Str_o_2:	.asciz "o"
-Str_p_5:	.asciz "p"
-Str_q_3:	.asciz "q"
-Str_r_4:	.asciz "r"
+Str_p_4:	.asciz "p"
+Str_q_2:	.asciz "q"
+Str_r_10:	.asciz "r"
 Str_s_71:	.asciz "s"
 Str_t_4:	.asciz "t"
 Str_u_2:	.asciz "u"
@@ -21425,17 +21358,17 @@ Str_w_4:	.asciz "w"
 Str_x_6:	.asciz "x"
 Str_y_3:	.asciz "y"
 Str_z_2:	.asciz "z"
-Str_empty_698:	.asciz "_"
-Str_0_26:	.asciz "0"
-Str_1_35:	.asciz "1"
-Str_2_35:	.asciz "2"
-Str_3_27:	.asciz "3"
+Str_empty_696:	.asciz "_"
+Str_0_25:	.asciz "0"
+Str_1_33:	.asciz "1"
+Str_2_33:	.asciz "2"
+Str_3_25:	.asciz "3"
 Str_4_27:	.asciz "4"
-Str_5_18:	.asciz "5"
-Str_6_17:	.asciz "6"
-Str_7_8:	.asciz "7"
-Str_8_9:	.asciz "8"
-Str_9_7:	.asciz "9"
+Str_5_16:	.asciz "5"
+Str_6_14:	.asciz "6"
+Str_7_6:	.asciz "7"
+Str_8_8:	.asciz "8"
+Str_9_5:	.asciz "9"
 Str_SPC:	.asciz "SPC"
 data_4844F9FA:
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
@@ -21443,9 +21376,9 @@ data_4844F9FA:
 
 ptrs_4844F9FC:
 	.long	Str_a_3
-	.long	Str_b_3
-	.long	Str_c_3
-	.long	Str_d_4
+	.long	Str_b_2
+	.long	Str_c_2
+	.long	Str_d_5
 	.long	Str_e_2
 	.long	Str_f_2
 	.long	Str_g_2
@@ -21453,13 +21386,13 @@ ptrs_4844F9FC:
 	.long	Str_i_2
 	.long	Str_j_2
 	.long	Str_k_2
-	.long	Str_l_7
+	.long	Str_l_6
 	.long	Str_m_2
 	.long	Str_n_2
 	.long	Str_o_2
-	.long	Str_p_5
-	.long	Str_q_3
-	.long	Str_r_4
+	.long	Str_p_4
+	.long	Str_q_2
+	.long	Str_r_10
 	.long	Str_s_71
 	.long	Str_t_4
 	.long	Str_u_2
@@ -21468,71 +21401,69 @@ ptrs_4844F9FC:
 	.long	Str_x_6
 	.long	Str_y_3
 	.long	Str_z_2
-	.long	Str_empty_698
-	.long	Str_0_26
-	.long	Str_1_35
-	.long	Str_2_35
-	.long	Str_3_27
+	.long	Str_empty_696
+	.long	Str_0_25
+	.long	Str_1_33
+	.long	Str_2_33
+	.long	Str_3_25
 	.long	Str_4_27
-	.long	Str_5_18
-	.long	Str_6_17
-	.long	Str_7_8
-	.long	Str_8_9
-	.long	Str_9_7
+	.long	Str_5_16
+	.long	Str_6_14
+	.long	Str_7_6
+	.long	Str_8_8
+	.long	Str_9_5
 	.long	Str_SPC
 	.long	data_4844F9FA
 
-Str_empty_697:	.asciz "!"
-Str_empty_696:	.asciz "#"
-Str_empty_695:	.asciz "$"
-Str_empty_694:	.asciz "%"
-Str_empty_693:	.asciz "&"
-Str_empty_692:	.asciz "?"
+Str_empty_695:	.asciz "!"
+Str_empty_694:	.asciz "#"
+Str_empty_693:	.asciz "$"
+Str_empty_692:	.asciz "%"
+Str_empty_691:	.asciz "&"
+Str_empty_690:	.asciz "?"
 Str_40_3:	.asciz "~40"
 Str_5c_2:	.asciz "~5c"
-Str_empty_691:	.asciz "^"
-Str_empty_690:	.asciz "|"
+Str_empty_689:	.asciz "^"
+Str_empty_688:	.asciz "|"
 Str_22_2:	.asciz "~22"
 Str_27_2:	.asciz "~27"
-Str_empty_689:	.asciz "`"
-Str_empty_688:	.asciz ","
-Str_empty_687:	.asciz "."
-Str_empty_686:	.asciz ":"
-Str_empty_685:	.asciz ";"
-Str_empty_684:	.asciz "+"
-Str_empty_683:	.asciz "-"
-Str_empty_682:	.asciz "*"
-Str_empty_681:	.asciz "/"
-Str_empty_680:	.asciz "="
+Str_empty_687:	.asciz "`"
+Str_empty_686:	.asciz ","
+Str_empty_685:	.asciz "."
+Str_empty_684:	.asciz ":"
+Str_empty_683:	.asciz ";"
+Str_empty_682:	.asciz "+"
+Str_empty_681:	.asciz "-"
+Str_empty_680:	.asciz "*"
+Str_empty_679:	.asciz "/"
+Str_empty_678:	.asciz "="
 Str_8b_2:	.asciz "~8b"
 Str_8d_2:	.asciz "~8d"
-Str_empty_679:	.asciz "("
-Str_empty_678:	.asciz ")"
-Str_empty_677:	.asciz "<"
-Str_empty_676:	.asciz ">"
-Str_empty_675:	.asciz "["
-Str_empty_674:	.asciz "]"
-Str_empty_673:	.asciz "{"
-Str_empty_672:	.asciz "}"
+Str_empty_677:	.asciz "("
+Str_empty_676:	.asciz ")"
+Str_empty_675:	.asciz "<"
+Str_empty_674:	.asciz ">"
+Str_empty_673:	.asciz "["
+Str_empty_672:	.asciz "]"
+Str_empty_671:	.asciz "{"
+Str_empty_670:	.asciz "}"
 data_4844FAE4:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x04FAE4, 0x04FAE8
 
 ptrs_4844FAE8:
-	.long	Str_empty_697
-	.long	Str_empty_696
 	.long	Str_empty_695
 	.long	Str_empty_694
 	.long	Str_empty_693
 	.long	Str_empty_692
-	.long	Str_40_3
-	.long	Str_5c_2
 	.long	Str_empty_691
 	.long	Str_empty_690
-	.long	Str_22_2
-	.long	Str_27_2
+	.long	Str_40_3
+	.long	Str_5c_2
 	.long	Str_empty_689
 	.long	Str_empty_688
+	.long	Str_22_2
+	.long	Str_27_2
 	.long	Str_empty_687
 	.long	Str_empty_686
 	.long	Str_empty_685
@@ -21541,16 +21472,18 @@ ptrs_4844FAE8:
 	.long	Str_empty_682
 	.long	Str_empty_681
 	.long	Str_empty_680
-	.long	Str_8b_2
-	.long	Str_8d_2
 	.long	Str_empty_679
 	.long	Str_empty_678
+	.long	Str_8b_2
+	.long	Str_8d_2
 	.long	Str_empty_677
 	.long	Str_empty_676
 	.long	Str_empty_675
 	.long	Str_empty_674
 	.long	Str_empty_673
 	.long	Str_empty_672
+	.long	Str_empty_671
+	.long	Str_empty_670
 	.long	data_4844FAE4
 AcNamingWindowProc_L31f_Table:
 	.long	ptrs_4844F910
@@ -21565,9 +21498,9 @@ AcNamingWindowProc_L151_Table:
 	.long	AcNamingWindowProc_L4fe_Table+14
 
 Str_a_2:	.asciz "a"
-Str_b_2:	.asciz "b"
-Str_c_2:	.asciz "c"
-Str_d_3:	.asciz "d"
+Str_b:	.asciz "b"
+Str_c:	.asciz "c"
+Str_d_4:	.asciz "d"
 Str_e:	.asciz "e"
 Str_f:	.asciz "f"
 Str_g:	.asciz "g"
@@ -21575,13 +21508,13 @@ Str_h_3:	.asciz "h"
 Str_i:	.asciz "i"
 Str_j:	.asciz "j"
 Str_k:	.asciz "k"
-Str_l_6:	.asciz "l"
+Str_l_5:	.asciz "l"
 Str_m:	.asciz "m"
 Str_n:	.asciz "n"
 Str_o:	.asciz "o"
 Str_p_3:	.asciz "p"
-Str_q_2:	.asciz "q"
-Str_r_3:	.asciz "r"
+Str_q:	.asciz "q"
+Str_r_9:	.asciz "r"
 Str_s:	.asciz "s"
 Str_t_3:	.asciz "t"
 Str_u:	.asciz "u"
@@ -21593,9 +21526,9 @@ Str_z:	.asciz "z"
 
 ptrs_4844FBC4:
 	.long	Str_a_2
-	.long	Str_b_2
-	.long	Str_c_2
-	.long	Str_d_3
+	.long	Str_b
+	.long	Str_c
+	.long	Str_d_4
 	.long	Str_e
 	.long	Str_f
 	.long	Str_g
@@ -21603,13 +21536,13 @@ ptrs_4844FBC4:
 	.long	Str_i
 	.long	Str_j
 	.long	Str_k
-	.long	Str_l_6
+	.long	Str_l_5
 	.long	Str_m
 	.long	Str_n
 	.long	Str_o
 	.long	Str_p_3
-	.long	Str_q_2
-	.long	Str_r_3
+	.long	Str_q
+	.long	Str_r_9
 	.long	Str_s
 	.long	Str_t_3
 	.long	Str_u
@@ -21619,61 +21552,6 @@ ptrs_4844FBC4:
 	.long	Str_y_2
 	.long	Str_z
 
-Str_A_23:	.asciz "A"
-Str_B_12:	.asciz "B"
-Str_C_23:	.asciz "C"
-Str_D_11:	.asciz "D"
-Str_E_10:	.asciz "E"
-Str_F_10:	.asciz "F"
-Str_G_9:	.asciz "G"
-Str_H_6:	.asciz "H"
-Str_I_5:	.asciz "I"
-Str_J_4:	.asciz "J"
-Str_K_4:	.asciz "K"
-Str_L_6:	.asciz "L"
-Str_M_6:	.asciz "M"
-Str_N_4:	.asciz "N"
-Str_O_4:	.asciz "O"
-Str_P_11:	.asciz "P"
-Str_Q_5:	.asciz "Q"
-Str_R_5:	.asciz "R"
-Str_S_4:	.asciz "S"
-Str_T_6:	.asciz "T"
-Str_U_4:	.asciz "U"
-Str_V_4:	.asciz "V"
-Str_W_4:	.asciz "W"
-Str_X_6:	.asciz "X"
-Str_Y_5:	.asciz "Y"
-Str_Z_4:	.asciz "Z"
-
-ptrs_4844FC60:
-	.long	Str_A_23
-	.long	Str_B_12
-	.long	Str_C_23
-	.long	Str_D_11
-	.long	Str_E_10
-	.long	Str_F_10
-	.long	Str_G_9
-	.long	Str_H_6
-	.long	Str_I_5
-	.long	Str_J_4
-	.long	Str_K_4
-	.long	Str_L_6
-	.long	Str_M_6
-	.long	Str_N_4
-	.long	Str_O_4
-	.long	Str_P_11
-	.long	Str_Q_5
-	.long	Str_R_5
-	.long	Str_S_4
-	.long	Str_T_6
-	.long	Str_U_4
-	.long	Str_V_4
-	.long	Str_W_4
-	.long	Str_X_6
-	.long	Str_Y_5
-	.long	Str_Z_4
-
 Str_A_22:	.asciz "A"
 Str_B_11:	.asciz "B"
 Str_C_22:	.asciz "C"
@@ -21681,27 +21559,27 @@ Str_D_10:	.asciz "D"
 Str_E_9:	.asciz "E"
 Str_F_9:	.asciz "F"
 Str_G_8:	.asciz "G"
-Str_H_5:	.asciz "H"
-Str_I_4:	.asciz "I"
-Str_J_3:	.asciz "J"
-Str_K_3:	.asciz "K"
-Str_L_5:	.asciz "L"
-Str_M_5:	.asciz "M"
-Str_N_3:	.asciz "N"
-Str_O_3:	.asciz "O"
-Str_P_10:	.asciz "P"
-Str_Q_4:	.asciz "Q"
-Str_R_4:	.asciz "R"
-Str_S_3:	.asciz "S"
-Str_T_5:	.asciz "T"
-Str_U_3:	.asciz "U"
-Str_V_3:	.asciz "V"
-Str_W_3:	.asciz "W"
-Str_X_5:	.asciz "X"
-Str_Y_4:	.asciz "Y"
-Str_Z_3:	.asciz "Z"
+Str_H_4:	.asciz "H"
+Str_I_2:	.asciz "I"
+Str_J_2:	.asciz "J"
+Str_K_2:	.asciz "K"
+Str_L_4:	.asciz "L"
+Str_M_2:	.asciz "M"
+Str_N_2:	.asciz "N"
+Str_O_2:	.asciz "O"
+Str_P_11:	.asciz "P"
+Str_Q_3:	.asciz "Q"
+Str_R_2:	.asciz "R"
+Str_S_2:	.asciz "S"
+Str_T_4:	.asciz "T"
+Str_U_2:	.asciz "U"
+Str_V_2:	.asciz "V"
+Str_W_2:	.asciz "W"
+Str_X_6:	.asciz "X"
+Str_Y_3:	.asciz "Y"
+Str_Z_2:	.asciz "Z"
 
-ptrs_4844FCFC:
+ptrs_4844FC60:
 	.long	Str_A_22
 	.long	Str_B_11
 	.long	Str_C_22
@@ -21709,25 +21587,80 @@ ptrs_4844FCFC:
 	.long	Str_E_9
 	.long	Str_F_9
 	.long	Str_G_8
-	.long	Str_H_5
-	.long	Str_I_4
-	.long	Str_J_3
-	.long	Str_K_3
-	.long	Str_L_5
-	.long	Str_M_5
-	.long	Str_N_3
-	.long	Str_O_3
+	.long	Str_H_4
+	.long	Str_I_2
+	.long	Str_J_2
+	.long	Str_K_2
+	.long	Str_L_4
+	.long	Str_M_2
+	.long	Str_N_2
+	.long	Str_O_2
+	.long	Str_P_11
+	.long	Str_Q_3
+	.long	Str_R_2
+	.long	Str_S_2
+	.long	Str_T_4
+	.long	Str_U_2
+	.long	Str_V_2
+	.long	Str_W_2
+	.long	Str_X_6
+	.long	Str_Y_3
+	.long	Str_Z_2
+
+Str_A_21:	.asciz "A"
+Str_B_10:	.asciz "B"
+Str_C_21:	.asciz "C"
+Str_D_9:	.asciz "D"
+Str_E_8:	.asciz "E"
+Str_F_8:	.asciz "F"
+Str_G_7:	.asciz "G"
+Str_H_3:	.asciz "H"
+Str_I:	.asciz "I"
+Str_J:	.asciz "J"
+Str_K:	.asciz "K"
+Str_L_3:	.asciz "L"
+Str_M:	.asciz "M"
+Str_N:	.asciz "N"
+Str_O:	.asciz "O"
+Str_P_10:	.asciz "P"
+Str_Q_2:	.asciz "Q"
+Str_R:	.asciz "R"
+Str_S:	.asciz "S"
+Str_T_3:	.asciz "T"
+Str_U:	.asciz "U"
+Str_V:	.asciz "V"
+Str_W:	.asciz "W"
+Str_X_5:	.asciz "X"
+Str_Y_2:	.asciz "Y"
+Str_Z:	.asciz "Z"
+
+ptrs_4844FCFC:
+	.long	Str_A_21
+	.long	Str_B_10
+	.long	Str_C_21
+	.long	Str_D_9
+	.long	Str_E_8
+	.long	Str_F_8
+	.long	Str_G_7
+	.long	Str_H_3
+	.long	Str_I
+	.long	Str_J
+	.long	Str_K
+	.long	Str_L_3
+	.long	Str_M
+	.long	Str_N
+	.long	Str_O
 	.long	Str_P_10
-	.long	Str_Q_4
-	.long	Str_R_4
-	.long	Str_S_3
-	.long	Str_T_5
-	.long	Str_U_3
-	.long	Str_V_3
-	.long	Str_W_3
+	.long	Str_Q_2
+	.long	Str_R
+	.long	Str_S
+	.long	Str_T_3
+	.long	Str_U
+	.long	Str_V
+	.long	Str_W
 	.long	Str_X_5
-	.long	Str_Y_4
-	.long	Str_Z_3
+	.long	Str_Y_2
+	.long	Str_Z
 
 AcNamingEditSwProc_L3c_Table_p0_p0_0:	# REC_AcNamingEditSwProc_L3c_Table_p0_p0 (4 bytes)
 	REC_AcNamingEditSwProc_L3c_Table_p0_p0	x1="\x00\x00\x00"
@@ -21752,17 +21685,17 @@ data_4844FD70:
 data_4844FD71:
 	.space	1, 0x00
 
-Str_empty_671:	.asciz "_"
-Str_0_25:	.asciz "0"
-Str_1_34:	.asciz "1"
-Str_2_34:	.asciz "2"
-Str_3_26:	.asciz "3"
+Str_empty_669:	.asciz "_"
+Str_0_24:	.asciz "0"
+Str_1_31:	.asciz "1"
+Str_2_32:	.asciz "2"
+Str_3_24:	.asciz "3"
 Str_4_26:	.asciz "4"
-Str_5_17:	.asciz "5"
-Str_6_16:	.asciz "6"
-Str_7_7:	.asciz "7"
-Str_8_8:	.asciz "8"
-Str_9_6:	.asciz "9"
+Str_5_15:	.asciz "5"
+Str_6_13:	.asciz "6"
+Str_7_5:	.asciz "7"
+Str_8_7:	.asciz "8"
+Str_9_4:	.asciz "9"
 data_4844FD88:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x04FD88, 0x04FD8C
@@ -21782,45 +21715,45 @@ ptrs_4844FD8C:
 	.long	data_4844FD6F
 	.long	data_4844FD70
 	.long	data_4844FD71
-	.long	Str_empty_671
-	.long	Str_0_25
-	.long	Str_1_34
-	.long	Str_2_34
-	.long	Str_3_26
+	.long	Str_empty_669
+	.long	Str_0_24
+	.long	Str_1_31
+	.long	Str_2_32
+	.long	Str_3_24
 	.long	Str_4_26
-	.long	Str_5_17
-	.long	Str_6_16
-	.long	Str_7_7
-	.long	Str_8_8
-	.long	Str_9_6
+	.long	Str_5_15
+	.long	Str_6_13
+	.long	Str_7_5
+	.long	Str_8_7
+	.long	Str_9_4
 	.long	data_4844FD88
 
-Str_empty_670:	.asciz "!"
-Str_empty_669:	.asciz "#"
-Str_empty_668:	.asciz "$"
-Str_empty_667:	.asciz "%"
-Str_empty_666:	.asciz "&"
-Str_empty_665:	.asciz "?"
+Str_empty_668:	.asciz "!"
+Str_empty_667:	.asciz "#"
+Str_empty_666:	.asciz "$"
+Str_empty_665:	.asciz "%"
+Str_empty_664:	.asciz "&"
+Str_empty_663:	.asciz "?"
 Str_40_2:	.asciz "~40"
 Str_5c:	.asciz "~5c"
-Str_empty_664:	.asciz "^"
+Str_empty_662:	.asciz "^"
 Str_22:	.asciz "~22"
 Str_27:	.asciz "~27"
-Str_empty_663:	.asciz "`"
+Str_empty_661:	.asciz "`"
 data_4844FE14:
 	.space	1, 0x00
-Str_empty_662:	.asciz " "
-Str_empty_661:	.asciz "_"
-Str_0_24:	.asciz "0"
-Str_1_33:	.asciz "1"
-Str_2_33:	.asciz "2"
-Str_3_25:	.asciz "3"
+Str_empty_660:	.asciz " "
+Str_empty_659:	.asciz "_"
+Str_0_19:	.asciz "0"
+Str_1_30:	.asciz "1"
+Str_2_31:	.asciz "2"
+Str_3_23:	.asciz "3"
 Str_4_25:	.asciz "4"
-Str_5_16:	.asciz "5"
-Str_6_15:	.asciz "6"
-Str_7_6:	.asciz "7"
-Str_8_7:	.asciz "8"
-Str_9_5:	.asciz "9"
+Str_5_14:	.asciz "5"
+Str_6_12:	.asciz "6"
+Str_7_3:	.asciz "7"
+Str_8_6:	.asciz "8"
+Str_9_3:	.asciz "9"
 data_4844FE2D:
 	.space	1, 0x00
 data_4844FE2E:
@@ -21828,43 +21761,43 @@ data_4844FE2E:
 .incbin_range "baserom/kn2400_program.rom", 0x04FE2E, 0x04FE30
 
 ptrs_4844FE30:
-	.long	Str_empty_670
-	.long	Str_empty_669
 	.long	Str_empty_668
 	.long	Str_empty_667
 	.long	Str_empty_666
 	.long	Str_empty_665
+	.long	Str_empty_664
+	.long	Str_empty_663
 	.long	Str_40_2
 	.long	Str_5c
-	.long	Str_empty_664
+	.long	Str_empty_662
 	.long	Str_22
 	.long	Str_27
-	.long	Str_empty_663
-	.long	data_4844FE14
-	.long	Str_empty_662
 	.long	Str_empty_661
-	.long	Str_0_24
-	.long	Str_1_33
-	.long	Str_2_33
-	.long	Str_3_25
+	.long	data_4844FE14
+	.long	Str_empty_660
+	.long	Str_empty_659
+	.long	Str_0_19
+	.long	Str_1_30
+	.long	Str_2_31
+	.long	Str_3_23
 	.long	Str_4_25
-	.long	Str_5_16
-	.long	Str_6_15
-	.long	Str_7_6
-	.long	Str_8_7
-	.long	Str_9_5
+	.long	Str_5_14
+	.long	Str_6_12
+	.long	Str_7_3
+	.long	Str_8_6
+	.long	Str_9_3
 	.long	data_4844FE2D
 	.long	data_4844FE2E
 
-Str_empty_660:	.asciz "("
-Str_empty_659:	.asciz ")"
-Str_empty_658:	.asciz "<"
-Str_empty_657:	.asciz ">"
-Str_empty_656:	.asciz "["
-Str_empty_655:	.asciz "]"
-Str_empty_654:	.asciz "{"
-Str_empty_653:	.asciz "}"
-Str_empty_652:	.asciz "|"
+Str_empty_658:	.asciz "("
+Str_empty_657:	.asciz ")"
+Str_empty_656:	.asciz "<"
+Str_empty_655:	.asciz ">"
+Str_empty_654:	.asciz "["
+Str_empty_653:	.asciz "]"
+Str_empty_652:	.asciz "{"
+Str_empty_651:	.asciz "}"
+Str_empty_650:	.asciz "|"
 data_4844FEAE:
 	.space	1, 0x00
 data_4844FEAF:
@@ -21873,15 +21806,15 @@ data_4844FEB0:
 	.space	1, 0x00
 data_4844FEB1:
 	.space	1, 0x00
-Str_empty_651:	.asciz ","
-Str_empty_650:	.asciz "."
-Str_empty_649:	.asciz ":"
-Str_empty_648:	.asciz ";"
-Str_empty_647:	.asciz "+"
-Str_empty_646:	.asciz "-"
-Str_empty_645:	.asciz "*"
-Str_empty_644:	.asciz "/"
-Str_empty_643:	.asciz "="
+Str_empty_649:	.asciz ","
+Str_empty_648:	.asciz "."
+Str_empty_647:	.asciz ":"
+Str_empty_646:	.asciz ";"
+Str_empty_645:	.asciz "+"
+Str_empty_644:	.asciz "-"
+Str_empty_643:	.asciz "*"
+Str_empty_642:	.asciz "/"
+Str_empty_641:	.asciz "="
 Str_8b:	.asciz "~8b"
 Str_8d:	.asciz "~8d"
 data_4844FECC:
@@ -21891,8 +21824,6 @@ data_4844FECD:
 .incbin_range "baserom/kn2400_program.rom", 0x04FECD, 0x04FED0
 
 ptrs_4844FED0:
-	.long	Str_empty_660
-	.long	Str_empty_659
 	.long	Str_empty_658
 	.long	Str_empty_657
 	.long	Str_empty_656
@@ -21900,12 +21831,12 @@ ptrs_4844FED0:
 	.long	Str_empty_654
 	.long	Str_empty_653
 	.long	Str_empty_652
+	.long	Str_empty_651
+	.long	Str_empty_650
 	.long	data_4844FEAE
 	.long	data_4844FEAF
 	.long	data_4844FEB0
 	.long	data_4844FEB1
-	.long	Str_empty_651
-	.long	Str_empty_650
 	.long	Str_empty_649
 	.long	Str_empty_648
 	.long	Str_empty_647
@@ -21913,6 +21844,8 @@ ptrs_4844FED0:
 	.long	Str_empty_645
 	.long	Str_empty_644
 	.long	Str_empty_643
+	.long	Str_empty_642
+	.long	Str_empty_641
 	.long	Str_8b
 	.long	Str_8d
 	.long	data_4844FECC
@@ -22301,7 +22234,7 @@ ptrs_48451530:
 	.long	Str_ERROR_xx_2
 	.long	Str_ERROR_xx
 	.long	data_48451502
-	.long	Str_0_19
+	.long	Str_0_18
 
 Str_EXIT_BUTTON:	.asciz " EXIT BUTTON"
 Str_PUSH_EXIT_BUTTON:	.asciz "PUSH EXIT BUTTON"
@@ -23842,120 +23775,120 @@ ptrs_4845E1EC:
 	.long	Str_SD_access_is_canceled_Please_try_again_a
 	.long	data_4845E1B1
 
-TtMessage_Table:	# 113 x MessageBoxDef (16 bytes each); read by TtMessage_L39 0x4864BE9E `movhu (d0, a0), d1`; IvMessageProc_L32 0x4864BEF9 `movhu (d0, a2), d0`; IvMessageProc_Le3 0x4864BFAA `movhu (d0, a0), d0` (+3)
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x00\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484517E4	# [0]
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x01\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484519DC
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x02\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48451AE8
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x03\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48451C50
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x05\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48451E48
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x06\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48452104
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x07\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484522B4
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x08\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484525D0	# [8]
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x09\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484527C4
-	MessageBoxDef	kind=3, x2="\xFF\xFF\n\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484528DC
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x0B\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48452A04
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x0C\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48452C64
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x14\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48453804
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x15\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484538D8
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684	# [16]
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x1E\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48455660
-	MessageBoxDef	kind=1, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450814
-	MessageBoxDef	kind=1, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450814
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x1F\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48455B80
-	MessageBoxDef	kind=3, x2="\xFF\xFF \x00\x00\x00", header=ptrs_484506CC, text=ptrs_48455C38
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x16\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48453A60	# [24]
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x17\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48453CCC
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x18\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48453EF8
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x19\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48454728
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x1A\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484549FC
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x1B\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48454CDC
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x1C\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48454EB4
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x1D\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845525C
-	MessageBoxDef	kind=3, x2="\xFF\xFF*\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48456754	# [32]
-	MessageBoxDef	kind=3, x2="\xFF\xFF)\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48456428
-	MessageBoxDef	kind=3, x2="\xFF\xFF(\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48456098
-	MessageBoxDef	kind=1, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450814
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450798, text=ptrs_48450BB0
-	MessageBoxDef	kind=5, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_484508AC
-	MessageBoxDef	kind=5, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_484508AC
-	MessageBoxDef	kind=5, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_484508AC
-	MessageBoxDef	kind=5, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_484508AC	# [40]
-	MessageBoxDef	kind=1, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450814
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF+\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48456AF0
-	MessageBoxDef	kind=1, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450814
-	MessageBoxDef	kind=3, x2="\xFF\xFF,\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48456DF4
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x0F\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48452DB0
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x10\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48452FB4	# [48]
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x11\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484530DC
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x12\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48453328
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF.\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484570E4
-	MessageBoxDef	kind=3, x2="\xFF\xFF/\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48457388
-	MessageBoxDef	kind=3, x2="\xFF\xFF0\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484575E0
-	MessageBoxDef	kind=3, x2="\xFF\xFF1\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48457968	# [56]
-	MessageBoxDef	kind=3, x2="\xFF\xFF6\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48457CD8
-	MessageBoxDef	kind=3, x2="\xFF\xFF7\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48458120
-	MessageBoxDef	kind=3, x2="\xFF\xFF8\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845843C
-	MessageBoxDef	kind=3, x2="\xFF\xFF9\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484587F0
-	MessageBoxDef	kind=3, x2="\xFF\xFF:\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48458BE8
-	MessageBoxDef	kind=3, x2="\xFF\xFF=\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484595E0
-	MessageBoxDef	kind=3, x2="\xFF\xFF\x13\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48453558
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684	# [64]
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF;\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48458F04
-	MessageBoxDef	kind=3, x2="\xFF\xFF<\x00\x00\x00", header=ptrs_484506CC, text=ptrs_484592F8
-	MessageBoxDef	kind=3, x2="\xFF\xFF>\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48459A9C
-	MessageBoxDef	kind=3, x2="\xFF\xFF?\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48459D8C
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450798, text=ptrs_48450F98	# [72]
-	MessageBoxDef	kind=3, x2="\xFF\xFF@\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48459F30
-	MessageBoxDef	kind=4, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48451610
-	MessageBoxDef	kind=3, x2="\xFF\xFF!\x00\x00\x00", header=ptrs_484506CC, text=ptrs_48455E1C
-	MessageBoxDef	kind=3, x2="\xFF\xFFA\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845A238
-	MessageBoxDef	kind=2, x2="\xFF\xFFB\x00\x00\x00", header=ptrs_48450798, text=ptrs_4845A53C
-	MessageBoxDef	kind=3, x2="\xFF\xFFC\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845A798
-	MessageBoxDef	kind=3, x2="\xFF\xFFD\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845AAD8
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450798, text=ptrs_48451254	# [80]
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450798, text=ptrs_48451388
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450798, text=ptrs_48451474
-	MessageBoxDef	kind=3, x2="\xFF\xFFE\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845ABBC
-	MessageBoxDef	kind=3, x2="\xFF\xFFF\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845ACF8
-	MessageBoxDef	kind=3, x2="\xFF\xFFG\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845AEDC
-	MessageBoxDef	kind=3, x2="\xFF\xFFH\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845B1BC
-	MessageBoxDef	kind=3, x2="\xFF\xFFI\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845B708
-	MessageBoxDef	kind=3, x2="\xFF\xFF-\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845B8C4	# [88]
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450798, text=ptrs_48451530
-	MessageBoxDef	kind=3, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450734, text=ptrs_4845BB18
-	MessageBoxDef	kind=3, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450734, text=ptrs_4845BE7C
-	MessageBoxDef	kind=3, x2="\xFF\xFFP\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845C038
-	MessageBoxDef	kind=3, x2="\xFF\xFFQ\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845C21C
-	MessageBoxDef	kind=3, x2="\xFF\xFFR\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845C2F8
-	MessageBoxDef	kind=3, x2="\xFF\xFFS\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845C44C
-	MessageBoxDef	kind=3, x2="\xFF\xFFU\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845C634	# [96]
-	MessageBoxDef	kind=3, x2="\xFF\xFFV\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845C8CC
-	MessageBoxDef	kind=3, x2="\xFF\xFFW\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845CA50
-	MessageBoxDef	kind=3, x2="\xFF\xFFX\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845CD3C
-	MessageBoxDef	kind=3, x2="\xFF\xFFY\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845CFD4
-	MessageBoxDef	kind=3, x2="\xFF\xFFZ\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845D630
-	MessageBoxDef	kind=3, x2="\xFF\xFF[\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845DB94
-	MessageBoxDef	kind=3, x2="\xFF\xFF\\\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845DDDC
-	MessageBoxDef	kind=3, x2="\xFF\xFF]\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845DFD4	# [104]
-	MessageBoxDef	kind=3, x2="\xFF\xFF^\x00\x00\x00", header=ptrs_484506CC, text=ptrs_4845E1EC
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=1, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=2, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=3, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=4, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	kind=6, x2="\xFF\xFF\xFF\xFF\x00\x00", header=ptrs_48450604, text=ptrs_48450684
-	MessageBoxDef	x2="\xFF\xFF\xFF\xFF\x00\x00"	# [112]
+TtMessage_Table:	# 113 x MessageBoxDef (16 bytes each); read by TtMessage_L39 0x4864BE9E `movhu (d0, a0), d1`; IvMessageProc_L32 0x4864BEF9 `movhu (d0, a2), d0`; IvMessageProc_L6c 0x4864BF33 `movhu (d0, a2), d0` (+11)
+	MessageBoxDef	kind=3, x2="\xFF\xFF", x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484517E4	# [0]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=1, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484519DC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=2, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48451AE8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=3, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48451C50
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=5, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48451E48
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=6, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48452104
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=7, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484522B4
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=8, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484525D0	# [8]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=9, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484527C4
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=10, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484528DC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=11, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48452A04
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=12, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48452C64
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=20, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48453804
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=21, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484538D8
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684	# [16]
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=30, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48455660
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450814
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450814
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=31, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48455B80
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=32, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48455C38
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=22, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48453A60	# [24]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=23, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48453CCC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=24, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48453EF8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=25, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48454728
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=26, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484549FC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=27, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48454CDC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=28, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48454EB4
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=29, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845525C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=42, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48456754	# [32]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=41, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48456428
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=40, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48456098
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450814
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450798, text=ptrs_48450BB0
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_484508AC
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_484508AC
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_484508AC
+	MessageBoxDef	kind=5, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_484508AC	# [40]
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450814
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=43, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48456AF0
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450814
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=44, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48456DF4
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=15, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48452DB0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=16, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48452FB4	# [48]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=17, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484530DC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=18, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48453328
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=46, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484570E4
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=47, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48457388
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=48, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484575E0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=49, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48457968	# [56]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=54, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48457CD8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=55, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48458120
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=56, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845843C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=57, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484587F0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=58, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48458BE8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=61, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484595E0
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=19, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48453558
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684	# [64]
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=59, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48458F04
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=60, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_484592F8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=62, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48459A9C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=63, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48459D8C
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450798, text=ptrs_48450F98	# [72]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=64, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48459F30
+	MessageBoxDef	kind=4, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48451610
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=33, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_48455E1C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=65, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845A238
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=66, x6="\x00\x00", header=ptrs_48450798, text=ptrs_4845A53C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=67, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845A798
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=68, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845AAD8
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450798, text=ptrs_48451254	# [80]
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450798, text=ptrs_48451388
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450798, text=ptrs_48451474
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=69, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845ABBC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=70, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845ACF8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=71, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845AEDC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=72, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845B1BC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=73, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845B708
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=45, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845B8C4	# [88]
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450798, text=ptrs_48451530
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450734, text=ptrs_4845BB18
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450734, text=ptrs_4845BE7C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=80, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845C038
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=81, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845C21C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=82, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845C2F8
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=83, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845C44C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=85, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845C634	# [96]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=86, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845C8CC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=87, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845CA50
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=88, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845CD3C
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=89, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845CFD4
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=90, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845D630
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=91, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845DB94
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=92, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845DDDC
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=93, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845DFD4	# [104]
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=94, x6="\x00\x00", header=ptrs_484506CC, text=ptrs_4845E1EC
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=1, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=2, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=3, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=4, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	kind=6, x2="\xFF\xFF", error_no=-1, x6="\x00\x00", header=ptrs_48450604, text=ptrs_48450684
+	MessageBoxDef	x2="\xFF\xFF", error_no=-1, x6="\x00\x00"	# [112]
 
 IvMessageProc_Table:	# 7 x u32, 5242882..5242905; read by IvMessageProc_L6c 0x4864BF33: `mov	(d0, a0), d0`; IvMessageProc_Le3 0x4864BFAA: `mov	(d0, a0), d0` ...
 	tab_u32	5242882, 5242884, 5242887, 5242891, 5242894, 5242896, 5242905
@@ -25668,8 +25601,11 @@ AcSpsMmmEditProc_Table:	# 8 x s16, 19..255; read by AcSpsMmmEditProc_L5c2 0x4864
 	tab_s16	255, 19, 20, 21, 22, 255, 255, 255
 
 Str_P_19:	.asciz "P\xB0"
-# census: opaque -- unknown-dump: 21 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06342F, 0x063444
+	.align	4, 0x00	# pad after Str_P_19
+
+func_4864CD66_entry_L32_Table:	# 5 x u32, 45072..4294967295; read by func_4864CD66_entry_L32 0x4864CD9D: `mov (d0, a2), d0`
+	tab_u32	45120, 45104, 45088, 45072, 4294967295
+
 Str_OtPt_2:	.asciz "OtPt"
 	.align	4, 0xFF	# pad after Str_OtPt_2
 
@@ -25855,7 +25791,7 @@ ptrs_48463B84:
 	.long	Str_POLY_3
 	.long	Str_MONO_4
 
-func_4864D035_Records:	# 31 x REC_func_4864D035_Records (28 bytes each); read by func_4864D035 0x4864D035 `mov (0xc, a0), d2`; func_4864D035 0x4864D035 `mov (4, a0), a0`; func_4864D035_entry_L4c 0x4864D083 `mov (4, a0), a0` (+17)
+func_4864D035_Records:	# 31 x REC_func_4864D035_Records (28 bytes each); read by func_4864D035 0x4864D035 `mov (0xc, a0), d2`; func_4864D035 0x4864D035 `mov (4, a0), a0`; func_4864D035_entry_L4c 0x4864D083 `mov (4, a0), a0` (+18)
 	REC_func_4864D035_Records	p0=func_4864D0EC, f20=0xFFFFFFFF	# [0]
 	REC_func_4864D035_Records	p0=func_4864DE46, p4=func_4864D035_Records_p4_10, p8=func_4864D035_Records_p4_p0_0, p12=data_48463634, f16=0xC00000, f20=0xFFFFFFFF
 	REC_func_4864D035_Records	p0=func_4864D61C, p4=func_4864D035_Records_p4_0, p8=func_4864D035_Records_p4_p0_10, p12=func_4864D035_Records_p4_p0_10, f16=0xB00007, f20=128
@@ -25922,9 +25858,9 @@ Str_R_2d_4:	.asciz "R%2d"
 	.align	4, 0xFF	# pad after Str_R_2d_4
 Str_empty_1107:	.asciz " --"
 
-func_4864DA1A_Table:	# 5 x u32, 45076..45140; read by func_4864DA1A_L2f 0x4864DA49: `mov	(d2, a0), a2`
+func_4864DA1A_Table:	# 5 x u32, 45076..45140; read by func_4864DA1A : `mov	(d2, a0), a2`
 	tab_u32	45076, 45092, 45108, 45124, 45140
-func_4864DA1A_Table_2:	# 8 x u32, 45072..4294901766; read by func_4864DA1A_L2f 0x4864DA49: `mov	(d1, a0), d0`; func_4864DA1A_Lcc 0x4864DAE6: `mov	(d0, a0), d0`
+func_4864DA1A_Table_2:	# 8 x u32, 45072..4294901766; read by func_4864DA1A : `mov	(d0, a0), d0`; func_4864DA1A : `mov	(d1, a0), d0`
 	tab_u32	45072, 45088, 45104, 45120, 45136, 196610, 327684, 4294901766
 
 Str_empty_1106:	.asciz "      ----                         "
@@ -25959,7 +25895,7 @@ Str_10k:	.asciz "  10k"
 Str_12_5k:	.asciz "12.5k"
 Str_16k:	.asciz "  16k"
 Str_20k:	.asciz "  20k"
-Str_empty_642:	.asciz "     "
+Str_empty_640:	.asciz "     "
 
 func_4864DBA7_Table:
 	.long	Str_20
@@ -25993,7 +25929,7 @@ func_4864DBA7_Table:
 	.long	Str_12_5k
 	.long	Str_16k
 	.long	Str_20k
-	.long	Str_empty_642
+	.long	Str_empty_640
 
 Str_empty_1104:	.asciz "  -- "
 	.align	4, 0xFF	# pad after Str_empty_1104
@@ -26389,7 +26325,7 @@ AcSpsMmmEditProc_L5c2_Records:	# 7 x REC_AcSpsMmmEditProc_L5c2_Records (32 bytes
 	REC_AcSpsMmmEditProc_L5c2_Records	28, 0, 29, 0, 30, 0, 31, 0, 55, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0
 	REC_AcSpsMmmEditProc_L5c2_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
-IvSdpartProc_Table:	# 7 x u32, 7340053..4294967295; read by IvSdpartProc_Lbe 0x4864ECA2: `mov	(d1, a0), d0`; IvSdpartProc_Ldd 0x4864ECC1: `mov	(d0, a0), d0` ...
+IvSdpartProc_Table:	# 7 x u32, 7340053..4294967295; read by IvSdpartProc_Ldd 0x4864ECC1: `mov	(d0, a0), d0`; IvSdpartProc_L2fa 0x4864EEDE: `mov	(d0, a0), d0` ...
 	tab_u32	4294967295, 7340053, 7340081, 7340127, 7340162, 7340103, 7340053
 
 Str_SdPT:	.asciz "SdPT"
@@ -26403,15 +26339,9 @@ AcMixerProc_Lb6_Table:
 	.long	func_486519B7
 	.long	func_48651B2A
 	.long	func_48651E87
-	.long	func_48651EE0
-	.long	func_48651FF4
-	.long	func_486521F9
-	.long	func_486523A1
-	.long	func_4865253D
+# census: opaque -- unknown-dump: 31 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x064DE8, 0x064E07
 
-Str_SOUND_17:	.asciz "SOUND"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x064E02, 0x064E07
 Str_VOLUME_58:	.asciz "VOLUME"
 	.align	4, 0x00	# pad after Str_VOLUME_58
 Str_REVERB_14:	.asciz "REVERB"
@@ -26469,7 +26399,7 @@ Str_DECAY_TIME_2:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_5:	.asciz "RELEASE TIME"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06532E, 0x065330
-Str_empty_641:	.asciz "%"
+Str_empty_639:	.asciz "%"
 # census: opaque -- unknown-dump: 154 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x065332, 0x0653CC
 Str_SFHVIBRATO_RATE:	.asciz ".SFHVIBRATO RATE"
@@ -26483,20 +26413,23 @@ Str_DECAY_TIME_3:	.asciz "DECAY TIME"
 Str_RELEASE_TIME_6:	.asciz "RELEASE TIME"
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06543A, 0x06543C
-Str_empty_640:	.asciz "%"
+Str_empty_638:	.asciz "%"
 # census: opaque -- unknown-dump: 158 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06543E, 0x0654DC
 
 AcMixerScreenProc_Lba_Table:
 	.long	data_48464ED0
-	.long	Str_empty_641
+	.long	Str_empty_639
 	.long	data_48465134
-	.long	Str_empty_640
+	.long	Str_empty_638
 
-data_500017B8_p0_0:	# REC_data_500017B8_p0 (4 bytes)
-	REC_data_500017B8_p0	x0="\x10\x00\x11\x00"
-# census: opaque -- unknown-dump: 124 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0654F0, 0x06556C
+data_500017B8_p0_0:	# REC_data_500017B8_p0 (1 bytes), then 63 x u16 the code indexes from +0 (read by func_4864FE74 0x4864FE74 `movhu (d1, a0), d0`; func_4864FE74_entry_L1a 0x4864FE93 `movhu (d0, a0), d0`)
+	REC_data_500017B8_p0	x0="\x10"
+	tab_u16	4352, 4608, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 0	# [0]
+	tab_u16	256, 512, 768, 1024, 1280, 1536, 1792, 2048, 2304, 2560, 2816, 3072, 3328, 3584, 3840, 6656	# [16]
+	tab_u16	6400, 5888, 5632, 5376, 5120, 4864, 6144, 7424, 7168, 6912, 8704, 8960, 4608, 4352, 4096, 65280	# [32]
+	tab_u16	65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280, 65280	# [48]
+	.align	4, 0x00	# pad after data_500017B8_p0_0
 
 AcMixerScreenProc_Lba_Table_2:
 	.long	data_500017B8_p0_0
@@ -26668,7 +26601,7 @@ Str_3d_223:	.asciz "%3d"
 Str_MUTE_5:	.asciz "MUTE"
 	.align	4, 0xFF	# pad after Str_MUTE_5
 
-AcSpsKsclPartProc_L19a_Table:	# 27 x s16, 0..28; read by AcSpsKsclPartProc_L19a 0x48652D0E: `movhu	(d0, a2), d0`
+AcSpsKsclPartProc_L19a_Table:	# 27 x s16, 0..28; read by AcSpsKsclPartProc_L19a 0x48652D0E: `movhu	(d0, a2), d0`; AcSpsKsclPartProc_L33e 0x48652EB2: `movhu	(d1, a2), d0` ...
 	tab_s16	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8	# [0]
 	tab_s16	9, 10, 11, 12, 13, 14, 15, 27, 28, 19, 20, 21	# [12]
 	tab_s16	22, 23, 24	# [24]
@@ -26777,30 +26710,30 @@ AcKsclTypeEditProc_Lc5_Table:
 	.long	Text_FLAT+117
 	.long	data_48465BEA
 
-Str_0_18:	.asciz "  0"
-Str_1_31:	.asciz " +1"
-Str_2_32:	.asciz " +2"
-Str_3_24:	.asciz " +3"
+Str_0_15:	.asciz "  0"
+Str_1_29:	.asciz " +1"
+Str_2_30:	.asciz " +2"
+Str_3_22:	.asciz " +3"
 Str_4_24:	.asciz " +4"
-Str_5_15:	.asciz " +5"
-Str_6_14:	.asciz " +6"
-Str_7_5:	.asciz " +7"
-Str_8_6:	.asciz " +8"
-Str_9_4:	.asciz " +9"
+Str_5_12:	.asciz " +5"
+Str_6_11:	.asciz " +6"
+Str_7_2:	.asciz " +7"
+Str_8_5:	.asciz " +8"
+Str_9_2:	.asciz " +9"
 Str_10_3:	.asciz "+10"
 Str_11:	.asciz "+11"
 
 AcKsclShiftEditProc_Lc5_Table:
-	.long	Str_0_18
-	.long	Str_1_31
-	.long	Str_2_32
-	.long	Str_3_24
+	.long	Str_0_15
+	.long	Str_1_29
+	.long	Str_2_30
+	.long	Str_3_22
 	.long	Str_4_24
-	.long	Str_5_15
-	.long	Str_6_14
-	.long	Str_7_5
-	.long	Str_8_6
-	.long	Str_9_4
+	.long	Str_5_12
+	.long	Str_6_11
+	.long	Str_7_2
+	.long	Str_8_5
+	.long	Str_9_2
 	.long	Str_10_3
 	.long	Str_11
 
@@ -26833,7 +26766,7 @@ AcKsclShiftProc_L3f_Table:
 	.long	Text_KEY_C+81
 	.long	Text_KEY_C+90
 
-Str_C_21:	.asciz "[C ]"
+Str_C_20:	.asciz "[C ]"
 
 Text_C:	# 11 strings of 4 characters, NUL-terminated
 	.asciz	"[C#]"
@@ -26849,7 +26782,7 @@ Text_C:	# 11 strings of 4 characters, NUL-terminated
 	.asciz	"[B ]"
 
 AcKsclKeyEditProc_L51_Table:
-	.long	Str_C_21
+	.long	Str_C_20
 	.long	Text_C
 	.long	Text_C+5
 	.long	Text_C+10
@@ -27013,40 +26946,26 @@ Text_3d:	# 22 strings of 3 characters, NUL-terminated
 	.asciz	"OFF"
 	.asciz	"ON "
 
-IvOtherPartProc_L1d_Records:	# 16 x REC_IvOtherPartProc_L1d_Records (8 bytes each); read by IvOtherPartProc_L1d 0x4864CE43 `mov (a0), d0`
-	REC_IvOtherPartProc_L1d_Records	x4="%\xD0dH"	# [0]
-	REC_IvOtherPartProc_L1d_Records	f0=1, x4="y\xCEdH"
-	REC_IvOtherPartProc_L1d_Records	f0=2, x4="\xD0\xCEdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x700002, x4="\xF7\xCEdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x700003, x4="\x92\xCFdH"
-	REC_IvOtherPartProc_L1d_Records	f0=5, x4="\x19\xCFdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x10054, x4="\xB3\xCFdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x10075, x4="\xC4\xCFdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x10052, x4="\xD6\xCFdH"	# [8]
-	REC_IvOtherPartProc_L1d_Records	f0=0x10053, x4="\xE4\xCFdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x100B2, x4="\xF2\xCFdH"
-	REC_IvOtherPartProc_L1d_Records	f0=0x1003A, x4="\x13\xD0dH"
-	REC_IvOtherPartProc_L1d_Records	x4="%\xD0dH"
-	REC_IvOtherPartProc_L1d_Records	x4="%\xD0dH"
-	REC_IvOtherPartProc_L1d_Records	x4="%\xD0dH"
-	REC_IvOtherPartProc_L1d_Records	x4="%\xD0dH"
-func_4864D0EC_entry_L1e_Records:	# 16 x REC_func_4864D0EC_entry_L1e_Records (8 bytes each); read by func_4864D0EC_entry_L1e 0x4864D10F `mov (a0), d0`
-	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFD0, x4="n\xD1dH"	# [0]
-	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFD1, x4="Z\xD1dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFD2, x4="c\xD1dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=131, x4="E\xD1dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=1, x4="\xC1\xD1dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=133, x4="c\xD1dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=5, x4="}\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFC7, x4="Q\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=6, x4="\x81\xD2dH"	# [8]
-	REC_func_4864D0EC_entry_L1e_Records	f0=41, x4="\x7F\xD1dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=112, x4="\x85\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	f0=113, x4="\x9F\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	x4="\xB1\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	x4="\xB1\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	x4="\xB1\xD2dH"
-	REC_func_4864D0EC_entry_L1e_Records	x4="\xB1\xD2dH"
+IvOtherPartProc_L1d_Records:	# 1 x REC_IvOtherPartProc_L1d_Records (8 bytes each); read by IvOtherPartProc_L1d 0x4864CE43 `mov (a0), d0`; IvOtherPartProc_L4b 0x4864CE71 `mov (a0), d0`; IvOtherPartProc_L4e 0x4864CE74 `mov (4, a0), a0`
+	REC_IvOtherPartProc_L1d_Records	p4=IvOtherPartProc_L1ff
+.incbin_range "baserom/kn2400_program.rom", 0x068508, 0x068580
+func_4864D0EC_entry_L1e_Records:	# 16 x REC_func_4864D0EC_entry_L1e_Records (8 bytes each); read by func_4864D0EC_entry_L1e 0x4864D10F `mov (a0), d0`; func_4864D0EC_entry_L4c 0x4864D13D `mov (a0), d0`; func_4864D0EC_entry_L4f 0x4864D140 `mov (4, a0), a0`
+	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFD0, f4=0x4864D16E	# [0]
+	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFD1, f4=0x4864D15A
+	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFD2, f4=0x4864D163
+	REC_func_4864D0EC_entry_L1e_Records	f0=131, f4=0x4864D145
+	REC_func_4864D0EC_entry_L1e_Records	f0=1, f4=0x4864D1C1
+	REC_func_4864D0EC_entry_L1e_Records	f0=133, f4=0x4864D163
+	REC_func_4864D0EC_entry_L1e_Records	f0=5, f4=0x4864D27D
+	REC_func_4864D0EC_entry_L1e_Records	f0=0x6FFFC7, f4=0x4864D251
+	REC_func_4864D0EC_entry_L1e_Records	f0=6, f4=0x4864D281	# [8]
+	REC_func_4864D0EC_entry_L1e_Records	f0=41, f4=0x4864D17F
+	REC_func_4864D0EC_entry_L1e_Records	f0=112, f4=0x4864D285
+	REC_func_4864D0EC_entry_L1e_Records	f0=113, f4=0x4864D29F
+	REC_func_4864D0EC_entry_L1e_Records	f4=0x4864D2B1
+	REC_func_4864D0EC_entry_L1e_Records	f4=0x4864D2B1
+	REC_func_4864D0EC_entry_L1e_Records	f4=0x4864D2B1
+	REC_func_4864D0EC_entry_L1e_Records	f4=0x4864D2B1
 
 MainSoundAdd_Table:	# 12 x u32, 1214571015..1214571086; read by MainSoundAdd_L2ab 0x4864E1FB: `mov	(d0, a0), a0`
 	tab_u32	1214571015, 1214571015, 1214571086, 1214571086, 1214571086, 1214571086, 1214571086, 1214571086	# [0]
@@ -27055,345 +26974,318 @@ MainSoundAdd_Table_2:	# 12 x u32, 1214570639..1214570714; read by MainSoundAdd_L
 	tab_u32	1214570639, 1214570639, 1214570714, 1214570714, 1214570714, 1214570714, 1214570714, 1214570714	# [0]
 	tab_u32	1214570714, 1214570714, 1214570714, 1214570714	# [8]
 
-MmmMtune_L1d_Records:	# 16 x REC_MmmMtune_L1d_Records (8 bytes each); read by MmmMtune_L1d 0x4864E392 `mov (a0), d0`
-	REC_MmmMtune_L1d_Records	f0=128, x4="\x19\xE4dH"	# [0]
-	REC_MmmMtune_L1d_Records	f0=129, x4=",\xE4dH"
-	REC_MmmMtune_L1d_Records	f0=1, x4="7\xE4dH"
-	REC_MmmMtune_L1d_Records	f0=2, x4=";\xE4dH"
-	REC_MmmMtune_L1d_Records	f0=109, x4="C\xE4dH"
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"	# [8]
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"
-	REC_MmmMtune_L1d_Records	x4="F\xE4dH"
-	REC_MmmMtune_L1d_Records	f0=108, x4="?\xE4dH"
-	REC_MmmMtune_L1d_Records	f0=125, x4="\x1C\xE4dH"
-	REC_MmmMtune_L1d_Records	f0=126, x4="\xC8\xE3dH"
-	REC_MmmMtune_L1d_Records	f0=127, x4="\x16\xE4dH"
-AcTechniChordProc_L1d_Records:	# 16 x REC_AcTechniChordProc_L1d_Records (8 bytes each); read by AcTechniChordProc_L1d 0x4864E4D7 `mov (a0), d0`
-	REC_AcTechniChordProc_L1d_Records	f0=16, x4="\xF8\xE8dH"	# [0]
-	REC_AcTechniChordProc_L1d_Records	f0=1, x4="\x0E\xE5dH"
-	REC_AcTechniChordProc_L1d_Records	f0=0x100B2, x4="\xA9\xE5dH"
-	REC_AcTechniChordProc_L1d_Records	f0=0x100B3, x4="\xBE\xE7dH"
-	REC_AcTechniChordProc_L1d_Records	f0=0x100B4, x4="\xD4\xE5dH"
-	REC_AcTechniChordProc_L1d_Records	f0=0x710005, x4="\x1C\xE8dH"
-	REC_AcTechniChordProc_L1d_Records	f0=17, x4="`\xE8dH"
-	REC_AcTechniChordProc_L1d_Records	f0=18, x4="\xF8\xE8dH"
-	REC_AcTechniChordProc_L1d_Records	f0=36, x4="\x90\xE9dH"	# [8]
-	REC_AcTechniChordProc_L1d_Records	f0=9, x4="b\xE5dH"
-	REC_AcTechniChordProc_L1d_Records	f0=20, x4="\xB5\xE9dH"
-	REC_AcTechniChordProc_L1d_Records	x4="\xDF\xE9dH"
-	REC_AcTechniChordProc_L1d_Records	x4="\xDF\xE9dH"
-	REC_AcTechniChordProc_L1d_Records	x4="\xDF\xE9dH"
-	REC_AcTechniChordProc_L1d_Records	x4="\xDF\xE9dH"
-	REC_AcTechniChordProc_L1d_Records	f0=15, x4="`\xE8dH"
-IvSdpartProc_L21_Records:	# 16 x REC_IvSdpartProc_L21_Records (8 bytes each); read by IvSdpartProc_L21 0x4864EC05 `mov (a0), d0`
-	REC_IvSdpartProc_L21_Records	f0=16, x4="\x87\xEDdH"	# [0]
-	REC_IvSdpartProc_L21_Records	f0=1, x4="<\xECdH"
-	REC_IvSdpartProc_L21_Records	f0=2, x4="\xF1\xECdH"
-	REC_IvSdpartProc_L21_Records	f0=17, x4="\x87\xEDdH"
-	REC_IvSdpartProc_L21_Records	f0=18, x4="\x87\xEDdH"
-	REC_IvSdpartProc_L21_Records	f0=20, x4=";\xEEdH"
-	REC_IvSdpartProc_L21_Records	f0=0x710006, x4="\xE2\xEEdH"
-	REC_IvSdpartProc_L21_Records	f0=22, x4="\x17\xEFdH"
-	REC_IvSdpartProc_L21_Records	f0=0x100B2, x4="\x9E\xEFdH"	# [8]
-	REC_IvSdpartProc_L21_Records	f0=9, x4="(\xEDdH"
-	REC_IvSdpartProc_L21_Records	f0=0x1003A, x4="\xC2\xEFdH"
-	REC_IvSdpartProc_L21_Records	x4="\xD4\xEFdH"
-	REC_IvSdpartProc_L21_Records	x4="\xD4\xEFdH"
-	REC_IvSdpartProc_L21_Records	x4="\xD4\xEFdH"
-	REC_IvSdpartProc_L21_Records	x4="\xD4\xEFdH"
-	REC_IvSdpartProc_L21_Records	f0=15, x4="\x87\xEDdH"
-AcSpsMmmEditProc_L21_Records:	# 32 x REC_AcSpsMmmEditProc_L21_Records (8 bytes each); read by AcSpsMmmEditProc_L21 0x4864F1DB `mov (a0), d0`
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x700000, x4="\x0F\xF5dH"	# [0]
-	REC_AcSpsMmmEditProc_L21_Records	f0=1, x4="\x13\xF2dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x10062, x4="\xFE\xF3dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x710001, x4="\x85\xF7dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x710002, x4="\xBE\xF7dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"	# [8]
-	REC_AcSpsMmmEditProc_L21_Records	f0=9, x4="\x10\xF4dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=41, x4="\xAA\xF6dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x1004E, x4="f\xF7dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=15, x4="\xE2\xF5dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x100D0, x4="\xE7\xF2dH"	# [16]
-	REC_AcSpsMmmEditProc_L21_Records	f0=49, x4="\\\xF2dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=17, x4="\xE2\xF5dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=19, x4="\xB9\xF5dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=20, x4="k\xF4dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=18, x4="\xE2\xF5dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=16, x4="\xE2\xF5dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x10054, x4="\xC8\xF7dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x100AE, x4="\xD2\xF7dH"	# [24]
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003A, x4="\xAD\xF2dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003B, x4="+\xF3dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003C, x4="\x80\xF7dH"
-	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003D, x4="\x94\xF3dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-	REC_AcSpsMmmEditProc_L21_Records	x4=":\xF8dH"
-AcSpsPanProc_L1d_Records:	# 16 x REC_AcSpsPanProc_L1d_Records (8 bytes each); read by AcSpsPanProc_L1d 0x4864FAC3 `mov (a0), d0`
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"	# [0]
-	REC_AcSpsPanProc_L1d_Records	f0=1, x4="\xE5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	f0=2, x4="\xE5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	f0=3, x4="\xE5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	f0=4, x4="\xE5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	f0=0x100A5, x4="\xF5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	f0=0x100A6, x4="\xF9\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"	# [8]
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"
-	REC_AcSpsPanProc_L1d_Records	f0=27, x4="\xE5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"
-	REC_AcSpsPanProc_L1d_Records	f0=0x1002D, x4="\xF5\xFAdH"
-	REC_AcSpsPanProc_L1d_Records	x4="\xD0\xFCdH"
-	REC_AcSpsPanProc_L1d_Records	f0=0x1002F, x4="\xF5\xFAdH"
-AcMixerScreenProc_L21_Records:	# 16 x REC_AcMixerScreenProc_L21_Records (8 bytes each); read by AcMixerScreenProc_L21 0x4864FECA `mov (a0), d0`
-	REC_AcMixerScreenProc_L21_Records	f0=16, x4="_\x05eH"	# [0]
-	REC_AcMixerScreenProc_L21_Records	f0=1, x4="g\xFFdH"
-	REC_AcMixerScreenProc_L21_Records	f0=2, x4="\x16\x01eH"
-	REC_AcMixerScreenProc_L21_Records	f0=0x700002, x4="@\x05eH"
-	REC_AcMixerScreenProc_L21_Records	f0=20, x4="\x0F\x02eH"
-	REC_AcMixerScreenProc_L21_Records	x4="\x98\x05eH"
-	REC_AcMixerScreenProc_L21_Records	f0=22, x4="\xB2\x03eH"
-	REC_AcMixerScreenProc_L21_Records	f0=39, x4="h\x02eH"
-	REC_AcMixerScreenProc_L21_Records	x4="\x98\x05eH"	# [8]
-	REC_AcMixerScreenProc_L21_Records	f0=9, x4="\xEE\x01eH"
-	REC_AcMixerScreenProc_L21_Records	f0=0x1003A, x4="\x01\xFFdH"
-	REC_AcMixerScreenProc_L21_Records	x4="\x98\x05eH"
-	REC_AcMixerScreenProc_L21_Records	x4="\x98\x05eH"
-	REC_AcMixerScreenProc_L21_Records	x4="\x98\x05eH"
-	REC_AcMixerScreenProc_L21_Records	x4="\x98\x05eH"
-	REC_AcMixerScreenProc_L21_Records	f0=15, x4="_\x05eH"
-AcMixerProc_L1e_Records:	# 16 x REC_AcMixerProc_L1e_Records (8 bytes each); read by AcMixerProc_L1e 0x4865061F `mov (a0), d0`
-	REC_AcMixerProc_L1e_Records	f0=0x100B0, x4="\x83\x07eH"	# [0]
-	REC_AcMixerProc_L1e_Records	f0=1, x4="\xAF\x07eH"
-	REC_AcMixerProc_L1e_Records	f0=16, x4="\x83\x08eH"
-	REC_AcMixerProc_L1e_Records	f0=0x700001, x4="\x82\x09eH"
-	REC_AcMixerProc_L1e_Records	f0=36, x4="9\x08eH"
-	REC_AcMixerProc_L1e_Records	f0=5, x4="V\x06eH"
-	REC_AcMixerProc_L1e_Records	x4="\xCD\x09eH"
-	REC_AcMixerProc_L1e_Records	x4="\xCD\x09eH"
-	REC_AcMixerProc_L1e_Records	x4="\xCD\x09eH"	# [8]
-	REC_AcMixerProc_L1e_Records	x4="\xCD\x09eH"
-	REC_AcMixerProc_L1e_Records	x4="\xCD\x09eH"
-	REC_AcMixerProc_L1e_Records	f0=27, x4="9\x08eH"
-	REC_AcMixerProc_L1e_Records	x4="\xCD\x09eH"
-	REC_AcMixerProc_L1e_Records	f0=0x1004D, x4="T\x09eH"
-	REC_AcMixerProc_L1e_Records	f0=0x100AE, x4="\x10\x07eH"
-	REC_AcMixerProc_L1e_Records	f0=0x100AF, x4="\x83\x07eH"
-AcSpsKsclPartProc_L1e_Records:	# 16 x REC_AcSpsKsclPartProc_L1e_Records (8 bytes each); read by AcSpsKsclPartProc_L1e 0x48652B92 `mov (a0), d0`
-	REC_AcSpsKsclPartProc_L1e_Records	f0=16, x4="6.eH"	# [0]
-	REC_AcSpsKsclPartProc_L1e_Records	f0=1, x4="\xC9+eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=2, x4="3,eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=49, x4="\x91,eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=20, x4="}-eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=19, x4="\x0F.eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=0x710006, x4="\xD7-eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=17, x4="6.eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=18, x4="6.eH"	# [8]
-	REC_AcSpsKsclPartProc_L1e_Records	f0=9, x4="\x12-eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=0x1003A, x4="\xDE,eH"
-	REC_AcSpsKsclPartProc_L1e_Records	x4=":/eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=0x1003C, x4="6/eH"
-	REC_AcSpsKsclPartProc_L1e_Records	x4=":/eH"
-	REC_AcSpsKsclPartProc_L1e_Records	x4=":/eH"
-	REC_AcSpsKsclPartProc_L1e_Records	f0=15, x4="6.eH"
-AcKsclTypeEditProc_L1e_Records:	# 16 x REC_AcKsclTypeEditProc_L1e_Records (8 bytes each); read by AcKsclTypeEditProc_L1e 0x48653043 `mov (a0), d0`
-	REC_AcKsclTypeEditProc_L1e_Records	f0=16, x4="U1eH"	# [0]
-	REC_AcKsclTypeEditProc_L1e_Records	f0=1, x4="{0eH"
-	REC_AcKsclTypeEditProc_L1e_Records	f0=17, x4="U1eH"
-	REC_AcKsclTypeEditProc_L1e_Records	f0=19, x4=".1eH"
-	REC_AcKsclTypeEditProc_L1e_Records	f0=18, x4="U1eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"	# [8]
-	REC_AcKsclTypeEditProc_L1e_Records	f0=9, x4="\x0B1eH"
-	REC_AcKsclTypeEditProc_L1e_Records	f0=0x1003A, x4="\xEE0eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"
-	REC_AcKsclTypeEditProc_L1e_Records	f0=0x1003C, x4="\xD31eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"
-	REC_AcKsclTypeEditProc_L1e_Records	x4="\xD71eH"
-	REC_AcKsclTypeEditProc_L1e_Records	f0=15, x4="U1eH"
-AcKsclShiftEditProc_L1e_Records:	# 16 x REC_AcKsclShiftEditProc_L1e_Records (8 bytes each); read by AcKsclShiftEditProc_L1e 0x48653206 `mov (a0), d0`
-	REC_AcKsclShiftEditProc_L1e_Records	f0=16, x4="\x183eH"	# [0]
-	REC_AcKsclShiftEditProc_L1e_Records	f0=1, x4=">2eH"
-	REC_AcKsclShiftEditProc_L1e_Records	f0=17, x4="\x183eH"
-	REC_AcKsclShiftEditProc_L1e_Records	f0=19, x4="\xF12eH"
-	REC_AcKsclShiftEditProc_L1e_Records	f0=18, x4="\x183eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"	# [8]
-	REC_AcKsclShiftEditProc_L1e_Records	f0=9, x4="\xCE2eH"
-	REC_AcKsclShiftEditProc_L1e_Records	f0=0x1003A, x4="\xB12eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"
-	REC_AcKsclShiftEditProc_L1e_Records	f0=0x1003C, x4="\xAE3eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"
-	REC_AcKsclShiftEditProc_L1e_Records	x4="\xB23eH"
-	REC_AcKsclShiftEditProc_L1e_Records	f0=15, x4="\x183eH"
-AcKsclCopyEditProc_L1e_Records:	# 16 x REC_AcKsclCopyEditProc_L1e_Records (8 bytes each); read by AcKsclCopyEditProc_L1e 0x4865344A `mov (a0), d0`
-	REC_AcKsclCopyEditProc_L1e_Records	f0=16, x4="\xD85eH"	# [0]
-	REC_AcKsclCopyEditProc_L1e_Records	f0=1, x4="\x814eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=2, x4=",5eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=19, x4="\xB15eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=17, x4="\xD85eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=18, x4="\xD85eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=20, x4="\xC86eH"
-	REC_AcKsclCopyEditProc_L1e_Records	x4="X7eH"
-	REC_AcKsclCopyEditProc_L1e_Records	x4="X7eH"	# [8]
-	REC_AcKsclCopyEditProc_L1e_Records	f0=9, x4="\x8E5eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=0x1003A, x4="q5eH"
-	REC_AcKsclCopyEditProc_L1e_Records	x4="X7eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=0x1003C, x4="\xC36eH"
-	REC_AcKsclCopyEditProc_L1e_Records	x4="X7eH"
-	REC_AcKsclCopyEditProc_L1e_Records	x4="X7eH"
-	REC_AcKsclCopyEditProc_L1e_Records	f0=15, x4="\xD85eH"
-AcKsclKeyEditProc_L1e_Records:	# 16 x REC_AcKsclKeyEditProc_L1e_Records (8 bytes each); read by AcKsclKeyEditProc_L1e 0x48653787 `mov (a0), d0`
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"	# [0]
-	REC_AcKsclKeyEditProc_L1e_Records	f0=1, x4="\xDC7eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=0x10032, x4="\xBF7eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=33, x4="\xBA;eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=0x10034, x4="\x07<eH"
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=7, x4="&8eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=8, x4="&8eH"	# [8]
-	REC_AcKsclKeyEditProc_L1e_Records	f0=9, x4="&8eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=10, x4="&8eH"
-	REC_AcKsclKeyEditProc_L1e_Records	f0=11, x4="\xFF7eH"
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"
-	REC_AcKsclKeyEditProc_L1e_Records	x4="\x0B<eH"
-SpPartMono_L1d_Records:	# 16 x REC_SpPartMono_L1d_Records (8 bytes each); read by SpPartMono_L1d 0x486545B5 `mov (a0), d0`
-	REC_SpPartMono_L1d_Records	f0=16, x4="\x03FeH"	# [0]
-	REC_SpPartMono_L1d_Records	f0=17, x4="\x03FeH"
-	REC_SpPartMono_L1d_Records	f0=2, x4="\xEBEeH"
-	REC_SpPartMono_L1d_Records	f0=18, x4="\x03FeH"
-	REC_SpPartMono_L1d_Records	f0=19, x4="\x03FeH"
-	REC_SpPartMono_L1d_Records	f0=21, x4="\xD9FeH"
-	REC_SpPartMono_L1d_Records	f0=22, x4="qGeH"
-	REC_SpPartMono_L1d_Records	f0=0x10082, x4="uGeH"
-	REC_SpPartMono_L1d_Records	f0=1, x4="\x1AHeH"	# [8]
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-	REC_SpPartMono_L1d_Records	x4="\x1DHeH"
-ApcRevFunc_L1d_Records:	# 16 x REC_ApcRevFunc_L1d_Records (8 bytes each); read by ApcRevFunc_L1d 0x4865488F `mov (a0), d0`
-	REC_ApcRevFunc_L1d_Records	f0=16, x4="\xECHeH"	# [0]
-	REC_ApcRevFunc_L1d_Records	f0=17, x4="uIeH"
-	REC_ApcRevFunc_L1d_Records	f0=2, x4="\xC5HeH"
-	REC_ApcRevFunc_L1d_Records	f0=18, x4="\xECHeH"
-	REC_ApcRevFunc_L1d_Records	f0=19, x4="uIeH"
-	REC_ApcRevFunc_L1d_Records	f0=21, x4="\x09JeH"
-	REC_ApcRevFunc_L1d_Records	f0=22, x4=";KeH"
-	REC_ApcRevFunc_L1d_Records	f0=0x10082, x4="?KeH"
-	REC_ApcRevFunc_L1d_Records	f0=1, x4="\xE5KeH"	# [8]
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-	REC_ApcRevFunc_L1d_Records	x4="\xE8KeH"
-ApcRevCheck_L1d_Records:	# 16 x REC_ApcRevCheck_L1d_Records (8 bytes each); read by ApcRevCheck_L1d 0x48654C09 `mov (a0), d0`
-	REC_ApcRevCheck_L1d_Records	f0=16, x4="OLeH"	# [0]
-	REC_ApcRevCheck_L1d_Records	f0=17, x4="OLeH"
-	REC_ApcRevCheck_L1d_Records	f0=2, x4=">LeH"
-	REC_ApcRevCheck_L1d_Records	f0=18, x4="OLeH"
-	REC_ApcRevCheck_L1d_Records	f0=19, x4="OLeH"
-	REC_ApcRevCheck_L1d_Records	f0=21, x4="SLeH"
-	REC_ApcRevCheck_L1d_Records	f0=22, x4="\xC0LeH"
-	REC_ApcRevCheck_L1d_Records	f0=0x10082, x4="\xC4LeH"
-	REC_ApcRevCheck_L1d_Records	f0=1, x4=">MeH"	# [8]
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-	REC_ApcRevCheck_L1d_Records	x4="AMeH"
-TsRight1Func_L1d_Records:	# 16 x REC_TsRight1Func_L1d_Records (8 bytes each); read by TsRight1Func_L1d 0x48654D62 `mov (a0), d0`
-	REC_TsRight1Func_L1d_Records	f0=16, x4="\xB6MeH"	# [0]
-	REC_TsRight1Func_L1d_Records	f0=17, x4="*NeH"
-	REC_TsRight1Func_L1d_Records	f0=2, x4="\x98MeH"
-	REC_TsRight1Func_L1d_Records	f0=18, x4="\xB6MeH"
-	REC_TsRight1Func_L1d_Records	f0=19, x4="*NeH"
-	REC_TsRight1Func_L1d_Records	f0=21, x4="\x9ANeH"
-	REC_TsRight1Func_L1d_Records	f0=22, x4="vOeH"
-	REC_TsRight1Func_L1d_Records	f0=0x10082, x4="zOeH"
-	REC_TsRight1Func_L1d_Records	f0=1, x4="XPeH"	# [8]
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-	REC_TsRight1Func_L1d_Records	x4="[PeH"
-TsPart1Func_L1d_Records:	# 16 x REC_TsPart1Func_L1d_Records (8 bytes each); read by TsPart1Func_L1d 0x4865507C `mov (a0), d0`
-	REC_TsPart1Func_L1d_Records	f0=16, x4="\xC2PeH"	# [0]
-	REC_TsPart1Func_L1d_Records	f0=17, x4="\x1DQeH"
-	REC_TsPart1Func_L1d_Records	f0=2, x4="\xB1PeH"
-	REC_TsPart1Func_L1d_Records	f0=18, x4="\xC2PeH"
-	REC_TsPart1Func_L1d_Records	f0=19, x4="\x1DQeH"
-	REC_TsPart1Func_L1d_Records	f0=21, x4="uQeH"
-	REC_TsPart1Func_L1d_Records	f0=22, x4="\xEBQeH"
-	REC_TsPart1Func_L1d_Records	f0=0x10082, x4="\xEFQeH"
-	REC_TsPart1Func_L1d_Records	f0=1, x4="vReH"	# [8]
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-	REC_TsPart1Func_L1d_Records	x4="yReH"
-TsPart9Func_L1d_Records:	# 16 x REC_TsPart9Func_L1d_Records (8 bytes each); read by TsPart9Func_L1d 0x4865529A `mov (a0), d0`
-	REC_TsPart9Func_L1d_Records	f0=16, x4="\xE0ReH"	# [0]
-	REC_TsPart9Func_L1d_Records	f0=17, x4=";SeH"
-	REC_TsPart9Func_L1d_Records	f0=2, x4="\xCFReH"
-	REC_TsPart9Func_L1d_Records	f0=18, x4="\xE0ReH"
-	REC_TsPart9Func_L1d_Records	f0=19, x4=";SeH"
-	REC_TsPart9Func_L1d_Records	f0=21, x4="\x93SeH"
-	REC_TsPart9Func_L1d_Records	f0=22, x4="\x09TeH"
-	REC_TsPart9Func_L1d_Records	f0=0x10082, x4="\x0DTeH"
-	REC_TsPart9Func_L1d_Records	f0=1, x4="\x94TeH"	# [8]
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-	REC_TsPart9Func_L1d_Records	x4="\x97TeH"
-TsAccomp1Func_L1d_Records:	# 16 x REC_TsAccomp1Func_L1d_Records (8 bytes each); read by TsAccomp1Func_L1d 0x486554B8 `mov (a0), d0`
-	REC_TsAccomp1Func_L1d_Records	f0=16, x4="\xFETeH"	# [0]
-	REC_TsAccomp1Func_L1d_Records	f0=17, x4="YUeH"
-	REC_TsAccomp1Func_L1d_Records	f0=2, x4="\xEDTeH"
-	REC_TsAccomp1Func_L1d_Records	f0=18, x4="\xFETeH"
-	REC_TsAccomp1Func_L1d_Records	f0=19, x4="YUeH"
-	REC_TsAccomp1Func_L1d_Records	f0=21, x4="\xB1UeH"
-	REC_TsAccomp1Func_L1d_Records	f0=22, x4="'VeH"
-	REC_TsAccomp1Func_L1d_Records	f0=0x10082, x4="+VeH"
-	REC_TsAccomp1Func_L1d_Records	f0=1, x4="\xB2VeH"	# [8]
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
-	REC_TsAccomp1Func_L1d_Records	x4="\xB5VeH"
+MmmMtune_L1d_Records:	# 16 x REC_MmmMtune_L1d_Records (8 bytes each); read by MmmMtune_L1d 0x4864E392 `mov (a0), d0`; MmmMtune_L4b 0x4864E3C0 `mov (a0), d0`; MmmMtune_L4e 0x4864E3C3 `mov (4, a0), a0`
+	REC_MmmMtune_L1d_Records	f0=128, f4=0x4864E419	# [0]
+	REC_MmmMtune_L1d_Records	f0=129, f4=0x4864E42C
+	REC_MmmMtune_L1d_Records	f0=1, f4=0x4864E437
+	REC_MmmMtune_L1d_Records	f0=2, f4=0x4864E43B
+	REC_MmmMtune_L1d_Records	f0=109, f4=0x4864E443
+	REC_MmmMtune_L1d_Records	f4=0x4864E446
+	REC_MmmMtune_L1d_Records	f4=0x4864E446
+	REC_MmmMtune_L1d_Records	f4=0x4864E446
+	REC_MmmMtune_L1d_Records	f4=0x4864E446	# [8]
+	REC_MmmMtune_L1d_Records	f4=0x4864E446
+	REC_MmmMtune_L1d_Records	f4=0x4864E446
+	REC_MmmMtune_L1d_Records	f4=0x4864E446
+	REC_MmmMtune_L1d_Records	f0=108, f4=0x4864E43F
+	REC_MmmMtune_L1d_Records	f0=125, f4=0x4864E41C
+	REC_MmmMtune_L1d_Records	f0=126, f4=0x4864E3C8
+	REC_MmmMtune_L1d_Records	f0=127, f4=0x4864E416
+AcTechniChordProc_L1d_Records:	# 16 x REC_AcTechniChordProc_L1d_Records (8 bytes each); read by AcTechniChordProc_L1d 0x4864E4D7 `mov (a0), d0`; AcTechniChordProc_L4c 0x4864E506 `mov (a0), d0`; AcTechniChordProc_L4f 0x4864E509 `mov (4, a0), a0`
+	REC_AcTechniChordProc_L1d_Records	f0=16, f4=0x4864E8F8	# [0]
+	REC_AcTechniChordProc_L1d_Records	f0=1, f4=0x4864E50E
+	REC_AcTechniChordProc_L1d_Records	f0=0x100B2, f4=0x4864E5A9
+	REC_AcTechniChordProc_L1d_Records	f0=0x100B3, f4=0x4864E7BE
+	REC_AcTechniChordProc_L1d_Records	f0=0x100B4, f4=0x4864E5D4
+	REC_AcTechniChordProc_L1d_Records	f0=0x710005, f4=0x4864E81C
+	REC_AcTechniChordProc_L1d_Records	f0=17, f4=0x4864E860
+	REC_AcTechniChordProc_L1d_Records	f0=18, f4=0x4864E8F8
+	REC_AcTechniChordProc_L1d_Records	f0=36, f4=0x4864E990	# [8]
+	REC_AcTechniChordProc_L1d_Records	f0=9, f4=0x4864E562
+	REC_AcTechniChordProc_L1d_Records	f0=20, f4=0x4864E9B5
+	REC_AcTechniChordProc_L1d_Records	f4=0x4864E9DF
+	REC_AcTechniChordProc_L1d_Records	f4=0x4864E9DF
+	REC_AcTechniChordProc_L1d_Records	f4=0x4864E9DF
+	REC_AcTechniChordProc_L1d_Records	f4=0x4864E9DF
+	REC_AcTechniChordProc_L1d_Records	f0=15, f4=0x4864E860
+IvSdpartProc_L21_Records:	# 16 x REC_IvSdpartProc_L21_Records (8 bytes each); read by IvSdpartProc_L21 0x4864EC05 `mov (a0), d0`; IvSdpartProc_L50 0x4864EC34 `mov (a0), d0`; IvSdpartProc_L53 0x4864EC37 `mov (4, a0), a0`
+	REC_IvSdpartProc_L21_Records	f0=16, f4=0x4864ED87	# [0]
+	REC_IvSdpartProc_L21_Records	f0=1, f4=0x4864EC3C
+	REC_IvSdpartProc_L21_Records	f0=2, f4=0x4864ECF1
+	REC_IvSdpartProc_L21_Records	f0=17, f4=0x4864ED87
+	REC_IvSdpartProc_L21_Records	f0=18, f4=0x4864ED87
+	REC_IvSdpartProc_L21_Records	f0=20, f4=0x4864EE3B
+	REC_IvSdpartProc_L21_Records	f0=0x710006, f4=0x4864EEE2
+	REC_IvSdpartProc_L21_Records	f0=22, f4=0x4864EF17
+	REC_IvSdpartProc_L21_Records	f0=0x100B2, f4=0x4864EF9E	# [8]
+	REC_IvSdpartProc_L21_Records	f0=9, f4=0x4864ED28
+	REC_IvSdpartProc_L21_Records	f0=0x1003A, f4=0x4864EFC2
+	REC_IvSdpartProc_L21_Records	f4=0x4864EFD4
+	REC_IvSdpartProc_L21_Records	f4=0x4864EFD4
+	REC_IvSdpartProc_L21_Records	f4=0x4864EFD4
+	REC_IvSdpartProc_L21_Records	f4=0x4864EFD4
+	REC_IvSdpartProc_L21_Records	f0=15, f4=0x4864ED87
+AcSpsMmmEditProc_L21_Records:	# 32 x REC_AcSpsMmmEditProc_L21_Records (8 bytes each); read by AcSpsMmmEditProc_L21 0x4864F1DB `mov (a0), d0`; AcSpsMmmEditProc_L51 0x4864F20B `mov (a0), d0`; AcSpsMmmEditProc_L54 0x4864F20E `mov (4, a0), a0`
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x700000, f4=0x4864F50F	# [0]
+	REC_AcSpsMmmEditProc_L21_Records	f0=1, f4=0x4864F213
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x10062, f4=0x4864F3FE
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x710001, f4=0x4864F785
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x710002, f4=0x4864F7BE
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A	# [8]
+	REC_AcSpsMmmEditProc_L21_Records	f0=9, f4=0x4864F410
+	REC_AcSpsMmmEditProc_L21_Records	f0=41, f4=0x4864F6AA
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x1004E, f4=0x4864F766
+	REC_AcSpsMmmEditProc_L21_Records	f0=15, f4=0x4864F5E2
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x100D0, f4=0x4864F2E7	# [16]
+	REC_AcSpsMmmEditProc_L21_Records	f0=49, f4=0x4864F25C
+	REC_AcSpsMmmEditProc_L21_Records	f0=17, f4=0x4864F5E2
+	REC_AcSpsMmmEditProc_L21_Records	f0=19, f4=0x4864F5B9
+	REC_AcSpsMmmEditProc_L21_Records	f0=20, f4=0x4864F46B
+	REC_AcSpsMmmEditProc_L21_Records	f0=18, f4=0x4864F5E2
+	REC_AcSpsMmmEditProc_L21_Records	f0=16, f4=0x4864F5E2
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x10054, f4=0x4864F7C8
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x100AE, f4=0x4864F7D2	# [24]
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003A, f4=0x4864F2AD
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003B, f4=0x4864F32B
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003C, f4=0x4864F780
+	REC_AcSpsMmmEditProc_L21_Records	f0=0x1003D, f4=0x4864F394
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+	REC_AcSpsMmmEditProc_L21_Records	f4=0x4864F83A
+AcSpsPanProc_L1d_Records:	# 1 x REC_AcSpsPanProc_L1d_Records (8 bytes each); read by AcSpsPanProc_L1d 0x4864FAC3 `mov (a0), d0`; AcSpsPanProc_L3a 0x4864FAE0 `mov (4, a0), a0`
+	REC_AcSpsPanProc_L1d_Records	p4=AcSpsPanProc_L22a
+# census: opaque -- unknown-dump: 120 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0688E8, 0x068960
+AcMixerScreenProc_L21_Records:	# 16 x REC_AcMixerScreenProc_L21_Records (8 bytes each); read by AcMixerScreenProc_L21 0x4864FECA `mov (a0), d0`; AcMixerScreenProc_L50 0x4864FEF9 `mov (a0), d0`; AcMixerScreenProc_L53 0x4864FEFC `mov (4, a0), a0`
+	REC_AcMixerScreenProc_L21_Records	f0=16, f4=0x4865055F	# [0]
+	REC_AcMixerScreenProc_L21_Records	f0=1, f4=0x4864FF67
+	REC_AcMixerScreenProc_L21_Records	f0=2, f4=0x48650116
+	REC_AcMixerScreenProc_L21_Records	f0=0x700002, f4=0x48650540
+	REC_AcMixerScreenProc_L21_Records	f0=20, f4=0x4865020F
+	REC_AcMixerScreenProc_L21_Records	f4=0x48650598
+	REC_AcMixerScreenProc_L21_Records	f0=22, f4=0x486503B2
+	REC_AcMixerScreenProc_L21_Records	f0=39, f4=0x48650268
+	REC_AcMixerScreenProc_L21_Records	f4=0x48650598	# [8]
+	REC_AcMixerScreenProc_L21_Records	f0=9, f4=0x486501EE
+	REC_AcMixerScreenProc_L21_Records	f0=0x1003A, f4=0x4864FF01
+	REC_AcMixerScreenProc_L21_Records	f4=0x48650598
+	REC_AcMixerScreenProc_L21_Records	f4=0x48650598
+	REC_AcMixerScreenProc_L21_Records	f4=0x48650598
+	REC_AcMixerScreenProc_L21_Records	f4=0x48650598
+	REC_AcMixerScreenProc_L21_Records	f0=15, f4=0x4865055F
+AcMixerProc_L1e_Records:	# 16 x REC_AcMixerProc_L1e_Records (8 bytes each); read by AcMixerProc_L1e 0x4865061F `mov (a0), d0`; AcMixerProc_L4d 0x4865064E `mov (a0), d0`; AcMixerProc_L50 0x48650651 `mov (4, a0), a0`
+	REC_AcMixerProc_L1e_Records	f0=0x100B0, f4=0x48650783	# [0]
+	REC_AcMixerProc_L1e_Records	f0=1, f4=0x486507AF
+	REC_AcMixerProc_L1e_Records	f0=16, f4=0x48650883
+	REC_AcMixerProc_L1e_Records	f0=0x700001, f4=0x48650982
+	REC_AcMixerProc_L1e_Records	f0=36, f4=0x48650839
+	REC_AcMixerProc_L1e_Records	f0=5, f4=0x48650656
+	REC_AcMixerProc_L1e_Records	f4=0x486509CD
+	REC_AcMixerProc_L1e_Records	f4=0x486509CD
+	REC_AcMixerProc_L1e_Records	f4=0x486509CD	# [8]
+	REC_AcMixerProc_L1e_Records	f4=0x486509CD
+	REC_AcMixerProc_L1e_Records	f4=0x486509CD
+	REC_AcMixerProc_L1e_Records	f0=27, f4=0x48650839
+	REC_AcMixerProc_L1e_Records	f4=0x486509CD
+	REC_AcMixerProc_L1e_Records	f0=0x1004D, f4=0x48650954
+	REC_AcMixerProc_L1e_Records	f0=0x100AE, f4=0x48650710
+	REC_AcMixerProc_L1e_Records	f0=0x100AF, f4=0x48650783
+AcSpsKsclPartProc_L1e_Records:	# 16 x REC_AcSpsKsclPartProc_L1e_Records (8 bytes each); read by AcSpsKsclPartProc_L1e 0x48652B92 `mov (a0), d0`; AcSpsKsclPartProc_L4d 0x48652BC1 `mov (a0), d0`; AcSpsKsclPartProc_L50 0x48652BC4 `mov (4, a0), a0`
+	REC_AcSpsKsclPartProc_L1e_Records	f0=16, f4=0x48652E36	# [0]
+	REC_AcSpsKsclPartProc_L1e_Records	f0=1, f4=0x48652BC9
+	REC_AcSpsKsclPartProc_L1e_Records	f0=2, f4=0x48652C33
+	REC_AcSpsKsclPartProc_L1e_Records	f0=49, f4=0x48652C91
+	REC_AcSpsKsclPartProc_L1e_Records	f0=20, f4=0x48652D7D
+	REC_AcSpsKsclPartProc_L1e_Records	f0=19, f4=0x48652E0F
+	REC_AcSpsKsclPartProc_L1e_Records	f0=0x710006, f4=0x48652DD7
+	REC_AcSpsKsclPartProc_L1e_Records	f0=17, f4=0x48652E36
+	REC_AcSpsKsclPartProc_L1e_Records	f0=18, f4=0x48652E36	# [8]
+	REC_AcSpsKsclPartProc_L1e_Records	f0=9, f4=0x48652D12
+	REC_AcSpsKsclPartProc_L1e_Records	f0=0x1003A, f4=0x48652CDE
+	REC_AcSpsKsclPartProc_L1e_Records	f4=0x48652F3A
+	REC_AcSpsKsclPartProc_L1e_Records	f0=0x1003C, f4=0x48652F36
+	REC_AcSpsKsclPartProc_L1e_Records	f4=0x48652F3A
+	REC_AcSpsKsclPartProc_L1e_Records	f4=0x48652F3A
+	REC_AcSpsKsclPartProc_L1e_Records	f0=15, f4=0x48652E36
+AcKsclTypeEditProc_L1e_Records:	# 16 x REC_AcKsclTypeEditProc_L1e_Records (8 bytes each); read by AcKsclTypeEditProc_L1e 0x48653043 `mov (a0), d0`; AcKsclTypeEditProc_L4e 0x48653073 `mov (a0), d0`; AcKsclTypeEditProc_L51 0x48653076 `mov (4, a0), a0`
+	REC_AcKsclTypeEditProc_L1e_Records	f0=16, f4=0x48653155	# [0]
+	REC_AcKsclTypeEditProc_L1e_Records	f0=1, f4=0x4865307B
+	REC_AcKsclTypeEditProc_L1e_Records	f0=17, f4=0x48653155
+	REC_AcKsclTypeEditProc_L1e_Records	f0=19, f4=0x4865312E
+	REC_AcKsclTypeEditProc_L1e_Records	f0=18, f4=0x48653155
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7	# [8]
+	REC_AcKsclTypeEditProc_L1e_Records	f0=9, f4=0x4865310B
+	REC_AcKsclTypeEditProc_L1e_Records	f0=0x1003A, f4=0x486530EE
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7
+	REC_AcKsclTypeEditProc_L1e_Records	f0=0x1003C, f4=0x486531D3
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7
+	REC_AcKsclTypeEditProc_L1e_Records	f4=0x486531D7
+	REC_AcKsclTypeEditProc_L1e_Records	f0=15, f4=0x48653155
+AcKsclShiftEditProc_L1e_Records:	# 16 x REC_AcKsclShiftEditProc_L1e_Records (8 bytes each); read by AcKsclShiftEditProc_L1e 0x48653206 `mov (a0), d0`; AcKsclShiftEditProc_L4e 0x48653236 `mov (a0), d0`; AcKsclShiftEditProc_L51 0x48653239 `mov (4, a0), a0`
+	REC_AcKsclShiftEditProc_L1e_Records	f0=16, f4=0x48653318	# [0]
+	REC_AcKsclShiftEditProc_L1e_Records	f0=1, f4=0x4865323E
+	REC_AcKsclShiftEditProc_L1e_Records	f0=17, f4=0x48653318
+	REC_AcKsclShiftEditProc_L1e_Records	f0=19, f4=0x486532F1
+	REC_AcKsclShiftEditProc_L1e_Records	f0=18, f4=0x48653318
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2	# [8]
+	REC_AcKsclShiftEditProc_L1e_Records	f0=9, f4=0x486532CE
+	REC_AcKsclShiftEditProc_L1e_Records	f0=0x1003A, f4=0x486532B1
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2
+	REC_AcKsclShiftEditProc_L1e_Records	f0=0x1003C, f4=0x486533AE
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2
+	REC_AcKsclShiftEditProc_L1e_Records	f4=0x486533B2
+	REC_AcKsclShiftEditProc_L1e_Records	f0=15, f4=0x48653318
+AcKsclCopyEditProc_L1e_Records:	# 16 x REC_AcKsclCopyEditProc_L1e_Records (8 bytes each); read by AcKsclCopyEditProc_L1e 0x4865344A `mov (a0), d0`; AcKsclCopyEditProc_L4d 0x48653479 `mov (a0), d0`; AcKsclCopyEditProc_L50 0x4865347C `mov (4, a0), a0`
+	REC_AcKsclCopyEditProc_L1e_Records	f0=16, f4=0x486535D8	# [0]
+	REC_AcKsclCopyEditProc_L1e_Records	f0=1, f4=0x48653481
+	REC_AcKsclCopyEditProc_L1e_Records	f0=2, f4=0x4865352C
+	REC_AcKsclCopyEditProc_L1e_Records	f0=19, f4=0x486535B1
+	REC_AcKsclCopyEditProc_L1e_Records	f0=17, f4=0x486535D8
+	REC_AcKsclCopyEditProc_L1e_Records	f0=18, f4=0x486535D8
+	REC_AcKsclCopyEditProc_L1e_Records	f0=20, f4=0x486536C8
+	REC_AcKsclCopyEditProc_L1e_Records	f4=0x48653758
+	REC_AcKsclCopyEditProc_L1e_Records	f4=0x48653758	# [8]
+	REC_AcKsclCopyEditProc_L1e_Records	f0=9, f4=0x4865358E
+	REC_AcKsclCopyEditProc_L1e_Records	f0=0x1003A, f4=0x48653571
+	REC_AcKsclCopyEditProc_L1e_Records	f4=0x48653758
+	REC_AcKsclCopyEditProc_L1e_Records	f0=0x1003C, f4=0x486536C3
+	REC_AcKsclCopyEditProc_L1e_Records	f4=0x48653758
+	REC_AcKsclCopyEditProc_L1e_Records	f4=0x48653758
+	REC_AcKsclCopyEditProc_L1e_Records	f0=15, f4=0x486535D8
+AcKsclKeyEditProc_L1e_Records:	# 1 x REC_AcKsclKeyEditProc_L1e_Records (8 bytes each); read by AcKsclKeyEditProc_L1e 0x48653787 `mov (a0), d0`; AcKsclKeyEditProc_L4e 0x486537B7 `mov (a0), d0`; AcKsclKeyEditProc_L51 0x486537BA `mov (4, a0), a0`
+	REC_AcKsclKeyEditProc_L1e_Records	p4=AcKsclKeyEditProc_L4a2
+.incbin_range "baserom/kn2400_program.rom", 0x068C68, 0x068CE0
+SpPartMono_L1d_Records:	# 16 x REC_SpPartMono_L1d_Records (8 bytes each); read by SpPartMono_L1d 0x486545B5 `mov (a0), d0`; SpPartMono_L4b 0x486545E3 `mov (a0), d0`; SpPartMono_L4e 0x486545E6 `mov (4, a0), a0`
+	REC_SpPartMono_L1d_Records	f0=16, f4=0x48654603	# [0]
+	REC_SpPartMono_L1d_Records	f0=17, f4=0x48654603
+	REC_SpPartMono_L1d_Records	f0=2, f4=0x486545EB
+	REC_SpPartMono_L1d_Records	f0=18, f4=0x48654603
+	REC_SpPartMono_L1d_Records	f0=19, f4=0x48654603
+	REC_SpPartMono_L1d_Records	f0=21, f4=0x486546D9
+	REC_SpPartMono_L1d_Records	f0=22, f4=0x48654771
+	REC_SpPartMono_L1d_Records	f0=0x10082, f4=0x48654775
+	REC_SpPartMono_L1d_Records	f0=1, f4=0x4865481A	# [8]
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+	REC_SpPartMono_L1d_Records	f4=0x4865481D
+ApcRevFunc_L1d_Records:	# 16 x REC_ApcRevFunc_L1d_Records (8 bytes each); read by ApcRevFunc_L1d 0x4865488F `mov (a0), d0`; ApcRevFunc_L4b 0x486548BD `mov (a0), d0`; ApcRevFunc_L4e 0x486548C0 `mov (4, a0), a0`
+	REC_ApcRevFunc_L1d_Records	f0=16, f4=0x486548EC	# [0]
+	REC_ApcRevFunc_L1d_Records	f0=17, f4=0x48654975
+	REC_ApcRevFunc_L1d_Records	f0=2, f4=0x486548C5
+	REC_ApcRevFunc_L1d_Records	f0=18, f4=0x486548EC
+	REC_ApcRevFunc_L1d_Records	f0=19, f4=0x48654975
+	REC_ApcRevFunc_L1d_Records	f0=21, f4=0x48654A09
+	REC_ApcRevFunc_L1d_Records	f0=22, f4=0x48654B3B
+	REC_ApcRevFunc_L1d_Records	f0=0x10082, f4=0x48654B3F
+	REC_ApcRevFunc_L1d_Records	f0=1, f4=0x48654BE5	# [8]
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+	REC_ApcRevFunc_L1d_Records	f4=0x48654BE8
+ApcRevCheck_L1d_Records:	# 16 x REC_ApcRevCheck_L1d_Records (8 bytes each); read by ApcRevCheck_L1d 0x48654C09 `mov (a0), d0`; ApcRevCheck_L4a 0x48654C36 `mov (a0), d0`; ApcRevCheck_L4d 0x48654C39 `mov (4, a0), a0`
+	REC_ApcRevCheck_L1d_Records	f0=16, f4=0x48654C4F	# [0]
+	REC_ApcRevCheck_L1d_Records	f0=17, f4=0x48654C4F
+	REC_ApcRevCheck_L1d_Records	f0=2, f4=0x48654C3E
+	REC_ApcRevCheck_L1d_Records	f0=18, f4=0x48654C4F
+	REC_ApcRevCheck_L1d_Records	f0=19, f4=0x48654C4F
+	REC_ApcRevCheck_L1d_Records	f0=21, f4=0x48654C53
+	REC_ApcRevCheck_L1d_Records	f0=22, f4=0x48654CC0
+	REC_ApcRevCheck_L1d_Records	f0=0x10082, f4=0x48654CC4
+	REC_ApcRevCheck_L1d_Records	f0=1, f4=0x48654D3E	# [8]
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+	REC_ApcRevCheck_L1d_Records	f4=0x48654D41
+TsRight1Func_L1d_Records:	# 16 x REC_TsRight1Func_L1d_Records (8 bytes each); read by TsRight1Func_L1d 0x48654D62 `mov (a0), d0`; TsRight1Func_L4b 0x48654D90 `mov (a0), d0`; TsRight1Func_L4e 0x48654D93 `mov (4, a0), a0`
+	REC_TsRight1Func_L1d_Records	f0=16, f4=0x48654DB6	# [0]
+	REC_TsRight1Func_L1d_Records	f0=17, f4=0x48654E2A
+	REC_TsRight1Func_L1d_Records	f0=2, f4=0x48654D98
+	REC_TsRight1Func_L1d_Records	f0=18, f4=0x48654DB6
+	REC_TsRight1Func_L1d_Records	f0=19, f4=0x48654E2A
+	REC_TsRight1Func_L1d_Records	f0=21, f4=0x48654E9A
+	REC_TsRight1Func_L1d_Records	f0=22, f4=0x48654F76
+	REC_TsRight1Func_L1d_Records	f0=0x10082, f4=0x48654F7A
+	REC_TsRight1Func_L1d_Records	f0=1, f4=0x48655058	# [8]
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+	REC_TsRight1Func_L1d_Records	f4=0x4865505B
+TsPart1Func_L1d_Records:	# 16 x REC_TsPart1Func_L1d_Records (8 bytes each); read by TsPart1Func_L1d 0x4865507C `mov (a0), d0`; TsPart1Func_L4a 0x486550A9 `mov (a0), d0`; TsPart1Func_L4d 0x486550AC `mov (4, a0), a0`
+	REC_TsPart1Func_L1d_Records	f0=16, f4=0x486550C2	# [0]
+	REC_TsPart1Func_L1d_Records	f0=17, f4=0x4865511D
+	REC_TsPart1Func_L1d_Records	f0=2, f4=0x486550B1
+	REC_TsPart1Func_L1d_Records	f0=18, f4=0x486550C2
+	REC_TsPart1Func_L1d_Records	f0=19, f4=0x4865511D
+	REC_TsPart1Func_L1d_Records	f0=21, f4=0x48655175
+	REC_TsPart1Func_L1d_Records	f0=22, f4=0x486551EB
+	REC_TsPart1Func_L1d_Records	f0=0x10082, f4=0x486551EF
+	REC_TsPart1Func_L1d_Records	f0=1, f4=0x48655276	# [8]
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+	REC_TsPart1Func_L1d_Records	f4=0x48655279
+TsPart9Func_L1d_Records:	# 16 x REC_TsPart9Func_L1d_Records (8 bytes each); read by TsPart9Func_L1d 0x4865529A `mov (a0), d0`; TsPart9Func_L4a 0x486552C7 `mov (a0), d0`; TsPart9Func_L4d 0x486552CA `mov (4, a0), a0`
+	REC_TsPart9Func_L1d_Records	f0=16, f4=0x486552E0	# [0]
+	REC_TsPart9Func_L1d_Records	f0=17, f4=0x4865533B
+	REC_TsPart9Func_L1d_Records	f0=2, f4=0x486552CF
+	REC_TsPart9Func_L1d_Records	f0=18, f4=0x486552E0
+	REC_TsPart9Func_L1d_Records	f0=19, f4=0x4865533B
+	REC_TsPart9Func_L1d_Records	f0=21, f4=0x48655393
+	REC_TsPart9Func_L1d_Records	f0=22, f4=0x48655409
+	REC_TsPart9Func_L1d_Records	f0=0x10082, f4=0x4865540D
+	REC_TsPart9Func_L1d_Records	f0=1, f4=0x48655494	# [8]
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+	REC_TsPart9Func_L1d_Records	f4=0x48655497
+TsAccomp1Func_L1d_Records:	# 16 x REC_TsAccomp1Func_L1d_Records (8 bytes each); read by TsAccomp1Func_L1d 0x486554B8 `mov (a0), d0`; TsAccomp1Func_L4a 0x486554E5 `mov (a0), d0`; TsAccomp1Func_L4d 0x486554E8 `mov (4, a0), a0`
+	REC_TsAccomp1Func_L1d_Records	f0=16, f4=0x486554FE	# [0]
+	REC_TsAccomp1Func_L1d_Records	f0=17, f4=0x48655559
+	REC_TsAccomp1Func_L1d_Records	f0=2, f4=0x486554ED
+	REC_TsAccomp1Func_L1d_Records	f0=18, f4=0x486554FE
+	REC_TsAccomp1Func_L1d_Records	f0=19, f4=0x48655559
+	REC_TsAccomp1Func_L1d_Records	f0=21, f4=0x486555B1
+	REC_TsAccomp1Func_L1d_Records	f0=22, f4=0x48655627
+	REC_TsAccomp1Func_L1d_Records	f0=0x10082, f4=0x4865562B
+	REC_TsAccomp1Func_L1d_Records	f0=1, f4=0x486556B2	# [8]
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
+	REC_TsAccomp1Func_L1d_Records	f4=0x486556B5
 
 Field_IvPageControlOW_page:	.asciz "page"
 Field_IvPageControlOW_window:	.asciz "window"
@@ -27962,8 +27854,10 @@ Str_PgKP:	.asciz "PgKP"
 Bitmap_AcHpScreenProc_L9f:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc_L9f 0x48655FF2 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcHpScreenProc_L9f.png)
 	.incbin	"build/bitmaps/Bitmap_AcHpScreenProc_L9f.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 24 24) from src/program/data/media/Bitmap_AcHpScreenProc_L9f.png
 
-IsPointOnScreen_Table:	# 2 x s16, 2..2; read by IsPointOnScreen 0x485FF4B5: `movhu (a0), d0`
-	tab_s16	2, 2
+IsPointOnScreen_Table:	# s16, a constant; read / written by DrawIcons_entry_L1e 0x485FB925: `movhu (a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981: `movhu (a0), d2` ...
+	.word	2
+DrawIcons_entry_L1e_Var:	# s16, a constant; read / written by DrawIcons_entry_L1e 0x485FB925: `movhu (2, a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981: `movhu (a0), d0` ...
+	.word	2
 
 Text_PT1:	# 19 strings of 5 characters, NUL-terminated
 	.asciz	"PT1  "
@@ -28005,7 +27899,7 @@ Text_CHORD:	# 9 strings of 5 characters, NUL-terminated
 	.asciz	"MIC  "
 	.asciz	"APC  "
 
-AcVolBoxProc_Table:	# 36 x REC_AcVolBoxProc_Table (16 bytes each); read by SetMmmFilter 0x485F3EF0 `call MainDeleteSpecificEvent_entry, [d2], 0x1c`; AcVolBoxProc_L55 0x486560AA `call SetMmmFilter_entry, [d2], 0x18`; AcVolBoxProc_L55 0x486560AA `mov (4, a0), d1` (+6)
+AcVolBoxProc_Table:	# 36 x REC_AcVolBoxProc_Table (16 bytes each); read by AcVolBoxProc_L55 0x486560AA `mov (4, a0), d1`; AcVolBoxProc_L55 0x486560AA `mov (8, a2), d0`; AcVolBoxProc_Le5 0x4865613A `mov (d2, a0), d0` (+16)
 	REC_AcVolBoxProc_Table	p0=Text_PT1, f4=0xB00007, f8=0x200000	# [0]
 	REC_AcVolBoxProc_Table	p0=Text_PT1+6, f4=0xB00007, f8=0x200000
 	REC_AcVolBoxProc_Table	p0=Text_PT1+12, f4=0xB00007, f8=0x200000
@@ -28049,33 +27943,33 @@ Str_s_3d_3:	.asciz "%s=%3d"
 	.align	4, 0xFF	# pad after Str_s_3d_3
 Str_M_4:	.asciz "-M-"
 Str_M_3:	.asciz "-M-"
-Str_C_20:	.asciz "C"
-Str_D_a0_5:	.asciz "D~a0"
-Str_D_9:	.asciz "D"
-Str_E_a0_5:	.asciz "E~a0"
-Str_E_8:	.asciz "E"
-Str_F_8:	.asciz "F"
-Str_F_9e_5:	.asciz "F~9e"
-Str_G_7:	.asciz "G"
-Str_A_a0_5:	.asciz "A~a0"
-Str_A_21:	.asciz "A"
-Str_B_a0_5:	.asciz "B~a0"
-Str_B_10:	.asciz "B"
-	.align	4, 0xFF	# pad after Str_B_10
+Str_C_19:	.asciz "C"
+Str_D_a0_6:	.asciz "D~a0"
+Str_D_8:	.asciz "D"
+Str_E_a0_6:	.asciz "E~a0"
+Str_E_7:	.asciz "E"
+Str_F_7:	.asciz "F"
+Str_F_9e_6:	.asciz "F~9e"
+Str_G_6:	.asciz "G"
+Str_A_a0_6:	.asciz "A~a0"
+Str_A_20:	.asciz "A"
+Str_B_a0_6:	.asciz "B~a0"
+Str_B_9:	.asciz "B"
+	.align	4, 0xFF	# pad after Str_B_9
 
 AcSplitBoxProc_L78_Table:
-	.long	Str_C_20
-	.long	Str_D_a0_5
-	.long	Str_D_9
-	.long	Str_E_a0_5
-	.long	Str_E_8
-	.long	Str_F_8
-	.long	Str_F_9e_5
-	.long	Str_G_7
-	.long	Str_A_a0_5
-	.long	Str_A_21
-	.long	Str_B_a0_5
-	.long	Str_B_10
+	.long	Str_C_19
+	.long	Str_D_a0_6
+	.long	Str_D_8
+	.long	Str_E_a0_6
+	.long	Str_E_7
+	.long	Str_F_7
+	.long	Str_F_9e_6
+	.long	Str_G_6
+	.long	Str_A_a0_6
+	.long	Str_A_20
+	.long	Str_B_a0_6
+	.long	Str_B_9
 
 Str_SPLIT_s_d:	.asciz "SPLIT:%s%d"
 	.align	4, 0xFF	# pad after Str_SPLIT_s_d
@@ -28085,13 +27979,13 @@ Str_SPLIT_C3:	.asciz "SPLIT:C3"
 	.align	4, 0xFF	# pad after Str_SPLIT_C3
 Str_SPLIT_G3:	.asciz "SPLIT:G3"
 	.align	4, 0xFF	# pad after Str_SPLIT_G3
-Str_empty_639:	.asciz "        "
+Str_empty_637:	.asciz "        "
 Str_FADE_IN_4:	.asciz "FADE IN "
 Str_FADE_OUT_4:	.asciz "FADE OUT"
 	.align	4, 0xFF	# pad after Str_FADE_OUT_4
 
 AcFadeBoxProc_Lb0_Table:
-	.long	Str_empty_639
+	.long	Str_empty_637
 	.long	Str_FADE_IN_4
 	.long	Str_FADE_OUT_4
 
@@ -28254,40 +28148,68 @@ Text_OFF:	# 43 strings of 16 characters, NUL-terminated
 	.asciz	"     -----      "
 	.align	4, 0xFF	# pad after Text_OFF
 
-AcFootSwProc_Table:	# 172 x s16, -21688..18502; read by AcFootSwProc : `movhu	(d1, a1), d1`
-	tab_s16	0, 0, -21688, 18502, 65, 0, -21671, 18502, 66, 0, -21654, 18502	# [0]
-	tab_s16	144, 0, -21637, 18502, 145, 0, -21620, 18502, 179, 0, -21603, 18502	# [12]
-	tab_s16	180, 0, -21586, 18502, 192, 0, -21569, 18502, 193, 0, -21552, 18502	# [24]
-	tab_s16	194, 0, -21535, 18502, 195, 0, -21518, 18502, 196, 0, -21501, 18502	# [36]
-	tab_s16	197, 0, -21484, 18502, 198, 0, -21467, 18502, 199, 0, -21450, 18502	# [48]
-	tab_s16	178, 0, -21433, 18502, 136, 0, -21416, 18502, 146, 0, -21399, 18502	# [60]
-	tab_s16	147, 0, -21382, 18502, 148, 0, -21365, 18502, 149, 0, -21348, 18502	# [72]
-	tab_s16	64, 0, -21331, 18502, 150, 0, -21314, 18502, 153, 0, -21297, 18502	# [84]
-	tab_s16	151, 0, -21280, 18502, 191, 0, -21263, 18502, 190, 0, -21246, 18502	# [96]
-	tab_s16	173, 0, -21229, 18502, 188, 0, -21212, 18502, 176, 0, -21195, 18502	# [108]
-	tab_s16	177, 0, -21178, 18502, 184, 0, -21161, 18502, 185, 0, -21144, 18502	# [120]
-	tab_s16	160, 0, -21127, 18502, 161, 0, -21110, 18502, 162, 0, -21093, 18502	# [132]
-	tab_s16	163, 0, -21076, 18502, 164, 0, -21059, 18502, 165, 0, -21042, 18502	# [144]
-	tab_s16	189, 0, -21025, 18502, 182, 0, -21008, 18502, 183, 0, -20991, 18502	# [156]
-	tab_s16	-1, 0, -20974, 18502	# [168]
+AcFootSwProc_Table:	# 43 x REC_AcFootSwProc_Table (8 bytes each); read by AcFootSwProc_Ldc 0x48657491 `mov (4, a1), a0`; AcFootSwProc_Ldc 0x48657491 `call sprintf_entry, [a2], 0x20`
+	REC_AcFootSwProc_Table	x0="\x00\x00\x00\x00", p4=Text_OFF	# [0]
+	REC_AcFootSwProc_Table	x0="A\x00\x00\x00", p4=Text_OFF+17
+	REC_AcFootSwProc_Table	x0="B\x00\x00\x00", p4=Text_OFF+34
+	REC_AcFootSwProc_Table	x0="\x90\x00\x00\x00", p4=Text_OFF+51
+	REC_AcFootSwProc_Table	x0="\x91\x00\x00\x00", p4=Text_OFF+68
+	REC_AcFootSwProc_Table	x0="\xB3\x00\x00\x00", p4=Text_OFF+85
+	REC_AcFootSwProc_Table	x0="\xB4\x00\x00\x00", p4=Text_OFF+102
+	REC_AcFootSwProc_Table	x0="\xC0\x00\x00\x00", p4=Text_OFF+119
+	REC_AcFootSwProc_Table	x0="\xC1\x00\x00\x00", p4=Text_OFF+136	# [8]
+	REC_AcFootSwProc_Table	x0="\xC2\x00\x00\x00", p4=Text_OFF+153
+	REC_AcFootSwProc_Table	x0="\xC3\x00\x00\x00", p4=Text_OFF+170
+	REC_AcFootSwProc_Table	x0="\xC4\x00\x00\x00", p4=Text_OFF+187
+	REC_AcFootSwProc_Table	x0="\xC5\x00\x00\x00", p4=Text_OFF+204
+	REC_AcFootSwProc_Table	x0="\xC6\x00\x00\x00", p4=Text_OFF+221
+	REC_AcFootSwProc_Table	x0="\xC7\x00\x00\x00", p4=Text_OFF+238
+	REC_AcFootSwProc_Table	x0="\xB2\x00\x00\x00", p4=Text_OFF+255
+	REC_AcFootSwProc_Table	x0="\x88\x00\x00\x00", p4=Text_OFF+272	# [16]
+	REC_AcFootSwProc_Table	x0="\x92\x00\x00\x00", p4=Text_OFF+289
+	REC_AcFootSwProc_Table	x0="\x93\x00\x00\x00", p4=Text_OFF+306
+	REC_AcFootSwProc_Table	x0="\x94\x00\x00\x00", p4=Text_OFF+323
+	REC_AcFootSwProc_Table	x0="\x95\x00\x00\x00", p4=Text_OFF+340
+	REC_AcFootSwProc_Table	x0="@\x00\x00\x00", p4=Text_OFF+357
+	REC_AcFootSwProc_Table	x0="\x96\x00\x00\x00", p4=Text_OFF+374
+	REC_AcFootSwProc_Table	x0="\x99\x00\x00\x00", p4=Text_OFF+391
+	REC_AcFootSwProc_Table	x0="\x97\x00\x00\x00", p4=Text_OFF+408	# [24]
+	REC_AcFootSwProc_Table	x0="\xBF\x00\x00\x00", p4=Text_OFF+425
+	REC_AcFootSwProc_Table	x0="\xBE\x00\x00\x00", p4=Text_OFF+442
+	REC_AcFootSwProc_Table	x0="\xAD\x00\x00\x00", p4=Text_OFF+459
+	REC_AcFootSwProc_Table	x0="\xBC\x00\x00\x00", p4=Text_OFF+476
+	REC_AcFootSwProc_Table	x0="\xB0\x00\x00\x00", p4=Text_OFF+493
+	REC_AcFootSwProc_Table	x0="\xB1\x00\x00\x00", p4=Text_OFF+510
+	REC_AcFootSwProc_Table	x0="\xB8\x00\x00\x00", p4=Text_OFF+527
+	REC_AcFootSwProc_Table	x0="\xB9\x00\x00\x00", p4=Text_OFF+544	# [32]
+	REC_AcFootSwProc_Table	x0="\xA0\x00\x00\x00", p4=Text_OFF+561
+	REC_AcFootSwProc_Table	x0="\xA1\x00\x00\x00", p4=Text_OFF+578
+	REC_AcFootSwProc_Table	x0="\xA2\x00\x00\x00", p4=Text_OFF+595
+	REC_AcFootSwProc_Table	x0="\xA3\x00\x00\x00", p4=Text_OFF+612
+	REC_AcFootSwProc_Table	x0="\xA4\x00\x00\x00", p4=Text_OFF+629
+	REC_AcFootSwProc_Table	x0="\xA5\x00\x00\x00", p4=Text_OFF+646
+	REC_AcFootSwProc_Table	x0="\xBD\x00\x00\x00", p4=Text_OFF+663
+	REC_AcFootSwProc_Table	x0="\xB6\x00\x00\x00", p4=Text_OFF+680	# [40]
+	REC_AcFootSwProc_Table	x0="\xB7\x00\x00\x00", p4=Text_OFF+697
+	REC_AcFootSwProc_Table	x0="\xFF\xFF\x00\x00", p4=Text_OFF+714
 
-Str_1_30:	.asciz "1 "
-Str_2_31:	.asciz "2 "
-Str_1_29:	.asciz "1 "
-Str_2_30:	.asciz "2 "
-Str_3_23:	.asciz "3 "
+Str_1_26:	.asciz "1 "
+Str_2_27:	.asciz "2 "
+Str_1_25:	.asciz "1 "
+Str_2_26:	.asciz "2 "
+Str_3_21:	.asciz "3 "
 Str_4_23:	.asciz "4 "
-Str_E_7:	.asciz "E "
-	.align	4, 0xFF	# pad after Str_E_7
+Str_E_6:	.asciz "E "
+	.align	4, 0xFF	# pad after Str_E_6
 
-AcFootSwProc_Table_2:	# 7 x REC_AcFootSwProc_Table_2 (8 bytes each); read by AcFootSwProc_L2d 0x486573E2 `mov (d0, a0), d0`; AcFootSwProc_L83 0x48657438 `mov (d0, a3), d0`; AcFootSwProc_L11a 0x486574CF `mov (d0, a0), d0`
-	REC_AcFootSwProc_Table_2	f0=16386, p4=Str_1_30
-	REC_AcFootSwProc_Table_2	f0=16387, p4=Str_2_31
-	REC_AcFootSwProc_Table_2	f0=16388, p4=Str_1_29
-	REC_AcFootSwProc_Table_2	f0=16389, p4=Str_2_30
-	REC_AcFootSwProc_Table_2	f0=16390, p4=Str_3_23
+AcFootSwProc_Table_2:	# 7 x REC_AcFootSwProc_Table_2 (8 bytes each); read by AcFootSwProc_L2d 0x486573E2 `mov (d0, a0), d0`; AcFootSwProc_L83 0x48657438 `mov (d0, a3), d0`; AcFootSwProc_Ldc 0x48657491 `mov (4, a3), a0` (+1)
+	REC_AcFootSwProc_Table_2	f0=16386, p4=Str_1_26
+	REC_AcFootSwProc_Table_2	f0=16387, p4=Str_2_27
+	REC_AcFootSwProc_Table_2	f0=16388, p4=Str_1_25
+	REC_AcFootSwProc_Table_2	f0=16389, p4=Str_2_26
+	REC_AcFootSwProc_Table_2	f0=16390, p4=Str_3_21
 	REC_AcFootSwProc_Table_2	f0=16391, p4=Str_4_23
-	REC_AcFootSwProc_Table_2	f0=16384, p4=Str_E_7
+	REC_AcFootSwProc_Table_2	f0=16384, p4=Str_E_6
 
 Str_s_s_4:	.asciz "%s: %s"
 	.align	4, 0xFF	# pad after Str_s_s_4
@@ -28328,21 +28250,21 @@ AcSndDspAllocProc_L67_Table:
 	.long	Str_SEQUENCER_12
 
 Str_ALLOCATION_MODE_s:	.asciz "ALLOCATION MODE: %s"
-Str_1_26:	.asciz "1 "
-Str_2_27:	.asciz "2 "
-Str_3_22:	.asciz "3 "
+Str_1_24:	.asciz "1 "
+Str_2_25:	.asciz "2 "
+Str_3_20:	.asciz "3 "
 Str_4_22:	.asciz "4 "
-Str_5_14:	.asciz "5 "
+Str_5_11:	.asciz "5 "
 Str_CHORUS_11:	.asciz "CHORUS"
 Str_MULTI_5:	.asciz "MULTI "
 Str_REVERB_13:	.asciz "REVERB"
 
-AcEffectTypeProc_Table:	# 8 x REC_AcEffectTypeProc_Table (12 bytes each); read by func_4863C209 0x4863C209 `call func_4863D95A_entry, [d2,d3,a2], 0x1c`; AcEffectTypeProc_L2d 0x48657985 `mov (d0, a0), d0`; AcEffectTypeProc_L7e 0x486579D6 `call func_4863C209_entry, [d2], 0x18` (+5)
-	REC_AcEffectTypeProc_Table	f0=45076, f4=2, x6="\x00\x00", p8=Str_1_26
-	REC_AcEffectTypeProc_Table	f0=45092, f4=3, x6="\x00\x00", p8=Str_2_27
-	REC_AcEffectTypeProc_Table	f0=45108, f4=4, x6="\x00\x00", p8=Str_3_22
+AcEffectTypeProc_Table:	# 8 x REC_AcEffectTypeProc_Table (12 bytes each); read by AcEffectTypeProc_L2d 0x48657985 `mov (d0, a0), d0`; AcEffectTypeProc_L7e 0x486579D6 `mov (8, a0), a0`; AcEffectTypeProc_L7e 0x486579D6 `mov (d0, a2), d0` (+6)
+	REC_AcEffectTypeProc_Table	f0=45076, f4=2, x6="\x00\x00", p8=Str_1_24
+	REC_AcEffectTypeProc_Table	f0=45092, f4=3, x6="\x00\x00", p8=Str_2_25
+	REC_AcEffectTypeProc_Table	f0=45108, f4=4, x6="\x00\x00", p8=Str_3_20
 	REC_AcEffectTypeProc_Table	f0=45124, f4=5, x6="\x00\x00", p8=Str_4_22
-	REC_AcEffectTypeProc_Table	f0=45140, f4=6, x6="\x00\x00", p8=Str_5_14
+	REC_AcEffectTypeProc_Table	f0=45140, f4=6, x6="\x00\x00", p8=Str_5_11
 	REC_AcEffectTypeProc_Table	f0=41216, f4=9, x6="\x00\x00", p8=Str_CHORUS_11
 	REC_AcEffectTypeProc_Table	f0=41472, f4=1, x6="\x00\x00", p8=Str_MULTI_5
 	REC_AcEffectTypeProc_Table	f0=40960, x6="\x00\x00", p8=Str_REVERB_13
@@ -28409,7 +28331,7 @@ Str_SD_2:	.asciz "SD"
 Str_MUSIC:	.asciz "MUSIC"
 	.align	4, 0xFF	# pad after Str_MUSIC
 
-AcSeqMixerVolProc_Table:	# 39 x REC_AcSeqMixerVolProc_Table (16 bytes each); read by SetMmmFilter 0x485F3EF0 `call MainDeleteSpecificEvent_entry, [d2], 0x1c`; func_486001D4 0x486001D4 `call func_5018C754, 0, 0`; MainDeleteSpecificEvent 0x48600FBE `call func_486001D4_entry, [d2,d3,a2,a3], 0x58` (+10)
+AcSeqMixerVolProc_Table:	# 39 x REC_AcSeqMixerVolProc_Table (16 bytes each); read by AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a1), d0`; AcSeqMixerVolProc_L51 0x48657F8C `mov (8, a2), d0`; AcSeqMixerVolProc_L172 0x486580AD `mov (0xc, a0), d1` (+38)
 	REC_AcSeqMixerVolProc_Table	p0=Str_PT1, f4=0xB00007, f8=0x200000	# [0]
 	REC_AcSeqMixerVolProc_Table	p0=Str_PT2, f4=0xB00007, f8=0x200000
 	REC_AcSeqMixerVolProc_Table	p0=Str_PT3, f4=0xB00007, f8=0x200000
@@ -28573,73 +28495,29 @@ Str_MUTE_4:	.asciz "MUTE"
 Str_MUTE_3:	.asciz "MUTE"
 	.align	4, 0xFF	# pad after Str_MUTE_3
 
-IvRstOtherPartProc_L1d_Records:	# 16 x REC_IvRstOtherPartProc_L1d_Records (8 bytes each); read by IvRstOtherPartProc_L1d 0x48655B08 `mov (a0), d0`
-	REC_IvRstOtherPartProc_L1d_Records	x4="\x14]eH"	# [0]
-	REC_IvRstOtherPartProc_L1d_Records	f0=1, x4="?[eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=2, x4="\xBF[eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x10052, x4="\xC5\\eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x10054, x4="\xA2\\eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=5, x4="\x08\\eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x10075, x4="\xB3\\eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x300007, x4="\xE6[eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x300008, x4="\x81\\eH"	# [8]
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x10053, x4="\xD3\\eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x100B2, x4="\xE1\\eH"
-	REC_IvRstOtherPartProc_L1d_Records	f0=0x1003A, x4="\x02]eH"
-	REC_IvRstOtherPartProc_L1d_Records	x4="\x14]eH"
-	REC_IvRstOtherPartProc_L1d_Records	x4="\x14]eH"
-	REC_IvRstOtherPartProc_L1d_Records	x4="\x14]eH"
-	REC_IvRstOtherPartProc_L1d_Records	x4="\x14]eH"
-AcSndCtrlXProc_Lae_Records:	# 16 x REC_AcSndCtrlXProc_Lae_Records (8 bytes each); read by AcSndCtrlXProc_Lae 0x4865707F `mov (a0), d1`
-	REC_AcSndCtrlXProc_Lae_Records	f0=64, x4="\xF5peH"	# [0]
-	REC_AcSndCtrlXProc_Lae_Records	f0=65, x4="\xDDpeH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=82, x4="\xCDpeH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=1, x4="\xEDpeH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=4, x4="\xC5peH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=84, x4="\xD5peH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=86, x4="\xBDpeH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=7, x4="\xADpeH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=8, x4="\xB5peH"	# [8]
-	REC_AcSndCtrlXProc_Lae_Records	x4="\x05qeH"
-	REC_AcSndCtrlXProc_Lae_Records	x4="\x05qeH"
-	REC_AcSndCtrlXProc_Lae_Records	x4="\x05qeH"
-	REC_AcSndCtrlXProc_Lae_Records	x4="\x05qeH"
-	REC_AcSndCtrlXProc_Lae_Records	x4="\x05qeH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=62, x4="\xE5peH"
-	REC_AcSndCtrlXProc_Lae_Records	f0=63, x4="\xFDpeH"
-AcSeqMixerVolProc_L1f_Records:	# 32 x REC_AcSeqMixerVolProc_L1f_Records (8 bytes each); read by AcSeqMixerVolProc_L1f 0x48657F5A `mov (a0), d0`
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"	# [0]
-	REC_AcSeqMixerVolProc_L1f_Records	f0=1, x4="\x91\x7FeH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100A2, x4="c\x87eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=5, x4="#\x84eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=40, x4="%\x86eH"	# [8]
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100E8, x4="\x15\x87eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x300009, x4="\xD3\x87eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100EE, x4="s\x87eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100EF, x4="\x82\x87eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"	# [16]
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x10051, x4="\xE5\x86eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100B2, x4="\xEB\x7FeH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100B4, x4="\x8F\x80eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=20, x4="a\x83eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x10058, x4="\xCF\x86eH"	# [24]
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x100D9, x4="b\x82eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=0x1003A, x4="8\x87eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	x4="\n\x88eH"
-	REC_AcSeqMixerVolProc_L1f_Records	f0=31, x4="8\x85eH"
+IvRstOtherPartProc_L1d_Records:	# 1 x REC_IvRstOtherPartProc_L1d_Records (8 bytes each); read by IvRstOtherPartProc_L1d 0x48655B08 `mov (a0), d0`; IvRstOtherPartProc_L4c 0x48655B37 `mov (a0), d0`; IvRstOtherPartProc_L4f 0x48655B3A `mov (4, a0), a0`
+	REC_IvRstOtherPartProc_L1d_Records	p4=IvRstOtherPartProc_L229
+.incbin_range "baserom/kn2400_program.rom", 0x06C8B8, 0x06C930
+AcSndCtrlXProc_Lae_Records:	# 16 x REC_AcSndCtrlXProc_Lae_Records (8 bytes each); read by AcSndCtrlXProc_Lae 0x4865707F `mov (a0), d1`; AcSndCtrlXProc_Ld4 0x486570A5 `mov (a0), d1`; AcSndCtrlXProc_Ld7 0x486570A8 `mov (4, a0), a0`
+	REC_AcSndCtrlXProc_Lae_Records	f0=64, f4=0x486570F5	# [0]
+	REC_AcSndCtrlXProc_Lae_Records	f0=65, f4=0x486570DD
+	REC_AcSndCtrlXProc_Lae_Records	f0=82, f4=0x486570CD
+	REC_AcSndCtrlXProc_Lae_Records	f0=1, f4=0x486570ED
+	REC_AcSndCtrlXProc_Lae_Records	f0=4, f4=0x486570C5
+	REC_AcSndCtrlXProc_Lae_Records	f0=84, f4=0x486570D5
+	REC_AcSndCtrlXProc_Lae_Records	f0=86, f4=0x486570BD
+	REC_AcSndCtrlXProc_Lae_Records	f0=7, f4=0x486570AD
+	REC_AcSndCtrlXProc_Lae_Records	f0=8, f4=0x486570B5	# [8]
+	REC_AcSndCtrlXProc_Lae_Records	f4=0x48657105
+	REC_AcSndCtrlXProc_Lae_Records	f4=0x48657105
+	REC_AcSndCtrlXProc_Lae_Records	f4=0x48657105
+	REC_AcSndCtrlXProc_Lae_Records	f4=0x48657105
+	REC_AcSndCtrlXProc_Lae_Records	f4=0x48657105
+	REC_AcSndCtrlXProc_Lae_Records	f0=62, f4=0x486570E5
+	REC_AcSndCtrlXProc_Lae_Records	f0=63, f4=0x486570FD
+AcSeqMixerVolProc_L1f_Records:	# 1 x REC_AcSeqMixerVolProc_L1f_Records (8 bytes each); read by AcSeqMixerVolProc_L1f 0x48657F5A `mov (a0), d0`; AcSeqMixerVolProc_L4e 0x48657F89 `mov (a0), d0`; AcSeqMixerVolProc_L51 0x48657F8C `mov (4, a0), a0`
+	REC_AcSeqMixerVolProc_L1f_Records	p4=AcSeqMixerVolProc_L8cf
+.incbin_range "baserom/kn2400_program.rom", 0x06C9B8, 0x06CAB0
 
 Field_AcRvariScreen_normal:	.asciz "normal"
 Field_AcRvariScreen_custom:	.asciz "custom"
@@ -29598,28 +29476,28 @@ AcSndImageProc_Table:	# 64 x u8, 0..8; read by AcSndImageProc : `movbu	(a1), d0`
 	tab_u8	8, 0, 6, 0, 6, 0, 2, 0, 8, 0, 8, 0, 6, 0, 6, 0	# [32]
 	tab_u8	4, 0, 4, 0, 4, 0, 8, 0, 8, 0, 4, 0, 4, 0, 4, 0	# [48]
 
-Str_empty_638:	.asciz "     "
+Str_empty_636:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FAB6, 0x06FAC2
-Str_empty_637:	.asciz "  \x95  "
+Str_empty_635:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FAC8, 0x06FAD4
-Str_empty_636:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FADA, 0x06FAE6
-Str_empty_635:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FAEC, 0x06FAF8
 Str_empty_634:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FAFE, 0x06FB0A
-Str_empty_633:	.asciz "     "
+.incbin_range "baserom/kn2400_program.rom", 0x06FADA, 0x06FAE6
+Str_empty_633:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FB10, 0x06FB1C
+.incbin_range "baserom/kn2400_program.rom", 0x06FAEC, 0x06FAF8
 Str_empty_632:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FB22, 0x06FB2E
+.incbin_range "baserom/kn2400_program.rom", 0x06FAFE, 0x06FB0A
 Str_empty_631:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FB10, 0x06FB1C
+Str_empty_630:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FB22, 0x06FB2E
+Str_empty_629:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FB34, 0x06FB40
 data_4846FB40:
@@ -29634,28 +29512,28 @@ data_4846FB52:
 Str_BASS2:	.asciz "BASS2"
 # census: opaque -- unknown-dump: 6 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FB5E, 0x06FB64
-Str_empty_630:	.asciz "     "
+Str_empty_628:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FB6A, 0x06FB76
-Str_empty_629:	.asciz "     "
+Str_empty_627:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FB7C, 0x06FB88
-Str_empty_628:	.asciz "  \x95  "
+Str_empty_626:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FB8E, 0x06FB9A
-Str_empty_627:	.asciz "     "
+Str_empty_625:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FBA0, 0x06FBAC
-Str_empty_626:	.asciz "  \x95  "
+Str_empty_624:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FBB2, 0x06FBBE
-Str_empty_625:	.asciz "     "
+Str_empty_623:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FBC4, 0x06FBD0
-Str_empty_624:	.asciz "  \x95  "
+Str_empty_622:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FBD6, 0x06FBE2
-Str_empty_623:	.asciz "     "
+Str_empty_621:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FBE8, 0x06FBF4
 data_4846FBF4:
@@ -29670,28 +29548,28 @@ data_4846FC06:
 Str_BASS2_2:	.asciz "BASS2"
 # census: opaque -- unknown-dump: 6 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FC12, 0x06FC18
-Str_empty_622:	.asciz "     "
+Str_empty_588:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FC1E, 0x06FC2A
-Str_empty_621:	.asciz "     "
+Str_empty_587:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FC30, 0x06FC3C
-Str_empty_588:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FC42, 0x06FC4E
-Str_empty_587:	.asciz "  \x95  "
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FC54, 0x06FC60
 Str_empty_586:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FC66, 0x06FC72
-Str_empty_580:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FC78, 0x06FC84
+.incbin_range "baserom/kn2400_program.rom", 0x06FC42, 0x06FC4E
+Str_empty_580:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FC54, 0x06FC60
 Str_empty_579:	.asciz "  \x95  "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FC8A, 0x06FC96
+.incbin_range "baserom/kn2400_program.rom", 0x06FC66, 0x06FC72
 Str_empty_578:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FC78, 0x06FC84
+Str_empty_577:	.asciz "  \x95  "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FC8A, 0x06FC96
+Str_empty_576:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FC9C, 0x06FCA8
 data_4846FCA8:
@@ -29706,70 +29584,68 @@ data_4846FCBA:
 Str_BASS2_3:	.asciz "BASS2"
 # census: opaque -- unknown-dump: 6 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FCC6, 0x06FCCC
-Str_empty_577:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FCD2, 0x06FCDE
-Str_empty_576:	.asciz "     "
-# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FCE4, 0x06FCF0
 Str_empty_575:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FCF6, 0x06FD02
+.incbin_range "baserom/kn2400_program.rom", 0x06FCD2, 0x06FCDE
 Str_empty_574:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FD08, 0x06FD14
+.incbin_range "baserom/kn2400_program.rom", 0x06FCE4, 0x06FCF0
 Str_empty_573:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FD1A, 0x06FD26
+.incbin_range "baserom/kn2400_program.rom", 0x06FCF6, 0x06FD02
 Str_empty_572:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FD2C, 0x06FD38
+.incbin_range "baserom/kn2400_program.rom", 0x06FD08, 0x06FD14
 Str_empty_571:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FD3E, 0x06FD4A
+.incbin_range "baserom/kn2400_program.rom", 0x06FD1A, 0x06FD26
 Str_empty_570:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FD50, 0x06FD5C
+.incbin_range "baserom/kn2400_program.rom", 0x06FD2C, 0x06FD38
 Str_empty_569:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x06FD62, 0x06FD6E
+.incbin_range "baserom/kn2400_program.rom", 0x06FD3E, 0x06FD4A
 Str_empty_568:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FD50, 0x06FD5C
+Str_empty_567:	.asciz "     "
+# census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x06FD62, 0x06FD6E
+Str_empty_566:	.asciz "     "
 # census: opaque -- unknown-dump: 12 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06FD74, 0x06FD80
 
 AcAcdnTabProc_L43d_Table:
-	.long	Str_empty_638
-	.long	Str_empty_637
 	.long	Str_empty_636
 	.long	Str_empty_635
 	.long	Str_empty_634
 	.long	Str_empty_633
 	.long	Str_empty_632
 	.long	Str_empty_631
-	.long	data_4846FB40
-	.long	data_4846FB52
 	.long	Str_empty_630
 	.long	Str_empty_629
+	.long	data_4846FB40
+	.long	data_4846FB52
 	.long	Str_empty_628
 	.long	Str_empty_627
 	.long	Str_empty_626
 	.long	Str_empty_625
 	.long	Str_empty_624
 	.long	Str_empty_623
-	.long	data_4846FBF4
-	.long	data_4846FC06
 	.long	Str_empty_622
 	.long	Str_empty_621
+	.long	data_4846FBF4
+	.long	data_4846FC06
 	.long	Str_empty_588
 	.long	Str_empty_587
 	.long	Str_empty_586
 	.long	Str_empty_580
 	.long	Str_empty_579
 	.long	Str_empty_578
-	.long	data_4846FCA8
-	.long	data_4846FCBA
 	.long	Str_empty_577
 	.long	Str_empty_576
+	.long	data_4846FCA8
+	.long	data_4846FCBA
 	.long	Str_empty_575
 	.long	Str_empty_574
 	.long	Str_empty_573
@@ -29778,6 +29654,8 @@ AcAcdnTabProc_L43d_Table:
 	.long	Str_empty_570
 	.long	Str_empty_569
 	.long	Str_empty_568
+	.long	Str_empty_567
+	.long	Str_empty_566
 
 Str_GERMAN_7:	.asciz "GERMAN "
 Str_FRENCH_7:	.asciz "FRENCH "
@@ -29814,7 +29692,7 @@ Bitmap_func_4865C1AC_3:	# 22 x 117, 8 bit(s) a pixel: func_4865C1AC 0x4865C1AC d
 	.incbin	"build/bitmaps/Bitmap_func_4865C1AC_3.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 22 117) from src/program/data/media/Bitmap_func_4865C1AC_3.png
 	.space	2310, 0x07
 
-AcDrawbarProc_Table:	# 21 x u32, 2097296..908918839; read by AcDrawbarProc_L49 0x4865B400: `mov	(d0, a0), d0`; AcDrawbarProc_Lbc 0x4865B473: `mov	(d0, a0), d0` ...
+AcDrawbarProc_Table:	# 21 x u32, 2097296..908918839; read by AcDrawbarProc_Lef 0x4865B4A6: `mov	(d0, a0), d0`; AcDrawbarProc_L247 0x4865B5FE: `mov	(d2, a0), d0`
 	tab_u32	2097296, 2097298, 2097297, 2097299, 2097300, 2097301, 2097302, 2097303	# [0]
 	tab_u32	2097304, 721432608, 841678897, 3353344, 721433643, 908787765, 3615488, 754989101	# [8]
 	tab_u32	908918839, 3484928, 754988077, 841809971, 3222784	# [16]
@@ -29872,74 +29750,74 @@ Str_0_16:	.asciz " 0"
 BitmapDrawsw_Pixels:	# 294 x 6, 8 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapDrawsw answers MT_GetBitmapData with (src/program/data/media/BitmapDrawsw_Pixels.png)
 	.incbin	"build/bitmaps/BitmapDrawsw_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 294 6) from src/program/data/media/BitmapDrawsw_Pixels.png
 
-AcAcdnTabProc_L21_Records:	# 16 x REC_AcAcdnTabProc_L21_Records (8 bytes each); read by AcAcdnTabProc_L21 0x4865AE50 `mov (a0), d0`
-	REC_AcAcdnTabProc_L21_Records	f0=0x100B0, x4="\xAA\xAFeH"	# [0]
-	REC_AcAcdnTabProc_L21_Records	f0=1, x4="\x03\xB1eH"
-	REC_AcAcdnTabProc_L21_Records	f0=0x1009E, x4="\xD7\xB1eH"
-	REC_AcAcdnTabProc_L21_Records	f0=0x1009F, x4="&\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	f0=5, x4="\x88\xAEeH"
-	REC_AcAcdnTabProc_L21_Records	f0=0x10036, x4="}\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"	# [8]
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	f0=0x100AA, x4="S\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	x4="\xB7\xB2eH"
-	REC_AcAcdnTabProc_L21_Records	f0=0x100AE, x4="\"\xAFeH"
-	REC_AcAcdnTabProc_L21_Records	f0=0x5FFFFF, x4="\x8C\xB1eH"
-PsDrawEditProc_L1e_Records:	# 16 x REC_PsDrawEditProc_L1e_Records (8 bytes each); read by PsDrawEditProc_L1e 0x4865BC58 `mov (a0), d0`
-	REC_PsDrawEditProc_L1e_Records	f0=0x100D0, x4="\xDA\xBCeH"	# [0]
-	REC_PsDrawEditProc_L1e_Records	f0=1, x4="\x8F\xBCeH"
-	REC_PsDrawEditProc_L1e_Records	f0=0x10062, x4="E\xBDeH"
-	REC_PsDrawEditProc_L1e_Records	f0=19, x4="\x13\xBEeH"
-	REC_PsDrawEditProc_L1e_Records	f0=20, x4="\xBA\xBDeH"
-	REC_PsDrawEditProc_L1e_Records	f0=17, x4="6\xBEeH"
-	REC_PsDrawEditProc_L1e_Records	f0=18, x4="6\xBEeH"
-	REC_PsDrawEditProc_L1e_Records	f0=16, x4="6\xBEeH"
-	REC_PsDrawEditProc_L1e_Records	f0=0x1003F, x4="\xB3\xBEeH"	# [8]
-	REC_PsDrawEditProc_L1e_Records	f0=9, x4="V\xBDeH"
-	REC_PsDrawEditProc_L1e_Records	f0=0x1003A, x4="\xB2\xBCeH"
-	REC_PsDrawEditProc_L1e_Records	f0=0x1003B, x4="\xF6\xBCeH"
-	REC_PsDrawEditProc_L1e_Records	x4="\xB7\xBEeH"
-	REC_PsDrawEditProc_L1e_Records	f0=0x1003D, x4="\x18\xBDeH"
-	REC_PsDrawEditProc_L1e_Records	f0=0x1003E, x4="\xAF\xBEeH"
-	REC_PsDrawEditProc_L1e_Records	f0=15, x4="6\xBEeH"
-AcSndExpGroupProc_L1e_Records:	# 16 x REC_AcSndExpGroupProc_L1e_Records (8 bytes each); read by AcSndExpGroupProc_L1e 0x4865C212 `mov (a0), d0`
-	REC_AcSndExpGroupProc_L1e_Records	f0=16, x4="*\xC3eH"	# [0]
-	REC_AcSndExpGroupProc_L1e_Records	f0=1, x4="H\xC2eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=0x100B2, x4="\x80\xC2eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=0x600001, x4="\xA4\xC2eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=33, x4="\xE6\xC2eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=17, x4="*\xC3eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=18, x4="*\xC3eH"
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"	# [8]
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=0x1003A, x4="\x9E\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	x4="\xF8\xC4eH"
-	REC_AcSndExpGroupProc_L1e_Records	f0=15, x4="*\xC3eH"
-SVariR12OctaveFunc_L1c_Records:	# 16 x REC_SVariR12OctaveFunc_L1c_Records (8 bytes each); read by SVariR12OctaveFunc_L1c 0x4865D02B `mov (a0), d0`
-	REC_SVariR12OctaveFunc_L1c_Records	f0=128, x4="\x08\xD1eH"	# [0]
-	REC_SVariR12OctaveFunc_L1c_Records	f0=129, x4="!\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=1, x4=",\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=2, x4="0\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=109, x4="8\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"	# [8]
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	x4="<\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=108, x4="4\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=125, x4="\x0B\xD1eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=126, x4="a\xD0eH"
-	REC_SVariR12OctaveFunc_L1c_Records	f0=127, x4="\x00\xD1eH"
+AcAcdnTabProc_L21_Records:	# 16 x REC_AcAcdnTabProc_L21_Records (8 bytes each); read by AcAcdnTabProc_L21 0x4865AE50 `mov (a0), d0`; AcAcdnTabProc_L51 0x4865AE80 `mov (a0), d0`; AcAcdnTabProc_L54 0x4865AE83 `mov (4, a0), a0`
+	REC_AcAcdnTabProc_L21_Records	f0=0x100B0, f4=0x4865AFAA	# [0]
+	REC_AcAcdnTabProc_L21_Records	f0=1, f4=0x4865B103
+	REC_AcAcdnTabProc_L21_Records	f0=0x1009E, f4=0x4865B1D7
+	REC_AcAcdnTabProc_L21_Records	f0=0x1009F, f4=0x4865B226
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7
+	REC_AcAcdnTabProc_L21_Records	f0=5, f4=0x4865AE88
+	REC_AcAcdnTabProc_L21_Records	f0=0x10036, f4=0x4865B27D
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7	# [8]
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7
+	REC_AcAcdnTabProc_L21_Records	f0=0x100AA, f4=0x4865B253
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7
+	REC_AcAcdnTabProc_L21_Records	f4=0x4865B2B7
+	REC_AcAcdnTabProc_L21_Records	f0=0x100AE, f4=0x4865AF22
+	REC_AcAcdnTabProc_L21_Records	f0=0x5FFFFF, f4=0x4865B18C
+PsDrawEditProc_L1e_Records:	# 16 x REC_PsDrawEditProc_L1e_Records (8 bytes each); read by PsDrawEditProc_L1e 0x4865BC58 `mov (a0), d0`; PsDrawEditProc_L4d 0x4865BC87 `mov (a0), d0`; PsDrawEditProc_L50 0x4865BC8A `mov (4, a0), a0`
+	REC_PsDrawEditProc_L1e_Records	f0=0x100D0, f4=0x4865BCDA	# [0]
+	REC_PsDrawEditProc_L1e_Records	f0=1, f4=0x4865BC8F
+	REC_PsDrawEditProc_L1e_Records	f0=0x10062, f4=0x4865BD45
+	REC_PsDrawEditProc_L1e_Records	f0=19, f4=0x4865BE13
+	REC_PsDrawEditProc_L1e_Records	f0=20, f4=0x4865BDBA
+	REC_PsDrawEditProc_L1e_Records	f0=17, f4=0x4865BE36
+	REC_PsDrawEditProc_L1e_Records	f0=18, f4=0x4865BE36
+	REC_PsDrawEditProc_L1e_Records	f0=16, f4=0x4865BE36
+	REC_PsDrawEditProc_L1e_Records	f0=0x1003F, f4=0x4865BEB3	# [8]
+	REC_PsDrawEditProc_L1e_Records	f0=9, f4=0x4865BD56
+	REC_PsDrawEditProc_L1e_Records	f0=0x1003A, f4=0x4865BCB2
+	REC_PsDrawEditProc_L1e_Records	f0=0x1003B, f4=0x4865BCF6
+	REC_PsDrawEditProc_L1e_Records	f4=0x4865BEB7
+	REC_PsDrawEditProc_L1e_Records	f0=0x1003D, f4=0x4865BD18
+	REC_PsDrawEditProc_L1e_Records	f0=0x1003E, f4=0x4865BEAF
+	REC_PsDrawEditProc_L1e_Records	f0=15, f4=0x4865BE36
+AcSndExpGroupProc_L1e_Records:	# 16 x REC_AcSndExpGroupProc_L1e_Records (8 bytes each); read by AcSndExpGroupProc_L1e 0x4865C212 `mov (a0), d0`; AcSndExpGroupProc_L4c 0x4865C240 `mov (a0), d0`; AcSndExpGroupProc_L4f 0x4865C243 `mov (4, a0), a0`
+	REC_AcSndExpGroupProc_L1e_Records	f0=16, f4=0x4865C32A	# [0]
+	REC_AcSndExpGroupProc_L1e_Records	f0=1, f4=0x4865C248
+	REC_AcSndExpGroupProc_L1e_Records	f0=0x100B2, f4=0x4865C280
+	REC_AcSndExpGroupProc_L1e_Records	f0=0x600001, f4=0x4865C2A4
+	REC_AcSndExpGroupProc_L1e_Records	f0=33, f4=0x4865C2E6
+	REC_AcSndExpGroupProc_L1e_Records	f0=17, f4=0x4865C32A
+	REC_AcSndExpGroupProc_L1e_Records	f0=18, f4=0x4865C32A
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8	# [8]
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8
+	REC_AcSndExpGroupProc_L1e_Records	f0=0x1003A, f4=0x4865C49E
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8
+	REC_AcSndExpGroupProc_L1e_Records	f4=0x4865C4F8
+	REC_AcSndExpGroupProc_L1e_Records	f0=15, f4=0x4865C32A
+SVariR12OctaveFunc_L1c_Records:	# 16 x REC_SVariR12OctaveFunc_L1c_Records (8 bytes each); read by SVariR12OctaveFunc_L1c 0x4865D02B `mov (a0), d0`; SVariR12OctaveFunc_L4a 0x4865D059 `mov (a0), d0`; SVariR12OctaveFunc_L4d 0x4865D05C `mov (4, a0), a0`
+	REC_SVariR12OctaveFunc_L1c_Records	f0=128, f4=0x4865D108	# [0]
+	REC_SVariR12OctaveFunc_L1c_Records	f0=129, f4=0x4865D121
+	REC_SVariR12OctaveFunc_L1c_Records	f0=1, f4=0x4865D12C
+	REC_SVariR12OctaveFunc_L1c_Records	f0=2, f4=0x4865D130
+	REC_SVariR12OctaveFunc_L1c_Records	f0=109, f4=0x4865D138
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C	# [8]
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C
+	REC_SVariR12OctaveFunc_L1c_Records	f4=0x4865D13C
+	REC_SVariR12OctaveFunc_L1c_Records	f0=108, f4=0x4865D134
+	REC_SVariR12OctaveFunc_L1c_Records	f0=125, f4=0x4865D10B
+	REC_SVariR12OctaveFunc_L1c_Records	f0=126, f4=0x4865D061
+	REC_SVariR12OctaveFunc_L1c_Records	f0=127, f4=0x4865D100
 
 Field_AcFavorite_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_AcFavorite_end
@@ -30403,105 +30281,105 @@ Str_SD_PREFERENCES_3:	.asciz "SD PREFERENCES"
 data_484759CF:
 	.align	4, 0x00	# pad after Str_SD_PREFERENCES_3
 
-func_4865E476_Table:	# 98 x REC_func_4865E476_Table (24 bytes each); read by TtFavorite_L20c 0x4865D5CE `call func_486BFC6D_entry, 0, 0xc`; TtFavorite_L20c 0x4865D5CE `mov (0xc, a0), d0`; func_4865E476_Ld5 0x4865E54B `mov (0x10, a3), d0` (+3)
-	REC_func_4865E476_Table	p0=Str_SOUND_MENU_2, f4=21, x8="\x03\x00\x0E\x00", f12=0xF0008, f16=0x5000C, x20="\x00\x00\x00\x00"	# [0]
-	REC_func_4865E476_Table	p0=Str_SOUND_PART_SETTING, f4=2, x8="\x03\x00\x0E\x00", f12=0xF0009, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MIXER_18, f4=7, x8="\x03\x00\x0E\x00", f12=0xF000C, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TECHNI_CHORD_3, f4=24, x8="\x03\x00\x0E\x00", f12=0xF000D, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MASTER_TUNING_4, f4=9, x8="\x03\x00\x0E\x00", f12=0xF000A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_KEY_SCALING_3, f4=132, x8="\x03\x00\x0E\x00", f12=0xF000B, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SOUND_LOAD_OPTION_5, f4=209, x8="\x03\x00\x0E\x00", f12=0xF003A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_REVERB_EFFECT_MENU, f4=206, x8="\x14\x00\x0E\x00", f12=0xF0078, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MULTI_DSP, f4=12, x8="\x14\x00\x0E\x00", f12=0xF007B, f16=0x5000D, x20="\x00\x00\x00\x00"	# [8]
-	REC_func_4865E476_Table	p0=Str_CHORUS_10, f4=207, x8="\x14\x00\x0E\x00", f12=0xF007A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_REVERB_12, f4=23, x8="\x14\x00\x0E\x00", f12=0xF0079, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TONE_CONTROL_3, f4=13, x8="\x14\x00\x0E\x00", f12=0xF007D, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MIC_REVERB_EFFECT_3, f4=155, x8="\x14\x00\x0E\x00", f12=0xF007E, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SOUND_EDIT_MENU_2, f4=15, x8="\x0E\x00\x0E\x00", f12=0xF0011, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_CONTROL_MENU_2, f4=147, x8="\x05\x00\x0E\x00", f12=0xF0024, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_INITIAL_6, f4=14, x8="\x05\x00\x0E\x00", f12=0xF0025, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_OVERALL_TOUCH_SENSITIVITY_3, f4=10, x8="\x05\x00\x0E\x00", f12=0xF0136, f16=0x5000D, x20="\x00\x00\x00\x00"	# [16]
-	REC_func_4865E476_Table	p0=Str_FOOT_CONTROLLERS_3, f4=129, x8="\x05\x00\x0E\x00", f12=0xF0026, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MUSIC_STYLE_ARRANGER_MODE_3, f4=50, x8="\x05\x00\x0E\x00", f12=0xF0028, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_PANEL_MEMORY_MODE_5, f4=49, x8="\x05\x00\x0E\x00", f12=0xF0029, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_FADE_IN_OUT_SETTING_3, f4=156, x8="\x05\x00\x0E\x00", f12=0xF002A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MIDI_MENU_2, f4=25, x8="\x04\x00\x0E\x00", f12=0xF0050, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MIDI_PART_SETTING, f4=103, x8="\x04\x00\x0E\x00", f12=0xF0051, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_CONTROL_MESSAGES_3, f4=134, x8="\x04\x00\x0E\x00", f12=0xF0052, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_REALTIME_MESSAGES_3, f4=27, x8="\x04\x00\x0E\x00", f12=0xF0053, f16=0x5000D, x20="\x00\x00\x00\x00"	# [24]
-	REC_func_4865E476_Table	p0=Str_COMMON_SETTING_3, f4=26, x8="\x04\x00\x0E\x00", f12=0xF0054, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_INPUT_OUTPUT_SETTING_3, f4=104, x8="\x04\x00\x0E\x00", f12=0xF0055, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MIDI_PRESETS_3, f4=30, x8="\x04\x00\x0E\x00", f12=0xF0056, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MODE_SETTING_4, f4=186, x8="\x04\x00\x0E\x00", f12=0xF0058, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_COMPUTER_CONNECTION_3, f4=135, x8="\x04\x00\x0E\x00", f12=0xF005A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_CUSTOMIZE_MENU_2, f4=187, x8="\x0D\x00\x0E\x00", f12=0xF0030, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_DISPLAY_TIME_OUT_4, f4=148, x8="\x0D\x00\x0E\x00", f12=0xF0033, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MIDI_SETTING_LOAD_OPTION_4, f4=136, x8="\x0D\x00\x0E\x00", f12=0xF0035, f16=0x5000D, x20="\x00\x00\x00\x00"	# [32]
-	REC_func_4865E476_Table	p0=Str_DATA_PROTECTION_4, f4=190, x8="\x0D\x00\x0E\x00", f12=0xF002B, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_LANGUAGE_SETTING_4, f4=191, x8="\x0D\x00\x0E\x00", f12=0xF0036, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_DISK_PREFERENCE_2, f4=232, x8="\x06\x00\x0E\x00", f12=0xF006D, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_DISK_MENU_3, f4=149, x8="\x06\x00\x0E\x00", f12=0xF0060, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_LOAD_25, f4=44, x8="\x06\x00\x0E\x00", f12=0xF0061, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SAVE_TECHNICS_FORMAT, f4=45, x8="\x06\x00\x0E\x00", f12=0xF0067, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SAVE_SMF_FORMAT_0, f4=45, x8="\x06\x00\x0E\x00", f12=0xF0069, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_DIRECT_PLAY_3, f4=46, x8="\x06\x00\x0E\x00", f12=0xF006E, f16=0x5000D, x20="\x00\x00\x00\x00"	# [40]
-	REC_func_4865E476_Table	p0=Str_SONG_MEDLEY_9, f4=58, x8="\x06\x00\x0E\x00", f12=0xF0071, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_DISK_TOOLS_3, f4=231, x8="\x06\x00\x0E\x00", f12=0xF006A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MUSIC_STYLIST_2, f4=162, x8="\x10\x00\x0E\x00", f12=0xF0041, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MUSICAL_CATEGORY_3, f4=163, x8="\x10\x00\x0E\x00", f12=0xF0042, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MUSICAL_ERA_3, f4=184, x8="\x10\x00\x0E\x00", f12=0xF0044, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_ALPHABETICAL_LIST_3, f4=164, x8="\x10\x00\x0E\x00", f12=0xF0043, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_CHORD_FINDER_4, f4=176, x8="\x00\x00\x0E\x00", f12=0xF00EE, f16=0x5000E, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_PADS_MENU_2, f4=197, x8="\x09\x00\x0E\x00", f12=0xF00DA, f16=0x5000C, x20="\x00\x00\x00\x00"	# [48]
-	REC_func_4865E476_Table	p0=Str_COMPILE_SET_2, f4=167, x8="\x09\x00\x0E\x00", f12=0xF00DC, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_PHRASE_COPY_3, f4=198, x8="\x09\x00\x0E\x00", f12=0xF00E4, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SEQ_TO_PAD_COPY_3, f4=178, x8="\x09\x00\x0E\x00", f12=0xF00DE, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_COMPOSER_MENU_2, f4=77, x8="\x07\x00\x0E\x00", f12=0xF00B0, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_EASY_COMPOSER_3, f4=81, x8="\x07\x00\x0E\x00", f12=0xF00BA, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_PATTERN_COPY_3, f4=82, x8="\x07\x00\x0E\x00", f12=0xF00B8, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SEQ_TO_COMPOSER_COPY_3, f4=83, x8="\x07\x00\x0E\x00", f12=0xF00B9, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_LOAD_SINGLE_COMPOSER_4, f4=84, x8="\x07\x00\x0E\x00", f12=0xF0062, f16=0x5000D, x20="\x00\x00\x00\x00"	# [56]
-	REC_func_4865E476_Table	p0=Str_SEQUENCER_MENU, f4=51, x8="\x08\x00\x0E\x00", f12=0xF0080, f16=0x5000C, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_RECORD_EDIT_3, f4=202, x8="\x08\x00\x0E\x00", f12=0xF0093, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_COPY_PASTE_3, f4=203, x8="\x08\x00\x0E\x00", f12=0xF00A5, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_RANGE_EDIT_3, f4=204, x8="\x08\x00\x0E\x00", f12=0xF00A6, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_PANEL_WRITE_3, f4=70, x8="\x08\x00\x0E\x00", f12=0xF008D, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TRACK_MIXER_3, f4=7, x8="\x08\x00\x0E\x00", f12=0xF007F, f16=0x5000E, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_REALTIME_RECORD_3, f4=52, x8="\x08\x00\x0E\x00", f12=0xF0085, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=data_48475817, f4=53, x8="\x08\x00\x0E\x00", f12=0xF0087, f16=0x5000D, x20="\x00\x00\x00\x00"	# [64]
-	REC_func_4865E476_Table	p0=Str_STEP_RECORD_6, f4=54, x8="\x08\x00\x0E\x00", f12=0xF0089, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TRACK_ASSIGN_4, f4=57, x8="\x08\x00\x0E\x00", f12=0xF008B, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_QUANTIZE_8, f4=61, x8="\x08\x00\x0E\x00", f12=0xF009C, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SONG_SELECT_14, f4=55, x8="\x08\x00\x0E\x00", f12=0xF008E, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SONG_CLEAR_4, f4=63, x8="\x08\x00\x0E\x00", f12=0xF0090, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TRACK_CLEAR_4, f4=64, x8="\x08\x00\x0E\x00", f12=0xF009A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_NOTE_EDIT_4, f4=4, x8="\x08\x00\x0E\x00", f12=0xF0094, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_DRUM_EDIT_4, f4=17, x8="\x08\x00\x0E\x00", f12=0xF0097, f16=0x5000D, x20="\x00\x00\x00\x00"	# [72]
-	REC_func_4865E476_Table	p0=Str_TRACK_COPY_3, f4=205, x8="\x08\x00\x0E\x00", f12=0xF0084, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SONG_COPY_3, f4=67, x8="\x08\x00\x0E\x00", f12=0xF0091, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TRACK_MERGE_3, f4=69, x8="\x08\x00\x0E\x00", f12=0xF009B, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MEASURE_COPY_5, f4=71, x8="\x08\x00\x0E\x00", f12=0xF00A2, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MEASURE_ERASE_5, f4=72, x8="\x08\x00\x0E\x00", f12=0xF00A1, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MEASURE_DELETE_5, f4=73, x8="\x08\x00\x0E\x00", f12=0xF00A3, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_MEASURE_INSERT_5, f4=74, x8="\x08\x00\x0E\x00", f12=0xF00A4, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_APC_TO_SMF_CONVERT_5, f4=201, x8="\x08\x00\x0E\x00", f12=0xF00A8, f16=0x5000D, x20="\x00\x00\x00\x00"	# [80]
-	REC_func_4865E476_Table	p0=Str_NOTE_CHANGE_3, f4=65, x8="\x08\x00\x0E\x00", f12=0xF009F, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_VELOCITY_CHANGE_3, f4=139, x8="\x08\x00\x0E\x00", f12=0xF009E, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_TRANSPOSE_5, f4=62, x8="\x08\x00\x0E\x00", f12=0xF009D, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_ADVANCE_DELAY_4, f4=66, x8="\x08\x00\x0E\x00", f12=0xF00A0, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_APC_REVERB_SETTING_3, f4=230, x8="\x03\x00\x0E\x00", f12=0xF0103, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_MENU_3, f4=219, x8="\x18\x00\x0E\x00", f12=0xF0104, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_LOAD_2, f4=220, x8="\x18\x00\x0E\x00", f12=0xF0105, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_SAVE_TECHNICS_FMT, f4=221, x8="\x18\x00\x0E\x00", f12=0xF0108, f16=0x5000D, x20="\x00\x00\x00\x00"	# [88]
-	REC_func_4865E476_Table	p0=Str_SD_SAVE_SMF_FORMAT_0, f4=221, x8="\x18\x00\x0E\x00", f12=0xF0109, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_SONG_MEDLEY_3, f4=222, x8="\x18\x00\x0E\x00", f12=0xF0110, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_AUDIO_PLAY_3, f4=218, x8="\x18\x00\x0E\x00", f12=0xF0116, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_SOUND_PLAY_4, f4=216, x8="\x18\x00\x0E\x00", f12=0xF011A, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_TOOLS_3, f4=224, x8="\x18\x00\x0E\x00", f12=0xF010B, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_PREFERENCES_4, f4=226, x8="\x18\x00\x0E\x00", f12=0xF0112, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_FAVORITE_SONGS, f4=225, x8="\x18\x00\x0E\x00", f12=0xF011F, f16=0x5000D, x20="\x00\x00\x00\x00"
-	REC_func_4865E476_Table	p0=Str_SD_PREFERENCES_3, f4=226, x8="\x18\x00\x0E\x00", f12=0xF0112, f16=0x5000D, x20="\x00\x00\x00\x00"	# [96]
-	REC_func_4865E476_Table	p0=data_484759CF, f4=2, x8="\x00\x00\x0E\x00", f12=0xF0000, f16=0x5000D, x20="\x00\x00\x00\x00"
+func_4865E476_Table:	# 98 x REC_func_4865E476_Table (24 bytes each); read by TtFavorite_L20c 0x4865D5CE `mov (0xc, a0), d0`; func_4865E476_Ld5 0x4865E54B `mov (0x10, a3), d0`; func_4865E476_L104 0x4865E57A `mov (a0), d0` (+23)
+	REC_func_4865E476_Table	p0=Str_SOUND_MENU_2, f4=21, f8=0xE0003, f12=0xF0008, f16=0x5000C	# [0]
+	REC_func_4865E476_Table	p0=Str_SOUND_PART_SETTING, f4=2, f8=0xE0003, f12=0xF0009, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MIXER_18, f4=7, f8=0xE0003, f12=0xF000C, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TECHNI_CHORD_3, f4=24, f8=0xE0003, f12=0xF000D, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MASTER_TUNING_4, f4=9, f8=0xE0003, f12=0xF000A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_KEY_SCALING_3, f4=132, f8=0xE0003, f12=0xF000B, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SOUND_LOAD_OPTION_5, f4=209, f8=0xE0003, f12=0xF003A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_REVERB_EFFECT_MENU, f4=206, f8=0xE0014, f12=0xF0078, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_MULTI_DSP, f4=12, f8=0xE0014, f12=0xF007B, f16=0x5000D	# [8]
+	REC_func_4865E476_Table	p0=Str_CHORUS_10, f4=207, f8=0xE0014, f12=0xF007A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_REVERB_12, f4=23, f8=0xE0014, f12=0xF0079, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TONE_CONTROL_3, f4=13, f8=0xE0014, f12=0xF007D, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MIC_REVERB_EFFECT_3, f4=155, f8=0xE0014, f12=0xF007E, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SOUND_EDIT_MENU_2, f4=15, f8=0xE000E, f12=0xF0011, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_CONTROL_MENU_2, f4=147, f8=0xE0005, f12=0xF0024, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_INITIAL_6, f4=14, f8=0xE0005, f12=0xF0025, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_OVERALL_TOUCH_SENSITIVITY_3, f4=10, f8=0xE0005, f12=0xF0136, f16=0x5000D	# [16]
+	REC_func_4865E476_Table	p0=Str_FOOT_CONTROLLERS_3, f4=129, f8=0xE0005, f12=0xF0026, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MUSIC_STYLE_ARRANGER_MODE_3, f4=50, f8=0xE0005, f12=0xF0028, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_PANEL_MEMORY_MODE_5, f4=49, f8=0xE0005, f12=0xF0029, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_FADE_IN_OUT_SETTING_3, f4=156, f8=0xE0005, f12=0xF002A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MIDI_MENU_2, f4=25, f8=0xE0004, f12=0xF0050, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_MIDI_PART_SETTING, f4=103, f8=0xE0004, f12=0xF0051, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_CONTROL_MESSAGES_3, f4=134, f8=0xE0004, f12=0xF0052, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_REALTIME_MESSAGES_3, f4=27, f8=0xE0004, f12=0xF0053, f16=0x5000D	# [24]
+	REC_func_4865E476_Table	p0=Str_COMMON_SETTING_3, f4=26, f8=0xE0004, f12=0xF0054, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_INPUT_OUTPUT_SETTING_3, f4=104, f8=0xE0004, f12=0xF0055, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MIDI_PRESETS_3, f4=30, f8=0xE0004, f12=0xF0056, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MODE_SETTING_4, f4=186, f8=0xE0004, f12=0xF0058, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_COMPUTER_CONNECTION_3, f4=135, f8=0xE0004, f12=0xF005A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_CUSTOMIZE_MENU_2, f4=187, f8=0xE000D, f12=0xF0030, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_DISPLAY_TIME_OUT_4, f4=148, f8=0xE000D, f12=0xF0033, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MIDI_SETTING_LOAD_OPTION_4, f4=136, f8=0xE000D, f12=0xF0035, f16=0x5000D	# [32]
+	REC_func_4865E476_Table	p0=Str_DATA_PROTECTION_4, f4=190, f8=0xE000D, f12=0xF002B, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_LANGUAGE_SETTING_4, f4=191, f8=0xE000D, f12=0xF0036, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_DISK_PREFERENCE_2, f4=232, f8=0xE0006, f12=0xF006D, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_DISK_MENU_3, f4=149, f8=0xE0006, f12=0xF0060, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_LOAD_25, f4=44, f8=0xE0006, f12=0xF0061, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SAVE_TECHNICS_FORMAT, f4=45, f8=0xE0006, f12=0xF0067, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SAVE_SMF_FORMAT_0, f4=45, f8=0xE0006, f12=0xF0069, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_DIRECT_PLAY_3, f4=46, f8=0xE0006, f12=0xF006E, f16=0x5000D	# [40]
+	REC_func_4865E476_Table	p0=Str_SONG_MEDLEY_9, f4=58, f8=0xE0006, f12=0xF0071, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_DISK_TOOLS_3, f4=231, f8=0xE0006, f12=0xF006A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MUSIC_STYLIST_2, f4=162, f8=0xE0010, f12=0xF0041, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_MUSICAL_CATEGORY_3, f4=163, f8=0xE0010, f12=0xF0042, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MUSICAL_ERA_3, f4=184, f8=0xE0010, f12=0xF0044, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_ALPHABETICAL_LIST_3, f4=164, f8=0xE0010, f12=0xF0043, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_CHORD_FINDER_4, f4=176, f8=0xE0000, f12=0xF00EE, f16=0x5000E
+	REC_func_4865E476_Table	p0=Str_PADS_MENU_2, f4=197, f8=0xE0009, f12=0xF00DA, f16=0x5000C	# [48]
+	REC_func_4865E476_Table	p0=Str_COMPILE_SET_2, f4=167, f8=0xE0009, f12=0xF00DC, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_PHRASE_COPY_3, f4=198, f8=0xE0009, f12=0xF00E4, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SEQ_TO_PAD_COPY_3, f4=178, f8=0xE0009, f12=0xF00DE, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_COMPOSER_MENU_2, f4=77, f8=0xE0007, f12=0xF00B0, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_EASY_COMPOSER_3, f4=81, f8=0xE0007, f12=0xF00BA, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_PATTERN_COPY_3, f4=82, f8=0xE0007, f12=0xF00B8, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SEQ_TO_COMPOSER_COPY_3, f4=83, f8=0xE0007, f12=0xF00B9, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_LOAD_SINGLE_COMPOSER_4, f4=84, f8=0xE0007, f12=0xF0062, f16=0x5000D	# [56]
+	REC_func_4865E476_Table	p0=Str_SEQUENCER_MENU, f4=51, f8=0xE0008, f12=0xF0080, f16=0x5000C
+	REC_func_4865E476_Table	p0=Str_RECORD_EDIT_3, f4=202, f8=0xE0008, f12=0xF0093, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_COPY_PASTE_3, f4=203, f8=0xE0008, f12=0xF00A5, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_RANGE_EDIT_3, f4=204, f8=0xE0008, f12=0xF00A6, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_PANEL_WRITE_3, f4=70, f8=0xE0008, f12=0xF008D, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TRACK_MIXER_3, f4=7, f8=0xE0008, f12=0xF007F, f16=0x5000E
+	REC_func_4865E476_Table	p0=Str_REALTIME_RECORD_3, f4=52, f8=0xE0008, f12=0xF0085, f16=0x5000D
+	REC_func_4865E476_Table	p0=data_48475817, f4=53, f8=0xE0008, f12=0xF0087, f16=0x5000D	# [64]
+	REC_func_4865E476_Table	p0=Str_STEP_RECORD_6, f4=54, f8=0xE0008, f12=0xF0089, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TRACK_ASSIGN_4, f4=57, f8=0xE0008, f12=0xF008B, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_QUANTIZE_8, f4=61, f8=0xE0008, f12=0xF009C, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SONG_SELECT_14, f4=55, f8=0xE0008, f12=0xF008E, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SONG_CLEAR_4, f4=63, f8=0xE0008, f12=0xF0090, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TRACK_CLEAR_4, f4=64, f8=0xE0008, f12=0xF009A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_NOTE_EDIT_4, f4=4, f8=0xE0008, f12=0xF0094, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_DRUM_EDIT_4, f4=17, f8=0xE0008, f12=0xF0097, f16=0x5000D	# [72]
+	REC_func_4865E476_Table	p0=Str_TRACK_COPY_3, f4=205, f8=0xE0008, f12=0xF0084, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SONG_COPY_3, f4=67, f8=0xE0008, f12=0xF0091, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TRACK_MERGE_3, f4=69, f8=0xE0008, f12=0xF009B, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MEASURE_COPY_5, f4=71, f8=0xE0008, f12=0xF00A2, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MEASURE_ERASE_5, f4=72, f8=0xE0008, f12=0xF00A1, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MEASURE_DELETE_5, f4=73, f8=0xE0008, f12=0xF00A3, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_MEASURE_INSERT_5, f4=74, f8=0xE0008, f12=0xF00A4, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_APC_TO_SMF_CONVERT_5, f4=201, f8=0xE0008, f12=0xF00A8, f16=0x5000D	# [80]
+	REC_func_4865E476_Table	p0=Str_NOTE_CHANGE_3, f4=65, f8=0xE0008, f12=0xF009F, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_VELOCITY_CHANGE_3, f4=139, f8=0xE0008, f12=0xF009E, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_TRANSPOSE_5, f4=62, f8=0xE0008, f12=0xF009D, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_ADVANCE_DELAY_4, f4=66, f8=0xE0008, f12=0xF00A0, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_APC_REVERB_SETTING_3, f4=230, f8=0xE0003, f12=0xF0103, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_MENU_3, f4=219, f8=0xE0018, f12=0xF0104, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_LOAD_2, f4=220, f8=0xE0018, f12=0xF0105, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_SAVE_TECHNICS_FMT, f4=221, f8=0xE0018, f12=0xF0108, f16=0x5000D	# [88]
+	REC_func_4865E476_Table	p0=Str_SD_SAVE_SMF_FORMAT_0, f4=221, f8=0xE0018, f12=0xF0109, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_SONG_MEDLEY_3, f4=222, f8=0xE0018, f12=0xF0110, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_AUDIO_PLAY_3, f4=218, f8=0xE0018, f12=0xF0116, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_SOUND_PLAY_4, f4=216, f8=0xE0018, f12=0xF011A, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_TOOLS_3, f4=224, f8=0xE0018, f12=0xF010B, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_PREFERENCES_4, f4=226, f8=0xE0018, f12=0xF0112, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_FAVORITE_SONGS, f4=225, f8=0xE0018, f12=0xF011F, f16=0x5000D
+	REC_func_4865E476_Table	p0=Str_SD_PREFERENCES_3, f4=226, f8=0xE0018, f12=0xF0112, f16=0x5000D	# [96]
+	REC_func_4865E476_Table	p0=data_484759CF, f4=2, f8=0xE0000, f12=0xF0000, f16=0x5000D
 
 Str_CURRENT_SOUND_3:	.asciz "CURRENT SOUND"
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -30893,20 +30771,20 @@ Str_MUTE_KEYS_ON:	.asciz "MUTE KEYS : ON  "
 Str_MUTE_KEYS_OFF:	.asciz "MUTE KEYS : OFF "
 	.align	4, 0xFF	# pad after Str_MUTE_KEYS_OFF
 Str_NX_SOUND_ON:	.asciz "NX SOUND ON   "
-Str_empty_567:	.asciz "     --       "
-Str_GM_LEVEL2_ON:	.asciz "GM LEVEL2 ON  "
-Str_empty_566:	.asciz "     --       "
 Str_empty_565:	.asciz "     --       "
+Str_GM_LEVEL2_ON:	.asciz "GM LEVEL2 ON  "
 Str_empty_564:	.asciz "     --       "
-	.align	4, 0xFF	# pad after Str_empty_564
+Str_empty_563:	.asciz "     --       "
+Str_empty_562:	.asciz "     --       "
+	.align	4, 0xFF	# pad after Str_empty_562
 
 func_4865E8F4_La1_Table:
 	.long	Str_NX_SOUND_ON
-	.long	Str_empty_567
-	.long	Str_GM_LEVEL2_ON
-	.long	Str_empty_566
 	.long	Str_empty_565
+	.long	Str_GM_LEVEL2_ON
 	.long	Str_empty_564
+	.long	Str_empty_563
+	.long	Str_empty_562
 data_484779C0:
 .incbin_range "baserom/kn2400_program.rom", 0x0779C0, 0x0779C4
 
@@ -30962,140 +30840,140 @@ TtFavorite_Table:	# 59 x u32, 1214633327..1214633744; read by TtFavorite_L19d 0x
 	tab_u32	1214633744, 1214633744, 1214633485, 1214633529, 1214633573, 1214633617, 1214633744, 1214633744	# [48]
 	tab_u32	1214633660, 1214633744, 1214633703	# [56]
 
-AcFavoriteProc_L1d_Records:	# 16 x REC_AcFavoriteProc_L1d_Records (8 bytes each); read by AcFavoriteProc_L1d 0x4865D82A `mov (a0), d0`
-	REC_AcFavoriteProc_L1d_Records	f0=0x800000, x4="&\xD9eH"	# [0]
-	REC_AcFavoriteProc_L1d_Records	f0=1, x4="a\xD8eH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100B2, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100B3, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=20, x4="a\xD8eH"
-	REC_AcFavoriteProc_L1d_Records	f0=5, x4="\xA1\xD9eH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100B4, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100A3, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100B8, x4="\x0F\xDAeH"	# [8]
-	REC_AcFavoriteProc_L1d_Records	f0=9, x4="\xBC\xD8eH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100A2, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x1003A, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	x4="j\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	x4="j\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100AE, x4="\x0F\xDAeH"
-	REC_AcFavoriteProc_L1d_Records	f0=0x100AF, x4="\x0F\xDAeH"
-func_4865DAE8_L1d_Records:	# 16 x REC_func_4865DAE8_L1d_Records (8 bytes each); read by func_4865DAE8_L1d 0x4865DB05 `mov (a0), d0`
-	REC_func_4865DAE8_L1d_Records	f0=0x100B0, x4="k\xDBeH"	# [0]
-	REC_func_4865DAE8_L1d_Records	f0=1, x4="9\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x1009F, x4="n\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x1009E, x4="s\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x100B4, x4="<\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x810000, x4="v\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x10036, x4="<\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x810001, x4="\x81\xDBeH"
-	REC_func_4865DAE8_L1d_Records	x4="\x85\xDBeH"	# [8]
-	REC_func_4865DAE8_L1d_Records	x4="\x85\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x100AA, x4="<\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x100AB, x4="<\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x80FFFC, x4="}\xDBeH"
-	REC_func_4865DAE8_L1d_Records	x4="\x85\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x100AE, x4="K\xDBeH"
-	REC_func_4865DAE8_L1d_Records	f0=0x100AF, x4="k\xDBeH"
-func_4865DB89_L1c_Records:	# 16 x REC_func_4865DB89_L1c_Records (8 bytes each); read by func_4865DB89_L1c 0x4865DBA5 `mov (a0), d0`
-	REC_func_4865DB89_L1c_Records	f0=0x100B0, x4="u\xDCeH"	# [0]
-	REC_func_4865DB89_L1c_Records	f0=1, x4="\xDB\xDBeH"
-	REC_func_4865DB89_L1c_Records	f0=0x1009F, x4="\x87\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x1009E, x4="\x8C\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x100B4, x4="\x94\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x810000, x4="\xA9\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x10036, x4="\x97\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x810001, x4="\xB4\xDCeH"
-	REC_func_4865DB89_L1c_Records	x4="\xB8\xDCeH"	# [8]
-	REC_func_4865DB89_L1c_Records	x4="\xB8\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x100AA, x4="\x8F\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x100AB, x4="\x83\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x80FFFC, x4="\xB0\xDCeH"
-	REC_func_4865DB89_L1c_Records	x4="\xB8\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x100AE, x4="u\xDCeH"
-	REC_func_4865DB89_L1c_Records	f0=0x100AF, x4="u\xDCeH"
-func_4865DCBC_entry_L17_Records:	# 32 x REC_func_4865DCBC_entry_L17_Records (8 bytes each); read by func_4865DCBC_entry_L17 0x4865DCD8 `mov (a0), d0`
-	REC_func_4865DCBC_entry_L17_Records	f0=0x800000, x4="\x0F\xDDeH"	# [0]
-	REC_func_4865DCBC_entry_L17_Records	f0=1, x4="\x0F\xDDeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100A2, x4="\xF9\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100A3, x4="\xF4\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x810004, x4="\x16\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	f0=5, x4="\xB1\xDDeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x810000, x4="|\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x810005, x4="\xBB\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"	# [8]
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100AE, x4="\xFF\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100AF, x4="\xE5\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"	# [16]
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100B2, x4="\x1D\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100B3, x4="\x1D\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=20, x4="-\xDDeH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100B4, x4=",\xDEeH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x100B8, x4="a\xDFeH"	# [24]
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	f0=0x1003A, x4="e\xDFeH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-	REC_func_4865DCBC_entry_L17_Records	x4="\xBF\xE0eH"
-func_4865E0C3_entry_L17_Records:	# 32 x REC_func_4865E0C3_entry_L17_Records (8 bytes each); read by func_4865E0C3_entry_L17 0x4865E0DF `mov (a0), d0`
-	REC_func_4865E0C3_entry_L17_Records	f0=0x800000, x4="\x16\xE1eH"	# [0]
-	REC_func_4865E0C3_entry_L17_Records	f0=1, x4="\x16\xE1eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100A2, x4="[\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100A3, x4="V\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x810004, x4="\xBC\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=5, x4="X\xE1eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x810000, x4="\xEE\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x810005, x4="\x05\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"	# [8]
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100AE, x4="a\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100AF, x4="G\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"	# [16]
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100B2, x4="\xA2\xE1eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100B3, x4="\xA2\xE1eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=20, x4="'\xE1eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100B4, x4="\xB1\xE1eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x100B8, x4="g\xE2eH"	# [24]
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	f0=0x1003A, x4="k\xE2eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-	REC_func_4865E0C3_entry_L17_Records	x4="\x09\xE3eH"
-func_4865E30D_entry_L18_Records:	# 16 x REC_func_4865E30D_entry_L18_Records (8 bytes each); read by func_4865E30D_entry_L18 0x4865E32A `mov (a0), d0`
-	REC_func_4865E30D_entry_L18_Records	f0=0x100B0, x4="\xB2\xE3eH"	# [0]
-	REC_func_4865E30D_entry_L18_Records	f0=1, x4="a\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x1009F, x4="\xD2\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x1009E, x4="\xD7\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x100B4, x4="\xE3\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x810000, x4="5\xE4eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x10036, x4="\xE7\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x810001, x4="n\xE4eH"
-	REC_func_4865E30D_entry_L18_Records	x4="r\xE4eH"	# [8]
-	REC_func_4865E30D_entry_L18_Records	x4="r\xE4eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x100AA, x4="\xDD\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x100AB, x4="\xC2\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x80FFFC, x4="d\xE4eH"
-	REC_func_4865E30D_entry_L18_Records	x4="r\xE4eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x100AE, x4="\xB2\xE3eH"
-	REC_func_4865E30D_entry_L18_Records	f0=0x100AF, x4="\xB2\xE3eH"
+AcFavoriteProc_L1d_Records:	# 16 x REC_AcFavoriteProc_L1d_Records (8 bytes each); read by AcFavoriteProc_L1d 0x4865D82A `mov (a0), d0`; AcFavoriteProc_L4c 0x4865D859 `mov (a0), d0`; AcFavoriteProc_L4f 0x4865D85C `mov (4, a0), a0`
+	REC_AcFavoriteProc_L1d_Records	f0=0x800000, f4=0x4865D926	# [0]
+	REC_AcFavoriteProc_L1d_Records	f0=1, f4=0x4865D861
+	REC_AcFavoriteProc_L1d_Records	f0=0x100B2, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f0=0x100B3, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f0=20, f4=0x4865D861
+	REC_AcFavoriteProc_L1d_Records	f0=5, f4=0x4865D9A1
+	REC_AcFavoriteProc_L1d_Records	f0=0x100B4, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f0=0x100A3, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f0=0x100B8, f4=0x4865DA0F	# [8]
+	REC_AcFavoriteProc_L1d_Records	f0=9, f4=0x4865D8BC
+	REC_AcFavoriteProc_L1d_Records	f0=0x100A2, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f0=0x1003A, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f4=0x4865DA6A
+	REC_AcFavoriteProc_L1d_Records	f4=0x4865DA6A
+	REC_AcFavoriteProc_L1d_Records	f0=0x100AE, f4=0x4865DA0F
+	REC_AcFavoriteProc_L1d_Records	f0=0x100AF, f4=0x4865DA0F
+func_4865DAE8_L1d_Records:	# 16 x REC_func_4865DAE8_L1d_Records (8 bytes each); read by func_4865DAE8_L1d 0x4865DB05 `mov (a0), d0`; func_4865DAE8_L49 0x4865DB31 `mov (a0), d0`; func_4865DAE8_L4c 0x4865DB34 `mov (4, a0), a0`
+	REC_func_4865DAE8_L1d_Records	f0=0x100B0, f4=0x4865DB6B	# [0]
+	REC_func_4865DAE8_L1d_Records	f0=1, f4=0x4865DB39
+	REC_func_4865DAE8_L1d_Records	f0=0x1009F, f4=0x4865DB6E
+	REC_func_4865DAE8_L1d_Records	f0=0x1009E, f4=0x4865DB73
+	REC_func_4865DAE8_L1d_Records	f0=0x100B4, f4=0x4865DB3C
+	REC_func_4865DAE8_L1d_Records	f0=0x810000, f4=0x4865DB76
+	REC_func_4865DAE8_L1d_Records	f0=0x10036, f4=0x4865DB3C
+	REC_func_4865DAE8_L1d_Records	f0=0x810001, f4=0x4865DB81
+	REC_func_4865DAE8_L1d_Records	f4=0x4865DB85	# [8]
+	REC_func_4865DAE8_L1d_Records	f4=0x4865DB85
+	REC_func_4865DAE8_L1d_Records	f0=0x100AA, f4=0x4865DB3C
+	REC_func_4865DAE8_L1d_Records	f0=0x100AB, f4=0x4865DB3C
+	REC_func_4865DAE8_L1d_Records	f0=0x80FFFC, f4=0x4865DB7D
+	REC_func_4865DAE8_L1d_Records	f4=0x4865DB85
+	REC_func_4865DAE8_L1d_Records	f0=0x100AE, f4=0x4865DB4B
+	REC_func_4865DAE8_L1d_Records	f0=0x100AF, f4=0x4865DB6B
+func_4865DB89_L1c_Records:	# 16 x REC_func_4865DB89_L1c_Records (8 bytes each); read by func_4865DB89_L1c 0x4865DBA5 `mov (a0), d0`; func_4865DB89_L4a 0x4865DBD3 `mov (a0), d0`; func_4865DB89_L4d 0x4865DBD6 `mov (4, a0), a0`
+	REC_func_4865DB89_L1c_Records	f0=0x100B0, f4=0x4865DC75	# [0]
+	REC_func_4865DB89_L1c_Records	f0=1, f4=0x4865DBDB
+	REC_func_4865DB89_L1c_Records	f0=0x1009F, f4=0x4865DC87
+	REC_func_4865DB89_L1c_Records	f0=0x1009E, f4=0x4865DC8C
+	REC_func_4865DB89_L1c_Records	f0=0x100B4, f4=0x4865DC94
+	REC_func_4865DB89_L1c_Records	f0=0x810000, f4=0x4865DCA9
+	REC_func_4865DB89_L1c_Records	f0=0x10036, f4=0x4865DC97
+	REC_func_4865DB89_L1c_Records	f0=0x810001, f4=0x4865DCB4
+	REC_func_4865DB89_L1c_Records	f4=0x4865DCB8	# [8]
+	REC_func_4865DB89_L1c_Records	f4=0x4865DCB8
+	REC_func_4865DB89_L1c_Records	f0=0x100AA, f4=0x4865DC8F
+	REC_func_4865DB89_L1c_Records	f0=0x100AB, f4=0x4865DC83
+	REC_func_4865DB89_L1c_Records	f0=0x80FFFC, f4=0x4865DCB0
+	REC_func_4865DB89_L1c_Records	f4=0x4865DCB8
+	REC_func_4865DB89_L1c_Records	f0=0x100AE, f4=0x4865DC75
+	REC_func_4865DB89_L1c_Records	f0=0x100AF, f4=0x4865DC75
+func_4865DCBC_entry_L17_Records:	# 32 x REC_func_4865DCBC_entry_L17_Records (8 bytes each); read by func_4865DCBC_entry_L17 0x4865DCD8 `mov (a0), d0`; func_4865DCBC_entry_L46 0x4865DD07 `mov (a0), d0`; func_4865DCBC_entry_L49 0x4865DD0A `mov (4, a0), a0`
+	REC_func_4865DCBC_entry_L17_Records	f0=0x800000, f4=0x4865DD0F	# [0]
+	REC_func_4865DCBC_entry_L17_Records	f0=1, f4=0x4865DD0F
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100A2, f4=0x4865DEF9
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100A3, f4=0x4865DEF4
+	REC_func_4865DCBC_entry_L17_Records	f0=0x810004, f4=0x4865E016
+	REC_func_4865DCBC_entry_L17_Records	f0=5, f4=0x4865DDB1
+	REC_func_4865DCBC_entry_L17_Records	f0=0x810000, f4=0x4865E07C
+	REC_func_4865DCBC_entry_L17_Records	f0=0x810005, f4=0x4865E0BB
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF	# [8]
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100AE, f4=0x4865DEFF
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100AF, f4=0x4865DEE5
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF	# [16]
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100B2, f4=0x4865DE1D
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100B3, f4=0x4865DE1D
+	REC_func_4865DCBC_entry_L17_Records	f0=20, f4=0x4865DD2D
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100B4, f4=0x4865DE2C
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f0=0x100B8, f4=0x4865DF61	# [24]
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f0=0x1003A, f4=0x4865DF65
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+	REC_func_4865DCBC_entry_L17_Records	f4=0x4865E0BF
+func_4865E0C3_entry_L17_Records:	# 32 x REC_func_4865E0C3_entry_L17_Records (8 bytes each); read by func_4865E0C3_entry_L17 0x4865E0DF `mov (a0), d0`; func_4865E0C3_entry_L46 0x4865E10E `mov (a0), d0`; func_4865E0C3_entry_L49 0x4865E111 `mov (4, a0), a0`
+	REC_func_4865E0C3_entry_L17_Records	f0=0x800000, f4=0x4865E116	# [0]
+	REC_func_4865E0C3_entry_L17_Records	f0=1, f4=0x4865E116
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100A2, f4=0x4865E25B
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100A3, f4=0x4865E256
+	REC_func_4865E0C3_entry_L17_Records	f0=0x810004, f4=0x4865E2BC
+	REC_func_4865E0C3_entry_L17_Records	f0=5, f4=0x4865E158
+	REC_func_4865E0C3_entry_L17_Records	f0=0x810000, f4=0x4865E2EE
+	REC_func_4865E0C3_entry_L17_Records	f0=0x810005, f4=0x4865E305
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309	# [8]
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100AE, f4=0x4865E261
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100AF, f4=0x4865E247
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309	# [16]
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100B2, f4=0x4865E1A2
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100B3, f4=0x4865E1A2
+	REC_func_4865E0C3_entry_L17_Records	f0=20, f4=0x4865E127
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100B4, f4=0x4865E1B1
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f0=0x100B8, f4=0x4865E267	# [24]
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f0=0x1003A, f4=0x4865E26B
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+	REC_func_4865E0C3_entry_L17_Records	f4=0x4865E309
+func_4865E30D_entry_L18_Records:	# 16 x REC_func_4865E30D_entry_L18_Records (8 bytes each); read by func_4865E30D_entry_L18 0x4865E32A `mov (a0), d0`; func_4865E30D_entry_L47 0x4865E359 `mov (a0), d0`; func_4865E30D_entry_L4a 0x4865E35C `mov (4, a0), a0`
+	REC_func_4865E30D_entry_L18_Records	f0=0x100B0, f4=0x4865E3B2	# [0]
+	REC_func_4865E30D_entry_L18_Records	f0=1, f4=0x4865E361
+	REC_func_4865E30D_entry_L18_Records	f0=0x1009F, f4=0x4865E3D2
+	REC_func_4865E30D_entry_L18_Records	f0=0x1009E, f4=0x4865E3D7
+	REC_func_4865E30D_entry_L18_Records	f0=0x100B4, f4=0x4865E3E3
+	REC_func_4865E30D_entry_L18_Records	f0=0x810000, f4=0x4865E435
+	REC_func_4865E30D_entry_L18_Records	f0=0x10036, f4=0x4865E3E7
+	REC_func_4865E30D_entry_L18_Records	f0=0x810001, f4=0x4865E46E
+	REC_func_4865E30D_entry_L18_Records	f4=0x4865E472	# [8]
+	REC_func_4865E30D_entry_L18_Records	f4=0x4865E472
+	REC_func_4865E30D_entry_L18_Records	f0=0x100AA, f4=0x4865E3DD
+	REC_func_4865E30D_entry_L18_Records	f0=0x100AB, f4=0x4865E3C2
+	REC_func_4865E30D_entry_L18_Records	f0=0x80FFFC, f4=0x4865E464
+	REC_func_4865E30D_entry_L18_Records	f4=0x4865E472
+	REC_func_4865E30D_entry_L18_Records	f0=0x100AE, f4=0x4865E3B2
+	REC_func_4865E30D_entry_L18_Records	f0=0x100AF, f4=0x4865E3B2
 
 func_4865E476_Table_2:	# 59 x u32, 1214637363..1214637387; read by func_4865E476_L60 0x4865E4D6: `mov	(d0, a0), a0`
 	tab_u32	1214637363, 1214637363, 1214637363, 1214637363, 1214637363, 1214637363, 1214637387, 1214637387	# [0]
@@ -31107,90 +30985,90 @@ func_4865E476_Table_2:	# 59 x u32, 1214637363..1214637387; read by func_4865E476
 	tab_u32	1214637387, 1214637387, 1214637363, 1214637363, 1214637363, 1214637363, 1214637387, 1214637387	# [48]
 	tab_u32	1214637363, 1214637387, 1214637363	# [56]
 
-func_4865E476_L1d_Records:	# 16 x REC_func_4865E476_L1d_Records (8 bytes each); read by func_4865E476_L1d 0x4865E493 `mov (a0), d0`
-	REC_func_4865E476_L1d_Records	f0=0x100B0, x4="\x09\xE6eH"	# [0]
-	REC_func_4865E476_L1d_Records	f0=1, x4="\xC9\xE4eH"
-	REC_func_4865E476_L1d_Records	f0=0x1009F, x4=")\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x1009E, x4="/\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x100B4, x4="9\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x810000, x4="\xC2\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x10036, x4="z\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x810001, x4="\xCD\xE6eH"
-	REC_func_4865E476_L1d_Records	x4="\xD1\xE6eH"	# [8]
-	REC_func_4865E476_L1d_Records	x4="\xD1\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x100AA, x4="3\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x100AB, x4="\x19\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x80FFFC, x4="\xC9\xE6eH"
-	REC_func_4865E476_L1d_Records	x4="\xD1\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x100AE, x4="\x09\xE6eH"
-	REC_func_4865E476_L1d_Records	f0=0x100AF, x4="\x09\xE6eH"
-func_4865E6D5_L1c_Records:	# 16 x REC_func_4865E6D5_L1c_Records (8 bytes each); read by func_4865E6D5_L1c 0x4865E6F1 `mov (a0), d0`
-	REC_func_4865E6D5_L1c_Records	f0=0x100B0, x4="@\xE7eH"	# [0]
-	REC_func_4865E6D5_L1c_Records	f0=1, x4="%\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x1009F, x4="R\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x1009E, x4="V\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x100B4, x4="^\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x810000, x4="s\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x10036, x4="a\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x810001, x4="~\xE7eH"
-	REC_func_4865E6D5_L1c_Records	x4="\x82\xE7eH"	# [8]
-	REC_func_4865E6D5_L1c_Records	x4="\x82\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x100AA, x4="[\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x100AB, x4="N\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x80FFFC, x4="z\xE7eH"
-	REC_func_4865E6D5_L1c_Records	x4="\x82\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x100AE, x4="@\xE7eH"
-	REC_func_4865E6D5_L1c_Records	f0=0x100AF, x4="@\xE7eH"
-func_4865E786_L1d_Records:	# 32 x REC_func_4865E786_L1d_Records (8 bytes each); read by func_4865E786_L1d 0x4865E7A3 `mov (a0), d0`
-	REC_func_4865E786_L1d_Records	f0=0x800000, x4="\xDA\xE7eH"	# [0]
-	REC_func_4865E786_L1d_Records	f0=1, x4="\xDA\xE7eH"
-	REC_func_4865E786_L1d_Records	f0=0x100A2, x4="\x8B\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x100A3, x4="o\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x810004, x4="\xE1\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=5, x4="\x1C\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x810000, x4="\xE8\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x810005, x4="\xEC\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"	# [8]
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x100AE, x4="\x91\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x100AF, x4="_\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"	# [16]
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x100B2, x4="O\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x100B3, x4="O\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=20, x4="\xEB\xE7eH"
-	REC_func_4865E786_L1d_Records	f0=0x100B4, x4="O\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x100B8, x4="\xA9\xE8eH"	# [24]
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	f0=0x1003A, x4="\xAC\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-	REC_func_4865E786_L1d_Records	x4="\xF0\xE8eH"
-func_4865E8F4_L1d_Records:	# 16 x REC_func_4865E8F4_L1d_Records (8 bytes each); read by func_4865E8F4_L1d 0x4865E911 `mov (a0), d0`
-	REC_func_4865E8F4_L1d_Records	f0=0x100B0, x4="\x99\xE9eH"	# [0]
-	REC_func_4865E8F4_L1d_Records	f0=1, x4="H\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x1009F, x4="\xB8\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x1009E, x4="\xBC\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x100B4, x4="\xC4\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x810000, x4="\n\xEAeH"
-	REC_func_4865E8F4_L1d_Records	f0=0x10036, x4="\xC7\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x810001, x4="\x15\xEAeH"
-	REC_func_4865E8F4_L1d_Records	x4="\x19\xEAeH"	# [8]
-	REC_func_4865E8F4_L1d_Records	x4="\x19\xEAeH"
-	REC_func_4865E8F4_L1d_Records	f0=0x100AA, x4="\xC1\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x100AB, x4="\xA9\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x80FFFC, x4="\x11\xEAeH"
-	REC_func_4865E8F4_L1d_Records	x4="\x19\xEAeH"
-	REC_func_4865E8F4_L1d_Records	f0=0x100AE, x4="\x99\xE9eH"
-	REC_func_4865E8F4_L1d_Records	f0=0x100AF, x4="\x99\xE9eH"
+func_4865E476_L1d_Records:	# 16 x REC_func_4865E476_L1d_Records (8 bytes each); read by func_4865E476_L1d 0x4865E493 `mov (a0), d0`; func_4865E476_L4b 0x4865E4C1 `mov (a0), d0`; func_4865E476_L4e 0x4865E4C4 `mov (4, a0), a0`
+	REC_func_4865E476_L1d_Records	f0=0x100B0, f4=0x4865E609	# [0]
+	REC_func_4865E476_L1d_Records	f0=1, f4=0x4865E4C9
+	REC_func_4865E476_L1d_Records	f0=0x1009F, f4=0x4865E629
+	REC_func_4865E476_L1d_Records	f0=0x1009E, f4=0x4865E62F
+	REC_func_4865E476_L1d_Records	f0=0x100B4, f4=0x4865E639
+	REC_func_4865E476_L1d_Records	f0=0x810000, f4=0x4865E6C2
+	REC_func_4865E476_L1d_Records	f0=0x10036, f4=0x4865E67A
+	REC_func_4865E476_L1d_Records	f0=0x810001, f4=0x4865E6CD
+	REC_func_4865E476_L1d_Records	f4=0x4865E6D1	# [8]
+	REC_func_4865E476_L1d_Records	f4=0x4865E6D1
+	REC_func_4865E476_L1d_Records	f0=0x100AA, f4=0x4865E633
+	REC_func_4865E476_L1d_Records	f0=0x100AB, f4=0x4865E619
+	REC_func_4865E476_L1d_Records	f0=0x80FFFC, f4=0x4865E6C9
+	REC_func_4865E476_L1d_Records	f4=0x4865E6D1
+	REC_func_4865E476_L1d_Records	f0=0x100AE, f4=0x4865E609
+	REC_func_4865E476_L1d_Records	f0=0x100AF, f4=0x4865E609
+func_4865E6D5_L1c_Records:	# 16 x REC_func_4865E6D5_L1c_Records (8 bytes each); read by func_4865E6D5_L1c 0x4865E6F1 `mov (a0), d0`; func_4865E6D5_L48 0x4865E71D `mov (a0), d0`; func_4865E6D5_L4b 0x4865E720 `mov (4, a0), a0`
+	REC_func_4865E6D5_L1c_Records	f0=0x100B0, f4=0x4865E740	# [0]
+	REC_func_4865E6D5_L1c_Records	f0=1, f4=0x4865E725
+	REC_func_4865E6D5_L1c_Records	f0=0x1009F, f4=0x4865E752
+	REC_func_4865E6D5_L1c_Records	f0=0x1009E, f4=0x4865E756
+	REC_func_4865E6D5_L1c_Records	f0=0x100B4, f4=0x4865E75E
+	REC_func_4865E6D5_L1c_Records	f0=0x810000, f4=0x4865E773
+	REC_func_4865E6D5_L1c_Records	f0=0x10036, f4=0x4865E761
+	REC_func_4865E6D5_L1c_Records	f0=0x810001, f4=0x4865E77E
+	REC_func_4865E6D5_L1c_Records	f4=0x4865E782	# [8]
+	REC_func_4865E6D5_L1c_Records	f4=0x4865E782
+	REC_func_4865E6D5_L1c_Records	f0=0x100AA, f4=0x4865E75B
+	REC_func_4865E6D5_L1c_Records	f0=0x100AB, f4=0x4865E74E
+	REC_func_4865E6D5_L1c_Records	f0=0x80FFFC, f4=0x4865E77A
+	REC_func_4865E6D5_L1c_Records	f4=0x4865E782
+	REC_func_4865E6D5_L1c_Records	f0=0x100AE, f4=0x4865E740
+	REC_func_4865E6D5_L1c_Records	f0=0x100AF, f4=0x4865E740
+func_4865E786_L1d_Records:	# 32 x REC_func_4865E786_L1d_Records (8 bytes each); read by func_4865E786_L1d 0x4865E7A3 `mov (a0), d0`; func_4865E786_L4c 0x4865E7D2 `mov (a0), d0`; func_4865E786_L4f 0x4865E7D5 `mov (4, a0), a0`
+	REC_func_4865E786_L1d_Records	f0=0x800000, f4=0x4865E7DA	# [0]
+	REC_func_4865E786_L1d_Records	f0=1, f4=0x4865E7DA
+	REC_func_4865E786_L1d_Records	f0=0x100A2, f4=0x4865E88B
+	REC_func_4865E786_L1d_Records	f0=0x100A3, f4=0x4865E86F
+	REC_func_4865E786_L1d_Records	f0=0x810004, f4=0x4865E8E1
+	REC_func_4865E786_L1d_Records	f0=5, f4=0x4865E81C
+	REC_func_4865E786_L1d_Records	f0=0x810000, f4=0x4865E8E8
+	REC_func_4865E786_L1d_Records	f0=0x810005, f4=0x4865E8EC
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0	# [8]
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f0=0x100AE, f4=0x4865E891
+	REC_func_4865E786_L1d_Records	f0=0x100AF, f4=0x4865E85F
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0	# [16]
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f0=0x100B2, f4=0x4865E84F
+	REC_func_4865E786_L1d_Records	f0=0x100B3, f4=0x4865E84F
+	REC_func_4865E786_L1d_Records	f0=20, f4=0x4865E7EB
+	REC_func_4865E786_L1d_Records	f0=0x100B4, f4=0x4865E84F
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f0=0x100B8, f4=0x4865E8A9	# [24]
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f0=0x1003A, f4=0x4865E8AC
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+	REC_func_4865E786_L1d_Records	f4=0x4865E8F0
+func_4865E8F4_L1d_Records:	# 16 x REC_func_4865E8F4_L1d_Records (8 bytes each); read by func_4865E8F4_L1d 0x4865E911 `mov (a0), d0`; func_4865E8F4_L4c 0x4865E940 `mov (a0), d0`; func_4865E8F4_L4f 0x4865E943 `mov (4, a0), a0`
+	REC_func_4865E8F4_L1d_Records	f0=0x100B0, f4=0x4865E999	# [0]
+	REC_func_4865E8F4_L1d_Records	f0=1, f4=0x4865E948
+	REC_func_4865E8F4_L1d_Records	f0=0x1009F, f4=0x4865E9B8
+	REC_func_4865E8F4_L1d_Records	f0=0x1009E, f4=0x4865E9BC
+	REC_func_4865E8F4_L1d_Records	f0=0x100B4, f4=0x4865E9C4
+	REC_func_4865E8F4_L1d_Records	f0=0x810000, f4=0x4865EA0A
+	REC_func_4865E8F4_L1d_Records	f0=0x10036, f4=0x4865E9C7
+	REC_func_4865E8F4_L1d_Records	f0=0x810001, f4=0x4865EA15
+	REC_func_4865E8F4_L1d_Records	f4=0x4865EA19	# [8]
+	REC_func_4865E8F4_L1d_Records	f4=0x4865EA19
+	REC_func_4865E8F4_L1d_Records	f0=0x100AA, f4=0x4865E9C1
+	REC_func_4865E8F4_L1d_Records	f0=0x100AB, f4=0x4865E9A9
+	REC_func_4865E8F4_L1d_Records	f0=0x80FFFC, f4=0x4865EA11
+	REC_func_4865E8F4_L1d_Records	f4=0x4865EA19
+	REC_func_4865E8F4_L1d_Records	f0=0x100AE, f4=0x4865E999
+	REC_func_4865E8F4_L1d_Records	f0=0x100AF, f4=0x4865E999
 
 Field_StestWindow_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_StestWindow_end
@@ -32912,12 +32790,13 @@ data_4847D338:
 
 Str_OUT_3:	.asciz "OUT"
 Str_IN:	.asciz "IN "
-data_4847D34C:
-.incbin_range "baserom/kn2400_program.rom", 0x07D34C, 0x07D358
-data_4847D358:
-.incbin_range "baserom/kn2400_program.rom", 0x07D358, 0x07D360
-data_4847D360:
-.incbin_range "baserom/kn2400_program.rom", 0x07D360, 0x07D370
+
+func_486604E5_entry_L5_Table:	# 6 x u16, 15..65535; read by func_486604E5_entry_L5 0x486604EF: `movhu (a0), d0`; func_486604E5_entry_L5 0x486604EF: `movhu (a0), d1`
+	tab_u16	15, 271, 527, 831, 1087, 65535
+func_4866051C_entry_L5_Table:	# 4 x u16, 16..2431; read by func_4866051C_entry_L5 0x48660526: `movhu (a0), d0`; func_4866051C_entry_L5 0x48660526: `movhu (a0), d1`
+	tab_u16	16, 304, 560, 2431
+func_48660553_entry_L5_Table:	# 8 x u16, 1311..3335; read by func_48660553_entry_L5 0x4866055D: `movhu (a0), d0`; func_48660553_entry_L5 0x4866055D: `movhu (a0), d1`
+	tab_u16	1311, 1791, 1855, 2175, 2575, 2831, 3079, 3335
 
 func_486605C3_Table:	# 152 x REC_func_486605C3_Table (2 bytes each); read by func_486605C3_entry_L63 0x4866062B `movbu (1, a2), d3`
 	REC_func_486605C3_Table	x0="\x00", f1=1	# [0]
@@ -33103,7 +32982,7 @@ AcItimatuWindowProc_Table_2:	# 4 x u16, 0..0; read by AcItimatuWindowProc 0x4866
 	.align	4, 0xFF	# pad after AcItimatuWindowProc_Table_2
 AcItimatuWindowProc_Table_3:	# 2 x u16, 0..0; read by AcItimatuWindowProc : `movhu	(a1), d0`
 	tab_u16	0, 0
-InOutTestFilter_Table:	# 2 x u32, 7340032..7344145; read by InOutTestFilter_L21 0x48661575: `mov	(d0, a0), d0`
+InOutTestFilter_Table:	# 2 x u32, 7340032..7344145; read by InOutTestFilter : `mov	(d0, a0), d0`
 	tab_u32	7344145, 7340032
 InOutTestWindowProc_Table:	# 4 x u16, 0..0; read by InOutTestWindowProc 0x486615A5: `movhu	(a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -33127,33 +33006,33 @@ InOutTestWindowProc_Table_3:	# 256 x u8, 0..0; read by InOutTestWindowProc : `mo
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
 
-Str_C_19:	.asciz "C "
-Str_D_a0_4:	.asciz "D~a0"
-Str_D_8:	.asciz "D "
-Str_E_a0_4:	.asciz "E~a0"
-Str_E_6:	.asciz "E "
-Str_F_7:	.asciz "F "
-Str_F_9e_4:	.asciz "F~9e"
-Str_G_6:	.asciz "G "
-Str_A_a0_4:	.asciz "A~a0"
-Str_A_20:	.asciz "A "
-Str_B_a0_4:	.asciz "B~a0"
-Str_B_9:	.asciz "B "
-	.align	4, 0xFF	# pad after Str_B_9
+Str_C_18:	.asciz "C "
+Str_D_a0_5:	.asciz "D~a0"
+Str_D_7:	.asciz "D "
+Str_E_a0_5:	.asciz "E~a0"
+Str_E_5:	.asciz "E "
+Str_F_6:	.asciz "F "
+Str_F_9e_5:	.asciz "F~9e"
+Str_G_5:	.asciz "G "
+Str_A_a0_5:	.asciz "A~a0"
+Str_A_12:	.asciz "A "
+Str_B_a0_5:	.asciz "B~a0"
+Str_B_8:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_8
 
 InOutTestWindowProc_L14a_Table:
-	.long	Str_C_19
-	.long	Str_D_a0_4
-	.long	Str_D_8
-	.long	Str_E_a0_4
-	.long	Str_E_6
-	.long	Str_F_7
-	.long	Str_F_9e_4
-	.long	Str_G_6
-	.long	Str_A_a0_4
-	.long	Str_A_20
-	.long	Str_B_a0_4
-	.long	Str_B_9
+	.long	Str_C_18
+	.long	Str_D_a0_5
+	.long	Str_D_7
+	.long	Str_E_a0_5
+	.long	Str_E_5
+	.long	Str_F_6
+	.long	Str_F_9e_5
+	.long	Str_G_5
+	.long	Str_A_a0_5
+	.long	Str_A_12
+	.long	Str_B_a0_5
+	.long	Str_B_8
 
 InOutTestWindowProc_Table_4:	# 2 x u16, 40..250; read by InOutTestWindowProc : `movhu	(a1), d0`
 	tab_u16	250, 40
@@ -33172,7 +33051,7 @@ InOutTestWindowProc_Table_10:	# 2 x u16, 88..285; read by InOutTestWindowProc : 
 InOutTestWindowProc_Table_11:	# 2 x u16, 112..285; read by InOutTestWindowProc : `movhu	(a0), d0`
 	tab_u16	285, 112
 
-InOutTestWindowProc_L612_Records:	# 2 x REC_InOutTestWindowProc_L612_Records (4 bytes each); read by InOutTestWindowProc_L612 0x48661BB7 `movhu (2, a1), d1`; InOutTestWindowProc_L612 0x48661BB7 `movhu (a1), d1`; InOutTestWindowProc_L68d 0x48661C32 `movhu (2, a0), d0` (+3)
+InOutTestWindowProc_L612_Records:	# 2 x REC_InOutTestWindowProc_L612_Records (4 bytes each); read by InOutTestWindowProc_L612 0x48661BB7 `movhu (2, a1), d1`; InOutTestWindowProc_L612 0x48661BB7 `movhu (a1), d1`; InOutTestWindowProc_L68d 0x48661C32 `movhu (2, a0), d0` (+1)
 	REC_InOutTestWindowProc_L612_Records	f0=250, f2=136
 	REC_InOutTestWindowProc_L612_Records	f0=250, f2=160
 
@@ -33231,23 +33110,36 @@ Str_BASS_PEDAL:	.asciz "BASS PEDAL"
 Str_CcEv_12:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_12
 
-SineWaveFilter_Table:	# 14 x u32, 3170686..4294901792; read by SineWaveFilter_L21 0x48662557: `mov	(d0, a0), d0`
-	tab_u32	12582912, 7340032, 1140858947, 3170686, 1157636164, 3170686, 1174413381, 2118516768	# [0]
-	tab_u32	1191208249, 2118189088, 1090531425, 2118254624, 1107308641, 4294901792	# [8]
+SineWaveFilter_Table:	# 2 x u32, 7340032..12582912; read by SineWaveFilter : `mov	(d0, a0), d0`
+	tab_u32	12582912, 7340032
+
+Str_C_17:	.asciz "C "
+Str_D_a0_4:	.asciz "D~a0"
+Str_D_6:	.asciz "D "
+Str_E_a0_4:	.asciz "E~a0"
+Str_E_4:	.asciz "E "
+Str_F_5:	.asciz "F "
+Str_F_9e_4:	.asciz "F~9e"
+Str_G_4:	.asciz "G "
+Str_A_a0_4:	.asciz "A~a0"
+Str_A_11:	.asciz "A "
+Str_B_a0_4:	.asciz "B~a0"
+Str_B_7:	.asciz "B "
+	.align	4, 0xFF	# pad after Str_B_7
 
 SineWaveWindowProc_L145_Table:
-	.long	SineWaveFilter_Table+8
-	.long	SineWaveFilter_Table+11
-	.long	SineWaveFilter_Table+16
-	.long	SineWaveFilter_Table+19
-	.long	SineWaveFilter_Table+24
-	.long	SineWaveFilter_Table+27
-	.long	SineWaveFilter_Table+30
-	.long	SineWaveFilter_Table+35
-	.long	SineWaveFilter_Table+38
-	.long	SineWaveFilter_Table+43
-	.long	SineWaveFilter_Table+46
-	.long	SineWaveFilter_Table+51
+	.long	Str_C_17
+	.long	Str_D_a0_4
+	.long	Str_D_6
+	.long	Str_E_a0_4
+	.long	Str_E_4
+	.long	Str_F_5
+	.long	Str_F_9e_4
+	.long	Str_G_4
+	.long	Str_A_a0_4
+	.long	Str_A_11
+	.long	Str_B_a0_4
+	.long	Str_B_7
 
 SineWaveWindowProc_Table:	# 4 x u16, 0..0; read by SineWaveWindowProc 0x4866257B: `movhu	(a1), d0`
 	tab_u16	0, 0, 0, 0
@@ -33278,10 +33170,7 @@ Str_Select_the_mode_by_sound_button_of_highe:	.asciz "Select the mode by sound b
 Str_CHECK_MODE:	.asciz "CHECK MODE:"
 Str_KEY_DOWN_INFORMATION:	.asciz "KEY DOWN INFORMATION = (            )"
 	.align	4, 0xFF	# pad after Str_KEY_DOWN_INFORMATION
-
-SdTestFilter_L21_Table:	# 1 x u32, 7348411..7348411; read by SdTestFilter_L21 0x48662BCC: `mov	(d0, a0), d0`
-	tab_u32	7348411
-
+SdTestFilter_L21_Table:	.asciz "\xBB p"
 Str_CcEv_11:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_11
 data_4847DA50:
@@ -33323,39 +33212,9 @@ func_486605C3_entry_L2d0_Table:
 # census: opaque -- unknown-dump: 64 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x07DB84, 0x07DBC4
 
-InOutTestWindowProc_L5f_Records:	# 32 x REC_InOutTestWindowProc_L5f_Records (8 bytes each); read by InOutTestWindowProc_L5f 0x48661604 `mov (a0), d0`
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"	# [0]
-	REC_InOutTestWindowProc_L5f_Records	f0=1, x4=":\x16fH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"	# [8]
-	REC_InOutTestWindowProc_L5f_Records	f0=9, x4="\x7F\x16fH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x101000E, x4="\xF3\x16fH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010010, x4="\xCF\x17fH"	# [16]
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010011, x4="\xD3\x17fH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010012, x4="\xEE\x18fH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010013, x4="~\x1AfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=20, x4="\x95\x16fH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010014, x4="\x9A\x1BfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010015, x4="\x9E\x1BfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010016, x4="\xA2\x1BfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010017, x4="\xA6\x1BfH"	# [24]
-	REC_InOutTestWindowProc_L5f_Records	f0=0x1010018, x4="\xA1\x1CfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x100B2, x4="\xBD\x1DfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x100B3, x4="\xE3\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	f0=0x100B4, x4="\xE3\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
-	REC_InOutTestWindowProc_L5f_Records	x4="\xE6\x1EfH"
+InOutTestWindowProc_L5f_Records:	# 1 x REC_InOutTestWindowProc_L5f_Records (8 bytes each); read by InOutTestWindowProc_L5f 0x48661604 `mov (a0), d0`; InOutTestWindowProc_L8d 0x48661632 `mov (a0), d0`; InOutTestWindowProc_L90 0x48661635 `mov (4, a0), a0`
+	REC_InOutTestWindowProc_L5f_Records	p4=InOutTestWindowProc_L941
+.incbin_range "baserom/kn2400_program.rom", 0x07DBCC, 0x07DCC4
 
 func_48664419_Table:	# 9 x u32, 1214661691..1214661691; read by func_48664419 0x48664419: `mov	(d0, a0), a0`
 	tab_u32	1214661691, 1214661691, 1214661691, 1214661691, 1214661691, 1214661691, 1214661691, 1214661691	# [0]
@@ -34299,45 +34158,45 @@ ptrs_48480E4C:
 	.long	Str_If_this_mode_is_selected_without_Home_Th_2
 	.long	Str_If_this_mode_is_selected_without_Home_Th
 
-AcDispTimeSetGridBoxProc_L1d_Records:	# 16 x REC_AcDispTimeSetGridBoxProc_L1d_Records (8 bytes each); read by AcDispTimeSetGridBoxProc_L1d 0x486647B1 `mov (a0), d0`
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=16, x4="\x7FIfH"	# [0]
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=1, x4="\xE8GfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=2, x4="THfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=17, x4="\xC4HfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=18, x4="\x7FIfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=0x1007F, x4="OJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=20, x4="gJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=21, x4="gJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=0x10081, x4="\x81JfH"	# [8]
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	x4="\x9BJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	x4="\x9BJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	x4="\x9BJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	x4="\x9BJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	x4="\x9BJfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=0x1007E, x4="7JfH"
-	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=15, x4="\xC4HfH"
+AcDispTimeSetGridBoxProc_L1d_Records:	# 16 x REC_AcDispTimeSetGridBoxProc_L1d_Records (8 bytes each); read by AcDispTimeSetGridBoxProc_L1d 0x486647B1 `mov (a0), d0`; AcDispTimeSetGridBoxProc_L4c 0x486647E0 `mov (a0), d0`; AcDispTimeSetGridBoxProc_L4f 0x486647E3 `mov (4, a0), a0`
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=16, f4=0x4866497F	# [0]
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=1, f4=0x486647E8
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=2, f4=0x48664854
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=17, f4=0x486648C4
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=18, f4=0x4866497F
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=0x1007F, f4=0x48664A4F
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=20, f4=0x48664A67
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=21, f4=0x48664A67
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=0x10081, f4=0x48664A81	# [8]
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f4=0x48664A9B
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f4=0x48664A9B
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f4=0x48664A9B
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f4=0x48664A9B
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f4=0x48664A9B
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=0x1007E, f4=0x48664A37
+	REC_AcDispTimeSetGridBoxProc_L1d_Records	f0=15, f4=0x486648C4
 
 WallPresetCheck_Table:	# 9 x u32, 1214666104..1214666284; read by WallPresetCheck_L71 0x4866556B: `mov	(d0, a1), a1`
 	tab_u32	1214666104, 1214666127, 1214666150, 1214666173, 1214666196, 1214666218, 1214666240, 1214666262	# [0]
 	tab_u32	1214666284	# [8]
 
-AcParaLoadOptGridBoxProc_L1e_Records:	# 16 x REC_AcParaLoadOptGridBoxProc_L1e_Records (8 bytes each); read by AcParaLoadOptGridBoxProc_L1e 0x48665809 `mov (a0), d0`
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=16, x4="\xEBYfH"	# [0]
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=1, x4="@XfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=2, x4="\xADXfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=17, x4="\x1EYfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=18, x4="\xEBYfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=0x1007F, x4="\xCCZfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=20, x4="\xE3ZfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=21, x4="\xE3ZfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=0x10081, x4="\xFEZfH"	# [8]
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	x4="\x19[fH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	x4="\x19[fH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	x4="\x19[fH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	x4="\x19[fH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	x4="\x19[fH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=0x1007E, x4="\xB4ZfH"
-	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=15, x4="\x1EYfH"
+AcParaLoadOptGridBoxProc_L1e_Records:	# 16 x REC_AcParaLoadOptGridBoxProc_L1e_Records (8 bytes each); read by AcParaLoadOptGridBoxProc_L1e 0x48665809 `mov (a0), d0`; AcParaLoadOptGridBoxProc_L4d 0x48665838 `mov (a0), d0`; AcParaLoadOptGridBoxProc_L50 0x4866583B `mov (4, a0), a0`
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=16, f4=0x486659EB	# [0]
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=1, f4=0x48665840
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=2, f4=0x486658AD
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=17, f4=0x4866591E
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=18, f4=0x486659EB
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=0x1007F, f4=0x48665ACC
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=20, f4=0x48665AE3
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=21, f4=0x48665AE3
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=0x10081, f4=0x48665AFE	# [8]
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f4=0x48665B19
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f4=0x48665B19
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f4=0x48665B19
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f4=0x48665B19
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f4=0x48665B19
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=0x1007E, f4=0x48665AB4
+	REC_AcParaLoadOptGridBoxProc_L1e_Records	f0=15, f4=0x4866591E
 
 Field_AcFSWAssGridBox_fixedcol:	.asciz "fixedcol"
 Field_AcFSWAssGridBox_fixedrow:	.asciz "fixedrow"
@@ -35050,8 +34909,10 @@ ptrs_48483B94:
 	.long	Str_Apakah_Anda_sudah_yakin
 	.long	data_48483B86
 
-TouchFilter_L21_Table:	# 8 x u32, 0..65; read by TouchFilter_L21 0x486684CB: `mov	(d0, a0), d0`
-	tab_u32	32, 65, 44, 36, 40, 34, 0, 9
+TouchFilter_L21_Table:	.asciz " "
+# census: opaque -- unknown-dump: 30 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x083BB2, 0x083BD0
+
 TchSensGridCheck_Table_2:	# 12 x u8, 0..255; read by TchSensGridCheck : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
 
@@ -35395,9 +35256,9 @@ Str_s_22:	.asciz "%s"
 Str_s_21:	.asciz "%s"
 	.align	4, 0xFF	# pad after Str_s_21
 
-FSWAssGridFilter_Table:	# 2 x u32, 16384..16386; read by FSWAssGridFilter_L21 0x4866988E: `mov	(d0, a0), d0`
+FSWAssGridFilter_Table:	# 2 x u32, 16384..16386; read by FSWAssGridFilter : `mov	(d0, a0), d0`
 	tab_u32	16386, 16384
-FSWAssGridPR54Filter_Table:	# 2 x u32, 16386..16387; read by FSWAssGridPR54Filter_L21 0x486698D3: `mov	(d0, a0), d0`
+FSWAssGridPR54Filter_Table:	# 2 x u32, 16386..16387; read by FSWAssGridPR54Filter : `mov	(d0, a0), d0`
 	tab_u32	16387, 16386
 
 Str_OK_SET:	.asciz "OK SET"
@@ -35424,27 +35285,27 @@ MSAModeBoxProc_Table_3:	# 256 x u8, 0..0; read by MSAModeBoxProc : `movbu	(a1), 
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [208]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [240]
-MSAFilter_Table:	# 86 x u32, 1..4278231969; read by MSAFilter_L21 0x48669C60: `mov	(d0, a0), d0`
-	tab_u32	161, 1, 2, 3, 1919906899, 1931506533, 1684960623, 1646274080	# [0]
-	tab_u32	1851878497, 1931502947, 1769239653, 544434030, 2037149295, 1884487726, 1751345509, 544502373	# [8]
-	tab_u32	544372078, 1851878475, 1965043047, 1277191278, 1937012065, 1802691700, 1852400997, 1818588275	# [16]
-	tab_u32	1735292268, 3042917, 1869474125, 1634953586, 1852795252, 1768846624, 1835365745, 544501349	# [24]
-	tab_u32	544433508, 1818749298, 1936025441, 543515680, 1869508467, 3916720498, 1952784499, 543515680	# [32]
-	tab_u32	1634492770, 543515502, 1981834596, 1836412015, 1291857509, 1919905125, 543259241, 1869411187	# [40]
-	tab_u32	543974688, 1768845171, 2032168804, 1969905952, 543519859, 1646290276, 1851878497, 3040611	# [48]
-	tab_u32	1919906899, 1931506533, 1684960623, 1646274080, 1851878497, 1931502947, 1769239653, 544434030	# [56]
-	tab_u32	2037149295, 1951596590, 1936028271, 1970238240, 639657070, 1818321440, 1701015137, 1952805664	# [64]
-	tab_u32	1735289204, 1852776563, 3045740, 2795877797, 3383096229, 3500532900, 4087736741, 3753949605	# [72]
-	tab_u32	3399805636, 4070885796, 3752118726, 3081031869, 3114589860, 4278231969	# [80]
+MSAFilter_Table:	# 4 x u32, 1..161; read by MSAFilter : `mov	(d0, a0), d0`
+	tab_u32	161, 1, 2, 3
+
+Str_Stores_sound_balance_settings_only_3:	.asciz "Stores sound & balance settings only."
+Str_Speichert_nur_Klang_und_Lautst_rkeeinste:	.asciz "Speichert nur Klang- und Lautst\xE4rkeeinstellungen."
+Str_M_morisation_uniquement_des_r_glages_de:	.asciz "M\xE9morisation uniquement des r\xE9glages de sonorit\xE9s et de balance de volume."
+Str_Memoriza_s_lo_el_sonido_y_ajuste_de_bala:	.asciz "Memoriza s\xF3lo el sonido y ajuste de balance."
+Str_Stores_sound_balance_settings_only_2:	.asciz "Stores sound & balance settings only."
+Str_Stores_sound_balance_settings_only:	.asciz "Stores sound & balance settings only."
+data_48484AE4:
+# census: opaque -- unknown-dump: 44 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x084AE4, 0x084B10
 
 ptrs_48484B10:
-	.long	MSAFilter_Table+16
-	.long	MSAFilter_Table+54
-	.long	MSAFilter_Table+104
-	.long	MSAFilter_Table+179
-	.long	MSAFilter_Table+224
-	.long	MSAFilter_Table+262
-	.long	MSAFilter_Table+300
+	.long	Str_Stores_sound_balance_settings_only_3
+	.long	Str_Speichert_nur_Klang_und_Lautst_rkeeinste
+	.long	Str_M_morisation_uniquement_des_r_glages_de
+	.long	Str_Memoriza_s_lo_el_sonido_y_ajuste_de_bala
+	.long	Str_Stores_sound_balance_settings_only_2
+	.long	Str_Stores_sound_balance_settings_only
+	.long	data_48484AE4
 
 Str_Stores_to_total_setting_including_Rhythm_3:	.asciz "Stores to total setting including Rhythm, Transpose & tempo."
 Str_Speichert_die_gesamte_Einstellung_einsch:	.asciz "Speichert die gesamte Einstellung einschlie\xDFlich Rhythmus, Transpose & Tempo."
@@ -35606,14 +35467,16 @@ Str_OFF_125:	.asciz "OFF"
 Str_OFF_124:	.asciz "OFF"
 Str_ON_91:	.asciz "ON "
 
-PmemModeFilter_Table:	# 3 x u32, 0..130; read by PmemModeFilter_L21 0x4866AD47: `mov	(d0, a0), d0`
+PmemModeFilter_Table:	# 3 x u32, 0..130; read by PmemModeFilter : `mov	(d0, a0), d0`
 	tab_u32	130, 0, 1
-PmExp1Filter_Table:	# 9 x u32, 20480..20501; read by PmExp1Filter_L21 0x4866AD90: `mov	(d0, a0), d0`
+PmExp1Filter_Table:	# 9 x u32, 20480..20501; read by PmExp1Filter : `mov	(d0, a0), d0`
 	tab_u32	20480, 20481, 20484, 20501, 20498, 20482, 20483, 20490	# [0]
 	tab_u32	20492	# [8]
-PmExp2Filter_L21_Table:	# 9 x u32, 20485..20500; read by PmExp2Filter_L21 0x4866ADD5: `mov	(d0, a0), d0`
-	tab_u32	20493, 20485, 20487, 20500, 20491, 20496, 20489, 20486	# [0]
-	tab_u32	20497	# [8]
+
+PmExp2Filter_L21_Table:	.asciz "\x0DP"
+# census: opaque -- unknown-dump: 33 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x085427, 0x085448
+
 AcFadeSetGridBoxProc_Table:	# 7 x s16, 1..2; read by AcFadeSetGridBoxProc_L109 0x4866AF5C: `movhu	(d1, a0), d1`
 	tab_s16	1, 1, 1, 2, 1, 1, 1
 AcFadeSetGridBoxProc_Table_2:	# 7 x s16, 1..2; read by AcFadeSetGridBoxProc_L197 0x4866AFEA: `movhu	(d1, a1), d1`
@@ -35638,89 +35501,89 @@ Str_ON_89:	.asciz " ON  "
 Str_OFF_122:	.asciz " OFF "
 	.align	4, 0xFF	# pad after Str_OFF_122
 
-FadeIOFilter_Table:	# 5 x u32, 24576..24582; read by FadeIOFilter_L21 0x4866B417: `mov	(d0, a0), d0`
+FadeIOFilter_Table:	# 5 x u32, 24576..24582; read by FadeIOFilter : `mov	(d0, a0), d0`
 	tab_u32	24576, 24577, 24582, 24580, 24581
 MainSysControl_Table:	# 10 x u32, 1214677827..1214677952; read by MainSysControl_L44 0x48668338: `mov	(d2, a0), a0`
 	tab_u32	1214677827, 1214677890, 1214677920, 1214677943, 1214677872, 1214677845, 1214677854, 1214677863	# [0]
 	tab_u32	1214677952, 1214677881	# [8]
 
-AcTchSensGridBoxProc_L1d_Records:	# 16 x REC_AcTchSensGridBoxProc_L1d_Records (8 bytes each); read by AcTchSensGridBoxProc_L1d 0x48668510 `mov (a0), d0`
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=16, x4="\x88\x86fH"	# [0]
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=1, x4="F\x85fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=17, x4="\xAF\x85fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=18, x4="\x88\x86fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=0x1007F, x4="v\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=20, x4="\x8D\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=21, x4="\x8D\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=0x10081, x4="\xA7\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	x4="\xC1\x87fH"	# [8]
-	REC_AcTchSensGridBoxProc_L1d_Records	x4="\xC1\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	x4="\xC1\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	x4="\xC1\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	x4="\xC1\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	x4="\xC1\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=0x1007E, x4="_\x87fH"
-	REC_AcTchSensGridBoxProc_L1d_Records	f0=15, x4="\xAF\x85fH"
-AcFSWAssGridBoxProc_L1d_Records:	# 16 x REC_AcFSWAssGridBoxProc_L1d_Records (8 bytes each); read by AcFSWAssGridBoxProc_L1d 0x48668AFA `mov (a0), d0`
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=16, x4="T\x8CfH"	# [0]
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=1, x4="1\x8BfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=17, x4="\x9A\x8BfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=18, x4="T\x8CfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=0x1007F, x4="#\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=20, x4=":\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=21, x4=":\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=0x10081, x4="T\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	x4="n\x8DfH"	# [8]
-	REC_AcFSWAssGridBoxProc_L1d_Records	x4="n\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	x4="n\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	x4="n\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	x4="n\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	x4="n\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=0x1007E, x4="\x0C\x8DfH"
-	REC_AcFSWAssGridBoxProc_L1d_Records	f0=15, x4="\x9A\x8BfH"
-AcPmExpFilterGridBoxProc_L33_Records:	# 16 x REC_AcPmExpFilterGridBoxProc_L33_Records (8 bytes each); read by AcPmExpFilterGridBoxProc_L33 0x48669D33 `mov (a0), d0`
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=16, x4="\xC3\x9EfH"	# [0]
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=1, x4="i\x9DfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=17, x4="\xFD\x9DfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=18, x4="\xC3\x9EfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=0x1007F, x4="\xA3\x9FfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=20, x4="\xBE\x9FfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=21, x4="\xBE\x9FfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=0x10081, x4="\xDB\x9FfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=5, x4="\xF7\x9FfH"	# [8]
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=9, x4="\xD4\x9DfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	x4="W\xA0fH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	x4="W\xA0fH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	x4="W\xA0fH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	x4="W\xA0fH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=0x1007E, x4="\x88\x9FfH"
-	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=15, x4="\xFD\x9DfH"
-AcFadeSetGridBoxProc_L1d_Records:	# 16 x REC_AcFadeSetGridBoxProc_L1d_Records (8 bytes each); read by AcFadeSetGridBoxProc_L1d 0x4866AE70 `mov (a0), d0`
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=16, x4="\xEE\xAFfH"	# [0]
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=1, x4="\xA6\xAEfH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=17, x4="\"\xAFfH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=18, x4="\xEE\xAFfH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=0x1007F, x4="\xCD\xB0fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=20, x4="\xE5\xB0fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=21, x4="\xE5\xB0fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=0x10081, x4="\xFF\xB0fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	x4="\x19\xB1fH"	# [8]
-	REC_AcFadeSetGridBoxProc_L1d_Records	x4="\x19\xB1fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	x4="\x19\xB1fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	x4="\x19\xB1fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	x4="\x19\xB1fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	x4="\x19\xB1fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=0x1007E, x4="\xB5\xB0fH"
-	REC_AcFadeSetGridBoxProc_L1d_Records	f0=15, x4="\"\xAFfH"
-data_4848570C:
-.incbin_range "baserom/kn2400_program.rom", 0x08570C, 0x08570F
-data_4848570F:
-.incbin_range "baserom/kn2400_program.rom", 0x08570F, 0x08571C
-data_4848571C:
-.incbin_range "baserom/kn2400_program.rom", 0x08571C, 0x085721
-data_48485721:
-.incbin_range "baserom/kn2400_program.rom", 0x085721, 0x085723
+AcTchSensGridBoxProc_L1d_Records:	# 16 x REC_AcTchSensGridBoxProc_L1d_Records (8 bytes each); read by AcTchSensGridBoxProc_L1d 0x48668510 `mov (a0), d0`; AcTchSensGridBoxProc_L4b 0x4866853E `mov (a0), d0`; AcTchSensGridBoxProc_L4e 0x48668541 `mov (4, a0), a0`
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=16, f4=0x48668688	# [0]
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=1, f4=0x48668546
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=17, f4=0x486685AF
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=18, f4=0x48668688
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=0x1007F, f4=0x48668776
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=20, f4=0x4866878D
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=21, f4=0x4866878D
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=0x10081, f4=0x486687A7
+	REC_AcTchSensGridBoxProc_L1d_Records	f4=0x486687C1	# [8]
+	REC_AcTchSensGridBoxProc_L1d_Records	f4=0x486687C1
+	REC_AcTchSensGridBoxProc_L1d_Records	f4=0x486687C1
+	REC_AcTchSensGridBoxProc_L1d_Records	f4=0x486687C1
+	REC_AcTchSensGridBoxProc_L1d_Records	f4=0x486687C1
+	REC_AcTchSensGridBoxProc_L1d_Records	f4=0x486687C1
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=0x1007E, f4=0x4866875F
+	REC_AcTchSensGridBoxProc_L1d_Records	f0=15, f4=0x486685AF
+AcFSWAssGridBoxProc_L1d_Records:	# 16 x REC_AcFSWAssGridBoxProc_L1d_Records (8 bytes each); read by AcFSWAssGridBoxProc_L1d 0x48668AFA `mov (a0), d0`; AcFSWAssGridBoxProc_L4c 0x48668B29 `mov (a0), d0`; AcFSWAssGridBoxProc_L4f 0x48668B2C `mov (4, a0), a0`
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=16, f4=0x48668C54	# [0]
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=1, f4=0x48668B31
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=17, f4=0x48668B9A
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=18, f4=0x48668C54
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=0x1007F, f4=0x48668D23
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=20, f4=0x48668D3A
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=21, f4=0x48668D3A
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=0x10081, f4=0x48668D54
+	REC_AcFSWAssGridBoxProc_L1d_Records	f4=0x48668D6E	# [8]
+	REC_AcFSWAssGridBoxProc_L1d_Records	f4=0x48668D6E
+	REC_AcFSWAssGridBoxProc_L1d_Records	f4=0x48668D6E
+	REC_AcFSWAssGridBoxProc_L1d_Records	f4=0x48668D6E
+	REC_AcFSWAssGridBoxProc_L1d_Records	f4=0x48668D6E
+	REC_AcFSWAssGridBoxProc_L1d_Records	f4=0x48668D6E
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=0x1007E, f4=0x48668D0C
+	REC_AcFSWAssGridBoxProc_L1d_Records	f0=15, f4=0x48668B9A
+AcPmExpFilterGridBoxProc_L33_Records:	# 16 x REC_AcPmExpFilterGridBoxProc_L33_Records (8 bytes each); read by AcPmExpFilterGridBoxProc_L33 0x48669D33 `mov (a0), d0`; AcPmExpFilterGridBoxProc_L61 0x48669D61 `mov (a0), d0`; AcPmExpFilterGridBoxProc_L64 0x48669D64 `mov (4, a0), a0`
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=16, f4=0x48669EC3	# [0]
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=1, f4=0x48669D69
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=17, f4=0x48669DFD
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=18, f4=0x48669EC3
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=0x1007F, f4=0x48669FA3
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=20, f4=0x48669FBE
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=21, f4=0x48669FBE
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=0x10081, f4=0x48669FDB
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=5, f4=0x48669FF7	# [8]
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=9, f4=0x48669DD4
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f4=0x4866A057
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f4=0x4866A057
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f4=0x4866A057
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f4=0x4866A057
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=0x1007E, f4=0x48669F88
+	REC_AcPmExpFilterGridBoxProc_L33_Records	f0=15, f4=0x48669DFD
+AcFadeSetGridBoxProc_L1d_Records:	# 16 x REC_AcFadeSetGridBoxProc_L1d_Records (8 bytes each); read by AcFadeSetGridBoxProc_L1d 0x4866AE70 `mov (a0), d0`; AcFadeSetGridBoxProc_L4b 0x4866AE9E `mov (a0), d0`; AcFadeSetGridBoxProc_L4e 0x4866AEA1 `mov (4, a0), a0`
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=16, f4=0x4866AFEE	# [0]
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=1, f4=0x4866AEA6
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=17, f4=0x4866AF22
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=18, f4=0x4866AFEE
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=0x1007F, f4=0x4866B0CD
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=20, f4=0x4866B0E5
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=21, f4=0x4866B0E5
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=0x10081, f4=0x4866B0FF
+	REC_AcFadeSetGridBoxProc_L1d_Records	f4=0x4866B119	# [8]
+	REC_AcFadeSetGridBoxProc_L1d_Records	f4=0x4866B119
+	REC_AcFadeSetGridBoxProc_L1d_Records	f4=0x4866B119
+	REC_AcFadeSetGridBoxProc_L1d_Records	f4=0x4866B119
+	REC_AcFadeSetGridBoxProc_L1d_Records	f4=0x4866B119
+	REC_AcFadeSetGridBoxProc_L1d_Records	f4=0x4866B119
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=0x1007E, f4=0x4866B0B5
+	REC_AcFadeSetGridBoxProc_L1d_Records	f0=15, f4=0x4866AF22
 
+func_4866B676_entry_L53_Table:	# 3 x u8, 6..8; read by func_4866B676_entry_L53 0x4866B6CE: `movbu (a0), d1`
+	tab_u8	6, 7, 8
+func_4866B676_entry_La6_Table:	# 13 x u8, 9..21; read by func_4866B676_entry_La6 0x4866B721: `movbu (a0), d1`
+	tab_u8	9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+func_4866B676_entry_Lf9_Table:	# 5 x u8, 1..5; read by func_4866B676_entry_Lf9 0x4866B774: `movbu (a0), d0`
+	tab_u8	3, 4, 5, 1, 2
+func_4866B676_entry_L14c_Table:	# 2 x u8, 22..23; read by func_4866B676_entry_L14c 0x4866B7C7: `movbu (a0), d0`
+	tab_u8	22, 23
 func_4866B676_Table:	# 3 x u8, 0..2; read by func_4866B676_entry : `movbu	(a2), d0`; func_4866B8A8_entry : `movbu	(d0, a0), d1` ...
 	tab_u8	0, 1, 2
 func_4866B676_Table_2:	# 13 x u8, 3..15; read by func_4866B676_entry : `movbu	(a2), d0`; func_4866BA86_entry : `movbu	(a3), d0`
@@ -35775,71 +35638,9 @@ func_48674283_Table_2:	# 12 x u32, 1214726910..1214727750; read by func_48674283
 	tab_u32	1214726910, 1214727750, 1214727750, 1214727032, 1214727133, 1214727333, 1214727426, 1214727519	# [0]
 	tab_u32	1214727565, 1214727705, 1214727656, 1214727610	# [8]
 
-func_48674283_entry_L2a_Records:	# 64 x REC_func_48674283_entry_L2a_Records (8 bytes each); read by func_48674283_entry_L2a 0x486742B2 `mov (a0), d0`
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"	# [0]
-	REC_func_48674283_entry_L2a_Records	f0=1, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=2, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=3, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=4, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=5, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=6, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=7, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=8, x4="\xE2BgH"	# [8]
-	REC_func_48674283_entry_L2a_Records	f0=9, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=10, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=11, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=12, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=13, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=14, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=15, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=16, x4="\xE2BgH"	# [16]
-	REC_func_48674283_entry_L2a_Records	f0=17, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=18, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=19, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=20, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=21, x4="\xE2BgH"
-	REC_func_48674283_entry_L2a_Records	f0=69, x4="nFgH"
-	REC_func_48674283_entry_L2a_Records	f0=70, x4="nFgH"
-	REC_func_48674283_entry_L2a_Records	f0=24, x4="IFgH"	# [24]
-	REC_func_48674283_entry_L2a_Records	f0=71, x4="nFgH"
-	REC_func_48674283_entry_L2a_Records	f0=73, x4="\x9FHgH"
-	REC_func_48674283_entry_L2a_Records	f0=145, x4="\xA0KgH"
-	REC_func_48674283_entry_L2a_Records	f0=153, x4="\x8FLgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"	# [32]
-	REC_func_48674283_entry_L2a_Records	f0=97, x4="\xD6JgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"	# [40]
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	f0=174, x4="\x84MgH"
-	REC_func_48674283_entry_L2a_Records	f0=175, x4="\x9EMgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"	# [48]
-	REC_func_48674283_entry_L2a_Records	f0=113, x4="\x05KgH"
-	REC_func_48674283_entry_L2a_Records	f0=177, x4="\xB8MgH"
-	REC_func_48674283_entry_L2a_Records	f0=115, x4="wKgH"
-	REC_func_48674283_entry_L2a_Records	f0=178, x4="\xE1MgH"
-	REC_func_48674283_entry_L2a_Records	f0=179, x4="\x06NgH"
-	REC_func_48674283_entry_L2a_Records	f0=180, x4="&NgH"
-	REC_func_48674283_entry_L2a_Records	f0=181, x4="|NgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"	# [56]
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
-	REC_func_48674283_entry_L2a_Records	x4="\x9BNgH"
+func_48674283_entry_L2a_Records:	# 1 x REC_func_48674283_entry_L2a_Records (8 bytes each); read by func_48674283_entry_L2a 0x486742B2 `mov (a0), d0`; func_48674283_entry_L52 0x486742DA `mov (a0), d0`; func_48674283_entry_L55 0x486742DD `mov (4, a0), a0`
+	REC_func_48674283_entry_L2a_Records	p4=func_48674283_entry_Lc13
+.incbin_range "baserom/kn2400_program.rom", 0x085838, 0x085A30
 
 func_48674EB2_Table:	# 8 x u8, 0..5; read by func_48674EB2_entry : `movbu	(d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -35850,71 +35651,9 @@ func_48674EB2_Table_2:	# 12 x u32, 1214730030..1214730700; read by func_48674EB2
 	tab_u32	1214730030, 1214730700, 1214730700, 1214730153, 1214730254, 1214730387, 1214730700, 1214730469	# [0]
 	tab_u32	1214730514, 1214730655, 1214730609, 1214730564	# [8]
 
-func_48674EB2_entry_L2a_Records:	# 64 x REC_func_48674EB2_entry_L2a_Records (8 bytes each); read by func_48674EB2_entry_L2a 0x48674EE1 `mov (a0), d0`
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"	# [0]
-	REC_func_48674EB2_entry_L2a_Records	f0=1, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=2, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=3, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=4, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=5, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=6, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=7, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=8, x4="\x12OgH"	# [8]
-	REC_func_48674EB2_entry_L2a_Records	f0=9, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=10, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=11, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=12, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=13, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=14, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=15, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=16, x4="\x12OgH"	# [16]
-	REC_func_48674EB2_entry_L2a_Records	f0=17, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=18, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=19, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=20, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=21, x4="\x12OgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=69, x4="\xF4QgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=70, x4="\xF4QgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=24, x4="\xCFQgH"	# [24]
-	REC_func_48674EB2_entry_L2a_Records	f0=71, x4="\xF4QgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=73, x4="&TgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=145, x4="'WgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=153, x4="\x18XgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"	# [32]
-	REC_func_48674EB2_entry_L2a_Records	f0=97, x4="]VgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"	# [40]
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=174, x4="(YgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=175, x4="BYgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"	# [48]
-	REC_func_48674EB2_entry_L2a_Records	f0=113, x4="\x8CVgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=177, x4="\\YgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=115, x4="\xFEVgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=178, x4="\x85YgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=179, x4="\xAAYgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=180, x4="\xCBYgH"
-	REC_func_48674EB2_entry_L2a_Records	f0=181, x4="!ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"	# [56]
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
-	REC_func_48674EB2_entry_L2a_Records	x4="?ZgH"
+func_48674EB2_entry_L2a_Records:	# 1 x REC_func_48674EB2_entry_L2a_Records (8 bytes each); read by func_48674EB2_entry_L2a 0x48674EE1 `mov (a0), d0`; func_48674EB2_entry_L53 0x48674F0A `mov (a0), d0`; func_48674EB2_entry_L56 0x48674F0D `mov (4, a0), a0`
+	REC_func_48674EB2_entry_L2a_Records	p4=func_48674EB2_entry_Lb88
+.incbin_range "baserom/kn2400_program.rom", 0x085A88, 0x085C80
 
 func_48675A56_Table:	# 8 x u8, 0..5; read by func_48675A56_entry : `movbu	(d0, a2), d0`; func_48675A56_entry : `movbu	(d1, a2), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -35925,71 +35664,13 @@ func_48675A56_Table_2:	# 12 x u32, 1214733006..1214733634; read by func_48675A56
 	tab_u32	1214733006, 1214733634, 1214733634, 1214733073, 1214733178, 1214733305, 1214733634, 1214733398	# [0]
 	tab_u32	1214733448, 1214733589, 1214733542, 1214733496	# [8]
 
-func_48675A56_entry_L28_Records:	# 64 x REC_func_48675A56_entry_L28_Records (8 bytes each); read by func_48675A56_entry_L28 0x48675A83 `mov (a0), d0`
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"	# [0]
-	REC_func_48675A56_entry_L28_Records	f0=1, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=2, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=3, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=4, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=5, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=6, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=7, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=8, x4="\xB3ZgH"	# [8]
-	REC_func_48675A56_entry_L28_Records	f0=9, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=10, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=11, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=12, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=13, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=14, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=15, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=16, x4="\xB3ZgH"	# [16]
-	REC_func_48675A56_entry_L28_Records	f0=17, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=18, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=19, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=20, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=21, x4="\xB3ZgH"
-	REC_func_48675A56_entry_L28_Records	f0=69, x4="i]gH"
-	REC_func_48675A56_entry_L28_Records	f0=70, x4="i]gH"
-	REC_func_48675A56_entry_L28_Records	f0=24, x4="E]gH"	# [24]
-	REC_func_48675A56_entry_L28_Records	f0=71, x4="i]gH"
-	REC_func_48675A56_entry_L28_Records	f0=73, x4="\xA5_gH"
-	REC_func_48675A56_entry_L28_Records	f0=145, x4="\x97bgH"
-	REC_func_48675A56_entry_L28_Records	f0=153, x4="\x87cgH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"	# [32]
-	REC_func_48675A56_entry_L28_Records	f0=97, x4="\xD0agH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"	# [40]
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	f0=174, x4="\xFBcgH"
-	REC_func_48675A56_entry_L28_Records	f0=175, x4="\x15dgH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"	# [48]
-	REC_func_48675A56_entry_L28_Records	f0=113, x4="\xFFagH"
-	REC_func_48675A56_entry_L28_Records	f0=177, x4="/dgH"
-	REC_func_48675A56_entry_L28_Records	f0=115, x4="nbgH"
-	REC_func_48675A56_entry_L28_Records	f0=178, x4="XdgH"
-	REC_func_48675A56_entry_L28_Records	f0=179, x4="}dgH"
-	REC_func_48675A56_entry_L28_Records	f0=180, x4="\x9DdgH"
-	REC_func_48675A56_entry_L28_Records	f0=181, x4="\xF2dgH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"	# [56]
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
-	REC_func_48675A56_entry_L28_Records	x4="\x11egH"
+func_48675A56_entry_L28_Records:	# 1 x REC_func_48675A56_entry_L28_Records (8 bytes each); read by func_48675A56_entry_L28 0x48675A83 `mov (a0), d0`; func_48675A56_entry_L50 0x48675AAB `mov (a0), d0`; func_48675A56_entry_L53 0x48675AAE `mov (4, a0), a0`
+	REC_func_48675A56_entry_L28_Records	p4=func_48675A56_entry_Lab6
+.incbin_range "baserom/kn2400_program.rom", 0x085CD8, 0x085E5D
+
+Str_agH:	.asciz "agH\xB1"
+# census: opaque -- unknown-dump: 110 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x085E62, 0x085ED0
 
 func_48676528_Table:	# 8 x u8, 0..5; read by func_48676528_entry : `movbu	(d0, a3), d0`
 	tab_u8	0, 0, 1, 2, 4, 4, 5, 3
@@ -36767,7 +36448,7 @@ Str_TT_MDCOMP:	.asciz "TT_MDCOMP"
 	.align	4, 0xFF	# pad after Str_TT_MDCOMP
 Str_TT_MDPMLCTL:	.asciz "TT_MDPMLCTL"
 
-func_485FDD4C_Table:	# 4 x u16, 5..314; read by func_485FDD4C 0x485FDD4C: `movhu (a1), d1`
+func_485FDD4C_Table:	# 4 x u16, 5..314; read by DrawDesignBox_entry_L22 0x485FDCFD: `movhu (a2), d0`; func_485FDD4C 0x485FDD4C: `movhu (a1), d1`
 	tab_u16	244, 5, 314, 22
 data_4848EBE4:
 .incbin_range "baserom/kn2400_program.rom", 0x08EBE4, 0x08EBE8
@@ -36793,10 +36474,10 @@ AcMidiPartGridBoxProc_L6a_Table:
 	.long	Str_PAGE_3_4
 	.long	Str_PAGE_4_4
 
-TMidiPart_Table:	# 4 x u32, 61697..2113540; read by TMidiPart : `mov	(a2), d0`
+TMidiPart_Table:	# 4 x u32, 61697..2113540; read by TMidiPart_L79 0x4867717D: `mov	(a2), d0`
 	tab_u32	2113537, 2113540, 2113536, 61697
 
-MainPutM3Em_Records:	# 4 x REC_MainPutM3Em_Records (10 bytes each); read by MainPutM3Em 0x485F3E5D `call Malloc_entry, [d2,a2,a3], 0x28`; AcMidiPartGridBoxProc_L196 0x48677381 `call MainPutM3Em_entry, [d2,d3,a2], 0x20`; AcMidiPartGridBoxProc_L196 0x48677381 `movbu (2, a0), d1` (+28)
+MainPutM3Em_Records:	# 4 x REC_MainPutM3Em_Records (10 bytes each); read by AcMidiPartGridBoxProc_L196 0x48677381 `movbu (2, a0), d1`; AcMidiPartGridBoxProc_L196 0x48677381 `movbu (2, a2), d1`; AcMidiPartGridBoxProc_L22f 0x4867741A `movbu (2, a0), d1` (+46)
 	REC_MainPutM3Em_Records	a0="\xFF\xFF", f2=16, x3="\x11\x12\xFF\x00\xFF\x1B\xFF"
 	REC_MainPutM3Em_Records	a0="\xFF\xFF", x3="\x01\x02\x03\x04\x05\x06\x07"
 	REC_MainPutM3Em_Records	a0="\xFF\xFF", f2=8, x3="\x09\n\x0B\x0C\x0D\x0E\x0F"
@@ -36820,23 +36501,23 @@ Str_PART9_PART10_PART11_PART12_PART13_PART14:	.asciz "|-| PART9| PART10| PART11|
 	.align	4, 0xFF	# pad after Str_PART9_PART10_PART11_PART12_PART13_PART14
 Str_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACCOMP5_2:	.asciz "|-| ACCOMP1| ACCOMP2| ACCOMP3| ACCOMP4| ACCOMP5| BASS| DRUMS1| DRUMS2"
 	.align	4, 0xFF	# pad after Str_ACCOMP1_ACCOMP2_ACCOMP3_ACCOMP4_ACCOMP5_2
-Str_3_21:	.asciz " -3  "
-Str_2_26:	.asciz " -2  "
-Str_1_25:	.asciz " -1  "
-Str_0_15:	.asciz "  0  "
-Str_1_24:	.asciz "  1  "
-Str_2_25:	.asciz "  2  "
-Str_3_20:	.asciz "  3  "
-	.align	4, 0xFF	# pad after Str_3_20
+Str_3_19:	.asciz " -3  "
+Str_2_22:	.asciz " -2  "
+Str_1_21:	.asciz " -1  "
+Str_0_12:	.asciz "  0  "
+Str_1_20:	.asciz "  1  "
+Str_2_21:	.asciz "  2  "
+Str_3_18:	.asciz "  3  "
+	.align	4, 0xFF	# pad after Str_3_18
 
 MidiPartGrid_L42e_Table:
-	.long	Str_3_21
-	.long	Str_2_26
-	.long	Str_1_25
-	.long	Str_0_15
-	.long	Str_1_24
-	.long	Str_2_25
-	.long	Str_3_20
+	.long	Str_3_19
+	.long	Str_2_22
+	.long	Str_1_21
+	.long	Str_0_12
+	.long	Str_1_20
+	.long	Str_2_21
+	.long	Str_3_18
 
 MidiPartGrid_Table:	# 12 x u8, 0..255; read by MidiPartGrid : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
@@ -36871,10 +36552,11 @@ Str_OFF_116:	.asciz " OFF "
 	.align	4, 0xFF	# pad after Str_OFF_116
 Str_ON_87:	.asciz " ON  "
 	.align	4, 0xFF	# pad after Str_ON_87
-Str_empty_1036:	.asciz "\x80 "
-# census: opaque -- unknown-dump: 65 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x08EE7F, 0x08EEC0
 
+TMidiControl_L54_Table:	# 17 x u32, 8258..8340; read by TMidiControl_L54 0x486781FC: `mov	(a2), d0`
+	tab_u32	8320, 8323, 8322, 8324, 8325, 8326, 8327, 8330	# [0]
+	tab_u32	8331, 8337, 8336, 8321, 8334, 8258, 8338, 8339	# [8]
+	tab_u32	8340	# [16]
 AcMidiControlGridBoxProc_Table:	# 3 x u8, 4..8; read by AcMidiControlGridBoxProc : `movbu	(d0, a0), d0`; AcMidiControlGridBoxProc : `movbu	(d1, a0), d1`
 	tab_u8	8, 8, 4
 AcMidiControlGridBoxProc_Table_2:	# 17 x u8, 0..255; read by AcMidiControlGridBoxProc : `movbu	(a1), d0`
@@ -36885,7 +36567,7 @@ Str_PROGRAM_CHANGE_BANK_SELECT_PITCH_BEND_VO_2:	.asciz "|-| PROGRAM CHANGE      
 Str_EFFECT_REVERB_MODULATION_SOUND_CONTROLLE:	.asciz "|-| EFFECT & REVERB      | MODULATION           | SOUND CONTROLLERS    | PORTAMENTO           | PART EQUALIZER       | AFTER TOUCH          | RESET ALL CONTROLLERS"
 Str_RPN_NRPN_SYSTEM_EXCLUSIVE:	.asciz "|-| RPN                  | NRPN                 | SYSTEM EXCLUSIVE     "
 
-MainAddM3Em_Records:	# 3 x REC_MainAddM3Em_Records (36 bytes each); read by MainAddM3Em 0x485F3EA5 `call Malloc_entry, [d2,a2,a3], 0x28`; MidiControlGrid_L81 0x4867879A `call MainAddM3Em_entry, [d2,d3,a2], 0x20`; MidiControlGrid_L81 0x4867879A `mov (d0, a0), d0` (+9)
+MainAddM3Em_Records:	# 3 x REC_MainAddM3Em_Records (36 bytes each); read by MidiControlGrid_L81 0x4867879A `mov (d0, a0), d0`; MidiControlGrid_Ldd 0x486787F6 `mov (d0, a0), d0`; MidiControlGrid_L139 0x48678852 `mov (d0, a1), d0` (+9)
 	REC_MainAddM3Em_Records	4294967295, 4294967295, 8320, 8323, 8322, 8324, 8325, 8326, 8327
 	REC_MainAddM3Em_Records	4294967295, 4294967295, 8330, 8331, 8337, 8340, 8339, 8321, 8334
 	REC_MainAddM3Em_Records	4294967295, 4294967295, 8336, 8338, 8258, 0, 0, 0, 0
@@ -36903,9 +36585,10 @@ Str_ON_85:	.asciz " ON  "
 	.align	4, 0xFF	# pad after Str_ON_85
 Str_OFF_114:	.asciz " OFF "
 	.align	4, 0xFF	# pad after Str_OFF_114
-Str_A_26:	.asciz "A "
-# census: opaque -- unknown-dump: 5 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x08F107, 0x08F10C
+
+TMidiRealtime_L52_Table:	# 2 x u32, 8224..8257; read by TMidiRealtime_L52 0x486789C6: `mov	(a2), d0`
+	tab_u32	8257, 8224
+
 Str_ON_84:	.asciz " ON  "
 	.align	4, 0xFF	# pad after Str_ON_84
 Str_OFF_113:	.asciz " OFF "
@@ -36914,10 +36597,10 @@ Str_INTERNAL_2:	.asciz " INTERNAL "
 	.align	4, 0xFF	# pad after Str_INTERNAL_2
 Str_MIDI_9:	.asciz "   MIDI   "
 	.align	4, 0xFF	# pad after Str_MIDI_9
-Str_empty_1035:	.asciz "# "
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x08F137, 0x08F158
 
+TMidiCommon_L47_Table:	# 9 x u32, 8225..8345; read by TMidiCommon_L47 0x48678B66: `mov	(a2), d0`
+	tab_u32	8227, 8226, 8345, 8344, 8335, 8225, 8229, 8256	# [0]
+	tab_u32	8259	# [8]
 MidiCommonGrid_L81_Table:	# 9 x u32, 8225..8345; read by MidiCommonGrid_L81 0x48678C02: `mov	(d0, a0), d0`; MidiCommonGrid_Lcf 0x48678C50: `mov	(d0, a0), d0` ...
 	tab_u32	8227, 8226, 8345, 8344, 8335, 8225, 8229, 8256	# [0]
 	tab_u32	8259	# [8]
@@ -36959,7 +36642,7 @@ Str_ON_82:	.asciz " ON  "
 Str_OFF_111:	.asciz " OFF "
 	.align	4, 0xFF	# pad after Str_OFF_111
 
-TMidiInput_Table:	# 10 x u32, 8192..32914; read by TMidiInput : `mov	(a2), d0`
+TMidiInput_Table:	# 10 x u32, 8192..32914; read by TMidiInput_L47 0x486790F4: `mov	(a2), d0`
 	tab_u32	8192, 8193, 32912, 32913, 32914, 8208, 8211, 8209	# [0]
 	tab_u32	8210, 8212	# [8]
 AcMidiInputGridBoxProc_Table:	# 10 x s16, 1..3; read by AcMidiInputGridBoxProc_Le5 0x486791F4: `movhu	(d0, a1), d1`
@@ -37027,13 +36710,13 @@ Str_3d_198:	.asciz " %3d "
 	.align	4, 0xFF	# pad after Str_3d_198
 Str_PAGE:	.asciz "PAGE"
 	.align	4, 0xFF	# pad after Str_PAGE
-Str_empty_563:	.asciz " "
+Str_empty_561:	.asciz " "
 Str_NX_SOUND:	.asciz "NX SOUND "
 Str_GM_LEVEL2_2:	.asciz "GM LEVEL2"
 Str_GM_LEVEL2:	.asciz "GM LEVEL2"
 
 AcTGModeSelProc_L367_Table:
-	.long	Str_empty_563
+	.long	Str_empty_561
 	.long	Str_NX_SOUND
 	.long	Str_GM_LEVEL2_2
 	.long	Str_GM_LEVEL2
@@ -37303,9 +36986,9 @@ Str_3d_186:	.asciz " %3d "
 	.align	4, 0xFF	# pad after Str_3d_186
 Str_OFF_95:	.asciz " OFF "
 	.align	4, 0xFF	# pad after Str_OFF_95
-Str_empty_1028:	.asciz " `"
-	.align	4, 0x00	# pad after Str_empty_1028
 
+TMidiComputer_L27_Table:	# 1 x u32, 24608..24608; read by TMidiComputer_L27 0x4867CF5E: `mov	(a2), d0`
+	tab_u32	24608
 ComputerConnection_Table:	# 2 x u16, 12..88; read by ComputerConnection : `movhu	(a0), d0`
 	tab_u16	12, 88
 ComputerConnection_Table_2:	# 2 x u16, 102..448; read by ComputerConnection : `movhu	(a0), d0`
@@ -37334,113 +37017,99 @@ Str_INTERFACE_3:	.asciz "       INTERFACE        "
 Str_KN:	.asciz "KN"
 	.align	4, 0xFF	# pad after Str_KN
 
-AcMidiPartGridBoxProc_L37_Records:	# 16 x REC_AcMidiPartGridBoxProc_L37_Records (8 bytes each); read by AcMidiPartGridBoxProc_L37 0x48677222 `mov (a0), d0`
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=16, x4="&wgH"	# [0]
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=1, x4="ZrgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=17, x4="\x9BtgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=18, x4="&wgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=0x1007F, x4="\xB0ygH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=5, x4="=sgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=21, x4="\x1CzgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=20, x4="\x1FzgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=0x10081, x4="\x1FzgH"	# [8]
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=9, x4="\xDArgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	x4=";zgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	x4=";zgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	x4=";zgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	x4=";zgH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=0x1007E, x4="\x97ygH"
-	REC_AcMidiPartGridBoxProc_L37_Records	f0=15, x4="\x9BtgH"
-AcMidiControlGridBoxProc_L31_Records:	# 16 x REC_AcMidiControlGridBoxProc_L31_Records (8 bytes each); read by AcMidiControlGridBoxProc_L31 0x48678248 `mov (a0), d0`
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=16, x4="Q\x85gH"	# [0]
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=1, x4="\x7F\x82gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=17, x4=" \x84gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=18, x4="Q\x85gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=0x1007F, x4="\x97\x86gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=5, x4="\\\x83gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=21, x4="\xEC\x86gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=20, x4="\xEF\x86gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=0x10081, x4="\xEF\x86gH"	# [8]
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=9, x4="\xFC\x82gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	x4="\x09\x87gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	x4="\x09\x87gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	x4="\x09\x87gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	x4="\x09\x87gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=0x1007E, x4="~\x86gH"
-	REC_AcMidiControlGridBoxProc_L31_Records	f0=15, x4=" \x84gH"
-MidiCommonGrid_L369_Records:	# 16 x REC_MidiCommonGrid_L369_Records (8 bytes each); read by MidiCommonGrid_L369 0x48678EEA `mov (a0), d0`
-	REC_MidiCommonGrid_L369_Records	f0=32, x4="T\x90gH"	# [0]
-	REC_MidiCommonGrid_L369_Records	f0=1, x4="\x1D\x8FgH"
-	REC_MidiCommonGrid_L369_Records	f0=2, x4="T\x90gH"
-	REC_MidiCommonGrid_L369_Records	f0=3, x4="T\x90gH"
-	REC_MidiCommonGrid_L369_Records	f0=35, x4="T\x90gH"
-	REC_MidiCommonGrid_L369_Records	f0=5, x4="\xE7\x8FgH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	f0=120, x4="T\x90gH"	# [8]
-	REC_MidiCommonGrid_L369_Records	f0=121, x4="T\x90gH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	x4="\xA0\x90gH"
-	REC_MidiCommonGrid_L369_Records	f0=111, x4="T\x90gH"
-MidiCommonGrid_L15d_Records:	# 16 x REC_MidiCommonGrid_L15d_Records (8 bytes each); read by MidiCommonGrid_L15d 0x48678CDE `mov (a0), d0`
-	REC_MidiCommonGrid_L15d_Records	f0=32, x4="9\x8EgH"	# [0]
-	REC_MidiCommonGrid_L15d_Records	f0=1, x4="\x12\x8DgH"
-	REC_MidiCommonGrid_L15d_Records	f0=2, x4="9\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	f0=3, x4="9\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	f0=35, x4="9\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	f0=5, x4="\xD1\x8DgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	f0=120, x4="9\x8EgH"	# [8]
-	REC_MidiCommonGrid_L15d_Records	f0=121, x4="9\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	x4="\x7F\x8EgH"
-	REC_MidiCommonGrid_L15d_Records	f0=111, x4="9\x8EgH"
-AcMidiInputGridBoxProc_L1e_Records:	# 16 x REC_AcMidiInputGridBoxProc_L1e_Records (8 bytes each); read by AcMidiInputGridBoxProc_L1e 0x4867912D `mov (a0), d0`
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=16, x4="\xD9\x92gH"	# [0]
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=1, x4="e\x91gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=17, x4="\xCF\x91gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=18, x4="\xD9\x92gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=0x1007F, x4="\xFA\x93gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=21, x4="L\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=20, x4="O\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=0x10081, x4="O\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	x4="j\x94gH"	# [8]
-	REC_AcMidiInputGridBoxProc_L1e_Records	x4="j\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	x4="j\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	x4="j\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	x4="j\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	x4="j\x94gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=0x1007E, x4="\xE1\x93gH"
-	REC_AcMidiInputGridBoxProc_L1e_Records	f0=15, x4="\xCF\x91gH"
+AcMidiPartGridBoxProc_L37_Records:	# 16 x REC_AcMidiPartGridBoxProc_L37_Records (8 bytes each); read by AcMidiPartGridBoxProc_L37 0x48677222 `mov (a0), d0`; AcMidiPartGridBoxProc_L67 0x48677252 `mov (a0), d0`; AcMidiPartGridBoxProc_L6a 0x48677255 `mov (4, a0), a0`
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=16, f4=0x48677726	# [0]
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=1, f4=0x4867725A
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=17, f4=0x4867749B
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=18, f4=0x48677726
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=0x1007F, f4=0x486779B0
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=5, f4=0x4867733D
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=21, f4=0x48677A1C
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=20, f4=0x48677A1F
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=0x10081, f4=0x48677A1F	# [8]
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=9, f4=0x486772DA
+	REC_AcMidiPartGridBoxProc_L37_Records	f4=0x48677A3B
+	REC_AcMidiPartGridBoxProc_L37_Records	f4=0x48677A3B
+	REC_AcMidiPartGridBoxProc_L37_Records	f4=0x48677A3B
+	REC_AcMidiPartGridBoxProc_L37_Records	f4=0x48677A3B
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=0x1007E, f4=0x48677997
+	REC_AcMidiPartGridBoxProc_L37_Records	f0=15, f4=0x4867749B
+AcMidiControlGridBoxProc_L31_Records:	# 16 x REC_AcMidiControlGridBoxProc_L31_Records (8 bytes each); read by AcMidiControlGridBoxProc_L31 0x48678248 `mov (a0), d0`; AcMidiControlGridBoxProc_L60 0x48678277 `mov (a0), d0`; AcMidiControlGridBoxProc_L63 0x4867827A `mov (4, a0), a0`
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=16, f4=0x48678551	# [0]
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=1, f4=0x4867827F
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=17, f4=0x48678420
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=18, f4=0x48678551
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=0x1007F, f4=0x48678697
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=5, f4=0x4867835C
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=21, f4=0x486786EC
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=20, f4=0x486786EF
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=0x10081, f4=0x486786EF	# [8]
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=9, f4=0x486782FC
+	REC_AcMidiControlGridBoxProc_L31_Records	f4=0x48678709
+	REC_AcMidiControlGridBoxProc_L31_Records	f4=0x48678709
+	REC_AcMidiControlGridBoxProc_L31_Records	f4=0x48678709
+	REC_AcMidiControlGridBoxProc_L31_Records	f4=0x48678709
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=0x1007E, f4=0x4867867E
+	REC_AcMidiControlGridBoxProc_L31_Records	f0=15, f4=0x48678420
+MidiCommonGrid_L369_Records:	# 16 x REC_MidiCommonGrid_L369_Records (8 bytes each); read by MidiCommonGrid_L369 0x48678EEA `mov (a0), d0`; MidiCommonGrid_L394 0x48678F15 `mov (a0), d0`; MidiCommonGrid_L397 0x48678F18 `mov (4, a0), a0`
+	REC_MidiCommonGrid_L369_Records	f0=32, f4=0x48679054	# [0]
+	REC_MidiCommonGrid_L369_Records	f0=1, f4=0x48678F1D
+	REC_MidiCommonGrid_L369_Records	f0=2, f4=0x48679054
+	REC_MidiCommonGrid_L369_Records	f0=3, f4=0x48679054
+	REC_MidiCommonGrid_L369_Records	f0=35, f4=0x48679054
+	REC_MidiCommonGrid_L369_Records	f0=5, f4=0x48678FE7
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f0=120, f4=0x48679054	# [8]
+	REC_MidiCommonGrid_L369_Records	f0=121, f4=0x48679054
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f4=0x486790A0
+	REC_MidiCommonGrid_L369_Records	f0=111, f4=0x48679054
+MidiCommonGrid_L15d_Records:	# 16 x REC_MidiCommonGrid_L15d_Records (8 bytes each); read by MidiCommonGrid_L15d 0x48678CDE `mov (a0), d0`; MidiCommonGrid_L189 0x48678D0A `mov (a0), d0`; MidiCommonGrid_L18c 0x48678D0D `mov (4, a0), a0`
+	REC_MidiCommonGrid_L15d_Records	f0=32, f4=0x48678E39	# [0]
+	REC_MidiCommonGrid_L15d_Records	f0=1, f4=0x48678D12
+	REC_MidiCommonGrid_L15d_Records	f0=2, f4=0x48678E39
+	REC_MidiCommonGrid_L15d_Records	f0=3, f4=0x48678E39
+	REC_MidiCommonGrid_L15d_Records	f0=35, f4=0x48678E39
+	REC_MidiCommonGrid_L15d_Records	f0=5, f4=0x48678DD1
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f0=120, f4=0x48678E39	# [8]
+	REC_MidiCommonGrid_L15d_Records	f0=121, f4=0x48678E39
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f4=0x48678E7F
+	REC_MidiCommonGrid_L15d_Records	f0=111, f4=0x48678E39
+AcMidiInputGridBoxProc_L1e_Records:	# 16 x REC_AcMidiInputGridBoxProc_L1e_Records (8 bytes each); read by AcMidiInputGridBoxProc_L1e 0x4867912D `mov (a0), d0`; AcMidiInputGridBoxProc_L4e 0x4867915D `mov (a0), d0`; AcMidiInputGridBoxProc_L51 0x48679160 `mov (4, a0), a0`
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=16, f4=0x486792D9	# [0]
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=1, f4=0x48679165
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=17, f4=0x486791CF
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=18, f4=0x486792D9
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=0x1007F, f4=0x486793FA
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=21, f4=0x4867944C
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=20, f4=0x4867944F
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=0x10081, f4=0x4867944F
+	REC_AcMidiInputGridBoxProc_L1e_Records	f4=0x4867946A	# [8]
+	REC_AcMidiInputGridBoxProc_L1e_Records	f4=0x4867946A
+	REC_AcMidiInputGridBoxProc_L1e_Records	f4=0x4867946A
+	REC_AcMidiInputGridBoxProc_L1e_Records	f4=0x4867946A
+	REC_AcMidiInputGridBoxProc_L1e_Records	f4=0x4867946A
+	REC_AcMidiInputGridBoxProc_L1e_Records	f4=0x4867946A
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=0x1007E, f4=0x486793E1
+	REC_AcMidiInputGridBoxProc_L1e_Records	f0=15, f4=0x486791CF
 
 MidiInputGrid_Table_3:	# 10 x u32, 1214749533..1214750361; read by MidiInputGrid_L6d7 0x48679B52: `mov	(d0, a0), a0`
 	tab_u32	1214749533, 1214749587, 1214749641, 1214749901, 1214750361, 1214750093, 1214750147, 1214750201	# [0]
 	tab_u32	1214750255, 1214750308	# [8]
 
-MidiInputGrid_L318_Records:	# 16 x REC_MidiInputGrid_L318_Records (8 bytes each); read by MidiInputGrid_L318 0x48679793 `mov (a0), d0`
-	REC_MidiInputGrid_L318_Records	x4="\x12\x9BgH"	# [0]
-	REC_MidiInputGrid_L318_Records	f0=1, x4="\xC6\x97gH"
-	REC_MidiInputGrid_L318_Records	f0=2, x4="\xFE\x97gH"
-	REC_MidiInputGrid_L318_Records	f0=24721, x4="5\x98gH"
-	REC_MidiInputGrid_L318_Records	f0=24722, x4=";\x99gH"
-	REC_MidiInputGrid_L318_Records	f0=24723, x4="\x98\x99gH"
-	REC_MidiInputGrid_L318_Records	f0=17, x4="\xF5\x99gH"
-	REC_MidiInputGrid_L318_Records	f0=20, x4=".\x9AgH"
-	REC_MidiInputGrid_L318_Records	f0=18, x4="g\x9AgH"	# [8]
-	REC_MidiInputGrid_L318_Records	f0=19, x4="\xA0\x9AgH"
-	REC_MidiInputGrid_L318_Records	f0=21, x4="\xD9\x9AgH"
-	REC_MidiInputGrid_L318_Records	x4="\x12\x9BgH"
-	REC_MidiInputGrid_L318_Records	x4="\x12\x9BgH"
-	REC_MidiInputGrid_L318_Records	x4="\x12\x9BgH"
-	REC_MidiInputGrid_L318_Records	x4="\x12\x9BgH"
-	REC_MidiInputGrid_L318_Records	x4="\x12\x9BgH"
+MidiInputGrid_L318_Records:	# 1 x REC_MidiInputGrid_L318_Records (8 bytes each); read by MidiInputGrid_L318 0x48679793 `mov (a0), d0`; MidiInputGrid_L343 0x486797BE `mov (a0), d0`; MidiInputGrid_L346 0x486797C1 `mov (4, a0), a0`
+	REC_MidiInputGrid_L318_Records	p4=MidiInputGrid_L697
+.incbin_range "baserom/kn2400_program.rom", 0x090384, 0x0903FC
 
 MidiInputGrid_Table_4:	# 10 x u32, 1214748285..1214748512; read by MidiInputGrid_L1f7 0x48679672: `mov	(d0, a0), a0`
 	tab_u32	1214748285, 1214748304, 1214748323, 1214748345, 1214748512, 1214748417, 1214748436, 1214748455	# [0]
@@ -37449,91 +37118,91 @@ MidiInputGrid_Table_5:	# 10 x u32, 1214747977..1214748204; read by MidiInputGrid
 	tab_u32	1214747977, 1214747996, 1214748015, 1214748037, 1214748204, 1214748109, 1214748128, 1214748147	# [0]
 	tab_u32	1214748166, 1214748185	# [8]
 
-MidiPresetSw_L182_Records:	# 16 x REC_MidiPresetSw_L182_Records (8 bytes each); read by MidiPresetSw_L182 0x4867A17F `mov (a0), d0`
-	REC_MidiPresetSw_L182_Records	x4="\x9E\xA2gH"	# [0]
-	REC_MidiPresetSw_L182_Records	f0=1, x4="\n\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=2, x4="\n\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=3, x4="\n\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=20, x4="\xB3\xA1gH"
-	REC_MidiPresetSw_L182_Records	f0=129, x4="\n\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=130, x4="\n\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=131, x4="\n\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=4, x4="U\xA2gH"	# [8]
-	REC_MidiPresetSw_L182_Records	f0=5, x4="U\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=6, x4="U\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=132, x4="U\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=133, x4="U\xA2gH"
-	REC_MidiPresetSw_L182_Records	f0=134, x4="U\xA2gH"
-	REC_MidiPresetSw_L182_Records	x4="\x9E\xA2gH"
-	REC_MidiPresetSw_L182_Records	x4="\x9E\xA2gH"
-MidiPresetSw_L52_Records:	# 16 x REC_MidiPresetSw_L52_Records (8 bytes each); read by MidiPresetSw_L52 0x4867A04F `mov (a0), d0`
-	REC_MidiPresetSw_L52_Records	x4="l\xA1gH"	# [0]
-	REC_MidiPresetSw_L52_Records	f0=1, x4="\xD8\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=2, x4="\xD8\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=3, x4="\xD8\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=20, x4="\x81\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=129, x4="\xD8\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=130, x4="\xD8\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=131, x4="\xD8\xA0gH"
-	REC_MidiPresetSw_L52_Records	f0=4, x4="#\xA1gH"	# [8]
-	REC_MidiPresetSw_L52_Records	f0=5, x4="#\xA1gH"
-	REC_MidiPresetSw_L52_Records	f0=6, x4="#\xA1gH"
-	REC_MidiPresetSw_L52_Records	f0=132, x4="#\xA1gH"
-	REC_MidiPresetSw_L52_Records	f0=133, x4="#\xA1gH"
-	REC_MidiPresetSw_L52_Records	f0=134, x4="#\xA1gH"
-	REC_MidiPresetSw_L52_Records	x4="l\xA1gH"
-	REC_MidiPresetSw_L52_Records	x4="l\xA1gH"
-AcMidiPcgOutGridBoxProc_L1d_Records:	# 16 x REC_AcMidiPcgOutGridBoxProc_L1d_Records (8 bytes each); read by AcMidiPcgOutGridBoxProc_L1d 0x4867AC36 `mov (a0), d0`
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=16, x4="\x8F\xADgH"	# [0]
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=1, x4="l\xACgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=17, x4="\xD5\xACgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=18, x4="\x8F\xADgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=0x1007F, x4="g\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=21, x4="\x7F\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=20, x4="\x99\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=0x10081, x4="\x9C\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	x4="\xB6\xAEgH"	# [8]
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	x4="\xB6\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	x4="\xB6\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	x4="\xB6\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	x4="\xB6\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	x4="\xB6\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=0x1007E, x4="O\xAEgH"
-	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=15, x4="\xD5\xACgH"
-AcMidiPmemOutLGridBoxProc_L1d_Records:	# 16 x REC_AcMidiPmemOutLGridBoxProc_L1d_Records (8 bytes each); read by AcMidiPmemOutLGridBoxProc_L1d 0x4867B7D5 `mov (a0), d0`
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=16, x4="\xC2\xB8gH"	# [0]
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=1, x4="\x0C\xB8gH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=17, x4="\xC2\xB8gH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=18, x4="\xC2\xB8gH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=0x1007F, x4="\x11\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=21, x4=")\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=0x10081, x4="N\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"	# [8]
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	x4="h\xBBgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=0x1007E, x4="\xFA\xBAgH"
-	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=15, x4="\xC2\xB8gH"
-AcMidiPmemOutRGridBoxProc_L1d_Records:	# 16 x REC_AcMidiPmemOutRGridBoxProc_L1d_Records (8 bytes each); read by AcMidiPmemOutRGridBoxProc_L1d 0x4867BB95 `mov (a0), d0`
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=16, x4=">\xBCgH"	# [0]
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=1, x4="\xCB\xBBgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=17, x4=">\xBCgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=18, x4=">\xBCgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=0x1007F, x4="G\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=21, x4="_\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=0x10081, x4="\x84\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"	# [8]
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	x4="\x9E\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=0x1007E, x4="/\xBFgH"
-	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=15, x4=">\xBCgH"
+MidiPresetSw_L182_Records:	# 16 x REC_MidiPresetSw_L182_Records (8 bytes each); read by MidiPresetSw_L182 0x4867A17F `mov (a0), d0`; MidiPresetSw_L1ad 0x4867A1AA `mov (a0), d0`; MidiPresetSw_L1b1 0x4867A1AE `mov (4, a0), a0`
+	REC_MidiPresetSw_L182_Records	f4=0x4867A29E	# [0]
+	REC_MidiPresetSw_L182_Records	f0=1, f4=0x4867A20A
+	REC_MidiPresetSw_L182_Records	f0=2, f4=0x4867A20A
+	REC_MidiPresetSw_L182_Records	f0=3, f4=0x4867A20A
+	REC_MidiPresetSw_L182_Records	f0=20, f4=0x4867A1B3
+	REC_MidiPresetSw_L182_Records	f0=129, f4=0x4867A20A
+	REC_MidiPresetSw_L182_Records	f0=130, f4=0x4867A20A
+	REC_MidiPresetSw_L182_Records	f0=131, f4=0x4867A20A
+	REC_MidiPresetSw_L182_Records	f0=4, f4=0x4867A255	# [8]
+	REC_MidiPresetSw_L182_Records	f0=5, f4=0x4867A255
+	REC_MidiPresetSw_L182_Records	f0=6, f4=0x4867A255
+	REC_MidiPresetSw_L182_Records	f0=132, f4=0x4867A255
+	REC_MidiPresetSw_L182_Records	f0=133, f4=0x4867A255
+	REC_MidiPresetSw_L182_Records	f0=134, f4=0x4867A255
+	REC_MidiPresetSw_L182_Records	f4=0x4867A29E
+	REC_MidiPresetSw_L182_Records	f4=0x4867A29E
+MidiPresetSw_L52_Records:	# 16 x REC_MidiPresetSw_L52_Records (8 bytes each); read by MidiPresetSw_L52 0x4867A04F `mov (a0), d0`; MidiPresetSw_L7c 0x4867A079 `mov (a0), d0`; MidiPresetSw_L7f 0x4867A07C `mov (4, a0), a0`
+	REC_MidiPresetSw_L52_Records	f4=0x4867A16C	# [0]
+	REC_MidiPresetSw_L52_Records	f0=1, f4=0x4867A0D8
+	REC_MidiPresetSw_L52_Records	f0=2, f4=0x4867A0D8
+	REC_MidiPresetSw_L52_Records	f0=3, f4=0x4867A0D8
+	REC_MidiPresetSw_L52_Records	f0=20, f4=0x4867A081
+	REC_MidiPresetSw_L52_Records	f0=129, f4=0x4867A0D8
+	REC_MidiPresetSw_L52_Records	f0=130, f4=0x4867A0D8
+	REC_MidiPresetSw_L52_Records	f0=131, f4=0x4867A0D8
+	REC_MidiPresetSw_L52_Records	f0=4, f4=0x4867A123	# [8]
+	REC_MidiPresetSw_L52_Records	f0=5, f4=0x4867A123
+	REC_MidiPresetSw_L52_Records	f0=6, f4=0x4867A123
+	REC_MidiPresetSw_L52_Records	f0=132, f4=0x4867A123
+	REC_MidiPresetSw_L52_Records	f0=133, f4=0x4867A123
+	REC_MidiPresetSw_L52_Records	f0=134, f4=0x4867A123
+	REC_MidiPresetSw_L52_Records	f4=0x4867A16C
+	REC_MidiPresetSw_L52_Records	f4=0x4867A16C
+AcMidiPcgOutGridBoxProc_L1d_Records:	# 16 x REC_AcMidiPcgOutGridBoxProc_L1d_Records (8 bytes each); read by AcMidiPcgOutGridBoxProc_L1d 0x4867AC36 `mov (a0), d0`; AcMidiPcgOutGridBoxProc_L4b 0x4867AC64 `mov (a0), d0`; AcMidiPcgOutGridBoxProc_L4e 0x4867AC67 `mov (4, a0), a0`
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=16, f4=0x4867AD8F	# [0]
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=1, f4=0x4867AC6C
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=17, f4=0x4867ACD5
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=18, f4=0x4867AD8F
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=0x1007F, f4=0x4867AE67
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=21, f4=0x4867AE7F
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=20, f4=0x4867AE99
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=0x10081, f4=0x4867AE9C
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f4=0x4867AEB6	# [8]
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f4=0x4867AEB6
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f4=0x4867AEB6
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f4=0x4867AEB6
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f4=0x4867AEB6
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f4=0x4867AEB6
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=0x1007E, f4=0x4867AE4F
+	REC_AcMidiPcgOutGridBoxProc_L1d_Records	f0=15, f4=0x4867ACD5
+AcMidiPmemOutLGridBoxProc_L1d_Records:	# 16 x REC_AcMidiPmemOutLGridBoxProc_L1d_Records (8 bytes each); read by AcMidiPmemOutLGridBoxProc_L1d 0x4867B7D5 `mov (a0), d0`; AcMidiPmemOutLGridBoxProc_L4c 0x4867B804 `mov (a0), d0`; AcMidiPmemOutLGridBoxProc_L4f 0x4867B807 `mov (4, a0), a0`
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=16, f4=0x4867B8C2	# [0]
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=1, f4=0x4867B80C
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=17, f4=0x4867B8C2
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=18, f4=0x4867B8C2
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=0x1007F, f4=0x4867BB11
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=21, f4=0x4867BB29
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=0x10081, f4=0x4867BB4E
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68	# [8]
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f4=0x4867BB68
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=0x1007E, f4=0x4867BAFA
+	REC_AcMidiPmemOutLGridBoxProc_L1d_Records	f0=15, f4=0x4867B8C2
+AcMidiPmemOutRGridBoxProc_L1d_Records:	# 16 x REC_AcMidiPmemOutRGridBoxProc_L1d_Records (8 bytes each); read by AcMidiPmemOutRGridBoxProc_L1d 0x4867BB95 `mov (a0), d0`; AcMidiPmemOutRGridBoxProc_L4b 0x4867BBC3 `mov (a0), d0`; AcMidiPmemOutRGridBoxProc_L4e 0x4867BBC6 `mov (4, a0), a0`
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=16, f4=0x4867BC3E	# [0]
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=1, f4=0x4867BBCB
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=17, f4=0x4867BC3E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=18, f4=0x4867BC3E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=0x1007F, f4=0x4867BF47
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=21, f4=0x4867BF5F
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=0x10081, f4=0x4867BF84
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E	# [8]
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f4=0x4867BF9E
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=0x1007E, f4=0x4867BF2F
+	REC_AcMidiPmemOutRGridBoxProc_L1d_Records	f0=15, f4=0x4867BC3E
 
 Field_AcPmemBankSel_end:	.asciz ""
 	.align	4, 0xFF	# pad after Field_AcPmemBankSel_end
@@ -37724,15 +37393,15 @@ Str_TT_PMVIEW:	.asciz "TT_PMVIEW"
 Str_TT_PMNAME:	.asciz "TT_PMNAME"
 	.align	4, 0xFF	# pad after Str_TT_PMNAME
 Str_TT_PMBKNAME:	.asciz "TT_PMBKNAME"
-Str_A_12:	.asciz " A"
-Str_B_8:	.asciz " B"
-Str_C_18:	.asciz " C"
-	.align	4, 0xFF	# pad after Str_C_18
+Str_A_10:	.asciz " A"
+Str_B_6:	.asciz " B"
+Str_C_16:	.asciz " C"
+	.align	4, 0xFF	# pad after Str_C_16
 
 AcPmemBankSelProc_L127_Table:
-	.long	Str_A_12
-	.long	Str_B_8
-	.long	Str_C_18
+	.long	Str_A_10
+	.long	Str_B_6
+	.long	Str_C_16
 
 Str_s_s_2:	.asciz "%s : %s"
 Str_s_s:	.asciz "%s : %s"
@@ -40004,3 +39673,333 @@ Str_WRITE_6:	.asciz "WRITE"
 			VwLabel	TtSedMain_Label_WRITE, super=TtSedMain_FuncEditSw1, flag=VF_Const, X=7, Y=35, W=44, H=19, str=Str_WRITE_6, fontcolor=CL_White	# str "WRITE"
 		AcIndexEditSw	TtSedMain_IndexEditSw1, super=TtSedMain, next=TtSedMain_IndexEditSw2, prev=TtSedMain_FuncEditSw1, flag=VF_Const, X=281, Y=34, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=15, font=4, fontcolor=CL_Black, editsw=ES_Right1, style=1
 		AcIndexEditSw	TtSedMain_IndexEditSw2, super=TtSedMain, next=DrumKeyName, prev=TtSedMain_IndexEditSw1, flag=VF_Const, X=281, Y=76, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=15, font=4, fontcolor=CL_Black, editsw=ES_Right2, style=2
+
+Str_PsEditBox:	.asciz "PsEditBox :"
+
+		AcChEditBoxSe	DrumKeyName, super=TtSedMain, next=TtSedMain_Line1, prev=TtSedMain_IndexEditSw2, flag=VF_Const, X=64, Y=34, W=178, H=22, color=CL_WallPattern, border=BD_3D_UP2, index=15, caption=Str_PsEditBox, fontcolor=CL_White, align=1, length=13, editsw=ES_None, dial=1, selected=DrumKeyName_selected, func=FN_DrumKeyNameSe	# caption "PsEditBox :"
+		VwLine	TtSedMain_Line1, super=TtSedMain, next=TtSedMain_Line2, prev=DrumKeyName, flag=VF_Const, X=268, Y=45, W=1, H=36, color=CL_White, linemode=1
+		VwLine	TtSedMain_Line2, super=TtSedMain, next=TtSedMain_Line3, prev=TtSedMain_Line1, flag=VF_Const, X=268, Y=81, W=14, H=1, color=CL_White, linemode=1
+		VwLine	TtSedMain_Line3, super=TtSedMain, next=TtSedMain_TitleMenu_DETAIL_EDIT, prev=TtSedMain_Line2, flag=VF_Const, X=242, Y=44, W=40, H=1, color=CL_White, linemode=1
+
+Str_DETAIL_EDIT_2:	.asciz "DETAIL EDIT"
+
+		AcTitleMenu	TtSedMain_TitleMenu_DETAIL_EDIT, super=TtSedMain, next=TtSedMain_EditBoxSe1, prev=TtSedMain_Line3, flag=VF_Const, X=6, Y=74, W=53, H=22, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_White, editsw=ES_Left2, selected=TtSedMain_TitleMenu_DETAIL_EDIT_selected, str=Str_DETAIL_EDIT_2, title=TT_SEDMENU	# str "DETAIL EDIT"
+
+Str_empty_264:	.asciz " "
+	.align	4, 0xFF	# pad after Str_empty_264
+
+		AcEditBoxSe	TtSedMain_EditBoxSe1, super=TtSedMain, next=TtSedMain_IndexEditSw3, prev=TtSedMain_TitleMenu_DETAIL_EDIT, flag=VF_Const, X=262, Y=185, W=58, H=26, color=CL_WallPattern, border=BD_3D_UP2, index=12, caption=Str_empty_264, fontcolor=CL_White, align=1, length=4, editsw=ES_None, dial=1, selected=TtSedMain_EditBoxSe1_selected, func=FN_DrumRevAdjSe	# caption " "
+		AcIndexEditSw	TtSedMain_IndexEditSw3, super=TtSedMain, next=TtSedMain_Label_REVERB, prev=TtSedMain_EditBoxSe1, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=12, font=4, fontcolor=CL_Black, editsw=ES_Bottom8, style=3
+
+Str_REVERB_8:	.asciz "REVERB"
+	.align	4, 0xFF	# pad after Str_REVERB_8
+
+		VwLabel	TtSedMain_Label_REVERB, super=TtSedMain, next=TtSedMain_ExitMode1, prev=TtSedMain_IndexEditSw3, flag=VF_Const, X=270, Y=166, W=40, H=11, str=Str_REVERB_8, font=3, fontcolor=CL_White	# str "REVERB"
+		IvExitMode	TtSedMain_ExitMode1, super=TtSedMain, next=TtSedMain_DrumNoteSelSe1, prev=TtSedMain_Label_REVERB, flag=VF_Const|VF_InvisibleBox, X=304, Y=0, W=16, H=32, mode=MD_PROGRAM
+		DrumNoteSelSe	TtSedMain_DrumNoteSelSe1, super=TtSedMain, sub=TtSedMain_Label_SELECT, next=TtSedMain_1stRadioBoxSe_1st, prev=TtSedMain_ExitMode1, flag=VF_Const, X=265, Y=110, W=47, H=26, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3
+
+Str_SELECT:	.asciz "SELECT"
+	.align	4, 0xFF	# pad after Str_SELECT
+
+			VwLabel	TtSedMain_Label_SELECT, super=TtSedMain_DrumNoteSelSe1, next=TtSedMain_Label_NOTE, flag=VF_Const, X=268, Y=123, W=40, H=11, str=Str_SELECT, font=3, fontcolor=CL_White	# str "SELECT"
+
+Str_NOTE_5:	.asciz "NOTE"
+	.align	4, 0xFF	# pad after Str_NOTE_5
+
+			VwLabel	TtSedMain_Label_NOTE, super=TtSedMain_DrumNoteSelSe1, prev=TtSedMain_Label_SELECT, flag=VF_Const, X=268, Y=113, W=28, H=11, str=Str_NOTE_5, font=3, fontcolor=CL_White	# str "NOTE"
+
+Str_1st_21:	.asciz "1st"
+
+		Ac1stRadioBoxSe	TtSedMain_1stRadioBoxSe_1st, super=TtSedMain, next=TtSedMain_2ndRadioBoxSe_2nd, prev=TtSedMain_DrumNoteSelSe1, flag=VF_Const, X=8, Y=114, W=41, H=26, color=CL_WallPattern, index=5, fontcolor=CL_White, editsw=ES_Left3, selected=TtSedMain_1stRadioBoxSe_1st_selected, tag=0xFFFF, str=Str_1st_21	# str "1st"
+
+Str_2nd_21:	.asciz "2nd"
+
+		Ac2ndRadioBoxSe	TtSedMain_2ndRadioBoxSe_2nd, super=TtSedMain, next=TtSedMain_IndexWideES1, prev=TtSedMain_1stRadioBoxSe_1st, flag=VF_Const, X=8, Y=156, W=41, H=26, color=CL_WallPattern, index=5, fontcolor=CL_White, editsw=ES_Left4, selected=TtSedMain_2ndRadioBoxSe_2nd_selected, tag=0xFFFF, str=Str_2nd_21	# str "2nd"
+		AcIndexWideES	TtSedMain_IndexWideES1, super=TtSedMain, next=TtSedMain_IndexWideES2, prev=TtSedMain_2ndRadioBoxSe_2nd, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
+		AcIndexWideES	TtSedMain_IndexWideES2, super=TtSedMain, next=TtSedMain_GridBoxSe31, prev=TtSedMain_IndexWideES1, flag=VF_Const, X=164, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom5, editsw2=ES_Bottom6, style=3
+
+Str_empty_265:	.asciz "           |            "
+Str_ON_OFF_GROUP_TONE_NAME_DYNAM_AMPLITUDE_L:	.asciz "ON/OFF|GROUP|TONE NAME/DYNAM|AMPLITUDE LEVEL|AMPLITUDE TOUCH|AMPLITUDE CURVE|PITCH KEY|PITCH DETUNE|PAN"
+	.align	4, 0xFF	# pad after Str_ON_OFF_GROUP_TONE_NAME_DYNAM_AMPLITUDE_L
+
+		AcGridBoxSe3	TtSedMain_GridBoxSe31, super=TtSedMain, next=TtSedMain_Label_ADJUST, prev=TtSedMain_IndexWideES2, flag=VF_Const, X=50, Y=58, W=210, H=153, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=3, fontcolor=CL_White, row=9, col=2, vertline=1, selrow=TtSedMain_GridBoxSe31_selrow, selcol=TtSedMain_GridBoxSe31_selcol, pcol=TtSedMain_GridBoxSe31_pcol, prow=TtSedMain_GridBoxSe31_prow, crow=TtSedMain_GridBoxSe31_crow, fixedcol=Str_empty_265, fixedrow=Str_ON_OFF_GROUP_TONE_NAME_DYNAM_AMPLITUDE_L, func=FN_DrumMainGridSe	# fixedcol "           |            "; fixedrow "ON/OFF|GROUP|TONE NAME/DYNAM|AMPLITUDE L"
+
+Str_ADJUST_5:	.asciz "ADJUST"
+	.align	4, 0xFF	# pad after Str_ADJUST_5
+
+		VwLabel	TtSedMain_Label_ADJUST, super=TtSedMain, prev=TtSedMain_GridBoxSe31, flag=VF_Const, X=270, Y=175, W=40, H=11, str=Str_ADJUST_5, font=3, fontcolor=CL_White	# str "ADJUST"
+
+Str_CONTROLLER_2:	.asciz "CONTROLLER"
+	.align	4, 0xFF	# pad after Str_CONTROLLER_2
+
+	TtlScreen	TtSeControl, sub=TtSeControl_FixWin1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SEMENU, window=TtSeControl_window, title=Str_CONTROLLER_2, icon=97	# title "CONTROLLER"
+		IvFixWin	TtSeControl_FixWin1, super=TtSeControl, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=16, H=32, window=Ctrl1_id
+
+	Window	Ctrl1, sub=Ctrl1_IndexWideES1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=Ctrl1_parent, child=Ctrl1_child
+		AcIndexWideES	Ctrl1_IndexWideES1, super=Ctrl1, next=Ctrl1_IndexEditSw1, flag=VF_Const, X=80, Y=216, W=56, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom3, style=3
+		AcIndexEditSw	Ctrl1_IndexEditSw1, super=Ctrl1, next=Ctrl1_IndexEditSw2, prev=Ctrl1_IndexWideES1, flag=VF_Const, X=140, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, style=3
+		AcIndexEditSw	Ctrl1_IndexEditSw2, super=Ctrl1, next=Ctrl1_IndexEditSw3, prev=Ctrl1_IndexEditSw1, flag=VF_Const, X=176, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=4, font=3, fontcolor=CL_Black, editsw=ES_Bottom5, style=11
+		AcIndexEditSw	Ctrl1_IndexEditSw3, super=Ctrl1, next=Ctrl1_IndexEditSw4, prev=Ctrl1_IndexEditSw2, flag=VF_Const, X=212, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=5, font=3, fontcolor=CL_Black, editsw=ES_Bottom6, style=11
+		AcIndexEditSw	Ctrl1_IndexEditSw4, super=Ctrl1, next=Ctrl1_IndexEditSw5, prev=Ctrl1_IndexEditSw3, flag=VF_Const, X=248, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=3, fontcolor=CL_Black, editsw=ES_Bottom7, style=11
+		AcIndexEditSw	Ctrl1_IndexEditSw5, super=Ctrl1, next=Ctrl1_Label_CONTROLLER_ASSIGN, prev=Ctrl1_IndexEditSw4, flag=VF_Const, X=284, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=7, font=3, fontcolor=CL_Black, editsw=ES_Bottom8, style=11
+
+Str_CONTROLLER_ASSIGN:	.asciz "CONTROLLER ASSIGN"
+	.align	4, 0xFF	# pad after Str_CONTROLLER_ASSIGN
+
+		VwLabel	Ctrl1_Label_CONTROLLER_ASSIGN, super=Ctrl1, next=Ctrl1_EditBoxSe_GLIDE, prev=Ctrl1_IndexEditSw5, flag=VF_Const, X=103, Y=28, W=140, H=19, str=Str_CONTROLLER_ASSIGN, fontcolor=CL_White	# str "CONTROLLER ASSIGN"
+
+Str_GLIDE_2:	.asciz "GLIDE:"
+	.align	4, 0xFF	# pad after Str_GLIDE_2
+
+		AcEditBoxSe	Ctrl1_EditBoxSe_GLIDE, super=Ctrl1, next=Ctrl1_IndexEditSw6, prev=Ctrl1_Label_CONTROLLER_ASSIGN, flag=VF_Const, X=8, Y=34, W=93, H=18, color=CL_WallPattern, border=BD_3D_UP2, index=10, caption=Str_GLIDE_2, font=3, fontcolor=CL_White, length=7, editsw=ES_None, dial=1, selected=Ctrl1_EditBoxSe_GLIDE_selected, func=FN_GlideEditSe	# caption "GLIDE:"
+		AcIndexEditSw	Ctrl1_IndexEditSw6, super=Ctrl1, next=Ctrl1_CtrlGridBoxSe1, prev=Ctrl1_EditBoxSe_GLIDE, flag=VF_Const, X=44, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=10, font=4, fontcolor=CL_Black, editsw=ES_Bottom2, style=3
+		AcCtrlGridBoxSe	Ctrl1_CtrlGridBoxSe1, super=Ctrl1, sub=Ctrl1_Line1, next=Ctrl1_Label_GLIDE, prev=Ctrl1_IndexEditSw6, flag=VF_Const, X=8, Y=54, W=312, H=151, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=3, fontcolor=CL_White, row=6, col=7, vertline=1, selrow=Ctrl1_CtrlGridBoxSe1_selrow, selcol=Ctrl1_CtrlGridBoxSe1_selcol, pcol=Ctrl1_CtrlGridBoxSe1_pcol, prow=Ctrl1_CtrlGridBoxSe1_prow, crow=Ctrl1_CtrlGridBoxSe1_crow, func=FN_CtrlGridSe1
+			VwLine	Ctrl1_Line1, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Box1, flag=VF_Const, X=9, Y=145, W=309, H=1, color=CL_White, linemode=1
+			VwBox	Ctrl1_Box1, super=Ctrl1_CtrlGridBoxSe1, sub=Ctrl1_Label_TONE_ENABLE, next=Ctrl1_Line2, prev=Ctrl1_Line1, flag=VF_Const, X=84, Y=56, W=134, H=16, color=CL_WallPattern, index=0xFFFF
+
+Str_TONE_ENABLE:	.asciz "TONE ENABLE"
+
+				VwLabel	Ctrl1_Label_TONE_ENABLE, super=Ctrl1_Box1, flag=VF_Const, X=113, Y=60, W=70, H=11, str=Str_TONE_ENABLE, font=3, fontcolor=CL_White	# str "TONE ENABLE"
+			VwLine	Ctrl1_Line2, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Label_3rd, prev=Ctrl1_Box1, flag=VF_Const, X=83, Y=72, W=135, H=1, color=CL_White, linemode=1
+
+Str_3rd_20:	.asciz "3rd"
+
+			VwLabel	Ctrl1_Label_3rd, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Label_4th, prev=Ctrl1_Line2, flag=VF_Const, X=267, Y=68, W=22, H=11, str=Str_3rd_20, font=3, fontcolor=CL_White	# str "3rd"
+
+Str_4th_20:	.asciz "4th"
+
+			VwLabel	Ctrl1_Label_4th, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Label_1st, prev=Ctrl1_Label_3rd, flag=VF_Const, X=292, Y=68, W=22, H=11, str=Str_4th_20, font=3, fontcolor=CL_White	# str "4th"
+
+Str_1st_22:	.asciz "1st"
+
+			VwLabel	Ctrl1_Label_1st, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Label_DEPTH, prev=Ctrl1_Label_4th, flag=VF_Const, X=218, Y=68, W=22, H=11, str=Str_1st_22, font=3, fontcolor=CL_White	# str "1st"
+
+Str_DEPTH_12:	.asciz "DEPTH"
+	.align	4, 0xFF	# pad after Str_DEPTH_12
+
+			VwLabel	Ctrl1_Label_DEPTH, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Label_FUNCTION, prev=Ctrl1_Label_1st, flag=VF_Const, X=185, Y=76, W=34, H=11, str=Str_DEPTH_12, font=3, fontcolor=CL_White	# str "DEPTH"
+
+Str_FUNCTION:	.asciz "FUNCTION"
+	.align	4, 0xFF	# pad after Str_FUNCTION
+
+			VwLabel	Ctrl1_Label_FUNCTION, super=Ctrl1_CtrlGridBoxSe1, next=Ctrl1_Label_2nd, prev=Ctrl1_Label_DEPTH, flag=VF_Const, X=106, Y=76, W=52, H=11, str=Str_FUNCTION, font=3, fontcolor=CL_White	# str "FUNCTION"
+
+Str_2nd_22:	.asciz "2nd"
+
+			VwLabel	Ctrl1_Label_2nd, super=Ctrl1_CtrlGridBoxSe1, prev=Ctrl1_Label_FUNCTION, flag=VF_Const, X=243, Y=68, W=22, H=11, str=Str_2nd_22, font=3, fontcolor=CL_White	# str "2nd"
+
+Str_GLIDE_3:	.asciz "GLIDE"
+	.align	4, 0xFF	# pad after Str_GLIDE_3
+
+		VwLabel	Ctrl1_Label_GLIDE, super=Ctrl1, next=Ctrl1_Label_4th2, prev=Ctrl1_CtrlGridBoxSe1, flag=VF_Const, X=42, Y=206, W=34, H=11, str=Str_GLIDE_3, font=3, fontcolor=CL_White	# str "GLIDE"
+
+Str_4th_21:	.asciz "4th"
+
+		VwLabel	Ctrl1_Label_4th2, super=Ctrl1, next=Ctrl1_Label_3rd2, prev=Ctrl1_Label_GLIDE, flag=VF_Const, X=288, Y=206, W=22, H=11, str=Str_4th_21, font=3, fontcolor=CL_White	# str "4th"
+
+Str_3rd_21:	.asciz "3rd"
+
+		VwLabel	Ctrl1_Label_3rd2, super=Ctrl1, next=Ctrl1_Label_2nd2, prev=Ctrl1_Label_4th2, flag=VF_Const, X=252, Y=206, W=22, H=11, str=Str_3rd_21, font=3, fontcolor=CL_White	# str "3rd"
+
+Str_2nd_23:	.asciz "2nd"
+
+		VwLabel	Ctrl1_Label_2nd2, super=Ctrl1, next=Ctrl1_Label_1st2, prev=Ctrl1_Label_3rd2, flag=VF_Const, X=216, Y=206, W=22, H=11, str=Str_2nd_23, font=3, fontcolor=CL_White	# str "2nd"
+
+Str_1st_23:	.asciz "1st"
+
+		VwLabel	Ctrl1_Label_1st2, super=Ctrl1, next=Ctrl1_Label_DEPTH2, prev=Ctrl1_Label_2nd2, flag=VF_Const, X=180, Y=206, W=22, H=11, str=Str_1st_23, font=3, fontcolor=CL_White	# str "1st"
+
+Str_DEPTH_13:	.asciz "DEPTH"
+	.align	4, 0xFF	# pad after Str_DEPTH_13
+
+		VwLabel	Ctrl1_Label_DEPTH2, super=Ctrl1, next=Ctrl1_Label_FUNCTION2, prev=Ctrl1_Label_1st2, flag=VF_Const, X=138, Y=206, W=34, H=11, str=Str_DEPTH_13, font=3, fontcolor=CL_White	# str "DEPTH"
+
+Str_FUNCTION_2:	.asciz "FUNCTION"
+	.align	4, 0xFF	# pad after Str_FUNCTION_2
+
+		VwLabel	Ctrl1_Label_FUNCTION2, super=Ctrl1, prev=Ctrl1_Label_DEPTH2, flag=VF_Const, X=84, Y=206, W=52, H=11, str=Str_FUNCTION_2, font=3, fontcolor=CL_White	# str "FUNCTION"
+
+	Window	Effect2, sub=Effect2_CatchEvent1, flag=VF_Const, X=0, Y=30, W=320, H=210, color=CL_WallPattern, index=0xFFFF, parent=Effect2_parent, child=Effect2_child
+		IvCatchEvent	Effect2_CatchEvent1, super=Effect2, flag=VF_Const|VF_InvisibleBox, X=16, Y=0, W=16, H=32, func=FN_EffPage2Catch
+
+Str_MEMORY_WRITE_2:	.asciz "MEMORY WRITE"
+	.align	4, 0xFF	# pad after Str_MEMORY_WRITE_2
+
+	TtlScreen	TtSeWrite, sub=TtSeWrite_TitleMenu_SOUND_NAMING, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SEMENU, window=TtSeWrite_window, title=Str_MEMORY_WRITE_2, icon=15	# title "MEMORY WRITE"
+
+Str_SOUND_NAMING:	.asciz "SOUND NAMING"
+	.align	4, 0xFF	# pad after Str_SOUND_NAMING
+
+		AcTitleMenu	TtSeWrite_TitleMenu_SOUND_NAMING, super=TtSeWrite, next=TtSeWrite_Box1, flag=VF_Const, X=249, Y=70, W=63, H=36, color=CL_SilverB, border=BD_Double1, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=TtSeWrite_TitleMenu_SOUND_NAMING_selected, str=Str_SOUND_NAMING, title=TT_SENAME	# str "SOUND NAMING"
+		VwBox	TtSeWrite_Box1, super=TtSeWrite, sub=TtSeWrite_SnameSe1, next=TtSeWrite_Box2, prev=TtSeWrite_TitleMenu_SOUND_NAMING, flag=VF_Const, X=4, Y=70, W=240, H=36, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+			VwSnameSe	TtSeWrite_SnameSe1, super=TtSeWrite_Box1, next=TtSeWrite_Label_NAME, flag=VF_Const, X=55, Y=72, W=187, H=32, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White
+
+Str_NAME_5:	.asciz "NAME:"
+	.align	4, 0xFF	# pad after Str_NAME_5
+
+			VwLabel	TtSeWrite_Label_NAME, super=TtSeWrite_Box1, prev=TtSeWrite_SnameSe1, flag=VF_Const, X=11, Y=80, W=44, H=19, str=Str_NAME_5, fontcolor=CL_White	# str "NAME:"
+		VwBox	TtSeWrite_Box2, super=TtSeWrite, sub=TtSeWrite_EditBoxSe_MEMORY_BANK, next=TtSeWrite_IndexWideES1, prev=TtSeWrite_Box1, flag=VF_Const, X=4, Y=120, W=240, H=90, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF
+
+Str_MEMORY_BANK:	.asciz "MEMORY BANK:"
+	.align	4, 0xFF	# pad after Str_MEMORY_BANK
+
+			AcEditBoxSe	TtSeWrite_EditBoxSe_MEMORY_BANK, super=TtSeWrite_Box2, next=MemName, flag=VF_Const, X=8, Y=130, W=232, H=36, color=CL_WallPattern, index=1, caption=Str_MEMORY_BANK, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=TtSeWrite_EditBoxSe_MEMORY_BANK_selected, func=FN_MemoryBankSe	# caption "MEMORY BANK:"
+			VwMnameSe	MemName, super=TtSeWrite_Box2, prev=TtSeWrite_EditBoxSe_MEMORY_BANK, flag=VF_Const, X=8, Y=166, W=232, H=36, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White
+		AcIndexWideES	TtSeWrite_IndexWideES1, super=TtSeWrite, next=TtSeWrite_FuncEditSw1, prev=TtSeWrite_Box2, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=3
+		AcFuncEditSw	TtSeWrite_FuncEditSw1, super=TtSeWrite, next=TtSeWrite_ExitWriteSe1, prev=TtSeWrite_IndexWideES1, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_MemoryWriteSe
+		IvExitWriteSe	TtSeWrite_ExitWriteSe1, super=TtSeWrite, prev=TtSeWrite_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32
+
+Str_SOUND_NAMING_2:	.asciz "SOUND NAMING"
+	.align	4, 0xFF	# pad after Str_SOUND_NAMING_2
+
+	TtlScreen	TtSeName, sub=TtSeName_Naming1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SEWRITE, window=TtSeName_window, title=Str_SOUND_NAMING_2, icon=15	# title "SOUND NAMING"
+		IvNaming	TtSeName_Naming1, super=TtSeName, next=TtSeName_FuncEditSw1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_NamingSe
+		AcFuncEditSw	TtSeName_FuncEditSw1, super=TtSeName, prev=TtSeName_Naming1, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_NamingFixSe
+
+Str_TONE_COPY_2:	.asciz "TONE COPY"
+	.align	4, 0xFF	# pad after Str_TONE_COPY_2
+
+	TtlScreen	TtSeCopy, sub=TtSeCopy_IndexWideES1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SETONE, window=TtSeCopy_window, title=Str_TONE_COPY_2, icon=15	# title "TONE COPY"
+		AcIndexWideES	TtSeCopy_IndexWideES1, super=TtSeCopy, next=TtSeCopy_IndexWideES2, flag=VF_Const, X=4, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, editsw2=ES_Bottom2, style=3
+		AcIndexWideES	TtSeCopy_IndexWideES2, super=TtSeCopy, next=TtSeCopy_DrawYajirushi1, prev=TtSeCopy_IndexWideES1, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=3, font=4, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
+		DrawYajirushi	TtSeCopy_DrawYajirushi1, super=TtSeCopy, next=TtSeCopy_EditBoxSe1, prev=TtSeCopy_IndexWideES2, flag=VF_Const, X=140, Y=82, W=46, H=24, color=CL_White, dir=1, tail_x_rate=50, tail_y_rate=50
+
+Str_empty_266:	.asciz ""
+	.align	4, 0xFF	# pad after Str_empty_266
+
+		AcEditBoxSe	TtSeCopy_EditBoxSe1, super=TtSeCopy, next=TtSeCopy_EditBoxSe2, prev=TtSeCopy_DrawYajirushi1, flag=VF_Const, X=10, Y=66, W=101, H=66, color=CL_WallPattern, border=BD_3D_UP2, index=1, caption=Str_empty_266, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=TtSeCopy_EditBoxSe1_selected, func=FN_CopyFromSe	# caption ""
+
+Str_empty_267:	.asciz ""
+	.align	4, 0xFF	# pad after Str_empty_267
+
+		AcEditBoxSe	TtSeCopy_EditBoxSe2, super=TtSeCopy, next=TtSeCopy_Label_FROM, prev=TtSeCopy_EditBoxSe1, flag=VF_Const, X=208, Y=66, W=101, H=66, color=CL_WallPattern, border=BD_3D_UP2, index=3, caption=Str_empty_267, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=TtSeCopy_EditBoxSe2_selected, func=FN_CopyToSe	# caption ""
+
+Str_FROM_14:	.asciz "FROM"
+	.align	4, 0xFF	# pad after Str_FROM_14
+
+		VwLabel	TtSeCopy_Label_FROM, super=TtSeCopy, next=TtSeCopy_Label_TO, prev=TtSeCopy_EditBoxSe2, flag=VF_Const, X=31, Y=46, W=48, H=19, str=Str_FROM_14, font=4, fontcolor=CL_White	# str "FROM"
+
+Str_TO_15:	.asciz "TO"
+	.align	4, 0xFF	# pad after Str_TO_15
+
+		VwLabel	TtSeCopy_Label_TO, super=TtSeCopy, next=TtSeCopy_EditBoxSe3, prev=TtSeCopy_Label_FROM, flag=VF_Const, X=243, Y=46, W=26, H=19, str=Str_TO_15, font=4, fontcolor=CL_White	# str "TO"
+
+Str_empty_268:	.asciz ""
+	.align	4, 0xFF	# pad after Str_empty_268
+
+		AcEditBoxSe	TtSeCopy_EditBoxSe3, super=TtSeCopy, next=TtSeCopy_IndexWideES3, prev=TtSeCopy_Label_TO, flag=VF_Const, X=114, Y=158, W=95, H=38, color=CL_WallPattern, border=BD_3D_UP2, index=2, caption=Str_empty_268, fontcolor=CL_White, length=4, editsw=ES_None, dial=1, selected=TtSeCopy_EditBoxSe3_selected, func=FN_CopyOptSe	# caption ""
+		AcIndexWideES	TtSeCopy_IndexWideES3, super=TtSeCopy, next=TtSeCopy_Label_OPTION, prev=TtSeCopy_EditBoxSe3, flag=VF_Const, X=124, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, font=4, fontcolor=CL_Black, editsw=ES_Bottom4, editsw2=ES_Bottom5, style=3
+
+Str_OPTION:	.asciz "OPTION"
+	.align	4, 0xFF	# pad after Str_OPTION
+
+		VwLabel	TtSeCopy_Label_OPTION, super=TtSeCopy, next=TtSeCopy_FuncEditSw1, prev=TtSeCopy_IndexWideES3, flag=VF_Const, X=135, Y=138, W=52, H=19, str=Str_OPTION, fontcolor=CL_White	# str "OPTION"
+		AcFuncEditSw	TtSeCopy_FuncEditSw1, super=TtSeCopy, prev=TtSeCopy_Label_OPTION, flag=VF_Const, X=281, Y=160, W=31, H=18, color=CL_Silver, border=BD_3D_UP2, index=0xFFFF, fontcolor=CL_Black, editsw=ES_Right4, style=6, func=FN_CopyExeSe
+
+Str_DRUM_SOUND_DETAIL_EDIT:	.asciz "DRUM SOUND DETAIL EDIT    "
+	.align	4, 0xFF	# pad after Str_DRUM_SOUND_DETAIL_EDIT
+
+	TtlScreen	TtSedMenu, sub=TtSedMenu_FuncEditSw1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, border=BD_Single2, index=0xFFFF, exit=TT_SEDMAIN, window=TtSedMenu_window, title=Str_DRUM_SOUND_DETAIL_EDIT, icon=15	# title "DRUM SOUND DETAIL EDIT    "
+		AcFuncEditSw	TtSedMenu_FuncEditSw1, super=TtSedMenu, sub=TtSedMenu_Label_WRITE, next=TtSedMenu_TitleMenu_TONE, flag=VF_Const, X=8, Y=34, W=47, H=18, color=CL_Silver, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, func=FN_DrumMemoryWriteSe
+
+Str_WRITE_7:	.asciz "WRITE"
+	.align	4, 0xFF	# pad after Str_WRITE_7
+
+			VwLabel	TtSedMenu_Label_WRITE, super=TtSedMenu_FuncEditSw1, flag=VF_Const, X=9, Y=35, W=44, H=19, str=Str_WRITE_7, fontcolor=CL_White	# str "WRITE"
+
+Str_TONE_4:	.asciz "TONE"
+	.align	4, 0xFF	# pad after Str_TONE_4
+
+		AcTitleMenu	TtSedMenu_TitleMenu_TONE, super=TtSedMenu, next=TtSedMenu_TitleMenu_AMPLITUDE, prev=TtSedMenu_FuncEditSw1, flag=VF_Const, X=8, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left2, selected=TtSedMenu_TitleMenu_TONE_selected, str=Str_TONE_4, title=TT_SEDTONE, icon=99	# str "TONE"
+
+Str_AMPLITUDE_3:	.asciz "AMPLITUDE"
+	.align	4, 0xFF	# pad after Str_AMPLITUDE_3
+
+		AcTitleMenu	TtSedMenu_TitleMenu_AMPLITUDE, super=TtSedMenu, next=TtSedMenu_TitleMenu_FILTER, prev=TtSedMenu_TitleMenu_TONE, flag=VF_Const, X=8, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left3, selected=TtSedMenu_TitleMenu_AMPLITUDE_selected, str=Str_AMPLITUDE_3, title=TT_SEDAMP, icon=101	# str "AMPLITUDE"
+
+Str_FILTER_4:	.asciz "FILTER"
+	.align	4, 0xFF	# pad after Str_FILTER_4
+
+		AcTitleMenu	TtSedMenu_TitleMenu_FILTER, super=TtSedMenu, next=TtSedMenu_TitleMenu_LFO, prev=TtSedMenu_TitleMenu_AMPLITUDE, flag=VF_Const, X=8, Y=154, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Left4, selected=TtSedMenu_TitleMenu_FILTER_selected, str=Str_FILTER_4, title=TT_SEDFILTER, icon=35	# str "FILTER"
+
+Str_LFO_3:	.asciz "LFO"
+
+		AcTitleMenu	TtSedMenu_TitleMenu_LFO, super=TtSedMenu, next=TtSedMenu_TitleMenu_CONTROLLER, prev=TtSedMenu_TitleMenu_FILTER, flag=VF_Const, X=163, Y=70, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right2, selected=TtSedMenu_TitleMenu_LFO_selected, str=Str_LFO_3, title=TT_SEDLFO, icon=33	# str "LFO"
+
+Str_CONTROLLER_3:	.asciz "CONTROLLER"
+	.align	4, 0xFF	# pad after Str_CONTROLLER_3
+
+		AcTitleMenu	TtSedMenu_TitleMenu_CONTROLLER, super=TtSedMenu, next=TtSedMenu_TitleMenu_DRUM_SOUND_NAMING, prev=TtSedMenu_TitleMenu_LFO, flag=VF_Const, X=163, Y=112, W=149, H=30, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right3, selected=TtSedMenu_TitleMenu_CONTROLLER_selected, str=Str_CONTROLLER_3, title=TT_SEDCONTROL, icon=97	# str "CONTROLLER"
+
+Str_DRUM_SOUND_NAMING:	.asciz "DRUM SOUND NAMING"
+	.align	4, 0xFF	# pad after Str_DRUM_SOUND_NAMING
+
+		AcTitleMenu	TtSedMenu_TitleMenu_DRUM_SOUND_NAMING, super=TtSedMenu, prev=TtSedMenu_TitleMenu_CONTROLLER, flag=VF_Const, X=215, Y=28, W=97, H=30, color=CL_WallPattern, index=0xFFFF, fontcolor=CL_White, editsw=ES_Right1, selected=TtSedMenu_TitleMenu_DRUM_SOUND_NAMING_selected, str=Str_DRUM_SOUND_NAMING, title=TT_SEDNAME	# str "DRUM SOUND NAMING"
+
+Str_AMPLITUDE_4:	.asciz "AMPLITUDE"
+	.align	4, 0xFF	# pad after Str_AMPLITUDE_4
+
+	TtlScreen	TtSedAmp, sub=TtSedAmp_Label_ENVELOPE, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SEDMENU, window=TtSedAmp_window, title=Str_AMPLITUDE_4, icon=101	# title "AMPLITUDE"
+
+Str_ENVELOPE_2:	.asciz "ENVELOPE"
+	.align	4, 0xFF	# pad after Str_ENVELOPE_2
+
+		VwLabel	TtSedAmp_Label_ENVELOPE, super=TtSedAmp, next=TtSedAmp_GraphBoxSe1, flag=VF_Const, X=151, Y=28, W=68, H=19, str=Str_ENVELOPE_2, fontcolor=CL_White	# str "ENVELOPE"
+		GraphBoxSe	TtSedAmp_GraphBoxSe1, super=TtSedAmp, next=TtSedAmp_EditBoxSe1, prev=TtSedAmp_Label_ENVELOPE, flag=VF_Const, X=79, Y=44, W=209, H=44, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, func=FN_DrumGraphAmpEnvSe
+
+Str_empty_269:	.asciz ""
+	.align	4, 0xFF	# pad after Str_empty_269
+
+		AcEditBoxSe	TtSedAmp_EditBoxSe1, super=TtSedAmp, next=TtSedAmp_Label_KEYOFF, prev=TtSedAmp_GraphBoxSe1, flag=VF_Const, X=0, Y=189, W=56, H=22, color=CL_WallPattern, border=BD_3D_UP2, index=12, caption=Str_empty_269, font=3, fontcolor=CL_White, align=1, length=7, editsw=ES_None, dial=1, selected=TtSedAmp_EditBoxSe1_selected, func=FN_DrumKeyOffSe	# caption ""
+
+Str_KEYOFF_4:	.asciz "KEYOFF"
+	.align	4, 0xFF	# pad after Str_KEYOFF_4
+
+		VwLabel	TtSedAmp_Label_KEYOFF, super=TtSedAmp, next=TtSedAmp_IndexEditSw1, prev=TtSedAmp_EditBoxSe1, flag=VF_Const, X=8, Y=176, W=40, H=11, str=Str_KEYOFF_4, font=3, fontcolor=CL_White	# str "KEYOFF"
+		AcIndexEditSw	TtSedAmp_IndexEditSw1, super=TtSedAmp, next=TtSedAmp_FuncBoxSe1, prev=TtSedAmp_Label_KEYOFF, flag=VF_Const, X=4, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=12, font=4, fontcolor=CL_Black, editsw=ES_Bottom1, style=3
+		AcFuncBoxSe	TtSedAmp_FuncBoxSe1, super=TtSedAmp, next=TtSedAmp_1stRadioBoxSe_1st, prev=TtSedAmp_IndexEditSw1, flag=VF_Const, X=224, Y=87, W=48, H=11, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White, func=FN_DrumGraphKeyOffXSe
+
+Str_1st_24:	.asciz "1st"
+
+		Ac1stRadioBoxSe	TtSedAmp_1stRadioBoxSe_1st, super=TtSedAmp, next=TtSedAmp_2ndRadioBoxSe_2nd, prev=TtSedAmp_FuncBoxSe1, flag=VF_Const, X=8, Y=72, W=41, H=26, color=CL_WallPattern, index=5, fontcolor=CL_White, editsw=ES_Left2, selected=TtSedAmp_1stRadioBoxSe_1st_selected, tag=0xFFFF, str=Str_1st_24	# str "1st"
+
+Str_2nd_24:	.asciz "2nd"
+
+		Ac2ndRadioBoxSe	TtSedAmp_2ndRadioBoxSe_2nd, super=TtSedAmp, next=TtSedAmp_IndexWideES1, prev=TtSedAmp_1stRadioBoxSe_1st, flag=VF_Const, X=8, Y=114, W=41, H=26, color=CL_WallPattern, index=5, fontcolor=CL_White, editsw=ES_Left3, selected=TtSedAmp_2ndRadioBoxSe_2nd_selected, tag=0xFFFF, str=Str_2nd_24	# str "2nd"
+		AcIndexWideES	TtSedAmp_IndexWideES1, super=TtSedAmp, next=TtSedAmp_IndexWideES2, prev=TtSedAmp_2ndRadioBoxSe_2nd, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
+		AcIndexWideES	TtSedAmp_IndexWideES2, super=TtSedAmp, next=DrumAmpEnv, prev=TtSedAmp_IndexWideES1, flag=VF_Const, X=204, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom6, editsw2=ES_Bottom7, style=3
+
+Str_empty_270:	.asciz " | "
+Str_ON_OFF_ATTACK_DECAY1_SUSTAIN1_DECAY2_SUS:	.asciz "ON/OFF|ATTACK|DECAY1|SUSTAIN1|DECAY2|SUSTAIN2|RELEASE|TOUCH ATTACK"
+	.align	4, 0xFF	# pad after Str_ON_OFF_ATTACK_DECAY1_SUSTAIN1_DECAY2_SUS
+
+		AcGridBoxSe3	DrumAmpEnv, super=TtSedAmp, prev=TtSedAmp_IndexWideES2, flag=VF_Const, X=56, Y=98, W=260, H=113, color=CL_WallPattern, border=BD_3D_UP2, index=1, font=3, fontcolor=CL_White, row=8, col=2, vertline=1, selrow=DrumAmpEnv_selrow, selcol=DrumAmpEnv_selcol, pcol=DrumAmpEnv_pcol, prow=DrumAmpEnv_prow, crow=DrumAmpEnv_crow, fixedcol=Str_empty_270, fixedrow=Str_ON_OFF_ATTACK_DECAY1_SUSTAIN1_DECAY2_SUS, func=FN_DrumAmpGridSe	# fixedcol " | "; fixedrow "ON/OFF|ATTACK|DECAY1|SUSTAIN1|DECAY2|SUS"
+
+Str_FILTER_5:	.asciz "FILTER"
+	.align	4, 0xFF	# pad after Str_FILTER_5
+
+	TtlScreen	TtSedFilter, sub=TtSedFilter_GraphBoxSe1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=320, H=240, color=CL_Black, index=0xFFFF, exit=TT_SEDMENU, window=TtSedFilter_window, title=Str_FILTER_5, icon=35	# title "FILTER"
+		GraphBoxSe	TtSedFilter_GraphBoxSe1, super=TtSedFilter, next=TtSedFilter_GraphBoxSe2, flag=VF_Const, X=56, Y=42, W=129, H=42, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, func=FN_DrumGraphFltSe
+		GraphBoxSe	TtSedFilter_GraphBoxSe2, super=TtSedFilter, next=TtSedFilter_FuncBoxSe1, prev=TtSedFilter_GraphBoxSe1, flag=VF_Const, X=187, Y=42, W=129, H=42, color=CL_WallPattern, border=BD_3D_UP2, index=0xFFFF, func=FN_DrumGraphEqSe
+		AcFuncBoxSe	TtSedFilter_FuncBoxSe1, super=TtSedFilter, next=TtSedFilter_Label_CUTOFF, prev=TtSedFilter_GraphBoxSe2, flag=VF_Const, X=50, Y=30, W=147, H=11, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White, func=FN_DrumFltGraphTitleSe
+
+Str_CUTOFF_3:	.asciz "CUTOFF"
+	.align	4, 0xFF	# pad after Str_CUTOFF_3
+
+		VwLabel	TtSedFilter_Label_CUTOFF, super=TtSedFilter, next=TtSedFilter_FuncBoxSe2, prev=TtSedFilter_FuncBoxSe1, flag=VF_Const, X=144, Y=84, W=40, H=11, str=Str_CUTOFF_3, font=3, fontcolor=CL_White	# str "CUTOFF"
+		AcFuncBoxSe	TtSedFilter_FuncBoxSe2, super=TtSedFilter, next=TtSedFilter_FuncBoxSe3, prev=TtSedFilter_Label_CUTOFF, flag=VF_Const, X=222, Y=30, W=58, H=11, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White, func=FN_DrumEqGraphTitleSe
+		AcFuncBoxSe	TtSedFilter_FuncBoxSe3, super=TtSedFilter, next=TtSedFilter_1stRadioBoxSe_1st, prev=TtSedFilter_FuncBoxSe2, flag=VF_Const, X=284, Y=83, W=31, H=11, color=CL_WallPattern, index=0xFFFF, font=3, fontcolor=CL_White, func=FN_DrumEqGraphXSe
+
+Str_1st_25:	.asciz "1st"
+
+		Ac1stRadioBoxSe	TtSedFilter_1stRadioBoxSe_1st, super=TtSedFilter, next=TtSedFilter_2ndRadioBoxSe_2nd, prev=TtSedFilter_FuncBoxSe3, flag=VF_Const, X=8, Y=72, W=41, H=26, color=CL_WallPattern, index=5, fontcolor=CL_White, editsw=ES_Left2, selected=TtSedFilter_1stRadioBoxSe_1st_selected, tag=0xFFFF, str=Str_1st_25	# str "1st"
+
+Str_2nd_25:	.asciz "2nd"
+
+		Ac2ndRadioBoxSe	TtSedFilter_2ndRadioBoxSe_2nd, super=TtSedFilter, next=TtSedFilter_IndexWideES1, prev=TtSedFilter_1stRadioBoxSe_1st, flag=VF_Const, X=8, Y=114, W=41, H=26, color=CL_WallPattern, index=5, fontcolor=CL_White, editsw=ES_Left3, selected=TtSedFilter_2ndRadioBoxSe_2nd_selected, tag=0xFFFF, str=Str_2nd_25	# str "2nd"
+		AcIndexWideES	TtSedFilter_IndexWideES1, super=TtSedFilter, next=TtSedFilter_IndexWideES2, prev=TtSedFilter_2ndRadioBoxSe_2nd, flag=VF_Const, X=84, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=1, fontcolor=CL_Black, editsw=ES_Bottom3, editsw2=ES_Bottom4, style=14
+		AcIndexWideES	TtSedFilter_IndexWideES2, super=TtSedFilter, next=TtSedFilter_GridBoxSe31, prev=TtSedFilter_IndexWideES1, flag=VF_Const, X=244, Y=216, W=72, H=23, color=CL_Silver, border=BD_EditSwitch, index=2, fontcolor=CL_Black, editsw=ES_Bottom7, editsw2=ES_Bottom8, style=3
+
+Str_empty_271:	.asciz "  | "
+Str_ON_OFF_MODE_CUTOFF_RESONANCE_EQUALIZER_R:	.asciz "ON/OFF|MODE|CUTOFF|RESONANCE|EQUALIZER RANGE|EQUALIZER FREQUANCY/CUTOFF|EQUALIZER GAIN/RESONANCE|TOUCH CUTOFF|TOUCH CURVE|TOUCH RESONANCE"
+	.align	4, 0xFF	# pad after Str_ON_OFF_MODE_CUTOFF_RESONANCE_EQUALIZER_R

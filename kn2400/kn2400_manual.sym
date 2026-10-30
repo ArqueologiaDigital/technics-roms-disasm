@@ -16,3 +16,6 @@
 ;
 ; ---- data ----------------------------------------------------------------------
 0x4852BD9C  TechnicsRhythmsResource ; built-in rhythm style resource in IC18's format, one style (as the KN7000's at 0x48729988, typed by kn7000/tools/program_rhythm.py); its name string "Technics Rhythms" is also at 0x4852BC20
+0x48571564  StyleRecordTable           ; the built-in Music Stylist setups, 720 x 24 bytes (the KN7000's / KN6000's layout): func_48641CCD returns &StyleRecordTable[i] unless func_487055C4 (the 0x98070000 bits) answers 1; +0 -> a 160-byte one-touch setting (kn6000/notes/siblings-data-final/README.md)
+0x48577738  StyleRecordTableAlt        ; the other list of Music Stylist setups, 680 x 24 bytes, over the same one-touch settings: func_48641CCD returns &StyleRecordTableAlt[i] when func_487055C4 answers 1 [INFERENCE: the other model's list, KN2400 / KN2600]
+0x48532260  TechnicsPadsResource       ; the built-in "Technics Pads" PERFORMANCE PAD bank (the table flash's segment 4 format): TechnicsPadsResourceInit stores it when the table flash's resource does not check; typed by ../kn7000/tools/gen_data_s.py pads()

@@ -4585,7 +4585,7 @@ func_97802884_entry_Lc0:
 func_97802884_entry_Lc9:
 	jmp	func_97802884_entry_L19f
 func_97802884_entry_Lcc:
-	mov	(func_97802884_entry_Lcc_Var), d0
+	mov	(func_97805FD0_L26_Var+12), d0
 	mov	(0x14, sp), a0
 	mov	d0, (a0)
 	clr	d0
@@ -4818,7 +4818,7 @@ func_97802A33_entry_Lc4:
 	bra	func_97802A33_entry_Ld8
 func_97802A33_entry_Lcc:
 	mov	(0x1c, sp), d0
-	mov	d0, (func_97802884_entry_Lcc_Var)
+	mov	d0, (func_97805FD0_L26_Var+12)
 	clr	d0
 	jmp	func_97802A33_entry_L2a4
 func_97802A33_entry_Ld8:
@@ -10639,10 +10639,10 @@ func_97805F89_entry_L28:
 	ret	0, 0x10
 # func_97805F89_entry + 0x2b: no traced path reaches what follows (--decode-gaps)
 	mov	1, d0
-	mov	d0, (func_97805F89_entry_L28_Var)
+	mov	d0, (func_97805FD0_L26_Var+4)
 	ret	0, 0
 	mov	1, d0
-	mov	d0, (func_97805F89_entry_L28_Var_2)
+	mov	d0, (func_97805FD0_L26_Var+8)
 	ret	0, 0
 	add	-0x24, sp
 
@@ -10719,7 +10719,7 @@ func_97805FD0_Lbd:
 	mov	1, d0
 	movbu	d0, (0x97913945)
 	clr	d0
-	mov	d0, (func_97805F89_entry_L28_Var)
+	mov	d0, (func_97805FD0_L26_Var+4)
 func_97805FD0_Le4:
 	ret	0, 0x24
 
@@ -10746,7 +10746,7 @@ func_978060B7_entry_L1f:
 	jmp	func_978060B7_entry_Le4
 func_978060B7_entry_L24:
 	mov	1, d0
-	movbu	d0, (func_978060B7_entry_L24_Table)
+	movbu	d0, (func_97805FD0_L26_Var+1)
 	clr	d0
 	mov	d0, (0x9798fd98)
 	movhu	(0x20, sp), d0
@@ -10797,7 +10797,7 @@ func_978060B7_entry_Ld1:
 	bra	func_978060B7_entry_Le4
 func_978060B7_entry_Ld5:
 	clr	d0
-	mov	d0, (func_97805F89_entry_L28_Var_2)
+	mov	d0, (func_97805FD0_L26_Var+8)
 	bra	func_978060B7_entry_Le4
 func_978060B7_entry_Lde:
 	mov	-2, d0
@@ -11269,7 +11269,7 @@ func_97806595:
 	add	-0x50, sp
 
 func_97806595_entry:
-	mov	(func_97805F89_entry_L28_Var), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	beq	func_97806595_entry_Lc
 	bra	func_97806595_entry_L18
@@ -11279,7 +11279,7 @@ func_97806595_entry_Lc:
 	bne	func_97806595_entry_L18
 	bra	func_97806595_entry_L70
 func_97806595_entry_L18:
-	mov	(func_97805F89_entry_L28_Var), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_97806595_entry_L24
 	bra	func_97806595_entry_L31
@@ -11292,7 +11292,7 @@ func_97806595_entry_L31:
 	call	func_9780AEBC_entry, 0, 0x14
 func_97806595_entry_L3c:
 	mov	1, d0
-	mov	d0, (func_97805F89_entry_L28_Var)
+	mov	d0, (func_97805FD0_L26_Var+4)
 	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
@@ -11445,7 +11445,7 @@ func_97806763:
 func_97806763_entry:
 	movbu	d1, (0x78, sp)
 	mov	d0, (0x74, sp)
-	mov	(func_97805F89_entry_L28_Var), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_97806763_entry_L11
 	bra	func_97806763_entry_L26
@@ -11598,7 +11598,7 @@ func_978068AF_entry:
 	mov	a0, (0x34, sp)
 	mov	d1, (0x3c, sp)
 	mov	d0, (0x38, sp)
-	mov	(func_97805F89_entry_L28_Var), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_978068AF_entry_L12
 	bra	func_978068AF_entry_L27
@@ -11740,7 +11740,7 @@ func_978069C7_entry:
 	mov	a0, (0x34, sp)
 	mov	d0, (0x38, sp)
 	mov	d1, (0x3c, sp)
-	mov	(func_97805F89_entry_L28_Var), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_978069C7_entry_L12
 	bra	func_978069C7_entry_L27
@@ -14756,7 +14756,7 @@ func_9780836B_entry:
 	nop
 	clr	d0
 	mov	d0, (a1)
-	mov	data_9783E4DC, a3
+	mov	func_9780836B_entry_L10_Records, a3
 func_9780836B_entry_L10:
 	movbu	(a2), d1
 	extb	d1
@@ -14782,7 +14782,7 @@ func_9780836B_entry_L10:
 	nop
 	beq	func_9780836B_entry_L8f
 	add	8, a0
-	cmp	Str_C_2, a0
+	cmp	func_9780836B_entry_L10_Records+128, a0
 	nop
 	blt	func_9780836B_entry_L41
 	mov	a3, a0
@@ -14795,46 +14795,55 @@ func_9780836B_entry_L41:
 func_9780836B_entry_L46:
 	mov	(4, a0), a0
 	jmp	(a0)
+loc_978083BB:
 	mov	(a1), d0
 	nop
 	or	0x01, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083C3:
 	mov	(a1), d0
 	nop
 	or	0x02, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083CB:
 	mov	(a1), d0
 	nop
 	or	0x04, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083D3:
 	mov	(a1), d0
 	nop
 	or	0x08, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083DB:
 	mov	(a1), d0
 	nop
 	or	0x10, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083E3:
 	mov	(a1), d0
 	nop
 	or	0x20, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083EB:
 	mov	(a1), d0
 	nop
 	or	0x80, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083F3:
 	mov	(a1), d0
 	nop
 	or	0x40, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083FB:
 	mov	0, a0
 	bra	func_9780836B_entry_La1
 func_9780836B_entry_L8f:
@@ -16746,12 +16755,12 @@ PfDoubleToDecimal_entry:
 	inc	d1
 	nop
 	lne
-	mov	doubles_978AFD80+24, a2
+	mov	PfDoubleToDecimal_entry_L290_Records, a2
 	mov	(a2), d0
 	mov	(4, a2), d1
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
-	mov	doubles_978AFD80+32, a0
+	mov	doubles_978AFDA0, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x24, sp)
@@ -16977,7 +16986,7 @@ PfDoubleToDecimal_entry_L19d:
 	bcc	PfDoubleToDecimal_entry_L19d
 	jmp	PfDoubleToDecimal_entry_L33c
 PfDoubleToDecimal_entry_L1e1:
-	mov	doubles_978AFD80+16, a0
+	mov	PfDoubleToDecimal_entry_L1e1_Var, a0
 	mov	(a0), d2
 	mov	(4, a0), d3
 	mov	d2, (0x2c, sp)
@@ -17001,7 +17010,7 @@ PfDoubleToDecimal_entry_L1e1:
 	mov	d1, (0xc, sp)
 	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	bgt	PfDoubleToDecimal_entry_L24b
-	mov	doubles_978AFD80+16, a0
+	mov	PfDoubleToDecimal_entry_L1e1_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (8, sp)
@@ -17019,7 +17028,7 @@ PfDoubleToDecimal_entry_L1e1:
 	call	LibF64ToI32_entry, [d3,a3], 0x10
 	bra	PfDoubleToDecimal_entry_L278
 PfDoubleToDecimal_entry_L24b:
-	mov	doubles_978AFD80+16, a0
+	mov	PfDoubleToDecimal_entry_L1e1_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (8, sp)
@@ -17182,7 +17191,7 @@ PfDoubleToDecimal_entry_L34b:
 	nop
 	bcs	PfDoubleToDecimal_entry_L34b
 PfDoubleToDecimal_entry_L3a3:
-	mov	doubles_978AFD80+8, a0
+	mov	PfDoubleToDecimal_entry_L3a3_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x1c, sp)
@@ -17197,7 +17206,7 @@ PfDoubleToDecimal_entry_L3a3:
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bgt	PfDoubleToDecimal_entry_L3f9
-	mov	doubles_978AFD80+8, a0
+	mov	PfDoubleToDecimal_entry_L3a3_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x1c, sp)

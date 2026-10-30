@@ -14,7 +14,9 @@ QUESTION IT ANSWERS
   and in a size class (< 16, < 256, < 4096, >= 4096 bytes).  Measures; types nothing.
 
 RUN (from kn7000/, after a build):
-  python3 notes/gui-data-region-probes/gap_kinds.py [src/program/data] [baserom/kn7000_program.rom]
+  python3 notes/gui-data-region-probes/gap_kinds.py [src/program/data] [baserom/kn7000_program.rom] [base]
+  (base: the image's link base, default 0x48400000; the SX-KN6000 / KN6500 0x4C000000, the HD-SX3
+  plug-in 0x97800000; lane siblings-final)
 """
 import collections
 import glob
@@ -24,7 +26,7 @@ import sys
 
 d = sys.argv[1] if len(sys.argv) > 1 else "src/program/data"
 rom = open(sys.argv[2] if len(sys.argv) > 2 else "baserom/kn7000_program.rom", "rb").read()
-B = 0x48400000
+B = int(sys.argv[3], 0) if len(sys.argv) > 3 else 0x48400000
 kinds, sizes, n = collections.Counter(), collections.Counter(), collections.Counter()
 for f in sorted(glob.glob(os.path.join(d, "data_*.s"))):
     prev = ""

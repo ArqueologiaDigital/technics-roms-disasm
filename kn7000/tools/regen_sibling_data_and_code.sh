@@ -15,6 +15,8 @@
 # RUN (from the model's directory, as its Makefile does):
 #     ../kn7000/tools/regen_sibling_data_and_code.sh kn6000 "make program-src UNIDASM=..."
 set -e
+# (a generator that fails must stop the loop: its output goes through grep / tail)
+set -o pipefail
 MODEL=$1
 PROGRAM_SRC=$2
 HERE=$(cd "$(dirname "$0")" && pwd)

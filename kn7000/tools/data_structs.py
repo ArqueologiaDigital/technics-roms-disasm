@@ -82,7 +82,8 @@ def readers(g, labels_path, src_glob):
             n, v = line.split()
             labels[n] = int(v, 16)
     labels.update(g.prev_data_label)
-    return DR.Reader(src_glob, labels, g.in_data)
+    # (the siblings, a profile with a `root`) parameter accesses kept once each: DR.resolve_params_distinct
+    return DR.Reader(src_glob, labels, g.in_data, distinct=bool(getattr(g, "distinct_readers", False)))
 
 
 def groups(dr):
@@ -245,9 +246,16 @@ def name_fields(g, names):
         f.name = n
 
 
+# (gen_data_s.configure: the siblings) cite an array's own loads and stores before the accesses
+# carried in from a callee through a parameter (`via`) and the calls it is passed to
+PREFER_DIRECT = False
+
+
 def cite(accs, k=2):
     seen, out = set(), []
-    for a in sorted(accs, key=lambda a: (a.cpu or 0, a.func or "", a.insn)):
+    order = (lambda a: (a.cpu or 0, a.func or "", a.insn)) if not PREFER_DIRECT else \
+        (lambda a: (not a.width or bool(a.extra), a.cpu or 0, a.func or "", a.insn))
+    for a in sorted(accs, key=order):
         key = (a.func, a.insn)
         if key in seen:
             continue

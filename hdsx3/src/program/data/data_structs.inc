@@ -7,6 +7,14 @@
 # f<off> / p<off> / s<off> / x<off> are fields named by their offset only (a number, a pointer,
 # text, bytes no reader was seen to touch); tools/data_struct_names.py names the others.
 
+# REC_func_9780836B_entry_L10_Records: 8-byte records (func_9780836B_entry_L10_Records, 17 records); fields, and what reads them:
+#   +0   f0           u32            func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`
+#   +4   p4           ptr            func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
+.macro REC_func_9780836B_entry_L10_Records f0=0, p4=0
+	.long	\f0
+	.long	\p4
+.endm
+
 # REC_localeconv_Records: 40-byte records (localeconv_Records, 1 records); fields, and what reads them:
 #   +0   p0           ptr            no reader seen
 #   +4   p4           ptr            localeconv 0x9780851A `mov (4, a1), a0`
@@ -53,6 +61,24 @@
 	.long	\p4
 	.long	\p8
 	.long	\p12
+.endm
+
+# REC_PfDoubleToDecimal_entry_L290_Records: 8-byte records (PfDoubleToDecimal_entry_L290_Records, 1 records); fields, and what reads them:
+#   +0   f0           u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-8, a0), d0`
+#   +4   f4           u32            PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1`
+.macro REC_PfDoubleToDecimal_entry_L290_Records f0=0, f4=0
+	.long	\f0
+	.long	\f4
+.endm
+
+# REC_func_97805FD0_L26_Var: 4-byte records (func_97805FD0_L26_Var, 4 records); fields, and what reads them:
+#   +0   f0           u8             func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978063F3 0x978063F3 `movbu (func_97805FD0_L26_Var), d0` (+3)
+#   +1   f1           u8             func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)`
+#   +2   x2           u8[2]          no reader seen
+.macro REC_func_97805FD0_L26_Var f0=0, f1=0, x2
+	.byte	\f0
+	.byte	\f1
+	.ascii	\x2
 .endm
 
 # REC_func_97833B38_entry_L34_Records: 160-byte records (func_97833B38_entry_L34_Records, 9 records); fields, and what reads them:
