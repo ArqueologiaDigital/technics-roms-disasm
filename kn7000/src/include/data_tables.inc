@@ -52,6 +52,7 @@
 .macro hash_ent16 next, key
 	.long	\next
 	.word	\key
+.endm
 # One entry of the SupportClass table (registry slot 0xD, tools/gen_data_s.py support_classes):
 # SupportClassProc (0x4842AAF0) indexes it by an id's low half, 12 bytes an entry: MT_GetInstance
 # answers the entry's address, MT_GetPropSize its +6 halfword, any other message is passed to the
