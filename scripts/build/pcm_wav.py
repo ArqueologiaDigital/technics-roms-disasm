@@ -25,7 +25,7 @@ data, only where each recording is and how it is encoded:
             low byte first (the evidence is the tree's notes; notes/media-files-2026-10-30/README.md)
     rate    the WAV header's sample rate (nominal: the notes say what it is known to be)
     wav     the WAV's file name in WAVDIR (the label, plus the instrument where it is known)
-    unity   smpl chunk MIDI unity note, `note+fraction` in semitones, or `-`
+    unity   smpl chunk MIDI unity note as a decimal note number (40.7656 = note 40 + 0.7656 semitone), or `-`
     loops   smpl chunk loops `id:start:end,...` in samples, end inclusive, or `-`
     comment the WAV's LIST/INFO ICMT text
 
