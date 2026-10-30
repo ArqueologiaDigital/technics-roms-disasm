@@ -243,16 +243,6 @@ HDAE5000_RECORD_COUNT:
 	                                       ; hd-ae5000_v2_06i.s:310 `ldw_da xwa, (0x29d97e)` reads
 	                                       ; this exact word -- NOT alignment padding, real data;
 	                                       ; it also happens to word-align the string pool below.
-HDAE5000_Str_EV_DrawFDText:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_InitFDFileSelect:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_Scrollline:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_Drawsyllable:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_Alldraw:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_Initlyrics:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_SETPOSITION:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_BEATMESSAGE:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_TICKS:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_EV_INITLYRICPARAM:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_EV_TimerBack:
 	.asciz "EV_TimerBack"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
@@ -467,20 +457,6 @@ HDAE5000_Bitmap_DriveMech:
 	; Built from images/HDAE5000_Hands.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 133729, 76800
 	.incbin "includes/generated/HDAE5000_Hands.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Hands.png
-
-HDAE5000_Palette_FilePanel:
-	; v2.01i's own palette for its own backdrop below (v2.06i's differs in
-	; 326 of the 1,024 bytes).  Built from
-	; hdae5000_v2_01i/images/HDAE5000_Palette_FilePanel_v2_01i.txt by
-	; scripts/build/hdae5000_images.py.
-
-HDAE5000_Bitmap_FilePanel:
-	; 320 x 240 @ 8bpp.  The file-selection panel background, as v2.01i draws
-	; it: the same three sunken list wells as v2.06i's, but over a magenta
-	; marble fill instead of a plain dark one, and with five buttons in the
-	; grey strip along the bottom where v2.06i has three.  Built from
-	; hdae5000_v2_01i/images/HDAE5000_FilePanel_v2_01i.png by
-	; scripts/build/hdae5000_images.py.
 
 HDAE5000_Palette_HddIcon:
 	; 0x400 B = 256 RGBX entries, all 256 distinct -- the Windows halftone

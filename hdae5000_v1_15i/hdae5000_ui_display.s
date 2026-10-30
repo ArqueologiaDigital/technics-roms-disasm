@@ -4952,7 +4952,6 @@ HDAE5000_Song_IsUsed:
 	; --- Slot 8: base 0x201676 ---
 .Ltco_slot8:
 	ldw	hl, 0xffff
-.Ltco_all_free:
 .Ltco_exit:
 	pop xiz
 	inc 4, xsp
@@ -8016,7 +8015,6 @@ HDAE5000_CopyFdSongToHd_Pmt_Skip2:
 	ld xbc, 0x000004c0
 	call HDAE5000_Multiply
 .Lts925_4:
-.Lts925_5:
 	; Post-processing: set flag
 	add xhl, 0x780
 	add xhl, xiz
@@ -9925,7 +9923,6 @@ HDAE5000_Song_CheckFreeSpace:
 	; --- Bit 8: fixed constant 0x5000 ---
 .Lcv_bit8:
 	; --- Final validation ---
-.Lcv_final:
 	ld xwa, xiz			; total accumulated size
 	call HDAE5000_HD_ClusterCount			; validate total
 	ld xiz, xhl			; save result
@@ -13122,7 +13119,6 @@ HDAE5000_PPORT_Cmd08_SendDataToPc:	; (838 bytes)
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
 .Lrfsb_flag2_bit0:			; — Head flag bit 0
-.Lrfsb_exit:
 	jp HDAE5000_PPORT_CommandDone
 
 HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
@@ -13349,8 +13345,6 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3:
 	nop
 	ld	(0x23c4ee), 0x80
 .Lsfsb_bit6:				; — Bit 6 (0x40)
-.Lsfsb_bit7:				; — Bit 7 (0x80)
-.Lsfsb_bit8:				; — Flag byte 2, bit 0 (0x01)
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
@@ -13534,7 +13528,6 @@ HDAE5000_PPORT_Cmd10_RcvDataFromPc:	; (570 bytes)
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
 	nop
-.Lrcv_flag2_bit0:			; — Flag byte 2, bit 0
 .Lrcv_finish:
 	; Restore XIX, write flag bytes back, display final status
 	ld xix, (HDAE5000_RAM_PportInfoPtr:24)
@@ -14920,7 +14913,6 @@ HDAE5000_PPORT_InitRegionDescriptors:	; — Initialize region descriptors
 	ld (HDAE5000_RAM_PportRegions+64:24), xwa
 	nop
 .Lir_flag2_bit0:
-.Lir_ret:
 	ret
 	nop
 

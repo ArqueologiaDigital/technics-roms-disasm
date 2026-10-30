@@ -7,7 +7,7 @@ import os
 import re
 from _edit import ROOT, TREE, read, write
 
-FILES = ["hd-ae5000_v1_15i.s", "hdae5000_hd_driver.s", "hdae5000_filesystem.s", "hdae5000_ui_display.s",
+FILES = ["hd-ae5000_%s.s" % TREE[len("hdae5000_"):], "hdae5000_hd_driver.s", "hdae5000_filesystem.s", "hdae5000_ui_display.s",
          "hdae5000_utilities.s", "hdae5000_data_tables.s", "hdae5000_init_data.s", "hdae5000_ui_tree.s"]
 EQU = re.compile(rb"^\s*\.(?:equ|set)\s+(HDAE5000_(?:RAM|IO)_\w+)\s*,", re.M)
 
@@ -24,8 +24,10 @@ def uses(texts):
     return out
 
 
-v2 = os.path.join(ROOT, "hdae5000_v2_01i")
-v2t = [open(os.path.join(v2, f.replace("v1_15i", "v2_01i")), "rb").read() for f in FILES]
+# the tree this one was ported from: v1.15i from v2.01i, v1.10i from v1.15i
+src = "v2_01i" if TREE == "hdae5000_v1_15i" else "v1_15i"
+v2 = os.path.join(ROOT, "hdae5000_" + src)
+v2t = [open(os.path.join(v2, f.replace(TREE[len("hdae5000_"):], src)), "rb").read() for f in FILES]
 mine = {f: read(f) for f in FILES}
 u2, u1 = uses(v2t), uses(mine.values())
 gone = []

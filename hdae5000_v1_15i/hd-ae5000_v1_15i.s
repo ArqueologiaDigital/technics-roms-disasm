@@ -1,22 +1,23 @@
 ; =============================================================================
-; HD-AE5000 expansion ROM v2.01i  (IC4, 512 KiB at 0x280000)
+; HD-AE5000 expansion ROM v1.15i  (IC4, 512 KiB at 0x280000)
 ; =============================================================================
-; PORTED from the v2.06i tree (hdae5000/) by scripts/tools/port_hdae5000_version.py,
-; then by hand: notes/hdae5000-versions-2026-10-24/README.md lists what differs and
-; port-edits/ there holds every hand edit as a script.  Names and routine headers
-; are v2.06i's wherever the code is the same.  `make gate` rebuilds this tree
-; byte-identical to the v2.01i dump (SHA-1 0160c17baa7b026771872126d8146038a19ef53b).
+; PORTED from the v2.01i tree (hdae5000_v2_01i/) by scripts/tools/port_hdae5000_version.py:
+; notes/hdae5000-versions-2026-10-24/port-edits-v1_15i/replay.sh rebuilds this tree from it,
+; running the tool's passes and the hand edits there in order; README.md in that folder's
+; parent says what v1.x lacks against v2.x (no lyrics, no floppy lyric selector, no
+; file-selection backdrop, no XAP flash service, eight parts instead of nine ...).  Names and
+; routine headers are v2.x's wherever the code is the same.  `make gate` rebuilds this tree
+; byte-identical to the v1.15i dump (SHA-1 581fa58e2cd6fe381cfc312c73771d25ff2e662c).
 ;
-; ADDRESSES AND OBJECT NUMBERS QUOTED IN COMMENTS ARE v2.06i'S unless a comment
-;   says otherwise: the comments came with the code.  Most of the v2.01i image lies
-;   0x7F2 or 0xB0A bytes below its v2.06i twin (scripts/analysis/hdae5000_version_delta.py),
-;   the RAM variables from 0x229DAD up 2 to 0x96 bytes below.  Trust the labels:
-;   rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf and symbols/hdae5000_v2_01i_symbols_reference.txt
-;   give every name's v2.01i address.  The UI object section of hdae5000_data_tables.s
-;   is the exception: it is generated from this ROM and numbers objects as v2.01i does.
+; ADDRESSES AND OBJECT NUMBERS QUOTED IN COMMENTS ARE v2.06i'S OR v2.01i'S unless a
+;   comment says otherwise: the comments came with the code.  Trust the labels:
+;   rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf and symbols/hdae5000_v1_15i_symbols_reference.txt
+;   give every name's v1.15i address.  The UI object section (hdae5000_ui_tree.s) is the
+;   exception: it is generated from this ROM and numbers objects as v1.15i does.
 ;
-; What this tree does not hold -- shared/event_codes.s and the pictures that did not
-; change -- comes from hdae5000/ through the build's second -I.
+; shared/event_codes.s is this tree's own (v1.x numbers the HD-AE5000's messages
+; differently); the rest of shared/ and the pictures that did not change come from
+; hdae5000/ through the build's second -I.
 ; =============================================================================
 
 
@@ -330,7 +331,7 @@
 	.equ HamaFn_ChangePalette, 0x0138	; -> 0xFAF2C7 (index 78)
 	.equ HamaFn_ChangeWall, 0x013c	; -> 0xFAF20B (index 79)
 
-; HD-AE5000 Hard Disk Expansion ROM, v2.01i
+; HD-AE5000 Hard Disk Expansion ROM, v1.15i
 ;   Version string "V1.15i" (HDAE5000_Str_V115i).  The credits block
 ;   HDAE5000_Version_Info ("Technics Software section M. Kitajima 2.33J 2.21
 ;   TECHNICS KN5000 Juli-Oktober 1996") is the same in all four dumped versions.

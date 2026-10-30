@@ -31,8 +31,8 @@ for r in 1 2 3; do
   $P strings v1_15i | tail -1
 done
 $P afix v1_15i | tail -1
-# the hand edits 10.., made on the tree the passes above leave, then the passes again
-for s in $(ls $E | grep -E '^[1-9][0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
+# the hand edits 10..89, made on the tree the passes above leave, then the passes again
+for s in $(ls $E | grep -E '^[1-8][0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
   python3 $E/$s
 done
 for r in 1 2; do
@@ -41,5 +41,8 @@ for r in 1 2; do
   $P strings v1_15i | tail -1
 done
 $P afix v1_15i | tail -1
-python3 $E/99_tail_fill.py
+# the clean-ups 90..99 (comments, labels and constants the passes leave; the zero tail)
+for s in $(ls $E | grep -E '^9[0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
+  python3 $E/$s
+done
 $P status v1_15i | head -1

@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 6,725
-#   semantic names ........... 6,725 (100.0%)
+#   symbols .................. 6,709
+#   semantic names ........... 6,709 (100.0%)
 #   positional names ......... 0
 #
 HDAE5000_ROM_HEADER 00280000
@@ -291,13 +291,9 @@ HDAE5000_SaveOptSwEventCatch_OnSwIn 00285083
 HDAE5000_SaveOptSwEventCatch_Skip 0028511F
 HDAE5000_SaveOptSwEventCatch_Join 00285140
 HDAE5000_SaveOptSwEventCatch_Skip2 00285149
-HDAE5000_SaveOptSwEventCatch_Skip3 00285149
 HDAE5000_SaveOptSwEventCatch_Skip7 00285161
 HDAE5000_SaveOptSwEventCatch_Skip4 00285179
 HDAE5000_SaveOptSwEventCatch_Done 0028518E
-HDAE5000_SaveOptSwEventCatch_Join2 0028518E
-HDAE5000_SaveOptSwEventCatch_Skip5 0028518E
-HDAE5000_SaveOptSwEventCatch_Skip6 0028518E
 HDAE5000_SaveOptSwEventCatch_Epilogue 00285190
 HDAE5000_FileOptNameCheck 00285192
 HDAE5000_FileOptNameCheck_Ev01E00047 002851CC
@@ -2250,16 +2246,6 @@ ClassName_DbMemoCl 002997E2
 ClassSig_SelectList 002997EC
 ClassName_SelectList 002997F8
 HDAE5000_RECORD_COUNT 00299804
-HDAE5000_Str_EV_Alldraw 00299806
-HDAE5000_Str_EV_BEATMESSAGE 00299806
-HDAE5000_Str_EV_DrawFDText 00299806
-HDAE5000_Str_EV_Drawsyllable 00299806
-HDAE5000_Str_EV_INITLYRICPARAM 00299806
-HDAE5000_Str_EV_InitFDFileSelect 00299806
-HDAE5000_Str_EV_Initlyrics 00299806
-HDAE5000_Str_EV_SETPOSITION 00299806
-HDAE5000_Str_EV_Scrollline 00299806
-HDAE5000_Str_EV_TICKS 00299806
 HDAE5000_Str_EV_TimerBack 00299806
 HDAE5000_Str_EV_AfterLoad 00299814
 HDAE5000_Str_EV_SeqStop 00299822
@@ -5646,8 +5632,6 @@ HDAE5000_Palette_TitleLogo 002A3D10
 HDAE5000_Bitmap_TitleLogo 002A4110
 HDAE5000_Palette_DriveMech 002B6D10
 HDAE5000_Bitmap_DriveMech 002B7110
-HDAE5000_Bitmap_FilePanel 002C9D10
-HDAE5000_Palette_FilePanel 002C9D10
 HDAE5000_Palette_HddIcon 002C9D10
 HDAE5000_Bitmap_HddIcon 002CA110
 HDAE5000_TypeSel_TemplateAllNo 002CA404

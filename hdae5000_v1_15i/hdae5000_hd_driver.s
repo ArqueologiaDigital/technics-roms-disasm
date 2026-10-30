@@ -1208,7 +1208,6 @@ HDAE5000_PartList_Build:
 	lda xsp, (xsp + 0x0a)
 .Lhsk_bit7:
 
-.Lhsk_bit8:
 	bit 7, iz
 	jr nz, .Lhsk_epilogue_vtable
 	pushw 0x000e
@@ -3054,7 +3053,6 @@ HDAE5000_TypeSel_Init:
 	jr z, .LHD_Data_Copy__bit8
 	ld (xwa + 9), e
 .LHD_Data_Copy__bit8:
-.LHD_Data_Copy__done:
 	retd 0x0002
 
 ; ---------------------------------------------------------------------------
@@ -3094,7 +3092,6 @@ HDAE5000_TypeSel_BuildMask:
 	jr nz, .Lhbi_skip6
 	ormi16 (xwa + 0), 0x0040	; set bit 6
 .Lhbi_skip6:
-.Lhbi_skip7:
 	cp (xwa + 9), 0x02
 	ret nz
 	ormi16 (xwa + 0), 0x0080	; set bit 8
@@ -3351,7 +3348,6 @@ HDAE5000_SaveOptSwEventCatch_Join:
 	calr	HDAE5000_SongScreen_Refresh
 	jr	t, HDAE5000_SaveOptSwEventCatch_Done
 HDAE5000_SaveOptSwEventCatch_Skip2:
-HDAE5000_SaveOptSwEventCatch_Skip3:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
@@ -3374,9 +3370,6 @@ HDAE5000_SaveOptSwEventCatch_Skip4:
 	ld	bc, 0:i3
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
-HDAE5000_SaveOptSwEventCatch_Skip5:
-HDAE5000_SaveOptSwEventCatch_Skip6:
-HDAE5000_SaveOptSwEventCatch_Join2:
 HDAE5000_SaveOptSwEventCatch_Done:
 	ld	xhl, 0:i3
 HDAE5000_SaveOptSwEventCatch_Epilogue:
