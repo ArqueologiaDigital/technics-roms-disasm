@@ -19,7 +19,7 @@
 #                  reset code and run there: code, then its constant data
 #   0xFA0C-0xFFFF  ROM: the 12-byte descriptor of that copy, then erased (0xFF)
 #
-# Every byte becomes source; nothing is .incbin'd:
+# Every byte becomes source; the only .incbin is the font, built from its committed PNG:
 #
 #   * code: recursive descent from the reset vector, the NMI vector, the two
 #     interrupt thunks the reset code builds in work RAM, the program's main,
@@ -32,7 +32,7 @@
 #     exact bytes (a long form the assembler would not choose gets a `:32` or
 #     `:16` width suffix);
 #   * data: text is .ascii/.asciz, pointer words .long <label>, the 8x16 font a
-#     .byte row per glyph line, everything else typed by the width the code
+#     PNG sheet (src/ic18/media/, tools/table_png.py), everything else typed by the width the code
 #     reads it with, else bytes;
 #   * addresses: every code and data address an operand names is a label; RAM
 #     outside the image (.bss, the stack) and every hardware register an operand
@@ -1480,10 +1480,16 @@ class Emitter:
                 L.append(f"    .long   {self.sym_or_hex(ptr)}")
             return L
         if kind == "font":
-            for k in range(0, n, 16):
-                c = arg + k // 16
-                shown = repr(chr(c)) if 0x20 <= c < 0x7F else f"0x{c:02X}"
-                L.append("    .byte   " + ", ".join(f"0x{b:02X}" for b in d[o + k:o + k + 16]) + f"    # {shown}")
+            # the glyphs are a PNG sheet, src/ic18/media/FontGlyphs8x16.png (tools/table_png.py
+            # `font 1 16 N`: one 8-pixel column of 16 rows a glyph, MSB leftmost, from `arg`);
+            # the build turns it back into build/ic18_png/FontGlyphs8x16.bin (lane media-files)
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import table_png
+            fmt = f"font 1 16 {n // 16}"
+            table_png.write_item(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
+                                              "src/ic18/media/FontGlyphs8x16.png"), fmt, bytes(d[o:o + n]))
+            L.append(f"    .incbin \"build/ic18_png/FontGlyphs8x16.bin\"    # census: generated -- tools/table_png.py "
+                     f"({fmt}) from src/ic18/media/FontGlyphs8x16.png: characters 0x{arg:02X}..0x{arg + n // 16 - 1:02X}")
             return L
         sys.exit(f"gen_ic18_s: no emitter for {kind}")
 

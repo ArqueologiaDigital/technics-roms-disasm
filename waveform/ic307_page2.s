@@ -4947,2158 +4947,2162 @@ P2_Rec1071:	WaveRecHead	IC307_Page2, P2_W1033_Drawbar
 ; the first wave starts on a 16-byte granule (wave offsets count granules): zero fill
 	.balign	16, 0
 
-; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
+; ---- PCM: one item per distinct wave start, each from its WAV file waveform/wav/<label>.wav ----
+; scripts/build/pcm_wav.py turns the WAV back into the raw item build/pcm/<label>.pcm (make
+; waveform-wav extracts the WAVs from the git-ignored reference image).  IC307 is the Y chip of a
+; word-interleaved pair, so an item is every other word of a recording: signed 16-bit little-endian
+; samples, or two signed 8-bit samples per word, low byte first (notes/media-files-2026-10-30).
 ; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
 ; play on into the next items: see the notes on sequence records ([INFERENCE]).
-; wave 0: 256 samples (512 B); entry 0
-P2_W0000_Sine:	.incbin	"kn5000_waveform_rom.ic307", 0x2026a0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1: 25,360 samples (50,720 B); entry 1
+; wave 0: 256 16-bit samples (512 B); entry 0
+P2_W0000_Sine:	.incbin	"pcm/P2_W0000_Sine.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0000_Sine.wav (16-bit)
+; wave 1: 25,360 16-bit samples (50,720 B); entry 1
 ;   source "Concert Str.L", "Violin Ens."
 ;   tones Chamber Orch, Concert Strings, Piano & Strings, Unison Strings, Violin Ensemble
-P2_W0001:	.incbin	"kn5000_waveform_rom.ic307", 0x2028a0, 50720	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 2: 25,104 samples (50,208 B); entry 2
+P2_W0001:	.incbin	"pcm/P2_W0001.pcm", 0, 50720	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0001.wav (16-bit)
+; wave 2: 25,104 16-bit samples (50,208 B); entry 2
 ;   source "Concert Str.L", "Violin Ens."
 ;   tones Chamber Orch, Concert Strings, Piano & Strings, Unison Strings, Violin Ensemble
-P2_W0002:	.incbin	"kn5000_waveform_rom.ic307", 0x20eec0, 50208	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 3: 9,832 samples (19,664 B); entry 3
+P2_W0002:	.incbin	"pcm/P2_W0002.pcm", 0, 50208	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0002.wav (16-bit)
+; wave 3: 19,664 8-bit samples (19,664 B); entry 3
 ;   source "Concert Str.L", "Violin Ens."
 ;   tones Chamber Orch, Concert Strings, Piano & Strings, Unison Strings, Violin Ensemble
-P2_W0003:	.incbin	"kn5000_waveform_rom.ic307", 0x21b2e0, 19664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 4: 12,264 samples (24,528 B); entry 4
+P2_W0003:	.incbin	"pcm/P2_W0003.pcm", 0, 19664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0003.wav (8-bit)
+; wave 4: 24,528 8-bit samples (24,528 B); entry 4
 ;   source "Cello Ens.", "Concert Str.L", "Violin Ens."
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Orchestral Sweep, Piano & Strings, Springtime Orch, Strings & Flutes, Unison Strings +1 more
-P2_W0004:	.incbin	"kn5000_waveform_rom.ic307", 0x21ffb0, 24528	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 5: 8,008 samples (16,016 B); entry 5
+P2_W0004:	.incbin	"pcm/P2_W0004.pcm", 0, 24528	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0004.wav (8-bit)
+; wave 5: 16,016 8-bit samples (16,016 B); entry 5
 ;   source "Cello Ens.", "Concert Str.L", "Violin Ens."
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Orchestral Sweep, Piano & Strings, Springtime Orch, Strings & Flutes, Unison Strings +1 more
-P2_W0005:	.incbin	"kn5000_waveform_rom.ic307", 0x225f80, 16016	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 6: 18,456 samples (36,912 B); entry 6
+P2_W0005:	.incbin	"pcm/P2_W0005.pcm", 0, 16016	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0005.wav (8-bit)
+; wave 6: 36,912 8-bit samples (36,912 B); entry 6
 ;   source "Cello Ens.", "Concert Str.L", "Violin Ens."
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Orchestral Sweep, Piano & Strings, Springtime Orch, Strings & Flutes, Unison Strings +1 more
-P2_W0006:	.incbin	"kn5000_waveform_rom.ic307", 0x229e10, 36912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 7: 25,744 samples (51,488 B); entry 7
+P2_W0006:	.incbin	"pcm/P2_W0006.pcm", 0, 36912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0006.wav (8-bit)
+; wave 7: 25,744 16-bit samples (51,488 B); entry 7
 ;   source "Viola Ens."
 ;   tones Unison Strings, Viola Ensemble
-P2_W0007_ViolaEns:	.incbin	"kn5000_waveform_rom.ic307", 0x232e40, 51488	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 8: 26,384 samples (52,768 B); entry 8
+P2_W0007_ViolaEns:	.incbin	"pcm/P2_W0007_ViolaEns.pcm", 0, 51488	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0007_ViolaEns.wav (16-bit)
+; wave 8: 26,384 16-bit samples (52,768 B); entry 8
 ;   source "Viola Ens."
 ;   tones Unison Strings, Viola Ensemble
-P2_W0008_ViolaEns:	.incbin	"kn5000_waveform_rom.ic307", 0x23f760, 52768	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 9: 26,832 samples (53,664 B); entry 9
+P2_W0008_ViolaEns:	.incbin	"pcm/P2_W0008_ViolaEns.pcm", 0, 52768	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0008_ViolaEns.wav (16-bit)
+; wave 9: 26,832 16-bit samples (53,664 B); entry 9
 ;   source "Viola Ens."
 ;   tones Unison Strings, Viola Ensemble
-P2_W0009_ViolaEns:	.incbin	"kn5000_waveform_rom.ic307", 0x24c580, 53664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 10: 11,432 samples (22,864 B); entry 10
+P2_W0009_ViolaEns:	.incbin	"pcm/P2_W0009_ViolaEns.pcm", 0, 53664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0009_ViolaEns.wav (16-bit)
+; wave 10: 22,864 8-bit samples (22,864 B); entry 10
 ;   source "Viola Ens."
 ;   tones Unison Strings, Viola Ensemble
-P2_W0010_ViolaEns:	.incbin	"kn5000_waveform_rom.ic307", 0x259720, 22864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 11: 13,016 samples (26,032 B); entry 11
+P2_W0010_ViolaEns:	.incbin	"pcm/P2_W0010_ViolaEns.pcm", 0, 22864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0010_ViolaEns.wav (8-bit)
+; wave 11: 26,032 8-bit samples (26,032 B); entry 11
 ;   source "Concert Str.R", "Viola Ens."
 ;   tones Chamber Orch, Concert Strings, Dreamy Strings, Heavenly Strings, Unison Strings, Viola Ensemble
-P2_W0011:	.incbin	"kn5000_waveform_rom.ic307", 0x25f070, 26032	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 12: 13,208 samples (26,416 B); entry 12
+P2_W0011:	.incbin	"pcm/P2_W0011.pcm", 0, 26032	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0011.wav (8-bit)
+; wave 12: 26,416 8-bit samples (26,416 B); entry 12
 ;   source "Concert Str.R", "Viola Ens."
 ;   tones Chamber Orch, Concert Strings, Dreamy Strings, Heavenly Strings, Unison Strings, Viola Ensemble
-P2_W0012:	.incbin	"kn5000_waveform_rom.ic307", 0x265620, 26416	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 13: 24,336 samples (48,672 B); entry 13
+P2_W0012:	.incbin	"pcm/P2_W0012.pcm", 0, 26416	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0012.wav (8-bit)
+; wave 13: 24,336 16-bit samples (48,672 B); entry 13
 ;   source "Cello Ens.", "Concert Str.L"
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Orchestral Sweep, Piano & Strings, Springtime Orch, Strings & Flutes, Unison Strings
-P2_W0013:	.incbin	"kn5000_waveform_rom.ic307", 0x26bd50, 48672	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 14: 22,544 samples (45,088 B); entry 14
+P2_W0013:	.incbin	"pcm/P2_W0013.pcm", 0, 48672	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0013.wav (16-bit)
+; wave 14: 22,544 16-bit samples (45,088 B); entry 14
 ;   source "Cello Ens.", "Concert Str.L"
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Orchestral Sweep, Piano & Strings, Springtime Orch, Strings & Flutes, Unison Strings
-P2_W0014:	.incbin	"kn5000_waveform_rom.ic307", 0x277b70, 45088	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 15: 24,848 samples (49,696 B); entry 15
+P2_W0014:	.incbin	"pcm/P2_W0014.pcm", 0, 45088	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0014.wav (16-bit)
+; wave 15: 24,848 16-bit samples (49,696 B); entry 15
 ;   source "Cello Ens.", "Concert Str.R"
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Dreamy Strings, Heavenly Strings, Orchestral Sweep, Springtime Orch, Strings & Flutes +1 more
-P2_W0015:	.incbin	"kn5000_waveform_rom.ic307", 0x282b90, 49696	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 16: 11,816 samples (23,632 B); entry 16
+P2_W0015:	.incbin	"pcm/P2_W0015.pcm", 0, 49696	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0015.wav (16-bit)
+; wave 16: 23,632 8-bit samples (23,632 B); entry 16
 ;   source "Cello Ens.", "Concert Str.R"
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Dreamy Strings, Heavenly Strings, Orchestral Sweep, Springtime Orch, Strings & Flutes +1 more
-P2_W0016:	.incbin	"kn5000_waveform_rom.ic307", 0x28edb0, 23632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 17: 8,648 samples (17,296 B); entry 17
+P2_W0016:	.incbin	"pcm/P2_W0016.pcm", 0, 23632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0016.wav (8-bit)
+; wave 17: 17,296 8-bit samples (17,296 B); entry 17
 ;   source "Cello Ens.", "Concert Str.R"
 ;   tones Cello Ensemble, Chamber Orch, Concert Strings, Dreamy Strings, Heavenly Strings, Orchestral Sweep, Springtime Orch, Strings & Flutes +1 more
-P2_W0017:	.incbin	"kn5000_waveform_rom.ic307", 0x294a00, 17296	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 18: 24,080 samples (48,160 B); entry 18
+P2_W0017:	.incbin	"pcm/P2_W0017.pcm", 0, 17296	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0017.wav (8-bit)
+; wave 18: 24,080 16-bit samples (48,160 B); entry 18
 ;   source "Bass Ens.", "Concert Str.R"
 ;   tones Bass Ensemble, Chamber Orch, Concert Strings, Dark Movie Scene, Dreamy Strings, Heavenly Strings, Strings & Horns, Unison Strings
-P2_W0018:	.incbin	"kn5000_waveform_rom.ic307", 0x298d90, 48160	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 19: 24,080 samples (48,160 B); entry 19
+P2_W0018:	.incbin	"pcm/P2_W0018.pcm", 0, 48160	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0018.wav (16-bit)
+; wave 19: 24,080 16-bit samples (48,160 B); entry 19
 ;   source "Bass Ens.", "Concert Str.R"
 ;   tones Bass Ensemble, Chamber Orch, Concert Strings, Dark Movie Scene, Dreamy Strings, Heavenly Strings, Strings & Horns, Unison Strings
-P2_W0019:	.incbin	"kn5000_waveform_rom.ic307", 0x2a49b0, 48160	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 20: 21,008 samples (42,016 B); entry 20
+P2_W0019:	.incbin	"pcm/P2_W0019.pcm", 0, 48160	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0019.wav (16-bit)
+; wave 20: 21,008 16-bit samples (42,016 B); entry 20
 ;   source "Bass Ens.", "Concert Str.R"
 ;   tones Bass Ensemble, Chamber Orch, Concert Strings, Dark Movie Scene, Dreamy Strings, Heavenly Strings, Strings & Horns, Unison Strings
-P2_W0020:	.incbin	"kn5000_waveform_rom.ic307", 0x2b05d0, 42016	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 21: 22,544 samples (45,088 B); entry 21
+P2_W0020:	.incbin	"pcm/P2_W0020.pcm", 0, 42016	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0020.wav (16-bit)
+; wave 21: 22,544 16-bit samples (45,088 B); entry 21
 ;   source "Bass Ens.", "Concert Str.R"
 ;   tones Bass Ensemble, Chamber Orch, Concert Strings, Dark Movie Scene, Dreamy Strings, Heavenly Strings, Strings & Horns, Unison Strings
-P2_W0021:	.incbin	"kn5000_waveform_rom.ic307", 0x2ba9f0, 45088	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 22: 2,560 samples (5,120 B); entry 22
+P2_W0021:	.incbin	"pcm/P2_W0021.pcm", 0, 45088	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0021.wav (16-bit)
+; wave 22: 2,560 16-bit samples (5,120 B); entry 22
 ;   source "Bright E.Bass"
 ;   tones Bright Bass, Bright E.Bass
-P2_W0022_BrightEBass:	.incbin	"kn5000_waveform_rom.ic307", 0x2c5a10, 5120	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 23: 2,816 samples (5,632 B); entries 23, 24
+P2_W0022_BrightEBass:	.incbin	"pcm/P2_W0022_BrightEBass.pcm", 0, 5120	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0022_BrightEBass.wav (16-bit)
+; wave 23: 2,816 16-bit samples (5,632 B); entries 23, 24
 ;   source "Bright E.Bass"
 ;   tones Bright Bass, Bright E.Bass
-P2_W0023_BrightEBass:	.incbin	"kn5000_waveform_rom.ic307", 0x2c6e10, 5632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 24: 1,536 samples (3,072 B); entries 25, 26, 27, 28, 29
+P2_W0023_BrightEBass:	.incbin	"pcm/P2_W0023_BrightEBass.pcm", 0, 5632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0023_BrightEBass.wav (16-bit)
+; wave 24: 1,536 16-bit samples (3,072 B); entries 25, 26, 27, 28, 29
 ;   source "Bright E.Bass"
 ;   tones Bright Bass, Bright E.Bass
-P2_W0024_BrightEBass:	.incbin	"kn5000_waveform_rom.ic307", 0x2c8410, 3072	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 25: 1,664 samples (3,328 B); entries 30, 31, 32
+P2_W0024_BrightEBass:	.incbin	"pcm/P2_W0024_BrightEBass.pcm", 0, 3072	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0024_BrightEBass.wav (16-bit)
+; wave 25: 1,664 16-bit samples (3,328 B); entries 30, 31, 32
 ;   source "FretlessBass2"
-P2_W0025_FretlessBass2:	.incbin	"kn5000_waveform_rom.ic307", 0x2c9010, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 26: 1,792 samples (3,584 B); entries 33, 34, 35, 36, 37, 38, 39
+P2_W0025_FretlessBass2:	.incbin	"pcm/P2_W0025_FretlessBass2.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0025_FretlessBass2.wav (16-bit)
+; wave 26: 1,792 16-bit samples (3,584 B); entries 33, 34, 35, 36, 37, 38, 39
 ;   source "Soul Bass"
-P2_W0026_SoulBass:	.incbin	"kn5000_waveform_rom.ic307", 0x2c9d10, 3584	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 27: 144 samples (288 B); entries 40, 41
+P2_W0026_SoulBass:	.incbin	"pcm/P2_W0026_SoulBass.pcm", 0, 3584	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0026_SoulBass.wav (16-bit)
+; wave 27: 288 8-bit samples (288 B); entries 40, 41
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0027_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2cab10, 288	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 28: 96 samples (192 B); entries 42, 43
-P2_W0028:	.incbin	"kn5000_waveform_rom.ic307", 0x2cac30, 192	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 29: 48 samples (96 B); entries 44, 45
-P2_W0029:	.incbin	"kn5000_waveform_rom.ic307", 0x2cacf0, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 30: 48 samples (96 B); entry 46
-P2_W0030:	.incbin	"kn5000_waveform_rom.ic307", 0x2cad50, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 31: 1,224 samples (2,448 B); entry 47
-P2_W0031:	.incbin	"kn5000_waveform_rom.ic307", 0x2cadb0, 2448	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 32: 32 samples (64 B); entry 48
+P2_W0027_OrganClick:	.incbin	"pcm/P2_W0027_OrganClick.pcm", 0, 288	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0027_OrganClick.wav (8-bit)
+; wave 28: 192 8-bit samples (192 B); entries 42, 43
+P2_W0028:	.incbin	"pcm/P2_W0028.pcm", 0, 192	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0028.wav (8-bit)
+; wave 29: 96 8-bit samples (96 B); entries 44, 45
+P2_W0029:	.incbin	"pcm/P2_W0029.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0029.wav (8-bit)
+; wave 30: 96 8-bit samples (96 B); entry 46
+P2_W0030:	.incbin	"pcm/P2_W0030.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0030.wav (8-bit)
+; wave 31: 2,448 8-bit samples (2,448 B); entry 47
+P2_W0031:	.incbin	"pcm/P2_W0031.pcm", 0, 2448	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0031.wav (8-bit)
+; wave 32: 64 8-bit samples (64 B); entry 48
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0032_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2cb740, 64	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 33: 16 samples (32 B); entry 49
-P2_W0033:	.incbin	"kn5000_waveform_rom.ic307", 0x2cb780, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 34: 16 samples (32 B); entry 50
-P2_W0034:	.incbin	"kn5000_waveform_rom.ic307", 0x2cb7a0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 35: 16 samples (32 B); entry 51
-P2_W0035:	.incbin	"kn5000_waveform_rom.ic307", 0x2cb7c0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 36: 48 samples (96 B); entries 52, 53
-P2_W0036:	.incbin	"kn5000_waveform_rom.ic307", 0x2cb7e0, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 37: 1,432 samples (2,864 B); entries 54, 55
-P2_W0037:	.incbin	"kn5000_waveform_rom.ic307", 0x2cb840, 2864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 38: 32 samples (64 B); entry 56
+P2_W0032_OrganClick:	.incbin	"pcm/P2_W0032_OrganClick.pcm", 0, 64	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0032_OrganClick.wav (8-bit)
+; wave 33: 16 16-bit samples (32 B); entry 49
+P2_W0033:	.incbin	"pcm/P2_W0033.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0033.wav (16-bit)
+; wave 34: 16 16-bit samples (32 B); entry 50
+P2_W0034:	.incbin	"pcm/P2_W0034.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0034.wav (16-bit)
+; wave 35: 16 16-bit samples (32 B); entry 51
+P2_W0035:	.incbin	"pcm/P2_W0035.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0035.wav (16-bit)
+; wave 36: 96 8-bit samples (96 B); entries 52, 53
+P2_W0036:	.incbin	"pcm/P2_W0036.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0036.wav (8-bit)
+; wave 37: 2,864 8-bit samples (2,864 B); entries 54, 55
+P2_W0037:	.incbin	"pcm/P2_W0037.pcm", 0, 2864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0037.wav (8-bit)
+; wave 38: 64 8-bit samples (64 B); entry 56
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0038_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2cc370, 64	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 39: 16 samples (32 B); entry 57
-P2_W0039:	.incbin	"kn5000_waveform_rom.ic307", 0x2cc3b0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 40: 16 samples (32 B); entry 58
-P2_W0040:	.incbin	"kn5000_waveform_rom.ic307", 0x2cc3d0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 41: 16 samples (32 B); entry 59
-P2_W0041:	.incbin	"kn5000_waveform_rom.ic307", 0x2cc3f0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 42: 48 samples (96 B); entries 60, 61
-P2_W0042:	.incbin	"kn5000_waveform_rom.ic307", 0x2cc410, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 43: 1,672 samples (3,344 B); entries 62, 63
-P2_W0043:	.incbin	"kn5000_waveform_rom.ic307", 0x2cc470, 3344	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 44: 32 samples (64 B); entry 64
+P2_W0038_OrganClick:	.incbin	"pcm/P2_W0038_OrganClick.pcm", 0, 64	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0038_OrganClick.wav (8-bit)
+; wave 39: 16 16-bit samples (32 B); entry 57
+P2_W0039:	.incbin	"pcm/P2_W0039.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0039.wav (16-bit)
+; wave 40: 16 16-bit samples (32 B); entry 58
+P2_W0040:	.incbin	"pcm/P2_W0040.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0040.wav (16-bit)
+; wave 41: 16 16-bit samples (32 B); entry 59
+P2_W0041:	.incbin	"pcm/P2_W0041.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0041.wav (16-bit)
+; wave 42: 96 8-bit samples (96 B); entries 60, 61
+P2_W0042:	.incbin	"pcm/P2_W0042.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0042.wav (8-bit)
+; wave 43: 3,344 8-bit samples (3,344 B); entries 62, 63
+P2_W0043:	.incbin	"pcm/P2_W0043.pcm", 0, 3344	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0043.wav (8-bit)
+; wave 44: 64 8-bit samples (64 B); entry 64
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0044_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2cd180, 64	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 45: 64 samples (128 B); entries 65, 66
-P2_W0045:	.incbin	"kn5000_waveform_rom.ic307", 0x2cd1c0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 46: 32 samples (64 B); entries 67, 68
-P2_W0046:	.incbin	"kn5000_waveform_rom.ic307", 0x2cd240, 64	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 47: 1,432 samples (2,864 B); entries 69, 70, 71
-P2_W0047:	.incbin	"kn5000_waveform_rom.ic307", 0x2cd280, 2864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 48: 16 samples (32 B); entry 72
+P2_W0044_OrganClick:	.incbin	"pcm/P2_W0044_OrganClick.pcm", 0, 64	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0044_OrganClick.wav (8-bit)
+; wave 45: 128 8-bit samples (128 B); entries 65, 66
+P2_W0045:	.incbin	"pcm/P2_W0045.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0045.wav (8-bit)
+; wave 46: 64 8-bit samples (64 B); entries 67, 68
+P2_W0046:	.incbin	"pcm/P2_W0046.pcm", 0, 64	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0046.wav (8-bit)
+; wave 47: 2,864 8-bit samples (2,864 B); entries 69, 70, 71
+P2_W0047:	.incbin	"pcm/P2_W0047.pcm", 0, 2864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0047.wav (8-bit)
+; wave 48: 16 16-bit samples (32 B); entry 72
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0048_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2cddb0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 49: 16 samples (32 B); entry 73
-P2_W0049:	.incbin	"kn5000_waveform_rom.ic307", 0x2cddd0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 50: 16 samples (32 B); entry 74
-P2_W0050:	.incbin	"kn5000_waveform_rom.ic307", 0x2cddf0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 51: 16 samples (32 B); entry 75
-P2_W0051:	.incbin	"kn5000_waveform_rom.ic307", 0x2cde10, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 52: 16 samples (32 B); entry 76
-P2_W0052:	.incbin	"kn5000_waveform_rom.ic307", 0x2cde30, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 53: 1,480 samples (2,960 B); entries 77, 78, 79
-P2_W0053:	.incbin	"kn5000_waveform_rom.ic307", 0x2cde50, 2960	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 54: 16 samples (32 B); entry 80
+P2_W0048_OrganClick:	.incbin	"pcm/P2_W0048_OrganClick.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0048_OrganClick.wav (16-bit)
+; wave 49: 16 16-bit samples (32 B); entry 73
+P2_W0049:	.incbin	"pcm/P2_W0049.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0049.wav (16-bit)
+; wave 50: 16 16-bit samples (32 B); entry 74
+P2_W0050:	.incbin	"pcm/P2_W0050.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0050.wav (16-bit)
+; wave 51: 16 16-bit samples (32 B); entry 75
+P2_W0051:	.incbin	"pcm/P2_W0051.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0051.wav (16-bit)
+; wave 52: 16 16-bit samples (32 B); entry 76
+P2_W0052:	.incbin	"pcm/P2_W0052.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0052.wav (16-bit)
+; wave 53: 2,960 8-bit samples (2,960 B); entries 77, 78, 79
+P2_W0053:	.incbin	"pcm/P2_W0053.pcm", 0, 2960	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0053.wav (8-bit)
+; wave 54: 16 16-bit samples (32 B); entry 80
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0054_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2ce9e0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 55: 16 samples (32 B); entry 81
-P2_W0055:	.incbin	"kn5000_waveform_rom.ic307", 0x2cea00, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 56: 32 samples (64 B); entries 82, 83
-P2_W0056:	.incbin	"kn5000_waveform_rom.ic307", 0x2cea20, 64	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 57: 16 samples (32 B); entry 84
-P2_W0057:	.incbin	"kn5000_waveform_rom.ic307", 0x2cea60, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 58: 1,480 samples (2,960 B); entries 85, 86, 87
-P2_W0058:	.incbin	"kn5000_waveform_rom.ic307", 0x2cea80, 2960	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 59: 16 samples (32 B); entry 88
+P2_W0054_OrganClick:	.incbin	"pcm/P2_W0054_OrganClick.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0054_OrganClick.wav (16-bit)
+; wave 55: 16 16-bit samples (32 B); entry 81
+P2_W0055:	.incbin	"pcm/P2_W0055.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0055.wav (16-bit)
+; wave 56: 64 8-bit samples (64 B); entries 82, 83
+P2_W0056:	.incbin	"pcm/P2_W0056.pcm", 0, 64	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0056.wav (8-bit)
+; wave 57: 16 16-bit samples (32 B); entry 84
+P2_W0057:	.incbin	"pcm/P2_W0057.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0057.wav (16-bit)
+; wave 58: 2,960 8-bit samples (2,960 B); entries 85, 86, 87
+P2_W0058:	.incbin	"pcm/P2_W0058.pcm", 0, 2960	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0058.wav (8-bit)
+; wave 59: 16 16-bit samples (32 B); entry 88
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0059_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2cf610, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 60: 16 samples (32 B); entry 89
-P2_W0060:	.incbin	"kn5000_waveform_rom.ic307", 0x2cf630, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 61: 16 samples (32 B); entry 90
-P2_W0061:	.incbin	"kn5000_waveform_rom.ic307", 0x2cf650, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 62: 16 samples (32 B); entry 91
-P2_W0062:	.incbin	"kn5000_waveform_rom.ic307", 0x2cf670, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 63: 48 samples (96 B); entries 92, 93
-P2_W0063:	.incbin	"kn5000_waveform_rom.ic307", 0x2cf690, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 64: 1,544 samples (3,088 B); entries 94, 95
-P2_W0064:	.incbin	"kn5000_waveform_rom.ic307", 0x2cf6f0, 3088	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 65: 16 samples (32 B); entry 96
+P2_W0059_OrganClick:	.incbin	"pcm/P2_W0059_OrganClick.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0059_OrganClick.wav (16-bit)
+; wave 60: 16 16-bit samples (32 B); entry 89
+P2_W0060:	.incbin	"pcm/P2_W0060.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0060.wav (16-bit)
+; wave 61: 16 16-bit samples (32 B); entry 90
+P2_W0061:	.incbin	"pcm/P2_W0061.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0061.wav (16-bit)
+; wave 62: 16 16-bit samples (32 B); entry 91
+P2_W0062:	.incbin	"pcm/P2_W0062.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0062.wav (16-bit)
+; wave 63: 96 8-bit samples (96 B); entries 92, 93
+P2_W0063:	.incbin	"pcm/P2_W0063.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0063.wav (8-bit)
+; wave 64: 3,088 8-bit samples (3,088 B); entries 94, 95
+P2_W0064:	.incbin	"pcm/P2_W0064.pcm", 0, 3088	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0064.wav (8-bit)
+; wave 65: 16 16-bit samples (32 B); entry 96
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0065_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0300, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 66: 48 samples (96 B); entries 97, 98, 99
-P2_W0066:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0320, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 67: 48 samples (96 B); entries 100, 101
-P2_W0067:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0380, 96	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 68: 1,448 samples (2,896 B); entries 102, 103
-P2_W0068:	.incbin	"kn5000_waveform_rom.ic307", 0x2d03e0, 2896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 69: 16 samples (32 B); entry 104
+P2_W0065_OrganClick:	.incbin	"pcm/P2_W0065_OrganClick.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0065_OrganClick.wav (16-bit)
+; wave 66: 96 8-bit samples (96 B); entries 97, 98, 99
+P2_W0066:	.incbin	"pcm/P2_W0066.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0066.wav (8-bit)
+; wave 67: 96 8-bit samples (96 B); entries 100, 101
+P2_W0067:	.incbin	"pcm/P2_W0067.pcm", 0, 96	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0067.wav (8-bit)
+; wave 68: 2,896 8-bit samples (2,896 B); entries 102, 103
+P2_W0068:	.incbin	"pcm/P2_W0068.pcm", 0, 2896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0068.wav (8-bit)
+; wave 69: 16 16-bit samples (32 B); entry 104
 ;   source "Organ Click"
 ;   tones Accomp Drawbars, Pop Organ, Rock Organ, Soul Organ
 ;   drums Organ Click
-P2_W0069_OrganClick:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0f30, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 70: 16 samples (32 B); entry 105
-P2_W0070:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0f50, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 71: 64 samples (128 B); entries 106, 107, 108, 109
-P2_W0071:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0f70, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 72: 16 samples (32 B); entry 110
-P2_W0072:	.incbin	"kn5000_waveform_rom.ic307", 0x2d0ff0, 32	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 73: 1,448 samples (2,896 B); entry 111
-P2_W0073:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1010, 2896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 74: 64 samples (128 B); entry 112
+P2_W0069_OrganClick:	.incbin	"pcm/P2_W0069_OrganClick.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0069_OrganClick.wav (16-bit)
+; wave 70: 16 16-bit samples (32 B); entry 105
+P2_W0070:	.incbin	"pcm/P2_W0070.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0070.wav (16-bit)
+; wave 71: 128 8-bit samples (128 B); entries 106, 107, 108, 109
+P2_W0071:	.incbin	"pcm/P2_W0071.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0071.wav (8-bit)
+; wave 72: 16 16-bit samples (32 B); entry 110
+P2_W0072:	.incbin	"pcm/P2_W0072.pcm", 0, 32	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0072.wav (16-bit)
+; wave 73: 2,896 8-bit samples (2,896 B); entry 111
+P2_W0073:	.incbin	"pcm/P2_W0073.pcm", 0, 2896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0073.wav (8-bit)
+; wave 74: 64 16-bit samples (128 B); entry 112
 ;   source "16'"
 ;   tones Organ Bass, Soul Organ
-P2_W0074_16ft:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 75: 64 samples (128 B); entry 113
-P2_W0075_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 76: 64 samples (128 B); entry 114
-P2_W0076_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 77: 64 samples (128 B); entry 115
-P2_W0077_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 78: 64 samples (128 B); entry 116
-P2_W0078_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 79: 64 samples (128 B); entry 117
-P2_W0079_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 80: 64 samples (128 B); entry 118
-P2_W0080_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 81: 64 samples (128 B); entry 119
-P2_W0081_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 82: 64 samples (128 B); entry 120
-P2_W0082_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 83: 64 samples (128 B); entry 121
-P2_W0083_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d1fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 84: 64 samples (128 B); entry 122
-P2_W0084_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 85: 64 samples (128 B); entry 123
-P2_W0085_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d20e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 86: 64 samples (128 B); entry 124
-P2_W0086_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 87: 64 samples (128 B); entry 125
-P2_W0087_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d21e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 88: 64 samples (128 B); entry 126
-P2_W0088_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 89: 64 samples (128 B); entry 127
-P2_W0089_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d22e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 90: 64 samples (128 B); entry 128
-P2_W0090_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 91: 64 samples (128 B); entry 129
-P2_W0091_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d23e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 92: 64 samples (128 B); entry 130
-P2_W0092_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 93: 64 samples (128 B); entry 131
-P2_W0093_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d24e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 94: 64 samples (128 B); entry 132
-P2_W0094_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 95: 64 samples (128 B); entry 133
-P2_W0095_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d25e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 96: 64 samples (128 B); entry 134
-P2_W0096_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 97: 64 samples (128 B); entry 135
-P2_W0097_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d26e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 98: 64 samples (128 B); entry 136
-P2_W0098_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 99: 64 samples (128 B); entry 137
-P2_W0099_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d27e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 100: 64 samples (128 B); entry 138
-P2_W0100_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 101: 64 samples (128 B); entry 139
-P2_W0101_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d28e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 102: 64 samples (128 B); entry 140
-P2_W0102_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 103: 64 samples (128 B); entry 141
-P2_W0103_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d29e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 104: 64 samples (128 B); entry 142
-P2_W0104_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 105: 64 samples (128 B); entry 143
-P2_W0105_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 106: 64 samples (128 B); entry 144
-P2_W0106_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 107: 64 samples (128 B); entry 145
-P2_W0107_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 108: 64 samples (128 B); entry 146
-P2_W0108_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 109: 64 samples (128 B); entry 147
-P2_W0109_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 110: 64 samples (128 B); entry 148
-P2_W0110_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 111: 64 samples (128 B); entry 149
-P2_W0111_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 112: 64 samples (128 B); entry 150
+P2_W0074_16ft:	.incbin	"pcm/P2_W0074_16ft.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0074_16ft.wav (16-bit)
+; wave 75: 64 16-bit samples (128 B); entry 113
+P2_W0075_Drawbar:	.incbin	"pcm/P2_W0075_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0075_Drawbar.wav (16-bit)
+; wave 76: 64 16-bit samples (128 B); entry 114
+P2_W0076_Drawbar:	.incbin	"pcm/P2_W0076_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0076_Drawbar.wav (16-bit)
+; wave 77: 64 16-bit samples (128 B); entry 115
+P2_W0077_Drawbar:	.incbin	"pcm/P2_W0077_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0077_Drawbar.wav (16-bit)
+; wave 78: 64 16-bit samples (128 B); entry 116
+P2_W0078_Drawbar:	.incbin	"pcm/P2_W0078_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0078_Drawbar.wav (16-bit)
+; wave 79: 64 16-bit samples (128 B); entry 117
+P2_W0079_Drawbar:	.incbin	"pcm/P2_W0079_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0079_Drawbar.wav (16-bit)
+; wave 80: 64 16-bit samples (128 B); entry 118
+P2_W0080_Drawbar:	.incbin	"pcm/P2_W0080_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0080_Drawbar.wav (16-bit)
+; wave 81: 64 16-bit samples (128 B); entry 119
+P2_W0081_Drawbar:	.incbin	"pcm/P2_W0081_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0081_Drawbar.wav (16-bit)
+; wave 82: 64 16-bit samples (128 B); entry 120
+P2_W0082_Drawbar:	.incbin	"pcm/P2_W0082_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0082_Drawbar.wav (16-bit)
+; wave 83: 64 16-bit samples (128 B); entry 121
+P2_W0083_Drawbar:	.incbin	"pcm/P2_W0083_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0083_Drawbar.wav (16-bit)
+; wave 84: 64 16-bit samples (128 B); entry 122
+P2_W0084_Drawbar:	.incbin	"pcm/P2_W0084_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0084_Drawbar.wav (16-bit)
+; wave 85: 64 16-bit samples (128 B); entry 123
+P2_W0085_Drawbar:	.incbin	"pcm/P2_W0085_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0085_Drawbar.wav (16-bit)
+; wave 86: 64 16-bit samples (128 B); entry 124
+P2_W0086_Drawbar:	.incbin	"pcm/P2_W0086_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0086_Drawbar.wav (16-bit)
+; wave 87: 64 16-bit samples (128 B); entry 125
+P2_W0087_Drawbar:	.incbin	"pcm/P2_W0087_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0087_Drawbar.wav (16-bit)
+; wave 88: 64 16-bit samples (128 B); entry 126
+P2_W0088_Drawbar:	.incbin	"pcm/P2_W0088_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0088_Drawbar.wav (16-bit)
+; wave 89: 64 16-bit samples (128 B); entry 127
+P2_W0089_Drawbar:	.incbin	"pcm/P2_W0089_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0089_Drawbar.wav (16-bit)
+; wave 90: 64 16-bit samples (128 B); entry 128
+P2_W0090_Drawbar:	.incbin	"pcm/P2_W0090_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0090_Drawbar.wav (16-bit)
+; wave 91: 64 16-bit samples (128 B); entry 129
+P2_W0091_Drawbar:	.incbin	"pcm/P2_W0091_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0091_Drawbar.wav (16-bit)
+; wave 92: 64 16-bit samples (128 B); entry 130
+P2_W0092_Drawbar:	.incbin	"pcm/P2_W0092_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0092_Drawbar.wav (16-bit)
+; wave 93: 64 16-bit samples (128 B); entry 131
+P2_W0093_Drawbar:	.incbin	"pcm/P2_W0093_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0093_Drawbar.wav (16-bit)
+; wave 94: 64 16-bit samples (128 B); entry 132
+P2_W0094_Drawbar:	.incbin	"pcm/P2_W0094_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0094_Drawbar.wav (16-bit)
+; wave 95: 64 16-bit samples (128 B); entry 133
+P2_W0095_Drawbar:	.incbin	"pcm/P2_W0095_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0095_Drawbar.wav (16-bit)
+; wave 96: 64 16-bit samples (128 B); entry 134
+P2_W0096_Drawbar:	.incbin	"pcm/P2_W0096_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0096_Drawbar.wav (16-bit)
+; wave 97: 64 16-bit samples (128 B); entry 135
+P2_W0097_Drawbar:	.incbin	"pcm/P2_W0097_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0097_Drawbar.wav (16-bit)
+; wave 98: 64 16-bit samples (128 B); entry 136
+P2_W0098_Drawbar:	.incbin	"pcm/P2_W0098_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0098_Drawbar.wav (16-bit)
+; wave 99: 64 16-bit samples (128 B); entry 137
+P2_W0099_Drawbar:	.incbin	"pcm/P2_W0099_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0099_Drawbar.wav (16-bit)
+; wave 100: 64 16-bit samples (128 B); entry 138
+P2_W0100_Drawbar:	.incbin	"pcm/P2_W0100_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0100_Drawbar.wav (16-bit)
+; wave 101: 64 16-bit samples (128 B); entry 139
+P2_W0101_Drawbar:	.incbin	"pcm/P2_W0101_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0101_Drawbar.wav (16-bit)
+; wave 102: 64 16-bit samples (128 B); entry 140
+P2_W0102_Drawbar:	.incbin	"pcm/P2_W0102_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0102_Drawbar.wav (16-bit)
+; wave 103: 64 16-bit samples (128 B); entry 141
+P2_W0103_Drawbar:	.incbin	"pcm/P2_W0103_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0103_Drawbar.wav (16-bit)
+; wave 104: 64 16-bit samples (128 B); entry 142
+P2_W0104_Drawbar:	.incbin	"pcm/P2_W0104_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0104_Drawbar.wav (16-bit)
+; wave 105: 64 16-bit samples (128 B); entry 143
+P2_W0105_Drawbar:	.incbin	"pcm/P2_W0105_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0105_Drawbar.wav (16-bit)
+; wave 106: 64 16-bit samples (128 B); entry 144
+P2_W0106_Drawbar:	.incbin	"pcm/P2_W0106_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0106_Drawbar.wav (16-bit)
+; wave 107: 64 16-bit samples (128 B); entry 145
+P2_W0107_Drawbar:	.incbin	"pcm/P2_W0107_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0107_Drawbar.wav (16-bit)
+; wave 108: 64 16-bit samples (128 B); entry 146
+P2_W0108_Drawbar:	.incbin	"pcm/P2_W0108_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0108_Drawbar.wav (16-bit)
+; wave 109: 64 16-bit samples (128 B); entry 147
+P2_W0109_Drawbar:	.incbin	"pcm/P2_W0109_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0109_Drawbar.wav (16-bit)
+; wave 110: 64 16-bit samples (128 B); entry 148
+P2_W0110_Drawbar:	.incbin	"pcm/P2_W0110_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0110_Drawbar.wav (16-bit)
+; wave 111: 64 16-bit samples (128 B); entry 149
+P2_W0111_Drawbar:	.incbin	"pcm/P2_W0111_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0111_Drawbar.wav (16-bit)
+; wave 112: 64 16-bit samples (128 B); entry 150
 ;   source "16' & 8'"
 ;   tones Accomp Drawbars, Perc Organ, Pop Organ
-P2_W0112_16ftAnd8ft:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 113: 64 samples (128 B); entry 151
-P2_W0113_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 114: 64 samples (128 B); entry 152
-P2_W0114_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 115: 64 samples (128 B); entry 153
-P2_W0115_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d2fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 116: 64 samples (128 B); entry 154
-P2_W0116_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 117: 64 samples (128 B); entry 155
-P2_W0117_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d30e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 118: 64 samples (128 B); entry 156
-P2_W0118_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 119: 64 samples (128 B); entry 157
-P2_W0119_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d31e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 120: 64 samples (128 B); entry 158
-P2_W0120_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 121: 64 samples (128 B); entry 159
-P2_W0121_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d32e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 122: 64 samples (128 B); entry 160
-P2_W0122_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 123: 64 samples (128 B); entry 161
-P2_W0123_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d33e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 124: 64 samples (128 B); entry 162
-P2_W0124_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 125: 64 samples (128 B); entry 163
-P2_W0125_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d34e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 126: 64 samples (128 B); entry 164
-P2_W0126_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 127: 128 samples (256 B); entry 165
-P2_W0127_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d35e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 128: 64 samples (128 B); entry 166
-P2_W0128_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d36e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 129: 64 samples (128 B); entry 167
-P2_W0129_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 130: 64 samples (128 B); entry 168
-P2_W0130_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d37e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 131: 64 samples (128 B); entry 169
-P2_W0131_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 132: 64 samples (128 B); entry 170
-P2_W0132_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d38e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 133: 64 samples (128 B); entry 171
-P2_W0133_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 134: 64 samples (128 B); entry 172
-P2_W0134_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d39e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 135: 64 samples (128 B); entry 173
-P2_W0135_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 136: 128 samples (256 B); entry 174
-P2_W0136_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 137: 64 samples (128 B); entry 175
-P2_W0137_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 138: 64 samples (128 B); entry 176
-P2_W0138_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 139: 64 samples (128 B); entry 177
-P2_W0139_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 140: 64 samples (128 B); entry 178
-P2_W0140_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 141: 64 samples (128 B); entry 179
-P2_W0141_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 142: 64 samples (128 B); entry 180
-P2_W0142_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 143: 64 samples (128 B); entry 181
-P2_W0143_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 144: 64 samples (128 B); entry 182
-P2_W0144_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 145: 128 samples (256 B); entry 183
-P2_W0145_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d3fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 146: 64 samples (128 B); entry 184
-P2_W0146_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d40e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 147: 64 samples (128 B); entry 185
-P2_W0147_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 148: 64 samples (128 B); entry 186
-P2_W0148_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d41e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 149: 64 samples (128 B); entry 187
-P2_W0149_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 150: 64 samples (128 B); entry 188
-P2_W0150_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d42e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 151: 64 samples (128 B); entry 189
-P2_W0151_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 152: 64 samples (128 B); entry 190
-P2_W0152_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d43e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 153: 64 samples (128 B); entry 191
-P2_W0153_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 154: 128 samples (256 B); entry 192
-P2_W0154_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d44e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 155: 64 samples (128 B); entry 193
-P2_W0155_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d45e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 156: 64 samples (128 B); entry 194
-P2_W0156_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 157: 64 samples (128 B); entry 195
-P2_W0157_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d46e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 158: 64 samples (128 B); entry 196
-P2_W0158_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 159: 64 samples (128 B); entry 197
-P2_W0159_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d47e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 160: 64 samples (128 B); entry 198
-P2_W0160_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 161: 64 samples (128 B); entry 199
-P2_W0161_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d48e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 162: 64 samples (128 B); entry 200
-P2_W0162_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 163: 128 samples (256 B); entry 201
-P2_W0163_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d49e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 164: 64 samples (128 B); entry 202
-P2_W0164_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 165: 64 samples (128 B); entry 203
-P2_W0165_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 166: 64 samples (128 B); entry 204
-P2_W0166_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 167: 64 samples (128 B); entry 205
-P2_W0167_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 168: 64 samples (128 B); entry 206
-P2_W0168_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 169: 64 samples (128 B); entry 207
-P2_W0169_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 170: 64 samples (128 B); entry 208
-P2_W0170_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 171: 64 samples (128 B); entry 209
-P2_W0171_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 172: 128 samples (256 B); entry 210
-P2_W0172_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4ee0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 173: 64 samples (128 B); entry 211
-P2_W0173_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d4fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 174: 64 samples (128 B); entry 212
-P2_W0174_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 175: 64 samples (128 B); entry 213
-P2_W0175_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d50e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 176: 64 samples (128 B); entry 214
-P2_W0176_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 177: 64 samples (128 B); entry 215
-P2_W0177_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d51e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 178: 64 samples (128 B); entry 216
-P2_W0178_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 179: 64 samples (128 B); entry 217
-P2_W0179_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d52e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 180: 64 samples (128 B); entry 218
-P2_W0180_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 181: 128 samples (256 B); entry 219
-P2_W0181_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d53e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 182: 64 samples (128 B); entry 220
-P2_W0182_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d54e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 183: 64 samples (128 B); entry 221
-P2_W0183_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 184: 64 samples (128 B); entry 222
-P2_W0184_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d55e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 185: 64 samples (128 B); entry 223
-P2_W0185_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 186: 64 samples (128 B); entry 224
-P2_W0186_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d56e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 187: 64 samples (128 B); entry 225
-P2_W0187_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 188: 64 samples (128 B); entry 226
-P2_W0188_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d57e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 189: 64 samples (128 B); entry 227
-P2_W0189_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 190: 128 samples (256 B); entry 228
-P2_W0190_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d58e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 191: 64 samples (128 B); entry 229
-P2_W0191_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d59e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 192: 64 samples (128 B); entry 230
-P2_W0192_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 193: 64 samples (128 B); entry 231
-P2_W0193_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 194: 64 samples (128 B); entry 232
-P2_W0194_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 195: 64 samples (128 B); entry 233
-P2_W0195_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 196: 64 samples (128 B); entry 234
-P2_W0196_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 197: 128 samples (256 B); entry 235
-P2_W0197_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5ce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 198: 128 samples (256 B); entry 236
-P2_W0198_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5de0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 199: 128 samples (256 B); entry 237
-P2_W0199_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5ee0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 200: 64 samples (128 B); entry 238
-P2_W0200_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d5fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 201: 64 samples (128 B); entry 239
-P2_W0201_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 202: 64 samples (128 B); entry 240
-P2_W0202_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d60e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 203: 64 samples (128 B); entry 241
-P2_W0203_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 204: 64 samples (128 B); entry 242
-P2_W0204_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d61e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 205: 64 samples (128 B); entry 243
-P2_W0205_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 206: 128 samples (256 B); entry 244
-P2_W0206_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d62e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 207: 64 samples (128 B); entry 245
-P2_W0207_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d63e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 208: 64 samples (128 B); entry 246
-P2_W0208_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 209: 64 samples (128 B); entry 247
-P2_W0209_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d64e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 210: 64 samples (128 B); entry 248
-P2_W0210_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 211: 64 samples (128 B); entry 249
-P2_W0211_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d65e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 212: 64 samples (128 B); entry 250
-P2_W0212_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 213: 128 samples (256 B); entry 251
-P2_W0213_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d66e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 214: 64 samples (128 B); entry 252
-P2_W0214_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d67e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 215: 64 samples (128 B); entry 253
-P2_W0215_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 216: 64 samples (128 B); entry 254
-P2_W0216_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d68e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 217: 64 samples (128 B); entry 255
-P2_W0217_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 218: 64 samples (128 B); entry 256
-P2_W0218_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d69e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 219: 64 samples (128 B); entry 257
-P2_W0219_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 220: 64 samples (128 B); entry 258
-P2_W0220_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 221: 64 samples (128 B); entry 259
-P2_W0221_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 222: 128 samples (256 B); entry 260
-P2_W0222_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 223: 64 samples (128 B); entry 261
-P2_W0223_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 224: 64 samples (128 B); entry 262
-P2_W0224_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 225: 64 samples (128 B); entry 263
-P2_W0225_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 226: 64 samples (128 B); entry 264
-P2_W0226_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 227: 64 samples (128 B); entry 265
-P2_W0227_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 228: 64 samples (128 B); entry 266
-P2_W0228_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 229: 64 samples (128 B); entry 267
-P2_W0229_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d6fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 230: 64 samples (128 B); entry 268
-P2_W0230_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 231: 128 samples (256 B); entry 269
-P2_W0231_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d70e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 232: 64 samples (128 B); entry 270
-P2_W0232_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d71e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 233: 64 samples (128 B); entry 271
-P2_W0233_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 234: 64 samples (128 B); entry 272
-P2_W0234_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d72e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 235: 64 samples (128 B); entry 273
-P2_W0235_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 236: 64 samples (128 B); entry 274
-P2_W0236_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d73e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 237: 64 samples (128 B); entry 275
-P2_W0237_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 238: 64 samples (128 B); entry 276
-P2_W0238_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d74e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 239: 64 samples (128 B); entry 277
-P2_W0239_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 240: 128 samples (256 B); entry 278
-P2_W0240_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d75e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 241: 64 samples (128 B); entry 279
-P2_W0241_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d76e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 242: 64 samples (128 B); entry 280
-P2_W0242_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 243: 64 samples (128 B); entry 281
-P2_W0243_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d77e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 244: 64 samples (128 B); entry 282
-P2_W0244_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 245: 64 samples (128 B); entry 283
-P2_W0245_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d78e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 246: 64 samples (128 B); entry 284
-P2_W0246_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 247: 64 samples (128 B); entry 285
-P2_W0247_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d79e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 248: 64 samples (128 B); entry 286
-P2_W0248_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 249: 128 samples (256 B); entry 287
-P2_W0249_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 250: 64 samples (128 B); entry 288
-P2_W0250_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 251: 64 samples (128 B); entry 289
-P2_W0251_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 252: 64 samples (128 B); entry 290
-P2_W0252_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 253: 64 samples (128 B); entry 291
-P2_W0253_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 254: 64 samples (128 B); entry 292
-P2_W0254_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 255: 64 samples (128 B); entry 293
-P2_W0255_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 256: 64 samples (128 B); entry 294
-P2_W0256_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 257: 64 samples (128 B); entry 295
-P2_W0257_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 258: 128 samples (256 B); entry 296
-P2_W0258_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d7fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 259: 64 samples (128 B); entry 297
-P2_W0259_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d80e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 260: 64 samples (128 B); entry 298
-P2_W0260_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 261: 64 samples (128 B); entry 299
-P2_W0261_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d81e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 262: 64 samples (128 B); entry 300
-P2_W0262_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 263: 64 samples (128 B); entry 301
-P2_W0263_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d82e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 264: 64 samples (128 B); entry 302
-P2_W0264_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 265: 64 samples (128 B); entry 303
-P2_W0265_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d83e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 266: 64 samples (128 B); entry 304
-P2_W0266_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 267: 128 samples (256 B); entry 305
-P2_W0267_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d84e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 268: 128 samples (256 B); entry 306
-P2_W0268_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d85e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 269: 64 samples (128 B); entry 307
-P2_W0269_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d86e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 270: 128 samples (256 B); entry 308
-P2_W0270_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 271: 128 samples (256 B); entry 309
-P2_W0271_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 272: 128 samples (256 B); entry 310
-P2_W0272_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 273: 64 samples (128 B); entry 311
-P2_W0273_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 274: 64 samples (128 B); entry 312
-P2_W0274_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 275: 64 samples (128 B); entry 313
-P2_W0275_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 276: 64 samples (128 B); entry 314
-P2_W0276_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 277: 64 samples (128 B); entry 315
-P2_W0277_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 278: 64 samples (128 B); entry 316
-P2_W0278_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 279: 128 samples (256 B); entry 317
-P2_W0279_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8d60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 280: 128 samples (256 B); entry 318
-P2_W0280_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8e60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 281: 128 samples (256 B); entry 319
-P2_W0281_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d8f60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 282: 64 samples (128 B); entry 320
-P2_W0282_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 283: 64 samples (128 B); entry 321
-P2_W0283_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d90e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 284: 64 samples (128 B); entry 322
-P2_W0284_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 285: 64 samples (128 B); entry 323
-P2_W0285_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d91e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 286: 64 samples (128 B); entry 324
-P2_W0286_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 287: 64 samples (128 B); entry 325
-P2_W0287_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d92e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 288: 128 samples (256 B); entry 326
-P2_W0288_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 289: 128 samples (256 B); entry 327
-P2_W0289_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9460, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 290: 64 samples (128 B); entry 328
-P2_W0290_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 291: 64 samples (128 B); entry 329
-P2_W0291_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d95e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 292: 64 samples (128 B); entry 330
-P2_W0292_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 293: 64 samples (128 B); entry 331
-P2_W0293_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d96e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 294: 64 samples (128 B); entry 332
-P2_W0294_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 295: 64 samples (128 B); entry 333
-P2_W0295_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d97e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 296: 64 samples (128 B); entry 334
-P2_W0296_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 297: 64 samples (128 B); entry 335
-P2_W0297_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d98e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 298: 64 samples (128 B); entry 336
-P2_W0298_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 299: 64 samples (128 B); entry 337
-P2_W0299_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d99e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 300: 64 samples (128 B); entry 338
-P2_W0300_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 301: 64 samples (128 B); entry 339
-P2_W0301_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 302: 64 samples (128 B); entry 340
-P2_W0302_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 303: 128 samples (256 B); entry 341
-P2_W0303_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 304: 64 samples (128 B); entry 342
-P2_W0304_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 305: 64 samples (128 B); entry 343
-P2_W0305_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 306: 64 samples (128 B); entry 344
-P2_W0306_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 307: 64 samples (128 B); entry 345
-P2_W0307_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 308: 64 samples (128 B); entry 346
-P2_W0308_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 309: 64 samples (128 B); entry 347
-P2_W0309_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 310: 64 samples (128 B); entry 348
-P2_W0310_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2d9fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 311: 64 samples (128 B); entry 349
-P2_W0311_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 312: 128 samples (256 B); entry 350
-P2_W0312_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da0e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 313: 128 samples (256 B); entry 351
-P2_W0313_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da1e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 314: 64 samples (128 B); entry 352
-P2_W0314_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da2e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 315: 256 samples (512 B); entry 353
-P2_W0315_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da360, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 316: 128 samples (256 B); entry 354
-P2_W0316_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 317: 128 samples (256 B); entry 355
-P2_W0317_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 318: 64 samples (128 B); entry 356
-P2_W0318_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 319: 64 samples (128 B); entry 357
-P2_W0319_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da7e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 320: 64 samples (128 B); entry 358
-P2_W0320_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 321: 64 samples (128 B); entry 359
-P2_W0321_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da8e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 322: 64 samples (128 B); entry 360
-P2_W0322_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 323: 64 samples (128 B); entry 361
-P2_W0323_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2da9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 324: 128 samples (256 B); entry 362
-P2_W0324_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2daa60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 325: 128 samples (256 B); entry 363
-P2_W0325_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dab60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 326: 128 samples (256 B); entry 364
-P2_W0326_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dac60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 327: 64 samples (128 B); entry 365
-P2_W0327_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dad60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 328: 64 samples (128 B); entry 366
-P2_W0328_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dade0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 329: 64 samples (128 B); entry 367
-P2_W0329_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dae60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 330: 64 samples (128 B); entry 368
-P2_W0330_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2daee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 331: 64 samples (128 B); entry 369
-P2_W0331_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2daf60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 332: 64 samples (128 B); entry 370
-P2_W0332_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dafe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 333: 128 samples (256 B); entry 371
-P2_W0333_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 334: 128 samples (256 B); entry 372
-P2_W0334_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 335: 64 samples (128 B); entry 373
-P2_W0335_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 336: 64 samples (128 B); entry 374
-P2_W0336_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db2e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 337: 64 samples (128 B); entry 375
-P2_W0337_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 338: 64 samples (128 B); entry 376
-P2_W0338_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db3e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 339: 64 samples (128 B); entry 377
-P2_W0339_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 340: 64 samples (128 B); entry 378
-P2_W0340_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db4e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 341: 64 samples (128 B); entry 379
-P2_W0341_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 342: 64 samples (128 B); entry 380
-P2_W0342_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db5e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 343: 64 samples (128 B); entry 381
-P2_W0343_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 344: 64 samples (128 B); entry 382
-P2_W0344_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db6e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 345: 64 samples (128 B); entry 383
-P2_W0345_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 346: 64 samples (128 B); entry 384
-P2_W0346_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db7e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 347: 64 samples (128 B); entry 385
-P2_W0347_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 348: 128 samples (256 B); entry 386
-P2_W0348_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db8e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 349: 64 samples (128 B); entry 387
-P2_W0349_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2db9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 350: 64 samples (128 B); entry 388
-P2_W0350_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dba60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 351: 64 samples (128 B); entry 389
-P2_W0351_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 352: 64 samples (128 B); entry 390
-P2_W0352_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbb60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 353: 64 samples (128 B); entry 391
-P2_W0353_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbbe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 354: 64 samples (128 B); entry 392
-P2_W0354_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbc60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 355: 64 samples (128 B); entry 393
-P2_W0355_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 356: 64 samples (128 B); entry 394
-P2_W0356_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbd60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 357: 256 samples (512 B); entry 395
-P2_W0357_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbde0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 358: 256 samples (512 B); entry 396
-P2_W0358_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dbfe0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 359: 128 samples (256 B); entry 397
-P2_W0359_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dc1e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 360: 256 samples (512 B); entry 398
-P2_W0360_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dc2e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 361: 256 samples (512 B); entry 399
-P2_W0361_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dc4e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 362: 256 samples (512 B); entry 400
-P2_W0362_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dc6e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 363: 256 samples (512 B); entry 401
-P2_W0363_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dc8e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 364: 128 samples (256 B); entry 402
-P2_W0364_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dcae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 365: 128 samples (256 B); entry 403
-P2_W0365_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dcbe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 366: 128 samples (256 B); entry 404
-P2_W0366_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dcce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 367: 128 samples (256 B); entry 405
-P2_W0367_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dcde0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 368: 128 samples (256 B); entry 406
-P2_W0368_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dcee0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 369: 256 samples (512 B); entry 407
-P2_W0369_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dcfe0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 370: 256 samples (512 B); entry 408
-P2_W0370_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dd1e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 371: 256 samples (512 B); entry 409
-P2_W0371_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dd3e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 372: 256 samples (512 B); entry 410
-P2_W0372_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dd5e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 373: 128 samples (256 B); entry 411
-P2_W0373_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dd7e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 374: 128 samples (256 B); entry 412
-P2_W0374_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dd8e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 375: 128 samples (256 B); entry 413
-P2_W0375_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dd9e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 376: 128 samples (256 B); entry 414
-P2_W0376_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ddae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 377: 128 samples (256 B); entry 415
-P2_W0377_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ddbe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 378: 256 samples (512 B); entry 416
-P2_W0378_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ddce0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 379: 128 samples (256 B); entry 417
-P2_W0379_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ddee0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 380: 128 samples (256 B); entry 418
-P2_W0380_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ddfe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 381: 128 samples (256 B); entry 419
-P2_W0381_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de0e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 382: 128 samples (256 B); entry 420
-P2_W0382_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de1e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 383: 128 samples (256 B); entry 421
-P2_W0383_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de2e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 384: 128 samples (256 B); entry 422
-P2_W0384_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de3e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 385: 128 samples (256 B); entry 423
-P2_W0385_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de4e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 386: 64 samples (128 B); entry 424
-P2_W0386_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de5e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 387: 128 samples (256 B); entry 425
-P2_W0387_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 388: 128 samples (256 B); entry 426
-P2_W0388_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 389: 64 samples (128 B); entry 427
-P2_W0389_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 390: 128 samples (256 B); entry 428
-P2_W0390_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de8e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 391: 128 samples (256 B); entry 429
-P2_W0391_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2de9e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 392: 64 samples (128 B); entry 430
-P2_W0392_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2deae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 393: 128 samples (256 B); entry 431
-P2_W0393_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2deb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 394: 128 samples (256 B); entry 432
-P2_W0394_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dec60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 395: 128 samples (256 B); entry 433
-P2_W0395_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ded60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 396: 128 samples (256 B); entry 434
-P2_W0396_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dee60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 397: 128 samples (256 B); entry 435
-P2_W0397_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2def60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 398: 64 samples (128 B); entry 436
-P2_W0398_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 399: 64 samples (128 B); entry 437
-P2_W0399_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df0e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 400: 64 samples (128 B); entry 438
-P2_W0400_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 401: 64 samples (128 B); entry 439
-P2_W0401_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df1e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 402: 256 samples (512 B); entry 440
-P2_W0402_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df260, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 403: 256 samples (512 B); entry 441
-P2_W0403_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df460, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 404: 128 samples (256 B); entry 442
-P2_W0404_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 405: 256 samples (512 B); entry 443
-P2_W0405_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df760, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 406: 256 samples (512 B); entry 444
-P2_W0406_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2df960, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 407: 256 samples (512 B); entry 445
-P2_W0407_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dfb60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 408: 128 samples (256 B); entry 446
-P2_W0408_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dfd60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 409: 128 samples (256 B); entry 447
-P2_W0409_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dfe60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 410: 128 samples (256 B); entry 448
-P2_W0410_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2dff60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 411: 128 samples (256 B); entry 449
-P2_W0411_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 412: 128 samples (256 B); entry 450
-P2_W0412_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 413: 128 samples (256 B); entry 451
-P2_W0413_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 414: 256 samples (512 B); entry 452
-P2_W0414_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0360, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 415: 256 samples (512 B); entry 453
-P2_W0415_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0560, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 416: 256 samples (512 B); entry 454
-P2_W0416_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0760, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 417: 128 samples (256 B); entry 455
-P2_W0417_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 418: 128 samples (256 B); entry 456
-P2_W0418_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0a60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 419: 128 samples (256 B); entry 457
-P2_W0419_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0b60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 420: 128 samples (256 B); entry 458
-P2_W0420_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0c60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 421: 128 samples (256 B); entry 459
-P2_W0421_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0d60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 422: 128 samples (256 B); entry 460
-P2_W0422_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0e60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 423: 128 samples (256 B); entry 461
-P2_W0423_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e0f60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 424: 128 samples (256 B); entry 462
-P2_W0424_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 425: 64 samples (128 B); entry 463
-P2_W0425_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 426: 128 samples (256 B); entry 464
-P2_W0426_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e11e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 427: 128 samples (256 B); entry 465
-P2_W0427_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e12e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 428: 64 samples (128 B); entry 466
-P2_W0428_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e13e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 429: 128 samples (256 B); entry 467
-P2_W0429_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1460, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 430: 128 samples (256 B); entry 468
-P2_W0430_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 431: 64 samples (128 B); entry 469
-P2_W0431_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 432: 128 samples (256 B); entry 470
-P2_W0432_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e16e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 433: 128 samples (256 B); entry 471
-P2_W0433_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e17e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 434: 64 samples (128 B); entry 472
-P2_W0434_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e18e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 435: 128 samples (256 B); entry 473
-P2_W0435_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 436: 128 samples (256 B); entry 474
-P2_W0436_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1a60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 437: 64 samples (128 B); entry 475
-P2_W0437_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 438: 128 samples (256 B); entry 476
-P2_W0438_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 439: 128 samples (256 B); entry 477
-P2_W0439_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1ce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 440: 128 samples (256 B); entry 478
-P2_W0440_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1de0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 441: 128 samples (256 B); entry 479
-P2_W0441_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1ee0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 442: 128 samples (256 B); entry 480
-P2_W0442_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e1fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 443: 128 samples (256 B); entry 481
-P2_W0443_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e20e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 444: 128 samples (256 B); entry 482
-P2_W0444_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e21e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 445: 64 samples (128 B); entry 483
-P2_W0445_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e22e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 446: 64 samples (128 B); entry 484
-P2_W0446_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e2360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 447: 256 samples (512 B); entry 485
-P2_W0447_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e23e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 448: 256 samples (512 B); entry 486
-P2_W0448_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e25e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 449: 128 samples (256 B); entry 487
-P2_W0449_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e27e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 450: 256 samples (512 B); entry 488
-P2_W0450_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e28e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 451: 256 samples (512 B); entry 489
-P2_W0451_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e2ae0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 452: 256 samples (512 B); entry 490
-P2_W0452_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e2ce0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 453: 256 samples (512 B); entry 491
-P2_W0453_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e2ee0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 454: 256 samples (512 B); entry 492
-P2_W0454_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e30e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 455: 128 samples (256 B); entry 493
-P2_W0455_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e32e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 456: 128 samples (256 B); entry 494
-P2_W0456_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e33e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 457: 128 samples (256 B); entry 495
-P2_W0457_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e34e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 458: 128 samples (256 B); entry 496
-P2_W0458_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e35e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 459: 256 samples (512 B); entry 497
-P2_W0459_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e36e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 460: 256 samples (512 B); entry 498
-P2_W0460_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e38e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 461: 256 samples (512 B); entry 499
-P2_W0461_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e3ae0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 462: 256 samples (512 B); entry 500
-P2_W0462_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e3ce0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 463: 256 samples (512 B); entry 501
-P2_W0463_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e3ee0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 464: 128 samples (256 B); entry 502
-P2_W0464_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e40e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 465: 128 samples (256 B); entry 503
-P2_W0465_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e41e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 466: 128 samples (256 B); entry 504
-P2_W0466_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e42e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 467: 128 samples (256 B); entry 505
-P2_W0467_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e43e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 468: 256 samples (512 B); entry 506
-P2_W0468_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e44e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 469: 256 samples (512 B); entry 507
-P2_W0469_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e46e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 470: 128 samples (256 B); entry 508
-P2_W0470_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e48e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 471: 256 samples (512 B); entry 509
-P2_W0471_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e49e0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 472: 128 samples (256 B); entry 510
-P2_W0472_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e4be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 473: 128 samples (256 B); entry 511
-P2_W0473_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e4ce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 474: 256 samples (512 B); entry 512
-P2_W0474_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e4de0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 475: 128 samples (256 B); entry 513
-P2_W0475_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e4fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 476: 64 samples (128 B); entry 514
-P2_W0476_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e50e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 477: 256 samples (512 B); entry 515
-P2_W0477_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5160, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 478: 128 samples (256 B); entry 516
-P2_W0478_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 479: 64 samples (128 B); entry 517
-P2_W0479_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 480: 128 samples (256 B); entry 518
-P2_W0480_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e54e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 481: 128 samples (256 B); entry 519
-P2_W0481_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e55e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 482: 128 samples (256 B); entry 520
-P2_W0482_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e56e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 483: 128 samples (256 B); entry 521
-P2_W0483_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e57e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 484: 128 samples (256 B); entry 522
-P2_W0484_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e58e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 485: 128 samples (256 B); entry 523
-P2_W0485_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e59e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 486: 128 samples (256 B); entry 524
-P2_W0486_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 487: 64 samples (128 B); entry 525
-P2_W0487_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 488: 64 samples (128 B); entry 526
-P2_W0488_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 489: 64 samples (128 B); entry 527
-P2_W0489_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 490: 64 samples (128 B); entry 528
-P2_W0490_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 491: 64 samples (128 B); entry 529
-P2_W0491_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 492: 256 samples (512 B); entry 530
-P2_W0492_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e5e60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 493: 256 samples (512 B); entry 531
-P2_W0493_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6060, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 494: 256 samples (512 B); entry 532
-P2_W0494_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6260, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 495: 256 samples (512 B); entry 533
-P2_W0495_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6460, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 496: 256 samples (512 B); entry 534
-P2_W0496_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6660, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 497: 256 samples (512 B); entry 535
-P2_W0497_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6860, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 498: 128 samples (256 B); entry 536
-P2_W0498_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6a60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 499: 128 samples (256 B); entry 537
-P2_W0499_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6b60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 500: 128 samples (256 B); entry 538
-P2_W0500_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6c60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 501: 256 samples (512 B); entry 539
-P2_W0501_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6d60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 502: 256 samples (512 B); entry 540
-P2_W0502_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e6f60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 503: 256 samples (512 B); entry 541
-P2_W0503_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7160, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 504: 256 samples (512 B); entry 542
-P2_W0504_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7360, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 505: 256 samples (512 B); entry 543
-P2_W0505_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7560, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 506: 256 samples (512 B); entry 544
-P2_W0506_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7760, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 507: 128 samples (256 B); entry 545
-P2_W0507_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 508: 128 samples (256 B); entry 546
-P2_W0508_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7a60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 509: 128 samples (256 B); entry 547
-P2_W0509_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7b60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 510: 256 samples (512 B); entry 548
-P2_W0510_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7c60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 511: 256 samples (512 B); entry 549
-P2_W0511_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e7e60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 512: 256 samples (512 B); entry 550
-P2_W0512_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8060, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 513: 256 samples (512 B); entry 551
-P2_W0513_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8260, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 514: 256 samples (512 B); entry 552
-P2_W0514_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8460, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 515: 256 samples (512 B); entry 553
-P2_W0515_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8660, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 516: 128 samples (256 B); entry 554
-P2_W0516_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 517: 128 samples (256 B); entry 555
-P2_W0517_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 518: 128 samples (256 B); entry 556
-P2_W0518_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8a60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 519: 256 samples (512 B); entry 557
-P2_W0519_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8b60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 520: 256 samples (512 B); entry 558
-P2_W0520_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8d60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 521: 256 samples (512 B); entry 559
-P2_W0521_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e8f60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 522: 256 samples (512 B); entry 560
-P2_W0522_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9160, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 523: 256 samples (512 B); entry 561
-P2_W0523_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9360, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 524: 128 samples (256 B); entry 562
-P2_W0524_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 525: 128 samples (256 B); entry 563
-P2_W0525_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 526: 128 samples (256 B); entry 564
-P2_W0526_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 527: 128 samples (256 B); entry 565
-P2_W0527_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 528: 256 samples (512 B); entry 566
-P2_W0528_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9960, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 529: 256 samples (512 B); entry 567
-P2_W0529_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9b60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 530: 256 samples (512 B); entry 568
-P2_W0530_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9d60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 531: 128 samples (256 B); entry 569
-P2_W0531_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2e9f60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 532: 128 samples (256 B); entry 570
-P2_W0532_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 533: 128 samples (256 B); entry 571
-P2_W0533_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 534: 128 samples (256 B); entry 572
-P2_W0534_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 535: 128 samples (256 B); entry 573
-P2_W0535_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 536: 128 samples (256 B); entry 574
-P2_W0536_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea460, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 537: 256 samples (512 B); entry 575
-P2_W0537_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea560, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 538: 256 samples (512 B); entry 576
-P2_W0538_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea760, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 539: 256 samples (512 B); entry 577
-P2_W0539_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ea960, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 540: 128 samples (256 B); entry 578
-P2_W0540_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eab60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 541: 128 samples (256 B); entry 579
-P2_W0541_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eac60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 542: 128 samples (256 B); entry 580
-P2_W0542_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ead60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 543: 128 samples (256 B); entry 581
-P2_W0543_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eae60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 544: 128 samples (256 B); entry 582
-P2_W0544_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eaf60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 545: 128 samples (256 B); entry 583
-P2_W0545_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 546: 256 samples (512 B); entry 584
-P2_W0546_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb160, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 547: 256 samples (512 B); entry 585
-P2_W0547_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb360, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 548: 256 samples (512 B); entry 586
-P2_W0548_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb560, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 549: 128 samples (256 B); entry 587
-P2_W0549_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 550: 128 samples (256 B); entry 588
-P2_W0550_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 551: 128 samples (256 B); entry 589
-P2_W0551_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eb960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 552: 128 samples (256 B); entry 590
-P2_W0552_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eba60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 553: 128 samples (256 B); entry 591
-P2_W0553_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ebb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 554: 128 samples (256 B); entry 592
-P2_W0554_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ebc60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 555: 256 samples (512 B); entry 593
-P2_W0555_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ebd60, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 556: 128 samples (256 B); entry 594
-P2_W0556_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ebf60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 557: 128 samples (256 B); entry 595
-P2_W0557_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 558: 128 samples (256 B); entry 596
-P2_W0558_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 559: 128 samples (256 B); entry 597
-P2_W0559_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 560: 64 samples (128 B); entry 598
-P2_W0560_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 561: 64 samples (128 B); entry 599
-P2_W0561_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec3e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 562: 64 samples (128 B); entry 600
-P2_W0562_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 563: 64 samples (128 B); entry 601
-P2_W0563_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec4e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 564: 128 samples (256 B); entry 602
-P2_W0564_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 565: 128 samples (256 B); entry 603
-P2_W0565_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 566: 128 samples (256 B); entry 604
-P2_W0566_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 567: 128 samples (256 B); entry 605
-P2_W0567_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 568: 64 samples (128 B); entry 606
-P2_W0568_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 569: 64 samples (128 B); entry 607
-P2_W0569_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ec9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 570: 64 samples (128 B); entry 608
-P2_W0570_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eca60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 571: 64 samples (128 B); entry 609
-P2_W0571_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 572: 64 samples (128 B); entry 610
-P2_W0572_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecb60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 573: 64 samples (128 B); entry 611
-P2_W0573_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecbe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 574: 64 samples (128 B); entry 612
-P2_W0574_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecc60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 575: 64 samples (128 B); entry 613
-P2_W0575_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 576: 64 samples (128 B); entry 614
-P2_W0576_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecd60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 577: 64 samples (128 B); entry 615
-P2_W0577_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecde0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 578: 64 samples (128 B); entry 616
-P2_W0578_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ece60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 579: 64 samples (128 B); entry 617
-P2_W0579_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 580: 64 samples (128 B); entry 618
-P2_W0580_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecf60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 581: 64 samples (128 B); entry 619
-P2_W0581_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ecfe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 582: 64 samples (128 B); entry 620
-P2_W0582_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 583: 64 samples (128 B); entry 621
-P2_W0583_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed0e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 584: 64 samples (128 B); entry 622
-P2_W0584_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 585: 64 samples (128 B); entry 623
-P2_W0585_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed1e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 586: 64 samples (128 B); entry 624
-P2_W0586_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 587: 64 samples (128 B); entry 625
-P2_W0587_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed2e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 588: 128 samples (256 B); entry 626
-P2_W0588_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 589: 64 samples (128 B); entry 627
-P2_W0589_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 590: 64 samples (128 B); entry 628
-P2_W0590_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed4e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 591: 128 samples (256 B); entry 629
-P2_W0591_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 592: 128 samples (256 B); entry 630
-P2_W0592_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 593: 64 samples (128 B); entry 631
-P2_W0593_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 594: 128 samples (256 B); entry 632
-P2_W0594_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed7e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 595: 128 samples (256 B); entry 633
-P2_W0595_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed8e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 596: 64 samples (128 B); entry 634
-P2_W0596_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ed9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 597: 128 samples (256 B); entry 635
-P2_W0597_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eda60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 598: 128 samples (256 B); entry 636
-P2_W0598_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2edb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 599: 64 samples (128 B); entry 637
-P2_W0599_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2edc60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 600: 128 samples (256 B); entry 638
-P2_W0600_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2edce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 601: 128 samples (256 B); entry 639
-P2_W0601_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2edde0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 602: 64 samples (128 B); entry 640
-P2_W0602_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2edee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 603: 128 samples (256 B); entry 641
-P2_W0603_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2edf60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 604: 128 samples (256 B); entry 642
-P2_W0604_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 605: 128 samples (256 B); entry 643
-P2_W0605_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 606: 128 samples (256 B); entry 644
-P2_W0606_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 607: 128 samples (256 B); entry 645
-P2_W0607_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 608: 128 samples (256 B); entry 646
-P2_W0608_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee460, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 609: 128 samples (256 B); entry 647
-P2_W0609_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 610: 128 samples (256 B); entry 648
-P2_W0610_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 611: 64 samples (128 B); entry 649
-P2_W0611_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 612: 64 samples (128 B); entry 650
-P2_W0612_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee7e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 613: 64 samples (128 B); entry 651
-P2_W0613_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 614: 64 samples (128 B); entry 652
-P2_W0614_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee8e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 615: 64 samples (128 B); entry 653
-P2_W0615_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 616: 64 samples (128 B); entry 654
-P2_W0616_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ee9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 617: 64 samples (128 B); entry 655
-P2_W0617_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eea60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 618: 64 samples (128 B); entry 656
-P2_W0618_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eeae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 619: 64 samples (128 B); entry 657
-P2_W0619_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eeb60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 620: 64 samples (128 B); entry 658
-P2_W0620_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eebe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 621: 64 samples (128 B); entry 659
-P2_W0621_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eec60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 622: 64 samples (128 B); entry 660
-P2_W0622_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eece0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 623: 64 samples (128 B); entry 661
-P2_W0623_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eed60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 624: 64 samples (128 B); entry 662
-P2_W0624_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eede0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 625: 64 samples (128 B); entry 663
-P2_W0625_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eee60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 626: 64 samples (128 B); entry 664
-P2_W0626_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eeee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 627: 64 samples (128 B); entry 665
-P2_W0627_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eef60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 628: 64 samples (128 B); entry 666
-P2_W0628_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eefe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 629: 64 samples (128 B); entry 667
-P2_W0629_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 630: 64 samples (128 B); entry 668
-P2_W0630_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef0e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 631: 64 samples (128 B); entry 669
-P2_W0631_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 632: 64 samples (128 B); entry 670
-P2_W0632_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef1e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 633: 64 samples (128 B); entry 671
-P2_W0633_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 634: 64 samples (128 B); entry 672
-P2_W0634_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef2e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 635: 64 samples (128 B); entry 673
-P2_W0635_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 636: 64 samples (128 B); entry 674
-P2_W0636_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef3e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 637: 64 samples (128 B); entry 675
-P2_W0637_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 638: 64 samples (128 B); entry 676
-P2_W0638_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef4e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 639: 64 samples (128 B); entry 677
-P2_W0639_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 640: 64 samples (128 B); entry 678
-P2_W0640_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef5e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 641: 64 samples (128 B); entry 679
-P2_W0641_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 642: 64 samples (128 B); entry 680
-P2_W0642_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef6e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 643: 64 samples (128 B); entry 681
-P2_W0643_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 644: 64 samples (128 B); entry 682
-P2_W0644_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef7e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 645: 64 samples (128 B); entry 683
-P2_W0645_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 646: 64 samples (128 B); entry 684
-P2_W0646_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef8e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 647: 64 samples (128 B); entry 685
-P2_W0647_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 648: 64 samples (128 B); entry 686
-P2_W0648_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ef9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 649: 64 samples (128 B); entry 687
-P2_W0649_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efa60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 650: 64 samples (128 B); entry 688
-P2_W0650_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 651: 64 samples (128 B); entry 689
-P2_W0651_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efb60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 652: 64 samples (128 B); entry 690
-P2_W0652_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efbe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 653: 64 samples (128 B); entry 691
-P2_W0653_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efc60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 654: 64 samples (128 B); entry 692
-P2_W0654_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 655: 64 samples (128 B); entry 693
-P2_W0655_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efd60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 656: 64 samples (128 B); entry 694
-P2_W0656_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efde0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 657: 64 samples (128 B); entry 695
-P2_W0657_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efe60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 658: 64 samples (128 B); entry 696
-P2_W0658_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2efee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 659: 64 samples (128 B); entry 697
-P2_W0659_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2eff60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 660: 64 samples (128 B); entry 698
-P2_W0660_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2effe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 661: 64 samples (128 B); entry 699
-P2_W0661_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 662: 64 samples (128 B); entry 700
-P2_W0662_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f00e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 663: 64 samples (128 B); entry 701
-P2_W0663_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 664: 64 samples (128 B); entry 702
-P2_W0664_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f01e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 665: 64 samples (128 B); entry 703
-P2_W0665_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 666: 64 samples (128 B); entry 704
-P2_W0666_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f02e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 667: 64 samples (128 B); entry 705
-P2_W0667_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 668: 64 samples (128 B); entry 706
-P2_W0668_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f03e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 669: 64 samples (128 B); entry 707
-P2_W0669_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 670: 64 samples (128 B); entry 708
-P2_W0670_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f04e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 671: 64 samples (128 B); entry 709
-P2_W0671_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 672: 64 samples (128 B); entry 710
-P2_W0672_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f05e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 673: 64 samples (128 B); entry 711
-P2_W0673_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 674: 64 samples (128 B); entry 712
-P2_W0674_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f06e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 675: 64 samples (128 B); entry 713
-P2_W0675_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 676: 64 samples (128 B); entry 714
-P2_W0676_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f07e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 677: 64 samples (128 B); entry 715
-P2_W0677_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 678: 64 samples (128 B); entry 716
-P2_W0678_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f08e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 679: 64 samples (128 B); entry 717
-P2_W0679_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 680: 64 samples (128 B); entry 718
-P2_W0680_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f09e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 681: 64 samples (128 B); entry 719
-P2_W0681_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 682: 64 samples (128 B); entry 720
-P2_W0682_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 683: 64 samples (128 B); entry 721
-P2_W0683_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 684: 64 samples (128 B); entry 722
-P2_W0684_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 685: 64 samples (128 B); entry 723
-P2_W0685_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 686: 64 samples (128 B); entry 724
-P2_W0686_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 687: 64 samples (128 B); entry 725
-P2_W0687_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 688: 64 samples (128 B); entry 726
-P2_W0688_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 689: 64 samples (128 B); entry 727
-P2_W0689_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 690: 64 samples (128 B); entry 728
-P2_W0690_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 691: 64 samples (128 B); entry 729
-P2_W0691_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 692: 64 samples (128 B); entry 730
-P2_W0692_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f0fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 693: 64 samples (128 B); entry 731
-P2_W0693_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 694: 64 samples (128 B); entry 732
-P2_W0694_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f10e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 695: 64 samples (128 B); entry 733
-P2_W0695_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 696: 64 samples (128 B); entry 734
-P2_W0696_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f11e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 697: 64 samples (128 B); entry 735
-P2_W0697_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 698: 64 samples (128 B); entry 736
-P2_W0698_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f12e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 699: 64 samples (128 B); entry 737
-P2_W0699_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 700: 64 samples (128 B); entry 738
-P2_W0700_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f13e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 701: 64 samples (128 B); entry 739
-P2_W0701_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 702: 64 samples (128 B); entry 740
-P2_W0702_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f14e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 703: 64 samples (128 B); entry 741
-P2_W0703_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 704: 64 samples (128 B); entry 742
-P2_W0704_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f15e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 705: 64 samples (128 B); entry 743
-P2_W0705_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 706: 64 samples (128 B); entry 744
-P2_W0706_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f16e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 707: 64 samples (128 B); entry 745
-P2_W0707_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 708: 64 samples (128 B); entry 746
-P2_W0708_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f17e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 709: 64 samples (128 B); entry 747
-P2_W0709_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 710: 64 samples (128 B); entry 748
-P2_W0710_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f18e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 711: 64 samples (128 B); entry 749
-P2_W0711_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 712: 64 samples (128 B); entry 750
-P2_W0712_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f19e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 713: 64 samples (128 B); entry 751
-P2_W0713_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 714: 64 samples (128 B); entry 752
-P2_W0714_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 715: 64 samples (128 B); entry 753
-P2_W0715_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 716: 64 samples (128 B); entry 754
-P2_W0716_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 717: 64 samples (128 B); entry 755
-P2_W0717_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 718: 64 samples (128 B); entry 756
-P2_W0718_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 719: 64 samples (128 B); entry 757
-P2_W0719_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 720: 64 samples (128 B); entry 758
-P2_W0720_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 721: 64 samples (128 B); entry 759
-P2_W0721_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 722: 64 samples (128 B); entry 760
-P2_W0722_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 723: 64 samples (128 B); entry 761
-P2_W0723_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 724: 64 samples (128 B); entry 762
-P2_W0724_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f1fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 725: 64 samples (128 B); entry 763
-P2_W0725_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 726: 64 samples (128 B); entry 764
-P2_W0726_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f20e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 727: 64 samples (128 B); entry 765
-P2_W0727_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 728: 64 samples (128 B); entry 766
-P2_W0728_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f21e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 729: 64 samples (128 B); entry 767
-P2_W0729_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 730: 64 samples (128 B); entry 768
-P2_W0730_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f22e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 731: 64 samples (128 B); entry 769
-P2_W0731_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 732: 64 samples (128 B); entry 770
-P2_W0732_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f23e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 733: 64 samples (128 B); entry 771
-P2_W0733_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 734: 64 samples (128 B); entry 772
-P2_W0734_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f24e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 735: 64 samples (128 B); entry 773
-P2_W0735_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 736: 64 samples (128 B); entry 774
-P2_W0736_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f25e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 737: 64 samples (128 B); entry 775
-P2_W0737_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 738: 64 samples (128 B); entry 776
-P2_W0738_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f26e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 739: 64 samples (128 B); entry 777
-P2_W0739_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 740: 64 samples (128 B); entry 778
-P2_W0740_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f27e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 741: 64 samples (128 B); entry 779
-P2_W0741_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 742: 64 samples (128 B); entry 780
-P2_W0742_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f28e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 743: 64 samples (128 B); entry 781
-P2_W0743_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 744: 64 samples (128 B); entry 782
-P2_W0744_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f29e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 745: 64 samples (128 B); entry 783
-P2_W0745_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 746: 64 samples (128 B); entry 784
-P2_W0746_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 747: 64 samples (128 B); entry 785
-P2_W0747_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 748: 64 samples (128 B); entry 786
-P2_W0748_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 749: 64 samples (128 B); entry 787
-P2_W0749_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 750: 64 samples (128 B); entry 788
-P2_W0750_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 751: 64 samples (128 B); entry 789
-P2_W0751_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 752: 64 samples (128 B); entry 790
-P2_W0752_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 753: 64 samples (128 B); entry 791
-P2_W0753_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 754: 64 samples (128 B); entry 792
-P2_W0754_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 755: 64 samples (128 B); entry 793
-P2_W0755_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 756: 64 samples (128 B); entry 794
-P2_W0756_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f2fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 757: 64 samples (128 B); entry 795
-P2_W0757_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 758: 64 samples (128 B); entry 796
-P2_W0758_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f30e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 759: 64 samples (128 B); entry 797
-P2_W0759_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 760: 64 samples (128 B); entry 798
-P2_W0760_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f31e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 761: 64 samples (128 B); entry 799
-P2_W0761_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 762: 64 samples (128 B); entry 800
-P2_W0762_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f32e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 763: 64 samples (128 B); entry 801
-P2_W0763_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 764: 64 samples (128 B); entry 802
-P2_W0764_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f33e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 765: 64 samples (128 B); entry 803
-P2_W0765_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 766: 64 samples (128 B); entry 804
-P2_W0766_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f34e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 767: 64 samples (128 B); entry 805
-P2_W0767_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 768: 64 samples (128 B); entry 806
-P2_W0768_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f35e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 769: 64 samples (128 B); entry 807
-P2_W0769_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 770: 64 samples (128 B); entry 808
-P2_W0770_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f36e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 771: 64 samples (128 B); entry 809
-P2_W0771_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 772: 64 samples (128 B); entry 810
-P2_W0772_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f37e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 773: 64 samples (128 B); entry 811
-P2_W0773_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 774: 64 samples (128 B); entry 812
-P2_W0774_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f38e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 775: 64 samples (128 B); entry 813
-P2_W0775_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 776: 64 samples (128 B); entry 814
-P2_W0776_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f39e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 777: 64 samples (128 B); entry 815
-P2_W0777_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 778: 64 samples (128 B); entry 816
-P2_W0778_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 779: 64 samples (128 B); entry 817
-P2_W0779_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 780: 64 samples (128 B); entry 818
-P2_W0780_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 781: 64 samples (128 B); entry 819
-P2_W0781_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 782: 64 samples (128 B); entry 820
-P2_W0782_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 783: 64 samples (128 B); entry 821
-P2_W0783_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 784: 64 samples (128 B); entry 822
-P2_W0784_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 785: 64 samples (128 B); entry 823
-P2_W0785_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 786: 64 samples (128 B); entry 824
-P2_W0786_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 787: 64 samples (128 B); entry 825
-P2_W0787_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 788: 64 samples (128 B); entry 826
-P2_W0788_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f3fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 789: 64 samples (128 B); entry 827
-P2_W0789_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 790: 64 samples (128 B); entry 828
-P2_W0790_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f40e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 791: 64 samples (128 B); entry 829
-P2_W0791_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 792: 64 samples (128 B); entry 830
-P2_W0792_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f41e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 793: 64 samples (128 B); entry 831
-P2_W0793_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 794: 64 samples (128 B); entry 832
-P2_W0794_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f42e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 795: 64 samples (128 B); entry 833
-P2_W0795_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 796: 64 samples (128 B); entry 834
-P2_W0796_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f43e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 797: 64 samples (128 B); entry 835
-P2_W0797_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 798: 64 samples (128 B); entry 836
-P2_W0798_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f44e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 799: 64 samples (128 B); entry 837
-P2_W0799_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 800: 64 samples (128 B); entry 838
-P2_W0800_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f45e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 801: 64 samples (128 B); entry 839
-P2_W0801_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 802: 64 samples (128 B); entry 840
-P2_W0802_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f46e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 803: 64 samples (128 B); entry 841
-P2_W0803_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 804: 64 samples (128 B); entry 842
-P2_W0804_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f47e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 805: 64 samples (128 B); entry 843
-P2_W0805_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 806: 64 samples (128 B); entry 844
-P2_W0806_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f48e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 807: 64 samples (128 B); entry 845
-P2_W0807_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 808: 64 samples (128 B); entry 846
-P2_W0808_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f49e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 809: 64 samples (128 B); entry 847
-P2_W0809_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 810: 64 samples (128 B); entry 848
-P2_W0810_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4ae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 811: 64 samples (128 B); entry 849
-P2_W0811_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4b60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 812: 64 samples (128 B); entry 850
-P2_W0812_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4be0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 813: 64 samples (128 B); entry 851
-P2_W0813_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4c60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 814: 64 samples (128 B); entry 852
-P2_W0814_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 815: 64 samples (128 B); entry 853
-P2_W0815_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4d60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 816: 64 samples (128 B); entry 854
-P2_W0816_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 817: 64 samples (128 B); entry 855
-P2_W0817_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 818: 64 samples (128 B); entry 856
-P2_W0818_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 819: 64 samples (128 B); entry 857
-P2_W0819_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 820: 64 samples (128 B); entry 858
-P2_W0820_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f4fe0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 821: 64 samples (128 B); entry 859
-P2_W0821_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 822: 64 samples (128 B); entry 860
-P2_W0822_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f50e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 823: 64 samples (128 B); entry 861
-P2_W0823_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 824: 64 samples (128 B); entry 862
-P2_W0824_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f51e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 825: 64 samples (128 B); entry 863
-P2_W0825_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 826: 64 samples (128 B); entry 864
-P2_W0826_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f52e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 827: 64 samples (128 B); entry 865
-P2_W0827_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 828: 64 samples (128 B); entry 866
-P2_W0828_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f53e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 829: 64 samples (128 B); entry 867
-P2_W0829_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 830: 64 samples (128 B); entry 868
-P2_W0830_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f54e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 831: 64 samples (128 B); entry 869
-P2_W0831_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 832: 64 samples (128 B); entry 870
-P2_W0832_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f55e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 833: 64 samples (128 B); entry 871
-P2_W0833_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 834: 64 samples (128 B); entry 872
-P2_W0834_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f56e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 835: 128 samples (256 B); entry 873
-P2_W0835_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 836: 128 samples (256 B); entry 874
-P2_W0836_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 837: 64 samples (128 B); entry 875
-P2_W0837_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5960, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 838: 128 samples (256 B); entry 876
-P2_W0838_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f59e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 839: 128 samples (256 B); entry 877
-P2_W0839_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 840: 128 samples (256 B); entry 878
-P2_W0840_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 841: 128 samples (256 B); entry 879
-P2_W0841_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5ce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 842: 64 samples (128 B); entry 880
-P2_W0842_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 843: 64 samples (128 B); entry 881
-P2_W0843_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 844: 64 samples (128 B); entry 882
-P2_W0844_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 845: 64 samples (128 B); entry 883
-P2_W0845_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 846: 128 samples (256 B); entry 884
-P2_W0846_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f5fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 847: 128 samples (256 B); entry 885
-P2_W0847_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f60e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 848: 128 samples (256 B); entry 886
-P2_W0848_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f61e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 849: 128 samples (256 B); entry 887
-P2_W0849_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f62e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 850: 64 samples (128 B); entry 888
-P2_W0850_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f63e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 851: 64 samples (128 B); entry 889
-P2_W0851_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 852: 64 samples (128 B); entry 890
-P2_W0852_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f64e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 853: 64 samples (128 B); entry 891
-P2_W0853_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 854: 128 samples (256 B); entry 892
-P2_W0854_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f65e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 855: 128 samples (256 B); entry 893
-P2_W0855_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f66e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 856: 64 samples (128 B); entry 894
-P2_W0856_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f67e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 857: 128 samples (256 B); entry 895
-P2_W0857_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 858: 128 samples (256 B); entry 896
-P2_W0858_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 859: 64 samples (128 B); entry 897
-P2_W0859_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 860: 128 samples (256 B); entry 898
-P2_W0860_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 861: 128 samples (256 B); entry 899
-P2_W0861_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 862: 64 samples (128 B); entry 900
-P2_W0862_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 863: 128 samples (256 B); entry 901
-P2_W0863_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6d60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 864: 128 samples (256 B); entry 902
-P2_W0864_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6e60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 865: 64 samples (128 B); entry 903
-P2_W0865_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 866: 128 samples (256 B); entry 904
-P2_W0866_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f6fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 867: 128 samples (256 B); entry 905
-P2_W0867_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f70e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 868: 64 samples (128 B); entry 906
-P2_W0868_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f71e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 869: 64 samples (128 B); entry 907
-P2_W0869_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 870: 64 samples (128 B); entry 908
-P2_W0870_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f72e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 871: 64 samples (128 B); entry 909
-P2_W0871_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7360, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 872: 64 samples (128 B); entry 910
-P2_W0872_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f73e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 873: 64 samples (128 B); entry 911
-P2_W0873_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 874: 64 samples (128 B); entry 912
-P2_W0874_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f74e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 875: 64 samples (128 B); entry 913
-P2_W0875_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 876: 64 samples (128 B); entry 914
-P2_W0876_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f75e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 877: 128 samples (256 B); entry 915
-P2_W0877_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 878: 128 samples (256 B); entry 916
-P2_W0878_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 879: 64 samples (128 B); entry 917
-P2_W0879_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7860, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 880: 128 samples (256 B); entry 918
-P2_W0880_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f78e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 881: 128 samples (256 B); entry 919
-P2_W0881_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f79e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 882: 128 samples (256 B); entry 920
-P2_W0882_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 883: 128 samples (256 B); entry 921
-P2_W0883_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 884: 128 samples (256 B); entry 922
-P2_W0884_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7ce0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 885: 64 samples (128 B); entry 923
-P2_W0885_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7de0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 886: 64 samples (128 B); entry 924
-P2_W0886_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7e60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 887: 64 samples (128 B); entry 925
-P2_W0887_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7ee0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 888: 128 samples (256 B); entry 926
-P2_W0888_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f7f60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 889: 128 samples (256 B); entry 927
-P2_W0889_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 890: 128 samples (256 B); entry 928
-P2_W0890_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 891: 128 samples (256 B); entry 929
-P2_W0891_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 892: 128 samples (256 B); entry 930
-P2_W0892_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 893: 64 samples (128 B); entry 931
-P2_W0893_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 894: 64 samples (128 B); entry 932
-P2_W0894_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f84e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 895: 64 samples (128 B); entry 933
-P2_W0895_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 896: 128 samples (256 B); entry 934
-P2_W0896_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f85e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 897: 128 samples (256 B); entry 935
-P2_W0897_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f86e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 898: 64 samples (128 B); entry 936
-P2_W0898_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f87e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 899: 128 samples (256 B); entry 937
-P2_W0899_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 900: 128 samples (256 B); entry 938
-P2_W0900_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 901: 64 samples (128 B); entry 939
-P2_W0901_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8a60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 902: 128 samples (256 B); entry 940
-P2_W0902_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8ae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 903: 128 samples (256 B); entry 941
-P2_W0903_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8be0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 904: 64 samples (128 B); entry 942
-P2_W0904_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8ce0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 905: 128 samples (256 B); entry 943
-P2_W0905_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8d60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 906: 128 samples (256 B); entry 944
-P2_W0906_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8e60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 907: 64 samples (128 B); entry 945
-P2_W0907_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8f60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 908: 128 samples (256 B); entry 946
-P2_W0908_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f8fe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 909: 128 samples (256 B); entry 947
-P2_W0909_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f90e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 910: 64 samples (128 B); entry 948
-P2_W0910_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f91e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 911: 128 samples (256 B); entry 949
-P2_W0911_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 912: 128 samples (256 B); entry 950
-P2_W0912_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 913: 128 samples (256 B); entry 951
-P2_W0913_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9460, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 914: 64 samples (128 B); entry 952
-P2_W0914_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9560, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 915: 64 samples (128 B); entry 953
-P2_W0915_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f95e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 916: 64 samples (128 B); entry 954
-P2_W0916_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9660, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 917: 64 samples (128 B); entry 955
-P2_W0917_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f96e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 918: 64 samples (128 B); entry 956
-P2_W0918_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 919: 128 samples (256 B); entry 957
-P2_W0919_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f97e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 920: 128 samples (256 B); entry 958
-P2_W0920_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f98e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 921: 64 samples (128 B); entry 959
-P2_W0921_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f99e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 922: 128 samples (256 B); entry 960
-P2_W0922_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9a60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 923: 128 samples (256 B); entry 961
-P2_W0923_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9b60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 924: 128 samples (256 B); entry 962
-P2_W0924_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9c60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 925: 128 samples (256 B); entry 963
-P2_W0925_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9d60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 926: 128 samples (256 B); entry 964
-P2_W0926_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9e60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 927: 128 samples (256 B); entry 965
-P2_W0927_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2f9f60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 928: 64 samples (128 B); entry 966
-P2_W0928_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 929: 64 samples (128 B); entry 967
-P2_W0929_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa0e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 930: 128 samples (256 B); entry 968
-P2_W0930_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 931: 128 samples (256 B); entry 969
-P2_W0931_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 932: 128 samples (256 B); entry 970
-P2_W0932_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 933: 128 samples (256 B); entry 971
-P2_W0933_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa460, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 934: 128 samples (256 B); entry 972
-P2_W0934_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa560, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 935: 128 samples (256 B); entry 973
-P2_W0935_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa660, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 936: 64 samples (128 B); entry 974
-P2_W0936_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa760, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 937: 64 samples (128 B); entry 975
-P2_W0937_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa7e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 938: 128 samples (256 B); entry 976
-P2_W0938_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 939: 128 samples (256 B); entry 977
-P2_W0939_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fa960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 940: 64 samples (128 B); entry 978
-P2_W0940_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2faa60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 941: 128 samples (256 B); entry 979
-P2_W0941_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2faae0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 942: 128 samples (256 B); entry 980
-P2_W0942_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fabe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 943: 64 samples (128 B); entry 981
-P2_W0943_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2face0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 944: 128 samples (256 B); entry 982
-P2_W0944_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fad60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 945: 128 samples (256 B); entry 983
-P2_W0945_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fae60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 946: 64 samples (128 B); entry 984
-P2_W0946_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2faf60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 947: 128 samples (256 B); entry 985
-P2_W0947_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fafe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 948: 128 samples (256 B); entry 986
-P2_W0948_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb0e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 949: 64 samples (128 B); entry 987
-P2_W0949_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb1e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 950: 128 samples (256 B); entry 988
-P2_W0950_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb260, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 951: 128 samples (256 B); entry 989
-P2_W0951_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb360, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 952: 64 samples (128 B); entry 990
-P2_W0952_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb460, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 953: 128 samples (256 B); entry 991
-P2_W0953_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb4e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 954: 128 samples (256 B); entry 992
-P2_W0954_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb5e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 955: 128 samples (256 B); entry 993
-P2_W0955_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb6e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 956: 128 samples (256 B); entry 994
-P2_W0956_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb7e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 957: 128 samples (256 B); entry 995
-P2_W0957_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb8e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 958: 64 samples (128 B); entry 996
-P2_W0958_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fb9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 959: 64 samples (128 B); entry 997
-P2_W0959_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fba60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 960: 64 samples (128 B); entry 998
-P2_W0960_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fbae0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 961: 128 samples (256 B); entry 999
-P2_W0961_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fbb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 962: 128 samples (256 B); entry 1000
-P2_W0962_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fbc60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 963: 128 samples (256 B); entry 1001
-P2_W0963_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fbd60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 964: 128 samples (256 B); entry 1002
-P2_W0964_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fbe60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 965: 128 samples (256 B); entry 1003
-P2_W0965_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fbf60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 966: 128 samples (256 B); entry 1004
-P2_W0966_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 967: 128 samples (256 B); entry 1005
-P2_W0967_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc160, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 968: 64 samples (128 B); entry 1006
-P2_W0968_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc260, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 969: 128 samples (256 B); entry 1007
-P2_W0969_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc2e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 970: 128 samples (256 B); entry 1008
-P2_W0970_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc3e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 971: 128 samples (256 B); entry 1009
-P2_W0971_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc4e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 972: 128 samples (256 B); entry 1010
-P2_W0972_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc5e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 973: 128 samples (256 B); entry 1011
-P2_W0973_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc6e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 974: 128 samples (256 B); entry 1012
-P2_W0974_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc7e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 975: 128 samples (256 B); entry 1013
-P2_W0975_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc8e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 976: 64 samples (128 B); entry 1014
-P2_W0976_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fc9e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 977: 128 samples (256 B); entry 1015
-P2_W0977_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fca60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 978: 128 samples (256 B); entry 1016
-P2_W0978_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fcb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 979: 128 samples (256 B); entry 1017
-P2_W0979_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fcc60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 980: 128 samples (256 B); entry 1018
-P2_W0980_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fcd60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 981: 128 samples (256 B); entry 1019
-P2_W0981_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fce60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 982: 128 samples (256 B); entry 1020
-P2_W0982_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fcf60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 983: 128 samples (256 B); entry 1021
-P2_W0983_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd060, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 984: 64 samples (128 B); entry 1022
-P2_W0984_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd160, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 985: 128 samples (256 B); entry 1023
-P2_W0985_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd1e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 986: 128 samples (256 B); entry 1024
-P2_W0986_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd2e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 987: 128 samples (256 B); entry 1025
-P2_W0987_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd3e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 988: 128 samples (256 B); entry 1026
-P2_W0988_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd4e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 989: 128 samples (256 B); entry 1027
-P2_W0989_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd5e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 990: 128 samples (256 B); entry 1028
-P2_W0990_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd6e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 991: 128 samples (256 B); entry 1029
-P2_W0991_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd7e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 992: 64 samples (128 B); entry 1030
-P2_W0992_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd8e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 993: 128 samples (256 B); entry 1031
-P2_W0993_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fd960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 994: 128 samples (256 B); entry 1032
-P2_W0994_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fda60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 995: 128 samples (256 B); entry 1033
-P2_W0995_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fdb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 996: 128 samples (256 B); entry 1034
-P2_W0996_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fdc60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 997: 128 samples (256 B); entry 1035
-P2_W0997_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fdd60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 998: 128 samples (256 B); entry 1036
-P2_W0998_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fde60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 999: 128 samples (256 B); entry 1037
-P2_W0999_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fdf60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1000: 64 samples (128 B); entry 1038
-P2_W1000_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe060, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1001: 128 samples (256 B); entry 1039
-P2_W1001_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe0e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1002: 128 samples (256 B); entry 1040
-P2_W1002_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe1e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1003: 128 samples (256 B); entry 1041
-P2_W1003_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe2e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1004: 128 samples (256 B); entry 1042
-P2_W1004_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe3e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1005: 128 samples (256 B); entry 1043
-P2_W1005_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe4e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1006: 128 samples (256 B); entry 1044
-P2_W1006_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe5e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1007: 128 samples (256 B); entry 1045
-P2_W1007_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe6e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1008: 64 samples (128 B); entry 1046
-P2_W1008_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe7e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1009: 128 samples (256 B); entry 1047
-P2_W1009_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1010: 128 samples (256 B); entry 1048
-P2_W1010_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fe960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1011: 128 samples (256 B); entry 1049
-P2_W1011_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fea60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1012: 128 samples (256 B); entry 1050
-P2_W1012_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2feb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1013: 128 samples (256 B); entry 1051
-P2_W1013_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fec60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1014: 128 samples (256 B); entry 1052
-P2_W1014_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fed60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1015: 128 samples (256 B); entry 1053
-P2_W1015_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fee60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1016: 64 samples (128 B); entry 1054
-P2_W1016_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fef60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1017: 128 samples (256 B); entry 1055
-P2_W1017_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2fefe0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1018: 128 samples (256 B); entry 1056
-P2_W1018_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff0e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1019: 128 samples (256 B); entry 1057
-P2_W1019_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff1e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1020: 128 samples (256 B); entry 1058
-P2_W1020_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff2e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1021: 128 samples (256 B); entry 1059
-P2_W1021_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff3e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1022: 128 samples (256 B); entry 1060
-P2_W1022_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff4e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1023: 128 samples (256 B); entry 1061
-P2_W1023_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff5e0, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1024: 64 samples (128 B); entry 1062
-P2_W1024_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff6e0, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1025: 128 samples (256 B); entry 1063
-P2_W1025_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff760, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1026: 128 samples (256 B); entry 1064
-P2_W1026_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff860, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1027: 128 samples (256 B); entry 1065
-P2_W1027_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ff960, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1028: 128 samples (256 B); entry 1066
-P2_W1028_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ffa60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1029: 128 samples (256 B); entry 1067
-P2_W1029_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ffb60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1030: 128 samples (256 B); entry 1068
-P2_W1030_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ffc60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1031: 128 samples (256 B); entry 1069
-P2_W1031_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ffd60, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1032: 64 samples (128 B); entry 1070
-P2_W1032_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ffe60, 128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1033: 80 samples (160 B); entry 1071
-P2_W1033_Drawbar:	.incbin	"kn5000_waveform_rom.ic307", 0x2ffee0, 160	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
+P2_W0112_16ftAnd8ft:	.incbin	"pcm/P2_W0112_16ftAnd8ft.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0112_16ftAnd8ft.wav (16-bit)
+; wave 113: 64 16-bit samples (128 B); entry 151
+P2_W0113_Drawbar:	.incbin	"pcm/P2_W0113_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0113_Drawbar.wav (16-bit)
+; wave 114: 64 16-bit samples (128 B); entry 152
+P2_W0114_Drawbar:	.incbin	"pcm/P2_W0114_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0114_Drawbar.wav (16-bit)
+; wave 115: 64 16-bit samples (128 B); entry 153
+P2_W0115_Drawbar:	.incbin	"pcm/P2_W0115_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0115_Drawbar.wav (16-bit)
+; wave 116: 64 16-bit samples (128 B); entry 154
+P2_W0116_Drawbar:	.incbin	"pcm/P2_W0116_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0116_Drawbar.wav (16-bit)
+; wave 117: 64 16-bit samples (128 B); entry 155
+P2_W0117_Drawbar:	.incbin	"pcm/P2_W0117_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0117_Drawbar.wav (16-bit)
+; wave 118: 64 16-bit samples (128 B); entry 156
+P2_W0118_Drawbar:	.incbin	"pcm/P2_W0118_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0118_Drawbar.wav (16-bit)
+; wave 119: 64 16-bit samples (128 B); entry 157
+P2_W0119_Drawbar:	.incbin	"pcm/P2_W0119_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0119_Drawbar.wav (16-bit)
+; wave 120: 64 16-bit samples (128 B); entry 158
+P2_W0120_Drawbar:	.incbin	"pcm/P2_W0120_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0120_Drawbar.wav (16-bit)
+; wave 121: 64 16-bit samples (128 B); entry 159
+P2_W0121_Drawbar:	.incbin	"pcm/P2_W0121_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0121_Drawbar.wav (16-bit)
+; wave 122: 64 16-bit samples (128 B); entry 160
+P2_W0122_Drawbar:	.incbin	"pcm/P2_W0122_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0122_Drawbar.wav (16-bit)
+; wave 123: 64 16-bit samples (128 B); entry 161
+P2_W0123_Drawbar:	.incbin	"pcm/P2_W0123_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0123_Drawbar.wav (16-bit)
+; wave 124: 64 16-bit samples (128 B); entry 162
+P2_W0124_Drawbar:	.incbin	"pcm/P2_W0124_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0124_Drawbar.wav (16-bit)
+; wave 125: 64 16-bit samples (128 B); entry 163
+P2_W0125_Drawbar:	.incbin	"pcm/P2_W0125_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0125_Drawbar.wav (16-bit)
+; wave 126: 64 16-bit samples (128 B); entry 164
+P2_W0126_Drawbar:	.incbin	"pcm/P2_W0126_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0126_Drawbar.wav (16-bit)
+; wave 127: 128 16-bit samples (256 B); entry 165
+P2_W0127_Drawbar:	.incbin	"pcm/P2_W0127_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0127_Drawbar.wav (16-bit)
+; wave 128: 64 16-bit samples (128 B); entry 166
+P2_W0128_Drawbar:	.incbin	"pcm/P2_W0128_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0128_Drawbar.wav (16-bit)
+; wave 129: 64 16-bit samples (128 B); entry 167
+P2_W0129_Drawbar:	.incbin	"pcm/P2_W0129_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0129_Drawbar.wav (16-bit)
+; wave 130: 64 16-bit samples (128 B); entry 168
+P2_W0130_Drawbar:	.incbin	"pcm/P2_W0130_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0130_Drawbar.wav (16-bit)
+; wave 131: 64 16-bit samples (128 B); entry 169
+P2_W0131_Drawbar:	.incbin	"pcm/P2_W0131_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0131_Drawbar.wav (16-bit)
+; wave 132: 64 16-bit samples (128 B); entry 170
+P2_W0132_Drawbar:	.incbin	"pcm/P2_W0132_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0132_Drawbar.wav (16-bit)
+; wave 133: 64 16-bit samples (128 B); entry 171
+P2_W0133_Drawbar:	.incbin	"pcm/P2_W0133_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0133_Drawbar.wav (16-bit)
+; wave 134: 64 16-bit samples (128 B); entry 172
+P2_W0134_Drawbar:	.incbin	"pcm/P2_W0134_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0134_Drawbar.wav (16-bit)
+; wave 135: 64 16-bit samples (128 B); entry 173
+P2_W0135_Drawbar:	.incbin	"pcm/P2_W0135_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0135_Drawbar.wav (16-bit)
+; wave 136: 128 16-bit samples (256 B); entry 174
+P2_W0136_Drawbar:	.incbin	"pcm/P2_W0136_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0136_Drawbar.wav (16-bit)
+; wave 137: 64 16-bit samples (128 B); entry 175
+P2_W0137_Drawbar:	.incbin	"pcm/P2_W0137_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0137_Drawbar.wav (16-bit)
+; wave 138: 64 16-bit samples (128 B); entry 176
+P2_W0138_Drawbar:	.incbin	"pcm/P2_W0138_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0138_Drawbar.wav (16-bit)
+; wave 139: 64 16-bit samples (128 B); entry 177
+P2_W0139_Drawbar:	.incbin	"pcm/P2_W0139_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0139_Drawbar.wav (16-bit)
+; wave 140: 64 16-bit samples (128 B); entry 178
+P2_W0140_Drawbar:	.incbin	"pcm/P2_W0140_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0140_Drawbar.wav (16-bit)
+; wave 141: 64 16-bit samples (128 B); entry 179
+P2_W0141_Drawbar:	.incbin	"pcm/P2_W0141_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0141_Drawbar.wav (16-bit)
+; wave 142: 64 16-bit samples (128 B); entry 180
+P2_W0142_Drawbar:	.incbin	"pcm/P2_W0142_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0142_Drawbar.wav (16-bit)
+; wave 143: 64 16-bit samples (128 B); entry 181
+P2_W0143_Drawbar:	.incbin	"pcm/P2_W0143_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0143_Drawbar.wav (16-bit)
+; wave 144: 64 16-bit samples (128 B); entry 182
+P2_W0144_Drawbar:	.incbin	"pcm/P2_W0144_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0144_Drawbar.wav (16-bit)
+; wave 145: 128 16-bit samples (256 B); entry 183
+P2_W0145_Drawbar:	.incbin	"pcm/P2_W0145_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0145_Drawbar.wav (16-bit)
+; wave 146: 64 16-bit samples (128 B); entry 184
+P2_W0146_Drawbar:	.incbin	"pcm/P2_W0146_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0146_Drawbar.wav (16-bit)
+; wave 147: 64 16-bit samples (128 B); entry 185
+P2_W0147_Drawbar:	.incbin	"pcm/P2_W0147_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0147_Drawbar.wav (16-bit)
+; wave 148: 64 16-bit samples (128 B); entry 186
+P2_W0148_Drawbar:	.incbin	"pcm/P2_W0148_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0148_Drawbar.wav (16-bit)
+; wave 149: 64 16-bit samples (128 B); entry 187
+P2_W0149_Drawbar:	.incbin	"pcm/P2_W0149_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0149_Drawbar.wav (16-bit)
+; wave 150: 64 16-bit samples (128 B); entry 188
+P2_W0150_Drawbar:	.incbin	"pcm/P2_W0150_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0150_Drawbar.wav (16-bit)
+; wave 151: 64 16-bit samples (128 B); entry 189
+P2_W0151_Drawbar:	.incbin	"pcm/P2_W0151_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0151_Drawbar.wav (16-bit)
+; wave 152: 64 16-bit samples (128 B); entry 190
+P2_W0152_Drawbar:	.incbin	"pcm/P2_W0152_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0152_Drawbar.wav (16-bit)
+; wave 153: 64 16-bit samples (128 B); entry 191
+P2_W0153_Drawbar:	.incbin	"pcm/P2_W0153_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0153_Drawbar.wav (16-bit)
+; wave 154: 128 16-bit samples (256 B); entry 192
+P2_W0154_Drawbar:	.incbin	"pcm/P2_W0154_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0154_Drawbar.wav (16-bit)
+; wave 155: 64 16-bit samples (128 B); entry 193
+P2_W0155_Drawbar:	.incbin	"pcm/P2_W0155_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0155_Drawbar.wav (16-bit)
+; wave 156: 64 16-bit samples (128 B); entry 194
+P2_W0156_Drawbar:	.incbin	"pcm/P2_W0156_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0156_Drawbar.wav (16-bit)
+; wave 157: 64 16-bit samples (128 B); entry 195
+P2_W0157_Drawbar:	.incbin	"pcm/P2_W0157_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0157_Drawbar.wav (16-bit)
+; wave 158: 64 16-bit samples (128 B); entry 196
+P2_W0158_Drawbar:	.incbin	"pcm/P2_W0158_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0158_Drawbar.wav (16-bit)
+; wave 159: 64 16-bit samples (128 B); entry 197
+P2_W0159_Drawbar:	.incbin	"pcm/P2_W0159_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0159_Drawbar.wav (16-bit)
+; wave 160: 64 16-bit samples (128 B); entry 198
+P2_W0160_Drawbar:	.incbin	"pcm/P2_W0160_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0160_Drawbar.wav (16-bit)
+; wave 161: 64 16-bit samples (128 B); entry 199
+P2_W0161_Drawbar:	.incbin	"pcm/P2_W0161_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0161_Drawbar.wav (16-bit)
+; wave 162: 64 16-bit samples (128 B); entry 200
+P2_W0162_Drawbar:	.incbin	"pcm/P2_W0162_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0162_Drawbar.wav (16-bit)
+; wave 163: 128 16-bit samples (256 B); entry 201
+P2_W0163_Drawbar:	.incbin	"pcm/P2_W0163_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0163_Drawbar.wav (16-bit)
+; wave 164: 64 16-bit samples (128 B); entry 202
+P2_W0164_Drawbar:	.incbin	"pcm/P2_W0164_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0164_Drawbar.wav (16-bit)
+; wave 165: 64 16-bit samples (128 B); entry 203
+P2_W0165_Drawbar:	.incbin	"pcm/P2_W0165_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0165_Drawbar.wav (16-bit)
+; wave 166: 64 16-bit samples (128 B); entry 204
+P2_W0166_Drawbar:	.incbin	"pcm/P2_W0166_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0166_Drawbar.wav (16-bit)
+; wave 167: 64 16-bit samples (128 B); entry 205
+P2_W0167_Drawbar:	.incbin	"pcm/P2_W0167_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0167_Drawbar.wav (16-bit)
+; wave 168: 64 16-bit samples (128 B); entry 206
+P2_W0168_Drawbar:	.incbin	"pcm/P2_W0168_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0168_Drawbar.wav (16-bit)
+; wave 169: 64 16-bit samples (128 B); entry 207
+P2_W0169_Drawbar:	.incbin	"pcm/P2_W0169_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0169_Drawbar.wav (16-bit)
+; wave 170: 64 16-bit samples (128 B); entry 208
+P2_W0170_Drawbar:	.incbin	"pcm/P2_W0170_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0170_Drawbar.wav (16-bit)
+; wave 171: 64 16-bit samples (128 B); entry 209
+P2_W0171_Drawbar:	.incbin	"pcm/P2_W0171_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0171_Drawbar.wav (16-bit)
+; wave 172: 128 16-bit samples (256 B); entry 210
+P2_W0172_Drawbar:	.incbin	"pcm/P2_W0172_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0172_Drawbar.wav (16-bit)
+; wave 173: 64 16-bit samples (128 B); entry 211
+P2_W0173_Drawbar:	.incbin	"pcm/P2_W0173_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0173_Drawbar.wav (16-bit)
+; wave 174: 64 16-bit samples (128 B); entry 212
+P2_W0174_Drawbar:	.incbin	"pcm/P2_W0174_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0174_Drawbar.wav (16-bit)
+; wave 175: 64 16-bit samples (128 B); entry 213
+P2_W0175_Drawbar:	.incbin	"pcm/P2_W0175_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0175_Drawbar.wav (16-bit)
+; wave 176: 64 16-bit samples (128 B); entry 214
+P2_W0176_Drawbar:	.incbin	"pcm/P2_W0176_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0176_Drawbar.wav (16-bit)
+; wave 177: 64 16-bit samples (128 B); entry 215
+P2_W0177_Drawbar:	.incbin	"pcm/P2_W0177_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0177_Drawbar.wav (16-bit)
+; wave 178: 64 16-bit samples (128 B); entry 216
+P2_W0178_Drawbar:	.incbin	"pcm/P2_W0178_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0178_Drawbar.wav (16-bit)
+; wave 179: 64 16-bit samples (128 B); entry 217
+P2_W0179_Drawbar:	.incbin	"pcm/P2_W0179_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0179_Drawbar.wav (16-bit)
+; wave 180: 64 16-bit samples (128 B); entry 218
+P2_W0180_Drawbar:	.incbin	"pcm/P2_W0180_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0180_Drawbar.wav (16-bit)
+; wave 181: 128 16-bit samples (256 B); entry 219
+P2_W0181_Drawbar:	.incbin	"pcm/P2_W0181_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0181_Drawbar.wav (16-bit)
+; wave 182: 64 16-bit samples (128 B); entry 220
+P2_W0182_Drawbar:	.incbin	"pcm/P2_W0182_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0182_Drawbar.wav (16-bit)
+; wave 183: 64 16-bit samples (128 B); entry 221
+P2_W0183_Drawbar:	.incbin	"pcm/P2_W0183_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0183_Drawbar.wav (16-bit)
+; wave 184: 64 16-bit samples (128 B); entry 222
+P2_W0184_Drawbar:	.incbin	"pcm/P2_W0184_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0184_Drawbar.wav (16-bit)
+; wave 185: 64 16-bit samples (128 B); entry 223
+P2_W0185_Drawbar:	.incbin	"pcm/P2_W0185_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0185_Drawbar.wav (16-bit)
+; wave 186: 64 16-bit samples (128 B); entry 224
+P2_W0186_Drawbar:	.incbin	"pcm/P2_W0186_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0186_Drawbar.wav (16-bit)
+; wave 187: 64 16-bit samples (128 B); entry 225
+P2_W0187_Drawbar:	.incbin	"pcm/P2_W0187_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0187_Drawbar.wav (16-bit)
+; wave 188: 64 16-bit samples (128 B); entry 226
+P2_W0188_Drawbar:	.incbin	"pcm/P2_W0188_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0188_Drawbar.wav (16-bit)
+; wave 189: 64 16-bit samples (128 B); entry 227
+P2_W0189_Drawbar:	.incbin	"pcm/P2_W0189_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0189_Drawbar.wav (16-bit)
+; wave 190: 128 16-bit samples (256 B); entry 228
+P2_W0190_Drawbar:	.incbin	"pcm/P2_W0190_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0190_Drawbar.wav (16-bit)
+; wave 191: 64 16-bit samples (128 B); entry 229
+P2_W0191_Drawbar:	.incbin	"pcm/P2_W0191_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0191_Drawbar.wav (16-bit)
+; wave 192: 64 16-bit samples (128 B); entry 230
+P2_W0192_Drawbar:	.incbin	"pcm/P2_W0192_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0192_Drawbar.wav (16-bit)
+; wave 193: 64 16-bit samples (128 B); entry 231
+P2_W0193_Drawbar:	.incbin	"pcm/P2_W0193_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0193_Drawbar.wav (16-bit)
+; wave 194: 64 16-bit samples (128 B); entry 232
+P2_W0194_Drawbar:	.incbin	"pcm/P2_W0194_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0194_Drawbar.wav (16-bit)
+; wave 195: 64 16-bit samples (128 B); entry 233
+P2_W0195_Drawbar:	.incbin	"pcm/P2_W0195_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0195_Drawbar.wav (16-bit)
+; wave 196: 64 16-bit samples (128 B); entry 234
+P2_W0196_Drawbar:	.incbin	"pcm/P2_W0196_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0196_Drawbar.wav (16-bit)
+; wave 197: 128 16-bit samples (256 B); entry 235
+P2_W0197_Drawbar:	.incbin	"pcm/P2_W0197_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0197_Drawbar.wav (16-bit)
+; wave 198: 128 16-bit samples (256 B); entry 236
+P2_W0198_Drawbar:	.incbin	"pcm/P2_W0198_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0198_Drawbar.wav (16-bit)
+; wave 199: 128 16-bit samples (256 B); entry 237
+P2_W0199_Drawbar:	.incbin	"pcm/P2_W0199_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0199_Drawbar.wav (16-bit)
+; wave 200: 64 16-bit samples (128 B); entry 238
+P2_W0200_Drawbar:	.incbin	"pcm/P2_W0200_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0200_Drawbar.wav (16-bit)
+; wave 201: 64 16-bit samples (128 B); entry 239
+P2_W0201_Drawbar:	.incbin	"pcm/P2_W0201_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0201_Drawbar.wav (16-bit)
+; wave 202: 64 16-bit samples (128 B); entry 240
+P2_W0202_Drawbar:	.incbin	"pcm/P2_W0202_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0202_Drawbar.wav (16-bit)
+; wave 203: 64 16-bit samples (128 B); entry 241
+P2_W0203_Drawbar:	.incbin	"pcm/P2_W0203_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0203_Drawbar.wav (16-bit)
+; wave 204: 64 16-bit samples (128 B); entry 242
+P2_W0204_Drawbar:	.incbin	"pcm/P2_W0204_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0204_Drawbar.wav (16-bit)
+; wave 205: 64 16-bit samples (128 B); entry 243
+P2_W0205_Drawbar:	.incbin	"pcm/P2_W0205_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0205_Drawbar.wav (16-bit)
+; wave 206: 128 16-bit samples (256 B); entry 244
+P2_W0206_Drawbar:	.incbin	"pcm/P2_W0206_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0206_Drawbar.wav (16-bit)
+; wave 207: 64 16-bit samples (128 B); entry 245
+P2_W0207_Drawbar:	.incbin	"pcm/P2_W0207_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0207_Drawbar.wav (16-bit)
+; wave 208: 64 16-bit samples (128 B); entry 246
+P2_W0208_Drawbar:	.incbin	"pcm/P2_W0208_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0208_Drawbar.wav (16-bit)
+; wave 209: 64 16-bit samples (128 B); entry 247
+P2_W0209_Drawbar:	.incbin	"pcm/P2_W0209_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0209_Drawbar.wav (16-bit)
+; wave 210: 64 16-bit samples (128 B); entry 248
+P2_W0210_Drawbar:	.incbin	"pcm/P2_W0210_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0210_Drawbar.wav (16-bit)
+; wave 211: 64 16-bit samples (128 B); entry 249
+P2_W0211_Drawbar:	.incbin	"pcm/P2_W0211_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0211_Drawbar.wav (16-bit)
+; wave 212: 64 16-bit samples (128 B); entry 250
+P2_W0212_Drawbar:	.incbin	"pcm/P2_W0212_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0212_Drawbar.wav (16-bit)
+; wave 213: 128 16-bit samples (256 B); entry 251
+P2_W0213_Drawbar:	.incbin	"pcm/P2_W0213_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0213_Drawbar.wav (16-bit)
+; wave 214: 64 16-bit samples (128 B); entry 252
+P2_W0214_Drawbar:	.incbin	"pcm/P2_W0214_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0214_Drawbar.wav (16-bit)
+; wave 215: 64 16-bit samples (128 B); entry 253
+P2_W0215_Drawbar:	.incbin	"pcm/P2_W0215_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0215_Drawbar.wav (16-bit)
+; wave 216: 64 16-bit samples (128 B); entry 254
+P2_W0216_Drawbar:	.incbin	"pcm/P2_W0216_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0216_Drawbar.wav (16-bit)
+; wave 217: 64 16-bit samples (128 B); entry 255
+P2_W0217_Drawbar:	.incbin	"pcm/P2_W0217_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0217_Drawbar.wav (16-bit)
+; wave 218: 64 16-bit samples (128 B); entry 256
+P2_W0218_Drawbar:	.incbin	"pcm/P2_W0218_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0218_Drawbar.wav (16-bit)
+; wave 219: 64 16-bit samples (128 B); entry 257
+P2_W0219_Drawbar:	.incbin	"pcm/P2_W0219_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0219_Drawbar.wav (16-bit)
+; wave 220: 64 16-bit samples (128 B); entry 258
+P2_W0220_Drawbar:	.incbin	"pcm/P2_W0220_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0220_Drawbar.wav (16-bit)
+; wave 221: 64 16-bit samples (128 B); entry 259
+P2_W0221_Drawbar:	.incbin	"pcm/P2_W0221_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0221_Drawbar.wav (16-bit)
+; wave 222: 128 16-bit samples (256 B); entry 260
+P2_W0222_Drawbar:	.incbin	"pcm/P2_W0222_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0222_Drawbar.wav (16-bit)
+; wave 223: 64 16-bit samples (128 B); entry 261
+P2_W0223_Drawbar:	.incbin	"pcm/P2_W0223_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0223_Drawbar.wav (16-bit)
+; wave 224: 64 16-bit samples (128 B); entry 262
+P2_W0224_Drawbar:	.incbin	"pcm/P2_W0224_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0224_Drawbar.wav (16-bit)
+; wave 225: 64 16-bit samples (128 B); entry 263
+P2_W0225_Drawbar:	.incbin	"pcm/P2_W0225_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0225_Drawbar.wav (16-bit)
+; wave 226: 64 16-bit samples (128 B); entry 264
+P2_W0226_Drawbar:	.incbin	"pcm/P2_W0226_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0226_Drawbar.wav (16-bit)
+; wave 227: 64 16-bit samples (128 B); entry 265
+P2_W0227_Drawbar:	.incbin	"pcm/P2_W0227_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0227_Drawbar.wav (16-bit)
+; wave 228: 64 16-bit samples (128 B); entry 266
+P2_W0228_Drawbar:	.incbin	"pcm/P2_W0228_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0228_Drawbar.wav (16-bit)
+; wave 229: 64 16-bit samples (128 B); entry 267
+P2_W0229_Drawbar:	.incbin	"pcm/P2_W0229_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0229_Drawbar.wav (16-bit)
+; wave 230: 64 16-bit samples (128 B); entry 268
+P2_W0230_Drawbar:	.incbin	"pcm/P2_W0230_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0230_Drawbar.wav (16-bit)
+; wave 231: 128 16-bit samples (256 B); entry 269
+P2_W0231_Drawbar:	.incbin	"pcm/P2_W0231_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0231_Drawbar.wav (16-bit)
+; wave 232: 64 16-bit samples (128 B); entry 270
+P2_W0232_Drawbar:	.incbin	"pcm/P2_W0232_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0232_Drawbar.wav (16-bit)
+; wave 233: 64 16-bit samples (128 B); entry 271
+P2_W0233_Drawbar:	.incbin	"pcm/P2_W0233_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0233_Drawbar.wav (16-bit)
+; wave 234: 64 16-bit samples (128 B); entry 272
+P2_W0234_Drawbar:	.incbin	"pcm/P2_W0234_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0234_Drawbar.wav (16-bit)
+; wave 235: 64 16-bit samples (128 B); entry 273
+P2_W0235_Drawbar:	.incbin	"pcm/P2_W0235_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0235_Drawbar.wav (16-bit)
+; wave 236: 64 16-bit samples (128 B); entry 274
+P2_W0236_Drawbar:	.incbin	"pcm/P2_W0236_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0236_Drawbar.wav (16-bit)
+; wave 237: 64 16-bit samples (128 B); entry 275
+P2_W0237_Drawbar:	.incbin	"pcm/P2_W0237_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0237_Drawbar.wav (16-bit)
+; wave 238: 64 16-bit samples (128 B); entry 276
+P2_W0238_Drawbar:	.incbin	"pcm/P2_W0238_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0238_Drawbar.wav (16-bit)
+; wave 239: 64 16-bit samples (128 B); entry 277
+P2_W0239_Drawbar:	.incbin	"pcm/P2_W0239_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0239_Drawbar.wav (16-bit)
+; wave 240: 128 16-bit samples (256 B); entry 278
+P2_W0240_Drawbar:	.incbin	"pcm/P2_W0240_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0240_Drawbar.wav (16-bit)
+; wave 241: 64 16-bit samples (128 B); entry 279
+P2_W0241_Drawbar:	.incbin	"pcm/P2_W0241_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0241_Drawbar.wav (16-bit)
+; wave 242: 64 16-bit samples (128 B); entry 280
+P2_W0242_Drawbar:	.incbin	"pcm/P2_W0242_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0242_Drawbar.wav (16-bit)
+; wave 243: 64 16-bit samples (128 B); entry 281
+P2_W0243_Drawbar:	.incbin	"pcm/P2_W0243_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0243_Drawbar.wav (16-bit)
+; wave 244: 64 16-bit samples (128 B); entry 282
+P2_W0244_Drawbar:	.incbin	"pcm/P2_W0244_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0244_Drawbar.wav (16-bit)
+; wave 245: 64 16-bit samples (128 B); entry 283
+P2_W0245_Drawbar:	.incbin	"pcm/P2_W0245_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0245_Drawbar.wav (16-bit)
+; wave 246: 64 16-bit samples (128 B); entry 284
+P2_W0246_Drawbar:	.incbin	"pcm/P2_W0246_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0246_Drawbar.wav (16-bit)
+; wave 247: 64 16-bit samples (128 B); entry 285
+P2_W0247_Drawbar:	.incbin	"pcm/P2_W0247_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0247_Drawbar.wav (16-bit)
+; wave 248: 64 16-bit samples (128 B); entry 286
+P2_W0248_Drawbar:	.incbin	"pcm/P2_W0248_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0248_Drawbar.wav (16-bit)
+; wave 249: 128 16-bit samples (256 B); entry 287
+P2_W0249_Drawbar:	.incbin	"pcm/P2_W0249_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0249_Drawbar.wav (16-bit)
+; wave 250: 64 16-bit samples (128 B); entry 288
+P2_W0250_Drawbar:	.incbin	"pcm/P2_W0250_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0250_Drawbar.wav (16-bit)
+; wave 251: 64 16-bit samples (128 B); entry 289
+P2_W0251_Drawbar:	.incbin	"pcm/P2_W0251_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0251_Drawbar.wav (16-bit)
+; wave 252: 64 16-bit samples (128 B); entry 290
+P2_W0252_Drawbar:	.incbin	"pcm/P2_W0252_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0252_Drawbar.wav (16-bit)
+; wave 253: 64 16-bit samples (128 B); entry 291
+P2_W0253_Drawbar:	.incbin	"pcm/P2_W0253_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0253_Drawbar.wav (16-bit)
+; wave 254: 64 16-bit samples (128 B); entry 292
+P2_W0254_Drawbar:	.incbin	"pcm/P2_W0254_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0254_Drawbar.wav (16-bit)
+; wave 255: 64 16-bit samples (128 B); entry 293
+P2_W0255_Drawbar:	.incbin	"pcm/P2_W0255_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0255_Drawbar.wav (16-bit)
+; wave 256: 64 16-bit samples (128 B); entry 294
+P2_W0256_Drawbar:	.incbin	"pcm/P2_W0256_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0256_Drawbar.wav (16-bit)
+; wave 257: 64 16-bit samples (128 B); entry 295
+P2_W0257_Drawbar:	.incbin	"pcm/P2_W0257_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0257_Drawbar.wav (16-bit)
+; wave 258: 128 16-bit samples (256 B); entry 296
+P2_W0258_Drawbar:	.incbin	"pcm/P2_W0258_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0258_Drawbar.wav (16-bit)
+; wave 259: 64 16-bit samples (128 B); entry 297
+P2_W0259_Drawbar:	.incbin	"pcm/P2_W0259_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0259_Drawbar.wav (16-bit)
+; wave 260: 64 16-bit samples (128 B); entry 298
+P2_W0260_Drawbar:	.incbin	"pcm/P2_W0260_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0260_Drawbar.wav (16-bit)
+; wave 261: 64 16-bit samples (128 B); entry 299
+P2_W0261_Drawbar:	.incbin	"pcm/P2_W0261_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0261_Drawbar.wav (16-bit)
+; wave 262: 64 16-bit samples (128 B); entry 300
+P2_W0262_Drawbar:	.incbin	"pcm/P2_W0262_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0262_Drawbar.wav (16-bit)
+; wave 263: 64 16-bit samples (128 B); entry 301
+P2_W0263_Drawbar:	.incbin	"pcm/P2_W0263_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0263_Drawbar.wav (16-bit)
+; wave 264: 64 16-bit samples (128 B); entry 302
+P2_W0264_Drawbar:	.incbin	"pcm/P2_W0264_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0264_Drawbar.wav (16-bit)
+; wave 265: 64 16-bit samples (128 B); entry 303
+P2_W0265_Drawbar:	.incbin	"pcm/P2_W0265_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0265_Drawbar.wav (16-bit)
+; wave 266: 64 16-bit samples (128 B); entry 304
+P2_W0266_Drawbar:	.incbin	"pcm/P2_W0266_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0266_Drawbar.wav (16-bit)
+; wave 267: 128 16-bit samples (256 B); entry 305
+P2_W0267_Drawbar:	.incbin	"pcm/P2_W0267_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0267_Drawbar.wav (16-bit)
+; wave 268: 128 16-bit samples (256 B); entry 306
+P2_W0268_Drawbar:	.incbin	"pcm/P2_W0268_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0268_Drawbar.wav (16-bit)
+; wave 269: 64 16-bit samples (128 B); entry 307
+P2_W0269_Drawbar:	.incbin	"pcm/P2_W0269_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0269_Drawbar.wav (16-bit)
+; wave 270: 128 16-bit samples (256 B); entry 308
+P2_W0270_Drawbar:	.incbin	"pcm/P2_W0270_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0270_Drawbar.wav (16-bit)
+; wave 271: 128 16-bit samples (256 B); entry 309
+P2_W0271_Drawbar:	.incbin	"pcm/P2_W0271_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0271_Drawbar.wav (16-bit)
+; wave 272: 128 16-bit samples (256 B); entry 310
+P2_W0272_Drawbar:	.incbin	"pcm/P2_W0272_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0272_Drawbar.wav (16-bit)
+; wave 273: 64 16-bit samples (128 B); entry 311
+P2_W0273_Drawbar:	.incbin	"pcm/P2_W0273_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0273_Drawbar.wav (16-bit)
+; wave 274: 64 16-bit samples (128 B); entry 312
+P2_W0274_Drawbar:	.incbin	"pcm/P2_W0274_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0274_Drawbar.wav (16-bit)
+; wave 275: 64 16-bit samples (128 B); entry 313
+P2_W0275_Drawbar:	.incbin	"pcm/P2_W0275_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0275_Drawbar.wav (16-bit)
+; wave 276: 64 16-bit samples (128 B); entry 314
+P2_W0276_Drawbar:	.incbin	"pcm/P2_W0276_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0276_Drawbar.wav (16-bit)
+; wave 277: 64 16-bit samples (128 B); entry 315
+P2_W0277_Drawbar:	.incbin	"pcm/P2_W0277_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0277_Drawbar.wav (16-bit)
+; wave 278: 64 16-bit samples (128 B); entry 316
+P2_W0278_Drawbar:	.incbin	"pcm/P2_W0278_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0278_Drawbar.wav (16-bit)
+; wave 279: 128 16-bit samples (256 B); entry 317
+P2_W0279_Drawbar:	.incbin	"pcm/P2_W0279_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0279_Drawbar.wav (16-bit)
+; wave 280: 128 16-bit samples (256 B); entry 318
+P2_W0280_Drawbar:	.incbin	"pcm/P2_W0280_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0280_Drawbar.wav (16-bit)
+; wave 281: 128 16-bit samples (256 B); entry 319
+P2_W0281_Drawbar:	.incbin	"pcm/P2_W0281_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0281_Drawbar.wav (16-bit)
+; wave 282: 64 16-bit samples (128 B); entry 320
+P2_W0282_Drawbar:	.incbin	"pcm/P2_W0282_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0282_Drawbar.wav (16-bit)
+; wave 283: 64 16-bit samples (128 B); entry 321
+P2_W0283_Drawbar:	.incbin	"pcm/P2_W0283_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0283_Drawbar.wav (16-bit)
+; wave 284: 64 16-bit samples (128 B); entry 322
+P2_W0284_Drawbar:	.incbin	"pcm/P2_W0284_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0284_Drawbar.wav (16-bit)
+; wave 285: 64 16-bit samples (128 B); entry 323
+P2_W0285_Drawbar:	.incbin	"pcm/P2_W0285_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0285_Drawbar.wav (16-bit)
+; wave 286: 64 16-bit samples (128 B); entry 324
+P2_W0286_Drawbar:	.incbin	"pcm/P2_W0286_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0286_Drawbar.wav (16-bit)
+; wave 287: 64 16-bit samples (128 B); entry 325
+P2_W0287_Drawbar:	.incbin	"pcm/P2_W0287_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0287_Drawbar.wav (16-bit)
+; wave 288: 128 16-bit samples (256 B); entry 326
+P2_W0288_Drawbar:	.incbin	"pcm/P2_W0288_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0288_Drawbar.wav (16-bit)
+; wave 289: 128 16-bit samples (256 B); entry 327
+P2_W0289_Drawbar:	.incbin	"pcm/P2_W0289_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0289_Drawbar.wav (16-bit)
+; wave 290: 64 16-bit samples (128 B); entry 328
+P2_W0290_Drawbar:	.incbin	"pcm/P2_W0290_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0290_Drawbar.wav (16-bit)
+; wave 291: 64 16-bit samples (128 B); entry 329
+P2_W0291_Drawbar:	.incbin	"pcm/P2_W0291_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0291_Drawbar.wav (16-bit)
+; wave 292: 64 16-bit samples (128 B); entry 330
+P2_W0292_Drawbar:	.incbin	"pcm/P2_W0292_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0292_Drawbar.wav (16-bit)
+; wave 293: 64 16-bit samples (128 B); entry 331
+P2_W0293_Drawbar:	.incbin	"pcm/P2_W0293_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0293_Drawbar.wav (16-bit)
+; wave 294: 64 16-bit samples (128 B); entry 332
+P2_W0294_Drawbar:	.incbin	"pcm/P2_W0294_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0294_Drawbar.wav (16-bit)
+; wave 295: 64 16-bit samples (128 B); entry 333
+P2_W0295_Drawbar:	.incbin	"pcm/P2_W0295_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0295_Drawbar.wav (16-bit)
+; wave 296: 64 16-bit samples (128 B); entry 334
+P2_W0296_Drawbar:	.incbin	"pcm/P2_W0296_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0296_Drawbar.wav (16-bit)
+; wave 297: 64 16-bit samples (128 B); entry 335
+P2_W0297_Drawbar:	.incbin	"pcm/P2_W0297_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0297_Drawbar.wav (16-bit)
+; wave 298: 64 16-bit samples (128 B); entry 336
+P2_W0298_Drawbar:	.incbin	"pcm/P2_W0298_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0298_Drawbar.wav (16-bit)
+; wave 299: 64 16-bit samples (128 B); entry 337
+P2_W0299_Drawbar:	.incbin	"pcm/P2_W0299_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0299_Drawbar.wav (16-bit)
+; wave 300: 64 16-bit samples (128 B); entry 338
+P2_W0300_Drawbar:	.incbin	"pcm/P2_W0300_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0300_Drawbar.wav (16-bit)
+; wave 301: 64 16-bit samples (128 B); entry 339
+P2_W0301_Drawbar:	.incbin	"pcm/P2_W0301_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0301_Drawbar.wav (16-bit)
+; wave 302: 64 16-bit samples (128 B); entry 340
+P2_W0302_Drawbar:	.incbin	"pcm/P2_W0302_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0302_Drawbar.wav (16-bit)
+; wave 303: 128 16-bit samples (256 B); entry 341
+P2_W0303_Drawbar:	.incbin	"pcm/P2_W0303_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0303_Drawbar.wav (16-bit)
+; wave 304: 64 16-bit samples (128 B); entry 342
+P2_W0304_Drawbar:	.incbin	"pcm/P2_W0304_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0304_Drawbar.wav (16-bit)
+; wave 305: 64 16-bit samples (128 B); entry 343
+P2_W0305_Drawbar:	.incbin	"pcm/P2_W0305_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0305_Drawbar.wav (16-bit)
+; wave 306: 64 16-bit samples (128 B); entry 344
+P2_W0306_Drawbar:	.incbin	"pcm/P2_W0306_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0306_Drawbar.wav (16-bit)
+; wave 307: 64 16-bit samples (128 B); entry 345
+P2_W0307_Drawbar:	.incbin	"pcm/P2_W0307_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0307_Drawbar.wav (16-bit)
+; wave 308: 64 16-bit samples (128 B); entry 346
+P2_W0308_Drawbar:	.incbin	"pcm/P2_W0308_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0308_Drawbar.wav (16-bit)
+; wave 309: 64 16-bit samples (128 B); entry 347
+P2_W0309_Drawbar:	.incbin	"pcm/P2_W0309_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0309_Drawbar.wav (16-bit)
+; wave 310: 64 16-bit samples (128 B); entry 348
+P2_W0310_Drawbar:	.incbin	"pcm/P2_W0310_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0310_Drawbar.wav (16-bit)
+; wave 311: 64 16-bit samples (128 B); entry 349
+P2_W0311_Drawbar:	.incbin	"pcm/P2_W0311_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0311_Drawbar.wav (16-bit)
+; wave 312: 128 16-bit samples (256 B); entry 350
+P2_W0312_Drawbar:	.incbin	"pcm/P2_W0312_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0312_Drawbar.wav (16-bit)
+; wave 313: 128 16-bit samples (256 B); entry 351
+P2_W0313_Drawbar:	.incbin	"pcm/P2_W0313_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0313_Drawbar.wav (16-bit)
+; wave 314: 64 16-bit samples (128 B); entry 352
+P2_W0314_Drawbar:	.incbin	"pcm/P2_W0314_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0314_Drawbar.wav (16-bit)
+; wave 315: 256 16-bit samples (512 B); entry 353
+P2_W0315_Drawbar:	.incbin	"pcm/P2_W0315_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0315_Drawbar.wav (16-bit)
+; wave 316: 128 16-bit samples (256 B); entry 354
+P2_W0316_Drawbar:	.incbin	"pcm/P2_W0316_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0316_Drawbar.wav (16-bit)
+; wave 317: 128 16-bit samples (256 B); entry 355
+P2_W0317_Drawbar:	.incbin	"pcm/P2_W0317_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0317_Drawbar.wav (16-bit)
+; wave 318: 64 16-bit samples (128 B); entry 356
+P2_W0318_Drawbar:	.incbin	"pcm/P2_W0318_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0318_Drawbar.wav (16-bit)
+; wave 319: 64 16-bit samples (128 B); entry 357
+P2_W0319_Drawbar:	.incbin	"pcm/P2_W0319_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0319_Drawbar.wav (16-bit)
+; wave 320: 64 16-bit samples (128 B); entry 358
+P2_W0320_Drawbar:	.incbin	"pcm/P2_W0320_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0320_Drawbar.wav (16-bit)
+; wave 321: 64 16-bit samples (128 B); entry 359
+P2_W0321_Drawbar:	.incbin	"pcm/P2_W0321_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0321_Drawbar.wav (16-bit)
+; wave 322: 64 16-bit samples (128 B); entry 360
+P2_W0322_Drawbar:	.incbin	"pcm/P2_W0322_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0322_Drawbar.wav (16-bit)
+; wave 323: 64 16-bit samples (128 B); entry 361
+P2_W0323_Drawbar:	.incbin	"pcm/P2_W0323_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0323_Drawbar.wav (16-bit)
+; wave 324: 128 16-bit samples (256 B); entry 362
+P2_W0324_Drawbar:	.incbin	"pcm/P2_W0324_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0324_Drawbar.wav (16-bit)
+; wave 325: 128 16-bit samples (256 B); entry 363
+P2_W0325_Drawbar:	.incbin	"pcm/P2_W0325_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0325_Drawbar.wav (16-bit)
+; wave 326: 128 16-bit samples (256 B); entry 364
+P2_W0326_Drawbar:	.incbin	"pcm/P2_W0326_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0326_Drawbar.wav (16-bit)
+; wave 327: 64 16-bit samples (128 B); entry 365
+P2_W0327_Drawbar:	.incbin	"pcm/P2_W0327_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0327_Drawbar.wav (16-bit)
+; wave 328: 64 16-bit samples (128 B); entry 366
+P2_W0328_Drawbar:	.incbin	"pcm/P2_W0328_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0328_Drawbar.wav (16-bit)
+; wave 329: 64 16-bit samples (128 B); entry 367
+P2_W0329_Drawbar:	.incbin	"pcm/P2_W0329_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0329_Drawbar.wav (16-bit)
+; wave 330: 64 16-bit samples (128 B); entry 368
+P2_W0330_Drawbar:	.incbin	"pcm/P2_W0330_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0330_Drawbar.wav (16-bit)
+; wave 331: 64 16-bit samples (128 B); entry 369
+P2_W0331_Drawbar:	.incbin	"pcm/P2_W0331_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0331_Drawbar.wav (16-bit)
+; wave 332: 64 16-bit samples (128 B); entry 370
+P2_W0332_Drawbar:	.incbin	"pcm/P2_W0332_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0332_Drawbar.wav (16-bit)
+; wave 333: 128 16-bit samples (256 B); entry 371
+P2_W0333_Drawbar:	.incbin	"pcm/P2_W0333_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0333_Drawbar.wav (16-bit)
+; wave 334: 128 16-bit samples (256 B); entry 372
+P2_W0334_Drawbar:	.incbin	"pcm/P2_W0334_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0334_Drawbar.wav (16-bit)
+; wave 335: 64 16-bit samples (128 B); entry 373
+P2_W0335_Drawbar:	.incbin	"pcm/P2_W0335_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0335_Drawbar.wav (16-bit)
+; wave 336: 64 16-bit samples (128 B); entry 374
+P2_W0336_Drawbar:	.incbin	"pcm/P2_W0336_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0336_Drawbar.wav (16-bit)
+; wave 337: 64 16-bit samples (128 B); entry 375
+P2_W0337_Drawbar:	.incbin	"pcm/P2_W0337_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0337_Drawbar.wav (16-bit)
+; wave 338: 64 16-bit samples (128 B); entry 376
+P2_W0338_Drawbar:	.incbin	"pcm/P2_W0338_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0338_Drawbar.wav (16-bit)
+; wave 339: 64 16-bit samples (128 B); entry 377
+P2_W0339_Drawbar:	.incbin	"pcm/P2_W0339_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0339_Drawbar.wav (16-bit)
+; wave 340: 64 16-bit samples (128 B); entry 378
+P2_W0340_Drawbar:	.incbin	"pcm/P2_W0340_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0340_Drawbar.wav (16-bit)
+; wave 341: 64 16-bit samples (128 B); entry 379
+P2_W0341_Drawbar:	.incbin	"pcm/P2_W0341_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0341_Drawbar.wav (16-bit)
+; wave 342: 64 16-bit samples (128 B); entry 380
+P2_W0342_Drawbar:	.incbin	"pcm/P2_W0342_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0342_Drawbar.wav (16-bit)
+; wave 343: 64 16-bit samples (128 B); entry 381
+P2_W0343_Drawbar:	.incbin	"pcm/P2_W0343_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0343_Drawbar.wav (16-bit)
+; wave 344: 64 16-bit samples (128 B); entry 382
+P2_W0344_Drawbar:	.incbin	"pcm/P2_W0344_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0344_Drawbar.wav (16-bit)
+; wave 345: 64 16-bit samples (128 B); entry 383
+P2_W0345_Drawbar:	.incbin	"pcm/P2_W0345_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0345_Drawbar.wav (16-bit)
+; wave 346: 64 16-bit samples (128 B); entry 384
+P2_W0346_Drawbar:	.incbin	"pcm/P2_W0346_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0346_Drawbar.wav (16-bit)
+; wave 347: 64 16-bit samples (128 B); entry 385
+P2_W0347_Drawbar:	.incbin	"pcm/P2_W0347_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0347_Drawbar.wav (16-bit)
+; wave 348: 128 16-bit samples (256 B); entry 386
+P2_W0348_Drawbar:	.incbin	"pcm/P2_W0348_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0348_Drawbar.wav (16-bit)
+; wave 349: 64 16-bit samples (128 B); entry 387
+P2_W0349_Drawbar:	.incbin	"pcm/P2_W0349_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0349_Drawbar.wav (16-bit)
+; wave 350: 64 16-bit samples (128 B); entry 388
+P2_W0350_Drawbar:	.incbin	"pcm/P2_W0350_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0350_Drawbar.wav (16-bit)
+; wave 351: 64 16-bit samples (128 B); entry 389
+P2_W0351_Drawbar:	.incbin	"pcm/P2_W0351_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0351_Drawbar.wav (16-bit)
+; wave 352: 64 16-bit samples (128 B); entry 390
+P2_W0352_Drawbar:	.incbin	"pcm/P2_W0352_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0352_Drawbar.wav (16-bit)
+; wave 353: 64 16-bit samples (128 B); entry 391
+P2_W0353_Drawbar:	.incbin	"pcm/P2_W0353_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0353_Drawbar.wav (16-bit)
+; wave 354: 64 16-bit samples (128 B); entry 392
+P2_W0354_Drawbar:	.incbin	"pcm/P2_W0354_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0354_Drawbar.wav (16-bit)
+; wave 355: 64 16-bit samples (128 B); entry 393
+P2_W0355_Drawbar:	.incbin	"pcm/P2_W0355_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0355_Drawbar.wav (16-bit)
+; wave 356: 64 16-bit samples (128 B); entry 394
+P2_W0356_Drawbar:	.incbin	"pcm/P2_W0356_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0356_Drawbar.wav (16-bit)
+; wave 357: 256 16-bit samples (512 B); entry 395
+P2_W0357_Drawbar:	.incbin	"pcm/P2_W0357_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0357_Drawbar.wav (16-bit)
+; wave 358: 256 16-bit samples (512 B); entry 396
+P2_W0358_Drawbar:	.incbin	"pcm/P2_W0358_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0358_Drawbar.wav (16-bit)
+; wave 359: 128 16-bit samples (256 B); entry 397
+P2_W0359_Drawbar:	.incbin	"pcm/P2_W0359_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0359_Drawbar.wav (16-bit)
+; wave 360: 256 16-bit samples (512 B); entry 398
+P2_W0360_Drawbar:	.incbin	"pcm/P2_W0360_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0360_Drawbar.wav (16-bit)
+; wave 361: 256 16-bit samples (512 B); entry 399
+P2_W0361_Drawbar:	.incbin	"pcm/P2_W0361_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0361_Drawbar.wav (16-bit)
+; wave 362: 256 16-bit samples (512 B); entry 400
+P2_W0362_Drawbar:	.incbin	"pcm/P2_W0362_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0362_Drawbar.wav (16-bit)
+; wave 363: 256 16-bit samples (512 B); entry 401
+P2_W0363_Drawbar:	.incbin	"pcm/P2_W0363_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0363_Drawbar.wav (16-bit)
+; wave 364: 128 16-bit samples (256 B); entry 402
+P2_W0364_Drawbar:	.incbin	"pcm/P2_W0364_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0364_Drawbar.wav (16-bit)
+; wave 365: 128 16-bit samples (256 B); entry 403
+P2_W0365_Drawbar:	.incbin	"pcm/P2_W0365_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0365_Drawbar.wav (16-bit)
+; wave 366: 128 16-bit samples (256 B); entry 404
+P2_W0366_Drawbar:	.incbin	"pcm/P2_W0366_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0366_Drawbar.wav (16-bit)
+; wave 367: 128 16-bit samples (256 B); entry 405
+P2_W0367_Drawbar:	.incbin	"pcm/P2_W0367_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0367_Drawbar.wav (16-bit)
+; wave 368: 128 16-bit samples (256 B); entry 406
+P2_W0368_Drawbar:	.incbin	"pcm/P2_W0368_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0368_Drawbar.wav (16-bit)
+; wave 369: 256 16-bit samples (512 B); entry 407
+P2_W0369_Drawbar:	.incbin	"pcm/P2_W0369_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0369_Drawbar.wav (16-bit)
+; wave 370: 256 16-bit samples (512 B); entry 408
+P2_W0370_Drawbar:	.incbin	"pcm/P2_W0370_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0370_Drawbar.wav (16-bit)
+; wave 371: 256 16-bit samples (512 B); entry 409
+P2_W0371_Drawbar:	.incbin	"pcm/P2_W0371_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0371_Drawbar.wav (16-bit)
+; wave 372: 256 16-bit samples (512 B); entry 410
+P2_W0372_Drawbar:	.incbin	"pcm/P2_W0372_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0372_Drawbar.wav (16-bit)
+; wave 373: 128 16-bit samples (256 B); entry 411
+P2_W0373_Drawbar:	.incbin	"pcm/P2_W0373_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0373_Drawbar.wav (16-bit)
+; wave 374: 128 16-bit samples (256 B); entry 412
+P2_W0374_Drawbar:	.incbin	"pcm/P2_W0374_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0374_Drawbar.wav (16-bit)
+; wave 375: 128 16-bit samples (256 B); entry 413
+P2_W0375_Drawbar:	.incbin	"pcm/P2_W0375_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0375_Drawbar.wav (16-bit)
+; wave 376: 128 16-bit samples (256 B); entry 414
+P2_W0376_Drawbar:	.incbin	"pcm/P2_W0376_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0376_Drawbar.wav (16-bit)
+; wave 377: 128 16-bit samples (256 B); entry 415
+P2_W0377_Drawbar:	.incbin	"pcm/P2_W0377_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0377_Drawbar.wav (16-bit)
+; wave 378: 256 16-bit samples (512 B); entry 416
+P2_W0378_Drawbar:	.incbin	"pcm/P2_W0378_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0378_Drawbar.wav (16-bit)
+; wave 379: 128 16-bit samples (256 B); entry 417
+P2_W0379_Drawbar:	.incbin	"pcm/P2_W0379_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0379_Drawbar.wav (16-bit)
+; wave 380: 128 16-bit samples (256 B); entry 418
+P2_W0380_Drawbar:	.incbin	"pcm/P2_W0380_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0380_Drawbar.wav (16-bit)
+; wave 381: 128 16-bit samples (256 B); entry 419
+P2_W0381_Drawbar:	.incbin	"pcm/P2_W0381_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0381_Drawbar.wav (16-bit)
+; wave 382: 128 16-bit samples (256 B); entry 420
+P2_W0382_Drawbar:	.incbin	"pcm/P2_W0382_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0382_Drawbar.wav (16-bit)
+; wave 383: 128 16-bit samples (256 B); entry 421
+P2_W0383_Drawbar:	.incbin	"pcm/P2_W0383_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0383_Drawbar.wav (16-bit)
+; wave 384: 128 16-bit samples (256 B); entry 422
+P2_W0384_Drawbar:	.incbin	"pcm/P2_W0384_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0384_Drawbar.wav (16-bit)
+; wave 385: 128 16-bit samples (256 B); entry 423
+P2_W0385_Drawbar:	.incbin	"pcm/P2_W0385_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0385_Drawbar.wav (16-bit)
+; wave 386: 64 16-bit samples (128 B); entry 424
+P2_W0386_Drawbar:	.incbin	"pcm/P2_W0386_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0386_Drawbar.wav (16-bit)
+; wave 387: 128 16-bit samples (256 B); entry 425
+P2_W0387_Drawbar:	.incbin	"pcm/P2_W0387_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0387_Drawbar.wav (16-bit)
+; wave 388: 128 16-bit samples (256 B); entry 426
+P2_W0388_Drawbar:	.incbin	"pcm/P2_W0388_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0388_Drawbar.wav (16-bit)
+; wave 389: 64 16-bit samples (128 B); entry 427
+P2_W0389_Drawbar:	.incbin	"pcm/P2_W0389_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0389_Drawbar.wav (16-bit)
+; wave 390: 128 16-bit samples (256 B); entry 428
+P2_W0390_Drawbar:	.incbin	"pcm/P2_W0390_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0390_Drawbar.wav (16-bit)
+; wave 391: 128 16-bit samples (256 B); entry 429
+P2_W0391_Drawbar:	.incbin	"pcm/P2_W0391_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0391_Drawbar.wav (16-bit)
+; wave 392: 64 16-bit samples (128 B); entry 430
+P2_W0392_Drawbar:	.incbin	"pcm/P2_W0392_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0392_Drawbar.wav (16-bit)
+; wave 393: 128 16-bit samples (256 B); entry 431
+P2_W0393_Drawbar:	.incbin	"pcm/P2_W0393_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0393_Drawbar.wav (16-bit)
+; wave 394: 128 16-bit samples (256 B); entry 432
+P2_W0394_Drawbar:	.incbin	"pcm/P2_W0394_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0394_Drawbar.wav (16-bit)
+; wave 395: 128 16-bit samples (256 B); entry 433
+P2_W0395_Drawbar:	.incbin	"pcm/P2_W0395_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0395_Drawbar.wav (16-bit)
+; wave 396: 128 16-bit samples (256 B); entry 434
+P2_W0396_Drawbar:	.incbin	"pcm/P2_W0396_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0396_Drawbar.wav (16-bit)
+; wave 397: 128 16-bit samples (256 B); entry 435
+P2_W0397_Drawbar:	.incbin	"pcm/P2_W0397_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0397_Drawbar.wav (16-bit)
+; wave 398: 64 16-bit samples (128 B); entry 436
+P2_W0398_Drawbar:	.incbin	"pcm/P2_W0398_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0398_Drawbar.wav (16-bit)
+; wave 399: 64 16-bit samples (128 B); entry 437
+P2_W0399_Drawbar:	.incbin	"pcm/P2_W0399_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0399_Drawbar.wav (16-bit)
+; wave 400: 64 16-bit samples (128 B); entry 438
+P2_W0400_Drawbar:	.incbin	"pcm/P2_W0400_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0400_Drawbar.wav (16-bit)
+; wave 401: 64 16-bit samples (128 B); entry 439
+P2_W0401_Drawbar:	.incbin	"pcm/P2_W0401_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0401_Drawbar.wav (16-bit)
+; wave 402: 256 16-bit samples (512 B); entry 440
+P2_W0402_Drawbar:	.incbin	"pcm/P2_W0402_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0402_Drawbar.wav (16-bit)
+; wave 403: 256 16-bit samples (512 B); entry 441
+P2_W0403_Drawbar:	.incbin	"pcm/P2_W0403_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0403_Drawbar.wav (16-bit)
+; wave 404: 128 16-bit samples (256 B); entry 442
+P2_W0404_Drawbar:	.incbin	"pcm/P2_W0404_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0404_Drawbar.wav (16-bit)
+; wave 405: 256 16-bit samples (512 B); entry 443
+P2_W0405_Drawbar:	.incbin	"pcm/P2_W0405_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0405_Drawbar.wav (16-bit)
+; wave 406: 256 16-bit samples (512 B); entry 444
+P2_W0406_Drawbar:	.incbin	"pcm/P2_W0406_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0406_Drawbar.wav (16-bit)
+; wave 407: 256 16-bit samples (512 B); entry 445
+P2_W0407_Drawbar:	.incbin	"pcm/P2_W0407_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0407_Drawbar.wav (16-bit)
+; wave 408: 128 16-bit samples (256 B); entry 446
+P2_W0408_Drawbar:	.incbin	"pcm/P2_W0408_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0408_Drawbar.wav (16-bit)
+; wave 409: 128 16-bit samples (256 B); entry 447
+P2_W0409_Drawbar:	.incbin	"pcm/P2_W0409_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0409_Drawbar.wav (16-bit)
+; wave 410: 128 16-bit samples (256 B); entry 448
+P2_W0410_Drawbar:	.incbin	"pcm/P2_W0410_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0410_Drawbar.wav (16-bit)
+; wave 411: 128 16-bit samples (256 B); entry 449
+P2_W0411_Drawbar:	.incbin	"pcm/P2_W0411_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0411_Drawbar.wav (16-bit)
+; wave 412: 128 16-bit samples (256 B); entry 450
+P2_W0412_Drawbar:	.incbin	"pcm/P2_W0412_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0412_Drawbar.wav (16-bit)
+; wave 413: 128 16-bit samples (256 B); entry 451
+P2_W0413_Drawbar:	.incbin	"pcm/P2_W0413_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0413_Drawbar.wav (16-bit)
+; wave 414: 256 16-bit samples (512 B); entry 452
+P2_W0414_Drawbar:	.incbin	"pcm/P2_W0414_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0414_Drawbar.wav (16-bit)
+; wave 415: 256 16-bit samples (512 B); entry 453
+P2_W0415_Drawbar:	.incbin	"pcm/P2_W0415_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0415_Drawbar.wav (16-bit)
+; wave 416: 256 16-bit samples (512 B); entry 454
+P2_W0416_Drawbar:	.incbin	"pcm/P2_W0416_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0416_Drawbar.wav (16-bit)
+; wave 417: 128 16-bit samples (256 B); entry 455
+P2_W0417_Drawbar:	.incbin	"pcm/P2_W0417_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0417_Drawbar.wav (16-bit)
+; wave 418: 128 16-bit samples (256 B); entry 456
+P2_W0418_Drawbar:	.incbin	"pcm/P2_W0418_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0418_Drawbar.wav (16-bit)
+; wave 419: 128 16-bit samples (256 B); entry 457
+P2_W0419_Drawbar:	.incbin	"pcm/P2_W0419_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0419_Drawbar.wav (16-bit)
+; wave 420: 128 16-bit samples (256 B); entry 458
+P2_W0420_Drawbar:	.incbin	"pcm/P2_W0420_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0420_Drawbar.wav (16-bit)
+; wave 421: 128 16-bit samples (256 B); entry 459
+P2_W0421_Drawbar:	.incbin	"pcm/P2_W0421_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0421_Drawbar.wav (16-bit)
+; wave 422: 128 16-bit samples (256 B); entry 460
+P2_W0422_Drawbar:	.incbin	"pcm/P2_W0422_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0422_Drawbar.wav (16-bit)
+; wave 423: 128 16-bit samples (256 B); entry 461
+P2_W0423_Drawbar:	.incbin	"pcm/P2_W0423_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0423_Drawbar.wav (16-bit)
+; wave 424: 128 16-bit samples (256 B); entry 462
+P2_W0424_Drawbar:	.incbin	"pcm/P2_W0424_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0424_Drawbar.wav (16-bit)
+; wave 425: 64 16-bit samples (128 B); entry 463
+P2_W0425_Drawbar:	.incbin	"pcm/P2_W0425_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0425_Drawbar.wav (16-bit)
+; wave 426: 128 16-bit samples (256 B); entry 464
+P2_W0426_Drawbar:	.incbin	"pcm/P2_W0426_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0426_Drawbar.wav (16-bit)
+; wave 427: 128 16-bit samples (256 B); entry 465
+P2_W0427_Drawbar:	.incbin	"pcm/P2_W0427_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0427_Drawbar.wav (16-bit)
+; wave 428: 64 16-bit samples (128 B); entry 466
+P2_W0428_Drawbar:	.incbin	"pcm/P2_W0428_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0428_Drawbar.wav (16-bit)
+; wave 429: 128 16-bit samples (256 B); entry 467
+P2_W0429_Drawbar:	.incbin	"pcm/P2_W0429_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0429_Drawbar.wav (16-bit)
+; wave 430: 128 16-bit samples (256 B); entry 468
+P2_W0430_Drawbar:	.incbin	"pcm/P2_W0430_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0430_Drawbar.wav (16-bit)
+; wave 431: 64 16-bit samples (128 B); entry 469
+P2_W0431_Drawbar:	.incbin	"pcm/P2_W0431_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0431_Drawbar.wav (16-bit)
+; wave 432: 128 16-bit samples (256 B); entry 470
+P2_W0432_Drawbar:	.incbin	"pcm/P2_W0432_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0432_Drawbar.wav (16-bit)
+; wave 433: 128 16-bit samples (256 B); entry 471
+P2_W0433_Drawbar:	.incbin	"pcm/P2_W0433_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0433_Drawbar.wav (16-bit)
+; wave 434: 64 16-bit samples (128 B); entry 472
+P2_W0434_Drawbar:	.incbin	"pcm/P2_W0434_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0434_Drawbar.wav (16-bit)
+; wave 435: 128 16-bit samples (256 B); entry 473
+P2_W0435_Drawbar:	.incbin	"pcm/P2_W0435_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0435_Drawbar.wav (16-bit)
+; wave 436: 128 16-bit samples (256 B); entry 474
+P2_W0436_Drawbar:	.incbin	"pcm/P2_W0436_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0436_Drawbar.wav (16-bit)
+; wave 437: 64 16-bit samples (128 B); entry 475
+P2_W0437_Drawbar:	.incbin	"pcm/P2_W0437_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0437_Drawbar.wav (16-bit)
+; wave 438: 128 16-bit samples (256 B); entry 476
+P2_W0438_Drawbar:	.incbin	"pcm/P2_W0438_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0438_Drawbar.wav (16-bit)
+; wave 439: 128 16-bit samples (256 B); entry 477
+P2_W0439_Drawbar:	.incbin	"pcm/P2_W0439_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0439_Drawbar.wav (16-bit)
+; wave 440: 128 16-bit samples (256 B); entry 478
+P2_W0440_Drawbar:	.incbin	"pcm/P2_W0440_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0440_Drawbar.wav (16-bit)
+; wave 441: 128 16-bit samples (256 B); entry 479
+P2_W0441_Drawbar:	.incbin	"pcm/P2_W0441_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0441_Drawbar.wav (16-bit)
+; wave 442: 128 16-bit samples (256 B); entry 480
+P2_W0442_Drawbar:	.incbin	"pcm/P2_W0442_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0442_Drawbar.wav (16-bit)
+; wave 443: 128 16-bit samples (256 B); entry 481
+P2_W0443_Drawbar:	.incbin	"pcm/P2_W0443_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0443_Drawbar.wav (16-bit)
+; wave 444: 128 16-bit samples (256 B); entry 482
+P2_W0444_Drawbar:	.incbin	"pcm/P2_W0444_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0444_Drawbar.wav (16-bit)
+; wave 445: 64 16-bit samples (128 B); entry 483
+P2_W0445_Drawbar:	.incbin	"pcm/P2_W0445_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0445_Drawbar.wav (16-bit)
+; wave 446: 64 16-bit samples (128 B); entry 484
+P2_W0446_Drawbar:	.incbin	"pcm/P2_W0446_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0446_Drawbar.wav (16-bit)
+; wave 447: 256 16-bit samples (512 B); entry 485
+P2_W0447_Drawbar:	.incbin	"pcm/P2_W0447_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0447_Drawbar.wav (16-bit)
+; wave 448: 256 16-bit samples (512 B); entry 486
+P2_W0448_Drawbar:	.incbin	"pcm/P2_W0448_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0448_Drawbar.wav (16-bit)
+; wave 449: 128 16-bit samples (256 B); entry 487
+P2_W0449_Drawbar:	.incbin	"pcm/P2_W0449_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0449_Drawbar.wav (16-bit)
+; wave 450: 256 16-bit samples (512 B); entry 488
+P2_W0450_Drawbar:	.incbin	"pcm/P2_W0450_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0450_Drawbar.wav (16-bit)
+; wave 451: 256 16-bit samples (512 B); entry 489
+P2_W0451_Drawbar:	.incbin	"pcm/P2_W0451_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0451_Drawbar.wav (16-bit)
+; wave 452: 256 16-bit samples (512 B); entry 490
+P2_W0452_Drawbar:	.incbin	"pcm/P2_W0452_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0452_Drawbar.wav (16-bit)
+; wave 453: 256 16-bit samples (512 B); entry 491
+P2_W0453_Drawbar:	.incbin	"pcm/P2_W0453_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0453_Drawbar.wav (16-bit)
+; wave 454: 256 16-bit samples (512 B); entry 492
+P2_W0454_Drawbar:	.incbin	"pcm/P2_W0454_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0454_Drawbar.wav (16-bit)
+; wave 455: 128 16-bit samples (256 B); entry 493
+P2_W0455_Drawbar:	.incbin	"pcm/P2_W0455_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0455_Drawbar.wav (16-bit)
+; wave 456: 128 16-bit samples (256 B); entry 494
+P2_W0456_Drawbar:	.incbin	"pcm/P2_W0456_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0456_Drawbar.wav (16-bit)
+; wave 457: 128 16-bit samples (256 B); entry 495
+P2_W0457_Drawbar:	.incbin	"pcm/P2_W0457_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0457_Drawbar.wav (16-bit)
+; wave 458: 128 16-bit samples (256 B); entry 496
+P2_W0458_Drawbar:	.incbin	"pcm/P2_W0458_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0458_Drawbar.wav (16-bit)
+; wave 459: 256 16-bit samples (512 B); entry 497
+P2_W0459_Drawbar:	.incbin	"pcm/P2_W0459_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0459_Drawbar.wav (16-bit)
+; wave 460: 256 16-bit samples (512 B); entry 498
+P2_W0460_Drawbar:	.incbin	"pcm/P2_W0460_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0460_Drawbar.wav (16-bit)
+; wave 461: 256 16-bit samples (512 B); entry 499
+P2_W0461_Drawbar:	.incbin	"pcm/P2_W0461_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0461_Drawbar.wav (16-bit)
+; wave 462: 256 16-bit samples (512 B); entry 500
+P2_W0462_Drawbar:	.incbin	"pcm/P2_W0462_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0462_Drawbar.wav (16-bit)
+; wave 463: 256 16-bit samples (512 B); entry 501
+P2_W0463_Drawbar:	.incbin	"pcm/P2_W0463_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0463_Drawbar.wav (16-bit)
+; wave 464: 128 16-bit samples (256 B); entry 502
+P2_W0464_Drawbar:	.incbin	"pcm/P2_W0464_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0464_Drawbar.wav (16-bit)
+; wave 465: 128 16-bit samples (256 B); entry 503
+P2_W0465_Drawbar:	.incbin	"pcm/P2_W0465_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0465_Drawbar.wav (16-bit)
+; wave 466: 128 16-bit samples (256 B); entry 504
+P2_W0466_Drawbar:	.incbin	"pcm/P2_W0466_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0466_Drawbar.wav (16-bit)
+; wave 467: 128 16-bit samples (256 B); entry 505
+P2_W0467_Drawbar:	.incbin	"pcm/P2_W0467_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0467_Drawbar.wav (16-bit)
+; wave 468: 256 16-bit samples (512 B); entry 506
+P2_W0468_Drawbar:	.incbin	"pcm/P2_W0468_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0468_Drawbar.wav (16-bit)
+; wave 469: 256 16-bit samples (512 B); entry 507
+P2_W0469_Drawbar:	.incbin	"pcm/P2_W0469_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0469_Drawbar.wav (16-bit)
+; wave 470: 128 16-bit samples (256 B); entry 508
+P2_W0470_Drawbar:	.incbin	"pcm/P2_W0470_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0470_Drawbar.wav (16-bit)
+; wave 471: 256 16-bit samples (512 B); entry 509
+P2_W0471_Drawbar:	.incbin	"pcm/P2_W0471_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0471_Drawbar.wav (16-bit)
+; wave 472: 128 16-bit samples (256 B); entry 510
+P2_W0472_Drawbar:	.incbin	"pcm/P2_W0472_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0472_Drawbar.wav (16-bit)
+; wave 473: 128 16-bit samples (256 B); entry 511
+P2_W0473_Drawbar:	.incbin	"pcm/P2_W0473_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0473_Drawbar.wav (16-bit)
+; wave 474: 256 16-bit samples (512 B); entry 512
+P2_W0474_Drawbar:	.incbin	"pcm/P2_W0474_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0474_Drawbar.wav (16-bit)
+; wave 475: 128 16-bit samples (256 B); entry 513
+P2_W0475_Drawbar:	.incbin	"pcm/P2_W0475_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0475_Drawbar.wav (16-bit)
+; wave 476: 64 16-bit samples (128 B); entry 514
+P2_W0476_Drawbar:	.incbin	"pcm/P2_W0476_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0476_Drawbar.wav (16-bit)
+; wave 477: 256 16-bit samples (512 B); entry 515
+P2_W0477_Drawbar:	.incbin	"pcm/P2_W0477_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0477_Drawbar.wav (16-bit)
+; wave 478: 128 16-bit samples (256 B); entry 516
+P2_W0478_Drawbar:	.incbin	"pcm/P2_W0478_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0478_Drawbar.wav (16-bit)
+; wave 479: 64 16-bit samples (128 B); entry 517
+P2_W0479_Drawbar:	.incbin	"pcm/P2_W0479_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0479_Drawbar.wav (16-bit)
+; wave 480: 128 16-bit samples (256 B); entry 518
+P2_W0480_Drawbar:	.incbin	"pcm/P2_W0480_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0480_Drawbar.wav (16-bit)
+; wave 481: 128 16-bit samples (256 B); entry 519
+P2_W0481_Drawbar:	.incbin	"pcm/P2_W0481_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0481_Drawbar.wav (16-bit)
+; wave 482: 128 16-bit samples (256 B); entry 520
+P2_W0482_Drawbar:	.incbin	"pcm/P2_W0482_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0482_Drawbar.wav (16-bit)
+; wave 483: 128 16-bit samples (256 B); entry 521
+P2_W0483_Drawbar:	.incbin	"pcm/P2_W0483_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0483_Drawbar.wav (16-bit)
+; wave 484: 128 16-bit samples (256 B); entry 522
+P2_W0484_Drawbar:	.incbin	"pcm/P2_W0484_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0484_Drawbar.wav (16-bit)
+; wave 485: 128 16-bit samples (256 B); entry 523
+P2_W0485_Drawbar:	.incbin	"pcm/P2_W0485_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0485_Drawbar.wav (16-bit)
+; wave 486: 128 16-bit samples (256 B); entry 524
+P2_W0486_Drawbar:	.incbin	"pcm/P2_W0486_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0486_Drawbar.wav (16-bit)
+; wave 487: 64 16-bit samples (128 B); entry 525
+P2_W0487_Drawbar:	.incbin	"pcm/P2_W0487_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0487_Drawbar.wav (16-bit)
+; wave 488: 64 16-bit samples (128 B); entry 526
+P2_W0488_Drawbar:	.incbin	"pcm/P2_W0488_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0488_Drawbar.wav (16-bit)
+; wave 489: 64 16-bit samples (128 B); entry 527
+P2_W0489_Drawbar:	.incbin	"pcm/P2_W0489_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0489_Drawbar.wav (16-bit)
+; wave 490: 64 16-bit samples (128 B); entry 528
+P2_W0490_Drawbar:	.incbin	"pcm/P2_W0490_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0490_Drawbar.wav (16-bit)
+; wave 491: 64 16-bit samples (128 B); entry 529
+P2_W0491_Drawbar:	.incbin	"pcm/P2_W0491_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0491_Drawbar.wav (16-bit)
+; wave 492: 256 16-bit samples (512 B); entry 530
+P2_W0492_Drawbar:	.incbin	"pcm/P2_W0492_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0492_Drawbar.wav (16-bit)
+; wave 493: 256 16-bit samples (512 B); entry 531
+P2_W0493_Drawbar:	.incbin	"pcm/P2_W0493_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0493_Drawbar.wav (16-bit)
+; wave 494: 256 16-bit samples (512 B); entry 532
+P2_W0494_Drawbar:	.incbin	"pcm/P2_W0494_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0494_Drawbar.wav (16-bit)
+; wave 495: 256 16-bit samples (512 B); entry 533
+P2_W0495_Drawbar:	.incbin	"pcm/P2_W0495_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0495_Drawbar.wav (16-bit)
+; wave 496: 256 16-bit samples (512 B); entry 534
+P2_W0496_Drawbar:	.incbin	"pcm/P2_W0496_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0496_Drawbar.wav (16-bit)
+; wave 497: 256 16-bit samples (512 B); entry 535
+P2_W0497_Drawbar:	.incbin	"pcm/P2_W0497_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0497_Drawbar.wav (16-bit)
+; wave 498: 128 16-bit samples (256 B); entry 536
+P2_W0498_Drawbar:	.incbin	"pcm/P2_W0498_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0498_Drawbar.wav (16-bit)
+; wave 499: 128 16-bit samples (256 B); entry 537
+P2_W0499_Drawbar:	.incbin	"pcm/P2_W0499_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0499_Drawbar.wav (16-bit)
+; wave 500: 128 16-bit samples (256 B); entry 538
+P2_W0500_Drawbar:	.incbin	"pcm/P2_W0500_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0500_Drawbar.wav (16-bit)
+; wave 501: 256 16-bit samples (512 B); entry 539
+P2_W0501_Drawbar:	.incbin	"pcm/P2_W0501_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0501_Drawbar.wav (16-bit)
+; wave 502: 256 16-bit samples (512 B); entry 540
+P2_W0502_Drawbar:	.incbin	"pcm/P2_W0502_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0502_Drawbar.wav (16-bit)
+; wave 503: 256 16-bit samples (512 B); entry 541
+P2_W0503_Drawbar:	.incbin	"pcm/P2_W0503_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0503_Drawbar.wav (16-bit)
+; wave 504: 256 16-bit samples (512 B); entry 542
+P2_W0504_Drawbar:	.incbin	"pcm/P2_W0504_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0504_Drawbar.wav (16-bit)
+; wave 505: 256 16-bit samples (512 B); entry 543
+P2_W0505_Drawbar:	.incbin	"pcm/P2_W0505_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0505_Drawbar.wav (16-bit)
+; wave 506: 256 16-bit samples (512 B); entry 544
+P2_W0506_Drawbar:	.incbin	"pcm/P2_W0506_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0506_Drawbar.wav (16-bit)
+; wave 507: 128 16-bit samples (256 B); entry 545
+P2_W0507_Drawbar:	.incbin	"pcm/P2_W0507_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0507_Drawbar.wav (16-bit)
+; wave 508: 128 16-bit samples (256 B); entry 546
+P2_W0508_Drawbar:	.incbin	"pcm/P2_W0508_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0508_Drawbar.wav (16-bit)
+; wave 509: 128 16-bit samples (256 B); entry 547
+P2_W0509_Drawbar:	.incbin	"pcm/P2_W0509_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0509_Drawbar.wav (16-bit)
+; wave 510: 256 16-bit samples (512 B); entry 548
+P2_W0510_Drawbar:	.incbin	"pcm/P2_W0510_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0510_Drawbar.wav (16-bit)
+; wave 511: 256 16-bit samples (512 B); entry 549
+P2_W0511_Drawbar:	.incbin	"pcm/P2_W0511_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0511_Drawbar.wav (16-bit)
+; wave 512: 256 16-bit samples (512 B); entry 550
+P2_W0512_Drawbar:	.incbin	"pcm/P2_W0512_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0512_Drawbar.wav (16-bit)
+; wave 513: 256 16-bit samples (512 B); entry 551
+P2_W0513_Drawbar:	.incbin	"pcm/P2_W0513_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0513_Drawbar.wav (16-bit)
+; wave 514: 256 16-bit samples (512 B); entry 552
+P2_W0514_Drawbar:	.incbin	"pcm/P2_W0514_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0514_Drawbar.wav (16-bit)
+; wave 515: 256 16-bit samples (512 B); entry 553
+P2_W0515_Drawbar:	.incbin	"pcm/P2_W0515_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0515_Drawbar.wav (16-bit)
+; wave 516: 128 16-bit samples (256 B); entry 554
+P2_W0516_Drawbar:	.incbin	"pcm/P2_W0516_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0516_Drawbar.wav (16-bit)
+; wave 517: 128 16-bit samples (256 B); entry 555
+P2_W0517_Drawbar:	.incbin	"pcm/P2_W0517_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0517_Drawbar.wav (16-bit)
+; wave 518: 128 16-bit samples (256 B); entry 556
+P2_W0518_Drawbar:	.incbin	"pcm/P2_W0518_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0518_Drawbar.wav (16-bit)
+; wave 519: 256 16-bit samples (512 B); entry 557
+P2_W0519_Drawbar:	.incbin	"pcm/P2_W0519_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0519_Drawbar.wav (16-bit)
+; wave 520: 256 16-bit samples (512 B); entry 558
+P2_W0520_Drawbar:	.incbin	"pcm/P2_W0520_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0520_Drawbar.wav (16-bit)
+; wave 521: 256 16-bit samples (512 B); entry 559
+P2_W0521_Drawbar:	.incbin	"pcm/P2_W0521_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0521_Drawbar.wav (16-bit)
+; wave 522: 256 16-bit samples (512 B); entry 560
+P2_W0522_Drawbar:	.incbin	"pcm/P2_W0522_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0522_Drawbar.wav (16-bit)
+; wave 523: 256 16-bit samples (512 B); entry 561
+P2_W0523_Drawbar:	.incbin	"pcm/P2_W0523_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0523_Drawbar.wav (16-bit)
+; wave 524: 128 16-bit samples (256 B); entry 562
+P2_W0524_Drawbar:	.incbin	"pcm/P2_W0524_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0524_Drawbar.wav (16-bit)
+; wave 525: 128 16-bit samples (256 B); entry 563
+P2_W0525_Drawbar:	.incbin	"pcm/P2_W0525_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0525_Drawbar.wav (16-bit)
+; wave 526: 128 16-bit samples (256 B); entry 564
+P2_W0526_Drawbar:	.incbin	"pcm/P2_W0526_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0526_Drawbar.wav (16-bit)
+; wave 527: 128 16-bit samples (256 B); entry 565
+P2_W0527_Drawbar:	.incbin	"pcm/P2_W0527_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0527_Drawbar.wav (16-bit)
+; wave 528: 256 16-bit samples (512 B); entry 566
+P2_W0528_Drawbar:	.incbin	"pcm/P2_W0528_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0528_Drawbar.wav (16-bit)
+; wave 529: 256 16-bit samples (512 B); entry 567
+P2_W0529_Drawbar:	.incbin	"pcm/P2_W0529_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0529_Drawbar.wav (16-bit)
+; wave 530: 256 16-bit samples (512 B); entry 568
+P2_W0530_Drawbar:	.incbin	"pcm/P2_W0530_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0530_Drawbar.wav (16-bit)
+; wave 531: 128 16-bit samples (256 B); entry 569
+P2_W0531_Drawbar:	.incbin	"pcm/P2_W0531_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0531_Drawbar.wav (16-bit)
+; wave 532: 128 16-bit samples (256 B); entry 570
+P2_W0532_Drawbar:	.incbin	"pcm/P2_W0532_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0532_Drawbar.wav (16-bit)
+; wave 533: 128 16-bit samples (256 B); entry 571
+P2_W0533_Drawbar:	.incbin	"pcm/P2_W0533_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0533_Drawbar.wav (16-bit)
+; wave 534: 128 16-bit samples (256 B); entry 572
+P2_W0534_Drawbar:	.incbin	"pcm/P2_W0534_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0534_Drawbar.wav (16-bit)
+; wave 535: 128 16-bit samples (256 B); entry 573
+P2_W0535_Drawbar:	.incbin	"pcm/P2_W0535_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0535_Drawbar.wav (16-bit)
+; wave 536: 128 16-bit samples (256 B); entry 574
+P2_W0536_Drawbar:	.incbin	"pcm/P2_W0536_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0536_Drawbar.wav (16-bit)
+; wave 537: 256 16-bit samples (512 B); entry 575
+P2_W0537_Drawbar:	.incbin	"pcm/P2_W0537_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0537_Drawbar.wav (16-bit)
+; wave 538: 256 16-bit samples (512 B); entry 576
+P2_W0538_Drawbar:	.incbin	"pcm/P2_W0538_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0538_Drawbar.wav (16-bit)
+; wave 539: 256 16-bit samples (512 B); entry 577
+P2_W0539_Drawbar:	.incbin	"pcm/P2_W0539_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0539_Drawbar.wav (16-bit)
+; wave 540: 128 16-bit samples (256 B); entry 578
+P2_W0540_Drawbar:	.incbin	"pcm/P2_W0540_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0540_Drawbar.wav (16-bit)
+; wave 541: 128 16-bit samples (256 B); entry 579
+P2_W0541_Drawbar:	.incbin	"pcm/P2_W0541_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0541_Drawbar.wav (16-bit)
+; wave 542: 128 16-bit samples (256 B); entry 580
+P2_W0542_Drawbar:	.incbin	"pcm/P2_W0542_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0542_Drawbar.wav (16-bit)
+; wave 543: 128 16-bit samples (256 B); entry 581
+P2_W0543_Drawbar:	.incbin	"pcm/P2_W0543_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0543_Drawbar.wav (16-bit)
+; wave 544: 128 16-bit samples (256 B); entry 582
+P2_W0544_Drawbar:	.incbin	"pcm/P2_W0544_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0544_Drawbar.wav (16-bit)
+; wave 545: 128 16-bit samples (256 B); entry 583
+P2_W0545_Drawbar:	.incbin	"pcm/P2_W0545_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0545_Drawbar.wav (16-bit)
+; wave 546: 256 16-bit samples (512 B); entry 584
+P2_W0546_Drawbar:	.incbin	"pcm/P2_W0546_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0546_Drawbar.wav (16-bit)
+; wave 547: 256 16-bit samples (512 B); entry 585
+P2_W0547_Drawbar:	.incbin	"pcm/P2_W0547_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0547_Drawbar.wav (16-bit)
+; wave 548: 256 16-bit samples (512 B); entry 586
+P2_W0548_Drawbar:	.incbin	"pcm/P2_W0548_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0548_Drawbar.wav (16-bit)
+; wave 549: 128 16-bit samples (256 B); entry 587
+P2_W0549_Drawbar:	.incbin	"pcm/P2_W0549_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0549_Drawbar.wav (16-bit)
+; wave 550: 128 16-bit samples (256 B); entry 588
+P2_W0550_Drawbar:	.incbin	"pcm/P2_W0550_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0550_Drawbar.wav (16-bit)
+; wave 551: 128 16-bit samples (256 B); entry 589
+P2_W0551_Drawbar:	.incbin	"pcm/P2_W0551_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0551_Drawbar.wav (16-bit)
+; wave 552: 128 16-bit samples (256 B); entry 590
+P2_W0552_Drawbar:	.incbin	"pcm/P2_W0552_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0552_Drawbar.wav (16-bit)
+; wave 553: 128 16-bit samples (256 B); entry 591
+P2_W0553_Drawbar:	.incbin	"pcm/P2_W0553_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0553_Drawbar.wav (16-bit)
+; wave 554: 128 16-bit samples (256 B); entry 592
+P2_W0554_Drawbar:	.incbin	"pcm/P2_W0554_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0554_Drawbar.wav (16-bit)
+; wave 555: 256 16-bit samples (512 B); entry 593
+P2_W0555_Drawbar:	.incbin	"pcm/P2_W0555_Drawbar.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0555_Drawbar.wav (16-bit)
+; wave 556: 128 16-bit samples (256 B); entry 594
+P2_W0556_Drawbar:	.incbin	"pcm/P2_W0556_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0556_Drawbar.wav (16-bit)
+; wave 557: 128 16-bit samples (256 B); entry 595
+P2_W0557_Drawbar:	.incbin	"pcm/P2_W0557_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0557_Drawbar.wav (16-bit)
+; wave 558: 128 16-bit samples (256 B); entry 596
+P2_W0558_Drawbar:	.incbin	"pcm/P2_W0558_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0558_Drawbar.wav (16-bit)
+; wave 559: 128 16-bit samples (256 B); entry 597
+P2_W0559_Drawbar:	.incbin	"pcm/P2_W0559_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0559_Drawbar.wav (16-bit)
+; wave 560: 64 16-bit samples (128 B); entry 598
+P2_W0560_Drawbar:	.incbin	"pcm/P2_W0560_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0560_Drawbar.wav (16-bit)
+; wave 561: 64 16-bit samples (128 B); entry 599
+P2_W0561_Drawbar:	.incbin	"pcm/P2_W0561_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0561_Drawbar.wav (16-bit)
+; wave 562: 64 16-bit samples (128 B); entry 600
+P2_W0562_Drawbar:	.incbin	"pcm/P2_W0562_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0562_Drawbar.wav (16-bit)
+; wave 563: 64 16-bit samples (128 B); entry 601
+P2_W0563_Drawbar:	.incbin	"pcm/P2_W0563_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0563_Drawbar.wav (16-bit)
+; wave 564: 128 16-bit samples (256 B); entry 602
+P2_W0564_Drawbar:	.incbin	"pcm/P2_W0564_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0564_Drawbar.wav (16-bit)
+; wave 565: 128 16-bit samples (256 B); entry 603
+P2_W0565_Drawbar:	.incbin	"pcm/P2_W0565_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0565_Drawbar.wav (16-bit)
+; wave 566: 128 16-bit samples (256 B); entry 604
+P2_W0566_Drawbar:	.incbin	"pcm/P2_W0566_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0566_Drawbar.wav (16-bit)
+; wave 567: 128 16-bit samples (256 B); entry 605
+P2_W0567_Drawbar:	.incbin	"pcm/P2_W0567_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0567_Drawbar.wav (16-bit)
+; wave 568: 64 16-bit samples (128 B); entry 606
+P2_W0568_Drawbar:	.incbin	"pcm/P2_W0568_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0568_Drawbar.wav (16-bit)
+; wave 569: 64 16-bit samples (128 B); entry 607
+P2_W0569_Drawbar:	.incbin	"pcm/P2_W0569_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0569_Drawbar.wav (16-bit)
+; wave 570: 64 16-bit samples (128 B); entry 608
+P2_W0570_Drawbar:	.incbin	"pcm/P2_W0570_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0570_Drawbar.wav (16-bit)
+; wave 571: 64 16-bit samples (128 B); entry 609
+P2_W0571_Drawbar:	.incbin	"pcm/P2_W0571_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0571_Drawbar.wav (16-bit)
+; wave 572: 64 16-bit samples (128 B); entry 610
+P2_W0572_Drawbar:	.incbin	"pcm/P2_W0572_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0572_Drawbar.wav (16-bit)
+; wave 573: 64 16-bit samples (128 B); entry 611
+P2_W0573_Drawbar:	.incbin	"pcm/P2_W0573_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0573_Drawbar.wav (16-bit)
+; wave 574: 64 16-bit samples (128 B); entry 612
+P2_W0574_Drawbar:	.incbin	"pcm/P2_W0574_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0574_Drawbar.wav (16-bit)
+; wave 575: 64 16-bit samples (128 B); entry 613
+P2_W0575_Drawbar:	.incbin	"pcm/P2_W0575_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0575_Drawbar.wav (16-bit)
+; wave 576: 64 16-bit samples (128 B); entry 614
+P2_W0576_Drawbar:	.incbin	"pcm/P2_W0576_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0576_Drawbar.wav (16-bit)
+; wave 577: 64 16-bit samples (128 B); entry 615
+P2_W0577_Drawbar:	.incbin	"pcm/P2_W0577_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0577_Drawbar.wav (16-bit)
+; wave 578: 64 16-bit samples (128 B); entry 616
+P2_W0578_Drawbar:	.incbin	"pcm/P2_W0578_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0578_Drawbar.wav (16-bit)
+; wave 579: 64 16-bit samples (128 B); entry 617
+P2_W0579_Drawbar:	.incbin	"pcm/P2_W0579_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0579_Drawbar.wav (16-bit)
+; wave 580: 64 16-bit samples (128 B); entry 618
+P2_W0580_Drawbar:	.incbin	"pcm/P2_W0580_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0580_Drawbar.wav (16-bit)
+; wave 581: 64 16-bit samples (128 B); entry 619
+P2_W0581_Drawbar:	.incbin	"pcm/P2_W0581_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0581_Drawbar.wav (16-bit)
+; wave 582: 64 16-bit samples (128 B); entry 620
+P2_W0582_Drawbar:	.incbin	"pcm/P2_W0582_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0582_Drawbar.wav (16-bit)
+; wave 583: 64 16-bit samples (128 B); entry 621
+P2_W0583_Drawbar:	.incbin	"pcm/P2_W0583_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0583_Drawbar.wav (16-bit)
+; wave 584: 64 16-bit samples (128 B); entry 622
+P2_W0584_Drawbar:	.incbin	"pcm/P2_W0584_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0584_Drawbar.wav (16-bit)
+; wave 585: 64 16-bit samples (128 B); entry 623
+P2_W0585_Drawbar:	.incbin	"pcm/P2_W0585_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0585_Drawbar.wav (16-bit)
+; wave 586: 64 16-bit samples (128 B); entry 624
+P2_W0586_Drawbar:	.incbin	"pcm/P2_W0586_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0586_Drawbar.wav (16-bit)
+; wave 587: 64 16-bit samples (128 B); entry 625
+P2_W0587_Drawbar:	.incbin	"pcm/P2_W0587_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0587_Drawbar.wav (16-bit)
+; wave 588: 128 16-bit samples (256 B); entry 626
+P2_W0588_Drawbar:	.incbin	"pcm/P2_W0588_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0588_Drawbar.wav (16-bit)
+; wave 589: 64 16-bit samples (128 B); entry 627
+P2_W0589_Drawbar:	.incbin	"pcm/P2_W0589_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0589_Drawbar.wav (16-bit)
+; wave 590: 64 16-bit samples (128 B); entry 628
+P2_W0590_Drawbar:	.incbin	"pcm/P2_W0590_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0590_Drawbar.wav (16-bit)
+; wave 591: 128 16-bit samples (256 B); entry 629
+P2_W0591_Drawbar:	.incbin	"pcm/P2_W0591_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0591_Drawbar.wav (16-bit)
+; wave 592: 128 16-bit samples (256 B); entry 630
+P2_W0592_Drawbar:	.incbin	"pcm/P2_W0592_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0592_Drawbar.wav (16-bit)
+; wave 593: 64 16-bit samples (128 B); entry 631
+P2_W0593_Drawbar:	.incbin	"pcm/P2_W0593_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0593_Drawbar.wav (16-bit)
+; wave 594: 128 16-bit samples (256 B); entry 632
+P2_W0594_Drawbar:	.incbin	"pcm/P2_W0594_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0594_Drawbar.wav (16-bit)
+; wave 595: 128 16-bit samples (256 B); entry 633
+P2_W0595_Drawbar:	.incbin	"pcm/P2_W0595_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0595_Drawbar.wav (16-bit)
+; wave 596: 64 16-bit samples (128 B); entry 634
+P2_W0596_Drawbar:	.incbin	"pcm/P2_W0596_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0596_Drawbar.wav (16-bit)
+; wave 597: 128 16-bit samples (256 B); entry 635
+P2_W0597_Drawbar:	.incbin	"pcm/P2_W0597_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0597_Drawbar.wav (16-bit)
+; wave 598: 128 16-bit samples (256 B); entry 636
+P2_W0598_Drawbar:	.incbin	"pcm/P2_W0598_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0598_Drawbar.wav (16-bit)
+; wave 599: 64 16-bit samples (128 B); entry 637
+P2_W0599_Drawbar:	.incbin	"pcm/P2_W0599_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0599_Drawbar.wav (16-bit)
+; wave 600: 128 16-bit samples (256 B); entry 638
+P2_W0600_Drawbar:	.incbin	"pcm/P2_W0600_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0600_Drawbar.wav (16-bit)
+; wave 601: 128 16-bit samples (256 B); entry 639
+P2_W0601_Drawbar:	.incbin	"pcm/P2_W0601_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0601_Drawbar.wav (16-bit)
+; wave 602: 64 16-bit samples (128 B); entry 640
+P2_W0602_Drawbar:	.incbin	"pcm/P2_W0602_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0602_Drawbar.wav (16-bit)
+; wave 603: 128 16-bit samples (256 B); entry 641
+P2_W0603_Drawbar:	.incbin	"pcm/P2_W0603_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0603_Drawbar.wav (16-bit)
+; wave 604: 128 16-bit samples (256 B); entry 642
+P2_W0604_Drawbar:	.incbin	"pcm/P2_W0604_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0604_Drawbar.wav (16-bit)
+; wave 605: 128 16-bit samples (256 B); entry 643
+P2_W0605_Drawbar:	.incbin	"pcm/P2_W0605_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0605_Drawbar.wav (16-bit)
+; wave 606: 128 16-bit samples (256 B); entry 644
+P2_W0606_Drawbar:	.incbin	"pcm/P2_W0606_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0606_Drawbar.wav (16-bit)
+; wave 607: 128 16-bit samples (256 B); entry 645
+P2_W0607_Drawbar:	.incbin	"pcm/P2_W0607_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0607_Drawbar.wav (16-bit)
+; wave 608: 128 16-bit samples (256 B); entry 646
+P2_W0608_Drawbar:	.incbin	"pcm/P2_W0608_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0608_Drawbar.wav (16-bit)
+; wave 609: 128 16-bit samples (256 B); entry 647
+P2_W0609_Drawbar:	.incbin	"pcm/P2_W0609_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0609_Drawbar.wav (16-bit)
+; wave 610: 128 16-bit samples (256 B); entry 648
+P2_W0610_Drawbar:	.incbin	"pcm/P2_W0610_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0610_Drawbar.wav (16-bit)
+; wave 611: 64 16-bit samples (128 B); entry 649
+P2_W0611_Drawbar:	.incbin	"pcm/P2_W0611_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0611_Drawbar.wav (16-bit)
+; wave 612: 64 16-bit samples (128 B); entry 650
+P2_W0612_Drawbar:	.incbin	"pcm/P2_W0612_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0612_Drawbar.wav (16-bit)
+; wave 613: 64 16-bit samples (128 B); entry 651
+P2_W0613_Drawbar:	.incbin	"pcm/P2_W0613_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0613_Drawbar.wav (16-bit)
+; wave 614: 64 16-bit samples (128 B); entry 652
+P2_W0614_Drawbar:	.incbin	"pcm/P2_W0614_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0614_Drawbar.wav (16-bit)
+; wave 615: 64 16-bit samples (128 B); entry 653
+P2_W0615_Drawbar:	.incbin	"pcm/P2_W0615_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0615_Drawbar.wav (16-bit)
+; wave 616: 64 16-bit samples (128 B); entry 654
+P2_W0616_Drawbar:	.incbin	"pcm/P2_W0616_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0616_Drawbar.wav (16-bit)
+; wave 617: 64 16-bit samples (128 B); entry 655
+P2_W0617_Drawbar:	.incbin	"pcm/P2_W0617_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0617_Drawbar.wav (16-bit)
+; wave 618: 64 16-bit samples (128 B); entry 656
+P2_W0618_Drawbar:	.incbin	"pcm/P2_W0618_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0618_Drawbar.wav (16-bit)
+; wave 619: 64 16-bit samples (128 B); entry 657
+P2_W0619_Drawbar:	.incbin	"pcm/P2_W0619_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0619_Drawbar.wav (16-bit)
+; wave 620: 64 16-bit samples (128 B); entry 658
+P2_W0620_Drawbar:	.incbin	"pcm/P2_W0620_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0620_Drawbar.wav (16-bit)
+; wave 621: 64 16-bit samples (128 B); entry 659
+P2_W0621_Drawbar:	.incbin	"pcm/P2_W0621_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0621_Drawbar.wav (16-bit)
+; wave 622: 64 16-bit samples (128 B); entry 660
+P2_W0622_Drawbar:	.incbin	"pcm/P2_W0622_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0622_Drawbar.wav (16-bit)
+; wave 623: 64 16-bit samples (128 B); entry 661
+P2_W0623_Drawbar:	.incbin	"pcm/P2_W0623_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0623_Drawbar.wav (16-bit)
+; wave 624: 64 16-bit samples (128 B); entry 662
+P2_W0624_Drawbar:	.incbin	"pcm/P2_W0624_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0624_Drawbar.wav (16-bit)
+; wave 625: 64 16-bit samples (128 B); entry 663
+P2_W0625_Drawbar:	.incbin	"pcm/P2_W0625_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0625_Drawbar.wav (16-bit)
+; wave 626: 64 16-bit samples (128 B); entry 664
+P2_W0626_Drawbar:	.incbin	"pcm/P2_W0626_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0626_Drawbar.wav (16-bit)
+; wave 627: 64 16-bit samples (128 B); entry 665
+P2_W0627_Drawbar:	.incbin	"pcm/P2_W0627_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0627_Drawbar.wav (16-bit)
+; wave 628: 64 16-bit samples (128 B); entry 666
+P2_W0628_Drawbar:	.incbin	"pcm/P2_W0628_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0628_Drawbar.wav (16-bit)
+; wave 629: 64 16-bit samples (128 B); entry 667
+P2_W0629_Drawbar:	.incbin	"pcm/P2_W0629_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0629_Drawbar.wav (16-bit)
+; wave 630: 64 16-bit samples (128 B); entry 668
+P2_W0630_Drawbar:	.incbin	"pcm/P2_W0630_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0630_Drawbar.wav (16-bit)
+; wave 631: 64 16-bit samples (128 B); entry 669
+P2_W0631_Drawbar:	.incbin	"pcm/P2_W0631_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0631_Drawbar.wav (16-bit)
+; wave 632: 64 16-bit samples (128 B); entry 670
+P2_W0632_Drawbar:	.incbin	"pcm/P2_W0632_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0632_Drawbar.wav (16-bit)
+; wave 633: 64 16-bit samples (128 B); entry 671
+P2_W0633_Drawbar:	.incbin	"pcm/P2_W0633_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0633_Drawbar.wav (16-bit)
+; wave 634: 64 16-bit samples (128 B); entry 672
+P2_W0634_Drawbar:	.incbin	"pcm/P2_W0634_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0634_Drawbar.wav (16-bit)
+; wave 635: 64 16-bit samples (128 B); entry 673
+P2_W0635_Drawbar:	.incbin	"pcm/P2_W0635_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0635_Drawbar.wav (16-bit)
+; wave 636: 64 16-bit samples (128 B); entry 674
+P2_W0636_Drawbar:	.incbin	"pcm/P2_W0636_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0636_Drawbar.wav (16-bit)
+; wave 637: 64 16-bit samples (128 B); entry 675
+P2_W0637_Drawbar:	.incbin	"pcm/P2_W0637_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0637_Drawbar.wav (16-bit)
+; wave 638: 64 16-bit samples (128 B); entry 676
+P2_W0638_Drawbar:	.incbin	"pcm/P2_W0638_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0638_Drawbar.wav (16-bit)
+; wave 639: 64 16-bit samples (128 B); entry 677
+P2_W0639_Drawbar:	.incbin	"pcm/P2_W0639_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0639_Drawbar.wav (16-bit)
+; wave 640: 64 16-bit samples (128 B); entry 678
+P2_W0640_Drawbar:	.incbin	"pcm/P2_W0640_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0640_Drawbar.wav (16-bit)
+; wave 641: 64 16-bit samples (128 B); entry 679
+P2_W0641_Drawbar:	.incbin	"pcm/P2_W0641_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0641_Drawbar.wav (16-bit)
+; wave 642: 64 16-bit samples (128 B); entry 680
+P2_W0642_Drawbar:	.incbin	"pcm/P2_W0642_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0642_Drawbar.wav (16-bit)
+; wave 643: 64 16-bit samples (128 B); entry 681
+P2_W0643_Drawbar:	.incbin	"pcm/P2_W0643_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0643_Drawbar.wav (16-bit)
+; wave 644: 64 16-bit samples (128 B); entry 682
+P2_W0644_Drawbar:	.incbin	"pcm/P2_W0644_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0644_Drawbar.wav (16-bit)
+; wave 645: 64 16-bit samples (128 B); entry 683
+P2_W0645_Drawbar:	.incbin	"pcm/P2_W0645_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0645_Drawbar.wav (16-bit)
+; wave 646: 64 16-bit samples (128 B); entry 684
+P2_W0646_Drawbar:	.incbin	"pcm/P2_W0646_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0646_Drawbar.wav (16-bit)
+; wave 647: 64 16-bit samples (128 B); entry 685
+P2_W0647_Drawbar:	.incbin	"pcm/P2_W0647_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0647_Drawbar.wav (16-bit)
+; wave 648: 64 16-bit samples (128 B); entry 686
+P2_W0648_Drawbar:	.incbin	"pcm/P2_W0648_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0648_Drawbar.wav (16-bit)
+; wave 649: 64 16-bit samples (128 B); entry 687
+P2_W0649_Drawbar:	.incbin	"pcm/P2_W0649_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0649_Drawbar.wav (16-bit)
+; wave 650: 64 16-bit samples (128 B); entry 688
+P2_W0650_Drawbar:	.incbin	"pcm/P2_W0650_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0650_Drawbar.wav (16-bit)
+; wave 651: 64 16-bit samples (128 B); entry 689
+P2_W0651_Drawbar:	.incbin	"pcm/P2_W0651_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0651_Drawbar.wav (16-bit)
+; wave 652: 64 16-bit samples (128 B); entry 690
+P2_W0652_Drawbar:	.incbin	"pcm/P2_W0652_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0652_Drawbar.wav (16-bit)
+; wave 653: 64 16-bit samples (128 B); entry 691
+P2_W0653_Drawbar:	.incbin	"pcm/P2_W0653_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0653_Drawbar.wav (16-bit)
+; wave 654: 64 16-bit samples (128 B); entry 692
+P2_W0654_Drawbar:	.incbin	"pcm/P2_W0654_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0654_Drawbar.wav (16-bit)
+; wave 655: 64 16-bit samples (128 B); entry 693
+P2_W0655_Drawbar:	.incbin	"pcm/P2_W0655_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0655_Drawbar.wav (16-bit)
+; wave 656: 64 16-bit samples (128 B); entry 694
+P2_W0656_Drawbar:	.incbin	"pcm/P2_W0656_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0656_Drawbar.wav (16-bit)
+; wave 657: 64 16-bit samples (128 B); entry 695
+P2_W0657_Drawbar:	.incbin	"pcm/P2_W0657_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0657_Drawbar.wav (16-bit)
+; wave 658: 64 16-bit samples (128 B); entry 696
+P2_W0658_Drawbar:	.incbin	"pcm/P2_W0658_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0658_Drawbar.wav (16-bit)
+; wave 659: 64 16-bit samples (128 B); entry 697
+P2_W0659_Drawbar:	.incbin	"pcm/P2_W0659_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0659_Drawbar.wav (16-bit)
+; wave 660: 64 16-bit samples (128 B); entry 698
+P2_W0660_Drawbar:	.incbin	"pcm/P2_W0660_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0660_Drawbar.wav (16-bit)
+; wave 661: 64 16-bit samples (128 B); entry 699
+P2_W0661_Drawbar:	.incbin	"pcm/P2_W0661_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0661_Drawbar.wav (16-bit)
+; wave 662: 64 16-bit samples (128 B); entry 700
+P2_W0662_Drawbar:	.incbin	"pcm/P2_W0662_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0662_Drawbar.wav (16-bit)
+; wave 663: 64 16-bit samples (128 B); entry 701
+P2_W0663_Drawbar:	.incbin	"pcm/P2_W0663_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0663_Drawbar.wav (16-bit)
+; wave 664: 64 16-bit samples (128 B); entry 702
+P2_W0664_Drawbar:	.incbin	"pcm/P2_W0664_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0664_Drawbar.wav (16-bit)
+; wave 665: 64 16-bit samples (128 B); entry 703
+P2_W0665_Drawbar:	.incbin	"pcm/P2_W0665_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0665_Drawbar.wav (16-bit)
+; wave 666: 64 16-bit samples (128 B); entry 704
+P2_W0666_Drawbar:	.incbin	"pcm/P2_W0666_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0666_Drawbar.wav (16-bit)
+; wave 667: 64 16-bit samples (128 B); entry 705
+P2_W0667_Drawbar:	.incbin	"pcm/P2_W0667_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0667_Drawbar.wav (16-bit)
+; wave 668: 64 16-bit samples (128 B); entry 706
+P2_W0668_Drawbar:	.incbin	"pcm/P2_W0668_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0668_Drawbar.wav (16-bit)
+; wave 669: 64 16-bit samples (128 B); entry 707
+P2_W0669_Drawbar:	.incbin	"pcm/P2_W0669_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0669_Drawbar.wav (16-bit)
+; wave 670: 64 16-bit samples (128 B); entry 708
+P2_W0670_Drawbar:	.incbin	"pcm/P2_W0670_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0670_Drawbar.wav (16-bit)
+; wave 671: 64 16-bit samples (128 B); entry 709
+P2_W0671_Drawbar:	.incbin	"pcm/P2_W0671_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0671_Drawbar.wav (16-bit)
+; wave 672: 64 16-bit samples (128 B); entry 710
+P2_W0672_Drawbar:	.incbin	"pcm/P2_W0672_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0672_Drawbar.wav (16-bit)
+; wave 673: 64 16-bit samples (128 B); entry 711
+P2_W0673_Drawbar:	.incbin	"pcm/P2_W0673_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0673_Drawbar.wav (16-bit)
+; wave 674: 64 16-bit samples (128 B); entry 712
+P2_W0674_Drawbar:	.incbin	"pcm/P2_W0674_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0674_Drawbar.wav (16-bit)
+; wave 675: 64 16-bit samples (128 B); entry 713
+P2_W0675_Drawbar:	.incbin	"pcm/P2_W0675_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0675_Drawbar.wav (16-bit)
+; wave 676: 64 16-bit samples (128 B); entry 714
+P2_W0676_Drawbar:	.incbin	"pcm/P2_W0676_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0676_Drawbar.wav (16-bit)
+; wave 677: 64 16-bit samples (128 B); entry 715
+P2_W0677_Drawbar:	.incbin	"pcm/P2_W0677_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0677_Drawbar.wav (16-bit)
+; wave 678: 64 16-bit samples (128 B); entry 716
+P2_W0678_Drawbar:	.incbin	"pcm/P2_W0678_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0678_Drawbar.wav (16-bit)
+; wave 679: 64 16-bit samples (128 B); entry 717
+P2_W0679_Drawbar:	.incbin	"pcm/P2_W0679_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0679_Drawbar.wav (16-bit)
+; wave 680: 64 16-bit samples (128 B); entry 718
+P2_W0680_Drawbar:	.incbin	"pcm/P2_W0680_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0680_Drawbar.wav (16-bit)
+; wave 681: 64 16-bit samples (128 B); entry 719
+P2_W0681_Drawbar:	.incbin	"pcm/P2_W0681_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0681_Drawbar.wav (16-bit)
+; wave 682: 64 16-bit samples (128 B); entry 720
+P2_W0682_Drawbar:	.incbin	"pcm/P2_W0682_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0682_Drawbar.wav (16-bit)
+; wave 683: 64 16-bit samples (128 B); entry 721
+P2_W0683_Drawbar:	.incbin	"pcm/P2_W0683_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0683_Drawbar.wav (16-bit)
+; wave 684: 64 16-bit samples (128 B); entry 722
+P2_W0684_Drawbar:	.incbin	"pcm/P2_W0684_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0684_Drawbar.wav (16-bit)
+; wave 685: 64 16-bit samples (128 B); entry 723
+P2_W0685_Drawbar:	.incbin	"pcm/P2_W0685_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0685_Drawbar.wav (16-bit)
+; wave 686: 64 16-bit samples (128 B); entry 724
+P2_W0686_Drawbar:	.incbin	"pcm/P2_W0686_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0686_Drawbar.wav (16-bit)
+; wave 687: 64 16-bit samples (128 B); entry 725
+P2_W0687_Drawbar:	.incbin	"pcm/P2_W0687_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0687_Drawbar.wav (16-bit)
+; wave 688: 64 16-bit samples (128 B); entry 726
+P2_W0688_Drawbar:	.incbin	"pcm/P2_W0688_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0688_Drawbar.wav (16-bit)
+; wave 689: 64 16-bit samples (128 B); entry 727
+P2_W0689_Drawbar:	.incbin	"pcm/P2_W0689_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0689_Drawbar.wav (16-bit)
+; wave 690: 64 16-bit samples (128 B); entry 728
+P2_W0690_Drawbar:	.incbin	"pcm/P2_W0690_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0690_Drawbar.wav (16-bit)
+; wave 691: 64 16-bit samples (128 B); entry 729
+P2_W0691_Drawbar:	.incbin	"pcm/P2_W0691_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0691_Drawbar.wav (16-bit)
+; wave 692: 64 16-bit samples (128 B); entry 730
+P2_W0692_Drawbar:	.incbin	"pcm/P2_W0692_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0692_Drawbar.wav (16-bit)
+; wave 693: 64 16-bit samples (128 B); entry 731
+P2_W0693_Drawbar:	.incbin	"pcm/P2_W0693_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0693_Drawbar.wav (16-bit)
+; wave 694: 64 16-bit samples (128 B); entry 732
+P2_W0694_Drawbar:	.incbin	"pcm/P2_W0694_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0694_Drawbar.wav (16-bit)
+; wave 695: 64 16-bit samples (128 B); entry 733
+P2_W0695_Drawbar:	.incbin	"pcm/P2_W0695_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0695_Drawbar.wav (16-bit)
+; wave 696: 64 16-bit samples (128 B); entry 734
+P2_W0696_Drawbar:	.incbin	"pcm/P2_W0696_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0696_Drawbar.wav (16-bit)
+; wave 697: 64 16-bit samples (128 B); entry 735
+P2_W0697_Drawbar:	.incbin	"pcm/P2_W0697_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0697_Drawbar.wav (16-bit)
+; wave 698: 64 16-bit samples (128 B); entry 736
+P2_W0698_Drawbar:	.incbin	"pcm/P2_W0698_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0698_Drawbar.wav (16-bit)
+; wave 699: 64 16-bit samples (128 B); entry 737
+P2_W0699_Drawbar:	.incbin	"pcm/P2_W0699_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0699_Drawbar.wav (16-bit)
+; wave 700: 64 16-bit samples (128 B); entry 738
+P2_W0700_Drawbar:	.incbin	"pcm/P2_W0700_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0700_Drawbar.wav (16-bit)
+; wave 701: 64 16-bit samples (128 B); entry 739
+P2_W0701_Drawbar:	.incbin	"pcm/P2_W0701_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0701_Drawbar.wav (16-bit)
+; wave 702: 64 16-bit samples (128 B); entry 740
+P2_W0702_Drawbar:	.incbin	"pcm/P2_W0702_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0702_Drawbar.wav (16-bit)
+; wave 703: 64 16-bit samples (128 B); entry 741
+P2_W0703_Drawbar:	.incbin	"pcm/P2_W0703_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0703_Drawbar.wav (16-bit)
+; wave 704: 64 16-bit samples (128 B); entry 742
+P2_W0704_Drawbar:	.incbin	"pcm/P2_W0704_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0704_Drawbar.wav (16-bit)
+; wave 705: 64 16-bit samples (128 B); entry 743
+P2_W0705_Drawbar:	.incbin	"pcm/P2_W0705_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0705_Drawbar.wav (16-bit)
+; wave 706: 64 16-bit samples (128 B); entry 744
+P2_W0706_Drawbar:	.incbin	"pcm/P2_W0706_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0706_Drawbar.wav (16-bit)
+; wave 707: 64 16-bit samples (128 B); entry 745
+P2_W0707_Drawbar:	.incbin	"pcm/P2_W0707_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0707_Drawbar.wav (16-bit)
+; wave 708: 64 16-bit samples (128 B); entry 746
+P2_W0708_Drawbar:	.incbin	"pcm/P2_W0708_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0708_Drawbar.wav (16-bit)
+; wave 709: 64 16-bit samples (128 B); entry 747
+P2_W0709_Drawbar:	.incbin	"pcm/P2_W0709_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0709_Drawbar.wav (16-bit)
+; wave 710: 64 16-bit samples (128 B); entry 748
+P2_W0710_Drawbar:	.incbin	"pcm/P2_W0710_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0710_Drawbar.wav (16-bit)
+; wave 711: 64 16-bit samples (128 B); entry 749
+P2_W0711_Drawbar:	.incbin	"pcm/P2_W0711_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0711_Drawbar.wav (16-bit)
+; wave 712: 64 16-bit samples (128 B); entry 750
+P2_W0712_Drawbar:	.incbin	"pcm/P2_W0712_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0712_Drawbar.wav (16-bit)
+; wave 713: 64 16-bit samples (128 B); entry 751
+P2_W0713_Drawbar:	.incbin	"pcm/P2_W0713_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0713_Drawbar.wav (16-bit)
+; wave 714: 64 16-bit samples (128 B); entry 752
+P2_W0714_Drawbar:	.incbin	"pcm/P2_W0714_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0714_Drawbar.wav (16-bit)
+; wave 715: 64 16-bit samples (128 B); entry 753
+P2_W0715_Drawbar:	.incbin	"pcm/P2_W0715_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0715_Drawbar.wav (16-bit)
+; wave 716: 64 16-bit samples (128 B); entry 754
+P2_W0716_Drawbar:	.incbin	"pcm/P2_W0716_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0716_Drawbar.wav (16-bit)
+; wave 717: 64 16-bit samples (128 B); entry 755
+P2_W0717_Drawbar:	.incbin	"pcm/P2_W0717_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0717_Drawbar.wav (16-bit)
+; wave 718: 64 16-bit samples (128 B); entry 756
+P2_W0718_Drawbar:	.incbin	"pcm/P2_W0718_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0718_Drawbar.wav (16-bit)
+; wave 719: 64 16-bit samples (128 B); entry 757
+P2_W0719_Drawbar:	.incbin	"pcm/P2_W0719_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0719_Drawbar.wav (16-bit)
+; wave 720: 64 16-bit samples (128 B); entry 758
+P2_W0720_Drawbar:	.incbin	"pcm/P2_W0720_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0720_Drawbar.wav (16-bit)
+; wave 721: 64 16-bit samples (128 B); entry 759
+P2_W0721_Drawbar:	.incbin	"pcm/P2_W0721_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0721_Drawbar.wav (16-bit)
+; wave 722: 64 16-bit samples (128 B); entry 760
+P2_W0722_Drawbar:	.incbin	"pcm/P2_W0722_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0722_Drawbar.wav (16-bit)
+; wave 723: 64 16-bit samples (128 B); entry 761
+P2_W0723_Drawbar:	.incbin	"pcm/P2_W0723_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0723_Drawbar.wav (16-bit)
+; wave 724: 64 16-bit samples (128 B); entry 762
+P2_W0724_Drawbar:	.incbin	"pcm/P2_W0724_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0724_Drawbar.wav (16-bit)
+; wave 725: 64 16-bit samples (128 B); entry 763
+P2_W0725_Drawbar:	.incbin	"pcm/P2_W0725_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0725_Drawbar.wav (16-bit)
+; wave 726: 64 16-bit samples (128 B); entry 764
+P2_W0726_Drawbar:	.incbin	"pcm/P2_W0726_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0726_Drawbar.wav (16-bit)
+; wave 727: 64 16-bit samples (128 B); entry 765
+P2_W0727_Drawbar:	.incbin	"pcm/P2_W0727_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0727_Drawbar.wav (16-bit)
+; wave 728: 64 16-bit samples (128 B); entry 766
+P2_W0728_Drawbar:	.incbin	"pcm/P2_W0728_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0728_Drawbar.wav (16-bit)
+; wave 729: 64 16-bit samples (128 B); entry 767
+P2_W0729_Drawbar:	.incbin	"pcm/P2_W0729_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0729_Drawbar.wav (16-bit)
+; wave 730: 64 16-bit samples (128 B); entry 768
+P2_W0730_Drawbar:	.incbin	"pcm/P2_W0730_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0730_Drawbar.wav (16-bit)
+; wave 731: 64 16-bit samples (128 B); entry 769
+P2_W0731_Drawbar:	.incbin	"pcm/P2_W0731_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0731_Drawbar.wav (16-bit)
+; wave 732: 64 16-bit samples (128 B); entry 770
+P2_W0732_Drawbar:	.incbin	"pcm/P2_W0732_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0732_Drawbar.wav (16-bit)
+; wave 733: 64 16-bit samples (128 B); entry 771
+P2_W0733_Drawbar:	.incbin	"pcm/P2_W0733_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0733_Drawbar.wav (16-bit)
+; wave 734: 64 16-bit samples (128 B); entry 772
+P2_W0734_Drawbar:	.incbin	"pcm/P2_W0734_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0734_Drawbar.wav (16-bit)
+; wave 735: 64 16-bit samples (128 B); entry 773
+P2_W0735_Drawbar:	.incbin	"pcm/P2_W0735_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0735_Drawbar.wav (16-bit)
+; wave 736: 64 16-bit samples (128 B); entry 774
+P2_W0736_Drawbar:	.incbin	"pcm/P2_W0736_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0736_Drawbar.wav (16-bit)
+; wave 737: 64 16-bit samples (128 B); entry 775
+P2_W0737_Drawbar:	.incbin	"pcm/P2_W0737_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0737_Drawbar.wav (16-bit)
+; wave 738: 64 16-bit samples (128 B); entry 776
+P2_W0738_Drawbar:	.incbin	"pcm/P2_W0738_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0738_Drawbar.wav (16-bit)
+; wave 739: 64 16-bit samples (128 B); entry 777
+P2_W0739_Drawbar:	.incbin	"pcm/P2_W0739_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0739_Drawbar.wav (16-bit)
+; wave 740: 64 16-bit samples (128 B); entry 778
+P2_W0740_Drawbar:	.incbin	"pcm/P2_W0740_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0740_Drawbar.wav (16-bit)
+; wave 741: 64 16-bit samples (128 B); entry 779
+P2_W0741_Drawbar:	.incbin	"pcm/P2_W0741_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0741_Drawbar.wav (16-bit)
+; wave 742: 64 16-bit samples (128 B); entry 780
+P2_W0742_Drawbar:	.incbin	"pcm/P2_W0742_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0742_Drawbar.wav (16-bit)
+; wave 743: 64 16-bit samples (128 B); entry 781
+P2_W0743_Drawbar:	.incbin	"pcm/P2_W0743_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0743_Drawbar.wav (16-bit)
+; wave 744: 64 16-bit samples (128 B); entry 782
+P2_W0744_Drawbar:	.incbin	"pcm/P2_W0744_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0744_Drawbar.wav (16-bit)
+; wave 745: 64 16-bit samples (128 B); entry 783
+P2_W0745_Drawbar:	.incbin	"pcm/P2_W0745_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0745_Drawbar.wav (16-bit)
+; wave 746: 64 16-bit samples (128 B); entry 784
+P2_W0746_Drawbar:	.incbin	"pcm/P2_W0746_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0746_Drawbar.wav (16-bit)
+; wave 747: 64 16-bit samples (128 B); entry 785
+P2_W0747_Drawbar:	.incbin	"pcm/P2_W0747_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0747_Drawbar.wav (16-bit)
+; wave 748: 64 16-bit samples (128 B); entry 786
+P2_W0748_Drawbar:	.incbin	"pcm/P2_W0748_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0748_Drawbar.wav (16-bit)
+; wave 749: 64 16-bit samples (128 B); entry 787
+P2_W0749_Drawbar:	.incbin	"pcm/P2_W0749_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0749_Drawbar.wav (16-bit)
+; wave 750: 64 16-bit samples (128 B); entry 788
+P2_W0750_Drawbar:	.incbin	"pcm/P2_W0750_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0750_Drawbar.wav (16-bit)
+; wave 751: 64 16-bit samples (128 B); entry 789
+P2_W0751_Drawbar:	.incbin	"pcm/P2_W0751_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0751_Drawbar.wav (16-bit)
+; wave 752: 64 16-bit samples (128 B); entry 790
+P2_W0752_Drawbar:	.incbin	"pcm/P2_W0752_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0752_Drawbar.wav (16-bit)
+; wave 753: 64 16-bit samples (128 B); entry 791
+P2_W0753_Drawbar:	.incbin	"pcm/P2_W0753_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0753_Drawbar.wav (16-bit)
+; wave 754: 64 16-bit samples (128 B); entry 792
+P2_W0754_Drawbar:	.incbin	"pcm/P2_W0754_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0754_Drawbar.wav (16-bit)
+; wave 755: 64 16-bit samples (128 B); entry 793
+P2_W0755_Drawbar:	.incbin	"pcm/P2_W0755_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0755_Drawbar.wav (16-bit)
+; wave 756: 64 16-bit samples (128 B); entry 794
+P2_W0756_Drawbar:	.incbin	"pcm/P2_W0756_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0756_Drawbar.wav (16-bit)
+; wave 757: 64 16-bit samples (128 B); entry 795
+P2_W0757_Drawbar:	.incbin	"pcm/P2_W0757_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0757_Drawbar.wav (16-bit)
+; wave 758: 64 16-bit samples (128 B); entry 796
+P2_W0758_Drawbar:	.incbin	"pcm/P2_W0758_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0758_Drawbar.wav (16-bit)
+; wave 759: 64 16-bit samples (128 B); entry 797
+P2_W0759_Drawbar:	.incbin	"pcm/P2_W0759_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0759_Drawbar.wav (16-bit)
+; wave 760: 64 16-bit samples (128 B); entry 798
+P2_W0760_Drawbar:	.incbin	"pcm/P2_W0760_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0760_Drawbar.wav (16-bit)
+; wave 761: 64 16-bit samples (128 B); entry 799
+P2_W0761_Drawbar:	.incbin	"pcm/P2_W0761_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0761_Drawbar.wav (16-bit)
+; wave 762: 64 16-bit samples (128 B); entry 800
+P2_W0762_Drawbar:	.incbin	"pcm/P2_W0762_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0762_Drawbar.wav (16-bit)
+; wave 763: 64 16-bit samples (128 B); entry 801
+P2_W0763_Drawbar:	.incbin	"pcm/P2_W0763_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0763_Drawbar.wav (16-bit)
+; wave 764: 64 16-bit samples (128 B); entry 802
+P2_W0764_Drawbar:	.incbin	"pcm/P2_W0764_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0764_Drawbar.wav (16-bit)
+; wave 765: 64 16-bit samples (128 B); entry 803
+P2_W0765_Drawbar:	.incbin	"pcm/P2_W0765_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0765_Drawbar.wav (16-bit)
+; wave 766: 64 16-bit samples (128 B); entry 804
+P2_W0766_Drawbar:	.incbin	"pcm/P2_W0766_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0766_Drawbar.wav (16-bit)
+; wave 767: 64 16-bit samples (128 B); entry 805
+P2_W0767_Drawbar:	.incbin	"pcm/P2_W0767_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0767_Drawbar.wav (16-bit)
+; wave 768: 64 16-bit samples (128 B); entry 806
+P2_W0768_Drawbar:	.incbin	"pcm/P2_W0768_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0768_Drawbar.wav (16-bit)
+; wave 769: 64 16-bit samples (128 B); entry 807
+P2_W0769_Drawbar:	.incbin	"pcm/P2_W0769_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0769_Drawbar.wav (16-bit)
+; wave 770: 64 16-bit samples (128 B); entry 808
+P2_W0770_Drawbar:	.incbin	"pcm/P2_W0770_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0770_Drawbar.wav (16-bit)
+; wave 771: 64 16-bit samples (128 B); entry 809
+P2_W0771_Drawbar:	.incbin	"pcm/P2_W0771_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0771_Drawbar.wav (16-bit)
+; wave 772: 64 16-bit samples (128 B); entry 810
+P2_W0772_Drawbar:	.incbin	"pcm/P2_W0772_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0772_Drawbar.wav (16-bit)
+; wave 773: 64 16-bit samples (128 B); entry 811
+P2_W0773_Drawbar:	.incbin	"pcm/P2_W0773_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0773_Drawbar.wav (16-bit)
+; wave 774: 64 16-bit samples (128 B); entry 812
+P2_W0774_Drawbar:	.incbin	"pcm/P2_W0774_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0774_Drawbar.wav (16-bit)
+; wave 775: 64 16-bit samples (128 B); entry 813
+P2_W0775_Drawbar:	.incbin	"pcm/P2_W0775_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0775_Drawbar.wav (16-bit)
+; wave 776: 64 16-bit samples (128 B); entry 814
+P2_W0776_Drawbar:	.incbin	"pcm/P2_W0776_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0776_Drawbar.wav (16-bit)
+; wave 777: 64 16-bit samples (128 B); entry 815
+P2_W0777_Drawbar:	.incbin	"pcm/P2_W0777_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0777_Drawbar.wav (16-bit)
+; wave 778: 64 16-bit samples (128 B); entry 816
+P2_W0778_Drawbar:	.incbin	"pcm/P2_W0778_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0778_Drawbar.wav (16-bit)
+; wave 779: 64 16-bit samples (128 B); entry 817
+P2_W0779_Drawbar:	.incbin	"pcm/P2_W0779_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0779_Drawbar.wav (16-bit)
+; wave 780: 64 16-bit samples (128 B); entry 818
+P2_W0780_Drawbar:	.incbin	"pcm/P2_W0780_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0780_Drawbar.wav (16-bit)
+; wave 781: 64 16-bit samples (128 B); entry 819
+P2_W0781_Drawbar:	.incbin	"pcm/P2_W0781_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0781_Drawbar.wav (16-bit)
+; wave 782: 64 16-bit samples (128 B); entry 820
+P2_W0782_Drawbar:	.incbin	"pcm/P2_W0782_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0782_Drawbar.wav (16-bit)
+; wave 783: 64 16-bit samples (128 B); entry 821
+P2_W0783_Drawbar:	.incbin	"pcm/P2_W0783_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0783_Drawbar.wav (16-bit)
+; wave 784: 64 16-bit samples (128 B); entry 822
+P2_W0784_Drawbar:	.incbin	"pcm/P2_W0784_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0784_Drawbar.wav (16-bit)
+; wave 785: 64 16-bit samples (128 B); entry 823
+P2_W0785_Drawbar:	.incbin	"pcm/P2_W0785_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0785_Drawbar.wav (16-bit)
+; wave 786: 64 16-bit samples (128 B); entry 824
+P2_W0786_Drawbar:	.incbin	"pcm/P2_W0786_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0786_Drawbar.wav (16-bit)
+; wave 787: 64 16-bit samples (128 B); entry 825
+P2_W0787_Drawbar:	.incbin	"pcm/P2_W0787_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0787_Drawbar.wav (16-bit)
+; wave 788: 64 16-bit samples (128 B); entry 826
+P2_W0788_Drawbar:	.incbin	"pcm/P2_W0788_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0788_Drawbar.wav (16-bit)
+; wave 789: 64 16-bit samples (128 B); entry 827
+P2_W0789_Drawbar:	.incbin	"pcm/P2_W0789_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0789_Drawbar.wav (16-bit)
+; wave 790: 64 16-bit samples (128 B); entry 828
+P2_W0790_Drawbar:	.incbin	"pcm/P2_W0790_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0790_Drawbar.wav (16-bit)
+; wave 791: 64 16-bit samples (128 B); entry 829
+P2_W0791_Drawbar:	.incbin	"pcm/P2_W0791_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0791_Drawbar.wav (16-bit)
+; wave 792: 64 16-bit samples (128 B); entry 830
+P2_W0792_Drawbar:	.incbin	"pcm/P2_W0792_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0792_Drawbar.wav (16-bit)
+; wave 793: 64 16-bit samples (128 B); entry 831
+P2_W0793_Drawbar:	.incbin	"pcm/P2_W0793_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0793_Drawbar.wav (16-bit)
+; wave 794: 64 16-bit samples (128 B); entry 832
+P2_W0794_Drawbar:	.incbin	"pcm/P2_W0794_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0794_Drawbar.wav (16-bit)
+; wave 795: 64 16-bit samples (128 B); entry 833
+P2_W0795_Drawbar:	.incbin	"pcm/P2_W0795_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0795_Drawbar.wav (16-bit)
+; wave 796: 64 16-bit samples (128 B); entry 834
+P2_W0796_Drawbar:	.incbin	"pcm/P2_W0796_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0796_Drawbar.wav (16-bit)
+; wave 797: 64 16-bit samples (128 B); entry 835
+P2_W0797_Drawbar:	.incbin	"pcm/P2_W0797_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0797_Drawbar.wav (16-bit)
+; wave 798: 64 16-bit samples (128 B); entry 836
+P2_W0798_Drawbar:	.incbin	"pcm/P2_W0798_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0798_Drawbar.wav (16-bit)
+; wave 799: 64 16-bit samples (128 B); entry 837
+P2_W0799_Drawbar:	.incbin	"pcm/P2_W0799_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0799_Drawbar.wav (16-bit)
+; wave 800: 64 16-bit samples (128 B); entry 838
+P2_W0800_Drawbar:	.incbin	"pcm/P2_W0800_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0800_Drawbar.wav (16-bit)
+; wave 801: 64 16-bit samples (128 B); entry 839
+P2_W0801_Drawbar:	.incbin	"pcm/P2_W0801_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0801_Drawbar.wav (16-bit)
+; wave 802: 64 16-bit samples (128 B); entry 840
+P2_W0802_Drawbar:	.incbin	"pcm/P2_W0802_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0802_Drawbar.wav (16-bit)
+; wave 803: 64 16-bit samples (128 B); entry 841
+P2_W0803_Drawbar:	.incbin	"pcm/P2_W0803_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0803_Drawbar.wav (16-bit)
+; wave 804: 64 16-bit samples (128 B); entry 842
+P2_W0804_Drawbar:	.incbin	"pcm/P2_W0804_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0804_Drawbar.wav (16-bit)
+; wave 805: 64 16-bit samples (128 B); entry 843
+P2_W0805_Drawbar:	.incbin	"pcm/P2_W0805_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0805_Drawbar.wav (16-bit)
+; wave 806: 64 16-bit samples (128 B); entry 844
+P2_W0806_Drawbar:	.incbin	"pcm/P2_W0806_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0806_Drawbar.wav (16-bit)
+; wave 807: 64 16-bit samples (128 B); entry 845
+P2_W0807_Drawbar:	.incbin	"pcm/P2_W0807_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0807_Drawbar.wav (16-bit)
+; wave 808: 64 16-bit samples (128 B); entry 846
+P2_W0808_Drawbar:	.incbin	"pcm/P2_W0808_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0808_Drawbar.wav (16-bit)
+; wave 809: 64 16-bit samples (128 B); entry 847
+P2_W0809_Drawbar:	.incbin	"pcm/P2_W0809_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0809_Drawbar.wav (16-bit)
+; wave 810: 64 16-bit samples (128 B); entry 848
+P2_W0810_Drawbar:	.incbin	"pcm/P2_W0810_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0810_Drawbar.wav (16-bit)
+; wave 811: 64 16-bit samples (128 B); entry 849
+P2_W0811_Drawbar:	.incbin	"pcm/P2_W0811_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0811_Drawbar.wav (16-bit)
+; wave 812: 64 16-bit samples (128 B); entry 850
+P2_W0812_Drawbar:	.incbin	"pcm/P2_W0812_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0812_Drawbar.wav (16-bit)
+; wave 813: 64 16-bit samples (128 B); entry 851
+P2_W0813_Drawbar:	.incbin	"pcm/P2_W0813_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0813_Drawbar.wav (16-bit)
+; wave 814: 64 16-bit samples (128 B); entry 852
+P2_W0814_Drawbar:	.incbin	"pcm/P2_W0814_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0814_Drawbar.wav (16-bit)
+; wave 815: 64 16-bit samples (128 B); entry 853
+P2_W0815_Drawbar:	.incbin	"pcm/P2_W0815_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0815_Drawbar.wav (16-bit)
+; wave 816: 64 16-bit samples (128 B); entry 854
+P2_W0816_Drawbar:	.incbin	"pcm/P2_W0816_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0816_Drawbar.wav (16-bit)
+; wave 817: 64 16-bit samples (128 B); entry 855
+P2_W0817_Drawbar:	.incbin	"pcm/P2_W0817_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0817_Drawbar.wav (16-bit)
+; wave 818: 64 16-bit samples (128 B); entry 856
+P2_W0818_Drawbar:	.incbin	"pcm/P2_W0818_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0818_Drawbar.wav (16-bit)
+; wave 819: 64 16-bit samples (128 B); entry 857
+P2_W0819_Drawbar:	.incbin	"pcm/P2_W0819_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0819_Drawbar.wav (16-bit)
+; wave 820: 64 16-bit samples (128 B); entry 858
+P2_W0820_Drawbar:	.incbin	"pcm/P2_W0820_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0820_Drawbar.wav (16-bit)
+; wave 821: 64 16-bit samples (128 B); entry 859
+P2_W0821_Drawbar:	.incbin	"pcm/P2_W0821_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0821_Drawbar.wav (16-bit)
+; wave 822: 64 16-bit samples (128 B); entry 860
+P2_W0822_Drawbar:	.incbin	"pcm/P2_W0822_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0822_Drawbar.wav (16-bit)
+; wave 823: 64 16-bit samples (128 B); entry 861
+P2_W0823_Drawbar:	.incbin	"pcm/P2_W0823_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0823_Drawbar.wav (16-bit)
+; wave 824: 64 16-bit samples (128 B); entry 862
+P2_W0824_Drawbar:	.incbin	"pcm/P2_W0824_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0824_Drawbar.wav (16-bit)
+; wave 825: 64 16-bit samples (128 B); entry 863
+P2_W0825_Drawbar:	.incbin	"pcm/P2_W0825_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0825_Drawbar.wav (16-bit)
+; wave 826: 64 16-bit samples (128 B); entry 864
+P2_W0826_Drawbar:	.incbin	"pcm/P2_W0826_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0826_Drawbar.wav (16-bit)
+; wave 827: 64 16-bit samples (128 B); entry 865
+P2_W0827_Drawbar:	.incbin	"pcm/P2_W0827_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0827_Drawbar.wav (16-bit)
+; wave 828: 64 16-bit samples (128 B); entry 866
+P2_W0828_Drawbar:	.incbin	"pcm/P2_W0828_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0828_Drawbar.wav (16-bit)
+; wave 829: 64 16-bit samples (128 B); entry 867
+P2_W0829_Drawbar:	.incbin	"pcm/P2_W0829_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0829_Drawbar.wav (16-bit)
+; wave 830: 64 16-bit samples (128 B); entry 868
+P2_W0830_Drawbar:	.incbin	"pcm/P2_W0830_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0830_Drawbar.wav (16-bit)
+; wave 831: 64 16-bit samples (128 B); entry 869
+P2_W0831_Drawbar:	.incbin	"pcm/P2_W0831_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0831_Drawbar.wav (16-bit)
+; wave 832: 64 16-bit samples (128 B); entry 870
+P2_W0832_Drawbar:	.incbin	"pcm/P2_W0832_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0832_Drawbar.wav (16-bit)
+; wave 833: 64 16-bit samples (128 B); entry 871
+P2_W0833_Drawbar:	.incbin	"pcm/P2_W0833_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0833_Drawbar.wav (16-bit)
+; wave 834: 64 16-bit samples (128 B); entry 872
+P2_W0834_Drawbar:	.incbin	"pcm/P2_W0834_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0834_Drawbar.wav (16-bit)
+; wave 835: 128 16-bit samples (256 B); entry 873
+P2_W0835_Drawbar:	.incbin	"pcm/P2_W0835_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0835_Drawbar.wav (16-bit)
+; wave 836: 128 16-bit samples (256 B); entry 874
+P2_W0836_Drawbar:	.incbin	"pcm/P2_W0836_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0836_Drawbar.wav (16-bit)
+; wave 837: 64 16-bit samples (128 B); entry 875
+P2_W0837_Drawbar:	.incbin	"pcm/P2_W0837_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0837_Drawbar.wav (16-bit)
+; wave 838: 128 16-bit samples (256 B); entry 876
+P2_W0838_Drawbar:	.incbin	"pcm/P2_W0838_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0838_Drawbar.wav (16-bit)
+; wave 839: 128 16-bit samples (256 B); entry 877
+P2_W0839_Drawbar:	.incbin	"pcm/P2_W0839_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0839_Drawbar.wav (16-bit)
+; wave 840: 128 16-bit samples (256 B); entry 878
+P2_W0840_Drawbar:	.incbin	"pcm/P2_W0840_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0840_Drawbar.wav (16-bit)
+; wave 841: 128 16-bit samples (256 B); entry 879
+P2_W0841_Drawbar:	.incbin	"pcm/P2_W0841_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0841_Drawbar.wav (16-bit)
+; wave 842: 64 16-bit samples (128 B); entry 880
+P2_W0842_Drawbar:	.incbin	"pcm/P2_W0842_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0842_Drawbar.wav (16-bit)
+; wave 843: 64 16-bit samples (128 B); entry 881
+P2_W0843_Drawbar:	.incbin	"pcm/P2_W0843_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0843_Drawbar.wav (16-bit)
+; wave 844: 64 16-bit samples (128 B); entry 882
+P2_W0844_Drawbar:	.incbin	"pcm/P2_W0844_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0844_Drawbar.wav (16-bit)
+; wave 845: 64 16-bit samples (128 B); entry 883
+P2_W0845_Drawbar:	.incbin	"pcm/P2_W0845_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0845_Drawbar.wav (16-bit)
+; wave 846: 128 16-bit samples (256 B); entry 884
+P2_W0846_Drawbar:	.incbin	"pcm/P2_W0846_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0846_Drawbar.wav (16-bit)
+; wave 847: 128 16-bit samples (256 B); entry 885
+P2_W0847_Drawbar:	.incbin	"pcm/P2_W0847_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0847_Drawbar.wav (16-bit)
+; wave 848: 128 16-bit samples (256 B); entry 886
+P2_W0848_Drawbar:	.incbin	"pcm/P2_W0848_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0848_Drawbar.wav (16-bit)
+; wave 849: 128 16-bit samples (256 B); entry 887
+P2_W0849_Drawbar:	.incbin	"pcm/P2_W0849_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0849_Drawbar.wav (16-bit)
+; wave 850: 64 16-bit samples (128 B); entry 888
+P2_W0850_Drawbar:	.incbin	"pcm/P2_W0850_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0850_Drawbar.wav (16-bit)
+; wave 851: 64 16-bit samples (128 B); entry 889
+P2_W0851_Drawbar:	.incbin	"pcm/P2_W0851_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0851_Drawbar.wav (16-bit)
+; wave 852: 64 16-bit samples (128 B); entry 890
+P2_W0852_Drawbar:	.incbin	"pcm/P2_W0852_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0852_Drawbar.wav (16-bit)
+; wave 853: 64 16-bit samples (128 B); entry 891
+P2_W0853_Drawbar:	.incbin	"pcm/P2_W0853_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0853_Drawbar.wav (16-bit)
+; wave 854: 128 16-bit samples (256 B); entry 892
+P2_W0854_Drawbar:	.incbin	"pcm/P2_W0854_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0854_Drawbar.wav (16-bit)
+; wave 855: 128 16-bit samples (256 B); entry 893
+P2_W0855_Drawbar:	.incbin	"pcm/P2_W0855_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0855_Drawbar.wav (16-bit)
+; wave 856: 64 16-bit samples (128 B); entry 894
+P2_W0856_Drawbar:	.incbin	"pcm/P2_W0856_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0856_Drawbar.wav (16-bit)
+; wave 857: 128 16-bit samples (256 B); entry 895
+P2_W0857_Drawbar:	.incbin	"pcm/P2_W0857_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0857_Drawbar.wav (16-bit)
+; wave 858: 128 16-bit samples (256 B); entry 896
+P2_W0858_Drawbar:	.incbin	"pcm/P2_W0858_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0858_Drawbar.wav (16-bit)
+; wave 859: 64 16-bit samples (128 B); entry 897
+P2_W0859_Drawbar:	.incbin	"pcm/P2_W0859_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0859_Drawbar.wav (16-bit)
+; wave 860: 128 16-bit samples (256 B); entry 898
+P2_W0860_Drawbar:	.incbin	"pcm/P2_W0860_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0860_Drawbar.wav (16-bit)
+; wave 861: 128 16-bit samples (256 B); entry 899
+P2_W0861_Drawbar:	.incbin	"pcm/P2_W0861_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0861_Drawbar.wav (16-bit)
+; wave 862: 64 16-bit samples (128 B); entry 900
+P2_W0862_Drawbar:	.incbin	"pcm/P2_W0862_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0862_Drawbar.wav (16-bit)
+; wave 863: 128 16-bit samples (256 B); entry 901
+P2_W0863_Drawbar:	.incbin	"pcm/P2_W0863_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0863_Drawbar.wav (16-bit)
+; wave 864: 128 16-bit samples (256 B); entry 902
+P2_W0864_Drawbar:	.incbin	"pcm/P2_W0864_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0864_Drawbar.wav (16-bit)
+; wave 865: 64 16-bit samples (128 B); entry 903
+P2_W0865_Drawbar:	.incbin	"pcm/P2_W0865_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0865_Drawbar.wav (16-bit)
+; wave 866: 128 16-bit samples (256 B); entry 904
+P2_W0866_Drawbar:	.incbin	"pcm/P2_W0866_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0866_Drawbar.wav (16-bit)
+; wave 867: 128 16-bit samples (256 B); entry 905
+P2_W0867_Drawbar:	.incbin	"pcm/P2_W0867_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0867_Drawbar.wav (16-bit)
+; wave 868: 64 16-bit samples (128 B); entry 906
+P2_W0868_Drawbar:	.incbin	"pcm/P2_W0868_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0868_Drawbar.wav (16-bit)
+; wave 869: 64 16-bit samples (128 B); entry 907
+P2_W0869_Drawbar:	.incbin	"pcm/P2_W0869_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0869_Drawbar.wav (16-bit)
+; wave 870: 64 16-bit samples (128 B); entry 908
+P2_W0870_Drawbar:	.incbin	"pcm/P2_W0870_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0870_Drawbar.wav (16-bit)
+; wave 871: 64 16-bit samples (128 B); entry 909
+P2_W0871_Drawbar:	.incbin	"pcm/P2_W0871_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0871_Drawbar.wav (16-bit)
+; wave 872: 64 16-bit samples (128 B); entry 910
+P2_W0872_Drawbar:	.incbin	"pcm/P2_W0872_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0872_Drawbar.wav (16-bit)
+; wave 873: 64 16-bit samples (128 B); entry 911
+P2_W0873_Drawbar:	.incbin	"pcm/P2_W0873_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0873_Drawbar.wav (16-bit)
+; wave 874: 64 16-bit samples (128 B); entry 912
+P2_W0874_Drawbar:	.incbin	"pcm/P2_W0874_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0874_Drawbar.wav (16-bit)
+; wave 875: 64 16-bit samples (128 B); entry 913
+P2_W0875_Drawbar:	.incbin	"pcm/P2_W0875_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0875_Drawbar.wav (16-bit)
+; wave 876: 64 16-bit samples (128 B); entry 914
+P2_W0876_Drawbar:	.incbin	"pcm/P2_W0876_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0876_Drawbar.wav (16-bit)
+; wave 877: 128 16-bit samples (256 B); entry 915
+P2_W0877_Drawbar:	.incbin	"pcm/P2_W0877_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0877_Drawbar.wav (16-bit)
+; wave 878: 128 16-bit samples (256 B); entry 916
+P2_W0878_Drawbar:	.incbin	"pcm/P2_W0878_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0878_Drawbar.wav (16-bit)
+; wave 879: 64 16-bit samples (128 B); entry 917
+P2_W0879_Drawbar:	.incbin	"pcm/P2_W0879_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0879_Drawbar.wav (16-bit)
+; wave 880: 128 16-bit samples (256 B); entry 918
+P2_W0880_Drawbar:	.incbin	"pcm/P2_W0880_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0880_Drawbar.wav (16-bit)
+; wave 881: 128 16-bit samples (256 B); entry 919
+P2_W0881_Drawbar:	.incbin	"pcm/P2_W0881_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0881_Drawbar.wav (16-bit)
+; wave 882: 128 16-bit samples (256 B); entry 920
+P2_W0882_Drawbar:	.incbin	"pcm/P2_W0882_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0882_Drawbar.wav (16-bit)
+; wave 883: 128 16-bit samples (256 B); entry 921
+P2_W0883_Drawbar:	.incbin	"pcm/P2_W0883_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0883_Drawbar.wav (16-bit)
+; wave 884: 128 16-bit samples (256 B); entry 922
+P2_W0884_Drawbar:	.incbin	"pcm/P2_W0884_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0884_Drawbar.wav (16-bit)
+; wave 885: 64 16-bit samples (128 B); entry 923
+P2_W0885_Drawbar:	.incbin	"pcm/P2_W0885_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0885_Drawbar.wav (16-bit)
+; wave 886: 64 16-bit samples (128 B); entry 924
+P2_W0886_Drawbar:	.incbin	"pcm/P2_W0886_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0886_Drawbar.wav (16-bit)
+; wave 887: 64 16-bit samples (128 B); entry 925
+P2_W0887_Drawbar:	.incbin	"pcm/P2_W0887_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0887_Drawbar.wav (16-bit)
+; wave 888: 128 16-bit samples (256 B); entry 926
+P2_W0888_Drawbar:	.incbin	"pcm/P2_W0888_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0888_Drawbar.wav (16-bit)
+; wave 889: 128 16-bit samples (256 B); entry 927
+P2_W0889_Drawbar:	.incbin	"pcm/P2_W0889_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0889_Drawbar.wav (16-bit)
+; wave 890: 128 16-bit samples (256 B); entry 928
+P2_W0890_Drawbar:	.incbin	"pcm/P2_W0890_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0890_Drawbar.wav (16-bit)
+; wave 891: 128 16-bit samples (256 B); entry 929
+P2_W0891_Drawbar:	.incbin	"pcm/P2_W0891_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0891_Drawbar.wav (16-bit)
+; wave 892: 128 16-bit samples (256 B); entry 930
+P2_W0892_Drawbar:	.incbin	"pcm/P2_W0892_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0892_Drawbar.wav (16-bit)
+; wave 893: 64 16-bit samples (128 B); entry 931
+P2_W0893_Drawbar:	.incbin	"pcm/P2_W0893_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0893_Drawbar.wav (16-bit)
+; wave 894: 64 16-bit samples (128 B); entry 932
+P2_W0894_Drawbar:	.incbin	"pcm/P2_W0894_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0894_Drawbar.wav (16-bit)
+; wave 895: 64 16-bit samples (128 B); entry 933
+P2_W0895_Drawbar:	.incbin	"pcm/P2_W0895_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0895_Drawbar.wav (16-bit)
+; wave 896: 128 16-bit samples (256 B); entry 934
+P2_W0896_Drawbar:	.incbin	"pcm/P2_W0896_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0896_Drawbar.wav (16-bit)
+; wave 897: 128 16-bit samples (256 B); entry 935
+P2_W0897_Drawbar:	.incbin	"pcm/P2_W0897_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0897_Drawbar.wav (16-bit)
+; wave 898: 64 16-bit samples (128 B); entry 936
+P2_W0898_Drawbar:	.incbin	"pcm/P2_W0898_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0898_Drawbar.wav (16-bit)
+; wave 899: 128 16-bit samples (256 B); entry 937
+P2_W0899_Drawbar:	.incbin	"pcm/P2_W0899_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0899_Drawbar.wav (16-bit)
+; wave 900: 128 16-bit samples (256 B); entry 938
+P2_W0900_Drawbar:	.incbin	"pcm/P2_W0900_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0900_Drawbar.wav (16-bit)
+; wave 901: 64 16-bit samples (128 B); entry 939
+P2_W0901_Drawbar:	.incbin	"pcm/P2_W0901_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0901_Drawbar.wav (16-bit)
+; wave 902: 128 16-bit samples (256 B); entry 940
+P2_W0902_Drawbar:	.incbin	"pcm/P2_W0902_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0902_Drawbar.wav (16-bit)
+; wave 903: 128 16-bit samples (256 B); entry 941
+P2_W0903_Drawbar:	.incbin	"pcm/P2_W0903_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0903_Drawbar.wav (16-bit)
+; wave 904: 64 16-bit samples (128 B); entry 942
+P2_W0904_Drawbar:	.incbin	"pcm/P2_W0904_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0904_Drawbar.wav (16-bit)
+; wave 905: 128 16-bit samples (256 B); entry 943
+P2_W0905_Drawbar:	.incbin	"pcm/P2_W0905_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0905_Drawbar.wav (16-bit)
+; wave 906: 128 16-bit samples (256 B); entry 944
+P2_W0906_Drawbar:	.incbin	"pcm/P2_W0906_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0906_Drawbar.wav (16-bit)
+; wave 907: 64 16-bit samples (128 B); entry 945
+P2_W0907_Drawbar:	.incbin	"pcm/P2_W0907_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0907_Drawbar.wav (16-bit)
+; wave 908: 128 16-bit samples (256 B); entry 946
+P2_W0908_Drawbar:	.incbin	"pcm/P2_W0908_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0908_Drawbar.wav (16-bit)
+; wave 909: 128 16-bit samples (256 B); entry 947
+P2_W0909_Drawbar:	.incbin	"pcm/P2_W0909_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0909_Drawbar.wav (16-bit)
+; wave 910: 64 16-bit samples (128 B); entry 948
+P2_W0910_Drawbar:	.incbin	"pcm/P2_W0910_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0910_Drawbar.wav (16-bit)
+; wave 911: 128 16-bit samples (256 B); entry 949
+P2_W0911_Drawbar:	.incbin	"pcm/P2_W0911_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0911_Drawbar.wav (16-bit)
+; wave 912: 128 16-bit samples (256 B); entry 950
+P2_W0912_Drawbar:	.incbin	"pcm/P2_W0912_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0912_Drawbar.wav (16-bit)
+; wave 913: 128 16-bit samples (256 B); entry 951
+P2_W0913_Drawbar:	.incbin	"pcm/P2_W0913_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0913_Drawbar.wav (16-bit)
+; wave 914: 64 16-bit samples (128 B); entry 952
+P2_W0914_Drawbar:	.incbin	"pcm/P2_W0914_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0914_Drawbar.wav (16-bit)
+; wave 915: 64 16-bit samples (128 B); entry 953
+P2_W0915_Drawbar:	.incbin	"pcm/P2_W0915_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0915_Drawbar.wav (16-bit)
+; wave 916: 64 16-bit samples (128 B); entry 954
+P2_W0916_Drawbar:	.incbin	"pcm/P2_W0916_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0916_Drawbar.wav (16-bit)
+; wave 917: 64 16-bit samples (128 B); entry 955
+P2_W0917_Drawbar:	.incbin	"pcm/P2_W0917_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0917_Drawbar.wav (16-bit)
+; wave 918: 64 16-bit samples (128 B); entry 956
+P2_W0918_Drawbar:	.incbin	"pcm/P2_W0918_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0918_Drawbar.wav (16-bit)
+; wave 919: 128 16-bit samples (256 B); entry 957
+P2_W0919_Drawbar:	.incbin	"pcm/P2_W0919_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0919_Drawbar.wav (16-bit)
+; wave 920: 128 16-bit samples (256 B); entry 958
+P2_W0920_Drawbar:	.incbin	"pcm/P2_W0920_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0920_Drawbar.wav (16-bit)
+; wave 921: 64 16-bit samples (128 B); entry 959
+P2_W0921_Drawbar:	.incbin	"pcm/P2_W0921_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0921_Drawbar.wav (16-bit)
+; wave 922: 128 16-bit samples (256 B); entry 960
+P2_W0922_Drawbar:	.incbin	"pcm/P2_W0922_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0922_Drawbar.wav (16-bit)
+; wave 923: 128 16-bit samples (256 B); entry 961
+P2_W0923_Drawbar:	.incbin	"pcm/P2_W0923_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0923_Drawbar.wav (16-bit)
+; wave 924: 128 16-bit samples (256 B); entry 962
+P2_W0924_Drawbar:	.incbin	"pcm/P2_W0924_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0924_Drawbar.wav (16-bit)
+; wave 925: 128 16-bit samples (256 B); entry 963
+P2_W0925_Drawbar:	.incbin	"pcm/P2_W0925_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0925_Drawbar.wav (16-bit)
+; wave 926: 128 16-bit samples (256 B); entry 964
+P2_W0926_Drawbar:	.incbin	"pcm/P2_W0926_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0926_Drawbar.wav (16-bit)
+; wave 927: 128 16-bit samples (256 B); entry 965
+P2_W0927_Drawbar:	.incbin	"pcm/P2_W0927_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0927_Drawbar.wav (16-bit)
+; wave 928: 64 16-bit samples (128 B); entry 966
+P2_W0928_Drawbar:	.incbin	"pcm/P2_W0928_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0928_Drawbar.wav (16-bit)
+; wave 929: 64 16-bit samples (128 B); entry 967
+P2_W0929_Drawbar:	.incbin	"pcm/P2_W0929_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0929_Drawbar.wav (16-bit)
+; wave 930: 128 16-bit samples (256 B); entry 968
+P2_W0930_Drawbar:	.incbin	"pcm/P2_W0930_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0930_Drawbar.wav (16-bit)
+; wave 931: 128 16-bit samples (256 B); entry 969
+P2_W0931_Drawbar:	.incbin	"pcm/P2_W0931_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0931_Drawbar.wav (16-bit)
+; wave 932: 128 16-bit samples (256 B); entry 970
+P2_W0932_Drawbar:	.incbin	"pcm/P2_W0932_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0932_Drawbar.wav (16-bit)
+; wave 933: 128 16-bit samples (256 B); entry 971
+P2_W0933_Drawbar:	.incbin	"pcm/P2_W0933_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0933_Drawbar.wav (16-bit)
+; wave 934: 128 16-bit samples (256 B); entry 972
+P2_W0934_Drawbar:	.incbin	"pcm/P2_W0934_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0934_Drawbar.wav (16-bit)
+; wave 935: 128 16-bit samples (256 B); entry 973
+P2_W0935_Drawbar:	.incbin	"pcm/P2_W0935_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0935_Drawbar.wav (16-bit)
+; wave 936: 64 16-bit samples (128 B); entry 974
+P2_W0936_Drawbar:	.incbin	"pcm/P2_W0936_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0936_Drawbar.wav (16-bit)
+; wave 937: 64 16-bit samples (128 B); entry 975
+P2_W0937_Drawbar:	.incbin	"pcm/P2_W0937_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0937_Drawbar.wav (16-bit)
+; wave 938: 128 16-bit samples (256 B); entry 976
+P2_W0938_Drawbar:	.incbin	"pcm/P2_W0938_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0938_Drawbar.wav (16-bit)
+; wave 939: 128 16-bit samples (256 B); entry 977
+P2_W0939_Drawbar:	.incbin	"pcm/P2_W0939_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0939_Drawbar.wav (16-bit)
+; wave 940: 64 16-bit samples (128 B); entry 978
+P2_W0940_Drawbar:	.incbin	"pcm/P2_W0940_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0940_Drawbar.wav (16-bit)
+; wave 941: 128 16-bit samples (256 B); entry 979
+P2_W0941_Drawbar:	.incbin	"pcm/P2_W0941_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0941_Drawbar.wav (16-bit)
+; wave 942: 128 16-bit samples (256 B); entry 980
+P2_W0942_Drawbar:	.incbin	"pcm/P2_W0942_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0942_Drawbar.wav (16-bit)
+; wave 943: 64 16-bit samples (128 B); entry 981
+P2_W0943_Drawbar:	.incbin	"pcm/P2_W0943_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0943_Drawbar.wav (16-bit)
+; wave 944: 128 16-bit samples (256 B); entry 982
+P2_W0944_Drawbar:	.incbin	"pcm/P2_W0944_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0944_Drawbar.wav (16-bit)
+; wave 945: 128 16-bit samples (256 B); entry 983
+P2_W0945_Drawbar:	.incbin	"pcm/P2_W0945_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0945_Drawbar.wav (16-bit)
+; wave 946: 64 16-bit samples (128 B); entry 984
+P2_W0946_Drawbar:	.incbin	"pcm/P2_W0946_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0946_Drawbar.wav (16-bit)
+; wave 947: 128 16-bit samples (256 B); entry 985
+P2_W0947_Drawbar:	.incbin	"pcm/P2_W0947_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0947_Drawbar.wav (16-bit)
+; wave 948: 128 16-bit samples (256 B); entry 986
+P2_W0948_Drawbar:	.incbin	"pcm/P2_W0948_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0948_Drawbar.wav (16-bit)
+; wave 949: 64 16-bit samples (128 B); entry 987
+P2_W0949_Drawbar:	.incbin	"pcm/P2_W0949_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0949_Drawbar.wav (16-bit)
+; wave 950: 128 16-bit samples (256 B); entry 988
+P2_W0950_Drawbar:	.incbin	"pcm/P2_W0950_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0950_Drawbar.wav (16-bit)
+; wave 951: 128 16-bit samples (256 B); entry 989
+P2_W0951_Drawbar:	.incbin	"pcm/P2_W0951_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0951_Drawbar.wav (16-bit)
+; wave 952: 64 16-bit samples (128 B); entry 990
+P2_W0952_Drawbar:	.incbin	"pcm/P2_W0952_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0952_Drawbar.wav (16-bit)
+; wave 953: 128 16-bit samples (256 B); entry 991
+P2_W0953_Drawbar:	.incbin	"pcm/P2_W0953_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0953_Drawbar.wav (16-bit)
+; wave 954: 128 16-bit samples (256 B); entry 992
+P2_W0954_Drawbar:	.incbin	"pcm/P2_W0954_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0954_Drawbar.wav (16-bit)
+; wave 955: 128 16-bit samples (256 B); entry 993
+P2_W0955_Drawbar:	.incbin	"pcm/P2_W0955_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0955_Drawbar.wav (16-bit)
+; wave 956: 128 16-bit samples (256 B); entry 994
+P2_W0956_Drawbar:	.incbin	"pcm/P2_W0956_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0956_Drawbar.wav (16-bit)
+; wave 957: 128 16-bit samples (256 B); entry 995
+P2_W0957_Drawbar:	.incbin	"pcm/P2_W0957_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0957_Drawbar.wav (16-bit)
+; wave 958: 64 16-bit samples (128 B); entry 996
+P2_W0958_Drawbar:	.incbin	"pcm/P2_W0958_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0958_Drawbar.wav (16-bit)
+; wave 959: 64 16-bit samples (128 B); entry 997
+P2_W0959_Drawbar:	.incbin	"pcm/P2_W0959_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0959_Drawbar.wav (16-bit)
+; wave 960: 64 16-bit samples (128 B); entry 998
+P2_W0960_Drawbar:	.incbin	"pcm/P2_W0960_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0960_Drawbar.wav (16-bit)
+; wave 961: 128 16-bit samples (256 B); entry 999
+P2_W0961_Drawbar:	.incbin	"pcm/P2_W0961_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0961_Drawbar.wav (16-bit)
+; wave 962: 128 16-bit samples (256 B); entry 1000
+P2_W0962_Drawbar:	.incbin	"pcm/P2_W0962_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0962_Drawbar.wav (16-bit)
+; wave 963: 128 16-bit samples (256 B); entry 1001
+P2_W0963_Drawbar:	.incbin	"pcm/P2_W0963_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0963_Drawbar.wav (16-bit)
+; wave 964: 128 16-bit samples (256 B); entry 1002
+P2_W0964_Drawbar:	.incbin	"pcm/P2_W0964_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0964_Drawbar.wav (16-bit)
+; wave 965: 128 16-bit samples (256 B); entry 1003
+P2_W0965_Drawbar:	.incbin	"pcm/P2_W0965_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0965_Drawbar.wav (16-bit)
+; wave 966: 128 16-bit samples (256 B); entry 1004
+P2_W0966_Drawbar:	.incbin	"pcm/P2_W0966_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0966_Drawbar.wav (16-bit)
+; wave 967: 128 16-bit samples (256 B); entry 1005
+P2_W0967_Drawbar:	.incbin	"pcm/P2_W0967_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0967_Drawbar.wav (16-bit)
+; wave 968: 64 16-bit samples (128 B); entry 1006
+P2_W0968_Drawbar:	.incbin	"pcm/P2_W0968_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0968_Drawbar.wav (16-bit)
+; wave 969: 128 16-bit samples (256 B); entry 1007
+P2_W0969_Drawbar:	.incbin	"pcm/P2_W0969_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0969_Drawbar.wav (16-bit)
+; wave 970: 128 16-bit samples (256 B); entry 1008
+P2_W0970_Drawbar:	.incbin	"pcm/P2_W0970_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0970_Drawbar.wav (16-bit)
+; wave 971: 128 16-bit samples (256 B); entry 1009
+P2_W0971_Drawbar:	.incbin	"pcm/P2_W0971_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0971_Drawbar.wav (16-bit)
+; wave 972: 128 16-bit samples (256 B); entry 1010
+P2_W0972_Drawbar:	.incbin	"pcm/P2_W0972_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0972_Drawbar.wav (16-bit)
+; wave 973: 128 16-bit samples (256 B); entry 1011
+P2_W0973_Drawbar:	.incbin	"pcm/P2_W0973_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0973_Drawbar.wav (16-bit)
+; wave 974: 128 16-bit samples (256 B); entry 1012
+P2_W0974_Drawbar:	.incbin	"pcm/P2_W0974_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0974_Drawbar.wav (16-bit)
+; wave 975: 128 16-bit samples (256 B); entry 1013
+P2_W0975_Drawbar:	.incbin	"pcm/P2_W0975_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0975_Drawbar.wav (16-bit)
+; wave 976: 64 16-bit samples (128 B); entry 1014
+P2_W0976_Drawbar:	.incbin	"pcm/P2_W0976_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0976_Drawbar.wav (16-bit)
+; wave 977: 128 16-bit samples (256 B); entry 1015
+P2_W0977_Drawbar:	.incbin	"pcm/P2_W0977_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0977_Drawbar.wav (16-bit)
+; wave 978: 128 16-bit samples (256 B); entry 1016
+P2_W0978_Drawbar:	.incbin	"pcm/P2_W0978_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0978_Drawbar.wav (16-bit)
+; wave 979: 128 16-bit samples (256 B); entry 1017
+P2_W0979_Drawbar:	.incbin	"pcm/P2_W0979_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0979_Drawbar.wav (16-bit)
+; wave 980: 128 16-bit samples (256 B); entry 1018
+P2_W0980_Drawbar:	.incbin	"pcm/P2_W0980_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0980_Drawbar.wav (16-bit)
+; wave 981: 128 16-bit samples (256 B); entry 1019
+P2_W0981_Drawbar:	.incbin	"pcm/P2_W0981_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0981_Drawbar.wav (16-bit)
+; wave 982: 128 16-bit samples (256 B); entry 1020
+P2_W0982_Drawbar:	.incbin	"pcm/P2_W0982_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0982_Drawbar.wav (16-bit)
+; wave 983: 128 16-bit samples (256 B); entry 1021
+P2_W0983_Drawbar:	.incbin	"pcm/P2_W0983_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0983_Drawbar.wav (16-bit)
+; wave 984: 64 16-bit samples (128 B); entry 1022
+P2_W0984_Drawbar:	.incbin	"pcm/P2_W0984_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0984_Drawbar.wav (16-bit)
+; wave 985: 128 16-bit samples (256 B); entry 1023
+P2_W0985_Drawbar:	.incbin	"pcm/P2_W0985_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0985_Drawbar.wav (16-bit)
+; wave 986: 128 16-bit samples (256 B); entry 1024
+P2_W0986_Drawbar:	.incbin	"pcm/P2_W0986_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0986_Drawbar.wav (16-bit)
+; wave 987: 128 16-bit samples (256 B); entry 1025
+P2_W0987_Drawbar:	.incbin	"pcm/P2_W0987_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0987_Drawbar.wav (16-bit)
+; wave 988: 128 16-bit samples (256 B); entry 1026
+P2_W0988_Drawbar:	.incbin	"pcm/P2_W0988_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0988_Drawbar.wav (16-bit)
+; wave 989: 128 16-bit samples (256 B); entry 1027
+P2_W0989_Drawbar:	.incbin	"pcm/P2_W0989_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0989_Drawbar.wav (16-bit)
+; wave 990: 128 16-bit samples (256 B); entry 1028
+P2_W0990_Drawbar:	.incbin	"pcm/P2_W0990_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0990_Drawbar.wav (16-bit)
+; wave 991: 128 16-bit samples (256 B); entry 1029
+P2_W0991_Drawbar:	.incbin	"pcm/P2_W0991_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0991_Drawbar.wav (16-bit)
+; wave 992: 64 16-bit samples (128 B); entry 1030
+P2_W0992_Drawbar:	.incbin	"pcm/P2_W0992_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0992_Drawbar.wav (16-bit)
+; wave 993: 128 16-bit samples (256 B); entry 1031
+P2_W0993_Drawbar:	.incbin	"pcm/P2_W0993_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0993_Drawbar.wav (16-bit)
+; wave 994: 128 16-bit samples (256 B); entry 1032
+P2_W0994_Drawbar:	.incbin	"pcm/P2_W0994_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0994_Drawbar.wav (16-bit)
+; wave 995: 128 16-bit samples (256 B); entry 1033
+P2_W0995_Drawbar:	.incbin	"pcm/P2_W0995_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0995_Drawbar.wav (16-bit)
+; wave 996: 128 16-bit samples (256 B); entry 1034
+P2_W0996_Drawbar:	.incbin	"pcm/P2_W0996_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0996_Drawbar.wav (16-bit)
+; wave 997: 128 16-bit samples (256 B); entry 1035
+P2_W0997_Drawbar:	.incbin	"pcm/P2_W0997_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0997_Drawbar.wav (16-bit)
+; wave 998: 128 16-bit samples (256 B); entry 1036
+P2_W0998_Drawbar:	.incbin	"pcm/P2_W0998_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0998_Drawbar.wav (16-bit)
+; wave 999: 128 16-bit samples (256 B); entry 1037
+P2_W0999_Drawbar:	.incbin	"pcm/P2_W0999_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W0999_Drawbar.wav (16-bit)
+; wave 1000: 64 16-bit samples (128 B); entry 1038
+P2_W1000_Drawbar:	.incbin	"pcm/P2_W1000_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1000_Drawbar.wav (16-bit)
+; wave 1001: 128 16-bit samples (256 B); entry 1039
+P2_W1001_Drawbar:	.incbin	"pcm/P2_W1001_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1001_Drawbar.wav (16-bit)
+; wave 1002: 128 16-bit samples (256 B); entry 1040
+P2_W1002_Drawbar:	.incbin	"pcm/P2_W1002_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1002_Drawbar.wav (16-bit)
+; wave 1003: 128 16-bit samples (256 B); entry 1041
+P2_W1003_Drawbar:	.incbin	"pcm/P2_W1003_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1003_Drawbar.wav (16-bit)
+; wave 1004: 128 16-bit samples (256 B); entry 1042
+P2_W1004_Drawbar:	.incbin	"pcm/P2_W1004_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1004_Drawbar.wav (16-bit)
+; wave 1005: 128 16-bit samples (256 B); entry 1043
+P2_W1005_Drawbar:	.incbin	"pcm/P2_W1005_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1005_Drawbar.wav (16-bit)
+; wave 1006: 128 16-bit samples (256 B); entry 1044
+P2_W1006_Drawbar:	.incbin	"pcm/P2_W1006_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1006_Drawbar.wav (16-bit)
+; wave 1007: 128 16-bit samples (256 B); entry 1045
+P2_W1007_Drawbar:	.incbin	"pcm/P2_W1007_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1007_Drawbar.wav (16-bit)
+; wave 1008: 64 16-bit samples (128 B); entry 1046
+P2_W1008_Drawbar:	.incbin	"pcm/P2_W1008_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1008_Drawbar.wav (16-bit)
+; wave 1009: 128 16-bit samples (256 B); entry 1047
+P2_W1009_Drawbar:	.incbin	"pcm/P2_W1009_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1009_Drawbar.wav (16-bit)
+; wave 1010: 128 16-bit samples (256 B); entry 1048
+P2_W1010_Drawbar:	.incbin	"pcm/P2_W1010_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1010_Drawbar.wav (16-bit)
+; wave 1011: 128 16-bit samples (256 B); entry 1049
+P2_W1011_Drawbar:	.incbin	"pcm/P2_W1011_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1011_Drawbar.wav (16-bit)
+; wave 1012: 128 16-bit samples (256 B); entry 1050
+P2_W1012_Drawbar:	.incbin	"pcm/P2_W1012_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1012_Drawbar.wav (16-bit)
+; wave 1013: 128 16-bit samples (256 B); entry 1051
+P2_W1013_Drawbar:	.incbin	"pcm/P2_W1013_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1013_Drawbar.wav (16-bit)
+; wave 1014: 128 16-bit samples (256 B); entry 1052
+P2_W1014_Drawbar:	.incbin	"pcm/P2_W1014_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1014_Drawbar.wav (16-bit)
+; wave 1015: 128 16-bit samples (256 B); entry 1053
+P2_W1015_Drawbar:	.incbin	"pcm/P2_W1015_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1015_Drawbar.wav (16-bit)
+; wave 1016: 64 16-bit samples (128 B); entry 1054
+P2_W1016_Drawbar:	.incbin	"pcm/P2_W1016_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1016_Drawbar.wav (16-bit)
+; wave 1017: 128 16-bit samples (256 B); entry 1055
+P2_W1017_Drawbar:	.incbin	"pcm/P2_W1017_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1017_Drawbar.wav (16-bit)
+; wave 1018: 128 16-bit samples (256 B); entry 1056
+P2_W1018_Drawbar:	.incbin	"pcm/P2_W1018_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1018_Drawbar.wav (16-bit)
+; wave 1019: 128 16-bit samples (256 B); entry 1057
+P2_W1019_Drawbar:	.incbin	"pcm/P2_W1019_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1019_Drawbar.wav (16-bit)
+; wave 1020: 128 16-bit samples (256 B); entry 1058
+P2_W1020_Drawbar:	.incbin	"pcm/P2_W1020_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1020_Drawbar.wav (16-bit)
+; wave 1021: 128 16-bit samples (256 B); entry 1059
+P2_W1021_Drawbar:	.incbin	"pcm/P2_W1021_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1021_Drawbar.wav (16-bit)
+; wave 1022: 128 16-bit samples (256 B); entry 1060
+P2_W1022_Drawbar:	.incbin	"pcm/P2_W1022_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1022_Drawbar.wav (16-bit)
+; wave 1023: 128 16-bit samples (256 B); entry 1061
+P2_W1023_Drawbar:	.incbin	"pcm/P2_W1023_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1023_Drawbar.wav (16-bit)
+; wave 1024: 64 16-bit samples (128 B); entry 1062
+P2_W1024_Drawbar:	.incbin	"pcm/P2_W1024_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1024_Drawbar.wav (16-bit)
+; wave 1025: 128 16-bit samples (256 B); entry 1063
+P2_W1025_Drawbar:	.incbin	"pcm/P2_W1025_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1025_Drawbar.wav (16-bit)
+; wave 1026: 128 16-bit samples (256 B); entry 1064
+P2_W1026_Drawbar:	.incbin	"pcm/P2_W1026_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1026_Drawbar.wav (16-bit)
+; wave 1027: 128 16-bit samples (256 B); entry 1065
+P2_W1027_Drawbar:	.incbin	"pcm/P2_W1027_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1027_Drawbar.wav (16-bit)
+; wave 1028: 128 16-bit samples (256 B); entry 1066
+P2_W1028_Drawbar:	.incbin	"pcm/P2_W1028_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1028_Drawbar.wav (16-bit)
+; wave 1029: 128 16-bit samples (256 B); entry 1067
+P2_W1029_Drawbar:	.incbin	"pcm/P2_W1029_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1029_Drawbar.wav (16-bit)
+; wave 1030: 128 16-bit samples (256 B); entry 1068
+P2_W1030_Drawbar:	.incbin	"pcm/P2_W1030_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1030_Drawbar.wav (16-bit)
+; wave 1031: 128 16-bit samples (256 B); entry 1069
+P2_W1031_Drawbar:	.incbin	"pcm/P2_W1031_Drawbar.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1031_Drawbar.wav (16-bit)
+; wave 1032: 64 16-bit samples (128 B); entry 1070
+P2_W1032_Drawbar:	.incbin	"pcm/P2_W1032_Drawbar.pcm", 0, 128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1032_Drawbar.wav (16-bit)
+; wave 1033: 80 16-bit samples (160 B); entry 1071
+P2_W1033_Drawbar:	.incbin	"pcm/P2_W1033_Drawbar.pcm", 0, 160	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P2_W1033_Drawbar.wav (16-bit)
 
 ; ---- page tail: 128 bytes of 0xFF after the last wave ----
 IC307_Page2_TailFill:	.fill	128, 1, 0xff

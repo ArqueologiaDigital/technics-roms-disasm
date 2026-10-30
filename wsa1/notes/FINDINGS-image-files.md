@@ -10,7 +10,7 @@ PNGs covering 93,656 bytes** of prom_a and prom_b, each one a lossless, exact
 rendering of its range, each regenerating the `.byte` rows it came from:
 
 ```
-python3 scripts/build/wsa1_bitmaps.py check     # 204 bitmaps,  46,152 B
+python3 scripts/build/wsa1_bitmaps.py check     # 208 bitmaps,  46,440 B (204 before lane media-files, 2026-10-30)
 python3 scripts/build/wsa1_fonts.py   check     #  12 faces,    47,504 B
 ```
 
@@ -211,14 +211,14 @@ Those eight (720 B) are exported as `Widget_FC48D7.png` .. The remaining
 
 ## 6. Reproducing every number in this note
 
-| number | command |
-|---|---|
+| number                                          | command                                        |
+|-------------------------------------------------|------------------------------------------------|
 | 119 records / 30 targets / 0 ambiguous / null 0 | `python3 scripts/build/wsa1_bitmaps.py census` |
-| 204 images, 46,152 B, 0 failures | `python3 scripts/build/wsa1_bitmaps.py verify` |
-| 12 faces, 47,504 B, 0 failures, abutments | `python3 scripts/build/wsa1_fonts.py verify` |
-| the assembly equals the PNGs | `make images-check` (in `wsa1/`) |
-| edge densities, column vs row major | `python3 scripts/build/wsa1_bitmaps.py probe` |
-| the ROM still rebuilds | `make gate-wsa1` (from the repo root) |
+| 208 images, 46,440 B, 0 failures (2026-10-30)   | `python3 scripts/build/wsa1_bitmaps.py verify` |
+| 12 faces, 47,504 B, 0 failures, abutments       | `python3 scripts/build/wsa1_fonts.py verify`   |
+| the assembly equals the PNGs                    | `make images-check` (in `wsa1/`)               |
+| edge densities, column vs row major             | `python3 scripts/build/wsa1_bitmaps.py probe`  |
+| the ROM still rebuilds                          | `make gate-wsa1` (from the repo root)          |
 
 ★ And the check that certifies the checks: flip one pixel of
 `prom_b/images/Bitmap_F05CE0.png`, run `wsa1_bitmaps.py rewrite`, and
