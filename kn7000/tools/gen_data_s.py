@@ -1925,6 +1925,40 @@ class Gen:
                          f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
                          f"{SHARED}tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
+    # Glyphs the code addresses by name rather than through a blitter call's arguments:
+    # label -> (tools/table_png.py format, why).  Lane media-files, 2026-10-30.
+    NAMED_GLYPHS = {
+        "SjisMissingGlyph": ("font 2 16 1",
+                             "16 x 16, 1 bpp, column-major (two 8-pixel columns of 16 bytes): the glyph "
+                             "DrawString_Impl 0x48425467 draws for a Shift-JIS code its font lacks "
+                             "(annotations/gfx_draw.ann); a box with an X in it"),
+    }
+
+    def named_glyphs(self):
+        """(`structs` profiles) The NAMED_GLYPHS: a PNG in <data dir>/media/, which the
+        build turns back into the bytes, like drawn_bitmaps()."""
+        import table_png as TP
+        by_name = {}
+        for a, nm in list(self.fixed.items()) + list(self.label_at.items()):
+            by_name.setdefault(nm, a)
+        for nm, (fmt, why) in self.NAMED_GLYPHS.items():
+            a = by_name.get(nm)
+            if a is None:
+                continue
+            _, (cols, h, count), _ = TP.parse_fmt(fmt)
+            n = cols * h * count
+            if not self.in_data(a) or not self.free(a, n):
+                print(f"gen_data_s: glyph {nm} at {a:#x} not free; not typed")
+                continue
+            lab = self.name_at(a, nm)
+            fn = f"{lab}.png"
+            self.media_files[fn] = TP.to_png(fmt, self.rom[self.off(a):self.off(a) + n])
+            self.add(a, n, lab, "bitmap",
+                     lambda g, it, fn=fn, fmt=fmt, why=why: [
+                         f"{it.label}:\t# {why} ({OUTDIR}/media/{fn})",
+                         f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f"{SHARED}tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
+
     def variables(self):
         """(`structs` profiles) What is left that an instruction reads or writes at a
         fixed address (data_readers: a load / store of `(Label)` or `(off, aN)` with aN a
@@ -3703,6 +3737,7 @@ class Gen:
             self.typed_refs()
             self.message_tables()
             self.drawn_bitmaps()
+            self.named_glyphs()
             self.ptr_records()
             if P.get("readers_ext"):
                 self.sysex_strings()

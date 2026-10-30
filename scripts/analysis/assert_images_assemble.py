@@ -68,8 +68,9 @@ IMAGES = [
     ("hdae5000_v2_01i", "hdae5000_v2_01i/hd-ae5000_v2_01i.s", (), ("-I", "hdae5000")),
     ("table_data",   "table_data/kn5000_table_data.s"),
     ("custom_data",  "custom_data/kn5000_custom_data.s"),
-    # the waveform ROM's PCM is .incbin'd from the reference copy in original_ROMs/
-    ("waveform",     "waveform/kn5000_waveform_ic307.s", (), ("-I", "original_ROMs")),
+    # the waveform ROM's PCM items are .incbin'd from waveform/build/pcm/, which
+    # scripts/build/pcm_wav.py makes from the WAV files (`make` builds them first)
+    ("waveform",     "waveform/kn5000_waveform_ic307.s", (), ("-I", "waveform/build")),
     ("rhythm_data",  "rhythm_data/kn5000_rhythm_data.s"),
 ]
 

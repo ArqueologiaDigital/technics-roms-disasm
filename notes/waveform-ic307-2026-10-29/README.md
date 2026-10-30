@@ -51,14 +51,18 @@ records, alignment and tails. `data_incbin_census.py`: `kn5000-waveform` opaque 
   head-only, 961 of them in page 2.
 - **Alignment.** The zero bytes after the last record exactly reach the next 16-byte boundary in every page
   (`.balign 16, 0`). A wave start counts 16-byte granules, so the first wave has to start on one.
-- **PCM.** Signed 16-bit little-endian samples. A wave's length is taken as the distance to the next distinct
+- **PCM.** Signed 16-bit little-endian words. A wave's length is taken as the distance to the next distinct
   wave start, or to the 0xFF tail. Lengths run from 32 B to 75,040 B. 30 records suggest that an entry can play
-  past that length (below).
+  past that length (below). **Corrected 2026-10-30** (`../media-files-2026-10-30/README.md`): IC307 is the Y
+  chip of a word-interleaved pair like the KN7000's, so each item is every other word of a recording, and
+  169 + 31 of the items are two signed 8-bit samples per word, not 16-bit samples. 1,342 of the 1,413 items
+  occur verbatim in the KN7000's Y chips (`../media-files-probes/ic307_kn7000_match.py`).
 - **Tails.** Pages 0-2 end with 128 B of 0xFF and page 3 with 64 B (`.fill`). `.org` pins each page end at
   `(p + 1) * 0x100000`.
-- **Test sines.** The first wave of page 0 and the first wave of page 2 are the same 256-sample sine: peak 32,767,
+- **Test sines.** The first wave of page 0 and the first wave of page 2 are the same 256-word sine: peak 32,767,
   mean deviation 0.26 LSB from `32767 sin(2 pi k / 256)`. No SET or drawbar record selects either one (labels
-  `P0_W0000_Sine`, `P2_W0000_Sine`).
+  `P0_W0000_Sine`, `P2_W0000_Sine`). Since 2026-10-30: it is exactly the even samples of the KN7000's
+  512-sample sine `Main_P00_W000`, the first proof that this chip holds every other word.
 
 ### Parameter words: two kinds
 
@@ -191,8 +195,10 @@ waves, 958 of the named ones `_Drawbar`.
 - What the sequence words encode: the value, the two 3-bit fields, the marker bit, and how a word maps to a stretch
   of samples.
 - Where loops are. No field is wide enough to hold a loop point, so loops may be implied by the sequence end, or
-  be IC303's own business.
-- The base sample rate, and which socket holds classes 0-3.
+  be IC303's own business. Since 2026-10-30, the likelier answer: on the X chip. In the KN7000 the loop marks
+  are in the records' odd words and the format flag in the directory's P word, which are X-chip words; IC307's
+  "sequence words" would be the even words of such records.
+- The base sample rate, and which socket holds classes 0-3 (and the X chip of each pair).
 - Why page 1 entries 77, 80, 83 and 85, page 0 entries 152 and 159, and 65 page-2 entries have no selector.
   Possibly older-build leftovers, or users reached only through the RAM user-tone banks.
 

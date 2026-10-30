@@ -13,8 +13,11 @@
 # service-mode checksum (notes/wave-rom-port.md).  Fields: src/wave/wave_format.inc.
 # Format, evidence and open questions: notes/wave-roms-2026-10-29.md.
 #
-# The recordings come from the reference stream (git-ignored, made by the Makefile from the
-# private romset with SHA-1 checks): one labelled .incbin_range each.
+# The recordings are WAV files, one each, in wav/<tg>/ (git-ignored: `make wave-wav` extracts them
+# from the reference stream, which the Makefile joins from the private romset with SHA-1 checks).
+# ../scripts/build/pcm_wav.py turns each back into the raw item build/wav_pcm/<tg>/<label>.pcm that
+# its .incbin below reads: 16-bit = signed little-endian, the WAV data as it is; 8-bit = two signed
+# samples per word, low byte first, WAV byte = ROM byte ^ 0x80.  Manifest: src/wave/main_wav.tsv.
 #
 # page  entries  8-bit  recordings  record words  fill bytes
 # 0x00      181     67         160          3907        8832
@@ -824,167 +827,167 @@ Main_P00_R0B4:	.word	(Main_P00_W0B4 - Main_P00) / 32, 0x1a<<8 | 256-1, 0x0b<<8 |
 	.word	LOOP_END | 0x24<<8 | 256-4
 	.align	4
 	.align	32
-# recordings
-Main_P00_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2440, 0x2840	; census: opaque -- pcm: 512 16-bit samples, entry 000
-Main_P00_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2840, 0x3040	; census: opaque -- pcm: 1024 16-bit samples, entry 001
-Main_P00_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3040, 0x3080	; census: opaque -- pcm: 32 16-bit samples, entry 002
-Main_P00_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3080, 0x3c80	; census: opaque -- pcm: 1536 16-bit samples, entry 003
-Main_P00_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3c80, 0x4880	; census: opaque -- pcm: 1536 16-bit samples, entry 004
-Main_P00_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4880, 0x5080	; census: opaque -- pcm: 1024 16-bit samples, entry 005
-Main_P00_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5080, 0x5a80	; census: opaque -- pcm: 1280 16-bit samples, entry 006
-Main_P00_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5a80, 0x5f80	; census: opaque -- pcm: 640 16-bit samples, entry 007
-Main_P00_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5f80, 0x6480	; census: opaque -- pcm: 640 16-bit samples, entry 008
-Main_P00_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6480, 0x6700	; census: opaque -- pcm: 320 16-bit samples, entry 009
-Main_P00_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6700, 0x6980	; census: opaque -- pcm: 320 16-bit samples, entry 00A
-Main_P00_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6980, 0x6b80	; census: opaque -- pcm: 256 16-bit samples, entry 00B
-Main_P00_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6b80, 0x6d80	; census: opaque -- pcm: 256 16-bit samples, entry 00C
-Main_P00_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6d80, 0x6f80	; census: opaque -- pcm: 256 16-bit samples, entry 00D
-Main_P00_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6f80, 0x7080	; census: opaque -- pcm: 128 16-bit samples, entry 00E
-Main_P00_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7080, 0x7180	; census: opaque -- pcm: 128 16-bit samples, entry 00F
-Main_P00_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7180, 0x7280	; census: opaque -- pcm: 128 16-bit samples, entry 010
-Main_P00_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7280, 0x7380	; census: opaque -- pcm: 128 16-bit samples, entry 011
-Main_P00_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7380, 0x7480	; census: opaque -- pcm: 128 16-bit samples, entry 012
-Main_P00_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7480, 0x8c80	; census: opaque -- pcm: 3072 16-bit samples, entry 013
-Main_P00_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8c80, 0xa480	; census: opaque -- pcm: 3072 16-bit samples, entry 014
-Main_P00_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa480, 0xb480	; census: opaque -- pcm: 2048 16-bit samples, entry 015
-Main_P00_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb480, 0xc080	; census: opaque -- pcm: 1536 16-bit samples, entry 016
-Main_P00_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc080, 0xca80	; census: opaque -- pcm: 1280 16-bit samples, entry 017
-Main_P00_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0xca80, 0xd080	; census: opaque -- pcm: 768 16-bit samples, entry 018
-Main_P00_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd080, 0xda80	; census: opaque -- pcm: 1280 16-bit samples, entry 019
-Main_P00_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda80, 0xe080	; census: opaque -- pcm: 768 16-bit samples, entry 01A
-Main_P00_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe080, 0xe580	; census: opaque -- pcm: 640 16-bit samples, entry 01B
-Main_P00_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe580, 0xe880	; census: opaque -- pcm: 384 16-bit samples, entry 01C
-Main_P00_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe880, 0xec80	; census: opaque -- pcm: 1024 8-bit samples, entry 01D
-Main_P00_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xec80, 0xf080	; census: opaque -- pcm: 1024 8-bit samples, entry 01E
-Main_P00_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf080, 0xf280	; census: opaque -- pcm: 512 8-bit samples, entry 01F
-Main_P00_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf280, 0xf480	; census: opaque -- pcm: 512 8-bit samples, entry 020
-Main_P00_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf480, 0xf580	; census: opaque -- pcm: 256 8-bit samples, entry 021
-Main_P00_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf580, 0xf680	; census: opaque -- pcm: 256 8-bit samples, entry 022
-Main_P00_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf680, 0xf700	; census: opaque -- pcm: 128 8-bit samples, entry 023
-Main_P00_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf700, 0xf800	; census: opaque -- pcm: 128 16-bit samples, entry 024
-Main_P00_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf800, 0xf900	; census: opaque -- pcm: 128 16-bit samples, entry 025
-Main_P00_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf900, 0x10900	; census: opaque -- pcm: 2048 16-bit samples, entry 026
-Main_P00_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10900, 0x11100	; census: opaque -- pcm: 1024 16-bit samples, entry 027
-Main_P00_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11100, 0x11600	; census: opaque -- pcm: 640 16-bit samples, entry 028
-Main_P00_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11600, 0x11a00	; census: opaque -- pcm: 512 16-bit samples, entry 029
-Main_P00_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11a00, 0x11e00	; census: opaque -- pcm: 512 16-bit samples, entry 02A
-Main_P00_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11e00, 0x12200	; census: opaque -- pcm: 512 16-bit samples, entry 02B
-Main_P00_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x12200, 0x12e00	; census: opaque -- pcm: 3072 8-bit samples, entry 02C
-Main_P00_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x12e00, 0x13a00	; census: opaque -- pcm: 3072 8-bit samples, entry 02D
-Main_P00_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13a00, 0x14000	; census: opaque -- pcm: 1536 8-bit samples, entry 02E
-Main_P00_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14000, 0x14600	; census: opaque -- pcm: 1536 8-bit samples, entry 02F
-Main_P00_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14600, 0x14b00	; census: opaque -- pcm: 1280 8-bit samples, entry 030
-Main_P00_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14b00, 0x14f00	; census: opaque -- pcm: 1024 8-bit samples, entry 031
-Main_P00_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14f00, 0x15180	; census: opaque -- pcm: 640 8-bit samples, entry 032
-Main_P00_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15180, 0x15780	; census: opaque -- pcm: 1536 8-bit samples, entry 033
-Main_P00_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15780, 0x15d80	; census: opaque -- pcm: 768 16-bit samples, entry 034
-Main_P00_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15d80, 0x16d80	; census: opaque -- pcm: 2048 16-bit samples, entry 035
-Main_P00_W036:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16d80, 0x16f80	; census: opaque -- pcm: 512 8-bit samples, entry 036
-Main_P00_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16f80, 0x17180	; census: opaque -- pcm: 512 8-bit samples, entry 037
-Main_P00_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17180, 0x17280	; census: opaque -- pcm: 256 8-bit samples, entry 038
-Main_P00_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17280, 0x17380	; census: opaque -- pcm: 256 8-bit samples, entry 039
-Main_P00_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17380, 0x17400	; census: opaque -- pcm: 128 8-bit samples, entry 03A
-Main_P00_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17400, 0x17500	; census: opaque -- pcm: 128 16-bit samples, entry 03B
-Main_P00_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17500, 0x17600	; census: opaque -- pcm: 128 16-bit samples, entry 03C
-Main_P00_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17600, 0x19e00	; census: opaque -- pcm: 5120 16-bit samples, entry 03D
-Main_P00_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19e00, 0x1ae00	; census: opaque -- pcm: 4096 8-bit samples, entry 03E
-Main_P00_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ae00, 0x1b800	; census: opaque -- pcm: 2560 8-bit samples, entry 03F
-Main_P00_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b800, 0x1c200	; census: opaque -- pcm: 2560 8-bit samples, entry 040
-Main_P00_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c200, 0x1c800	; census: opaque -- pcm: 1536 8-bit samples, entry 041
-Main_P00_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c800, 0x1cd00	; census: opaque -- pcm: 1280 8-bit samples, entry 042
-Main_P00_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cd00, 0x1cf80	; census: opaque -- pcm: 640 8-bit samples, entry 043
-Main_P00_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cf80, 0x1d300	; census: opaque -- pcm: 896 8-bit samples, entry 044
-Main_P00_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d300, 0x1d600	; census: opaque -- pcm: 768 8-bit samples, entry 045
-Main_P00_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d600, 0x1db00	; census: opaque -- pcm: 640 16-bit samples, entry 046
-Main_P00_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1db00, 0x1f900	; census: opaque -- pcm: 3840 16-bit samples, entries 047 048
-Main_P00_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1f900, 0x21900	; census: opaque -- pcm: 4096 16-bit samples, entries 049 04A
-Main_P00_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x21900, 0x22e00	; census: opaque -- pcm: 2688 16-bit samples, entry 04B
-Main_P00_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x22e00, 0x25200	; census: opaque -- pcm: 4608 16-bit samples, entries 04C 04D
-Main_P00_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x25200, 0x28600	; census: opaque -- pcm: 6656 16-bit samples, entries 04E 04F
-Main_P00_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0x28600, 0x29a80	; census: opaque -- pcm: 2624 16-bit samples, entry 050
-Main_P00_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0x29a80, 0x2d000	; census: opaque -- pcm: 6848 16-bit samples, entries 051 052 053
-Main_P00_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2d000, 0x30800	; census: opaque -- pcm: 7168 16-bit samples, entries 054 055
-Main_P00_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0x30800, 0x34800	; census: opaque -- pcm: 8192 16-bit samples, entries 056 057
-Main_P00_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0x34800, 0x37400	; census: opaque -- pcm: 5632 16-bit samples, entry 058
-Main_P00_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0x37400, 0x3b600	; census: opaque -- pcm: 8448 16-bit samples, entries 059 05A
-Main_P00_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3b600, 0x3d800	; census: opaque -- pcm: 4352 16-bit samples, entries 05B 05C
-Main_P00_W05D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3d800, 0x3ee80	; census: opaque -- pcm: 2880 16-bit samples, entry 05D
-Main_P00_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3ee80, 0x40b00	; census: opaque -- pcm: 3648 16-bit samples, entries 05E 05F 060
-Main_P00_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0x40b00, 0x41f00	; census: opaque -- pcm: 2560 16-bit samples, entry 061
-Main_P00_W062:	.incbin_range "baserom/kn7000_wave_main.bin", 0x41f00, 0x42b00	; census: opaque -- pcm: 1536 16-bit samples, entry 062
-Main_P00_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0x42b00, 0x44100	; census: opaque -- pcm: 2816 16-bit samples, entry 063
-Main_P00_W064:	.incbin_range "baserom/kn7000_wave_main.bin", 0x44100, 0x4d900	; census: opaque -- pcm: 19456 16-bit samples, entry 064
-Main_P00_W065:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4d900, 0x51600	; census: opaque -- pcm: 7808 16-bit samples, entry 065
-Main_P00_W0AF:	.incbin_range "baserom/kn7000_wave_main.bin", 0x51600, 0x56b80	; census: opaque -- pcm: 21888 8-bit samples, entry 0AF
-Main_P00_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0x56b80, 0x5a680	; census: opaque -- pcm: 15104 8-bit samples, entry 066
-Main_P00_W067:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5a680, 0x5e3e0	; census: opaque -- pcm: 15712 8-bit samples, entry 067
-Main_P00_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5e3e0, 0x61fe0	; census: opaque -- pcm: 15360 8-bit samples, entry 068
-Main_P00_W069:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61fe0, 0x65940	; census: opaque -- pcm: 14688 8-bit samples, entry 069
-Main_P00_W06A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x65940, 0x683c0	; census: opaque -- pcm: 10880 8-bit samples, entry 06A
-Main_P00_W06B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x683c0, 0x6ace0	; census: opaque -- pcm: 10528 8-bit samples, entry 06B
-Main_P00_W06C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6ace0, 0x6f4e0	; census: opaque -- pcm: 18432 8-bit samples, entry 06C
-Main_P00_W06D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6f4e0, 0x75540	; census: opaque -- pcm: 24672 8-bit samples, entry 06D
-Main_P00_W06E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x75540, 0x78d40	; census: opaque -- pcm: 14336 8-bit samples, entry 06E
-Main_P00_W06F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x78d40, 0x7e2a0	; census: opaque -- pcm: 21856 8-bit samples, entry 06F
-Main_P00_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7e2a0, 0x812a0	; census: opaque -- pcm: 12288 8-bit samples, entry 070
-Main_P00_W071:	.incbin_range "baserom/kn7000_wave_main.bin", 0x812a0, 0x86900	; census: opaque -- pcm: 22112 8-bit samples, entry 071
-Main_P00_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0x86900, 0x8a200	; census: opaque -- pcm: 14592 8-bit samples, entry 072
-Main_P00_W073:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8a200, 0x8efe0	; census: opaque -- pcm: 19936 8-bit samples, entry 073
-Main_P00_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8efe0, 0x91ce0	; census: opaque -- pcm: 11520 8-bit samples, entry 074
-Main_P00_W075:	.incbin_range "baserom/kn7000_wave_main.bin", 0x91ce0, 0x967c0	; census: opaque -- pcm: 19168 8-bit samples, entry 075
-Main_P00_W076:	.incbin_range "baserom/kn7000_wave_main.bin", 0x967c0, 0x99440	; census: opaque -- pcm: 11392 8-bit samples, entry 076
-Main_P00_W077:	.incbin_range "baserom/kn7000_wave_main.bin", 0x99440, 0x9d660	; census: opaque -- pcm: 16928 8-bit samples, entry 077
-Main_P00_W078:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9d660, 0x9fde0	; census: opaque -- pcm: 10112 8-bit samples, entry 078
-Main_P00_W079:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9fde0, 0xa3e00	; census: opaque -- pcm: 16416 8-bit samples, entry 079
-Main_P00_W07A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa3e00, 0xa9d00	; census: opaque -- pcm: 24320 8-bit samples, entry 07A
-Main_P00_W07B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa9d00, 0xb16a0	; census: opaque -- pcm: 31136 8-bit samples, entry 07B
-Main_P00_W07C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb16a0, 0xc3ae0	; census: opaque -- pcm: 37408 16-bit samples, entry 07C
-Main_P00_W07D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc3ae0, 0xd3f20	; census: opaque -- pcm: 33312 16-bit samples, entry 07D
-Main_P00_W07E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd3f20, 0xe5b60	; census: opaque -- pcm: 36384 16-bit samples, entry 07E
-Main_P00_W07F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe5b60, 0xf5da0	; census: opaque -- pcm: 33056 16-bit samples, entry 07F
-Main_P00_W080:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf5da0, 0x108ee0	; census: opaque -- pcm: 39072 16-bit samples, entry 080
-Main_P00_W081:	.incbin_range "baserom/kn7000_wave_main.bin", 0x108ee0, 0x11a820	; census: opaque -- pcm: 36000 16-bit samples, entry 081
-Main_P00_W082:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11a820, 0x135f60	; census: opaque -- pcm: 56224 16-bit samples, entry 082
-Main_P00_W083:	.incbin_range "baserom/kn7000_wave_main.bin", 0x135f60, 0x138360	; census: opaque -- pcm: 4608 16-bit samples, entries 083 084 085 086 087 088
-Main_P00_W089:	.incbin_range "baserom/kn7000_wave_main.bin", 0x138360, 0x13b360	; census: opaque -- pcm: 6144 16-bit samples, entries 089 08A 08B 08C 08D
-Main_P00_W08E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13b360, 0x13d160	; census: opaque -- pcm: 3840 16-bit samples, entry 08E
-Main_P00_W08F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13d160, 0x13e160	; census: opaque -- pcm: 2048 16-bit samples, entry 08F
-Main_P00_W090:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13e160, 0x13f160	; census: opaque -- pcm: 2048 16-bit samples, entry 090
-Main_P00_W091:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13f160, 0x13fa60	; census: opaque -- pcm: 1152 16-bit samples, entry 091
-Main_P00_W092:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13fa60, 0x140660	; census: opaque -- pcm: 1536 16-bit samples, entry 092
-Main_P00_W093:	.incbin_range "baserom/kn7000_wave_main.bin", 0x140660, 0x141860	; census: opaque -- pcm: 2304 16-bit samples, entry 093
-Main_P00_W094:	.incbin_range "baserom/kn7000_wave_main.bin", 0x141860, 0x142ee0	; census: opaque -- pcm: 2880 16-bit samples, entry 094
-Main_P00_W095:	.incbin_range "baserom/kn7000_wave_main.bin", 0x142ee0, 0x144ee0	; census: opaque -- pcm: 4096 16-bit samples, entry 095
-Main_P00_W096:	.incbin_range "baserom/kn7000_wave_main.bin", 0x144ee0, 0x145ee0	; census: opaque -- pcm: 2048 16-bit samples, entry 096
-Main_P00_W097:	.incbin_range "baserom/kn7000_wave_main.bin", 0x145ee0, 0x1472e0	; census: opaque -- pcm: 2560 16-bit samples, entry 097
-Main_P00_W098:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1472e0, 0x147ee0	; census: opaque -- pcm: 1536 16-bit samples, entry 098
-Main_P00_W099:	.incbin_range "baserom/kn7000_wave_main.bin", 0x147ee0, 0x1488e0	; census: opaque -- pcm: 1280 16-bit samples, entry 099
-Main_P00_W09A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1488e0, 0x148de0	; census: opaque -- pcm: 640 16-bit samples, entry 09A
-Main_P00_W09B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x148de0, 0x1497e0	; census: opaque -- pcm: 1280 16-bit samples, entry 09B
-Main_P00_W09C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1497e0, 0x149fe0	; census: opaque -- pcm: 1024 16-bit samples, entry 09C
-Main_P00_W09D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x149fe0, 0x150c20	; census: opaque -- pcm: 13856 16-bit samples, entry 09D
-Main_P00_W09E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x150c20, 0x157060	; census: opaque -- pcm: 12832 16-bit samples, entry 09E
-Main_P00_W09F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x157060, 0x15a060	; census: opaque -- pcm: 6144 16-bit samples, entry 09F
-Main_P00_W0A0:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15a060, 0x15d660	; census: opaque -- pcm: 6912 16-bit samples, entry 0A0
-Main_P00_W0A1:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15d660, 0x15fc60	; census: opaque -- pcm: 4864 16-bit samples, entry 0A1
-Main_P00_W0A2:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15fc60, 0x163260	; census: opaque -- pcm: 6912 16-bit samples, entry 0A2
-Main_P00_W0A3:	.incbin_range "baserom/kn7000_wave_main.bin", 0x163260, 0x165860	; census: opaque -- pcm: 9728 8-bit samples, entry 0A3
-Main_P00_W0A4:	.incbin_range "baserom/kn7000_wave_main.bin", 0x165860, 0x167ce0	; census: opaque -- pcm: 9344 8-bit samples, entry 0A4
-Main_P00_W0A5:	.incbin_range "baserom/kn7000_wave_main.bin", 0x167ce0, 0x16b0e0	; census: opaque -- pcm: 13312 8-bit samples, entry 0A5
-Main_P00_W0A6:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16b0e0, 0x16dfa0	; census: opaque -- pcm: 11968 8-bit samples, entry 0A6
-Main_P00_W0A7:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16dfa0, 0x1815e0	; census: opaque -- pcm: 79424 8-bit samples, entry 0A7
-Main_P00_W0A8:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1815e0, 0x182760	; census: opaque -- pcm: 4480 8-bit samples, entry 0A8
-Main_P00_W0A9:	.incbin_range "baserom/kn7000_wave_main.bin", 0x182760, 0x188640	; census: opaque -- pcm: 24288 8-bit samples, entry 0A9
-Main_P00_W0AA:	.incbin_range "baserom/kn7000_wave_main.bin", 0x188640, 0x1929e0	; census: opaque -- pcm: 41888 8-bit samples, entry 0AA
-Main_P00_W0AB:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1929e0, 0x19cd80	; census: opaque -- pcm: 41888 8-bit samples, entry 0AB
-Main_P00_W0AC:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19cd80, 0x1a7120	; census: opaque -- pcm: 41888 8-bit samples, entry 0AC
-Main_P00_W0AD:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a7120, 0x1a71a0	; census: opaque -- pcm: 64 16-bit samples, entry 0AD
-Main_P00_W0AE:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a71a0, 0x1aea80	; census: opaque -- pcm: 30944 8-bit samples, entry 0AE
-Main_P00_W0B0:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aea80, 0x1b8e20	; census: opaque -- pcm: 41888 8-bit samples, entry 0B0
-Main_P00_W0B1:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b8e20, 0x1c9080	; census: opaque -- pcm: 66144 8-bit samples, entry 0B1
-Main_P00_W0B2:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c9080, 0x1dc6a0	; census: opaque -- pcm: 79392 8-bit samples, entry 0B2
-Main_P00_W0B3:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1dc6a0, 0x1eebc0	; census: opaque -- pcm: 75040 8-bit samples, entry 0B3
-Main_P00_W0B4:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1eebc0, 0x1fdd80	; census: opaque -- pcm: 61888 8-bit samples, entry 0B4
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P00_W000:	.incbin	"build/wav_pcm/main/Main_P00_W000.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W000_Sine.wav: 512 16-bit samples, entry 000
+Main_P00_W001:	.incbin	"build/wav_pcm/main/Main_P00_W001.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W001.wav: 1024 16-bit samples, entry 001
+Main_P00_W002:	.incbin	"build/wav_pcm/main/Main_P00_W002.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W002.wav: 32 16-bit samples, entry 002
+Main_P00_W003:	.incbin	"build/wav_pcm/main/Main_P00_W003.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W003.wav: 1536 16-bit samples, entry 003
+Main_P00_W004:	.incbin	"build/wav_pcm/main/Main_P00_W004.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W004.wav: 1536 16-bit samples, entry 004
+Main_P00_W005:	.incbin	"build/wav_pcm/main/Main_P00_W005.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W005.wav: 1024 16-bit samples, entry 005
+Main_P00_W006:	.incbin	"build/wav_pcm/main/Main_P00_W006.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W006.wav: 1280 16-bit samples, entry 006
+Main_P00_W007:	.incbin	"build/wav_pcm/main/Main_P00_W007.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W007.wav: 640 16-bit samples, entry 007
+Main_P00_W008:	.incbin	"build/wav_pcm/main/Main_P00_W008.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W008.wav: 640 16-bit samples, entry 008
+Main_P00_W009:	.incbin	"build/wav_pcm/main/Main_P00_W009.pcm", 0, 640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W009.wav: 320 16-bit samples, entry 009
+Main_P00_W00A:	.incbin	"build/wav_pcm/main/Main_P00_W00A.pcm", 0, 640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W00A.wav: 320 16-bit samples, entry 00A
+Main_P00_W00B:	.incbin	"build/wav_pcm/main/Main_P00_W00B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W00B.wav: 256 16-bit samples, entry 00B
+Main_P00_W00C:	.incbin	"build/wav_pcm/main/Main_P00_W00C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W00C.wav: 256 16-bit samples, entry 00C
+Main_P00_W00D:	.incbin	"build/wav_pcm/main/Main_P00_W00D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W00D.wav: 256 16-bit samples, entry 00D
+Main_P00_W00E:	.incbin	"build/wav_pcm/main/Main_P00_W00E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W00E.wav: 128 16-bit samples, entry 00E
+Main_P00_W00F:	.incbin	"build/wav_pcm/main/Main_P00_W00F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W00F.wav: 128 16-bit samples, entry 00F
+Main_P00_W010:	.incbin	"build/wav_pcm/main/Main_P00_W010.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W010.wav: 128 16-bit samples, entry 010
+Main_P00_W011:	.incbin	"build/wav_pcm/main/Main_P00_W011.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W011.wav: 128 16-bit samples, entry 011
+Main_P00_W012:	.incbin	"build/wav_pcm/main/Main_P00_W012.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W012.wav: 128 16-bit samples, entry 012
+Main_P00_W013:	.incbin	"build/wav_pcm/main/Main_P00_W013.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W013.wav: 3072 16-bit samples, entry 013
+Main_P00_W014:	.incbin	"build/wav_pcm/main/Main_P00_W014.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W014.wav: 3072 16-bit samples, entry 014
+Main_P00_W015:	.incbin	"build/wav_pcm/main/Main_P00_W015.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W015.wav: 2048 16-bit samples, entry 015
+Main_P00_W016:	.incbin	"build/wav_pcm/main/Main_P00_W016.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W016.wav: 1536 16-bit samples, entry 016
+Main_P00_W017:	.incbin	"build/wav_pcm/main/Main_P00_W017.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W017.wav: 1280 16-bit samples, entry 017
+Main_P00_W018:	.incbin	"build/wav_pcm/main/Main_P00_W018.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W018.wav: 768 16-bit samples, entry 018
+Main_P00_W019:	.incbin	"build/wav_pcm/main/Main_P00_W019.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W019.wav: 1280 16-bit samples, entry 019
+Main_P00_W01A:	.incbin	"build/wav_pcm/main/Main_P00_W01A.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W01A.wav: 768 16-bit samples, entry 01A
+Main_P00_W01B:	.incbin	"build/wav_pcm/main/Main_P00_W01B.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W01B.wav: 640 16-bit samples, entry 01B
+Main_P00_W01C:	.incbin	"build/wav_pcm/main/Main_P00_W01C.pcm", 0, 768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W01C.wav: 384 16-bit samples, entry 01C
+Main_P00_W01D:	.incbin	"build/wav_pcm/main/Main_P00_W01D.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W01D.wav: 1024 8-bit samples, entry 01D
+Main_P00_W01E:	.incbin	"build/wav_pcm/main/Main_P00_W01E.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W01E.wav: 1024 8-bit samples, entry 01E
+Main_P00_W01F:	.incbin	"build/wav_pcm/main/Main_P00_W01F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W01F.wav: 512 8-bit samples, entry 01F
+Main_P00_W020:	.incbin	"build/wav_pcm/main/Main_P00_W020.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W020.wav: 512 8-bit samples, entry 020
+Main_P00_W021:	.incbin	"build/wav_pcm/main/Main_P00_W021.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W021.wav: 256 8-bit samples, entry 021
+Main_P00_W022:	.incbin	"build/wav_pcm/main/Main_P00_W022.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W022.wav: 256 8-bit samples, entry 022
+Main_P00_W023:	.incbin	"build/wav_pcm/main/Main_P00_W023.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W023.wav: 128 8-bit samples, entry 023
+Main_P00_W024:	.incbin	"build/wav_pcm/main/Main_P00_W024.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W024.wav: 128 16-bit samples, entry 024
+Main_P00_W025:	.incbin	"build/wav_pcm/main/Main_P00_W025.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W025.wav: 128 16-bit samples, entry 025
+Main_P00_W026:	.incbin	"build/wav_pcm/main/Main_P00_W026.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W026.wav: 2048 16-bit samples, entry 026
+Main_P00_W027:	.incbin	"build/wav_pcm/main/Main_P00_W027.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W027.wav: 1024 16-bit samples, entry 027
+Main_P00_W028:	.incbin	"build/wav_pcm/main/Main_P00_W028.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W028.wav: 640 16-bit samples, entry 028
+Main_P00_W029:	.incbin	"build/wav_pcm/main/Main_P00_W029.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W029.wav: 512 16-bit samples, entry 029
+Main_P00_W02A:	.incbin	"build/wav_pcm/main/Main_P00_W02A.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W02A.wav: 512 16-bit samples, entry 02A
+Main_P00_W02B:	.incbin	"build/wav_pcm/main/Main_P00_W02B.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W02B.wav: 512 16-bit samples, entry 02B
+Main_P00_W02C:	.incbin	"build/wav_pcm/main/Main_P00_W02C.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W02C.wav: 3072 8-bit samples, entry 02C
+Main_P00_W02D:	.incbin	"build/wav_pcm/main/Main_P00_W02D.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W02D.wav: 3072 8-bit samples, entry 02D
+Main_P00_W02E:	.incbin	"build/wav_pcm/main/Main_P00_W02E.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W02E.wav: 1536 8-bit samples, entry 02E
+Main_P00_W02F:	.incbin	"build/wav_pcm/main/Main_P00_W02F.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W02F.wav: 1536 8-bit samples, entry 02F
+Main_P00_W030:	.incbin	"build/wav_pcm/main/Main_P00_W030.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W030.wav: 1280 8-bit samples, entry 030
+Main_P00_W031:	.incbin	"build/wav_pcm/main/Main_P00_W031.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W031.wav: 1024 8-bit samples, entry 031
+Main_P00_W032:	.incbin	"build/wav_pcm/main/Main_P00_W032.pcm", 0, 640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W032.wav: 640 8-bit samples, entry 032
+Main_P00_W033:	.incbin	"build/wav_pcm/main/Main_P00_W033.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W033.wav: 1536 8-bit samples, entry 033
+Main_P00_W034:	.incbin	"build/wav_pcm/main/Main_P00_W034.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W034.wav: 768 16-bit samples, entry 034
+Main_P00_W035:	.incbin	"build/wav_pcm/main/Main_P00_W035.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W035.wav: 2048 16-bit samples, entry 035
+Main_P00_W036:	.incbin	"build/wav_pcm/main/Main_P00_W036.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W036.wav: 512 8-bit samples, entry 036
+Main_P00_W037:	.incbin	"build/wav_pcm/main/Main_P00_W037.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W037.wav: 512 8-bit samples, entry 037
+Main_P00_W038:	.incbin	"build/wav_pcm/main/Main_P00_W038.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W038.wav: 256 8-bit samples, entry 038
+Main_P00_W039:	.incbin	"build/wav_pcm/main/Main_P00_W039.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W039.wav: 256 8-bit samples, entry 039
+Main_P00_W03A:	.incbin	"build/wav_pcm/main/Main_P00_W03A.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W03A.wav: 128 8-bit samples, entry 03A
+Main_P00_W03B:	.incbin	"build/wav_pcm/main/Main_P00_W03B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W03B.wav: 128 16-bit samples, entry 03B
+Main_P00_W03C:	.incbin	"build/wav_pcm/main/Main_P00_W03C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W03C.wav: 128 16-bit samples, entry 03C
+Main_P00_W03D:	.incbin	"build/wav_pcm/main/Main_P00_W03D.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W03D.wav: 5120 16-bit samples, entry 03D
+Main_P00_W03E:	.incbin	"build/wav_pcm/main/Main_P00_W03E.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W03E.wav: 4096 8-bit samples, entry 03E
+Main_P00_W03F:	.incbin	"build/wav_pcm/main/Main_P00_W03F.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W03F.wav: 2560 8-bit samples, entry 03F
+Main_P00_W040:	.incbin	"build/wav_pcm/main/Main_P00_W040.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W040.wav: 2560 8-bit samples, entry 040
+Main_P00_W041:	.incbin	"build/wav_pcm/main/Main_P00_W041.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W041.wav: 1536 8-bit samples, entry 041
+Main_P00_W042:	.incbin	"build/wav_pcm/main/Main_P00_W042.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W042.wav: 1280 8-bit samples, entry 042
+Main_P00_W043:	.incbin	"build/wav_pcm/main/Main_P00_W043.pcm", 0, 640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W043.wav: 640 8-bit samples, entry 043
+Main_P00_W044:	.incbin	"build/wav_pcm/main/Main_P00_W044.pcm", 0, 896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W044.wav: 896 8-bit samples, entry 044
+Main_P00_W045:	.incbin	"build/wav_pcm/main/Main_P00_W045.pcm", 0, 768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W045.wav: 768 8-bit samples, entry 045
+Main_P00_W046:	.incbin	"build/wav_pcm/main/Main_P00_W046.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W046.wav: 640 16-bit samples, entry 046
+Main_P00_W047:	.incbin	"build/wav_pcm/main/Main_P00_W047.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W047.wav: 3840 16-bit samples, entries 047 048
+Main_P00_W049:	.incbin	"build/wav_pcm/main/Main_P00_W049.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W049.wav: 4096 16-bit samples, entries 049 04A
+Main_P00_W04B:	.incbin	"build/wav_pcm/main/Main_P00_W04B.pcm", 0, 5376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W04B.wav: 2688 16-bit samples, entry 04B
+Main_P00_W04C:	.incbin	"build/wav_pcm/main/Main_P00_W04C.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W04C.wav: 4608 16-bit samples, entries 04C 04D
+Main_P00_W04E:	.incbin	"build/wav_pcm/main/Main_P00_W04E.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W04E.wav: 6656 16-bit samples, entries 04E 04F
+Main_P00_W050:	.incbin	"build/wav_pcm/main/Main_P00_W050.pcm", 0, 5248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W050.wav: 2624 16-bit samples, entry 050
+Main_P00_W051:	.incbin	"build/wav_pcm/main/Main_P00_W051.pcm", 0, 13696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W051.wav: 6848 16-bit samples, entries 051 052 053
+Main_P00_W054:	.incbin	"build/wav_pcm/main/Main_P00_W054.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W054.wav: 7168 16-bit samples, entries 054 055
+Main_P00_W056:	.incbin	"build/wav_pcm/main/Main_P00_W056.pcm", 0, 16384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W056.wav: 8192 16-bit samples, entries 056 057
+Main_P00_W058:	.incbin	"build/wav_pcm/main/Main_P00_W058.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W058.wav: 5632 16-bit samples, entry 058
+Main_P00_W059:	.incbin	"build/wav_pcm/main/Main_P00_W059.pcm", 0, 16896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W059.wav: 8448 16-bit samples, entries 059 05A
+Main_P00_W05B:	.incbin	"build/wav_pcm/main/Main_P00_W05B.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W05B.wav: 4352 16-bit samples, entries 05B 05C
+Main_P00_W05D:	.incbin	"build/wav_pcm/main/Main_P00_W05D.pcm", 0, 5760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W05D.wav: 2880 16-bit samples, entry 05D
+Main_P00_W05E:	.incbin	"build/wav_pcm/main/Main_P00_W05E.pcm", 0, 7296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W05E.wav: 3648 16-bit samples, entries 05E 05F 060
+Main_P00_W061:	.incbin	"build/wav_pcm/main/Main_P00_W061.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W061.wav: 2560 16-bit samples, entry 061
+Main_P00_W062:	.incbin	"build/wav_pcm/main/Main_P00_W062.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W062.wav: 1536 16-bit samples, entry 062
+Main_P00_W063:	.incbin	"build/wav_pcm/main/Main_P00_W063.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W063.wav: 2816 16-bit samples, entry 063
+Main_P00_W064:	.incbin	"build/wav_pcm/main/Main_P00_W064.pcm", 0, 38912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W064.wav: 19456 16-bit samples, entry 064
+Main_P00_W065:	.incbin	"build/wav_pcm/main/Main_P00_W065.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W065.wav: 7808 16-bit samples, entry 065
+Main_P00_W0AF:	.incbin	"build/wav_pcm/main/Main_P00_W0AF.pcm", 0, 21888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0AF.wav: 21888 8-bit samples, entry 0AF
+Main_P00_W066:	.incbin	"build/wav_pcm/main/Main_P00_W066.pcm", 0, 15104	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W066.wav: 15104 8-bit samples, entry 066
+Main_P00_W067:	.incbin	"build/wav_pcm/main/Main_P00_W067.pcm", 0, 15712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W067.wav: 15712 8-bit samples, entry 067
+Main_P00_W068:	.incbin	"build/wav_pcm/main/Main_P00_W068.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W068.wav: 15360 8-bit samples, entry 068
+Main_P00_W069:	.incbin	"build/wav_pcm/main/Main_P00_W069.pcm", 0, 14688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W069.wav: 14688 8-bit samples, entry 069
+Main_P00_W06A:	.incbin	"build/wav_pcm/main/Main_P00_W06A.pcm", 0, 10880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W06A.wav: 10880 8-bit samples, entry 06A
+Main_P00_W06B:	.incbin	"build/wav_pcm/main/Main_P00_W06B.pcm", 0, 10528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W06B.wav: 10528 8-bit samples, entry 06B
+Main_P00_W06C:	.incbin	"build/wav_pcm/main/Main_P00_W06C.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W06C.wav: 18432 8-bit samples, entry 06C
+Main_P00_W06D:	.incbin	"build/wav_pcm/main/Main_P00_W06D.pcm", 0, 24672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W06D.wav: 24672 8-bit samples, entry 06D
+Main_P00_W06E:	.incbin	"build/wav_pcm/main/Main_P00_W06E.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W06E.wav: 14336 8-bit samples, entry 06E
+Main_P00_W06F:	.incbin	"build/wav_pcm/main/Main_P00_W06F.pcm", 0, 21856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W06F.wav: 21856 8-bit samples, entry 06F
+Main_P00_W070:	.incbin	"build/wav_pcm/main/Main_P00_W070.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W070.wav: 12288 8-bit samples, entry 070
+Main_P00_W071:	.incbin	"build/wav_pcm/main/Main_P00_W071.pcm", 0, 22112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W071.wav: 22112 8-bit samples, entry 071
+Main_P00_W072:	.incbin	"build/wav_pcm/main/Main_P00_W072.pcm", 0, 14592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W072.wav: 14592 8-bit samples, entry 072
+Main_P00_W073:	.incbin	"build/wav_pcm/main/Main_P00_W073.pcm", 0, 19936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W073.wav: 19936 8-bit samples, entry 073
+Main_P00_W074:	.incbin	"build/wav_pcm/main/Main_P00_W074.pcm", 0, 11520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W074.wav: 11520 8-bit samples, entry 074
+Main_P00_W075:	.incbin	"build/wav_pcm/main/Main_P00_W075.pcm", 0, 19168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W075.wav: 19168 8-bit samples, entry 075
+Main_P00_W076:	.incbin	"build/wav_pcm/main/Main_P00_W076.pcm", 0, 11392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W076.wav: 11392 8-bit samples, entry 076
+Main_P00_W077:	.incbin	"build/wav_pcm/main/Main_P00_W077.pcm", 0, 16928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W077.wav: 16928 8-bit samples, entry 077
+Main_P00_W078:	.incbin	"build/wav_pcm/main/Main_P00_W078.pcm", 0, 10112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W078.wav: 10112 8-bit samples, entry 078
+Main_P00_W079:	.incbin	"build/wav_pcm/main/Main_P00_W079.pcm", 0, 16416	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W079.wav: 16416 8-bit samples, entry 079
+Main_P00_W07A:	.incbin	"build/wav_pcm/main/Main_P00_W07A.pcm", 0, 24320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W07A.wav: 24320 8-bit samples, entry 07A
+Main_P00_W07B:	.incbin	"build/wav_pcm/main/Main_P00_W07B.pcm", 0, 31136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W07B.wav: 31136 8-bit samples, entry 07B
+Main_P00_W07C:	.incbin	"build/wav_pcm/main/Main_P00_W07C.pcm", 0, 74816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W07C.wav: 37408 16-bit samples, entry 07C
+Main_P00_W07D:	.incbin	"build/wav_pcm/main/Main_P00_W07D.pcm", 0, 66624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W07D.wav: 33312 16-bit samples, entry 07D
+Main_P00_W07E:	.incbin	"build/wav_pcm/main/Main_P00_W07E.pcm", 0, 72768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W07E.wav: 36384 16-bit samples, entry 07E
+Main_P00_W07F:	.incbin	"build/wav_pcm/main/Main_P00_W07F.pcm", 0, 66112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W07F.wav: 33056 16-bit samples, entry 07F
+Main_P00_W080:	.incbin	"build/wav_pcm/main/Main_P00_W080.pcm", 0, 78144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W080.wav: 39072 16-bit samples, entry 080
+Main_P00_W081:	.incbin	"build/wav_pcm/main/Main_P00_W081.pcm", 0, 72000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W081.wav: 36000 16-bit samples, entry 081
+Main_P00_W082:	.incbin	"build/wav_pcm/main/Main_P00_W082.pcm", 0, 112448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W082.wav: 56224 16-bit samples, entry 082
+Main_P00_W083:	.incbin	"build/wav_pcm/main/Main_P00_W083.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W083.wav: 4608 16-bit samples, entries 083 084 085 086 087 088
+Main_P00_W089:	.incbin	"build/wav_pcm/main/Main_P00_W089.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W089.wav: 6144 16-bit samples, entries 089 08A 08B 08C 08D
+Main_P00_W08E:	.incbin	"build/wav_pcm/main/Main_P00_W08E.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W08E_Pipe16ftPlus8ftL.wav: 3840 16-bit samples, entry 08E
+Main_P00_W08F:	.incbin	"build/wav_pcm/main/Main_P00_W08F.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W08F_Pipe16ftPlus8ftL.wav: 2048 16-bit samples, entry 08F
+Main_P00_W090:	.incbin	"build/wav_pcm/main/Main_P00_W090.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W090_Pipe16ftPlus8ftL.wav: 2048 16-bit samples, entry 090
+Main_P00_W091:	.incbin	"build/wav_pcm/main/Main_P00_W091.pcm", 0, 2304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W091_Pipe16ftPlus8ftL.wav: 1152 16-bit samples, entry 091
+Main_P00_W092:	.incbin	"build/wav_pcm/main/Main_P00_W092.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W092_Pipe16ftPlus8ftL.wav: 1536 16-bit samples, entry 092
+Main_P00_W093:	.incbin	"build/wav_pcm/main/Main_P00_W093.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W093_Pipe16ftPlus8ftL.wav: 2304 16-bit samples, entry 093
+Main_P00_W094:	.incbin	"build/wav_pcm/main/Main_P00_W094.pcm", 0, 5760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W094_Pipe16ftPlus8ftL.wav: 2880 16-bit samples, entry 094
+Main_P00_W095:	.incbin	"build/wav_pcm/main/Main_P00_W095.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W095.wav: 4096 16-bit samples, entry 095
+Main_P00_W096:	.incbin	"build/wav_pcm/main/Main_P00_W096.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W096.wav: 2048 16-bit samples, entry 096
+Main_P00_W097:	.incbin	"build/wav_pcm/main/Main_P00_W097.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W097.wav: 2560 16-bit samples, entry 097
+Main_P00_W098:	.incbin	"build/wav_pcm/main/Main_P00_W098.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W098.wav: 1536 16-bit samples, entry 098
+Main_P00_W099:	.incbin	"build/wav_pcm/main/Main_P00_W099.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W099.wav: 1280 16-bit samples, entry 099
+Main_P00_W09A:	.incbin	"build/wav_pcm/main/Main_P00_W09A.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W09A.wav: 640 16-bit samples, entry 09A
+Main_P00_W09B:	.incbin	"build/wav_pcm/main/Main_P00_W09B.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W09B.wav: 1280 16-bit samples, entry 09B
+Main_P00_W09C:	.incbin	"build/wav_pcm/main/Main_P00_W09C.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W09C.wav: 1024 16-bit samples, entry 09C
+Main_P00_W09D:	.incbin	"build/wav_pcm/main/Main_P00_W09D.pcm", 0, 27712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W09D_FullPipeL.wav: 13856 16-bit samples, entry 09D
+Main_P00_W09E:	.incbin	"build/wav_pcm/main/Main_P00_W09E.pcm", 0, 25664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W09E_FullPipeL.wav: 12832 16-bit samples, entry 09E
+Main_P00_W09F:	.incbin	"build/wav_pcm/main/Main_P00_W09F.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W09F_FullPipeL.wav: 6144 16-bit samples, entry 09F
+Main_P00_W0A0:	.incbin	"build/wav_pcm/main/Main_P00_W0A0.pcm", 0, 13824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A0_FullPipeL.wav: 6912 16-bit samples, entry 0A0
+Main_P00_W0A1:	.incbin	"build/wav_pcm/main/Main_P00_W0A1.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A1_FullPipeL.wav: 4864 16-bit samples, entry 0A1
+Main_P00_W0A2:	.incbin	"build/wav_pcm/main/Main_P00_W0A2.pcm", 0, 13824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A2_FullPipeL.wav: 6912 16-bit samples, entry 0A2
+Main_P00_W0A3:	.incbin	"build/wav_pcm/main/Main_P00_W0A3.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A3_FullPipeL.wav: 9728 8-bit samples, entry 0A3
+Main_P00_W0A4:	.incbin	"build/wav_pcm/main/Main_P00_W0A4.pcm", 0, 9344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A4.wav: 9344 8-bit samples, entry 0A4
+Main_P00_W0A5:	.incbin	"build/wav_pcm/main/Main_P00_W0A5.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A5.wav: 13312 8-bit samples, entry 0A5
+Main_P00_W0A6:	.incbin	"build/wav_pcm/main/Main_P00_W0A6.pcm", 0, 11968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A6.wav: 11968 8-bit samples, entry 0A6
+Main_P00_W0A7:	.incbin	"build/wav_pcm/main/Main_P00_W0A7.pcm", 0, 79424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A7.wav: 79424 8-bit samples, entry 0A7
+Main_P00_W0A8:	.incbin	"build/wav_pcm/main/Main_P00_W0A8.pcm", 0, 4480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A8.wav: 4480 8-bit samples, entry 0A8
+Main_P00_W0A9:	.incbin	"build/wav_pcm/main/Main_P00_W0A9.pcm", 0, 24288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0A9.wav: 24288 8-bit samples, entry 0A9
+Main_P00_W0AA:	.incbin	"build/wav_pcm/main/Main_P00_W0AA.pcm", 0, 41888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0AA.wav: 41888 8-bit samples, entry 0AA
+Main_P00_W0AB:	.incbin	"build/wav_pcm/main/Main_P00_W0AB.pcm", 0, 41888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0AB.wav: 41888 8-bit samples, entry 0AB
+Main_P00_W0AC:	.incbin	"build/wav_pcm/main/Main_P00_W0AC.pcm", 0, 41888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0AC.wav: 41888 8-bit samples, entry 0AC
+Main_P00_W0AD:	.incbin	"build/wav_pcm/main/Main_P00_W0AD.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0AD_Whistle.wav: 64 16-bit samples, entry 0AD
+Main_P00_W0AE:	.incbin	"build/wav_pcm/main/Main_P00_W0AE.pcm", 0, 30944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0AE_RideCymbal2.wav: 30944 8-bit samples, entry 0AE
+Main_P00_W0B0:	.incbin	"build/wav_pcm/main/Main_P00_W0B0.pcm", 0, 41888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0B0_RideBell.wav: 41888 8-bit samples, entry 0B0
+Main_P00_W0B1:	.incbin	"build/wav_pcm/main/Main_P00_W0B1.pcm", 0, 66144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0B1.wav: 66144 8-bit samples, entry 0B1
+Main_P00_W0B2:	.incbin	"build/wav_pcm/main/Main_P00_W0B2.pcm", 0, 79392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0B2.wav: 79392 8-bit samples, entry 0B2
+Main_P00_W0B3:	.incbin	"build/wav_pcm/main/Main_P00_W0B3.pcm", 0, 75040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0B3.wav: 75040 8-bit samples, entry 0B3
+Main_P00_W0B4:	.incbin	"build/wav_pcm/main/Main_P00_W0B4.pcm", 0, 61888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P00_W0B4.wav: 61888 8-bit samples, entry 0B4
 Main_P00_Fill:	.space	8832, 0xff	; erased fill to the page end
 
 # ==== page 0x01 (selects 0x01000-0x01081): 130 entries (130 16-bit, 0 8-bit), 90 recordings ====
@@ -1383,97 +1386,97 @@ Main_P01_R080:	.word	(Main_P01_W07F - Main_P01) / 32, 256-18, 72, 64, 56, 48, 40
 Main_P01_R081:	.word	(Main_P01_W07F - Main_P01) / 32, 256-18, 80, 72, 64, 56, 48, 40, 32, REC_END
 	.align	4
 	.align	32
-# recordings
-Main_P01_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x200cc0, 0x201ec0	; census: opaque -- pcm: 2304 16-bit samples, entries 000 001
-Main_P01_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x201ec0, 0x2030c0	; census: opaque -- pcm: 2304 16-bit samples, entry 002
-Main_P01_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2030c0, 0x2039c0	; census: opaque -- pcm: 1152 16-bit samples, entry 003
-Main_P01_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2039c0, 0x203f40	; census: opaque -- pcm: 704 16-bit samples, entry 004
-Main_P01_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x203f40, 0x204440	; census: opaque -- pcm: 640 16-bit samples, entries 005 006 007
-Main_P01_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x204440, 0x205a40	; census: opaque -- pcm: 2816 16-bit samples, entries 008 009
-Main_P01_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x205a40, 0x207640	; census: opaque -- pcm: 3584 16-bit samples, entry 00A
-Main_P01_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x207640, 0x208640	; census: opaque -- pcm: 2048 16-bit samples, entry 00B
-Main_P01_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x208640, 0x2090c0	; census: opaque -- pcm: 1344 16-bit samples, entry 00C
-Main_P01_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2090c0, 0x20a5c0	; census: opaque -- pcm: 2688 16-bit samples, entries 00D 00E 00F
-Main_P01_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x20a5c0, 0x20bdc0	; census: opaque -- pcm: 3072 16-bit samples, entries 010 011
-Main_P01_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x20bdc0, 0x20dbc0	; census: opaque -- pcm: 3840 16-bit samples, entry 012
-Main_P01_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x20dbc0, 0x20eac0	; census: opaque -- pcm: 1920 16-bit samples, entry 013
-Main_P01_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x20eac0, 0x20f440	; census: opaque -- pcm: 1216 16-bit samples, entry 014
-Main_P01_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x20f440, 0x210140	; census: opaque -- pcm: 1664 16-bit samples, entries 015 016 017
-Main_P01_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x210140, 0x211940	; census: opaque -- pcm: 3072 16-bit samples, entries 018 019
-Main_P01_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x211940, 0x213740	; census: opaque -- pcm: 3840 16-bit samples, entry 01A
-Main_P01_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x213740, 0x214640	; census: opaque -- pcm: 1920 16-bit samples, entry 01B
-Main_P01_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x214640, 0x2150c0	; census: opaque -- pcm: 1344 16-bit samples, entry 01C
-Main_P01_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2150c0, 0x2169c0	; census: opaque -- pcm: 3200 16-bit samples, entries 01D 01E 01F
-Main_P01_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2169c0, 0x2181c0	; census: opaque -- pcm: 3072 16-bit samples, entry 020
-Main_P01_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2181c0, 0x2199c0	; census: opaque -- pcm: 3072 16-bit samples, entry 021
-Main_P01_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2199c0, 0x21a5c0	; census: opaque -- pcm: 1536 16-bit samples, entry 022
-Main_P01_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x21a5c0, 0x21b0c0	; census: opaque -- pcm: 1408 16-bit samples, entries 023 024
-Main_P01_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x21b0c0, 0x22ed00	; census: opaque -- pcm: 40480 16-bit samples, entry 025
-Main_P01_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x22ed00, 0x23f740	; census: opaque -- pcm: 34080 16-bit samples, entry 026
-Main_P01_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x23f740, 0x24e580	; census: opaque -- pcm: 30496 16-bit samples, entry 027
-Main_P01_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x24e580, 0x25d1c0	; census: opaque -- pcm: 30240 16-bit samples, entry 028
-Main_P01_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x25d1c0, 0x26b600	; census: opaque -- pcm: 29216 16-bit samples, entry 029
-Main_P01_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x26b600, 0x279f40	; census: opaque -- pcm: 29856 16-bit samples, entry 02A
-Main_P01_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x279f40, 0x288880	; census: opaque -- pcm: 29856 16-bit samples, entry 02B
-Main_P01_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x288880, 0x297140	; census: opaque -- pcm: 29792 16-bit samples, entry 02C
-Main_P01_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x297140, 0x29af40	; census: opaque -- pcm: 7936 16-bit samples, entries 02D 02E
-Main_P01_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x29af40, 0x29fb40	; census: opaque -- pcm: 9728 16-bit samples, entry 02F
-Main_P01_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x29fb40, 0x2a2f40	; census: opaque -- pcm: 6656 16-bit samples, entry 030
-Main_P01_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2a2f40, 0x2a6940	; census: opaque -- pcm: 7424 16-bit samples, entry 031
-Main_P01_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2a6940, 0x2a9ec0	; census: opaque -- pcm: 6848 16-bit samples, entries 032 033
-Main_P01_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2a9ec0, 0x2ae740	; census: opaque -- pcm: 9280 16-bit samples, entries 034 035 036
-Main_P01_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2ae740, 0x2aff40	; census: opaque -- pcm: 3072 16-bit samples, entries 037 038
-Main_P01_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2aff40, 0x2b1740	; census: opaque -- pcm: 3072 16-bit samples, entry 039
-Main_P01_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2b1740, 0x2b3540	; census: opaque -- pcm: 3840 16-bit samples, entries 03A 03B
-Main_P01_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2b3540, 0x2b4940	; census: opaque -- pcm: 2560 16-bit samples, entry 03C
-Main_P01_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2b4940, 0x2b54c0	; census: opaque -- pcm: 1472 16-bit samples, entries 03D 03E 03F
-Main_P01_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2b54c0, 0x2b80c0	; census: opaque -- pcm: 5632 16-bit samples, entry 040
-Main_P01_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2b80c0, 0x2b98c0	; census: opaque -- pcm: 3072 16-bit samples, entry 041
-Main_P01_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2b98c0, 0x2ba8c0	; census: opaque -- pcm: 2048 16-bit samples, entries 042 043
-Main_P01_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2ba8c0, 0x2bb5c0	; census: opaque -- pcm: 1664 16-bit samples, entry 044
-Main_P01_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2bb5c0, 0x2bc4c0	; census: opaque -- pcm: 1920 16-bit samples, entries 045 046 047 048
-Main_P01_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2bc4c0, 0x2bdac0	; census: opaque -- pcm: 2816 16-bit samples, entry 049
-Main_P01_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2bdac0, 0x2be4c0	; census: opaque -- pcm: 1280 16-bit samples, entry 04A
-Main_P01_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2be4c0, 0x2beb40	; census: opaque -- pcm: 832 16-bit samples, entry 04B
-Main_P01_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2beb40, 0x2bf940	; census: opaque -- pcm: 1792 16-bit samples, entries 04C 04D
-Main_P01_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2bf940, 0x2bffc0	; census: opaque -- pcm: 832 16-bit samples, entries 04E 04F 050 051
-Main_P01_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2bffc0, 0x2c2540	; census: opaque -- pcm: 4800 16-bit samples, entries 052 054 055
-Main_P01_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2c2540, 0x2c4f40	; census: opaque -- pcm: 5376 16-bit samples, entry 053
-Main_P01_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2c4f40, 0x2daf80	; census: opaque -- pcm: 45088 16-bit samples, entry 056
-Main_P01_W057:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2daf80, 0x2eb7c0	; census: opaque -- pcm: 33824 16-bit samples, entry 057
-Main_P01_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2eb7c0, 0x2fa800	; census: opaque -- pcm: 30752 16-bit samples, entry 058
-Main_P01_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0x2fa800, 0x308e40	; census: opaque -- pcm: 29472 16-bit samples, entry 059
-Main_P01_W05A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x308e40, 0x317480	; census: opaque -- pcm: 29472 16-bit samples, entry 05A
-Main_P01_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x317480, 0x3294c0	; census: opaque -- pcm: 36896 16-bit samples, entry 05B
-Main_P01_W05C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3294c0, 0x343500	; census: opaque -- pcm: 53280 16-bit samples, entry 05C
-Main_P01_W05D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x343500, 0x355940	; census: opaque -- pcm: 37408 16-bit samples, entry 05D
-Main_P01_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x355940, 0x366780	; census: opaque -- pcm: 34592 16-bit samples, entry 05E
-Main_P01_W05F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x366780, 0x3789c0	; census: opaque -- pcm: 37152 16-bit samples, entry 05F
-Main_P01_W060:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3789c0, 0x38c000	; census: opaque -- pcm: 39712 16-bit samples, entry 060
-Main_P01_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0x38c000, 0x3aac40	; census: opaque -- pcm: 63008 16-bit samples, entry 061
-Main_P01_W062:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3aac40, 0x3bb880	; census: opaque -- pcm: 34336 16-bit samples, entry 062
-Main_P01_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3bb880, 0x3cb7c0	; census: opaque -- pcm: 32672 16-bit samples, entry 063
-Main_P01_W064:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3cb7c0, 0x3dbb00	; census: opaque -- pcm: 33184 16-bit samples, entry 064
-Main_P01_W065:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3dbb00, 0x3edb40	; census: opaque -- pcm: 36896 16-bit samples, entry 065
-Main_P01_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3edb40, 0x3ef140	; census: opaque -- pcm: 2816 16-bit samples, entry 066
-Main_P01_W067:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3ef140, 0x3f0540	; census: opaque -- pcm: 2560 16-bit samples, entry 067
-Main_P01_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f0540, 0x3f2340	; census: opaque -- pcm: 3840 16-bit samples, entries 068 069
-Main_P01_W06A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f2340, 0x3f3140	; census: opaque -- pcm: 1792 16-bit samples, entry 06A
-Main_P01_W06B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f3140, 0x3f3f40	; census: opaque -- pcm: 1792 16-bit samples, entries 06B 06C
-Main_P01_W06D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f3f40, 0x3f4d40	; census: opaque -- pcm: 1792 16-bit samples, entries 06D 06E 06F
-Main_P01_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f4d40, 0x3f5940	; census: opaque -- pcm: 1536 16-bit samples, entry 070
-Main_P01_W071:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f5940, 0x3f6540	; census: opaque -- pcm: 1536 16-bit samples, entry 071
-Main_P01_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f6540, 0x3f7140	; census: opaque -- pcm: 1536 16-bit samples, entry 072
-Main_P01_W073:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f7140, 0x3f7940	; census: opaque -- pcm: 1024 16-bit samples, entry 073
-Main_P01_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f7940, 0x3f8040	; census: opaque -- pcm: 896 16-bit samples, entry 074
-Main_P01_W075:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f8040, 0x3f84c0	; census: opaque -- pcm: 576 16-bit samples, entry 075
-Main_P01_W076:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f84c0, 0x3f8cc0	; census: opaque -- pcm: 1024 16-bit samples, entry 076
-Main_P01_W077:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3f8cc0, 0x3fa6c0	; census: opaque -- pcm: 3328 16-bit samples, entries 077 078
-Main_P01_W079:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3fa6c0, 0x3fc0c0	; census: opaque -- pcm: 3328 16-bit samples, entry 079
-Main_P01_W07A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3fc0c0, 0x3fd3c0	; census: opaque -- pcm: 2432 16-bit samples, entries 07A 07B
-Main_P01_W07C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3fd3c0, 0x3fe5c0	; census: opaque -- pcm: 2304 16-bit samples, entry 07C
-Main_P01_W07D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3fe5c0, 0x3ff140	; census: opaque -- pcm: 1472 16-bit samples, entries 07D 07E
-Main_P01_W07F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x3ff140, 0x3ffe80	; census: opaque -- pcm: 1696 16-bit samples, entries 07F 080 081
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P01_W000:	.incbin	"build/wav_pcm/main/Main_P01_W000.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W000.wav: 2304 16-bit samples, entries 000 001
+Main_P01_W002:	.incbin	"build/wav_pcm/main/Main_P01_W002.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W002.wav: 2304 16-bit samples, entry 002
+Main_P01_W003:	.incbin	"build/wav_pcm/main/Main_P01_W003.pcm", 0, 2304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W003.wav: 1152 16-bit samples, entry 003
+Main_P01_W004:	.incbin	"build/wav_pcm/main/Main_P01_W004.pcm", 0, 1408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W004.wav: 704 16-bit samples, entry 004
+Main_P01_W005:	.incbin	"build/wav_pcm/main/Main_P01_W005.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W005.wav: 640 16-bit samples, entries 005 006 007
+Main_P01_W008:	.incbin	"build/wav_pcm/main/Main_P01_W008.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W008.wav: 2816 16-bit samples, entries 008 009
+Main_P01_W00A:	.incbin	"build/wav_pcm/main/Main_P01_W00A.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W00A.wav: 3584 16-bit samples, entry 00A
+Main_P01_W00B:	.incbin	"build/wav_pcm/main/Main_P01_W00B.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W00B.wav: 2048 16-bit samples, entry 00B
+Main_P01_W00C:	.incbin	"build/wav_pcm/main/Main_P01_W00C.pcm", 0, 2688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W00C.wav: 1344 16-bit samples, entry 00C
+Main_P01_W00D:	.incbin	"build/wav_pcm/main/Main_P01_W00D.pcm", 0, 5376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W00D.wav: 2688 16-bit samples, entries 00D 00E 00F
+Main_P01_W010:	.incbin	"build/wav_pcm/main/Main_P01_W010.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W010.wav: 3072 16-bit samples, entries 010 011
+Main_P01_W012:	.incbin	"build/wav_pcm/main/Main_P01_W012.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W012.wav: 3840 16-bit samples, entry 012
+Main_P01_W013:	.incbin	"build/wav_pcm/main/Main_P01_W013.pcm", 0, 3840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W013.wav: 1920 16-bit samples, entry 013
+Main_P01_W014:	.incbin	"build/wav_pcm/main/Main_P01_W014.pcm", 0, 2432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W014.wav: 1216 16-bit samples, entry 014
+Main_P01_W015:	.incbin	"build/wav_pcm/main/Main_P01_W015.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W015.wav: 1664 16-bit samples, entries 015 016 017
+Main_P01_W018:	.incbin	"build/wav_pcm/main/Main_P01_W018.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W018.wav: 3072 16-bit samples, entries 018 019
+Main_P01_W01A:	.incbin	"build/wav_pcm/main/Main_P01_W01A.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W01A.wav: 3840 16-bit samples, entry 01A
+Main_P01_W01B:	.incbin	"build/wav_pcm/main/Main_P01_W01B.pcm", 0, 3840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W01B.wav: 1920 16-bit samples, entry 01B
+Main_P01_W01C:	.incbin	"build/wav_pcm/main/Main_P01_W01C.pcm", 0, 2688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W01C.wav: 1344 16-bit samples, entry 01C
+Main_P01_W01D:	.incbin	"build/wav_pcm/main/Main_P01_W01D.pcm", 0, 6400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W01D.wav: 3200 16-bit samples, entries 01D 01E 01F
+Main_P01_W020:	.incbin	"build/wav_pcm/main/Main_P01_W020.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W020.wav: 3072 16-bit samples, entry 020
+Main_P01_W021:	.incbin	"build/wav_pcm/main/Main_P01_W021.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W021.wav: 3072 16-bit samples, entry 021
+Main_P01_W022:	.incbin	"build/wav_pcm/main/Main_P01_W022.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W022.wav: 1536 16-bit samples, entry 022
+Main_P01_W023:	.incbin	"build/wav_pcm/main/Main_P01_W023.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W023.wav: 1408 16-bit samples, entries 023 024
+Main_P01_W025:	.incbin	"build/wav_pcm/main/Main_P01_W025.pcm", 0, 80960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W025.wav: 40480 16-bit samples, entry 025
+Main_P01_W026:	.incbin	"build/wav_pcm/main/Main_P01_W026.pcm", 0, 68160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W026.wav: 34080 16-bit samples, entry 026
+Main_P01_W027:	.incbin	"build/wav_pcm/main/Main_P01_W027.pcm", 0, 60992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W027.wav: 30496 16-bit samples, entry 027
+Main_P01_W028:	.incbin	"build/wav_pcm/main/Main_P01_W028.pcm", 0, 60480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W028.wav: 30240 16-bit samples, entry 028
+Main_P01_W029:	.incbin	"build/wav_pcm/main/Main_P01_W029.pcm", 0, 58432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W029.wav: 29216 16-bit samples, entry 029
+Main_P01_W02A:	.incbin	"build/wav_pcm/main/Main_P01_W02A.pcm", 0, 59712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W02A.wav: 29856 16-bit samples, entry 02A
+Main_P01_W02B:	.incbin	"build/wav_pcm/main/Main_P01_W02B.pcm", 0, 59712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W02B.wav: 29856 16-bit samples, entry 02B
+Main_P01_W02C:	.incbin	"build/wav_pcm/main/Main_P01_W02C.pcm", 0, 59584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W02C.wav: 29792 16-bit samples, entry 02C
+Main_P01_W02D:	.incbin	"build/wav_pcm/main/Main_P01_W02D.pcm", 0, 15872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W02D.wav: 7936 16-bit samples, entries 02D 02E
+Main_P01_W02F:	.incbin	"build/wav_pcm/main/Main_P01_W02F.pcm", 0, 19456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W02F.wav: 9728 16-bit samples, entry 02F
+Main_P01_W030:	.incbin	"build/wav_pcm/main/Main_P01_W030.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W030.wav: 6656 16-bit samples, entry 030
+Main_P01_W031:	.incbin	"build/wav_pcm/main/Main_P01_W031.pcm", 0, 14848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W031.wav: 7424 16-bit samples, entry 031
+Main_P01_W032:	.incbin	"build/wav_pcm/main/Main_P01_W032.pcm", 0, 13696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W032.wav: 6848 16-bit samples, entries 032 033
+Main_P01_W034:	.incbin	"build/wav_pcm/main/Main_P01_W034.pcm", 0, 18560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W034.wav: 9280 16-bit samples, entries 034 035 036
+Main_P01_W037:	.incbin	"build/wav_pcm/main/Main_P01_W037.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W037.wav: 3072 16-bit samples, entries 037 038
+Main_P01_W039:	.incbin	"build/wav_pcm/main/Main_P01_W039.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W039.wav: 3072 16-bit samples, entry 039
+Main_P01_W03A:	.incbin	"build/wav_pcm/main/Main_P01_W03A.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W03A.wav: 3840 16-bit samples, entries 03A 03B
+Main_P01_W03C:	.incbin	"build/wav_pcm/main/Main_P01_W03C.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W03C.wav: 2560 16-bit samples, entry 03C
+Main_P01_W03D:	.incbin	"build/wav_pcm/main/Main_P01_W03D.pcm", 0, 2944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W03D.wav: 1472 16-bit samples, entries 03D 03E 03F
+Main_P01_W040:	.incbin	"build/wav_pcm/main/Main_P01_W040.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W040.wav: 5632 16-bit samples, entry 040
+Main_P01_W041:	.incbin	"build/wav_pcm/main/Main_P01_W041.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W041.wav: 3072 16-bit samples, entry 041
+Main_P01_W042:	.incbin	"build/wav_pcm/main/Main_P01_W042.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W042.wav: 2048 16-bit samples, entries 042 043
+Main_P01_W044:	.incbin	"build/wav_pcm/main/Main_P01_W044.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W044.wav: 1664 16-bit samples, entry 044
+Main_P01_W045:	.incbin	"build/wav_pcm/main/Main_P01_W045.pcm", 0, 3840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W045.wav: 1920 16-bit samples, entries 045 046 047 048
+Main_P01_W049:	.incbin	"build/wav_pcm/main/Main_P01_W049.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W049.wav: 2816 16-bit samples, entry 049
+Main_P01_W04A:	.incbin	"build/wav_pcm/main/Main_P01_W04A.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W04A.wav: 1280 16-bit samples, entry 04A
+Main_P01_W04B:	.incbin	"build/wav_pcm/main/Main_P01_W04B.pcm", 0, 1664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W04B.wav: 832 16-bit samples, entry 04B
+Main_P01_W04C:	.incbin	"build/wav_pcm/main/Main_P01_W04C.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W04C.wav: 1792 16-bit samples, entries 04C 04D
+Main_P01_W04E:	.incbin	"build/wav_pcm/main/Main_P01_W04E.pcm", 0, 1664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W04E.wav: 832 16-bit samples, entries 04E 04F 050 051
+Main_P01_W052:	.incbin	"build/wav_pcm/main/Main_P01_W052.pcm", 0, 9600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W052.wav: 4800 16-bit samples, entries 052 054 055
+Main_P01_W053:	.incbin	"build/wav_pcm/main/Main_P01_W053.pcm", 0, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W053.wav: 5376 16-bit samples, entry 053
+Main_P01_W056:	.incbin	"build/wav_pcm/main/Main_P01_W056.pcm", 0, 90176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W056.wav: 45088 16-bit samples, entry 056
+Main_P01_W057:	.incbin	"build/wav_pcm/main/Main_P01_W057.pcm", 0, 67648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W057.wav: 33824 16-bit samples, entry 057
+Main_P01_W058:	.incbin	"build/wav_pcm/main/Main_P01_W058.pcm", 0, 61504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W058.wav: 30752 16-bit samples, entry 058
+Main_P01_W059:	.incbin	"build/wav_pcm/main/Main_P01_W059.pcm", 0, 58944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W059.wav: 29472 16-bit samples, entry 059
+Main_P01_W05A:	.incbin	"build/wav_pcm/main/Main_P01_W05A.pcm", 0, 58944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W05A.wav: 29472 16-bit samples, entry 05A
+Main_P01_W05B:	.incbin	"build/wav_pcm/main/Main_P01_W05B.pcm", 0, 73792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W05B.wav: 36896 16-bit samples, entry 05B
+Main_P01_W05C:	.incbin	"build/wav_pcm/main/Main_P01_W05C.pcm", 0, 106560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W05C.wav: 53280 16-bit samples, entry 05C
+Main_P01_W05D:	.incbin	"build/wav_pcm/main/Main_P01_W05D.pcm", 0, 74816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W05D.wav: 37408 16-bit samples, entry 05D
+Main_P01_W05E:	.incbin	"build/wav_pcm/main/Main_P01_W05E.pcm", 0, 69184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W05E.wav: 34592 16-bit samples, entry 05E
+Main_P01_W05F:	.incbin	"build/wav_pcm/main/Main_P01_W05F.pcm", 0, 74304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W05F.wav: 37152 16-bit samples, entry 05F
+Main_P01_W060:	.incbin	"build/wav_pcm/main/Main_P01_W060.pcm", 0, 79424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W060.wav: 39712 16-bit samples, entry 060
+Main_P01_W061:	.incbin	"build/wav_pcm/main/Main_P01_W061.pcm", 0, 126016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W061.wav: 63008 16-bit samples, entry 061
+Main_P01_W062:	.incbin	"build/wav_pcm/main/Main_P01_W062.pcm", 0, 68672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W062.wav: 34336 16-bit samples, entry 062
+Main_P01_W063:	.incbin	"build/wav_pcm/main/Main_P01_W063.pcm", 0, 65344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W063.wav: 32672 16-bit samples, entry 063
+Main_P01_W064:	.incbin	"build/wav_pcm/main/Main_P01_W064.pcm", 0, 66368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W064.wav: 33184 16-bit samples, entry 064
+Main_P01_W065:	.incbin	"build/wav_pcm/main/Main_P01_W065.pcm", 0, 73792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W065.wav: 36896 16-bit samples, entry 065
+Main_P01_W066:	.incbin	"build/wav_pcm/main/Main_P01_W066.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W066.wav: 2816 16-bit samples, entry 066
+Main_P01_W067:	.incbin	"build/wav_pcm/main/Main_P01_W067.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W067.wav: 2560 16-bit samples, entry 067
+Main_P01_W068:	.incbin	"build/wav_pcm/main/Main_P01_W068.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W068.wav: 3840 16-bit samples, entries 068 069
+Main_P01_W06A:	.incbin	"build/wav_pcm/main/Main_P01_W06A.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W06A.wav: 1792 16-bit samples, entry 06A
+Main_P01_W06B:	.incbin	"build/wav_pcm/main/Main_P01_W06B.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W06B.wav: 1792 16-bit samples, entries 06B 06C
+Main_P01_W06D:	.incbin	"build/wav_pcm/main/Main_P01_W06D.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W06D.wav: 1792 16-bit samples, entries 06D 06E 06F
+Main_P01_W070:	.incbin	"build/wav_pcm/main/Main_P01_W070.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W070.wav: 1536 16-bit samples, entry 070
+Main_P01_W071:	.incbin	"build/wav_pcm/main/Main_P01_W071.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W071.wav: 1536 16-bit samples, entry 071
+Main_P01_W072:	.incbin	"build/wav_pcm/main/Main_P01_W072.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W072.wav: 1536 16-bit samples, entry 072
+Main_P01_W073:	.incbin	"build/wav_pcm/main/Main_P01_W073.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W073.wav: 1024 16-bit samples, entry 073
+Main_P01_W074:	.incbin	"build/wav_pcm/main/Main_P01_W074.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W074.wav: 896 16-bit samples, entry 074
+Main_P01_W075:	.incbin	"build/wav_pcm/main/Main_P01_W075.pcm", 0, 1152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W075.wav: 576 16-bit samples, entry 075
+Main_P01_W076:	.incbin	"build/wav_pcm/main/Main_P01_W076.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W076.wav: 1024 16-bit samples, entry 076
+Main_P01_W077:	.incbin	"build/wav_pcm/main/Main_P01_W077.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W077.wav: 3328 16-bit samples, entries 077 078
+Main_P01_W079:	.incbin	"build/wav_pcm/main/Main_P01_W079.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W079.wav: 3328 16-bit samples, entry 079
+Main_P01_W07A:	.incbin	"build/wav_pcm/main/Main_P01_W07A.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W07A.wav: 2432 16-bit samples, entries 07A 07B
+Main_P01_W07C:	.incbin	"build/wav_pcm/main/Main_P01_W07C.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W07C.wav: 2304 16-bit samples, entry 07C
+Main_P01_W07D:	.incbin	"build/wav_pcm/main/Main_P01_W07D.pcm", 0, 2944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W07D.wav: 1472 16-bit samples, entries 07D 07E
+Main_P01_W07F:	.incbin	"build/wav_pcm/main/Main_P01_W07F.pcm", 0, 3392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P01_W07F.wav: 1696 16-bit samples, entries 07F 080 081
 Main_P01_Fill:	.space	384, 0xff	; erased fill to the page end
 
 # ==== page 0x02 (selects 0x02000-0x02076): 119 entries (44 16-bit, 75 8-bit), 103 recordings ====
@@ -1906,110 +1909,110 @@ Main_P02_R075:	.word	(Main_P02_W075 - Main_P02) / 32, 256-112, 256-128, 256-128,
 Main_P02_R076:	.word	(Main_P02_W076 - Main_P02) / 32, 256-128, 256-128, 256-128, LOOP_START | 256-64, 256-128, 256-128, 256-128, LOOP_END | 256-64
 	.align	4
 	.align	32
-# recordings
-Main_P02_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x401160, 0x402b60	; census: opaque -- pcm: 3328 16-bit samples, entries 000 001 002
-Main_P02_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x402b60, 0x407360	; census: opaque -- pcm: 9216 16-bit samples, entry 003
-Main_P02_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x407360, 0x409f60	; census: opaque -- pcm: 5632 16-bit samples, entries 004 005
-Main_P02_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x409f60, 0x40d760	; census: opaque -- pcm: 7168 16-bit samples, entry 006
-Main_P02_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x40d760, 0x410760	; census: opaque -- pcm: 6144 16-bit samples, entries 007 008 009
-Main_P02_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x410760, 0x415760	; census: opaque -- pcm: 10240 16-bit samples, entries 00A 00B 00C 00D
-Main_P02_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x415760, 0x418b60	; census: opaque -- pcm: 6656 16-bit samples, entries 00E 00F
-Main_P02_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x418b60, 0x41b760	; census: opaque -- pcm: 5632 16-bit samples, entry 010
-Main_P02_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x41b760, 0x41eb60	; census: opaque -- pcm: 6656 16-bit samples, entries 011 012 013
-Main_P02_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x41eb60, 0x427b60	; census: opaque -- pcm: 18432 16-bit samples, entries 014 015 016 017 018 019
-Main_P02_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x427b60, 0x42b280	; census: opaque -- pcm: 14112 8-bit samples, entry 01A
-Main_P02_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x42b280, 0x42eda0	; census: opaque -- pcm: 15136 8-bit samples, entry 01B
-Main_P02_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x42eda0, 0x4328c0	; census: opaque -- pcm: 15136 8-bit samples, entry 01C
-Main_P02_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4328c0, 0x436360	; census: opaque -- pcm: 15008 8-bit samples, entry 01D
-Main_P02_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x436360, 0x439e00	; census: opaque -- pcm: 15008 8-bit samples, entry 01E
-Main_P02_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x439e00, 0x43d2e0	; census: opaque -- pcm: 13536 8-bit samples, entry 01F
-Main_P02_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x43d2e0, 0x4404c0	; census: opaque -- pcm: 12768 8-bit samples, entry 020
-Main_P02_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4404c0, 0x4454e0	; census: opaque -- pcm: 20512 8-bit samples, entry 021
-Main_P02_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4454e0, 0x449c00	; census: opaque -- pcm: 18208 8-bit samples, entry 022
-Main_P02_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x449c00, 0x44e320	; census: opaque -- pcm: 18208 8-bit samples, entry 023
-Main_P02_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x44e320, 0x452840	; census: opaque -- pcm: 17696 8-bit samples, entry 024
-Main_P02_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x452840, 0x456c60	; census: opaque -- pcm: 17440 8-bit samples, entry 025
-Main_P02_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x456c60, 0x45b080	; census: opaque -- pcm: 17440 8-bit samples, entry 026
-Main_P02_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x45b080, 0x460aa0	; census: opaque -- pcm: 23072 8-bit samples, entry 027
-Main_P02_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x460aa0, 0x4742e0	; census: opaque -- pcm: 39968 16-bit samples, entry 028
-Main_P02_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4742e0, 0x47bf00	; census: opaque -- pcm: 31776 8-bit samples, entry 029
-Main_P02_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x47bf00, 0x483d20	; census: opaque -- pcm: 32288 8-bit samples, entry 02A
-Main_P02_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x483d20, 0x48ba40	; census: opaque -- pcm: 32032 8-bit samples, entry 02B
-Main_P02_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x48ba40, 0x493760	; census: opaque -- pcm: 32032 8-bit samples, entry 02C
-Main_P02_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x493760, 0x49ae80	; census: opaque -- pcm: 30496 8-bit samples, entry 02D
-Main_P02_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x49ae80, 0x4a25a0	; census: opaque -- pcm: 30496 8-bit samples, entry 02E
-Main_P02_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4a25a0, 0x4aa2c0	; census: opaque -- pcm: 32032 8-bit samples, entry 02F
-Main_P02_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4aa2c0, 0x4b2de0	; census: opaque -- pcm: 35616 8-bit samples, entry 030
-Main_P02_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4b2de0, 0x4b44e0	; census: opaque -- pcm: 2944 16-bit samples, entry 031
-Main_P02_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4b44e0, 0x4b61e0	; census: opaque -- pcm: 3712 16-bit samples, entry 032
-Main_P02_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4b61e0, 0x4b84e0	; census: opaque -- pcm: 4480 16-bit samples, entry 033
-Main_P02_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4b84e0, 0x4bf520	; census: opaque -- pcm: 14368 16-bit samples, entry 034
-Main_P02_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4bf520, 0x4c3f60	; census: opaque -- pcm: 9504 16-bit samples, entry 035
-Main_P02_W036:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4c3f60, 0x4c86a0	; census: opaque -- pcm: 9120 16-bit samples, entry 036
-Main_P02_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4c86a0, 0x4cbae0	; census: opaque -- pcm: 6688 16-bit samples, entry 037
-Main_P02_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4cbae0, 0x4d1820	; census: opaque -- pcm: 11936 16-bit samples, entry 038
-Main_P02_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4d1820, 0x4d5e20	; census: opaque -- pcm: 17920 8-bit samples, entry 039
-Main_P02_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4d5e20, 0x4db480	; census: opaque -- pcm: 22112 8-bit samples, entry 03A
-Main_P02_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4db480, 0x4de680	; census: opaque -- pcm: 12800 8-bit samples, entry 03B
-Main_P02_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4de680, 0x4e32e0	; census: opaque -- pcm: 19552 8-bit samples, entry 03C
-Main_P02_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4e32e0, 0x4e5ae0	; census: opaque -- pcm: 10240 8-bit samples, entry 03D
-Main_P02_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4e5ae0, 0x4eb040	; census: opaque -- pcm: 21856 8-bit samples, entry 03E
-Main_P02_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4eb040, 0x4ed840	; census: opaque -- pcm: 10240 8-bit samples, entry 03F
-Main_P02_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4ed840, 0x4f2da0	; census: opaque -- pcm: 21856 8-bit samples, entry 040
-Main_P02_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4f2da0, 0x4f5fa0	; census: opaque -- pcm: 12800 8-bit samples, entry 041
-Main_P02_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4f5fa0, 0x4fab00	; census: opaque -- pcm: 19296 8-bit samples, entry 042
-Main_P02_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4fab00, 0x4fdd00	; census: opaque -- pcm: 12800 8-bit samples, entry 043
-Main_P02_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x4fdd00, 0x502860	; census: opaque -- pcm: 19296 8-bit samples, entry 044
-Main_P02_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x502860, 0x5047a0	; census: opaque -- pcm: 8000 8-bit samples, entry 045
-Main_P02_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5047a0, 0x50a5c0	; census: opaque -- pcm: 24096 8-bit samples, entry 046
-Main_P02_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0x50a5c0, 0x50c500	; census: opaque -- pcm: 8000 8-bit samples, entry 047
-Main_P02_W048:	.incbin_range "baserom/kn7000_wave_main.bin", 0x50c500, 0x512320	; census: opaque -- pcm: 24096 8-bit samples, entry 048
-Main_P02_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0x512320, 0x516420	; census: opaque -- pcm: 16640 8-bit samples, entry 049
-Main_P02_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x516420, 0x51bf80	; census: opaque -- pcm: 23392 8-bit samples, entry 04A
-Main_P02_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x51bf80, 0x51e780	; census: opaque -- pcm: 10240 8-bit samples, entry 04B
-Main_P02_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x51e780, 0x523ce0	; census: opaque -- pcm: 21856 8-bit samples, entry 04C
-Main_P02_W04D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x523ce0, 0x5264e0	; census: opaque -- pcm: 10240 8-bit samples, entry 04D
-Main_P02_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5264e0, 0x52ba40	; census: opaque -- pcm: 21856 8-bit samples, entry 04E
-Main_P02_W04F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x52ba40, 0x52dfc0	; census: opaque -- pcm: 9600 8-bit samples, entry 04F
-Main_P02_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0x52dfc0, 0x5337a0	; census: opaque -- pcm: 22496 8-bit samples, entry 050
-Main_P02_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5337a0, 0x5356e0	; census: opaque -- pcm: 8000 8-bit samples, entry 051
-Main_P02_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5356e0, 0x53b500	; census: opaque -- pcm: 24096 8-bit samples, entry 052
-Main_P02_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0x53b500, 0x53d440	; census: opaque -- pcm: 8000 8-bit samples, entry 053
-Main_P02_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0x53d440, 0x543260	; census: opaque -- pcm: 24096 8-bit samples, entry 054
-Main_P02_W055:	.incbin_range "baserom/kn7000_wave_main.bin", 0x543260, 0x54aea0	; census: opaque -- pcm: 15904 16-bit samples, entry 055
-Main_P02_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0x54aea0, 0x54f6c0	; census: opaque -- pcm: 18464 8-bit samples, entry 056
-Main_P02_W057:	.incbin_range "baserom/kn7000_wave_main.bin", 0x54f6c0, 0x553ce0	; census: opaque -- pcm: 17952 8-bit samples, entry 057
-Main_P02_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0x553ce0, 0x558200	; census: opaque -- pcm: 17696 8-bit samples, entry 058
-Main_P02_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0x558200, 0x55c720	; census: opaque -- pcm: 17696 8-bit samples, entry 059
-Main_P02_W05A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x55c720, 0x560c40	; census: opaque -- pcm: 17696 8-bit samples, entry 05A
-Main_P02_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x560c40, 0x565160	; census: opaque -- pcm: 17696 8-bit samples, entry 05B
-Main_P02_W05C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x565160, 0x569680	; census: opaque -- pcm: 17696 8-bit samples, entry 05C
-Main_P02_W05D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x569680, 0x56fa80	; census: opaque -- pcm: 12800 16-bit samples, entry 05D
-Main_P02_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x56fa80, 0x573880	; census: opaque -- pcm: 15872 8-bit samples, entry 05E
-Main_P02_W05F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x573880, 0x578480	; census: opaque -- pcm: 19456 8-bit samples, entry 05F
-Main_P02_W060:	.incbin_range "baserom/kn7000_wave_main.bin", 0x578480, 0x57b280	; census: opaque -- pcm: 11776 8-bit samples, entry 060
-Main_P02_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0x57b280, 0x57ea80	; census: opaque -- pcm: 14336 8-bit samples, entry 061
-Main_P02_W062:	.incbin_range "baserom/kn7000_wave_main.bin", 0x57ea80, 0x582b80	; census: opaque -- pcm: 16640 8-bit samples, entry 062
-Main_P02_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0x582b80, 0x585080	; census: opaque -- pcm: 9472 8-bit samples, entry 063
-Main_P02_W064:	.incbin_range "baserom/kn7000_wave_main.bin", 0x585080, 0x587a00	; census: opaque -- pcm: 10624 8-bit samples, entry 064
-Main_P02_W065:	.incbin_range "baserom/kn7000_wave_main.bin", 0x587a00, 0x58fe00	; census: opaque -- pcm: 16896 16-bit samples, entry 065
-Main_P02_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0x58fe00, 0x594200	; census: opaque -- pcm: 17408 8-bit samples, entry 066
-Main_P02_W067:	.incbin_range "baserom/kn7000_wave_main.bin", 0x594200, 0x59ae00	; census: opaque -- pcm: 27648 8-bit samples, entry 067
-Main_P02_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0x59ae00, 0x59ef00	; census: opaque -- pcm: 16640 8-bit samples, entry 068
-Main_P02_W069:	.incbin_range "baserom/kn7000_wave_main.bin", 0x59ef00, 0x5a2b00	; census: opaque -- pcm: 15360 8-bit samples, entry 069
-Main_P02_W06A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5a2b00, 0x5a6b00	; census: opaque -- pcm: 16384 8-bit samples, entry 06A
-Main_P02_W06B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5a6b00, 0x5abd00	; census: opaque -- pcm: 20992 8-bit samples, entry 06B
-Main_P02_W06C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5abd00, 0x5af000	; census: opaque -- pcm: 13056 8-bit samples, entry 06C
-Main_P02_W06D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5af000, 0x5b42e0	; census: opaque -- pcm: 21216 8-bit samples, entry 06D
-Main_P02_W06E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5b42e0, 0x5d6aa0	; census: opaque -- pcm: 70624 16-bit samples, entry 06E
-Main_P02_W06F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5d6aa0, 0x5d9e80	; census: opaque -- pcm: 13280 8-bit samples, entry 06F
-Main_P02_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5d9e80, 0x5ddb00	; census: opaque -- pcm: 15488 8-bit samples, entry 070
-Main_P02_W071:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5ddb00, 0x5df500	; census: opaque -- pcm: 6656 8-bit samples, entry 071
-Main_P02_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5df500, 0x5e2700	; census: opaque -- pcm: 6400 16-bit samples, entry 072
-Main_P02_W073:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5e2700, 0x5e4000	; census: opaque -- pcm: 3200 16-bit samples, entry 073
-Main_P02_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5e4000, 0x5e5900	; census: opaque -- pcm: 3200 16-bit samples, entry 074
-Main_P02_W075:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5e5900, 0x5f1c80	; census: opaque -- pcm: 25024 16-bit samples, entry 075
-Main_P02_W076:	.incbin_range "baserom/kn7000_wave_main.bin", 0x5f1c80, 0x5ffd00	; census: opaque -- pcm: 28736 16-bit samples, entry 076
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P02_W000:	.incbin	"build/wav_pcm/main/Main_P02_W000.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W000.wav: 3328 16-bit samples, entries 000 001 002
+Main_P02_W003:	.incbin	"build/wav_pcm/main/Main_P02_W003.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W003.wav: 9216 16-bit samples, entry 003
+Main_P02_W004:	.incbin	"build/wav_pcm/main/Main_P02_W004.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W004.wav: 5632 16-bit samples, entries 004 005
+Main_P02_W006:	.incbin	"build/wav_pcm/main/Main_P02_W006.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W006.wav: 7168 16-bit samples, entry 006
+Main_P02_W007:	.incbin	"build/wav_pcm/main/Main_P02_W007.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W007.wav: 6144 16-bit samples, entries 007 008 009
+Main_P02_W00A:	.incbin	"build/wav_pcm/main/Main_P02_W00A.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W00A.wav: 10240 16-bit samples, entries 00A 00B 00C 00D
+Main_P02_W00E:	.incbin	"build/wav_pcm/main/Main_P02_W00E.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W00E.wav: 6656 16-bit samples, entries 00E 00F
+Main_P02_W010:	.incbin	"build/wav_pcm/main/Main_P02_W010.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W010.wav: 5632 16-bit samples, entry 010
+Main_P02_W011:	.incbin	"build/wav_pcm/main/Main_P02_W011.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W011.wav: 6656 16-bit samples, entries 011 012 013
+Main_P02_W014:	.incbin	"build/wav_pcm/main/Main_P02_W014.pcm", 0, 36864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W014.wav: 18432 16-bit samples, entries 014 015 016 017 018 019
+Main_P02_W01A:	.incbin	"build/wav_pcm/main/Main_P02_W01A.pcm", 0, 14112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W01A.wav: 14112 8-bit samples, entry 01A
+Main_P02_W01B:	.incbin	"build/wav_pcm/main/Main_P02_W01B.pcm", 0, 15136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W01B.wav: 15136 8-bit samples, entry 01B
+Main_P02_W01C:	.incbin	"build/wav_pcm/main/Main_P02_W01C.pcm", 0, 15136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W01C.wav: 15136 8-bit samples, entry 01C
+Main_P02_W01D:	.incbin	"build/wav_pcm/main/Main_P02_W01D.pcm", 0, 15008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W01D.wav: 15008 8-bit samples, entry 01D
+Main_P02_W01E:	.incbin	"build/wav_pcm/main/Main_P02_W01E.pcm", 0, 15008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W01E.wav: 15008 8-bit samples, entry 01E
+Main_P02_W01F:	.incbin	"build/wav_pcm/main/Main_P02_W01F.pcm", 0, 13536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W01F.wav: 13536 8-bit samples, entry 01F
+Main_P02_W020:	.incbin	"build/wav_pcm/main/Main_P02_W020.pcm", 0, 12768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W020.wav: 12768 8-bit samples, entry 020
+Main_P02_W021:	.incbin	"build/wav_pcm/main/Main_P02_W021.pcm", 0, 20512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W021.wav: 20512 8-bit samples, entry 021
+Main_P02_W022:	.incbin	"build/wav_pcm/main/Main_P02_W022.pcm", 0, 18208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W022.wav: 18208 8-bit samples, entry 022
+Main_P02_W023:	.incbin	"build/wav_pcm/main/Main_P02_W023.pcm", 0, 18208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W023.wav: 18208 8-bit samples, entry 023
+Main_P02_W024:	.incbin	"build/wav_pcm/main/Main_P02_W024.pcm", 0, 17696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W024.wav: 17696 8-bit samples, entry 024
+Main_P02_W025:	.incbin	"build/wav_pcm/main/Main_P02_W025.pcm", 0, 17440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W025.wav: 17440 8-bit samples, entry 025
+Main_P02_W026:	.incbin	"build/wav_pcm/main/Main_P02_W026.pcm", 0, 17440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W026.wav: 17440 8-bit samples, entry 026
+Main_P02_W027:	.incbin	"build/wav_pcm/main/Main_P02_W027.pcm", 0, 23072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W027.wav: 23072 8-bit samples, entry 027
+Main_P02_W028:	.incbin	"build/wav_pcm/main/Main_P02_W028.pcm", 0, 79936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W028.wav: 39968 16-bit samples, entry 028
+Main_P02_W029:	.incbin	"build/wav_pcm/main/Main_P02_W029.pcm", 0, 31776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W029.wav: 31776 8-bit samples, entry 029
+Main_P02_W02A:	.incbin	"build/wav_pcm/main/Main_P02_W02A.pcm", 0, 32288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W02A.wav: 32288 8-bit samples, entry 02A
+Main_P02_W02B:	.incbin	"build/wav_pcm/main/Main_P02_W02B.pcm", 0, 32032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W02B.wav: 32032 8-bit samples, entry 02B
+Main_P02_W02C:	.incbin	"build/wav_pcm/main/Main_P02_W02C.pcm", 0, 32032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W02C.wav: 32032 8-bit samples, entry 02C
+Main_P02_W02D:	.incbin	"build/wav_pcm/main/Main_P02_W02D.pcm", 0, 30496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W02D.wav: 30496 8-bit samples, entry 02D
+Main_P02_W02E:	.incbin	"build/wav_pcm/main/Main_P02_W02E.pcm", 0, 30496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W02E.wav: 30496 8-bit samples, entry 02E
+Main_P02_W02F:	.incbin	"build/wav_pcm/main/Main_P02_W02F.pcm", 0, 32032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W02F.wav: 32032 8-bit samples, entry 02F
+Main_P02_W030:	.incbin	"build/wav_pcm/main/Main_P02_W030.pcm", 0, 35616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W030.wav: 35616 8-bit samples, entry 030
+Main_P02_W031:	.incbin	"build/wav_pcm/main/Main_P02_W031.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W031.wav: 2944 16-bit samples, entry 031
+Main_P02_W032:	.incbin	"build/wav_pcm/main/Main_P02_W032.pcm", 0, 7424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W032.wav: 3712 16-bit samples, entry 032
+Main_P02_W033:	.incbin	"build/wav_pcm/main/Main_P02_W033.pcm", 0, 8960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W033.wav: 4480 16-bit samples, entry 033
+Main_P02_W034:	.incbin	"build/wav_pcm/main/Main_P02_W034.pcm", 0, 28736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W034.wav: 14368 16-bit samples, entry 034
+Main_P02_W035:	.incbin	"build/wav_pcm/main/Main_P02_W035.pcm", 0, 19008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W035.wav: 9504 16-bit samples, entry 035
+Main_P02_W036:	.incbin	"build/wav_pcm/main/Main_P02_W036.pcm", 0, 18240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W036.wav: 9120 16-bit samples, entry 036
+Main_P02_W037:	.incbin	"build/wav_pcm/main/Main_P02_W037.pcm", 0, 13376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W037.wav: 6688 16-bit samples, entry 037
+Main_P02_W038:	.incbin	"build/wav_pcm/main/Main_P02_W038.pcm", 0, 23872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W038.wav: 11936 16-bit samples, entry 038
+Main_P02_W039:	.incbin	"build/wav_pcm/main/Main_P02_W039.pcm", 0, 17920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W039.wav: 17920 8-bit samples, entry 039
+Main_P02_W03A:	.incbin	"build/wav_pcm/main/Main_P02_W03A.pcm", 0, 22112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W03A.wav: 22112 8-bit samples, entry 03A
+Main_P02_W03B:	.incbin	"build/wav_pcm/main/Main_P02_W03B.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W03B.wav: 12800 8-bit samples, entry 03B
+Main_P02_W03C:	.incbin	"build/wav_pcm/main/Main_P02_W03C.pcm", 0, 19552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W03C.wav: 19552 8-bit samples, entry 03C
+Main_P02_W03D:	.incbin	"build/wav_pcm/main/Main_P02_W03D.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W03D.wav: 10240 8-bit samples, entry 03D
+Main_P02_W03E:	.incbin	"build/wav_pcm/main/Main_P02_W03E.pcm", 0, 21856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W03E.wav: 21856 8-bit samples, entry 03E
+Main_P02_W03F:	.incbin	"build/wav_pcm/main/Main_P02_W03F.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W03F.wav: 10240 8-bit samples, entry 03F
+Main_P02_W040:	.incbin	"build/wav_pcm/main/Main_P02_W040.pcm", 0, 21856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W040.wav: 21856 8-bit samples, entry 040
+Main_P02_W041:	.incbin	"build/wav_pcm/main/Main_P02_W041.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W041.wav: 12800 8-bit samples, entry 041
+Main_P02_W042:	.incbin	"build/wav_pcm/main/Main_P02_W042.pcm", 0, 19296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W042.wav: 19296 8-bit samples, entry 042
+Main_P02_W043:	.incbin	"build/wav_pcm/main/Main_P02_W043.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W043.wav: 12800 8-bit samples, entry 043
+Main_P02_W044:	.incbin	"build/wav_pcm/main/Main_P02_W044.pcm", 0, 19296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W044.wav: 19296 8-bit samples, entry 044
+Main_P02_W045:	.incbin	"build/wav_pcm/main/Main_P02_W045.pcm", 0, 8000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W045.wav: 8000 8-bit samples, entry 045
+Main_P02_W046:	.incbin	"build/wav_pcm/main/Main_P02_W046.pcm", 0, 24096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W046.wav: 24096 8-bit samples, entry 046
+Main_P02_W047:	.incbin	"build/wav_pcm/main/Main_P02_W047.pcm", 0, 8000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W047.wav: 8000 8-bit samples, entry 047
+Main_P02_W048:	.incbin	"build/wav_pcm/main/Main_P02_W048.pcm", 0, 24096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W048.wav: 24096 8-bit samples, entry 048
+Main_P02_W049:	.incbin	"build/wav_pcm/main/Main_P02_W049.pcm", 0, 16640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W049.wav: 16640 8-bit samples, entry 049
+Main_P02_W04A:	.incbin	"build/wav_pcm/main/Main_P02_W04A.pcm", 0, 23392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W04A.wav: 23392 8-bit samples, entry 04A
+Main_P02_W04B:	.incbin	"build/wav_pcm/main/Main_P02_W04B.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W04B.wav: 10240 8-bit samples, entry 04B
+Main_P02_W04C:	.incbin	"build/wav_pcm/main/Main_P02_W04C.pcm", 0, 21856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W04C.wav: 21856 8-bit samples, entry 04C
+Main_P02_W04D:	.incbin	"build/wav_pcm/main/Main_P02_W04D.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W04D.wav: 10240 8-bit samples, entry 04D
+Main_P02_W04E:	.incbin	"build/wav_pcm/main/Main_P02_W04E.pcm", 0, 21856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W04E.wav: 21856 8-bit samples, entry 04E
+Main_P02_W04F:	.incbin	"build/wav_pcm/main/Main_P02_W04F.pcm", 0, 9600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W04F.wav: 9600 8-bit samples, entry 04F
+Main_P02_W050:	.incbin	"build/wav_pcm/main/Main_P02_W050.pcm", 0, 22496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W050.wav: 22496 8-bit samples, entry 050
+Main_P02_W051:	.incbin	"build/wav_pcm/main/Main_P02_W051.pcm", 0, 8000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W051.wav: 8000 8-bit samples, entry 051
+Main_P02_W052:	.incbin	"build/wav_pcm/main/Main_P02_W052.pcm", 0, 24096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W052.wav: 24096 8-bit samples, entry 052
+Main_P02_W053:	.incbin	"build/wav_pcm/main/Main_P02_W053.pcm", 0, 8000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W053.wav: 8000 8-bit samples, entry 053
+Main_P02_W054:	.incbin	"build/wav_pcm/main/Main_P02_W054.pcm", 0, 24096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W054.wav: 24096 8-bit samples, entry 054
+Main_P02_W055:	.incbin	"build/wav_pcm/main/Main_P02_W055.pcm", 0, 31808	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W055.wav: 15904 16-bit samples, entry 055
+Main_P02_W056:	.incbin	"build/wav_pcm/main/Main_P02_W056.pcm", 0, 18464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W056.wav: 18464 8-bit samples, entry 056
+Main_P02_W057:	.incbin	"build/wav_pcm/main/Main_P02_W057.pcm", 0, 17952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W057.wav: 17952 8-bit samples, entry 057
+Main_P02_W058:	.incbin	"build/wav_pcm/main/Main_P02_W058.pcm", 0, 17696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W058.wav: 17696 8-bit samples, entry 058
+Main_P02_W059:	.incbin	"build/wav_pcm/main/Main_P02_W059.pcm", 0, 17696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W059.wav: 17696 8-bit samples, entry 059
+Main_P02_W05A:	.incbin	"build/wav_pcm/main/Main_P02_W05A.pcm", 0, 17696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W05A.wav: 17696 8-bit samples, entry 05A
+Main_P02_W05B:	.incbin	"build/wav_pcm/main/Main_P02_W05B.pcm", 0, 17696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W05B.wav: 17696 8-bit samples, entry 05B
+Main_P02_W05C:	.incbin	"build/wav_pcm/main/Main_P02_W05C.pcm", 0, 17696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W05C.wav: 17696 8-bit samples, entry 05C
+Main_P02_W05D:	.incbin	"build/wav_pcm/main/Main_P02_W05D.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W05D.wav: 12800 16-bit samples, entry 05D
+Main_P02_W05E:	.incbin	"build/wav_pcm/main/Main_P02_W05E.pcm", 0, 15872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W05E.wav: 15872 8-bit samples, entry 05E
+Main_P02_W05F:	.incbin	"build/wav_pcm/main/Main_P02_W05F.pcm", 0, 19456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W05F.wav: 19456 8-bit samples, entry 05F
+Main_P02_W060:	.incbin	"build/wav_pcm/main/Main_P02_W060.pcm", 0, 11776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W060.wav: 11776 8-bit samples, entry 060
+Main_P02_W061:	.incbin	"build/wav_pcm/main/Main_P02_W061.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W061.wav: 14336 8-bit samples, entry 061
+Main_P02_W062:	.incbin	"build/wav_pcm/main/Main_P02_W062.pcm", 0, 16640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W062.wav: 16640 8-bit samples, entry 062
+Main_P02_W063:	.incbin	"build/wav_pcm/main/Main_P02_W063.pcm", 0, 9472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W063.wav: 9472 8-bit samples, entry 063
+Main_P02_W064:	.incbin	"build/wav_pcm/main/Main_P02_W064.pcm", 0, 10624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W064.wav: 10624 8-bit samples, entry 064
+Main_P02_W065:	.incbin	"build/wav_pcm/main/Main_P02_W065.pcm", 0, 33792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W065.wav: 16896 16-bit samples, entry 065
+Main_P02_W066:	.incbin	"build/wav_pcm/main/Main_P02_W066.pcm", 0, 17408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W066.wav: 17408 8-bit samples, entry 066
+Main_P02_W067:	.incbin	"build/wav_pcm/main/Main_P02_W067.pcm", 0, 27648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W067.wav: 27648 8-bit samples, entry 067
+Main_P02_W068:	.incbin	"build/wav_pcm/main/Main_P02_W068.pcm", 0, 16640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W068.wav: 16640 8-bit samples, entry 068
+Main_P02_W069:	.incbin	"build/wav_pcm/main/Main_P02_W069.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W069.wav: 15360 8-bit samples, entry 069
+Main_P02_W06A:	.incbin	"build/wav_pcm/main/Main_P02_W06A.pcm", 0, 16384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W06A.wav: 16384 8-bit samples, entry 06A
+Main_P02_W06B:	.incbin	"build/wav_pcm/main/Main_P02_W06B.pcm", 0, 20992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W06B.wav: 20992 8-bit samples, entry 06B
+Main_P02_W06C:	.incbin	"build/wav_pcm/main/Main_P02_W06C.pcm", 0, 13056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W06C.wav: 13056 8-bit samples, entry 06C
+Main_P02_W06D:	.incbin	"build/wav_pcm/main/Main_P02_W06D.pcm", 0, 21216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W06D.wav: 21216 8-bit samples, entry 06D
+Main_P02_W06E:	.incbin	"build/wav_pcm/main/Main_P02_W06E.pcm", 0, 141248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W06E.wav: 70624 16-bit samples, entry 06E
+Main_P02_W06F:	.incbin	"build/wav_pcm/main/Main_P02_W06F.pcm", 0, 13280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W06F_Agogo.wav: 13280 8-bit samples, entry 06F
+Main_P02_W070:	.incbin	"build/wav_pcm/main/Main_P02_W070.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W070_SleighBell.wav: 15488 8-bit samples, entry 070
+Main_P02_W071:	.incbin	"build/wav_pcm/main/Main_P02_W071.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W071_Cowbell.wav: 6656 8-bit samples, entry 071
+Main_P02_W072:	.incbin	"build/wav_pcm/main/Main_P02_W072.pcm", 0, 12800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W072_WindChime.wav: 6400 16-bit samples, entry 072
+Main_P02_W073:	.incbin	"build/wav_pcm/main/Main_P02_W073.pcm", 0, 6400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W073.wav: 3200 16-bit samples, entry 073
+Main_P02_W074:	.incbin	"build/wav_pcm/main/Main_P02_W074.pcm", 0, 6400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W074.wav: 3200 16-bit samples, entry 074
+Main_P02_W075:	.incbin	"build/wav_pcm/main/Main_P02_W075.pcm", 0, 50048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W075.wav: 25024 16-bit samples, entry 075
+Main_P02_W076:	.incbin	"build/wav_pcm/main/Main_P02_W076.pcm", 0, 57472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P02_W076_ChurchBell.wav: 28736 16-bit samples, entry 076
 Main_P02_Fill:	.space	768, 0xff	; erased fill to the page end
 
 # ==== page 0x03 (selects 0x03000-0x03089): 138 entries (110 16-bit, 28 8-bit), 96 recordings ====
@@ -2441,103 +2444,103 @@ Main_P03_R088:	.word	(Main_P03_W086 - Main_P03) / 32, 256-3, 72, 64, 56, 48, 40,
 Main_P03_R089:	.word	(Main_P03_W086 - Main_P03) / 32, 256-3, 80, 72, 64, 56, 48, REC_END
 	.align	4
 	.align	32
-# recordings
-Main_P03_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x600d60, 0x602360	; census: opaque -- pcm: 5632 8-bit samples, entries 000 001
-Main_P03_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x602360, 0x602e60	; census: opaque -- pcm: 2816 8-bit samples, entries 002 003
-Main_P03_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x602e60, 0x603c60	; census: opaque -- pcm: 3584 8-bit samples, entry 004
-Main_P03_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x603c60, 0x604360	; census: opaque -- pcm: 1792 8-bit samples, entry 005
-Main_P03_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x604360, 0x604ae0	; census: opaque -- pcm: 1920 8-bit samples, entry 006
-Main_P03_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x604ae0, 0x6052e0	; census: opaque -- pcm: 2048 8-bit samples, entries 007 008
-Main_P03_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6052e0, 0x6074e0	; census: opaque -- pcm: 4352 16-bit samples, entries 009 00A
-Main_P03_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6074e0, 0x608ee0	; census: opaque -- pcm: 3328 16-bit samples, entries 00B 00C 00D
-Main_P03_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x608ee0, 0x60a2e0	; census: opaque -- pcm: 2560 16-bit samples, entries 00E 00F 010
-Main_P03_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60a2e0, 0x60b8e0	; census: opaque -- pcm: 5632 8-bit samples, entries 011 012
-Main_P03_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60b8e0, 0x60c3e0	; census: opaque -- pcm: 2816 8-bit samples, entries 013 014
-Main_P03_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60c3e0, 0x60d1e0	; census: opaque -- pcm: 3584 8-bit samples, entry 015
-Main_P03_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60d1e0, 0x60d8e0	; census: opaque -- pcm: 1792 8-bit samples, entry 016
-Main_P03_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60d8e0, 0x60e060	; census: opaque -- pcm: 1920 8-bit samples, entry 017
-Main_P03_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60e060, 0x60e460	; census: opaque -- pcm: 1024 8-bit samples, entries 018 019
-Main_P03_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x60e460, 0x610660	; census: opaque -- pcm: 4352 16-bit samples, entries 01A 01B
-Main_P03_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x610660, 0x613260	; census: opaque -- pcm: 5632 16-bit samples, entries 01C 01D
-Main_P03_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x613260, 0x614a60	; census: opaque -- pcm: 3072 16-bit samples, entry 01E
-Main_P03_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x614a60, 0x616460	; census: opaque -- pcm: 3328 16-bit samples, entry 01F
-Main_P03_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x616460, 0x617260	; census: opaque -- pcm: 1792 16-bit samples, entries 020 021
-Main_P03_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x617260, 0x618660	; census: opaque -- pcm: 2560 16-bit samples, entry 022
-Main_P03_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x618660, 0x619160	; census: opaque -- pcm: 1408 16-bit samples, entry 023
-Main_P03_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x619160, 0x61ae60	; census: opaque -- pcm: 3712 16-bit samples, entries 024 025
-Main_P03_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61ae60, 0x61c060	; census: opaque -- pcm: 2304 16-bit samples, entry 026
-Main_P03_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61c060, 0x61cc60	; census: opaque -- pcm: 3072 8-bit samples, entry 027
-Main_P03_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61cc60, 0x61d260	; census: opaque -- pcm: 1536 8-bit samples, entry 028
-Main_P03_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61d260, 0x61de60	; census: opaque -- pcm: 3072 8-bit samples, entry 029
-Main_P03_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61de60, 0x61f660	; census: opaque -- pcm: 3072 16-bit samples, entry 02A
-Main_P03_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x61f660, 0x63afa0	; census: opaque -- pcm: 56480 16-bit samples, entry 02B
-Main_P03_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x63afa0, 0x6521e0	; census: opaque -- pcm: 47392 16-bit samples, entry 02C
-Main_P03_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6521e0, 0x666d20	; census: opaque -- pcm: 42400 16-bit samples, entry 02D
-Main_P03_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x666d20, 0x6799e0	; census: opaque -- pcm: 38496 16-bit samples, entry 02E
-Main_P03_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6799e0, 0x68c620	; census: opaque -- pcm: 38432 16-bit samples, entry 02F
-Main_P03_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x68c620, 0x6a5360	; census: opaque -- pcm: 50848 16-bit samples, entry 030
-Main_P03_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6a5360, 0x6a8760	; census: opaque -- pcm: 6656 16-bit samples, entry 031
-Main_P03_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6a8760, 0x6aa160	; census: opaque -- pcm: 3328 16-bit samples, entry 032
-Main_P03_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6aa160, 0x6abd60	; census: opaque -- pcm: 3584 16-bit samples, entry 033
-Main_P03_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6abd60, 0x6add60	; census: opaque -- pcm: 4096 16-bit samples, entry 034
-Main_P03_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6add60, 0x6aeb60	; census: opaque -- pcm: 1792 16-bit samples, entries 035 036 037
-Main_P03_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6aeb60, 0x6c37a0	; census: opaque -- pcm: 42528 16-bit samples, entry 038
-Main_P03_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6c37a0, 0x6d15e0	; census: opaque -- pcm: 28448 16-bit samples, entry 039
-Main_P03_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6d15e0, 0x6dec20	; census: opaque -- pcm: 27424 16-bit samples, entry 03A
-Main_P03_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6dec20, 0x6ea960	; census: opaque -- pcm: 24224 16-bit samples, entry 03B
-Main_P03_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6ea960, 0x6f6d20	; census: opaque -- pcm: 25056 16-bit samples, entry 03C
-Main_P03_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x6f6d20, 0x707de0	; census: opaque -- pcm: 34912 16-bit samples, entry 03D
-Main_P03_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x707de0, 0x713220	; census: opaque -- pcm: 23072 16-bit samples, entry 03E
-Main_P03_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x713220, 0x71b860	; census: opaque -- pcm: 17184 16-bit samples, entry 03F
-Main_P03_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x71b860, 0x7238a0	; census: opaque -- pcm: 16416 16-bit samples, entry 040
-Main_P03_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7238a0, 0x72aee0	; census: opaque -- pcm: 15136 16-bit samples, entry 041
-Main_P03_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x72aee0, 0x731c20	; census: opaque -- pcm: 13984 16-bit samples, entry 042
-Main_P03_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0x731c20, 0x738560	; census: opaque -- pcm: 13472 16-bit samples, entry 043
-Main_P03_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x738560, 0x73e2a0	; census: opaque -- pcm: 11936 16-bit samples, entry 044
-Main_P03_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x73e2a0, 0x743d60	; census: opaque -- pcm: 11616 16-bit samples, entry 045
-Main_P03_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0x743d60, 0x749620	; census: opaque -- pcm: 11360 16-bit samples, entry 046
-Main_P03_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0x749620, 0x74e860	; census: opaque -- pcm: 10528 16-bit samples, entry 047
-Main_P03_W048:	.incbin_range "baserom/kn7000_wave_main.bin", 0x74e860, 0x753720	; census: opaque -- pcm: 10080 16-bit samples, entry 048
-Main_P03_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0x753720, 0x758260	; census: opaque -- pcm: 9632 16-bit samples, entry 049
-Main_P03_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x758260, 0x75caa0	; census: opaque -- pcm: 9248 16-bit samples, entry 04A
-Main_P03_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x75caa0, 0x764ee0	; census: opaque -- pcm: 16928 16-bit samples, entry 04B
-Main_P03_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x764ee0, 0x7670c0	; census: opaque -- pcm: 8672 8-bit samples, entry 04C
-Main_P03_W04D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7670c0, 0x7692a0	; census: opaque -- pcm: 8672 8-bit samples, entry 04D
-Main_P03_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7692a0, 0x76b480	; census: opaque -- pcm: 8672 8-bit samples, entry 04E
-Main_P03_W04F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x76b480, 0x76d400	; census: opaque -- pcm: 8064 8-bit samples, entry 04F
-Main_P03_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0x76d400, 0x76f0e0	; census: opaque -- pcm: 7392 8-bit samples, entry 050
-Main_P03_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0x76f0e0, 0x770c80	; census: opaque -- pcm: 7072 8-bit samples, entry 051
-Main_P03_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0x770c80, 0x7725a0	; census: opaque -- pcm: 6432 8-bit samples, entry 052
-Main_P03_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7725a0, 0x775ae0	; census: opaque -- pcm: 6816 16-bit samples, entry 053
-Main_P03_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0x775ae0, 0x779340	; census: opaque -- pcm: 7216 16-bit samples, entry 054
-Main_P03_W055:	.incbin_range "baserom/kn7000_wave_main.bin", 0x779340, 0x77cf40	; census: opaque -- pcm: 7680 16-bit samples, entry 055
-Main_P03_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0x77cf40, 0x781b40	; census: opaque -- pcm: 9728 16-bit samples, entries 056 057 058
-Main_P03_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0x781b40, 0x782b40	; census: opaque -- pcm: 2048 16-bit samples, entries 059 05A
-Main_P03_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x782b40, 0x783540	; census: opaque -- pcm: 1280 16-bit samples, entry 05B
-Main_P03_W05C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x783540, 0x784040	; census: opaque -- pcm: 1408 16-bit samples, entries 05C 05D
-Main_P03_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x784040, 0x784940	; census: opaque -- pcm: 1152 16-bit samples, entries 05E 05F
-Main_P03_W060:	.incbin_range "baserom/kn7000_wave_main.bin", 0x784940, 0x785940	; census: opaque -- pcm: 2048 16-bit samples, entry 060
-Main_P03_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0x785940, 0x786b40	; census: opaque -- pcm: 2304 16-bit samples, entries 061 062
-Main_P03_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0x786b40, 0x787e40	; census: opaque -- pcm: 2432 16-bit samples, entries 063 064
-Main_P03_W065:	.incbin_range "baserom/kn7000_wave_main.bin", 0x787e40, 0x79c880	; census: opaque -- pcm: 42272 16-bit samples, entry 065
-Main_P03_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0x79c880, 0x7b16c0	; census: opaque -- pcm: 42784 16-bit samples, entry 066
-Main_P03_W067:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7b16c0, 0x7c3000	; census: opaque -- pcm: 36000 16-bit samples, entry 067
-Main_P03_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7c3000, 0x7c4400	; census: opaque -- pcm: 2560 16-bit samples, entries 068 069 06A 06B 06C 06D
-Main_P03_W06E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7c4400, 0x7c5a00	; census: opaque -- pcm: 2816 16-bit samples, entry 06E
-Main_P03_W06F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7c5a00, 0x7c6300	; census: opaque -- pcm: 1152 16-bit samples, entry 06F
-Main_P03_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7c6300, 0x7c6e00	; census: opaque -- pcm: 1408 16-bit samples, entries 070 071
-Main_P03_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7c6e00, 0x7ee640	; census: opaque -- pcm: 80928 16-bit samples, entry 072
-Main_P03_W073:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7ee640, 0x7f1240	; census: opaque -- pcm: 5632 16-bit samples, entry 073
-Main_P03_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7f1240, 0x7f4640	; census: opaque -- pcm: 6656 16-bit samples, entries 074 075 076 077 078 079 07A
-Main_P03_W07B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7f4640, 0x7f7240	; census: opaque -- pcm: 5632 16-bit samples, entries 07B 07C 07D 07E
-Main_P03_W07F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7f7240, 0x7f8e40	; census: opaque -- pcm: 3584 16-bit samples, entry 07F
-Main_P03_W080:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7f8e40, 0x7fb240	; census: opaque -- pcm: 4608 16-bit samples, entry 080
-Main_P03_W081:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7fb240, 0x7fc240	; census: opaque -- pcm: 2048 16-bit samples, entry 081
-Main_P03_W082:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7fc240, 0x7fce40	; census: opaque -- pcm: 1536 16-bit samples, entry 082
-Main_P03_W083:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7fce40, 0x7fd340	; census: opaque -- pcm: 640 16-bit samples, entry 083
-Main_P03_W084:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7fd340, 0x7fd740	; census: opaque -- pcm: 512 16-bit samples, entry 084
-Main_P03_W085:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7fd740, 0x7fdb40	; census: opaque -- pcm: 512 16-bit samples, entry 085
-Main_P03_W086:	.incbin_range "baserom/kn7000_wave_main.bin", 0x7fdb40, 0x7fff80	; census: opaque -- pcm: 4640 16-bit samples, entries 086 087 088 089
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P03_W000:	.incbin	"build/wav_pcm/main/Main_P03_W000.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W000.wav: 5632 8-bit samples, entries 000 001
+Main_P03_W002:	.incbin	"build/wav_pcm/main/Main_P03_W002.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W002.wav: 2816 8-bit samples, entries 002 003
+Main_P03_W004:	.incbin	"build/wav_pcm/main/Main_P03_W004.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W004.wav: 3584 8-bit samples, entry 004
+Main_P03_W005:	.incbin	"build/wav_pcm/main/Main_P03_W005.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W005.wav: 1792 8-bit samples, entry 005
+Main_P03_W006:	.incbin	"build/wav_pcm/main/Main_P03_W006.pcm", 0, 1920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W006.wav: 1920 8-bit samples, entry 006
+Main_P03_W007:	.incbin	"build/wav_pcm/main/Main_P03_W007.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W007.wav: 2048 8-bit samples, entries 007 008
+Main_P03_W009:	.incbin	"build/wav_pcm/main/Main_P03_W009.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W009.wav: 4352 16-bit samples, entries 009 00A
+Main_P03_W00B:	.incbin	"build/wav_pcm/main/Main_P03_W00B.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W00B.wav: 3328 16-bit samples, entries 00B 00C 00D
+Main_P03_W00E:	.incbin	"build/wav_pcm/main/Main_P03_W00E.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W00E.wav: 2560 16-bit samples, entries 00E 00F 010
+Main_P03_W011:	.incbin	"build/wav_pcm/main/Main_P03_W011.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W011.wav: 5632 8-bit samples, entries 011 012
+Main_P03_W013:	.incbin	"build/wav_pcm/main/Main_P03_W013.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W013.wav: 2816 8-bit samples, entries 013 014
+Main_P03_W015:	.incbin	"build/wav_pcm/main/Main_P03_W015.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W015.wav: 3584 8-bit samples, entry 015
+Main_P03_W016:	.incbin	"build/wav_pcm/main/Main_P03_W016.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W016.wav: 1792 8-bit samples, entry 016
+Main_P03_W017:	.incbin	"build/wav_pcm/main/Main_P03_W017.pcm", 0, 1920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W017.wav: 1920 8-bit samples, entry 017
+Main_P03_W018:	.incbin	"build/wav_pcm/main/Main_P03_W018.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W018.wav: 1024 8-bit samples, entries 018 019
+Main_P03_W01A:	.incbin	"build/wav_pcm/main/Main_P03_W01A.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W01A.wav: 4352 16-bit samples, entries 01A 01B
+Main_P03_W01C:	.incbin	"build/wav_pcm/main/Main_P03_W01C.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W01C.wav: 5632 16-bit samples, entries 01C 01D
+Main_P03_W01E:	.incbin	"build/wav_pcm/main/Main_P03_W01E.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W01E.wav: 3072 16-bit samples, entry 01E
+Main_P03_W01F:	.incbin	"build/wav_pcm/main/Main_P03_W01F.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W01F.wav: 3328 16-bit samples, entry 01F
+Main_P03_W020:	.incbin	"build/wav_pcm/main/Main_P03_W020.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W020.wav: 1792 16-bit samples, entries 020 021
+Main_P03_W022:	.incbin	"build/wav_pcm/main/Main_P03_W022.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W022.wav: 2560 16-bit samples, entry 022
+Main_P03_W023:	.incbin	"build/wav_pcm/main/Main_P03_W023.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W023.wav: 1408 16-bit samples, entry 023
+Main_P03_W024:	.incbin	"build/wav_pcm/main/Main_P03_W024.pcm", 0, 7424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W024.wav: 3712 16-bit samples, entries 024 025
+Main_P03_W026:	.incbin	"build/wav_pcm/main/Main_P03_W026.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W026.wav: 2304 16-bit samples, entry 026
+Main_P03_W027:	.incbin	"build/wav_pcm/main/Main_P03_W027.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W027.wav: 3072 8-bit samples, entry 027
+Main_P03_W028:	.incbin	"build/wav_pcm/main/Main_P03_W028.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W028.wav: 1536 8-bit samples, entry 028
+Main_P03_W029:	.incbin	"build/wav_pcm/main/Main_P03_W029.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W029.wav: 3072 8-bit samples, entry 029
+Main_P03_W02A:	.incbin	"build/wav_pcm/main/Main_P03_W02A.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W02A.wav: 3072 16-bit samples, entry 02A
+Main_P03_W02B:	.incbin	"build/wav_pcm/main/Main_P03_W02B.pcm", 0, 112960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W02B.wav: 56480 16-bit samples, entry 02B
+Main_P03_W02C:	.incbin	"build/wav_pcm/main/Main_P03_W02C.pcm", 0, 94784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W02C.wav: 47392 16-bit samples, entry 02C
+Main_P03_W02D:	.incbin	"build/wav_pcm/main/Main_P03_W02D.pcm", 0, 84800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W02D.wav: 42400 16-bit samples, entry 02D
+Main_P03_W02E:	.incbin	"build/wav_pcm/main/Main_P03_W02E.pcm", 0, 76992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W02E.wav: 38496 16-bit samples, entry 02E
+Main_P03_W02F:	.incbin	"build/wav_pcm/main/Main_P03_W02F.pcm", 0, 76864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W02F.wav: 38432 16-bit samples, entry 02F
+Main_P03_W030:	.incbin	"build/wav_pcm/main/Main_P03_W030.pcm", 0, 101696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W030.wav: 50848 16-bit samples, entry 030
+Main_P03_W031:	.incbin	"build/wav_pcm/main/Main_P03_W031.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W031.wav: 6656 16-bit samples, entry 031
+Main_P03_W032:	.incbin	"build/wav_pcm/main/Main_P03_W032.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W032.wav: 3328 16-bit samples, entry 032
+Main_P03_W033:	.incbin	"build/wav_pcm/main/Main_P03_W033.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W033.wav: 3584 16-bit samples, entry 033
+Main_P03_W034:	.incbin	"build/wav_pcm/main/Main_P03_W034.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W034.wav: 4096 16-bit samples, entry 034
+Main_P03_W035:	.incbin	"build/wav_pcm/main/Main_P03_W035.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W035.wav: 1792 16-bit samples, entries 035 036 037
+Main_P03_W038:	.incbin	"build/wav_pcm/main/Main_P03_W038.pcm", 0, 85056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W038.wav: 42528 16-bit samples, entry 038
+Main_P03_W039:	.incbin	"build/wav_pcm/main/Main_P03_W039.pcm", 0, 56896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W039.wav: 28448 16-bit samples, entry 039
+Main_P03_W03A:	.incbin	"build/wav_pcm/main/Main_P03_W03A.pcm", 0, 54848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W03A.wav: 27424 16-bit samples, entry 03A
+Main_P03_W03B:	.incbin	"build/wav_pcm/main/Main_P03_W03B.pcm", 0, 48448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W03B.wav: 24224 16-bit samples, entry 03B
+Main_P03_W03C:	.incbin	"build/wav_pcm/main/Main_P03_W03C.pcm", 0, 50112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W03C.wav: 25056 16-bit samples, entry 03C
+Main_P03_W03D:	.incbin	"build/wav_pcm/main/Main_P03_W03D.pcm", 0, 69824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W03D.wav: 34912 16-bit samples, entry 03D
+Main_P03_W03E:	.incbin	"build/wav_pcm/main/Main_P03_W03E.pcm", 0, 46144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W03E.wav: 23072 16-bit samples, entry 03E
+Main_P03_W03F:	.incbin	"build/wav_pcm/main/Main_P03_W03F.pcm", 0, 34368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W03F.wav: 17184 16-bit samples, entry 03F
+Main_P03_W040:	.incbin	"build/wav_pcm/main/Main_P03_W040.pcm", 0, 32832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W040.wav: 16416 16-bit samples, entry 040
+Main_P03_W041:	.incbin	"build/wav_pcm/main/Main_P03_W041.pcm", 0, 30272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W041.wav: 15136 16-bit samples, entry 041
+Main_P03_W042:	.incbin	"build/wav_pcm/main/Main_P03_W042.pcm", 0, 27968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W042.wav: 13984 16-bit samples, entry 042
+Main_P03_W043:	.incbin	"build/wav_pcm/main/Main_P03_W043.pcm", 0, 26944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W043.wav: 13472 16-bit samples, entry 043
+Main_P03_W044:	.incbin	"build/wav_pcm/main/Main_P03_W044.pcm", 0, 23872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W044.wav: 11936 16-bit samples, entry 044
+Main_P03_W045:	.incbin	"build/wav_pcm/main/Main_P03_W045.pcm", 0, 23232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W045.wav: 11616 16-bit samples, entry 045
+Main_P03_W046:	.incbin	"build/wav_pcm/main/Main_P03_W046.pcm", 0, 22720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W046.wav: 11360 16-bit samples, entry 046
+Main_P03_W047:	.incbin	"build/wav_pcm/main/Main_P03_W047.pcm", 0, 21056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W047.wav: 10528 16-bit samples, entry 047
+Main_P03_W048:	.incbin	"build/wav_pcm/main/Main_P03_W048.pcm", 0, 20160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W048.wav: 10080 16-bit samples, entry 048
+Main_P03_W049:	.incbin	"build/wav_pcm/main/Main_P03_W049.pcm", 0, 19264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W049.wav: 9632 16-bit samples, entry 049
+Main_P03_W04A:	.incbin	"build/wav_pcm/main/Main_P03_W04A.pcm", 0, 18496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W04A.wav: 9248 16-bit samples, entry 04A
+Main_P03_W04B:	.incbin	"build/wav_pcm/main/Main_P03_W04B.pcm", 0, 33856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W04B.wav: 16928 16-bit samples, entry 04B
+Main_P03_W04C:	.incbin	"build/wav_pcm/main/Main_P03_W04C.pcm", 0, 8672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W04C.wav: 8672 8-bit samples, entry 04C
+Main_P03_W04D:	.incbin	"build/wav_pcm/main/Main_P03_W04D.pcm", 0, 8672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W04D.wav: 8672 8-bit samples, entry 04D
+Main_P03_W04E:	.incbin	"build/wav_pcm/main/Main_P03_W04E.pcm", 0, 8672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W04E.wav: 8672 8-bit samples, entry 04E
+Main_P03_W04F:	.incbin	"build/wav_pcm/main/Main_P03_W04F.pcm", 0, 8064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W04F.wav: 8064 8-bit samples, entry 04F
+Main_P03_W050:	.incbin	"build/wav_pcm/main/Main_P03_W050.pcm", 0, 7392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W050.wav: 7392 8-bit samples, entry 050
+Main_P03_W051:	.incbin	"build/wav_pcm/main/Main_P03_W051.pcm", 0, 7072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W051.wav: 7072 8-bit samples, entry 051
+Main_P03_W052:	.incbin	"build/wav_pcm/main/Main_P03_W052.pcm", 0, 6432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W052.wav: 6432 8-bit samples, entry 052
+Main_P03_W053:	.incbin	"build/wav_pcm/main/Main_P03_W053.pcm", 0, 13632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W053.wav: 6816 16-bit samples, entry 053
+Main_P03_W054:	.incbin	"build/wav_pcm/main/Main_P03_W054.pcm", 0, 14432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W054.wav: 7216 16-bit samples, entry 054
+Main_P03_W055:	.incbin	"build/wav_pcm/main/Main_P03_W055.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W055.wav: 7680 16-bit samples, entry 055
+Main_P03_W056:	.incbin	"build/wav_pcm/main/Main_P03_W056.pcm", 0, 19456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W056.wav: 9728 16-bit samples, entries 056 057 058
+Main_P03_W059:	.incbin	"build/wav_pcm/main/Main_P03_W059.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W059.wav: 2048 16-bit samples, entries 059 05A
+Main_P03_W05B:	.incbin	"build/wav_pcm/main/Main_P03_W05B.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W05B.wav: 1280 16-bit samples, entry 05B
+Main_P03_W05C:	.incbin	"build/wav_pcm/main/Main_P03_W05C.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W05C.wav: 1408 16-bit samples, entries 05C 05D
+Main_P03_W05E:	.incbin	"build/wav_pcm/main/Main_P03_W05E.pcm", 0, 2304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W05E.wav: 1152 16-bit samples, entries 05E 05F
+Main_P03_W060:	.incbin	"build/wav_pcm/main/Main_P03_W060.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W060.wav: 2048 16-bit samples, entry 060
+Main_P03_W061:	.incbin	"build/wav_pcm/main/Main_P03_W061.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W061.wav: 2304 16-bit samples, entries 061 062
+Main_P03_W063:	.incbin	"build/wav_pcm/main/Main_P03_W063.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W063.wav: 2432 16-bit samples, entries 063 064
+Main_P03_W065:	.incbin	"build/wav_pcm/main/Main_P03_W065.pcm", 0, 84544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W065.wav: 42272 16-bit samples, entry 065
+Main_P03_W066:	.incbin	"build/wav_pcm/main/Main_P03_W066.pcm", 0, 85568	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W066.wav: 42784 16-bit samples, entry 066
+Main_P03_W067:	.incbin	"build/wav_pcm/main/Main_P03_W067.pcm", 0, 72000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W067.wav: 36000 16-bit samples, entry 067
+Main_P03_W068:	.incbin	"build/wav_pcm/main/Main_P03_W068.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W068.wav: 2560 16-bit samples, entries 068 069 06A 06B 06C 06D
+Main_P03_W06E:	.incbin	"build/wav_pcm/main/Main_P03_W06E.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W06E.wav: 2816 16-bit samples, entry 06E
+Main_P03_W06F:	.incbin	"build/wav_pcm/main/Main_P03_W06F.pcm", 0, 2304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W06F.wav: 1152 16-bit samples, entry 06F
+Main_P03_W070:	.incbin	"build/wav_pcm/main/Main_P03_W070.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W070.wav: 1408 16-bit samples, entries 070 071
+Main_P03_W072:	.incbin	"build/wav_pcm/main/Main_P03_W072.pcm", 0, 161856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W072.wav: 80928 16-bit samples, entry 072
+Main_P03_W073:	.incbin	"build/wav_pcm/main/Main_P03_W073.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W073.wav: 5632 16-bit samples, entry 073
+Main_P03_W074:	.incbin	"build/wav_pcm/main/Main_P03_W074.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W074.wav: 6656 16-bit samples, entries 074 075 076 077 078 079 07A
+Main_P03_W07B:	.incbin	"build/wav_pcm/main/Main_P03_W07B.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W07B.wav: 5632 16-bit samples, entries 07B 07C 07D 07E
+Main_P03_W07F:	.incbin	"build/wav_pcm/main/Main_P03_W07F.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W07F.wav: 3584 16-bit samples, entry 07F
+Main_P03_W080:	.incbin	"build/wav_pcm/main/Main_P03_W080.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W080.wav: 4608 16-bit samples, entry 080
+Main_P03_W081:	.incbin	"build/wav_pcm/main/Main_P03_W081.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W081_ClickBass.wav: 2048 16-bit samples, entry 081
+Main_P03_W082:	.incbin	"build/wav_pcm/main/Main_P03_W082.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W082_ClickBass.wav: 1536 16-bit samples, entry 082
+Main_P03_W083:	.incbin	"build/wav_pcm/main/Main_P03_W083.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W083_ClickBass.wav: 640 16-bit samples, entry 083
+Main_P03_W084:	.incbin	"build/wav_pcm/main/Main_P03_W084.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W084.wav: 512 16-bit samples, entry 084
+Main_P03_W085:	.incbin	"build/wav_pcm/main/Main_P03_W085.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W085.wav: 512 16-bit samples, entry 085
+Main_P03_W086:	.incbin	"build/wav_pcm/main/Main_P03_W086.pcm", 0, 9280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P03_W086.wav: 4640 16-bit samples, entries 086 087 088 089
 Main_P03_Fill:	.space	128, 0xff	; erased fill to the page end
 
 # ==== page 0x04 (selects 0x04000-0x04045): 70 entries (58 16-bit, 12 8-bit), 68 recordings ====
@@ -2763,75 +2766,75 @@ Main_P04_R044:	.word	(Main_P04_W044 - Main_P04) / 32, LOOP_START | 256-40, LOOP_
 Main_P04_R045:	.word	(Main_P04_W045 - Main_P04) / 32, LOOP_START | 256-62, LOOP_END | 256-8
 	.align	4
 	.align	32
-# recordings
-Main_P04_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x800600, 0x802000	; census: opaque -- pcm: 3328 16-bit samples, entry 000
-Main_P04_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x802000, 0x803100	; census: opaque -- pcm: 2176 16-bit samples, entry 001
-Main_P04_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x803100, 0x803e00	; census: opaque -- pcm: 1664 16-bit samples, entry 002
-Main_P04_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x803e00, 0x804e00	; census: opaque -- pcm: 2048 16-bit samples, entry 003
-Main_P04_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x804e00, 0x805200	; census: opaque -- pcm: 1024 8-bit samples, entry 004
-Main_P04_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x805200, 0x805500	; census: opaque -- pcm: 768 8-bit samples, entry 005
-Main_P04_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x805500, 0x805980	; census: opaque -- pcm: 1152 8-bit samples, entry 006
-Main_P04_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x805980, 0x805bc0	; census: opaque -- pcm: 576 8-bit samples, entry 007
-Main_P04_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x805bc0, 0x8066c0	; census: opaque -- pcm: 1408 16-bit samples, entry 008
-Main_P04_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8066c0, 0x806dc0	; census: opaque -- pcm: 896 16-bit samples, entry 009
-Main_P04_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x806dc0, 0x81d000	; census: opaque -- pcm: 45344 16-bit samples, entry 00A
-Main_P04_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x81d000, 0x827420	; census: opaque -- pcm: 42016 8-bit samples, entry 00B
-Main_P04_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x827420, 0x8344c0	; census: opaque -- pcm: 53408 8-bit samples, entry 00C
-Main_P04_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8344c0, 0x83d1e0	; census: opaque -- pcm: 36128 8-bit samples, entry 00D
-Main_P04_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x83d1e0, 0x845200	; census: opaque -- pcm: 32800 8-bit samples, entry 00E
-Main_P04_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x845200, 0x869c40	; census: opaque -- pcm: 75040 16-bit samples, entry 00F
-Main_P04_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x869c40, 0x878a80	; census: opaque -- pcm: 30496 16-bit samples, entry 010
-Main_P04_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x878a80, 0x87eea0	; census: opaque -- pcm: 25632 8-bit samples, entry 011
-Main_P04_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x87eea0, 0x884640	; census: opaque -- pcm: 22432 8-bit samples, entry 012
-Main_P04_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x884640, 0x8897a0	; census: opaque -- pcm: 20832 8-bit samples, entry 013
-Main_P04_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8897a0, 0x8970c0	; census: opaque -- pcm: 55584 8-bit samples, entry 014
-Main_P04_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8970c0, 0x89a0c0	; census: opaque -- pcm: 6144 16-bit samples, entry 015
-Main_P04_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x89a0c0, 0x8a1cc0	; census: opaque -- pcm: 15872 16-bit samples, entry 016
-Main_P04_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8a1cc0, 0x8a70c0	; census: opaque -- pcm: 10752 16-bit samples, entry 017
-Main_P04_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8a70c0, 0x8b0b00	; census: opaque -- pcm: 19744 16-bit samples, entry 018
-Main_P04_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8b0b00, 0x8ba940	; census: opaque -- pcm: 20256 16-bit samples, entry 019
-Main_P04_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8ba940, 0x8c3580	; census: opaque -- pcm: 17952 16-bit samples, entry 01A
-Main_P04_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8c3580, 0x8cc2c0	; census: opaque -- pcm: 18080 16-bit samples, entry 01B
-Main_P04_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8cc2c0, 0x8d4200	; census: opaque -- pcm: 16288 16-bit samples, entry 01C
-Main_P04_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8d4200, 0x8dc340	; census: opaque -- pcm: 16544 16-bit samples, entry 01D
-Main_P04_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8dc340, 0x8e4280	; census: opaque -- pcm: 16288 16-bit samples, entry 01E
-Main_P04_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8e4280, 0x8ecfc0	; census: opaque -- pcm: 18080 16-bit samples, entry 01F
-Main_P04_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8ecfc0, 0x8ef7c0	; census: opaque -- pcm: 5120 16-bit samples, entry 020
-Main_P04_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8ef7c0, 0x8f27c0	; census: opaque -- pcm: 6144 16-bit samples, entry 021
-Main_P04_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8f27c0, 0x8f3cc0	; census: opaque -- pcm: 2688 16-bit samples, entry 022
-Main_P04_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8f3cc0, 0x8f50c0	; census: opaque -- pcm: 2560 16-bit samples, entry 023
-Main_P04_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8f50c0, 0x8f5ec0	; census: opaque -- pcm: 1792 16-bit samples, entry 024
-Main_P04_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8f5ec0, 0x8f84c0	; census: opaque -- pcm: 4864 16-bit samples, entry 025
-Main_P04_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x8f84c0, 0x909900	; census: opaque -- pcm: 35360 16-bit samples, entry 026
-Main_P04_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x909900, 0x919d40	; census: opaque -- pcm: 33312 16-bit samples, entry 027
-Main_P04_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x919d40, 0x92c180	; census: opaque -- pcm: 37408 16-bit samples, entry 028
-Main_P04_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x92c180, 0x93c2c0	; census: opaque -- pcm: 32928 16-bit samples, entry 029
-Main_P04_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x93c2c0, 0x94fd00	; census: opaque -- pcm: 40224 16-bit samples, entry 02A
-Main_P04_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x94fd00, 0x95ec40	; census: opaque -- pcm: 30624 16-bit samples, entry 02B
-Main_P04_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x95ec40, 0x96df80	; census: opaque -- pcm: 31136 16-bit samples, entry 02C
-Main_P04_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x96df80, 0x97c5c0	; census: opaque -- pcm: 29472 16-bit samples, entry 02D
-Main_P04_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x97c5c0, 0x98cf00	; census: opaque -- pcm: 33952 16-bit samples, entry 02E
-Main_P04_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x98cf00, 0x9995c0	; census: opaque -- pcm: 25440 16-bit samples, entry 02F
-Main_P04_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9995c0, 0x99abc0	; census: opaque -- pcm: 2816 16-bit samples, entry 030
-Main_P04_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x99abc0, 0x99c3c0	; census: opaque -- pcm: 3072 16-bit samples, entry 031
-Main_P04_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x99c3c0, 0x99e7c0	; census: opaque -- pcm: 4608 16-bit samples, entry 032
-Main_P04_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x99e7c0, 0x9a11c0	; census: opaque -- pcm: 5376 16-bit samples, entry 033
-Main_P04_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9a11c0, 0x9a24c0	; census: opaque -- pcm: 2432 16-bit samples, entry 034
-Main_P04_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9a24c0, 0x9a42c0	; census: opaque -- pcm: 3840 16-bit samples, entries 035 036 037
-Main_P04_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9a42c0, 0x9acf00	; census: opaque -- pcm: 17952 16-bit samples, entry 038
-Main_P04_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9acf00, 0x9b5f40	; census: opaque -- pcm: 18464 16-bit samples, entry 039
-Main_P04_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9b5f40, 0x9bef80	; census: opaque -- pcm: 18464 16-bit samples, entry 03A
-Main_P04_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9bef80, 0x9c85c0	; census: opaque -- pcm: 19232 16-bit samples, entry 03B
-Main_P04_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9c85c0, 0x9d1200	; census: opaque -- pcm: 17952 16-bit samples, entry 03C
-Main_P04_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9d1200, 0x9dac40	; census: opaque -- pcm: 19744 16-bit samples, entry 03D
-Main_P04_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9dac40, 0x9e3b80	; census: opaque -- pcm: 18336 16-bit samples, entry 03E
-Main_P04_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9e3b80, 0x9ed9c0	; census: opaque -- pcm: 20256 16-bit samples, entry 03F
-Main_P04_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9ed9c0, 0x9f0800	; census: opaque -- pcm: 5920 16-bit samples, entry 040
-Main_P04_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9f0800, 0x9f3240	; census: opaque -- pcm: 5408 16-bit samples, entry 041
-Main_P04_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9f3240, 0x9f6280	; census: opaque -- pcm: 6176 16-bit samples, entry 042
-Main_P04_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9f6280, 0x9f8ac0	; census: opaque -- pcm: 5152 16-bit samples, entry 043
-Main_P04_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9f8ac0, 0x9fb900	; census: opaque -- pcm: 5920 16-bit samples, entry 044
-Main_P04_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x9fb900, 0x9fff80	; census: opaque -- pcm: 9024 16-bit samples, entry 045
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P04_W000:	.incbin	"build/wav_pcm/main/Main_P04_W000.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W000_BrtAccordion.wav: 3328 16-bit samples, entry 000
+Main_P04_W001:	.incbin	"build/wav_pcm/main/Main_P04_W001.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W001_BrtAccordion.wav: 2176 16-bit samples, entry 001
+Main_P04_W002:	.incbin	"build/wav_pcm/main/Main_P04_W002.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W002_BrtAccordion.wav: 1664 16-bit samples, entry 002
+Main_P04_W003:	.incbin	"build/wav_pcm/main/Main_P04_W003.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W003_MelAccordion.wav: 2048 16-bit samples, entry 003
+Main_P04_W004:	.incbin	"build/wav_pcm/main/Main_P04_W004.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W004_MelAccordion.wav: 1024 8-bit samples, entry 004
+Main_P04_W005:	.incbin	"build/wav_pcm/main/Main_P04_W005.pcm", 0, 768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W005_MelAccordion.wav: 768 8-bit samples, entry 005
+Main_P04_W006:	.incbin	"build/wav_pcm/main/Main_P04_W006.pcm", 0, 1152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W006.wav: 1152 8-bit samples, entry 006
+Main_P04_W007:	.incbin	"build/wav_pcm/main/Main_P04_W007.pcm", 0, 576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W007.wav: 576 8-bit samples, entry 007
+Main_P04_W008:	.incbin	"build/wav_pcm/main/Main_P04_W008.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W008.wav: 1408 16-bit samples, entry 008
+Main_P04_W009:	.incbin	"build/wav_pcm/main/Main_P04_W009.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W009.wav: 896 16-bit samples, entry 009
+Main_P04_W00A:	.incbin	"build/wav_pcm/main/Main_P04_W00A.pcm", 0, 90688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W00A_Musette.wav: 45344 16-bit samples, entry 00A
+Main_P04_W00B:	.incbin	"build/wav_pcm/main/Main_P04_W00B.pcm", 0, 42016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W00B_Musette.wav: 42016 8-bit samples, entry 00B
+Main_P04_W00C:	.incbin	"build/wav_pcm/main/Main_P04_W00C.pcm", 0, 53408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W00C_Musette.wav: 53408 8-bit samples, entry 00C
+Main_P04_W00D:	.incbin	"build/wav_pcm/main/Main_P04_W00D.pcm", 0, 36128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W00D_Musette.wav: 36128 8-bit samples, entry 00D
+Main_P04_W00E:	.incbin	"build/wav_pcm/main/Main_P04_W00E.pcm", 0, 32800	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W00E_Musette.wav: 32800 8-bit samples, entry 00E
+Main_P04_W00F:	.incbin	"build/wav_pcm/main/Main_P04_W00F.pcm", 0, 150080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W00F.wav: 75040 16-bit samples, entry 00F
+Main_P04_W010:	.incbin	"build/wav_pcm/main/Main_P04_W010.pcm", 0, 60992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W010_FolkAccordion.wav: 30496 16-bit samples, entry 010
+Main_P04_W011:	.incbin	"build/wav_pcm/main/Main_P04_W011.pcm", 0, 25632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W011_FolkAccordion.wav: 25632 8-bit samples, entry 011
+Main_P04_W012:	.incbin	"build/wav_pcm/main/Main_P04_W012.pcm", 0, 22432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W012_FolkAccordion.wav: 22432 8-bit samples, entry 012
+Main_P04_W013:	.incbin	"build/wav_pcm/main/Main_P04_W013.pcm", 0, 20832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W013_FolkAccordion.wav: 20832 8-bit samples, entry 013
+Main_P04_W014:	.incbin	"build/wav_pcm/main/Main_P04_W014.pcm", 0, 55584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W014_FolkAccordion.wav: 55584 8-bit samples, entry 014
+Main_P04_W015:	.incbin	"build/wav_pcm/main/Main_P04_W015.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W015_FolkAcdnBass.wav: 6144 16-bit samples, entry 015
+Main_P04_W016:	.incbin	"build/wav_pcm/main/Main_P04_W016.pcm", 0, 31744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W016_FolkAcdnBass.wav: 15872 16-bit samples, entry 016
+Main_P04_W017:	.incbin	"build/wav_pcm/main/Main_P04_W017.pcm", 0, 21504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W017_FolkAcdnBass.wav: 10752 16-bit samples, entry 017
+Main_P04_W018:	.incbin	"build/wav_pcm/main/Main_P04_W018.pcm", 0, 39488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W018.wav: 19744 16-bit samples, entry 018
+Main_P04_W019:	.incbin	"build/wav_pcm/main/Main_P04_W019.pcm", 0, 40512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W019.wav: 20256 16-bit samples, entry 019
+Main_P04_W01A:	.incbin	"build/wav_pcm/main/Main_P04_W01A.pcm", 0, 35904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W01A.wav: 17952 16-bit samples, entry 01A
+Main_P04_W01B:	.incbin	"build/wav_pcm/main/Main_P04_W01B.pcm", 0, 36160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W01B.wav: 18080 16-bit samples, entry 01B
+Main_P04_W01C:	.incbin	"build/wav_pcm/main/Main_P04_W01C.pcm", 0, 32576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W01C.wav: 16288 16-bit samples, entry 01C
+Main_P04_W01D:	.incbin	"build/wav_pcm/main/Main_P04_W01D.pcm", 0, 33088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W01D.wav: 16544 16-bit samples, entry 01D
+Main_P04_W01E:	.incbin	"build/wav_pcm/main/Main_P04_W01E.pcm", 0, 32576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W01E.wav: 16288 16-bit samples, entry 01E
+Main_P04_W01F:	.incbin	"build/wav_pcm/main/Main_P04_W01F.pcm", 0, 36160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W01F.wav: 18080 16-bit samples, entry 01F
+Main_P04_W020:	.incbin	"build/wav_pcm/main/Main_P04_W020.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W020.wav: 5120 16-bit samples, entry 020
+Main_P04_W021:	.incbin	"build/wav_pcm/main/Main_P04_W021.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W021.wav: 6144 16-bit samples, entry 021
+Main_P04_W022:	.incbin	"build/wav_pcm/main/Main_P04_W022.pcm", 0, 5376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W022.wav: 2688 16-bit samples, entry 022
+Main_P04_W023:	.incbin	"build/wav_pcm/main/Main_P04_W023.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W023.wav: 2560 16-bit samples, entry 023
+Main_P04_W024:	.incbin	"build/wav_pcm/main/Main_P04_W024.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W024.wav: 1792 16-bit samples, entry 024
+Main_P04_W025:	.incbin	"build/wav_pcm/main/Main_P04_W025.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W025.wav: 4864 16-bit samples, entry 025
+Main_P04_W026:	.incbin	"build/wav_pcm/main/Main_P04_W026.pcm", 0, 70720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W026.wav: 35360 16-bit samples, entry 026
+Main_P04_W027:	.incbin	"build/wav_pcm/main/Main_P04_W027.pcm", 0, 66624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W027.wav: 33312 16-bit samples, entry 027
+Main_P04_W028:	.incbin	"build/wav_pcm/main/Main_P04_W028.pcm", 0, 74816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W028.wav: 37408 16-bit samples, entry 028
+Main_P04_W029:	.incbin	"build/wav_pcm/main/Main_P04_W029.pcm", 0, 65856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W029.wav: 32928 16-bit samples, entry 029
+Main_P04_W02A:	.incbin	"build/wav_pcm/main/Main_P04_W02A.pcm", 0, 80448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W02A.wav: 40224 16-bit samples, entry 02A
+Main_P04_W02B:	.incbin	"build/wav_pcm/main/Main_P04_W02B.pcm", 0, 61248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W02B.wav: 30624 16-bit samples, entry 02B
+Main_P04_W02C:	.incbin	"build/wav_pcm/main/Main_P04_W02C.pcm", 0, 62272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W02C.wav: 31136 16-bit samples, entry 02C
+Main_P04_W02D:	.incbin	"build/wav_pcm/main/Main_P04_W02D.pcm", 0, 58944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W02D.wav: 29472 16-bit samples, entry 02D
+Main_P04_W02E:	.incbin	"build/wav_pcm/main/Main_P04_W02E.pcm", 0, 67904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W02E.wav: 33952 16-bit samples, entry 02E
+Main_P04_W02F:	.incbin	"build/wav_pcm/main/Main_P04_W02F.pcm", 0, 50880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W02F.wav: 25440 16-bit samples, entry 02F
+Main_P04_W030:	.incbin	"build/wav_pcm/main/Main_P04_W030.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W030.wav: 2816 16-bit samples, entry 030
+Main_P04_W031:	.incbin	"build/wav_pcm/main/Main_P04_W031.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W031.wav: 3072 16-bit samples, entry 031
+Main_P04_W032:	.incbin	"build/wav_pcm/main/Main_P04_W032.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W032.wav: 4608 16-bit samples, entry 032
+Main_P04_W033:	.incbin	"build/wav_pcm/main/Main_P04_W033.pcm", 0, 10752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W033.wav: 5376 16-bit samples, entry 033
+Main_P04_W034:	.incbin	"build/wav_pcm/main/Main_P04_W034.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W034.wav: 2432 16-bit samples, entry 034
+Main_P04_W035:	.incbin	"build/wav_pcm/main/Main_P04_W035.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W035.wav: 3840 16-bit samples, entries 035 036 037
+Main_P04_W038:	.incbin	"build/wav_pcm/main/Main_P04_W038.pcm", 0, 35904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W038.wav: 17952 16-bit samples, entry 038
+Main_P04_W039:	.incbin	"build/wav_pcm/main/Main_P04_W039.pcm", 0, 36928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W039.wav: 18464 16-bit samples, entry 039
+Main_P04_W03A:	.incbin	"build/wav_pcm/main/Main_P04_W03A.pcm", 0, 36928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W03A.wav: 18464 16-bit samples, entry 03A
+Main_P04_W03B:	.incbin	"build/wav_pcm/main/Main_P04_W03B.pcm", 0, 38464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W03B.wav: 19232 16-bit samples, entry 03B
+Main_P04_W03C:	.incbin	"build/wav_pcm/main/Main_P04_W03C.pcm", 0, 35904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W03C.wav: 17952 16-bit samples, entry 03C
+Main_P04_W03D:	.incbin	"build/wav_pcm/main/Main_P04_W03D.pcm", 0, 39488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W03D.wav: 19744 16-bit samples, entry 03D
+Main_P04_W03E:	.incbin	"build/wav_pcm/main/Main_P04_W03E.pcm", 0, 36672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W03E.wav: 18336 16-bit samples, entry 03E
+Main_P04_W03F:	.incbin	"build/wav_pcm/main/Main_P04_W03F.pcm", 0, 40512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W03F.wav: 20256 16-bit samples, entry 03F
+Main_P04_W040:	.incbin	"build/wav_pcm/main/Main_P04_W040.pcm", 0, 11840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W040.wav: 5920 16-bit samples, entry 040
+Main_P04_W041:	.incbin	"build/wav_pcm/main/Main_P04_W041.pcm", 0, 10816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W041.wav: 5408 16-bit samples, entry 041
+Main_P04_W042:	.incbin	"build/wav_pcm/main/Main_P04_W042.pcm", 0, 12352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W042.wav: 6176 16-bit samples, entry 042
+Main_P04_W043:	.incbin	"build/wav_pcm/main/Main_P04_W043.pcm", 0, 10304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W043.wav: 5152 16-bit samples, entry 043
+Main_P04_W044:	.incbin	"build/wav_pcm/main/Main_P04_W044.pcm", 0, 11840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W044.wav: 5920 16-bit samples, entry 044
+Main_P04_W045:	.incbin	"build/wav_pcm/main/Main_P04_W045.pcm", 0, 18048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P04_W045.wav: 9024 16-bit samples, entry 045
 Main_P04_Fill:	.space	128, 0xff	; erased fill to the page end
 
 # ==== page 0x05 (selects 0x05000-0x05074): 117 entries (61 16-bit, 56 8-bit), 108 recordings ====
@@ -3279,115 +3282,115 @@ Main_P05_R074:	.word	(Main_P05_W074 - Main_P05) / 32, 0x0a<<8 | 256-2, 0x11<<8 |
 	.word	0x2d<<8 | 256-1, REC_END | 0x05<<8
 	.align	4
 	.align	32
-# recordings
-Main_P05_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa01180, 0xa02580	; census: opaque -- pcm: 2560 16-bit samples, entries 000 001
-Main_P05_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa02580, 0xa03280	; census: opaque -- pcm: 1664 16-bit samples, entry 002
-Main_P05_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa03280, 0xa03980	; census: opaque -- pcm: 896 16-bit samples, entries 003 004
-Main_P05_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa03980, 0xa04100	; census: opaque -- pcm: 960 16-bit samples, entry 005
-Main_P05_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa04100, 0xa05300	; census: opaque -- pcm: 2304 16-bit samples, entry 006
-Main_P05_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa05300, 0xa06400	; census: opaque -- pcm: 2176 16-bit samples, entries 007 008
-Main_P05_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa06400, 0xa08400	; census: opaque -- pcm: 4096 16-bit samples, entries 009 00A
-Main_P05_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa08400, 0xa0a800	; census: opaque -- pcm: 4608 16-bit samples, entry 00B
-Main_P05_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa0a800, 0xa0bf00	; census: opaque -- pcm: 2944 16-bit samples, entry 00C
-Main_P05_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa0bf00, 0xa0db00	; census: opaque -- pcm: 3584 16-bit samples, entry 00D
-Main_P05_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa0db00, 0xa0ec80	; census: opaque -- pcm: 2240 16-bit samples, entries 00E 00F
-Main_P05_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa0ec80, 0xa10380	; census: opaque -- pcm: 5888 8-bit samples, entries 010 011 012
-Main_P05_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa10380, 0xa12180	; census: opaque -- pcm: 3840 16-bit samples, entries 013 014 015
-Main_P05_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa12180, 0xa13780	; census: opaque -- pcm: 2816 16-bit samples, entry 016
-Main_P05_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa13780, 0xa14300	; census: opaque -- pcm: 1472 16-bit samples, entry 017
-Main_P05_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa14300, 0xa15180	; census: opaque -- pcm: 1856 16-bit samples, entry 018
-Main_P05_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa15180, 0xa17680	; census: opaque -- pcm: 4736 16-bit samples, entry 019
-Main_P05_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa17680, 0xa19b80	; census: opaque -- pcm: 4736 16-bit samples, entry 01A
-Main_P05_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa19b80, 0xa1dfc0	; census: opaque -- pcm: 8736 16-bit samples, entry 01B
-Main_P05_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa1dfc0, 0xa1fde0	; census: opaque -- pcm: 7712 8-bit samples, entry 01C
-Main_P05_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa1fde0, 0xa21c80	; census: opaque -- pcm: 7840 8-bit samples, entry 01D
-Main_P05_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa21c80, 0xa240a0	; census: opaque -- pcm: 9248 8-bit samples, entry 01E
-Main_P05_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa240a0, 0xa2a4e0	; census: opaque -- pcm: 12832 16-bit samples, entry 01F
-Main_P05_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa2a4e0, 0xa2dee0	; census: opaque -- pcm: 7424 16-bit samples, entry 020
-Main_P05_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa2dee0, 0xa322e0	; census: opaque -- pcm: 8704 16-bit samples, entry 021
-Main_P05_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa322e0, 0xa372e0	; census: opaque -- pcm: 10240 16-bit samples, entry 022
-Main_P05_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa372e0, 0xa3d2e0	; census: opaque -- pcm: 12288 16-bit samples, entry 023
-Main_P05_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa3d2e0, 0xa408e0	; census: opaque -- pcm: 6912 16-bit samples, entry 024
-Main_P05_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa408e0, 0xa44be0	; census: opaque -- pcm: 8576 16-bit samples, entry 025
-Main_P05_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa44be0, 0xa492e0	; census: opaque -- pcm: 9088 16-bit samples, entry 026
-Main_P05_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa492e0, 0xa4e3e0	; census: opaque -- pcm: 10368 16-bit samples, entry 027
-Main_P05_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa4e3e0, 0xa513e0	; census: opaque -- pcm: 12288 8-bit samples, entry 028
-Main_P05_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa513e0, 0xa52ea0	; census: opaque -- pcm: 6848 8-bit samples, entry 029
-Main_P05_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa52ea0, 0xa548a0	; census: opaque -- pcm: 6656 8-bit samples, entry 02A
-Main_P05_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa548a0, 0xa5b5a0	; census: opaque -- pcm: 13952 16-bit samples, entry 02B
-Main_P05_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa5b5a0, 0xa741e0	; census: opaque -- pcm: 50720 16-bit samples, entry 02C
-Main_P05_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa741e0, 0xa87020	; census: opaque -- pcm: 38688 16-bit samples, entry 02D
-Main_P05_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa87020, 0xa99860	; census: opaque -- pcm: 37920 16-bit samples, entry 02E
-Main_P05_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xa99860, 0xaacea0	; census: opaque -- pcm: 39712 16-bit samples, entry 02F
-Main_P05_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0xaacea0, 0xabf2e0	; census: opaque -- pcm: 37408 16-bit samples, entry 030
-Main_P05_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0xabf2e0, 0xad1b20	; census: opaque -- pcm: 37920 16-bit samples, entry 031
-Main_P05_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0xad1b20, 0xae6a60	; census: opaque -- pcm: 42912 16-bit samples, entry 032
-Main_P05_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0xae6a60, 0xafa5a0	; census: opaque -- pcm: 40352 16-bit samples, entry 033
-Main_P05_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0xafa5a0, 0xb0a0e0	; census: opaque -- pcm: 32160 16-bit samples, entry 034
-Main_P05_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb0a0e0, 0xb0e4e0	; census: opaque -- pcm: 8704 16-bit samples, entry 035
-Main_P05_W036:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb0e4e0, 0xb10ce0	; census: opaque -- pcm: 10240 8-bit samples, entry 036
-Main_P05_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb10ce0, 0xb13ce0	; census: opaque -- pcm: 12288 8-bit samples, entry 037
-Main_P05_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb13ce0, 0xb15760	; census: opaque -- pcm: 6784 8-bit samples, entry 038
-Main_P05_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb15760, 0xb178e0	; census: opaque -- pcm: 8576 8-bit samples, entry 039
-Main_P05_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb178e0, 0xb1a160	; census: opaque -- pcm: 10368 8-bit samples, entry 03A
-Main_P05_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb1a160, 0xb1d0e0	; census: opaque -- pcm: 12160 8-bit samples, entry 03B
-Main_P05_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb1d0e0, 0xb1eb60	; census: opaque -- pcm: 6784 8-bit samples, entry 03C
-Main_P05_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb1eb60, 0xb20ba0	; census: opaque -- pcm: 8256 8-bit samples, entry 03D
-Main_P05_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb20ba0, 0xb2aea0	; census: opaque -- pcm: 20864 16-bit samples, entry 03E
-Main_P05_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb2aea0, 0xb2fcc0	; census: opaque -- pcm: 20000 8-bit samples, entry 03F
-Main_P05_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb2fcc0, 0xb338e0	; census: opaque -- pcm: 15392 8-bit samples, entry 040
-Main_P05_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb338e0, 0xb37800	; census: opaque -- pcm: 16160 8-bit samples, entry 041
-Main_P05_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb37800, 0xb3b6a0	; census: opaque -- pcm: 16032 8-bit samples, entry 042
-Main_P05_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb3b6a0, 0xb3f340	; census: opaque -- pcm: 15520 8-bit samples, entry 043
-Main_P05_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb3f340, 0xb43260	; census: opaque -- pcm: 16160 8-bit samples, entry 044
-Main_P05_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb43260, 0xb47480	; census: opaque -- pcm: 16928 8-bit samples, entry 045
-Main_P05_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb47480, 0xb4de20	; census: opaque -- pcm: 27040 8-bit samples, entry 046
-Main_P05_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb4de20, 0xb56300	; census: opaque -- pcm: 34016 8-bit samples, entry 047
-Main_P05_W048:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb56300, 0xb5d140	; census: opaque -- pcm: 14112 16-bit samples, entry 048
-Main_P05_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb5d140, 0xb64500	; census: opaque -- pcm: 14816 16-bit samples, entry 049
-Main_P05_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb64500, 0xb67720	; census: opaque -- pcm: 12832 8-bit samples, entry 04A
-Main_P05_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb67720, 0xb6cec0	; census: opaque -- pcm: 22432 8-bit samples, entry 04B
-Main_P05_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb6cec0, 0xb73d20	; census: opaque -- pcm: 28256 8-bit samples, entry 04C
-Main_P05_W04D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb73d20, 0xb7c660	; census: opaque -- pcm: 17568 16-bit samples, entry 04D
-Main_P05_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb7c660, 0xb7cb60	; census: opaque -- pcm: 640 16-bit samples, entry 04E
-Main_P05_W04F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb7cb60, 0xb81200	; census: opaque -- pcm: 18080 8-bit samples, entry 04F
-Main_P05_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb81200, 0xb849a0	; census: opaque -- pcm: 14240 8-bit samples, entry 050
-Main_P05_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb849a0, 0xb89100	; census: opaque -- pcm: 18272 8-bit samples, entry 051
-Main_P05_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb89100, 0xb8d760	; census: opaque -- pcm: 18016 8-bit samples, entry 052
-Main_P05_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb8d760, 0xb924e0	; census: opaque -- pcm: 19840 8-bit samples, entry 053
-Main_P05_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb924e0, 0xb995a0	; census: opaque -- pcm: 14432 16-bit samples, entry 054
-Main_P05_W055:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb995a0, 0xb9f9e0	; census: opaque -- pcm: 12832 16-bit samples, entry 055
-Main_P05_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0xb9f9e0, 0xba51a0	; census: opaque -- pcm: 11232 16-bit samples, entry 056
-Main_P05_W057:	.incbin_range "baserom/kn7000_wave_main.bin", 0xba51a0, 0xbade60	; census: opaque -- pcm: 18016 16-bit samples, entry 057
-Main_P05_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbade60, 0xbb7ca0	; census: opaque -- pcm: 20256 16-bit samples, entry 058
-Main_P05_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbb7ca0, 0xbbfae0	; census: opaque -- pcm: 16160 16-bit samples, entry 059
-Main_P05_W05A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbbfae0, 0xbc7220	; census: opaque -- pcm: 15264 16-bit samples, entry 05A
-Main_P05_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbc7220, 0xbce360	; census: opaque -- pcm: 14496 16-bit samples, entry 05B
-Main_P05_W05C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbce360, 0xbd4da0	; census: opaque -- pcm: 13600 16-bit samples, entry 05C
-Main_P05_W05D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbd4da0, 0xbdb1e0	; census: opaque -- pcm: 12832 16-bit samples, entry 05D
-Main_P05_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbdb1e0, 0xbdddc0	; census: opaque -- pcm: 11232 8-bit samples, entry 05E
-Main_P05_W05F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbdddc0, 0xbe09a0	; census: opaque -- pcm: 11232 8-bit samples, entry 05F
-Main_P05_W060:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbe09a0, 0xbe35a0	; census: opaque -- pcm: 11264 8-bit samples, entry 060
-Main_P05_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbe35a0, 0xbe5600	; census: opaque -- pcm: 8288 8-bit samples, entry 061
-Main_P05_W062:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbe5600, 0xbe5b80	; census: opaque -- pcm: 1408 8-bit samples, entry 062
-Main_P05_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbe5b80, 0xbe7b00	; census: opaque -- pcm: 8064 8-bit samples, entry 063
-Main_P05_W064:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbe7b00, 0xbea560	; census: opaque -- pcm: 10848 8-bit samples, entry 064
-Main_P05_W065:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbea560, 0xbea8a0	; census: opaque -- pcm: 832 8-bit samples, entry 065
-Main_P05_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbea8a0, 0xbeac60	; census: opaque -- pcm: 960 8-bit samples, entry 066
-Main_P05_W067:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbeac60, 0xbed4c0	; census: opaque -- pcm: 10336 8-bit samples, entry 067
-Main_P05_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbed4c0, 0xbee740	; census: opaque -- pcm: 4736 8-bit samples, entry 068
-Main_P05_W069:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbee740, 0xbeee40	; census: opaque -- pcm: 1792 8-bit samples, entry 069
-Main_P05_W06A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbeee40, 0xbefe40	; census: opaque -- pcm: 2048 16-bit samples, entry 06A
-Main_P05_W06B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbefe40, 0xbf0440	; census: opaque -- pcm: 1536 8-bit samples, entry 06B
-Main_P05_W06C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbf0440, 0xbf1240	; census: opaque -- pcm: 3584 8-bit samples, entry 06C
-Main_P05_W06D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbf1240, 0xbf3f40	; census: opaque -- pcm: 11520 8-bit samples, entry 06D
-Main_P05_W06E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbf3f40, 0xbf6a80	; census: opaque -- pcm: 11072 8-bit samples, entry 06E
-Main_P05_W06F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbf6a80, 0xbf7dc0	; census: opaque -- pcm: 4928 8-bit samples, entry 06F
-Main_P05_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbf7dc0, 0xbf9b40	; census: opaque -- pcm: 7552 8-bit samples, entry 070
-Main_P05_W071:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbf9b40, 0xbfbfc0	; census: opaque -- pcm: 9344 8-bit samples, entry 071
-Main_P05_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbfbfc0, 0xbfcda0	; census: opaque -- pcm: 3552 8-bit samples, entry 072
-Main_P05_W073:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbfcda0, 0xbfe960	; census: opaque -- pcm: 7104 8-bit samples, entry 073
-Main_P05_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0xbfe960, 0xbffb00	; census: opaque -- pcm: 4512 8-bit samples, entry 074
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P05_W000:	.incbin	"build/wav_pcm/main/Main_P05_W000.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W000.wav: 2560 16-bit samples, entries 000 001
+Main_P05_W002:	.incbin	"build/wav_pcm/main/Main_P05_W002.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W002.wav: 1664 16-bit samples, entry 002
+Main_P05_W003:	.incbin	"build/wav_pcm/main/Main_P05_W003.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W003.wav: 896 16-bit samples, entries 003 004
+Main_P05_W005:	.incbin	"build/wav_pcm/main/Main_P05_W005.pcm", 0, 1920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W005.wav: 960 16-bit samples, entry 005
+Main_P05_W006:	.incbin	"build/wav_pcm/main/Main_P05_W006.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W006.wav: 2304 16-bit samples, entry 006
+Main_P05_W007:	.incbin	"build/wav_pcm/main/Main_P05_W007.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W007.wav: 2176 16-bit samples, entries 007 008
+Main_P05_W009:	.incbin	"build/wav_pcm/main/Main_P05_W009.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W009.wav: 4096 16-bit samples, entries 009 00A
+Main_P05_W00B:	.incbin	"build/wav_pcm/main/Main_P05_W00B.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W00B.wav: 4608 16-bit samples, entry 00B
+Main_P05_W00C:	.incbin	"build/wav_pcm/main/Main_P05_W00C.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W00C.wav: 2944 16-bit samples, entry 00C
+Main_P05_W00D:	.incbin	"build/wav_pcm/main/Main_P05_W00D.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W00D.wav: 3584 16-bit samples, entry 00D
+Main_P05_W00E:	.incbin	"build/wav_pcm/main/Main_P05_W00E.pcm", 0, 4480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W00E.wav: 2240 16-bit samples, entries 00E 00F
+Main_P05_W010:	.incbin	"build/wav_pcm/main/Main_P05_W010.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W010.wav: 5888 8-bit samples, entries 010 011 012
+Main_P05_W013:	.incbin	"build/wav_pcm/main/Main_P05_W013.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W013.wav: 3840 16-bit samples, entries 013 014 015
+Main_P05_W016:	.incbin	"build/wav_pcm/main/Main_P05_W016.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W016.wav: 2816 16-bit samples, entry 016
+Main_P05_W017:	.incbin	"build/wav_pcm/main/Main_P05_W017.pcm", 0, 2944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W017.wav: 1472 16-bit samples, entry 017
+Main_P05_W018:	.incbin	"build/wav_pcm/main/Main_P05_W018.pcm", 0, 3712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W018.wav: 1856 16-bit samples, entry 018
+Main_P05_W019:	.incbin	"build/wav_pcm/main/Main_P05_W019.pcm", 0, 9472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W019.wav: 4736 16-bit samples, entry 019
+Main_P05_W01A:	.incbin	"build/wav_pcm/main/Main_P05_W01A.pcm", 0, 9472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W01A.wav: 4736 16-bit samples, entry 01A
+Main_P05_W01B:	.incbin	"build/wav_pcm/main/Main_P05_W01B.pcm", 0, 17472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W01B.wav: 8736 16-bit samples, entry 01B
+Main_P05_W01C:	.incbin	"build/wav_pcm/main/Main_P05_W01C.pcm", 0, 7712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W01C.wav: 7712 8-bit samples, entry 01C
+Main_P05_W01D:	.incbin	"build/wav_pcm/main/Main_P05_W01D.pcm", 0, 7840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W01D.wav: 7840 8-bit samples, entry 01D
+Main_P05_W01E:	.incbin	"build/wav_pcm/main/Main_P05_W01E.pcm", 0, 9248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W01E.wav: 9248 8-bit samples, entry 01E
+Main_P05_W01F:	.incbin	"build/wav_pcm/main/Main_P05_W01F.pcm", 0, 25664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W01F.wav: 12832 16-bit samples, entry 01F
+Main_P05_W020:	.incbin	"build/wav_pcm/main/Main_P05_W020.pcm", 0, 14848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W020.wav: 7424 16-bit samples, entry 020
+Main_P05_W021:	.incbin	"build/wav_pcm/main/Main_P05_W021.pcm", 0, 17408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W021.wav: 8704 16-bit samples, entry 021
+Main_P05_W022:	.incbin	"build/wav_pcm/main/Main_P05_W022.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W022.wav: 10240 16-bit samples, entry 022
+Main_P05_W023:	.incbin	"build/wav_pcm/main/Main_P05_W023.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W023.wav: 12288 16-bit samples, entry 023
+Main_P05_W024:	.incbin	"build/wav_pcm/main/Main_P05_W024.pcm", 0, 13824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W024.wav: 6912 16-bit samples, entry 024
+Main_P05_W025:	.incbin	"build/wav_pcm/main/Main_P05_W025.pcm", 0, 17152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W025.wav: 8576 16-bit samples, entry 025
+Main_P05_W026:	.incbin	"build/wav_pcm/main/Main_P05_W026.pcm", 0, 18176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W026.wav: 9088 16-bit samples, entry 026
+Main_P05_W027:	.incbin	"build/wav_pcm/main/Main_P05_W027.pcm", 0, 20736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W027.wav: 10368 16-bit samples, entry 027
+Main_P05_W028:	.incbin	"build/wav_pcm/main/Main_P05_W028.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W028.wav: 12288 8-bit samples, entry 028
+Main_P05_W029:	.incbin	"build/wav_pcm/main/Main_P05_W029.pcm", 0, 6848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W029.wav: 6848 8-bit samples, entry 029
+Main_P05_W02A:	.incbin	"build/wav_pcm/main/Main_P05_W02A.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W02A.wav: 6656 8-bit samples, entry 02A
+Main_P05_W02B:	.incbin	"build/wav_pcm/main/Main_P05_W02B.pcm", 0, 27904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W02B.wav: 13952 16-bit samples, entry 02B
+Main_P05_W02C:	.incbin	"build/wav_pcm/main/Main_P05_W02C.pcm", 0, 101440	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W02C.wav: 50720 16-bit samples, entry 02C
+Main_P05_W02D:	.incbin	"build/wav_pcm/main/Main_P05_W02D.pcm", 0, 77376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W02D.wav: 38688 16-bit samples, entry 02D
+Main_P05_W02E:	.incbin	"build/wav_pcm/main/Main_P05_W02E.pcm", 0, 75840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W02E.wav: 37920 16-bit samples, entry 02E
+Main_P05_W02F:	.incbin	"build/wav_pcm/main/Main_P05_W02F.pcm", 0, 79424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W02F.wav: 39712 16-bit samples, entry 02F
+Main_P05_W030:	.incbin	"build/wav_pcm/main/Main_P05_W030.pcm", 0, 74816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W030.wav: 37408 16-bit samples, entry 030
+Main_P05_W031:	.incbin	"build/wav_pcm/main/Main_P05_W031.pcm", 0, 75840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W031.wav: 37920 16-bit samples, entry 031
+Main_P05_W032:	.incbin	"build/wav_pcm/main/Main_P05_W032.pcm", 0, 85824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W032.wav: 42912 16-bit samples, entry 032
+Main_P05_W033:	.incbin	"build/wav_pcm/main/Main_P05_W033.pcm", 0, 80704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W033.wav: 40352 16-bit samples, entry 033
+Main_P05_W034:	.incbin	"build/wav_pcm/main/Main_P05_W034.pcm", 0, 64320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W034.wav: 32160 16-bit samples, entry 034
+Main_P05_W035:	.incbin	"build/wav_pcm/main/Main_P05_W035.pcm", 0, 17408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W035.wav: 8704 16-bit samples, entry 035
+Main_P05_W036:	.incbin	"build/wav_pcm/main/Main_P05_W036.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W036.wav: 10240 8-bit samples, entry 036
+Main_P05_W037:	.incbin	"build/wav_pcm/main/Main_P05_W037.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W037.wav: 12288 8-bit samples, entry 037
+Main_P05_W038:	.incbin	"build/wav_pcm/main/Main_P05_W038.pcm", 0, 6784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W038.wav: 6784 8-bit samples, entry 038
+Main_P05_W039:	.incbin	"build/wav_pcm/main/Main_P05_W039.pcm", 0, 8576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W039.wav: 8576 8-bit samples, entry 039
+Main_P05_W03A:	.incbin	"build/wav_pcm/main/Main_P05_W03A.pcm", 0, 10368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W03A.wav: 10368 8-bit samples, entry 03A
+Main_P05_W03B:	.incbin	"build/wav_pcm/main/Main_P05_W03B.pcm", 0, 12160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W03B.wav: 12160 8-bit samples, entry 03B
+Main_P05_W03C:	.incbin	"build/wav_pcm/main/Main_P05_W03C.pcm", 0, 6784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W03C.wav: 6784 8-bit samples, entry 03C
+Main_P05_W03D:	.incbin	"build/wav_pcm/main/Main_P05_W03D.pcm", 0, 8256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W03D.wav: 8256 8-bit samples, entry 03D
+Main_P05_W03E:	.incbin	"build/wav_pcm/main/Main_P05_W03E.pcm", 0, 41728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W03E.wav: 20864 16-bit samples, entry 03E
+Main_P05_W03F:	.incbin	"build/wav_pcm/main/Main_P05_W03F.pcm", 0, 20000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W03F.wav: 20000 8-bit samples, entry 03F
+Main_P05_W040:	.incbin	"build/wav_pcm/main/Main_P05_W040.pcm", 0, 15392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W040.wav: 15392 8-bit samples, entry 040
+Main_P05_W041:	.incbin	"build/wav_pcm/main/Main_P05_W041.pcm", 0, 16160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W041.wav: 16160 8-bit samples, entry 041
+Main_P05_W042:	.incbin	"build/wav_pcm/main/Main_P05_W042.pcm", 0, 16032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W042.wav: 16032 8-bit samples, entry 042
+Main_P05_W043:	.incbin	"build/wav_pcm/main/Main_P05_W043.pcm", 0, 15520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W043.wav: 15520 8-bit samples, entry 043
+Main_P05_W044:	.incbin	"build/wav_pcm/main/Main_P05_W044.pcm", 0, 16160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W044.wav: 16160 8-bit samples, entry 044
+Main_P05_W045:	.incbin	"build/wav_pcm/main/Main_P05_W045.pcm", 0, 16928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W045.wav: 16928 8-bit samples, entry 045
+Main_P05_W046:	.incbin	"build/wav_pcm/main/Main_P05_W046.pcm", 0, 27040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W046.wav: 27040 8-bit samples, entry 046
+Main_P05_W047:	.incbin	"build/wav_pcm/main/Main_P05_W047.pcm", 0, 34016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W047.wav: 34016 8-bit samples, entry 047
+Main_P05_W048:	.incbin	"build/wav_pcm/main/Main_P05_W048.pcm", 0, 28224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W048.wav: 14112 16-bit samples, entry 048
+Main_P05_W049:	.incbin	"build/wav_pcm/main/Main_P05_W049.pcm", 0, 29632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W049.wav: 14816 16-bit samples, entry 049
+Main_P05_W04A:	.incbin	"build/wav_pcm/main/Main_P05_W04A.pcm", 0, 12832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W04A.wav: 12832 8-bit samples, entry 04A
+Main_P05_W04B:	.incbin	"build/wav_pcm/main/Main_P05_W04B.pcm", 0, 22432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W04B.wav: 22432 8-bit samples, entry 04B
+Main_P05_W04C:	.incbin	"build/wav_pcm/main/Main_P05_W04C.pcm", 0, 28256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W04C.wav: 28256 8-bit samples, entry 04C
+Main_P05_W04D:	.incbin	"build/wav_pcm/main/Main_P05_W04D.pcm", 0, 35136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W04D.wav: 17568 16-bit samples, entry 04D
+Main_P05_W04E:	.incbin	"build/wav_pcm/main/Main_P05_W04E.pcm", 0, 1280	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W04E.wav: 640 16-bit samples, entry 04E
+Main_P05_W04F:	.incbin	"build/wav_pcm/main/Main_P05_W04F.pcm", 0, 18080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W04F_Shakuhachi.wav: 18080 8-bit samples, entry 04F
+Main_P05_W050:	.incbin	"build/wav_pcm/main/Main_P05_W050.pcm", 0, 14240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W050_Shakuhachi.wav: 14240 8-bit samples, entry 050
+Main_P05_W051:	.incbin	"build/wav_pcm/main/Main_P05_W051.pcm", 0, 18272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W051_Shakuhachi.wav: 18272 8-bit samples, entry 051
+Main_P05_W052:	.incbin	"build/wav_pcm/main/Main_P05_W052.pcm", 0, 18016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W052_Shakuhachi.wav: 18016 8-bit samples, entry 052
+Main_P05_W053:	.incbin	"build/wav_pcm/main/Main_P05_W053.pcm", 0, 19840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W053_Shakuhachi.wav: 19840 8-bit samples, entry 053
+Main_P05_W054:	.incbin	"build/wav_pcm/main/Main_P05_W054.pcm", 0, 28864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W054_PennyWhistle.wav: 14432 16-bit samples, entry 054
+Main_P05_W055:	.incbin	"build/wav_pcm/main/Main_P05_W055.pcm", 0, 25664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W055_PennyWhistle.wav: 12832 16-bit samples, entry 055
+Main_P05_W056:	.incbin	"build/wav_pcm/main/Main_P05_W056.pcm", 0, 22464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W056_PennyWhistle.wav: 11232 16-bit samples, entry 056
+Main_P05_W057:	.incbin	"build/wav_pcm/main/Main_P05_W057.pcm", 0, 36032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W057_PennyWhistle.wav: 18016 16-bit samples, entry 057
+Main_P05_W058:	.incbin	"build/wav_pcm/main/Main_P05_W058.pcm", 0, 40512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W058.wav: 20256 16-bit samples, entry 058
+Main_P05_W059:	.incbin	"build/wav_pcm/main/Main_P05_W059.pcm", 0, 32320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W059.wav: 16160 16-bit samples, entry 059
+Main_P05_W05A:	.incbin	"build/wav_pcm/main/Main_P05_W05A.pcm", 0, 30528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W05A.wav: 15264 16-bit samples, entry 05A
+Main_P05_W05B:	.incbin	"build/wav_pcm/main/Main_P05_W05B.pcm", 0, 28992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W05B.wav: 14496 16-bit samples, entry 05B
+Main_P05_W05C:	.incbin	"build/wav_pcm/main/Main_P05_W05C.pcm", 0, 27200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W05C.wav: 13600 16-bit samples, entry 05C
+Main_P05_W05D:	.incbin	"build/wav_pcm/main/Main_P05_W05D.pcm", 0, 25664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W05D.wav: 12832 16-bit samples, entry 05D
+Main_P05_W05E:	.incbin	"build/wav_pcm/main/Main_P05_W05E.pcm", 0, 11232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W05E_WhiteNoise.wav: 11232 8-bit samples, entry 05E
+Main_P05_W05F:	.incbin	"build/wav_pcm/main/Main_P05_W05F.pcm", 0, 11232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W05F.wav: 11232 8-bit samples, entry 05F
+Main_P05_W060:	.incbin	"build/wav_pcm/main/Main_P05_W060.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W060.wav: 11264 8-bit samples, entry 060
+Main_P05_W061:	.incbin	"build/wav_pcm/main/Main_P05_W061.pcm", 0, 8288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W061_SaxBreath2.wav: 8288 8-bit samples, entry 061
+Main_P05_W062:	.incbin	"build/wav_pcm/main/Main_P05_W062.pcm", 0, 1408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W062.wav: 1408 8-bit samples, entry 062
+Main_P05_W063:	.incbin	"build/wav_pcm/main/Main_P05_W063.pcm", 0, 8064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W063_FluteBreath2.wav: 8064 8-bit samples, entry 063
+Main_P05_W064:	.incbin	"build/wav_pcm/main/Main_P05_W064.pcm", 0, 10848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W064.wav: 10848 8-bit samples, entry 064
+Main_P05_W065:	.incbin	"build/wav_pcm/main/Main_P05_W065.pcm", 0, 832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W065_FlKeyClick.wav: 832 8-bit samples, entry 065
+Main_P05_W066:	.incbin	"build/wav_pcm/main/Main_P05_W066.pcm", 0, 960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W066.wav: 960 8-bit samples, entry 066
+Main_P05_W067:	.incbin	"build/wav_pcm/main/Main_P05_W067.pcm", 0, 10336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W067.wav: 10336 8-bit samples, entry 067
+Main_P05_W068:	.incbin	"build/wav_pcm/main/Main_P05_W068.pcm", 0, 4736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W068_HarpsiKeyOff.wav: 4736 8-bit samples, entry 068
+Main_P05_W069:	.incbin	"build/wav_pcm/main/Main_P05_W069.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W069_ClaviKeyOff.wav: 1792 8-bit samples, entry 069
+Main_P05_W06A:	.incbin	"build/wav_pcm/main/Main_P05_W06A.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W06A_SlapShot.wav: 2048 16-bit samples, entry 06A
+Main_P05_W06B:	.incbin	"build/wav_pcm/main/Main_P05_W06B.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W06B.wav: 1536 8-bit samples, entry 06B
+Main_P05_W06C:	.incbin	"build/wav_pcm/main/Main_P05_W06C.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W06C.wav: 3584 8-bit samples, entry 06C
+Main_P05_W06D:	.incbin	"build/wav_pcm/main/Main_P05_W06D.pcm", 0, 11520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W06D.wav: 11520 8-bit samples, entry 06D
+Main_P05_W06E:	.incbin	"build/wav_pcm/main/Main_P05_W06E.pcm", 0, 11072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W06E.wav: 11072 8-bit samples, entry 06E
+Main_P05_W06F:	.incbin	"build/wav_pcm/main/Main_P05_W06F.pcm", 0, 4928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W06F.wav: 4928 8-bit samples, entry 06F
+Main_P05_W070:	.incbin	"build/wav_pcm/main/Main_P05_W070.pcm", 0, 7552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W070.wav: 7552 8-bit samples, entry 070
+Main_P05_W071:	.incbin	"build/wav_pcm/main/Main_P05_W071.pcm", 0, 9344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W071.wav: 9344 8-bit samples, entry 071
+Main_P05_W072:	.incbin	"build/wav_pcm/main/Main_P05_W072.pcm", 0, 3552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W072.wav: 3552 8-bit samples, entry 072
+Main_P05_W073:	.incbin	"build/wav_pcm/main/Main_P05_W073.pcm", 0, 7104	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W073.wav: 7104 8-bit samples, entry 073
+Main_P05_W074:	.incbin	"build/wav_pcm/main/Main_P05_W074.pcm", 0, 4512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P05_W074.wav: 4512 8-bit samples, entry 074
 Main_P05_Fill:	.space	1280, 0xff	; erased fill to the page end
 
 # ==== page 0x06 (selects 0x06000-0x0646B): 1132 entries (988 16-bit, 144 8-bit), 1096 recordings ====
@@ -7132,1103 +7135,1103 @@ Main_P06_R46A:	.word	(Main_P06_W46A - Main_P06) / 32, REC_END
 Main_P06_R46B:	.word	(Main_P06_W46B - Main_P06) / 32, REC_END
 	.align	4
 	.align	32
-# recordings
-Main_P06_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc05c00, 0xc08ce0	; census: opaque -- pcm: 12512 8-bit samples, entry 000
-Main_P06_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc08ce0, 0xc0dc80	; census: opaque -- pcm: 20384 8-bit samples, entry 001
-Main_P06_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc0dc80, 0xc154e0	; census: opaque -- pcm: 30816 8-bit samples, entry 002
-Main_P06_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc154e0, 0xc18700	; census: opaque -- pcm: 12832 8-bit samples, entry 003
-Main_P06_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc18700, 0xc1b820	; census: opaque -- pcm: 12576 8-bit samples, entry 004
-Main_P06_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc1b820, 0xc1e480	; census: opaque -- pcm: 11360 8-bit samples, entry 005
-Main_P06_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc1e480, 0xc241a0	; census: opaque -- pcm: 23840 8-bit samples, entry 006
-Main_P06_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc241a0, 0xc329e0	; census: opaque -- pcm: 29728 16-bit samples, entry 007
-Main_P06_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc329e0, 0xc39c00	; census: opaque -- pcm: 29216 8-bit samples, entry 008
-Main_P06_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc39c00, 0xc409a0	; census: opaque -- pcm: 28064 8-bit samples, entry 009
-Main_P06_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc409a0, 0xc476c0	; census: opaque -- pcm: 27936 8-bit samples, entry 00A
-Main_P06_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc476c0, 0xc4cae0	; census: opaque -- pcm: 21536 8-bit samples, entry 00B
-Main_P06_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc4cae0, 0xc50380	; census: opaque -- pcm: 14496 8-bit samples, entry 00C
-Main_P06_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc50380, 0xc55920	; census: opaque -- pcm: 21920 8-bit samples, entry 00D
-Main_P06_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc55920, 0xc59cc0	; census: opaque -- pcm: 17312 8-bit samples, entry 00E
-Main_P06_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc59cc0, 0xc5e7e0	; census: opaque -- pcm: 19232 8-bit samples, entry 00F
-Main_P06_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc5e7e0, 0xc63940	; census: opaque -- pcm: 20832 8-bit samples, entry 010
-Main_P06_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc63940, 0xc69940	; census: opaque -- pcm: 24576 8-bit samples, entry 011
-Main_P06_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc69940, 0xc6f040	; census: opaque -- pcm: 22272 8-bit samples, entry 012
-Main_P06_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc6f040, 0xc758e0	; census: opaque -- pcm: 26784 8-bit samples, entry 013
-Main_P06_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc758e0, 0xc86920	; census: opaque -- pcm: 34848 16-bit samples, entry 014
-Main_P06_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc86920, 0xc8d2c0	; census: opaque -- pcm: 27040 8-bit samples, entry 015
-Main_P06_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc8d2c0, 0xc942e0	; census: opaque -- pcm: 28704 8-bit samples, entry 016
-Main_P06_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc942e0, 0xc99a00	; census: opaque -- pcm: 22304 8-bit samples, entry 017
-Main_P06_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0xc99a00, 0xca0b20	; census: opaque -- pcm: 28960 8-bit samples, entry 018
-Main_P06_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0xca0b20, 0xca7480	; census: opaque -- pcm: 26976 8-bit samples, entry 019
-Main_P06_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xca7480, 0xcaf820	; census: opaque -- pcm: 33696 8-bit samples, entry 01A
-Main_P06_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcaf820, 0xcb5d40	; census: opaque -- pcm: 25888 8-bit samples, entry 01B
-Main_P06_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcb5d40, 0xcbc3e0	; census: opaque -- pcm: 26272 8-bit samples, entry 01C
-Main_P06_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcbc3e0, 0xcc3a40	; census: opaque -- pcm: 30304 8-bit samples, entry 01D
-Main_P06_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcc3a40, 0xcc9fc0	; census: opaque -- pcm: 25984 8-bit samples, entry 01E
-Main_P06_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcc9fc0, 0xcd1720	; census: opaque -- pcm: 30560 8-bit samples, entry 01F
-Main_P06_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcd1720, 0xcd4cc0	; census: opaque -- pcm: 13728 8-bit samples, entry 020
-Main_P06_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcd4cc0, 0xcd74a0	; census: opaque -- pcm: 10208 8-bit samples, entry 021
-Main_P06_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcd74a0, 0xcd9be0	; census: opaque -- pcm: 10048 8-bit samples, entry 022
-Main_P06_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcd9be0, 0xcdca20	; census: opaque -- pcm: 11840 8-bit samples, entry 023
-Main_P06_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcdca20, 0xce0ce0	; census: opaque -- pcm: 17088 8-bit samples, entry 024
-Main_P06_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0xce0ce0, 0xce4800	; census: opaque -- pcm: 15136 8-bit samples, entry 025
-Main_P06_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0xce4800, 0xce7f20	; census: opaque -- pcm: 14112 8-bit samples, entry 026
-Main_P06_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0xce7f20, 0xceb640	; census: opaque -- pcm: 14112 8-bit samples, entry 027
-Main_P06_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0xceb640, 0xceed60	; census: opaque -- pcm: 14112 8-bit samples, entry 028
-Main_P06_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0xceed60, 0xcf2180	; census: opaque -- pcm: 13344 8-bit samples, entry 029
-Main_P06_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcf2180, 0xcf9120	; census: opaque -- pcm: 28576 8-bit samples, entry 02A
-Main_P06_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xcf9120, 0xd06b60	; census: opaque -- pcm: 27936 16-bit samples, entry 02B
-Main_P06_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd06b60, 0xd0d880	; census: opaque -- pcm: 27936 8-bit samples, entry 02C
-Main_P06_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd0d880, 0xd130e0	; census: opaque -- pcm: 22624 8-bit samples, entry 02D
-Main_P06_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd130e0, 0xd19f40	; census: opaque -- pcm: 28256 8-bit samples, entry 02E
-Main_P06_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd19f40, 0xd1f4a0	; census: opaque -- pcm: 21856 8-bit samples, entry 02F
-Main_P06_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd1f4a0, 0xd247e0	; census: opaque -- pcm: 21312 8-bit samples, entry 030
-Main_P06_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd247e0, 0xd2c5c0	; census: opaque -- pcm: 32224 8-bit samples, entry 031
-Main_P06_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd2c5c0, 0xd2e5c0	; census: opaque -- pcm: 4096 16-bit samples, entries 032 033 034 035 036 037 038
-Main_P06_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd2e5c0, 0xd315c0	; census: opaque -- pcm: 6144 16-bit samples, entry 039
-Main_P06_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd315c0, 0xd331c0	; census: opaque -- pcm: 3584 16-bit samples, entry 03A
-Main_P06_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd331c0, 0xd351c0	; census: opaque -- pcm: 4096 16-bit samples, entry 03B
-Main_P06_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd351c0, 0xd371c0	; census: opaque -- pcm: 4096 16-bit samples, entry 03C
-Main_P06_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd371c0, 0xd399c0	; census: opaque -- pcm: 5120 16-bit samples, entries 03D 03E 03F 040 041 042
-Main_P06_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd399c0, 0xd3bac0	; census: opaque -- pcm: 8448 8-bit samples, entry 043
-Main_P06_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd3bac0, 0xd3c440	; census: opaque -- pcm: 2432 8-bit samples, entry 044
-Main_P06_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd3c440, 0xd3d140	; census: opaque -- pcm: 3328 8-bit samples, entry 045
-Main_P06_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd3d140, 0xd3d920	; census: opaque -- pcm: 2016 8-bit samples, entry 046
-Main_P06_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd3d920, 0xd3fa20	; census: opaque -- pcm: 8448 8-bit samples, entry 047
-Main_P06_W048:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd3fa20, 0xd433a0	; census: opaque -- pcm: 7360 16-bit samples, entry 048
-Main_P06_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd433a0, 0xd45000	; census: opaque -- pcm: 7264 8-bit samples, entry 049
-Main_P06_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd45000, 0xd4ece0	; census: opaque -- pcm: 40160 8-bit samples, entry 04A
-Main_P06_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd4ece0, 0xd51d60	; census: opaque -- pcm: 12416 8-bit samples, entry 04B
-Main_P06_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd51d60, 0xd5fda0	; census: opaque -- pcm: 28704 16-bit samples, entry 04C
-Main_P06_W04D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd5fda0, 0xd612a0	; census: opaque -- pcm: 5376 8-bit samples, entry 04D
-Main_P06_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd612a0, 0xd62ca0	; census: opaque -- pcm: 6656 8-bit samples, entry 04E
-Main_P06_W04F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd62ca0, 0xd65120	; census: opaque -- pcm: 9344 8-bit samples, entry 04F
-Main_P06_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd65120, 0xd65fa0	; census: opaque -- pcm: 1856 16-bit samples, entry 050
-Main_P06_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd65fa0, 0xd66a20	; census: opaque -- pcm: 2688 8-bit samples, entry 051
-Main_P06_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd66a20, 0xd6afe0	; census: opaque -- pcm: 8928 16-bit samples, entry 052
-Main_P06_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd6afe0, 0xd6e860	; census: opaque -- pcm: 7232 16-bit samples, entry 053
-Main_P06_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd6e860, 0xd71c60	; census: opaque -- pcm: 13312 8-bit samples, entry 054
-Main_P06_W055:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd71c60, 0xd74ce0	; census: opaque -- pcm: 12416 8-bit samples, entry 055
-Main_P06_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd74ce0, 0xd75ee0	; census: opaque -- pcm: 4608 8-bit samples, entry 056
-Main_P06_W057:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd75ee0, 0xd764a0	; census: opaque -- pcm: 1472 8-bit samples, entry 057
-Main_P06_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd764a0, 0xd79180	; census: opaque -- pcm: 11488 8-bit samples, entry 058
-Main_P06_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd79180, 0xd7ab80	; census: opaque -- pcm: 6656 8-bit samples, entry 059
-Main_P06_W05A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd7ab80, 0xd80c40	; census: opaque -- pcm: 12384 16-bit samples, entry 05A
-Main_P06_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd80c40, 0xd81c00	; census: opaque -- pcm: 4032 8-bit samples, entry 05B
-Main_P06_W05C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd81c00, 0xd87080	; census: opaque -- pcm: 21632 8-bit samples, entry 05C
-Main_P06_W05D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd87080, 0xd87ec0	; census: opaque -- pcm: 3648 8-bit samples, entry 05D
-Main_P06_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd87ec0, 0xd88480	; census: opaque -- pcm: 1472 8-bit samples, entry 05E
-Main_P06_W05F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd88480, 0xd89b40	; census: opaque -- pcm: 5824 8-bit samples, entry 05F
-Main_P06_W060:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd89b40, 0xd8a3e0	; census: opaque -- pcm: 2208 8-bit samples, entry 060
-Main_P06_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd8a3e0, 0xd8af20	; census: opaque -- pcm: 2880 8-bit samples, entry 061
-Main_P06_W062:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd8af20, 0xd938e0	; census: opaque -- pcm: 17632 16-bit samples, entry 062
-Main_P06_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd938e0, 0xd95160	; census: opaque -- pcm: 3136 16-bit samples, entry 063
-Main_P06_W064:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd95160, 0xd953a0	; census: opaque -- pcm: 576 8-bit samples, entries 064 065
-Main_P06_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd953a0, 0xd95520	; census: opaque -- pcm: 384 8-bit samples, entries 066 067
-Main_P06_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd95520, 0xd955e0	; census: opaque -- pcm: 192 8-bit samples, entries 068 069
-Main_P06_W06A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd955e0, 0xd956a0	; census: opaque -- pcm: 192 8-bit samples, entry 06A
-Main_P06_W06B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd956a0, 0xd969c0	; census: opaque -- pcm: 4896 8-bit samples, entry 06B
-Main_P06_W06C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd969c0, 0xd96a40	; census: opaque -- pcm: 128 8-bit samples, entry 06C
-Main_P06_W06D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd96a40, 0xd96a80	; census: opaque -- pcm: 64 8-bit samples, entry 06D
-Main_P06_W06E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd96a80, 0xd96ac0	; census: opaque -- pcm: 64 8-bit samples, entry 06E
-Main_P06_W06F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd96ac0, 0xd96b00	; census: opaque -- pcm: 64 8-bit samples, entry 06F
-Main_P06_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd96b00, 0xd96bc0	; census: opaque -- pcm: 192 8-bit samples, entries 070 071
-Main_P06_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd96bc0, 0xd98220	; census: opaque -- pcm: 5728 8-bit samples, entries 072 073
-Main_P06_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd98220, 0xd982a0	; census: opaque -- pcm: 128 8-bit samples, entry 074
-Main_P06_W075:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd982a0, 0xd982e0	; census: opaque -- pcm: 64 8-bit samples, entry 075
-Main_P06_W076:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd982e0, 0xd98320	; census: opaque -- pcm: 64 8-bit samples, entry 076
-Main_P06_W077:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd98320, 0xd98360	; census: opaque -- pcm: 64 8-bit samples, entry 077
-Main_P06_W078:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd98360, 0xd98420	; census: opaque -- pcm: 192 8-bit samples, entries 078 079
-Main_P06_W07A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd98420, 0xd99e40	; census: opaque -- pcm: 6688 8-bit samples, entries 07A 07B
-Main_P06_W07C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd99e40, 0xd99ec0	; census: opaque -- pcm: 128 8-bit samples, entry 07C
-Main_P06_W07D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd99ec0, 0xd99fc0	; census: opaque -- pcm: 256 8-bit samples, entries 07D 07E
-Main_P06_W07F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd99fc0, 0xd9a040	; census: opaque -- pcm: 128 8-bit samples, entries 07F 080
-Main_P06_W081:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9a040, 0xd9b6a0	; census: opaque -- pcm: 5728 8-bit samples, entries 081 082 083
-Main_P06_W084:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9b6a0, 0xd9b6e0	; census: opaque -- pcm: 64 8-bit samples, entry 084
-Main_P06_W085:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9b6e0, 0xd9b720	; census: opaque -- pcm: 64 8-bit samples, entry 085
-Main_P06_W086:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9b720, 0xd9b760	; census: opaque -- pcm: 64 8-bit samples, entry 086
-Main_P06_W087:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9b760, 0xd9b7a0	; census: opaque -- pcm: 64 8-bit samples, entry 087
-Main_P06_W088:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9b7a0, 0xd9b7e0	; census: opaque -- pcm: 64 8-bit samples, entry 088
-Main_P06_W089:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9b7e0, 0xd9cf00	; census: opaque -- pcm: 5920 8-bit samples, entries 089 08A 08B
-Main_P06_W08C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9cf00, 0xd9cf40	; census: opaque -- pcm: 64 8-bit samples, entry 08C
-Main_P06_W08D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9cf40, 0xd9cf80	; census: opaque -- pcm: 64 8-bit samples, entry 08D
-Main_P06_W08E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9cf80, 0xd9d000	; census: opaque -- pcm: 128 8-bit samples, entries 08E 08F
-Main_P06_W090:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9d000, 0xd9d040	; census: opaque -- pcm: 64 8-bit samples, entry 090
-Main_P06_W091:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9d040, 0xd9e760	; census: opaque -- pcm: 5920 8-bit samples, entries 091 092 093
-Main_P06_W094:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9e760, 0xd9e7a0	; census: opaque -- pcm: 64 8-bit samples, entry 094
-Main_P06_W095:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9e7a0, 0xd9e7e0	; census: opaque -- pcm: 64 8-bit samples, entry 095
-Main_P06_W096:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9e7e0, 0xd9e820	; census: opaque -- pcm: 64 8-bit samples, entry 096
-Main_P06_W097:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9e820, 0xd9e860	; census: opaque -- pcm: 64 8-bit samples, entry 097
-Main_P06_W098:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9e860, 0xd9e920	; census: opaque -- pcm: 192 8-bit samples, entries 098 099
-Main_P06_W09A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xd9e920, 0xda0140	; census: opaque -- pcm: 6176 8-bit samples, entries 09A 09B
-Main_P06_W09C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda0140, 0xda0180	; census: opaque -- pcm: 64 8-bit samples, entry 09C
-Main_P06_W09D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda0180, 0xda0240	; census: opaque -- pcm: 192 8-bit samples, entries 09D 09E 09F
-Main_P06_W0A0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda0240, 0xda0300	; census: opaque -- pcm: 192 8-bit samples, entries 0A0 0A1
-Main_P06_W0A2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda0300, 0xda19a0	; census: opaque -- pcm: 5792 8-bit samples, entries 0A2 0A3
-Main_P06_W0A4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda19a0, 0xda19e0	; census: opaque -- pcm: 64 8-bit samples, entry 0A4
-Main_P06_W0A5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda19e0, 0xda1a20	; census: opaque -- pcm: 64 8-bit samples, entry 0A5
-Main_P06_W0A6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda1a20, 0xda1b20	; census: opaque -- pcm: 256 8-bit samples, entries 0A6 0A7 0A8 0A9
-Main_P06_W0AA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda1b20, 0xda1b60	; census: opaque -- pcm: 64 8-bit samples, entry 0AA
-Main_P06_W0AB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda1b60, 0xda3200	; census: opaque -- pcm: 5792 8-bit samples, entry 0AB
-Main_P06_W0AC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3200, 0xda3300	; census: opaque -- pcm: 128 16-bit samples, entry 0AC
-Main_P06_W0AD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3300, 0xda3400	; census: opaque -- pcm: 128 16-bit samples, entry 0AD
-Main_P06_W0AE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3400, 0xda3500	; census: opaque -- pcm: 128 16-bit samples, entry 0AE
-Main_P06_W0AF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3500, 0xda3600	; census: opaque -- pcm: 128 16-bit samples, entry 0AF
-Main_P06_W0B0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3600, 0xda3700	; census: opaque -- pcm: 128 16-bit samples, entry 0B0
-Main_P06_W0B1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3700, 0xda3800	; census: opaque -- pcm: 128 16-bit samples, entry 0B1
-Main_P06_W0B2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3800, 0xda3900	; census: opaque -- pcm: 128 16-bit samples, entry 0B2
-Main_P06_W0B3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3900, 0xda3a00	; census: opaque -- pcm: 128 16-bit samples, entry 0B3
-Main_P06_W0B4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3a00, 0xda3b00	; census: opaque -- pcm: 128 16-bit samples, entry 0B4
-Main_P06_W0B5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3b00, 0xda3c00	; census: opaque -- pcm: 128 16-bit samples, entry 0B5
-Main_P06_W0B6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3c00, 0xda3d00	; census: opaque -- pcm: 128 16-bit samples, entry 0B6
-Main_P06_W0B7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3d00, 0xda3e00	; census: opaque -- pcm: 128 16-bit samples, entry 0B7
-Main_P06_W0B8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3e00, 0xda3f00	; census: opaque -- pcm: 128 16-bit samples, entry 0B8
-Main_P06_W0B9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda3f00, 0xda4000	; census: opaque -- pcm: 128 16-bit samples, entry 0B9
-Main_P06_W0BA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4000, 0xda4100	; census: opaque -- pcm: 128 16-bit samples, entry 0BA
-Main_P06_W0BB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4100, 0xda4200	; census: opaque -- pcm: 128 16-bit samples, entry 0BB
-Main_P06_W0BC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4200, 0xda4300	; census: opaque -- pcm: 128 16-bit samples, entry 0BC
-Main_P06_W0BD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4300, 0xda4400	; census: opaque -- pcm: 128 16-bit samples, entry 0BD
-Main_P06_W0BE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4400, 0xda4500	; census: opaque -- pcm: 128 16-bit samples, entry 0BE
-Main_P06_W0BF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4500, 0xda4600	; census: opaque -- pcm: 128 16-bit samples, entry 0BF
-Main_P06_W0C0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4600, 0xda4700	; census: opaque -- pcm: 128 16-bit samples, entry 0C0
-Main_P06_W0C1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4700, 0xda4800	; census: opaque -- pcm: 128 16-bit samples, entry 0C1
-Main_P06_W0C2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4800, 0xda4900	; census: opaque -- pcm: 128 16-bit samples, entry 0C2
-Main_P06_W0C3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4900, 0xda4a00	; census: opaque -- pcm: 128 16-bit samples, entry 0C3
-Main_P06_W0C4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4a00, 0xda4b00	; census: opaque -- pcm: 128 16-bit samples, entry 0C4
-Main_P06_W0C5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4b00, 0xda4c00	; census: opaque -- pcm: 128 16-bit samples, entry 0C5
-Main_P06_W0C6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4c00, 0xda4d00	; census: opaque -- pcm: 128 16-bit samples, entry 0C6
-Main_P06_W0C7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4d00, 0xda4e00	; census: opaque -- pcm: 128 16-bit samples, entry 0C7
-Main_P06_W0C8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4e00, 0xda4f00	; census: opaque -- pcm: 128 16-bit samples, entry 0C8
-Main_P06_W0C9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda4f00, 0xda5000	; census: opaque -- pcm: 128 16-bit samples, entry 0C9
-Main_P06_W0CA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5000, 0xda5100	; census: opaque -- pcm: 128 16-bit samples, entry 0CA
-Main_P06_W0CB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5100, 0xda5200	; census: opaque -- pcm: 128 16-bit samples, entry 0CB
-Main_P06_W0CC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5200, 0xda5300	; census: opaque -- pcm: 128 16-bit samples, entry 0CC
-Main_P06_W0CD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5300, 0xda5400	; census: opaque -- pcm: 128 16-bit samples, entry 0CD
-Main_P06_W0CE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5400, 0xda5500	; census: opaque -- pcm: 128 16-bit samples, entry 0CE
-Main_P06_W0CF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5500, 0xda5600	; census: opaque -- pcm: 128 16-bit samples, entry 0CF
-Main_P06_W0D0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5600, 0xda5700	; census: opaque -- pcm: 128 16-bit samples, entry 0D0
-Main_P06_W0D1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5700, 0xda5800	; census: opaque -- pcm: 128 16-bit samples, entry 0D1
-Main_P06_W0D2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5800, 0xda5900	; census: opaque -- pcm: 128 16-bit samples, entry 0D2
-Main_P06_W0D3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5900, 0xda5a00	; census: opaque -- pcm: 128 16-bit samples, entry 0D3
-Main_P06_W0D4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5a00, 0xda5b00	; census: opaque -- pcm: 128 16-bit samples, entry 0D4
-Main_P06_W0D5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5b00, 0xda5c00	; census: opaque -- pcm: 128 16-bit samples, entry 0D5
-Main_P06_W0D6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5c00, 0xda5d00	; census: opaque -- pcm: 128 16-bit samples, entry 0D6
-Main_P06_W0D7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5d00, 0xda5e00	; census: opaque -- pcm: 128 16-bit samples, entry 0D7
-Main_P06_W0D8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5e00, 0xda5f00	; census: opaque -- pcm: 128 16-bit samples, entry 0D8
-Main_P06_W0D9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda5f00, 0xda6000	; census: opaque -- pcm: 128 16-bit samples, entry 0D9
-Main_P06_W0DA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6000, 0xda6100	; census: opaque -- pcm: 128 16-bit samples, entry 0DA
-Main_P06_W0DB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6100, 0xda6200	; census: opaque -- pcm: 128 16-bit samples, entry 0DB
-Main_P06_W0DC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6200, 0xda6300	; census: opaque -- pcm: 128 16-bit samples, entry 0DC
-Main_P06_W0DD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6300, 0xda6400	; census: opaque -- pcm: 128 16-bit samples, entry 0DD
-Main_P06_W0DE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6400, 0xda6500	; census: opaque -- pcm: 128 16-bit samples, entry 0DE
-Main_P06_W0DF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6500, 0xda6600	; census: opaque -- pcm: 128 16-bit samples, entry 0DF
-Main_P06_W0E0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6600, 0xda6700	; census: opaque -- pcm: 128 16-bit samples, entry 0E0
-Main_P06_W0E1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6700, 0xda6900	; census: opaque -- pcm: 256 16-bit samples, entry 0E1
-Main_P06_W0E2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6900, 0xda6a00	; census: opaque -- pcm: 128 16-bit samples, entry 0E2
-Main_P06_W0E3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6a00, 0xda6b00	; census: opaque -- pcm: 128 16-bit samples, entry 0E3
-Main_P06_W0E4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6b00, 0xda6c00	; census: opaque -- pcm: 128 16-bit samples, entry 0E4
-Main_P06_W0E5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6c00, 0xda6d00	; census: opaque -- pcm: 128 16-bit samples, entry 0E5
-Main_P06_W0E6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6d00, 0xda6e00	; census: opaque -- pcm: 128 16-bit samples, entry 0E6
-Main_P06_W0E7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6e00, 0xda6f00	; census: opaque -- pcm: 128 16-bit samples, entry 0E7
-Main_P06_W0E8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda6f00, 0xda7000	; census: opaque -- pcm: 128 16-bit samples, entry 0E8
-Main_P06_W0E9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7000, 0xda7100	; census: opaque -- pcm: 128 16-bit samples, entry 0E9
-Main_P06_W0EA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7100, 0xda7300	; census: opaque -- pcm: 256 16-bit samples, entry 0EA
-Main_P06_W0EB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7300, 0xda7400	; census: opaque -- pcm: 128 16-bit samples, entry 0EB
-Main_P06_W0EC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7400, 0xda7500	; census: opaque -- pcm: 128 16-bit samples, entry 0EC
-Main_P06_W0ED:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7500, 0xda7600	; census: opaque -- pcm: 128 16-bit samples, entry 0ED
-Main_P06_W0EE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7600, 0xda7700	; census: opaque -- pcm: 128 16-bit samples, entry 0EE
-Main_P06_W0EF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7700, 0xda7800	; census: opaque -- pcm: 128 16-bit samples, entry 0EF
-Main_P06_W0F0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7800, 0xda7900	; census: opaque -- pcm: 128 16-bit samples, entry 0F0
-Main_P06_W0F1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7900, 0xda7a00	; census: opaque -- pcm: 128 16-bit samples, entry 0F1
-Main_P06_W0F2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7a00, 0xda7b00	; census: opaque -- pcm: 128 16-bit samples, entry 0F2
-Main_P06_W0F3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7b00, 0xda7d00	; census: opaque -- pcm: 256 16-bit samples, entry 0F3
-Main_P06_W0F4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7d00, 0xda7e00	; census: opaque -- pcm: 128 16-bit samples, entry 0F4
-Main_P06_W0F5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7e00, 0xda7f00	; census: opaque -- pcm: 128 16-bit samples, entry 0F5
-Main_P06_W0F6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda7f00, 0xda8000	; census: opaque -- pcm: 128 16-bit samples, entry 0F6
-Main_P06_W0F7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8000, 0xda8100	; census: opaque -- pcm: 128 16-bit samples, entry 0F7
-Main_P06_W0F8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8100, 0xda8200	; census: opaque -- pcm: 128 16-bit samples, entry 0F8
-Main_P06_W0F9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8200, 0xda8300	; census: opaque -- pcm: 128 16-bit samples, entry 0F9
-Main_P06_W0FA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8300, 0xda8400	; census: opaque -- pcm: 128 16-bit samples, entry 0FA
-Main_P06_W0FB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8400, 0xda8500	; census: opaque -- pcm: 128 16-bit samples, entry 0FB
-Main_P06_W0FC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8500, 0xda8700	; census: opaque -- pcm: 256 16-bit samples, entry 0FC
-Main_P06_W0FD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8700, 0xda8800	; census: opaque -- pcm: 128 16-bit samples, entry 0FD
-Main_P06_W0FE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8800, 0xda8900	; census: opaque -- pcm: 128 16-bit samples, entry 0FE
-Main_P06_W0FF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8900, 0xda8a00	; census: opaque -- pcm: 128 16-bit samples, entry 0FF
-Main_P06_W100:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8a00, 0xda8b00	; census: opaque -- pcm: 128 16-bit samples, entry 100
-Main_P06_W101:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8b00, 0xda8c00	; census: opaque -- pcm: 128 16-bit samples, entry 101
-Main_P06_W102:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8c00, 0xda8d00	; census: opaque -- pcm: 128 16-bit samples, entry 102
-Main_P06_W103:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8d00, 0xda8e00	; census: opaque -- pcm: 128 16-bit samples, entry 103
-Main_P06_W104:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8e00, 0xda8f00	; census: opaque -- pcm: 128 16-bit samples, entry 104
-Main_P06_W105:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda8f00, 0xda9100	; census: opaque -- pcm: 256 16-bit samples, entry 105
-Main_P06_W106:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9100, 0xda9200	; census: opaque -- pcm: 128 16-bit samples, entry 106
-Main_P06_W107:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9200, 0xda9300	; census: opaque -- pcm: 128 16-bit samples, entry 107
-Main_P06_W108:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9300, 0xda9400	; census: opaque -- pcm: 128 16-bit samples, entry 108
-Main_P06_W109:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9400, 0xda9500	; census: opaque -- pcm: 128 16-bit samples, entry 109
-Main_P06_W10A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9500, 0xda9600	; census: opaque -- pcm: 128 16-bit samples, entry 10A
-Main_P06_W10B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9600, 0xda9700	; census: opaque -- pcm: 128 16-bit samples, entry 10B
-Main_P06_W10C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9700, 0xda9800	; census: opaque -- pcm: 128 16-bit samples, entry 10C
-Main_P06_W10D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9800, 0xda9900	; census: opaque -- pcm: 128 16-bit samples, entry 10D
-Main_P06_W10E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9900, 0xda9b00	; census: opaque -- pcm: 256 16-bit samples, entry 10E
-Main_P06_W10F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9b00, 0xda9c00	; census: opaque -- pcm: 128 16-bit samples, entry 10F
-Main_P06_W110:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9c00, 0xda9d00	; census: opaque -- pcm: 128 16-bit samples, entry 110
-Main_P06_W111:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9d00, 0xda9e00	; census: opaque -- pcm: 128 16-bit samples, entry 111
-Main_P06_W112:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9e00, 0xda9f00	; census: opaque -- pcm: 128 16-bit samples, entry 112
-Main_P06_W113:	.incbin_range "baserom/kn7000_wave_main.bin", 0xda9f00, 0xdaa000	; census: opaque -- pcm: 128 16-bit samples, entry 113
-Main_P06_W114:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa000, 0xdaa100	; census: opaque -- pcm: 128 16-bit samples, entry 114
-Main_P06_W115:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa100, 0xdaa200	; census: opaque -- pcm: 128 16-bit samples, entry 115
-Main_P06_W116:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa200, 0xdaa300	; census: opaque -- pcm: 128 16-bit samples, entry 116
-Main_P06_W117:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa300, 0xdaa500	; census: opaque -- pcm: 256 16-bit samples, entry 117
-Main_P06_W118:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa500, 0xdaa600	; census: opaque -- pcm: 128 16-bit samples, entry 118
-Main_P06_W119:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa600, 0xdaa700	; census: opaque -- pcm: 128 16-bit samples, entry 119
-Main_P06_W11A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa700, 0xdaa800	; census: opaque -- pcm: 128 16-bit samples, entry 11A
-Main_P06_W11B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa800, 0xdaa900	; census: opaque -- pcm: 128 16-bit samples, entry 11B
-Main_P06_W11C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaa900, 0xdaaa00	; census: opaque -- pcm: 128 16-bit samples, entry 11C
-Main_P06_W11D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaaa00, 0xdaab00	; census: opaque -- pcm: 128 16-bit samples, entry 11D
-Main_P06_W11E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaab00, 0xdaac00	; census: opaque -- pcm: 128 16-bit samples, entry 11E
-Main_P06_W11F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaac00, 0xdaad00	; census: opaque -- pcm: 128 16-bit samples, entry 11F
-Main_P06_W120:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaad00, 0xdaaf00	; census: opaque -- pcm: 256 16-bit samples, entry 120
-Main_P06_W121:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaaf00, 0xdab000	; census: opaque -- pcm: 128 16-bit samples, entry 121
-Main_P06_W122:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab000, 0xdab100	; census: opaque -- pcm: 128 16-bit samples, entry 122
-Main_P06_W123:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab100, 0xdab200	; census: opaque -- pcm: 128 16-bit samples, entry 123
-Main_P06_W124:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab200, 0xdab300	; census: opaque -- pcm: 128 16-bit samples, entry 124
-Main_P06_W125:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab300, 0xdab400	; census: opaque -- pcm: 128 16-bit samples, entry 125
-Main_P06_W126:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab400, 0xdab500	; census: opaque -- pcm: 128 16-bit samples, entry 126
-Main_P06_W127:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab500, 0xdab700	; census: opaque -- pcm: 256 16-bit samples, entry 127
-Main_P06_W128:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab700, 0xdab900	; census: opaque -- pcm: 256 16-bit samples, entry 128
-Main_P06_W129:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdab900, 0xdabb00	; census: opaque -- pcm: 256 16-bit samples, entry 129
-Main_P06_W12A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdabb00, 0xdabc00	; census: opaque -- pcm: 128 16-bit samples, entry 12A
-Main_P06_W12B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdabc00, 0xdabd00	; census: opaque -- pcm: 128 16-bit samples, entry 12B
-Main_P06_W12C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdabd00, 0xdabe00	; census: opaque -- pcm: 128 16-bit samples, entry 12C
-Main_P06_W12D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdabe00, 0xdabf00	; census: opaque -- pcm: 128 16-bit samples, entry 12D
-Main_P06_W12E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdabf00, 0xdac000	; census: opaque -- pcm: 128 16-bit samples, entry 12E
-Main_P06_W12F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac000, 0xdac100	; census: opaque -- pcm: 128 16-bit samples, entry 12F
-Main_P06_W130:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac100, 0xdac300	; census: opaque -- pcm: 256 16-bit samples, entry 130
-Main_P06_W131:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac300, 0xdac400	; census: opaque -- pcm: 128 16-bit samples, entry 131
-Main_P06_W132:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac400, 0xdac500	; census: opaque -- pcm: 128 16-bit samples, entry 132
-Main_P06_W133:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac500, 0xdac600	; census: opaque -- pcm: 128 16-bit samples, entry 133
-Main_P06_W134:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac600, 0xdac700	; census: opaque -- pcm: 128 16-bit samples, entry 134
-Main_P06_W135:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac700, 0xdac800	; census: opaque -- pcm: 128 16-bit samples, entry 135
-Main_P06_W136:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac800, 0xdac900	; census: opaque -- pcm: 128 16-bit samples, entry 136
-Main_P06_W137:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdac900, 0xdacb00	; census: opaque -- pcm: 256 16-bit samples, entry 137
-Main_P06_W138:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdacb00, 0xdacc00	; census: opaque -- pcm: 128 16-bit samples, entry 138
-Main_P06_W139:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdacc00, 0xdacd00	; census: opaque -- pcm: 128 16-bit samples, entry 139
-Main_P06_W13A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdacd00, 0xdace00	; census: opaque -- pcm: 128 16-bit samples, entry 13A
-Main_P06_W13B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdace00, 0xdacf00	; census: opaque -- pcm: 128 16-bit samples, entry 13B
-Main_P06_W13C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdacf00, 0xdad000	; census: opaque -- pcm: 128 16-bit samples, entry 13C
-Main_P06_W13D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad000, 0xdad100	; census: opaque -- pcm: 128 16-bit samples, entry 13D
-Main_P06_W13E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad100, 0xdad200	; census: opaque -- pcm: 128 16-bit samples, entry 13E
-Main_P06_W13F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad200, 0xdad300	; census: opaque -- pcm: 128 16-bit samples, entry 13F
-Main_P06_W140:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad300, 0xdad500	; census: opaque -- pcm: 256 16-bit samples, entry 140
-Main_P06_W141:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad500, 0xdad600	; census: opaque -- pcm: 128 16-bit samples, entry 141
-Main_P06_W142:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad600, 0xdad700	; census: opaque -- pcm: 128 16-bit samples, entry 142
-Main_P06_W143:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad700, 0xdad800	; census: opaque -- pcm: 128 16-bit samples, entry 143
-Main_P06_W144:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad800, 0xdad900	; census: opaque -- pcm: 128 16-bit samples, entry 144
-Main_P06_W145:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdad900, 0xdada00	; census: opaque -- pcm: 128 16-bit samples, entry 145
-Main_P06_W146:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdada00, 0xdadb00	; census: opaque -- pcm: 128 16-bit samples, entry 146
-Main_P06_W147:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdadb00, 0xdadc00	; census: opaque -- pcm: 128 16-bit samples, entry 147
-Main_P06_W148:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdadc00, 0xdadd00	; census: opaque -- pcm: 128 16-bit samples, entry 148
-Main_P06_W149:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdadd00, 0xdadf00	; census: opaque -- pcm: 256 16-bit samples, entry 149
-Main_P06_W14A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdadf00, 0xdae000	; census: opaque -- pcm: 128 16-bit samples, entry 14A
-Main_P06_W14B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae000, 0xdae100	; census: opaque -- pcm: 128 16-bit samples, entry 14B
-Main_P06_W14C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae100, 0xdae200	; census: opaque -- pcm: 128 16-bit samples, entry 14C
-Main_P06_W14D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae200, 0xdae300	; census: opaque -- pcm: 128 16-bit samples, entry 14D
-Main_P06_W14E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae300, 0xdae400	; census: opaque -- pcm: 128 16-bit samples, entry 14E
-Main_P06_W14F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae400, 0xdae500	; census: opaque -- pcm: 128 16-bit samples, entry 14F
-Main_P06_W150:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae500, 0xdae600	; census: opaque -- pcm: 128 16-bit samples, entry 150
-Main_P06_W151:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae600, 0xdae700	; census: opaque -- pcm: 128 16-bit samples, entry 151
-Main_P06_W152:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae700, 0xdae900	; census: opaque -- pcm: 256 16-bit samples, entry 152
-Main_P06_W153:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdae900, 0xdaea00	; census: opaque -- pcm: 128 16-bit samples, entry 153
-Main_P06_W154:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaea00, 0xdaeb00	; census: opaque -- pcm: 128 16-bit samples, entry 154
-Main_P06_W155:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaeb00, 0xdaec00	; census: opaque -- pcm: 128 16-bit samples, entry 155
-Main_P06_W156:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaec00, 0xdaed00	; census: opaque -- pcm: 128 16-bit samples, entry 156
-Main_P06_W157:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaed00, 0xdaee00	; census: opaque -- pcm: 128 16-bit samples, entry 157
-Main_P06_W158:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaee00, 0xdaef00	; census: opaque -- pcm: 128 16-bit samples, entry 158
-Main_P06_W159:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaef00, 0xdaf000	; census: opaque -- pcm: 128 16-bit samples, entry 159
-Main_P06_W15A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf000, 0xdaf100	; census: opaque -- pcm: 128 16-bit samples, entry 15A
-Main_P06_W15B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf100, 0xdaf300	; census: opaque -- pcm: 256 16-bit samples, entry 15B
-Main_P06_W15C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf300, 0xdaf400	; census: opaque -- pcm: 128 16-bit samples, entry 15C
-Main_P06_W15D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf400, 0xdaf500	; census: opaque -- pcm: 128 16-bit samples, entry 15D
-Main_P06_W15E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf500, 0xdaf600	; census: opaque -- pcm: 128 16-bit samples, entry 15E
-Main_P06_W15F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf600, 0xdaf700	; census: opaque -- pcm: 128 16-bit samples, entry 15F
-Main_P06_W160:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf700, 0xdaf800	; census: opaque -- pcm: 128 16-bit samples, entry 160
-Main_P06_W161:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf800, 0xdaf900	; census: opaque -- pcm: 128 16-bit samples, entry 161
-Main_P06_W162:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaf900, 0xdafa00	; census: opaque -- pcm: 128 16-bit samples, entry 162
-Main_P06_W163:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdafa00, 0xdafb00	; census: opaque -- pcm: 128 16-bit samples, entry 163
-Main_P06_W164:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdafb00, 0xdafd00	; census: opaque -- pcm: 256 16-bit samples, entry 164
-Main_P06_W165:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdafd00, 0xdafe00	; census: opaque -- pcm: 128 16-bit samples, entry 165
-Main_P06_W166:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdafe00, 0xdaff00	; census: opaque -- pcm: 128 16-bit samples, entry 166
-Main_P06_W167:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdaff00, 0xdb0000	; census: opaque -- pcm: 128 16-bit samples, entry 167
-Main_P06_W168:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0000, 0xdb0100	; census: opaque -- pcm: 128 16-bit samples, entry 168
-Main_P06_W169:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0100, 0xdb0200	; census: opaque -- pcm: 128 16-bit samples, entry 169
-Main_P06_W16A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0200, 0xdb0300	; census: opaque -- pcm: 128 16-bit samples, entry 16A
-Main_P06_W16B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0300, 0xdb0400	; census: opaque -- pcm: 128 16-bit samples, entry 16B
-Main_P06_W16C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0400, 0xdb0500	; census: opaque -- pcm: 128 16-bit samples, entry 16C
-Main_P06_W16D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0500, 0xdb0700	; census: opaque -- pcm: 256 16-bit samples, entry 16D
-Main_P06_W16E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0700, 0xdb0900	; census: opaque -- pcm: 256 16-bit samples, entry 16E
-Main_P06_W16F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0900, 0xdb0a00	; census: opaque -- pcm: 128 16-bit samples, entry 16F
-Main_P06_W170:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0a00, 0xdb0c00	; census: opaque -- pcm: 256 16-bit samples, entry 170
-Main_P06_W171:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0c00, 0xdb0e00	; census: opaque -- pcm: 256 16-bit samples, entry 171
-Main_P06_W172:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb0e00, 0xdb1000	; census: opaque -- pcm: 256 16-bit samples, entry 172
-Main_P06_W173:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1000, 0xdb1100	; census: opaque -- pcm: 128 16-bit samples, entry 173
-Main_P06_W174:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1100, 0xdb1200	; census: opaque -- pcm: 128 16-bit samples, entry 174
-Main_P06_W175:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1200, 0xdb1300	; census: opaque -- pcm: 128 16-bit samples, entry 175
-Main_P06_W176:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1300, 0xdb1400	; census: opaque -- pcm: 128 16-bit samples, entry 176
-Main_P06_W177:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1400, 0xdb1500	; census: opaque -- pcm: 128 16-bit samples, entry 177
-Main_P06_W178:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1500, 0xdb1600	; census: opaque -- pcm: 128 16-bit samples, entry 178
-Main_P06_W179:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1600, 0xdb1800	; census: opaque -- pcm: 256 16-bit samples, entry 179
-Main_P06_W17A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1800, 0xdb1a00	; census: opaque -- pcm: 256 16-bit samples, entry 17A
-Main_P06_W17B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1a00, 0xdb1c00	; census: opaque -- pcm: 256 16-bit samples, entry 17B
-Main_P06_W17C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1c00, 0xdb1d00	; census: opaque -- pcm: 128 16-bit samples, entry 17C
-Main_P06_W17D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1d00, 0xdb1e00	; census: opaque -- pcm: 128 16-bit samples, entry 17D
-Main_P06_W17E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1e00, 0xdb1f00	; census: opaque -- pcm: 128 16-bit samples, entry 17E
-Main_P06_W17F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb1f00, 0xdb2000	; census: opaque -- pcm: 128 16-bit samples, entry 17F
-Main_P06_W180:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2000, 0xdb2100	; census: opaque -- pcm: 128 16-bit samples, entry 180
-Main_P06_W181:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2100, 0xdb2200	; census: opaque -- pcm: 128 16-bit samples, entry 181
-Main_P06_W182:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2200, 0xdb2400	; census: opaque -- pcm: 256 16-bit samples, entry 182
-Main_P06_W183:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2400, 0xdb2600	; census: opaque -- pcm: 256 16-bit samples, entry 183
-Main_P06_W184:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2600, 0xdb2700	; census: opaque -- pcm: 128 16-bit samples, entry 184
-Main_P06_W185:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2700, 0xdb2800	; census: opaque -- pcm: 128 16-bit samples, entry 185
-Main_P06_W186:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2800, 0xdb2900	; census: opaque -- pcm: 128 16-bit samples, entry 186
-Main_P06_W187:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2900, 0xdb2a00	; census: opaque -- pcm: 128 16-bit samples, entry 187
-Main_P06_W188:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2a00, 0xdb2b00	; census: opaque -- pcm: 128 16-bit samples, entry 188
-Main_P06_W189:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2b00, 0xdb2c00	; census: opaque -- pcm: 128 16-bit samples, entry 189
-Main_P06_W18A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2c00, 0xdb2d00	; census: opaque -- pcm: 128 16-bit samples, entry 18A
-Main_P06_W18B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2d00, 0xdb2e00	; census: opaque -- pcm: 128 16-bit samples, entry 18B
-Main_P06_W18C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2e00, 0xdb2f00	; census: opaque -- pcm: 128 16-bit samples, entry 18C
-Main_P06_W18D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb2f00, 0xdb3000	; census: opaque -- pcm: 128 16-bit samples, entry 18D
-Main_P06_W18E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3000, 0xdb3100	; census: opaque -- pcm: 128 16-bit samples, entry 18E
-Main_P06_W18F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3100, 0xdb3200	; census: opaque -- pcm: 128 16-bit samples, entry 18F
-Main_P06_W190:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3200, 0xdb3300	; census: opaque -- pcm: 128 16-bit samples, entry 190
-Main_P06_W191:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3300, 0xdb3500	; census: opaque -- pcm: 256 16-bit samples, entry 191
-Main_P06_W192:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3500, 0xdb3600	; census: opaque -- pcm: 128 16-bit samples, entry 192
-Main_P06_W193:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3600, 0xdb3700	; census: opaque -- pcm: 128 16-bit samples, entry 193
-Main_P06_W194:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3700, 0xdb3800	; census: opaque -- pcm: 128 16-bit samples, entry 194
-Main_P06_W195:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3800, 0xdb3900	; census: opaque -- pcm: 128 16-bit samples, entry 195
-Main_P06_W196:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3900, 0xdb3a00	; census: opaque -- pcm: 128 16-bit samples, entry 196
-Main_P06_W197:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3a00, 0xdb3b00	; census: opaque -- pcm: 128 16-bit samples, entry 197
-Main_P06_W198:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3b00, 0xdb3c00	; census: opaque -- pcm: 128 16-bit samples, entry 198
-Main_P06_W199:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3c00, 0xdb3d00	; census: opaque -- pcm: 128 16-bit samples, entry 199
-Main_P06_W19A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3d00, 0xdb3f00	; census: opaque -- pcm: 256 16-bit samples, entry 19A
-Main_P06_W19B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb3f00, 0xdb4100	; census: opaque -- pcm: 256 16-bit samples, entry 19B
-Main_P06_W19C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4100, 0xdb4200	; census: opaque -- pcm: 128 16-bit samples, entry 19C
-Main_P06_W19D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4200, 0xdb4600	; census: opaque -- pcm: 512 16-bit samples, entry 19D
-Main_P06_W19E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4600, 0xdb4800	; census: opaque -- pcm: 256 16-bit samples, entry 19E
-Main_P06_W19F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4800, 0xdb4a00	; census: opaque -- pcm: 256 16-bit samples, entry 19F
-Main_P06_W1A0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4a00, 0xdb4b00	; census: opaque -- pcm: 128 16-bit samples, entry 1A0
-Main_P06_W1A1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4b00, 0xdb4c00	; census: opaque -- pcm: 128 16-bit samples, entry 1A1
-Main_P06_W1A2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4c00, 0xdb4d00	; census: opaque -- pcm: 128 16-bit samples, entry 1A2
-Main_P06_W1A3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4d00, 0xdb4e00	; census: opaque -- pcm: 128 16-bit samples, entry 1A3
-Main_P06_W1A4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4e00, 0xdb4f00	; census: opaque -- pcm: 128 16-bit samples, entry 1A4
-Main_P06_W1A5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb4f00, 0xdb5000	; census: opaque -- pcm: 128 16-bit samples, entry 1A5
-Main_P06_W1A6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5000, 0xdb5200	; census: opaque -- pcm: 256 16-bit samples, entry 1A6
-Main_P06_W1A7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5200, 0xdb5400	; census: opaque -- pcm: 256 16-bit samples, entry 1A7
-Main_P06_W1A8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5400, 0xdb5600	; census: opaque -- pcm: 256 16-bit samples, entry 1A8
-Main_P06_W1A9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5600, 0xdb5700	; census: opaque -- pcm: 128 16-bit samples, entry 1A9
-Main_P06_W1AA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5700, 0xdb5800	; census: opaque -- pcm: 128 16-bit samples, entry 1AA
-Main_P06_W1AB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5800, 0xdb5900	; census: opaque -- pcm: 128 16-bit samples, entry 1AB
-Main_P06_W1AC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5900, 0xdb5a00	; census: opaque -- pcm: 128 16-bit samples, entry 1AC
-Main_P06_W1AD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5a00, 0xdb5b00	; census: opaque -- pcm: 128 16-bit samples, entry 1AD
-Main_P06_W1AE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5b00, 0xdb5c00	; census: opaque -- pcm: 128 16-bit samples, entry 1AE
-Main_P06_W1AF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5c00, 0xdb5e00	; census: opaque -- pcm: 256 16-bit samples, entry 1AF
-Main_P06_W1B0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb5e00, 0xdb6000	; census: opaque -- pcm: 256 16-bit samples, entry 1B0
-Main_P06_W1B1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6000, 0xdb6100	; census: opaque -- pcm: 128 16-bit samples, entry 1B1
-Main_P06_W1B2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6100, 0xdb6200	; census: opaque -- pcm: 128 16-bit samples, entry 1B2
-Main_P06_W1B3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6200, 0xdb6300	; census: opaque -- pcm: 128 16-bit samples, entry 1B3
-Main_P06_W1B4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6300, 0xdb6400	; census: opaque -- pcm: 128 16-bit samples, entry 1B4
-Main_P06_W1B5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6400, 0xdb6500	; census: opaque -- pcm: 128 16-bit samples, entry 1B5
-Main_P06_W1B6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6500, 0xdb6600	; census: opaque -- pcm: 128 16-bit samples, entry 1B6
-Main_P06_W1B7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6600, 0xdb6700	; census: opaque -- pcm: 128 16-bit samples, entry 1B7
-Main_P06_W1B8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6700, 0xdb6800	; census: opaque -- pcm: 128 16-bit samples, entry 1B8
-Main_P06_W1B9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6800, 0xdb6900	; census: opaque -- pcm: 128 16-bit samples, entry 1B9
-Main_P06_W1BA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6900, 0xdb6a00	; census: opaque -- pcm: 128 16-bit samples, entry 1BA
-Main_P06_W1BB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6a00, 0xdb6b00	; census: opaque -- pcm: 128 16-bit samples, entry 1BB
-Main_P06_W1BC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6b00, 0xdb6c00	; census: opaque -- pcm: 128 16-bit samples, entry 1BC
-Main_P06_W1BD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6c00, 0xdb6d00	; census: opaque -- pcm: 128 16-bit samples, entry 1BD
-Main_P06_W1BE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6d00, 0xdb6f00	; census: opaque -- pcm: 256 16-bit samples, entry 1BE
-Main_P06_W1BF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb6f00, 0xdb7000	; census: opaque -- pcm: 128 16-bit samples, entry 1BF
-Main_P06_W1C0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7000, 0xdb7100	; census: opaque -- pcm: 128 16-bit samples, entry 1C0
-Main_P06_W1C1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7100, 0xdb7200	; census: opaque -- pcm: 128 16-bit samples, entry 1C1
-Main_P06_W1C2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7200, 0xdb7300	; census: opaque -- pcm: 128 16-bit samples, entry 1C2
-Main_P06_W1C3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7300, 0xdb7400	; census: opaque -- pcm: 128 16-bit samples, entry 1C3
-Main_P06_W1C4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7400, 0xdb7500	; census: opaque -- pcm: 128 16-bit samples, entry 1C4
-Main_P06_W1C5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7500, 0xdb7600	; census: opaque -- pcm: 128 16-bit samples, entry 1C5
-Main_P06_W1C6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7600, 0xdb7700	; census: opaque -- pcm: 128 16-bit samples, entry 1C6
-Main_P06_W1C7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7700, 0xdb7b00	; census: opaque -- pcm: 512 16-bit samples, entry 1C7
-Main_P06_W1C8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7b00, 0xdb7f00	; census: opaque -- pcm: 512 16-bit samples, entry 1C8
-Main_P06_W1C9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb7f00, 0xdb8100	; census: opaque -- pcm: 256 16-bit samples, entry 1C9
-Main_P06_W1CA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb8100, 0xdb8500	; census: opaque -- pcm: 512 16-bit samples, entry 1CA
-Main_P06_W1CB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb8500, 0xdb8900	; census: opaque -- pcm: 512 16-bit samples, entry 1CB
-Main_P06_W1CC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb8900, 0xdb8d00	; census: opaque -- pcm: 512 16-bit samples, entry 1CC
-Main_P06_W1CD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb8d00, 0xdb9100	; census: opaque -- pcm: 512 16-bit samples, entry 1CD
-Main_P06_W1CE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9100, 0xdb9300	; census: opaque -- pcm: 256 16-bit samples, entry 1CE
-Main_P06_W1CF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9300, 0xdb9500	; census: opaque -- pcm: 256 16-bit samples, entry 1CF
-Main_P06_W1D0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9500, 0xdb9700	; census: opaque -- pcm: 256 16-bit samples, entry 1D0
-Main_P06_W1D1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9700, 0xdb9900	; census: opaque -- pcm: 256 16-bit samples, entry 1D1
-Main_P06_W1D2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9900, 0xdb9b00	; census: opaque -- pcm: 256 16-bit samples, entry 1D2
-Main_P06_W1D3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9b00, 0xdb9f00	; census: opaque -- pcm: 512 16-bit samples, entry 1D3
-Main_P06_W1D4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdb9f00, 0xdba300	; census: opaque -- pcm: 512 16-bit samples, entry 1D4
-Main_P06_W1D5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdba300, 0xdba700	; census: opaque -- pcm: 512 16-bit samples, entry 1D5
-Main_P06_W1D6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdba700, 0xdbab00	; census: opaque -- pcm: 512 16-bit samples, entry 1D6
-Main_P06_W1D7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbab00, 0xdbad00	; census: opaque -- pcm: 256 16-bit samples, entry 1D7
-Main_P06_W1D8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbad00, 0xdbaf00	; census: opaque -- pcm: 256 16-bit samples, entry 1D8
-Main_P06_W1D9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbaf00, 0xdbb100	; census: opaque -- pcm: 256 16-bit samples, entry 1D9
-Main_P06_W1DA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbb100, 0xdbb300	; census: opaque -- pcm: 256 16-bit samples, entry 1DA
-Main_P06_W1DB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbb300, 0xdbb500	; census: opaque -- pcm: 256 16-bit samples, entry 1DB
-Main_P06_W1DC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbb500, 0xdbb900	; census: opaque -- pcm: 512 16-bit samples, entry 1DC
-Main_P06_W1DD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbb900, 0xdbbb00	; census: opaque -- pcm: 256 16-bit samples, entry 1DD
-Main_P06_W1DE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbbb00, 0xdbbd00	; census: opaque -- pcm: 256 16-bit samples, entry 1DE
-Main_P06_W1DF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbbd00, 0xdbbf00	; census: opaque -- pcm: 256 16-bit samples, entry 1DF
-Main_P06_W1E0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbbf00, 0xdbc100	; census: opaque -- pcm: 256 16-bit samples, entry 1E0
-Main_P06_W1E1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbc100, 0xdbc300	; census: opaque -- pcm: 256 16-bit samples, entry 1E1
-Main_P06_W1E2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbc300, 0xdbc500	; census: opaque -- pcm: 256 16-bit samples, entry 1E2
-Main_P06_W1E3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbc500, 0xdbc700	; census: opaque -- pcm: 256 16-bit samples, entry 1E3
-Main_P06_W1E4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbc700, 0xdbc800	; census: opaque -- pcm: 128 16-bit samples, entry 1E4
-Main_P06_W1E5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbc800, 0xdbca00	; census: opaque -- pcm: 256 16-bit samples, entry 1E5
-Main_P06_W1E6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbca00, 0xdbcc00	; census: opaque -- pcm: 256 16-bit samples, entry 1E6
-Main_P06_W1E7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbcc00, 0xdbcd00	; census: opaque -- pcm: 128 16-bit samples, entry 1E7
-Main_P06_W1E8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbcd00, 0xdbcf00	; census: opaque -- pcm: 256 16-bit samples, entry 1E8
-Main_P06_W1E9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbcf00, 0xdbd100	; census: opaque -- pcm: 256 16-bit samples, entry 1E9
-Main_P06_W1EA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbd100, 0xdbd200	; census: opaque -- pcm: 128 16-bit samples, entry 1EA
-Main_P06_W1EB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbd200, 0xdbd400	; census: opaque -- pcm: 256 16-bit samples, entry 1EB
-Main_P06_W1EC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbd400, 0xdbd600	; census: opaque -- pcm: 256 16-bit samples, entry 1EC
-Main_P06_W1ED:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbd600, 0xdbd800	; census: opaque -- pcm: 256 16-bit samples, entry 1ED
-Main_P06_W1EE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbd800, 0xdbda00	; census: opaque -- pcm: 256 16-bit samples, entry 1EE
-Main_P06_W1EF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbda00, 0xdbdc00	; census: opaque -- pcm: 256 16-bit samples, entry 1EF
-Main_P06_W1F0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbdc00, 0xdbdd00	; census: opaque -- pcm: 128 16-bit samples, entry 1F0
-Main_P06_W1F1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbdd00, 0xdbde00	; census: opaque -- pcm: 128 16-bit samples, entry 1F1
-Main_P06_W1F2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbde00, 0xdbdf00	; census: opaque -- pcm: 128 16-bit samples, entry 1F2
-Main_P06_W1F3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbdf00, 0xdbe000	; census: opaque -- pcm: 128 16-bit samples, entry 1F3
-Main_P06_W1F4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbe000, 0xdbe400	; census: opaque -- pcm: 512 16-bit samples, entry 1F4
-Main_P06_W1F5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbe400, 0xdbe800	; census: opaque -- pcm: 512 16-bit samples, entry 1F5
-Main_P06_W1F6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbe800, 0xdbea00	; census: opaque -- pcm: 256 16-bit samples, entry 1F6
-Main_P06_W1F7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbea00, 0xdbee00	; census: opaque -- pcm: 512 16-bit samples, entry 1F7
-Main_P06_W1F8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbee00, 0xdbf200	; census: opaque -- pcm: 512 16-bit samples, entry 1F8
-Main_P06_W1F9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbf200, 0xdbf600	; census: opaque -- pcm: 512 16-bit samples, entry 1F9
-Main_P06_W1FA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbf600, 0xdbf800	; census: opaque -- pcm: 256 16-bit samples, entry 1FA
-Main_P06_W1FB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbf800, 0xdbfa00	; census: opaque -- pcm: 256 16-bit samples, entry 1FB
-Main_P06_W1FC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbfa00, 0xdbfc00	; census: opaque -- pcm: 256 16-bit samples, entry 1FC
-Main_P06_W1FD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbfc00, 0xdbfe00	; census: opaque -- pcm: 256 16-bit samples, entry 1FD
-Main_P06_W1FE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdbfe00, 0xdc0000	; census: opaque -- pcm: 256 16-bit samples, entry 1FE
-Main_P06_W1FF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc0000, 0xdc0200	; census: opaque -- pcm: 256 16-bit samples, entry 1FF
-Main_P06_W200:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc0200, 0xdc0600	; census: opaque -- pcm: 512 16-bit samples, entry 200
-Main_P06_W201:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc0600, 0xdc0a00	; census: opaque -- pcm: 512 16-bit samples, entry 201
-Main_P06_W202:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc0a00, 0xdc0e00	; census: opaque -- pcm: 512 16-bit samples, entry 202
-Main_P06_W203:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc0e00, 0xdc1000	; census: opaque -- pcm: 256 16-bit samples, entry 203
-Main_P06_W204:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1000, 0xdc1200	; census: opaque -- pcm: 256 16-bit samples, entry 204
-Main_P06_W205:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1200, 0xdc1400	; census: opaque -- pcm: 256 16-bit samples, entry 205
-Main_P06_W206:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1400, 0xdc1600	; census: opaque -- pcm: 256 16-bit samples, entry 206
-Main_P06_W207:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1600, 0xdc1800	; census: opaque -- pcm: 256 16-bit samples, entry 207
-Main_P06_W208:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1800, 0xdc1a00	; census: opaque -- pcm: 256 16-bit samples, entry 208
-Main_P06_W209:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1a00, 0xdc1c00	; census: opaque -- pcm: 256 16-bit samples, entry 209
-Main_P06_W20A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1c00, 0xdc1e00	; census: opaque -- pcm: 256 16-bit samples, entry 20A
-Main_P06_W20B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1e00, 0xdc1f00	; census: opaque -- pcm: 128 16-bit samples, entry 20B
-Main_P06_W20C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc1f00, 0xdc2100	; census: opaque -- pcm: 256 16-bit samples, entry 20C
-Main_P06_W20D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2100, 0xdc2300	; census: opaque -- pcm: 256 16-bit samples, entry 20D
-Main_P06_W20E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2300, 0xdc2400	; census: opaque -- pcm: 128 16-bit samples, entry 20E
-Main_P06_W20F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2400, 0xdc2600	; census: opaque -- pcm: 256 16-bit samples, entry 20F
-Main_P06_W210:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2600, 0xdc2800	; census: opaque -- pcm: 256 16-bit samples, entry 210
-Main_P06_W211:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2800, 0xdc2900	; census: opaque -- pcm: 128 16-bit samples, entry 211
-Main_P06_W212:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2900, 0xdc2b00	; census: opaque -- pcm: 256 16-bit samples, entry 212
-Main_P06_W213:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2b00, 0xdc2d00	; census: opaque -- pcm: 256 16-bit samples, entry 213
-Main_P06_W214:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2d00, 0xdc2e00	; census: opaque -- pcm: 128 16-bit samples, entry 214
-Main_P06_W215:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc2e00, 0xdc3000	; census: opaque -- pcm: 256 16-bit samples, entry 215
-Main_P06_W216:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3000, 0xdc3200	; census: opaque -- pcm: 256 16-bit samples, entry 216
-Main_P06_W217:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3200, 0xdc3300	; census: opaque -- pcm: 128 16-bit samples, entry 217
-Main_P06_W218:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3300, 0xdc3500	; census: opaque -- pcm: 256 16-bit samples, entry 218
-Main_P06_W219:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3500, 0xdc3700	; census: opaque -- pcm: 256 16-bit samples, entry 219
-Main_P06_W21A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3700, 0xdc3900	; census: opaque -- pcm: 256 16-bit samples, entry 21A
-Main_P06_W21B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3900, 0xdc3b00	; census: opaque -- pcm: 256 16-bit samples, entry 21B
-Main_P06_W21C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3b00, 0xdc3d00	; census: opaque -- pcm: 256 16-bit samples, entry 21C
-Main_P06_W21D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3d00, 0xdc3f00	; census: opaque -- pcm: 256 16-bit samples, entry 21D
-Main_P06_W21E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc3f00, 0xdc4100	; census: opaque -- pcm: 256 16-bit samples, entry 21E
-Main_P06_W21F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc4100, 0xdc4200	; census: opaque -- pcm: 128 16-bit samples, entry 21F
-Main_P06_W220:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc4200, 0xdc4300	; census: opaque -- pcm: 128 16-bit samples, entry 220
-Main_P06_W221:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc4300, 0xdc4700	; census: opaque -- pcm: 512 16-bit samples, entry 221
-Main_P06_W222:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc4700, 0xdc4b00	; census: opaque -- pcm: 512 16-bit samples, entry 222
-Main_P06_W223:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc4b00, 0xdc4d00	; census: opaque -- pcm: 256 16-bit samples, entry 223
-Main_P06_W224:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc4d00, 0xdc5100	; census: opaque -- pcm: 512 16-bit samples, entry 224
-Main_P06_W225:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc5100, 0xdc5500	; census: opaque -- pcm: 512 16-bit samples, entry 225
-Main_P06_W226:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc5500, 0xdc5900	; census: opaque -- pcm: 512 16-bit samples, entry 226
-Main_P06_W227:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc5900, 0xdc5d00	; census: opaque -- pcm: 512 16-bit samples, entry 227
-Main_P06_W228:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc5d00, 0xdc6100	; census: opaque -- pcm: 512 16-bit samples, entry 228
-Main_P06_W229:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc6100, 0xdc6300	; census: opaque -- pcm: 256 16-bit samples, entry 229
-Main_P06_W22A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc6300, 0xdc6500	; census: opaque -- pcm: 256 16-bit samples, entry 22A
-Main_P06_W22B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc6500, 0xdc6700	; census: opaque -- pcm: 256 16-bit samples, entry 22B
-Main_P06_W22C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc6700, 0xdc6900	; census: opaque -- pcm: 256 16-bit samples, entry 22C
-Main_P06_W22D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc6900, 0xdc6d00	; census: opaque -- pcm: 512 16-bit samples, entry 22D
-Main_P06_W22E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc6d00, 0xdc7100	; census: opaque -- pcm: 512 16-bit samples, entry 22E
-Main_P06_W22F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc7100, 0xdc7500	; census: opaque -- pcm: 512 16-bit samples, entry 22F
-Main_P06_W230:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc7500, 0xdc7900	; census: opaque -- pcm: 512 16-bit samples, entry 230
-Main_P06_W231:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc7900, 0xdc7d00	; census: opaque -- pcm: 512 16-bit samples, entry 231
-Main_P06_W232:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc7d00, 0xdc7f00	; census: opaque -- pcm: 256 16-bit samples, entry 232
-Main_P06_W233:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc7f00, 0xdc8100	; census: opaque -- pcm: 256 16-bit samples, entry 233
-Main_P06_W234:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc8100, 0xdc8300	; census: opaque -- pcm: 256 16-bit samples, entry 234
-Main_P06_W235:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc8300, 0xdc8500	; census: opaque -- pcm: 256 16-bit samples, entry 235
-Main_P06_W236:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc8500, 0xdc8900	; census: opaque -- pcm: 512 16-bit samples, entry 236
-Main_P06_W237:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc8900, 0xdc8d00	; census: opaque -- pcm: 512 16-bit samples, entry 237
-Main_P06_W238:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc8d00, 0xdc8f00	; census: opaque -- pcm: 256 16-bit samples, entry 238
-Main_P06_W239:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc8f00, 0xdc9300	; census: opaque -- pcm: 512 16-bit samples, entry 239
-Main_P06_W23A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc9300, 0xdc9500	; census: opaque -- pcm: 256 16-bit samples, entry 23A
-Main_P06_W23B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc9500, 0xdc9700	; census: opaque -- pcm: 256 16-bit samples, entry 23B
-Main_P06_W23C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc9700, 0xdc9b00	; census: opaque -- pcm: 512 16-bit samples, entry 23C
-Main_P06_W23D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc9b00, 0xdc9d00	; census: opaque -- pcm: 256 16-bit samples, entry 23D
-Main_P06_W23E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc9d00, 0xdc9e00	; census: opaque -- pcm: 128 16-bit samples, entry 23E
-Main_P06_W23F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdc9e00, 0xdca200	; census: opaque -- pcm: 512 16-bit samples, entry 23F
-Main_P06_W240:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdca200, 0xdca400	; census: opaque -- pcm: 256 16-bit samples, entry 240
-Main_P06_W241:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdca400, 0xdca500	; census: opaque -- pcm: 128 16-bit samples, entry 241
-Main_P06_W242:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdca500, 0xdca700	; census: opaque -- pcm: 256 16-bit samples, entry 242
-Main_P06_W243:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdca700, 0xdca900	; census: opaque -- pcm: 256 16-bit samples, entry 243
-Main_P06_W244:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdca900, 0xdcab00	; census: opaque -- pcm: 256 16-bit samples, entry 244
-Main_P06_W245:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcab00, 0xdcad00	; census: opaque -- pcm: 256 16-bit samples, entry 245
-Main_P06_W246:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcad00, 0xdcaf00	; census: opaque -- pcm: 256 16-bit samples, entry 246
-Main_P06_W247:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcaf00, 0xdcb100	; census: opaque -- pcm: 256 16-bit samples, entry 247
-Main_P06_W248:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb100, 0xdcb300	; census: opaque -- pcm: 256 16-bit samples, entry 248
-Main_P06_W249:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb300, 0xdcb400	; census: opaque -- pcm: 128 16-bit samples, entry 249
-Main_P06_W24A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb400, 0xdcb500	; census: opaque -- pcm: 128 16-bit samples, entry 24A
-Main_P06_W24B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb500, 0xdcb600	; census: opaque -- pcm: 128 16-bit samples, entry 24B
-Main_P06_W24C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb600, 0xdcb700	; census: opaque -- pcm: 128 16-bit samples, entry 24C
-Main_P06_W24D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb700, 0xdcb800	; census: opaque -- pcm: 128 16-bit samples, entry 24D
-Main_P06_W24E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcb800, 0xdcbc00	; census: opaque -- pcm: 512 16-bit samples, entry 24E
-Main_P06_W24F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcbc00, 0xdcc000	; census: opaque -- pcm: 512 16-bit samples, entry 24F
-Main_P06_W250:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcc000, 0xdcc400	; census: opaque -- pcm: 512 16-bit samples, entry 250
-Main_P06_W251:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcc400, 0xdcc800	; census: opaque -- pcm: 512 16-bit samples, entry 251
-Main_P06_W252:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcc800, 0xdccc00	; census: opaque -- pcm: 512 16-bit samples, entry 252
-Main_P06_W253:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdccc00, 0xdcd000	; census: opaque -- pcm: 512 16-bit samples, entry 253
-Main_P06_W254:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcd000, 0xdcd200	; census: opaque -- pcm: 256 16-bit samples, entry 254
-Main_P06_W255:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcd200, 0xdcd400	; census: opaque -- pcm: 256 16-bit samples, entry 255
-Main_P06_W256:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcd400, 0xdcd600	; census: opaque -- pcm: 256 16-bit samples, entry 256
-Main_P06_W257:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcd600, 0xdcda00	; census: opaque -- pcm: 512 16-bit samples, entry 257
-Main_P06_W258:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcda00, 0xdcde00	; census: opaque -- pcm: 512 16-bit samples, entry 258
-Main_P06_W259:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcde00, 0xdce200	; census: opaque -- pcm: 512 16-bit samples, entry 259
-Main_P06_W25A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdce200, 0xdce600	; census: opaque -- pcm: 512 16-bit samples, entry 25A
-Main_P06_W25B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdce600, 0xdcea00	; census: opaque -- pcm: 512 16-bit samples, entry 25B
-Main_P06_W25C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcea00, 0xdcee00	; census: opaque -- pcm: 512 16-bit samples, entry 25C
-Main_P06_W25D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcee00, 0xdcf000	; census: opaque -- pcm: 256 16-bit samples, entry 25D
-Main_P06_W25E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcf000, 0xdcf200	; census: opaque -- pcm: 256 16-bit samples, entry 25E
-Main_P06_W25F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcf200, 0xdcf400	; census: opaque -- pcm: 256 16-bit samples, entry 25F
-Main_P06_W260:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcf400, 0xdcf800	; census: opaque -- pcm: 512 16-bit samples, entry 260
-Main_P06_W261:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcf800, 0xdcfc00	; census: opaque -- pcm: 512 16-bit samples, entry 261
-Main_P06_W262:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdcfc00, 0xdd0000	; census: opaque -- pcm: 512 16-bit samples, entry 262
-Main_P06_W263:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd0000, 0xdd0400	; census: opaque -- pcm: 512 16-bit samples, entry 263
-Main_P06_W264:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd0400, 0xdd0800	; census: opaque -- pcm: 512 16-bit samples, entry 264
-Main_P06_W265:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd0800, 0xdd0c00	; census: opaque -- pcm: 512 16-bit samples, entry 265
-Main_P06_W266:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd0c00, 0xdd0e00	; census: opaque -- pcm: 256 16-bit samples, entry 266
-Main_P06_W267:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd0e00, 0xdd1000	; census: opaque -- pcm: 256 16-bit samples, entry 267
-Main_P06_W268:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd1000, 0xdd1200	; census: opaque -- pcm: 256 16-bit samples, entry 268
-Main_P06_W269:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd1200, 0xdd1600	; census: opaque -- pcm: 512 16-bit samples, entry 269
-Main_P06_W26A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd1600, 0xdd1a00	; census: opaque -- pcm: 512 16-bit samples, entry 26A
-Main_P06_W26B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd1a00, 0xdd1e00	; census: opaque -- pcm: 512 16-bit samples, entry 26B
-Main_P06_W26C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd1e00, 0xdd2200	; census: opaque -- pcm: 512 16-bit samples, entry 26C
-Main_P06_W26D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd2200, 0xdd2600	; census: opaque -- pcm: 512 16-bit samples, entry 26D
-Main_P06_W26E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd2600, 0xdd2800	; census: opaque -- pcm: 256 16-bit samples, entry 26E
-Main_P06_W26F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd2800, 0xdd2a00	; census: opaque -- pcm: 256 16-bit samples, entry 26F
-Main_P06_W270:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd2a00, 0xdd2c00	; census: opaque -- pcm: 256 16-bit samples, entry 270
-Main_P06_W271:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd2c00, 0xdd2e00	; census: opaque -- pcm: 256 16-bit samples, entry 271
-Main_P06_W272:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd2e00, 0xdd3200	; census: opaque -- pcm: 512 16-bit samples, entry 272
-Main_P06_W273:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd3200, 0xdd3600	; census: opaque -- pcm: 512 16-bit samples, entry 273
-Main_P06_W274:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd3600, 0xdd3a00	; census: opaque -- pcm: 512 16-bit samples, entry 274
-Main_P06_W275:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd3a00, 0xdd3c00	; census: opaque -- pcm: 256 16-bit samples, entry 275
-Main_P06_W276:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd3c00, 0xdd3e00	; census: opaque -- pcm: 256 16-bit samples, entry 276
-Main_P06_W277:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd3e00, 0xdd4000	; census: opaque -- pcm: 256 16-bit samples, entry 277
-Main_P06_W278:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd4000, 0xdd4200	; census: opaque -- pcm: 256 16-bit samples, entry 278
-Main_P06_W279:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd4200, 0xdd4400	; census: opaque -- pcm: 256 16-bit samples, entry 279
-Main_P06_W27A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd4400, 0xdd4600	; census: opaque -- pcm: 256 16-bit samples, entry 27A
-Main_P06_W27B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd4600, 0xdd4a00	; census: opaque -- pcm: 512 16-bit samples, entry 27B
-Main_P06_W27C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd4a00, 0xdd4e00	; census: opaque -- pcm: 512 16-bit samples, entry 27C
-Main_P06_W27D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd4e00, 0xdd5200	; census: opaque -- pcm: 512 16-bit samples, entry 27D
-Main_P06_W27E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5200, 0xdd5400	; census: opaque -- pcm: 256 16-bit samples, entry 27E
-Main_P06_W27F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5400, 0xdd5600	; census: opaque -- pcm: 256 16-bit samples, entry 27F
-Main_P06_W280:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5600, 0xdd5800	; census: opaque -- pcm: 256 16-bit samples, entry 280
-Main_P06_W281:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5800, 0xdd5a00	; census: opaque -- pcm: 256 16-bit samples, entry 281
-Main_P06_W282:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5a00, 0xdd5c00	; census: opaque -- pcm: 256 16-bit samples, entry 282
-Main_P06_W283:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5c00, 0xdd5e00	; census: opaque -- pcm: 256 16-bit samples, entry 283
-Main_P06_W284:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd5e00, 0xdd6200	; census: opaque -- pcm: 512 16-bit samples, entry 284
-Main_P06_W285:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd6200, 0xdd6600	; census: opaque -- pcm: 512 16-bit samples, entry 285
-Main_P06_W286:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd6600, 0xdd6a00	; census: opaque -- pcm: 512 16-bit samples, entry 286
-Main_P06_W287:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd6a00, 0xdd6c00	; census: opaque -- pcm: 256 16-bit samples, entry 287
-Main_P06_W288:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd6c00, 0xdd6e00	; census: opaque -- pcm: 256 16-bit samples, entry 288
-Main_P06_W289:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd6e00, 0xdd7000	; census: opaque -- pcm: 256 16-bit samples, entry 289
-Main_P06_W28A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7000, 0xdd7200	; census: opaque -- pcm: 256 16-bit samples, entry 28A
-Main_P06_W28B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7200, 0xdd7400	; census: opaque -- pcm: 256 16-bit samples, entry 28B
-Main_P06_W28C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7400, 0xdd7600	; census: opaque -- pcm: 256 16-bit samples, entry 28C
-Main_P06_W28D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7600, 0xdd7a00	; census: opaque -- pcm: 512 16-bit samples, entry 28D
-Main_P06_W28E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7a00, 0xdd7c00	; census: opaque -- pcm: 256 16-bit samples, entry 28E
-Main_P06_W28F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7c00, 0xdd7e00	; census: opaque -- pcm: 256 16-bit samples, entry 28F
-Main_P06_W290:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd7e00, 0xdd8000	; census: opaque -- pcm: 256 16-bit samples, entry 290
-Main_P06_W291:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8000, 0xdd8200	; census: opaque -- pcm: 256 16-bit samples, entry 291
-Main_P06_W292:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8200, 0xdd8300	; census: opaque -- pcm: 128 16-bit samples, entry 292
-Main_P06_W293:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8300, 0xdd8400	; census: opaque -- pcm: 128 16-bit samples, entry 293
-Main_P06_W294:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8400, 0xdd8500	; census: opaque -- pcm: 128 16-bit samples, entry 294
-Main_P06_W295:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8500, 0xdd8600	; census: opaque -- pcm: 128 16-bit samples, entry 295
-Main_P06_W296:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8600, 0xdd8800	; census: opaque -- pcm: 256 16-bit samples, entry 296
-Main_P06_W297:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8800, 0xdd8a00	; census: opaque -- pcm: 256 16-bit samples, entry 297
-Main_P06_W298:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8a00, 0xdd8c00	; census: opaque -- pcm: 256 16-bit samples, entry 298
-Main_P06_W299:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8c00, 0xdd8e00	; census: opaque -- pcm: 256 16-bit samples, entry 299
-Main_P06_W29A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8e00, 0xdd8f00	; census: opaque -- pcm: 128 16-bit samples, entry 29A
-Main_P06_W29B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd8f00, 0xdd9000	; census: opaque -- pcm: 128 16-bit samples, entry 29B
-Main_P06_W29C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9000, 0xdd9100	; census: opaque -- pcm: 128 16-bit samples, entry 29C
-Main_P06_W29D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9100, 0xdd9200	; census: opaque -- pcm: 128 16-bit samples, entry 29D
-Main_P06_W29E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9200, 0xdd9300	; census: opaque -- pcm: 128 16-bit samples, entry 29E
-Main_P06_W29F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9300, 0xdd9400	; census: opaque -- pcm: 128 16-bit samples, entry 29F
-Main_P06_W2A0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9400, 0xdd9500	; census: opaque -- pcm: 128 16-bit samples, entry 2A0
-Main_P06_W2A1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9500, 0xdd9600	; census: opaque -- pcm: 128 16-bit samples, entry 2A1
-Main_P06_W2A2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9600, 0xdd9700	; census: opaque -- pcm: 128 16-bit samples, entry 2A2
-Main_P06_W2A3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9700, 0xdd9800	; census: opaque -- pcm: 128 16-bit samples, entry 2A3
-Main_P06_W2A4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9800, 0xdd9900	; census: opaque -- pcm: 128 16-bit samples, entry 2A4
-Main_P06_W2A5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9900, 0xdd9a00	; census: opaque -- pcm: 128 16-bit samples, entry 2A5
-Main_P06_W2A6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9a00, 0xdd9b00	; census: opaque -- pcm: 128 16-bit samples, entry 2A6
-Main_P06_W2A7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9b00, 0xdd9c00	; census: opaque -- pcm: 128 16-bit samples, entry 2A7
-Main_P06_W2A8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9c00, 0xdd9d00	; census: opaque -- pcm: 128 16-bit samples, entry 2A8
-Main_P06_W2A9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9d00, 0xdd9e00	; census: opaque -- pcm: 128 16-bit samples, entry 2A9
-Main_P06_W2AA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9e00, 0xdd9f00	; census: opaque -- pcm: 128 16-bit samples, entry 2AA
-Main_P06_W2AB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdd9f00, 0xdda000	; census: opaque -- pcm: 128 16-bit samples, entry 2AB
-Main_P06_W2AC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda000, 0xdda100	; census: opaque -- pcm: 128 16-bit samples, entry 2AC
-Main_P06_W2AD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda100, 0xdda200	; census: opaque -- pcm: 128 16-bit samples, entry 2AD
-Main_P06_W2AE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda200, 0xdda400	; census: opaque -- pcm: 256 16-bit samples, entry 2AE
-Main_P06_W2AF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda400, 0xdda500	; census: opaque -- pcm: 128 16-bit samples, entry 2AF
-Main_P06_W2B0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda500, 0xdda600	; census: opaque -- pcm: 128 16-bit samples, entry 2B0
-Main_P06_W2B1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda600, 0xdda800	; census: opaque -- pcm: 256 16-bit samples, entry 2B1
-Main_P06_W2B2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdda800, 0xddaa00	; census: opaque -- pcm: 256 16-bit samples, entry 2B2
-Main_P06_W2B3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddaa00, 0xddab00	; census: opaque -- pcm: 128 16-bit samples, entry 2B3
-Main_P06_W2B4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddab00, 0xddad00	; census: opaque -- pcm: 256 16-bit samples, entry 2B4
-Main_P06_W2B5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddad00, 0xddaf00	; census: opaque -- pcm: 256 16-bit samples, entry 2B5
-Main_P06_W2B6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddaf00, 0xddb000	; census: opaque -- pcm: 128 16-bit samples, entry 2B6
-Main_P06_W2B7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddb000, 0xddb200	; census: opaque -- pcm: 256 16-bit samples, entry 2B7
-Main_P06_W2B8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddb200, 0xddb400	; census: opaque -- pcm: 256 16-bit samples, entry 2B8
-Main_P06_W2B9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddb400, 0xddb500	; census: opaque -- pcm: 128 16-bit samples, entry 2B9
-Main_P06_W2BA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddb500, 0xddb700	; census: opaque -- pcm: 256 16-bit samples, entry 2BA
-Main_P06_W2BB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddb700, 0xddb900	; census: opaque -- pcm: 256 16-bit samples, entry 2BB
-Main_P06_W2BC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddb900, 0xddba00	; census: opaque -- pcm: 128 16-bit samples, entry 2BC
-Main_P06_W2BD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddba00, 0xddbc00	; census: opaque -- pcm: 256 16-bit samples, entry 2BD
-Main_P06_W2BE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddbc00, 0xddbe00	; census: opaque -- pcm: 256 16-bit samples, entry 2BE
-Main_P06_W2BF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddbe00, 0xddc000	; census: opaque -- pcm: 256 16-bit samples, entry 2BF
-Main_P06_W2C0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddc000, 0xddc200	; census: opaque -- pcm: 256 16-bit samples, entry 2C0
-Main_P06_W2C1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddc200, 0xddc400	; census: opaque -- pcm: 256 16-bit samples, entry 2C1
-Main_P06_W2C2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddc400, 0xddc600	; census: opaque -- pcm: 256 16-bit samples, entry 2C2
-Main_P06_W2C3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddc600, 0xddc800	; census: opaque -- pcm: 256 16-bit samples, entry 2C3
-Main_P06_W2C4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddc800, 0xddca00	; census: opaque -- pcm: 256 16-bit samples, entry 2C4
-Main_P06_W2C5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddca00, 0xddcb00	; census: opaque -- pcm: 128 16-bit samples, entry 2C5
-Main_P06_W2C6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddcb00, 0xddcc00	; census: opaque -- pcm: 128 16-bit samples, entry 2C6
-Main_P06_W2C7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddcc00, 0xddcd00	; census: opaque -- pcm: 128 16-bit samples, entry 2C7
-Main_P06_W2C8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddcd00, 0xddce00	; census: opaque -- pcm: 128 16-bit samples, entry 2C8
-Main_P06_W2C9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddce00, 0xddcf00	; census: opaque -- pcm: 128 16-bit samples, entry 2C9
-Main_P06_W2CA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddcf00, 0xddd000	; census: opaque -- pcm: 128 16-bit samples, entry 2CA
-Main_P06_W2CB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd000, 0xddd100	; census: opaque -- pcm: 128 16-bit samples, entry 2CB
-Main_P06_W2CC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd100, 0xddd200	; census: opaque -- pcm: 128 16-bit samples, entry 2CC
-Main_P06_W2CD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd200, 0xddd300	; census: opaque -- pcm: 128 16-bit samples, entry 2CD
-Main_P06_W2CE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd300, 0xddd400	; census: opaque -- pcm: 128 16-bit samples, entry 2CE
-Main_P06_W2CF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd400, 0xddd500	; census: opaque -- pcm: 128 16-bit samples, entry 2CF
-Main_P06_W2D0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd500, 0xddd600	; census: opaque -- pcm: 128 16-bit samples, entry 2D0
-Main_P06_W2D1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd600, 0xddd700	; census: opaque -- pcm: 128 16-bit samples, entry 2D1
-Main_P06_W2D2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd700, 0xddd800	; census: opaque -- pcm: 128 16-bit samples, entry 2D2
-Main_P06_W2D3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd800, 0xddd900	; census: opaque -- pcm: 128 16-bit samples, entry 2D3
-Main_P06_W2D4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddd900, 0xddda00	; census: opaque -- pcm: 128 16-bit samples, entry 2D4
-Main_P06_W2D5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddda00, 0xdddb00	; census: opaque -- pcm: 128 16-bit samples, entry 2D5
-Main_P06_W2D6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdddb00, 0xdddc00	; census: opaque -- pcm: 128 16-bit samples, entry 2D6
-Main_P06_W2D7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdddc00, 0xdddd00	; census: opaque -- pcm: 128 16-bit samples, entry 2D7
-Main_P06_W2D8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdddd00, 0xddde00	; census: opaque -- pcm: 128 16-bit samples, entry 2D8
-Main_P06_W2D9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddde00, 0xdddf00	; census: opaque -- pcm: 128 16-bit samples, entry 2D9
-Main_P06_W2DA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdddf00, 0xdde000	; census: opaque -- pcm: 128 16-bit samples, entry 2DA
-Main_P06_W2DB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde000, 0xdde100	; census: opaque -- pcm: 128 16-bit samples, entry 2DB
-Main_P06_W2DC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde100, 0xdde200	; census: opaque -- pcm: 128 16-bit samples, entry 2DC
-Main_P06_W2DD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde200, 0xdde300	; census: opaque -- pcm: 128 16-bit samples, entry 2DD
-Main_P06_W2DE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde300, 0xdde400	; census: opaque -- pcm: 128 16-bit samples, entry 2DE
-Main_P06_W2DF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde400, 0xdde500	; census: opaque -- pcm: 128 16-bit samples, entry 2DF
-Main_P06_W2E0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde500, 0xdde600	; census: opaque -- pcm: 128 16-bit samples, entry 2E0
-Main_P06_W2E1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde600, 0xdde700	; census: opaque -- pcm: 128 16-bit samples, entry 2E1
-Main_P06_W2E2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde700, 0xdde800	; census: opaque -- pcm: 128 16-bit samples, entry 2E2
-Main_P06_W2E3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde800, 0xdde900	; census: opaque -- pcm: 128 16-bit samples, entry 2E3
-Main_P06_W2E4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdde900, 0xddea00	; census: opaque -- pcm: 128 16-bit samples, entry 2E4
-Main_P06_W2E5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddea00, 0xddeb00	; census: opaque -- pcm: 128 16-bit samples, entry 2E5
-Main_P06_W2E6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddeb00, 0xddec00	; census: opaque -- pcm: 128 16-bit samples, entry 2E6
-Main_P06_W2E7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddec00, 0xdded00	; census: opaque -- pcm: 128 16-bit samples, entry 2E7
-Main_P06_W2E8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdded00, 0xddee00	; census: opaque -- pcm: 128 16-bit samples, entry 2E8
-Main_P06_W2E9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddee00, 0xddef00	; census: opaque -- pcm: 128 16-bit samples, entry 2E9
-Main_P06_W2EA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddef00, 0xddf000	; census: opaque -- pcm: 128 16-bit samples, entry 2EA
-Main_P06_W2EB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf000, 0xddf100	; census: opaque -- pcm: 128 16-bit samples, entry 2EB
-Main_P06_W2EC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf100, 0xddf200	; census: opaque -- pcm: 128 16-bit samples, entry 2EC
-Main_P06_W2ED:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf200, 0xddf300	; census: opaque -- pcm: 128 16-bit samples, entry 2ED
-Main_P06_W2EE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf300, 0xddf400	; census: opaque -- pcm: 128 16-bit samples, entry 2EE
-Main_P06_W2EF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf400, 0xddf500	; census: opaque -- pcm: 128 16-bit samples, entry 2EF
-Main_P06_W2F0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf500, 0xddf600	; census: opaque -- pcm: 128 16-bit samples, entry 2F0
-Main_P06_W2F1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf600, 0xddf700	; census: opaque -- pcm: 128 16-bit samples, entry 2F1
-Main_P06_W2F2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf700, 0xddf800	; census: opaque -- pcm: 128 16-bit samples, entry 2F2
-Main_P06_W2F3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf800, 0xddf900	; census: opaque -- pcm: 128 16-bit samples, entry 2F3
-Main_P06_W2F4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddf900, 0xddfa00	; census: opaque -- pcm: 128 16-bit samples, entry 2F4
-Main_P06_W2F5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddfa00, 0xddfb00	; census: opaque -- pcm: 128 16-bit samples, entry 2F5
-Main_P06_W2F6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddfb00, 0xddfc00	; census: opaque -- pcm: 128 16-bit samples, entry 2F6
-Main_P06_W2F7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddfc00, 0xddfd00	; census: opaque -- pcm: 128 16-bit samples, entry 2F7
-Main_P06_W2F8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddfd00, 0xddfe00	; census: opaque -- pcm: 128 16-bit samples, entry 2F8
-Main_P06_W2F9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddfe00, 0xddff00	; census: opaque -- pcm: 128 16-bit samples, entry 2F9
-Main_P06_W2FA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xddff00, 0xde0000	; census: opaque -- pcm: 128 16-bit samples, entry 2FA
-Main_P06_W2FB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0000, 0xde0100	; census: opaque -- pcm: 128 16-bit samples, entry 2FB
-Main_P06_W2FC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0100, 0xde0200	; census: opaque -- pcm: 128 16-bit samples, entry 2FC
-Main_P06_W2FD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0200, 0xde0300	; census: opaque -- pcm: 128 16-bit samples, entry 2FD
-Main_P06_W2FE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0300, 0xde0400	; census: opaque -- pcm: 128 16-bit samples, entry 2FE
-Main_P06_W2FF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0400, 0xde0500	; census: opaque -- pcm: 128 16-bit samples, entry 2FF
-Main_P06_W300:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0500, 0xde0600	; census: opaque -- pcm: 128 16-bit samples, entry 300
-Main_P06_W301:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0600, 0xde0700	; census: opaque -- pcm: 128 16-bit samples, entry 301
-Main_P06_W302:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0700, 0xde0800	; census: opaque -- pcm: 128 16-bit samples, entry 302
-Main_P06_W303:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0800, 0xde0900	; census: opaque -- pcm: 128 16-bit samples, entry 303
-Main_P06_W304:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0900, 0xde0a00	; census: opaque -- pcm: 128 16-bit samples, entry 304
-Main_P06_W305:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0a00, 0xde0b00	; census: opaque -- pcm: 128 16-bit samples, entry 305
-Main_P06_W306:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0b00, 0xde0c00	; census: opaque -- pcm: 128 16-bit samples, entry 306
-Main_P06_W307:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0c00, 0xde0d00	; census: opaque -- pcm: 128 16-bit samples, entry 307
-Main_P06_W308:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0d00, 0xde0e00	; census: opaque -- pcm: 128 16-bit samples, entry 308
-Main_P06_W309:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0e00, 0xde0f00	; census: opaque -- pcm: 128 16-bit samples, entry 309
-Main_P06_W30A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde0f00, 0xde1000	; census: opaque -- pcm: 128 16-bit samples, entry 30A
-Main_P06_W30B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1000, 0xde1100	; census: opaque -- pcm: 128 16-bit samples, entry 30B
-Main_P06_W30C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1100, 0xde1200	; census: opaque -- pcm: 128 16-bit samples, entry 30C
-Main_P06_W30D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1200, 0xde1300	; census: opaque -- pcm: 128 16-bit samples, entry 30D
-Main_P06_W30E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1300, 0xde1400	; census: opaque -- pcm: 128 16-bit samples, entry 30E
-Main_P06_W30F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1400, 0xde1500	; census: opaque -- pcm: 128 16-bit samples, entry 30F
-Main_P06_W310:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1500, 0xde1600	; census: opaque -- pcm: 128 16-bit samples, entry 310
-Main_P06_W311:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1600, 0xde1700	; census: opaque -- pcm: 128 16-bit samples, entry 311
-Main_P06_W312:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1700, 0xde1800	; census: opaque -- pcm: 128 16-bit samples, entry 312
-Main_P06_W313:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1800, 0xde1900	; census: opaque -- pcm: 128 16-bit samples, entry 313
-Main_P06_W314:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1900, 0xde1a00	; census: opaque -- pcm: 128 16-bit samples, entry 314
-Main_P06_W315:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1a00, 0xde1b00	; census: opaque -- pcm: 128 16-bit samples, entry 315
-Main_P06_W316:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1b00, 0xde1c00	; census: opaque -- pcm: 128 16-bit samples, entry 316
-Main_P06_W317:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1c00, 0xde1d00	; census: opaque -- pcm: 128 16-bit samples, entry 317
-Main_P06_W318:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1d00, 0xde1e00	; census: opaque -- pcm: 128 16-bit samples, entry 318
-Main_P06_W319:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1e00, 0xde1f00	; census: opaque -- pcm: 128 16-bit samples, entry 319
-Main_P06_W31A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde1f00, 0xde2000	; census: opaque -- pcm: 128 16-bit samples, entry 31A
-Main_P06_W31B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2000, 0xde2100	; census: opaque -- pcm: 128 16-bit samples, entry 31B
-Main_P06_W31C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2100, 0xde2200	; census: opaque -- pcm: 128 16-bit samples, entry 31C
-Main_P06_W31D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2200, 0xde2300	; census: opaque -- pcm: 128 16-bit samples, entry 31D
-Main_P06_W31E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2300, 0xde2400	; census: opaque -- pcm: 128 16-bit samples, entry 31E
-Main_P06_W31F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2400, 0xde2500	; census: opaque -- pcm: 128 16-bit samples, entry 31F
-Main_P06_W320:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2500, 0xde2600	; census: opaque -- pcm: 128 16-bit samples, entry 320
-Main_P06_W321:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2600, 0xde2700	; census: opaque -- pcm: 128 16-bit samples, entry 321
-Main_P06_W322:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2700, 0xde2800	; census: opaque -- pcm: 128 16-bit samples, entry 322
-Main_P06_W323:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2800, 0xde2900	; census: opaque -- pcm: 128 16-bit samples, entry 323
-Main_P06_W324:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2900, 0xde2a00	; census: opaque -- pcm: 128 16-bit samples, entry 324
-Main_P06_W325:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2a00, 0xde2b00	; census: opaque -- pcm: 128 16-bit samples, entry 325
-Main_P06_W326:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2b00, 0xde2c00	; census: opaque -- pcm: 128 16-bit samples, entry 326
-Main_P06_W327:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2c00, 0xde2d00	; census: opaque -- pcm: 128 16-bit samples, entry 327
-Main_P06_W328:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2d00, 0xde2e00	; census: opaque -- pcm: 128 16-bit samples, entry 328
-Main_P06_W329:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2e00, 0xde2f00	; census: opaque -- pcm: 128 16-bit samples, entry 329
-Main_P06_W32A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde2f00, 0xde3000	; census: opaque -- pcm: 128 16-bit samples, entry 32A
-Main_P06_W32B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3000, 0xde3100	; census: opaque -- pcm: 128 16-bit samples, entry 32B
-Main_P06_W32C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3100, 0xde3200	; census: opaque -- pcm: 128 16-bit samples, entry 32C
-Main_P06_W32D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3200, 0xde3300	; census: opaque -- pcm: 128 16-bit samples, entry 32D
-Main_P06_W32E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3300, 0xde3400	; census: opaque -- pcm: 128 16-bit samples, entry 32E
-Main_P06_W32F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3400, 0xde3500	; census: opaque -- pcm: 128 16-bit samples, entry 32F
-Main_P06_W330:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3500, 0xde3600	; census: opaque -- pcm: 128 16-bit samples, entry 330
-Main_P06_W331:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3600, 0xde3700	; census: opaque -- pcm: 128 16-bit samples, entry 331
-Main_P06_W332:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3700, 0xde3800	; census: opaque -- pcm: 128 16-bit samples, entry 332
-Main_P06_W333:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3800, 0xde3900	; census: opaque -- pcm: 128 16-bit samples, entry 333
-Main_P06_W334:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3900, 0xde3a00	; census: opaque -- pcm: 128 16-bit samples, entry 334
-Main_P06_W335:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3a00, 0xde3b00	; census: opaque -- pcm: 128 16-bit samples, entry 335
-Main_P06_W336:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3b00, 0xde3c00	; census: opaque -- pcm: 128 16-bit samples, entry 336
-Main_P06_W337:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3c00, 0xde3d00	; census: opaque -- pcm: 128 16-bit samples, entry 337
-Main_P06_W338:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3d00, 0xde3e00	; census: opaque -- pcm: 128 16-bit samples, entry 338
-Main_P06_W339:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3e00, 0xde3f00	; census: opaque -- pcm: 128 16-bit samples, entry 339
-Main_P06_W33A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde3f00, 0xde4000	; census: opaque -- pcm: 128 16-bit samples, entry 33A
-Main_P06_W33B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4000, 0xde4100	; census: opaque -- pcm: 128 16-bit samples, entry 33B
-Main_P06_W33C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4100, 0xde4200	; census: opaque -- pcm: 128 16-bit samples, entry 33C
-Main_P06_W33D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4200, 0xde4300	; census: opaque -- pcm: 128 16-bit samples, entry 33D
-Main_P06_W33E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4300, 0xde4400	; census: opaque -- pcm: 128 16-bit samples, entry 33E
-Main_P06_W33F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4400, 0xde4500	; census: opaque -- pcm: 128 16-bit samples, entry 33F
-Main_P06_W340:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4500, 0xde4600	; census: opaque -- pcm: 128 16-bit samples, entry 340
-Main_P06_W341:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4600, 0xde4700	; census: opaque -- pcm: 128 16-bit samples, entry 341
-Main_P06_W342:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4700, 0xde4800	; census: opaque -- pcm: 128 16-bit samples, entry 342
-Main_P06_W343:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4800, 0xde4900	; census: opaque -- pcm: 128 16-bit samples, entry 343
-Main_P06_W344:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4900, 0xde4a00	; census: opaque -- pcm: 128 16-bit samples, entry 344
-Main_P06_W345:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4a00, 0xde4b00	; census: opaque -- pcm: 128 16-bit samples, entry 345
-Main_P06_W346:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4b00, 0xde4c00	; census: opaque -- pcm: 128 16-bit samples, entry 346
-Main_P06_W347:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4c00, 0xde4d00	; census: opaque -- pcm: 128 16-bit samples, entry 347
-Main_P06_W348:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4d00, 0xde4e00	; census: opaque -- pcm: 128 16-bit samples, entry 348
-Main_P06_W349:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4e00, 0xde4f00	; census: opaque -- pcm: 128 16-bit samples, entry 349
-Main_P06_W34A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde4f00, 0xde5000	; census: opaque -- pcm: 128 16-bit samples, entry 34A
-Main_P06_W34B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5000, 0xde5100	; census: opaque -- pcm: 128 16-bit samples, entry 34B
-Main_P06_W34C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5100, 0xde5200	; census: opaque -- pcm: 128 16-bit samples, entry 34C
-Main_P06_W34D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5200, 0xde5300	; census: opaque -- pcm: 128 16-bit samples, entry 34D
-Main_P06_W34E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5300, 0xde5400	; census: opaque -- pcm: 128 16-bit samples, entry 34E
-Main_P06_W34F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5400, 0xde5500	; census: opaque -- pcm: 128 16-bit samples, entry 34F
-Main_P06_W350:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5500, 0xde5600	; census: opaque -- pcm: 128 16-bit samples, entry 350
-Main_P06_W351:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5600, 0xde5700	; census: opaque -- pcm: 128 16-bit samples, entry 351
-Main_P06_W352:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5700, 0xde5800	; census: opaque -- pcm: 128 16-bit samples, entry 352
-Main_P06_W353:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5800, 0xde5900	; census: opaque -- pcm: 128 16-bit samples, entry 353
-Main_P06_W354:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5900, 0xde5a00	; census: opaque -- pcm: 128 16-bit samples, entry 354
-Main_P06_W355:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5a00, 0xde5b00	; census: opaque -- pcm: 128 16-bit samples, entry 355
-Main_P06_W356:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5b00, 0xde5c00	; census: opaque -- pcm: 128 16-bit samples, entry 356
-Main_P06_W357:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5c00, 0xde5d00	; census: opaque -- pcm: 128 16-bit samples, entry 357
-Main_P06_W358:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5d00, 0xde5e00	; census: opaque -- pcm: 128 16-bit samples, entry 358
-Main_P06_W359:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5e00, 0xde5f00	; census: opaque -- pcm: 128 16-bit samples, entry 359
-Main_P06_W35A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde5f00, 0xde6000	; census: opaque -- pcm: 128 16-bit samples, entry 35A
-Main_P06_W35B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6000, 0xde6100	; census: opaque -- pcm: 128 16-bit samples, entry 35B
-Main_P06_W35C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6100, 0xde6200	; census: opaque -- pcm: 128 16-bit samples, entry 35C
-Main_P06_W35D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6200, 0xde6300	; census: opaque -- pcm: 128 16-bit samples, entry 35D
-Main_P06_W35E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6300, 0xde6400	; census: opaque -- pcm: 128 16-bit samples, entry 35E
-Main_P06_W35F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6400, 0xde6500	; census: opaque -- pcm: 128 16-bit samples, entry 35F
-Main_P06_W360:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6500, 0xde6600	; census: opaque -- pcm: 128 16-bit samples, entry 360
-Main_P06_W361:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6600, 0xde6700	; census: opaque -- pcm: 128 16-bit samples, entry 361
-Main_P06_W362:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6700, 0xde6800	; census: opaque -- pcm: 128 16-bit samples, entry 362
-Main_P06_W363:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6800, 0xde6900	; census: opaque -- pcm: 128 16-bit samples, entry 363
-Main_P06_W364:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6900, 0xde6a00	; census: opaque -- pcm: 128 16-bit samples, entry 364
-Main_P06_W365:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6a00, 0xde6b00	; census: opaque -- pcm: 128 16-bit samples, entry 365
-Main_P06_W366:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6b00, 0xde6c00	; census: opaque -- pcm: 128 16-bit samples, entry 366
-Main_P06_W367:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6c00, 0xde6d00	; census: opaque -- pcm: 128 16-bit samples, entry 367
-Main_P06_W368:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6d00, 0xde6e00	; census: opaque -- pcm: 128 16-bit samples, entry 368
-Main_P06_W369:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6e00, 0xde6f00	; census: opaque -- pcm: 128 16-bit samples, entry 369
-Main_P06_W36A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde6f00, 0xde7000	; census: opaque -- pcm: 128 16-bit samples, entry 36A
-Main_P06_W36B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7000, 0xde7100	; census: opaque -- pcm: 128 16-bit samples, entry 36B
-Main_P06_W36C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7100, 0xde7200	; census: opaque -- pcm: 128 16-bit samples, entry 36C
-Main_P06_W36D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7200, 0xde7300	; census: opaque -- pcm: 128 16-bit samples, entry 36D
-Main_P06_W36E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7300, 0xde7400	; census: opaque -- pcm: 128 16-bit samples, entry 36E
-Main_P06_W36F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7400, 0xde7500	; census: opaque -- pcm: 128 16-bit samples, entry 36F
-Main_P06_W370:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7500, 0xde7600	; census: opaque -- pcm: 128 16-bit samples, entry 370
-Main_P06_W371:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7600, 0xde7700	; census: opaque -- pcm: 128 16-bit samples, entry 371
-Main_P06_W372:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7700, 0xde7800	; census: opaque -- pcm: 128 16-bit samples, entry 372
-Main_P06_W373:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7800, 0xde7900	; census: opaque -- pcm: 128 16-bit samples, entry 373
-Main_P06_W374:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7900, 0xde7a00	; census: opaque -- pcm: 128 16-bit samples, entry 374
-Main_P06_W375:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7a00, 0xde7b00	; census: opaque -- pcm: 128 16-bit samples, entry 375
-Main_P06_W376:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7b00, 0xde7c00	; census: opaque -- pcm: 128 16-bit samples, entry 376
-Main_P06_W377:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7c00, 0xde7d00	; census: opaque -- pcm: 128 16-bit samples, entry 377
-Main_P06_W378:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7d00, 0xde7e00	; census: opaque -- pcm: 128 16-bit samples, entry 378
-Main_P06_W379:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7e00, 0xde7f00	; census: opaque -- pcm: 128 16-bit samples, entry 379
-Main_P06_W37A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde7f00, 0xde8000	; census: opaque -- pcm: 128 16-bit samples, entry 37A
-Main_P06_W37B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8000, 0xde8100	; census: opaque -- pcm: 128 16-bit samples, entry 37B
-Main_P06_W37C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8100, 0xde8200	; census: opaque -- pcm: 128 16-bit samples, entry 37C
-Main_P06_W37D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8200, 0xde8300	; census: opaque -- pcm: 128 16-bit samples, entry 37D
-Main_P06_W37E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8300, 0xde8400	; census: opaque -- pcm: 128 16-bit samples, entry 37E
-Main_P06_W37F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8400, 0xde8500	; census: opaque -- pcm: 128 16-bit samples, entry 37F
-Main_P06_W380:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8500, 0xde8600	; census: opaque -- pcm: 128 16-bit samples, entry 380
-Main_P06_W381:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8600, 0xde8700	; census: opaque -- pcm: 128 16-bit samples, entry 381
-Main_P06_W382:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8700, 0xde8800	; census: opaque -- pcm: 128 16-bit samples, entry 382
-Main_P06_W383:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8800, 0xde8900	; census: opaque -- pcm: 128 16-bit samples, entry 383
-Main_P06_W384:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8900, 0xde8a00	; census: opaque -- pcm: 128 16-bit samples, entry 384
-Main_P06_W385:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8a00, 0xde8b00	; census: opaque -- pcm: 128 16-bit samples, entry 385
-Main_P06_W386:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8b00, 0xde8c00	; census: opaque -- pcm: 128 16-bit samples, entry 386
-Main_P06_W387:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8c00, 0xde8d00	; census: opaque -- pcm: 128 16-bit samples, entry 387
-Main_P06_W388:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8d00, 0xde8e00	; census: opaque -- pcm: 128 16-bit samples, entry 388
-Main_P06_W389:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8e00, 0xde8f00	; census: opaque -- pcm: 128 16-bit samples, entry 389
-Main_P06_W38A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde8f00, 0xde9000	; census: opaque -- pcm: 128 16-bit samples, entry 38A
-Main_P06_W38B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9000, 0xde9100	; census: opaque -- pcm: 128 16-bit samples, entry 38B
-Main_P06_W38C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9100, 0xde9200	; census: opaque -- pcm: 128 16-bit samples, entry 38C
-Main_P06_W38D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9200, 0xde9300	; census: opaque -- pcm: 128 16-bit samples, entry 38D
-Main_P06_W38E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9300, 0xde9400	; census: opaque -- pcm: 128 16-bit samples, entry 38E
-Main_P06_W38F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9400, 0xde9500	; census: opaque -- pcm: 128 16-bit samples, entry 38F
-Main_P06_W390:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9500, 0xde9600	; census: opaque -- pcm: 128 16-bit samples, entry 390
-Main_P06_W391:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9600, 0xde9700	; census: opaque -- pcm: 128 16-bit samples, entry 391
-Main_P06_W392:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9700, 0xde9800	; census: opaque -- pcm: 128 16-bit samples, entry 392
-Main_P06_W393:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9800, 0xde9900	; census: opaque -- pcm: 128 16-bit samples, entry 393
-Main_P06_W394:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9900, 0xde9a00	; census: opaque -- pcm: 128 16-bit samples, entry 394
-Main_P06_W395:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9a00, 0xde9b00	; census: opaque -- pcm: 128 16-bit samples, entry 395
-Main_P06_W396:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9b00, 0xde9c00	; census: opaque -- pcm: 128 16-bit samples, entry 396
-Main_P06_W397:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9c00, 0xde9d00	; census: opaque -- pcm: 128 16-bit samples, entry 397
-Main_P06_W398:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9d00, 0xde9e00	; census: opaque -- pcm: 128 16-bit samples, entry 398
-Main_P06_W399:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9e00, 0xde9f00	; census: opaque -- pcm: 128 16-bit samples, entry 399
-Main_P06_W39A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xde9f00, 0xdea000	; census: opaque -- pcm: 128 16-bit samples, entry 39A
-Main_P06_W39B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea000, 0xdea100	; census: opaque -- pcm: 128 16-bit samples, entry 39B
-Main_P06_W39C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea100, 0xdea200	; census: opaque -- pcm: 128 16-bit samples, entry 39C
-Main_P06_W39D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea200, 0xdea300	; census: opaque -- pcm: 128 16-bit samples, entry 39D
-Main_P06_W39E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea300, 0xdea400	; census: opaque -- pcm: 128 16-bit samples, entry 39E
-Main_P06_W39F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea400, 0xdea500	; census: opaque -- pcm: 128 16-bit samples, entry 39F
-Main_P06_W3A0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea500, 0xdea600	; census: opaque -- pcm: 128 16-bit samples, entry 3A0
-Main_P06_W3A1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea600, 0xdea700	; census: opaque -- pcm: 128 16-bit samples, entry 3A1
-Main_P06_W3A2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea700, 0xdea800	; census: opaque -- pcm: 128 16-bit samples, entry 3A2
-Main_P06_W3A3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea800, 0xdea900	; census: opaque -- pcm: 128 16-bit samples, entry 3A3
-Main_P06_W3A4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdea900, 0xdeaa00	; census: opaque -- pcm: 128 16-bit samples, entry 3A4
-Main_P06_W3A5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeaa00, 0xdeac00	; census: opaque -- pcm: 256 16-bit samples, entry 3A5
-Main_P06_W3A6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeac00, 0xdeae00	; census: opaque -- pcm: 256 16-bit samples, entry 3A6
-Main_P06_W3A7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeae00, 0xdeaf00	; census: opaque -- pcm: 128 16-bit samples, entry 3A7
-Main_P06_W3A8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeaf00, 0xdeb100	; census: opaque -- pcm: 256 16-bit samples, entry 3A8
-Main_P06_W3A9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeb100, 0xdeb300	; census: opaque -- pcm: 256 16-bit samples, entry 3A9
-Main_P06_W3AA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeb300, 0xdeb500	; census: opaque -- pcm: 256 16-bit samples, entry 3AA
-Main_P06_W3AB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeb500, 0xdeb700	; census: opaque -- pcm: 256 16-bit samples, entry 3AB
-Main_P06_W3AC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeb700, 0xdeb800	; census: opaque -- pcm: 128 16-bit samples, entry 3AC
-Main_P06_W3AD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeb800, 0xdeb900	; census: opaque -- pcm: 128 16-bit samples, entry 3AD
-Main_P06_W3AE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeb900, 0xdeba00	; census: opaque -- pcm: 128 16-bit samples, entry 3AE
-Main_P06_W3AF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeba00, 0xdebb00	; census: opaque -- pcm: 128 16-bit samples, entry 3AF
-Main_P06_W3B0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdebb00, 0xdebd00	; census: opaque -- pcm: 256 16-bit samples, entry 3B0
-Main_P06_W3B1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdebd00, 0xdebf00	; census: opaque -- pcm: 256 16-bit samples, entry 3B1
-Main_P06_W3B2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdebf00, 0xdec100	; census: opaque -- pcm: 256 16-bit samples, entry 3B2
-Main_P06_W3B3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec100, 0xdec300	; census: opaque -- pcm: 256 16-bit samples, entry 3B3
-Main_P06_W3B4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec300, 0xdec400	; census: opaque -- pcm: 128 16-bit samples, entry 3B4
-Main_P06_W3B5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec400, 0xdec500	; census: opaque -- pcm: 128 16-bit samples, entry 3B5
-Main_P06_W3B6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec500, 0xdec600	; census: opaque -- pcm: 128 16-bit samples, entry 3B6
-Main_P06_W3B7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec600, 0xdec700	; census: opaque -- pcm: 128 16-bit samples, entry 3B7
-Main_P06_W3B8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec700, 0xdec900	; census: opaque -- pcm: 256 16-bit samples, entry 3B8
-Main_P06_W3B9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdec900, 0xdecb00	; census: opaque -- pcm: 256 16-bit samples, entry 3B9
-Main_P06_W3BA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdecb00, 0xdecc00	; census: opaque -- pcm: 128 16-bit samples, entry 3BA
-Main_P06_W3BB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdecc00, 0xdece00	; census: opaque -- pcm: 256 16-bit samples, entry 3BB
-Main_P06_W3BC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdece00, 0xded000	; census: opaque -- pcm: 256 16-bit samples, entry 3BC
-Main_P06_W3BD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xded000, 0xded100	; census: opaque -- pcm: 128 16-bit samples, entry 3BD
-Main_P06_W3BE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xded100, 0xded300	; census: opaque -- pcm: 256 16-bit samples, entry 3BE
-Main_P06_W3BF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xded300, 0xded500	; census: opaque -- pcm: 256 16-bit samples, entry 3BF
-Main_P06_W3C0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xded500, 0xded600	; census: opaque -- pcm: 128 16-bit samples, entry 3C0
-Main_P06_W3C1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xded600, 0xded800	; census: opaque -- pcm: 256 16-bit samples, entry 3C1
-Main_P06_W3C2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xded800, 0xdeda00	; census: opaque -- pcm: 256 16-bit samples, entry 3C2
-Main_P06_W3C3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeda00, 0xdedb00	; census: opaque -- pcm: 128 16-bit samples, entry 3C3
-Main_P06_W3C4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdedb00, 0xdedd00	; census: opaque -- pcm: 256 16-bit samples, entry 3C4
-Main_P06_W3C5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdedd00, 0xdedf00	; census: opaque -- pcm: 256 16-bit samples, entry 3C5
-Main_P06_W3C6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdedf00, 0xdee000	; census: opaque -- pcm: 128 16-bit samples, entry 3C6
-Main_P06_W3C7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee000, 0xdee100	; census: opaque -- pcm: 128 16-bit samples, entry 3C7
-Main_P06_W3C8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee100, 0xdee200	; census: opaque -- pcm: 128 16-bit samples, entry 3C8
-Main_P06_W3C9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee200, 0xdee300	; census: opaque -- pcm: 128 16-bit samples, entry 3C9
-Main_P06_W3CA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee300, 0xdee400	; census: opaque -- pcm: 128 16-bit samples, entry 3CA
-Main_P06_W3CB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee400, 0xdee500	; census: opaque -- pcm: 128 16-bit samples, entry 3CB
-Main_P06_W3CC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee500, 0xdee600	; census: opaque -- pcm: 128 16-bit samples, entry 3CC
-Main_P06_W3CD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee600, 0xdee700	; census: opaque -- pcm: 128 16-bit samples, entry 3CD
-Main_P06_W3CE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee700, 0xdee800	; census: opaque -- pcm: 128 16-bit samples, entry 3CE
-Main_P06_W3CF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdee800, 0xdeea00	; census: opaque -- pcm: 256 16-bit samples, entry 3CF
-Main_P06_W3D0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeea00, 0xdeec00	; census: opaque -- pcm: 256 16-bit samples, entry 3D0
-Main_P06_W3D1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeec00, 0xdeed00	; census: opaque -- pcm: 128 16-bit samples, entry 3D1
-Main_P06_W3D2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeed00, 0xdeef00	; census: opaque -- pcm: 256 16-bit samples, entry 3D2
-Main_P06_W3D3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdeef00, 0xdef100	; census: opaque -- pcm: 256 16-bit samples, entry 3D3
-Main_P06_W3D4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdef100, 0xdef300	; census: opaque -- pcm: 256 16-bit samples, entry 3D4
-Main_P06_W3D5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdef300, 0xdef500	; census: opaque -- pcm: 256 16-bit samples, entry 3D5
-Main_P06_W3D6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdef500, 0xdef700	; census: opaque -- pcm: 256 16-bit samples, entry 3D6
-Main_P06_W3D7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdef700, 0xdef800	; census: opaque -- pcm: 128 16-bit samples, entry 3D7
-Main_P06_W3D8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdef800, 0xdef900	; census: opaque -- pcm: 128 16-bit samples, entry 3D8
-Main_P06_W3D9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdef900, 0xdefa00	; census: opaque -- pcm: 128 16-bit samples, entry 3D9
-Main_P06_W3DA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdefa00, 0xdefc00	; census: opaque -- pcm: 256 16-bit samples, entry 3DA
-Main_P06_W3DB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdefc00, 0xdefe00	; census: opaque -- pcm: 256 16-bit samples, entry 3DB
-Main_P06_W3DC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdefe00, 0xdf0000	; census: opaque -- pcm: 256 16-bit samples, entry 3DC
-Main_P06_W3DD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0000, 0xdf0200	; census: opaque -- pcm: 256 16-bit samples, entry 3DD
-Main_P06_W3DE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0200, 0xdf0400	; census: opaque -- pcm: 256 16-bit samples, entry 3DE
-Main_P06_W3DF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0400, 0xdf0500	; census: opaque -- pcm: 128 16-bit samples, entry 3DF
-Main_P06_W3E0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0500, 0xdf0600	; census: opaque -- pcm: 128 16-bit samples, entry 3E0
-Main_P06_W3E1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0600, 0xdf0700	; census: opaque -- pcm: 128 16-bit samples, entry 3E1
-Main_P06_W3E2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0700, 0xdf0900	; census: opaque -- pcm: 256 16-bit samples, entry 3E2
-Main_P06_W3E3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0900, 0xdf0b00	; census: opaque -- pcm: 256 16-bit samples, entry 3E3
-Main_P06_W3E4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0b00, 0xdf0c00	; census: opaque -- pcm: 128 16-bit samples, entry 3E4
-Main_P06_W3E5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0c00, 0xdf0e00	; census: opaque -- pcm: 256 16-bit samples, entry 3E5
-Main_P06_W3E6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf0e00, 0xdf1000	; census: opaque -- pcm: 256 16-bit samples, entry 3E6
-Main_P06_W3E7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1000, 0xdf1100	; census: opaque -- pcm: 128 16-bit samples, entry 3E7
-Main_P06_W3E8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1100, 0xdf1300	; census: opaque -- pcm: 256 16-bit samples, entry 3E8
-Main_P06_W3E9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1300, 0xdf1500	; census: opaque -- pcm: 256 16-bit samples, entry 3E9
-Main_P06_W3EA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1500, 0xdf1600	; census: opaque -- pcm: 128 16-bit samples, entry 3EA
-Main_P06_W3EB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1600, 0xdf1800	; census: opaque -- pcm: 256 16-bit samples, entry 3EB
-Main_P06_W3EC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1800, 0xdf1a00	; census: opaque -- pcm: 256 16-bit samples, entry 3EC
-Main_P06_W3ED:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1a00, 0xdf1b00	; census: opaque -- pcm: 128 16-bit samples, entry 3ED
-Main_P06_W3EE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1b00, 0xdf1d00	; census: opaque -- pcm: 256 16-bit samples, entry 3EE
-Main_P06_W3EF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1d00, 0xdf1f00	; census: opaque -- pcm: 256 16-bit samples, entry 3EF
-Main_P06_W3F0:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf1f00, 0xdf2000	; census: opaque -- pcm: 128 16-bit samples, entry 3F0
-Main_P06_W3F1:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2000, 0xdf2200	; census: opaque -- pcm: 256 16-bit samples, entry 3F1
-Main_P06_W3F2:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2200, 0xdf2400	; census: opaque -- pcm: 256 16-bit samples, entry 3F2
-Main_P06_W3F3:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2400, 0xdf2600	; census: opaque -- pcm: 256 16-bit samples, entry 3F3
-Main_P06_W3F4:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2600, 0xdf2700	; census: opaque -- pcm: 128 16-bit samples, entry 3F4
-Main_P06_W3F5:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2700, 0xdf2800	; census: opaque -- pcm: 128 16-bit samples, entry 3F5
-Main_P06_W3F6:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2800, 0xdf2900	; census: opaque -- pcm: 128 16-bit samples, entry 3F6
-Main_P06_W3F7:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2900, 0xdf2a00	; census: opaque -- pcm: 128 16-bit samples, entry 3F7
-Main_P06_W3F8:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2a00, 0xdf2b00	; census: opaque -- pcm: 128 16-bit samples, entry 3F8
-Main_P06_W3F9:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2b00, 0xdf2d00	; census: opaque -- pcm: 256 16-bit samples, entry 3F9
-Main_P06_W3FA:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2d00, 0xdf2f00	; census: opaque -- pcm: 256 16-bit samples, entry 3FA
-Main_P06_W3FB:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf2f00, 0xdf3000	; census: opaque -- pcm: 128 16-bit samples, entry 3FB
-Main_P06_W3FC:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3000, 0xdf3200	; census: opaque -- pcm: 256 16-bit samples, entry 3FC
-Main_P06_W3FD:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3200, 0xdf3400	; census: opaque -- pcm: 256 16-bit samples, entry 3FD
-Main_P06_W3FE:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3400, 0xdf3600	; census: opaque -- pcm: 256 16-bit samples, entry 3FE
-Main_P06_W3FF:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3600, 0xdf3800	; census: opaque -- pcm: 256 16-bit samples, entry 3FF
-Main_P06_W400:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3800, 0xdf3a00	; census: opaque -- pcm: 256 16-bit samples, entry 400
-Main_P06_W401:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3a00, 0xdf3c00	; census: opaque -- pcm: 256 16-bit samples, entry 401
-Main_P06_W402:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3c00, 0xdf3d00	; census: opaque -- pcm: 128 16-bit samples, entry 402
-Main_P06_W403:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3d00, 0xdf3e00	; census: opaque -- pcm: 128 16-bit samples, entry 403
-Main_P06_W404:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf3e00, 0xdf4000	; census: opaque -- pcm: 256 16-bit samples, entry 404
-Main_P06_W405:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4000, 0xdf4200	; census: opaque -- pcm: 256 16-bit samples, entry 405
-Main_P06_W406:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4200, 0xdf4400	; census: opaque -- pcm: 256 16-bit samples, entry 406
-Main_P06_W407:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4400, 0xdf4600	; census: opaque -- pcm: 256 16-bit samples, entry 407
-Main_P06_W408:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4600, 0xdf4800	; census: opaque -- pcm: 256 16-bit samples, entry 408
-Main_P06_W409:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4800, 0xdf4a00	; census: opaque -- pcm: 256 16-bit samples, entry 409
-Main_P06_W40A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4a00, 0xdf4b00	; census: opaque -- pcm: 128 16-bit samples, entry 40A
-Main_P06_W40B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4b00, 0xdf4c00	; census: opaque -- pcm: 128 16-bit samples, entry 40B
-Main_P06_W40C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4c00, 0xdf4e00	; census: opaque -- pcm: 256 16-bit samples, entry 40C
-Main_P06_W40D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf4e00, 0xdf5000	; census: opaque -- pcm: 256 16-bit samples, entry 40D
-Main_P06_W40E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5000, 0xdf5100	; census: opaque -- pcm: 128 16-bit samples, entry 40E
-Main_P06_W40F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5100, 0xdf5300	; census: opaque -- pcm: 256 16-bit samples, entry 40F
-Main_P06_W410:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5300, 0xdf5500	; census: opaque -- pcm: 256 16-bit samples, entry 410
-Main_P06_W411:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5500, 0xdf5600	; census: opaque -- pcm: 128 16-bit samples, entry 411
-Main_P06_W412:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5600, 0xdf5800	; census: opaque -- pcm: 256 16-bit samples, entry 412
-Main_P06_W413:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5800, 0xdf5a00	; census: opaque -- pcm: 256 16-bit samples, entry 413
-Main_P06_W414:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5a00, 0xdf5b00	; census: opaque -- pcm: 128 16-bit samples, entry 414
-Main_P06_W415:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5b00, 0xdf5d00	; census: opaque -- pcm: 256 16-bit samples, entry 415
-Main_P06_W416:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5d00, 0xdf5f00	; census: opaque -- pcm: 256 16-bit samples, entry 416
-Main_P06_W417:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf5f00, 0xdf6000	; census: opaque -- pcm: 128 16-bit samples, entry 417
-Main_P06_W418:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6000, 0xdf6200	; census: opaque -- pcm: 256 16-bit samples, entry 418
-Main_P06_W419:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6200, 0xdf6400	; census: opaque -- pcm: 256 16-bit samples, entry 419
-Main_P06_W41A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6400, 0xdf6500	; census: opaque -- pcm: 128 16-bit samples, entry 41A
-Main_P06_W41B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6500, 0xdf6700	; census: opaque -- pcm: 256 16-bit samples, entry 41B
-Main_P06_W41C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6700, 0xdf6900	; census: opaque -- pcm: 256 16-bit samples, entry 41C
-Main_P06_W41D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6900, 0xdf6b00	; census: opaque -- pcm: 256 16-bit samples, entry 41D
-Main_P06_W41E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6b00, 0xdf6d00	; census: opaque -- pcm: 256 16-bit samples, entry 41E
-Main_P06_W41F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6d00, 0xdf6f00	; census: opaque -- pcm: 256 16-bit samples, entry 41F
-Main_P06_W420:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf6f00, 0xdf7000	; census: opaque -- pcm: 128 16-bit samples, entry 420
-Main_P06_W421:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7000, 0xdf7100	; census: opaque -- pcm: 128 16-bit samples, entry 421
-Main_P06_W422:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7100, 0xdf7200	; census: opaque -- pcm: 128 16-bit samples, entry 422
-Main_P06_W423:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7200, 0xdf7400	; census: opaque -- pcm: 256 16-bit samples, entry 423
-Main_P06_W424:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7400, 0xdf7600	; census: opaque -- pcm: 256 16-bit samples, entry 424
-Main_P06_W425:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7600, 0xdf7800	; census: opaque -- pcm: 256 16-bit samples, entry 425
-Main_P06_W426:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7800, 0xdf7a00	; census: opaque -- pcm: 256 16-bit samples, entry 426
-Main_P06_W427:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7a00, 0xdf7c00	; census: opaque -- pcm: 256 16-bit samples, entry 427
-Main_P06_W428:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7c00, 0xdf7e00	; census: opaque -- pcm: 256 16-bit samples, entry 428
-Main_P06_W429:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf7e00, 0xdf8000	; census: opaque -- pcm: 256 16-bit samples, entry 429
-Main_P06_W42A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8000, 0xdf8100	; census: opaque -- pcm: 128 16-bit samples, entry 42A
-Main_P06_W42B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8100, 0xdf8300	; census: opaque -- pcm: 256 16-bit samples, entry 42B
-Main_P06_W42C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8300, 0xdf8500	; census: opaque -- pcm: 256 16-bit samples, entry 42C
-Main_P06_W42D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8500, 0xdf8700	; census: opaque -- pcm: 256 16-bit samples, entry 42D
-Main_P06_W42E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8700, 0xdf8900	; census: opaque -- pcm: 256 16-bit samples, entry 42E
-Main_P06_W42F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8900, 0xdf8b00	; census: opaque -- pcm: 256 16-bit samples, entry 42F
-Main_P06_W430:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8b00, 0xdf8d00	; census: opaque -- pcm: 256 16-bit samples, entry 430
-Main_P06_W431:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8d00, 0xdf8f00	; census: opaque -- pcm: 256 16-bit samples, entry 431
-Main_P06_W432:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf8f00, 0xdf9000	; census: opaque -- pcm: 128 16-bit samples, entry 432
-Main_P06_W433:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9000, 0xdf9200	; census: opaque -- pcm: 256 16-bit samples, entry 433
-Main_P06_W434:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9200, 0xdf9400	; census: opaque -- pcm: 256 16-bit samples, entry 434
-Main_P06_W435:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9400, 0xdf9600	; census: opaque -- pcm: 256 16-bit samples, entry 435
-Main_P06_W436:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9600, 0xdf9800	; census: opaque -- pcm: 256 16-bit samples, entry 436
-Main_P06_W437:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9800, 0xdf9a00	; census: opaque -- pcm: 256 16-bit samples, entry 437
-Main_P06_W438:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9a00, 0xdf9c00	; census: opaque -- pcm: 256 16-bit samples, entry 438
-Main_P06_W439:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9c00, 0xdf9e00	; census: opaque -- pcm: 256 16-bit samples, entry 439
-Main_P06_W43A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9e00, 0xdf9f00	; census: opaque -- pcm: 128 16-bit samples, entry 43A
-Main_P06_W43B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdf9f00, 0xdfa100	; census: opaque -- pcm: 256 16-bit samples, entry 43B
-Main_P06_W43C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfa100, 0xdfa300	; census: opaque -- pcm: 256 16-bit samples, entry 43C
-Main_P06_W43D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfa300, 0xdfa500	; census: opaque -- pcm: 256 16-bit samples, entry 43D
-Main_P06_W43E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfa500, 0xdfa700	; census: opaque -- pcm: 256 16-bit samples, entry 43E
-Main_P06_W43F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfa700, 0xdfa900	; census: opaque -- pcm: 256 16-bit samples, entry 43F
-Main_P06_W440:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfa900, 0xdfab00	; census: opaque -- pcm: 256 16-bit samples, entry 440
-Main_P06_W441:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfab00, 0xdfad00	; census: opaque -- pcm: 256 16-bit samples, entry 441
-Main_P06_W442:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfad00, 0xdfae00	; census: opaque -- pcm: 128 16-bit samples, entry 442
-Main_P06_W443:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfae00, 0xdfb000	; census: opaque -- pcm: 256 16-bit samples, entry 443
-Main_P06_W444:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfb000, 0xdfb200	; census: opaque -- pcm: 256 16-bit samples, entry 444
-Main_P06_W445:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfb200, 0xdfb400	; census: opaque -- pcm: 256 16-bit samples, entry 445
-Main_P06_W446:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfb400, 0xdfb600	; census: opaque -- pcm: 256 16-bit samples, entry 446
-Main_P06_W447:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfb600, 0xdfb800	; census: opaque -- pcm: 256 16-bit samples, entry 447
-Main_P06_W448:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfb800, 0xdfba00	; census: opaque -- pcm: 256 16-bit samples, entry 448
-Main_P06_W449:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfba00, 0xdfbc00	; census: opaque -- pcm: 256 16-bit samples, entry 449
-Main_P06_W44A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfbc00, 0xdfbd00	; census: opaque -- pcm: 128 16-bit samples, entry 44A
-Main_P06_W44B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfbd00, 0xdfbf00	; census: opaque -- pcm: 256 16-bit samples, entry 44B
-Main_P06_W44C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfbf00, 0xdfc100	; census: opaque -- pcm: 256 16-bit samples, entry 44C
-Main_P06_W44D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfc100, 0xdfc300	; census: opaque -- pcm: 256 16-bit samples, entry 44D
-Main_P06_W44E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfc300, 0xdfc500	; census: opaque -- pcm: 256 16-bit samples, entry 44E
-Main_P06_W44F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfc500, 0xdfc700	; census: opaque -- pcm: 256 16-bit samples, entry 44F
-Main_P06_W450:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfc700, 0xdfc900	; census: opaque -- pcm: 256 16-bit samples, entry 450
-Main_P06_W451:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfc900, 0xdfcb00	; census: opaque -- pcm: 256 16-bit samples, entry 451
-Main_P06_W452:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfcb00, 0xdfcc00	; census: opaque -- pcm: 128 16-bit samples, entry 452
-Main_P06_W453:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfcc00, 0xdfce00	; census: opaque -- pcm: 256 16-bit samples, entry 453
-Main_P06_W454:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfce00, 0xdfd000	; census: opaque -- pcm: 256 16-bit samples, entry 454
-Main_P06_W455:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfd000, 0xdfd200	; census: opaque -- pcm: 256 16-bit samples, entry 455
-Main_P06_W456:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfd200, 0xdfd400	; census: opaque -- pcm: 256 16-bit samples, entry 456
-Main_P06_W457:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfd400, 0xdfd600	; census: opaque -- pcm: 256 16-bit samples, entry 457
-Main_P06_W458:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfd600, 0xdfd800	; census: opaque -- pcm: 256 16-bit samples, entry 458
-Main_P06_W459:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfd800, 0xdfda00	; census: opaque -- pcm: 256 16-bit samples, entry 459
-Main_P06_W45A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfda00, 0xdfdb00	; census: opaque -- pcm: 128 16-bit samples, entry 45A
-Main_P06_W45B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfdb00, 0xdfdd00	; census: opaque -- pcm: 256 16-bit samples, entry 45B
-Main_P06_W45C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfdd00, 0xdfdf00	; census: opaque -- pcm: 256 16-bit samples, entry 45C
-Main_P06_W45D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfdf00, 0xdfe100	; census: opaque -- pcm: 256 16-bit samples, entry 45D
-Main_P06_W45E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfe100, 0xdfe300	; census: opaque -- pcm: 256 16-bit samples, entry 45E
-Main_P06_W45F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfe300, 0xdfe500	; census: opaque -- pcm: 256 16-bit samples, entry 45F
-Main_P06_W460:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfe500, 0xdfe700	; census: opaque -- pcm: 256 16-bit samples, entry 460
-Main_P06_W461:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfe700, 0xdfe900	; census: opaque -- pcm: 256 16-bit samples, entry 461
-Main_P06_W462:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfe900, 0xdfea00	; census: opaque -- pcm: 128 16-bit samples, entry 462
-Main_P06_W463:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfea00, 0xdfec00	; census: opaque -- pcm: 256 16-bit samples, entry 463
-Main_P06_W464:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfec00, 0xdfee00	; census: opaque -- pcm: 256 16-bit samples, entry 464
-Main_P06_W465:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdfee00, 0xdff000	; census: opaque -- pcm: 256 16-bit samples, entry 465
-Main_P06_W466:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdff000, 0xdff200	; census: opaque -- pcm: 256 16-bit samples, entry 466
-Main_P06_W467:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdff200, 0xdff400	; census: opaque -- pcm: 256 16-bit samples, entry 467
-Main_P06_W468:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdff400, 0xdff600	; census: opaque -- pcm: 256 16-bit samples, entry 468
-Main_P06_W469:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdff600, 0xdff800	; census: opaque -- pcm: 256 16-bit samples, entry 469
-Main_P06_W46A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdff800, 0xdff900	; census: opaque -- pcm: 128 16-bit samples, entry 46A
-Main_P06_W46B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xdff900, 0xdffa00	; census: opaque -- pcm: 128 16-bit samples, entry 46B
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P06_W000:	.incbin	"build/wav_pcm/main/Main_P06_W000.pcm", 0, 12512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W000_Piccolo.wav: 12512 8-bit samples, entry 000
+Main_P06_W001:	.incbin	"build/wav_pcm/main/Main_P06_W001.pcm", 0, 20384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W001_Piccolo.wav: 20384 8-bit samples, entry 001
+Main_P06_W002:	.incbin	"build/wav_pcm/main/Main_P06_W002.pcm", 0, 30816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W002_Piccolo.wav: 30816 8-bit samples, entry 002
+Main_P06_W003:	.incbin	"build/wav_pcm/main/Main_P06_W003.pcm", 0, 12832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W003_JazzFlute.wav: 12832 8-bit samples, entry 003
+Main_P06_W004:	.incbin	"build/wav_pcm/main/Main_P06_W004.pcm", 0, 12576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W004_JazzFlute.wav: 12576 8-bit samples, entry 004
+Main_P06_W005:	.incbin	"build/wav_pcm/main/Main_P06_W005.pcm", 0, 11360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W005_JazzFlute.wav: 11360 8-bit samples, entry 005
+Main_P06_W006:	.incbin	"build/wav_pcm/main/Main_P06_W006.pcm", 0, 23840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W006.wav: 23840 8-bit samples, entry 006
+Main_P06_W007:	.incbin	"build/wav_pcm/main/Main_P06_W007.pcm", 0, 59456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W007.wav: 29728 16-bit samples, entry 007
+Main_P06_W008:	.incbin	"build/wav_pcm/main/Main_P06_W008.pcm", 0, 29216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W008.wav: 29216 8-bit samples, entry 008
+Main_P06_W009:	.incbin	"build/wav_pcm/main/Main_P06_W009.pcm", 0, 28064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W009.wav: 28064 8-bit samples, entry 009
+Main_P06_W00A:	.incbin	"build/wav_pcm/main/Main_P06_W00A.pcm", 0, 27936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W00A.wav: 27936 8-bit samples, entry 00A
+Main_P06_W00B:	.incbin	"build/wav_pcm/main/Main_P06_W00B.pcm", 0, 21536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W00B.wav: 21536 8-bit samples, entry 00B
+Main_P06_W00C:	.incbin	"build/wav_pcm/main/Main_P06_W00C.pcm", 0, 14496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W00C.wav: 14496 8-bit samples, entry 00C
+Main_P06_W00D:	.incbin	"build/wav_pcm/main/Main_P06_W00D.pcm", 0, 21920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W00D.wav: 21920 8-bit samples, entry 00D
+Main_P06_W00E:	.incbin	"build/wav_pcm/main/Main_P06_W00E.pcm", 0, 17312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W00E.wav: 17312 8-bit samples, entry 00E
+Main_P06_W00F:	.incbin	"build/wav_pcm/main/Main_P06_W00F.pcm", 0, 19232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W00F.wav: 19232 8-bit samples, entry 00F
+Main_P06_W010:	.incbin	"build/wav_pcm/main/Main_P06_W010.pcm", 0, 20832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W010.wav: 20832 8-bit samples, entry 010
+Main_P06_W011:	.incbin	"build/wav_pcm/main/Main_P06_W011.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W011.wav: 24576 8-bit samples, entry 011
+Main_P06_W012:	.incbin	"build/wav_pcm/main/Main_P06_W012.pcm", 0, 22272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W012.wav: 22272 8-bit samples, entry 012
+Main_P06_W013:	.incbin	"build/wav_pcm/main/Main_P06_W013.pcm", 0, 26784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W013.wav: 26784 8-bit samples, entry 013
+Main_P06_W014:	.incbin	"build/wav_pcm/main/Main_P06_W014.pcm", 0, 69696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W014.wav: 34848 16-bit samples, entry 014
+Main_P06_W015:	.incbin	"build/wav_pcm/main/Main_P06_W015.pcm", 0, 27040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W015.wav: 27040 8-bit samples, entry 015
+Main_P06_W016:	.incbin	"build/wav_pcm/main/Main_P06_W016.pcm", 0, 28704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W016.wav: 28704 8-bit samples, entry 016
+Main_P06_W017:	.incbin	"build/wav_pcm/main/Main_P06_W017.pcm", 0, 22304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W017.wav: 22304 8-bit samples, entry 017
+Main_P06_W018:	.incbin	"build/wav_pcm/main/Main_P06_W018.pcm", 0, 28960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W018.wav: 28960 8-bit samples, entry 018
+Main_P06_W019:	.incbin	"build/wav_pcm/main/Main_P06_W019.pcm", 0, 26976	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W019.wav: 26976 8-bit samples, entry 019
+Main_P06_W01A:	.incbin	"build/wav_pcm/main/Main_P06_W01A.pcm", 0, 33696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W01A.wav: 33696 8-bit samples, entry 01A
+Main_P06_W01B:	.incbin	"build/wav_pcm/main/Main_P06_W01B.pcm", 0, 25888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W01B.wav: 25888 8-bit samples, entry 01B
+Main_P06_W01C:	.incbin	"build/wav_pcm/main/Main_P06_W01C.pcm", 0, 26272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W01C.wav: 26272 8-bit samples, entry 01C
+Main_P06_W01D:	.incbin	"build/wav_pcm/main/Main_P06_W01D.pcm", 0, 30304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W01D.wav: 30304 8-bit samples, entry 01D
+Main_P06_W01E:	.incbin	"build/wav_pcm/main/Main_P06_W01E.pcm", 0, 25984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W01E.wav: 25984 8-bit samples, entry 01E
+Main_P06_W01F:	.incbin	"build/wav_pcm/main/Main_P06_W01F.pcm", 0, 30560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W01F.wav: 30560 8-bit samples, entry 01F
+Main_P06_W020:	.incbin	"build/wav_pcm/main/Main_P06_W020.pcm", 0, 13728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W020_ClassicFlute.wav: 13728 8-bit samples, entry 020
+Main_P06_W021:	.incbin	"build/wav_pcm/main/Main_P06_W021.pcm", 0, 10208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W021_ClassicFlute.wav: 10208 8-bit samples, entry 021
+Main_P06_W022:	.incbin	"build/wav_pcm/main/Main_P06_W022.pcm", 0, 10048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W022_ClassicFlute.wav: 10048 8-bit samples, entry 022
+Main_P06_W023:	.incbin	"build/wav_pcm/main/Main_P06_W023.pcm", 0, 11840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W023_ClassicFlute.wav: 11840 8-bit samples, entry 023
+Main_P06_W024:	.incbin	"build/wav_pcm/main/Main_P06_W024.pcm", 0, 17088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W024_ClassicFlute.wav: 17088 8-bit samples, entry 024
+Main_P06_W025:	.incbin	"build/wav_pcm/main/Main_P06_W025.pcm", 0, 15136	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W025_AltoFlute.wav: 15136 8-bit samples, entry 025
+Main_P06_W026:	.incbin	"build/wav_pcm/main/Main_P06_W026.pcm", 0, 14112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W026_AltoFlute.wav: 14112 8-bit samples, entry 026
+Main_P06_W027:	.incbin	"build/wav_pcm/main/Main_P06_W027.pcm", 0, 14112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W027_AltoFlute.wav: 14112 8-bit samples, entry 027
+Main_P06_W028:	.incbin	"build/wav_pcm/main/Main_P06_W028.pcm", 0, 14112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W028_AltoFlute.wav: 14112 8-bit samples, entry 028
+Main_P06_W029:	.incbin	"build/wav_pcm/main/Main_P06_W029.pcm", 0, 13344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W029_AltoFlute.wav: 13344 8-bit samples, entry 029
+Main_P06_W02A:	.incbin	"build/wav_pcm/main/Main_P06_W02A.pcm", 0, 28576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W02A_PanFlute.wav: 28576 8-bit samples, entry 02A
+Main_P06_W02B:	.incbin	"build/wav_pcm/main/Main_P06_W02B.pcm", 0, 55872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W02B.wav: 27936 16-bit samples, entry 02B
+Main_P06_W02C:	.incbin	"build/wav_pcm/main/Main_P06_W02C.pcm", 0, 27936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W02C.wav: 27936 8-bit samples, entry 02C
+Main_P06_W02D:	.incbin	"build/wav_pcm/main/Main_P06_W02D.pcm", 0, 22624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W02D.wav: 22624 8-bit samples, entry 02D
+Main_P06_W02E:	.incbin	"build/wav_pcm/main/Main_P06_W02E.pcm", 0, 28256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W02E.wav: 28256 8-bit samples, entry 02E
+Main_P06_W02F:	.incbin	"build/wav_pcm/main/Main_P06_W02F.pcm", 0, 21856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W02F.wav: 21856 8-bit samples, entry 02F
+Main_P06_W030:	.incbin	"build/wav_pcm/main/Main_P06_W030.pcm", 0, 21312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W030.wav: 21312 8-bit samples, entry 030
+Main_P06_W031:	.incbin	"build/wav_pcm/main/Main_P06_W031.pcm", 0, 32224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W031.wav: 32224 8-bit samples, entry 031
+Main_P06_W032:	.incbin	"build/wav_pcm/main/Main_P06_W032.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W032_HouseBass.wav: 4096 16-bit samples, entries 032 033 034 035 036 037 038
+Main_P06_W039:	.incbin	"build/wav_pcm/main/Main_P06_W039.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W039_PlasticBass.wav: 6144 16-bit samples, entry 039
+Main_P06_W03A:	.incbin	"build/wav_pcm/main/Main_P06_W03A.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W03A_PlasticBass.wav: 3584 16-bit samples, entry 03A
+Main_P06_W03B:	.incbin	"build/wav_pcm/main/Main_P06_W03B.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W03B.wav: 4096 16-bit samples, entry 03B
+Main_P06_W03C:	.incbin	"build/wav_pcm/main/Main_P06_W03C.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W03C.wav: 4096 16-bit samples, entry 03C
+Main_P06_W03D:	.incbin	"build/wav_pcm/main/Main_P06_W03D.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W03D_BasicSBass2.wav: 5120 16-bit samples, entries 03D 03E 03F 040 041 042
+Main_P06_W043:	.incbin	"build/wav_pcm/main/Main_P06_W043.pcm", 0, 8448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W043.wav: 8448 8-bit samples, entry 043
+Main_P06_W044:	.incbin	"build/wav_pcm/main/Main_P06_W044.pcm", 0, 2432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W044_GuiroShort.wav: 2432 8-bit samples, entry 044
+Main_P06_W045:	.incbin	"build/wav_pcm/main/Main_P06_W045.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W045_HandClaps.wav: 3328 8-bit samples, entry 045
+Main_P06_W046:	.incbin	"build/wav_pcm/main/Main_P06_W046.pcm", 0, 2016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W046.wav: 2016 8-bit samples, entry 046
+Main_P06_W047:	.incbin	"build/wav_pcm/main/Main_P06_W047.pcm", 0, 8448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W047.wav: 8448 8-bit samples, entry 047
+Main_P06_W048:	.incbin	"build/wav_pcm/main/Main_P06_W048.pcm", 0, 14720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W048_OrchBassDrm.wav: 7360 16-bit samples, entry 048
+Main_P06_W049:	.incbin	"build/wav_pcm/main/Main_P06_W049.pcm", 0, 7264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W049_OrchSnare.wav: 7264 8-bit samples, entry 049
+Main_P06_W04A:	.incbin	"build/wav_pcm/main/Main_P06_W04A.pcm", 0, 40160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W04A_OrchCymbal.wav: 40160 8-bit samples, entry 04A
+Main_P06_W04B:	.incbin	"build/wav_pcm/main/Main_P06_W04B.pcm", 0, 12416	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W04B.wav: 12416 8-bit samples, entry 04B
+Main_P06_W04C:	.incbin	"build/wav_pcm/main/Main_P06_W04C.pcm", 0, 57408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W04C_OrchGong.wav: 28704 16-bit samples, entry 04C
+Main_P06_W04D:	.incbin	"build/wav_pcm/main/Main_P06_W04D.pcm", 0, 5376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W04D_Shaker.wav: 5376 8-bit samples, entry 04D
+Main_P06_W04E:	.incbin	"build/wav_pcm/main/Main_P06_W04E.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W04E.wav: 6656 8-bit samples, entry 04E
+Main_P06_W04F:	.incbin	"build/wav_pcm/main/Main_P06_W04F.pcm", 0, 9344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W04F_Maracas.wav: 9344 8-bit samples, entry 04F
+Main_P06_W050:	.incbin	"build/wav_pcm/main/Main_P06_W050.pcm", 0, 3712	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W050_SambaWhistle.wav: 1856 16-bit samples, entry 050
+Main_P06_W051:	.incbin	"build/wav_pcm/main/Main_P06_W051.pcm", 0, 2688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W051_Slap.wav: 2688 8-bit samples, entry 051
+Main_P06_W052:	.incbin	"build/wav_pcm/main/Main_P06_W052.pcm", 0, 17856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W052.wav: 8928 16-bit samples, entry 052
+Main_P06_W053:	.incbin	"build/wav_pcm/main/Main_P06_W053.pcm", 0, 14464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W053.wav: 7232 16-bit samples, entry 053
+Main_P06_W054:	.incbin	"build/wav_pcm/main/Main_P06_W054.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W054.wav: 13312 8-bit samples, entry 054
+Main_P06_W055:	.incbin	"build/wav_pcm/main/Main_P06_W055.pcm", 0, 12416	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W055.wav: 12416 8-bit samples, entry 055
+Main_P06_W056:	.incbin	"build/wav_pcm/main/Main_P06_W056.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W056.wav: 4608 8-bit samples, entry 056
+Main_P06_W057:	.incbin	"build/wav_pcm/main/Main_P06_W057.pcm", 0, 1472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W057.wav: 1472 8-bit samples, entry 057
+Main_P06_W058:	.incbin	"build/wav_pcm/main/Main_P06_W058.pcm", 0, 11488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W058.wav: 11488 8-bit samples, entry 058
+Main_P06_W059:	.incbin	"build/wav_pcm/main/Main_P06_W059.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W059.wav: 6656 8-bit samples, entry 059
+Main_P06_W05A:	.incbin	"build/wav_pcm/main/Main_P06_W05A.pcm", 0, 24768	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W05A_TriangleOpen.wav: 12384 16-bit samples, entry 05A
+Main_P06_W05B:	.incbin	"build/wav_pcm/main/Main_P06_W05B.pcm", 0, 4032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W05B_TriangleMute.wav: 4032 8-bit samples, entry 05B
+Main_P06_W05C:	.incbin	"build/wav_pcm/main/Main_P06_W05C.pcm", 0, 21632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W05C_Vibraslap.wav: 21632 8-bit samples, entry 05C
+Main_P06_W05D:	.incbin	"build/wav_pcm/main/Main_P06_W05D.pcm", 0, 3648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W05D_WoodBlock.wav: 3648 8-bit samples, entry 05D
+Main_P06_W05E:	.incbin	"build/wav_pcm/main/Main_P06_W05E.pcm", 0, 1472	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W05E_Castanets.wav: 1472 8-bit samples, entry 05E
+Main_P06_W05F:	.incbin	"build/wav_pcm/main/Main_P06_W05F.pcm", 0, 5824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W05F.wav: 5824 8-bit samples, entry 05F
+Main_P06_W060:	.incbin	"build/wav_pcm/main/Main_P06_W060.pcm", 0, 2208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W060_Crickets.wav: 2208 8-bit samples, entry 060
+Main_P06_W061:	.incbin	"build/wav_pcm/main/Main_P06_W061.pcm", 0, 2880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W061_HighQ.wav: 2880 8-bit samples, entry 061
+Main_P06_W062:	.incbin	"build/wav_pcm/main/Main_P06_W062.pcm", 0, 35264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W062_MetronomeBell.wav: 17632 16-bit samples, entry 062
+Main_P06_W063:	.incbin	"build/wav_pcm/main/Main_P06_W063.pcm", 0, 6272	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W063_MetronomeTap.wav: 3136 16-bit samples, entry 063
+Main_P06_W064:	.incbin	"build/wav_pcm/main/Main_P06_W064.pcm", 0, 576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W064_OrganClick.wav: 576 8-bit samples, entries 064 065
+Main_P06_W066:	.incbin	"build/wav_pcm/main/Main_P06_W066.pcm", 0, 384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W066.wav: 384 8-bit samples, entries 066 067
+Main_P06_W068:	.incbin	"build/wav_pcm/main/Main_P06_W068.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W068.wav: 192 8-bit samples, entries 068 069
+Main_P06_W06A:	.incbin	"build/wav_pcm/main/Main_P06_W06A.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W06A.wav: 192 8-bit samples, entry 06A
+Main_P06_W06B:	.incbin	"build/wav_pcm/main/Main_P06_W06B.pcm", 0, 4896	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W06B.wav: 4896 8-bit samples, entry 06B
+Main_P06_W06C:	.incbin	"build/wav_pcm/main/Main_P06_W06C.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W06C_OrganClick.wav: 128 8-bit samples, entry 06C
+Main_P06_W06D:	.incbin	"build/wav_pcm/main/Main_P06_W06D.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W06D.wav: 64 8-bit samples, entry 06D
+Main_P06_W06E:	.incbin	"build/wav_pcm/main/Main_P06_W06E.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W06E.wav: 64 8-bit samples, entry 06E
+Main_P06_W06F:	.incbin	"build/wav_pcm/main/Main_P06_W06F.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W06F.wav: 64 8-bit samples, entry 06F
+Main_P06_W070:	.incbin	"build/wav_pcm/main/Main_P06_W070.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W070.wav: 192 8-bit samples, entries 070 071
+Main_P06_W072:	.incbin	"build/wav_pcm/main/Main_P06_W072.pcm", 0, 5728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W072.wav: 5728 8-bit samples, entries 072 073
+Main_P06_W074:	.incbin	"build/wav_pcm/main/Main_P06_W074.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W074_OrganClick.wav: 128 8-bit samples, entry 074
+Main_P06_W075:	.incbin	"build/wav_pcm/main/Main_P06_W075.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W075.wav: 64 8-bit samples, entry 075
+Main_P06_W076:	.incbin	"build/wav_pcm/main/Main_P06_W076.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W076.wav: 64 8-bit samples, entry 076
+Main_P06_W077:	.incbin	"build/wav_pcm/main/Main_P06_W077.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W077.wav: 64 8-bit samples, entry 077
+Main_P06_W078:	.incbin	"build/wav_pcm/main/Main_P06_W078.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W078.wav: 192 8-bit samples, entries 078 079
+Main_P06_W07A:	.incbin	"build/wav_pcm/main/Main_P06_W07A.pcm", 0, 6688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W07A.wav: 6688 8-bit samples, entries 07A 07B
+Main_P06_W07C:	.incbin	"build/wav_pcm/main/Main_P06_W07C.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W07C_OrganClick.wav: 128 8-bit samples, entry 07C
+Main_P06_W07D:	.incbin	"build/wav_pcm/main/Main_P06_W07D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W07D.wav: 256 8-bit samples, entries 07D 07E
+Main_P06_W07F:	.incbin	"build/wav_pcm/main/Main_P06_W07F.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W07F.wav: 128 8-bit samples, entries 07F 080
+Main_P06_W081:	.incbin	"build/wav_pcm/main/Main_P06_W081.pcm", 0, 5728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W081.wav: 5728 8-bit samples, entries 081 082 083
+Main_P06_W084:	.incbin	"build/wav_pcm/main/Main_P06_W084.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W084.wav: 64 8-bit samples, entry 084
+Main_P06_W085:	.incbin	"build/wav_pcm/main/Main_P06_W085.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W085.wav: 64 8-bit samples, entry 085
+Main_P06_W086:	.incbin	"build/wav_pcm/main/Main_P06_W086.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W086.wav: 64 8-bit samples, entry 086
+Main_P06_W087:	.incbin	"build/wav_pcm/main/Main_P06_W087.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W087.wav: 64 8-bit samples, entry 087
+Main_P06_W088:	.incbin	"build/wav_pcm/main/Main_P06_W088.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W088.wav: 64 8-bit samples, entry 088
+Main_P06_W089:	.incbin	"build/wav_pcm/main/Main_P06_W089.pcm", 0, 5920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W089.wav: 5920 8-bit samples, entries 089 08A 08B
+Main_P06_W08C:	.incbin	"build/wav_pcm/main/Main_P06_W08C.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W08C.wav: 64 8-bit samples, entry 08C
+Main_P06_W08D:	.incbin	"build/wav_pcm/main/Main_P06_W08D.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W08D.wav: 64 8-bit samples, entry 08D
+Main_P06_W08E:	.incbin	"build/wav_pcm/main/Main_P06_W08E.pcm", 0, 128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W08E.wav: 128 8-bit samples, entries 08E 08F
+Main_P06_W090:	.incbin	"build/wav_pcm/main/Main_P06_W090.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W090.wav: 64 8-bit samples, entry 090
+Main_P06_W091:	.incbin	"build/wav_pcm/main/Main_P06_W091.pcm", 0, 5920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W091.wav: 5920 8-bit samples, entries 091 092 093
+Main_P06_W094:	.incbin	"build/wav_pcm/main/Main_P06_W094.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W094.wav: 64 8-bit samples, entry 094
+Main_P06_W095:	.incbin	"build/wav_pcm/main/Main_P06_W095.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W095.wav: 64 8-bit samples, entry 095
+Main_P06_W096:	.incbin	"build/wav_pcm/main/Main_P06_W096.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W096.wav: 64 8-bit samples, entry 096
+Main_P06_W097:	.incbin	"build/wav_pcm/main/Main_P06_W097.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W097.wav: 64 8-bit samples, entry 097
+Main_P06_W098:	.incbin	"build/wav_pcm/main/Main_P06_W098.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W098.wav: 192 8-bit samples, entries 098 099
+Main_P06_W09A:	.incbin	"build/wav_pcm/main/Main_P06_W09A.pcm", 0, 6176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W09A.wav: 6176 8-bit samples, entries 09A 09B
+Main_P06_W09C:	.incbin	"build/wav_pcm/main/Main_P06_W09C.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W09C.wav: 64 8-bit samples, entry 09C
+Main_P06_W09D:	.incbin	"build/wav_pcm/main/Main_P06_W09D.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W09D.wav: 192 8-bit samples, entries 09D 09E 09F
+Main_P06_W0A0:	.incbin	"build/wav_pcm/main/Main_P06_W0A0.pcm", 0, 192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0A0.wav: 192 8-bit samples, entries 0A0 0A1
+Main_P06_W0A2:	.incbin	"build/wav_pcm/main/Main_P06_W0A2.pcm", 0, 5792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0A2.wav: 5792 8-bit samples, entries 0A2 0A3
+Main_P06_W0A4:	.incbin	"build/wav_pcm/main/Main_P06_W0A4.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0A4.wav: 64 8-bit samples, entry 0A4
+Main_P06_W0A5:	.incbin	"build/wav_pcm/main/Main_P06_W0A5.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0A5.wav: 64 8-bit samples, entry 0A5
+Main_P06_W0A6:	.incbin	"build/wav_pcm/main/Main_P06_W0A6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0A6.wav: 256 8-bit samples, entries 0A6 0A7 0A8 0A9
+Main_P06_W0AA:	.incbin	"build/wav_pcm/main/Main_P06_W0AA.pcm", 0, 64	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0AA.wav: 64 8-bit samples, entry 0AA
+Main_P06_W0AB:	.incbin	"build/wav_pcm/main/Main_P06_W0AB.pcm", 0, 5792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0AB.wav: 5792 8-bit samples, entry 0AB
+Main_P06_W0AC:	.incbin	"build/wav_pcm/main/Main_P06_W0AC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0AC_16ft.wav: 128 16-bit samples, entry 0AC
+Main_P06_W0AD:	.incbin	"build/wav_pcm/main/Main_P06_W0AD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0AD_Drawbar.wav: 128 16-bit samples, entry 0AD
+Main_P06_W0AE:	.incbin	"build/wav_pcm/main/Main_P06_W0AE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0AE_Drawbar.wav: 128 16-bit samples, entry 0AE
+Main_P06_W0AF:	.incbin	"build/wav_pcm/main/Main_P06_W0AF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0AF_Drawbar.wav: 128 16-bit samples, entry 0AF
+Main_P06_W0B0:	.incbin	"build/wav_pcm/main/Main_P06_W0B0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B0_Drawbar.wav: 128 16-bit samples, entry 0B0
+Main_P06_W0B1:	.incbin	"build/wav_pcm/main/Main_P06_W0B1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B1_Drawbar.wav: 128 16-bit samples, entry 0B1
+Main_P06_W0B2:	.incbin	"build/wav_pcm/main/Main_P06_W0B2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B2_Drawbar.wav: 128 16-bit samples, entry 0B2
+Main_P06_W0B3:	.incbin	"build/wav_pcm/main/Main_P06_W0B3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B3_Drawbar.wav: 128 16-bit samples, entry 0B3
+Main_P06_W0B4:	.incbin	"build/wav_pcm/main/Main_P06_W0B4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B4_Drawbar.wav: 128 16-bit samples, entry 0B4
+Main_P06_W0B5:	.incbin	"build/wav_pcm/main/Main_P06_W0B5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B5_Drawbar.wav: 128 16-bit samples, entry 0B5
+Main_P06_W0B6:	.incbin	"build/wav_pcm/main/Main_P06_W0B6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B6_Drawbar.wav: 128 16-bit samples, entry 0B6
+Main_P06_W0B7:	.incbin	"build/wav_pcm/main/Main_P06_W0B7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B7_Drawbar.wav: 128 16-bit samples, entry 0B7
+Main_P06_W0B8:	.incbin	"build/wav_pcm/main/Main_P06_W0B8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B8_Drawbar.wav: 128 16-bit samples, entry 0B8
+Main_P06_W0B9:	.incbin	"build/wav_pcm/main/Main_P06_W0B9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0B9_Drawbar.wav: 128 16-bit samples, entry 0B9
+Main_P06_W0BA:	.incbin	"build/wav_pcm/main/Main_P06_W0BA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0BA_Drawbar.wav: 128 16-bit samples, entry 0BA
+Main_P06_W0BB:	.incbin	"build/wav_pcm/main/Main_P06_W0BB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0BB_Drawbar.wav: 128 16-bit samples, entry 0BB
+Main_P06_W0BC:	.incbin	"build/wav_pcm/main/Main_P06_W0BC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0BC_Drawbar.wav: 128 16-bit samples, entry 0BC
+Main_P06_W0BD:	.incbin	"build/wav_pcm/main/Main_P06_W0BD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0BD_Drawbar.wav: 128 16-bit samples, entry 0BD
+Main_P06_W0BE:	.incbin	"build/wav_pcm/main/Main_P06_W0BE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0BE_Drawbar.wav: 128 16-bit samples, entry 0BE
+Main_P06_W0BF:	.incbin	"build/wav_pcm/main/Main_P06_W0BF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0BF_Drawbar.wav: 128 16-bit samples, entry 0BF
+Main_P06_W0C0:	.incbin	"build/wav_pcm/main/Main_P06_W0C0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C0_Drawbar.wav: 128 16-bit samples, entry 0C0
+Main_P06_W0C1:	.incbin	"build/wav_pcm/main/Main_P06_W0C1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C1_Drawbar.wav: 128 16-bit samples, entry 0C1
+Main_P06_W0C2:	.incbin	"build/wav_pcm/main/Main_P06_W0C2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C2_Drawbar.wav: 128 16-bit samples, entry 0C2
+Main_P06_W0C3:	.incbin	"build/wav_pcm/main/Main_P06_W0C3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C3_Drawbar.wav: 128 16-bit samples, entry 0C3
+Main_P06_W0C4:	.incbin	"build/wav_pcm/main/Main_P06_W0C4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C4_Drawbar.wav: 128 16-bit samples, entry 0C4
+Main_P06_W0C5:	.incbin	"build/wav_pcm/main/Main_P06_W0C5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C5_Drawbar.wav: 128 16-bit samples, entry 0C5
+Main_P06_W0C6:	.incbin	"build/wav_pcm/main/Main_P06_W0C6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C6_Drawbar.wav: 128 16-bit samples, entry 0C6
+Main_P06_W0C7:	.incbin	"build/wav_pcm/main/Main_P06_W0C7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C7_Drawbar.wav: 128 16-bit samples, entry 0C7
+Main_P06_W0C8:	.incbin	"build/wav_pcm/main/Main_P06_W0C8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C8_Drawbar.wav: 128 16-bit samples, entry 0C8
+Main_P06_W0C9:	.incbin	"build/wav_pcm/main/Main_P06_W0C9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0C9_Drawbar.wav: 128 16-bit samples, entry 0C9
+Main_P06_W0CA:	.incbin	"build/wav_pcm/main/Main_P06_W0CA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0CA_Drawbar.wav: 128 16-bit samples, entry 0CA
+Main_P06_W0CB:	.incbin	"build/wav_pcm/main/Main_P06_W0CB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0CB_Drawbar.wav: 128 16-bit samples, entry 0CB
+Main_P06_W0CC:	.incbin	"build/wav_pcm/main/Main_P06_W0CC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0CC_Drawbar.wav: 128 16-bit samples, entry 0CC
+Main_P06_W0CD:	.incbin	"build/wav_pcm/main/Main_P06_W0CD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0CD_Drawbar.wav: 128 16-bit samples, entry 0CD
+Main_P06_W0CE:	.incbin	"build/wav_pcm/main/Main_P06_W0CE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0CE_Drawbar.wav: 128 16-bit samples, entry 0CE
+Main_P06_W0CF:	.incbin	"build/wav_pcm/main/Main_P06_W0CF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0CF_Drawbar.wav: 128 16-bit samples, entry 0CF
+Main_P06_W0D0:	.incbin	"build/wav_pcm/main/Main_P06_W0D0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D0_Drawbar.wav: 128 16-bit samples, entry 0D0
+Main_P06_W0D1:	.incbin	"build/wav_pcm/main/Main_P06_W0D1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D1_Drawbar.wav: 128 16-bit samples, entry 0D1
+Main_P06_W0D2:	.incbin	"build/wav_pcm/main/Main_P06_W0D2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D2_16ftAnd8ft.wav: 128 16-bit samples, entry 0D2
+Main_P06_W0D3:	.incbin	"build/wav_pcm/main/Main_P06_W0D3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D3_Drawbar.wav: 128 16-bit samples, entry 0D3
+Main_P06_W0D4:	.incbin	"build/wav_pcm/main/Main_P06_W0D4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D4_Drawbar.wav: 128 16-bit samples, entry 0D4
+Main_P06_W0D5:	.incbin	"build/wav_pcm/main/Main_P06_W0D5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D5_Drawbar.wav: 128 16-bit samples, entry 0D5
+Main_P06_W0D6:	.incbin	"build/wav_pcm/main/Main_P06_W0D6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D6_Drawbar.wav: 128 16-bit samples, entry 0D6
+Main_P06_W0D7:	.incbin	"build/wav_pcm/main/Main_P06_W0D7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D7_Drawbar.wav: 128 16-bit samples, entry 0D7
+Main_P06_W0D8:	.incbin	"build/wav_pcm/main/Main_P06_W0D8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D8_Drawbar.wav: 128 16-bit samples, entry 0D8
+Main_P06_W0D9:	.incbin	"build/wav_pcm/main/Main_P06_W0D9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0D9_Drawbar.wav: 128 16-bit samples, entry 0D9
+Main_P06_W0DA:	.incbin	"build/wav_pcm/main/Main_P06_W0DA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0DA_Drawbar.wav: 128 16-bit samples, entry 0DA
+Main_P06_W0DB:	.incbin	"build/wav_pcm/main/Main_P06_W0DB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0DB_Drawbar.wav: 128 16-bit samples, entry 0DB
+Main_P06_W0DC:	.incbin	"build/wav_pcm/main/Main_P06_W0DC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0DC_Drawbar.wav: 128 16-bit samples, entry 0DC
+Main_P06_W0DD:	.incbin	"build/wav_pcm/main/Main_P06_W0DD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0DD_Drawbar.wav: 128 16-bit samples, entry 0DD
+Main_P06_W0DE:	.incbin	"build/wav_pcm/main/Main_P06_W0DE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0DE_Drawbar.wav: 128 16-bit samples, entry 0DE
+Main_P06_W0DF:	.incbin	"build/wav_pcm/main/Main_P06_W0DF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0DF_Drawbar.wav: 128 16-bit samples, entry 0DF
+Main_P06_W0E0:	.incbin	"build/wav_pcm/main/Main_P06_W0E0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E0_Drawbar.wav: 128 16-bit samples, entry 0E0
+Main_P06_W0E1:	.incbin	"build/wav_pcm/main/Main_P06_W0E1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E1_Drawbar.wav: 256 16-bit samples, entry 0E1
+Main_P06_W0E2:	.incbin	"build/wav_pcm/main/Main_P06_W0E2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E2_Drawbar.wav: 128 16-bit samples, entry 0E2
+Main_P06_W0E3:	.incbin	"build/wav_pcm/main/Main_P06_W0E3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E3_Drawbar.wav: 128 16-bit samples, entry 0E3
+Main_P06_W0E4:	.incbin	"build/wav_pcm/main/Main_P06_W0E4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E4_Drawbar.wav: 128 16-bit samples, entry 0E4
+Main_P06_W0E5:	.incbin	"build/wav_pcm/main/Main_P06_W0E5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E5_Drawbar.wav: 128 16-bit samples, entry 0E5
+Main_P06_W0E6:	.incbin	"build/wav_pcm/main/Main_P06_W0E6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E6_Drawbar.wav: 128 16-bit samples, entry 0E6
+Main_P06_W0E7:	.incbin	"build/wav_pcm/main/Main_P06_W0E7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E7_Drawbar.wav: 128 16-bit samples, entry 0E7
+Main_P06_W0E8:	.incbin	"build/wav_pcm/main/Main_P06_W0E8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E8_Drawbar.wav: 128 16-bit samples, entry 0E8
+Main_P06_W0E9:	.incbin	"build/wav_pcm/main/Main_P06_W0E9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0E9_Drawbar.wav: 128 16-bit samples, entry 0E9
+Main_P06_W0EA:	.incbin	"build/wav_pcm/main/Main_P06_W0EA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0EA_Drawbar.wav: 256 16-bit samples, entry 0EA
+Main_P06_W0EB:	.incbin	"build/wav_pcm/main/Main_P06_W0EB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0EB_Drawbar.wav: 128 16-bit samples, entry 0EB
+Main_P06_W0EC:	.incbin	"build/wav_pcm/main/Main_P06_W0EC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0EC_Drawbar.wav: 128 16-bit samples, entry 0EC
+Main_P06_W0ED:	.incbin	"build/wav_pcm/main/Main_P06_W0ED.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0ED_Drawbar.wav: 128 16-bit samples, entry 0ED
+Main_P06_W0EE:	.incbin	"build/wav_pcm/main/Main_P06_W0EE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0EE_Drawbar.wav: 128 16-bit samples, entry 0EE
+Main_P06_W0EF:	.incbin	"build/wav_pcm/main/Main_P06_W0EF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0EF_Drawbar.wav: 128 16-bit samples, entry 0EF
+Main_P06_W0F0:	.incbin	"build/wav_pcm/main/Main_P06_W0F0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F0_Drawbar.wav: 128 16-bit samples, entry 0F0
+Main_P06_W0F1:	.incbin	"build/wav_pcm/main/Main_P06_W0F1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F1_Drawbar.wav: 128 16-bit samples, entry 0F1
+Main_P06_W0F2:	.incbin	"build/wav_pcm/main/Main_P06_W0F2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F2_Drawbar.wav: 128 16-bit samples, entry 0F2
+Main_P06_W0F3:	.incbin	"build/wav_pcm/main/Main_P06_W0F3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F3_Drawbar.wav: 256 16-bit samples, entry 0F3
+Main_P06_W0F4:	.incbin	"build/wav_pcm/main/Main_P06_W0F4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F4_Drawbar.wav: 128 16-bit samples, entry 0F4
+Main_P06_W0F5:	.incbin	"build/wav_pcm/main/Main_P06_W0F5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F5_Drawbar.wav: 128 16-bit samples, entry 0F5
+Main_P06_W0F6:	.incbin	"build/wav_pcm/main/Main_P06_W0F6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F6_Drawbar.wav: 128 16-bit samples, entry 0F6
+Main_P06_W0F7:	.incbin	"build/wav_pcm/main/Main_P06_W0F7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F7_Drawbar.wav: 128 16-bit samples, entry 0F7
+Main_P06_W0F8:	.incbin	"build/wav_pcm/main/Main_P06_W0F8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F8_Drawbar.wav: 128 16-bit samples, entry 0F8
+Main_P06_W0F9:	.incbin	"build/wav_pcm/main/Main_P06_W0F9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0F9_Drawbar.wav: 128 16-bit samples, entry 0F9
+Main_P06_W0FA:	.incbin	"build/wav_pcm/main/Main_P06_W0FA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0FA_Drawbar.wav: 128 16-bit samples, entry 0FA
+Main_P06_W0FB:	.incbin	"build/wav_pcm/main/Main_P06_W0FB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0FB_Drawbar.wav: 128 16-bit samples, entry 0FB
+Main_P06_W0FC:	.incbin	"build/wav_pcm/main/Main_P06_W0FC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0FC_Drawbar.wav: 256 16-bit samples, entry 0FC
+Main_P06_W0FD:	.incbin	"build/wav_pcm/main/Main_P06_W0FD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0FD_Drawbar.wav: 128 16-bit samples, entry 0FD
+Main_P06_W0FE:	.incbin	"build/wav_pcm/main/Main_P06_W0FE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0FE_Drawbar.wav: 128 16-bit samples, entry 0FE
+Main_P06_W0FF:	.incbin	"build/wav_pcm/main/Main_P06_W0FF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W0FF_Drawbar.wav: 128 16-bit samples, entry 0FF
+Main_P06_W100:	.incbin	"build/wav_pcm/main/Main_P06_W100.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W100_Drawbar.wav: 128 16-bit samples, entry 100
+Main_P06_W101:	.incbin	"build/wav_pcm/main/Main_P06_W101.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W101_Drawbar.wav: 128 16-bit samples, entry 101
+Main_P06_W102:	.incbin	"build/wav_pcm/main/Main_P06_W102.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W102_Drawbar.wav: 128 16-bit samples, entry 102
+Main_P06_W103:	.incbin	"build/wav_pcm/main/Main_P06_W103.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W103_Drawbar.wav: 128 16-bit samples, entry 103
+Main_P06_W104:	.incbin	"build/wav_pcm/main/Main_P06_W104.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W104_Drawbar.wav: 128 16-bit samples, entry 104
+Main_P06_W105:	.incbin	"build/wav_pcm/main/Main_P06_W105.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W105_Drawbar.wav: 256 16-bit samples, entry 105
+Main_P06_W106:	.incbin	"build/wav_pcm/main/Main_P06_W106.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W106_Drawbar.wav: 128 16-bit samples, entry 106
+Main_P06_W107:	.incbin	"build/wav_pcm/main/Main_P06_W107.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W107_Drawbar.wav: 128 16-bit samples, entry 107
+Main_P06_W108:	.incbin	"build/wav_pcm/main/Main_P06_W108.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W108_Drawbar.wav: 128 16-bit samples, entry 108
+Main_P06_W109:	.incbin	"build/wav_pcm/main/Main_P06_W109.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W109_Drawbar.wav: 128 16-bit samples, entry 109
+Main_P06_W10A:	.incbin	"build/wav_pcm/main/Main_P06_W10A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W10A_Drawbar.wav: 128 16-bit samples, entry 10A
+Main_P06_W10B:	.incbin	"build/wav_pcm/main/Main_P06_W10B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W10B_Drawbar.wav: 128 16-bit samples, entry 10B
+Main_P06_W10C:	.incbin	"build/wav_pcm/main/Main_P06_W10C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W10C_Drawbar.wav: 128 16-bit samples, entry 10C
+Main_P06_W10D:	.incbin	"build/wav_pcm/main/Main_P06_W10D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W10D_Drawbar.wav: 128 16-bit samples, entry 10D
+Main_P06_W10E:	.incbin	"build/wav_pcm/main/Main_P06_W10E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W10E_Drawbar.wav: 256 16-bit samples, entry 10E
+Main_P06_W10F:	.incbin	"build/wav_pcm/main/Main_P06_W10F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W10F_Drawbar.wav: 128 16-bit samples, entry 10F
+Main_P06_W110:	.incbin	"build/wav_pcm/main/Main_P06_W110.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W110_Drawbar.wav: 128 16-bit samples, entry 110
+Main_P06_W111:	.incbin	"build/wav_pcm/main/Main_P06_W111.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W111_Drawbar.wav: 128 16-bit samples, entry 111
+Main_P06_W112:	.incbin	"build/wav_pcm/main/Main_P06_W112.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W112_Drawbar.wav: 128 16-bit samples, entry 112
+Main_P06_W113:	.incbin	"build/wav_pcm/main/Main_P06_W113.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W113_Drawbar.wav: 128 16-bit samples, entry 113
+Main_P06_W114:	.incbin	"build/wav_pcm/main/Main_P06_W114.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W114_Drawbar.wav: 128 16-bit samples, entry 114
+Main_P06_W115:	.incbin	"build/wav_pcm/main/Main_P06_W115.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W115_Drawbar.wav: 128 16-bit samples, entry 115
+Main_P06_W116:	.incbin	"build/wav_pcm/main/Main_P06_W116.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W116_Drawbar.wav: 128 16-bit samples, entry 116
+Main_P06_W117:	.incbin	"build/wav_pcm/main/Main_P06_W117.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W117_Drawbar.wav: 256 16-bit samples, entry 117
+Main_P06_W118:	.incbin	"build/wav_pcm/main/Main_P06_W118.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W118_Drawbar.wav: 128 16-bit samples, entry 118
+Main_P06_W119:	.incbin	"build/wav_pcm/main/Main_P06_W119.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W119_Drawbar.wav: 128 16-bit samples, entry 119
+Main_P06_W11A:	.incbin	"build/wav_pcm/main/Main_P06_W11A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W11A_Drawbar.wav: 128 16-bit samples, entry 11A
+Main_P06_W11B:	.incbin	"build/wav_pcm/main/Main_P06_W11B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W11B_Drawbar.wav: 128 16-bit samples, entry 11B
+Main_P06_W11C:	.incbin	"build/wav_pcm/main/Main_P06_W11C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W11C_Drawbar.wav: 128 16-bit samples, entry 11C
+Main_P06_W11D:	.incbin	"build/wav_pcm/main/Main_P06_W11D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W11D_Drawbar.wav: 128 16-bit samples, entry 11D
+Main_P06_W11E:	.incbin	"build/wav_pcm/main/Main_P06_W11E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W11E_Drawbar.wav: 128 16-bit samples, entry 11E
+Main_P06_W11F:	.incbin	"build/wav_pcm/main/Main_P06_W11F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W11F_Drawbar.wav: 128 16-bit samples, entry 11F
+Main_P06_W120:	.incbin	"build/wav_pcm/main/Main_P06_W120.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W120_Drawbar.wav: 256 16-bit samples, entry 120
+Main_P06_W121:	.incbin	"build/wav_pcm/main/Main_P06_W121.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W121_Drawbar.wav: 128 16-bit samples, entry 121
+Main_P06_W122:	.incbin	"build/wav_pcm/main/Main_P06_W122.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W122_Drawbar.wav: 128 16-bit samples, entry 122
+Main_P06_W123:	.incbin	"build/wav_pcm/main/Main_P06_W123.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W123_Drawbar.wav: 128 16-bit samples, entry 123
+Main_P06_W124:	.incbin	"build/wav_pcm/main/Main_P06_W124.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W124_Drawbar.wav: 128 16-bit samples, entry 124
+Main_P06_W125:	.incbin	"build/wav_pcm/main/Main_P06_W125.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W125_Drawbar.wav: 128 16-bit samples, entry 125
+Main_P06_W126:	.incbin	"build/wav_pcm/main/Main_P06_W126.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W126_Drawbar.wav: 128 16-bit samples, entry 126
+Main_P06_W127:	.incbin	"build/wav_pcm/main/Main_P06_W127.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W127_Drawbar.wav: 256 16-bit samples, entry 127
+Main_P06_W128:	.incbin	"build/wav_pcm/main/Main_P06_W128.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W128_Drawbar.wav: 256 16-bit samples, entry 128
+Main_P06_W129:	.incbin	"build/wav_pcm/main/Main_P06_W129.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W129_Drawbar.wav: 256 16-bit samples, entry 129
+Main_P06_W12A:	.incbin	"build/wav_pcm/main/Main_P06_W12A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W12A_Drawbar.wav: 128 16-bit samples, entry 12A
+Main_P06_W12B:	.incbin	"build/wav_pcm/main/Main_P06_W12B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W12B_Drawbar.wav: 128 16-bit samples, entry 12B
+Main_P06_W12C:	.incbin	"build/wav_pcm/main/Main_P06_W12C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W12C_Drawbar.wav: 128 16-bit samples, entry 12C
+Main_P06_W12D:	.incbin	"build/wav_pcm/main/Main_P06_W12D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W12D_Drawbar.wav: 128 16-bit samples, entry 12D
+Main_P06_W12E:	.incbin	"build/wav_pcm/main/Main_P06_W12E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W12E_Drawbar.wav: 128 16-bit samples, entry 12E
+Main_P06_W12F:	.incbin	"build/wav_pcm/main/Main_P06_W12F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W12F_Drawbar.wav: 128 16-bit samples, entry 12F
+Main_P06_W130:	.incbin	"build/wav_pcm/main/Main_P06_W130.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W130_Drawbar.wav: 256 16-bit samples, entry 130
+Main_P06_W131:	.incbin	"build/wav_pcm/main/Main_P06_W131.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W131_Drawbar.wav: 128 16-bit samples, entry 131
+Main_P06_W132:	.incbin	"build/wav_pcm/main/Main_P06_W132.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W132_Drawbar.wav: 128 16-bit samples, entry 132
+Main_P06_W133:	.incbin	"build/wav_pcm/main/Main_P06_W133.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W133.wav: 128 16-bit samples, entry 133
+Main_P06_W134:	.incbin	"build/wav_pcm/main/Main_P06_W134.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W134.wav: 128 16-bit samples, entry 134
+Main_P06_W135:	.incbin	"build/wav_pcm/main/Main_P06_W135.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W135.wav: 128 16-bit samples, entry 135
+Main_P06_W136:	.incbin	"build/wav_pcm/main/Main_P06_W136.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W136.wav: 128 16-bit samples, entry 136
+Main_P06_W137:	.incbin	"build/wav_pcm/main/Main_P06_W137.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W137_Drawbar.wav: 256 16-bit samples, entry 137
+Main_P06_W138:	.incbin	"build/wav_pcm/main/Main_P06_W138.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W138_Drawbar.wav: 128 16-bit samples, entry 138
+Main_P06_W139:	.incbin	"build/wav_pcm/main/Main_P06_W139.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W139_Drawbar.wav: 128 16-bit samples, entry 139
+Main_P06_W13A:	.incbin	"build/wav_pcm/main/Main_P06_W13A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W13A_Drawbar.wav: 128 16-bit samples, entry 13A
+Main_P06_W13B:	.incbin	"build/wav_pcm/main/Main_P06_W13B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W13B_Drawbar.wav: 128 16-bit samples, entry 13B
+Main_P06_W13C:	.incbin	"build/wav_pcm/main/Main_P06_W13C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W13C_Drawbar.wav: 128 16-bit samples, entry 13C
+Main_P06_W13D:	.incbin	"build/wav_pcm/main/Main_P06_W13D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W13D_Drawbar.wav: 128 16-bit samples, entry 13D
+Main_P06_W13E:	.incbin	"build/wav_pcm/main/Main_P06_W13E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W13E_Drawbar.wav: 128 16-bit samples, entry 13E
+Main_P06_W13F:	.incbin	"build/wav_pcm/main/Main_P06_W13F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W13F_Drawbar.wav: 128 16-bit samples, entry 13F
+Main_P06_W140:	.incbin	"build/wav_pcm/main/Main_P06_W140.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W140_Drawbar.wav: 256 16-bit samples, entry 140
+Main_P06_W141:	.incbin	"build/wav_pcm/main/Main_P06_W141.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W141_Drawbar.wav: 128 16-bit samples, entry 141
+Main_P06_W142:	.incbin	"build/wav_pcm/main/Main_P06_W142.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W142_Drawbar.wav: 128 16-bit samples, entry 142
+Main_P06_W143:	.incbin	"build/wav_pcm/main/Main_P06_W143.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W143_Drawbar.wav: 128 16-bit samples, entry 143
+Main_P06_W144:	.incbin	"build/wav_pcm/main/Main_P06_W144.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W144_Drawbar.wav: 128 16-bit samples, entry 144
+Main_P06_W145:	.incbin	"build/wav_pcm/main/Main_P06_W145.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W145_Drawbar.wav: 128 16-bit samples, entry 145
+Main_P06_W146:	.incbin	"build/wav_pcm/main/Main_P06_W146.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W146_Drawbar.wav: 128 16-bit samples, entry 146
+Main_P06_W147:	.incbin	"build/wav_pcm/main/Main_P06_W147.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W147_Drawbar.wav: 128 16-bit samples, entry 147
+Main_P06_W148:	.incbin	"build/wav_pcm/main/Main_P06_W148.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W148_Drawbar.wav: 128 16-bit samples, entry 148
+Main_P06_W149:	.incbin	"build/wav_pcm/main/Main_P06_W149.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W149_Drawbar.wav: 256 16-bit samples, entry 149
+Main_P06_W14A:	.incbin	"build/wav_pcm/main/Main_P06_W14A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W14A_Drawbar.wav: 128 16-bit samples, entry 14A
+Main_P06_W14B:	.incbin	"build/wav_pcm/main/Main_P06_W14B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W14B.wav: 128 16-bit samples, entry 14B
+Main_P06_W14C:	.incbin	"build/wav_pcm/main/Main_P06_W14C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W14C_Drawbar.wav: 128 16-bit samples, entry 14C
+Main_P06_W14D:	.incbin	"build/wav_pcm/main/Main_P06_W14D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W14D_Drawbar.wav: 128 16-bit samples, entry 14D
+Main_P06_W14E:	.incbin	"build/wav_pcm/main/Main_P06_W14E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W14E.wav: 128 16-bit samples, entry 14E
+Main_P06_W14F:	.incbin	"build/wav_pcm/main/Main_P06_W14F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W14F.wav: 128 16-bit samples, entry 14F
+Main_P06_W150:	.incbin	"build/wav_pcm/main/Main_P06_W150.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W150.wav: 128 16-bit samples, entry 150
+Main_P06_W151:	.incbin	"build/wav_pcm/main/Main_P06_W151.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W151.wav: 128 16-bit samples, entry 151
+Main_P06_W152:	.incbin	"build/wav_pcm/main/Main_P06_W152.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W152_Drawbar.wav: 256 16-bit samples, entry 152
+Main_P06_W153:	.incbin	"build/wav_pcm/main/Main_P06_W153.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W153_Drawbar.wav: 128 16-bit samples, entry 153
+Main_P06_W154:	.incbin	"build/wav_pcm/main/Main_P06_W154.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W154.wav: 128 16-bit samples, entry 154
+Main_P06_W155:	.incbin	"build/wav_pcm/main/Main_P06_W155.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W155_Drawbar.wav: 128 16-bit samples, entry 155
+Main_P06_W156:	.incbin	"build/wav_pcm/main/Main_P06_W156.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W156_Drawbar.wav: 128 16-bit samples, entry 156
+Main_P06_W157:	.incbin	"build/wav_pcm/main/Main_P06_W157.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W157.wav: 128 16-bit samples, entry 157
+Main_P06_W158:	.incbin	"build/wav_pcm/main/Main_P06_W158.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W158.wav: 128 16-bit samples, entry 158
+Main_P06_W159:	.incbin	"build/wav_pcm/main/Main_P06_W159.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W159.wav: 128 16-bit samples, entry 159
+Main_P06_W15A:	.incbin	"build/wav_pcm/main/Main_P06_W15A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W15A.wav: 128 16-bit samples, entry 15A
+Main_P06_W15B:	.incbin	"build/wav_pcm/main/Main_P06_W15B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W15B_Drawbar.wav: 256 16-bit samples, entry 15B
+Main_P06_W15C:	.incbin	"build/wav_pcm/main/Main_P06_W15C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W15C_Drawbar.wav: 128 16-bit samples, entry 15C
+Main_P06_W15D:	.incbin	"build/wav_pcm/main/Main_P06_W15D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W15D.wav: 128 16-bit samples, entry 15D
+Main_P06_W15E:	.incbin	"build/wav_pcm/main/Main_P06_W15E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W15E_Drawbar.wav: 128 16-bit samples, entry 15E
+Main_P06_W15F:	.incbin	"build/wav_pcm/main/Main_P06_W15F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W15F_Drawbar.wav: 128 16-bit samples, entry 15F
+Main_P06_W160:	.incbin	"build/wav_pcm/main/Main_P06_W160.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W160.wav: 128 16-bit samples, entry 160
+Main_P06_W161:	.incbin	"build/wav_pcm/main/Main_P06_W161.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W161.wav: 128 16-bit samples, entry 161
+Main_P06_W162:	.incbin	"build/wav_pcm/main/Main_P06_W162.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W162.wav: 128 16-bit samples, entry 162
+Main_P06_W163:	.incbin	"build/wav_pcm/main/Main_P06_W163.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W163_Drawbar.wav: 128 16-bit samples, entry 163
+Main_P06_W164:	.incbin	"build/wav_pcm/main/Main_P06_W164.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W164_Drawbar.wav: 256 16-bit samples, entry 164
+Main_P06_W165:	.incbin	"build/wav_pcm/main/Main_P06_W165.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W165_Drawbar.wav: 128 16-bit samples, entry 165
+Main_P06_W166:	.incbin	"build/wav_pcm/main/Main_P06_W166.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W166.wav: 128 16-bit samples, entry 166
+Main_P06_W167:	.incbin	"build/wav_pcm/main/Main_P06_W167.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W167_Drawbar.wav: 128 16-bit samples, entry 167
+Main_P06_W168:	.incbin	"build/wav_pcm/main/Main_P06_W168.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W168_Drawbar.wav: 128 16-bit samples, entry 168
+Main_P06_W169:	.incbin	"build/wav_pcm/main/Main_P06_W169.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W169.wav: 128 16-bit samples, entry 169
+Main_P06_W16A:	.incbin	"build/wav_pcm/main/Main_P06_W16A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W16A.wav: 128 16-bit samples, entry 16A
+Main_P06_W16B:	.incbin	"build/wav_pcm/main/Main_P06_W16B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W16B.wav: 128 16-bit samples, entry 16B
+Main_P06_W16C:	.incbin	"build/wav_pcm/main/Main_P06_W16C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W16C.wav: 128 16-bit samples, entry 16C
+Main_P06_W16D:	.incbin	"build/wav_pcm/main/Main_P06_W16D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W16D_Drawbar.wav: 256 16-bit samples, entry 16D
+Main_P06_W16E:	.incbin	"build/wav_pcm/main/Main_P06_W16E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W16E_Drawbar.wav: 256 16-bit samples, entry 16E
+Main_P06_W16F:	.incbin	"build/wav_pcm/main/Main_P06_W16F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W16F_Drawbar.wav: 128 16-bit samples, entry 16F
+Main_P06_W170:	.incbin	"build/wav_pcm/main/Main_P06_W170.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W170_Drawbar.wav: 256 16-bit samples, entry 170
+Main_P06_W171:	.incbin	"build/wav_pcm/main/Main_P06_W171.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W171_Drawbar.wav: 256 16-bit samples, entry 171
+Main_P06_W172:	.incbin	"build/wav_pcm/main/Main_P06_W172.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W172_Drawbar.wav: 256 16-bit samples, entry 172
+Main_P06_W173:	.incbin	"build/wav_pcm/main/Main_P06_W173.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W173_Drawbar.wav: 128 16-bit samples, entry 173
+Main_P06_W174:	.incbin	"build/wav_pcm/main/Main_P06_W174.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W174_Drawbar.wav: 128 16-bit samples, entry 174
+Main_P06_W175:	.incbin	"build/wav_pcm/main/Main_P06_W175.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W175_Drawbar.wav: 128 16-bit samples, entry 175
+Main_P06_W176:	.incbin	"build/wav_pcm/main/Main_P06_W176.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W176_Drawbar.wav: 128 16-bit samples, entry 176
+Main_P06_W177:	.incbin	"build/wav_pcm/main/Main_P06_W177.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W177_Drawbar.wav: 128 16-bit samples, entry 177
+Main_P06_W178:	.incbin	"build/wav_pcm/main/Main_P06_W178.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W178_Drawbar.wav: 128 16-bit samples, entry 178
+Main_P06_W179:	.incbin	"build/wav_pcm/main/Main_P06_W179.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W179_Drawbar.wav: 256 16-bit samples, entry 179
+Main_P06_W17A:	.incbin	"build/wav_pcm/main/Main_P06_W17A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W17A_Drawbar.wav: 256 16-bit samples, entry 17A
+Main_P06_W17B:	.incbin	"build/wav_pcm/main/Main_P06_W17B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W17B_Drawbar.wav: 256 16-bit samples, entry 17B
+Main_P06_W17C:	.incbin	"build/wav_pcm/main/Main_P06_W17C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W17C_Drawbar.wav: 128 16-bit samples, entry 17C
+Main_P06_W17D:	.incbin	"build/wav_pcm/main/Main_P06_W17D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W17D_Drawbar.wav: 128 16-bit samples, entry 17D
+Main_P06_W17E:	.incbin	"build/wav_pcm/main/Main_P06_W17E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W17E_Drawbar.wav: 128 16-bit samples, entry 17E
+Main_P06_W17F:	.incbin	"build/wav_pcm/main/Main_P06_W17F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W17F_Drawbar.wav: 128 16-bit samples, entry 17F
+Main_P06_W180:	.incbin	"build/wav_pcm/main/Main_P06_W180.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W180_Drawbar.wav: 128 16-bit samples, entry 180
+Main_P06_W181:	.incbin	"build/wav_pcm/main/Main_P06_W181.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W181_Drawbar.wav: 128 16-bit samples, entry 181
+Main_P06_W182:	.incbin	"build/wav_pcm/main/Main_P06_W182.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W182_Drawbar.wav: 256 16-bit samples, entry 182
+Main_P06_W183:	.incbin	"build/wav_pcm/main/Main_P06_W183.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W183_Drawbar.wav: 256 16-bit samples, entry 183
+Main_P06_W184:	.incbin	"build/wav_pcm/main/Main_P06_W184.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W184_Drawbar.wav: 128 16-bit samples, entry 184
+Main_P06_W185:	.incbin	"build/wav_pcm/main/Main_P06_W185.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W185_Drawbar.wav: 128 16-bit samples, entry 185
+Main_P06_W186:	.incbin	"build/wav_pcm/main/Main_P06_W186.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W186_Drawbar.wav: 128 16-bit samples, entry 186
+Main_P06_W187:	.incbin	"build/wav_pcm/main/Main_P06_W187.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W187_Drawbar.wav: 128 16-bit samples, entry 187
+Main_P06_W188:	.incbin	"build/wav_pcm/main/Main_P06_W188.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W188_Drawbar.wav: 128 16-bit samples, entry 188
+Main_P06_W189:	.incbin	"build/wav_pcm/main/Main_P06_W189.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W189_Drawbar.wav: 128 16-bit samples, entry 189
+Main_P06_W18A:	.incbin	"build/wav_pcm/main/Main_P06_W18A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W18A_Drawbar.wav: 128 16-bit samples, entry 18A
+Main_P06_W18B:	.incbin	"build/wav_pcm/main/Main_P06_W18B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W18B_Drawbar.wav: 128 16-bit samples, entry 18B
+Main_P06_W18C:	.incbin	"build/wav_pcm/main/Main_P06_W18C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W18C_Drawbar.wav: 128 16-bit samples, entry 18C
+Main_P06_W18D:	.incbin	"build/wav_pcm/main/Main_P06_W18D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W18D_Drawbar.wav: 128 16-bit samples, entry 18D
+Main_P06_W18E:	.incbin	"build/wav_pcm/main/Main_P06_W18E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W18E_Drawbar.wav: 128 16-bit samples, entry 18E
+Main_P06_W18F:	.incbin	"build/wav_pcm/main/Main_P06_W18F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W18F_Drawbar.wav: 128 16-bit samples, entry 18F
+Main_P06_W190:	.incbin	"build/wav_pcm/main/Main_P06_W190.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W190_Drawbar.wav: 128 16-bit samples, entry 190
+Main_P06_W191:	.incbin	"build/wav_pcm/main/Main_P06_W191.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W191_Drawbar.wav: 256 16-bit samples, entry 191
+Main_P06_W192:	.incbin	"build/wav_pcm/main/Main_P06_W192.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W192_Drawbar.wav: 128 16-bit samples, entry 192
+Main_P06_W193:	.incbin	"build/wav_pcm/main/Main_P06_W193.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W193_Drawbar.wav: 128 16-bit samples, entry 193
+Main_P06_W194:	.incbin	"build/wav_pcm/main/Main_P06_W194.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W194_Drawbar.wav: 128 16-bit samples, entry 194
+Main_P06_W195:	.incbin	"build/wav_pcm/main/Main_P06_W195.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W195_Drawbar.wav: 128 16-bit samples, entry 195
+Main_P06_W196:	.incbin	"build/wav_pcm/main/Main_P06_W196.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W196_Drawbar.wav: 128 16-bit samples, entry 196
+Main_P06_W197:	.incbin	"build/wav_pcm/main/Main_P06_W197.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W197_Drawbar.wav: 128 16-bit samples, entry 197
+Main_P06_W198:	.incbin	"build/wav_pcm/main/Main_P06_W198.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W198_Drawbar.wav: 128 16-bit samples, entry 198
+Main_P06_W199:	.incbin	"build/wav_pcm/main/Main_P06_W199.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W199_Drawbar.wav: 128 16-bit samples, entry 199
+Main_P06_W19A:	.incbin	"build/wav_pcm/main/Main_P06_W19A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W19A_Drawbar.wav: 256 16-bit samples, entry 19A
+Main_P06_W19B:	.incbin	"build/wav_pcm/main/Main_P06_W19B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W19B_Drawbar.wav: 256 16-bit samples, entry 19B
+Main_P06_W19C:	.incbin	"build/wav_pcm/main/Main_P06_W19C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W19C_Drawbar.wav: 128 16-bit samples, entry 19C
+Main_P06_W19D:	.incbin	"build/wav_pcm/main/Main_P06_W19D.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W19D_Drawbar.wav: 512 16-bit samples, entry 19D
+Main_P06_W19E:	.incbin	"build/wav_pcm/main/Main_P06_W19E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W19E_Drawbar.wav: 256 16-bit samples, entry 19E
+Main_P06_W19F:	.incbin	"build/wav_pcm/main/Main_P06_W19F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W19F_Drawbar.wav: 256 16-bit samples, entry 19F
+Main_P06_W1A0:	.incbin	"build/wav_pcm/main/Main_P06_W1A0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A0_Drawbar.wav: 128 16-bit samples, entry 1A0
+Main_P06_W1A1:	.incbin	"build/wav_pcm/main/Main_P06_W1A1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A1_Drawbar.wav: 128 16-bit samples, entry 1A1
+Main_P06_W1A2:	.incbin	"build/wav_pcm/main/Main_P06_W1A2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A2_Drawbar.wav: 128 16-bit samples, entry 1A2
+Main_P06_W1A3:	.incbin	"build/wav_pcm/main/Main_P06_W1A3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A3_Drawbar.wav: 128 16-bit samples, entry 1A3
+Main_P06_W1A4:	.incbin	"build/wav_pcm/main/Main_P06_W1A4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A4_Drawbar.wav: 128 16-bit samples, entry 1A4
+Main_P06_W1A5:	.incbin	"build/wav_pcm/main/Main_P06_W1A5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A5_Drawbar.wav: 128 16-bit samples, entry 1A5
+Main_P06_W1A6:	.incbin	"build/wav_pcm/main/Main_P06_W1A6.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A6_Drawbar.wav: 256 16-bit samples, entry 1A6
+Main_P06_W1A7:	.incbin	"build/wav_pcm/main/Main_P06_W1A7.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A7_Drawbar.wav: 256 16-bit samples, entry 1A7
+Main_P06_W1A8:	.incbin	"build/wav_pcm/main/Main_P06_W1A8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A8_Drawbar.wav: 256 16-bit samples, entry 1A8
+Main_P06_W1A9:	.incbin	"build/wav_pcm/main/Main_P06_W1A9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1A9_Drawbar.wav: 128 16-bit samples, entry 1A9
+Main_P06_W1AA:	.incbin	"build/wav_pcm/main/Main_P06_W1AA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1AA_Drawbar.wav: 128 16-bit samples, entry 1AA
+Main_P06_W1AB:	.incbin	"build/wav_pcm/main/Main_P06_W1AB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1AB_Drawbar.wav: 128 16-bit samples, entry 1AB
+Main_P06_W1AC:	.incbin	"build/wav_pcm/main/Main_P06_W1AC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1AC_Drawbar.wav: 128 16-bit samples, entry 1AC
+Main_P06_W1AD:	.incbin	"build/wav_pcm/main/Main_P06_W1AD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1AD_Drawbar.wav: 128 16-bit samples, entry 1AD
+Main_P06_W1AE:	.incbin	"build/wav_pcm/main/Main_P06_W1AE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1AE_Drawbar.wav: 128 16-bit samples, entry 1AE
+Main_P06_W1AF:	.incbin	"build/wav_pcm/main/Main_P06_W1AF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1AF_Drawbar.wav: 256 16-bit samples, entry 1AF
+Main_P06_W1B0:	.incbin	"build/wav_pcm/main/Main_P06_W1B0.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B0_Drawbar.wav: 256 16-bit samples, entry 1B0
+Main_P06_W1B1:	.incbin	"build/wav_pcm/main/Main_P06_W1B1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B1_Drawbar.wav: 128 16-bit samples, entry 1B1
+Main_P06_W1B2:	.incbin	"build/wav_pcm/main/Main_P06_W1B2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B2_Drawbar.wav: 128 16-bit samples, entry 1B2
+Main_P06_W1B3:	.incbin	"build/wav_pcm/main/Main_P06_W1B3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B3_Drawbar.wav: 128 16-bit samples, entry 1B3
+Main_P06_W1B4:	.incbin	"build/wav_pcm/main/Main_P06_W1B4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B4_Drawbar.wav: 128 16-bit samples, entry 1B4
+Main_P06_W1B5:	.incbin	"build/wav_pcm/main/Main_P06_W1B5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B5_Drawbar.wav: 128 16-bit samples, entry 1B5
+Main_P06_W1B6:	.incbin	"build/wav_pcm/main/Main_P06_W1B6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B6_Drawbar.wav: 128 16-bit samples, entry 1B6
+Main_P06_W1B7:	.incbin	"build/wav_pcm/main/Main_P06_W1B7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B7_Drawbar.wav: 128 16-bit samples, entry 1B7
+Main_P06_W1B8:	.incbin	"build/wav_pcm/main/Main_P06_W1B8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B8_Drawbar.wav: 128 16-bit samples, entry 1B8
+Main_P06_W1B9:	.incbin	"build/wav_pcm/main/Main_P06_W1B9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1B9_Drawbar.wav: 128 16-bit samples, entry 1B9
+Main_P06_W1BA:	.incbin	"build/wav_pcm/main/Main_P06_W1BA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1BA_Drawbar.wav: 128 16-bit samples, entry 1BA
+Main_P06_W1BB:	.incbin	"build/wav_pcm/main/Main_P06_W1BB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1BB_Drawbar.wav: 128 16-bit samples, entry 1BB
+Main_P06_W1BC:	.incbin	"build/wav_pcm/main/Main_P06_W1BC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1BC_Drawbar.wav: 128 16-bit samples, entry 1BC
+Main_P06_W1BD:	.incbin	"build/wav_pcm/main/Main_P06_W1BD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1BD_Drawbar.wav: 128 16-bit samples, entry 1BD
+Main_P06_W1BE:	.incbin	"build/wav_pcm/main/Main_P06_W1BE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1BE_Drawbar.wav: 256 16-bit samples, entry 1BE
+Main_P06_W1BF:	.incbin	"build/wav_pcm/main/Main_P06_W1BF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1BF_Drawbar.wav: 128 16-bit samples, entry 1BF
+Main_P06_W1C0:	.incbin	"build/wav_pcm/main/Main_P06_W1C0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C0_Drawbar.wav: 128 16-bit samples, entry 1C0
+Main_P06_W1C1:	.incbin	"build/wav_pcm/main/Main_P06_W1C1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C1_Drawbar.wav: 128 16-bit samples, entry 1C1
+Main_P06_W1C2:	.incbin	"build/wav_pcm/main/Main_P06_W1C2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C2_Drawbar.wav: 128 16-bit samples, entry 1C2
+Main_P06_W1C3:	.incbin	"build/wav_pcm/main/Main_P06_W1C3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C3_Drawbar.wav: 128 16-bit samples, entry 1C3
+Main_P06_W1C4:	.incbin	"build/wav_pcm/main/Main_P06_W1C4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C4_Drawbar.wav: 128 16-bit samples, entry 1C4
+Main_P06_W1C5:	.incbin	"build/wav_pcm/main/Main_P06_W1C5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C5_Drawbar.wav: 128 16-bit samples, entry 1C5
+Main_P06_W1C6:	.incbin	"build/wav_pcm/main/Main_P06_W1C6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C6_Drawbar.wav: 128 16-bit samples, entry 1C6
+Main_P06_W1C7:	.incbin	"build/wav_pcm/main/Main_P06_W1C7.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C7_Drawbar.wav: 512 16-bit samples, entry 1C7
+Main_P06_W1C8:	.incbin	"build/wav_pcm/main/Main_P06_W1C8.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C8_Drawbar.wav: 512 16-bit samples, entry 1C8
+Main_P06_W1C9:	.incbin	"build/wav_pcm/main/Main_P06_W1C9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1C9_Drawbar.wav: 256 16-bit samples, entry 1C9
+Main_P06_W1CA:	.incbin	"build/wav_pcm/main/Main_P06_W1CA.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1CA_Drawbar.wav: 512 16-bit samples, entry 1CA
+Main_P06_W1CB:	.incbin	"build/wav_pcm/main/Main_P06_W1CB.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1CB_Drawbar.wav: 512 16-bit samples, entry 1CB
+Main_P06_W1CC:	.incbin	"build/wav_pcm/main/Main_P06_W1CC.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1CC_Drawbar.wav: 512 16-bit samples, entry 1CC
+Main_P06_W1CD:	.incbin	"build/wav_pcm/main/Main_P06_W1CD.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1CD_Drawbar.wav: 512 16-bit samples, entry 1CD
+Main_P06_W1CE:	.incbin	"build/wav_pcm/main/Main_P06_W1CE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1CE_Drawbar.wav: 256 16-bit samples, entry 1CE
+Main_P06_W1CF:	.incbin	"build/wav_pcm/main/Main_P06_W1CF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1CF_Drawbar.wav: 256 16-bit samples, entry 1CF
+Main_P06_W1D0:	.incbin	"build/wav_pcm/main/Main_P06_W1D0.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D0_Drawbar.wav: 256 16-bit samples, entry 1D0
+Main_P06_W1D1:	.incbin	"build/wav_pcm/main/Main_P06_W1D1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D1_Drawbar.wav: 256 16-bit samples, entry 1D1
+Main_P06_W1D2:	.incbin	"build/wav_pcm/main/Main_P06_W1D2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D2_Drawbar.wav: 256 16-bit samples, entry 1D2
+Main_P06_W1D3:	.incbin	"build/wav_pcm/main/Main_P06_W1D3.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D3_Drawbar.wav: 512 16-bit samples, entry 1D3
+Main_P06_W1D4:	.incbin	"build/wav_pcm/main/Main_P06_W1D4.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D4_Drawbar.wav: 512 16-bit samples, entry 1D4
+Main_P06_W1D5:	.incbin	"build/wav_pcm/main/Main_P06_W1D5.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D5_Drawbar.wav: 512 16-bit samples, entry 1D5
+Main_P06_W1D6:	.incbin	"build/wav_pcm/main/Main_P06_W1D6.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D6_Drawbar.wav: 512 16-bit samples, entry 1D6
+Main_P06_W1D7:	.incbin	"build/wav_pcm/main/Main_P06_W1D7.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D7_Drawbar.wav: 256 16-bit samples, entry 1D7
+Main_P06_W1D8:	.incbin	"build/wav_pcm/main/Main_P06_W1D8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D8_Drawbar.wav: 256 16-bit samples, entry 1D8
+Main_P06_W1D9:	.incbin	"build/wav_pcm/main/Main_P06_W1D9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1D9_Drawbar.wav: 256 16-bit samples, entry 1D9
+Main_P06_W1DA:	.incbin	"build/wav_pcm/main/Main_P06_W1DA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1DA_Drawbar.wav: 256 16-bit samples, entry 1DA
+Main_P06_W1DB:	.incbin	"build/wav_pcm/main/Main_P06_W1DB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1DB_Drawbar.wav: 256 16-bit samples, entry 1DB
+Main_P06_W1DC:	.incbin	"build/wav_pcm/main/Main_P06_W1DC.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1DC_Drawbar.wav: 512 16-bit samples, entry 1DC
+Main_P06_W1DD:	.incbin	"build/wav_pcm/main/Main_P06_W1DD.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1DD_Drawbar.wav: 256 16-bit samples, entry 1DD
+Main_P06_W1DE:	.incbin	"build/wav_pcm/main/Main_P06_W1DE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1DE_Drawbar.wav: 256 16-bit samples, entry 1DE
+Main_P06_W1DF:	.incbin	"build/wav_pcm/main/Main_P06_W1DF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1DF_Drawbar.wav: 256 16-bit samples, entry 1DF
+Main_P06_W1E0:	.incbin	"build/wav_pcm/main/Main_P06_W1E0.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E0_Drawbar.wav: 256 16-bit samples, entry 1E0
+Main_P06_W1E1:	.incbin	"build/wav_pcm/main/Main_P06_W1E1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E1_Drawbar.wav: 256 16-bit samples, entry 1E1
+Main_P06_W1E2:	.incbin	"build/wav_pcm/main/Main_P06_W1E2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E2_Drawbar.wav: 256 16-bit samples, entry 1E2
+Main_P06_W1E3:	.incbin	"build/wav_pcm/main/Main_P06_W1E3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E3.wav: 256 16-bit samples, entry 1E3
+Main_P06_W1E4:	.incbin	"build/wav_pcm/main/Main_P06_W1E4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E4_Drawbar.wav: 128 16-bit samples, entry 1E4
+Main_P06_W1E5:	.incbin	"build/wav_pcm/main/Main_P06_W1E5.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E5_Drawbar.wav: 256 16-bit samples, entry 1E5
+Main_P06_W1E6:	.incbin	"build/wav_pcm/main/Main_P06_W1E6.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E6_Drawbar.wav: 256 16-bit samples, entry 1E6
+Main_P06_W1E7:	.incbin	"build/wav_pcm/main/Main_P06_W1E7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E7_Drawbar.wav: 128 16-bit samples, entry 1E7
+Main_P06_W1E8:	.incbin	"build/wav_pcm/main/Main_P06_W1E8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E8_Drawbar.wav: 256 16-bit samples, entry 1E8
+Main_P06_W1E9:	.incbin	"build/wav_pcm/main/Main_P06_W1E9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1E9_Drawbar.wav: 256 16-bit samples, entry 1E9
+Main_P06_W1EA:	.incbin	"build/wav_pcm/main/Main_P06_W1EA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1EA_Drawbar.wav: 128 16-bit samples, entry 1EA
+Main_P06_W1EB:	.incbin	"build/wav_pcm/main/Main_P06_W1EB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1EB_Drawbar.wav: 256 16-bit samples, entry 1EB
+Main_P06_W1EC:	.incbin	"build/wav_pcm/main/Main_P06_W1EC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1EC_Drawbar.wav: 256 16-bit samples, entry 1EC
+Main_P06_W1ED:	.incbin	"build/wav_pcm/main/Main_P06_W1ED.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1ED_Drawbar.wav: 256 16-bit samples, entry 1ED
+Main_P06_W1EE:	.incbin	"build/wav_pcm/main/Main_P06_W1EE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1EE_Drawbar.wav: 256 16-bit samples, entry 1EE
+Main_P06_W1EF:	.incbin	"build/wav_pcm/main/Main_P06_W1EF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1EF_Drawbar.wav: 256 16-bit samples, entry 1EF
+Main_P06_W1F0:	.incbin	"build/wav_pcm/main/Main_P06_W1F0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F0_Drawbar.wav: 128 16-bit samples, entry 1F0
+Main_P06_W1F1:	.incbin	"build/wav_pcm/main/Main_P06_W1F1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F1_Drawbar.wav: 128 16-bit samples, entry 1F1
+Main_P06_W1F2:	.incbin	"build/wav_pcm/main/Main_P06_W1F2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F2_Drawbar.wav: 128 16-bit samples, entry 1F2
+Main_P06_W1F3:	.incbin	"build/wav_pcm/main/Main_P06_W1F3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F3_Drawbar.wav: 128 16-bit samples, entry 1F3
+Main_P06_W1F4:	.incbin	"build/wav_pcm/main/Main_P06_W1F4.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F4_Drawbar.wav: 512 16-bit samples, entry 1F4
+Main_P06_W1F5:	.incbin	"build/wav_pcm/main/Main_P06_W1F5.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F5_Drawbar.wav: 512 16-bit samples, entry 1F5
+Main_P06_W1F6:	.incbin	"build/wav_pcm/main/Main_P06_W1F6.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F6_Drawbar.wav: 256 16-bit samples, entry 1F6
+Main_P06_W1F7:	.incbin	"build/wav_pcm/main/Main_P06_W1F7.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F7_Drawbar.wav: 512 16-bit samples, entry 1F7
+Main_P06_W1F8:	.incbin	"build/wav_pcm/main/Main_P06_W1F8.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F8_Drawbar.wav: 512 16-bit samples, entry 1F8
+Main_P06_W1F9:	.incbin	"build/wav_pcm/main/Main_P06_W1F9.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1F9_Drawbar.wav: 512 16-bit samples, entry 1F9
+Main_P06_W1FA:	.incbin	"build/wav_pcm/main/Main_P06_W1FA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1FA_Drawbar.wav: 256 16-bit samples, entry 1FA
+Main_P06_W1FB:	.incbin	"build/wav_pcm/main/Main_P06_W1FB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1FB_Drawbar.wav: 256 16-bit samples, entry 1FB
+Main_P06_W1FC:	.incbin	"build/wav_pcm/main/Main_P06_W1FC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1FC_Drawbar.wav: 256 16-bit samples, entry 1FC
+Main_P06_W1FD:	.incbin	"build/wav_pcm/main/Main_P06_W1FD.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1FD_Drawbar.wav: 256 16-bit samples, entry 1FD
+Main_P06_W1FE:	.incbin	"build/wav_pcm/main/Main_P06_W1FE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1FE_Drawbar.wav: 256 16-bit samples, entry 1FE
+Main_P06_W1FF:	.incbin	"build/wav_pcm/main/Main_P06_W1FF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W1FF_Drawbar.wav: 256 16-bit samples, entry 1FF
+Main_P06_W200:	.incbin	"build/wav_pcm/main/Main_P06_W200.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W200_Drawbar.wav: 512 16-bit samples, entry 200
+Main_P06_W201:	.incbin	"build/wav_pcm/main/Main_P06_W201.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W201_Drawbar.wav: 512 16-bit samples, entry 201
+Main_P06_W202:	.incbin	"build/wav_pcm/main/Main_P06_W202.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W202_Drawbar.wav: 512 16-bit samples, entry 202
+Main_P06_W203:	.incbin	"build/wav_pcm/main/Main_P06_W203.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W203_Drawbar.wav: 256 16-bit samples, entry 203
+Main_P06_W204:	.incbin	"build/wav_pcm/main/Main_P06_W204.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W204_Drawbar.wav: 256 16-bit samples, entry 204
+Main_P06_W205:	.incbin	"build/wav_pcm/main/Main_P06_W205.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W205_Drawbar.wav: 256 16-bit samples, entry 205
+Main_P06_W206:	.incbin	"build/wav_pcm/main/Main_P06_W206.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W206_Drawbar.wav: 256 16-bit samples, entry 206
+Main_P06_W207:	.incbin	"build/wav_pcm/main/Main_P06_W207.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W207_Drawbar.wav: 256 16-bit samples, entry 207
+Main_P06_W208:	.incbin	"build/wav_pcm/main/Main_P06_W208.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W208_Drawbar.wav: 256 16-bit samples, entry 208
+Main_P06_W209:	.incbin	"build/wav_pcm/main/Main_P06_W209.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W209_Drawbar.wav: 256 16-bit samples, entry 209
+Main_P06_W20A:	.incbin	"build/wav_pcm/main/Main_P06_W20A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W20A_Drawbar.wav: 256 16-bit samples, entry 20A
+Main_P06_W20B:	.incbin	"build/wav_pcm/main/Main_P06_W20B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W20B_Drawbar.wav: 128 16-bit samples, entry 20B
+Main_P06_W20C:	.incbin	"build/wav_pcm/main/Main_P06_W20C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W20C_Drawbar.wav: 256 16-bit samples, entry 20C
+Main_P06_W20D:	.incbin	"build/wav_pcm/main/Main_P06_W20D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W20D_Drawbar.wav: 256 16-bit samples, entry 20D
+Main_P06_W20E:	.incbin	"build/wav_pcm/main/Main_P06_W20E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W20E_Drawbar.wav: 128 16-bit samples, entry 20E
+Main_P06_W20F:	.incbin	"build/wav_pcm/main/Main_P06_W20F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W20F_Drawbar.wav: 256 16-bit samples, entry 20F
+Main_P06_W210:	.incbin	"build/wav_pcm/main/Main_P06_W210.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W210.wav: 256 16-bit samples, entry 210
+Main_P06_W211:	.incbin	"build/wav_pcm/main/Main_P06_W211.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W211_Drawbar.wav: 128 16-bit samples, entry 211
+Main_P06_W212:	.incbin	"build/wav_pcm/main/Main_P06_W212.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W212_Drawbar.wav: 256 16-bit samples, entry 212
+Main_P06_W213:	.incbin	"build/wav_pcm/main/Main_P06_W213.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W213_Drawbar.wav: 256 16-bit samples, entry 213
+Main_P06_W214:	.incbin	"build/wav_pcm/main/Main_P06_W214.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W214.wav: 128 16-bit samples, entry 214
+Main_P06_W215:	.incbin	"build/wav_pcm/main/Main_P06_W215.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W215_Drawbar.wav: 256 16-bit samples, entry 215
+Main_P06_W216:	.incbin	"build/wav_pcm/main/Main_P06_W216.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W216_Drawbar.wav: 256 16-bit samples, entry 216
+Main_P06_W217:	.incbin	"build/wav_pcm/main/Main_P06_W217.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W217_Drawbar.wav: 128 16-bit samples, entry 217
+Main_P06_W218:	.incbin	"build/wav_pcm/main/Main_P06_W218.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W218_Drawbar.wav: 256 16-bit samples, entry 218
+Main_P06_W219:	.incbin	"build/wav_pcm/main/Main_P06_W219.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W219_Drawbar.wav: 256 16-bit samples, entry 219
+Main_P06_W21A:	.incbin	"build/wav_pcm/main/Main_P06_W21A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W21A_Drawbar.wav: 256 16-bit samples, entry 21A
+Main_P06_W21B:	.incbin	"build/wav_pcm/main/Main_P06_W21B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W21B_Drawbar.wav: 256 16-bit samples, entry 21B
+Main_P06_W21C:	.incbin	"build/wav_pcm/main/Main_P06_W21C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W21C_Drawbar.wav: 256 16-bit samples, entry 21C
+Main_P06_W21D:	.incbin	"build/wav_pcm/main/Main_P06_W21D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W21D_Drawbar.wav: 256 16-bit samples, entry 21D
+Main_P06_W21E:	.incbin	"build/wav_pcm/main/Main_P06_W21E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W21E_Drawbar.wav: 256 16-bit samples, entry 21E
+Main_P06_W21F:	.incbin	"build/wav_pcm/main/Main_P06_W21F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W21F_Drawbar.wav: 128 16-bit samples, entry 21F
+Main_P06_W220:	.incbin	"build/wav_pcm/main/Main_P06_W220.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W220.wav: 128 16-bit samples, entry 220
+Main_P06_W221:	.incbin	"build/wav_pcm/main/Main_P06_W221.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W221_Drawbar.wav: 512 16-bit samples, entry 221
+Main_P06_W222:	.incbin	"build/wav_pcm/main/Main_P06_W222.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W222_Drawbar.wav: 512 16-bit samples, entry 222
+Main_P06_W223:	.incbin	"build/wav_pcm/main/Main_P06_W223.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W223_Drawbar.wav: 256 16-bit samples, entry 223
+Main_P06_W224:	.incbin	"build/wav_pcm/main/Main_P06_W224.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W224_Drawbar.wav: 512 16-bit samples, entry 224
+Main_P06_W225:	.incbin	"build/wav_pcm/main/Main_P06_W225.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W225_Drawbar.wav: 512 16-bit samples, entry 225
+Main_P06_W226:	.incbin	"build/wav_pcm/main/Main_P06_W226.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W226_Drawbar.wav: 512 16-bit samples, entry 226
+Main_P06_W227:	.incbin	"build/wav_pcm/main/Main_P06_W227.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W227_Drawbar.wav: 512 16-bit samples, entry 227
+Main_P06_W228:	.incbin	"build/wav_pcm/main/Main_P06_W228.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W228_Drawbar.wav: 512 16-bit samples, entry 228
+Main_P06_W229:	.incbin	"build/wav_pcm/main/Main_P06_W229.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W229_Drawbar.wav: 256 16-bit samples, entry 229
+Main_P06_W22A:	.incbin	"build/wav_pcm/main/Main_P06_W22A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W22A_Drawbar.wav: 256 16-bit samples, entry 22A
+Main_P06_W22B:	.incbin	"build/wav_pcm/main/Main_P06_W22B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W22B_Drawbar.wav: 256 16-bit samples, entry 22B
+Main_P06_W22C:	.incbin	"build/wav_pcm/main/Main_P06_W22C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W22C_Drawbar.wav: 256 16-bit samples, entry 22C
+Main_P06_W22D:	.incbin	"build/wav_pcm/main/Main_P06_W22D.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W22D_Drawbar.wav: 512 16-bit samples, entry 22D
+Main_P06_W22E:	.incbin	"build/wav_pcm/main/Main_P06_W22E.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W22E_Drawbar.wav: 512 16-bit samples, entry 22E
+Main_P06_W22F:	.incbin	"build/wav_pcm/main/Main_P06_W22F.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W22F.wav: 512 16-bit samples, entry 22F
+Main_P06_W230:	.incbin	"build/wav_pcm/main/Main_P06_W230.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W230_Drawbar.wav: 512 16-bit samples, entry 230
+Main_P06_W231:	.incbin	"build/wav_pcm/main/Main_P06_W231.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W231_Drawbar.wav: 512 16-bit samples, entry 231
+Main_P06_W232:	.incbin	"build/wav_pcm/main/Main_P06_W232.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W232_Drawbar.wav: 256 16-bit samples, entry 232
+Main_P06_W233:	.incbin	"build/wav_pcm/main/Main_P06_W233.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W233.wav: 256 16-bit samples, entry 233
+Main_P06_W234:	.incbin	"build/wav_pcm/main/Main_P06_W234.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W234.wav: 256 16-bit samples, entry 234
+Main_P06_W235:	.incbin	"build/wav_pcm/main/Main_P06_W235.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W235.wav: 256 16-bit samples, entry 235
+Main_P06_W236:	.incbin	"build/wav_pcm/main/Main_P06_W236.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W236_Drawbar.wav: 512 16-bit samples, entry 236
+Main_P06_W237:	.incbin	"build/wav_pcm/main/Main_P06_W237.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W237_Drawbar.wav: 512 16-bit samples, entry 237
+Main_P06_W238:	.incbin	"build/wav_pcm/main/Main_P06_W238.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W238_Drawbar.wav: 256 16-bit samples, entry 238
+Main_P06_W239:	.incbin	"build/wav_pcm/main/Main_P06_W239.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W239_Drawbar.wav: 512 16-bit samples, entry 239
+Main_P06_W23A:	.incbin	"build/wav_pcm/main/Main_P06_W23A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W23A_Drawbar.wav: 256 16-bit samples, entry 23A
+Main_P06_W23B:	.incbin	"build/wav_pcm/main/Main_P06_W23B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W23B_Drawbar.wav: 256 16-bit samples, entry 23B
+Main_P06_W23C:	.incbin	"build/wav_pcm/main/Main_P06_W23C.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W23C_Drawbar.wav: 512 16-bit samples, entry 23C
+Main_P06_W23D:	.incbin	"build/wav_pcm/main/Main_P06_W23D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W23D_Drawbar.wav: 256 16-bit samples, entry 23D
+Main_P06_W23E:	.incbin	"build/wav_pcm/main/Main_P06_W23E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W23E_Drawbar.wav: 128 16-bit samples, entry 23E
+Main_P06_W23F:	.incbin	"build/wav_pcm/main/Main_P06_W23F.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W23F_Drawbar.wav: 512 16-bit samples, entry 23F
+Main_P06_W240:	.incbin	"build/wav_pcm/main/Main_P06_W240.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W240.wav: 256 16-bit samples, entry 240
+Main_P06_W241:	.incbin	"build/wav_pcm/main/Main_P06_W241.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W241_Drawbar.wav: 128 16-bit samples, entry 241
+Main_P06_W242:	.incbin	"build/wav_pcm/main/Main_P06_W242.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W242_Drawbar.wav: 256 16-bit samples, entry 242
+Main_P06_W243:	.incbin	"build/wav_pcm/main/Main_P06_W243.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W243.wav: 256 16-bit samples, entry 243
+Main_P06_W244:	.incbin	"build/wav_pcm/main/Main_P06_W244.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W244_Drawbar.wav: 256 16-bit samples, entry 244
+Main_P06_W245:	.incbin	"build/wav_pcm/main/Main_P06_W245.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W245_Drawbar.wav: 256 16-bit samples, entry 245
+Main_P06_W246:	.incbin	"build/wav_pcm/main/Main_P06_W246.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W246_Drawbar.wav: 256 16-bit samples, entry 246
+Main_P06_W247:	.incbin	"build/wav_pcm/main/Main_P06_W247.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W247.wav: 256 16-bit samples, entry 247
+Main_P06_W248:	.incbin	"build/wav_pcm/main/Main_P06_W248.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W248_Drawbar.wav: 256 16-bit samples, entry 248
+Main_P06_W249:	.incbin	"build/wav_pcm/main/Main_P06_W249.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W249_Drawbar.wav: 128 16-bit samples, entry 249
+Main_P06_W24A:	.incbin	"build/wav_pcm/main/Main_P06_W24A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W24A_Drawbar.wav: 128 16-bit samples, entry 24A
+Main_P06_W24B:	.incbin	"build/wav_pcm/main/Main_P06_W24B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W24B_Drawbar.wav: 128 16-bit samples, entry 24B
+Main_P06_W24C:	.incbin	"build/wav_pcm/main/Main_P06_W24C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W24C_Drawbar.wav: 128 16-bit samples, entry 24C
+Main_P06_W24D:	.incbin	"build/wav_pcm/main/Main_P06_W24D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W24D_Drawbar.wav: 128 16-bit samples, entry 24D
+Main_P06_W24E:	.incbin	"build/wav_pcm/main/Main_P06_W24E.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W24E_Drawbar.wav: 512 16-bit samples, entry 24E
+Main_P06_W24F:	.incbin	"build/wav_pcm/main/Main_P06_W24F.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W24F_Drawbar.wav: 512 16-bit samples, entry 24F
+Main_P06_W250:	.incbin	"build/wav_pcm/main/Main_P06_W250.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W250_Drawbar.wav: 512 16-bit samples, entry 250
+Main_P06_W251:	.incbin	"build/wav_pcm/main/Main_P06_W251.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W251_Drawbar.wav: 512 16-bit samples, entry 251
+Main_P06_W252:	.incbin	"build/wav_pcm/main/Main_P06_W252.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W252_Drawbar.wav: 512 16-bit samples, entry 252
+Main_P06_W253:	.incbin	"build/wav_pcm/main/Main_P06_W253.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W253_Drawbar.wav: 512 16-bit samples, entry 253
+Main_P06_W254:	.incbin	"build/wav_pcm/main/Main_P06_W254.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W254_Drawbar.wav: 256 16-bit samples, entry 254
+Main_P06_W255:	.incbin	"build/wav_pcm/main/Main_P06_W255.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W255_Drawbar.wav: 256 16-bit samples, entry 255
+Main_P06_W256:	.incbin	"build/wav_pcm/main/Main_P06_W256.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W256_Drawbar.wav: 256 16-bit samples, entry 256
+Main_P06_W257:	.incbin	"build/wav_pcm/main/Main_P06_W257.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W257_Drawbar.wav: 512 16-bit samples, entry 257
+Main_P06_W258:	.incbin	"build/wav_pcm/main/Main_P06_W258.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W258_Drawbar.wav: 512 16-bit samples, entry 258
+Main_P06_W259:	.incbin	"build/wav_pcm/main/Main_P06_W259.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W259_Drawbar.wav: 512 16-bit samples, entry 259
+Main_P06_W25A:	.incbin	"build/wav_pcm/main/Main_P06_W25A.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W25A_Drawbar.wav: 512 16-bit samples, entry 25A
+Main_P06_W25B:	.incbin	"build/wav_pcm/main/Main_P06_W25B.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W25B_Drawbar.wav: 512 16-bit samples, entry 25B
+Main_P06_W25C:	.incbin	"build/wav_pcm/main/Main_P06_W25C.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W25C_Drawbar.wav: 512 16-bit samples, entry 25C
+Main_P06_W25D:	.incbin	"build/wav_pcm/main/Main_P06_W25D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W25D_Drawbar.wav: 256 16-bit samples, entry 25D
+Main_P06_W25E:	.incbin	"build/wav_pcm/main/Main_P06_W25E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W25E_Drawbar.wav: 256 16-bit samples, entry 25E
+Main_P06_W25F:	.incbin	"build/wav_pcm/main/Main_P06_W25F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W25F_Drawbar.wav: 256 16-bit samples, entry 25F
+Main_P06_W260:	.incbin	"build/wav_pcm/main/Main_P06_W260.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W260_Drawbar.wav: 512 16-bit samples, entry 260
+Main_P06_W261:	.incbin	"build/wav_pcm/main/Main_P06_W261.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W261_Drawbar.wav: 512 16-bit samples, entry 261
+Main_P06_W262:	.incbin	"build/wav_pcm/main/Main_P06_W262.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W262.wav: 512 16-bit samples, entry 262
+Main_P06_W263:	.incbin	"build/wav_pcm/main/Main_P06_W263.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W263_Drawbar.wav: 512 16-bit samples, entry 263
+Main_P06_W264:	.incbin	"build/wav_pcm/main/Main_P06_W264.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W264_Drawbar.wav: 512 16-bit samples, entry 264
+Main_P06_W265:	.incbin	"build/wav_pcm/main/Main_P06_W265.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W265_Drawbar.wav: 512 16-bit samples, entry 265
+Main_P06_W266:	.incbin	"build/wav_pcm/main/Main_P06_W266.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W266.wav: 256 16-bit samples, entry 266
+Main_P06_W267:	.incbin	"build/wav_pcm/main/Main_P06_W267.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W267.wav: 256 16-bit samples, entry 267
+Main_P06_W268:	.incbin	"build/wav_pcm/main/Main_P06_W268.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W268.wav: 256 16-bit samples, entry 268
+Main_P06_W269:	.incbin	"build/wav_pcm/main/Main_P06_W269.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W269_Drawbar.wav: 512 16-bit samples, entry 269
+Main_P06_W26A:	.incbin	"build/wav_pcm/main/Main_P06_W26A.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W26A_Drawbar.wav: 512 16-bit samples, entry 26A
+Main_P06_W26B:	.incbin	"build/wav_pcm/main/Main_P06_W26B.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W26B_Drawbar.wav: 512 16-bit samples, entry 26B
+Main_P06_W26C:	.incbin	"build/wav_pcm/main/Main_P06_W26C.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W26C_Drawbar.wav: 512 16-bit samples, entry 26C
+Main_P06_W26D:	.incbin	"build/wav_pcm/main/Main_P06_W26D.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W26D_Drawbar.wav: 512 16-bit samples, entry 26D
+Main_P06_W26E:	.incbin	"build/wav_pcm/main/Main_P06_W26E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W26E_Drawbar.wav: 256 16-bit samples, entry 26E
+Main_P06_W26F:	.incbin	"build/wav_pcm/main/Main_P06_W26F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W26F_Drawbar.wav: 256 16-bit samples, entry 26F
+Main_P06_W270:	.incbin	"build/wav_pcm/main/Main_P06_W270.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W270_Drawbar.wav: 256 16-bit samples, entry 270
+Main_P06_W271:	.incbin	"build/wav_pcm/main/Main_P06_W271.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W271_Drawbar.wav: 256 16-bit samples, entry 271
+Main_P06_W272:	.incbin	"build/wav_pcm/main/Main_P06_W272.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W272_Drawbar.wav: 512 16-bit samples, entry 272
+Main_P06_W273:	.incbin	"build/wav_pcm/main/Main_P06_W273.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W273_Drawbar.wav: 512 16-bit samples, entry 273
+Main_P06_W274:	.incbin	"build/wav_pcm/main/Main_P06_W274.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W274_Drawbar.wav: 512 16-bit samples, entry 274
+Main_P06_W275:	.incbin	"build/wav_pcm/main/Main_P06_W275.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W275_Drawbar.wav: 256 16-bit samples, entry 275
+Main_P06_W276:	.incbin	"build/wav_pcm/main/Main_P06_W276.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W276_Drawbar.wav: 256 16-bit samples, entry 276
+Main_P06_W277:	.incbin	"build/wav_pcm/main/Main_P06_W277.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W277_Drawbar.wav: 256 16-bit samples, entry 277
+Main_P06_W278:	.incbin	"build/wav_pcm/main/Main_P06_W278.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W278_Drawbar.wav: 256 16-bit samples, entry 278
+Main_P06_W279:	.incbin	"build/wav_pcm/main/Main_P06_W279.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W279_Drawbar.wav: 256 16-bit samples, entry 279
+Main_P06_W27A:	.incbin	"build/wav_pcm/main/Main_P06_W27A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W27A_Drawbar.wav: 256 16-bit samples, entry 27A
+Main_P06_W27B:	.incbin	"build/wav_pcm/main/Main_P06_W27B.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W27B_Drawbar.wav: 512 16-bit samples, entry 27B
+Main_P06_W27C:	.incbin	"build/wav_pcm/main/Main_P06_W27C.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W27C_Drawbar.wav: 512 16-bit samples, entry 27C
+Main_P06_W27D:	.incbin	"build/wav_pcm/main/Main_P06_W27D.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W27D_Drawbar.wav: 512 16-bit samples, entry 27D
+Main_P06_W27E:	.incbin	"build/wav_pcm/main/Main_P06_W27E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W27E_Drawbar.wav: 256 16-bit samples, entry 27E
+Main_P06_W27F:	.incbin	"build/wav_pcm/main/Main_P06_W27F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W27F_Drawbar.wav: 256 16-bit samples, entry 27F
+Main_P06_W280:	.incbin	"build/wav_pcm/main/Main_P06_W280.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W280_Drawbar.wav: 256 16-bit samples, entry 280
+Main_P06_W281:	.incbin	"build/wav_pcm/main/Main_P06_W281.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W281_Drawbar.wav: 256 16-bit samples, entry 281
+Main_P06_W282:	.incbin	"build/wav_pcm/main/Main_P06_W282.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W282_Drawbar.wav: 256 16-bit samples, entry 282
+Main_P06_W283:	.incbin	"build/wav_pcm/main/Main_P06_W283.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W283_Drawbar.wav: 256 16-bit samples, entry 283
+Main_P06_W284:	.incbin	"build/wav_pcm/main/Main_P06_W284.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W284_Drawbar.wav: 512 16-bit samples, entry 284
+Main_P06_W285:	.incbin	"build/wav_pcm/main/Main_P06_W285.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W285_Drawbar.wav: 512 16-bit samples, entry 285
+Main_P06_W286:	.incbin	"build/wav_pcm/main/Main_P06_W286.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W286_Drawbar.wav: 512 16-bit samples, entry 286
+Main_P06_W287:	.incbin	"build/wav_pcm/main/Main_P06_W287.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W287_Drawbar.wav: 256 16-bit samples, entry 287
+Main_P06_W288:	.incbin	"build/wav_pcm/main/Main_P06_W288.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W288_Drawbar.wav: 256 16-bit samples, entry 288
+Main_P06_W289:	.incbin	"build/wav_pcm/main/Main_P06_W289.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W289_Drawbar.wav: 256 16-bit samples, entry 289
+Main_P06_W28A:	.incbin	"build/wav_pcm/main/Main_P06_W28A.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W28A.wav: 256 16-bit samples, entry 28A
+Main_P06_W28B:	.incbin	"build/wav_pcm/main/Main_P06_W28B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W28B_Drawbar.wav: 256 16-bit samples, entry 28B
+Main_P06_W28C:	.incbin	"build/wav_pcm/main/Main_P06_W28C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W28C.wav: 256 16-bit samples, entry 28C
+Main_P06_W28D:	.incbin	"build/wav_pcm/main/Main_P06_W28D.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W28D_Drawbar.wav: 512 16-bit samples, entry 28D
+Main_P06_W28E:	.incbin	"build/wav_pcm/main/Main_P06_W28E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W28E_Drawbar.wav: 256 16-bit samples, entry 28E
+Main_P06_W28F:	.incbin	"build/wav_pcm/main/Main_P06_W28F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W28F.wav: 256 16-bit samples, entry 28F
+Main_P06_W290:	.incbin	"build/wav_pcm/main/Main_P06_W290.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W290_Drawbar.wav: 256 16-bit samples, entry 290
+Main_P06_W291:	.incbin	"build/wav_pcm/main/Main_P06_W291.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W291_Drawbar.wav: 256 16-bit samples, entry 291
+Main_P06_W292:	.incbin	"build/wav_pcm/main/Main_P06_W292.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W292_Drawbar.wav: 128 16-bit samples, entry 292
+Main_P06_W293:	.incbin	"build/wav_pcm/main/Main_P06_W293.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W293_Drawbar.wav: 128 16-bit samples, entry 293
+Main_P06_W294:	.incbin	"build/wav_pcm/main/Main_P06_W294.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W294_Drawbar.wav: 128 16-bit samples, entry 294
+Main_P06_W295:	.incbin	"build/wav_pcm/main/Main_P06_W295.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W295_Drawbar.wav: 128 16-bit samples, entry 295
+Main_P06_W296:	.incbin	"build/wav_pcm/main/Main_P06_W296.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W296_Drawbar.wav: 256 16-bit samples, entry 296
+Main_P06_W297:	.incbin	"build/wav_pcm/main/Main_P06_W297.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W297_Drawbar.wav: 256 16-bit samples, entry 297
+Main_P06_W298:	.incbin	"build/wav_pcm/main/Main_P06_W298.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W298.wav: 256 16-bit samples, entry 298
+Main_P06_W299:	.incbin	"build/wav_pcm/main/Main_P06_W299.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W299_Drawbar.wav: 256 16-bit samples, entry 299
+Main_P06_W29A:	.incbin	"build/wav_pcm/main/Main_P06_W29A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W29A_Drawbar.wav: 128 16-bit samples, entry 29A
+Main_P06_W29B:	.incbin	"build/wav_pcm/main/Main_P06_W29B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W29B_Drawbar.wav: 128 16-bit samples, entry 29B
+Main_P06_W29C:	.incbin	"build/wav_pcm/main/Main_P06_W29C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W29C_Drawbar.wav: 128 16-bit samples, entry 29C
+Main_P06_W29D:	.incbin	"build/wav_pcm/main/Main_P06_W29D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W29D_Drawbar.wav: 128 16-bit samples, entry 29D
+Main_P06_W29E:	.incbin	"build/wav_pcm/main/Main_P06_W29E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W29E_Drawbar.wav: 128 16-bit samples, entry 29E
+Main_P06_W29F:	.incbin	"build/wav_pcm/main/Main_P06_W29F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W29F_Drawbar.wav: 128 16-bit samples, entry 29F
+Main_P06_W2A0:	.incbin	"build/wav_pcm/main/Main_P06_W2A0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A0_Drawbar.wav: 128 16-bit samples, entry 2A0
+Main_P06_W2A1:	.incbin	"build/wav_pcm/main/Main_P06_W2A1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A1_Drawbar.wav: 128 16-bit samples, entry 2A1
+Main_P06_W2A2:	.incbin	"build/wav_pcm/main/Main_P06_W2A2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A2_Drawbar.wav: 128 16-bit samples, entry 2A2
+Main_P06_W2A3:	.incbin	"build/wav_pcm/main/Main_P06_W2A3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A3_Drawbar.wav: 128 16-bit samples, entry 2A3
+Main_P06_W2A4:	.incbin	"build/wav_pcm/main/Main_P06_W2A4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A4_Drawbar.wav: 128 16-bit samples, entry 2A4
+Main_P06_W2A5:	.incbin	"build/wav_pcm/main/Main_P06_W2A5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A5_Drawbar.wav: 128 16-bit samples, entry 2A5
+Main_P06_W2A6:	.incbin	"build/wav_pcm/main/Main_P06_W2A6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A6_Drawbar.wav: 128 16-bit samples, entry 2A6
+Main_P06_W2A7:	.incbin	"build/wav_pcm/main/Main_P06_W2A7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A7_Drawbar.wav: 128 16-bit samples, entry 2A7
+Main_P06_W2A8:	.incbin	"build/wav_pcm/main/Main_P06_W2A8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A8_Drawbar.wav: 128 16-bit samples, entry 2A8
+Main_P06_W2A9:	.incbin	"build/wav_pcm/main/Main_P06_W2A9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2A9_Drawbar.wav: 128 16-bit samples, entry 2A9
+Main_P06_W2AA:	.incbin	"build/wav_pcm/main/Main_P06_W2AA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2AA_Drawbar.wav: 128 16-bit samples, entry 2AA
+Main_P06_W2AB:	.incbin	"build/wav_pcm/main/Main_P06_W2AB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2AB_Drawbar.wav: 128 16-bit samples, entry 2AB
+Main_P06_W2AC:	.incbin	"build/wav_pcm/main/Main_P06_W2AC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2AC_Drawbar.wav: 128 16-bit samples, entry 2AC
+Main_P06_W2AD:	.incbin	"build/wav_pcm/main/Main_P06_W2AD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2AD_Drawbar.wav: 128 16-bit samples, entry 2AD
+Main_P06_W2AE:	.incbin	"build/wav_pcm/main/Main_P06_W2AE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2AE_Drawbar.wav: 256 16-bit samples, entry 2AE
+Main_P06_W2AF:	.incbin	"build/wav_pcm/main/Main_P06_W2AF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2AF_Drawbar.wav: 128 16-bit samples, entry 2AF
+Main_P06_W2B0:	.incbin	"build/wav_pcm/main/Main_P06_W2B0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B0_Drawbar.wav: 128 16-bit samples, entry 2B0
+Main_P06_W2B1:	.incbin	"build/wav_pcm/main/Main_P06_W2B1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B1_Drawbar.wav: 256 16-bit samples, entry 2B1
+Main_P06_W2B2:	.incbin	"build/wav_pcm/main/Main_P06_W2B2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B2_Drawbar.wav: 256 16-bit samples, entry 2B2
+Main_P06_W2B3:	.incbin	"build/wav_pcm/main/Main_P06_W2B3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B3_Drawbar.wav: 128 16-bit samples, entry 2B3
+Main_P06_W2B4:	.incbin	"build/wav_pcm/main/Main_P06_W2B4.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B4_Drawbar.wav: 256 16-bit samples, entry 2B4
+Main_P06_W2B5:	.incbin	"build/wav_pcm/main/Main_P06_W2B5.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B5_Drawbar.wav: 256 16-bit samples, entry 2B5
+Main_P06_W2B6:	.incbin	"build/wav_pcm/main/Main_P06_W2B6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B6_Drawbar.wav: 128 16-bit samples, entry 2B6
+Main_P06_W2B7:	.incbin	"build/wav_pcm/main/Main_P06_W2B7.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B7_Drawbar.wav: 256 16-bit samples, entry 2B7
+Main_P06_W2B8:	.incbin	"build/wav_pcm/main/Main_P06_W2B8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B8_Drawbar.wav: 256 16-bit samples, entry 2B8
+Main_P06_W2B9:	.incbin	"build/wav_pcm/main/Main_P06_W2B9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2B9_Drawbar.wav: 128 16-bit samples, entry 2B9
+Main_P06_W2BA:	.incbin	"build/wav_pcm/main/Main_P06_W2BA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2BA_Drawbar.wav: 256 16-bit samples, entry 2BA
+Main_P06_W2BB:	.incbin	"build/wav_pcm/main/Main_P06_W2BB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2BB_Drawbar.wav: 256 16-bit samples, entry 2BB
+Main_P06_W2BC:	.incbin	"build/wav_pcm/main/Main_P06_W2BC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2BC_Drawbar.wav: 128 16-bit samples, entry 2BC
+Main_P06_W2BD:	.incbin	"build/wav_pcm/main/Main_P06_W2BD.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2BD_Drawbar.wav: 256 16-bit samples, entry 2BD
+Main_P06_W2BE:	.incbin	"build/wav_pcm/main/Main_P06_W2BE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2BE_Drawbar.wav: 256 16-bit samples, entry 2BE
+Main_P06_W2BF:	.incbin	"build/wav_pcm/main/Main_P06_W2BF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2BF_Drawbar.wav: 256 16-bit samples, entry 2BF
+Main_P06_W2C0:	.incbin	"build/wav_pcm/main/Main_P06_W2C0.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C0_Drawbar.wav: 256 16-bit samples, entry 2C0
+Main_P06_W2C1:	.incbin	"build/wav_pcm/main/Main_P06_W2C1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C1_Drawbar.wav: 256 16-bit samples, entry 2C1
+Main_P06_W2C2:	.incbin	"build/wav_pcm/main/Main_P06_W2C2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C2_Drawbar.wav: 256 16-bit samples, entry 2C2
+Main_P06_W2C3:	.incbin	"build/wav_pcm/main/Main_P06_W2C3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C3_Drawbar.wav: 256 16-bit samples, entry 2C3
+Main_P06_W2C4:	.incbin	"build/wav_pcm/main/Main_P06_W2C4.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C4_Drawbar.wav: 256 16-bit samples, entry 2C4
+Main_P06_W2C5:	.incbin	"build/wav_pcm/main/Main_P06_W2C5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C5_Drawbar.wav: 128 16-bit samples, entry 2C5
+Main_P06_W2C6:	.incbin	"build/wav_pcm/main/Main_P06_W2C6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C6_Drawbar.wav: 128 16-bit samples, entry 2C6
+Main_P06_W2C7:	.incbin	"build/wav_pcm/main/Main_P06_W2C7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C7_Drawbar.wav: 128 16-bit samples, entry 2C7
+Main_P06_W2C8:	.incbin	"build/wav_pcm/main/Main_P06_W2C8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C8_Drawbar.wav: 128 16-bit samples, entry 2C8
+Main_P06_W2C9:	.incbin	"build/wav_pcm/main/Main_P06_W2C9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2C9_Drawbar.wav: 128 16-bit samples, entry 2C9
+Main_P06_W2CA:	.incbin	"build/wav_pcm/main/Main_P06_W2CA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2CA_Drawbar.wav: 128 16-bit samples, entry 2CA
+Main_P06_W2CB:	.incbin	"build/wav_pcm/main/Main_P06_W2CB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2CB_Drawbar.wav: 128 16-bit samples, entry 2CB
+Main_P06_W2CC:	.incbin	"build/wav_pcm/main/Main_P06_W2CC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2CC_Drawbar.wav: 128 16-bit samples, entry 2CC
+Main_P06_W2CD:	.incbin	"build/wav_pcm/main/Main_P06_W2CD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2CD_Drawbar.wav: 128 16-bit samples, entry 2CD
+Main_P06_W2CE:	.incbin	"build/wav_pcm/main/Main_P06_W2CE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2CE_Drawbar.wav: 128 16-bit samples, entry 2CE
+Main_P06_W2CF:	.incbin	"build/wav_pcm/main/Main_P06_W2CF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2CF_Drawbar.wav: 128 16-bit samples, entry 2CF
+Main_P06_W2D0:	.incbin	"build/wav_pcm/main/Main_P06_W2D0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D0_Drawbar.wav: 128 16-bit samples, entry 2D0
+Main_P06_W2D1:	.incbin	"build/wav_pcm/main/Main_P06_W2D1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D1_Drawbar.wav: 128 16-bit samples, entry 2D1
+Main_P06_W2D2:	.incbin	"build/wav_pcm/main/Main_P06_W2D2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D2_Drawbar.wav: 128 16-bit samples, entry 2D2
+Main_P06_W2D3:	.incbin	"build/wav_pcm/main/Main_P06_W2D3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D3_Drawbar.wav: 128 16-bit samples, entry 2D3
+Main_P06_W2D4:	.incbin	"build/wav_pcm/main/Main_P06_W2D4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D4_Drawbar.wav: 128 16-bit samples, entry 2D4
+Main_P06_W2D5:	.incbin	"build/wav_pcm/main/Main_P06_W2D5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D5_Drawbar.wav: 128 16-bit samples, entry 2D5
+Main_P06_W2D6:	.incbin	"build/wav_pcm/main/Main_P06_W2D6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D6_Drawbar.wav: 128 16-bit samples, entry 2D6
+Main_P06_W2D7:	.incbin	"build/wav_pcm/main/Main_P06_W2D7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D7_Drawbar.wav: 128 16-bit samples, entry 2D7
+Main_P06_W2D8:	.incbin	"build/wav_pcm/main/Main_P06_W2D8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D8_Drawbar.wav: 128 16-bit samples, entry 2D8
+Main_P06_W2D9:	.incbin	"build/wav_pcm/main/Main_P06_W2D9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2D9_Drawbar.wav: 128 16-bit samples, entry 2D9
+Main_P06_W2DA:	.incbin	"build/wav_pcm/main/Main_P06_W2DA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2DA_Drawbar.wav: 128 16-bit samples, entry 2DA
+Main_P06_W2DB:	.incbin	"build/wav_pcm/main/Main_P06_W2DB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2DB_Drawbar.wav: 128 16-bit samples, entry 2DB
+Main_P06_W2DC:	.incbin	"build/wav_pcm/main/Main_P06_W2DC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2DC_Drawbar.wav: 128 16-bit samples, entry 2DC
+Main_P06_W2DD:	.incbin	"build/wav_pcm/main/Main_P06_W2DD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2DD_Drawbar.wav: 128 16-bit samples, entry 2DD
+Main_P06_W2DE:	.incbin	"build/wav_pcm/main/Main_P06_W2DE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2DE_Drawbar.wav: 128 16-bit samples, entry 2DE
+Main_P06_W2DF:	.incbin	"build/wav_pcm/main/Main_P06_W2DF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2DF_Drawbar.wav: 128 16-bit samples, entry 2DF
+Main_P06_W2E0:	.incbin	"build/wav_pcm/main/Main_P06_W2E0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E0_Drawbar.wav: 128 16-bit samples, entry 2E0
+Main_P06_W2E1:	.incbin	"build/wav_pcm/main/Main_P06_W2E1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E1_Drawbar.wav: 128 16-bit samples, entry 2E1
+Main_P06_W2E2:	.incbin	"build/wav_pcm/main/Main_P06_W2E2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E2_Drawbar.wav: 128 16-bit samples, entry 2E2
+Main_P06_W2E3:	.incbin	"build/wav_pcm/main/Main_P06_W2E3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E3_Drawbar.wav: 128 16-bit samples, entry 2E3
+Main_P06_W2E4:	.incbin	"build/wav_pcm/main/Main_P06_W2E4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E4_Drawbar.wav: 128 16-bit samples, entry 2E4
+Main_P06_W2E5:	.incbin	"build/wav_pcm/main/Main_P06_W2E5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E5_Drawbar.wav: 128 16-bit samples, entry 2E5
+Main_P06_W2E6:	.incbin	"build/wav_pcm/main/Main_P06_W2E6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E6_Drawbar.wav: 128 16-bit samples, entry 2E6
+Main_P06_W2E7:	.incbin	"build/wav_pcm/main/Main_P06_W2E7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E7_Drawbar.wav: 128 16-bit samples, entry 2E7
+Main_P06_W2E8:	.incbin	"build/wav_pcm/main/Main_P06_W2E8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E8_Drawbar.wav: 128 16-bit samples, entry 2E8
+Main_P06_W2E9:	.incbin	"build/wav_pcm/main/Main_P06_W2E9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2E9_Drawbar.wav: 128 16-bit samples, entry 2E9
+Main_P06_W2EA:	.incbin	"build/wav_pcm/main/Main_P06_W2EA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2EA_Drawbar.wav: 128 16-bit samples, entry 2EA
+Main_P06_W2EB:	.incbin	"build/wav_pcm/main/Main_P06_W2EB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2EB_Drawbar.wav: 128 16-bit samples, entry 2EB
+Main_P06_W2EC:	.incbin	"build/wav_pcm/main/Main_P06_W2EC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2EC_Drawbar.wav: 128 16-bit samples, entry 2EC
+Main_P06_W2ED:	.incbin	"build/wav_pcm/main/Main_P06_W2ED.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2ED_Drawbar.wav: 128 16-bit samples, entry 2ED
+Main_P06_W2EE:	.incbin	"build/wav_pcm/main/Main_P06_W2EE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2EE_Drawbar.wav: 128 16-bit samples, entry 2EE
+Main_P06_W2EF:	.incbin	"build/wav_pcm/main/Main_P06_W2EF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2EF_Drawbar.wav: 128 16-bit samples, entry 2EF
+Main_P06_W2F0:	.incbin	"build/wav_pcm/main/Main_P06_W2F0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F0_Drawbar.wav: 128 16-bit samples, entry 2F0
+Main_P06_W2F1:	.incbin	"build/wav_pcm/main/Main_P06_W2F1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F1_Drawbar.wav: 128 16-bit samples, entry 2F1
+Main_P06_W2F2:	.incbin	"build/wav_pcm/main/Main_P06_W2F2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F2_Drawbar.wav: 128 16-bit samples, entry 2F2
+Main_P06_W2F3:	.incbin	"build/wav_pcm/main/Main_P06_W2F3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F3_Drawbar.wav: 128 16-bit samples, entry 2F3
+Main_P06_W2F4:	.incbin	"build/wav_pcm/main/Main_P06_W2F4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F4_Drawbar.wav: 128 16-bit samples, entry 2F4
+Main_P06_W2F5:	.incbin	"build/wav_pcm/main/Main_P06_W2F5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F5_Drawbar.wav: 128 16-bit samples, entry 2F5
+Main_P06_W2F6:	.incbin	"build/wav_pcm/main/Main_P06_W2F6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F6_Drawbar.wav: 128 16-bit samples, entry 2F6
+Main_P06_W2F7:	.incbin	"build/wav_pcm/main/Main_P06_W2F7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F7_Drawbar.wav: 128 16-bit samples, entry 2F7
+Main_P06_W2F8:	.incbin	"build/wav_pcm/main/Main_P06_W2F8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F8_Drawbar.wav: 128 16-bit samples, entry 2F8
+Main_P06_W2F9:	.incbin	"build/wav_pcm/main/Main_P06_W2F9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2F9_Drawbar.wav: 128 16-bit samples, entry 2F9
+Main_P06_W2FA:	.incbin	"build/wav_pcm/main/Main_P06_W2FA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2FA_Drawbar.wav: 128 16-bit samples, entry 2FA
+Main_P06_W2FB:	.incbin	"build/wav_pcm/main/Main_P06_W2FB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2FB_Drawbar.wav: 128 16-bit samples, entry 2FB
+Main_P06_W2FC:	.incbin	"build/wav_pcm/main/Main_P06_W2FC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2FC_Drawbar.wav: 128 16-bit samples, entry 2FC
+Main_P06_W2FD:	.incbin	"build/wav_pcm/main/Main_P06_W2FD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2FD_Drawbar.wav: 128 16-bit samples, entry 2FD
+Main_P06_W2FE:	.incbin	"build/wav_pcm/main/Main_P06_W2FE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2FE_Drawbar.wav: 128 16-bit samples, entry 2FE
+Main_P06_W2FF:	.incbin	"build/wav_pcm/main/Main_P06_W2FF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W2FF_Drawbar.wav: 128 16-bit samples, entry 2FF
+Main_P06_W300:	.incbin	"build/wav_pcm/main/Main_P06_W300.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W300_Drawbar.wav: 128 16-bit samples, entry 300
+Main_P06_W301:	.incbin	"build/wav_pcm/main/Main_P06_W301.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W301_Drawbar.wav: 128 16-bit samples, entry 301
+Main_P06_W302:	.incbin	"build/wav_pcm/main/Main_P06_W302.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W302_Drawbar.wav: 128 16-bit samples, entry 302
+Main_P06_W303:	.incbin	"build/wav_pcm/main/Main_P06_W303.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W303_Drawbar.wav: 128 16-bit samples, entry 303
+Main_P06_W304:	.incbin	"build/wav_pcm/main/Main_P06_W304.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W304_Drawbar.wav: 128 16-bit samples, entry 304
+Main_P06_W305:	.incbin	"build/wav_pcm/main/Main_P06_W305.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W305_Drawbar.wav: 128 16-bit samples, entry 305
+Main_P06_W306:	.incbin	"build/wav_pcm/main/Main_P06_W306.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W306_Drawbar.wav: 128 16-bit samples, entry 306
+Main_P06_W307:	.incbin	"build/wav_pcm/main/Main_P06_W307.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W307_Drawbar.wav: 128 16-bit samples, entry 307
+Main_P06_W308:	.incbin	"build/wav_pcm/main/Main_P06_W308.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W308_Drawbar.wav: 128 16-bit samples, entry 308
+Main_P06_W309:	.incbin	"build/wav_pcm/main/Main_P06_W309.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W309_Drawbar.wav: 128 16-bit samples, entry 309
+Main_P06_W30A:	.incbin	"build/wav_pcm/main/Main_P06_W30A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W30A_Drawbar.wav: 128 16-bit samples, entry 30A
+Main_P06_W30B:	.incbin	"build/wav_pcm/main/Main_P06_W30B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W30B_Drawbar.wav: 128 16-bit samples, entry 30B
+Main_P06_W30C:	.incbin	"build/wav_pcm/main/Main_P06_W30C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W30C_Drawbar.wav: 128 16-bit samples, entry 30C
+Main_P06_W30D:	.incbin	"build/wav_pcm/main/Main_P06_W30D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W30D_Drawbar.wav: 128 16-bit samples, entry 30D
+Main_P06_W30E:	.incbin	"build/wav_pcm/main/Main_P06_W30E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W30E_Drawbar.wav: 128 16-bit samples, entry 30E
+Main_P06_W30F:	.incbin	"build/wav_pcm/main/Main_P06_W30F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W30F_Drawbar.wav: 128 16-bit samples, entry 30F
+Main_P06_W310:	.incbin	"build/wav_pcm/main/Main_P06_W310.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W310_Drawbar.wav: 128 16-bit samples, entry 310
+Main_P06_W311:	.incbin	"build/wav_pcm/main/Main_P06_W311.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W311_Drawbar.wav: 128 16-bit samples, entry 311
+Main_P06_W312:	.incbin	"build/wav_pcm/main/Main_P06_W312.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W312_Drawbar.wav: 128 16-bit samples, entry 312
+Main_P06_W313:	.incbin	"build/wav_pcm/main/Main_P06_W313.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W313_Drawbar.wav: 128 16-bit samples, entry 313
+Main_P06_W314:	.incbin	"build/wav_pcm/main/Main_P06_W314.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W314_Drawbar.wav: 128 16-bit samples, entry 314
+Main_P06_W315:	.incbin	"build/wav_pcm/main/Main_P06_W315.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W315_Drawbar.wav: 128 16-bit samples, entry 315
+Main_P06_W316:	.incbin	"build/wav_pcm/main/Main_P06_W316.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W316_Drawbar.wav: 128 16-bit samples, entry 316
+Main_P06_W317:	.incbin	"build/wav_pcm/main/Main_P06_W317.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W317_Drawbar.wav: 128 16-bit samples, entry 317
+Main_P06_W318:	.incbin	"build/wav_pcm/main/Main_P06_W318.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W318_Drawbar.wav: 128 16-bit samples, entry 318
+Main_P06_W319:	.incbin	"build/wav_pcm/main/Main_P06_W319.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W319_Drawbar.wav: 128 16-bit samples, entry 319
+Main_P06_W31A:	.incbin	"build/wav_pcm/main/Main_P06_W31A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W31A_Drawbar.wav: 128 16-bit samples, entry 31A
+Main_P06_W31B:	.incbin	"build/wav_pcm/main/Main_P06_W31B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W31B_Drawbar.wav: 128 16-bit samples, entry 31B
+Main_P06_W31C:	.incbin	"build/wav_pcm/main/Main_P06_W31C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W31C_Drawbar.wav: 128 16-bit samples, entry 31C
+Main_P06_W31D:	.incbin	"build/wav_pcm/main/Main_P06_W31D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W31D.wav: 128 16-bit samples, entry 31D
+Main_P06_W31E:	.incbin	"build/wav_pcm/main/Main_P06_W31E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W31E.wav: 128 16-bit samples, entry 31E
+Main_P06_W31F:	.incbin	"build/wav_pcm/main/Main_P06_W31F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W31F.wav: 128 16-bit samples, entry 31F
+Main_P06_W320:	.incbin	"build/wav_pcm/main/Main_P06_W320.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W320.wav: 128 16-bit samples, entry 320
+Main_P06_W321:	.incbin	"build/wav_pcm/main/Main_P06_W321.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W321_Drawbar.wav: 128 16-bit samples, entry 321
+Main_P06_W322:	.incbin	"build/wav_pcm/main/Main_P06_W322.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W322_Drawbar.wav: 128 16-bit samples, entry 322
+Main_P06_W323:	.incbin	"build/wav_pcm/main/Main_P06_W323.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W323_Drawbar.wav: 128 16-bit samples, entry 323
+Main_P06_W324:	.incbin	"build/wav_pcm/main/Main_P06_W324.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W324_Drawbar.wav: 128 16-bit samples, entry 324
+Main_P06_W325:	.incbin	"build/wav_pcm/main/Main_P06_W325.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W325_Drawbar.wav: 128 16-bit samples, entry 325
+Main_P06_W326:	.incbin	"build/wav_pcm/main/Main_P06_W326.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W326_Drawbar.wav: 128 16-bit samples, entry 326
+Main_P06_W327:	.incbin	"build/wav_pcm/main/Main_P06_W327.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W327_Drawbar.wav: 128 16-bit samples, entry 327
+Main_P06_W328:	.incbin	"build/wav_pcm/main/Main_P06_W328.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W328_Drawbar.wav: 128 16-bit samples, entry 328
+Main_P06_W329:	.incbin	"build/wav_pcm/main/Main_P06_W329.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W329_Drawbar.wav: 128 16-bit samples, entry 329
+Main_P06_W32A:	.incbin	"build/wav_pcm/main/Main_P06_W32A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W32A_Drawbar.wav: 128 16-bit samples, entry 32A
+Main_P06_W32B:	.incbin	"build/wav_pcm/main/Main_P06_W32B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W32B_Drawbar.wav: 128 16-bit samples, entry 32B
+Main_P06_W32C:	.incbin	"build/wav_pcm/main/Main_P06_W32C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W32C_Drawbar.wav: 128 16-bit samples, entry 32C
+Main_P06_W32D:	.incbin	"build/wav_pcm/main/Main_P06_W32D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W32D_Drawbar.wav: 128 16-bit samples, entry 32D
+Main_P06_W32E:	.incbin	"build/wav_pcm/main/Main_P06_W32E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W32E_Drawbar.wav: 128 16-bit samples, entry 32E
+Main_P06_W32F:	.incbin	"build/wav_pcm/main/Main_P06_W32F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W32F_Drawbar.wav: 128 16-bit samples, entry 32F
+Main_P06_W330:	.incbin	"build/wav_pcm/main/Main_P06_W330.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W330_Drawbar.wav: 128 16-bit samples, entry 330
+Main_P06_W331:	.incbin	"build/wav_pcm/main/Main_P06_W331.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W331_Drawbar.wav: 128 16-bit samples, entry 331
+Main_P06_W332:	.incbin	"build/wav_pcm/main/Main_P06_W332.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W332.wav: 128 16-bit samples, entry 332
+Main_P06_W333:	.incbin	"build/wav_pcm/main/Main_P06_W333.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W333_Drawbar.wav: 128 16-bit samples, entry 333
+Main_P06_W334:	.incbin	"build/wav_pcm/main/Main_P06_W334.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W334_Drawbar.wav: 128 16-bit samples, entry 334
+Main_P06_W335:	.incbin	"build/wav_pcm/main/Main_P06_W335.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W335.wav: 128 16-bit samples, entry 335
+Main_P06_W336:	.incbin	"build/wav_pcm/main/Main_P06_W336.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W336.wav: 128 16-bit samples, entry 336
+Main_P06_W337:	.incbin	"build/wav_pcm/main/Main_P06_W337.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W337.wav: 128 16-bit samples, entry 337
+Main_P06_W338:	.incbin	"build/wav_pcm/main/Main_P06_W338.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W338.wav: 128 16-bit samples, entry 338
+Main_P06_W339:	.incbin	"build/wav_pcm/main/Main_P06_W339.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W339_Drawbar.wav: 128 16-bit samples, entry 339
+Main_P06_W33A:	.incbin	"build/wav_pcm/main/Main_P06_W33A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W33A.wav: 128 16-bit samples, entry 33A
+Main_P06_W33B:	.incbin	"build/wav_pcm/main/Main_P06_W33B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W33B_Drawbar.wav: 128 16-bit samples, entry 33B
+Main_P06_W33C:	.incbin	"build/wav_pcm/main/Main_P06_W33C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W33C_Drawbar.wav: 128 16-bit samples, entry 33C
+Main_P06_W33D:	.incbin	"build/wav_pcm/main/Main_P06_W33D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W33D.wav: 128 16-bit samples, entry 33D
+Main_P06_W33E:	.incbin	"build/wav_pcm/main/Main_P06_W33E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W33E.wav: 128 16-bit samples, entry 33E
+Main_P06_W33F:	.incbin	"build/wav_pcm/main/Main_P06_W33F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W33F.wav: 128 16-bit samples, entry 33F
+Main_P06_W340:	.incbin	"build/wav_pcm/main/Main_P06_W340.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W340.wav: 128 16-bit samples, entry 340
+Main_P06_W341:	.incbin	"build/wav_pcm/main/Main_P06_W341.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W341_Drawbar.wav: 128 16-bit samples, entry 341
+Main_P06_W342:	.incbin	"build/wav_pcm/main/Main_P06_W342.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W342.wav: 128 16-bit samples, entry 342
+Main_P06_W343:	.incbin	"build/wav_pcm/main/Main_P06_W343.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W343_Drawbar.wav: 128 16-bit samples, entry 343
+Main_P06_W344:	.incbin	"build/wav_pcm/main/Main_P06_W344.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W344_Drawbar.wav: 128 16-bit samples, entry 344
+Main_P06_W345:	.incbin	"build/wav_pcm/main/Main_P06_W345.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W345.wav: 128 16-bit samples, entry 345
+Main_P06_W346:	.incbin	"build/wav_pcm/main/Main_P06_W346.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W346.wav: 128 16-bit samples, entry 346
+Main_P06_W347:	.incbin	"build/wav_pcm/main/Main_P06_W347.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W347.wav: 128 16-bit samples, entry 347
+Main_P06_W348:	.incbin	"build/wav_pcm/main/Main_P06_W348.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W348_Drawbar.wav: 128 16-bit samples, entry 348
+Main_P06_W349:	.incbin	"build/wav_pcm/main/Main_P06_W349.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W349_Drawbar.wav: 128 16-bit samples, entry 349
+Main_P06_W34A:	.incbin	"build/wav_pcm/main/Main_P06_W34A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W34A.wav: 128 16-bit samples, entry 34A
+Main_P06_W34B:	.incbin	"build/wav_pcm/main/Main_P06_W34B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W34B_Drawbar.wav: 128 16-bit samples, entry 34B
+Main_P06_W34C:	.incbin	"build/wav_pcm/main/Main_P06_W34C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W34C_Drawbar.wav: 128 16-bit samples, entry 34C
+Main_P06_W34D:	.incbin	"build/wav_pcm/main/Main_P06_W34D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W34D.wav: 128 16-bit samples, entry 34D
+Main_P06_W34E:	.incbin	"build/wav_pcm/main/Main_P06_W34E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W34E.wav: 128 16-bit samples, entry 34E
+Main_P06_W34F:	.incbin	"build/wav_pcm/main/Main_P06_W34F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W34F.wav: 128 16-bit samples, entry 34F
+Main_P06_W350:	.incbin	"build/wav_pcm/main/Main_P06_W350.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W350.wav: 128 16-bit samples, entry 350
+Main_P06_W351:	.incbin	"build/wav_pcm/main/Main_P06_W351.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W351_Drawbar.wav: 128 16-bit samples, entry 351
+Main_P06_W352:	.incbin	"build/wav_pcm/main/Main_P06_W352.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W352_Drawbar.wav: 128 16-bit samples, entry 352
+Main_P06_W353:	.incbin	"build/wav_pcm/main/Main_P06_W353.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W353_Drawbar.wav: 128 16-bit samples, entry 353
+Main_P06_W354:	.incbin	"build/wav_pcm/main/Main_P06_W354.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W354_Drawbar.wav: 128 16-bit samples, entry 354
+Main_P06_W355:	.incbin	"build/wav_pcm/main/Main_P06_W355.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W355_Drawbar.wav: 128 16-bit samples, entry 355
+Main_P06_W356:	.incbin	"build/wav_pcm/main/Main_P06_W356.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W356_Drawbar.wav: 128 16-bit samples, entry 356
+Main_P06_W357:	.incbin	"build/wav_pcm/main/Main_P06_W357.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W357_Drawbar.wav: 128 16-bit samples, entry 357
+Main_P06_W358:	.incbin	"build/wav_pcm/main/Main_P06_W358.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W358_Drawbar.wav: 128 16-bit samples, entry 358
+Main_P06_W359:	.incbin	"build/wav_pcm/main/Main_P06_W359.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W359_Drawbar.wav: 128 16-bit samples, entry 359
+Main_P06_W35A:	.incbin	"build/wav_pcm/main/Main_P06_W35A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W35A_Drawbar.wav: 128 16-bit samples, entry 35A
+Main_P06_W35B:	.incbin	"build/wav_pcm/main/Main_P06_W35B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W35B_Drawbar.wav: 128 16-bit samples, entry 35B
+Main_P06_W35C:	.incbin	"build/wav_pcm/main/Main_P06_W35C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W35C_Drawbar.wav: 128 16-bit samples, entry 35C
+Main_P06_W35D:	.incbin	"build/wav_pcm/main/Main_P06_W35D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W35D_Drawbar.wav: 128 16-bit samples, entry 35D
+Main_P06_W35E:	.incbin	"build/wav_pcm/main/Main_P06_W35E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W35E_Drawbar.wav: 128 16-bit samples, entry 35E
+Main_P06_W35F:	.incbin	"build/wav_pcm/main/Main_P06_W35F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W35F_Drawbar.wav: 128 16-bit samples, entry 35F
+Main_P06_W360:	.incbin	"build/wav_pcm/main/Main_P06_W360.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W360_Drawbar.wav: 128 16-bit samples, entry 360
+Main_P06_W361:	.incbin	"build/wav_pcm/main/Main_P06_W361.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W361_Drawbar.wav: 128 16-bit samples, entry 361
+Main_P06_W362:	.incbin	"build/wav_pcm/main/Main_P06_W362.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W362_Drawbar.wav: 128 16-bit samples, entry 362
+Main_P06_W363:	.incbin	"build/wav_pcm/main/Main_P06_W363.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W363_Drawbar.wav: 128 16-bit samples, entry 363
+Main_P06_W364:	.incbin	"build/wav_pcm/main/Main_P06_W364.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W364_Drawbar.wav: 128 16-bit samples, entry 364
+Main_P06_W365:	.incbin	"build/wav_pcm/main/Main_P06_W365.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W365_Drawbar.wav: 128 16-bit samples, entry 365
+Main_P06_W366:	.incbin	"build/wav_pcm/main/Main_P06_W366.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W366_Drawbar.wav: 128 16-bit samples, entry 366
+Main_P06_W367:	.incbin	"build/wav_pcm/main/Main_P06_W367.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W367_Drawbar.wav: 128 16-bit samples, entry 367
+Main_P06_W368:	.incbin	"build/wav_pcm/main/Main_P06_W368.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W368_Drawbar.wav: 128 16-bit samples, entry 368
+Main_P06_W369:	.incbin	"build/wav_pcm/main/Main_P06_W369.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W369_Drawbar.wav: 128 16-bit samples, entry 369
+Main_P06_W36A:	.incbin	"build/wav_pcm/main/Main_P06_W36A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W36A_Drawbar.wav: 128 16-bit samples, entry 36A
+Main_P06_W36B:	.incbin	"build/wav_pcm/main/Main_P06_W36B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W36B_Drawbar.wav: 128 16-bit samples, entry 36B
+Main_P06_W36C:	.incbin	"build/wav_pcm/main/Main_P06_W36C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W36C_Drawbar.wav: 128 16-bit samples, entry 36C
+Main_P06_W36D:	.incbin	"build/wav_pcm/main/Main_P06_W36D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W36D_Drawbar.wav: 128 16-bit samples, entry 36D
+Main_P06_W36E:	.incbin	"build/wav_pcm/main/Main_P06_W36E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W36E_Drawbar.wav: 128 16-bit samples, entry 36E
+Main_P06_W36F:	.incbin	"build/wav_pcm/main/Main_P06_W36F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W36F_Drawbar.wav: 128 16-bit samples, entry 36F
+Main_P06_W370:	.incbin	"build/wav_pcm/main/Main_P06_W370.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W370_Drawbar.wav: 128 16-bit samples, entry 370
+Main_P06_W371:	.incbin	"build/wav_pcm/main/Main_P06_W371.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W371_Drawbar.wav: 128 16-bit samples, entry 371
+Main_P06_W372:	.incbin	"build/wav_pcm/main/Main_P06_W372.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W372_Drawbar.wav: 128 16-bit samples, entry 372
+Main_P06_W373:	.incbin	"build/wav_pcm/main/Main_P06_W373.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W373_Drawbar.wav: 128 16-bit samples, entry 373
+Main_P06_W374:	.incbin	"build/wav_pcm/main/Main_P06_W374.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W374_Drawbar.wav: 128 16-bit samples, entry 374
+Main_P06_W375:	.incbin	"build/wav_pcm/main/Main_P06_W375.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W375_Drawbar.wav: 128 16-bit samples, entry 375
+Main_P06_W376:	.incbin	"build/wav_pcm/main/Main_P06_W376.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W376_Drawbar.wav: 128 16-bit samples, entry 376
+Main_P06_W377:	.incbin	"build/wav_pcm/main/Main_P06_W377.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W377_Drawbar.wav: 128 16-bit samples, entry 377
+Main_P06_W378:	.incbin	"build/wav_pcm/main/Main_P06_W378.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W378_Drawbar.wav: 128 16-bit samples, entry 378
+Main_P06_W379:	.incbin	"build/wav_pcm/main/Main_P06_W379.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W379_Drawbar.wav: 128 16-bit samples, entry 379
+Main_P06_W37A:	.incbin	"build/wav_pcm/main/Main_P06_W37A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W37A_Drawbar.wav: 128 16-bit samples, entry 37A
+Main_P06_W37B:	.incbin	"build/wav_pcm/main/Main_P06_W37B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W37B_Drawbar.wav: 128 16-bit samples, entry 37B
+Main_P06_W37C:	.incbin	"build/wav_pcm/main/Main_P06_W37C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W37C_Drawbar.wav: 128 16-bit samples, entry 37C
+Main_P06_W37D:	.incbin	"build/wav_pcm/main/Main_P06_W37D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W37D_Drawbar.wav: 128 16-bit samples, entry 37D
+Main_P06_W37E:	.incbin	"build/wav_pcm/main/Main_P06_W37E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W37E_Drawbar.wav: 128 16-bit samples, entry 37E
+Main_P06_W37F:	.incbin	"build/wav_pcm/main/Main_P06_W37F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W37F_Drawbar.wav: 128 16-bit samples, entry 37F
+Main_P06_W380:	.incbin	"build/wav_pcm/main/Main_P06_W380.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W380_Drawbar.wav: 128 16-bit samples, entry 380
+Main_P06_W381:	.incbin	"build/wav_pcm/main/Main_P06_W381.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W381_Drawbar.wav: 128 16-bit samples, entry 381
+Main_P06_W382:	.incbin	"build/wav_pcm/main/Main_P06_W382.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W382_Drawbar.wav: 128 16-bit samples, entry 382
+Main_P06_W383:	.incbin	"build/wav_pcm/main/Main_P06_W383.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W383_Drawbar.wav: 128 16-bit samples, entry 383
+Main_P06_W384:	.incbin	"build/wav_pcm/main/Main_P06_W384.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W384_Drawbar.wav: 128 16-bit samples, entry 384
+Main_P06_W385:	.incbin	"build/wav_pcm/main/Main_P06_W385.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W385_Drawbar.wav: 128 16-bit samples, entry 385
+Main_P06_W386:	.incbin	"build/wav_pcm/main/Main_P06_W386.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W386_Drawbar.wav: 128 16-bit samples, entry 386
+Main_P06_W387:	.incbin	"build/wav_pcm/main/Main_P06_W387.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W387_Drawbar.wav: 128 16-bit samples, entry 387
+Main_P06_W388:	.incbin	"build/wav_pcm/main/Main_P06_W388.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W388_Drawbar.wav: 128 16-bit samples, entry 388
+Main_P06_W389:	.incbin	"build/wav_pcm/main/Main_P06_W389.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W389_Drawbar.wav: 128 16-bit samples, entry 389
+Main_P06_W38A:	.incbin	"build/wav_pcm/main/Main_P06_W38A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W38A_Drawbar.wav: 128 16-bit samples, entry 38A
+Main_P06_W38B:	.incbin	"build/wav_pcm/main/Main_P06_W38B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W38B_Drawbar.wav: 128 16-bit samples, entry 38B
+Main_P06_W38C:	.incbin	"build/wav_pcm/main/Main_P06_W38C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W38C_Drawbar.wav: 128 16-bit samples, entry 38C
+Main_P06_W38D:	.incbin	"build/wav_pcm/main/Main_P06_W38D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W38D_Drawbar.wav: 128 16-bit samples, entry 38D
+Main_P06_W38E:	.incbin	"build/wav_pcm/main/Main_P06_W38E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W38E_Drawbar.wav: 128 16-bit samples, entry 38E
+Main_P06_W38F:	.incbin	"build/wav_pcm/main/Main_P06_W38F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W38F_Drawbar.wav: 128 16-bit samples, entry 38F
+Main_P06_W390:	.incbin	"build/wav_pcm/main/Main_P06_W390.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W390_Drawbar.wav: 128 16-bit samples, entry 390
+Main_P06_W391:	.incbin	"build/wav_pcm/main/Main_P06_W391.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W391_Drawbar.wav: 128 16-bit samples, entry 391
+Main_P06_W392:	.incbin	"build/wav_pcm/main/Main_P06_W392.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W392_Drawbar.wav: 128 16-bit samples, entry 392
+Main_P06_W393:	.incbin	"build/wav_pcm/main/Main_P06_W393.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W393_Drawbar.wav: 128 16-bit samples, entry 393
+Main_P06_W394:	.incbin	"build/wav_pcm/main/Main_P06_W394.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W394_Drawbar.wav: 128 16-bit samples, entry 394
+Main_P06_W395:	.incbin	"build/wav_pcm/main/Main_P06_W395.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W395_Drawbar.wav: 128 16-bit samples, entry 395
+Main_P06_W396:	.incbin	"build/wav_pcm/main/Main_P06_W396.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W396_Drawbar.wav: 128 16-bit samples, entry 396
+Main_P06_W397:	.incbin	"build/wav_pcm/main/Main_P06_W397.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W397_Drawbar.wav: 128 16-bit samples, entry 397
+Main_P06_W398:	.incbin	"build/wav_pcm/main/Main_P06_W398.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W398_Drawbar.wav: 128 16-bit samples, entry 398
+Main_P06_W399:	.incbin	"build/wav_pcm/main/Main_P06_W399.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W399_Drawbar.wav: 128 16-bit samples, entry 399
+Main_P06_W39A:	.incbin	"build/wav_pcm/main/Main_P06_W39A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W39A_Drawbar.wav: 128 16-bit samples, entry 39A
+Main_P06_W39B:	.incbin	"build/wav_pcm/main/Main_P06_W39B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W39B_Drawbar.wav: 128 16-bit samples, entry 39B
+Main_P06_W39C:	.incbin	"build/wav_pcm/main/Main_P06_W39C.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W39C_Drawbar.wav: 128 16-bit samples, entry 39C
+Main_P06_W39D:	.incbin	"build/wav_pcm/main/Main_P06_W39D.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W39D_Drawbar.wav: 128 16-bit samples, entry 39D
+Main_P06_W39E:	.incbin	"build/wav_pcm/main/Main_P06_W39E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W39E_Drawbar.wav: 128 16-bit samples, entry 39E
+Main_P06_W39F:	.incbin	"build/wav_pcm/main/Main_P06_W39F.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W39F_Drawbar.wav: 128 16-bit samples, entry 39F
+Main_P06_W3A0:	.incbin	"build/wav_pcm/main/Main_P06_W3A0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A0_Drawbar.wav: 128 16-bit samples, entry 3A0
+Main_P06_W3A1:	.incbin	"build/wav_pcm/main/Main_P06_W3A1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A1_Drawbar.wav: 128 16-bit samples, entry 3A1
+Main_P06_W3A2:	.incbin	"build/wav_pcm/main/Main_P06_W3A2.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A2_Drawbar.wav: 128 16-bit samples, entry 3A2
+Main_P06_W3A3:	.incbin	"build/wav_pcm/main/Main_P06_W3A3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A3_Drawbar.wav: 128 16-bit samples, entry 3A3
+Main_P06_W3A4:	.incbin	"build/wav_pcm/main/Main_P06_W3A4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A4_Drawbar.wav: 128 16-bit samples, entry 3A4
+Main_P06_W3A5:	.incbin	"build/wav_pcm/main/Main_P06_W3A5.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A5_Drawbar.wav: 256 16-bit samples, entry 3A5
+Main_P06_W3A6:	.incbin	"build/wav_pcm/main/Main_P06_W3A6.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A6_Drawbar.wav: 256 16-bit samples, entry 3A6
+Main_P06_W3A7:	.incbin	"build/wav_pcm/main/Main_P06_W3A7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A7_Drawbar.wav: 128 16-bit samples, entry 3A7
+Main_P06_W3A8:	.incbin	"build/wav_pcm/main/Main_P06_W3A8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A8_Drawbar.wav: 256 16-bit samples, entry 3A8
+Main_P06_W3A9:	.incbin	"build/wav_pcm/main/Main_P06_W3A9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3A9_Drawbar.wav: 256 16-bit samples, entry 3A9
+Main_P06_W3AA:	.incbin	"build/wav_pcm/main/Main_P06_W3AA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3AA_Drawbar.wav: 256 16-bit samples, entry 3AA
+Main_P06_W3AB:	.incbin	"build/wav_pcm/main/Main_P06_W3AB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3AB_Drawbar.wav: 256 16-bit samples, entry 3AB
+Main_P06_W3AC:	.incbin	"build/wav_pcm/main/Main_P06_W3AC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3AC_Drawbar.wav: 128 16-bit samples, entry 3AC
+Main_P06_W3AD:	.incbin	"build/wav_pcm/main/Main_P06_W3AD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3AD_Drawbar.wav: 128 16-bit samples, entry 3AD
+Main_P06_W3AE:	.incbin	"build/wav_pcm/main/Main_P06_W3AE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3AE_Drawbar.wav: 128 16-bit samples, entry 3AE
+Main_P06_W3AF:	.incbin	"build/wav_pcm/main/Main_P06_W3AF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3AF_Drawbar.wav: 128 16-bit samples, entry 3AF
+Main_P06_W3B0:	.incbin	"build/wav_pcm/main/Main_P06_W3B0.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B0_Drawbar.wav: 256 16-bit samples, entry 3B0
+Main_P06_W3B1:	.incbin	"build/wav_pcm/main/Main_P06_W3B1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B1_Drawbar.wav: 256 16-bit samples, entry 3B1
+Main_P06_W3B2:	.incbin	"build/wav_pcm/main/Main_P06_W3B2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B2_Drawbar.wav: 256 16-bit samples, entry 3B2
+Main_P06_W3B3:	.incbin	"build/wav_pcm/main/Main_P06_W3B3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B3_Drawbar.wav: 256 16-bit samples, entry 3B3
+Main_P06_W3B4:	.incbin	"build/wav_pcm/main/Main_P06_W3B4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B4.wav: 128 16-bit samples, entry 3B4
+Main_P06_W3B5:	.incbin	"build/wav_pcm/main/Main_P06_W3B5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B5.wav: 128 16-bit samples, entry 3B5
+Main_P06_W3B6:	.incbin	"build/wav_pcm/main/Main_P06_W3B6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B6.wav: 128 16-bit samples, entry 3B6
+Main_P06_W3B7:	.incbin	"build/wav_pcm/main/Main_P06_W3B7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B7.wav: 128 16-bit samples, entry 3B7
+Main_P06_W3B8:	.incbin	"build/wav_pcm/main/Main_P06_W3B8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B8_Drawbar.wav: 256 16-bit samples, entry 3B8
+Main_P06_W3B9:	.incbin	"build/wav_pcm/main/Main_P06_W3B9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3B9_Drawbar.wav: 256 16-bit samples, entry 3B9
+Main_P06_W3BA:	.incbin	"build/wav_pcm/main/Main_P06_W3BA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3BA_Drawbar.wav: 128 16-bit samples, entry 3BA
+Main_P06_W3BB:	.incbin	"build/wav_pcm/main/Main_P06_W3BB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3BB_Drawbar.wav: 256 16-bit samples, entry 3BB
+Main_P06_W3BC:	.incbin	"build/wav_pcm/main/Main_P06_W3BC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3BC_Drawbar.wav: 256 16-bit samples, entry 3BC
+Main_P06_W3BD:	.incbin	"build/wav_pcm/main/Main_P06_W3BD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3BD_Drawbar.wav: 128 16-bit samples, entry 3BD
+Main_P06_W3BE:	.incbin	"build/wav_pcm/main/Main_P06_W3BE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3BE_Drawbar.wav: 256 16-bit samples, entry 3BE
+Main_P06_W3BF:	.incbin	"build/wav_pcm/main/Main_P06_W3BF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3BF_Drawbar.wav: 256 16-bit samples, entry 3BF
+Main_P06_W3C0:	.incbin	"build/wav_pcm/main/Main_P06_W3C0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C0_Drawbar.wav: 128 16-bit samples, entry 3C0
+Main_P06_W3C1:	.incbin	"build/wav_pcm/main/Main_P06_W3C1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C1_Drawbar.wav: 256 16-bit samples, entry 3C1
+Main_P06_W3C2:	.incbin	"build/wav_pcm/main/Main_P06_W3C2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C2_Drawbar.wav: 256 16-bit samples, entry 3C2
+Main_P06_W3C3:	.incbin	"build/wav_pcm/main/Main_P06_W3C3.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C3_Drawbar.wav: 128 16-bit samples, entry 3C3
+Main_P06_W3C4:	.incbin	"build/wav_pcm/main/Main_P06_W3C4.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C4_Drawbar.wav: 256 16-bit samples, entry 3C4
+Main_P06_W3C5:	.incbin	"build/wav_pcm/main/Main_P06_W3C5.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C5_Drawbar.wav: 256 16-bit samples, entry 3C5
+Main_P06_W3C6:	.incbin	"build/wav_pcm/main/Main_P06_W3C6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C6_Drawbar.wav: 128 16-bit samples, entry 3C6
+Main_P06_W3C7:	.incbin	"build/wav_pcm/main/Main_P06_W3C7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C7_Drawbar.wav: 128 16-bit samples, entry 3C7
+Main_P06_W3C8:	.incbin	"build/wav_pcm/main/Main_P06_W3C8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C8.wav: 128 16-bit samples, entry 3C8
+Main_P06_W3C9:	.incbin	"build/wav_pcm/main/Main_P06_W3C9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3C9_Drawbar.wav: 128 16-bit samples, entry 3C9
+Main_P06_W3CA:	.incbin	"build/wav_pcm/main/Main_P06_W3CA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3CA_Drawbar.wav: 128 16-bit samples, entry 3CA
+Main_P06_W3CB:	.incbin	"build/wav_pcm/main/Main_P06_W3CB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3CB_Drawbar.wav: 128 16-bit samples, entry 3CB
+Main_P06_W3CC:	.incbin	"build/wav_pcm/main/Main_P06_W3CC.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3CC_Drawbar.wav: 128 16-bit samples, entry 3CC
+Main_P06_W3CD:	.incbin	"build/wav_pcm/main/Main_P06_W3CD.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3CD_Drawbar.wav: 128 16-bit samples, entry 3CD
+Main_P06_W3CE:	.incbin	"build/wav_pcm/main/Main_P06_W3CE.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3CE_Drawbar.wav: 128 16-bit samples, entry 3CE
+Main_P06_W3CF:	.incbin	"build/wav_pcm/main/Main_P06_W3CF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3CF_Drawbar.wav: 256 16-bit samples, entry 3CF
+Main_P06_W3D0:	.incbin	"build/wav_pcm/main/Main_P06_W3D0.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D0_Drawbar.wav: 256 16-bit samples, entry 3D0
+Main_P06_W3D1:	.incbin	"build/wav_pcm/main/Main_P06_W3D1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D1_Drawbar.wav: 128 16-bit samples, entry 3D1
+Main_P06_W3D2:	.incbin	"build/wav_pcm/main/Main_P06_W3D2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D2_Drawbar.wav: 256 16-bit samples, entry 3D2
+Main_P06_W3D3:	.incbin	"build/wav_pcm/main/Main_P06_W3D3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D3_Drawbar.wav: 256 16-bit samples, entry 3D3
+Main_P06_W3D4:	.incbin	"build/wav_pcm/main/Main_P06_W3D4.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D4_Drawbar.wav: 256 16-bit samples, entry 3D4
+Main_P06_W3D5:	.incbin	"build/wav_pcm/main/Main_P06_W3D5.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D5_Drawbar.wav: 256 16-bit samples, entry 3D5
+Main_P06_W3D6:	.incbin	"build/wav_pcm/main/Main_P06_W3D6.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D6_Drawbar.wav: 256 16-bit samples, entry 3D6
+Main_P06_W3D7:	.incbin	"build/wav_pcm/main/Main_P06_W3D7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D7_Drawbar.wav: 128 16-bit samples, entry 3D7
+Main_P06_W3D8:	.incbin	"build/wav_pcm/main/Main_P06_W3D8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D8_Drawbar.wav: 128 16-bit samples, entry 3D8
+Main_P06_W3D9:	.incbin	"build/wav_pcm/main/Main_P06_W3D9.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3D9_Drawbar.wav: 128 16-bit samples, entry 3D9
+Main_P06_W3DA:	.incbin	"build/wav_pcm/main/Main_P06_W3DA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3DA_Drawbar.wav: 256 16-bit samples, entry 3DA
+Main_P06_W3DB:	.incbin	"build/wav_pcm/main/Main_P06_W3DB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3DB_Drawbar.wav: 256 16-bit samples, entry 3DB
+Main_P06_W3DC:	.incbin	"build/wav_pcm/main/Main_P06_W3DC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3DC_Drawbar.wav: 256 16-bit samples, entry 3DC
+Main_P06_W3DD:	.incbin	"build/wav_pcm/main/Main_P06_W3DD.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3DD_Drawbar.wav: 256 16-bit samples, entry 3DD
+Main_P06_W3DE:	.incbin	"build/wav_pcm/main/Main_P06_W3DE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3DE_Drawbar.wav: 256 16-bit samples, entry 3DE
+Main_P06_W3DF:	.incbin	"build/wav_pcm/main/Main_P06_W3DF.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3DF.wav: 128 16-bit samples, entry 3DF
+Main_P06_W3E0:	.incbin	"build/wav_pcm/main/Main_P06_W3E0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E0.wav: 128 16-bit samples, entry 3E0
+Main_P06_W3E1:	.incbin	"build/wav_pcm/main/Main_P06_W3E1.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E1.wav: 128 16-bit samples, entry 3E1
+Main_P06_W3E2:	.incbin	"build/wav_pcm/main/Main_P06_W3E2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E2_Drawbar.wav: 256 16-bit samples, entry 3E2
+Main_P06_W3E3:	.incbin	"build/wav_pcm/main/Main_P06_W3E3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E3_Drawbar.wav: 256 16-bit samples, entry 3E3
+Main_P06_W3E4:	.incbin	"build/wav_pcm/main/Main_P06_W3E4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E4_Drawbar.wav: 128 16-bit samples, entry 3E4
+Main_P06_W3E5:	.incbin	"build/wav_pcm/main/Main_P06_W3E5.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E5_Drawbar.wav: 256 16-bit samples, entry 3E5
+Main_P06_W3E6:	.incbin	"build/wav_pcm/main/Main_P06_W3E6.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E6_Drawbar.wav: 256 16-bit samples, entry 3E6
+Main_P06_W3E7:	.incbin	"build/wav_pcm/main/Main_P06_W3E7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E7_Drawbar.wav: 128 16-bit samples, entry 3E7
+Main_P06_W3E8:	.incbin	"build/wav_pcm/main/Main_P06_W3E8.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E8_Drawbar.wav: 256 16-bit samples, entry 3E8
+Main_P06_W3E9:	.incbin	"build/wav_pcm/main/Main_P06_W3E9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3E9_Drawbar.wav: 256 16-bit samples, entry 3E9
+Main_P06_W3EA:	.incbin	"build/wav_pcm/main/Main_P06_W3EA.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3EA_Drawbar.wav: 128 16-bit samples, entry 3EA
+Main_P06_W3EB:	.incbin	"build/wav_pcm/main/Main_P06_W3EB.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3EB_Drawbar.wav: 256 16-bit samples, entry 3EB
+Main_P06_W3EC:	.incbin	"build/wav_pcm/main/Main_P06_W3EC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3EC_Drawbar.wav: 256 16-bit samples, entry 3EC
+Main_P06_W3ED:	.incbin	"build/wav_pcm/main/Main_P06_W3ED.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3ED.wav: 128 16-bit samples, entry 3ED
+Main_P06_W3EE:	.incbin	"build/wav_pcm/main/Main_P06_W3EE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3EE_Drawbar.wav: 256 16-bit samples, entry 3EE
+Main_P06_W3EF:	.incbin	"build/wav_pcm/main/Main_P06_W3EF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3EF_Drawbar.wav: 256 16-bit samples, entry 3EF
+Main_P06_W3F0:	.incbin	"build/wav_pcm/main/Main_P06_W3F0.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F0_Drawbar.wav: 128 16-bit samples, entry 3F0
+Main_P06_W3F1:	.incbin	"build/wav_pcm/main/Main_P06_W3F1.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F1_Drawbar.wav: 256 16-bit samples, entry 3F1
+Main_P06_W3F2:	.incbin	"build/wav_pcm/main/Main_P06_W3F2.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F2_Drawbar.wav: 256 16-bit samples, entry 3F2
+Main_P06_W3F3:	.incbin	"build/wav_pcm/main/Main_P06_W3F3.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F3_Drawbar.wav: 256 16-bit samples, entry 3F3
+Main_P06_W3F4:	.incbin	"build/wav_pcm/main/Main_P06_W3F4.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F4_Drawbar.wav: 128 16-bit samples, entry 3F4
+Main_P06_W3F5:	.incbin	"build/wav_pcm/main/Main_P06_W3F5.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F5_Drawbar.wav: 128 16-bit samples, entry 3F5
+Main_P06_W3F6:	.incbin	"build/wav_pcm/main/Main_P06_W3F6.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F6.wav: 128 16-bit samples, entry 3F6
+Main_P06_W3F7:	.incbin	"build/wav_pcm/main/Main_P06_W3F7.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F7_Drawbar.wav: 128 16-bit samples, entry 3F7
+Main_P06_W3F8:	.incbin	"build/wav_pcm/main/Main_P06_W3F8.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F8.wav: 128 16-bit samples, entry 3F8
+Main_P06_W3F9:	.incbin	"build/wav_pcm/main/Main_P06_W3F9.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3F9_Drawbar.wav: 256 16-bit samples, entry 3F9
+Main_P06_W3FA:	.incbin	"build/wav_pcm/main/Main_P06_W3FA.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3FA_Drawbar.wav: 256 16-bit samples, entry 3FA
+Main_P06_W3FB:	.incbin	"build/wav_pcm/main/Main_P06_W3FB.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3FB_Drawbar.wav: 128 16-bit samples, entry 3FB
+Main_P06_W3FC:	.incbin	"build/wav_pcm/main/Main_P06_W3FC.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3FC_Drawbar.wav: 256 16-bit samples, entry 3FC
+Main_P06_W3FD:	.incbin	"build/wav_pcm/main/Main_P06_W3FD.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3FD_Drawbar.wav: 256 16-bit samples, entry 3FD
+Main_P06_W3FE:	.incbin	"build/wav_pcm/main/Main_P06_W3FE.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3FE_Drawbar.wav: 256 16-bit samples, entry 3FE
+Main_P06_W3FF:	.incbin	"build/wav_pcm/main/Main_P06_W3FF.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W3FF_Drawbar.wav: 256 16-bit samples, entry 3FF
+Main_P06_W400:	.incbin	"build/wav_pcm/main/Main_P06_W400.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W400_Drawbar.wav: 256 16-bit samples, entry 400
+Main_P06_W401:	.incbin	"build/wav_pcm/main/Main_P06_W401.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W401_Drawbar.wav: 256 16-bit samples, entry 401
+Main_P06_W402:	.incbin	"build/wav_pcm/main/Main_P06_W402.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W402_Drawbar.wav: 128 16-bit samples, entry 402
+Main_P06_W403:	.incbin	"build/wav_pcm/main/Main_P06_W403.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W403_Drawbar.wav: 128 16-bit samples, entry 403
+Main_P06_W404:	.incbin	"build/wav_pcm/main/Main_P06_W404.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W404_Drawbar.wav: 256 16-bit samples, entry 404
+Main_P06_W405:	.incbin	"build/wav_pcm/main/Main_P06_W405.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W405.wav: 256 16-bit samples, entry 405
+Main_P06_W406:	.incbin	"build/wav_pcm/main/Main_P06_W406.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W406_Drawbar.wav: 256 16-bit samples, entry 406
+Main_P06_W407:	.incbin	"build/wav_pcm/main/Main_P06_W407.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W407_Drawbar.wav: 256 16-bit samples, entry 407
+Main_P06_W408:	.incbin	"build/wav_pcm/main/Main_P06_W408.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W408.wav: 256 16-bit samples, entry 408
+Main_P06_W409:	.incbin	"build/wav_pcm/main/Main_P06_W409.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W409.wav: 256 16-bit samples, entry 409
+Main_P06_W40A:	.incbin	"build/wav_pcm/main/Main_P06_W40A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W40A.wav: 128 16-bit samples, entry 40A
+Main_P06_W40B:	.incbin	"build/wav_pcm/main/Main_P06_W40B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W40B_Drawbar.wav: 128 16-bit samples, entry 40B
+Main_P06_W40C:	.incbin	"build/wav_pcm/main/Main_P06_W40C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W40C_Drawbar.wav: 256 16-bit samples, entry 40C
+Main_P06_W40D:	.incbin	"build/wav_pcm/main/Main_P06_W40D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W40D_Drawbar.wav: 256 16-bit samples, entry 40D
+Main_P06_W40E:	.incbin	"build/wav_pcm/main/Main_P06_W40E.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W40E_Drawbar.wav: 128 16-bit samples, entry 40E
+Main_P06_W40F:	.incbin	"build/wav_pcm/main/Main_P06_W40F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W40F_Drawbar.wav: 256 16-bit samples, entry 40F
+Main_P06_W410:	.incbin	"build/wav_pcm/main/Main_P06_W410.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W410_Drawbar.wav: 256 16-bit samples, entry 410
+Main_P06_W411:	.incbin	"build/wav_pcm/main/Main_P06_W411.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W411_Drawbar.wav: 128 16-bit samples, entry 411
+Main_P06_W412:	.incbin	"build/wav_pcm/main/Main_P06_W412.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W412_Drawbar.wav: 256 16-bit samples, entry 412
+Main_P06_W413:	.incbin	"build/wav_pcm/main/Main_P06_W413.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W413.wav: 256 16-bit samples, entry 413
+Main_P06_W414:	.incbin	"build/wav_pcm/main/Main_P06_W414.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W414_Drawbar.wav: 128 16-bit samples, entry 414
+Main_P06_W415:	.incbin	"build/wav_pcm/main/Main_P06_W415.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W415_Drawbar.wav: 256 16-bit samples, entry 415
+Main_P06_W416:	.incbin	"build/wav_pcm/main/Main_P06_W416.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W416.wav: 256 16-bit samples, entry 416
+Main_P06_W417:	.incbin	"build/wav_pcm/main/Main_P06_W417.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W417_Drawbar.wav: 128 16-bit samples, entry 417
+Main_P06_W418:	.incbin	"build/wav_pcm/main/Main_P06_W418.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W418_Drawbar.wav: 256 16-bit samples, entry 418
+Main_P06_W419:	.incbin	"build/wav_pcm/main/Main_P06_W419.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W419.wav: 256 16-bit samples, entry 419
+Main_P06_W41A:	.incbin	"build/wav_pcm/main/Main_P06_W41A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W41A_Drawbar.wav: 128 16-bit samples, entry 41A
+Main_P06_W41B:	.incbin	"build/wav_pcm/main/Main_P06_W41B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W41B_Drawbar.wav: 256 16-bit samples, entry 41B
+Main_P06_W41C:	.incbin	"build/wav_pcm/main/Main_P06_W41C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W41C.wav: 256 16-bit samples, entry 41C
+Main_P06_W41D:	.incbin	"build/wav_pcm/main/Main_P06_W41D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W41D_Drawbar.wav: 256 16-bit samples, entry 41D
+Main_P06_W41E:	.incbin	"build/wav_pcm/main/Main_P06_W41E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W41E_Drawbar.wav: 256 16-bit samples, entry 41E
+Main_P06_W41F:	.incbin	"build/wav_pcm/main/Main_P06_W41F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W41F_Drawbar.wav: 256 16-bit samples, entry 41F
+Main_P06_W420:	.incbin	"build/wav_pcm/main/Main_P06_W420.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W420_Drawbar.wav: 128 16-bit samples, entry 420
+Main_P06_W421:	.incbin	"build/wav_pcm/main/Main_P06_W421.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W421_Drawbar.wav: 128 16-bit samples, entry 421
+Main_P06_W422:	.incbin	"build/wav_pcm/main/Main_P06_W422.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W422_Drawbar.wav: 128 16-bit samples, entry 422
+Main_P06_W423:	.incbin	"build/wav_pcm/main/Main_P06_W423.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W423_Drawbar.wav: 256 16-bit samples, entry 423
+Main_P06_W424:	.incbin	"build/wav_pcm/main/Main_P06_W424.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W424_Drawbar.wav: 256 16-bit samples, entry 424
+Main_P06_W425:	.incbin	"build/wav_pcm/main/Main_P06_W425.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W425_Drawbar.wav: 256 16-bit samples, entry 425
+Main_P06_W426:	.incbin	"build/wav_pcm/main/Main_P06_W426.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W426_Drawbar.wav: 256 16-bit samples, entry 426
+Main_P06_W427:	.incbin	"build/wav_pcm/main/Main_P06_W427.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W427_Drawbar.wav: 256 16-bit samples, entry 427
+Main_P06_W428:	.incbin	"build/wav_pcm/main/Main_P06_W428.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W428_Drawbar.wav: 256 16-bit samples, entry 428
+Main_P06_W429:	.incbin	"build/wav_pcm/main/Main_P06_W429.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W429_Drawbar.wav: 256 16-bit samples, entry 429
+Main_P06_W42A:	.incbin	"build/wav_pcm/main/Main_P06_W42A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W42A_Drawbar.wav: 128 16-bit samples, entry 42A
+Main_P06_W42B:	.incbin	"build/wav_pcm/main/Main_P06_W42B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W42B_Drawbar.wav: 256 16-bit samples, entry 42B
+Main_P06_W42C:	.incbin	"build/wav_pcm/main/Main_P06_W42C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W42C_Drawbar.wav: 256 16-bit samples, entry 42C
+Main_P06_W42D:	.incbin	"build/wav_pcm/main/Main_P06_W42D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W42D_Drawbar.wav: 256 16-bit samples, entry 42D
+Main_P06_W42E:	.incbin	"build/wav_pcm/main/Main_P06_W42E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W42E_Drawbar.wav: 256 16-bit samples, entry 42E
+Main_P06_W42F:	.incbin	"build/wav_pcm/main/Main_P06_W42F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W42F_Drawbar.wav: 256 16-bit samples, entry 42F
+Main_P06_W430:	.incbin	"build/wav_pcm/main/Main_P06_W430.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W430_Drawbar.wav: 256 16-bit samples, entry 430
+Main_P06_W431:	.incbin	"build/wav_pcm/main/Main_P06_W431.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W431_Drawbar.wav: 256 16-bit samples, entry 431
+Main_P06_W432:	.incbin	"build/wav_pcm/main/Main_P06_W432.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W432_Drawbar.wav: 128 16-bit samples, entry 432
+Main_P06_W433:	.incbin	"build/wav_pcm/main/Main_P06_W433.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W433_Drawbar.wav: 256 16-bit samples, entry 433
+Main_P06_W434:	.incbin	"build/wav_pcm/main/Main_P06_W434.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W434.wav: 256 16-bit samples, entry 434
+Main_P06_W435:	.incbin	"build/wav_pcm/main/Main_P06_W435.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W435_Drawbar.wav: 256 16-bit samples, entry 435
+Main_P06_W436:	.incbin	"build/wav_pcm/main/Main_P06_W436.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W436_Drawbar.wav: 256 16-bit samples, entry 436
+Main_P06_W437:	.incbin	"build/wav_pcm/main/Main_P06_W437.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W437.wav: 256 16-bit samples, entry 437
+Main_P06_W438:	.incbin	"build/wav_pcm/main/Main_P06_W438.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W438.wav: 256 16-bit samples, entry 438
+Main_P06_W439:	.incbin	"build/wav_pcm/main/Main_P06_W439.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W439.wav: 256 16-bit samples, entry 439
+Main_P06_W43A:	.incbin	"build/wav_pcm/main/Main_P06_W43A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W43A.wav: 128 16-bit samples, entry 43A
+Main_P06_W43B:	.incbin	"build/wav_pcm/main/Main_P06_W43B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W43B_Drawbar.wav: 256 16-bit samples, entry 43B
+Main_P06_W43C:	.incbin	"build/wav_pcm/main/Main_P06_W43C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W43C_Drawbar.wav: 256 16-bit samples, entry 43C
+Main_P06_W43D:	.incbin	"build/wav_pcm/main/Main_P06_W43D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W43D_Drawbar.wav: 256 16-bit samples, entry 43D
+Main_P06_W43E:	.incbin	"build/wav_pcm/main/Main_P06_W43E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W43E_Drawbar.wav: 256 16-bit samples, entry 43E
+Main_P06_W43F:	.incbin	"build/wav_pcm/main/Main_P06_W43F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W43F_Drawbar.wav: 256 16-bit samples, entry 43F
+Main_P06_W440:	.incbin	"build/wav_pcm/main/Main_P06_W440.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W440_Drawbar.wav: 256 16-bit samples, entry 440
+Main_P06_W441:	.incbin	"build/wav_pcm/main/Main_P06_W441.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W441_Drawbar.wav: 256 16-bit samples, entry 441
+Main_P06_W442:	.incbin	"build/wav_pcm/main/Main_P06_W442.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W442_Drawbar.wav: 128 16-bit samples, entry 442
+Main_P06_W443:	.incbin	"build/wav_pcm/main/Main_P06_W443.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W443_Drawbar.wav: 256 16-bit samples, entry 443
+Main_P06_W444:	.incbin	"build/wav_pcm/main/Main_P06_W444.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W444_Drawbar.wav: 256 16-bit samples, entry 444
+Main_P06_W445:	.incbin	"build/wav_pcm/main/Main_P06_W445.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W445_Drawbar.wav: 256 16-bit samples, entry 445
+Main_P06_W446:	.incbin	"build/wav_pcm/main/Main_P06_W446.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W446_Drawbar.wav: 256 16-bit samples, entry 446
+Main_P06_W447:	.incbin	"build/wav_pcm/main/Main_P06_W447.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W447_Drawbar.wav: 256 16-bit samples, entry 447
+Main_P06_W448:	.incbin	"build/wav_pcm/main/Main_P06_W448.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W448_Drawbar.wav: 256 16-bit samples, entry 448
+Main_P06_W449:	.incbin	"build/wav_pcm/main/Main_P06_W449.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W449_Drawbar.wav: 256 16-bit samples, entry 449
+Main_P06_W44A:	.incbin	"build/wav_pcm/main/Main_P06_W44A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W44A_Drawbar.wav: 128 16-bit samples, entry 44A
+Main_P06_W44B:	.incbin	"build/wav_pcm/main/Main_P06_W44B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W44B_Drawbar.wav: 256 16-bit samples, entry 44B
+Main_P06_W44C:	.incbin	"build/wav_pcm/main/Main_P06_W44C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W44C.wav: 256 16-bit samples, entry 44C
+Main_P06_W44D:	.incbin	"build/wav_pcm/main/Main_P06_W44D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W44D_Drawbar.wav: 256 16-bit samples, entry 44D
+Main_P06_W44E:	.incbin	"build/wav_pcm/main/Main_P06_W44E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W44E_Drawbar.wav: 256 16-bit samples, entry 44E
+Main_P06_W44F:	.incbin	"build/wav_pcm/main/Main_P06_W44F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W44F_Drawbar.wav: 256 16-bit samples, entry 44F
+Main_P06_W450:	.incbin	"build/wav_pcm/main/Main_P06_W450.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W450_Drawbar.wav: 256 16-bit samples, entry 450
+Main_P06_W451:	.incbin	"build/wav_pcm/main/Main_P06_W451.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W451_Drawbar.wav: 256 16-bit samples, entry 451
+Main_P06_W452:	.incbin	"build/wav_pcm/main/Main_P06_W452.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W452_Drawbar.wav: 128 16-bit samples, entry 452
+Main_P06_W453:	.incbin	"build/wav_pcm/main/Main_P06_W453.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W453_Drawbar.wav: 256 16-bit samples, entry 453
+Main_P06_W454:	.incbin	"build/wav_pcm/main/Main_P06_W454.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W454.wav: 256 16-bit samples, entry 454
+Main_P06_W455:	.incbin	"build/wav_pcm/main/Main_P06_W455.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W455_Drawbar.wav: 256 16-bit samples, entry 455
+Main_P06_W456:	.incbin	"build/wav_pcm/main/Main_P06_W456.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W456_Drawbar.wav: 256 16-bit samples, entry 456
+Main_P06_W457:	.incbin	"build/wav_pcm/main/Main_P06_W457.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W457_Drawbar.wav: 256 16-bit samples, entry 457
+Main_P06_W458:	.incbin	"build/wav_pcm/main/Main_P06_W458.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W458_Drawbar.wav: 256 16-bit samples, entry 458
+Main_P06_W459:	.incbin	"build/wav_pcm/main/Main_P06_W459.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W459_Drawbar.wav: 256 16-bit samples, entry 459
+Main_P06_W45A:	.incbin	"build/wav_pcm/main/Main_P06_W45A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W45A.wav: 128 16-bit samples, entry 45A
+Main_P06_W45B:	.incbin	"build/wav_pcm/main/Main_P06_W45B.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W45B_Drawbar.wav: 256 16-bit samples, entry 45B
+Main_P06_W45C:	.incbin	"build/wav_pcm/main/Main_P06_W45C.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W45C.wav: 256 16-bit samples, entry 45C
+Main_P06_W45D:	.incbin	"build/wav_pcm/main/Main_P06_W45D.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W45D_Drawbar.wav: 256 16-bit samples, entry 45D
+Main_P06_W45E:	.incbin	"build/wav_pcm/main/Main_P06_W45E.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W45E_Drawbar.wav: 256 16-bit samples, entry 45E
+Main_P06_W45F:	.incbin	"build/wav_pcm/main/Main_P06_W45F.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W45F_Drawbar.wav: 256 16-bit samples, entry 45F
+Main_P06_W460:	.incbin	"build/wav_pcm/main/Main_P06_W460.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W460_Drawbar.wav: 256 16-bit samples, entry 460
+Main_P06_W461:	.incbin	"build/wav_pcm/main/Main_P06_W461.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W461_Drawbar.wav: 256 16-bit samples, entry 461
+Main_P06_W462:	.incbin	"build/wav_pcm/main/Main_P06_W462.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W462_Drawbar.wav: 128 16-bit samples, entry 462
+Main_P06_W463:	.incbin	"build/wav_pcm/main/Main_P06_W463.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W463_Drawbar.wav: 256 16-bit samples, entry 463
+Main_P06_W464:	.incbin	"build/wav_pcm/main/Main_P06_W464.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W464.wav: 256 16-bit samples, entry 464
+Main_P06_W465:	.incbin	"build/wav_pcm/main/Main_P06_W465.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W465_Drawbar.wav: 256 16-bit samples, entry 465
+Main_P06_W466:	.incbin	"build/wav_pcm/main/Main_P06_W466.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W466_Drawbar.wav: 256 16-bit samples, entry 466
+Main_P06_W467:	.incbin	"build/wav_pcm/main/Main_P06_W467.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W467_Drawbar.wav: 256 16-bit samples, entry 467
+Main_P06_W468:	.incbin	"build/wav_pcm/main/Main_P06_W468.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W468_Drawbar.wav: 256 16-bit samples, entry 468
+Main_P06_W469:	.incbin	"build/wav_pcm/main/Main_P06_W469.pcm", 0, 512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W469_Drawbar.wav: 256 16-bit samples, entry 469
+Main_P06_W46A:	.incbin	"build/wav_pcm/main/Main_P06_W46A.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W46A_Drawbar.wav: 128 16-bit samples, entry 46A
+Main_P06_W46B:	.incbin	"build/wav_pcm/main/Main_P06_W46B.pcm", 0, 256	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P06_W46B_Drawbar.wav: 128 16-bit samples, entry 46B
 Main_P06_Fill:	.space	1536, 0xff	; erased fill to the page end
 
 # ==== page 0x07 (selects 0x07000-0x07023): 36 entries (27 16-bit, 9 8-bit), 36 recordings ====
@@ -8353,43 +8356,43 @@ Main_P07_R022:	.word	(Main_P07_W022 - Main_P07) / 32, LOOP_START | 256-73, LOOP_
 Main_P07_R023:	.word	(Main_P07_W023 - Main_P07) / 32, 256-128, LOOP_START | 256-15, LOOP_END | 256-51
 	.align	4
 	.align	32
-# recordings
-Main_P07_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe00380, 0xe13dc0	; census: opaque -- pcm: 40224 16-bit samples, entry 000
-Main_P07_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe13dc0, 0xe23800	; census: opaque -- pcm: 32032 16-bit samples, entry 001
-Main_P07_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe23800, 0xe33540	; census: opaque -- pcm: 32416 16-bit samples, entry 002
-Main_P07_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe33540, 0xe42e80	; census: opaque -- pcm: 31904 16-bit samples, entry 003
-Main_P07_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe42e80, 0xe51dc0	; census: opaque -- pcm: 30624 16-bit samples, entry 004
-Main_P07_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe51dc0, 0xe67300	; census: opaque -- pcm: 43680 16-bit samples, entry 005
-Main_P07_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe67300, 0xe74fc0	; census: opaque -- pcm: 28256 16-bit samples, entry 006
-Main_P07_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe74fc0, 0xe80700	; census: opaque -- pcm: 23456 16-bit samples, entry 007
-Main_P07_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe80700, 0xe9a740	; census: opaque -- pcm: 53280 16-bit samples, entry 008
-Main_P07_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0xe9a740, 0xeb0b80	; census: opaque -- pcm: 45600 16-bit samples, entry 009
-Main_P07_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xeb0b80, 0xec51c0	; census: opaque -- pcm: 41760 16-bit samples, entry 00A
-Main_P07_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xec51c0, 0xeceee0	; census: opaque -- pcm: 40224 8-bit samples, entry 00B
-Main_P07_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xeceee0, 0xed8600	; census: opaque -- pcm: 38688 8-bit samples, entry 00C
-Main_P07_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xed8600, 0xee16a0	; census: opaque -- pcm: 37024 8-bit samples, entry 00D
-Main_P07_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xee16a0, 0xee9640	; census: opaque -- pcm: 32672 8-bit samples, entry 00E
-Main_P07_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xee9640, 0xef1520	; census: opaque -- pcm: 32480 8-bit samples, entry 00F
-Main_P07_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0xef1520, 0xef8d00	; census: opaque -- pcm: 30688 8-bit samples, entry 010
-Main_P07_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0xef8d00, 0xeffe20	; census: opaque -- pcm: 28960 8-bit samples, entry 011
-Main_P07_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0xeffe20, 0xf097c0	; census: opaque -- pcm: 39328 8-bit samples, entry 012
-Main_P07_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf097c0, 0xf10bc0	; census: opaque -- pcm: 29696 8-bit samples, entry 013
-Main_P07_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf10bc0, 0xf21e80	; census: opaque -- pcm: 35168 16-bit samples, entry 014
-Main_P07_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf21e80, 0xf31740	; census: opaque -- pcm: 31840 16-bit samples, entry 015
-Main_P07_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf31740, 0xf3bd00	; census: opaque -- pcm: 21216 16-bit samples, entry 016
-Main_P07_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf3bd00, 0xf4c440	; census: opaque -- pcm: 33696 16-bit samples, entry 017
-Main_P07_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf4c440, 0xf56280	; census: opaque -- pcm: 20256 16-bit samples, entry 018
-Main_P07_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf56280, 0xf67440	; census: opaque -- pcm: 35040 16-bit samples, entry 019
-Main_P07_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf67440, 0xf80500	; census: opaque -- pcm: 51296 16-bit samples, entry 01A
-Main_P07_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf80500, 0xf93540	; census: opaque -- pcm: 38944 16-bit samples, entry 01B
-Main_P07_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0xf93540, 0xfa0480	; census: opaque -- pcm: 26528 16-bit samples, entry 01C
-Main_P07_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0xfa0480, 0xfae940	; census: opaque -- pcm: 29280 16-bit samples, entry 01D
-Main_P07_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0xfae940, 0xfbce80	; census: opaque -- pcm: 29344 16-bit samples, entry 01E
-Main_P07_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0xfbce80, 0xfcbec0	; census: opaque -- pcm: 30752 16-bit samples, entry 01F
-Main_P07_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0xfcbec0, 0xfd9f00	; census: opaque -- pcm: 28704 16-bit samples, entry 020
-Main_P07_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0xfd9f00, 0xfe7740	; census: opaque -- pcm: 27680 16-bit samples, entry 021
-Main_P07_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0xfe7740, 0xff3d80	; census: opaque -- pcm: 25376 16-bit samples, entry 022
-Main_P07_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0xff3d80, 0x1000000	; census: opaque -- pcm: 24896 16-bit samples, entry 023
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P07_W000:	.incbin	"build/wav_pcm/main/Main_P07_W000.pcm", 0, 80448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W000.wav: 40224 16-bit samples, entry 000
+Main_P07_W001:	.incbin	"build/wav_pcm/main/Main_P07_W001.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W001.wav: 32032 16-bit samples, entry 001
+Main_P07_W002:	.incbin	"build/wav_pcm/main/Main_P07_W002.pcm", 0, 64832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W002.wav: 32416 16-bit samples, entry 002
+Main_P07_W003:	.incbin	"build/wav_pcm/main/Main_P07_W003.pcm", 0, 63808	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W003.wav: 31904 16-bit samples, entry 003
+Main_P07_W004:	.incbin	"build/wav_pcm/main/Main_P07_W004.pcm", 0, 61248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W004.wav: 30624 16-bit samples, entry 004
+Main_P07_W005:	.incbin	"build/wav_pcm/main/Main_P07_W005.pcm", 0, 87360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W005.wav: 43680 16-bit samples, entry 005
+Main_P07_W006:	.incbin	"build/wav_pcm/main/Main_P07_W006.pcm", 0, 56512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W006.wav: 28256 16-bit samples, entry 006
+Main_P07_W007:	.incbin	"build/wav_pcm/main/Main_P07_W007.pcm", 0, 46912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W007.wav: 23456 16-bit samples, entry 007
+Main_P07_W008:	.incbin	"build/wav_pcm/main/Main_P07_W008.pcm", 0, 106560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W008.wav: 53280 16-bit samples, entry 008
+Main_P07_W009:	.incbin	"build/wav_pcm/main/Main_P07_W009.pcm", 0, 91200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W009.wav: 45600 16-bit samples, entry 009
+Main_P07_W00A:	.incbin	"build/wav_pcm/main/Main_P07_W00A.pcm", 0, 83520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W00A.wav: 41760 16-bit samples, entry 00A
+Main_P07_W00B:	.incbin	"build/wav_pcm/main/Main_P07_W00B.pcm", 0, 40224	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W00B.wav: 40224 8-bit samples, entry 00B
+Main_P07_W00C:	.incbin	"build/wav_pcm/main/Main_P07_W00C.pcm", 0, 38688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W00C.wav: 38688 8-bit samples, entry 00C
+Main_P07_W00D:	.incbin	"build/wav_pcm/main/Main_P07_W00D.pcm", 0, 37024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W00D.wav: 37024 8-bit samples, entry 00D
+Main_P07_W00E:	.incbin	"build/wav_pcm/main/Main_P07_W00E.pcm", 0, 32672	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W00E.wav: 32672 8-bit samples, entry 00E
+Main_P07_W00F:	.incbin	"build/wav_pcm/main/Main_P07_W00F.pcm", 0, 32480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W00F.wav: 32480 8-bit samples, entry 00F
+Main_P07_W010:	.incbin	"build/wav_pcm/main/Main_P07_W010.pcm", 0, 30688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W010.wav: 30688 8-bit samples, entry 010
+Main_P07_W011:	.incbin	"build/wav_pcm/main/Main_P07_W011.pcm", 0, 28960	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W011.wav: 28960 8-bit samples, entry 011
+Main_P07_W012:	.incbin	"build/wav_pcm/main/Main_P07_W012.pcm", 0, 39328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W012.wav: 39328 8-bit samples, entry 012
+Main_P07_W013:	.incbin	"build/wav_pcm/main/Main_P07_W013.pcm", 0, 29696	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W013.wav: 29696 8-bit samples, entry 013
+Main_P07_W014:	.incbin	"build/wav_pcm/main/Main_P07_W014.pcm", 0, 70336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W014.wav: 35168 16-bit samples, entry 014
+Main_P07_W015:	.incbin	"build/wav_pcm/main/Main_P07_W015.pcm", 0, 63680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W015.wav: 31840 16-bit samples, entry 015
+Main_P07_W016:	.incbin	"build/wav_pcm/main/Main_P07_W016.pcm", 0, 42432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W016.wav: 21216 16-bit samples, entry 016
+Main_P07_W017:	.incbin	"build/wav_pcm/main/Main_P07_W017.pcm", 0, 67392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W017.wav: 33696 16-bit samples, entry 017
+Main_P07_W018:	.incbin	"build/wav_pcm/main/Main_P07_W018.pcm", 0, 40512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W018.wav: 20256 16-bit samples, entry 018
+Main_P07_W019:	.incbin	"build/wav_pcm/main/Main_P07_W019.pcm", 0, 70080	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W019.wav: 35040 16-bit samples, entry 019
+Main_P07_W01A:	.incbin	"build/wav_pcm/main/Main_P07_W01A.pcm", 0, 102592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W01A.wav: 51296 16-bit samples, entry 01A
+Main_P07_W01B:	.incbin	"build/wav_pcm/main/Main_P07_W01B.pcm", 0, 77888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W01B.wav: 38944 16-bit samples, entry 01B
+Main_P07_W01C:	.incbin	"build/wav_pcm/main/Main_P07_W01C.pcm", 0, 53056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W01C.wav: 26528 16-bit samples, entry 01C
+Main_P07_W01D:	.incbin	"build/wav_pcm/main/Main_P07_W01D.pcm", 0, 58560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W01D.wav: 29280 16-bit samples, entry 01D
+Main_P07_W01E:	.incbin	"build/wav_pcm/main/Main_P07_W01E.pcm", 0, 58688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W01E.wav: 29344 16-bit samples, entry 01E
+Main_P07_W01F:	.incbin	"build/wav_pcm/main/Main_P07_W01F.pcm", 0, 61504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W01F.wav: 30752 16-bit samples, entry 01F
+Main_P07_W020:	.incbin	"build/wav_pcm/main/Main_P07_W020.pcm", 0, 57408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W020.wav: 28704 16-bit samples, entry 020
+Main_P07_W021:	.incbin	"build/wav_pcm/main/Main_P07_W021.pcm", 0, 55360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W021.wav: 27680 16-bit samples, entry 021
+Main_P07_W022:	.incbin	"build/wav_pcm/main/Main_P07_W022.pcm", 0, 50752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W022.wav: 25376 16-bit samples, entry 022
+Main_P07_W023:	.incbin	"build/wav_pcm/main/Main_P07_W023.pcm", 0, 49792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P07_W023.wav: 24896 16-bit samples, entry 023
 
 # ==== page 0x08 (selects 0x08000-0x0805B): 92 entries (53 16-bit, 39 8-bit), 83 recordings ====
 	.org	0x1000000
@@ -8978,90 +8981,90 @@ Main_P08_R05B:	.word	(Main_P08_W05B - Main_P08) / 32, 0x08<<8 | 256-13, 0x01<<8 
 	.word	0x23<<8 | 256-1, 0x2c<<8 | 256-4, 0x25<<8 | 256-1, 0x2c<<8 | 256-19, 0x25<<8 | 256-5, 0x2c<<8 | 256-1, 0x2d<<8 | 256-34, REC_END | 0x05<<8
 	.align	4
 	.align	32
-# recordings
-Main_P08_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10024a0, 0x10028a0	; census: opaque -- pcm: 512 16-bit samples, entry 000
-Main_P08_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10028a0, 0x101c0e0	; census: opaque -- pcm: 52256 16-bit samples, entry 001
-Main_P08_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x101c0e0, 0x1032120	; census: opaque -- pcm: 45088 16-bit samples, entry 002
-Main_P08_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1032120, 0x1047d60	; census: opaque -- pcm: 44576 16-bit samples, entry 003
-Main_P08_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1047d60, 0x105c9a0	; census: opaque -- pcm: 42528 16-bit samples, entry 004
-Main_P08_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x105c9a0, 0x10703e0	; census: opaque -- pcm: 40224 16-bit samples, entry 005
-Main_P08_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10703e0, 0x1083020	; census: opaque -- pcm: 38432 16-bit samples, entry 006
-Main_P08_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1083020, 0x1095660	; census: opaque -- pcm: 37664 16-bit samples, entry 007
-Main_P08_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1095660, 0x10a5aa0	; census: opaque -- pcm: 33312 16-bit samples, entry 008
-Main_P08_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10a5aa0, 0x10b4ce0	; census: opaque -- pcm: 31008 16-bit samples, entry 009
-Main_P08_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10b4ce0, 0x10c1120	; census: opaque -- pcm: 25120 16-bit samples, entry 00A
-Main_P08_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10c1120, 0x10ccae0	; census: opaque -- pcm: 23776 16-bit samples, entry 00B
-Main_P08_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10ccae0, 0x10d7f20	; census: opaque -- pcm: 23072 16-bit samples, entry 00C
-Main_P08_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10d7f20, 0x10e24e0	; census: opaque -- pcm: 21216 16-bit samples, entry 00D
-Main_P08_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10e24e0, 0x10eb460	; census: opaque -- pcm: 18368 16-bit samples, entry 00E
-Main_P08_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10eb460, 0x10f2da0	; census: opaque -- pcm: 15520 16-bit samples, entry 00F
-Main_P08_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10f2da0, 0x10fb1a0	; census: opaque -- pcm: 16896 16-bit samples, entry 010
-Main_P08_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10fb1a0, 0x10fc3a0	; census: opaque -- pcm: 2304 16-bit samples, entries 011 012
-Main_P08_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10fc3a0, 0x10fd7a0	; census: opaque -- pcm: 2560 16-bit samples, entry 013
-Main_P08_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10fd7a0, 0x10ff1a0	; census: opaque -- pcm: 3328 16-bit samples, entries 014 015
-Main_P08_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10ff1a0, 0x10fffa0	; census: opaque -- pcm: 1792 16-bit samples, entry 016
-Main_P08_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x10fffa0, 0x1100ea0	; census: opaque -- pcm: 1920 16-bit samples, entries 017 018
-Main_P08_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1100ea0, 0x1101ca0	; census: opaque -- pcm: 1792 16-bit samples, entries 019 01A
-Main_P08_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1101ca0, 0x11030a0	; census: opaque -- pcm: 2560 16-bit samples, entry 01B
-Main_P08_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11030a0, 0x1103aa0	; census: opaque -- pcm: 1280 16-bit samples, entry 01C
-Main_P08_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1103aa0, 0x1104ea0	; census: opaque -- pcm: 2560 16-bit samples, entries 01D 01E
-Main_P08_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1104ea0, 0x11062a0	; census: opaque -- pcm: 2560 16-bit samples, entry 01F
-Main_P08_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11062a0, 0x1106ea0	; census: opaque -- pcm: 1536 16-bit samples, entries 020 021
-Main_P08_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1106ea0, 0x1107ca0	; census: opaque -- pcm: 1792 16-bit samples, entry 022
-Main_P08_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1107ca0, 0x1108da0	; census: opaque -- pcm: 2176 16-bit samples, entries 023 024
-Main_P08_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1108da0, 0x11094a0	; census: opaque -- pcm: 896 16-bit samples, entries 025 026 027
-Main_P08_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11094a0, 0x110a7e0	; census: opaque -- pcm: 4928 8-bit samples, entry 028
-Main_P08_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x110a7e0, 0x110ed60	; census: opaque -- pcm: 8896 16-bit samples, entry 029
-Main_P08_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x110ed60, 0x11154e0	; census: opaque -- pcm: 26496 8-bit samples, entry 02A
-Main_P08_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11154e0, 0x11183a0	; census: opaque -- pcm: 11968 8-bit samples, entry 02B
-Main_P08_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11183a0, 0x111a2e0	; census: opaque -- pcm: 8000 8-bit samples, entry 02C
-Main_P08_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x111a2e0, 0x111dda0	; census: opaque -- pcm: 7520 16-bit samples, entry 02D
-Main_P08_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x111dda0, 0x111f5e0	; census: opaque -- pcm: 6208 8-bit samples, entry 02E
-Main_P08_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x111f5e0, 0x1121520	; census: opaque -- pcm: 4000 16-bit samples, entry 02F
-Main_P08_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1121520, 0x1123ea0	; census: opaque -- pcm: 10624 8-bit samples, entry 030
-Main_P08_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1123ea0, 0x1127d20	; census: opaque -- pcm: 8000 16-bit samples, entry 031
-Main_P08_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1127d20, 0x1128c20	; census: opaque -- pcm: 1920 16-bit samples, entry 032
-Main_P08_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1128c20, 0x112a620	; census: opaque -- pcm: 3328 16-bit samples, entry 033
-Main_P08_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x112a620, 0x112bae0	; census: opaque -- pcm: 5312 8-bit samples, entry 034
-Main_P08_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x112bae0, 0x112cc40	; census: opaque -- pcm: 4448 8-bit samples, entry 035
-Main_P08_W036:	.incbin_range "baserom/kn7000_wave_main.bin", 0x112cc40, 0x112e140	; census: opaque -- pcm: 2688 16-bit samples, entry 036
-Main_P08_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0x112e140, 0x1131380	; census: opaque -- pcm: 12864 8-bit samples, entry 037
-Main_P08_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1131380, 0x1134400	; census: opaque -- pcm: 12416 8-bit samples, entry 038
-Main_P08_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1134400, 0x113bcc0	; census: opaque -- pcm: 30912 8-bit samples, entry 039
-Main_P08_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x113bcc0, 0x11446c0	; census: opaque -- pcm: 35328 8-bit samples, entry 03A
-Main_P08_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11446c0, 0x114bfa0	; census: opaque -- pcm: 30944 8-bit samples, entry 03B
-Main_P08_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x114bfa0, 0x1152720	; census: opaque -- pcm: 26496 8-bit samples, entry 03C
-Main_P08_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1152720, 0x115c260	; census: opaque -- pcm: 39744 8-bit samples, entry 03D
-Main_P08_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x115c260, 0x1165da0	; census: opaque -- pcm: 39744 8-bit samples, entry 03E
-Main_P08_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1165da0, 0x11691a0	; census: opaque -- pcm: 13312 8-bit samples, entry 03F
-Main_P08_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11691a0, 0x116c2e0	; census: opaque -- pcm: 12608 8-bit samples, entry 040
-Main_P08_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x116c2e0, 0x116fa60	; census: opaque -- pcm: 14208 8-bit samples, entry 041
-Main_P08_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x116fa60, 0x1173c20	; census: opaque -- pcm: 16832 8-bit samples, entry 042
-Main_P08_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1173c20, 0x11784a0	; census: opaque -- pcm: 18560 8-bit samples, entry 043
-Main_P08_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11784a0, 0x117bea0	; census: opaque -- pcm: 14848 8-bit samples, entry 044
-Main_P08_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x117bea0, 0x117efe0	; census: opaque -- pcm: 12608 8-bit samples, entry 045
-Main_P08_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0x117efe0, 0x1185260	; census: opaque -- pcm: 25216 8-bit samples, entry 046
-Main_P08_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1185260, 0x11883a0	; census: opaque -- pcm: 12608 8-bit samples, entry 047
-Main_P08_W048:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11883a0, 0x118a9e0	; census: opaque -- pcm: 9792 8-bit samples, entry 048
-Main_P08_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0x118a9e0, 0x118eba0	; census: opaque -- pcm: 16832 8-bit samples, entry 049
-Main_P08_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x118eba0, 0x118fb60	; census: opaque -- pcm: 4032 8-bit samples, entry 04A
-Main_P08_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x118fb60, 0x1191560	; census: opaque -- pcm: 6656 8-bit samples, entry 04B
-Main_P08_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1191560, 0x1193120	; census: opaque -- pcm: 7104 8-bit samples, entry 04C
-Main_P08_W04D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1193120, 0x119eee0	; census: opaque -- pcm: 48576 8-bit samples, entry 04D
-Main_P08_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x119eee0, 0x11a9b60	; census: opaque -- pcm: 44160 8-bit samples, entry 04E
-Main_P08_W04F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11a9b60, 0x11b47e0	; census: opaque -- pcm: 44160 8-bit samples, entry 04F
-Main_P08_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11b47e0, 0x11c23e0	; census: opaque -- pcm: 28160 16-bit samples, entry 050
-Main_P08_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11c23e0, 0x11cace0	; census: opaque -- pcm: 17536 16-bit samples, entry 051
-Main_P08_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11cace0, 0x11ceb40	; census: opaque -- pcm: 15968 8-bit samples, entry 052
-Main_P08_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11ceb40, 0x11d1780	; census: opaque -- pcm: 5664 16-bit samples, entry 053
-Main_P08_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11d1780, 0x11d43c0	; census: opaque -- pcm: 5664 16-bit samples, entry 054
-Main_P08_W055:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11d43c0, 0x11de680	; census: opaque -- pcm: 20832 16-bit samples, entry 055
-Main_P08_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11de680, 0x11eb580	; census: opaque -- pcm: 52992 8-bit samples, entry 056
-Main_P08_W057:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11eb580, 0x11f59c0	; census: opaque -- pcm: 21024 16-bit samples, entry 057
-Main_P08_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11f59c0, 0x11f85c0	; census: opaque -- pcm: 11264 8-bit samples, entry 058
-Main_P08_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11f85c0, 0x11faa40	; census: opaque -- pcm: 9344 8-bit samples, entry 059
-Main_P08_W05A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11faa40, 0x11fe6c0	; census: opaque -- pcm: 15488 8-bit samples, entry 05A
-Main_P08_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x11fe6c0, 0x11fff80	; census: opaque -- pcm: 6336 8-bit samples, entry 05B
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P08_W000:	.incbin	"build/wav_pcm/main/Main_P08_W000.pcm", 0, 1024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W000.wav: 512 16-bit samples, entry 000
+Main_P08_W001:	.incbin	"build/wav_pcm/main/Main_P08_W001.pcm", 0, 104512	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W001.wav: 52256 16-bit samples, entry 001
+Main_P08_W002:	.incbin	"build/wav_pcm/main/Main_P08_W002.pcm", 0, 90176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W002.wav: 45088 16-bit samples, entry 002
+Main_P08_W003:	.incbin	"build/wav_pcm/main/Main_P08_W003.pcm", 0, 89152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W003.wav: 44576 16-bit samples, entry 003
+Main_P08_W004:	.incbin	"build/wav_pcm/main/Main_P08_W004.pcm", 0, 85056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W004.wav: 42528 16-bit samples, entry 004
+Main_P08_W005:	.incbin	"build/wav_pcm/main/Main_P08_W005.pcm", 0, 80448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W005.wav: 40224 16-bit samples, entry 005
+Main_P08_W006:	.incbin	"build/wav_pcm/main/Main_P08_W006.pcm", 0, 76864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W006.wav: 38432 16-bit samples, entry 006
+Main_P08_W007:	.incbin	"build/wav_pcm/main/Main_P08_W007.pcm", 0, 75328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W007.wav: 37664 16-bit samples, entry 007
+Main_P08_W008:	.incbin	"build/wav_pcm/main/Main_P08_W008.pcm", 0, 66624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W008.wav: 33312 16-bit samples, entry 008
+Main_P08_W009:	.incbin	"build/wav_pcm/main/Main_P08_W009.pcm", 0, 62016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W009.wav: 31008 16-bit samples, entry 009
+Main_P08_W00A:	.incbin	"build/wav_pcm/main/Main_P08_W00A.pcm", 0, 50240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W00A.wav: 25120 16-bit samples, entry 00A
+Main_P08_W00B:	.incbin	"build/wav_pcm/main/Main_P08_W00B.pcm", 0, 47552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W00B.wav: 23776 16-bit samples, entry 00B
+Main_P08_W00C:	.incbin	"build/wav_pcm/main/Main_P08_W00C.pcm", 0, 46144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W00C.wav: 23072 16-bit samples, entry 00C
+Main_P08_W00D:	.incbin	"build/wav_pcm/main/Main_P08_W00D.pcm", 0, 42432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W00D.wav: 21216 16-bit samples, entry 00D
+Main_P08_W00E:	.incbin	"build/wav_pcm/main/Main_P08_W00E.pcm", 0, 36736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W00E.wav: 18368 16-bit samples, entry 00E
+Main_P08_W00F:	.incbin	"build/wav_pcm/main/Main_P08_W00F.pcm", 0, 31040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W00F.wav: 15520 16-bit samples, entry 00F
+Main_P08_W010:	.incbin	"build/wav_pcm/main/Main_P08_W010.pcm", 0, 33792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W010.wav: 16896 16-bit samples, entry 010
+Main_P08_W011:	.incbin	"build/wav_pcm/main/Main_P08_W011.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W011.wav: 2304 16-bit samples, entries 011 012
+Main_P08_W013:	.incbin	"build/wav_pcm/main/Main_P08_W013.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W013.wav: 2560 16-bit samples, entry 013
+Main_P08_W014:	.incbin	"build/wav_pcm/main/Main_P08_W014.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W014.wav: 3328 16-bit samples, entries 014 015
+Main_P08_W016:	.incbin	"build/wav_pcm/main/Main_P08_W016.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W016.wav: 1792 16-bit samples, entry 016
+Main_P08_W017:	.incbin	"build/wav_pcm/main/Main_P08_W017.pcm", 0, 3840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W017.wav: 1920 16-bit samples, entries 017 018
+Main_P08_W019:	.incbin	"build/wav_pcm/main/Main_P08_W019.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W019.wav: 1792 16-bit samples, entries 019 01A
+Main_P08_W01B:	.incbin	"build/wav_pcm/main/Main_P08_W01B.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W01B.wav: 2560 16-bit samples, entry 01B
+Main_P08_W01C:	.incbin	"build/wav_pcm/main/Main_P08_W01C.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W01C.wav: 1280 16-bit samples, entry 01C
+Main_P08_W01D:	.incbin	"build/wav_pcm/main/Main_P08_W01D.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W01D.wav: 2560 16-bit samples, entries 01D 01E
+Main_P08_W01F:	.incbin	"build/wav_pcm/main/Main_P08_W01F.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W01F.wav: 2560 16-bit samples, entry 01F
+Main_P08_W020:	.incbin	"build/wav_pcm/main/Main_P08_W020.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W020.wav: 1536 16-bit samples, entries 020 021
+Main_P08_W022:	.incbin	"build/wav_pcm/main/Main_P08_W022.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W022.wav: 1792 16-bit samples, entry 022
+Main_P08_W023:	.incbin	"build/wav_pcm/main/Main_P08_W023.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W023.wav: 2176 16-bit samples, entries 023 024
+Main_P08_W025:	.incbin	"build/wav_pcm/main/Main_P08_W025.pcm", 0, 1792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W025.wav: 896 16-bit samples, entries 025 026 027
+Main_P08_W028:	.incbin	"build/wav_pcm/main/Main_P08_W028.pcm", 0, 4928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W028.wav: 4928 8-bit samples, entry 028
+Main_P08_W029:	.incbin	"build/wav_pcm/main/Main_P08_W029.pcm", 0, 17792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W029.wav: 8896 16-bit samples, entry 029
+Main_P08_W02A:	.incbin	"build/wav_pcm/main/Main_P08_W02A.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W02A.wav: 26496 8-bit samples, entry 02A
+Main_P08_W02B:	.incbin	"build/wav_pcm/main/Main_P08_W02B.pcm", 0, 11968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W02B.wav: 11968 8-bit samples, entry 02B
+Main_P08_W02C:	.incbin	"build/wav_pcm/main/Main_P08_W02C.pcm", 0, 8000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W02C.wav: 8000 8-bit samples, entry 02C
+Main_P08_W02D:	.incbin	"build/wav_pcm/main/Main_P08_W02D.pcm", 0, 15040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W02D_JazzBassDrm.wav: 7520 16-bit samples, entry 02D
+Main_P08_W02E:	.incbin	"build/wav_pcm/main/Main_P08_W02E.pcm", 0, 6208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W02E_TradBassDrm.wav: 6208 8-bit samples, entry 02E
+Main_P08_W02F:	.incbin	"build/wav_pcm/main/Main_P08_W02F.pcm", 0, 8000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W02F_LtRockBassDrm.wav: 4000 16-bit samples, entry 02F
+Main_P08_W030:	.incbin	"build/wav_pcm/main/Main_P08_W030.pcm", 0, 10624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W030_PowerBassDrm.wav: 10624 8-bit samples, entry 030
+Main_P08_W031:	.incbin	"build/wav_pcm/main/Main_P08_W031.pcm", 0, 16000	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W031.wav: 8000 16-bit samples, entry 031
+Main_P08_W032:	.incbin	"build/wav_pcm/main/Main_P08_W032.pcm", 0, 3840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W032_SoulBassDrm.wav: 1920 16-bit samples, entry 032
+Main_P08_W033:	.incbin	"build/wav_pcm/main/Main_P08_W033.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W033.wav: 3328 16-bit samples, entry 033
+Main_P08_W034:	.incbin	"build/wav_pcm/main/Main_P08_W034.pcm", 0, 5312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W034_ElectBassDrm.wav: 5312 8-bit samples, entry 034
+Main_P08_W035:	.incbin	"build/wav_pcm/main/Main_P08_W035.pcm", 0, 4448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W035_FunkBassDrm.wav: 4448 8-bit samples, entry 035
+Main_P08_W036:	.incbin	"build/wav_pcm/main/Main_P08_W036.pcm", 0, 5376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W036.wav: 2688 16-bit samples, entry 036
+Main_P08_W037:	.incbin	"build/wav_pcm/main/Main_P08_W037.pcm", 0, 12864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W037.wav: 12864 8-bit samples, entry 037
+Main_P08_W038:	.incbin	"build/wav_pcm/main/Main_P08_W038.pcm", 0, 12416	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W038.wav: 12416 8-bit samples, entry 038
+Main_P08_W039:	.incbin	"build/wav_pcm/main/Main_P08_W039.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W039.wav: 30912 8-bit samples, entry 039
+Main_P08_W03A:	.incbin	"build/wav_pcm/main/Main_P08_W03A.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W03A.wav: 35328 8-bit samples, entry 03A
+Main_P08_W03B:	.incbin	"build/wav_pcm/main/Main_P08_W03B.pcm", 0, 30944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W03B.wav: 30944 8-bit samples, entry 03B
+Main_P08_W03C:	.incbin	"build/wav_pcm/main/Main_P08_W03C.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W03C.wav: 26496 8-bit samples, entry 03C
+Main_P08_W03D:	.incbin	"build/wav_pcm/main/Main_P08_W03D.pcm", 0, 39744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W03D.wav: 39744 8-bit samples, entry 03D
+Main_P08_W03E:	.incbin	"build/wav_pcm/main/Main_P08_W03E.pcm", 0, 39744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W03E.wav: 39744 8-bit samples, entry 03E
+Main_P08_W03F:	.incbin	"build/wav_pcm/main/Main_P08_W03F.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W03F.wav: 13312 8-bit samples, entry 03F
+Main_P08_W040:	.incbin	"build/wav_pcm/main/Main_P08_W040.pcm", 0, 12608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W040_PiccoloSnare.wav: 12608 8-bit samples, entry 040
+Main_P08_W041:	.incbin	"build/wav_pcm/main/Main_P08_W041.pcm", 0, 14208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W041_ReverseSnare.wav: 14208 8-bit samples, entry 041
+Main_P08_W042:	.incbin	"build/wav_pcm/main/Main_P08_W042.pcm", 0, 16832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W042_JazzSnare.wav: 16832 8-bit samples, entry 042
+Main_P08_W043:	.incbin	"build/wav_pcm/main/Main_P08_W043.pcm", 0, 18560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W043_JazzSnare.wav: 18560 8-bit samples, entry 043
+Main_P08_W044:	.incbin	"build/wav_pcm/main/Main_P08_W044.pcm", 0, 14848	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W044_TradSnare.wav: 14848 8-bit samples, entry 044
+Main_P08_W045:	.incbin	"build/wav_pcm/main/Main_P08_W045.pcm", 0, 12608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W045_LtRockSnare.wav: 12608 8-bit samples, entry 045
+Main_P08_W046:	.incbin	"build/wav_pcm/main/Main_P08_W046.pcm", 0, 25216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W046_PowerSnare.wav: 25216 8-bit samples, entry 046
+Main_P08_W047:	.incbin	"build/wav_pcm/main/Main_P08_W047.pcm", 0, 12608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W047_ElectSnare.wav: 12608 8-bit samples, entry 047
+Main_P08_W048:	.incbin	"build/wav_pcm/main/Main_P08_W048.pcm", 0, 9792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W048.wav: 9792 8-bit samples, entry 048
+Main_P08_W049:	.incbin	"build/wav_pcm/main/Main_P08_W049.pcm", 0, 16832	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W049_FunkSnare.wav: 16832 8-bit samples, entry 049
+Main_P08_W04A:	.incbin	"build/wav_pcm/main/Main_P08_W04A.pcm", 0, 4032	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W04A.wav: 4032 8-bit samples, entry 04A
+Main_P08_W04B:	.incbin	"build/wav_pcm/main/Main_P08_W04B.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W04B.wav: 6656 8-bit samples, entry 04B
+Main_P08_W04C:	.incbin	"build/wav_pcm/main/Main_P08_W04C.pcm", 0, 7104	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W04C.wav: 7104 8-bit samples, entry 04C
+Main_P08_W04D:	.incbin	"build/wav_pcm/main/Main_P08_W04D.pcm", 0, 48576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W04D.wav: 48576 8-bit samples, entry 04D
+Main_P08_W04E:	.incbin	"build/wav_pcm/main/Main_P08_W04E.pcm", 0, 44160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W04E.wav: 44160 8-bit samples, entry 04E
+Main_P08_W04F:	.incbin	"build/wav_pcm/main/Main_P08_W04F.pcm", 0, 44160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W04F.wav: 44160 8-bit samples, entry 04F
+Main_P08_W050:	.incbin	"build/wav_pcm/main/Main_P08_W050.pcm", 0, 56320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W050_RockTom.wav: 28160 16-bit samples, entry 050
+Main_P08_W051:	.incbin	"build/wav_pcm/main/Main_P08_W051.pcm", 0, 35072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W051_PowerTom.wav: 17536 16-bit samples, entry 051
+Main_P08_W052:	.incbin	"build/wav_pcm/main/Main_P08_W052.pcm", 0, 15968	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W052_ElectricTom.wav: 15968 8-bit samples, entry 052
+Main_P08_W053:	.incbin	"build/wav_pcm/main/Main_P08_W053.pcm", 0, 11328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W053_SoulTom.wav: 5664 16-bit samples, entry 053
+Main_P08_W054:	.incbin	"build/wav_pcm/main/Main_P08_W054.pcm", 0, 11328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W054_DanceTom.wav: 5664 16-bit samples, entry 054
+Main_P08_W055:	.incbin	"build/wav_pcm/main/Main_P08_W055.pcm", 0, 41664	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W055_JazzTom.wav: 20832 16-bit samples, entry 055
+Main_P08_W056:	.incbin	"build/wav_pcm/main/Main_P08_W056.pcm", 0, 52992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W056.wav: 52992 8-bit samples, entry 056
+Main_P08_W057:	.incbin	"build/wav_pcm/main/Main_P08_W057.pcm", 0, 42048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W057_PowerBassTom.wav: 21024 16-bit samples, entry 057
+Main_P08_W058:	.incbin	"build/wav_pcm/main/Main_P08_W058.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W058_ElectBassTom.wav: 11264 8-bit samples, entry 058
+Main_P08_W059:	.incbin	"build/wav_pcm/main/Main_P08_W059.pcm", 0, 9344	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W059.wav: 9344 8-bit samples, entry 059
+Main_P08_W05A:	.incbin	"build/wav_pcm/main/Main_P08_W05A.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W05A.wav: 15488 8-bit samples, entry 05A
+Main_P08_W05B:	.incbin	"build/wav_pcm/main/Main_P08_W05B.pcm", 0, 6336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P08_W05B.wav: 6336 8-bit samples, entry 05B
 Main_P08_Fill:	.space	128, 0xff	; erased fill to the page end
 
 # ==== page 0x09 (selects 0x09000-0x0901A): 27 entries (26 16-bit, 1 8-bit), 27 recordings ====
@@ -9153,34 +9156,34 @@ Main_P09_R019:	.word	(Main_P09_W019 - Main_P09) / 32, 256-128, 256-128, 256-128,
 Main_P09_R01A:	.word	(Main_P09_W01A - Main_P09) / 32, 256-128, 256-128, 256-128, 256-116, REC_END
 	.align	4
 	.align	32
-# recordings
-Main_P09_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1200240, 0x1221280	; census: opaque -- pcm: 67616 16-bit samples, entry 000
-Main_P09_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1221280, 0x1234bc0	; census: opaque -- pcm: 40096 16-bit samples, entry 001
-Main_P09_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1234bc0, 0x1245d00	; census: opaque -- pcm: 34976 16-bit samples, entry 002
-Main_P09_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1245d00, 0x125fd40	; census: opaque -- pcm: 53280 16-bit samples, entry 003
-Main_P09_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x125fd40, 0x1278880	; census: opaque -- pcm: 50592 16-bit samples, entry 004
-Main_P09_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1278880, 0x1286ac0	; census: opaque -- pcm: 28960 16-bit samples, entry 005
-Main_P09_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1286ac0, 0x129f000	; census: opaque -- pcm: 49824 16-bit samples, entry 006
-Main_P09_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x129f000, 0x12b40c0	; census: opaque -- pcm: 43104 16-bit samples, entry 007
-Main_P09_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x12b40c0, 0x12cff80	; census: opaque -- pcm: 57184 16-bit samples, entry 008
-Main_P09_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x12cff80, 0x12f6fc0	; census: opaque -- pcm: 79904 16-bit samples, entry 009
-Main_P09_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x12f6fc0, 0x1307400	; census: opaque -- pcm: 33312 16-bit samples, entry 00A
-Main_P09_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1307400, 0x1320840	; census: opaque -- pcm: 51744 16-bit samples, entry 00B
-Main_P09_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1320840, 0x1335280	; census: opaque -- pcm: 42272 16-bit samples, entry 00C
-Main_P09_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1335280, 0x13482c0	; census: opaque -- pcm: 38944 16-bit samples, entry 00D
-Main_P09_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13482c0, 0x1361700	; census: opaque -- pcm: 51744 16-bit samples, entry 00E
-Main_P09_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1361700, 0x1375140	; census: opaque -- pcm: 40224 16-bit samples, entry 00F
-Main_P09_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1375140, 0x1384280	; census: opaque -- pcm: 30880 16-bit samples, entry 010
-Main_P09_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1384280, 0x13912c0	; census: opaque -- pcm: 26656 16-bit samples, entry 011
-Main_P09_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13912c0, 0x1399e80	; census: opaque -- pcm: 17888 16-bit samples, entry 012
-Main_P09_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1399e80, 0x13a6700	; census: opaque -- pcm: 25664 16-bit samples, entry 013
-Main_P09_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13a6700, 0x13b2f80	; census: opaque -- pcm: 25664 16-bit samples, entry 014
-Main_P09_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13b2f80, 0x13bf800	; census: opaque -- pcm: 25664 16-bit samples, entry 015
-Main_P09_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13bf800, 0x13cc080	; census: opaque -- pcm: 25664 16-bit samples, entry 016
-Main_P09_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13cc080, 0x13d1700	; census: opaque -- pcm: 22144 8-bit samples, entry 017
-Main_P09_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13d1700, 0x13df880	; census: opaque -- pcm: 28864 16-bit samples, entry 018
-Main_P09_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13df880, 0x13ef300	; census: opaque -- pcm: 32064 16-bit samples, entry 019
-Main_P09_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x13ef300, 0x13fed80	; census: opaque -- pcm: 32064 16-bit samples, entry 01A
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P09_W000:	.incbin	"build/wav_pcm/main/Main_P09_W000.pcm", 0, 135232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W000.wav: 67616 16-bit samples, entry 000
+Main_P09_W001:	.incbin	"build/wav_pcm/main/Main_P09_W001.pcm", 0, 80192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W001.wav: 40096 16-bit samples, entry 001
+Main_P09_W002:	.incbin	"build/wav_pcm/main/Main_P09_W002.pcm", 0, 69952	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W002.wav: 34976 16-bit samples, entry 002
+Main_P09_W003:	.incbin	"build/wav_pcm/main/Main_P09_W003.pcm", 0, 106560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W003.wav: 53280 16-bit samples, entry 003
+Main_P09_W004:	.incbin	"build/wav_pcm/main/Main_P09_W004.pcm", 0, 101184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W004.wav: 50592 16-bit samples, entry 004
+Main_P09_W005:	.incbin	"build/wav_pcm/main/Main_P09_W005.pcm", 0, 57920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W005.wav: 28960 16-bit samples, entry 005
+Main_P09_W006:	.incbin	"build/wav_pcm/main/Main_P09_W006.pcm", 0, 99648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W006.wav: 49824 16-bit samples, entry 006
+Main_P09_W007:	.incbin	"build/wav_pcm/main/Main_P09_W007.pcm", 0, 86208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W007.wav: 43104 16-bit samples, entry 007
+Main_P09_W008:	.incbin	"build/wav_pcm/main/Main_P09_W008.pcm", 0, 114368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W008.wav: 57184 16-bit samples, entry 008
+Main_P09_W009:	.incbin	"build/wav_pcm/main/Main_P09_W009.pcm", 0, 159808	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W009.wav: 79904 16-bit samples, entry 009
+Main_P09_W00A:	.incbin	"build/wav_pcm/main/Main_P09_W00A.pcm", 0, 66624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W00A.wav: 33312 16-bit samples, entry 00A
+Main_P09_W00B:	.incbin	"build/wav_pcm/main/Main_P09_W00B.pcm", 0, 103488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W00B.wav: 51744 16-bit samples, entry 00B
+Main_P09_W00C:	.incbin	"build/wav_pcm/main/Main_P09_W00C.pcm", 0, 84544	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W00C.wav: 42272 16-bit samples, entry 00C
+Main_P09_W00D:	.incbin	"build/wav_pcm/main/Main_P09_W00D.pcm", 0, 77888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W00D.wav: 38944 16-bit samples, entry 00D
+Main_P09_W00E:	.incbin	"build/wav_pcm/main/Main_P09_W00E.pcm", 0, 103488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W00E.wav: 51744 16-bit samples, entry 00E
+Main_P09_W00F:	.incbin	"build/wav_pcm/main/Main_P09_W00F.pcm", 0, 80448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W00F.wav: 40224 16-bit samples, entry 00F
+Main_P09_W010:	.incbin	"build/wav_pcm/main/Main_P09_W010.pcm", 0, 61760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W010.wav: 30880 16-bit samples, entry 010
+Main_P09_W011:	.incbin	"build/wav_pcm/main/Main_P09_W011.pcm", 0, 53312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W011.wav: 26656 16-bit samples, entry 011
+Main_P09_W012:	.incbin	"build/wav_pcm/main/Main_P09_W012.pcm", 0, 35776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W012.wav: 17888 16-bit samples, entry 012
+Main_P09_W013:	.incbin	"build/wav_pcm/main/Main_P09_W013.pcm", 0, 51328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W013.wav: 25664 16-bit samples, entry 013
+Main_P09_W014:	.incbin	"build/wav_pcm/main/Main_P09_W014.pcm", 0, 51328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W014.wav: 25664 16-bit samples, entry 014
+Main_P09_W015:	.incbin	"build/wav_pcm/main/Main_P09_W015.pcm", 0, 51328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W015.wav: 25664 16-bit samples, entry 015
+Main_P09_W016:	.incbin	"build/wav_pcm/main/Main_P09_W016.pcm", 0, 51328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W016.wav: 25664 16-bit samples, entry 016
+Main_P09_W017:	.incbin	"build/wav_pcm/main/Main_P09_W017.pcm", 0, 22144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W017.wav: 22144 8-bit samples, entry 017
+Main_P09_W018:	.incbin	"build/wav_pcm/main/Main_P09_W018.pcm", 0, 57728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W018.wav: 28864 16-bit samples, entry 018
+Main_P09_W019:	.incbin	"build/wav_pcm/main/Main_P09_W019.pcm", 0, 64128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W019.wav: 32064 16-bit samples, entry 019
+Main_P09_W01A:	.incbin	"build/wav_pcm/main/Main_P09_W01A.pcm", 0, 64128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P09_W01A.wav: 32064 16-bit samples, entry 01A
 Main_P09_Fill:	.space	4736, 0xff	; erased fill to the page end
 
 # ==== page 0x0A (selects 0x0A000-0x0A029): 42 entries (35 16-bit, 7 8-bit), 42 recordings ====
@@ -9375,49 +9378,49 @@ Main_P0A_R028:	.word	(Main_P0A_W028 - Main_P0A) / 32, LOOP_START | 256-71, LOOP_
 Main_P0A_R029:	.word	(Main_P0A_W029 - Main_P0A) / 32, LOOP_START | 256-118, LOOP_END | 256-34
 	.align	4
 	.align	32
-# recordings
-Main_P0A_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14008a0, 0x140ef20	; census: opaque -- pcm: 29504 16-bit samples, entry 000
-Main_P0A_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x140ef20, 0x141e620	; census: opaque -- pcm: 31616 16-bit samples, entry 001
-Main_P0A_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x141e620, 0x142dea0	; census: opaque -- pcm: 31808 16-bit samples, entry 002
-Main_P0A_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x142dea0, 0x143cf20	; census: opaque -- pcm: 30784 16-bit samples, entry 003
-Main_P0A_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x143cf20, 0x14497a0	; census: opaque -- pcm: 25664 16-bit samples, entry 004
-Main_P0A_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14497a0, 0x1457720	; census: opaque -- pcm: 28608 16-bit samples, entry 005
-Main_P0A_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1457720, 0x14639a0	; census: opaque -- pcm: 24896 16-bit samples, entry 006
-Main_P0A_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14639a0, 0x1474820	; census: opaque -- pcm: 34624 16-bit samples, entry 007
-Main_P0A_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1474820, 0x1485060	; census: opaque -- pcm: 33824 16-bit samples, entry 008
-Main_P0A_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1485060, 0x14952a0	; census: opaque -- pcm: 33056 16-bit samples, entry 009
-Main_P0A_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14952a0, 0x14a4ee0	; census: opaque -- pcm: 32288 16-bit samples, entry 00A
-Main_P0A_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14a4ee0, 0x14b4120	; census: opaque -- pcm: 31008 16-bit samples, entry 00B
-Main_P0A_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14b4120, 0x14c2460	; census: opaque -- pcm: 29088 16-bit samples, entry 00C
-Main_P0A_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14c2460, 0x14cfea0	; census: opaque -- pcm: 27936 16-bit samples, entry 00D
-Main_P0A_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14cfea0, 0x14dd6e0	; census: opaque -- pcm: 27680 16-bit samples, entry 00E
-Main_P0A_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14dd6e0, 0x14e9420	; census: opaque -- pcm: 24224 16-bit samples, entry 00F
-Main_P0A_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14e9420, 0x14f4260	; census: opaque -- pcm: 22304 16-bit samples, entry 010
-Main_P0A_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14f4260, 0x14fcea0	; census: opaque -- pcm: 17952 16-bit samples, entry 011
-Main_P0A_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x14fcea0, 0x15056e0	; census: opaque -- pcm: 17440 16-bit samples, entry 012
-Main_P0A_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15056e0, 0x150db20	; census: opaque -- pcm: 16928 16-bit samples, entry 013
-Main_P0A_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x150db20, 0x15153e0	; census: opaque -- pcm: 15456 16-bit samples, entry 014
-Main_P0A_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15153e0, 0x15213a0	; census: opaque -- pcm: 24544 16-bit samples, entry 015
-Main_P0A_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15213a0, 0x152b7e0	; census: opaque -- pcm: 21024 16-bit samples, entry 016
-Main_P0A_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x152b7e0, 0x1536c80	; census: opaque -- pcm: 23120 16-bit samples, entry 017
-Main_P0A_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1536c80, 0x153a080	; census: opaque -- pcm: 13312 8-bit samples, entry 018
-Main_P0A_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x153a080, 0x1541940	; census: opaque -- pcm: 30912 8-bit samples, entry 019
-Main_P0A_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1541940, 0x1549200	; census: opaque -- pcm: 30912 8-bit samples, entry 01A
-Main_P0A_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1549200, 0x1550ac0	; census: opaque -- pcm: 30912 8-bit samples, entry 01B
-Main_P0A_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1550ac0, 0x1558380	; census: opaque -- pcm: 30912 8-bit samples, entry 01C
-Main_P0A_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1558380, 0x155fc40	; census: opaque -- pcm: 30912 8-bit samples, entry 01D
-Main_P0A_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x155fc40, 0x156fea0	; census: opaque -- pcm: 66144 8-bit samples, entry 01E
-Main_P0A_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x156fea0, 0x157eee0	; census: opaque -- pcm: 30752 16-bit samples, entry 01F
-Main_P0A_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x157eee0, 0x1589320	; census: opaque -- pcm: 21024 16-bit samples, entry 020
-Main_P0A_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1589320, 0x1598b60	; census: opaque -- pcm: 31776 16-bit samples, entry 021
-Main_P0A_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1598b60, 0x15a03a0	; census: opaque -- pcm: 15392 16-bit samples, entry 022
-Main_P0A_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15a03a0, 0x15ae3e0	; census: opaque -- pcm: 28704 16-bit samples, entry 023
-Main_P0A_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15ae3e0, 0x15b9c20	; census: opaque -- pcm: 23584 16-bit samples, entry 024
-Main_P0A_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15b9c20, 0x15c8060	; census: opaque -- pcm: 29216 16-bit samples, entry 025
-Main_P0A_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15c8060, 0x15d30a0	; census: opaque -- pcm: 22560 16-bit samples, entry 026
-Main_P0A_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15d30a0, 0x15e10e0	; census: opaque -- pcm: 28704 16-bit samples, entry 027
-Main_P0A_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15e10e0, 0x15ecf20	; census: opaque -- pcm: 24352 16-bit samples, entry 028
-Main_P0A_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x15ecf20, 0x15fff80	; census: opaque -- pcm: 38960 16-bit samples, entry 029
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P0A_W000:	.incbin	"build/wav_pcm/main/Main_P0A_W000.pcm", 0, 59008	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W000.wav: 29504 16-bit samples, entry 000
+Main_P0A_W001:	.incbin	"build/wav_pcm/main/Main_P0A_W001.pcm", 0, 63232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W001.wav: 31616 16-bit samples, entry 001
+Main_P0A_W002:	.incbin	"build/wav_pcm/main/Main_P0A_W002.pcm", 0, 63616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W002.wav: 31808 16-bit samples, entry 002
+Main_P0A_W003:	.incbin	"build/wav_pcm/main/Main_P0A_W003.pcm", 0, 61568	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W003.wav: 30784 16-bit samples, entry 003
+Main_P0A_W004:	.incbin	"build/wav_pcm/main/Main_P0A_W004.pcm", 0, 51328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W004.wav: 25664 16-bit samples, entry 004
+Main_P0A_W005:	.incbin	"build/wav_pcm/main/Main_P0A_W005.pcm", 0, 57216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W005.wav: 28608 16-bit samples, entry 005
+Main_P0A_W006:	.incbin	"build/wav_pcm/main/Main_P0A_W006.pcm", 0, 49792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W006.wav: 24896 16-bit samples, entry 006
+Main_P0A_W007:	.incbin	"build/wav_pcm/main/Main_P0A_W007.pcm", 0, 69248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W007.wav: 34624 16-bit samples, entry 007
+Main_P0A_W008:	.incbin	"build/wav_pcm/main/Main_P0A_W008.pcm", 0, 67648	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W008.wav: 33824 16-bit samples, entry 008
+Main_P0A_W009:	.incbin	"build/wav_pcm/main/Main_P0A_W009.pcm", 0, 66112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W009.wav: 33056 16-bit samples, entry 009
+Main_P0A_W00A:	.incbin	"build/wav_pcm/main/Main_P0A_W00A.pcm", 0, 64576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W00A.wav: 32288 16-bit samples, entry 00A
+Main_P0A_W00B:	.incbin	"build/wav_pcm/main/Main_P0A_W00B.pcm", 0, 62016	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W00B.wav: 31008 16-bit samples, entry 00B
+Main_P0A_W00C:	.incbin	"build/wav_pcm/main/Main_P0A_W00C.pcm", 0, 58176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W00C.wav: 29088 16-bit samples, entry 00C
+Main_P0A_W00D:	.incbin	"build/wav_pcm/main/Main_P0A_W00D.pcm", 0, 55872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W00D.wav: 27936 16-bit samples, entry 00D
+Main_P0A_W00E:	.incbin	"build/wav_pcm/main/Main_P0A_W00E.pcm", 0, 55360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W00E.wav: 27680 16-bit samples, entry 00E
+Main_P0A_W00F:	.incbin	"build/wav_pcm/main/Main_P0A_W00F.pcm", 0, 48448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W00F.wav: 24224 16-bit samples, entry 00F
+Main_P0A_W010:	.incbin	"build/wav_pcm/main/Main_P0A_W010.pcm", 0, 44608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W010.wav: 22304 16-bit samples, entry 010
+Main_P0A_W011:	.incbin	"build/wav_pcm/main/Main_P0A_W011.pcm", 0, 35904	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W011.wav: 17952 16-bit samples, entry 011
+Main_P0A_W012:	.incbin	"build/wav_pcm/main/Main_P0A_W012.pcm", 0, 34880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W012.wav: 17440 16-bit samples, entry 012
+Main_P0A_W013:	.incbin	"build/wav_pcm/main/Main_P0A_W013.pcm", 0, 33856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W013.wav: 16928 16-bit samples, entry 013
+Main_P0A_W014:	.incbin	"build/wav_pcm/main/Main_P0A_W014.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W014.wav: 15456 16-bit samples, entry 014
+Main_P0A_W015:	.incbin	"build/wav_pcm/main/Main_P0A_W015.pcm", 0, 49088	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W015.wav: 24544 16-bit samples, entry 015
+Main_P0A_W016:	.incbin	"build/wav_pcm/main/Main_P0A_W016.pcm", 0, 42048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W016.wav: 21024 16-bit samples, entry 016
+Main_P0A_W017:	.incbin	"build/wav_pcm/main/Main_P0A_W017.pcm", 0, 46240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W017.wav: 23120 16-bit samples, entry 017
+Main_P0A_W018:	.incbin	"build/wav_pcm/main/Main_P0A_W018.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W018.wav: 13312 8-bit samples, entry 018
+Main_P0A_W019:	.incbin	"build/wav_pcm/main/Main_P0A_W019.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W019.wav: 30912 8-bit samples, entry 019
+Main_P0A_W01A:	.incbin	"build/wav_pcm/main/Main_P0A_W01A.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W01A.wav: 30912 8-bit samples, entry 01A
+Main_P0A_W01B:	.incbin	"build/wav_pcm/main/Main_P0A_W01B.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W01B.wav: 30912 8-bit samples, entry 01B
+Main_P0A_W01C:	.incbin	"build/wav_pcm/main/Main_P0A_W01C.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W01C.wav: 30912 8-bit samples, entry 01C
+Main_P0A_W01D:	.incbin	"build/wav_pcm/main/Main_P0A_W01D.pcm", 0, 30912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W01D.wav: 30912 8-bit samples, entry 01D
+Main_P0A_W01E:	.incbin	"build/wav_pcm/main/Main_P0A_W01E.pcm", 0, 66144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W01E.wav: 66144 8-bit samples, entry 01E
+Main_P0A_W01F:	.incbin	"build/wav_pcm/main/Main_P0A_W01F.pcm", 0, 61504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W01F.wav: 30752 16-bit samples, entry 01F
+Main_P0A_W020:	.incbin	"build/wav_pcm/main/Main_P0A_W020.pcm", 0, 42048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W020.wav: 21024 16-bit samples, entry 020
+Main_P0A_W021:	.incbin	"build/wav_pcm/main/Main_P0A_W021.pcm", 0, 63552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W021.wav: 31776 16-bit samples, entry 021
+Main_P0A_W022:	.incbin	"build/wav_pcm/main/Main_P0A_W022.pcm", 0, 30784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W022.wav: 15392 16-bit samples, entry 022
+Main_P0A_W023:	.incbin	"build/wav_pcm/main/Main_P0A_W023.pcm", 0, 57408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W023.wav: 28704 16-bit samples, entry 023
+Main_P0A_W024:	.incbin	"build/wav_pcm/main/Main_P0A_W024.pcm", 0, 47168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W024.wav: 23584 16-bit samples, entry 024
+Main_P0A_W025:	.incbin	"build/wav_pcm/main/Main_P0A_W025.pcm", 0, 58432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W025.wav: 29216 16-bit samples, entry 025
+Main_P0A_W026:	.incbin	"build/wav_pcm/main/Main_P0A_W026.pcm", 0, 45120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W026.wav: 22560 16-bit samples, entry 026
+Main_P0A_W027:	.incbin	"build/wav_pcm/main/Main_P0A_W027.pcm", 0, 57408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W027.wav: 28704 16-bit samples, entry 027
+Main_P0A_W028:	.incbin	"build/wav_pcm/main/Main_P0A_W028.pcm", 0, 48704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W028.wav: 24352 16-bit samples, entry 028
+Main_P0A_W029:	.incbin	"build/wav_pcm/main/Main_P0A_W029.pcm", 0, 77920	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0A_W029.wav: 38960 16-bit samples, entry 029
 Main_P0A_Fill:	.space	128, 0xff	; erased fill to the page end
 
 # ==== page 0x0B (selects 0x0B000-0x0B02C): 45 entries (21 16-bit, 24 8-bit), 45 recordings ====
@@ -9733,52 +9736,52 @@ Main_P0B_R02B:	.word	(Main_P0B_W02B - Main_P0B) / 32, 256-128, 256-122, REC_END
 Main_P0B_R02C:	.word	(Main_P0B_W02C - Main_P0B) / 32, 256-128, 256-128, 256-44, REC_END
 	.align	4
 	.align	32
-# recordings
-Main_P0B_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1601420, 0x1614460	; census: opaque -- pcm: 38944 16-bit samples, entry 000
-Main_P0B_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1614460, 0x1623aa0	; census: opaque -- pcm: 31520 16-bit samples, entry 001
-Main_P0B_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1623aa0, 0x16331e0	; census: opaque -- pcm: 31648 16-bit samples, entry 002
-Main_P0B_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16331e0, 0x163fb20	; census: opaque -- pcm: 25760 16-bit samples, entry 003
-Main_P0B_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x163fb20, 0x164d060	; census: opaque -- pcm: 27296 16-bit samples, entry 004
-Main_P0B_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x164d060, 0x165cca0	; census: opaque -- pcm: 32288 16-bit samples, entry 005
-Main_P0B_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x165cca0, 0x1668f60	; census: opaque -- pcm: 24928 16-bit samples, entry 006
-Main_P0B_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1668f60, 0x167d520	; census: opaque -- pcm: 41696 16-bit samples, entry 007
-Main_P0B_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x167d520, 0x168dc20	; census: opaque -- pcm: 33664 16-bit samples, entry 008
-Main_P0B_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x168dc20, 0x169bda0	; census: opaque -- pcm: 28864 16-bit samples, entry 009
-Main_P0B_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x169bda0, 0x16a8260	; census: opaque -- pcm: 25184 16-bit samples, entry 00A
-Main_P0B_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16a8260, 0x16ada60	; census: opaque -- pcm: 22528 8-bit samples, entry 00B
-Main_P0B_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16ada60, 0x16b2160	; census: opaque -- pcm: 18176 8-bit samples, entry 00C
-Main_P0B_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16b2160, 0x16b5e60	; census: opaque -- pcm: 15616 8-bit samples, entry 00D
-Main_P0B_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16b5e60, 0x16baa60	; census: opaque -- pcm: 19456 8-bit samples, entry 00E
-Main_P0B_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16baa60, 0x16c09e0	; census: opaque -- pcm: 24448 8-bit samples, entry 00F
-Main_P0B_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16c09e0, 0x16c6060	; census: opaque -- pcm: 22144 8-bit samples, entry 010
-Main_P0B_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16c6060, 0x16c8e60	; census: opaque -- pcm: 11776 8-bit samples, entry 011
-Main_P0B_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16c8e60, 0x16cbda0	; census: opaque -- pcm: 12096 8-bit samples, entry 012
-Main_P0B_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16cbda0, 0x16dd120	; census: opaque -- pcm: 35264 16-bit samples, entry 013
-Main_P0B_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16dd120, 0x16ee4a0	; census: opaque -- pcm: 35264 16-bit samples, entry 014
-Main_P0B_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16ee4a0, 0x16ff820	; census: opaque -- pcm: 35264 16-bit samples, entry 015
-Main_P0B_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x16ff820, 0x1710ba0	; census: opaque -- pcm: 35264 16-bit samples, entry 016
-Main_P0B_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1710ba0, 0x17195a0	; census: opaque -- pcm: 35328 8-bit samples, entry 017
-Main_P0B_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17195a0, 0x1721fa0	; census: opaque -- pcm: 35328 8-bit samples, entry 018
-Main_P0B_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1721fa0, 0x172a9a0	; census: opaque -- pcm: 35328 8-bit samples, entry 019
-Main_P0B_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x172a9a0, 0x17333a0	; census: opaque -- pcm: 35328 8-bit samples, entry 01A
-Main_P0B_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17333a0, 0x17367a0	; census: opaque -- pcm: 13312 8-bit samples, entry 01B
-Main_P0B_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17367a0, 0x1741720	; census: opaque -- pcm: 22464 16-bit samples, entry 01C
-Main_P0B_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1741720, 0x174c6a0	; census: opaque -- pcm: 22464 16-bit samples, entry 01D
-Main_P0B_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x174c6a0, 0x175da20	; census: opaque -- pcm: 35264 16-bit samples, entry 01E
-Main_P0B_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x175da20, 0x176eda0	; census: opaque -- pcm: 35264 16-bit samples, entry 01F
-Main_P0B_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x176eda0, 0x17718e0	; census: opaque -- pcm: 11072 8-bit samples, entry 020
-Main_P0B_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17718e0, 0x1774420	; census: opaque -- pcm: 11072 8-bit samples, entry 021
-Main_P0B_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1774420, 0x1787a60	; census: opaque -- pcm: 79424 8-bit samples, entry 022
-Main_P0B_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1787a60, 0x178b6e0	; census: opaque -- pcm: 15488 8-bit samples, entry 023
-Main_P0B_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x178b6e0, 0x179cac0	; census: opaque -- pcm: 70624 8-bit samples, entry 024
-Main_P0B_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x179cac0, 0x17adea0	; census: opaque -- pcm: 70624 8-bit samples, entry 025
-Main_P0B_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17adea0, 0x17bf280	; census: opaque -- pcm: 70624 8-bit samples, entry 026
-Main_P0B_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17bf280, 0x17c5a00	; census: opaque -- pcm: 26496 8-bit samples, entry 027
-Main_P0B_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17c5a00, 0x17cc180	; census: opaque -- pcm: 26496 8-bit samples, entry 028
-Main_P0B_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17cc180, 0x17d2900	; census: opaque -- pcm: 26496 8-bit samples, entry 029
-Main_P0B_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17d2900, 0x17d9080	; census: opaque -- pcm: 26496 8-bit samples, entry 02A
-Main_P0B_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17d9080, 0x17e0e00	; census: opaque -- pcm: 16064 16-bit samples, entry 02B
-Main_P0B_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x17e0e00, 0x17ea480	; census: opaque -- pcm: 19264 16-bit samples, entry 02C
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P0B_W000:	.incbin	"build/wav_pcm/main/Main_P0B_W000.pcm", 0, 77888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W000.wav: 38944 16-bit samples, entry 000
+Main_P0B_W001:	.incbin	"build/wav_pcm/main/Main_P0B_W001.pcm", 0, 63040	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W001.wav: 31520 16-bit samples, entry 001
+Main_P0B_W002:	.incbin	"build/wav_pcm/main/Main_P0B_W002.pcm", 0, 63296	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W002.wav: 31648 16-bit samples, entry 002
+Main_P0B_W003:	.incbin	"build/wav_pcm/main/Main_P0B_W003.pcm", 0, 51520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W003.wav: 25760 16-bit samples, entry 003
+Main_P0B_W004:	.incbin	"build/wav_pcm/main/Main_P0B_W004.pcm", 0, 54592	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W004.wav: 27296 16-bit samples, entry 004
+Main_P0B_W005:	.incbin	"build/wav_pcm/main/Main_P0B_W005.pcm", 0, 64576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W005.wav: 32288 16-bit samples, entry 005
+Main_P0B_W006:	.incbin	"build/wav_pcm/main/Main_P0B_W006.pcm", 0, 49856	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W006.wav: 24928 16-bit samples, entry 006
+Main_P0B_W007:	.incbin	"build/wav_pcm/main/Main_P0B_W007.pcm", 0, 83392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W007.wav: 41696 16-bit samples, entry 007
+Main_P0B_W008:	.incbin	"build/wav_pcm/main/Main_P0B_W008.pcm", 0, 67328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W008.wav: 33664 16-bit samples, entry 008
+Main_P0B_W009:	.incbin	"build/wav_pcm/main/Main_P0B_W009.pcm", 0, 57728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W009.wav: 28864 16-bit samples, entry 009
+Main_P0B_W00A:	.incbin	"build/wav_pcm/main/Main_P0B_W00A.pcm", 0, 50368	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W00A.wav: 25184 16-bit samples, entry 00A
+Main_P0B_W00B:	.incbin	"build/wav_pcm/main/Main_P0B_W00B.pcm", 0, 22528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W00B.wav: 22528 8-bit samples, entry 00B
+Main_P0B_W00C:	.incbin	"build/wav_pcm/main/Main_P0B_W00C.pcm", 0, 18176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W00C.wav: 18176 8-bit samples, entry 00C
+Main_P0B_W00D:	.incbin	"build/wav_pcm/main/Main_P0B_W00D.pcm", 0, 15616	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W00D.wav: 15616 8-bit samples, entry 00D
+Main_P0B_W00E:	.incbin	"build/wav_pcm/main/Main_P0B_W00E.pcm", 0, 19456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W00E.wav: 19456 8-bit samples, entry 00E
+Main_P0B_W00F:	.incbin	"build/wav_pcm/main/Main_P0B_W00F.pcm", 0, 24448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W00F.wav: 24448 8-bit samples, entry 00F
+Main_P0B_W010:	.incbin	"build/wav_pcm/main/Main_P0B_W010.pcm", 0, 22144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W010.wav: 22144 8-bit samples, entry 010
+Main_P0B_W011:	.incbin	"build/wav_pcm/main/Main_P0B_W011.pcm", 0, 11776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W011.wav: 11776 8-bit samples, entry 011
+Main_P0B_W012:	.incbin	"build/wav_pcm/main/Main_P0B_W012.pcm", 0, 12096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W012.wav: 12096 8-bit samples, entry 012
+Main_P0B_W013:	.incbin	"build/wav_pcm/main/Main_P0B_W013.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W013.wav: 35264 16-bit samples, entry 013
+Main_P0B_W014:	.incbin	"build/wav_pcm/main/Main_P0B_W014.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W014.wav: 35264 16-bit samples, entry 014
+Main_P0B_W015:	.incbin	"build/wav_pcm/main/Main_P0B_W015.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W015.wav: 35264 16-bit samples, entry 015
+Main_P0B_W016:	.incbin	"build/wav_pcm/main/Main_P0B_W016.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W016.wav: 35264 16-bit samples, entry 016
+Main_P0B_W017:	.incbin	"build/wav_pcm/main/Main_P0B_W017.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W017.wav: 35328 8-bit samples, entry 017
+Main_P0B_W018:	.incbin	"build/wav_pcm/main/Main_P0B_W018.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W018.wav: 35328 8-bit samples, entry 018
+Main_P0B_W019:	.incbin	"build/wav_pcm/main/Main_P0B_W019.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W019.wav: 35328 8-bit samples, entry 019
+Main_P0B_W01A:	.incbin	"build/wav_pcm/main/Main_P0B_W01A.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W01A.wav: 35328 8-bit samples, entry 01A
+Main_P0B_W01B:	.incbin	"build/wav_pcm/main/Main_P0B_W01B.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W01B.wav: 13312 8-bit samples, entry 01B
+Main_P0B_W01C:	.incbin	"build/wav_pcm/main/Main_P0B_W01C.pcm", 0, 44928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W01C.wav: 22464 16-bit samples, entry 01C
+Main_P0B_W01D:	.incbin	"build/wav_pcm/main/Main_P0B_W01D.pcm", 0, 44928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W01D.wav: 22464 16-bit samples, entry 01D
+Main_P0B_W01E:	.incbin	"build/wav_pcm/main/Main_P0B_W01E.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W01E.wav: 35264 16-bit samples, entry 01E
+Main_P0B_W01F:	.incbin	"build/wav_pcm/main/Main_P0B_W01F.pcm", 0, 70528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W01F.wav: 35264 16-bit samples, entry 01F
+Main_P0B_W020:	.incbin	"build/wav_pcm/main/Main_P0B_W020.pcm", 0, 11072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W020.wav: 11072 8-bit samples, entry 020
+Main_P0B_W021:	.incbin	"build/wav_pcm/main/Main_P0B_W021.pcm", 0, 11072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W021.wav: 11072 8-bit samples, entry 021
+Main_P0B_W022:	.incbin	"build/wav_pcm/main/Main_P0B_W022.pcm", 0, 79424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W022.wav: 79424 8-bit samples, entry 022
+Main_P0B_W023:	.incbin	"build/wav_pcm/main/Main_P0B_W023.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W023.wav: 15488 8-bit samples, entry 023
+Main_P0B_W024:	.incbin	"build/wav_pcm/main/Main_P0B_W024.pcm", 0, 70624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W024.wav: 70624 8-bit samples, entry 024
+Main_P0B_W025:	.incbin	"build/wav_pcm/main/Main_P0B_W025.pcm", 0, 70624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W025.wav: 70624 8-bit samples, entry 025
+Main_P0B_W026:	.incbin	"build/wav_pcm/main/Main_P0B_W026.pcm", 0, 70624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W026.wav: 70624 8-bit samples, entry 026
+Main_P0B_W027:	.incbin	"build/wav_pcm/main/Main_P0B_W027.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W027.wav: 26496 8-bit samples, entry 027
+Main_P0B_W028:	.incbin	"build/wav_pcm/main/Main_P0B_W028.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W028.wav: 26496 8-bit samples, entry 028
+Main_P0B_W029:	.incbin	"build/wav_pcm/main/Main_P0B_W029.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W029.wav: 26496 8-bit samples, entry 029
+Main_P0B_W02A:	.incbin	"build/wav_pcm/main/Main_P0B_W02A.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W02A.wav: 26496 8-bit samples, entry 02A
+Main_P0B_W02B:	.incbin	"build/wav_pcm/main/Main_P0B_W02B.pcm", 0, 32128	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W02B.wav: 16064 16-bit samples, entry 02B
+Main_P0B_W02C:	.incbin	"build/wav_pcm/main/Main_P0B_W02C.pcm", 0, 38528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0B_W02C.wav: 19264 16-bit samples, entry 02C
 Main_P0B_Fill:	.space	88960, 0xff	; erased fill to the page end
 
 # ==== page 0x0C (selects 0x0C000-0x0C02B): 44 entries (28 16-bit, 16 8-bit), 44 recordings ====
@@ -10048,51 +10051,51 @@ Main_P0C_R02A:	.word	(Main_P0C_W02A - Main_P0C) / 32, LOOP_START | 256-78, LOOP_
 Main_P0C_R02B:	.word	(Main_P0C_W02B - Main_P0C) / 32, LOOP_START | 256-89, LOOP_END | 256-124
 	.align	4
 	.align	32
-# recordings
-Main_P0C_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1800f80, 0x1810100	; census: opaque -- pcm: 30912 16-bit samples, entry 000
-Main_P0C_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1810100, 0x181f280	; census: opaque -- pcm: 30912 16-bit samples, entry 001
-Main_P0C_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x181f280, 0x1827c80	; census: opaque -- pcm: 35328 8-bit samples, entry 002
-Main_P0C_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1827c80, 0x18317c0	; census: opaque -- pcm: 39744 8-bit samples, entry 003
-Main_P0C_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18317c0, 0x183a1c0	; census: opaque -- pcm: 35328 8-bit samples, entry 004
-Main_P0C_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x183a1c0, 0x1842bc0	; census: opaque -- pcm: 35328 8-bit samples, entry 005
-Main_P0C_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1842bc0, 0x1849c00	; census: opaque -- pcm: 28736 8-bit samples, entry 006
-Main_P0C_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1849c00, 0x1861780	; census: opaque -- pcm: 48576 16-bit samples, entry 007
-Main_P0C_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1861780, 0x187b580	; census: opaque -- pcm: 52992 16-bit samples, entry 008
-Main_P0C_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x187b580, 0x188c960	; census: opaque -- pcm: 70624 8-bit samples, entry 009
-Main_P0C_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x188c960, 0x189dd40	; census: opaque -- pcm: 70624 8-bit samples, entry 00A
-Main_P0C_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x189dd40, 0x18a44c0	; census: opaque -- pcm: 26496 8-bit samples, entry 00B
-Main_P0C_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18a44c0, 0x18aa200	; census: opaque -- pcm: 23872 8-bit samples, entry 00C
-Main_P0C_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18aa200, 0x18af180	; census: opaque -- pcm: 20352 8-bit samples, entry 00D
-Main_P0C_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18af180, 0x18cc300	; census: opaque -- pcm: 59584 16-bit samples, entry 00E
-Main_P0C_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18cc300, 0x18cf280	; census: opaque -- pcm: 12160 8-bit samples, entry 00F
-Main_P0C_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18cf280, 0x18dcf80	; census: opaque -- pcm: 28288 16-bit samples, entry 010
-Main_P0C_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18dcf80, 0x18e8d80	; census: opaque -- pcm: 24320 16-bit samples, entry 011
-Main_P0C_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18e8d80, 0x18fe680	; census: opaque -- pcm: 44160 16-bit samples, entry 012
-Main_P0C_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x18fe680, 0x1918480	; census: opaque -- pcm: 52992 16-bit samples, entry 013
-Main_P0C_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1918480, 0x193ac40	; census: opaque -- pcm: 70624 16-bit samples, entry 014
-Main_P0C_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x193ac40, 0x1949dc0	; census: opaque -- pcm: 30912 16-bit samples, entry 015
-Main_P0C_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1949dc0, 0x1958f40	; census: opaque -- pcm: 30912 16-bit samples, entry 016
-Main_P0C_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1958f40, 0x1961940	; census: opaque -- pcm: 35328 8-bit samples, entry 017
-Main_P0C_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1961940, 0x196a340	; census: opaque -- pcm: 35328 8-bit samples, entry 018
-Main_P0C_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x196a340, 0x1972d40	; census: opaque -- pcm: 35328 8-bit samples, entry 019
-Main_P0C_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1972d40, 0x197b740	; census: opaque -- pcm: 35328 8-bit samples, entry 01A
-Main_P0C_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x197b740, 0x197f3c0	; census: opaque -- pcm: 15488 8-bit samples, entry 01B
-Main_P0C_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x197f3c0, 0x1988c00	; census: opaque -- pcm: 19488 16-bit samples, entry 01C
-Main_P0C_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1988c00, 0x1990440	; census: opaque -- pcm: 15392 16-bit samples, entry 01D
-Main_P0C_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1990440, 0x199a480	; census: opaque -- pcm: 20512 16-bit samples, entry 01E
-Main_P0C_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x199a480, 0x19a1cc0	; census: opaque -- pcm: 15392 16-bit samples, entry 01F
-Main_P0C_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19a1cc0, 0x19a9100	; census: opaque -- pcm: 14880 16-bit samples, entry 020
-Main_P0C_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19a9100, 0x19af140	; census: opaque -- pcm: 12320 16-bit samples, entry 021
-Main_P0C_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19af140, 0x19b8180	; census: opaque -- pcm: 18464 16-bit samples, entry 022
-Main_P0C_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19b8180, 0x19bfdc0	; census: opaque -- pcm: 15904 16-bit samples, entry 023
-Main_P0C_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19bfdc0, 0x19c6e00	; census: opaque -- pcm: 14368 16-bit samples, entry 024
-Main_P0C_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19c6e00, 0x19d1240	; census: opaque -- pcm: 21024 16-bit samples, entry 025
-Main_P0C_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19d1240, 0x19d7880	; census: opaque -- pcm: 13088 16-bit samples, entry 026
-Main_P0C_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19d7880, 0x19decc0	; census: opaque -- pcm: 14880 16-bit samples, entry 027
-Main_P0C_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19decc0, 0x19e7500	; census: opaque -- pcm: 17440 16-bit samples, entry 028
-Main_P0C_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19e7500, 0x19efa40	; census: opaque -- pcm: 17056 16-bit samples, entry 029
-Main_P0C_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19efa40, 0x19f4900	; census: opaque -- pcm: 10080 16-bit samples, entry 02A
-Main_P0C_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x19f4900, 0x19fb400	; census: opaque -- pcm: 13696 16-bit samples, entry 02B
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P0C_W000:	.incbin	"build/wav_pcm/main/Main_P0C_W000.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W000.wav: 30912 16-bit samples, entry 000
+Main_P0C_W001:	.incbin	"build/wav_pcm/main/Main_P0C_W001.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W001.wav: 30912 16-bit samples, entry 001
+Main_P0C_W002:	.incbin	"build/wav_pcm/main/Main_P0C_W002.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W002.wav: 35328 8-bit samples, entry 002
+Main_P0C_W003:	.incbin	"build/wav_pcm/main/Main_P0C_W003.pcm", 0, 39744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W003.wav: 39744 8-bit samples, entry 003
+Main_P0C_W004:	.incbin	"build/wav_pcm/main/Main_P0C_W004.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W004.wav: 35328 8-bit samples, entry 004
+Main_P0C_W005:	.incbin	"build/wav_pcm/main/Main_P0C_W005.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W005.wav: 35328 8-bit samples, entry 005
+Main_P0C_W006:	.incbin	"build/wav_pcm/main/Main_P0C_W006.pcm", 0, 28736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W006.wav: 28736 8-bit samples, entry 006
+Main_P0C_W007:	.incbin	"build/wav_pcm/main/Main_P0C_W007.pcm", 0, 97152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W007.wav: 48576 16-bit samples, entry 007
+Main_P0C_W008:	.incbin	"build/wav_pcm/main/Main_P0C_W008.pcm", 0, 105984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W008.wav: 52992 16-bit samples, entry 008
+Main_P0C_W009:	.incbin	"build/wav_pcm/main/Main_P0C_W009.pcm", 0, 70624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W009.wav: 70624 8-bit samples, entry 009
+Main_P0C_W00A:	.incbin	"build/wav_pcm/main/Main_P0C_W00A.pcm", 0, 70624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W00A.wav: 70624 8-bit samples, entry 00A
+Main_P0C_W00B:	.incbin	"build/wav_pcm/main/Main_P0C_W00B.pcm", 0, 26496	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W00B.wav: 26496 8-bit samples, entry 00B
+Main_P0C_W00C:	.incbin	"build/wav_pcm/main/Main_P0C_W00C.pcm", 0, 23872	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W00C.wav: 23872 8-bit samples, entry 00C
+Main_P0C_W00D:	.incbin	"build/wav_pcm/main/Main_P0C_W00D.pcm", 0, 20352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W00D.wav: 20352 8-bit samples, entry 00D
+Main_P0C_W00E:	.incbin	"build/wav_pcm/main/Main_P0C_W00E.pcm", 0, 119168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W00E.wav: 59584 16-bit samples, entry 00E
+Main_P0C_W00F:	.incbin	"build/wav_pcm/main/Main_P0C_W00F.pcm", 0, 12160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W00F.wav: 12160 8-bit samples, entry 00F
+Main_P0C_W010:	.incbin	"build/wav_pcm/main/Main_P0C_W010.pcm", 0, 56576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W010.wav: 28288 16-bit samples, entry 010
+Main_P0C_W011:	.incbin	"build/wav_pcm/main/Main_P0C_W011.pcm", 0, 48640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W011.wav: 24320 16-bit samples, entry 011
+Main_P0C_W012:	.incbin	"build/wav_pcm/main/Main_P0C_W012.pcm", 0, 88320	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W012.wav: 44160 16-bit samples, entry 012
+Main_P0C_W013:	.incbin	"build/wav_pcm/main/Main_P0C_W013.pcm", 0, 105984	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W013.wav: 52992 16-bit samples, entry 013
+Main_P0C_W014:	.incbin	"build/wav_pcm/main/Main_P0C_W014.pcm", 0, 141248	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W014.wav: 70624 16-bit samples, entry 014
+Main_P0C_W015:	.incbin	"build/wav_pcm/main/Main_P0C_W015.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W015.wav: 30912 16-bit samples, entry 015
+Main_P0C_W016:	.incbin	"build/wav_pcm/main/Main_P0C_W016.pcm", 0, 61824	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W016.wav: 30912 16-bit samples, entry 016
+Main_P0C_W017:	.incbin	"build/wav_pcm/main/Main_P0C_W017.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W017.wav: 35328 8-bit samples, entry 017
+Main_P0C_W018:	.incbin	"build/wav_pcm/main/Main_P0C_W018.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W018.wav: 35328 8-bit samples, entry 018
+Main_P0C_W019:	.incbin	"build/wav_pcm/main/Main_P0C_W019.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W019.wav: 35328 8-bit samples, entry 019
+Main_P0C_W01A:	.incbin	"build/wav_pcm/main/Main_P0C_W01A.pcm", 0, 35328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W01A.wav: 35328 8-bit samples, entry 01A
+Main_P0C_W01B:	.incbin	"build/wav_pcm/main/Main_P0C_W01B.pcm", 0, 15488	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W01B.wav: 15488 8-bit samples, entry 01B
+Main_P0C_W01C:	.incbin	"build/wav_pcm/main/Main_P0C_W01C.pcm", 0, 38976	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W01C.wav: 19488 16-bit samples, entry 01C
+Main_P0C_W01D:	.incbin	"build/wav_pcm/main/Main_P0C_W01D.pcm", 0, 30784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W01D.wav: 15392 16-bit samples, entry 01D
+Main_P0C_W01E:	.incbin	"build/wav_pcm/main/Main_P0C_W01E.pcm", 0, 41024	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W01E.wav: 20512 16-bit samples, entry 01E
+Main_P0C_W01F:	.incbin	"build/wav_pcm/main/Main_P0C_W01F.pcm", 0, 30784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W01F.wav: 15392 16-bit samples, entry 01F
+Main_P0C_W020:	.incbin	"build/wav_pcm/main/Main_P0C_W020.pcm", 0, 29760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W020.wav: 14880 16-bit samples, entry 020
+Main_P0C_W021:	.incbin	"build/wav_pcm/main/Main_P0C_W021.pcm", 0, 24640	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W021.wav: 12320 16-bit samples, entry 021
+Main_P0C_W022:	.incbin	"build/wav_pcm/main/Main_P0C_W022.pcm", 0, 36928	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W022.wav: 18464 16-bit samples, entry 022
+Main_P0C_W023:	.incbin	"build/wav_pcm/main/Main_P0C_W023.pcm", 0, 31808	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W023.wav: 15904 16-bit samples, entry 023
+Main_P0C_W024:	.incbin	"build/wav_pcm/main/Main_P0C_W024.pcm", 0, 28736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W024.wav: 14368 16-bit samples, entry 024
+Main_P0C_W025:	.incbin	"build/wav_pcm/main/Main_P0C_W025.pcm", 0, 42048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W025.wav: 21024 16-bit samples, entry 025
+Main_P0C_W026:	.incbin	"build/wav_pcm/main/Main_P0C_W026.pcm", 0, 26176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W026.wav: 13088 16-bit samples, entry 026
+Main_P0C_W027:	.incbin	"build/wav_pcm/main/Main_P0C_W027.pcm", 0, 29760	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W027.wav: 14880 16-bit samples, entry 027
+Main_P0C_W028:	.incbin	"build/wav_pcm/main/Main_P0C_W028.pcm", 0, 34880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W028.wav: 17440 16-bit samples, entry 028
+Main_P0C_W029:	.incbin	"build/wav_pcm/main/Main_P0C_W029.pcm", 0, 34112	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W029.wav: 17056 16-bit samples, entry 029
+Main_P0C_W02A:	.incbin	"build/wav_pcm/main/Main_P0C_W02A.pcm", 0, 20160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W02A.wav: 10080 16-bit samples, entry 02A
+Main_P0C_W02B:	.incbin	"build/wav_pcm/main/Main_P0C_W02B.pcm", 0, 27392	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0C_W02B.wav: 13696 16-bit samples, entry 02B
 Main_P0C_Fill:	.space	19456, 0xff	; erased fill to the page end
 
 # ==== page 0x0D (selects 0x0D000-0x0D0AD): 174 entries (174 16-bit, 0 8-bit), 174 recordings ====
@@ -10623,181 +10626,181 @@ Main_P0D_R0AC:	.word	(Main_P0D_W0AC - Main_P0D) / 32, 256-128, LOOP_START | 256-
 Main_P0D_R0AD:	.word	(Main_P0D_W0AD - Main_P0D) / 32, 256-128, LOOP_START | 256-98, 256-128, LOOP_END | 256-60
 	.align	4
 	.align	32
-# recordings
-Main_P0D_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a00cc0, 0x1a054c0	; census: opaque -- pcm: 9216 16-bit samples, entry 000
-Main_P0D_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a054c0, 0x1a0acc0	; census: opaque -- pcm: 11264 16-bit samples, entry 001
-Main_P0D_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a0acc0, 0x1a0e4c0	; census: opaque -- pcm: 7168 16-bit samples, entry 002
-Main_P0D_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a0e4c0, 0x1a120c0	; census: opaque -- pcm: 7680 16-bit samples, entry 003
-Main_P0D_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a120c0, 0x1a13ec0	; census: opaque -- pcm: 3840 16-bit samples, entry 004
-Main_P0D_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a13ec0, 0x1a152c0	; census: opaque -- pcm: 2560 16-bit samples, entry 005
-Main_P0D_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a152c0, 0x1a165c0	; census: opaque -- pcm: 2432 16-bit samples, entry 006
-Main_P0D_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a165c0, 0x1a199c0	; census: opaque -- pcm: 6656 16-bit samples, entry 007
-Main_P0D_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a199c0, 0x1a1d9c0	; census: opaque -- pcm: 8192 16-bit samples, entry 008
-Main_P0D_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a1d9c0, 0x1a201c0	; census: opaque -- pcm: 5120 16-bit samples, entry 009
-Main_P0D_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a201c0, 0x1a22fc0	; census: opaque -- pcm: 5888 16-bit samples, entry 00A
-Main_P0D_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a22fc0, 0x1a24dc0	; census: opaque -- pcm: 3840 16-bit samples, entry 00B
-Main_P0D_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a24dc0, 0x1a26bc0	; census: opaque -- pcm: 3840 16-bit samples, entry 00C
-Main_P0D_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a26bc0, 0x1a27cc0	; census: opaque -- pcm: 2176 16-bit samples, entry 00D
-Main_P0D_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a27cc0, 0x1a2c4c0	; census: opaque -- pcm: 9216 16-bit samples, entry 00E
-Main_P0D_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a2c4c0, 0x1a314c0	; census: opaque -- pcm: 10240 16-bit samples, entry 00F
-Main_P0D_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a314c0, 0x1a33cc0	; census: opaque -- pcm: 5120 16-bit samples, entry 010
-Main_P0D_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a33cc0, 0x1a36cc0	; census: opaque -- pcm: 6144 16-bit samples, entry 011
-Main_P0D_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a36cc0, 0x1a384c0	; census: opaque -- pcm: 3072 16-bit samples, entry 012
-Main_P0D_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a384c0, 0x1a39ec0	; census: opaque -- pcm: 3328 16-bit samples, entry 013
-Main_P0D_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a39ec0, 0x1a3abc0	; census: opaque -- pcm: 1664 16-bit samples, entry 014
-Main_P0D_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a3abc0, 0x1a3e3c0	; census: opaque -- pcm: 7168 16-bit samples, entry 015
-Main_P0D_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a3e3c0, 0x1a41bc0	; census: opaque -- pcm: 7168 16-bit samples, entry 016
-Main_P0D_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a41bc0, 0x1a43fc0	; census: opaque -- pcm: 4608 16-bit samples, entry 017
-Main_P0D_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a43fc0, 0x1a45fc0	; census: opaque -- pcm: 4096 16-bit samples, entry 018
-Main_P0D_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a45fc0, 0x1a46fc0	; census: opaque -- pcm: 2048 16-bit samples, entry 019
-Main_P0D_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a46fc0, 0x1a47dc0	; census: opaque -- pcm: 1792 16-bit samples, entry 01A
-Main_P0D_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a47dc0, 0x1a48fc0	; census: opaque -- pcm: 2304 16-bit samples, entry 01B
-Main_P0D_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a48fc0, 0x1a4abc0	; census: opaque -- pcm: 3584 16-bit samples, entry 01C
-Main_P0D_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a4abc0, 0x1a4c3c0	; census: opaque -- pcm: 3072 16-bit samples, entry 01D
-Main_P0D_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a4c3c0, 0x1a4cfc0	; census: opaque -- pcm: 1536 16-bit samples, entry 01E
-Main_P0D_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a4cfc0, 0x1a4ddc0	; census: opaque -- pcm: 1792 16-bit samples, entry 01F
-Main_P0D_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a4ddc0, 0x1a4edc0	; census: opaque -- pcm: 2048 16-bit samples, entry 020
-Main_P0D_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a4edc0, 0x1a4fbc0	; census: opaque -- pcm: 1792 16-bit samples, entry 021
-Main_P0D_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a4fbc0, 0x1a50dc0	; census: opaque -- pcm: 2304 16-bit samples, entry 022
-Main_P0D_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a50dc0, 0x1a545c0	; census: opaque -- pcm: 7168 16-bit samples, entry 023
-Main_P0D_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a545c0, 0x1a575c0	; census: opaque -- pcm: 6144 16-bit samples, entry 024
-Main_P0D_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a575c0, 0x1a595c0	; census: opaque -- pcm: 4096 16-bit samples, entry 025
-Main_P0D_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a595c0, 0x1a5adc0	; census: opaque -- pcm: 3072 16-bit samples, entry 026
-Main_P0D_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a5adc0, 0x1a5c5c0	; census: opaque -- pcm: 3072 16-bit samples, entry 027
-Main_P0D_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a5c5c0, 0x1a5ddc0	; census: opaque -- pcm: 3072 16-bit samples, entry 028
-Main_P0D_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a5ddc0, 0x1a5f5c0	; census: opaque -- pcm: 3072 16-bit samples, entry 029
-Main_P0D_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a5f5c0, 0x1a63dc0	; census: opaque -- pcm: 9216 16-bit samples, entry 02A
-Main_P0D_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a63dc0, 0x1a66dc0	; census: opaque -- pcm: 6144 16-bit samples, entry 02B
-Main_P0D_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a66dc0, 0x1a6a9c0	; census: opaque -- pcm: 7680 16-bit samples, entry 02C
-Main_P0D_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a6a9c0, 0x1a6cbc0	; census: opaque -- pcm: 4352 16-bit samples, entry 02D
-Main_P0D_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a6cbc0, 0x1a6f1c0	; census: opaque -- pcm: 4864 16-bit samples, entry 02E
-Main_P0D_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a6f1c0, 0x1a70cc0	; census: opaque -- pcm: 3456 16-bit samples, entry 02F
-Main_P0D_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a70cc0, 0x1a720c0	; census: opaque -- pcm: 2560 16-bit samples, entry 030
-Main_P0D_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a720c0, 0x1a738c0	; census: opaque -- pcm: 3072 16-bit samples, entry 031
-Main_P0D_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a738c0, 0x1a748c0	; census: opaque -- pcm: 2048 16-bit samples, entry 032
-Main_P0D_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a748c0, 0x1a75ec0	; census: opaque -- pcm: 2816 16-bit samples, entry 033
-Main_P0D_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a75ec0, 0x1a769c0	; census: opaque -- pcm: 1408 16-bit samples, entry 034
-Main_P0D_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a769c0, 0x1a773c0	; census: opaque -- pcm: 1280 16-bit samples, entry 035
-Main_P0D_W036:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a773c0, 0x1a779c0	; census: opaque -- pcm: 768 16-bit samples, entry 036
-Main_P0D_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a779c0, 0x1a782c0	; census: opaque -- pcm: 1152 16-bit samples, entry 037
-Main_P0D_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a782c0, 0x1a7bac0	; census: opaque -- pcm: 7168 16-bit samples, entry 038
-Main_P0D_W039:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a7bac0, 0x1a7f2c0	; census: opaque -- pcm: 7168 16-bit samples, entry 039
-Main_P0D_W03A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a7f2c0, 0x1a812c0	; census: opaque -- pcm: 4096 16-bit samples, entry 03A
-Main_P0D_W03B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a812c0, 0x1a82ec0	; census: opaque -- pcm: 3584 16-bit samples, entry 03B
-Main_P0D_W03C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a82ec0, 0x1a83cc0	; census: opaque -- pcm: 1792 16-bit samples, entry 03C
-Main_P0D_W03D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a83cc0, 0x1a84cc0	; census: opaque -- pcm: 2048 16-bit samples, entry 03D
-Main_P0D_W03E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a84cc0, 0x1a857c0	; census: opaque -- pcm: 1408 16-bit samples, entry 03E
-Main_P0D_W03F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a857c0, 0x1a862c0	; census: opaque -- pcm: 1408 16-bit samples, entry 03F
-Main_P0D_W040:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a862c0, 0x1a89ac0	; census: opaque -- pcm: 7168 16-bit samples, entry 040
-Main_P0D_W041:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a89ac0, 0x1a8dac0	; census: opaque -- pcm: 8192 16-bit samples, entry 041
-Main_P0D_W042:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a8dac0, 0x1a8fec0	; census: opaque -- pcm: 4608 16-bit samples, entry 042
-Main_P0D_W043:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a8fec0, 0x1a926c0	; census: opaque -- pcm: 5120 16-bit samples, entry 043
-Main_P0D_W044:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a926c0, 0x1a940c0	; census: opaque -- pcm: 3328 16-bit samples, entry 044
-Main_P0D_W045:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a940c0, 0x1a95ac0	; census: opaque -- pcm: 3328 16-bit samples, entry 045
-Main_P0D_W046:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a95ac0, 0x1a96bc0	; census: opaque -- pcm: 2176 16-bit samples, entry 046
-Main_P0D_W047:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a96bc0, 0x1a98bc0	; census: opaque -- pcm: 4096 16-bit samples, entry 047
-Main_P0D_W048:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a98bc0, 0x1a9b7c0	; census: opaque -- pcm: 5632 16-bit samples, entry 048
-Main_P0D_W049:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a9b7c0, 0x1a9d3c0	; census: opaque -- pcm: 3584 16-bit samples, entry 049
-Main_P0D_W04A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a9d3c0, 0x1a9f3c0	; census: opaque -- pcm: 4096 16-bit samples, entry 04A
-Main_P0D_W04B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1a9f3c0, 0x1aa09c0	; census: opaque -- pcm: 2816 16-bit samples, entry 04B
-Main_P0D_W04C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa09c0, 0x1aa1740	; census: opaque -- pcm: 1728 16-bit samples, entry 04C
-Main_P0D_W04D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa1740, 0x1aa2740	; census: opaque -- pcm: 2048 16-bit samples, entry 04D
-Main_P0D_W04E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa2740, 0x1aa3b40	; census: opaque -- pcm: 2560 16-bit samples, entry 04E
-Main_P0D_W04F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa3b40, 0x1aa5140	; census: opaque -- pcm: 2816 16-bit samples, entry 04F
-Main_P0D_W050:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa5140, 0x1aa6140	; census: opaque -- pcm: 2048 16-bit samples, entry 050
-Main_P0D_W051:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa6140, 0x1aa7240	; census: opaque -- pcm: 2176 16-bit samples, entry 051
-Main_P0D_W052:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa7240, 0x1aa85c0	; census: opaque -- pcm: 2496 16-bit samples, entry 052
-Main_P0D_W053:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aa85c0, 0x1aaa040	; census: opaque -- pcm: 3392 16-bit samples, entry 053
-Main_P0D_W054:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aaa040, 0x1aac840	; census: opaque -- pcm: 5120 16-bit samples, entry 054
-Main_P0D_W055:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aac840, 0x1aaf840	; census: opaque -- pcm: 6144 16-bit samples, entry 055
-Main_P0D_W056:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aaf840, 0x1ab1840	; census: opaque -- pcm: 4096 16-bit samples, entry 056
-Main_P0D_W057:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ab1840, 0x1ab3c40	; census: opaque -- pcm: 4608 16-bit samples, entry 057
-Main_P0D_W058:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ab3c40, 0x1ab5240	; census: opaque -- pcm: 2816 16-bit samples, entry 058
-Main_P0D_W059:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ab5240, 0x1ab6840	; census: opaque -- pcm: 2816 16-bit samples, entry 059
-Main_P0D_W05A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ab6840, 0x1ab7740	; census: opaque -- pcm: 1920 16-bit samples, entry 05A
-Main_P0D_W05B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ab7740, 0x1ab9f40	; census: opaque -- pcm: 5120 16-bit samples, entry 05B
-Main_P0D_W05C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ab9f40, 0x1abd740	; census: opaque -- pcm: 7168 16-bit samples, entry 05C
-Main_P0D_W05D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1abd740, 0x1abf340	; census: opaque -- pcm: 3584 16-bit samples, entry 05D
-Main_P0D_W05E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1abf340, 0x1ac1340	; census: opaque -- pcm: 4096 16-bit samples, entry 05E
-Main_P0D_W05F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ac1340, 0x1ac3b40	; census: opaque -- pcm: 5120 16-bit samples, entry 05F
-Main_P0D_W060:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ac3b40, 0x1ac6340	; census: opaque -- pcm: 5120 16-bit samples, entry 060
-Main_P0D_W061:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ac6340, 0x1ac9b40	; census: opaque -- pcm: 7168 16-bit samples, entry 061
-Main_P0D_W062:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ac9b40, 0x1acb740	; census: opaque -- pcm: 3584 16-bit samples, entry 062
-Main_P0D_W063:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1acb740, 0x1acd740	; census: opaque -- pcm: 4096 16-bit samples, entry 063
-Main_P0D_W064:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1acd740, 0x1aced40	; census: opaque -- pcm: 2816 16-bit samples, entry 064
-Main_P0D_W065:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aced40, 0x1ad0940	; census: opaque -- pcm: 3584 16-bit samples, entry 065
-Main_P0D_W066:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ad0940, 0x1ad1c40	; census: opaque -- pcm: 2432 16-bit samples, entry 066
-Main_P0D_W067:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ad1c40, 0x1ad3340	; census: opaque -- pcm: 2944 16-bit samples, entry 067
-Main_P0D_W068:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ad3340, 0x1ad4b40	; census: opaque -- pcm: 3072 16-bit samples, entry 068
-Main_P0D_W069:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ad4b40, 0x1ad7340	; census: opaque -- pcm: 5120 16-bit samples, entry 069
-Main_P0D_W06A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ad7340, 0x1ada340	; census: opaque -- pcm: 6144 16-bit samples, entry 06A
-Main_P0D_W06B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ada340, 0x1adbf40	; census: opaque -- pcm: 3584 16-bit samples, entry 06B
-Main_P0D_W06C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1adbf40, 0x1addb40	; census: opaque -- pcm: 3584 16-bit samples, entry 06C
-Main_P0D_W06D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1addb40, 0x1ae0340	; census: opaque -- pcm: 5120 16-bit samples, entry 06D
-Main_P0D_W06E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ae0340, 0x1ae1d40	; census: opaque -- pcm: 3328 16-bit samples, entry 06E
-Main_P0D_W06F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ae1d40, 0x1ae3b40	; census: opaque -- pcm: 3840 16-bit samples, entry 06F
-Main_P0D_W070:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ae3b40, 0x1ae9340	; census: opaque -- pcm: 11264 16-bit samples, entry 070
-Main_P0D_W071:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ae9340, 0x1aecb40	; census: opaque -- pcm: 7168 16-bit samples, entry 071
-Main_P0D_W072:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1aecb40, 0x1af0f40	; census: opaque -- pcm: 8704 16-bit samples, entry 072
-Main_P0D_W073:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1af0f40, 0x1af3140	; census: opaque -- pcm: 4352 16-bit samples, entry 073
-Main_P0D_W074:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1af3140, 0x1af5740	; census: opaque -- pcm: 4864 16-bit samples, entry 074
-Main_P0D_W075:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1af5740, 0x1af7140	; census: opaque -- pcm: 3328 16-bit samples, entry 075
-Main_P0D_W076:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1af7140, 0x1af8d40	; census: opaque -- pcm: 3584 16-bit samples, entry 076
-Main_P0D_W077:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1af8d40, 0x1afb540	; census: opaque -- pcm: 5120 16-bit samples, entry 077
-Main_P0D_W078:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1afb540, 0x1afc940	; census: opaque -- pcm: 2560 16-bit samples, entry 078
-Main_P0D_W079:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1afc940, 0x1afe140	; census: opaque -- pcm: 3072 16-bit samples, entry 079
-Main_P0D_W07A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1afe140, 0x1afee40	; census: opaque -- pcm: 1664 16-bit samples, entry 07A
-Main_P0D_W07B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1afee40, 0x1affe40	; census: opaque -- pcm: 2048 16-bit samples, entry 07B
-Main_P0D_W07C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1affe40, 0x1b00640	; census: opaque -- pcm: 1024 16-bit samples, entry 07C
-Main_P0D_W07D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b00640, 0x1b01740	; census: opaque -- pcm: 2176 16-bit samples, entry 07D
-Main_P0D_W07E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b01740, 0x1b04f40	; census: opaque -- pcm: 7168 16-bit samples, entry 07E
-Main_P0D_W07F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b04f40, 0x1b08740	; census: opaque -- pcm: 7168 16-bit samples, entry 07F
-Main_P0D_W080:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b08740, 0x1b0af40	; census: opaque -- pcm: 5120 16-bit samples, entry 080
-Main_P0D_W081:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b0af40, 0x1b0e340	; census: opaque -- pcm: 6656 16-bit samples, entry 081
-Main_P0D_W082:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b0e340, 0x1b10540	; census: opaque -- pcm: 4352 16-bit samples, entry 082
-Main_P0D_W083:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b10540, 0x1b12b40	; census: opaque -- pcm: 4864 16-bit samples, entry 083
-Main_P0D_W084:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b12b40, 0x1b14340	; census: opaque -- pcm: 3072 16-bit samples, entry 084
-Main_P0D_W085:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b14340, 0x1b15b40	; census: opaque -- pcm: 3072 16-bit samples, entry 085
-Main_P0D_W086:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b15b40, 0x1b1b340	; census: opaque -- pcm: 11264 16-bit samples, entry 086
-Main_P0D_W087:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b1b340, 0x1b22b40	; census: opaque -- pcm: 15360 16-bit samples, entry 087
-Main_P0D_W088:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b22b40, 0x1b26340	; census: opaque -- pcm: 7168 16-bit samples, entry 088
-Main_P0D_W089:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b26340, 0x1b2ab40	; census: opaque -- pcm: 9216 16-bit samples, entry 089
-Main_P0D_W08A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b2ab40, 0x1b2f740	; census: opaque -- pcm: 9728 16-bit samples, entry 08A
-Main_P0D_W08B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b2f740, 0x1b34f40	; census: opaque -- pcm: 11264 16-bit samples, entry 08B
-Main_P0D_W08C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b34f40, 0x1b3b740	; census: opaque -- pcm: 13312 16-bit samples, entry 08C
-Main_P0D_W08D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b3b740, 0x1b44b40	; census: opaque -- pcm: 18944 16-bit samples, entry 08D
-Main_P0D_W08E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b44b40, 0x1b4af40	; census: opaque -- pcm: 12800 16-bit samples, entry 08E
-Main_P0D_W08F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b4af40, 0x1b4ff40	; census: opaque -- pcm: 10240 16-bit samples, entry 08F
-Main_P0D_W090:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b4ff40, 0x1b55f40	; census: opaque -- pcm: 12288 16-bit samples, entry 090
-Main_P0D_W091:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b55f40, 0x1b59740	; census: opaque -- pcm: 7168 16-bit samples, entry 091
-Main_P0D_W092:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b59740, 0x1b5db40	; census: opaque -- pcm: 8704 16-bit samples, entry 092
-Main_P0D_W093:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b5db40, 0x1b61740	; census: opaque -- pcm: 7680 16-bit samples, entry 093
-Main_P0D_W094:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b61740, 0x1b66b40	; census: opaque -- pcm: 10752 16-bit samples, entry 094
-Main_P0D_W095:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b66b40, 0x1b6cb40	; census: opaque -- pcm: 12288 16-bit samples, entry 095
-Main_P0D_W096:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b6cb40, 0x1b74f40	; census: opaque -- pcm: 16896 16-bit samples, entry 096
-Main_P0D_W097:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b74f40, 0x1b78f40	; census: opaque -- pcm: 8192 16-bit samples, entry 097
-Main_P0D_W098:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b78f40, 0x1b7bb40	; census: opaque -- pcm: 5632 16-bit samples, entry 098
-Main_P0D_W099:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b7bb40, 0x1b7f740	; census: opaque -- pcm: 7680 16-bit samples, entry 099
-Main_P0D_W09A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b7f740, 0x1b83340	; census: opaque -- pcm: 7680 16-bit samples, entry 09A
-Main_P0D_W09B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b83340, 0x1b87b40	; census: opaque -- pcm: 9216 16-bit samples, entry 09B
-Main_P0D_W09C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b87b40, 0x1b8cb40	; census: opaque -- pcm: 10240 16-bit samples, entry 09C
-Main_P0D_W09D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b8cb40, 0x1b90340	; census: opaque -- pcm: 7168 16-bit samples, entry 09D
-Main_P0D_W09E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b90340, 0x1b94740	; census: opaque -- pcm: 8704 16-bit samples, entry 09E
-Main_P0D_W09F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b94740, 0x1b98340	; census: opaque -- pcm: 7680 16-bit samples, entry 09F
-Main_P0D_W0A0:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b98340, 0x1b9d740	; census: opaque -- pcm: 10752 16-bit samples, entry 0A0
-Main_P0D_W0A1:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1b9d740, 0x1ba3740	; census: opaque -- pcm: 12288 16-bit samples, entry 0A1
-Main_P0D_W0A2:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ba3740, 0x1babb40	; census: opaque -- pcm: 16896 16-bit samples, entry 0A2
-Main_P0D_W0A3:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1babb40, 0x1bb0b40	; census: opaque -- pcm: 10240 16-bit samples, entry 0A3
-Main_P0D_W0A4:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bb0b40, 0x1bb3b40	; census: opaque -- pcm: 6144 16-bit samples, entry 0A4
-Main_P0D_W0A5:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bb3b40, 0x1bb6f40	; census: opaque -- pcm: 6656 16-bit samples, entry 0A5
-Main_P0D_W0A6:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bb6f40, 0x1bb8b40	; census: opaque -- pcm: 3584 16-bit samples, entry 0A6
-Main_P0D_W0A7:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bb8b40, 0x1bb9640	; census: opaque -- pcm: 1408 16-bit samples, entry 0A7
-Main_P0D_W0A8:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bb9640, 0x1bb9fc0	; census: opaque -- pcm: 1216 16-bit samples, entry 0A8
-Main_P0D_W0A9:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bb9fc0, 0x1bba8c0	; census: opaque -- pcm: 1152 16-bit samples, entry 0A9
-Main_P0D_W0AA:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bba8c0, 0x1bbb140	; census: opaque -- pcm: 1088 16-bit samples, entry 0AA
-Main_P0D_W0AB:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bbb140, 0x1bd2380	; census: opaque -- pcm: 47392 16-bit samples, entry 0AB
-Main_P0D_W0AC:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1bd2380, 0x1be4fc0	; census: opaque -- pcm: 38432 16-bit samples, entry 0AC
-Main_P0D_W0AD:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1be4fc0, 0x1bfee00	; census: opaque -- pcm: 53024 16-bit samples, entry 0AD
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P0D_W000:	.incbin	"build/wav_pcm/main/Main_P0D_W000.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W000.wav: 9216 16-bit samples, entry 000
+Main_P0D_W001:	.incbin	"build/wav_pcm/main/Main_P0D_W001.pcm", 0, 22528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W001.wav: 11264 16-bit samples, entry 001
+Main_P0D_W002:	.incbin	"build/wav_pcm/main/Main_P0D_W002.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W002.wav: 7168 16-bit samples, entry 002
+Main_P0D_W003:	.incbin	"build/wav_pcm/main/Main_P0D_W003.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W003.wav: 7680 16-bit samples, entry 003
+Main_P0D_W004:	.incbin	"build/wav_pcm/main/Main_P0D_W004.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W004.wav: 3840 16-bit samples, entry 004
+Main_P0D_W005:	.incbin	"build/wav_pcm/main/Main_P0D_W005.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W005.wav: 2560 16-bit samples, entry 005
+Main_P0D_W006:	.incbin	"build/wav_pcm/main/Main_P0D_W006.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W006.wav: 2432 16-bit samples, entry 006
+Main_P0D_W007:	.incbin	"build/wav_pcm/main/Main_P0D_W007.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W007.wav: 6656 16-bit samples, entry 007
+Main_P0D_W008:	.incbin	"build/wav_pcm/main/Main_P0D_W008.pcm", 0, 16384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W008.wav: 8192 16-bit samples, entry 008
+Main_P0D_W009:	.incbin	"build/wav_pcm/main/Main_P0D_W009.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W009.wav: 5120 16-bit samples, entry 009
+Main_P0D_W00A:	.incbin	"build/wav_pcm/main/Main_P0D_W00A.pcm", 0, 11776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W00A.wav: 5888 16-bit samples, entry 00A
+Main_P0D_W00B:	.incbin	"build/wav_pcm/main/Main_P0D_W00B.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W00B.wav: 3840 16-bit samples, entry 00B
+Main_P0D_W00C:	.incbin	"build/wav_pcm/main/Main_P0D_W00C.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W00C.wav: 3840 16-bit samples, entry 00C
+Main_P0D_W00D:	.incbin	"build/wav_pcm/main/Main_P0D_W00D.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W00D.wav: 2176 16-bit samples, entry 00D
+Main_P0D_W00E:	.incbin	"build/wav_pcm/main/Main_P0D_W00E.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W00E.wav: 9216 16-bit samples, entry 00E
+Main_P0D_W00F:	.incbin	"build/wav_pcm/main/Main_P0D_W00F.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W00F.wav: 10240 16-bit samples, entry 00F
+Main_P0D_W010:	.incbin	"build/wav_pcm/main/Main_P0D_W010.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W010.wav: 5120 16-bit samples, entry 010
+Main_P0D_W011:	.incbin	"build/wav_pcm/main/Main_P0D_W011.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W011.wav: 6144 16-bit samples, entry 011
+Main_P0D_W012:	.incbin	"build/wav_pcm/main/Main_P0D_W012.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W012.wav: 3072 16-bit samples, entry 012
+Main_P0D_W013:	.incbin	"build/wav_pcm/main/Main_P0D_W013.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W013.wav: 3328 16-bit samples, entry 013
+Main_P0D_W014:	.incbin	"build/wav_pcm/main/Main_P0D_W014.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W014.wav: 1664 16-bit samples, entry 014
+Main_P0D_W015:	.incbin	"build/wav_pcm/main/Main_P0D_W015.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W015.wav: 7168 16-bit samples, entry 015
+Main_P0D_W016:	.incbin	"build/wav_pcm/main/Main_P0D_W016.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W016.wav: 7168 16-bit samples, entry 016
+Main_P0D_W017:	.incbin	"build/wav_pcm/main/Main_P0D_W017.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W017.wav: 4608 16-bit samples, entry 017
+Main_P0D_W018:	.incbin	"build/wav_pcm/main/Main_P0D_W018.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W018.wav: 4096 16-bit samples, entry 018
+Main_P0D_W019:	.incbin	"build/wav_pcm/main/Main_P0D_W019.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W019.wav: 2048 16-bit samples, entry 019
+Main_P0D_W01A:	.incbin	"build/wav_pcm/main/Main_P0D_W01A.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W01A.wav: 1792 16-bit samples, entry 01A
+Main_P0D_W01B:	.incbin	"build/wav_pcm/main/Main_P0D_W01B.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W01B.wav: 2304 16-bit samples, entry 01B
+Main_P0D_W01C:	.incbin	"build/wav_pcm/main/Main_P0D_W01C.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W01C.wav: 3584 16-bit samples, entry 01C
+Main_P0D_W01D:	.incbin	"build/wav_pcm/main/Main_P0D_W01D.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W01D.wav: 3072 16-bit samples, entry 01D
+Main_P0D_W01E:	.incbin	"build/wav_pcm/main/Main_P0D_W01E.pcm", 0, 3072	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W01E.wav: 1536 16-bit samples, entry 01E
+Main_P0D_W01F:	.incbin	"build/wav_pcm/main/Main_P0D_W01F.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W01F.wav: 1792 16-bit samples, entry 01F
+Main_P0D_W020:	.incbin	"build/wav_pcm/main/Main_P0D_W020.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W020.wav: 2048 16-bit samples, entry 020
+Main_P0D_W021:	.incbin	"build/wav_pcm/main/Main_P0D_W021.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W021.wav: 1792 16-bit samples, entry 021
+Main_P0D_W022:	.incbin	"build/wav_pcm/main/Main_P0D_W022.pcm", 0, 4608	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W022.wav: 2304 16-bit samples, entry 022
+Main_P0D_W023:	.incbin	"build/wav_pcm/main/Main_P0D_W023.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W023.wav: 7168 16-bit samples, entry 023
+Main_P0D_W024:	.incbin	"build/wav_pcm/main/Main_P0D_W024.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W024.wav: 6144 16-bit samples, entry 024
+Main_P0D_W025:	.incbin	"build/wav_pcm/main/Main_P0D_W025.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W025.wav: 4096 16-bit samples, entry 025
+Main_P0D_W026:	.incbin	"build/wav_pcm/main/Main_P0D_W026.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W026.wav: 3072 16-bit samples, entry 026
+Main_P0D_W027:	.incbin	"build/wav_pcm/main/Main_P0D_W027.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W027.wav: 3072 16-bit samples, entry 027
+Main_P0D_W028:	.incbin	"build/wav_pcm/main/Main_P0D_W028.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W028.wav: 3072 16-bit samples, entry 028
+Main_P0D_W029:	.incbin	"build/wav_pcm/main/Main_P0D_W029.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W029.wav: 3072 16-bit samples, entry 029
+Main_P0D_W02A:	.incbin	"build/wav_pcm/main/Main_P0D_W02A.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W02A.wav: 9216 16-bit samples, entry 02A
+Main_P0D_W02B:	.incbin	"build/wav_pcm/main/Main_P0D_W02B.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W02B.wav: 6144 16-bit samples, entry 02B
+Main_P0D_W02C:	.incbin	"build/wav_pcm/main/Main_P0D_W02C.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W02C.wav: 7680 16-bit samples, entry 02C
+Main_P0D_W02D:	.incbin	"build/wav_pcm/main/Main_P0D_W02D.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W02D.wav: 4352 16-bit samples, entry 02D
+Main_P0D_W02E:	.incbin	"build/wav_pcm/main/Main_P0D_W02E.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W02E.wav: 4864 16-bit samples, entry 02E
+Main_P0D_W02F:	.incbin	"build/wav_pcm/main/Main_P0D_W02F.pcm", 0, 6912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W02F.wav: 3456 16-bit samples, entry 02F
+Main_P0D_W030:	.incbin	"build/wav_pcm/main/Main_P0D_W030.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W030.wav: 2560 16-bit samples, entry 030
+Main_P0D_W031:	.incbin	"build/wav_pcm/main/Main_P0D_W031.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W031.wav: 3072 16-bit samples, entry 031
+Main_P0D_W032:	.incbin	"build/wav_pcm/main/Main_P0D_W032.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W032.wav: 2048 16-bit samples, entry 032
+Main_P0D_W033:	.incbin	"build/wav_pcm/main/Main_P0D_W033.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W033.wav: 2816 16-bit samples, entry 033
+Main_P0D_W034:	.incbin	"build/wav_pcm/main/Main_P0D_W034.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W034.wav: 1408 16-bit samples, entry 034
+Main_P0D_W035:	.incbin	"build/wav_pcm/main/Main_P0D_W035.pcm", 0, 2560	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W035.wav: 1280 16-bit samples, entry 035
+Main_P0D_W036:	.incbin	"build/wav_pcm/main/Main_P0D_W036.pcm", 0, 1536	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W036.wav: 768 16-bit samples, entry 036
+Main_P0D_W037:	.incbin	"build/wav_pcm/main/Main_P0D_W037.pcm", 0, 2304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W037.wav: 1152 16-bit samples, entry 037
+Main_P0D_W038:	.incbin	"build/wav_pcm/main/Main_P0D_W038.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W038.wav: 7168 16-bit samples, entry 038
+Main_P0D_W039:	.incbin	"build/wav_pcm/main/Main_P0D_W039.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W039.wav: 7168 16-bit samples, entry 039
+Main_P0D_W03A:	.incbin	"build/wav_pcm/main/Main_P0D_W03A.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W03A.wav: 4096 16-bit samples, entry 03A
+Main_P0D_W03B:	.incbin	"build/wav_pcm/main/Main_P0D_W03B.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W03B.wav: 3584 16-bit samples, entry 03B
+Main_P0D_W03C:	.incbin	"build/wav_pcm/main/Main_P0D_W03C.pcm", 0, 3584	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W03C.wav: 1792 16-bit samples, entry 03C
+Main_P0D_W03D:	.incbin	"build/wav_pcm/main/Main_P0D_W03D.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W03D.wav: 2048 16-bit samples, entry 03D
+Main_P0D_W03E:	.incbin	"build/wav_pcm/main/Main_P0D_W03E.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W03E.wav: 1408 16-bit samples, entry 03E
+Main_P0D_W03F:	.incbin	"build/wav_pcm/main/Main_P0D_W03F.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W03F.wav: 1408 16-bit samples, entry 03F
+Main_P0D_W040:	.incbin	"build/wav_pcm/main/Main_P0D_W040.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W040.wav: 7168 16-bit samples, entry 040
+Main_P0D_W041:	.incbin	"build/wav_pcm/main/Main_P0D_W041.pcm", 0, 16384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W041.wav: 8192 16-bit samples, entry 041
+Main_P0D_W042:	.incbin	"build/wav_pcm/main/Main_P0D_W042.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W042.wav: 4608 16-bit samples, entry 042
+Main_P0D_W043:	.incbin	"build/wav_pcm/main/Main_P0D_W043.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W043.wav: 5120 16-bit samples, entry 043
+Main_P0D_W044:	.incbin	"build/wav_pcm/main/Main_P0D_W044.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W044.wav: 3328 16-bit samples, entry 044
+Main_P0D_W045:	.incbin	"build/wav_pcm/main/Main_P0D_W045.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W045.wav: 3328 16-bit samples, entry 045
+Main_P0D_W046:	.incbin	"build/wav_pcm/main/Main_P0D_W046.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W046.wav: 2176 16-bit samples, entry 046
+Main_P0D_W047:	.incbin	"build/wav_pcm/main/Main_P0D_W047.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W047.wav: 4096 16-bit samples, entry 047
+Main_P0D_W048:	.incbin	"build/wav_pcm/main/Main_P0D_W048.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W048.wav: 5632 16-bit samples, entry 048
+Main_P0D_W049:	.incbin	"build/wav_pcm/main/Main_P0D_W049.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W049.wav: 3584 16-bit samples, entry 049
+Main_P0D_W04A:	.incbin	"build/wav_pcm/main/Main_P0D_W04A.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W04A.wav: 4096 16-bit samples, entry 04A
+Main_P0D_W04B:	.incbin	"build/wav_pcm/main/Main_P0D_W04B.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W04B.wav: 2816 16-bit samples, entry 04B
+Main_P0D_W04C:	.incbin	"build/wav_pcm/main/Main_P0D_W04C.pcm", 0, 3456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W04C.wav: 1728 16-bit samples, entry 04C
+Main_P0D_W04D:	.incbin	"build/wav_pcm/main/Main_P0D_W04D.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W04D.wav: 2048 16-bit samples, entry 04D
+Main_P0D_W04E:	.incbin	"build/wav_pcm/main/Main_P0D_W04E.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W04E.wav: 2560 16-bit samples, entry 04E
+Main_P0D_W04F:	.incbin	"build/wav_pcm/main/Main_P0D_W04F.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W04F.wav: 2816 16-bit samples, entry 04F
+Main_P0D_W050:	.incbin	"build/wav_pcm/main/Main_P0D_W050.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W050.wav: 2048 16-bit samples, entry 050
+Main_P0D_W051:	.incbin	"build/wav_pcm/main/Main_P0D_W051.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W051.wav: 2176 16-bit samples, entry 051
+Main_P0D_W052:	.incbin	"build/wav_pcm/main/Main_P0D_W052.pcm", 0, 4992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W052.wav: 2496 16-bit samples, entry 052
+Main_P0D_W053:	.incbin	"build/wav_pcm/main/Main_P0D_W053.pcm", 0, 6784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W053.wav: 3392 16-bit samples, entry 053
+Main_P0D_W054:	.incbin	"build/wav_pcm/main/Main_P0D_W054.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W054.wav: 5120 16-bit samples, entry 054
+Main_P0D_W055:	.incbin	"build/wav_pcm/main/Main_P0D_W055.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W055.wav: 6144 16-bit samples, entry 055
+Main_P0D_W056:	.incbin	"build/wav_pcm/main/Main_P0D_W056.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W056.wav: 4096 16-bit samples, entry 056
+Main_P0D_W057:	.incbin	"build/wav_pcm/main/Main_P0D_W057.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W057.wav: 4608 16-bit samples, entry 057
+Main_P0D_W058:	.incbin	"build/wav_pcm/main/Main_P0D_W058.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W058.wav: 2816 16-bit samples, entry 058
+Main_P0D_W059:	.incbin	"build/wav_pcm/main/Main_P0D_W059.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W059.wav: 2816 16-bit samples, entry 059
+Main_P0D_W05A:	.incbin	"build/wav_pcm/main/Main_P0D_W05A.pcm", 0, 3840	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W05A.wav: 1920 16-bit samples, entry 05A
+Main_P0D_W05B:	.incbin	"build/wav_pcm/main/Main_P0D_W05B.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W05B.wav: 5120 16-bit samples, entry 05B
+Main_P0D_W05C:	.incbin	"build/wav_pcm/main/Main_P0D_W05C.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W05C.wav: 7168 16-bit samples, entry 05C
+Main_P0D_W05D:	.incbin	"build/wav_pcm/main/Main_P0D_W05D.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W05D.wav: 3584 16-bit samples, entry 05D
+Main_P0D_W05E:	.incbin	"build/wav_pcm/main/Main_P0D_W05E.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W05E.wav: 4096 16-bit samples, entry 05E
+Main_P0D_W05F:	.incbin	"build/wav_pcm/main/Main_P0D_W05F.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W05F.wav: 5120 16-bit samples, entry 05F
+Main_P0D_W060:	.incbin	"build/wav_pcm/main/Main_P0D_W060.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W060.wav: 5120 16-bit samples, entry 060
+Main_P0D_W061:	.incbin	"build/wav_pcm/main/Main_P0D_W061.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W061.wav: 7168 16-bit samples, entry 061
+Main_P0D_W062:	.incbin	"build/wav_pcm/main/Main_P0D_W062.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W062.wav: 3584 16-bit samples, entry 062
+Main_P0D_W063:	.incbin	"build/wav_pcm/main/Main_P0D_W063.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W063.wav: 4096 16-bit samples, entry 063
+Main_P0D_W064:	.incbin	"build/wav_pcm/main/Main_P0D_W064.pcm", 0, 5632	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W064.wav: 2816 16-bit samples, entry 064
+Main_P0D_W065:	.incbin	"build/wav_pcm/main/Main_P0D_W065.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W065.wav: 3584 16-bit samples, entry 065
+Main_P0D_W066:	.incbin	"build/wav_pcm/main/Main_P0D_W066.pcm", 0, 4864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W066.wav: 2432 16-bit samples, entry 066
+Main_P0D_W067:	.incbin	"build/wav_pcm/main/Main_P0D_W067.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W067.wav: 2944 16-bit samples, entry 067
+Main_P0D_W068:	.incbin	"build/wav_pcm/main/Main_P0D_W068.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W068.wav: 3072 16-bit samples, entry 068
+Main_P0D_W069:	.incbin	"build/wav_pcm/main/Main_P0D_W069.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W069.wav: 5120 16-bit samples, entry 069
+Main_P0D_W06A:	.incbin	"build/wav_pcm/main/Main_P0D_W06A.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W06A.wav: 6144 16-bit samples, entry 06A
+Main_P0D_W06B:	.incbin	"build/wav_pcm/main/Main_P0D_W06B.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W06B.wav: 3584 16-bit samples, entry 06B
+Main_P0D_W06C:	.incbin	"build/wav_pcm/main/Main_P0D_W06C.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W06C.wav: 3584 16-bit samples, entry 06C
+Main_P0D_W06D:	.incbin	"build/wav_pcm/main/Main_P0D_W06D.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W06D.wav: 5120 16-bit samples, entry 06D
+Main_P0D_W06E:	.incbin	"build/wav_pcm/main/Main_P0D_W06E.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W06E.wav: 3328 16-bit samples, entry 06E
+Main_P0D_W06F:	.incbin	"build/wav_pcm/main/Main_P0D_W06F.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W06F.wav: 3840 16-bit samples, entry 06F
+Main_P0D_W070:	.incbin	"build/wav_pcm/main/Main_P0D_W070.pcm", 0, 22528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W070.wav: 11264 16-bit samples, entry 070
+Main_P0D_W071:	.incbin	"build/wav_pcm/main/Main_P0D_W071.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W071.wav: 7168 16-bit samples, entry 071
+Main_P0D_W072:	.incbin	"build/wav_pcm/main/Main_P0D_W072.pcm", 0, 17408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W072.wav: 8704 16-bit samples, entry 072
+Main_P0D_W073:	.incbin	"build/wav_pcm/main/Main_P0D_W073.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W073.wav: 4352 16-bit samples, entry 073
+Main_P0D_W074:	.incbin	"build/wav_pcm/main/Main_P0D_W074.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W074.wav: 4864 16-bit samples, entry 074
+Main_P0D_W075:	.incbin	"build/wav_pcm/main/Main_P0D_W075.pcm", 0, 6656	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W075.wav: 3328 16-bit samples, entry 075
+Main_P0D_W076:	.incbin	"build/wav_pcm/main/Main_P0D_W076.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W076.wav: 3584 16-bit samples, entry 076
+Main_P0D_W077:	.incbin	"build/wav_pcm/main/Main_P0D_W077.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W077.wav: 5120 16-bit samples, entry 077
+Main_P0D_W078:	.incbin	"build/wav_pcm/main/Main_P0D_W078.pcm", 0, 5120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W078.wav: 2560 16-bit samples, entry 078
+Main_P0D_W079:	.incbin	"build/wav_pcm/main/Main_P0D_W079.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W079.wav: 3072 16-bit samples, entry 079
+Main_P0D_W07A:	.incbin	"build/wav_pcm/main/Main_P0D_W07A.pcm", 0, 3328	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W07A.wav: 1664 16-bit samples, entry 07A
+Main_P0D_W07B:	.incbin	"build/wav_pcm/main/Main_P0D_W07B.pcm", 0, 4096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W07B.wav: 2048 16-bit samples, entry 07B
+Main_P0D_W07C:	.incbin	"build/wav_pcm/main/Main_P0D_W07C.pcm", 0, 2048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W07C.wav: 1024 16-bit samples, entry 07C
+Main_P0D_W07D:	.incbin	"build/wav_pcm/main/Main_P0D_W07D.pcm", 0, 4352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W07D.wav: 2176 16-bit samples, entry 07D
+Main_P0D_W07E:	.incbin	"build/wav_pcm/main/Main_P0D_W07E.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W07E.wav: 7168 16-bit samples, entry 07E
+Main_P0D_W07F:	.incbin	"build/wav_pcm/main/Main_P0D_W07F.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W07F.wav: 7168 16-bit samples, entry 07F
+Main_P0D_W080:	.incbin	"build/wav_pcm/main/Main_P0D_W080.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W080.wav: 5120 16-bit samples, entry 080
+Main_P0D_W081:	.incbin	"build/wav_pcm/main/Main_P0D_W081.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W081.wav: 6656 16-bit samples, entry 081
+Main_P0D_W082:	.incbin	"build/wav_pcm/main/Main_P0D_W082.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W082.wav: 4352 16-bit samples, entry 082
+Main_P0D_W083:	.incbin	"build/wav_pcm/main/Main_P0D_W083.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W083.wav: 4864 16-bit samples, entry 083
+Main_P0D_W084:	.incbin	"build/wav_pcm/main/Main_P0D_W084.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W084.wav: 3072 16-bit samples, entry 084
+Main_P0D_W085:	.incbin	"build/wav_pcm/main/Main_P0D_W085.pcm", 0, 6144	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W085.wav: 3072 16-bit samples, entry 085
+Main_P0D_W086:	.incbin	"build/wav_pcm/main/Main_P0D_W086.pcm", 0, 22528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W086.wav: 11264 16-bit samples, entry 086
+Main_P0D_W087:	.incbin	"build/wav_pcm/main/Main_P0D_W087.pcm", 0, 30720	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W087.wav: 15360 16-bit samples, entry 087
+Main_P0D_W088:	.incbin	"build/wav_pcm/main/Main_P0D_W088.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W088.wav: 7168 16-bit samples, entry 088
+Main_P0D_W089:	.incbin	"build/wav_pcm/main/Main_P0D_W089.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W089.wav: 9216 16-bit samples, entry 089
+Main_P0D_W08A:	.incbin	"build/wav_pcm/main/Main_P0D_W08A.pcm", 0, 19456	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W08A.wav: 9728 16-bit samples, entry 08A
+Main_P0D_W08B:	.incbin	"build/wav_pcm/main/Main_P0D_W08B.pcm", 0, 22528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W08B.wav: 11264 16-bit samples, entry 08B
+Main_P0D_W08C:	.incbin	"build/wav_pcm/main/Main_P0D_W08C.pcm", 0, 26624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W08C.wav: 13312 16-bit samples, entry 08C
+Main_P0D_W08D:	.incbin	"build/wav_pcm/main/Main_P0D_W08D.pcm", 0, 37888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W08D.wav: 18944 16-bit samples, entry 08D
+Main_P0D_W08E:	.incbin	"build/wav_pcm/main/Main_P0D_W08E.pcm", 0, 25600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W08E.wav: 12800 16-bit samples, entry 08E
+Main_P0D_W08F:	.incbin	"build/wav_pcm/main/Main_P0D_W08F.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W08F.wav: 10240 16-bit samples, entry 08F
+Main_P0D_W090:	.incbin	"build/wav_pcm/main/Main_P0D_W090.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W090.wav: 12288 16-bit samples, entry 090
+Main_P0D_W091:	.incbin	"build/wav_pcm/main/Main_P0D_W091.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W091.wav: 7168 16-bit samples, entry 091
+Main_P0D_W092:	.incbin	"build/wav_pcm/main/Main_P0D_W092.pcm", 0, 17408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W092.wav: 8704 16-bit samples, entry 092
+Main_P0D_W093:	.incbin	"build/wav_pcm/main/Main_P0D_W093.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W093.wav: 7680 16-bit samples, entry 093
+Main_P0D_W094:	.incbin	"build/wav_pcm/main/Main_P0D_W094.pcm", 0, 21504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W094.wav: 10752 16-bit samples, entry 094
+Main_P0D_W095:	.incbin	"build/wav_pcm/main/Main_P0D_W095.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W095.wav: 12288 16-bit samples, entry 095
+Main_P0D_W096:	.incbin	"build/wav_pcm/main/Main_P0D_W096.pcm", 0, 33792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W096.wav: 16896 16-bit samples, entry 096
+Main_P0D_W097:	.incbin	"build/wav_pcm/main/Main_P0D_W097.pcm", 0, 16384	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W097.wav: 8192 16-bit samples, entry 097
+Main_P0D_W098:	.incbin	"build/wav_pcm/main/Main_P0D_W098.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W098.wav: 5632 16-bit samples, entry 098
+Main_P0D_W099:	.incbin	"build/wav_pcm/main/Main_P0D_W099.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W099.wav: 7680 16-bit samples, entry 099
+Main_P0D_W09A:	.incbin	"build/wav_pcm/main/Main_P0D_W09A.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W09A.wav: 7680 16-bit samples, entry 09A
+Main_P0D_W09B:	.incbin	"build/wav_pcm/main/Main_P0D_W09B.pcm", 0, 18432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W09B.wav: 9216 16-bit samples, entry 09B
+Main_P0D_W09C:	.incbin	"build/wav_pcm/main/Main_P0D_W09C.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W09C.wav: 10240 16-bit samples, entry 09C
+Main_P0D_W09D:	.incbin	"build/wav_pcm/main/Main_P0D_W09D.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W09D.wav: 7168 16-bit samples, entry 09D
+Main_P0D_W09E:	.incbin	"build/wav_pcm/main/Main_P0D_W09E.pcm", 0, 17408	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W09E.wav: 8704 16-bit samples, entry 09E
+Main_P0D_W09F:	.incbin	"build/wav_pcm/main/Main_P0D_W09F.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W09F.wav: 7680 16-bit samples, entry 09F
+Main_P0D_W0A0:	.incbin	"build/wav_pcm/main/Main_P0D_W0A0.pcm", 0, 21504	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A0.wav: 10752 16-bit samples, entry 0A0
+Main_P0D_W0A1:	.incbin	"build/wav_pcm/main/Main_P0D_W0A1.pcm", 0, 24576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A1.wav: 12288 16-bit samples, entry 0A1
+Main_P0D_W0A2:	.incbin	"build/wav_pcm/main/Main_P0D_W0A2.pcm", 0, 33792	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A2.wav: 16896 16-bit samples, entry 0A2
+Main_P0D_W0A3:	.incbin	"build/wav_pcm/main/Main_P0D_W0A3.pcm", 0, 20480	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A3.wav: 10240 16-bit samples, entry 0A3
+Main_P0D_W0A4:	.incbin	"build/wav_pcm/main/Main_P0D_W0A4.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A4.wav: 6144 16-bit samples, entry 0A4
+Main_P0D_W0A5:	.incbin	"build/wav_pcm/main/Main_P0D_W0A5.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A5.wav: 6656 16-bit samples, entry 0A5
+Main_P0D_W0A6:	.incbin	"build/wav_pcm/main/Main_P0D_W0A6.pcm", 0, 7168	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A6.wav: 3584 16-bit samples, entry 0A6
+Main_P0D_W0A7:	.incbin	"build/wav_pcm/main/Main_P0D_W0A7.pcm", 0, 2816	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A7.wav: 1408 16-bit samples, entry 0A7
+Main_P0D_W0A8:	.incbin	"build/wav_pcm/main/Main_P0D_W0A8.pcm", 0, 2432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A8.wav: 1216 16-bit samples, entry 0A8
+Main_P0D_W0A9:	.incbin	"build/wav_pcm/main/Main_P0D_W0A9.pcm", 0, 2304	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0A9.wav: 1152 16-bit samples, entry 0A9
+Main_P0D_W0AA:	.incbin	"build/wav_pcm/main/Main_P0D_W0AA.pcm", 0, 2176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0AA.wav: 1088 16-bit samples, entry 0AA
+Main_P0D_W0AB:	.incbin	"build/wav_pcm/main/Main_P0D_W0AB.pcm", 0, 94784	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0AB.wav: 47392 16-bit samples, entry 0AB
+Main_P0D_W0AC:	.incbin	"build/wav_pcm/main/Main_P0D_W0AC.pcm", 0, 76864	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0AC.wav: 38432 16-bit samples, entry 0AC
+Main_P0D_W0AD:	.incbin	"build/wav_pcm/main/Main_P0D_W0AD.pcm", 0, 106048	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0D_W0AD.wav: 53024 16-bit samples, entry 0AD
 Main_P0D_Fill:	.space	4608, 0xff	; erased fill to the page end
 
 # ==== page 0x0E (selects 0x0E000-0x0E038): 57 entries (57 16-bit, 0 8-bit), 57 recordings ====
@@ -10977,64 +10980,64 @@ Main_P0E_R037:	.word	(Main_P0E_W037 - Main_P0E) / 32, LOOP_START | 256-125, LOOP
 Main_P0E_R038:	.word	(Main_P0E_W038 - Main_P0E) / 32, 256-128, 256-128, LOOP_START | 256-107, 256-128, 256-128, LOOP_END | 256-3
 	.align	4
 	.align	32
-# recordings
-Main_P0E_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c00480, 0x1c02c80	; census: opaque -- pcm: 5120 16-bit samples, entry 000
-Main_P0E_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c02c80, 0x1c06880	; census: opaque -- pcm: 7680 16-bit samples, entry 001
-Main_P0E_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c06880, 0x1c09c80	; census: opaque -- pcm: 6656 16-bit samples, entry 002
-Main_P0E_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c09c80, 0x1c0d480	; census: opaque -- pcm: 7168 16-bit samples, entry 003
-Main_P0E_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c0d480, 0x1c0f680	; census: opaque -- pcm: 4352 16-bit samples, entry 004
-Main_P0E_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c0f680, 0x1c11a80	; census: opaque -- pcm: 4608 16-bit samples, entry 005
-Main_P0E_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c11a80, 0x1c14080	; census: opaque -- pcm: 4864 16-bit samples, entry 006
-Main_P0E_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c14080, 0x1c16680	; census: opaque -- pcm: 4864 16-bit samples, entry 007
-Main_P0E_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c16680, 0x1c18e80	; census: opaque -- pcm: 5120 16-bit samples, entry 008
-Main_P0E_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c18e80, 0x1c1ba80	; census: opaque -- pcm: 5632 16-bit samples, entry 009
-Main_P0E_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c1ba80, 0x1c1d180	; census: opaque -- pcm: 2944 16-bit samples, entry 00A
-Main_P0E_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c1d180, 0x1c1e880	; census: opaque -- pcm: 2944 16-bit samples, entry 00B
-Main_P0E_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c1e880, 0x1c20380	; census: opaque -- pcm: 3456 16-bit samples, entry 00C
-Main_P0E_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c20380, 0x1c22480	; census: opaque -- pcm: 4224 16-bit samples, entry 00D
-Main_P0E_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c22480, 0x1c24380	; census: opaque -- pcm: 3968 16-bit samples, entry 00E
-Main_P0E_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c24380, 0x1c25600	; census: opaque -- pcm: 2368 16-bit samples, entry 00F
-Main_P0E_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c25600, 0x1c28e00	; census: opaque -- pcm: 7168 16-bit samples, entry 010
-Main_P0E_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c28e00, 0x1c2c200	; census: opaque -- pcm: 6656 16-bit samples, entry 011
-Main_P0E_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c2c200, 0x1c2fa00	; census: opaque -- pcm: 7168 16-bit samples, entry 012
-Main_P0E_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c2fa00, 0x1c33600	; census: opaque -- pcm: 7680 16-bit samples, entry 013
-Main_P0E_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c33600, 0x1c35600	; census: opaque -- pcm: 4096 16-bit samples, entry 014
-Main_P0E_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c35600, 0x1c37a00	; census: opaque -- pcm: 4608 16-bit samples, entry 015
-Main_P0E_W016:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c37a00, 0x1c3a000	; census: opaque -- pcm: 4864 16-bit samples, entry 016
-Main_P0E_W017:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c3a000, 0x1c3c800	; census: opaque -- pcm: 5120 16-bit samples, entry 017
-Main_P0E_W018:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c3c800, 0x1c3f800	; census: opaque -- pcm: 6144 16-bit samples, entry 018
-Main_P0E_W019:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c3f800, 0x1c40f00	; census: opaque -- pcm: 2944 16-bit samples, entry 019
-Main_P0E_W01A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c40f00, 0x1c42800	; census: opaque -- pcm: 3200 16-bit samples, entry 01A
-Main_P0E_W01B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c42800, 0x1c44600	; census: opaque -- pcm: 3840 16-bit samples, entry 01B
-Main_P0E_W01C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c44600, 0x1c46300	; census: opaque -- pcm: 3712 16-bit samples, entry 01C
-Main_P0E_W01D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c46300, 0x1c48300	; census: opaque -- pcm: 4096 16-bit samples, entry 01D
-Main_P0E_W01E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c48300, 0x1c4a300	; census: opaque -- pcm: 4096 16-bit samples, entry 01E
-Main_P0E_W01F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c4a300, 0x1c4c300	; census: opaque -- pcm: 4096 16-bit samples, entry 01F
-Main_P0E_W020:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c4c300, 0x1c67b40	; census: opaque -- pcm: 56352 16-bit samples, entry 020
-Main_P0E_W021:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c67b40, 0x1c77780	; census: opaque -- pcm: 32288 16-bit samples, entry 021
-Main_P0E_W022:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c77780, 0x1c889c0	; census: opaque -- pcm: 35104 16-bit samples, entry 022
-Main_P0E_W023:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c889c0, 0x1c9e600	; census: opaque -- pcm: 44576 16-bit samples, entry 023
-Main_P0E_W024:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1c9e600, 0x1cabe40	; census: opaque -- pcm: 27680 16-bit samples, entry 024
-Main_P0E_W025:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cabe40, 0x1cbc280	; census: opaque -- pcm: 33312 16-bit samples, entry 025
-Main_P0E_W026:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cbc280, 0x1cca6c0	; census: opaque -- pcm: 29216 16-bit samples, entry 026
-Main_P0E_W027:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cca6c0, 0x1cdd400	; census: opaque -- pcm: 38560 16-bit samples, entry 027
-Main_P0E_W028:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cdd400, 0x1cece40	; census: opaque -- pcm: 32032 16-bit samples, entry 028
-Main_P0E_W029:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cece40, 0x1cfc880	; census: opaque -- pcm: 32032 16-bit samples, entry 029
-Main_P0E_W02A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1cfc880, 0x1d0c2c0	; census: opaque -- pcm: 32032 16-bit samples, entry 02A
-Main_P0E_W02B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d0c2c0, 0x1d1bd00	; census: opaque -- pcm: 32032 16-bit samples, entry 02B
-Main_P0E_W02C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d1bd00, 0x1d2c240	; census: opaque -- pcm: 33440 16-bit samples, entry 02C
-Main_P0E_W02D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d2c240, 0x1d3fa80	; census: opaque -- pcm: 39968 16-bit samples, entry 02D
-Main_P0E_W02E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d3fa80, 0x1d4fac0	; census: opaque -- pcm: 32800 16-bit samples, entry 02E
-Main_P0E_W02F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d4fac0, 0x1d64700	; census: opaque -- pcm: 42528 16-bit samples, entry 02F
-Main_P0E_W030:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d64700, 0x1d74340	; census: opaque -- pcm: 32288 16-bit samples, entry 030
-Main_P0E_W031:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d74340, 0x1d83b80	; census: opaque -- pcm: 31776 16-bit samples, entry 031
-Main_P0E_W032:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d83b80, 0x1d951c0	; census: opaque -- pcm: 35616 16-bit samples, entry 032
-Main_P0E_W033:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1d951c0, 0x1da4e00	; census: opaque -- pcm: 32288 16-bit samples, entry 033
-Main_P0E_W034:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1da4e00, 0x1db6140	; census: opaque -- pcm: 35232 16-bit samples, entry 034
-Main_P0E_W035:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1db6140, 0x1dc7480	; census: opaque -- pcm: 35232 16-bit samples, entry 035
-Main_P0E_W036:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1dc7480, 0x1dd6ec0	; census: opaque -- pcm: 32032 16-bit samples, entry 036
-Main_P0E_W037:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1dd6ec0, 0x1de6900	; census: opaque -- pcm: 32032 16-bit samples, entry 037
-Main_P0E_W038:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1de6900, 0x1dfa080	; census: opaque -- pcm: 39872 16-bit samples, entry 038
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P0E_W000:	.incbin	"build/wav_pcm/main/Main_P0E_W000.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W000.wav: 5120 16-bit samples, entry 000
+Main_P0E_W001:	.incbin	"build/wav_pcm/main/Main_P0E_W001.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W001.wav: 7680 16-bit samples, entry 001
+Main_P0E_W002:	.incbin	"build/wav_pcm/main/Main_P0E_W002.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W002.wav: 6656 16-bit samples, entry 002
+Main_P0E_W003:	.incbin	"build/wav_pcm/main/Main_P0E_W003.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W003.wav: 7168 16-bit samples, entry 003
+Main_P0E_W004:	.incbin	"build/wav_pcm/main/Main_P0E_W004.pcm", 0, 8704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W004.wav: 4352 16-bit samples, entry 004
+Main_P0E_W005:	.incbin	"build/wav_pcm/main/Main_P0E_W005.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W005.wav: 4608 16-bit samples, entry 005
+Main_P0E_W006:	.incbin	"build/wav_pcm/main/Main_P0E_W006.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W006.wav: 4864 16-bit samples, entry 006
+Main_P0E_W007:	.incbin	"build/wav_pcm/main/Main_P0E_W007.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W007.wav: 4864 16-bit samples, entry 007
+Main_P0E_W008:	.incbin	"build/wav_pcm/main/Main_P0E_W008.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W008.wav: 5120 16-bit samples, entry 008
+Main_P0E_W009:	.incbin	"build/wav_pcm/main/Main_P0E_W009.pcm", 0, 11264	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W009.wav: 5632 16-bit samples, entry 009
+Main_P0E_W00A:	.incbin	"build/wav_pcm/main/Main_P0E_W00A.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W00A.wav: 2944 16-bit samples, entry 00A
+Main_P0E_W00B:	.incbin	"build/wav_pcm/main/Main_P0E_W00B.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W00B.wav: 2944 16-bit samples, entry 00B
+Main_P0E_W00C:	.incbin	"build/wav_pcm/main/Main_P0E_W00C.pcm", 0, 6912	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W00C.wav: 3456 16-bit samples, entry 00C
+Main_P0E_W00D:	.incbin	"build/wav_pcm/main/Main_P0E_W00D.pcm", 0, 8448	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W00D.wav: 4224 16-bit samples, entry 00D
+Main_P0E_W00E:	.incbin	"build/wav_pcm/main/Main_P0E_W00E.pcm", 0, 7936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W00E.wav: 3968 16-bit samples, entry 00E
+Main_P0E_W00F:	.incbin	"build/wav_pcm/main/Main_P0E_W00F.pcm", 0, 4736	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W00F.wav: 2368 16-bit samples, entry 00F
+Main_P0E_W010:	.incbin	"build/wav_pcm/main/Main_P0E_W010.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W010.wav: 7168 16-bit samples, entry 010
+Main_P0E_W011:	.incbin	"build/wav_pcm/main/Main_P0E_W011.pcm", 0, 13312	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W011.wav: 6656 16-bit samples, entry 011
+Main_P0E_W012:	.incbin	"build/wav_pcm/main/Main_P0E_W012.pcm", 0, 14336	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W012.wav: 7168 16-bit samples, entry 012
+Main_P0E_W013:	.incbin	"build/wav_pcm/main/Main_P0E_W013.pcm", 0, 15360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W013.wav: 7680 16-bit samples, entry 013
+Main_P0E_W014:	.incbin	"build/wav_pcm/main/Main_P0E_W014.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W014.wav: 4096 16-bit samples, entry 014
+Main_P0E_W015:	.incbin	"build/wav_pcm/main/Main_P0E_W015.pcm", 0, 9216	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W015.wav: 4608 16-bit samples, entry 015
+Main_P0E_W016:	.incbin	"build/wav_pcm/main/Main_P0E_W016.pcm", 0, 9728	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W016.wav: 4864 16-bit samples, entry 016
+Main_P0E_W017:	.incbin	"build/wav_pcm/main/Main_P0E_W017.pcm", 0, 10240	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W017.wav: 5120 16-bit samples, entry 017
+Main_P0E_W018:	.incbin	"build/wav_pcm/main/Main_P0E_W018.pcm", 0, 12288	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W018.wav: 6144 16-bit samples, entry 018
+Main_P0E_W019:	.incbin	"build/wav_pcm/main/Main_P0E_W019.pcm", 0, 5888	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W019.wav: 2944 16-bit samples, entry 019
+Main_P0E_W01A:	.incbin	"build/wav_pcm/main/Main_P0E_W01A.pcm", 0, 6400	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W01A.wav: 3200 16-bit samples, entry 01A
+Main_P0E_W01B:	.incbin	"build/wav_pcm/main/Main_P0E_W01B.pcm", 0, 7680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W01B.wav: 3840 16-bit samples, entry 01B
+Main_P0E_W01C:	.incbin	"build/wav_pcm/main/Main_P0E_W01C.pcm", 0, 7424	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W01C.wav: 3712 16-bit samples, entry 01C
+Main_P0E_W01D:	.incbin	"build/wav_pcm/main/Main_P0E_W01D.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W01D.wav: 4096 16-bit samples, entry 01D
+Main_P0E_W01E:	.incbin	"build/wav_pcm/main/Main_P0E_W01E.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W01E.wav: 4096 16-bit samples, entry 01E
+Main_P0E_W01F:	.incbin	"build/wav_pcm/main/Main_P0E_W01F.pcm", 0, 8192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W01F.wav: 4096 16-bit samples, entry 01F
+Main_P0E_W020:	.incbin	"build/wav_pcm/main/Main_P0E_W020.pcm", 0, 112704	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W020.wav: 56352 16-bit samples, entry 020
+Main_P0E_W021:	.incbin	"build/wav_pcm/main/Main_P0E_W021.pcm", 0, 64576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W021.wav: 32288 16-bit samples, entry 021
+Main_P0E_W022:	.incbin	"build/wav_pcm/main/Main_P0E_W022.pcm", 0, 70208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W022.wav: 35104 16-bit samples, entry 022
+Main_P0E_W023:	.incbin	"build/wav_pcm/main/Main_P0E_W023.pcm", 0, 89152	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W023.wav: 44576 16-bit samples, entry 023
+Main_P0E_W024:	.incbin	"build/wav_pcm/main/Main_P0E_W024.pcm", 0, 55360	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W024.wav: 27680 16-bit samples, entry 024
+Main_P0E_W025:	.incbin	"build/wav_pcm/main/Main_P0E_W025.pcm", 0, 66624	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W025.wav: 33312 16-bit samples, entry 025
+Main_P0E_W026:	.incbin	"build/wav_pcm/main/Main_P0E_W026.pcm", 0, 58432	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W026.wav: 29216 16-bit samples, entry 026
+Main_P0E_W027:	.incbin	"build/wav_pcm/main/Main_P0E_W027.pcm", 0, 77120	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W027.wav: 38560 16-bit samples, entry 027
+Main_P0E_W028:	.incbin	"build/wav_pcm/main/Main_P0E_W028.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W028.wav: 32032 16-bit samples, entry 028
+Main_P0E_W029:	.incbin	"build/wav_pcm/main/Main_P0E_W029.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W029.wav: 32032 16-bit samples, entry 029
+Main_P0E_W02A:	.incbin	"build/wav_pcm/main/Main_P0E_W02A.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W02A.wav: 32032 16-bit samples, entry 02A
+Main_P0E_W02B:	.incbin	"build/wav_pcm/main/Main_P0E_W02B.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W02B.wav: 32032 16-bit samples, entry 02B
+Main_P0E_W02C:	.incbin	"build/wav_pcm/main/Main_P0E_W02C.pcm", 0, 66880	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W02C.wav: 33440 16-bit samples, entry 02C
+Main_P0E_W02D:	.incbin	"build/wav_pcm/main/Main_P0E_W02D.pcm", 0, 79936	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W02D.wav: 39968 16-bit samples, entry 02D
+Main_P0E_W02E:	.incbin	"build/wav_pcm/main/Main_P0E_W02E.pcm", 0, 65600	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W02E.wav: 32800 16-bit samples, entry 02E
+Main_P0E_W02F:	.incbin	"build/wav_pcm/main/Main_P0E_W02F.pcm", 0, 85056	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W02F.wav: 42528 16-bit samples, entry 02F
+Main_P0E_W030:	.incbin	"build/wav_pcm/main/Main_P0E_W030.pcm", 0, 64576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W030.wav: 32288 16-bit samples, entry 030
+Main_P0E_W031:	.incbin	"build/wav_pcm/main/Main_P0E_W031.pcm", 0, 63552	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W031.wav: 31776 16-bit samples, entry 031
+Main_P0E_W032:	.incbin	"build/wav_pcm/main/Main_P0E_W032.pcm", 0, 71232	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W032.wav: 35616 16-bit samples, entry 032
+Main_P0E_W033:	.incbin	"build/wav_pcm/main/Main_P0E_W033.pcm", 0, 64576	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W033.wav: 32288 16-bit samples, entry 033
+Main_P0E_W034:	.incbin	"build/wav_pcm/main/Main_P0E_W034.pcm", 0, 70464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W034.wav: 35232 16-bit samples, entry 034
+Main_P0E_W035:	.incbin	"build/wav_pcm/main/Main_P0E_W035.pcm", 0, 70464	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W035.wav: 35232 16-bit samples, entry 035
+Main_P0E_W036:	.incbin	"build/wav_pcm/main/Main_P0E_W036.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W036.wav: 32032 16-bit samples, entry 036
+Main_P0E_W037:	.incbin	"build/wav_pcm/main/Main_P0E_W037.pcm", 0, 64064	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W037.wav: 32032 16-bit samples, entry 037
+Main_P0E_W038:	.incbin	"build/wav_pcm/main/Main_P0E_W038.pcm", 0, 79744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0E_W038.wav: 39872 16-bit samples, entry 038
 Main_P0E_Fill:	.space	24448, 0xff	; erased fill to the page end
 
 # ==== page 0x0F (selects 0x0F000-0x0F015): 22 entries (22 16-bit, 0 8-bit), 22 recordings ====
@@ -11109,27 +11112,27 @@ Main_P0F_R014:	.word	(Main_P0F_W014 - Main_P0F) / 32, LOOP_START | 256-113, 256-
 Main_P0F_R015:	.word	(Main_P0F_W015 - Main_P0F) / 32, 256-128, LOOP_START | 256-29, 256-128, 256-128, 256-128, 256-128, 256-128, 256-128, 256-128, LOOP_END | 256-123
 	.align	4
 	.align	32
-# recordings
-Main_P0F_W000:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e001a0, 0x1e161e0	; census: opaque -- pcm: 45088 16-bit samples, entry 000
-Main_P0F_W001:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e161e0, 0x1e27a20	; census: opaque -- pcm: 35872 16-bit samples, entry 001
-Main_P0F_W002:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e27a20, 0x1e38c60	; census: opaque -- pcm: 35104 16-bit samples, entry 002
-Main_P0F_W003:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e38c60, 0x1e496a0	; census: opaque -- pcm: 34080 16-bit samples, entry 003
-Main_P0F_W004:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e496a0, 0x1e584e0	; census: opaque -- pcm: 30496 16-bit samples, entry 004
-Main_P0F_W005:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e584e0, 0x1e67320	; census: opaque -- pcm: 30496 16-bit samples, entry 005
-Main_P0F_W006:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e67320, 0x1e75a60	; census: opaque -- pcm: 29600 16-bit samples, entry 006
-Main_P0F_W007:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e75a60, 0x1e840a0	; census: opaque -- pcm: 29472 16-bit samples, entry 007
-Main_P0F_W008:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e840a0, 0x1e927e0	; census: opaque -- pcm: 29600 16-bit samples, entry 008
-Main_P0F_W009:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1e927e0, 0x1ea17a0	; census: opaque -- pcm: 30688 16-bit samples, entry 009
-Main_P0F_W00A:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ea17a0, 0x1ec1fe0	; census: opaque -- pcm: 66592 16-bit samples, entry 00A
-Main_P0F_W00B:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ec1fe0, 0x1edd420	; census: opaque -- pcm: 55840 16-bit samples, entry 00B
-Main_P0F_W00C:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1edd420, 0x1ef9460	; census: opaque -- pcm: 57376 16-bit samples, entry 00C
-Main_P0F_W00D:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1ef9460, 0x1f14aa0	; census: opaque -- pcm: 56096 16-bit samples, entry 00D
-Main_P0F_W00E:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1f14aa0, 0x1f30ee0	; census: opaque -- pcm: 57888 16-bit samples, entry 00E
-Main_P0F_W00F:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1f30ee0, 0x1f4c520	; census: opaque -- pcm: 56096 16-bit samples, entry 00F
-Main_P0F_W010:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1f4c520, 0x1f6b360	; census: opaque -- pcm: 63264 16-bit samples, entry 010
-Main_P0F_W011:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1f6b360, 0x1f876a0	; census: opaque -- pcm: 57760 16-bit samples, entry 011
-Main_P0F_W012:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1f876a0, 0x1fa2ae0	; census: opaque -- pcm: 55840 16-bit samples, entry 012
-Main_P0F_W013:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1fa2ae0, 0x1fbd220	; census: opaque -- pcm: 54176 16-bit samples, entry 013
-Main_P0F_W014:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1fbd220, 0x1fd7860	; census: opaque -- pcm: 54048 16-bit samples, entry 014
-Main_P0F_W015:	.incbin_range "baserom/kn7000_wave_main.bin", 0x1fd7860, 0x1ffc500	; census: opaque -- pcm: 75344 16-bit samples, entry 015
+# recordings: one WAV file each, wav/main/ (make wave-wav), through ../scripts/build/pcm_wav.py
+Main_P0F_W000:	.incbin	"build/wav_pcm/main/Main_P0F_W000.pcm", 0, 90176	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W000.wav: 45088 16-bit samples, entry 000
+Main_P0F_W001:	.incbin	"build/wav_pcm/main/Main_P0F_W001.pcm", 0, 71744	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W001.wav: 35872 16-bit samples, entry 001
+Main_P0F_W002:	.incbin	"build/wav_pcm/main/Main_P0F_W002.pcm", 0, 70208	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W002.wav: 35104 16-bit samples, entry 002
+Main_P0F_W003:	.incbin	"build/wav_pcm/main/Main_P0F_W003.pcm", 0, 68160	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W003.wav: 34080 16-bit samples, entry 003
+Main_P0F_W004:	.incbin	"build/wav_pcm/main/Main_P0F_W004.pcm", 0, 60992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W004.wav: 30496 16-bit samples, entry 004
+Main_P0F_W005:	.incbin	"build/wav_pcm/main/Main_P0F_W005.pcm", 0, 60992	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W005.wav: 30496 16-bit samples, entry 005
+Main_P0F_W006:	.incbin	"build/wav_pcm/main/Main_P0F_W006.pcm", 0, 59200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W006.wav: 29600 16-bit samples, entry 006
+Main_P0F_W007:	.incbin	"build/wav_pcm/main/Main_P0F_W007.pcm", 0, 58944	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W007.wav: 29472 16-bit samples, entry 007
+Main_P0F_W008:	.incbin	"build/wav_pcm/main/Main_P0F_W008.pcm", 0, 59200	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W008.wav: 29600 16-bit samples, entry 008
+Main_P0F_W009:	.incbin	"build/wav_pcm/main/Main_P0F_W009.pcm", 0, 61376	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W009.wav: 30688 16-bit samples, entry 009
+Main_P0F_W00A:	.incbin	"build/wav_pcm/main/Main_P0F_W00A.pcm", 0, 133184	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W00A.wav: 66592 16-bit samples, entry 00A
+Main_P0F_W00B:	.incbin	"build/wav_pcm/main/Main_P0F_W00B.pcm", 0, 111680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W00B.wav: 55840 16-bit samples, entry 00B
+Main_P0F_W00C:	.incbin	"build/wav_pcm/main/Main_P0F_W00C.pcm", 0, 114752	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W00C.wav: 57376 16-bit samples, entry 00C
+Main_P0F_W00D:	.incbin	"build/wav_pcm/main/Main_P0F_W00D.pcm", 0, 112192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W00D.wav: 56096 16-bit samples, entry 00D
+Main_P0F_W00E:	.incbin	"build/wav_pcm/main/Main_P0F_W00E.pcm", 0, 115776	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W00E.wav: 57888 16-bit samples, entry 00E
+Main_P0F_W00F:	.incbin	"build/wav_pcm/main/Main_P0F_W00F.pcm", 0, 112192	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W00F.wav: 56096 16-bit samples, entry 00F
+Main_P0F_W010:	.incbin	"build/wav_pcm/main/Main_P0F_W010.pcm", 0, 126528	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W010.wav: 63264 16-bit samples, entry 010
+Main_P0F_W011:	.incbin	"build/wav_pcm/main/Main_P0F_W011.pcm", 0, 115520	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W011.wav: 57760 16-bit samples, entry 011
+Main_P0F_W012:	.incbin	"build/wav_pcm/main/Main_P0F_W012.pcm", 0, 111680	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W012.wav: 55840 16-bit samples, entry 012
+Main_P0F_W013:	.incbin	"build/wav_pcm/main/Main_P0F_W013.pcm", 0, 108352	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W013.wav: 54176 16-bit samples, entry 013
+Main_P0F_W014:	.incbin	"build/wav_pcm/main/Main_P0F_W014.pcm", 0, 108096	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W014.wav: 54048 16-bit samples, entry 014
+Main_P0F_W015:	.incbin	"build/wav_pcm/main/Main_P0F_W015.pcm", 0, 150688	; census: generated -- ../scripts/build/pcm_wav.py, from wav/main/Main_P0F_W015.wav: 75344 16-bit samples, entry 015
 Main_P0F_Fill:	.space	15104, 0xff	; erased fill to the page end
