@@ -326,9 +326,9 @@ crt0_start:
 	mov	0xff, d0
 	movbu	d0, (0x36008064)
 	mov	0x20000070, a0
-	.byte	0xfc, 0xcc, 0x30, 0x00, 0x00, 0x00	# mov 0x00000030, d0
+	mov	0x00000030:32, d0
 	mov	d0, (a0)
-	.byte	0xfc, 0xcc, 0x03, 0x00, 0x00, 0x00	# mov 0x00000003, d0
+	mov	0x00000003:32, d0
 	mov	d0, (a0)
 	nop
 	mov	0x497, d0
@@ -437,7 +437,7 @@ func_4C000350_L5b:
 	movhu	(a0), d0
 	btst	0x04, d0
 	lne
-	.byte	0xfa, 0xe5, 0x10, 0x00	# or 0x0010, d1
+	or	0x0010:16, d1
 	mov	d1, (a0)
 	or	0x01, d1
 	movhu	d1, (a0)
@@ -456,7 +456,7 @@ func_4C000350_L5b:
 	mov	(a0), d0
 	btst	0x08, d0
 	lne
-	.byte	0xfa, 0xe5, 0x20, 0x00	# or 0x0020, d1
+	or	0x0020:16, d1
 	mov	d1, (a0)
 	or	0x02, d1
 	movhu	d1, (a0)
@@ -531,7 +531,7 @@ DCacheFlushDisable_L51:
 	mov	(a0), d0
 	btst	0x08, d0
 	lne
-	.byte	0xfa, 0xe5, 0x20, 0x00	# or 0x0020, d1
+	or	0x0020:16, d1
 	mov	d1, (a0)
 	ret	0, 0
 
@@ -22832,7 +22832,7 @@ AcListBoxProc_L225:
 	call	GetViewInstance, 0, 0
 	mov	(0x30, a0), a1
 	mov	(0x30, sp), a0
-	.byte	0xdd, 0x2d, 0x80, 0xff, 0xff, 0x20, 0x04	# call 0x4c004260, [a2], 4
+	call	strcpy_entry:32, [a2], 4
 	clr	d0
 	bra	AcListBoxProc_L246
 AcListBoxProc_L23b:
@@ -23025,7 +23025,7 @@ PsGridBoxProc_L18b:
 	add	-1, d0
 	movhu	d0, (0x60, sp)
 	mov	a3, a0
-	.byte	0xdd, 0x04, 0x80, 0xff, 0xff, 0x00, 0x00	# call 0x4c0043fa, 0, 0
+	call	LibStrlen:32, 0, 0
 	exth	d3
 	mov	d0, d1
 	movhu	(0x16c, sp), d0
@@ -29280,7 +29280,7 @@ PsPageBoxProc_L123:
 	add	0x28, a3
 	mov	(0x4c, sp), d0
 	mov	a3, a0
-	.byte	0xdd, 0x0a, 0x80, 0xff, 0xff, 0x30, 0x24	# call 0x4c008243, [a2,a3], 0x24
+	call	GetClientBox_entry:32, [a2,a3], 0x24
 	mov	sp, a2
 	add	0x30, a2
 	mov	a3, a0
@@ -29631,7 +29631,7 @@ PsToggleBoxProc_L1d4:
 	mov	(0x20, sp), a0
 	mov	(0x24, sp), d0
 	mov	0xff, d1
-	.byte	0xdd, 0xc1, 0x7f, 0x00, 0x00, 0xf0, 0x10	# call 0x4c01856c, [d2,d3,a2,a3], 0x10
+	call	DrawStringCentered_entry:32, [d2,d3,a2,a3], 0x10
 	bra	PsToggleBoxProc_L22f
 PsToggleBoxProc_L1f2:
 	mov	d3, a0
@@ -35481,7 +35481,7 @@ AcChordBoxProc_Lb5:
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	(0x4c, sp), d0
-	.byte	0xdd, 0xf2, 0x7f, 0x00, 0x00, 0xc0, 0x24	# call 0x4c01be3b, [d2,d3], 0x24
+	call	SendEvent_entry:32, [d2,d3], 0x24
 	mov	d0, d1
 	mov	(0x24, sp), d0
 	exth	d1
@@ -44535,10 +44535,10 @@ DrawStringCentered_entry:
 	call	CalcTotalWidth_entry, [d2,d3,a2,a3], 0x24
 	mov	d0, a2
 	mov	(0x154, sp), d0
-	.byte	0xdd, 0xde, 0x7f, 0x00, 0x00, 0x00, 0x00	# call 0x4c020589, 0, 0
+	call	GetCharHeight:32, 0, 0
 	movhu	d0, (0x28, sp)
 	mov	(0x154, sp), d0
-	.byte	0xdd, 0xe3, 0x7f, 0x00, 0x00, 0x00, 0x00	# call 0x4c02059c, 0, 0
+	call	GetCharDescent:32, 0, 0
 	mov	(0x14c, sp), a0
 	mov	sp, a1
 	add	0x12c, a1
@@ -44666,7 +44666,7 @@ DrawStringRightJustify_entry:
 	call	ConvertStrings_entry, [d2,d3,a2,a3], 0x20
 	mov	(0x20, sp), a0
 	mov	(0x14c, sp), d0
-	.byte	0xdd, 0xfb, 0x7f, 0x00, 0x00, 0xf0, 0x24	# call 0x4c0206e9, [d2,d3,a2,a3], 0x24
+	call	CalcTotalWidth_entry:32, [d2,d3,a2,a3], 0x24
 	mov	d0, d2
 	mov	(0x14c, sp), d0
 	call	GetCharHeight, 0, 0
@@ -66794,7 +66794,7 @@ EasySetControl_entry_L16d:
 	mov	(0xc, a0), d0
 	mov	d1, (0x10, sp)
 	mov	d2, d1
-	.byte	0xdd, 0x4e, 0x80, 0xff, 0xff, 0xc0, 0x24	# call 0x4c01be60, [d2,d3], 0x24
+	call	PostEvent_entry:32, [d2,d3], 0x24
 EasySetControl_entry_L17e:
 	clr	d0
 	ret	[d2,d3,a2,a3], 0x2c
@@ -71691,7 +71691,7 @@ func_4C026E0E:
 
 func_4C026E0E_entry:
 	mov	a1, a2
-	.byte	0xdd, 0xb3, 0x7f, 0x00, 0x00, 0x00, 0x00	# call 0x4c02edc7, 0, 0
+	call	func_4C02EDC7:32, 0, 0
 	mov	(a2), d1
 	extbu	d0
 	and	0xffffff00, d1
@@ -73608,7 +73608,7 @@ func_4C027E40_entry:
 	mov	d1, d2
 	and	0xff, d2
 	mov	0xf, d1
-	.byte	0xdd, 0xaa, 0x7f, 0x00, 0x00, 0xc0, 0x14	# call 0x4c02fe05, [d2,d3], 0x14
+	call	func_4C02FE00_entry:32, [d2,d3], 0x14
 	movbu	d0, (0x20, sp)
 	mov	0xa, a0
 	add	a2, a0
@@ -73657,7 +73657,7 @@ func_4C027E40_entry_L3c:
 	mov	a3, (0x18, sp)
 	mov	d2, d1
 	mov	d3, d0
-	.byte	0xdd, 0xff, 0x7f, 0x00, 0x00, 0xf0, 0x30	# call 0x4c02feb2, [d2,d3,a2,a3], 0x30
+	call	func_4C02FEAD_entry:32, [d2,d3,a2,a3], 0x30
 	mov	d0, d2
 	exth	d2
 	cmp	0, d2
@@ -226738,7 +226738,7 @@ func_4C07E1D4_entry_L23:
 	call	func_4C07D7C1_entry, [d2], 4
 	mov	(0x50276e94), a0
 	exthu	d0
-	.byte	0xfc, 0x64, 0xf8, 0xb7, 0x00, 0x00	# movhu (0x0000b7f8, a1), d0
+	movhu	(0x0000b7f8, a0), d1
 	cmp	d0, d1
 	beq	func_4C07E1D4_entry_L41
 func_4C07E1D4_entry_L3c:
@@ -476938,10 +476938,10 @@ func_4C1125A2_entry_L42:
 func_4C1125A2_entry_L5a:
 	mov	0x20000070, a0
 	mov	(a0), d0
-	.byte	0xfc, 0xe4, 0x20, 0x00, 0x00, 0x00	# or 0x00000020, d0
+	or	0x00000020:32, d0
 	mov	d0, (a0)
 	mov	(a0), d0
-	.byte	0xfc, 0xe4, 0x02, 0x00, 0x00, 0x00	# or 0x00000002, d0
+	or	0x00000002:32, d0
 	mov	d0, (a0)
 	nop
 func_4C1125A2_entry_L71:
@@ -493156,7 +493156,7 @@ func_4C11AF0F_entry_L206:
 	exthu	d1
 	call	func_4C066FBC_entry, [d2,d3], 0x10
 func_4C11AF0F_entry_L235:
-	.byte	0xdd, 0xbc, 0x80, 0xff, 0xff, 0x00, 0x00	# call 0x4c113205, 0, 0
+	call	GetSeqRecPart:32, 0, 0
 	exthu	d0
 	cmp	0, d0
 	beq	func_4C11AF0F_entry_L248
@@ -493166,7 +493166,7 @@ func_4C11AF0F_entry_L248:
 	call	func_4C118B0E_entry, [d2], 0x10
 func_4C11AF0F_entry_L24d:
 	movhu	d2, (0x5005be32)
-	.byte	0xdd, 0x9e, 0x80, 0xff, 0xff, 0x00, 0x00	# call 0x4c113205, 0, 0
+	call	GetSeqRecPart:32, 0, 0
 	exthu	d0
 	cmp	0, d0
 	bne	func_4C11AF0F_entry_L299
@@ -493276,7 +493276,7 @@ func_4C11B277_entry_L10:
 	extbu	d0
 	cmp	d3, d0
 	beq	func_4C11B277_entry_L4c
-	.byte	0xdd, 0x9b, 0x80, 0xff, 0xff, 0x00, 0x00	# call 0x4c113330, 0, 0
+	call	GetMeasSeq:32, 0, 0
 	mov	d0, d2
 	call	func_4C114600, 0, 0
 	exthu	d2
@@ -493290,7 +493290,7 @@ func_4C11B277_entry_L2f:
 	extbu	d0
 	cmp	d3, d0
 	beq	func_4C11B277_entry_L4c
-	.byte	0xdd, 0x7c, 0x80, 0xff, 0xff, 0x00, 0x00	# call 0x4c113330, 0, 0
+	call	GetMeasSeq:32, 0, 0
 	mov	d0, d2
 	call	func_4C114624, 0, 0
 	exthu	d2
@@ -496749,7 +496749,7 @@ func_4C11D2E0_entry:
 	mov	1, d2
 func_4C11D2E0_entry_L2:
 	mov	d2, d0
-	.byte	0xdd, 0x28, 0x80, 0xff, 0xff, 0xc0, 0x1c	# call 0x4c115310, [d2,d3], 0x1c
+	call	func_4C11530B_entry:32, [d2,d3], 0x1c
 	inc	d2
 	extbu	d2
 	cmp	0xa, d2
@@ -497773,7 +497773,7 @@ func_4C11DBAF_entry_L37:
 	cmp	d2, d0
 	bne	func_4C11DBAF_entry_L75
 	clr	d0
-	.byte	0xdd, 0x3f, 0x80, 0xff, 0xff, 0xc0, 0x1c	# call 0x4c115c46, [d2,d3], 0x1c
+	call	func_4C115C41_entry:32, [d2,d3], 0x1c
 	clr	d0
 	call	func_4C116BBA_entry, [d2], 0x18
 	call	func_4C1142ED, 0, 0
@@ -502643,7 +502643,7 @@ func_4C1201B7_entry_L4e:
 func_4C1201B7_entry_L58:
 	movhu	(0x10, sp), d0
 	movhu	(0x12, sp), d1
-	.byte	0xdd, 0xc8, 0x82, 0xff, 0xff, 0x00, 0x18	# call 0x4c1184e2, 0, 0x18
+	call	func_4C1184DF_entry:32, 0, 0x18
 func_4C1201B7_entry_L65:
 	mov	d3, d0
 	ret	[d2,d3], 0x1c
@@ -502679,7 +502679,7 @@ func_4C120225_entry:
 	exthu	d2
 	exthu	d1
 	mov	d2, d0
-	.byte	0xdd, 0x5f, 0x82, 0xff, 0xff, 0x00, 0x18	# call 0x4c1184c9, 0, 0x18
+	call	func_4C1184C6_entry:32, 0, 0x18
 	call	func_4C1187D0_entry, 0, 0x10
 	call	func_4C118880_entry, 0, 0x10
 	exth	d0
@@ -502709,10 +502709,10 @@ func_4C120225_entry_L94:
 	exthu	d0
 	mov	a2, d1
 	exthu	d1
-	.byte	0xdd, 0x05, 0x82, 0xff, 0xff, 0x00, 0x18	# call 0x4c1184c9, 0, 0x18
+	call	func_4C1184C6_entry:32, 0, 0x18
 	movhu	(0x14, sp), d0
 	movhu	(0x16, sp), d1
-	.byte	0xdd, 0x11, 0x82, 0xff, 0xff, 0x00, 0x18	# call 0x4c1184e2, 0, 0x18
+	call	func_4C1184DF_entry:32, 0, 0x18
 	ret	[d2,d3,a2,a3], 0x28
 
 func_4C1202DB:
@@ -502892,11 +502892,11 @@ func_4C1203FB_entry_L51:
 	mov	d2, d0
 	exthu	d0
 	mov	5, d1
-	.byte	0xdd, 0x5b, 0x80, 0xff, 0xff, 0x00, 0x18	# call 0x4c1184b0, 0, 0x18
+	call	func_4C1184AD_entry:32, 0, 0x18
 	exthu	d2
 	mov	5, d1
 	mov	d2, d0
-	.byte	0xdd, 0x69, 0x80, 0xff, 0xff, 0x00, 0x18	# call 0x4c1184c9, 0, 0x18
+	call	func_4C1184C6_entry:32, 0, 0x18
 func_4C1203FB_entry_L67:
 	call	func_4C118867_entry, 0, 0x10
 	extbu	d0
@@ -502915,13 +502915,13 @@ func_4C1203FB_entry_L82:
 	mov	d0, d3
 	bra	func_4C1203FB_entry_Ldf
 func_4C1203FB_entry_L8d:
-	.byte	0xdd, 0x52, 0x82, 0xff, 0xff, 0x00, 0x10	# call 0x4c1186df, 0, 0x10
+	call	func_4C1186DC_entry:32, 0, 0x10
 	call	func_4C118867_entry, 0, 0x10
 	mov	d0, d3
 	extbu	d3
-	.byte	0xdd, 0xb0, 0x81, 0xff, 0xff, 0x00, 0x0c	# call 0x4c11864b, 0, 0xc
+	call	func_4C118648_entry:32, 0, 0xc
 	mov	d0, d2
-	.byte	0xdd, 0xfa, 0x81, 0xff, 0xff, 0x00, 0x0c	# call 0x4c11869d, 0, 0xc
+	call	func_4C11869A_entry:32, 0, 0xc
 	exthu	d0
 	mov	d0, (0x10, sp)
 	exthu	d2
@@ -502936,7 +502936,7 @@ func_4C1203FB_entry_L8d:
 	mov	d0, d3
 	bra	func_4C1203FB_entry_Ldf
 func_4C1203FB_entry_Lc6:
-	.byte	0xdd, 0xf6, 0x82, 0xff, 0xff, 0x00, 0x10	# call 0x4c1187bc, 0, 0x10
+	call	func_4C1187B9_entry:32, 0, 0x10
 	clr	d0
 	call	func_4C1173AC_entry, [d2,d3,a2], 0x18
 	mov	1, d0
@@ -502958,16 +502958,16 @@ func_4C1203FB_entry_Lef:
 	exth	d0
 	cmp	0, d0
 	bne	func_4C1203FB_entry_L12e
-	.byte	0xdd, 0x5b, 0x81, 0xff, 0xff, 0x00, 0x0c	# call 0x4c11865c, 0, 0xc
+	call	func_4C118659_entry:32, 0, 0xc
 	mov	d0, d2
-	.byte	0xdd, 0xa5, 0x81, 0xff, 0xff, 0x00, 0x0c	# call 0x4c1186ae, 0, 0xc
+	call	func_4C1186AB_entry:32, 0, 0xc
 	extbu	d0
 	mov	d0, (0x10, sp)
 	movbu	(0x15, sp), d0
 	mov	d2, d1
 	exthu	d1
 	call	func_4C1152A8_entry, [d2,d3], 0x1c
-	.byte	0xdd, 0x3d, 0x81, 0xff, 0xff, 0x00, 0x0c	# call 0x4c11865c, 0, 0xc
+	call	func_4C118659_entry:32, 0, 0xc
 	exthu	d0
 	call	func_4C115B9A_entry, [d2,d3,a2], 0x1c
 func_4C1203FB_entry_L12e:
@@ -503094,7 +503094,7 @@ func_4C1205D7_entry_L2c:
 	exthu	d1
 	mov	d2, d0
 	call	func_4C1184DF_entry, 0, 0x18
-	.byte	0xdd, 0x81, 0x82, 0xff, 0xff, 0x00, 0x10	# call 0x4c11889c, 0, 0x10
+	call	func_4C118899_entry:32, 0, 0x10
 	exth	d0
 	cmp	0x84, d0
 	bne	func_4C1205D7_entry_L51
@@ -503138,9 +503138,9 @@ func_4C120631_entry_L23:
 	bne	func_4C120631_entry_L35
 	ret	[d2,d3,a2,a3], 0x24
 func_4C120631_entry_L35:
-	.byte	0xdd, 0x02, 0x80, 0xff, 0xff, 0x00, 0x0c	# call 0x4c11866d, 0, 0xc
+	call	func_4C11866A_entry:32, 0, 0xc
 	mov	d0, a3
-	.byte	0xdd, 0x4b, 0x80, 0xff, 0xff, 0x00, 0x0c	# call 0x4c1186bf, 0, 0xc
+	call	func_4C1186BC_entry:32, 0, 0xc
 	movhu	d0, (0x10, sp)
 	exthu	d2
 	mov	5, d1
@@ -503159,7 +503159,7 @@ func_4C120631_entry_L62:
 	ble	func_4C120631_entry_L73
 	jmp	func_4C120631_entry_L100
 func_4C120631_entry_L73:
-	.byte	0xdd, 0xf3, 0x81, 0xff, 0xff, 0x00, 0x10	# call 0x4c11889c, 0, 0x10
+	call	func_4C118899_entry:32, 0, 0x10
 	extbu	d0
 	cmp	0x82, d0
 	bne	func_4C120631_entry_L84
@@ -503169,11 +503169,11 @@ func_4C120631_entry_L84:
 	beq	func_4C120631_entry_L100
 	cmp	0x81, d0
 	bne	func_4C120631_entry_L99
-	.byte	0xdd, 0x92, 0x80, 0xff, 0xff, 0x00, 0x10	# call 0x4c118758, 0, 0x10
+	call	func_4C118755_entry:32, 0, 0x10
 	bra	func_4C120631_entry_Le6
 func_4C120631_entry_L99:
-	.byte	0xdd, 0x89, 0x80, 0xff, 0xff, 0x00, 0x10	# call 0x4c118758, 0, 0x10
-	.byte	0xdd, 0xc6, 0x81, 0xff, 0xff, 0x00, 0x10	# call 0x4c11889c, 0, 0x10
+	call	func_4C118755_entry:32, 0, 0x10
+	call	func_4C118899_entry:32, 0, 0x10
 	mov	d0, d2
 	extbu	d2
 	mov	0xf0, d1
@@ -503182,14 +503182,14 @@ func_4C120631_entry_L99:
 	bne	func_4C120631_entry_Lc1
 	mov	1, d0
 	mov	a2, d1
-	.byte	0xdd, 0x07, 0x83, 0xff, 0xff, 0xf0, 0x1c	# call 0x4c1189f5, [d2,d3,a2,a3], 0x1c
+	call	func_4C1189F0_entry:32, [d2,d3,a2,a3], 0x1c
 	bra	func_4C120631_entry_Ld2
 func_4C120631_entry_Lc1:
 	cmp	0xa0, d1
 	bne	func_4C120631_entry_Ld2
 	mov	1, d0
 	mov	a2, d1
-	.byte	0xdd, 0xf4, 0x82, 0xff, 0xff, 0xf0, 0x1c	# call 0x4c1189f5, [d2,d3,a2,a3], 0x1c
+	call	func_4C1189F0_entry:32, [d2,d3,a2,a3], 0x1c
 func_4C120631_entry_Ld2:
 	mov	d2, d0
 	call	func_4C11B33A, 0, 0
@@ -503198,7 +503198,7 @@ func_4C120631_entry_Ld2:
 	cmp	-1, d1
 	beq	func_4C120631_entry_L100
 	exthu	d0
-	.byte	0xdd, 0x24, 0x82, 0xff, 0xff, 0x00, 0x14	# call 0x4c118939, 0, 0x14
+	call	func_4C118936_entry:32, 0, 0x14
 func_4C120631_entry_Le6:
 	call	func_4C11866A_entry, 0, 0xc
 	exth	d0
@@ -650768,7 +650768,7 @@ func_4C3F4950:
 	bne	func_4C3F4950_L3c
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -651891,7 +651891,7 @@ func_4C3F520C:
 	bne	func_4C3F520C_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -651996,7 +651996,7 @@ func_4C3F52E7:
 	bne	func_4C3F52E7_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -652094,7 +652094,7 @@ func_4C3F53B4:
 	bne	func_4C3F53B4_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -652223,7 +652223,7 @@ func_4C3F54DB:
 	bne	func_4C3F54DB_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -652495,7 +652495,7 @@ del_mbx:
 	bne	del_mbx_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -652645,7 +652645,7 @@ func_4C3F586A:
 	bne	func_4C3F586A_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -652775,7 +652775,7 @@ del_sem:
 	bne	del_sem_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -652864,7 +652864,7 @@ func_4C3F5A66:
 	bne	func_4C3F5A66_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -653143,7 +653143,7 @@ func_4C3F5CA2:
 	bne	func_4C3F5CA2_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -653308,7 +653308,7 @@ del_flg:
 	bne	del_flg_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -653397,7 +653397,7 @@ preq_sem:
 	bne	preq_sem_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -653517,7 +653517,7 @@ func_4C3F5FCC:
 	bne	func_4C3F5FCC_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -653643,7 +653643,7 @@ func_4C3F60C3:
 	bne	func_4C3F60C3_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -653931,7 +653931,7 @@ set_flg:
 	bne	set_flg_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654083,7 +654083,7 @@ wai_sem:
 	bne	wai_sem_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654270,7 +654270,7 @@ sig_sem:
 	bne	sig_sem_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654402,7 +654402,7 @@ cre_tsk:
 	bne	cre_tsk_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654552,7 +654552,7 @@ func_4C3F680E:
 	bne	func_4C3F680E_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654723,7 +654723,7 @@ func_4C3F6962:
 	bne	func_4C3F6962_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654837,7 +654837,7 @@ func_4C3F6A6F:
 	bne	func_4C3F6A6F_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -654964,7 +654964,7 @@ exd_tsk:
 	bne	exd_tsk_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -655055,7 +655055,7 @@ unl_cpu:
 	bne	unl_cpu_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -655170,7 +655170,7 @@ ext_tsk:
 	bne	ext_tsk_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -655248,7 +655248,7 @@ sta_tsk:
 	bne	sta_tsk_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -655330,7 +655330,7 @@ rot_rdq:
 	bne	rot_rdq_L3d
 	mov	(0, sp), d1
 	add	-4, sp
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	movhu	d3, (0x3c, sp)
@@ -656428,7 +656428,7 @@ KernelStartStub:
 	.space	5, 0xff
 
 KernelGroup0IntDispatch:
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	udf15	d3, d3
@@ -656475,11 +656475,11 @@ KernelGroup0IntDispatch_L3b:
 	mov	(0xc, sp), d3
 	udf20	d3, d3
 	add	0xc, sp
-	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	movm	(sp), [d2,d3,a2,a3,other3]
 	rti
 
 KernelIntDispatch:
-	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
 	mov	psw, d3
 	udf15	d3, d3
@@ -656546,7 +656546,7 @@ KernelIntDispatch_La7:
 	mov	(0xc, sp), d3
 	udf20	d3, d3
 	add	0xc, sp
-	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	movm	(sp), [d2,d3,a2,a3,other3]
 	rti
 	rets
 
@@ -656566,7 +656566,7 @@ func_4C3F7A07:
 	mov	(0xc, sp), d3
 	udf20	d3, d3
 	add	0xc, sp
-	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	movm	(sp), [d2,d3,a2,a3,other3]
 	rti
 
 .org 0x3f7a31
