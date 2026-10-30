@@ -23,7 +23,10 @@ _reset:
 
 _vector_08:
 	jmp	func_4C07B331
-.incbin_range "baserom/kn6500_program.rom", 0x00000d, 0x000080
+	.space	2, 0xff	# erased flash
+FirmwareVersionByte:
+	.byte	0x13
+	.space	112, 0xff	# erased flash
 
 LibF64Pow:
 	movm	[d2,d3,a2,a3], (sp)
@@ -419,7 +422,7 @@ func_4C000350_L5b:
 	movhu	d0, (a0)
 	jmp	func_4C3813F3
 # func_4C000350 + 0xe6: no traced path reaches what follows (--decode-gaps)
-	jmp	0x4c3815a2
+	jmp	KernelIntDispatch
 	mov	0x20000070, a0
 	movhu	(a0), d0
 	and	0xfffe, d0
@@ -73980,7 +73983,7 @@ func_4C0280ED_entry_Lac:
 	ret	[d2,d3,a2,a3], 0x38
 func_4C0280ED_entry_Lbf:
 	mov	(0x1c, sp), d0
-	mov	Str_empty_1165, a0
+	mov	func_4C02CBDA_Records_p0_86, a0
 	mov	d0, (0x14, sp)
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
@@ -74054,7 +74057,7 @@ func_4C0280ED_entry_L156:
 	and	0xff000000, d3
 	mov	d0, (0x14, sp)
 	mov	(0x48, sp), d1
-	mov	Str_empty_1165, a0
+	mov	func_4C02CBDA_Records_p0_86, a0
 	mov	0x0000b040, d0
 	add	d3, d0
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
@@ -74176,7 +74179,7 @@ func_4C0280ED_entry_L262:
 	ret	[d2,d3,a2,a3], 0x38
 func_4C0280ED_entry_L275:
 	mov	(0x1c, sp), d0
-	mov	Str_P_19, a0
+	mov	func_4C02CBDA_Records_p0_87, a0
 	mov	d0, (0x14, sp)
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
@@ -74213,7 +74216,7 @@ func_4C0280ED_entry_L2c1:
 	and	0xff000000, d3
 	mov	d0, (0x14, sp)
 	mov	(0x48, sp), d1
-	mov	Str_P_19, a0
+	mov	func_4C02CBDA_Records_p0_87, a0
 	mov	0x0000b050, d0
 	add	d3, d0
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
@@ -74739,7 +74742,7 @@ func_4C02871E_entry_L12b:
 func_4C02871E_entry_L14b:
 	mov	d1, (0x20, sp)
 	mov	d3, (0x14, sp)
-	mov	Str_0_23, a0
+	mov	func_4C02CBDA_Records_p0_60, a0
 	mov	d2, d0
 	call	func_4C028CD0_entry, [d2,d3,a2,a3], 0x3c
 	jmp	func_4C02871E_entry_L1fa
@@ -75629,7 +75632,7 @@ func_4C028F55_entry:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x18, sp)
-	mov	Str_empty_1168, a0
+	mov	func_4C02CBDA_Records_p0_61, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x18, a1
@@ -75664,7 +75667,7 @@ func_4C028FA8_entry:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x18, sp)
-	mov	Str_empty_1168, a0
+	mov	func_4C02CBDA_Records_p0_61, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x18, a1
@@ -78968,7 +78971,7 @@ func_4C02AA75_entry_L7e:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x20, sp)
-	mov	Str_empty_1168, a0
+	mov	func_4C02CBDA_Records_p0_61, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x20, a1
@@ -79131,7 +79134,7 @@ func_4C02ABCD_entry_L46:
 	mov	(0x20, sp), d0
 	asl	24, d1
 	add	d2, d1
-	mov	Str_empty_1160, a0
+	mov	func_4C02CBDA_Records_p0_119, a0
 	call	func_4C027333_entry, [d2,d3,a2,a3], 0x38
 	mov	d0, (0x18, sp)
 func_4C02ABCD_entry_Lac:
@@ -79346,7 +79349,7 @@ func_4C02ACE1_entry_L102:
 func_4C02ACE1_entry_L160:
 	mov	d1, (0x28, sp)
 	mov	(0x1c, sp), d0
-	mov	Str_0_23, a0
+	mov	func_4C02CBDA_Records_p0_60, a0
 	mov	d0, (0x14, sp)
 	mov	a3, d0
 	call	func_4C028CD0_entry, [d2,d3,a2,a3], 0x3c
@@ -80456,7 +80459,7 @@ func_4C02B71A_entry_Ld:
 	mov	d0, (0x14, sp)
 	add	d2, d3
 	mov	d3, d0
-	mov	Str_0_23, a0
+	mov	func_4C02CBDA_Records_p0_60, a0
 	mov	1, d1
 	call	func_4C028CD0_entry, [d2,d3,a2,a3], 0x3c
 	bra	func_4C02B71A_entry_L53
@@ -80466,7 +80469,7 @@ func_4C02B71A_entry_L3a:
 	mov	d0, (0x14, sp)
 	add	d2, d3
 	mov	d3, d0
-	mov	Str_0_23, a0
+	mov	func_4C02CBDA_Records_p0_60, a0
 	clr	d1
 	call	func_4C028CD0_entry, [d2,d3,a2,a3], 0x3c
 func_4C02B71A_entry_L53:
@@ -82033,7 +82036,7 @@ func_4C02C3C8_entry:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x1c, sp)
-	mov	Str_empty_1168, a0
+	mov	func_4C02CBDA_Records_p0_61, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x1c, a1
@@ -84441,7 +84444,7 @@ func_4C02D1ED_entry_L439:
 	bne	func_4C02D1ED_entry_L480
 func_4C02D1ED_entry_L46e:
 	mov	a3, (0x14, sp)
-	mov	Str_empty_1164, a0
+	mov	func_4C02CBDA_Records_p0_120, a0
 	mov	(0x1c, sp), d0
 	mov	d3, d1
 	call	func_4C02722A_entry, [d2,d3,a2,a3], 0x30
@@ -85235,7 +85238,7 @@ func_4C02DCCE_entry_L71:
 func_4C02DCCE_entry_L8f:
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_1_34, a0
+	mov	data_4C192110_p0_0, a0
 	and	0xf0000000, d2
 	add	0x8031, d2
 	clr	d1
@@ -85399,7 +85402,7 @@ func_4C02DEA8_L2f:
 	call	func_4C0291D6_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_empty_1160, a0
+	mov	func_4C02CBDA_Records_p0_119, a0
 	mov	0x07b00040, d0
 	add	d2, d0
 	mov	d3, d1
@@ -142801,7 +142804,6 @@ func_4C04E0E5:
 	call	func_4C04E324_entry, [d2,d3,a2], 0x1c
 func_4C04E0E5_L1e:
 	ret	[a2], 0x14
-loc_4C04E106:
 	add	-0x10, sp
 	clr	d0
 	call	func_4C04E324_entry, [d2,d3,a2], 0x1c
@@ -220918,7 +220920,7 @@ func_4C07B482:
 	ret	0, 0
 
 func_4C07B56B:
-	movbu	(0x4c00000f), d0
+	movbu	(FirmwareVersionByte), d0
 	ret	0, 0
 
 func_4C07B574:
@@ -651540,11 +651542,11 @@ func_4C37E44C_Lb0:
 	movhu	d0, (0x5018072c)
 func_4C37E44C_Ld5:
 	or	0x0800, psw
-	movhu	(0x4c381508), d0
+	movhu	(KernelParams+16), d0
 	exth	d0
 	cmp	0, d0
 	bne	func_4C37E44C_Lef
-	movhu	(0x4c38150a), d0
+	movhu	(KernelParams+18), d0
 	exth	d0
 	cmp	0, d0
 	beq	func_4C37E44C_L155
@@ -651647,7 +651649,7 @@ func_4C37E5B0_L3c:
 	add	0, d1
 	bne	func_4C37E5B0_L73
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37E5B0_L73:
 	add	0xc, sp
 	mov	d0, a0
@@ -651735,12 +651737,12 @@ func_4C37E6C9_entry:
 	cmp	d0, a0
 	bne	func_4C37E6C9_entry_L7f
 	movhu	(a2), d2
-	movhu	(0x4c38150e), d0
+	movhu	(KernelParams+22), d0
 	exth	d2
 	exth	d0
 	cmp	d0, d2
 	bgt	func_4C37E6C9_entry_L5a
-	movhu	(0x4c38150e), d1
+	movhu	(KernelParams+22), d1
 	asl	3, d2
 	exth	d1
 	mov	d2, a0
@@ -651782,7 +651784,7 @@ func_4C37E6C9_entry_L8d:
 	cmp	d1, d0
 	bne	func_4C37E6C9_entry_Lf3
 	movhu	(a2), d1
-	movhu	(0x4c38150e), d0
+	movhu	(KernelParams+22), d0
 	exth	d1
 	exth	d0
 	cmp	d0, d1
@@ -651793,7 +651795,7 @@ func_4C37E6C9_entry_L8d:
 	bge	func_4C37E6C9_entry_Le0
 func_4C37E6C9_entry_Lac:
 	movhu	(0x1c, a0), d3
-	movhu	(0x4c38150e), d2
+	movhu	(KernelParams+22), d2
 	exth	d3
 	exth	d2
 	asl	3, d1
@@ -652770,7 +652772,7 @@ func_4C37EE6C_L3d:
 	add	0, d1
 	bne	func_4C37EE6C_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37EE6C_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -652875,7 +652877,7 @@ func_4C37EF47_L3d:
 	add	0, d1
 	bne	func_4C37EF47_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37EF47_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -652973,7 +652975,7 @@ func_4C37F014_L3d:
 	add	0, d1
 	bne	func_4C37F014_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37F014_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -653102,7 +653104,7 @@ func_4C37F13B_L3d:
 	add	0, d1
 	bne	func_4C37F13B_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37F13B_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -653374,7 +653376,7 @@ del_mbx_L3d:
 	add	0, d1
 	bne	del_mbx_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 del_mbx_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -653524,7 +653526,7 @@ func_4C37F4CA_L3d:
 	add	0, d1
 	bne	func_4C37F4CA_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37F4CA_L74:
 	add	0x18, sp
 	mov	d0, a0
@@ -653654,7 +653656,7 @@ del_sem_L3d:
 	add	0, d1
 	bne	del_sem_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 del_sem_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -653745,7 +653747,7 @@ func_4C37F6C6_L3d:
 	add	0, d1
 	bne	func_4C37F6C6_L78
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37F6C6_L78:
 	add	0x18, sp
 	mov	d0, a0
@@ -654022,7 +654024,7 @@ func_4C37F902_L3d:
 	add	0, d1
 	bne	func_4C37F902_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37F902_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -654187,7 +654189,7 @@ del_flg_L3d:
 	add	0, d1
 	bne	del_flg_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 del_flg_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -654276,7 +654278,7 @@ preq_sem_L3d:
 	add	0, d1
 	bne	preq_sem_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 preq_sem_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -654396,7 +654398,7 @@ func_4C37FC2C_L3d:
 	add	0, d1
 	bne	func_4C37FC2C_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37FC2C_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -654522,7 +654524,7 @@ func_4C37FD23_L3d:
 	add	0, d1
 	bne	func_4C37FD23_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C37FD23_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -654596,16 +654598,16 @@ func_4C37FE1B:
 	add	-0xc, sp
 
 func_4C37FE1B_entry:
-	mov	(0x4c3814f4), a0
+	mov	(KernelRamLayout+20), a0
 	mov	0x53595350, d0
 	mov	a0, (0x5018096c)
 	mov	d0, (0xc, a0)
-	mov	(0x4c3814e4), d0
-	mov	(0x4c3814f4), a1
+	mov	(KernelRamLayout+4), d0
+	mov	(KernelRamLayout+20), a1
 	sub	a1, d0
 	mov	d0, (8, a0)
 	call	func_4C37EBC8, 0, 0
-	mov	(0x4c3814e8), a0
+	mov	(KernelRamLayout+8), a0
 	clr	d0
 	mov	d0, (a0)
 	mov	d0, (4, a0)
@@ -654628,7 +654630,7 @@ func_4C37FE57_entry:
 	mov	-0xa, d0
 	retf	[d2,d3,a2,a3], 0x10
 func_4C37FE57_entry_L1d:
-	mov	(0x4c3814e8), a2
+	mov	(KernelRamLayout+8), a2
 	mov	0, a1
 	mov	(a2), d0
 	cmp	0, d0
@@ -654661,7 +654663,7 @@ func_4C37FE57_entry_L45:
 	cmp	0, d0
 	lne
 func_4C37FE57_entry_L51:
-	mov	(0x4c3814ec), d0
+	mov	(KernelRamLayout+12), d0
 	mov	8, d1
 	sub	a2, d0
 	sub	d1, d0
@@ -654721,7 +654723,7 @@ func_4C37FF04:
 
 func_4C37FF04_entry:
 	mov	a0, d0
-	mov	(0x4c3814e8), a1
+	mov	(KernelRamLayout+8), a1
 	mov	8, d1
 	sub	d1, d0
 	mov	d0, a2
@@ -654757,7 +654759,7 @@ func_4C37FF04_entry_L2f:
 	mov	d1, (a0)
 	bra	func_4C37FF04_entry_L45
 func_4C37FF04_entry_L3b:
-	mov	(0x4c3814e8), a0
+	mov	(KernelRamLayout+8), a0
 	clr	d0
 	mov	d0, (4, a0)
 func_4C37FF04_entry_L45:
@@ -654810,7 +654812,7 @@ set_flg_L3d:
 	add	0, d1
 	bne	set_flg_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 set_flg_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -654962,7 +654964,7 @@ wai_sem_L3d:
 	add	0, d1
 	bne	wai_sem_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 wai_sem_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -655072,7 +655074,7 @@ func_4C3801D6:
 	add	-0xc, sp
 
 func_4C3801D6_entry:
-	mov	(0x4c3814e8), a1
+	mov	(KernelRamLayout+8), a1
 	mov	a0, a2
 	mov	(a1), d1
 	mov	0, a0
@@ -655149,7 +655151,7 @@ sig_sem_L3d:
 	add	0, d1
 	bne	sig_sem_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 sig_sem_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -655281,7 +655283,7 @@ cre_tsk_L3d:
 	add	0, d1
 	bne	cre_tsk_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 cre_tsk_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -655431,7 +655433,7 @@ func_4C38046E_L3d:
 	add	0, d1
 	bne	func_4C38046E_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C38046E_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -655602,7 +655604,7 @@ func_4C3805C2_L3d:
 	add	0, d1
 	bne	func_4C3805C2_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C3805C2_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -655716,7 +655718,7 @@ func_4C3806CF_L3d:
 	add	0, d1
 	bne	func_4C3806CF_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 func_4C3806CF_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -655843,7 +655845,7 @@ exd_tsk_L3d:
 	add	0, d1
 	bne	exd_tsk_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 exd_tsk_L74:
 	add	0xc, sp
 	mov	d0, a0
@@ -655934,7 +655936,7 @@ unl_cpu_L3d:
 	add	0, d1
 	bne	unl_cpu_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 unl_cpu_L74:
 	add	0xc, sp
 	mov	d0, a0
@@ -656049,7 +656051,7 @@ ext_tsk_L3d:
 	add	0, d1
 	bne	ext_tsk_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 ext_tsk_L74:
 	add	0xc, sp
 	mov	d0, a0
@@ -656127,7 +656129,7 @@ sta_tsk_L3d:
 	add	0, d1
 	bne	sta_tsk_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 sta_tsk_L74:
 	add	0x14, sp
 	mov	d0, a0
@@ -656209,7 +656211,7 @@ rot_rdq_L3d:
 	add	0, d1
 	bne	rot_rdq_L74
 	mov	d0, (0x28, a3)
-	jmp	0x4c381667
+	jmp	func_4C381667
 rot_rdq_L74:
 	add	0x10, sp
 	mov	d0, a0
@@ -656536,7 +656538,7 @@ get_tid_entry:
 	call	func_4C37EBBE, 0, 0
 	mov	d0, (0xc, sp)
 	and	0xf7ff, psw
-	movhu	(0x4c3814f8), d0
+	movhu	(KernelParams), d0
 	clr	d2
 	exth	d0
 	inc	d0
@@ -656605,7 +656607,7 @@ func_4C380ED2_L35:
 
 func_4C380F0A:
 	and	0xf7ff, psw
-	jmp	0x4c381667
+	jmp	func_4C381667
 
 ena_int:
 	movm	[d2], (sp)
@@ -657008,13 +657010,13 @@ func_4C381292_entry:
 	and	0xff00, d1
 	cmp	0x100, d1
 	bge	func_4C381292_entry_L20
-	jmp	func_4C381292_entry_L11f
+	jmp	func_4C3813B6
 func_4C381292_entry_L20:
 	cmp	0x7800, d1
 	ble	func_4C381292_entry_L29
-	jmp	func_4C381292_entry_L11f
+	jmp	func_4C3813B6
 func_4C381292_entry_L29:
-	mov	0x4c381460, a1
+	mov	KernelServiceHash, a1
 	add	-0xff, d1
 	mov	a1, a0
 	mov	0xf, d0
@@ -657027,10 +657029,10 @@ func_4C381292_entry_L29:
 	setlb
 	cmp	0, d0
 	bne	func_4C381292_entry_L49
-	jmp	func_4C381292_entry_L11f
+	jmp	func_4C3813B6
 func_4C381292_entry_L49:
 	add	8, a0
-	cmp	0x4c3814e0, a0
+	cmp	KernelRamLayout, a0
 	bcs	func_4C381292_entry_L54
 	mov	a1, a0
 func_4C381292_entry_L54:
@@ -657040,7 +657042,11 @@ func_4C381292_entry_L54:
 func_4C381292_entry_L57:
 	mov	(4, a0), a0
 	jmp	(a0)
-	jmp	func_4C381292_entry_L13c
+
+func_4C3812F3:
+	jmp	func_4C3813B6_L1d
+
+func_4C3812F6:
 	mov	a3, a0
 	exthu	d2
 	mov	0x14, d0
@@ -657050,7 +657056,9 @@ func_4C381292_entry_L57:
 	mov	d0, a1
 	add	0x501803a8, a1
 	call	func_4C37E830_entry, [a2], 4
-	jmp	func_4C381292_entry_L13c
+	jmp	func_4C3813B6_L1d
+
+func_4C38130E:
 	mov	a3, a0
 	exthu	d2
 	mov	0x14, d0
@@ -657060,7 +657068,9 @@ func_4C381292_entry_L57:
 	mov	d2, a1
 	add	0x50180218, a1
 	call	func_4C37E830_entry, [a2], 4
-	jmp	func_4C381292_entry_L13c
+	jmp	func_4C3813B6_L1d
+
+func_4C381326:
 	mov	a3, a0
 	exthu	d2
 	mov	0x14, d0
@@ -657070,7 +657080,9 @@ func_4C381292_entry_L57:
 	mov	d2, a1
 	add	0x50180538, a1
 	call	func_4C37E830_entry, [a2], 4
-	jmp	func_4C381292_entry_L13c
+	jmp	func_4C3813B6_L1d
+
+func_4C38133E:
 	mov	a3, a0
 	exthu	d2
 	mov	0x14, d0
@@ -657081,7 +657093,9 @@ func_4C381292_entry_L57:
 	mov	8, a1
 	add	d0, a1
 	call	func_4C37E830_entry, [a2], 4
-	jmp	func_4C381292_entry_L13c
+	jmp	func_4C3813B6_L1d
+
+func_4C381358:
 	mov	a3, a0
 	exthu	d2
 	mov	0x1c, d0
@@ -657091,7 +657105,9 @@ func_4C381292_entry_L57:
 	mov	d0, a1
 	add	0x50180600, a1
 	call	func_4C37E830_entry, [a2], 4
-	bra	func_4C381292_entry_L13c
+	bra	func_4C3813B6_L1d
+
+func_4C38136F:
 	mov	a3, a0
 	exthu	d2
 	mov	0x1c, d0
@@ -657102,7 +657118,11 @@ func_4C381292_entry_L57:
 	add	0x50180600, a1
 	add	8, a1
 	call	func_4C37E830_entry, [a2], 4
-	bra	func_4C381292_entry_L13c
+
+func_4C381386:
+	bra	func_4C3813B6_L1d
+
+func_4C381388:
 	mov	a3, a0
 	exthu	d2
 	mov	0xc, d0
@@ -657112,7 +657132,9 @@ func_4C381292_entry_L57:
 	mov	d2, a1
 	add	0x501809e8, a1
 	call	func_4C37E830_entry, [a2], 4
-	bra	func_4C381292_entry_L13c
+	bra	func_4C3813B6_L1d
+
+func_4C38139F:
 	mov	a3, a0
 	exthu	d2
 	mov	0xc, d0
@@ -657122,11 +657144,14 @@ func_4C381292_entry_L57:
 	mov	d0, a1
 	add	0x50180964, a1
 	call	func_4C37E830_entry, [a2], 4
-	bra	func_4C381292_entry_L13c
-func_4C381292_entry_L11f:
+
+func_4C3813B4:
+	bra	func_4C3813B6_L1d
+
+func_4C3813B6:
 	movhu	(a2), d0
 	btst	0x8000, d0
-	beq	func_4C381292_entry_L150
+	beq	func_4C3813B6_L31
 	mov	a3, a0
 	exthu	d2
 	mov	0x14, d0
@@ -657136,17 +657161,17 @@ func_4C381292_entry_L11f:
 	mov	d2, a1
 	add	0x50180088, a1
 	call	func_4C37E830_entry, [a2], 4
-func_4C381292_entry_L13c:
+func_4C3813B6_L1d:
 	mov	(0x38, a3), a0
 	cmp	0, a0
-	bne	func_4C381292_entry_L14a
+	bne	func_4C3813B6_L2b
 	mov	(0x34, a3), a0
 	cmp	0, a0
-	beq	func_4C381292_entry_L150
-func_4C381292_entry_L14a:
+	beq	func_4C3813B6_L31
+func_4C3813B6_L2b:
 	mov	a3, a0
 	call	func_4C37F334_entry, [a2,a3], 8
-func_4C381292_entry_L150:
+func_4C3813B6_L31:
 	ret	[d2,a2,a3], 0x1c
 
 func_4C3813EA:
@@ -657159,7 +657184,7 @@ func_4C3813F0:
 	retf	0, 0
 
 func_4C3813F3:
-	mov	(0x4c3814f4), a3
+	mov	(KernelRamLayout+20), a3
 	mov	a3, sp
 	jmp	func_4C380FE3
 
@@ -657194,6 +657219,198 @@ dly_tsk_entry_L10:
 dly_tsk_entry_L20:
 	clr	d0
 	ret	[d2,a2], 0x18
-.incbin_range "baserom/kn6500_program.rom", 0x381447, 0x381691
+	.space	1, 0xff	# erased flash
+Str_MILK_MN10300_Ver1_0R1:
+	.asciz	"MILK MN10300 Ver1.0R1"
+	.space	2, 0xff
+KernelServiceHash:
+	.long	0x00000000
+	.long	func_4C3813B6
+	.long	0x00005f01
+	.long	func_4C3812F3
+	.long	0x00001f01
+	.long	func_4C3812F6
+	.long	0x00003f01
+	.long	func_4C38130E
+	.long	0x00000f01
+	.long	func_4C381326
+	.long	0x00002f01
+	.long	func_4C38133E
+	.long	0x00000201
+	.long	func_4C381358
+	.long	0x00000001
+	.long	func_4C38136F
+	.long	0x00000401
+	.long	func_4C381386
+	.long	0x00000701
+	.long	func_4C381388
+	.long	0x00001701
+	.long	func_4C38139F
+	.long	0x00007701
+	.long	func_4C3813B4
+	.long	0x00000000
+	.long	func_4C3813B6
+	.long	0x00000000
+	.long	func_4C3813B6
+	.long	0x00000000
+	.long	func_4C3813B6
+	.long	0x00000000
+	.long	func_4C3813B6
+KernelRamLayout:
+	.long	0x50180000
+	.long	0x501bffff
+	.long	0x501c0000
+	.long	0x501fffff
+	.long	0x50180ce0
+	.long	0x501813c8
+KernelParams:
+	.word	10, 20, 20, 20, 10, 10, 10, 10, 10, 10, 16, 10, 30, 0
+
+KernelStartStub:
+	jmp	func_4C3813F3
+# KernelStartStub + 0x3: no traced path reaches what follows (--decode-gaps)
+	.space	5, 0xff
+
+KernelGroup0IntDispatch:
+	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	add	-0xc, sp
+	mov	psw, d3
+	udf15	d3, d3
+	mov	d3, (0xc, sp)
+	udf13	d3, d3
+	mov	d3, (8, sp)
+	udf12	d3, d3
+	mov	d3, (4, sp)
+	mov	psw, d3
+	mov	d3, (0, sp)
+	movhu	(0x50180ccc), d3
+	add	1, d3
+	movhu	d3, (0x50180ccc)
+	mov	0x34000100, a2
+	movhu	(a2), d3
+	cmp	0, d3
+	bne	KernelGroup0IntDispatch_L3b
+	mov	0x34000104, a2
+	movhu	(a2), d3
+	add	8, d3
+KernelGroup0IntDispatch_L3b:
+	lsr	1, d3
+	mov	0x50180a6c, a2
+	add	d3, d3
+	movhu	(d3, a2), d3
+	mov	0x50180b64, a2
+	add	d3, d3
+	mov	(d3, a2), a2
+	add	-4, sp
+	calls	(a2)
+	add	4, sp
+	and	0xf7ff, psw
+	movhu	(0x50180ccc), d3
+	add	-1, d3
+	movhu	d3, (0x50180ccc)
+	mov	(0, sp), d2
+	and	0x08, d2
+	mov	psw, d3
+	or	d2, d3
+	mov	d3, psw
+	mov	(4, sp), d3
+	mov	(8, sp), d2
+	udf21	d3, d2
+	mov	(0xc, sp), d3
+	udf20	d3, d3
+	add	0xc, sp
+	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	rti
+
+KernelIntDispatch:
+	.byte	0xcf, 0xf8	# movm [d2,d3,a2,a3,other3], (sp)
+	add	-0xc, sp
+	mov	psw, d3
+	udf15	d3, d3
+	mov	d3, (0xc, sp)
+	udf13	d3, d3
+	mov	d3, (8, sp)
+	udf12	d3, d3
+	mov	d3, (4, sp)
+	mov	psw, d3
+	mov	d3, (0, sp)
+	movhu	(0x50180ccc), d3
+	add	0, d3
+	bne	KernelIntDispatch_L32
+	mov	(0x5018002c), a1
+	mov	sp, (0, a1)
+	mov	(0x50180c7c), a1
+	mov	a1, sp
+KernelIntDispatch_L32:
+	movhu	(0x50180ccc), d3
+	add	1, d3
+	movhu	d3, (0x50180ccc)
+	movhu	(0x34000200), d3
+	mov	0x34000100, a2
+	movhu	(d3, a2), d2
+	lsr	1, d2
+	bcs	KernelIntDispatch_L63
+	add	1, d3
+	lsr	1, d2
+	bcs	KernelIntDispatch_L63
+	add	1, d3
+	lsr	1, d2
+	bcs	KernelIntDispatch_L63
+	add	1, d3
+KernelIntDispatch_L63:
+	mov	0x50180a6c, a2
+	add	d3, d3
+	movhu	(d3, a2), d3
+	mov	0x50180b64, a2
+	add	d3, d3
+	mov	(d3, a2), a2
+	add	-4, sp
+	calls	(a2)
+	add	4, sp
+	and	0xf7ff, psw
+	movhu	(0x50180ccc), d3
+	add	-1, d3
+	movhu	d3, (0x50180ccc)
+	movhu	(0x50180ccc), d3
+	add	0, d3
+	bne	KernelIntDispatch_La7
+	mov	(0x5018002c), a2
+	mov	(0, a2), sp
+	mov	0, d2
+	movhu	d2, (0xe, a2)
+KernelIntDispatch_La7:
+	mov	(0, sp), d2
+	and	0x08, d2
+	mov	psw, d3
+	or	d2, d3
+	mov	d3, psw
+	mov	(4, sp), d3
+	mov	(8, sp), d2
+	udf21	d3, d2
+	mov	(0xc, sp), d3
+	udf20	d3, d3
+	add	0xc, sp
+	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	rti
+	rets
+
+func_4C381667:
+	mov	(0x5018002c), a2
+	mov	(0, a2), sp
+	mov	0, d2
+	movhu	d2, (0xe, a2)
+	mov	(0, sp), d2
+	and	0x08, d2
+	mov	psw, d3
+	or	d2, d3
+	mov	d3, psw
+	mov	(4, sp), d3
+	mov	(8, sp), d2
+	udf21	d3, d2
+	mov	(0xc, sp), d3
+	udf20	d3, d3
+	add	0xc, sp
+	.byte	0xce, 0xf8	# movm (sp), [d2,d3,a2,a3,other3]
+	rti
 
 .org 0x381691

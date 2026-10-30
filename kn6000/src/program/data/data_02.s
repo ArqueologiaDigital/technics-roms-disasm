@@ -1187,8 +1187,15 @@ FnName_DemoJpgDataL5:	.asciz "DemoJpgDataL5"
 FnName_DemoJpgDataL6:	.asciz "DemoJpgDataL6"
 FnName_DemoJpgDataL7:	.asciz "DemoJpgDataL7"
 FnName_DemoJpgDataL8:	.asciz "DemoJpgDataL8"
-# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2774F0, 0x2774FC
+data_4C2774F0:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x2774F0, 0x2774F4
+data_4C2774F4:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x2774F4, 0x2774F8
+data_4C2774F8:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x2774F8, 0x2774FC
 
 	Screen	demo1_1, sub=demo1_1_Label_Dummy, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=demo1_1_window
 
@@ -2138,1273 +2145,1274 @@ RN_fdemo_kd:	.asciz "fdemo_kd"
 RN_empty_4507:	.asciz ""
 RN_empty_4508:	.asciz ""
 RN_empty_4509:	.asciz ""
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+data_4C27AB0A:
+# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x27AB0A, 0x27AB0C
 Str_TT_DEMORUN:	.asciz "TT_DEMORUN"
 	.align	4, 0xFF	# pad after Str_TT_DEMORUN
 Str_New_Sound_Generator_With_Multi_DSP_0dCre:	.asciz "New Sound Generator With Multi DSP~0dCreates Dynamic Realism"
 Str_Neuer_Klanggenerator_mit_Multi_DSP_Effek:	.asciz "Neuer Klanggenerator mit Multi DSP-Effekt~0df\xFCr dynamische, naturgetreue Kl\xE4nge"
-Str_empty_875:	.asciz " "
+Str_empty_858:	.asciz " "
 Str_El_nuevo_generador_de_sonido_con_procesa:	.asciz "El nuevo generador de sonido con procesador de se\xF1ales digitales (DSP) m\xFAltiple crea un realismo din\xE1mico"
-Str_empty_858:	.asciz "="
 Str_empty_857:	.asciz "="
 Str_empty_845:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_845
+Str_empty_839:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_839
 
 ptrs_4C27AC18:
 	.long	Str_New_Sound_Generator_With_Multi_DSP_0dCre
 	.long	Str_Neuer_Klanggenerator_mit_Multi_DSP_Effek
-	.long	Str_empty_875
-	.long	Str_El_nuevo_generador_de_sonido_con_procesa
 	.long	Str_empty_858
+	.long	Str_El_nuevo_generador_de_sonido_con_procesa
 	.long	Str_empty_857
 	.long	Str_empty_845
+	.long	Str_empty_839
 
-Str_empty_839:	.asciz " "
 Str_empty_830:	.asciz " "
-Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu:	.asciz "Un nouveau g\xE9n\xE9rateur sonore dot\xE9 d\x92un multi \x96 effet num\xE9rique DSP pour des sonorit\xE9s dynamiques et authentiques"
 Str_empty_829:	.asciz " "
-Str_empty_828:	.asciz "="
+Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu:	.asciz "Un nouveau g\xE9n\xE9rateur sonore dot\xE9 d\x92un multi \x96 effet num\xE9rique DSP pour des sonorit\xE9s dynamiques et authentiques"
+Str_empty_828:	.asciz " "
 Str_empty_827:	.asciz "="
 Str_empty_826:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_826
+Str_empty_825:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_825
 
 ptrs_4C27ACB4:
-	.long	Str_empty_839
 	.long	Str_empty_830
-	.long	Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu
 	.long	Str_empty_829
+	.long	Str_Un_nouveau_g_n_rateur_sonore_dot_d_un_mu
 	.long	Str_empty_828
 	.long	Str_empty_827
 	.long	Str_empty_826
+	.long	Str_empty_825
 
 Str_High_Power_Speaker_System_And_Bass_Port:	.asciz "High Power Speaker System And Bass Port For Pure Clarity"
 Str_Hochleistungs_Verst_rkersystem_und_ein_B:	.asciz "Hochleistungs-Verst\xE4rkersystem und ein Bass Port garantieren eine optimale Klangwiedergabe"
 Str_Un_amplification_sur_puissante_avec_Bass:	.asciz "Un amplification sur \x96 puissante avec Bass Reflex pour un reproduction sonore parfaite"
 Str_Sistema_de_altavoces_de_alta_potencia_y:	.asciz "Sistema de altavoces de alta potencia y puerto de bajos, para lograr claridad y pureza"
-Str_empty_825:	.asciz "="
 Str_empty_824:	.asciz "="
 Str_empty_823:	.asciz "="
+Str_empty_822:	.asciz "="
 
 ptrs_4C27AE18:
 	.long	Str_High_Power_Speaker_System_And_Bass_Port
 	.long	Str_Hochleistungs_Verst_rkersystem_und_ein_B
 	.long	Str_Un_amplification_sur_puissante_avec_Bass
 	.long	Str_Sistema_de_altavoces_de_alta_potencia_y
-	.long	Str_empty_825
 	.long	Str_empty_824
 	.long	Str_empty_823
+	.long	Str_empty_822
 
 Str_NX_Sound_For_Great_Software_Compatibilit:	.asciz "NX Sound For Great Software Compatibility"
 Str_NX_System_f_r_gr_te_Software_Kompatibili:	.asciz "NX System f\xFCr gr\xF6\xDFte Software-Kompatibilit\xE4t"
 Str_Un_g_n_rateur_sonore_NX_pour_une_totale:	.asciz "Un g\xE9n\xE9rateur sonore NX pour une totale compatibilit\xE9"
 Str_Sonido_NX_con_mayor_compatibilidad_de_so:	.asciz "Sonido NX con mayor compatibilidad de software"
-Str_empty_822:	.asciz "="
 Str_empty_821:	.asciz "="
 Str_empty_820:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_820
+Str_empty_819:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_819
 
 ptrs_4C27AEF8:
 	.long	Str_NX_Sound_For_Great_Software_Compatibilit
 	.long	Str_NX_System_f_r_gr_te_Software_Kompatibili
 	.long	Str_Un_g_n_rateur_sonore_NX_pour_une_totale
 	.long	Str_Sonido_NX_con_mayor_compatibilidad_de_so
-	.long	Str_empty_822
 	.long	Str_empty_821
 	.long	Str_empty_820
+	.long	Str_empty_819
 
 Str_New_Accompaniment_System_Provides_Smooth:	.asciz "New Accompaniment System Provides Smooth Grooves"
 Str_Neues_Begleitautomatiksystem_f_r_noch_me:	.asciz "Neues Begleitautomatiksystem f\xFCr noch mehr Musikalit\xE4t!"
 Str_Le_nouveau_dispositif_d_accompagnement_v:	.asciz "Le nouveau dispositif d'accompagnement vous apporte de v\xE9ritables grooves"
 Str_Nuevo_sistema_de_acompa_amiento_que_gene:	.asciz "Nuevo sistema de acompa\xF1amiento que genera ritmos atractivos"
-Str_empty_819:	.asciz "="
 Str_empty_818:	.asciz "="
 Str_empty_817:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_817
+Str_empty_816:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_816
 
 ptrs_4C27B00C:
 	.long	Str_New_Accompaniment_System_Provides_Smooth
 	.long	Str_Neues_Begleitautomatiksystem_f_r_noch_me
 	.long	Str_Le_nouveau_dispositif_d_accompagnement_v
 	.long	Str_Nuevo_sistema_de_acompa_amiento_que_gene
-	.long	Str_empty_819
 	.long	Str_empty_818
 	.long	Str_empty_817
+	.long	Str_empty_816
 
 Str_1000_Music_Styles_To_Fit_Any_Kind_Of_Per:	.asciz "1000 Music Styles To Fit Any Kind Of Performance"
 Str_1000_Music_Styles_passend_f_r_nahezu_jed:	.asciz "1000 Music Styles passend f\xFCr nahezu jede musikalische Stilrichtung"
 Str_1000_styles_d_accompagnement_pour_tout_j:	.asciz "1000 styles d\x92accompagnement pour tout jouer"
 Str_1000_estilos_musicales_0d_adaptables_a_t:	.asciz "1000 estilos musicales,~0d adaptables a todo tipo de ejecuci\xF3n"
-Str_empty_816:	.asciz "="
 Str_empty_815:	.asciz "="
 Str_empty_814:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_814
+Str_empty_813:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_813
 
 ptrs_4C27B110:
 	.long	Str_1000_Music_Styles_To_Fit_Any_Kind_Of_Per
 	.long	Str_1000_Music_Styles_passend_f_r_nahezu_jed
 	.long	Str_1000_styles_d_accompagnement_pour_tout_j
 	.long	Str_1000_estilos_musicales_0d_adaptables_a_t
-	.long	Str_empty_816
 	.long	Str_empty_815
 	.long	Str_empty_814
+	.long	Str_empty_813
 
 Str_Load_Almost_Any_Technics_SMF_0dAnd_Other:	.asciz "Load Almost Any Technics, SMF~0dAnd Other Keyboard Software"
 Str_Laden_Sie_nahezu_jede_Technics_SMF_0dund:	.asciz "Laden Sie nahezu jede Technics-, SMF-~0dund andere Keyboardsoftware"
 Str_Il_peut_utiliser_la_plupart_des_s_quence:	.asciz "Il peut utiliser la plupart des s\xE9quences ou styles enregistr\xE9s sous les formats Technics, SMF ou autres\x85"
 Str_Carga_casi_cualquier_software_de_teclado:	.asciz "Carga casi cualquier software de teclado Technics,~0d SMF y otros"
-Str_empty_813:	.asciz "="
 Str_empty_812:	.asciz "="
 Str_empty_811:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_811
+Str_empty_810:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_810
 
 ptrs_4C27B260:
 	.long	Str_Load_Almost_Any_Technics_SMF_0dAnd_Other
 	.long	Str_Laden_Sie_nahezu_jede_Technics_SMF_0dund
 	.long	Str_Il_peut_utiliser_la_plupart_des_s_quence
 	.long	Str_Carga_casi_cualquier_software_de_teclado
-	.long	Str_empty_813
 	.long	Str_empty_812
 	.long	Str_empty_811
+	.long	Str_empty_810
 
 Str_Wide_Screen_Color_LCD_Is_The_Key_To_Ease:	.asciz "Wide Screen Color LCD Is The Key To Ease Of Use"
 Str_Breites_Farbdisplay_als_Schl_ssel_zu_ein:	.asciz "Breites Farbdisplay als Schl\xFCssel zu einem hohen Bedienkomfort"
 Str_Son_grand_cran_LCD_couleur_garanti_sa_fa:	.asciz "Son grand \xE9cran LCD couleur garanti sa facilit\xE9 d\x92utilisation"
 Str_La_amplia_pantalla_LCD_color_es_la_clave:	.asciz "La amplia pantalla LCD color es la clave de su facilidad de uso"
-Str_empty_810:	.asciz "="
 Str_empty_809:	.asciz "="
 Str_empty_808:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_808
+Str_empty_807:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_807
 
 ptrs_4C27B370:
 	.long	Str_Wide_Screen_Color_LCD_Is_The_Key_To_Ease
 	.long	Str_Breites_Farbdisplay_als_Schl_ssel_zu_ein
 	.long	Str_Son_grand_cran_LCD_couleur_garanti_sa_fa
 	.long	Str_La_amplia_pantalla_LCD_color_es_la_clave
-	.long	Str_empty_810
 	.long	Str_empty_809
 	.long	Str_empty_808
+	.long	Str_empty_807
 
 Str_Intuitive_Functions_Help_Create_Music_0d:	.asciz "Intuitive Functions Help Create Music~0dThe Way You Want It"
 Str_Intuitive_Funktionen_verhelfen_Ihnen_0dd:	.asciz "Intuitive Funktionen verhelfen Ihnen,~0ddie Musik ganz nach Ihren W\xFCnschen zu kreieren"
 Str_Une_fonction_d_aide_intuitive_vous_assis:	.asciz "Une fonction d\x92aide intuitive, vous assiste pour vous permettre de cr\xE9er votre musique comme vous le d\xE9sirez"
 Str_Las_funciones_intuitivas_ayudan_a_crear:	.asciz "Las funciones intuitivas ayudan a crear la m\xFAsica como~0d a usted le gusta"
-Str_empty_807:	.asciz "="
 Str_empty_806:	.asciz "="
 Str_empty_805:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_805
+Str_empty_803:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_803
 
 ptrs_4C27B4E0:
 	.long	Str_Intuitive_Functions_Help_Create_Music_0d
 	.long	Str_Intuitive_Funktionen_verhelfen_Ihnen_0dd
 	.long	Str_Une_fonction_d_aide_intuitive_vous_assis
 	.long	Str_Las_funciones_intuitivas_ayudan_a_crear
-	.long	Str_empty_807
 	.long	Str_empty_806
 	.long	Str_empty_805
+	.long	Str_empty_803
 
 Str_Customize_The_KN6000_To_Your_Needs:	.asciz "Customize The KN6000 To Your Needs"
 Str_Richten_Sie_das_KN6000_ganz_individuell:	.asciz "Richten Sie das KN6000 ganz individuell nach Ihren Bed\xFCrfnissen ein"
 Str_Personnalisez_votre_KN6000_suivant_vos_b:	.asciz "Personnalisez votre KN6000 suivant vos besoins"
 Str_Personalice_el_procesador_KN6000_seg_n_s:	.asciz "Personalice el procesador KN6000 seg\xFAn sus necesidades"
-Str_empty_803:	.asciz "="
 Str_empty_802:	.asciz "="
 Str_empty_800:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_800
+Str_empty_799:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_799
 
 ptrs_4C27B5D0:
 	.long	Str_Customize_The_KN6000_To_Your_Needs
 	.long	Str_Richten_Sie_das_KN6000_ganz_individuell
 	.long	Str_Personnalisez_votre_KN6000_suivant_vos_b
 	.long	Str_Personalice_el_procesador_KN6000_seg_n_s
-	.long	Str_empty_803
 	.long	Str_empty_802
 	.long	Str_empty_800
+	.long	Str_empty_799
 
 Str_Learn_From_The_Help_Function:	.asciz "Learn From The Help Function"
 Str_Die_Help_Funktion_hilft_Ihnen_beim_Kenne:	.asciz "Die Help-Funktion hilft Ihnen beim Kennenlernen des Keyboards"
 Str_La_fonction_Help_vous_enseigne_comment_u:	.asciz "La fonction \xAB\xA0Help\xA0\xBB vous enseigne comment utiliser votre clavier"
 Str_Aprenda_con_la_funci_n_de_ayuda:	.asciz "Aprenda con la funci\xF3n de ayuda"
-Str_empty_799:	.asciz "="
 Str_empty_798:	.asciz "="
 Str_empty_797:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_797
+Str_empty_794:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_794
 
 ptrs_4C27B6B0:
 	.long	Str_Learn_From_The_Help_Function
 	.long	Str_Die_Help_Funktion_hilft_Ihnen_beim_Kenne
 	.long	Str_La_fonction_Help_vous_enseigne_comment_u
 	.long	Str_Aprenda_con_la_funci_n_de_ayuda
-	.long	Str_empty_799
 	.long	Str_empty_798
 	.long	Str_empty_797
+	.long	Str_empty_794
 
 Str_Special_Woofer_Bass_Port_0dBring_Hi_Fi_Q:	.asciz "Special Woofer & Bass Port~0dBring Hi-Fi Quality Sound To Life!"
 Str_Spezielle_Basslautsprecher_und_der_Bass:	.asciz "Spezielle Basslautsprecher und der Bass Port liefern Hi-Fi Sound Qualit\xE4t!"
 Str_Un_haut_parleur_de_basse_et_un_syst_me_B:	.asciz "Un haut parleur de basse et un syst\xE8me Bass Reflex qui donnent vie \x0B\xE0 une reproduction sonore de qualit\xE9 professionnelle!"
 Str_Puerto_especial_para_altavoces_de_graves:	.asciz "\xA1Puerto especial para altavoces de graves y bajos que da vida al sonido, con calidad y alta fidelidad!"
-Str_empty_794:	.asciz "="
 Str_empty_793:	.asciz "="
 Str_empty_792:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_792
+Str_empty_791:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_791
 
 ptrs_4C27B840:
 	.long	Str_Special_Woofer_Bass_Port_0dBring_Hi_Fi_Q
 	.long	Str_Spezielle_Basslautsprecher_und_der_Bass
 	.long	Str_Un_haut_parleur_de_basse_et_un_syst_me_B
 	.long	Str_Puerto_especial_para_altavoces_de_graves
-	.long	Str_empty_794
 	.long	Str_empty_793
 	.long	Str_empty_792
+	.long	Str_empty_791
 
 Str_Create_The_Best_Sounds_Using_Versatile_M:	.asciz "Create The Best Sounds Using Versatile Multi DSP!"
 Str_Erleben_Sie_beste_Soundqualit_t_mit_dem:	.asciz "Erleben Sie beste Soundqualit\xE4t mit dem Einsatz vielseitiger Multi DSP-Effekte!"
 Str_Gr_ce_au_multi_effet_num_rique_DSP_vous:	.asciz "Gr\xE2ce au multi \x96 effet num\xE9rique DSP vous disposez de sonorit\xE9s authentiques\xA0!"
 Str_Cree_los_mejores_sonidos_con_la_versatil:	.asciz "\xA1Cree los mejores sonidos, con la versatilidad del procesador DSP m\xFAltiple!"
-Str_empty_791:	.asciz "="
 Str_empty_790:	.asciz "="
 Str_empty_789:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_789
+Str_empty_788:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_788
 
 ptrs_4C27B980:
 	.long	Str_Create_The_Best_Sounds_Using_Versatile_M
 	.long	Str_Erleben_Sie_beste_Soundqualit_t_mit_dem
 	.long	Str_Gr_ce_au_multi_effet_num_rique_DSP_vous
 	.long	Str_Cree_los_mejores_sonidos_con_la_versatil
-	.long	Str_empty_791
 	.long	Str_empty_790
 	.long	Str_empty_789
+	.long	Str_empty_788
 
 Str_Hear_The_Difference_DSP_Effects_Can_Make:	.asciz "Hear The Difference DSP Effects Can Make."
 Str_H_ren_Sie_den_Unterschied_den_DSP_Effekt:	.asciz "H\xF6ren Sie den Unterschied, den DSP Effekte ausmachen."
 Str_Ecoutez_tout_ce_que_ce_DSP_peut_vous_off:	.asciz "Ecoutez tout ce que ce DSP peut vous offrir."
 Str_Oiga_la_diferencia_que_s_lo_los_efectos:	.asciz "Oiga la diferencia que s\xF3lo los efectos de un procesador DSP pueden crear."
-Str_empty_788:	.asciz "="
 Str_empty_787:	.asciz "="
 Str_empty_786:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_786
+Str_empty_784:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_784
 
 ptrs_4C27BA7C:
 	.long	Str_Hear_The_Difference_DSP_Effects_Can_Make
 	.long	Str_H_ren_Sie_den_Unterschied_den_DSP_Effekt
 	.long	Str_Ecoutez_tout_ce_que_ce_DSP_peut_vous_off
 	.long	Str_Oiga_la_diferencia_que_s_lo_los_efectos
-	.long	Str_empty_788
 	.long	Str_empty_787
 	.long	Str_empty_786
+	.long	Str_empty_784
 
 Str_Here_s_An_Electric_Guitar_Sound_0dWithou:	.asciz "Here's An Electric Guitar Sound~0dWithout DSP Effect."
 Str_Hier_klingt_ein_E_Gitarren_Klang_ohne_DS:	.asciz "Hier klingt ein E-Gitarren-Klang ohne DSP-Effekt."
 Str_Voici_une_sonorit_de_guitare_sans_effet:	.asciz "Voici une sonorit\xE9 de guitare, sans effet."
 Str_ste_es_un_sonido_de_guitarra_el_ctrica_s:	.asciz "\xC9ste es un sonido de guitarra el\xE9ctrica sin efecto DSP."
-Str_empty_784:	.asciz "="
 Str_empty_783:	.asciz "="
 Str_empty_782:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_782
+Str_empty_781:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_781
 
 ptrs_4C27BB6C:
 	.long	Str_Here_s_An_Electric_Guitar_Sound_0dWithou
 	.long	Str_Hier_klingt_ein_E_Gitarren_Klang_ohne_DS
 	.long	Str_Voici_une_sonorit_de_guitare_sans_effet
 	.long	Str_ste_es_un_sonido_de_guitarra_el_ctrica_s
-	.long	Str_empty_784
 	.long	Str_empty_783
 	.long	Str_empty_782
+	.long	Str_empty_781
 
 Str_Sounds_Great:	.asciz "Sounds Great!"
 Str_Der_klingt_bereits_sehr_gut:	.asciz "Der klingt bereits sehr gut!"
 Str_Superbe:	.asciz "Superbe\xA0!"
 Str_S_que_suena_bien:	.asciz "\xA1S\xED que suena bien!"
-Str_empty_781:	.asciz "="
 Str_empty_780:	.asciz "="
 Str_empty_779:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_779
+Str_empty_778:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_778
 
 ptrs_4C27BBD8:
 	.long	Str_Sounds_Great
 	.long	Str_Der_klingt_bereits_sehr_gut
 	.long	Str_Superbe
 	.long	Str_S_que_suena_bien
-	.long	Str_empty_781
 	.long	Str_empty_780
 	.long	Str_empty_779
+	.long	Str_empty_778
 
 Str_Now_Hear_The_Same_Sound_0dWith_DSP_Wah_W:	.asciz "Now Hear The Same Sound~0dWith DSP Wah Wah!"
 Str_Jetzt_h_ren_Sie_denselben_Klang_mit_dem:	.asciz "Jetzt h\xF6ren Sie denselben Klang mit dem DSP Wah Wah!"
 Str_Maintenant_coutes_la_m_me_sonorit_avec_l:	.asciz "Maintenant, \xE9coutes la m\xEAme sonorit\xE9 avec l\x92effet~0d\xAB\xA0Wah Wah\xA0\xBB du DSP."
 Str_Oiga_ahora_el_mismo_sonido_con_wah_wah_D:	.asciz "Oiga ahora el mismo sonido con wah-wah DSP."
-Str_empty_778:	.asciz "="
 Str_empty_777:	.asciz "="
 Str_empty_773:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_773
+Str_empty_772:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_772
 
 ptrs_4C27BCD0:
 	.long	Str_Now_Hear_The_Same_Sound_0dWith_DSP_Wah_W
 	.long	Str_Jetzt_h_ren_Sie_denselben_Klang_mit_dem
 	.long	Str_Maintenant_coutes_la_m_me_sonorit_avec_l
 	.long	Str_Oiga_ahora_el_mismo_sonido_con_wah_wah_D
-	.long	Str_empty_778
 	.long	Str_empty_777
 	.long	Str_empty_773
+	.long	Str_empty_772
 
 Str_Great_Brass_Sounds_0dCut_Through_The_Mix:	.asciz "Great Brass Sounds~0dCut Through The Mix~0dWhen You Use DSP Exciter!"
 Str_Gro_artige_Bl_ser_Kl_nge_bereichern_das:	.asciz "Gro\xDFartige Bl\xE4ser-Kl\xE4nge bereichern das Klangbild, wenn Sie den DSP Exciter~0d dazu schalten."
 Str_Les_gros_sons_de_cuivre_se_d_tachent_enc:	.asciz "Les gros sons de cuivre se d\xE9tachent encore mieux du mixage g\xE9n\xE9ral lorsque vous leur appliquez l\xA0\x91effet~0d\xAB\xA0Exciter\xA0\xBB du DSP\xA0!"
 Str_Los_excelentes_sonidos_de_bronces_del_me:	.asciz "\xA1Los excelentes sonidos de bronces del mezclador surgen brillantes con el excitador DSP!"
-Str_empty_772:	.asciz "="
 Str_empty_771:	.asciz "="
 Str_empty_766:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_766
+Str_empty_765:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_765
 
 ptrs_4C27BE70:
 	.long	Str_Great_Brass_Sounds_0dCut_Through_The_Mix
 	.long	Str_Gro_artige_Bl_ser_Kl_nge_bereichern_das
 	.long	Str_Les_gros_sons_de_cuivre_se_d_tachent_enc
 	.long	Str_Los_excelentes_sonidos_de_bronces_del_me
-	.long	Str_empty_772
 	.long	Str_empty_771
 	.long	Str_empty_766
+	.long	Str_empty_765
 
 Str_Create_The_Classic_Drawbar_Organ_Sound_B:	.asciz "Create The Classic Drawbar Organ Sound By Adding The DSP Rotary Speaker Effect."
 Str_Erzeugen_Sie_den_klassischen_Zugriegel_O:	.asciz "Erzeugen Sie den klassischen Zugriegel-Orgel-Klang~0d durch Hinzuf\xFCgen des DSP Rotary Effektes."
 Str_Retrouvez_les_sonorit_s_authentiques_de:	.asciz "Retrouvez les sonorit\xE9s authentiques de l\x92orgue de Jazz en leur additionnant un effet bien connu des amateurs de cet instrument."
 Str_Cree_el_cl_sico_sonido_de_un_rgano_de_re:	.asciz "Cree el cl\xE1sico sonido de un \xF3rgano de registros agregando el efecto de altavoz giratorio DSP."
-Str_empty_765:	.asciz "="
 Str_empty_764:	.asciz "="
 Str_empty_763:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_763
+Str_empty_762:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_762
 
 ptrs_4C27C024:
 	.long	Str_Create_The_Classic_Drawbar_Organ_Sound_B
 	.long	Str_Erzeugen_Sie_den_klassischen_Zugriegel_O
 	.long	Str_Retrouvez_les_sonorit_s_authentiques_de
 	.long	Str_Cree_el_cl_sico_sonido_de_un_rgano_de_re
-	.long	Str_empty_765
 	.long	Str_empty_764
 	.long	Str_empty_763
+	.long	Str_empty_762
 
 Str_Choose_From_600_Preset_Effects_Or_Set_Yo:	.asciz "Choose From 600 Preset Effects, Or Set Your Own!"
 Str_W_hlen_Sie_aus_600_fertigen_Effekten_ode:	.asciz "W\xE4hlen Sie aus 600 fertigen Effekten oder erzeugen Sie Ihre eigenen Effekte."
 Str_Choisissez_parmi_600_effets_pr_s_lection:	.asciz "Choisissez parmi 600 effets pr\xE9s\xE9lectionn\xE9s ou bien \xE9ditez en un par vous m\xEAme\xA0!"
 Str_Elija_entre_600_efectos_preprogramados_o:	.asciz "\xA1Elija entre 600 efectos preprogramados o configure el suyo propio!"
-Str_empty_762:	.asciz "="
 Str_empty_761:	.asciz "="
 Str_empty_757:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_757
+Str_empty_756:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_756
 
 ptrs_4C27C15C:
 	.long	Str_Choose_From_600_Preset_Effects_Or_Set_Yo
 	.long	Str_W_hlen_Sie_aus_600_fertigen_Effekten_ode
 	.long	Str_Choisissez_parmi_600_effets_pr_s_lection
 	.long	Str_Elija_entre_600_efectos_preprogramados_o
-	.long	Str_empty_762
 	.long	Str_empty_761
 	.long	Str_empty_757
+	.long	Str_empty_756
 
 Str_Set_Your_Imagination_Free:	.asciz "Set Your Imagination Free!"
 Str_Lassen_Sie_Ihrer_Kreativit_t_freien_Lauf:	.asciz "Lassen Sie Ihrer Kreativit\xE4t freien Lauf."
 Str_Donnez_libre_cours_votre_imagination:	.asciz "Donnez libre cours \xE0 votre imagination."
 Str_Libere_su_imaginaci_n:	.asciz "\xA1Libere su imaginaci\xF3n!"
-Str_empty_756:	.asciz "="
 Str_empty_755:	.asciz "="
 Str_empty_754:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_754
+Str_empty_753:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_753
 
 ptrs_4C27C204:
 	.long	Str_Set_Your_Imagination_Free
 	.long	Str_Lassen_Sie_Ihrer_Kreativit_t_freien_Lauf
 	.long	Str_Donnez_libre_cours_votre_imagination
 	.long	Str_Libere_su_imaginaci_n
-	.long	Str_empty_756
 	.long	Str_empty_755
 	.long	Str_empty_754
+	.long	Str_empty_753
 
 Str_For_Dance_The_Word_Is:	.asciz "For Dance The Word Is"
-Str_empty_753:	.asciz " "
+Str_empty_752:	.asciz " "
 Str_Pour_la_Dance_le_sp_cialiste_c_est:	.asciz "Pour la Dance, le sp\xE9cialiste c\x92est"
 Str_Para_bailar_la_palabra_es:	.asciz "Para bailar, la palabra es"
-Str_empty_752:	.asciz "="
 Str_empty_751:	.asciz "="
 Str_empty_750:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_750
+Str_empty_749:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_749
 
 ptrs_4C27C280:
 	.long	Str_For_Dance_The_Word_Is
-	.long	Str_empty_753
+	.long	Str_empty_752
 	.long	Str_Pour_la_Dance_le_sp_cialiste_c_est
 	.long	Str_Para_bailar_la_palabra_es
-	.long	Str_empty_752
 	.long	Str_empty_751
 	.long	Str_empty_750
+	.long	Str_empty_749
 
 Str_TECHNICS_4:	.asciz "TECHNICS"
-Str_empty_749:	.asciz " "
+Str_empty_748:	.asciz " "
 Str_TECHNICS_3:	.asciz "TECHNICS"
 Str_TECHNICS_2:	.asciz "TECHNICS"
-Str_empty_748:	.asciz "="
 Str_empty_747:	.asciz "="
 Str_empty_746:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_746
+Str_empty_745:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_745
 
 ptrs_4C27C2C0:
 	.long	Str_TECHNICS_4
-	.long	Str_empty_749
+	.long	Str_empty_748
 	.long	Str_TECHNICS_3
 	.long	Str_TECHNICS_2
-	.long	Str_empty_748
 	.long	Str_empty_747
 	.long	Str_empty_746
+	.long	Str_empty_745
 
-Str_empty_745:	.asciz " "
-Str_steht_f_r_Dance:	.asciz " steht f\xFCr Dance"
 Str_empty_744:	.asciz " "
+Str_steht_f_r_Dance:	.asciz " steht f\xFCr Dance"
 Str_empty_743:	.asciz " "
-Str_empty_742:	.asciz "="
+Str_empty_742:	.asciz " "
 Str_empty_741:	.asciz "="
 Str_empty_740:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_740
+Str_empty_739:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_739
 
 ptrs_4C27C2FC:
-	.long	Str_empty_745
-	.long	Str_steht_f_r_Dance
 	.long	Str_empty_744
+	.long	Str_steht_f_r_Dance
 	.long	Str_empty_743
 	.long	Str_empty_742
 	.long	Str_empty_741
 	.long	Str_empty_740
+	.long	Str_empty_739
 
-Str_empty_739:	.asciz " "
-Str_TECHNICS:	.asciz "TECHNICS"
 Str_empty_738:	.asciz " "
+Str_TECHNICS:	.asciz "TECHNICS"
 Str_empty_737:	.asciz " "
-Str_empty_736:	.asciz "="
+Str_empty_736:	.asciz " "
 Str_empty_735:	.asciz "="
 Str_empty_734:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_734
+Str_empty_733:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_733
 
 ptrs_4C27C330:
-	.long	Str_empty_739
-	.long	Str_TECHNICS
 	.long	Str_empty_738
+	.long	Str_TECHNICS
 	.long	Str_empty_737
 	.long	Str_empty_736
 	.long	Str_empty_735
 	.long	Str_empty_734
+	.long	Str_empty_733
 
 Str_Ready_To_Remix:	.asciz "Ready To Remix?"
 Str_Bereit_zum_Remixen:	.asciz "Bereit zum Remixen?"
 Str_Pr_t_r_aliser_vos_propres_mixages:	.asciz "Pr\xEAt \xE0 r\xE9aliser vos propres mixages\xA0?"
 Str_Listo_para_remezclar:	.asciz "\xBFListo para remezclar?"
-Str_empty_733:	.asciz "="
 Str_empty_732:	.asciz "="
 Str_empty_731:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_731
+Str_empty_730:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_730
 
 ptrs_4C27C3B4:
 	.long	Str_Ready_To_Remix
 	.long	Str_Bereit_zum_Remixen
 	.long	Str_Pr_t_r_aliser_vos_propres_mixages
 	.long	Str_Listo_para_remezclar
-	.long	Str_empty_733
 	.long	Str_empty_732
 	.long	Str_empty_731
+	.long	Str_empty_730
 
 Str_You_re_In_Control:	.asciz "You're In Control!"
 Str_Sie_haben_die_Kontrolle:	.asciz "Sie haben die Kontrolle!"
 Str_Vous_tes_au_commande_de_votre_propre_Hom:	.asciz "Vous \xEAtes au commande de votre propre Home Studio !"
 Str_Usted_tiene_el_control:	.asciz "\xA1Usted tiene el control!"
-Str_empty_730:	.asciz "="
 Str_empty_729:	.asciz "="
 Str_empty_728:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_728
+Str_empty_727:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_727
 
 ptrs_4C27C450:
 	.long	Str_You_re_In_Control
 	.long	Str_Sie_haben_die_Kontrolle
 	.long	Str_Vous_tes_au_commande_de_votre_propre_Hom
 	.long	Str_Usted_tiene_el_control
-	.long	Str_empty_730
 	.long	Str_empty_729
 	.long	Str_empty_728
+	.long	Str_empty_727
 
 Str_Create_The_Exact_Sound_Image_You_Want_Us:	.asciz "Create The Exact Sound Image You Want Using Production Techniques Including Multiple DSP, Reverb And Panning, All Built In To The KN6000."
 Str_Schaffen_Sie_sich_Ihr_pers_nliches_Klang:	.asciz "Schaffen Sie sich Ihr pers\xF6nliches Klangbild durch Produktionstechniken mit vielen DSP-Effekten,~0dHall- und Panorama-Einstellungen.~0dAll dies steht Ihnen im KN6000 zur Verf\xFCgung."
 Str_Le_KN6000_dispose_de_tous_les_moyens_tec:	.asciz "Le KN6000 dispose de tous les moyens techniques de production  pour vous permettre de cr\xE9er des mixages professionnels  : multi -  effet num\xE9rique, r\xE9verb\xE9ration num\xE9rique, effet panoramique."
 Str_Cree_la_imagen_sonora_exacta_que_usted_d:	.asciz "Cree la imagen sonora exacta que usted desea con t\xE9cnicas de producci\xF3n como DSP m\xFAltiple, reverberaci\xF3n y balance de canales, todos incorporados al KN6000."
-Str_empty_727:	.asciz "="
 Str_empty_726:	.asciz "="
 Str_empty_725:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_725
+Str_empty_724:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_724
 
 ptrs_4C27C710:
 	.long	Str_Create_The_Exact_Sound_Image_You_Want_Us
 	.long	Str_Schaffen_Sie_sich_Ihr_pers_nliches_Klang
 	.long	Str_Le_KN6000_dispose_de_tous_les_moyens_tec
 	.long	Str_Cree_la_imagen_sonora_exacta_que_usted_d
-	.long	Str_empty_727
 	.long	Str_empty_726
 	.long	Str_empty_725
+	.long	Str_empty_724
 
 Str_Fine_Tune_Your_Sound_Image_With_Part_And:	.asciz "Fine Tune Your Sound Image With Part And Total EQ And Filter Resonance.~0dThe Possibilities Are Vast!"
 Str_Stimmen_Sie_Ihren_Sound_mit_Part_und_Tot:	.asciz "Stimmen Sie Ihren Sound mit Part und Total EQ optimal ab. Die M\xF6glichkeiten sind einfach unglaublich."
 Str_Avec_l_galisation_par_partie_ou_g_n_rale:	.asciz "Avec l\x92\xE9galisation par partie ou g\xE9n\xE9rale et les corrections harmoniques, vous pouvez peaufiner votre mixage. Les possibilit\xE9s sont tr\xE8s \xE9tendues\xA0!"
 Str_Afine_con_precisi_n_su_imagen_sonora_con:	.asciz "Afine con precisi\xF3n su imagen sonora con ecualizaci\xF3n parcial y total, o con intensidad arm\xF3nica. \xA1Las posibilidades son ilimitadas!"
-Str_empty_724:	.asciz "="
 Str_empty_723:	.asciz "="
 Str_empty_722:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_722
+Str_empty_721:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_721
 
 ptrs_4C27C918:
 	.long	Str_Fine_Tune_Your_Sound_Image_With_Part_And
 	.long	Str_Stimmen_Sie_Ihren_Sound_mit_Part_und_Tot
 	.long	Str_Avec_l_galisation_par_partie_ou_g_n_rale
 	.long	Str_Afine_con_precisi_n_su_imagen_sonora_con
-	.long	Str_empty_724
 	.long	Str_empty_723
 	.long	Str_empty_722
+	.long	Str_empty_721
 
 Str_Reverb_Chorus_4:	.asciz "Reverb!  Chorus!"
 Str_Reverb_Chorus_3:	.asciz "Reverb!  Chorus!"
 Str_Reverb_Chorus_2:	.asciz "Reverb!  Chorus!"
 Str_Reverb_Chorus:	.asciz "Reverb!  Chorus!"
-Str_empty_721:	.asciz "="
 Str_empty_720:	.asciz "="
 Str_empty_719:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_719
+Str_empty_718:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_718
 
 ptrs_4C27C980:
 	.long	Str_Reverb_Chorus_4
 	.long	Str_Reverb_Chorus_3
 	.long	Str_Reverb_Chorus_2
 	.long	Str_Reverb_Chorus
-	.long	Str_empty_721
 	.long	Str_empty_720
 	.long	Str_empty_719
+	.long	Str_empty_718
 
 Str_Digital_Effect_DSP_4:	.asciz "Digital Effect!  DSP!"
 Str_Digital_Effect_DSP_3:	.asciz "Digital Effect!  DSP!"
 Str_Digital_Effect_DSP_2:	.asciz "Digital Effect!  DSP!"
 Str_Digital_Effect_DSP:	.asciz "Digital Effect!  DSP!"
-Str_empty_718:	.asciz "="
 Str_empty_717:	.asciz "="
 Str_empty_716:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_716
+Str_empty_715:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_715
 
 ptrs_4C27C9FC:
 	.long	Str_Digital_Effect_DSP_4
 	.long	Str_Digital_Effect_DSP_3
 	.long	Str_Digital_Effect_DSP_2
 	.long	Str_Digital_Effect_DSP
-	.long	Str_empty_718
 	.long	Str_empty_717
 	.long	Str_empty_716
+	.long	Str_empty_715
 
 Str_The_KN6000_Makes_You_A_Great_Producer:	.asciz "The KN6000 Makes You A Great Producer!"
 Str_Das_KN6000_macht_aus_Ihnen_einen_gro_en:	.asciz "Das KN6000 macht aus Ihnen einen gro\xDFen Produzenten!"
 Str_Avec_le_KN6000_0dvous_devenez_un_v_ritab:	.asciz "Avec le KN6000,~0dvous devenez un v\xE9ritable ing\xE9nieur du son\xA0!"
 Str_El_KN6000_lo_convierte_en_un_gran_produc:	.asciz "\xA1El KN6000 lo convierte en un gran productor!"
-Str_empty_715:	.asciz "="
 Str_empty_714:	.asciz "="
 Str_empty_713:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_713
+Str_empty_712:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_712
 
 ptrs_4C27CAE8:
 	.long	Str_The_KN6000_Makes_You_A_Great_Producer
 	.long	Str_Das_KN6000_macht_aus_Ihnen_einen_gro_en
 	.long	Str_Avec_le_KN6000_0dvous_devenez_un_v_ritab
 	.long	Str_El_KN6000_lo_convierte_en_un_gran_produc
-	.long	Str_empty_715
 	.long	Str_empty_714
 	.long	Str_empty_713
+	.long	Str_empty_712
 
 Str_Let_Auto_Play_Chord_Be_Your_Backing_Band:	.asciz "Let Auto Play Chord Be Your Backing Band."
 Str_Machen_Sie_Auto_Play_Chord_zu_Ihrer_Begl:	.asciz "Machen Sie Auto Play Chord zu Ihrer Begleitband."
 Str_Laissez_l_accompagnement_Auto_Play_Chord:	.asciz "Laissez l\x92accompagnement Auto Play Chord r\xE9aliser votre bande Orchestre."
 Str_Permita_que_los_acordes_autom_ticos_sean:	.asciz "Permita que los acordes autom\xE1ticos sean su banda de soporte."
-Str_empty_712:	.asciz "="
 Str_empty_711:	.asciz "="
 Str_empty_710:	.asciz "="
+Str_empty_709:	.asciz "="
 
 ptrs_4C27CBEC:
 	.long	Str_Let_Auto_Play_Chord_Be_Your_Backing_Band
 	.long	Str_Machen_Sie_Auto_Play_Chord_zu_Ihrer_Begl
 	.long	Str_Laissez_l_accompagnement_Auto_Play_Chord
 	.long	Str_Permita_que_los_acordes_autom_ticos_sean
-	.long	Str_empty_712
 	.long	Str_empty_711
 	.long	Str_empty_710
+	.long	Str_empty_709
 
 Str_Up_To_8_Parts_Provide_A_Rich_Accompanime:	.asciz "Up To 8 Parts Provide A Rich Accompaniment."
 Str_8_Spuren_erm_glichen_Ihnen_ein_gro_z_gig:	.asciz "8 Spuren erm\xF6glichen Ihnen ein gro\xDFz\xFCgiges Begleitarrangement."
 Str_Ses_8_parties_vous_fournissent_un_accomp:	.asciz "Ses 8 parties vous fournissent un accompagnement d\x92une grande richesse."
 Str_Hasta_8_partes_brindan_un_exuberante_aco:	.asciz "Hasta 8 partes brindan un exuberante acompa\xF1amiento."
-Str_empty_709:	.asciz "="
 Str_empty_708:	.asciz "="
 Str_empty_707:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_707
+Str_empty_706:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_706
 
 ptrs_4C27CCF8:
 	.long	Str_Up_To_8_Parts_Provide_A_Rich_Accompanime
 	.long	Str_8_Spuren_erm_glichen_Ihnen_ein_gro_z_gig
 	.long	Str_Ses_8_parties_vous_fournissent_un_accomp
 	.long	Str_Hasta_8_partes_brindan_un_exuberante_aco
-	.long	Str_empty_709
 	.long	Str_empty_708
 	.long	Str_empty_707
+	.long	Str_empty_706
 
 Str_The_KN6000_s_Built_In_Pattern_Library_0d:	.asciz "The KN6000's Built In Pattern Library~0dHas Been Created For You~0dBy Top Musicians From Around The World."
 Str_Die_Begleitrhythmen_des_KN6000_wurden_vo:	.asciz "Die Begleitrhythmen des KN6000 wurden von Top-Musikern aus der ganzen Welt f\xFCr Sie eingespielt und abgemischt."
 Str_La_biblioth_que_interne_des_rythmes_du_K:	.asciz "La biblioth\xE8que interne des rythmes du KN6000 a \xE9t\xE9 cr\xE9\xE9e pour vous par de grands musiciens, venant du monde entier."
 Str_La_biblioteca_de_frases_musicales_incorp:	.asciz "La biblioteca de frases musicales incorporada al KN6000 fue creada por los mejores m\xFAsicos del mundo y mezclada mediante la amplia gama de funciones del KN6000,"
-Str_empty_706:	.asciz "="
 Str_empty_705:	.asciz "="
 Str_empty_704:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_704
+Str_empty_703:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_703
 
 ptrs_4C27CF0C:
 	.long	Str_The_KN6000_s_Built_In_Pattern_Library_0d
 	.long	Str_Die_Begleitrhythmen_des_KN6000_wurden_vo
 	.long	Str_La_biblioth_que_interne_des_rythmes_du_K
 	.long	Str_La_biblioteca_de_frases_musicales_incorp
-	.long	Str_empty_706
 	.long	Str_empty_705
 	.long	Str_empty_704
+	.long	Str_empty_703
 
 Str_And_Mixed_Using_The_KN6000_s_Vast_Range:	.asciz "And Mixed Using The KN6000's Vast Range Of Features Including Great DSP Effects To Create CD Quality Sound Production."
 Str_Hierbei_kommen_die_vielseitigen_M_glichk:	.asciz "Hierbei kommen die vielseitigen M\xF6glichkeiten des KN6000 zum Einsatz, wie gro\xDFartige DSP- Effekte, wie Sie sie sonst nur von CD\xB4s kennen."
 Str_Afin_de_vous_assurer_une_prestation_de_n:	.asciz "Afin de vous assurer une prestation de niveau professionnel, leurs mixages utilisent toutes les vastes possibilit\xE9s offertes par les effets num\xE9riques du KN6000."
 Str_incluidos_los_notables_efectos_DSP_para:	.asciz "incluidos los notables efectos DSP, para crear una producci\xF3n de audio con calidad de CD."
-Str_empty_703:	.asciz "="
 Str_empty_702:	.asciz "="
 Str_empty_701:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_701
+Str_empty_700:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_700
 
 ptrs_4C27D12C:
 	.long	Str_And_Mixed_Using_The_KN6000_s_Vast_Range
 	.long	Str_Hierbei_kommen_die_vielseitigen_M_glichk
 	.long	Str_Afin_de_vous_assurer_une_prestation_de_n
 	.long	Str_incluidos_los_notables_efectos_DSP_para
-	.long	Str_empty_703
 	.long	Str_empty_702
 	.long	Str_empty_701
+	.long	Str_empty_700
 
 Str_Think_Of_A_Song_And_Choose_From_220_Acco:	.asciz "Think Of A Song, And Choose From 220 Accompaniment Patterns With 4 Variations To Back You!"
 Str_W_hlen_Sie_f_r_Ihren_Song_einen_der_220:	.asciz "W\xE4hlen Sie f\xFCr Ihren Song einen der 220 Begleitrhythmen mit jeweils 4 Variationen zur Begleitung aus!"
 Str_Choisissez_une_chanson_et_l_un_des_220_r:	.asciz "Choisissez une chanson et l\x92un des 220 rythmes pour vous accompagner suivant l\x92une de ses 4 variations\xA0!"
 Str_Piense_en_una_canci_n_y_elija_entre_220:	.asciz "\xA1Piense en una canci\xF3n y elija entre 220 frases musicales de acompa\xF1amiento,~0d con 4 variaciones de fondo!"
-Str_empty_700:	.asciz "="
 Str_empty_699:	.asciz "="
 Str_empty_698:	.asciz "="
+Str_empty_697:	.asciz "="
 
 ptrs_4C27D2E4:
 	.long	Str_Think_Of_A_Song_And_Choose_From_220_Acco
 	.long	Str_W_hlen_Sie_f_r_Ihren_Song_einen_der_220
 	.long	Str_Choisissez_une_chanson_et_l_un_des_220_r
 	.long	Str_Piense_en_una_canci_n_y_elija_entre_220
-	.long	Str_empty_700
 	.long	Str_empty_699
 	.long	Str_empty_698
+	.long	Str_empty_697
 
 Str_Just_Switch_On_And_Play_The_Music_Stylis:	.asciz "Just Switch On And Play! The Music Stylist Will Be Your Guide!"
 Str_Einfach_einschalten_und_spielen_Der_Musi:	.asciz "Einfach einschalten und spielen! Der Musikstylist f\xFChrt Sie durch die Welt der Musik."
 Str_Pressez_simplement_un_bouton_et_jouez_Le:	.asciz "Pressez simplement un bouton, et jouez\xA0! Le navigateur Music Stylist sera votre guide\xA0!"
 Str_S_lo_enci_ndalo_y_toque_El_estilista_mus:	.asciz "\xA1S\xF3lo enci\xE9ndalo y toque! \xA1El estilista musical ser\xE1 su gu\xEDa!"
-Str_empty_697:	.asciz "="
 Str_empty_696:	.asciz "="
 Str_empty_695:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_695
+Str_empty_694:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_694
 
 ptrs_4C27D434:
 	.long	Str_Just_Switch_On_And_Play_The_Music_Stylis
 	.long	Str_Einfach_einschalten_und_spielen_Der_Musi
 	.long	Str_Pressez_simplement_un_bouton_et_jouez_Le
 	.long	Str_S_lo_enci_ndalo_y_toque_El_estilista_mus
-	.long	Str_empty_697
 	.long	Str_empty_696
 	.long	Str_empty_695
+	.long	Str_empty_694
 
 Str_Choose_From_1000_Music_Styles_0dIncludin:	.asciz "Choose From 1000 Music Styles,~0dIncluding Accompaniment And Melody Settings~0dProduced For You By Top Musicians."
 Str_W_hlen_Sie_unter_1000_Registrierungen_in:	.asciz "W\xE4hlen Sie unter 1000 Registrierungen inklusive Einstellungen f\xFCr Begleitung und Melodie \x96 erstellt f\xFCr Sie durch Top Musiker aus der ganzen Welt."
 Str_Choisissez_l_un_des_1000_styles_incluant:	.asciz "Choisissez l\x92un des 1000 styles, incluant l\x92accompagnement et les r\xE9glages pour la m\xE9lodie, concoct\xE9s par les plus grands musiciens."
 Str_Elija_entre_1000_estilos_musicales_tales:	.asciz "Elija entre 1000 estilos musicales, tales como acompa\xF1amiento y sonidos mel\xF3dicos producidos para usted por los mejores m\xFAsicos."
-Str_empty_694:	.asciz "="
 Str_empty_693:	.asciz "="
 Str_empty_692:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_692
+Str_empty_691:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_691
 
 ptrs_4C27D664:
 	.long	Str_Choose_From_1000_Music_Styles_0dIncludin
 	.long	Str_W_hlen_Sie_unter_1000_Registrierungen_in
 	.long	Str_Choisissez_l_un_des_1000_styles_incluant
 	.long	Str_Elija_entre_1000_estilos_musicales_tales
-	.long	Str_empty_694
 	.long	Str_empty_693
 	.long	Str_empty_692
+	.long	Str_empty_691
 
 Str_Play_In_Any_Style_From_A_Traditional_Pol:	.asciz "Play In Any Style From A Traditional Polka....."
 Str_Spielen_Sie_jede_gew_nschte_Musikrichtun:	.asciz "Spielen Sie jede gew\xFCnschte Musikrichtung von einer traditionellen Polka..."
 Str_Jouez_n_importe_quel_type_de_musique_de:	.asciz "Jouez n\x92importe quel  type de musique, de la Polka ..."
 Str_Toque_en_cualquier_estilo_desde_una_polc:	.asciz "Toque en cualquier estilo, desde una polca tradicional...."
-Str_empty_691:	.asciz "="
 Str_empty_690:	.asciz "="
 Str_empty_689:	.asciz "="
+Str_empty_688:	.asciz "="
 
 ptrs_4C27D774:
 	.long	Str_Play_In_Any_Style_From_A_Traditional_Pol
 	.long	Str_Spielen_Sie_jede_gew_nschte_Musikrichtun
 	.long	Str_Jouez_n_importe_quel_type_de_musique_de
 	.long	Str_Toque_en_cualquier_estilo_desde_una_polc
-	.long	Str_empty_691
 	.long	Str_empty_690
 	.long	Str_empty_689
+	.long	Str_empty_688
 
 Str_To_A_Country_Hoedown_0dIn_Fact_Almost_An:	.asciz "...To A Country Hoedown.~0dIn Fact Almost Any Style You Can Think Of!"
 Str_bis_hin_zum_Country_Hoedown_0d_wirklich:	.asciz "... bis hin zum Country Hoedown~0d- wirklich fast jeden Stil,~0d den Sie sich vorstellen k\xF6nnen."
 Str_au_Country_En_fait_n_importe_quel_genre:	.asciz "...au Country. En fait, n\x92importe quel genre musical auquel vous pouvez penser\xA0!"
 Str_hasta_una_danza_folkl_rica_En_s_ntesis_c:	.asciz ".... hasta una danza folkl\xF3rica. En s\xEDntesis, \xA1cualquier estilo que se le ocurra!"
-Str_empty_688:	.asciz "="
 Str_empty_687:	.asciz "="
 Str_empty_686:	.asciz "="
+Str_empty_685:	.asciz "="
 
 ptrs_4C27D8E0:
 	.long	Str_To_A_Country_Hoedown_0dIn_Fact_Almost_An
 	.long	Str_bis_hin_zum_Country_Hoedown_0d_wirklich
 	.long	Str_au_Country_En_fait_n_importe_quel_genre
 	.long	Str_hasta_una_danza_folkl_rica_En_s_ntesis_c
-	.long	Str_empty_688
 	.long	Str_empty_687
 	.long	Str_empty_686
+	.long	Str_empty_685
 
 Str_Add_A_Solo_To_Your_Song_Using_The_Perfor:	.asciz "Add A Solo To Your Song Using The Performance Pads."
 Str_Bereichern_Sie_Ihren_Song_mit_einem_Solo:	.asciz "Bereichern Sie Ihren Song mit einem Solo der Performance Pads."
 Str_Avec_les_Performances_Pads_vous_pouvez_a:	.asciz "Avec les \xAB\xA0Performances Pads\xA0\xBB vous pouvez ajouter un solo \xE0 tout moment."
 Str_Agregue_un_solo_a_su_canci_n_con_las_tec:	.asciz "Agregue un solo a su canci\xF3n con las teclas de ejecuci\xF3n."
-Str_empty_685:	.asciz "="
 Str_empty_684:	.asciz "="
 Str_empty_683:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_683
+Str_empty_682:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_682
 
 ptrs_4C27D9FC:
 	.long	Str_Add_A_Solo_To_Your_Song_Using_The_Perfor
 	.long	Str_Bereichern_Sie_Ihren_Song_mit_einem_Solo
 	.long	Str_Avec_les_Performances_Pads_vous_pouvez_a
 	.long	Str_Agregue_un_solo_a_su_canci_n_con_las_tec
-	.long	Str_empty_685
 	.long	Str_empty_684
 	.long	Str_empty_683
+	.long	Str_empty_682
 
 Str_With_Auto_Setting_0dThe_Pads_Are_Matched:	.asciz "With Auto Setting,~0dThe Pads Are Matched To~0dThe Music Style Automatically!"
 Str_Durch_Auto_Setting_werden_die_Pads_autom:	.asciz "Durch Auto Setting werden die Pads automatisch dem gew\xE4hlten Musikstil angepasst."
 Str_Le_r_glage_automatique_permet_de_synchro:	.asciz "Le r\xE9glage automatique permet de synchroniser votre solo \xE0 l\x92accompagnement instantan\xE9ment\xA0!"
 Str_Con_la_configuraci_n_autom_tica_0d_las_t:	.asciz "Con la configuraci\xF3n autom\xE1tica,~0d\xA1las teclas se adaptan al estilo de la m\xFAsica!"
-Str_empty_682:	.asciz "="
 Str_empty_681:	.asciz "="
 Str_empty_680:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_680
+Str_empty_679:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_679
 
 ptrs_4C27DB70:
 	.long	Str_With_Auto_Setting_0dThe_Pads_Are_Matched
 	.long	Str_Durch_Auto_Setting_werden_die_Pads_autom
 	.long	Str_Le_r_glage_automatique_permet_de_synchro
 	.long	Str_Con_la_configuraci_n_autom_tica_0d_las_t
-	.long	Str_empty_682
 	.long	Str_empty_681
 	.long	Str_empty_680
+	.long	Str_empty_679
 
 Str_Music_Stylist_Will_Even_Add_The_Most_Sui:	.asciz "Music Stylist Will Even Add The Most Suitable Technichord Type To Create A Full Ensemble!"
 Str_Der_Music_Stylist_stellt_ebenso_den_pass:	.asciz "Der Music Stylist stellt ebenso den passenden Technichord Typ ein und erzeugt somit ein volles Ensemble."
 Str_De_plus_pour_vous_fournir_un_ensemble_pa:	.asciz "De plus, pour vous fournir un ensemble parfait, le \xAB\xA0Music Stylist\xA0\xBB s\xE9lectionne pour vous le type de \xAB\xA0Technichord\xA0\xBB le mieux adapt\xE9\xA0!"
 Str_El_estilista_musical_agrega_el_acorde_t:	.asciz "El estilista musical agrega el acorde t\xE9cnico m\xE1s adecuado,~0d\xA1para crear un conjunto completo de instrumentos!"
-Str_empty_679:	.asciz "="
 Str_empty_678:	.asciz "="
 Str_empty_677:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_677
+Str_empty_676:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_676
 
 ptrs_4C27DD50:
 	.long	Str_Music_Stylist_Will_Even_Add_The_Most_Sui
 	.long	Str_Der_Music_Stylist_stellt_ebenso_den_pass
 	.long	Str_De_plus_pour_vous_fournir_un_ensemble_pa
 	.long	Str_El_estilista_musical_agrega_el_acorde_t
-	.long	Str_empty_679
 	.long	Str_empty_678
 	.long	Str_empty_677
+	.long	Str_empty_676
 
 Str_NX_Sound_Expands_Your_Musical_Horizons:	.asciz "NX Sound Expands Your Musical Horizons!"
 Str_NX_Sounds_erweitern_Ihre_musikalischen_A:	.asciz "NX Sounds erweitern Ihre musikalischen Ausdrucksm\xF6glichkeiten!"
 Str_Le_standard_NX_vous_offre_de_nouveaux_ho:	.asciz "Le standard NX vous offre de nouveaux horizons!"
 Str_El_sonido_NX_expande_sus_horizontes_musi:	.asciz "\xA1El sonido NX expande sus horizontes musicales!"
-Str_empty_676:	.asciz "="
 Str_empty_675:	.asciz "="
 Str_empty_674:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_674
+Str_empty_673:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_673
 
 ptrs_4C27DE3C:
 	.long	Str_NX_Sound_Expands_Your_Musical_Horizons
 	.long	Str_NX_Sounds_erweitern_Ihre_musikalischen_A
 	.long	Str_Le_standard_NX_vous_offre_de_nouveaux_ho
 	.long	Str_El_sonido_NX_expande_sus_horizontes_musi
-	.long	Str_empty_676
 	.long	Str_empty_675
 	.long	Str_empty_674
+	.long	Str_empty_673
 
 Str_Load_Data_From_Other_Technics_Instrument:	.asciz "Load Data From Other Technics Instruments~0dWith Great Compatibility."
 Str_Laden_Sie_Daten_anderer_Technics_Keyboar:	.asciz "Laden Sie Daten anderer Technics Keyboards dank gro\xDFer Kompatibilit\xE4t."
 Str_Vous_pouvez_utiliser_des_disquettes_enre:	.asciz "Vous pouvez utiliser des disquettes enregistr\xE9es sur d'autres instruments Technics,"
 Str_Cargue_datos_de_otros_instrumentos_Techn:	.asciz "Cargue datos de otros instrumentos Technics altamente compatibles."
-Str_empty_673:	.asciz "="
 Str_empty_672:	.asciz "="
 Str_empty_671:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_671
+Str_empty_670:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_670
 
 ptrs_4C27DF84:
 	.long	Str_Load_Data_From_Other_Technics_Instrument
 	.long	Str_Laden_Sie_Daten_anderer_Technics_Keyboar
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_enre
 	.long	Str_Cargue_datos_de_otros_instrumentos_Techn
-	.long	Str_empty_673
 	.long	Str_empty_672
 	.long	Str_empty_671
+	.long	Str_empty_670
 
 Str_NX_Sound_Is_Also_Compatible_With_GM_Leve:	.asciz "NX Sound Is Also Compatible With GM Level2 Standard Midi Files And More!"
 Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM:	.asciz "NX Sounds sind ebenso kompatibel mit GM Level 2 Standard-MIDI-Files und mehr!"
 Str_des_instruments_compatibles_GM_niveau_2:	.asciz "des instruments compatibles GM niveau 2, des s\xE9quences SMF et bien d'autres encore!"
 Str_El_sonido_NX_es_tambi_n_compatible_con_l:	.asciz "El sonido NX es tambi\xE9n compatible con los archivos MIDI est\xE1ndar GM nivel 2\x85~0d \xA1y otros m\xE1s!"
-Str_empty_670:	.asciz "="
 Str_empty_669:	.asciz "="
 Str_empty_668:	.asciz "="
+Str_empty_667:	.asciz "="
 
 ptrs_4C27E0F0:
 	.long	Str_NX_Sound_Is_Also_Compatible_With_GM_Leve
 	.long	Str_NX_Sounds_sind_ebenso_kompatibel_mit_GM
 	.long	Str_des_instruments_compatibles_GM_niveau_2
 	.long	Str_El_sonido_NX_es_tambi_n_compatible_con_l
-	.long	Str_empty_670
 	.long	Str_empty_669
 	.long	Str_empty_668
+	.long	Str_empty_667
 
 Str_Load_Pattern_Software_0dFrom_Wide_Range:	.asciz "Load Pattern Software~0dFrom Wide Range Of~0dOther Manufacturers!"
 Str_Laden_Sie_Rhythmen_aus_dem_Angebot_ander:	.asciz "Laden Sie Rhythmen aus dem Angebot anderer Hersteller!"
 Str_Vous_pouvez_utiliser_des_disquettes_prov:	.asciz "Vous pouvez utiliser des disquettes provenant d'autres fabricants!"
 Str_Cargue_software_para_frases_musicales_de:	.asciz "\xA1Cargue software para frases musicales de una amplia gama de fabricantes!"
-Str_empty_667:	.asciz "="
 Str_empty_666:	.asciz "="
 Str_empty_665:	.asciz "="
+Str_empty_664:	.asciz "="
 
 ptrs_4C27E218:
 	.long	Str_Load_Pattern_Software_0dFrom_Wide_Range
 	.long	Str_Laden_Sie_Rhythmen_aus_dem_Angebot_ander
 	.long	Str_Vous_pouvez_utiliser_des_disquettes_prov
 	.long	Str_Cargue_software_para_frases_musicales_de
-	.long	Str_empty_667
 	.long	Str_empty_666
 	.long	Str_empty_665
+	.long	Str_empty_664
 
 Str_Create_Your_Own_Music_Library_From_Virtu:	.asciz "Create Your Own Music Library From Virtually Any Software! Technics NX Sound Means \"Compatibility\"."
 Str_Erstellen_Sie_Ihre_eigene_Musik_Sammlung:	.asciz "Erstellen Sie Ihre eigene Musik-Sammlung aus einem reichhaltigen Softwareangebot!~0dTechnics NX bedeutet \x84Kompatibilit\xE4t\x93!"
 Str_Cr_ez_votre_propre_biblioth_que_musicale:	.asciz "Cr\xE9ez votre propre biblioth\xE8que musicale \xE0 partir de tous les softs existants!~0dLe standard NX Technics rime avec \xAB Compatibilit\xE9 \xBB."
 Str_Cree_su_propia_biblioteca_musical_con_ca:	.asciz "\xA1Cree su propia biblioteca musical con casi cualquier programa! El sonido NX de Technics significa \x93compatibilidad\x94."
-Str_empty_664:	.asciz "="
 Str_empty_663:	.asciz "="
 Str_empty_662:	.asciz "="
+Str_empty_661:	.asciz "="
 
 ptrs_4C27E414:
 	.long	Str_Create_Your_Own_Music_Library_From_Virtu
 	.long	Str_Erstellen_Sie_Ihre_eigene_Musik_Sammlung
 	.long	Str_Cr_ez_votre_propre_biblioth_que_musicale
 	.long	Str_Cree_su_propia_biblioteca_musical_con_ca
-	.long	Str_empty_664
 	.long	Str_empty_663
 	.long	Str_empty_662
+	.long	Str_empty_661
 
 Str_Customize_Your_KN6000:	.asciz "Customize Your KN6000!"
 Str_Gestalten_Sie_Ihr_KN6000:	.asciz "Gestalten Sie Ihr KN6000!"
 Str_Personnalisez_votre_KN6000:	.asciz "Personnalisez votre KN6000!"
 Str_Personalice_su_procesador_KN6000:	.asciz "\xA1Personalice su procesador KN6000!"
-Str_empty_661:	.asciz "="
 Str_empty_660:	.asciz "="
 Str_empty_659:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_659
+Str_empty_658:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_658
 
 ptrs_4C27E4A8:
 	.long	Str_Customize_Your_KN6000
 	.long	Str_Gestalten_Sie_Ihr_KN6000
 	.long	Str_Personnalisez_votre_KN6000
 	.long	Str_Personalice_su_procesador_KN6000
-	.long	Str_empty_661
 	.long	Str_empty_660
 	.long	Str_empty_659
+	.long	Str_empty_658
 
 Str_Create_Your_Own_Main_Page_0dAnd_Store_Th:	.asciz "Create Your Own Main Page~0dAnd Store The Sounds, Patterns, Styles, And Functions~0dYou Use Most In The Favorites Button."
 Str_Erstellen_Sie_Ihr_pers_nliches_Hauptdisp:	.asciz "Erstellen Sie Ihr pers\xF6nliches Hauptdisplay und speichern Sie Sounds, Rhythmen, Styles und Funktionen, die Sie am h\xE4ufigsten verwenden auf  beliebige Display-Tasten."
 Str_Cr_ez_votre_propre_page_principale_et_de:	.asciz "Cr\xE9ez votre propre page principale et des raccourcis pour les sonorit\xE9s, les rythmes, les styles et les fonctions que vous utilisez le plus souvent,~0d en les rendant accessibles directement par les boutons \xAB Favorites \xBB."
 Str_Cree_su_propia_p_gina_principal_y_almace:	.asciz "Cree su propia p\xE1gina principal y almacene los sonidos, frases musicales, estilos y funciones que m\xE1s usa en el bot\xF3n de favoritos."
-Str_empty_658:	.asciz "="
 Str_empty_657:	.asciz "="
 Str_empty_656:	.asciz "="
+Str_empty_655:	.asciz "="
 
 ptrs_4C27E74C:
 	.long	Str_Create_Your_Own_Main_Page_0dAnd_Store_Th
 	.long	Str_Erstellen_Sie_Ihr_pers_nliches_Hauptdisp
 	.long	Str_Cr_ez_votre_propre_page_principale_et_de
 	.long	Str_Cree_su_propia_p_gina_principal_y_almace
-	.long	Str_empty_658
 	.long	Str_empty_657
 	.long	Str_empty_656
+	.long	Str_empty_655
 
 Str_Store_Your_Favorite_Registrations_0dIn_T:	.asciz "Store Your Favorite Registrations~0dIn The Custom Panel - Permanently!"
 Str_Speichern_Sie_Ihre_Lieblingsregistrierun:	.asciz "Speichern Sie Ihre Lieblingsregistrierung in den Custom Panel \x96 permanent!"
 Str_Enregistrez_vos_registrations_favorites:	.asciz "Enregistrez vos registrations favorites, de mani\xE8re permanente,~0d dans les \xAB Custom Panel \xBB."
 Str_Guarde_sus_grabaciones_favoritas_en_la_m:	.asciz "Guarde sus grabaciones favoritas en la memoria de panel personalizada,~0d \xA1en forma permanente!"
-Str_empty_655:	.asciz "="
 Str_empty_654:	.asciz "="
 Str_empty_653:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_653
+Str_empty_652:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_652
 
 ptrs_4C27E8C0:
 	.long	Str_Store_Your_Favorite_Registrations_0dIn_T
 	.long	Str_Speichern_Sie_Ihre_Lieblingsregistrierun
 	.long	Str_Enregistrez_vos_registrations_favorites
 	.long	Str_Guarde_sus_grabaciones_favoritas_en_la_m
-	.long	Str_empty_655
 	.long	Str_empty_654
 	.long	Str_empty_653
+	.long	Str_empty_652
 
 Str_They_ll_Stay_There_Even_After_You_Turn_T:	.asciz "They'll Stay There Even After You Turn The KN6000 Off!"
 Str_Diese_bleiben_immer_erhalten_0dselbst_we:	.asciz "Diese bleiben immer erhalten,~0dselbst wenn Sie das KN6000 ausschalten!"
 Str_Elles_resteront_accessibles_m_me_apr_s_a:	.asciz "Elles resteront accessibles m\xEAme apr\xE8s avoir coup\xE9 l'alimentation de votre KN6000."
 Str_All_quedar_n_despu_s_de_que_apague_el_KN:	.asciz "\xA1All\xED quedar\xE1n despu\xE9s de que apague el KN6000!"
-Str_empty_652:	.asciz "="
 Str_empty_651:	.asciz "="
 Str_empty_650:	.asciz "="
+Str_empty_649:	.asciz "="
 
 ptrs_4C27E9E4:
 	.long	Str_They_ll_Stay_There_Even_After_You_Turn_T
 	.long	Str_Diese_bleiben_immer_erhalten_0dselbst_we
 	.long	Str_Elles_resteront_accessibles_m_me_apr_s_a
 	.long	Str_All_quedar_n_despu_s_de_que_apague_el_KN
-	.long	Str_empty_652
 	.long	Str_empty_651
 	.long	Str_empty_650
+	.long	Str_empty_649
 
 Str_As_Will_Custom_Rhythms_And_Custom_Music:	.asciz "As Will Custom Rhythms And Custom Music Styles."
 Str_Das_Gleiche_gilt_f_r_Custom_Rhythmen_0d:	.asciz "Das Gleiche gilt f\xFCr Custom Rhythmen~0d und Custom Music Styles."
 Str_De_plus_avec_les_Custom_Rhythms_0d_et_le:	.asciz "De plus avec les \xAB Custom Rhythms \xBB~0d et les \xAB Custom Music Styles \xBB,"
 Str_Tambi_n_se_guardan_los_ritmos_y_los_esti:	.asciz "Tambi\xE9n se guardan los ritmos y los estilos musicales personalizados."
-Str_empty_649:	.asciz "="
 Str_empty_648:	.asciz "="
 Str_empty_647:	.asciz "="
+Str_empty_646:	.asciz "="
 
 ptrs_4C27EB04:
 	.long	Str_As_Will_Custom_Rhythms_And_Custom_Music
 	.long	Str_Das_Gleiche_gilt_f_r_Custom_Rhythmen_0d
 	.long	Str_De_plus_avec_les_Custom_Rhythms_0d_et_le
 	.long	Str_Tambi_n_se_guardan_los_ritmos_y_los_esti
-	.long	Str_empty_649
 	.long	Str_empty_648
 	.long	Str_empty_647
+	.long	Str_empty_646
 
 Str_You_Can_Truly_Personalize_Your_KN6000_0d:	.asciz "You Can Truly Personalize Your KN6000,~0dLeaving You Free To Play Your Favorite Music!"
 Str_Sie_k_nnen_tats_chlich_Ihr_KN6000_ganz_p:	.asciz "Sie k\xF6nnen tats\xE4chlich Ihr KN6000 ganz pers\xF6nlich einrichten, ~0d so wie Sie gern musizieren m\xF6chten."
 Str_vous_pouvez_vraiment_personnaliser_votre:	.asciz "vous pouvez vraiment personnaliser votre KN6000. Vous \xEAtes enfin libre pour vous concentrer uniquement sur votre interpr\xE9tation!"
 Str_Usted_puede_personalizar_verdaderamente:	.asciz "Usted puede personalizar verdaderamente su procesador KN6000.~0d\xA1Toque libremente su m\xFAsica favorita!"
-Str_empty_646:	.asciz "="
 Str_empty_645:	.asciz "="
 Str_empty_644:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_644
+Str_empty_643:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_643
 
 ptrs_4C27ECCC:
 	.long	Str_You_Can_Truly_Personalize_Your_KN6000_0d
 	.long	Str_Sie_k_nnen_tats_chlich_Ihr_KN6000_ganz_p
 	.long	Str_vous_pouvez_vraiment_personnaliser_votre
 	.long	Str_Usted_puede_personalizar_verdaderamente
-	.long	Str_empty_646
 	.long	Str_empty_645
 	.long	Str_empty_644
+	.long	Str_empty_643
 
 Str_Ready_To_Create_Music:	.asciz "Ready To Create Music?"
 Str_Sind_Sie_bereit_zu_musizieren:	.asciz "Sind Sie bereit zu musizieren?"
 Str_Pr_t_composer:	.asciz "Pr\xEAt \xE0 composer\xA0?"
 Str_Listo_para_crear_la_m_sica:	.asciz "\xBFListo para crear la m\xFAsica?"
-Str_empty_643:	.asciz "="
 Str_empty_642:	.asciz "="
 Str_empty_641:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_641
+Str_empty_640:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_640
 
 ptrs_4C27ED54:
 	.long	Str_Ready_To_Create_Music
 	.long	Str_Sind_Sie_bereit_zu_musizieren
 	.long	Str_Pr_t_composer
 	.long	Str_Listo_para_crear_la_m_sica
-	.long	Str_empty_643
 	.long	Str_empty_642
 	.long	Str_empty_641
+	.long	Str_empty_640
 
 Str_Be_An_Arranger_Using_The_KN6000_s_16_Tra:	.asciz "Be An Arranger Using The KN6000's 16 Track Sequencer, Create Anything From A Small Ensemble~0dTo A Full Orchestra!"
 Str_Bet_tigen_Sie_sich_als_Arrangeur_indem_S:	.asciz "Bet\xE4tigen Sie sich als Arrangeur, indem Sie den 16-Spur-Sequenzer des KN6000 zur Hilfe nehmen.~0dVom kleinen Ensemble bis hin zum gro\xDFen Orchester~0d- es stehen alle M\xF6glichkeiten offen."
 Str_Avec_le_s_quenceur_16_pistes_de_KN6OOO_d:	.asciz "Avec le s\xE9quenceur 16 pistes de KN6OOO, devenez un v\xE9ritable compositeur! Progressez \xE0 partir d'un petit ensemble instrumental pour parvenir \xE0 une formation orchestrale au grand complet!"
 Str_Sea_su_propio_arreglador_musical_El_secu:	.asciz "Sea su propio arreglador musical. El secuenciador de 16 pistas del KN6000 le permite crear cualquier combinaci\xF3n, desde un conjunto de c\xE1mara\x85~0d \xA1hasta una orquesta completa!"
-Str_empty_640:	.asciz "="
 Str_empty_639:	.asciz "="
 Str_empty_638:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_638
+Str_empty_637:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_637
 
 ptrs_4C27F010:
 	.long	Str_Be_An_Arranger_Using_The_KN6000_s_16_Tra
 	.long	Str_Bet_tigen_Sie_sich_als_Arrangeur_indem_S
 	.long	Str_Avec_le_s_quenceur_16_pistes_de_KN6OOO_d
 	.long	Str_Sea_su_propio_arreglador_musical_El_secu
-	.long	Str_empty_640
 	.long	Str_empty_639
 	.long	Str_empty_638
+	.long	Str_empty_637
 
 Str_Or_Record_Your_Performance_The_Easy_Way:	.asciz "Or Record Your Performance The Easy Way.~0dJust Press \"Easy Record\"."
 Str_Sie_k_nnen_auch_den_einfachsten_Weg_gehe:	.asciz "Sie k\xF6nnen auch den einfachsten Weg gehen \x96 dr\xFCcken Sie einfach~0d\x84Easy Record\x93."
 Str_Ou_enregistrez_simplement_votre_interpr:	.asciz "Ou enregistrez simplement votre interpr\xE9tation avec une grande facilit\xE9.~0dIl vous suffit de presser~0d\xAB Easy Record \xBB."
 Str_Grabe_f_cilmente_su_m_sica_con_s_lo_toca:	.asciz "Grabe f\xE1cilmente su m\xFAsica con s\xF3lo tocar un bot\xF3n."
-Str_empty_637:	.asciz "="
 Str_empty_636:	.asciz "="
 Str_empty_635:	.asciz "="
+Str_empty_634:	.asciz "="
 
 ptrs_4C27F174:
 	.long	Str_Or_Record_Your_Performance_The_Easy_Way
 	.long	Str_Sie_k_nnen_auch_den_einfachsten_Weg_gehe
 	.long	Str_Ou_enregistrez_simplement_votre_interpr
 	.long	Str_Grabe_f_cilmente_su_m_sica_con_s_lo_toca
-	.long	Str_empty_637
 	.long	Str_empty_636
 	.long	Str_empty_635
+	.long	Str_empty_634
 
 Str_Use_Auto_Play_Chord_To_Create_Your_Song:	.asciz "Use Auto Play Chord To Create Your Song Backing, Either In Technics Mode Or For Standard Midi File!"
 Str_Mit_Hilfe_von_Auto_Play_Chord_erstellen:	.asciz "Mit Hilfe von Auto Play Chord erstellen Sie Ihre pers\xF6nliche Begleitung, entweder im Technics Modus oder f\xFCr Standard-MIDI-Files."
 Str_Utilisez_l_auto_Play_Chord_pour_vous_acc:	.asciz "Utilisez l' \xAB auto Play Chord \xBB pour vous accompagner, que ce soit avec le mode Technics ou le mode \xAB Standard Midi File \xBB!"
 Str_Use_la_ejecuci_n_autom_tica_de_acordes_p:	.asciz "\xA1Use la ejecuci\xF3n autom\xE1tica de acordes para crear el acompa\xF1amiento, ya sea en modo Technics o en un archivo MIDI est\xE1ndar!"
-Str_empty_634:	.asciz "="
 Str_empty_631:	.asciz "="
 Str_empty_630:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_630
+Str_empty_629:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_629
 
 ptrs_4C27F378:
 	.long	Str_Use_Auto_Play_Chord_To_Create_Your_Song
 	.long	Str_Mit_Hilfe_von_Auto_Play_Chord_erstellen
 	.long	Str_Utilisez_l_auto_Play_Chord_pour_vous_acc
 	.long	Str_Use_la_ejecuci_n_autom_tica_de_acordes_p
-	.long	Str_empty_634
 	.long	Str_empty_631
 	.long	Str_empty_630
+	.long	Str_empty_629
 
 Str_Sing_Along_To_A_Huge_Range_Of_Song_Softw:	.asciz "Sing Along To A Huge Range Of Song Software With On Screen Lyrics!"
 Str_Singen_Sie_zu_einem_riesigen_Softwareang:	.asciz "Singen Sie zu einem riesigen Softwareangebot mit Texten, die im Display angezeigt werden."
-Str_empty_629:	.asciz " "
+Str_empty_628:	.asciz " "
 Str_Cante_una_amplia_gama_de_canciones_en_so:	.asciz "\xA1Cante una amplia gama de canciones en software con letras en pantalla!"
-Str_empty_628:	.asciz "="
 Str_empty_627:	.asciz "="
 Str_empty_626:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_626
+Str_empty_622:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_622
 
 ptrs_4C27F484:
 	.long	Str_Sing_Along_To_A_Huge_Range_Of_Song_Softw
 	.long	Str_Singen_Sie_zu_einem_riesigen_Softwareang
-	.long	Str_empty_629
-	.long	Str_Cante_una_amplia_gama_de_canciones_en_so
 	.long	Str_empty_628
+	.long	Str_Cante_una_amplia_gama_de_canciones_en_so
 	.long	Str_empty_627
 	.long	Str_empty_626
+	.long	Str_empty_622
 
-Str_empty_622:	.asciz " "
 Str_empty_592:	.asciz " "
-Str_Chantez_avec_l_accompagnement_d_orchestr:	.asciz "Chantez avec l'accompagnement d'orchestre d'une grande vari\xE9t\xE9 de softwares commerciaux. La plupart de ces softs permettent l'affichage des paroles sur l'\xE9cran de votre clavier\xA0!"
 Str_empty_585:	.asciz " "
-Str_empty_584:	.asciz "="
+Str_Chantez_avec_l_accompagnement_d_orchestr:	.asciz "Chantez avec l'accompagnement d'orchestre d'une grande vari\xE9t\xE9 de softwares commerciaux. La plupart de ces softs permettent l'affichage des paroles sur l'\xE9cran de votre clavier\xA0!"
+Str_empty_584:	.asciz " "
 Str_empty_583:	.asciz "="
 Str_empty_582:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_582
+Str_empty_567:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_567
 
 ptrs_4C27F560:
-	.long	Str_empty_622
 	.long	Str_empty_592
-	.long	Str_Chantez_avec_l_accompagnement_d_orchestr
 	.long	Str_empty_585
+	.long	Str_Chantez_avec_l_accompagnement_d_orchestr
 	.long	Str_empty_584
 	.long	Str_empty_583
 	.long	Str_empty_582
+	.long	Str_empty_567
 
 Str_Detailed_Editing_Functions_Let_You_Get_T:	.asciz "Detailed Editing Functions Let You Get The Recording~0dJust The Way You Want It!"
 Str_Detaillierte_Bearbeitungs_Funktionen_erm:	.asciz "Detaillierte Bearbeitungs-Funktionen erm\xF6glichen eine Aufnahme so, wie Sie es w\xFCnschen."
-Str_empty_567:	.asciz " "
+Str_empty_566:	.asciz " "
 Str_Las_funciones_de_edici_n_detallada_le_pe:	.asciz "\xA1Las funciones de edici\xF3n detallada le permiten lograr la grabaci\xF3n que desea!"
-Str_empty_566:	.asciz "="
 Str_empty_565:	.asciz "="
 Str_empty_564:	.asciz "="
+Str_empty_563:	.asciz "="
 
 ptrs_4C27F67C:
 	.long	Str_Detailed_Editing_Functions_Let_You_Get_T
 	.long	Str_Detaillierte_Bearbeitungs_Funktionen_erm
-	.long	Str_empty_567
-	.long	Str_Las_funciones_de_edici_n_detallada_le_pe
 	.long	Str_empty_566
+	.long	Str_Las_funciones_de_edici_n_detallada_le_pe
 	.long	Str_empty_565
 	.long	Str_empty_564
+	.long	Str_empty_563
 
-Str_empty_563:	.asciz " "
 Str_empty_562:	.asciz " "
-Str_Des_fonctions_d_ditions_tr_s_compl_tes_v:	.asciz "Des fonctions d'\xE9ditions tr\xE8s compl\xE8tes vous donnent la libert\xE9 d'effectuer vos enregistrements comme vous le voulez!"
 Str_empty_561:	.asciz " "
-Str_empty_560:	.asciz "="
+Str_Des_fonctions_d_ditions_tr_s_compl_tes_v:	.asciz "Des fonctions d'\xE9ditions tr\xE8s compl\xE8tes vous donnent la libert\xE9 d'effectuer vos enregistrements comme vous le voulez!"
+Str_empty_560:	.asciz " "
 Str_empty_529:	.asciz "="
 Str_empty_527:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_527
+Str_empty_522:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_522
 
 ptrs_4C27F71C:
-	.long	Str_empty_563
 	.long	Str_empty_562
-	.long	Str_Des_fonctions_d_ditions_tr_s_compl_tes_v
 	.long	Str_empty_561
+	.long	Str_Des_fonctions_d_ditions_tr_s_compl_tes_v
 	.long	Str_empty_560
 	.long	Str_empty_529
 	.long	Str_empty_527
+	.long	Str_empty_522
 
 Str_How_Easy_Is_The_KN6000_To_Use:	.asciz "How Easy Is The KN6000 To Use?"
 Str_Wie_einfach_ist_das_KN6000_zu_bedienen:	.asciz "Wie einfach ist das KN6000 zu bedienen?"
 Str_Le_KN6000_est_vraiment_tr_s_facile_utili:	.asciz "Le KN6000 est vraiment tr\xE8s facile \xE0 utiliser!"
 Str_Es_f_cil_usar_el_KN6000:	.asciz "\xBFEs f\xE1cil usar el KN6000?"
-Str_empty_522:	.asciz "="
 Str_empty_520:	.asciz "="
 Str_empty_517:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_517
+Str_empty_514:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_514
 
 ptrs_4C27F7D0:
 	.long	Str_How_Easy_Is_The_KN6000_To_Use
 	.long	Str_Wie_einfach_ist_das_KN6000_zu_bedienen
 	.long	Str_Le_KN6000_est_vraiment_tr_s_facile_utili
 	.long	Str_Es_f_cil_usar_el_KN6000
-	.long	Str_empty_522
 	.long	Str_empty_520
 	.long	Str_empty_517
+	.long	Str_empty_514
 
 Str_Find_Any_Information_In_Wide_Screen_Colo:	.asciz "Find Any Information In Wide Screen Color!"
 Str_Sie_finden_jede_Information_im_breiten_F:	.asciz "Sie finden jede Information im breiten Farb-Display!"
 Str_Le_grand_cran_LCD_vous_donne_toutes_les:	.asciz "Le grand \xE9cran LCD vous donne toutes les informations que vous D\xE9sirez!"
 Str_Encuentre_toda_la_informaci_n_en_la_ampl:	.asciz "\xA1Encuentre toda la informaci\xF3n en la amplia pantalla de color!"
-Str_empty_514:	.asciz "="
 Str_empty_513:	.asciz "="
 Str_empty_357:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_357
+Str_empty_356:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_356
 
 ptrs_4C27F8DC:
 	.long	Str_Find_Any_Information_In_Wide_Screen_Colo
 	.long	Str_Sie_finden_jede_Information_im_breiten_F
 	.long	Str_Le_grand_cran_LCD_vous_donne_toutes_les
 	.long	Str_Encuentre_toda_la_informaci_n_en_la_ampl
-	.long	Str_empty_514
 	.long	Str_empty_513
 	.long	Str_empty_357
+	.long	Str_empty_356
 
 Str_Play_Straight_Away_0dJust_Use_One_Touch:	.asciz "Play Straight Away!~0dJust Use One Touch Play Or The~0dMusic Style Arranger."
 Str_Spielen_Sie_einfach_drauf_los_Sie_werden:	.asciz "Spielen Sie einfach drauf los! Sie werden unterst\xFCtzt von One Touch Play oder vom Music Style Arranger."
 Str_Jouez_imm_diatement_0dIl_vous_suffit_de:	.asciz "Jouez imm\xE9diatement!~0dIl vous suffit de presser~0d\xAB One Touch Play \xBB~0d ou \xAB Music Style Arranger \xBB."
 Str_Toque_al_instante_Simplemente_use_la_eje:	.asciz "\xA1Toque al instante! Simplemente, use la ejecuci\xF3n de un bot\xF3n o el arreglador de estilos musicales."
-Str_empty_356:	.asciz "="
 Str_empty_343:	.asciz "="
 Str_empty_342:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_342
+Str_empty_341:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_341
 
 ptrs_4C27FA80:
 	.long	Str_Play_Straight_Away_0dJust_Use_One_Touch
 	.long	Str_Spielen_Sie_einfach_drauf_los_Sie_werden
 	.long	Str_Jouez_imm_diatement_0dIl_vous_suffit_de
 	.long	Str_Toque_al_instante_Simplemente_use_la_eje
-	.long	Str_empty_356
 	.long	Str_empty_343
 	.long	Str_empty_342
+	.long	Str_empty_341
 
 Str_Looking_For_The_Lost_Chord_Let_The_Chord:	.asciz "Looking For The Lost Chord? Let The Chord Finder Help You!"
 Str_Suchen_Sie_einen_bestimmten_Akkord_Frage:	.asciz "Suchen Sie einen bestimmten Akkord? Fragen Sie den Chord Finder um Hilfe."
 Str_A_la_recherche_de_l_accord_perdu_0dLe_Ch:	.asciz "A la recherche de l'accord perdu?~0dLe \xAB Chord finder \xBB vous aidera \xE0 le retrouver!"
 Str_Busca_un_acorde_0d_Deje_que_el_buscador:	.asciz "\xBFBusca un acorde?~0d\xA1Deje que el buscador de acordes le ayude!"
-Str_empty_341:	.asciz "="
 Str_empty_336:	.asciz "="
 Str_empty_335:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_335
+Str_empty_334:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_334
 
 ptrs_4C27FBBC:
 	.long	Str_Looking_For_The_Lost_Chord_Let_The_Chord
 	.long	Str_Suchen_Sie_einen_bestimmten_Akkord_Frage
 	.long	Str_A_la_recherche_de_l_accord_perdu_0dLe_Ch
 	.long	Str_Busca_un_acorde_0d_Deje_que_el_buscador
-	.long	Str_empty_341
 	.long	Str_empty_336
 	.long	Str_empty_335
+	.long	Str_empty_334
 
 Str_Easy_Setting_Makes_It_Simple_0dTo_Custom:	.asciz "Easy Setting Makes It Simple~0dTo Customize Features Just Press And Hold~0dThe Feature's Button For 2 Seconds."
 Str_Easy_Setting_macht_es_einfach_Funktionen:	.asciz "Easy Setting macht es einfach Funktionen zusammenzustellen. Dr\xFCcken und halten Sie einfach die Funktionstaste f\xFCr 2 Sekunden."
 Str_C_est_tr_s_facile_de_personnaliser_vos_r:	.asciz "C' est tr\xE8s facile de personnaliser vos r\xE9glages, il suffit de presser et de maintenir te bouton de la fonction plus de deux secondes."
 Str_La_configuraci_n_f_cil_simplifica_la_per:	.asciz "La configuraci\xF3n f\xE1cil simplifica la personalizaci\xF3n de funciones. S\xF3lo mantenga pulsado el bot\xF3n Feature por 2 segundos."
-Str_empty_334:	.asciz "="
 Str_empty_333:	.asciz "="
 Str_empty_332:	.asciz "="
+Str_empty_324:	.asciz "="
 
 ptrs_4C27FDCC:
 	.long	Str_Easy_Setting_Makes_It_Simple_0dTo_Custom
 	.long	Str_Easy_Setting_macht_es_einfach_Funktionen
 	.long	Str_C_est_tr_s_facile_de_personnaliser_vos_r
 	.long	Str_La_configuraci_n_f_cil_simplifica_la_per
-	.long	Str_empty_334
 	.long	Str_empty_333
 	.long	Str_empty_332
+	.long	Str_empty_324
 
 Str_Let_The_Help_Function_0dTeach_You_About:	.asciz "Let The Help Function~0dTeach You About KN6000!"
 Str_Lassen_Sie_sich_von_der_Help_Funktion_In:	.asciz "Lassen Sie sich von der Help-Funktion Informationen zum KN6000 geben!"
 Str_La_fonction_Help_vous_apprend_tout_sur_l:	.asciz "La fonction \xABHelp\xBB vous apprend tout sur le KN6000!"
 Str_Deje_que_la_funci_n_de_ayuda_le_explique:	.asciz "\xA1Deje que la funci\xF3n de ayuda le explique el KN6000!"
-Str_empty_324:	.asciz "="
 Str_empty_303:	.asciz "="
 Str_empty_302:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_302
+Str_empty_290:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_290
 
 ptrs_4C27FED0:
 	.long	Str_Let_The_Help_Function_0dTeach_You_About
 	.long	Str_Lassen_Sie_sich_von_der_Help_Funktion_In
 	.long	Str_La_fonction_Help_vous_apprend_tout_sur_l
 	.long	Str_Deje_que_la_funci_n_de_ayuda_le_explique
-	.long	Str_empty_324
 	.long	Str_empty_303
 	.long	Str_empty_302
+	.long	Str_empty_290
 
 Str_With_The_KN6000_You_Can_Spend_More_Time:	.asciz "With The KN6000 You Can Spend More Time Making Music!"
 Str_Mit_dem_KN6000_k_nnen_Sie_sich_ganz_auf:	.asciz "Mit dem KN6000 k\xF6nnen Sie sich ganz auf das Musizieren konzentrieren!"
 Str_Le_KN6000_vous_permet_de_passer_plus_de:	.asciz "Le KN6000 vous permet de passer plus de temps \xE0 r\xE9ellement faire de la musique!!"
 Str_Con_el_KN6000_0d_usted_puede_pasar_m_s_t:	.asciz "Con el KN6000,~0d\xA1usted puede pasar m\xE1s tiempo creando su m\xFAsica!"
-Str_empty_290:	.asciz "="
 Str_empty_287:	.asciz "="
 Str_empty_277:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_277
+Str_empty_276:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_276
 
 ptrs_4C280004:
 	.long	Str_With_The_KN6000_You_Can_Spend_More_Time
 	.long	Str_Mit_dem_KN6000_k_nnen_Sie_sich_ganz_auf
 	.long	Str_Le_KN6000_vous_permet_de_passer_plus_de
 	.long	Str_Con_el_KN6000_0d_usted_puede_pasar_m_s_t
-	.long	Str_empty_290
 	.long	Str_empty_287
 	.long	Str_empty_277
+	.long	Str_empty_276
 
-Str_empty_276:	.asciz "="
 Str_empty_275:	.asciz "="
 Str_empty_274:	.asciz "="
 Str_empty_273:	.asciz "="
 Str_empty_272:	.asciz "="
 Str_empty_271:	.asciz "="
 Str_empty_270:	.asciz "="
-	.align	4, 0xFF	# pad after Str_empty_270
+Str_empty_269:	.asciz "="
+	.align	4, 0xFF	# pad after Str_empty_269
 
 ptrs_4C280030:
-	.long	Str_empty_276
 	.long	Str_empty_275
 	.long	Str_empty_274
 	.long	Str_empty_273
 	.long	Str_empty_272
 	.long	Str_empty_271
 	.long	Str_empty_270
+	.long	Str_empty_269
 
 StylePanel_88_Ballad_1:	# one-touch setting 1 of the Music Stylist setup "88 Ballad" (StyleRecordTable[88].panel; src/include/panel_memory.inc)
 	PM_PART	0x00, 0x40, 0x20, 0x7f, 0x15, 0x02, 0x99, 0x50, 0x3c, 0x40, 0x00, 0x6c, 0x40, 0x1c, 0x40, 0x40, 0x40, 0x80, 0x00, 0x00, 0x00, 0x88, 0x80, 0x80, 0x00, 0x00	# part 0 (RIGHT1)
@@ -15686,7 +15694,7 @@ Text_Rock_Pop:	# 10 strings of 16 characters, NUL-terminated
 
 Str_1_17:	.asciz "1"
 Str_2_19:	.asciz "2"
-Str_4_19:	.asciz "4"
+Str_4_18:	.asciz "4"
 Str_5_14:	.asciz "5"
 Str_6_14:	.asciz "6"
 Str_7_5:	.asciz "7"
@@ -17267,8 +17275,12 @@ FnName_initialize_comp:	.asciz "initialize_comp"
 FnName_DirPlayRx:	.asciz "DirPlayRx"
 FnName_MrxFifoWrite:	.asciz "MrxFifoWrite"
 FnName_ErxFifoWrite:	.asciz "ErxFifoWrite"
-# census: opaque -- unknown-dump: 7 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2ABFA5, 0x2ABFAC
+data_4C2ABFA5:
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x2ABFA5, 0x2ABFA8
+data_4C2ABFA8:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x2ABFA8, 0x2ABFAC
 Str_HD_SX3_MAIN_MENU:	.asciz "HD-SX3 MAIN MENU"
 	.align	4, 0xFF	# pad after Str_HD_SX3_MAIN_MENU
 
@@ -17438,7 +17450,9 @@ Str_Device_s_OK:	.asciz "      Device: %s   OK!"
 	.align	4, 0xFF	# pad after Str_Device_s_OK
 Str_Not_Good:	.asciz "  !!!! Not Good !!!"
 data_4C2AC948:
-.incbin_range "baserom/kn6000_program.rom", 0x2AC948, 0x2AC968
+	# 32 bytes the code takes the address of: func_4C1722F9 0x4C1722F9 `call memcmp_entry, [d2,a2], 8` (+0, arg a1); func_4C1722F9 0x4C1722F9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C1722F9 0x4C1722F9 `mov data_4C2AC948, a2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128, 0	# +0
+	tab_u8	0, 1, 0, 2, 0, 4, 0, 8, 0, 16, 0, 32, 0, 64, 0, 128	# +16
 Str_OK_46:	.asciz "                           OK"
 	.align	4, 0xFF	# pad after Str_OK_46
 Str_NG_NG_NG_Err_d:	.asciz "                           NG NG NG  Err = %d"

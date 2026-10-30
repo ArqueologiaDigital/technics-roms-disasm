@@ -35,7 +35,15 @@ ROM_SHA1 := a507de3977def5d4148c4d3dbc16e3f6ff9f01c8
 # File-offset ranges that hold code (README.md, "Layout"): the boot header (its
 # vectors), the start-up code and application after the erased 0x10-0x80 bytes,
 # and the MILK kernel at the top of the image.
-CODE     := --code 0x0:0x10 --code 0x80:0x176839 --code 0x37e44c:0x381447
+CODE     := --code 0x0:0xd --code 0x80:0x176839 --code 0x37e44c:0x381447 --code 0x381514:0x381691
+# (lane generic-zero) the bytes between the code ranges, typed: the boot header's 0xFF pad,
+# FirmwareVersionByte (func_4C07B3D7 answers it: 0x71 on v7.1, 0x13 on the KN6500's v1.3)
+# and the erased flash before 0x80; after the MILK kernel its version string, the
+# KernelServiceHash records func_4C3F7632 probes, the RAM layout words and the u16
+# parameters the kernel reads ($(MODEL)_manual.sym says who reads each); then the kernel's
+# interrupt dispatchers, code (the last --code range above).
+TYPED    := --fill 0xd:0xf --rows 0xf:0x10:1:x --fill 0x10:0x80 --fill 0x381447:0x381448 --text 0x381448:0x381460 \
+            --long-table 0x381460:0x3814e0 --long-table 0x3814e0:0x3814f8 --rows 0x3814f8:0x381514:2
 SYMRANGE := --code-range 0x0:0x10 --code-range 0x80:0x176839 --code-range 0x37e44c:0x381447
 TITLE    := 'Technics SX-KN6500 program flash image (update v1.3) - byte-exact.'
 # The data region between the application's code and the MILK kernel, typed by
@@ -125,7 +133,7 @@ symbols-check:
 program-src: $(TOOLS)/gen_image_s.py $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym src/symbols.inc baserom/$(ROM)
 	$(PYTHON) $(TOOLS)/gen_image_s.py --rom baserom/$(ROM) --base $(BASE) $(CODE) --reflection-tables \
 	    --sym $(MODEL).sym $(MODEL)_manual.sym $(MODEL)_ported.sym $(FN_SYM) --inc src/symbols.inc --labels-inc src/labels.inc \
-	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(DATA) $(IDS) --decode-gaps \
+	    --out src/program.s --unidasm $(UNIDASM) --stats notes/conversion-stats.txt $(DATA) $(IDS) --decode-gaps $(TYPED) \
 	    --title $(TITLE) --title 'Panasonic MN10300, linked at 0x4C000000. See README.md.'
 
 # ---- the data region as typed source (README.md, "The data") ---------------------

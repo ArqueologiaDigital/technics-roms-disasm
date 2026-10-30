@@ -7,9 +7,9 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 	.long	0x4c1760a8
 
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
-	REC_localeconv_Records	p0=Str_C_22, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+	REC_localeconv_Records	p0=Str_C_21, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	p0=Str_C_21, p4=Str_empty_1042, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	p0=Str_C_20, p4=Str_empty_1004, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -1901,7 +1901,119 @@ User00_MainFunctionNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x329FD8, 0x329FDC
 data_4C329FDC:
-.incbin_range "baserom/kn6000_program.rom", 0x329FDC, 0x32A27C
+	# 672 bytes the code takes the address of: InitSptClassTable 0x4C020C05 `mov data_4C329FDC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	swordProc	# +0
+	tab_u32	0x20000	# +4
+	.long	data_4C18BD4C, uwordProc	# +8
+	tab_u32	0x20000	# +16
+	.long	data_4C18BD58, ucharProc	# +20
+	tab_u32	0x10000	# +28
+	.long	data_4C18BD64, scharProc	# +32
+	tab_u32	0x10000	# +40
+	.long	data_4C18BD70, slongProc	# +44
+	tab_u32	0x40000	# +52
+	.long	data_4C18BD7C, ulongProc	# +56
+	tab_u32	0x40000	# +64
+	.long	data_4C18BD88, boolProc	# +68
+	tab_u32	0x40002	# +76
+	.long	data_4C18BD9C, ObjectIDProc	# +80
+	tab_u32	0x40000	# +88
+	.long	data_4C18BDB8, pFuncProc	# +92
+	tab_u32	0x40000	# +100
+	.long	data_4C18BDC4, pProcProc	# +104
+	tab_u32	0x40000	# +112
+	.long	data_4C18BDD0, pPropProc	# +116
+	tab_u32	0x40000	# +124
+	.long	data_4C18BDDC, pStringProc	# +128
+	tab_u32	0x40000	# +136
+	.long	data_4C18BDE8, ClassIDProc	# +140
+	tab_u32	0x40000	# +148
+	.long	data_4C18BDF4, ScreenIDProc	# +152
+	tab_u32	0x40000	# +160
+	.long	data_4C18BE00, EventIDProc	# +164
+	tab_u32	0x40000	# +172
+	.long	data_4C18BE0C, RECTWProc	# +176
+	tab_u32	0x80000	# +184
+	.long	data_4C18BE18, RectX1Proc	# +188
+	tab_u32	0x20000	# +196
+	.long	data_4C18BE24, RectY1Proc	# +200
+	tab_u32	0x20000	# +208
+	.long	data_4C18BE30, RectX2Proc	# +212
+	tab_u32	0x20000	# +220
+	.long	data_4C18BE3C, RectY2Proc	# +224
+	tab_u32	0x20000	# +232
+	.long	data_4C18BE48, POINTWProc	# +236
+	tab_u32	0x40000	# +244
+	.long	data_4C18BE54, PointXProc	# +248
+	tab_u32	0x20000	# +256
+	.long	data_4C18BE60, PointYProc	# +260
+	tab_u32	0x20000	# +268
+	.long	data_4C18BE6C, StringProc	# +272
+	tab_u32	0x40000	# +280
+	.long	data_4C18BE78, NameProc	# +284
+	tab_u32	0x40000	# +292
+	.long	data_4C18BE84, ConstFlagProc	# +296
+	tab_u32	0x40002	# +304
+	.long	data_4C18BEA4, ViewIDProc	# +308
+	tab_u32	0x20000	# +316
+	.long	data_4C18BEC0, uwordProc	# +320
+	tab_u32	0x20000	# +328
+	.long	data_4C18BD58, ViewFlagProc	# +332
+	tab_u32	0x20006	# +340
+	.long	names_4C18BF0C, ColorIDProc	# +344
+	tab_u32	0x20027	# +352
+	.long	names_4C18C0E8, BorderIDProc	# +356
+	tab_u32	0x2001A	# +364
+	.long	names_4C18C34C, ModeIDProc	# +368
+	tab_u32	0x40000	# +376
+	.long	data_4C18C428, TitleIDProc	# +380
+	tab_u32	0x40000	# +388
+	.long	data_4C18C434, IconIDProc	# +392
+	tab_u32	0x40000	# +400
+	.long	data_4C18C440, FontIDProc	# +404
+	tab_u32	0x40000	# +412
+	.long	data_4C18C44C, AlignmentIDProc	# +416
+	tab_u32	0x10003	# +424
+	.long	data_4C18C480, EditSwIDProc	# +428
+	tab_u32	0x2001C	# +436
+	.long	names_4C18C5C8, EditSwStyleIDProc	# +440
+	tab_u32	0x10011	# +448
+	.long	names_4C18C73C, LineModeIDProc	# +452
+	tab_u32	0x10002	# +460
+	.long	data_4C18C7E8, FrameIDProc	# +464
+	tab_u32	0x20002	# +472
+	.long	data_4C18C814, BitmapIDProc	# +476
+	tab_u32	0x40000	# +484
+	.long	data_4C18C830, ApFuncIDProc	# +488
+	tab_u32	0x40000	# +496
+	.long	data_4C18C83C, MainFuncIDProc	# +500
+	tab_u32	0x40000	# +508
+	.long	data_4C18C848, UserIDProc	# +512
+	tab_u32	0x20021	# +520
+	.long	names_4C18C980, pBoolProc	# +524
+	tab_u32	0x40002	# +532
+	.long	data_4C18CA9C, pSwordProc	# +536
+	tab_u32	0x40000	# +544
+	.long	data_4C18CAB8, pUwordProc	# +548
+	tab_u32	0x40000	# +556
+	.long	data_4C18CAC4, pScharProc	# +560
+	tab_u32	0x40000	# +568
+	.long	data_4C18CAD0, pUcharProc	# +572
+	tab_u32	0x40000	# +580
+	.long	data_4C18CADC, pSlongProc	# +584
+	tab_u32	0x40000	# +592
+	.long	data_4C18CAE8, pUlongProc	# +596
+	tab_u32	0x40000	# +604
+	.long	data_4C18CAF4, WindowIDProc	# +608
+	tab_u32	0x40000	# +616
+	.long	data_4C18CB00, PartIDProc	# +620
+	tab_u32	0x20025	# +628
+	.long	names_4C18CC7C, TrackIDProc	# +632
+	tab_u32	0x20011	# +640
+	.long	names_4C18CE5C, IntTimeIDProc	# +644
+	tab_u32	0x2000E	# +652
+	.long	names_4C18CF60	# +656
+	tab_u32	0x0, 0x0, 0x0	# +660
 
 Str_empty_288:	.asciz "/"
 	.align	4, 0xFF	# pad after Str_empty_288
@@ -2286,7 +2398,8 @@ V_TtSoftver_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x32BD34, 0x32BD38
 data_4C32BD38:
-.incbin_range "baserom/kn6000_program.rom", 0x32BD38, 0x32BD3C
+	# 4 bytes the code takes the address of: InitializeUser00 0x4C023E1D `mov data_4C32BD38, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C18F938	# +0
 V_TtDebug_ResNames:
 	.long	RN_TtDebug	# TtDebug
 	.long	RN_empty_5447	# TtDebug_ScreenMenu_MEMO_LOG
@@ -7192,7 +7305,8 @@ ptrs_4C359724:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x359744, 0x35974C
 data_4C35974C:
-.incbin_range "baserom/kn6000_program.rom", 0x35974C, 0x359758
+	# 12 bytes the code takes the address of: TEST7FUNC_L56 0x4C0520F2 `mov data_4C35974C, d0` (+0, as a base); TEST7FUNC_L7f 0x4C05211B `mov data_4C35974C, d0` (+0, as a base); TEST7FUNC_La3 0x4C05213F `mov data_4C35974C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	9, 0, 76, 1, 0, 0, 140, 1, 0, 0, 0, 0	# +0
 
 func_4C05197F_entry_Lf4_Table:	# 160 x REC_func_4C05197F_entry_Lf4_Table (2 bytes each); read by func_4C05197F_entry_Lf4 0x4C051A78 `movbu (d1, a1), d3`
 	REC_func_4C05197F_entry_Lf4_Table	f0=10, x1="\xF0"	# [0]
@@ -7411,9 +7525,12 @@ func_4C05B884_Table_2:	# 2 x u16, 0..60; read by func_4C05B884 0x4C05B884: `movh
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 data_4C3599A0:
-.incbin_range "baserom/kn6000_program.rom", 0x3599A0, 0x3599A6
+	# 6 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A0, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 160, 0, 0, 8, 32	# +0
 data_4C3599A6:
-.incbin_range "baserom/kn6000_program.rom", 0x3599A6, 0x3599C0
+	# 26 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A6, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# +0
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
 Str_compile_bank_0:	.asciz " compile bank 0 "
 # census: opaque -- unknown-dump: 31 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -7424,7 +7541,12 @@ Str_user_bank_0:	.asciz "  user bank 0   "
 Str_clear_2:	.asciz "     clear      "
 	.align	4, 0x00	# pad after Str_clear_2
 data_4C359A74:
-.incbin_range "baserom/kn6000_program.rom", 0x359A74, 0x359AC0
+	# 76 bytes the code takes the address of: func_4C059CA9_entry_L45 0x4C059CF3 `add data_4C359A74, d3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	17, 17, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
+	tab_u8	0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0, 64, 2, 28, 64	# +16
+	tab_u8	108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0	# +32
+	tab_u8	32, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0	# +48
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +64
 
 # ---- the program's own "Technics Rhythms" resource (IC18's format: notes/ic18-rhythm-rom.md;
 #      the macros are src/ic18/rhythm.s's, in rhythm_macros.inc).  One style, the fallback the
@@ -15557,22 +15679,41 @@ Pad_PopSynth_2_Events:		# 4 bars of 4 beats, 354 bytes
 Str_TCMP:	.asciz "TCMP"
 	.space	11, 0x00
 data_4C361430:
-.incbin_range "baserom/kn6000_program.rom", 0x361430, 0x361436
+	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361430, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	2, 88, 0, 0, 54, 112	# +0
 data_4C361436:
-.incbin_range "baserom/kn6000_program.rom", 0x361436, 0x361450
+	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361436, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# +0
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
 Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36149E, 0x361500
 data_4C361500:
-.incbin_range "baserom/kn6000_program.rom", 0x361500, 0x361510
+	# 16 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361500, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x230010, 0x0, 0x0, 0x0	# +0
 
 MemStyleVarRecInit_Table_2:	# 4 x u8, 0..0; read by MemStyleVarRecInit_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0
 data_4C361514:
-.incbin_range "baserom/kn6000_program.rom", 0x361514, 0x361528
+	# 20 bytes the code takes the address of: func_4C060E4A_entry_L37 0x4C060E86 `add data_4C361514, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 16, 17, 17, 17, 17, 17, 0, 0, 0, 0, 0, 0, 3, 0, 0	# +0
+	tab_u8	0, 0, 0, 0	# +16
 data_4C361528:
-.incbin_range "baserom/kn6000_program.rom", 0x361528, 0x3615F0
+	# 200 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361528, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	255, 255, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 38, 64, 40, 0	# +0
+	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
+	tab_u8	6, 127, 33, 0, 32, 64, 0, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +32
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0	# +48
+	tab_u8	12, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +64
+	tab_u8	6, 127, 48, 0, 32, 64, 40, 0, 116, 2, 28, 64, 108, 64, 0, 0	# +80
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 73, 0, 32, 64, 40, 0	# +96
+	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +112
+	tab_u8	6, 127, 88, 0, 32, 64, 40, 0, 38, 2, 28, 64, 108, 64, 0, 0	# +128
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 25, 0, 32, 64, 40, 0	# +144
+	tab_u8	90, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +160
+	tab_u8	6, 127, 0, 0, 38, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +176
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# +192
 data_4C3615F0:
 	.space	1, 0x00
 
@@ -15584,7 +15725,8 @@ LoadU24BE_Var_2:	# u8, a constant; read / written by LoadU24BE 0x4C061F71: `movb
 LoadU24BE_Table:	# 10 x u8, 0..245; read by LoadU24BE 0x4C061F71: `movbu (a0), d0`
 	tab_u8	5, 244, 244, 244, 244, 245, 0, 0, 0, 0
 data_4C3615FD:
-.incbin_range "baserom/kn6000_program.rom", 0x3615FD, 0x36160C
+	# 15 bytes the code takes the address of: MemStyleAreaVarStreamsInit_entry_Ld 0x4C0574CA `mov data_4C3615FD, a2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 0, 9, 244, 244, 244, 244, 244, 244, 244, 244, 245, 255, 255	# +0
 
 ptrs_4C36160C:
 	.long	MmmMtune
@@ -19251,9 +19393,25 @@ data_4C36C0B8:
 data_4C36C0C4:
 	.space	12, 0x00
 data_4C36C0D0:
-.incbin_range "baserom/kn6000_program.rom", 0x36C0D0, 0x36C124
+	# 84 bytes the code takes the address of: func_4C03CC6E_entry_L1d 0x4C03CC90 `mov data_4C36C0D0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFF0000, 0x700000	# +0
+	.long	func_4C173C25	# +8
+	tab_u32	0xFF0000, 0x700000	# +12
+	.long	func_4C05234B	# +20
+	tab_u32	0xFF0000, 0x700000	# +24
+	.long	func_4C051307	# +32
+	tab_u32	0xFF00, 0x2000	# +36
+	.long	func_4C12D76A	# +44
+	tab_u32	0xFF00, 0x2000	# +48
+	.long	TempoSyncSetDispatch	# +56
+	tab_u32	0xFFFFFF, 0x702040	# +60
+	.long	func_4C114400	# +68
+	tab_u32	0x0, 0x0, 0x0	# +72
 data_4C36C124:
-.incbin_range "baserom/kn6000_program.rom", 0x36C124, 0x36C13C
+	# 24 bytes the code takes the address of: func_4C03CC6E_entry_L1d 0x4C03CC90 `mov data_4C36C124, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	255, 121	# +0
+	.long	func_4C02DD38	# +8
+	tab_u32	0, 0, 0	# +12
 data_4C36C13C:
 	.space	12, 0x00
 data_4C36C148:
@@ -19261,19 +19419,87 @@ data_4C36C148:
 data_4C36C154:
 	.space	12, 0x00
 data_4C36C160:
-.incbin_range "baserom/kn6000_program.rom", 0x36C160, 0x36C1F0
+	# 144 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C160, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFFFF00, 0x2000, 0x4C066D29, 0xFF0000, 0x0	# +0
+	.long	func_4C02F4E9	# +20
+	tab_u32	0xFFFF00, 0xC000	# +24
+	.long	func_4C031F48	# +32
+	tab_u32	0xFF0000, 0x0	# +36
+	.long	func_4C046F7C	# +44
+	tab_u32	0xFF0000, 0x0	# +48
+	.long	func_4C09DD93	# +56
+	tab_u32	0xFF0000, 0x0, 0x4C134069, 0xFF0000, 0x0	# +60
+	.long	func_4C0D9876	# +80
+	tab_u32	0xFF0000, 0x0, 0x4C0327DA, 0xFF0000, 0x0	# +84
+	.long	SndSetupPowerOnInit	# +104
+	tab_u32	0xFFFF00, 0x0, 0x4C03EC45, 0xFF0000, 0x0	# +108
+	.long	func_4C02DC11	# +128
+	tab_u32	0x0, 0x0, 0x0	# +132
 data_4C36C1F0:
-.incbin_range "baserom/kn6000_program.rom", 0x36C1F0, 0x36C220
+	# 48 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C1F0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFFFF00, 0x204000	# +0
+	.long	func_4C02F4E9	# +8
+	tab_u32	0xFF0000, 0x200000	# +12
+	.long	func_4C0D9876	# +20
+	tab_u32	0xFF0000, 0x200000	# +24
+	.long	func_4C031F48	# +32
+	tab_u32	0x0, 0x0, 0x0	# +36
 data_4C36C220:
-.incbin_range "baserom/kn6000_program.rom", 0x36C220, 0x36C280
+	# 96 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C220, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFF0000, 0x600000	# +0
+	.long	func_4C02F4E9	# +8
+	tab_u32	0xFFFFFF, 0x600000, 0x4C134069, 0xFFFFFF, 0x600010, 0x4C1142E1, 0xFFFFFF, 0x600012	# +12
+	.long	func_4C11C7E2	# +44
+	tab_u32	0xFFFFFF, 0x600011, 0x4C11C898, 0xFF0000, 0x600000	# +48
+	.long	func_4C09DD93	# +68
+	tab_u32	0xFF0000, 0x600000	# +72
+	.long	SndSetupPowerOnInit	# +80
+	tab_u32	0x0, 0x0, 0x0	# +84
 data_4C36C280:
-.incbin_range "baserom/kn6000_program.rom", 0x36C280, 0x36C3A0
+	# 288 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C280, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFFFFFF, 0x701011, 0x4C0515B2, 0xFFFFFF, 0x701009, 0x4C051DE9, 0xFFFFFF, 0x701004	# +0
+	tab_u32	0x4C051E21, 0xFFFFFF, 0x701005, 0x4C051E59, 0xFFFFFF, 0x701012, 0x4C051E91, 0xFFFFFF	# +32
+	tab_u32	0x701010, 0x4C051EEC, 0xFFFFFF, 0x701020, 0x4C051F24, 0xFFFFFF, 0x701000, 0x4C051F5B	# +64
+	tab_u32	0xFFFFFF, 0x7020A6	# +96
+	.long	func_4C02F4E9	# +104
+	tab_u32	0xFFFFFF, 0x7020A1	# +108
+	.long	func_4C046ACF	# +116
+	tab_u32	0xFFFFFF, 0x702032, 0x4C0AD289, 0xFFFFFF, 0x708000, 0x4C13A69F, 0xFFFFFF, 0x702004	# +120
+	.long	func_4C06FA02	# +152
+	tab_u32	0xFFFFFF, 0x708000	# +156
+	.long	func_4C16132D	# +164
+	tab_u32	0xFFFFFF, 0x7020A8, 0x4C0FDF3F, 0xFFFFFF, 0x702083, 0x4C0FDFA4, 0xFFFFFF, 0x700000	# +168
+	.long	func_4C0FDFCA	# +200
+	tab_u32	0xFFFFFF, 0x7020A4	# +204
+	.long	func_4C16AEB9	# +212
+	tab_u32	0xFFFFFF, 0x702020	# +216
+	.long	func_4C124B73	# +224
+	tab_u32	0xFFFFFF, 0x702040	# +228
+	.long	func_4C124ADC	# +236
+	tab_u32	0xFFFFFF, 0x700000	# +240
+	.long	func_4C12D80E	# +248
+	tab_u32	0xFFFFFF, 0x7020B0	# +252
+	.long	func_4C11B8AB	# +260
+	tab_u32	0xFFFFFF, 0x700000	# +264
+	.long	func_4C046F7C	# +272
+	tab_u32	0x0, 0x0, 0x0	# +276
 data_4C36C3A0:
-.incbin_range "baserom/kn6000_program.rom", 0x36C3A0, 0x36C3D0
+	# 48 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C3A0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFFFFFF, 0x900000	# +0
+	.long	func_4C05222C	# +8
+	tab_u32	0xFF0000, 0x900000	# +12
+	.long	func_4C046F7C	# +20
+	tab_u32	0xFFFFFF, 0x900000, 0x4C09D32B, 0x0, 0x0, 0x0	# +24
 data_4C36C3D0:
-.incbin_range "baserom/kn6000_program.rom", 0x36C3D0, 0x36C3E8
+	# 24 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C3D0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFFFFFF, 0xB0007E	# +0
+	.long	func_4C0D9876	# +8
+	tab_u32	0x0, 0x0, 0x0	# +12
 data_4C36C3E8:
-.incbin_range "baserom/kn6000_program.rom", 0x36C3E8, 0x36C40C
+	# 36 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C3E8, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xFFFFFF, 0xC00000, 0x4C09D32B, 0xFFFFFF, 0xC00000	# +0
+	.long	func_4C0D9876	# +20
+	tab_u32	0x0, 0x0, 0x0	# +24
 data_4C36C40C:
 	.space	12, 0x00
 data_4C36C418:
@@ -28324,7 +28550,8 @@ V_SeqMenuScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37497C, 0x374980
 data_4C374980:
-.incbin_range "baserom/kn6000_program.rom", 0x374980, 0x374984
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C374980, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FE6C0	# +0
 V_SeqCycPlyScreen_ResNames:
 	.long	RN_SeqCycPlyScreen	# SeqCycPlyScreen
 	.long	RN_SeqPlyCyclTgl2	# SeqPlyCyclTgl2
@@ -28343,9 +28570,11 @@ V_SeqCycPlyScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3749BC, 0x3749C0
 data_4C3749C0:
-.incbin_range "baserom/kn6000_program.rom", 0x3749C0, 0x3749C4
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3749C0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FE70C	# +0
 data_4C3749C4:
-.incbin_range "baserom/kn6000_program.rom", 0x3749C4, 0x3749C8
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3749C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FE710	# +0
 V_SeqRealRecScreen_ResNames:
 	.long	RN_SeqRealRecScreen	# SeqRealRecScreen
 	.long	RN_SeqRealRecMetTgl	# SeqRealRecMetTgl
@@ -28817,7 +29046,8 @@ V_SeqCycRecScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37510C, 0x375110
 data_4C375110:
-.incbin_range "baserom/kn6000_program.rom", 0x375110, 0x375114
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375110, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FED30	# +0
 V_SeqAtPunchRecScreen_ResNames:
 	.long	RN_SeqAtPunchRecScreen	# SeqAtPunchRecScreen
 	.long	RN_empty_3035	# SeqAtPunchRecScreen_StrBox_CURRENT_MEASURE
@@ -28841,7 +29071,8 @@ V_SeqAtPunchRecScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375160, 0x375164
 data_4C375164:
-.incbin_range "baserom/kn6000_program.rom", 0x375164, 0x375168
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375164, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FED94	# +0
 V_SeqStepRecScreen_ResNames:
 	.long	RN_SeqStepRecScreen	# SeqStepRecScreen
 	.long	RN_empty_3049	# SeqStepRecScreen_SeqSongNameBox1
@@ -29081,7 +29312,8 @@ V_SeqPanelWriteScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3754FC, 0x375500
 data_4C375500:
-.incbin_range "baserom/kn6000_program.rom", 0x375500, 0x375504
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375500, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF014	# +0
 V_SeqSongNamingScreen_ResNames:
 	.long	RN_SeqSongNamingScreen	# SeqSongNamingScreen
 	.long	RN_SeqSongNameExit	# SeqSongNameExit
@@ -29193,7 +29425,8 @@ V_SeqNoteSelScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375688, 0x37568C
 data_4C37568C:
-.incbin_range "baserom/kn6000_program.rom", 0x37568C, 0x375690
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C37568C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF1B0	# +0
 V_SeqNoteCycPScreen_ResNames:
 	.long	RN_SeqNoteCycPScreen	# SeqNoteCycPScreen
 	.long	RN_empty_3312	# SeqNoteCycPScreen_StrBox_CURRENT_MEASURE
@@ -29211,7 +29444,8 @@ V_SeqNoteCycPScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3756C4, 0x3756C8
 data_4C3756C8:
-.incbin_range "baserom/kn6000_program.rom", 0x3756C8, 0x3756CC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3756C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF204	# +0
 V_SeqDrmEdtScreen_ResNames:
 	.long	RN_SeqDrmEdtScreen	# SeqDrmEdtScreen
 	.long	RN_SeqDrumEditData	# SeqDrumEditData
@@ -29242,7 +29476,8 @@ V_SeqDrmEdtScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375734, 0x375738
 data_4C375738:
-.incbin_range "baserom/kn6000_program.rom", 0x375738, 0x37573C
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375738, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF258	# +0
 V_SeqTrkClrScreen_ResNames:
 	.long	RN_SeqTrkClrScreen	# SeqTrkClrScreen
 	.long	RN_empty_3343	# SeqTrkClrScreen_MultiExit1
@@ -29646,7 +29881,8 @@ V_SeqGlblEdtMnuScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375D18, 0x375D1C
 data_4C375D1C:
-.incbin_range "baserom/kn6000_program.rom", 0x375D1C, 0x375D20
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375D1C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF7EC	# +0
 V_SeqApcRemixScreen_ResNames:
 	.long	RN_SeqApcRemixScreen	# SeqApcRemixScreen
 	.long	RN_empty_3636	# SeqApcRemixScreen_GridBoxDelux1
@@ -29690,7 +29926,8 @@ V_SeqStepBalScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375DB4, 0x375DB8
 data_4C375DB8:
-.incbin_range "baserom/kn6000_program.rom", 0x375DB8, 0x375DBC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375DB8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF85C	# +0
 V_SeqMetroBalScreen_ResNames:
 	.long	RN_SeqMetroBalScreen	# SeqMetroBalScreen
 	.long	RN_empty_3668	# SeqMetroBalScreen_MixerVol1
@@ -29738,13 +29975,17 @@ V_SeqMetroBalScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375E68, 0x375E6C
 data_4C375E6C:
-.incbin_range "baserom/kn6000_program.rom", 0x375E6C, 0x375E70
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E6C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF8B0	# +0
 data_4C375E70:
-.incbin_range "baserom/kn6000_program.rom", 0x375E70, 0x375E74
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E70, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF8B4	# +0
 data_4C375E74:
-.incbin_range "baserom/kn6000_program.rom", 0x375E74, 0x375E78
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E74, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF8B8	# +0
 data_4C375E78:
-.incbin_range "baserom/kn6000_program.rom", 0x375E78, 0x375E7C
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E78, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FF8BC	# +0
 V_SndArgrScreen_ResNames:
 	.long	RN_SndArgrScreen	# SndArgrScreen
 	.long	RN_empty_3709	# SndArgrScreen_StrBox_PATTERN
@@ -29946,7 +30187,8 @@ V_SndArgrScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x376190, 0x376194
 data_4C376194:
-.incbin_range "baserom/kn6000_program.rom", 0x376194, 0x376198
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C376194, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FFB10	# +0
 V_CmpMeasEditScreen_ResNames:
 	.long	RN_CmpMeasEditScreen	# CmpMeasEditScreen
 	.long	RN_empty_3869	# CmpMeasEditScreen_TitleMenu_MEASURE_COPY
@@ -30088,7 +30330,8 @@ V_CmNameScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3763B4, 0x3763B8
 data_4C3763B8:
-.incbin_range "baserom/kn6000_program.rom", 0x3763B8, 0x3763BC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3763B8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FFCFC	# +0
 V_CmpRealScreen_ResNames:
 	.long	RN_CmpRealScreen	# CmpRealScreen
 	.long	RN_empty_3979	# CmpRealScreen_TitleMenu_PART_BALANCE
@@ -30295,11 +30538,14 @@ V_CmpRealScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3766E4, 0x3766E8
 data_4C3766E8:
-.incbin_range "baserom/kn6000_program.rom", 0x3766E8, 0x3766EC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3766E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FFFB4	# +0
 data_4C3766EC:
-.incbin_range "baserom/kn6000_program.rom", 0x3766EC, 0x3766F0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3766EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FFFB8	# +0
 data_4C3766F0:
-.incbin_range "baserom/kn6000_program.rom", 0x3766F0, 0x3766F4
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3766F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C1FFFBC	# +0
 V_CmpSeqCpScreen_ResNames:
 	.long	RN_CmpSeqCpScreen	# CmpSeqCpScreen
 	.long	RN_empty_4138	# CmpSeqCpScreen_Box1
@@ -30427,35 +30673,50 @@ V_CmpCstmCpyScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3768B0, 0x3768B4
 data_4C3768B4:
-.incbin_range "baserom/kn6000_program.rom", 0x3768B4, 0x3768B8
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768B4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C20019C	# +0
 data_4C3768B8:
-.incbin_range "baserom/kn6000_program.rom", 0x3768B8, 0x3768BC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768B8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001A0	# +0
 data_4C3768BC:
-.incbin_range "baserom/kn6000_program.rom", 0x3768BC, 0x3768C0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768BC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001A4	# +0
 data_4C3768C0:
-.incbin_range "baserom/kn6000_program.rom", 0x3768C0, 0x3768C4
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768C0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001A8	# +0
 data_4C3768C4:
-.incbin_range "baserom/kn6000_program.rom", 0x3768C4, 0x3768C8
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001AC	# +0
 data_4C3768C8:
-.incbin_range "baserom/kn6000_program.rom", 0x3768C8, 0x3768CC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001B0	# +0
 data_4C3768CC:
-.incbin_range "baserom/kn6000_program.rom", 0x3768CC, 0x3768D0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768CC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001B4	# +0
 data_4C3768D0:
-.incbin_range "baserom/kn6000_program.rom", 0x3768D0, 0x3768D4
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768D0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001B8	# +0
 data_4C3768D4:
-.incbin_range "baserom/kn6000_program.rom", 0x3768D4, 0x3768D8
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768D4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001BC	# +0
 data_4C3768D8:
-.incbin_range "baserom/kn6000_program.rom", 0x3768D8, 0x3768DC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768D8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001C0	# +0
 data_4C3768DC:
-.incbin_range "baserom/kn6000_program.rom", 0x3768DC, 0x3768E0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768DC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001C4	# +0
 data_4C3768E0:
-.incbin_range "baserom/kn6000_program.rom", 0x3768E0, 0x3768E4
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768E0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001C8	# +0
 data_4C3768E4:
-.incbin_range "baserom/kn6000_program.rom", 0x3768E4, 0x3768E8
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768E4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001CC	# +0
 data_4C3768E8:
-.incbin_range "baserom/kn6000_program.rom", 0x3768E8, 0x3768EC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001D0	# +0
 data_4C3768EC:
-.incbin_range "baserom/kn6000_program.rom", 0x3768EC, 0x3768F0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2001D4	# +0
 V_Demofeature_ResNames:
 	.long	RN_Demofeature	# Demofeature
 	.long	RN_empty_4221	# Demofeature_TempoBox1
@@ -30488,7 +30749,8 @@ V_Demofeature_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x376960, 0x376964
 data_4C376964:
-.incbin_range "baserom/kn6000_program.rom", 0x376964, 0x376968
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C376964, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C20024C	# +0
 V_MspBkslScreen_ResNames:
 	.long	RN_MspBkslScreen	# MspBkslScreen
 	.long	RN_empty_4510	# MspBkslScreen_PageControl1
@@ -30965,7 +31227,8 @@ V_MspBkslScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3770C8, 0x3770CC
 data_4C3770CC:
-.incbin_range "baserom/kn6000_program.rom", 0x3770CC, 0x3770D0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3770CC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C200730	# +0
 V_MspCompileSetScreen_ResNames:
 	.long	RN_MspCompileSetScreen	# MspCompileSetScreen
 	.long	RN_MspCompileSetGrid	# MspCompileSetGrid
@@ -30987,9 +31250,11 @@ V_MspNameScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37710C, 0x377110
 data_4C377110:
-.incbin_range "baserom/kn6000_program.rom", 0x377110, 0x377114
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377110, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C20078C	# +0
 data_4C377114:
-.incbin_range "baserom/kn6000_program.rom", 0x377114, 0x377118
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377114, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C200790	# +0
 V_MspSeqCpScreen_ResNames:
 	.long	RN_MspSeqCpScreen	# MspSeqCpScreen
 	.long	RN_empty_4934	# MspSeqCpScreen_Box1
@@ -31047,13 +31312,17 @@ V_MspPadNameScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3771E4, 0x3771E8
 data_4C3771E8:
-.incbin_range "baserom/kn6000_program.rom", 0x3771E8, 0x3771EC
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C200864	# +0
 data_4C3771EC:
-.incbin_range "baserom/kn6000_program.rom", 0x3771EC, 0x3771F0
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C200868	# +0
 data_4C3771F0:
-.incbin_range "baserom/kn6000_program.rom", 0x3771F0, 0x3771F4
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C20086C	# +0
 data_4C3771F4:
-.incbin_range "baserom/kn6000_program.rom", 0x3771F4, 0x3771F8
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771F4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C200870	# +0
 V_MspPnCpScreen_ResNames:
 	.long	RN_MspPnCpScreen	# MspPnCpScreen
 	.long	RN_empty_4974	# MspPnCpScreen_Box1
@@ -31082,18 +31351,22 @@ V_MspPnCpScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x377258, 0x37725C
 data_4C37725C:
-.incbin_range "baserom/kn6000_program.rom", 0x37725C, 0x377260
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C37725C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2008B0	# +0
 data_4C377260:
-.incbin_range "baserom/kn6000_program.rom", 0x377260, 0x377264
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377260, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2008B4	# +0
 data_4C377264:
-.incbin_range "baserom/kn6000_program.rom", 0x377264, 0x377268
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377264, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2008B8	# +0
 V_SeqIntTest_ResNames:
 	.long	RN_SeqIntTest	# SeqIntTest
 	.long	RN_empty_4995	# SeqIntTest_ShowHide1
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x377270, 0x377274
 data_4C377274:
-.incbin_range "baserom/kn6000_program.rom", 0x377274, 0x377278
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377274, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2008CC	# +0
 data_4C377278:
 	# 208 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; no instruction reads them (tools/data_readers.py)
 	.ascii	"<ACT NO=1><SHOW "
@@ -31633,7 +31906,8 @@ GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes)
 GetFocusObject_Records:
 	.long	Str_Melody
 	.long	GetFocusObject_Records_p4_0
-.incbin_range "baserom/kn6000_program.rom", 0x37B8F0, 0x37B8F4
+	# 4 bytes read by func_4C0CE3FD_La 0x4C0CE407 `movbu (8, a0), d0` (+0, u8); the read fields at their widths (u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	tab_u8	10, 0, 0, 0	# +0
 
 func_4C0BB259_entry_L56_Table:	# 9 x u32, 0..1278720192; read by func_4C0BB259_entry_L56 0x4C0BB2B4: `mov (a1), d0`; func_4C0BDE7B_entry_L56 0x4C0BDED6: `mov (a1), d0` ...
 	tab_u32	1277176848, 1278720112, 9, 1277176856, 1278720192, 4, 0, 0	# [0]
@@ -33148,16 +33422,16 @@ GetGenreName_entry_L14_Records:	# 16 x REC_GetGenreName_entry_L14_Records (24 by
 	REC_GetGenreName_entry_L14_Records	s0=" R&ROLL & BLUES ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_2
 	REC_GetGenreName_entry_L14_Records	s0="  SOUL & FUNK   ", x16="\x00", f17=16, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_3
 	REC_GetGenreName_entry_L14_Records	s0="  MODERN DANCE  ", x16="\x00", f17=17, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_4
-	REC_GetGenreName_entry_L14_Records	s0="   U.S. TRAD    ", x16="\x00", f17=9, x18="\x00\x00", p20=Str_M_4
+	REC_GetGenreName_entry_L14_Records	s0="   U.S. TRAD    ", x16="\x00", f17=9, x18="\x00\x00", p20=data_4C210904
 	REC_GetGenreName_entry_L14_Records	s0="    COUNTRY     ", x16="\x00", f17=12, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_5
 	REC_GetGenreName_entry_L14_Records	s0="BIG BAND & SWING", x16="\x00", f17=12, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_6	# [8]
 	REC_GetGenreName_entry_L14_Records	s0="   JAZZ COMBO   ", x16="\x00", f17=16, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_7
 	REC_GetGenreName_entry_L14_Records	s0=" MARCH & WALTZ  ", x16="\x00", f17=10, x18="\x00\x00", p20=data_4C2109C8
-	REC_GetGenreName_entry_L14_Records	s0="BALLROOM & SHOW ", x16="\x00", f17=20, x18="\x00\x00", p20=Str_empty_887
-	REC_GetGenreName_entry_L14_Records	s0="     LATIN      ", x16="\x00", f17=17, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_8
-	REC_GetGenreName_entry_L14_Records	s0="     WORLD      ", x16="\x00", f17=13, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_9
-	REC_GetGenreName_entry_L14_Records	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_10
-	REC_GetGenreName_entry_L14_Records	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_11
+	REC_GetGenreName_entry_L14_Records	s0="BALLROOM & SHOW ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_8
+	REC_GetGenreName_entry_L14_Records	s0="     LATIN      ", x16="\x00", f17=17, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_9
+	REC_GetGenreName_entry_L14_Records	s0="     WORLD      ", x16="\x00", f17=13, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_10
+	REC_GetGenreName_entry_L14_Records	s0="     CUSTOM     ", x16="\x00", f17=20, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_11
+	REC_GetGenreName_entry_L14_Records	s0="     MEMORY     ", x16="\x00", f17=3, x18="\x00\x00", p20=GetGenreName_entry_L14_Records_p20_12
 
 GetGenreName_Var:	# u16, a constant; read / written by GetGenreName 0x4C0579D8: `movhu (GetGenreName_Var), d3`; GetGenreStyleCount 0x4C057A12: `movhu (GetGenreName_Var), d2` ...
 	.word	16
@@ -33176,8 +33450,8 @@ AcRvariScreenProc_L88_Table:	# 2 x u16, 1..65535; read by AcRvariScreenProc_L88 
 	tab_u16	1, 65535
 
 StyleVariationNameGet_entry_L25_Table:
-	.long	GetGenreName_entry_L14_Records_p20_11+12
-	.long	GetGenreName_entry_L14_Records_p20_11+33
+	.long	GetGenreName_entry_L14_Records_p20_12+12
+	.long	GetGenreName_entry_L14_Records_p20_12+33
 	.long	data_4C210B45
 	.long	data_4C210B68
 	.long	0
@@ -37095,7 +37369,8 @@ V_ChoSel_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x382C48, 0x382C4C
 data_4C382C4C:
-.incbin_range "baserom/kn6000_program.rom", 0x382C4C, 0x382C50
+	# 4 bytes the code takes the address of: InitializeUser18 0x4C0FD6DA `mov data_4C382C4C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2290B8	# +0
 V_DSPSel_ResNames:
 	.long	RN_DSPSel	# DSPSel
 	.long	RN_empty_2538	# DSPSel_EffPage1
@@ -37171,7 +37446,8 @@ V_EqSel_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x382D64, 0x382D68
 data_4C382D68:
-.incbin_range "baserom/kn6000_program.rom", 0x382D68, 0x382D6C
+	# 4 bytes the code takes the address of: InitializeUser18 0x4C0FD6DA `mov data_4C382D68, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C229130	# +0
 V_SplitSel_ResNames:
 	.long	RN_SplitSel	# SplitSel
 	.long	RN_empty_5009	# SplitSel_MmmBox1
@@ -39404,7 +39680,8 @@ VFC_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x384FD4, 0x384FD8
 data_4C384FD8:
-.incbin_range "baserom/kn6000_program.rom", 0x384FD8, 0x384FDC
+	# 4 bytes the code takes the address of: InitializeUser12 0x4C106BC2 `mov data_4C384FD8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C241050	# +0
 
 PmemModeBoxProc_Lef_Table:	# 2 x u8, 144..146; read by PmemModeBoxProc : `movbu	(d0, a2), d0`
 	tab_u8	144, 146
@@ -39417,17 +39694,22 @@ FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(
 	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
 	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
 data_4C385014:
-.incbin_range "baserom/kn6000_program.rom", 0x385014, 0x385020
+	# 12 bytes the code takes the address of: TestRgbwbRunFunc 0x4C10E5A4 `mov data_4C385014, d1` (+0, as a base); TestRgbwbFunc_L54 0x4C10E628 `mov data_4C385014, d0` (+0, as a base); TestRgbwbFunc_L95 0x4C10E669 `mov data_4C385014, d0` (+0, as a base) (+5 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	20, 0, 76, 1, 20, 0, 172, 1, 0, 0, 0, 0	# +0
 data_4C385020:
-.incbin_range "baserom/kn6000_program.rom", 0x385020, 0x38502C
+	# 12 bytes the code takes the address of: TestCrosstarlRunFunc 0x4C10E7EE `mov data_4C385020, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	21, 0, 76, 1, 21, 0, 172, 1, 0, 0, 0, 0	# +0
 data_4C38502C:
-.incbin_range "baserom/kn6000_program.rom", 0x38502C, 0x385038
+	# 12 bytes the code takes the address of: TestSampleRunFunc 0x4C10E84E `mov data_4C38502C, d1` (+0, as a base); TestSampleFunc_L83 0x4C10E901 `mov data_4C38502C, d0` (+0, as a base); TestSampleFunc_La1 0x4C10E91F `mov data_4C38502C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	22, 0, 76, 1, 22, 0, 172, 1, 0, 0, 0, 0	# +0
 TestSampleFunc_L20_Table:	# 8 x u8, 1..223; read by TestSampleFunc : `movbu	(d0, a0), d0`
 	tab_u8	1, 9, 48, 64, 85, 65, 223, 131
 data_4C385040:
-.incbin_range "baserom/kn6000_program.rom", 0x385040, 0x38504C
+	# 12 bytes the code takes the address of: TestContrastRunFunc 0x4C10E93F `mov data_4C385040, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	23, 0, 76, 1, 23, 0, 172, 1, 0, 0, 0, 0	# +0
 data_4C38504C:
-.incbin_range "baserom/kn6000_program.rom", 0x38504C, 0x385058
+	# 12 bytes the code takes the address of: TestMICFunc_L141 0x4C10F848 `mov data_4C38504C, d0` (+0, as a base); TestMICFunc_L168 0x4C10F86F `mov data_4C38504C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	25, 0, 76, 1, 12, 0, 172, 1, 0, 0, 0, 0	# +0
 
 Str_empty_281:	.asciz " "
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -39443,12 +39725,14 @@ Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x385080, 0x385094
 data_4C385094:
-.incbin_range "baserom/kn6000_program.rom", 0x385094, 0x385097
+	# 3 bytes the code takes the address of: func_4C132BF7_entry_L9e 0x4C132C9A `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132BF7_entry_L9e 0x4C132C9A `mov data_4C385094, d2` (+0, as a base); func_4C132BF7_entry_L149 0x4C132D45 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	249, 255, 255	# +0
 Str_Technics:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3850A3, 0x3850B7
 data_4C3850B7:
-.incbin_range "baserom/kn6000_program.rom", 0x3850B7, 0x3850BC
+	# 5 bytes the code takes the address of: func_4C132EC1_entry_L9e 0x4C132F64 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132EC1_entry_L9e 0x4C132F64 `mov data_4C3850B7, d2` (+0, as a base); func_4C132EC1_entry_L11b 0x4C132FE1 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	240, 255, 255, 255, 255	# +0
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_4C05800B_L9 0x4C058014 `movbu (1, a0), d0`; func_4C058026_L9 0x4C05802F `movbu (2, a0), d0`; func_4C058041_L9 0x4C05804A `movbu (3, a0), d0` (+12)
 	NoteConvRule	is_melody=1, no_third_adj=1, no_transpose=1	# [0]
@@ -39800,261 +40084,3 @@ ClassFields_IvWaitWinCtl:
 ClassFields_IvMainEditIndex:
 	.long	Field_IvMainEditIndex_main_func
 	.long	Field_IvMainEditIndex_end
-
-# 19 classes; a class id is (0x170 << 16) | its index here (ClassProc 0x4C01D283 reads entry id & 0xFFFF, 0x18 bytes each)
-.equ User16_Classes_SLOT, 0x170
-User16_Classes:
-	CLASS	Class_PsFileNameBox, CLASS_PsFileNameBox, User16_Classes, proc=PsFileNameBoxProc, parent=CLASS_VwBox, allsize=68, selfsize=36, cname=ClassName_PsFileNameBox, sig=ClassSig_PsFileNameBox, fields=ClassFields_PsFileNameBox	# font:c fontcolor:^ main_func:k column:A row:A sel_num:n dial:G auto_inc:G paintok:m aicok:m
-	CLASS	Class_PsFileNmTwoBox, CLASS_PsFileNmTwoBox, User16_Classes, proc=PsFileNmTwoBoxProc, parent=CLASS_VwBox, allsize=64, selfsize=32, cname=ClassName_PsFileNmTwoBox, sig=ClassSig_PsFileNmTwoBox, fields=ClassFields_PsFileNmTwoBox	# font:c fontcolor:^ boxborder:_ main_func:k row:A spacewidth:B topdown:B bottomup:B auto_inc:G paintok:m aicok:m
-	CLASS	Class_PsOptionTwoBox, CLASS_PsOptionTwoBox, User16_Classes, proc=PsOptionTwoBoxProc, parent=CLASS_VwBox, allsize=64, selfsize=32, cname=ClassName_PsOptionTwoBox, sig=ClassSig_PsOptionTwoBox, fields=ClassFields_PsOptionTwoBox	# font:c fontcolor:^ boxborder:_ main_func:k row:A spacewidth:B stroffset:B auto_inc:G paintok:m aicok:m
-	CLASS	Class_PsPlayFileNameBox, CLASS_PsPlayFileNameBox, User16_Classes, proc=PsPlayFileNameBoxProc, parent=CLASS_VwBox, allsize=76, selfsize=44, cname=ClassName_PsPlayFileNameBox, sig=ClassSig_PsPlayFileNameBox, fields=ClassFields_PsPlayFileNameBox	# font:c font2:c fontcolor:^ fontcolor2:^ main_func:k sel_num:n row:A column:A stroffset:B dial:G auto_inc:G paintok:m aicok:m
-	CLASS	Class_PsWindowToggle, CLASS_PsWindowToggle, User16_Classes, proc=PsWindowToggleProc, parent=CLASS_PsToggleBox, allsize=56, selfsize=12, cname=ClassName_PsWindowToggle, sig=ClassSig_PsWindowToggle, fields=ClassFields_PsWindowToggle	# onwin:t offwin:t main_func:k
-	CLASS	Class_AcTtlJgBox, CLASS_AcTtlJgBox, User16_Classes, proc=AcTtlJgBoxProc, parent=CLASS_VwMenuBox, allsize=60, selfsize=4, cname=ClassName_AcTtlJgBox, sig=ClassSig_AcTtlJgBox, fields=ClassFields_AcTtlJgBox	# main_func:k
-	CLASS	Class_AcParaStrBox, CLASS_AcParaStrBox, User16_Classes, proc=AcParaStrBoxProc, parent=CLASS_PsParaBox, allsize=48, selfsize=8, cname=ClassName_AcParaStrBox, sig=ClassSig_AcParaStrBox, fields=ClassFields_AcParaStrBox	# main_func:k paintok:m
-	CLASS	Class_PsIndexParaStrBox, CLASS_PsIndexParaStrBox, User16_Classes, proc=PsIndexParaStrBoxProc, parent=CLASS_PsParaBox, allsize=48, selfsize=8, cname=ClassName_PsIndexParaStrBox, sig=ClassSig_PsIndexParaStrBox, fields=ClassFields_PsIndexParaStrBox	# main_func:k paintok:m
-	CLASS	Class_AcFileSfxBox, CLASS_AcFileSfxBox, User16_Classes, proc=AcFileSfxBoxProc, parent=CLASS_Viewable, allsize=36, selfsize=12, cname=ClassName_AcFileSfxBox, sig=ClassSig_AcFileSfxBox, fields=ClassFields_AcFileSfxBox	# font:c main_func:k paintok:m
-	CLASS	Class_AcMonoIndexToggle, CLASS_AcMonoIndexToggle, User16_Classes, proc=AcMonoIndexToggleProc, parent=CLASS_PsToggleBox, allsize=48, selfsize=2, cname=ClassName_AcMonoIndexToggle, sig=ClassSig_AcMonoIndexToggle, fields=ClassFields_AcMonoIndexToggle	# index:A
-	CLASS	Class_IvOneShotTimer, CLASS_IvOneShotTimer, User16_Classes, proc=IvOneShotTimerProc, parent=CLASS_PsInvisibleBox, allsize=28, selfsize=4, cname=ClassName_IvOneShotTimer, sig=ClassSig_IvOneShotTimer, fields=ClassFields_IvOneShotTimer	# main_func:k
-	CLASS	Class_VwScreenTitle, CLASS_VwScreenTitle, User16_Classes, proc=VwScreenTitleProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_VwScreenTitle, sig=ClassSig_VwScreenTitle, fields=ClassFields_VwScreenTitle	# title:X icon:b page:G
-	CLASS	Class_VwOwScreenTitle, CLASS_VwOwScreenTitle, User16_Classes, proc=VwOwScreenTitleProc, parent=CLASS_VwBox, allsize=44, selfsize=12, cname=ClassName_VwOwScreenTitle, sig=ClassSig_VwOwScreenTitle, fields=ClassFields_VwOwScreenTitle	# title:X icon:b page:G
-	CLASS	Class_Arrow, CLASS_Arrow, User16_Classes, proc=ArrowProc, parent=CLASS_Viewable, allsize=40, selfsize=16, cname=ClassName_Arrow, sig=ClassSig_Arrow, fields=ClassFields_Arrow	# color:^ frame_only:G dir:B tail_x_rate:B tail_y_rate:B
-	CLASS	Class_IvIndexSwCtrl, CLASS_IvIndexSwCtrl, User16_Classes, proc=IvIndexSwCtrlProc, parent=CLASS_PsInvisibleBox, allsize=40, selfsize=16, cname=ClassName_IvIndexSwCtrl, sig=ClassSig_IvIndexSwCtrl, fields=ClassFields_IvIndexSwCtrl	# index_min:B index_max:B dial:G dial_inv:G auto_inc:G
-	CLASS	Class_AcRotStrBox, CLASS_AcRotStrBox, User16_Classes, proc=AcRotStrBoxProc, parent=CLASS_PsParaBox, allsize=52, selfsize=12, cname=ClassName_AcRotStrBox, sig=ClassSig_AcRotStrBox, fields=ClassFields_AcRotStrBox	# func:j interval:B length:B paintok:m
-	CLASS	Class_IvIndexSwDelay, CLASS_IvIndexSwDelay, User16_Classes, proc=IvIndexSwDelayProc, parent=CLASS_PsInvisibleBox, allsize=32, selfsize=8, cname=ClassName_IvIndexSwDelay, sig=ClassSig_IvIndexSwDelay, fields=ClassFields_IvIndexSwDelay	# index_min:B index_max:B interval:B send_index:A
-	CLASS	Class_IvWaitWinCtl, CLASS_IvWaitWinCtl, User16_Classes, proc=IvWaitWinCtlProc, parent=CLASS_PsInvisibleBox, allsize=28, selfsize=4, cname=ClassName_IvWaitWinCtl, sig=ClassSig_IvWaitWinCtl, fields=ClassFields_IvWaitWinCtl	# win:t
-	CLASS	Class_IvMainEditIndex, CLASS_IvMainEditIndex, User16_Classes, proc=IvMainEditIndexProc, parent=CLASS_PsInvisibleBox, allsize=28, selfsize=4, cname=ClassName_IvMainEditIndex, sig=ClassSig_IvMainEditIndex, fields=ClassFields_IvMainEditIndex	# main_func:k
-	.space	24, 0x00
-
-InitializeUser16_Table:	# 2 x u16, 19..65535; read by InitializeUser16 0x4C15029C: `movhu (InitializeUser16_Table), d0`
-	tab_u16	19, 65535
-
-# 19 ResEvent names; an resevent id is (0x190 << 16) | its index
-User16_ResEvents:
-	IDNAME	EV_NOTPARADRAW, Str_EV_NOTPARADRAW, User16_ResEvents, 0x190
-	IDNAME	EV_NOTPOSTAIC, Str_EV_NOTPOSTAIC, User16_ResEvents, 0x190
-	IDNAME	EV_INDEXSW_UP_D, Str_EV_INDEXSW_UP_D, User16_ResEvents, 0x190
-	IDNAME	EV_INDEXSW_DOWN_D, Str_EV_INDEXSW_DOWN_D, User16_ResEvents, 0x190
-	IDNAME	EV_INDEXSW_UP_2, Str_EV_INDEXSW_UP_2, User16_ResEvents, 0x190
-	IDNAME	EV_INDEXSW_DOWN_2, Str_EV_INDEXSW_DOWN_2, User16_ResEvents, 0x190
-	IDNAME	EV_WAKEUPPASSWORD, Str_EV_WAKEUPPASSWORD, User16_ResEvents, 0x190
-	IDNAME	EV_SetPfmMessage, Str_EV_SetPfmMessage, User16_ResEvents, 0x190
-	IDNAME	EV_SetFileSfx, Str_EV_SetFileSfx, User16_ResEvents, 0x190
-	IDNAME	EV_FileNameDraw, Str_EV_FileNameDraw, User16_ResEvents, 0x190
-	IDNAME	EV_OptionSelectDraw, Str_EV_OptionSelectDraw, User16_ResEvents, 0x190
-	IDNAME	EV_SetSelectedFileNumber, Str_EV_SetSelectedFileNumber, User16_ResEvents, 0x190
-	IDNAME	EV_SetSelectedBankNumber, Str_EV_SetSelectedBankNumber, User16_ResEvents, 0x190
-	IDNAME	EV_OneStrDraw, Str_EV_OneStrDraw, User16_ResEvents, 0x190
-	IDNAME	EV_SingleLoadNameDraw, Str_EV_SingleLoadNameDraw, User16_ResEvents, 0x190
-	IDNAME	EV_DRAWSTRING, Str_EV_DRAWSTRING, User16_ResEvents, 0x190
-	IDNAME	EV_PlayFilesDraw, Str_EV_PlayFilesDraw, User16_ResEvents, 0x190
-	IDNAME	EV_DRAWBYSWIN, Str_EV_DRAWBYSWIN, User16_ResEvents, 0x190
-	IDNAME	EV_CHANGEONOFF, Str_EV_CHANGEONOFF, User16_ResEvents, 0x190
-	.space	4, 0x00
-
-InitializeUser16_Table_2:	# 2 x u16, 19..65535; read by InitializeUser16 0x4C15029C: `movhu (InitializeUser16_Table_2), d0`
-	tab_u16	19, 65535
-
-# 18 ResMethod names; an resmethod id is (0x1b0 << 16) | its index
-User16_ResMethods:
-	IDNAME	MT_GetFileSfx, Str_MT_GetFileSfx, User16_ResMethods, 0x1b0
-	IDNAME	MT_GetSelectedFileNumber, Str_MT_GetSelectedFileNumber, User16_ResMethods, 0x1b0
-	IDNAME	MT_PsFileNameBoxID, Str_MT_PsFileNameBoxID, User16_ResMethods, 0x1b0
-	IDNAME	MT_PsFileNmTwoBoxID, Str_MT_PsFileNmTwoBoxID, User16_ResMethods, 0x1b0
-	IDNAME	MT_OnWindow, Str_MT_OnWindow, User16_ResMethods, 0x1b0
-	IDNAME	MT_OffWindow, Str_MT_OffWindow, User16_ResMethods, 0x1b0
-	IDNAME	MT_WhichWindow, Str_MT_WhichWindow, User16_ResMethods, 0x1b0
-	IDNAME	MT_IWillWakeUp, Str_MT_IWillWakeUp, User16_ResMethods, 0x1b0
-	IDNAME	MT_WakeUpTime, Str_MT_WakeUpTime, User16_ResMethods, 0x1b0
-	IDNAME	MT_WakeUpNow, Str_MT_WakeUpNow, User16_ResMethods, 0x1b0
-	IDNAME	MT_FlashWrite, Str_MT_FlashWrite, User16_ResMethods, 0x1b0
-	IDNAME	MT_FlashLoad, Str_MT_FlashLoad, User16_ResMethods, 0x1b0
-	IDNAME	MT_SetPassword, Str_MT_SetPassword, User16_ResMethods, 0x1b0
-	IDNAME	MT_CheckPassword, Str_MT_CheckPassword, User16_ResMethods, 0x1b0
-	IDNAME	MT_CheckPassword2, Str_MT_CheckPassword2, User16_ResMethods, 0x1b0
-	IDNAME	MT_CheckPassword3, Str_MT_CheckPassword3, User16_ResMethods, 0x1b0
-	IDNAME	MT_GetStringCurName, Str_MT_GetStringCurName, User16_ResMethods, 0x1b0
-	IDNAME	MT_GetStringDiskName, Str_MT_GetStringDiskName, User16_ResMethods, 0x1b0
-	.space	4, 0x00
-
-InitializeUser16_Table_3:	# 2 x u16, 18..65535; read by InitializeUser16 0x4C15029C: `movhu (InitializeUser16_Table_3), d0`
-	tab_u16	18, 65535
-
-# 19 Function procedures; a function id is (0x110 << 16) | its index (the names are the parallel table at slot 0x310)
-User16_Functions:
-	IDNAME	FN_PsFileNameBoxProc, PsFileNameBoxProc, User16_Functions, 0x110
-	IDNAME	FN_PsFileNmTwoBoxProc, PsFileNmTwoBoxProc, User16_Functions, 0x110
-	IDNAME	FN_PsOptionTwoBoxProc, PsOptionTwoBoxProc, User16_Functions, 0x110
-	IDNAME	FN_PsPlayFileNameBoxProc, PsPlayFileNameBoxProc, User16_Functions, 0x110
-	IDNAME	FN_PsWindowToggleProc, PsWindowToggleProc, User16_Functions, 0x110
-	IDNAME	FN_AcTtlJgBoxProc, AcTtlJgBoxProc, User16_Functions, 0x110
-	IDNAME	FN_AcParaStrBoxProc, AcParaStrBoxProc, User16_Functions, 0x110
-	IDNAME	FN_AcFileSfxBoxProc, AcFileSfxBoxProc, User16_Functions, 0x110
-	IDNAME	FN_AcMonoIndexToggleProc, AcMonoIndexToggleProc, User16_Functions, 0x110
-	IDNAME	FN_IvOneShotTimerProc, IvOneShotTimerProc, User16_Functions, 0x110
-	IDNAME	FN_VwScreenTitleProc, VwScreenTitleProc, User16_Functions, 0x110
-	IDNAME	FN_VwOwScreenTitleProc, VwOwScreenTitleProc, User16_Functions, 0x110
-	IDNAME	FN_ArrowProc, ArrowProc, User16_Functions, 0x110
-	IDNAME	FN_IvIndexSwCtrlProc, IvIndexSwCtrlProc, User16_Functions, 0x110
-	IDNAME	FN_AcRotStrBoxProc, AcRotStrBoxProc, User16_Functions, 0x110
-	IDNAME	FN_IvIndexSwDelayProc, IvIndexSwDelayProc, User16_Functions, 0x110
-	IDNAME	FN_IvWaitWinCtlProc, IvWaitWinCtlProc, User16_Functions, 0x110
-	IDNAME	FN_PsIndexParaStrBoxProc, PsIndexParaStrBoxProc, User16_Functions, 0x110
-	IDNAME	FN_IvMainEditIndexProc, IvMainEditIndexProc, User16_Functions, 0x110
-	.space	4, 0x00
-
-User16_FunctionNames:
-	.long	FnName_PsFileNameBoxProc
-	.long	FnName_PsFileNmTwoBoxProc
-	.long	FnName_PsOptionTwoBoxProc
-	.long	FnName_PsPlayFileNameBoxProc
-	.long	FnName_PsWindowToggleProc
-	.long	FnName_AcTtlJgBoxProc
-	.long	FnName_AcParaStrBoxProc
-	.long	FnName_AcFileSfxBoxProc
-	.long	FnName_AcMonoIndexToggleProc
-	.long	FnName_IvOneShotTimerProc
-	.long	FnName_VwScreenTitleProc
-	.long	FnName_VwOwScreenTitleProc
-	.long	FnName_ArrowProc
-	.long	FnName_IvIndexSwCtrlProc
-	.long	FnName_AcRotStrBoxProc
-	.long	FnName_IvIndexSwDelayProc
-	.long	FnName_IvWaitWinCtlProc
-	.long	FnName_PsIndexParaStrBoxProc
-	.long	FnName_IvMainEditIndexProc
-# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x385B90, 0x385B94
-
-# 63 MainFunction procedures; a function id is (0x150 << 16) | its index (the names are the parallel table at slot 0x350)
-User16_MainFunctions:
-	IDNAME	FN_FmmFileNameFunc, FmmFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_LoadTtlJgFunc, LoadTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_CustomTtlJgFunc, CustomTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SingleLoadSrcDstFunc, SingleLoadSrcDstFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SingleLoadModeFunc, SingleLoadModeFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmLoadTitleFunc, FmmLoadTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_CurFileNameFunc, CurFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmLoadFilterFunc, FmmLoadFilterFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfLoadAsFunc, SmfLoadAsFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfSaveAsFunc, SmfSaveAsFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfPlayAsFunc, SmfPlayAsFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSaveTitleFunc, FmmSaveTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SongNameFunc, SongNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SaveTtlJgFunc, SaveTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SaveSmfTtlJgFunc, SaveSmfTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SaveFileNameFunc, SaveFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SaveFileNameNumFunc, SaveFileNameNumFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSaveFilterFunc, FmmSaveFilterFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSeqSongNameFunc, FmmSeqSongNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SaveFileNameSmfFunc, SaveFileNameSmfFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SaveFileNameCstFunc, SaveFileNameCstFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfSeqFromSongNumFunc, SmfSeqFromSongNumFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfSeqToSongNumFunc, SmfSeqToSongNumFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfSeqSongNameFunc, SmfSeqSongNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSmfFileNameFunc, FmmSmfFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSmfLoadTitleFunc, FmmSmfLoadTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSmfSaveTitleFunc, FmmSmfSaveTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmCstLSTitleFunc, FmmCstLSTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_DirectPlayTtlJgFunc, DirectPlayTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SongMedleyTtlJgFunc, SongMedleyTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmDiskMedleySelectFunc, FmmDiskMedleySelectFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSmfMedleyFunc, FmmSmfMedleyFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FileCopyFunc, FileCopyFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmFormatFunc, FmmFormatFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmCmpSingleLoadFunc, FmmCmpSingleLoadFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_CmpSingleLoadFileFunc, CmpSingleLoadFileFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_CmpSingleLoadSrcDstFunc, CmpSingleLoadSrcDstFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmIntMedleyFunc, FmmIntMedleyFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SetupFlashFunc, SetupFlashFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmUtilityTitleFunc, FmmUtilityTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmSmfUtilityTitleFunc, FmmSmfUtilityTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmCstUtilityTitleFunc, FmmCstUtilityTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmPreferenceTitleFunc, FmmPreferenceTitleFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmCstFileNameFunc, FmmCstFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_UtilityTtlJgFunc, UtilityTtlJgFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_DiskNameFunc, DiskNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_DiskInfoFunc, DiskInfoFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmWallpaperLoadFunc, FmmWallpaperLoadFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmDocFileNameFunc, FmmDocFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_DocDiskNameFunc, DocDiskNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmPdFileNameFunc, FmmPdFileNameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FileRenameFunc, FileRenameFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FileRenameSmfFunc, FileRenameSmfFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FileRenameCstFunc, FileRenameCstFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmPasswordFunc, FmmPasswordFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_CusLoadSaveSrcDstFunc, CusLoadSaveSrcDstFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_CmpSnglLdOptionFunc, CmpSnglLdOptionFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmDiskModeFunc, FmmDiskModeFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_FmmComposerLoadFunc, FmmComposerLoadFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SendIndexSingleLoadFunc, SendIndexSingleLoadFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SendIndexCustomSaveFunc, SendIndexCustomSaveFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_SmfToDocCngFunc, SmfToDocCngFunc, User16_MainFunctions, 0x150
-	IDNAME	FN_DocToSmfCngFunc, DocToSmfCngFunc, User16_MainFunctions, 0x150
-	.space	4, 0x00
-
-User16_MainFunctionNames:
-	.long	FnName_FmmFileNameFunc
-	.long	FnName_LoadTtlJgFunc
-	.long	FnName_CustomTtlJgFunc
-	.long	FnName_SingleLoadSrcDstFunc
-	.long	FnName_SingleLoadModeFunc
-	.long	FnName_FmmLoadTitleFunc
-	.long	FnName_CurFileNameFunc
-	.long	FnName_FmmLoadFilterFunc
-	.long	FnName_SmfLoadAsFunc
-	.long	FnName_SmfSaveAsFunc
-	.long	FnName_SmfPlayAsFunc
-	.long	FnName_FmmSaveTitleFunc
-	.long	FnName_SongNameFunc
-	.long	FnName_SaveTtlJgFunc
-	.long	FnName_SaveSmfTtlJgFunc
-	.long	FnName_SaveFileNameFunc
-	.long	FnName_SaveFileNameNumFunc
-	.long	FnName_FmmSaveFilterFunc
-	.long	FnName_FmmSeqSongNameFunc
-	.long	FnName_SaveFileNameSmfFunc
-	.long	FnName_SaveFileNameCstFunc
-	.long	FnName_SmfSeqFromSongNumFunc
-	.long	FnName_SmfSeqToSongNumFunc
-	.long	FnName_SmfSeqSongNameFunc
-	.long	FnName_FmmSmfFileNameFunc
-	.long	FnName_FmmSmfLoadTitleFunc
-	.long	FnName_FmmSmfSaveTitleFunc
-	.long	FnName_FmmCstLSTitleFunc
-	.long	FnName_DirectPlayTtlJgFunc
-	.long	FnName_SongMedleyTtlJgFunc
-	.long	FnName_FmmDiskMedleySelectFunc
-	.long	FnName_FmmSmfMedleyFunc
-	.long	FnName_FileCopyFunc
-	.long	FnName_FmmFormatFunc
-	.long	FnName_FmmCmpSingleLoadFunc
-	.long	FnName_CmpSingleLoadFileFunc
-	.long	FnName_CmpSingleLoadSrcDstFunc
-	.long	FnName_FmmIntMedleyFunc
-	.long	FnName_SetupFlashFunc
-	.long	FnName_FmmUtilityTitleFunc
-	.long	FnName_FmmSmfUtilityTitleFunc
-	.long	FnName_FmmCstUtilityTitleFunc
-	.long	FnName_FmmPreferenceTitleFunc
-	.long	FnName_FmmCstFileNameFunc
-	.long	FnName_UtilityTtlJgFunc
-	.long	FnName_DiskNameFunc
-	.long	FnName_DiskInfoFunc
-	.long	FnName_FmmWallpaperLoadFunc
-	.long	FnName_FmmDocFileNameFunc
-	.long	FnName_DocDiskNameFunc
-	.long	FnName_FmmPdFileNameFunc
-	.long	FnName_FileRenameFunc
-	.long	FnName_FileRenameSmfFunc
-	.long	FnName_FileRenameCstFunc
-	.long	FnName_FmmPasswordFunc
-	.long	FnName_CusLoadSaveSrcDstFunc
-	.long	FnName_CmpSnglLdOptionFunc
-	.long	FnName_FmmDiskModeFunc
-	.long	FnName_FmmComposerLoadFunc
-	.long	FnName_SendIndexSingleLoadFunc
-	.long	FnName_SendIndexCustomSaveFunc
-	.long	FnName_SmfToDocCngFunc
-	.long	FnName_DocToSmfCngFunc
-# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x385D90, 0x385D94
