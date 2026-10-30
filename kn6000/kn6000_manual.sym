@@ -29,3 +29,13 @@
 0x4C3F78B4  KernelStartStub              ; `jmp func_4C3F7793` (the routine crt0_start's func_4C000350 ends by jumping to); no word of the image holds this address
 0x4C3F78BC  KernelGroup0IntDispatch      ; an interrupt handler: saves the registers and psw, counts the nesting at 0x50180CCC, takes the group from 0x34000100 (0x34000104 + 8 when zero), calls the handler the RAM tables 0x50180A6C / 0x50180B64 give for it, rti [INFERENCE: group 0, the non-maskable sources; nothing in the image holds this address]
 0x4C3F7942  KernelIntDispatch            ; the interrupt handler func_4C000350 writes a `jmp` to at 0x90000000: as KernelGroup0IntDispatch, but it switches to the kernel stack when not nested and takes the group from 0x34000200
+; ---- the MILK kernel's tail routines (lane code-island, 2026-10-30; the KN7000's names,
+;      ../kn7000/notes/code-island/README.md: the same block, linked at the flash address) ----
+0x4C3F7383  KernelInit                   ; the routine KernelStart jumps to: fills the kernel's RAM tables, creates the kernel task, calls the application's start-up, KernelInitHook and the dispatcher start [INFERENCE: name, from what it does]
+0x4C3F7632  KernelWaitRelease            ; d0 = task id: dequeues the task from the wait queue its wait state names (through KernelServiceHash), then from the timer list [INFERENCE: name]
+0x4C3F778A  KernelErrorHook              ; `retf 0, 0`: kernel services call it before they return an error, d0 = the function code, d1 = the uITRON error code [INFERENCE]
+0x4C3F778D  KernelErrorHook2             ; `retf 0, 0`: as KernelErrorHook, from a few other call sites [INFERENCE]
+0x4C3F7790  KernelWaitAbortHook          ; `retf 0, 0`: called with a0 = the TCB and d0 = -0x55 (E_TMOUT) or -0x51 (E_DLT) for a wait that ends in an error [INFERENCE]
+0x4C3F7793  KernelStart                  ; sp := (KernelRamLayout + 0x14), jmp KernelInit: the kernel's start
+0x4C3F779E  KernelInitHook               ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
+;
