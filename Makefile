@@ -1315,6 +1315,39 @@ rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf: rebuilt_ROMs/hd-ae5000_v2_01i.llvm.o hda
 rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom: rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- HDAE5000 v1.15i and v1.10i ---
+# Their reference images, copied git-ignored from the private romset and refused unless
+# the SHA-1 matches (the v2.01i convention, above).  hd-ae5000.ic4 in the romset is the
+# same bytes as v1.15i.  notes/hdae5000-versions-2026-10-24/README.md describes the trees.
+#   make HDAE5000_V115_REF=/path/hd-ae5000_v1_15i.ic4 HDAE5000_V110_REF=/path/hd-ae5000_v1_10i.ic4
+HDAE5000_V115_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/hd-ae5000_v1_15i.ic4
+HDAE5000_V115_SHA1 := 581fa58e2cd6fe381cfc312c73771d25ff2e662c
+HDAE5000_V110_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/hd-ae5000_v1_10i.ic4
+HDAE5000_V110_SHA1 := 6019f3c28b6277730418974dde4dc6893fced00e
+
+# $(1) = v1_15i / v1_10i, $(2) = the REF variable, $(3) = the SHA-1 variable
+define HDAE_V1_REFERENCE
+original_ROMs/hd-ae5000_$(1).ic4:
+	@if [ ! -f "$$($(2))" ]; then \
+	  echo "ERROR: the HD-AE5000 $(1) reference image is missing: $$($(2))"; \
+	  echo "       It is not in git (new dumps come from the private romset). Point $(2) at a copy"; \
+	  echo "       whose SHA-1 is $$($(3)), e.g. make $(2)=/path/hd-ae5000_$(1).ic4"; \
+	  exit 1; fi
+	@got=$$$$(sha1sum < "$$($(2))" | cut -d' ' -f1); \
+	 if [ "$$$$got" != "$$($(3))" ]; then \
+	  echo "ERROR: $$($(2)) has SHA-1 $$$$got, expected $$($(3))"; exit 1; fi
+	cp "$$($(2))" $$@.tmp
+	mv $$@.tmp $$@
+
+verify-hdae5000-$(subst _,,$(1))-reference: original_ROMs/hd-ae5000_$(1).ic4
+	@got=$$$$(sha1sum < $$< | cut -d' ' -f1); \
+	 if [ "$$$$got" = "$$($(3))" ]; then echo "OK    $$< has SHA-1 $$($(3))"; \
+	 else echo "FAIL  $$< has SHA-1 $$$$got, expected $$($(3))"; exit 1; fi
+endef
+$(eval $(call HDAE_V1_REFERENCE,v1_15i,HDAE5000_V115_REF,HDAE5000_V115_SHA1))
+$(eval $(call HDAE_V1_REFERENCE,v1_10i,HDAE5000_V110_REF,HDAE5000_V110_SHA1))
+.PHONY: verify-hdae5000-v115i-reference verify-hdae5000-v110i-reference
+
 # The six Feature Demo BMPs (FTBMP01..06.BMP) are built from their committed PNGs
 # plus the header fields in ftbmp_headers.json; scripts/build/ftbmp_images.py
 # `verify` asserts the round trip against the committed .BMP and the ROM.  The

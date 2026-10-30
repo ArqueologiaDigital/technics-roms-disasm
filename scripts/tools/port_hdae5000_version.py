@@ -19,7 +19,10 @@ QUESTION ANSWERED / JOB IT DOES
       fix       same-size hunks whose differing bytes are a number the line
                 spells as a literal, or as a constant whose name is in
                 RETARGET_PREFIXES: the number is rewritten (a constant at its
-                `.equ`, once, for the whole tree).  Once `uitables` has run,
+                `.equ`, once, for the whole tree).  A constant whose uses want
+                different values -- some already right in an aligned block,
+                others not -- is two things in the target: those uses get a
+                symbol of their own (resolve_votes), so the pass converges;  Once `uitables` has run,
                 the HDAE5000_OBJ_* values come from the target's name table
                 and are frozen: a line whose object id differs is respelled
                 with the constant that has the target's value, or left alone
@@ -57,6 +60,7 @@ QUESTION ANSWERED / JOB IT DOES
 
 RUN (from the repo root)
     python3 scripts/tools/port_hdae5000_version.py init     v2_01i  # copy hdae5000/ -> hdae5000_v2_01i/
+    python3 scripts/tools/port_hdae5000_version.py init     v1_15i --from v2_01i  # from another port
     python3 scripts/tools/port_hdae5000_version.py status   v2_01i  # the hunks left
     python3 scripts/tools/port_hdae5000_version.py fix      v2_01i [--rounds N]
     python3 scripts/tools/port_hdae5000_version.py code     v2_01i [N ...] [--dry]
@@ -395,7 +399,8 @@ def num_tokens(code):
     signed and its replacement may flip the operator."""
     out = []
     for m in NUMTOK_RE.finditer(code):
-        v = int(m.group(1), 0)
+        t = m.group(1)
+        v = int(t, 16) if t[:2].lower() == b"0x" else int(t, 10)     # "01" is decimal, not an error
         j = m.start() - 1
         while j >= 0 and code[j] in b" \t":
             j -= 1
@@ -823,6 +828,79 @@ def respell_frozen_obj(txt, eq, equs):
     return txt, rest
 
 
+def symbol_uses(bld, names):
+    """name -> [line index] of the byte-emitting lines whose code part names it."""
+    pat = re.compile(rb'(?<![\w.])(' + b"|".join(re.escape(n.encode()) for n in names) + rb')(?![\w])')
+    out = collections.defaultdict(list)
+    for k, (f, n, s, e) in enumerate(bld.lines):
+        if e <= s:
+            continue
+        code, _ = split_code(bld.text(f, n))
+        for m in pat.finditer(code):
+            out[m.group(1).decode()].append(k)
+    return out
+
+
+def split_name(name, v):
+    """The constant a split-off use of `name` gets: <name>_Alt_<hex>, a placeholder that a
+    port-edit script renames once the use is understood."""
+    return "%s_Alt_%x" % (name, v)
+
+
+def resolve_votes(bld, hs, equs, votes):
+    """Decide each constant's value from the uses that want one ({name: {value: [(f, n)]}}).
+
+    A constant used by lines that are right as they stand (inside an aligned block) and by
+    lines that want another value is two things in the target, not one: moving its `.equ`
+    would only break the first lines, and the next round would move it back (the `fix`
+    oscillation of the 2026-10-24 v1.15i trial).  So the value of the settled uses stays,
+    and every other value is given its own symbol: the one RETARGET constant that already
+    has that value, or a new `.equ` next to the original's.  With no settled use the most
+    wanted value wins and the others split off the same way.
+
+    Returns ({name: value} to set, [(f, n, name, alt)] line respellings, {alt: (name, value)}
+    new constants)."""
+    covered = []
+    for h in hs:
+        (w0, w1, _, _), _ = expand(bld, h)
+        covered.append((w0, w1))
+    covered.sort()
+    starts = [a for a, _ in covered]
+
+    def settled(k):
+        _, _, s, e = bld.lines[k]
+        i = bisect.bisect_right(starts, e - 1) - 1
+        while i >= 0 and covered[i][1] > s:
+            if covered[i][0] < e:
+                return False
+            i -= 1
+        return True
+
+    uses = symbol_uses(bld, list(votes))
+    set_to, respell, new_equ = {}, [], {}
+    for name, byval in votes.items():
+        cur = equs[name][0]
+        want = {v: ls for v, ls in byval.items() if v != cur}
+        if not want:
+            continue
+        keep_cur = any(settled(k) for k in uses.get(name, []))
+        if keep_cur:
+            keep = cur
+        else:
+            keep = max(want, key=lambda v: (len(want[v]), -v))
+            set_to[name] = keep
+        for v, ls in want.items():
+            if v == keep:
+                continue
+            same = [n for n, e in equs.items() if n.startswith(RETARGET_PREFIXES) and e[0] == v]
+            alt = same[0] if len(same) == 1 else split_name(name, v)
+            if alt not in equs:
+                new_equ[alt] = (name, v)
+            for f, n in ls:
+                respell.append((f, n, name, alt))
+    return set_to, respell, new_equ
+
+
 def cmd_fix(ver, rounds):
     frozen = obj_ids_frozen(tree_of(ver))
     for r in range(rounds):
@@ -830,7 +908,7 @@ def cmd_fix(ver, rounds):
         equs = read_equs(bld)
         ed = Edits(bld.tree)
         n_fix = n_eq = 0
-        new_eq = {}
+        votes = collections.defaultdict(lambda: collections.defaultdict(list))
         for h in hs:
             (w0, w1, b0, b1), li = expand(bld, h)
             if w1 - w0 != b1 - b0:
@@ -851,16 +929,29 @@ def cmd_fix(ver, rounds):
                     ed.set(f, n, txt)
                     n_fix += 1
                 for name, v in eq.items():
-                    if name in new_eq and new_eq[name] != v:
-                        print("conflicting values for %s: %#x / %#x" % (name, new_eq[name], v))
-                        continue
-                    new_eq[name] = v
-        for name, v in new_eq.items():
-            if equs[name][0] != v:
-                ed.set_equ(equs[name][1], equs[name][2], v)
-                n_eq += 1
+                    votes[name][v].append((f, n))
+        set_to, respell, new_equ = resolve_votes(bld, hs, equs, votes)
+        for name, v in set_to.items():
+            ed.set_equ(equs[name][1], equs[name][2], v)
+            n_eq += 1
+        for f, n, name, alt in respell:
+            ln = ed.lines(f)[n - 1]
+            code, comment = split_code(ln)
+            code = re.sub(rb'(?<![\w.])' + re.escape(name.encode()) + rb'(?![\w])', alt.encode(), code)
+            ed.set(f, n, code + comment)
+            n_fix += 1
+        for alt, (name, v) in sorted(new_equ.items()):
+            f, n = equs[name][1], equs[name][2]
+            ln = ed.lines(f)[n - 1]
+            m = re.match(rb'^(\s*\.(?:equ|set)\s+)', ln)
+            ed.set(f, n, ln + b"\n" + m.group(1) + alt.encode() + b", 0x%06x" % v
+                   + b"\t; split from %s by `port_hdae5000_version.py fix`: these uses want a different address in %s"
+                   % (name.encode(), tag_of(ver).encode()))
+            n_eq += 1
+            print("split: %s -> %s = %#x" % (name, alt, v))
         ed.write()
-        print("round %d: %d hunks, %d lines rewritten, %d constants changed" % (r, len(hs), n_fix, n_eq))
+        print("round %d: %d hunks, %d lines rewritten, %d constants changed or added" % (
+            r, len(hs), n_fix, n_eq))
         if n_fix == 0 and n_eq == 0:
             break
     cmd_status(ver)
@@ -1720,15 +1811,22 @@ def cmd_show(ver, idx, ctx=2):
                 chr(c) if 0x20 <= c < 0x7f else "." for c in bs)))
 
 
-def cmd_init(ver):
+def tag_of(ver):
+    """'v1_15i' -> 'v1.15i'"""
+    return ver.replace("_", ".")
+
+
+def cmd_init(ver, frm=None):
+    """Copy the source tree (hdae5000/, or hdae5000_<frm>/ with --from <frm>) to the target's."""
     dst = tree_of(ver)
     if os.path.exists(dst):
         sys.exit("%s exists" % dst)
-    src = os.path.join(ROOT, SRC_TREE)
+    src = os.path.join(ROOT, SRC_TREE) if frm is None else tree_of(frm)
+    src_main = SRC_MAIN if frm is None else main_of(frm)
     os.makedirs(dst)
     for f in sorted(os.listdir(src)):
         if f.endswith(".s") or f.endswith(".ld"):
-            shutil.copy(os.path.join(src, f), os.path.join(dst, main_of(ver) if f == SRC_MAIN else f))
+            shutil.copy(os.path.join(src, f), os.path.join(dst, main_of(ver) if f == src_main else f))
     print("copied %s -> %s" % (src, dst))
 
 
@@ -1738,7 +1836,7 @@ def main():
         sys.exit(__doc__)
     cmd, ver = a[0], a[1]
     if cmd == "init":
-        cmd_init(ver)
+        cmd_init(ver, a[a.index("--from") + 1] if "--from" in a else None)
     elif cmd == "status":
         cmd_status(ver)
     elif cmd == "fix":
@@ -1749,7 +1847,7 @@ def main():
         cmd_code(ver, only, dry="--dry" in a)
     elif cmd == "strings":
         only = [int(x) for x in a[2:] if x.isdigit()] or None
-        cmd_strings(ver, only, dry="--dry" in a)
+        cmd_strings(ver, only, dry="--dry" in a, tag=tag_of(ver))
     elif cmd == "uitables":
         cmd_uitables(ver)
     elif cmd == "tables":

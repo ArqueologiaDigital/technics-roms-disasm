@@ -52,6 +52,8 @@ mame_driver/build_error.txt
 */maincpu/includes/generated/*.bin
 hdae5000/includes/generated/*.bin
 hdae5000_v2_01i/includes/generated/*.bin
+hdae5000_v1_15i/includes/generated/*.bin
+hdae5000_v1_10i/includes/generated/*.bin
 table_data/includes/generated/*.bin
 custom_data/includes/section_*.bin
 
@@ -100,6 +102,9 @@ original_ROMs/kn5000_v6_program.rom
 original_ROMs/kn5000_v5_program.rom
 # HD-AE5000 v2.01i: same convention (HDAE5000_V201_REF in Makefile).
 original_ROMs/hd-ae5000_v2_01i.ic4
+# HD-AE5000 v1.15i / v1.10i: same convention (HDAE5000_V115_REF / _V110_REF in Makefile).
+original_ROMs/hd-ae5000_v1_15i.ic4
+original_ROMs/hd-ae5000_v1_10i.ic4
 # KN5000 waveform ROM IC307: same convention (KN5000_IC307_REF in Makefile).
 original_ROMs/kn5000_waveform_rom.ic307
 # KN5000 rhythm data ROM IC14, descrambled image and raw chip read: same convention
