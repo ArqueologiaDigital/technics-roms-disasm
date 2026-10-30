@@ -62,7 +62,10 @@ titles, 23 modes; `milk_model --check` rules: 0 failures.
 - **Bitmaps**: the procedures that answer MT_GetBitmapData / Width / Height / Palette /
   GetBitCount (lane sib-kn6000's rule) give 45 bitmaps, PNG in `media/`, rebuilt by `table_png.py`.
 - **RamCodeTrailer** (0x487965B8, 27 bytes after the RAM-linked code): 7 bytes, then 0x487285BE,
-  0x50120000, 0x00038003, 0x487965B8, 0x5018FFF0. [INFERENCE] a copy descriptor; nothing reads it.
+  0x50120000, 0x00038003, 0x487965B8, 0x5018FFF0. [INFERENCE] a copy descriptor. Corrected 2026-10-30
+  (lane generic-zero): func_4870587E reads it, byte by byte from +3, 12 bytes a record (`movbu`, each word
+  assembled little-endian with `asl 8 / 16 / 24`); its `mov 0x487965bb, d0` ... immediates are now
+  `RamCodeTrailer+3` ... and `RamCodeTrailerWords+N` (`kn2400_manual.sym`).
 - **Code gaps**: `code_gap_classes.py` on the source before this lane: 324 pieces end in a return
   or jump, 42 run into the next function's `add -N, sp`, 7 are fill, 2 stop early (0xFF fill
   before more code). All 18,862 bytes are now instructions; 0 code-range bytes are binary.
@@ -149,7 +152,8 @@ extensions and fonts beside their strings, and RAM-image variables.
 
 ## Open questions
 
-- [INFERENCE] RamCodeTrailer is a copy descriptor; who copies the RAM-linked code is still unknown.
+- [INFERENCE] RamCodeTrailer is a copy descriptor; func_4870587E reads it (see above), but what it does with
+  the three words of each record was not traced.
 - The KN2400 title ids 0x000F000F / 0x000F0102 that records name but no RegisterTitle registers.
 - `gen_symbols.py`'s start-alignment rule would change `kn6000.sym` in 330 lines: not applied
   there (lane sib-kn6000's tree).

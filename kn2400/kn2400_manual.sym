@@ -12,7 +12,8 @@
 0x48705BDF  crt0_start      ; _reset's target: ports + memory controller (0x32000020..0x32000042), sp = 0x5006908C, clears 0x50006E88 (+0x189178) and 0x502B8000 (+0x148000), copies .data 0x485DD334 -> 0x50000010 (0x6E78 bytes), writes the jmp vectors at 0x90000000/0x90000006, then calls func_4870587E_entry and jumps to func_48728591
 ;
 ; ---- after the code linked for work RAM (file 0x3965b8..0x3965d3) --------------
-0x487965B8  RamCodeTrailer  ; 7 bytes, then 5 words: 0x487285BE (flash start of the RAM-linked code), 0x50120000 (its link address), 0x00038003, 0x487965B8 (this address: the flash end of that code), 0x5018FFF0; [INFERENCE] a copy descriptor; no code in this image reads it
+0x487965B8  RamCodeTrailer  ; 7 bytes, then 5 words: 0x487285BE (flash start of the RAM-linked code), 0x50120000 (its link address), 0x00038003, 0x487965B8 (this address: the flash end of that code), 0x5018FFF0; func_4870587E reads it byte by byte from +3 (movbu, each word assembled little-endian with asl 8 / 16 / 24) and steps 12 bytes a record (corrected 2026-10-30, lane generic-zero: the note said no code read it) [INFERENCE: a copy descriptor]
+0x487965BF  RamCodeTrailerWords  ; RamCodeTrailer+7: its five words (gen_image_s.py --long-table), which func_4870587E reads byte by byte
 ;
 ; ---- data ----------------------------------------------------------------------
 0x4852BD9C  TechnicsRhythmsResource ; built-in rhythm style resource in IC18's format, one style (as the KN7000's at 0x48729988, typed by kn7000/tools/program_rhythm.py); its name string "Technics Rhythms" is also at 0x4852BC20
