@@ -19,10 +19,14 @@ s, n = re.subn(rb"\t\.short\tHDAE5000_AcLanguageText1Proc_Msg064 - [^\n]*\n", b"
 assert n == 1
 s, n = re.subn(rb"\t\.short\tHDAE5000_AcLanguageText1Proc_NoMessage - [^\n]*; message 63\n", b"", s)
 assert n == 1
-s = s.replace(b"; HDAE5000_LangText_CaseTable (77 x u16)", b"; HDAE5000_LangText_CaseTable (75 x u16)")
-s = s.replace(b"; out of range, share the _NoMessage case.  v2.01i has no messages 65-67\n"
-              b"; (v2.06i's table has 80 entries: 1-67 and 200-212).",
-              b"; out of range, share the _NoMessage case.  v1.x's table covers messages 1-62 and\n"
-              b"; 200-212 (v2.01i 1-64, v2.06i 1-67; message 63 is a _NoMessage entry in v2.x).")
+s, n = re.subn(rb"; HDAE5000_LangText_CaseTable \(77 x u16\):(?:[^\n]*\n)*?;\n(?=HDAE5000_LangText_CaseTable:)",
+               b"; HDAE5000_LangText_CaseTable (75 x u16): the message switch of\n"
+               b"; HDAE5000_AcLanguageText1Proc.  Entry i serves message i+1 (i <= 0x3d) or\n"
+               b"; i+0x8a (0x3e <= i <= 0x4a, the `sub wa,0x89` range); each value is an offset\n"
+               b"; from HDAE5000_AcLanguageText1Proc_Msg001, the first case, and the reader\n"
+               b"; jumps there (`jp T,XIX+WA`).  Messages 204 and 205, and every number out of\n"
+               b"; range, share the _NoMessage case.  v1.15i covers messages 1-62 and 200-212\n"
+               b"; (v2.01i 1-64, v2.06i 1-67, message 63 a _NoMessage entry in both).\n;\n", s)
+assert n == 1
 write(f, s)
 print("ok")

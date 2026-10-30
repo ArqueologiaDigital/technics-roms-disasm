@@ -3563,12 +3563,12 @@ HDAE5000_LangMsg_NoMessage:
 	.balign 2, 0x00					; pad after "No Message"
 ;
 ; HDAE5000_LangText_CaseTable (75 x u16): the message switch of
-; HDAE5000_AcLanguageText1Proc.  Entry i serves message i+1 (i <= 0x3f) or
-; i+0x88 (0x40 <= i <= 0x4c, the `sub wa,0x87` range); each value is an offset
+; HDAE5000_AcLanguageText1Proc.  Entry i serves message i+1 (i <= 0x3d) or
+; i+0x8a (0x3e <= i <= 0x4a, the `sub wa,0x89` range); each value is an offset
 ; from HDAE5000_AcLanguageText1Proc_Msg001, the first case, and the reader
-; jumps there (`jp T,XIX+WA`).  Messages 63, 204 and 205, and every number
-; out of range, share the _NoMessage case.  v1.x's table covers messages 1-62 and
-; 200-212 (v2.01i 1-64, v2.06i 1-67; message 63 is a _NoMessage entry in v2.x).
+; jumps there (`jp T,XIX+WA`).  Messages 204 and 205, and every number out of
+; range, share the _NoMessage case.  v1.15i covers messages 1-62 and 200-212
+; (v2.01i 1-64, v2.06i 1-67, message 63 a _NoMessage entry in both).
 ;
 HDAE5000_LangText_CaseTable:
 	.short	HDAE5000_AcLanguageText1Proc_Msg001 - HDAE5000_AcLanguageText1Proc_Msg001	; message 1
