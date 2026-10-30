@@ -43748,19 +43748,19 @@ loc_4C015B75:
     mov     0x0000b014, d0
     bra     loc_4C015BBF
 loc_4C015B83:
-    mov     Str_empty_1415, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_157, a0
     mov     0x0000b024, d0
     bra     loc_4C015BBF
 loc_4C015B91:
-    mov     Str_4_40, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_159, a0
     mov     0x0000b034, d0
     bra     loc_4C015BBF
 loc_4C015B9F:
-    mov     Str_D_22, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_161, a0
     mov     0x0000b044, d0
     bra     loc_4C015BBF
 loc_4C015BAD:
-    mov     Str_T_11, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_164, a0
     mov     0x0000b054, d0
     bra     loc_4C015BBF
 loc_4C015BBB:
@@ -44075,19 +44075,19 @@ loc_4C015DE6:
     mov     0x0000b015, d0
     bra     loc_4C015E30
 loc_4C015DF4:
-    mov     Str_empty_1414, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_22, a0
     mov     0x0000b025, d0
     bra     loc_4C015E30
 loc_4C015E02:
-    mov     Str_5_34, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_23, a0
     mov     0x0000b035, d0
     bra     loc_4C015E30
 loc_4C015E10:
-    mov     Str_E_17, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_24, a0
     mov     0x0000b045, d0
     bra     loc_4C015E30
 loc_4C015E1E:
-    mov     Str_U_7, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_25, a0
     mov     0x0000b055, d0
     bra     loc_4C015E30
 loc_4C015E2C:
@@ -45576,7 +45576,7 @@ func_4C016AC9_entry:
     mov     d0, (0x14, sp)
     add     0xb0005b, d3
     mov     d3, d0
-    mov     Str_empty_1412, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_280, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d2
 loc_4C016B40:
@@ -45636,7 +45636,7 @@ func_4C016B44_entry:
     add     0xb0005b, d3
     mov     d2, d1
     mov     d3, d0
-    mov     Str_empty_1412, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_280, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d2
 loc_4C016BC1:
@@ -45847,7 +45847,7 @@ loc_4C016D2D:
     movbu   (0x25, sp), d2
     movbu   (0x25, sp), d3
     mov     a2, (0x14, sp)
-    mov     Str_D_22, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_161, a0
     mov     a3, d0
     and     0xff000000, d0
     add     0xb044, d0
@@ -45897,7 +45897,7 @@ loc_4C016DD0:
     movbu   (0x25, sp), d3
     movbu   (0x25, sp), d1
     mov     a2, (0x14, sp)
-    mov     Str_T_11, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_164, a0
     mov     a3, d0
     and     0xff000000, d0
     add     0xb054, d0
@@ -46226,7 +46226,7 @@ loc_4C0170DE:
     ret     [d2,d3,a2,a3], 0x38
 loc_4C0170F1:
     mov     (0x1c, sp), d0
-    mov     Str_empty_1413, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_160, a0
     mov     d0, (0x14, sp)
     mov     (0x44, sp), d0
     mov     (0x48, sp), d1
@@ -46300,7 +46300,7 @@ loc_4C01718C:
     and     0xff000000, d3
     mov     d0, (0x14, sp)
     mov     (0x48, sp), d1
-    mov     Str_empty_1413, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_160, a0
     mov     0x0000b040, d0
     add     d3, d0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
@@ -46344,7 +46344,7 @@ loc_4C0171B5:
     add     d1, d2
     mov     d2, d1
     mov     d3, d0
-    mov     Str_D_22, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_161, a0
     call    func_4C017668_entry, [d2,d3,a2,a3], 0x34
     jmp     loc_4C0173B3
 loc_4C017223:
@@ -46422,7 +46422,7 @@ loc_4C01729E:
     ret     [d2,d3,a2,a3], 0x38
 loc_4C0172B1:
     mov     (0x1c, sp), d0
-    mov     Str_P_28, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_163, a0
     mov     d0, (0x14, sp)
     mov     (0x44, sp), d0
     mov     (0x48, sp), d1
@@ -46459,7 +46459,7 @@ loc_4C0172FD:
     and     0xff000000, d3
     mov     d0, (0x14, sp)
     mov     (0x48, sp), d1
-    mov     Str_P_28, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_163, a0
     mov     0x0000b050, d0
     add     d3, d0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
@@ -46500,7 +46500,7 @@ loc_4C017326:
     asl     16, d1
     add     d0, d1
     mov     d3, d0
-    mov     Str_T_11, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_164, a0
     call    func_4C017668_entry, [d2,d3,a2,a3], 0x34
     bra     loc_4C0173B3
 loc_4C01738E:
@@ -46986,7 +46986,7 @@ loc_4C0177A2:
 loc_4C0177C2:
     mov     d1, (0x20, sp)
     mov     d3, (0x14, sp)
-    mov     Str_0_30, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_124, a0
     mov     d2, d0
     call    func_4C017C24_entry, [d2,d3,a2,a3], 0x3c
     jmp     loc_4C017871
@@ -47106,22 +47106,22 @@ loc_4C0178B4:
     add     0xb014, d3
     bra     loc_4C017908
 loc_4C0178C4:
-    mov     Str_empty_1415, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_157, a0
     and     d2, d3
     add     0xb024, d3
     bra     loc_4C017908
 loc_4C0178D4:
-    mov     Str_4_40, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_159, a0
     and     d2, d3
     add     0xb034, d3
     bra     loc_4C017908
 loc_4C0178E4:
-    mov     Str_D_22, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_161, a0
     and     d2, d3
     add     0xb044, d3
     bra     loc_4C017908
 loc_4C0178F4:
-    mov     Str_T_11, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_164, a0
     and     d2, d3
     add     0xb054, d3
     bra     loc_4C017908
@@ -47905,7 +47905,7 @@ func_4C017EFE_entry:
     add     0x8040, d2
     clr     d0
     mov     d0, (0x18, sp)
-    mov     Str_empty_1416, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_127, a0
     mov     d2, d0
     mov     sp, a1
     add     0x18, a1
@@ -48868,22 +48868,22 @@ loc_4C0186CD:
     add     0xb015, d3
     bra     loc_4C018721
 loc_4C0186DD:
-    mov     Str_empty_1414, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_22, a0
     and     d2, d3
     add     0xb025, d3
     bra     loc_4C018721
 loc_4C0186ED:
-    mov     Str_5_34, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_23, a0
     and     d2, d3
     add     0xb035, d3
     bra     loc_4C018721
 loc_4C0186FD:
-    mov     Str_E_17, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_24, a0
     and     d2, d3
     add     0xb045, d3
     bra     loc_4C018721
 loc_4C01870D:
-    mov     Str_U_7, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_25, a0
     and     d2, d3
     add     0xb055, d3
     bra     loc_4C018721
@@ -50535,7 +50535,7 @@ loc_4C01951B:
     jmp     loc_4C019621
 loc_4C01951E:
     mov     d2, (0x14, sp)
-    mov     Str_l_p_2, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s12_36, a0
     mov     a2, d2
     and     0xf0000000, d2
     add     0x670206c, d2
@@ -50546,7 +50546,7 @@ loc_4C01951E:
     jmp     loc_4C019621
 loc_4C019541:
     mov     d2, (0x14, sp)
-    mov     Str_p_62, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s12_23, a0
     mov     a2, d2
     and     0xf0000000, d2
     add     0x6702015, d2
@@ -50557,7 +50557,7 @@ loc_4C019541:
     jmp     loc_4C019621
 loc_4C019564:
     mov     d2, (0x14, sp)
-    mov     Str_m_p_2, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s12_37, a0
     mov     a2, d2
     and     0xf0000000, d2
     add     0x670206d, d2
@@ -50574,7 +50574,7 @@ loc_4C019587:
     add     0x6702014, d2
     add     0x100, d1
     mov     d2, d0
-    mov     Str_p_63, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s12_22, a0
     call    func_4C019F19_entry, [d2,d3,a2,a3], 0x34
     mov     d0, d3
     bra     loc_4C019621
@@ -50586,13 +50586,13 @@ loc_4C0195AD:
     add     0x6702015, d2
     add     0x100, d1
     mov     d2, d0
-    mov     Str_p_62, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s12_23, a0
     call    func_4C01A00B_entry, [d2,d3,a2], 0x1c
     mov     d0, d3
     bra     loc_4C019621
 loc_4C0195D3:
     mov     d2, (0x14, sp)
-    mov     Str_p_63, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s12_22, a0
     mov     a2, d2
     and     0xf0000000, d2
     add     0x6702014, d2
@@ -51457,7 +51457,7 @@ loc_4C019CA8:
     mov     (0x20, sp), d0
     asl     24, d1
     add     d2, d1
-    mov     Str_empty_1408, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_269, a0
     call    func_4C01613F_entry, [d2,d3,a2,a3], 0x38
     mov     d0, (0x18, sp)
 loc_4C019D0E:
@@ -51567,28 +51567,28 @@ loc_4C019DC4:
     add     a3, d2
     bra     loc_4C019E40
 loc_4C019DDC:
-    mov     Str_empty_1415, a2
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_157, a2
     and     0xff000000, d2
     mov     d2, a3
     mov     0x0000b024, d2
     add     a3, d2
     bra     loc_4C019E40
 loc_4C019DF4:
-    mov     Str_4_40, a2
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_159, a2
     and     0xff000000, d2
     mov     d2, a3
     mov     0x0000b034, d2
     add     a3, d2
     bra     loc_4C019E40
 loc_4C019E0C:
-    mov     Str_D_22, a2
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_161, a2
     and     0xff000000, d2
     mov     d2, a3
     mov     0x0000b044, d2
     add     a3, d2
     bra     loc_4C019E40
 loc_4C019E24:
-    mov     Str_T_11, a2
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_164, a2
     and     0xff000000, d2
     mov     d2, a3
     mov     0x0000b054, d2
@@ -51676,7 +51676,7 @@ loc_4C019ECE:
 loc_4C019EE2:
     mov     d1, (0x28, sp)
     mov     (0x1c, sp), d0
-    mov     Str_0_30, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_124, a0
     mov     d0, (0x14, sp)
     mov     a3, d0
     call    func_4C017C24_entry, [d2,d3,a2,a3], 0x3c
@@ -52350,7 +52350,7 @@ loc_4C01A3F3:
     mov     d0, (0x14, sp)
     add     d2, d3
     mov     d3, d0
-    mov     Str_0_30, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_124, a0
     mov     1, d1
     call    func_4C017C24_entry, [d2,d3,a2,a3], 0x3c
     bra     loc_4C01A439
@@ -52360,7 +52360,7 @@ loc_4C01A420:
     mov     d0, (0x14, sp)
     add     d2, d3
     mov     d3, d0
-    mov     Str_0_30, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_124, a0
     clr     d1
     call    func_4C017C24_entry, [d2,d3,a2,a3], 0x3c
 loc_4C01A439:
@@ -53867,7 +53867,7 @@ func_4C01B00C_entry:
     add     0xb0005b, d3
     mov     d2, d1
     mov     d3, d0
-    mov     Str_empty_1412, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_280, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d2
 loc_4C01B088:
@@ -53928,7 +53928,7 @@ func_4C01B08C_entry:
     add     0xb0005b, d3
     mov     d2, d1
     mov     d3, d0
-    mov     Str_empty_1412, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_280, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, d2
 loc_4C01B10A:
@@ -54010,7 +54010,7 @@ func_4C01B177_entry:
     add     0x8040, d2
     clr     d0
     mov     d0, (0x1c, sp)
-    mov     Str_empty_1416, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_127, a0
     mov     d2, d0
     mov     sp, a1
     add     0x1c, a1
@@ -56564,7 +56564,7 @@ loc_4C01C578:
     bne     loc_4C01C5BF
 loc_4C01C5AD:
     mov     a3, (0x14, sp)
-    mov     Str_empty_1410, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_284, a0
     mov     (0x24, sp), d0
     mov     d3, d1
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
@@ -56682,7 +56682,7 @@ loc_4C01C67B:
     bne     loc_4C01C6C2
 loc_4C01C6B0:
     mov     a3, (0x14, sp)
-    mov     Str_empty_1412, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_280, a0
     mov     (0x1c, sp), d0
     mov     d3, d1
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
@@ -56743,7 +56743,7 @@ loc_4C01C730:
     mov     d3, d1
     mov     d0, (0x14, sp)
     mov     (0x24, sp), d0
-    mov     Str_empty_1411, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_282, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, (0x20, sp)
 loc_4C01C744:
@@ -56802,7 +56802,7 @@ loc_4C01C7B2:
     mov     d3, d1
     mov     d0, (0x14, sp)
     mov     (0x24, sp), d0
-    mov     Str_J_8, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_274, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, (0x20, sp)
 loc_4C01C7C6:
@@ -56861,7 +56861,7 @@ loc_4C01C834:
     mov     d3, d1
     mov     d0, (0x14, sp)
     mov     (0x1c, sp), d0
-    mov     Str_G_21, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_271, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, (0x20, sp)
 loc_4C01C848:
@@ -57036,7 +57036,7 @@ loc_4C01C985:
     bne     loc_4C01C9CC
 loc_4C01C9BA:
     mov     a3, (0x14, sp)
-    mov     Str_I_9, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_273, a0
     mov     (0x28, sp), d0
     mov     d3, d1
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
@@ -57097,7 +57097,7 @@ loc_4C01CA3A:
     mov     d3, d1
     mov     d0, (0x14, sp)
     mov     (0x28, sp), d0
-    mov     Str_H_13, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_272, a0
     call    func_4C01603B_entry, [d2,d3,a2,a3], 0x30
     mov     d0, (0x20, sp)
 loc_4C01CA4E:
@@ -57457,7 +57457,7 @@ loc_4C01CD6D:
 loc_4C01CD92:
     clr     d0
     mov     d0, (0x14, sp)
-    mov     Str_2_44, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_13, a0
     and     0xf0000000, d2
     add     0x8032, d2
     clr     d1
@@ -57467,7 +57467,7 @@ loc_4C01CD92:
 loc_4C01CDB0:
     clr     d0
     mov     d0, (0x14, sp)
-    mov     Str_1_41, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_12, a0
     and     0xf0000000, d2
     add     0x8031, d2
     clr     d1
@@ -57655,7 +57655,7 @@ loc_4C01CF72:
     add     0x8040, d2
     clr     d0
     mov     d0, (0x1c, sp)
-    mov     Str_empty_1416, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_127, a0
     mov     d2, d0
     mov     sp, a1
     add     0x1c, a1
@@ -57684,7 +57684,7 @@ loc_4C01CF9D:
     add     0x8040, d2
     clr     d0
     mov     d0, (0x1c, sp)
-    mov     Str_empty_1416, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_127, a0
     mov     d2, d0
     mov     sp, a1
     add     0x1c, a1
@@ -57736,28 +57736,28 @@ loc_4C01D018:
     call    func_4C018286_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x14, sp)
-    mov     Str_empty_1408, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_269, a0
     mov     0x07b00040, d0
     add     d2, d0
     mov     d3, d1
     call    func_4C01613F_entry, [d2,d3,a2,a3], 0x38
     clr     d0
     mov     d0, (0x14, sp)
-    mov     Str_A_42, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_s16_270, a0
     mov     0x07b00041, d0
     add     d2, d0
     mov     d3, d1
     call    func_4C01613F_entry, [d2,d3,a2,a3], 0x38
     clr     d0
     mov     d0, (0x14, sp)
-    mov     Str_B_23, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_56, a0
     mov     0x07b00042, d0
     add     d2, d0
     mov     d3, d1
     call    func_4C018286_entry, [d2,d3,a2,a3], 0x2c
     clr     d0
     mov     d0, (0x14, sp)
-    mov     Str_C_39, a0
+    mov     ResourceIdTrieNode_48587CC4_p0_57, a0
     mov     0x07b00043, d0
     add     d2, d0
     mov     d3, d1

@@ -3947,7 +3947,7 @@
 	.ascii	\x0
 .endm
 
-# REC_ResourceIdTrieNode_48588F80_p0: 20-byte records (ResourceIdTrieNode_48588F80_p0, 42 records); fields, and what reads them:
+# REC_ResourceIdTrieNode_48588F80_p0: 20-byte records (ResourceIdTrieNode_48588F80_p0, 63 records); fields, and what reads them:
 #   +0   f0           u32            func_4C015D95 0x4C015D95 `mov (a0), d0`; func_4C0185A5 0x4C0185A5 `mov (a2), d3` (+7)
 #   +4   f4           s16            GetM3Em 0x4C014943 `movhu (4, a0), d1`; GetM3Sqf 0x4C014984 `movhu (4, a0), d1` (+7)
 #   +6   f6           s16            func_4C015602 0x4C015602 `movhu (6, a0), d1`; func_4C015C45 0x4C015C45 `movhu (6, a0), d1` (+7)
@@ -3975,7 +3975,7 @@
 	.byte	\f19
 .endm
 
-# REC_ResourceIdTrieNode_48588F80_p0_s16: 16-byte records (ResourceIdTrieNode_48588F80_p0_s16, 135 records); fields, and what reads them:
+# REC_ResourceIdTrieNode_48588F80_p0_s16: 16-byte records (ResourceIdTrieNode_48588F80_p0_s16, 291 records); fields, and what reads them:
 #   +0   f0           u32            func_4C015D95 0x4C015D95 `mov (a0), d0`; func_4C0185A5 0x4C0185A5 `mov (a2), d3` (+7)
 #   +4   f4           s16            GetM3Em 0x4C014943 `movhu (4, a0), d1`; GetM3Sqf 0x4C014984 `movhu (4, a0), d1` (+7)
 #   +6   f6           s16            func_4C015602 0x4C015602 `movhu (6, a0), d1`; func_4C015C45 0x4C015C45 `movhu (6, a0), d1` (+7)
@@ -3997,7 +3997,7 @@
 	.byte	\f15
 .endm
 
-# REC_ResourceIdTrieNode_48588F80_p0_s12: 12-byte records (ResourceIdTrieNode_48588F80_p0_s12, 18 records); fields, and what reads them:
+# REC_ResourceIdTrieNode_48588F80_p0_s12: 12-byte records (ResourceIdTrieNode_48588F80_p0_s12, 55 records); fields, and what reads them:
 #   +0   f0           u32            func_4C015D95 0x4C015D95 `mov (a0), d0`; func_4C0185A5 0x4C0185A5 `mov (a2), d3` (+7)
 #   +4   f4           s16            GetM3Em 0x4C014943 `movhu (4, a0), d1`; GetM3Sqf 0x4C014984 `movhu (4, a0), d1` (+7)
 #   +6   f6           s16            func_4C015602 0x4C015602 `movhu (6, a0), d1`; func_4C015C45 0x4C015C45 `movhu (6, a0), d1` (+7)
@@ -4011,7 +4011,7 @@
 	.word	\f10
 .endm
 
-# REC_ResourceIdTrieNode_48588F80_p0_s8: 8-byte records (ResourceIdTrieNode_48588F80_p0_s8, 29 records); fields, and what reads them:
+# REC_ResourceIdTrieNode_48588F80_p0_s8: 8-byte records (ResourceIdTrieNode_48588F80_p0_s8, 56 records); fields, and what reads them:
 #   +0   f0           u32            func_4C015D95 0x4C015D95 `mov (a0), d0`; func_4C0185A5 0x4C0185A5 `mov (a2), d3` (+7)
 #   +4   f4           s16            GetM3Em 0x4C014943 `movhu (4, a0), d1`; GetM3Sqf 0x4C014984 `movhu (4, a0), d1` (+7)
 #   +6   f6           s16            func_4C015602 0x4C015602 `movhu (6, a0), d1`; func_4C015C45 0x4C015C45 `movhu (6, a0), d1` (+7)
@@ -4227,6 +4227,26 @@
 	.ascii	\x0
 .endm
 
+# REC_SndRecTriFieldGet2_Table_2_p0: 32-byte records (SndRecTriFieldGet2_Table_2_p0, 601 records); fields, and what reads them:
+#   +0   x0           u8[18]         no reader seen
+#   +18  f18          u16            func_48412145 0x48412145 `movhu (0x12, a0), d0`
+#   +20  f20          u16            SndRecCountGet 0x48411E80 `movhu (0x14, a0), d0`; func_48412DB6 0x48412DB6 `movhu (0x14, a0), d0`
+#   +22  x22          u8[2]          no reader seen
+#   +24  p24          ptr            func_48412274 0x48412274 `mov (0x18, a0), a0`; func_48412274 0x48412274 `mov (0x18, a0), a1`
+#   +28  f28          s8             func_484129D5 0x484129D5 `movbu (0x1c, a0), d1`
+#   +29  f29          s8             func_484129D5 0x484129D5 `movbu (0x1d, a0), d0`
+#   +30  x30          u8[2]          no reader seen
+.macro REC_SndRecTriFieldGet2_Table_2_p0 x0, f18=0, f20=0, x22, p24=0, f28=0, f29=0, x30
+	.ascii	\x0
+	.word	\f18
+	.word	\f20
+	.ascii	\x22
+	.long	\p24
+	.byte	\f28
+	.byte	\f29
+	.ascii	\x30
+.endm
+
 # REC_func_48411FEA_Table_2_p0_p4: 32-byte records (func_48411FEA_Table_2_p0_p4, 91 records); fields, and what reads them:
 #   +0   x0           u8[32]         no reader seen
 .macro REC_func_48411FEA_Table_2_p0_p4 x0
@@ -4389,7 +4409,21 @@
 	.byte	\f0
 .endm
 
-# REC_func_484C01AF_Result: 18-byte records (func_484C01AF_Result, 164 records); fields, and what reads them:
+# REC_func_484ADF86_Result: 8-byte records (func_484ADF86_Result, 42 records); fields, and what reads them:
+#   +0   f0           u32            PanelBtnActType3 0x484ADDBD `mov (a2), d0`
+#   +4   f4           u8             PanelBtnActType3 0x484ADDBD `movbu (4, a2), d0`
+#   +5   f5           u8             PanelBtnActType3 0x484ADDBD `movbu (5, a2), d0`; PanelBtnActType3 0x484ADDBD `movbu (5, a2), d1` (+1)
+#   +6   f6           u8             PanelBtnActType3 0x484ADDBD `movbu (a0), d0`
+#   +7   x7           u8[1]          no reader seen
+.macro REC_func_484ADF86_Result f0=0, f4=0, f5=0, f6=0, x7
+	.long	\f0
+	.byte	\f4
+	.byte	\f5
+	.byte	\f6
+	.ascii	\x7
+.endm
+
+# REC_func_484C01AF_Result: 18-byte records (func_484C01AF_Result, 213 records); fields, and what reads them:
 #   +0   f0           u32            func_484BA3F2 0x484BA3F2 `mov (a0), d1`; func_484BA530 0x484BA530 `mov (a0), d1` (+50)
 #   +4   f4           s16            func_484B9EB4 0x484B9EB4 `movhu (4, a0), d1`; func_484B9F3B 0x484B9F3B `movhu (4, a0), d1`
 #   +6   f6           s16            func_484B9F3B 0x484B9F3B `movhu (6, a0), d1`; func_484BA219 0x484BA219 `movhu (6, a0), d1` (+4)
@@ -4725,7 +4759,7 @@
 	.long	\p8
 .endm
 
-# REC_StyleGenreTable_p4_p4: 8-byte records (StyleGenreTable_p4_p4, 8 records); fields, and what reads them:
+# REC_StyleGenreTable_p4_p4: 8-byte records (StyleGenreTable_p4_p4, 10 records); fields, and what reads them:
 #   +0   f0           u16            func_4847B629 0x4847B629 `movhu (a0), d0`; func_4847BBF7 0x4847BBF7 `movhu (a0), d0` (+4)
 #   +2   x2           u8[4]          no reader seen
 #   +6   f6           u16            func_4847C4AE 0x4847C4AE `movhu (6, a0), d0`
@@ -4825,7 +4859,7 @@
 	.ascii	\x8
 .endm
 
-# MusicStylistPanelData: 160-byte records (StyleRecordTable_p0, 1037 records); fields, and what reads them:
+# MusicStylistPanelData: 160-byte records (StyleRecordTable_p0, 1080 records); fields, and what reads them:
 #   +0   x0           u8[78]         no reader seen
 #   +78  f78          u8             func_4C02AD3C 0x4C02AD3C `movbu (a2), d0`
 #   +79  x79          u8[38]         no reader seen
