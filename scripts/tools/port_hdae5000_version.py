@@ -1595,9 +1595,50 @@ def find_classtab(R):
 
 
 def cmd_uitables(ver, tag="v2.01i"):
-    """The GUI of the target tree, from its ROM: scripts/converters/hdae5000_ui_tree.py."""
+    """The GUI of the target tree, from its ROM: scripts/converters/hdae5000_ui_tree.py.
+
+    The converter reads table and string addresses from the tree's labels.  While the tree
+    is not yet byte-identical those labels are not where the target has them, so this pass
+    hands it every label's TARGET address as the alignment places it (Ctx.bmap: a label in
+    an identical block, or at the first byte of a hunk), plus the build's absolute symbols."""
+    import json
+    bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
+    ctx = Ctx(bld, ref, full)
+    sym = {n: b for b, n in ctx.bmap.items()}
+    # what the alignment cannot place yet, read from the ROM itself
+    pt, nt, _ = ui_tables_of(ref)
+    sym.setdefault("HDAE5000_UiObject_PtrTable", pt)
+    sym.setdefault("HDAE5000_UiObjectName_PtrTable", nt)
+    if "HDAE5000_ObjName_Table" not in sym and "HDAE5000_DataSegmentImage" in sym:
+        # the image opens with the ApFunction table (procedures in ROM, then NULL), and its
+        # parallel name table follows it
+        a = sym["HDAE5000_DataSegmentImage"]
+        while int.from_bytes(ref[a - BASE:a - BASE + 4], "little"):
+            a += 4
+        sym["HDAE5000_ObjName_Table"] = a + 4
+    nm = subprocess.run([BIN + "/llvm-nm", "--defined-only", os.path.join(bld_work(ver), "out.elf")],
+                        capture_output=True, text=True, check=True).stdout
+    # the function and object ids the old hdae5000_ui_tree.s defines are about to be
+    # regenerated from the target: only shared/event_codes.s's are kept
+    shared = set(m.decode() for m in re.findall(
+        rb"^\s*\.equ\s+(\w+)\s*,", open(os.path.join(ROOT, SRC_TREE, "shared", "event_codes.s"),
+                                       "rb").read(), re.M))
+    absy = {}
+    for l in nm.split("\n"):
+        p = l.split()
+        if len(p) == 3 and p[1] in "aA":
+            if p[2].startswith(("NAKA_APFUNC_", "NAKA_MAINFUNC_", "HDAE5000_OBJ_")) and p[2] not in shared:
+                continue
+            absy[p[2]] = int(p[0], 16)
+    out = os.path.join(SCRATCH, "port_hdae5000_%s_syms.json" % ver)
+    json.dump({"sym": sym, "abs": absy}, open(out, "w"))
+    print("%d labels placed in the %s image -> %s" % (len(sym), ver, out))
     conv = os.path.join(ROOT, "scripts", "converters", "hdae5000_ui_tree.py")
-    sys.exit(subprocess.call([sys.executable, conv, ver, "--write"], cwd=ROOT))
+    sys.exit(subprocess.call([sys.executable, conv, ver, "--write", "--syms", out], cwd=ROOT))
+
+
+def bld_work(ver):
+    return os.path.join(SCRATCH, "port_hdae5000_" + ver)
 
 
 def cmd_uitables_typed_records(ver, tag="v2.01i"):
