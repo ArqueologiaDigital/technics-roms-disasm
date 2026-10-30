@@ -46006,7 +46006,7 @@ loc_4853C5E6:
     exth    d0
     add     -1, d0
     movhu   d0, (0x92, sp)
-    mov     data_48677884, d0
+    mov     DrawString_Impl_Var, d0
     mov     d0, (0x10, sp)
     movhu   (0x50081432), d0
     exth    d0
@@ -46594,7 +46594,7 @@ loc_4853CD37:
     exth    d0
     add     -2, d0
     movhu   d0, (0x4a, sp)
-    mov     data_4867789C, d0
+    mov     DrawString_Impl_Var_2, d0
     mov     d0, (0x10, sp)
     movhu   (0x5008146e), d0
     mov     sp, a1
@@ -47156,7 +47156,7 @@ loc_4853D1EA:
     exth    d0
     add     -1, d0
     movhu   d0, (0x4a, sp)
-    mov     data_486778AC, d0
+    mov     DrawString_Impl_Var_3, d0
     mov     d0, (0x10, sp)
     movhu   (0x5008146e), d0
     exth    d0

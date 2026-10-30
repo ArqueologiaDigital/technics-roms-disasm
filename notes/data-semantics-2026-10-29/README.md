@@ -200,6 +200,14 @@ bytes declared unread turned out to be record parts. Every gate passed on main a
 Left open: the reader walk does not follow an argument into the callee, so the reader-row blocks keep the
 reader's widths rather than the callee's layout.
 
+Resolved by lane callee-walk (2026-10-30, `kn7000/notes/callee-walk/README.md`): the walk follows register
+and stack arguments (a caller's (N, sp), N >= 16, is the callee's (N + frame, sp)) into the routine and the
+routines it hands them on to, and the siblings' walk also follows address joins, return sets and jump-table
+cases; a block a routine is handed is a `REC_<routine>_Arg<slot>` record of what it reads (micro-ITRON's
+`T_CTSK` for cre_tsk).  Measured against main 2a7b45be5, address-only reader-row pieces fell KN7000 941
+50 -> 39, KN6000 339 -> 151, KN6500 345 -> 156, KN2400 380 -> 123, HD-SX3 30 -> 25; each one left says why in
+its header (the routine stores the pointer, a library routine, or the address reaches no call the walk follows).
+
 Resolved by lane code-island (2026-10-30, `kn7000/notes/code-island/README.md`): KN7000 `func_487B8E34` and
 the opaque pieces after it were the MILK kernel's flash tail, 1,113 bytes of code between the data region
 and the library image (KernelInit, KernelWaitRelease, whose call entry `func_487B8E34` was, three `retf`

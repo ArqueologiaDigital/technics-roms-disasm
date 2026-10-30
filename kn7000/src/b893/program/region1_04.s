@@ -10499,7 +10499,7 @@ loc_48488569:
     mov     (0x2c, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    mov     data_485D5424, a0
+    mov     Draw2BpFile_ArgA0_0, a0
     mov     INSTALL_SCRATCH, a1
     call    Draw2BpFile_entry, [a2,a3], 0x18
     clr     d0
@@ -25332,7 +25332,7 @@ loc_484918CE:
     mov     MT_GetBitmapData, d1
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
 loc_484918E4:
-    mov     data_485EEB6C, d1
+    mov     DrawBitmapSPFast16_Impl_Table_2, d1
     mov     d1, (0x18, sp)
     mov     d0, a1
     exth    d3
@@ -33238,7 +33238,7 @@ loc_4849697A:
 loc_4849697D:
     cmp     0, d2
     beq     loc_484969A0
-    mov     data_485F8E8C, d0
+    mov     DrawBitmapSPFast4_Impl_Table, d0
     mov     d0, (0x18, sp)
     mov     0x20, d0
     mov     d0, (0x1c, sp)
@@ -33284,7 +33284,7 @@ loc_484969D9:
 loc_484969E9:
     cmp     0, d2
     beq     loc_48496A0B
-    mov     data_485F8E8C, d0
+    mov     DrawBitmapSPFast4_Impl_Table, d0
     mov     d0, (0x18, sp)
     mov     0x20, d0
     mov     d0, (0x1c, sp)

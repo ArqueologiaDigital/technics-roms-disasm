@@ -3299,7 +3299,7 @@ loc_48472B06:
     ret     [a2], 0x14
 loc_48472B19:
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table, a1
+    mov     func_48472AEF_Table_4+38, a1
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a1), d0
     mov     func_48472AEF_Var, a0
@@ -3353,7 +3353,7 @@ loc_48472B90:
     ret     [a2], 0x14
 loc_48472BAA:
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table, a0
+    mov     func_48472AEF_Table_4+38, a0
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a0), d0
     mov     func_48472AEF_Var, a1
@@ -3392,7 +3392,7 @@ loc_48472C0C:
     bne     loc_48472C1F
     ret     [a2], 0x14
 loc_48472C1F:
-    movbu   (func_48472AEF_Table), d1
+    movbu   (func_48472AEF_Table_4+38), d1
     movbu   (func_48472AEF_Var), d0
     extb    d1
     extb    d0
@@ -3401,7 +3401,7 @@ loc_48472C1F:
     ret     [a2], 0x14
 loc_48472C33:
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table, a1
+    mov     func_48472AEF_Table_4+38, a1
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a1), d0
     mov     func_48472AEF_Var, a0
@@ -3436,7 +3436,7 @@ loc_48472C94:
     mov     func_48472AEF_Table_4, a0
     call    func_48472D01_entry, [d2,d3,a2,a3], 0x10
     movhu   (func_48472AEF_Table_4), d0
-    mov     func_48472AEF_Table, a0
+    mov     func_48472AEF_Table_4+38, a0
     movhu   d0, (func_48472AEF_Table_2)
     movbu   (a0), d0
     mov     func_48472AEF_Var, a1
@@ -15045,7 +15045,7 @@ inflate_trees_dynamic:
 inflate_trees_dynamic_entry:
     mov     d1, (0x44, sp)
     mov     d0, d2
-    mov     data_5000102C, d0
+    mov     huft_build_Table_3, d0
     mov     d0, (0x18, sp)
     mov     (0x54, sp), d0
     mov     a0, d3
@@ -15080,7 +15080,7 @@ loc_48477E38:
     mov     d1, d0
     bra     loc_48477E9A
 loc_48477E3B:
-    mov     data_50001120, d0
+    mov     huft_build_Table_4, d0
     mov     d0, (0x18, sp)
     mov     (0x58, sp), a3
     asl2    d2
@@ -15225,7 +15225,7 @@ loc_48477F4D:
     mov     d0, (0x5004e3e8)
     mov     sp, a2
     add     0x64, a2
-    mov     data_5000102C, d0
+    mov     huft_build_Table_3, d0
     mov     d0, (0x18, sp)
     mov     0x5004e3f0, d0
     mov     d0, (0x1c, sp)
@@ -15247,7 +15247,7 @@ loc_48477F4D:
     cmp     a1, a0
     lcs
     mov     d0, (0x5004e3ec)
-    mov     data_50001120, d0
+    mov     huft_build_Table_4, d0
     mov     d0, (0x18, sp)
     mov     0x5004e3f4, d0
     mov     d0, (0x1c, sp)

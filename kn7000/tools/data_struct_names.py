@@ -34,6 +34,10 @@ NAMES = {
     # the alphabet index (func_4847C9A7 memcpys 1 byte of +0, func_4847C977 counts +4's 0xFFFF-ended list)
     "func_4847C9A7_Records": ("StyleLetter", {0: "letter", 4: "setups"}, "StyleAlphabetTable"),
     "StyleGenreTable_p4": ("GenreStyle", {0: "name", 4: "setups"}),
+    # (lane callee-walk) what callers hand cre_tsk in a0 (the kernel's micro-ITRON cre_tsk 0x4C03D0C8;
+    # kn7000.sym: a0 = &T_CTSK {exinf, tskatr, task, itskpri (16-bit) at +0x0C, stksz at +0x10});
+    # the reads are func_4C03D154's, which cre_tsk hands it to: +0 u32, +8 the entry, +0xC u16, +0x10 u32
+    "cre_tsk_ArgA0": ("T_CTSK", {0: "exinf", 4: "tskatr", 8: "task", 12: "itskpri", 16: "stksz"}),
 
     "TtMessage_Table": ("MessageBoxDef", {
         0: "kind",        # IvMessageProc 0x48489ED7 indexes IvMessageProc_Table[kind]; TtMessage maps 1/2/3 to title types

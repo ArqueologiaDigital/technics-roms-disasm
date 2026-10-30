@@ -165,9 +165,14 @@ PROFILES["sp7001plugin"] = dict(rom="baserom/kn7000_table_sp7001.rom", src="src/
 # (reader_rows), not a generic .incbin_range, in the program builds and the siblings
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
     PROFILES[_m]["reader_rows"] = True
+# lane callee-walk: a block whose address is passed to a routine is a record of what the routine reads
+# through that argument (data_readers.Reader(callee=): register and stack arguments, arg_layout)
+for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
+    PROFILES[_m]["readers_callee"] = True
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 TAIL = None                   # (CPU lo, hi) of gen_program_s.py's tail code, see configure()
+from data_readers import LIBC as DR_LIBC  # noqa: E402
 
 
 def configure(name):
@@ -323,6 +328,7 @@ class Gen:
         self.code_targets = set()     # code addresses the typed data names loc_<ADDR>
         self.host_ids, self.host_used = self.host_id_names(), set()
         self.readers_ext = bool(P.get("readers_ext"))   # tools/data_readers.py Reader(ext=)
+        self.readers_callee = bool(P.get("readers_callee"))   # Reader(callee=), lane callee-walk
 
     def host_id_names(self):
         """(a plug-in) {id: name} of the host firmware's titles, modes and Function /
@@ -1248,6 +1254,10 @@ class Gen:
             n = (e - o) // w
             if n < 1 or o % w:
                 continue
+            if self.in_arg_span(a, w * n):
+                # (callee) a field of a block a routine is handed: ptr_records(only_arg=True)
+                self._arg_deferred.append((o, o + w * n, w, signed))
+                continue
             vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=signed) for i in range(n)]
             kind = ("s" if signed else "u") + str(8 * w)
             # (ties broken by function and instruction: a set's order changes from run to run)
@@ -1577,26 +1587,162 @@ class Gen:
                 + [f"\tPM_PART_TAIL\t{hx(r[0x8F + 3 * j:0x92 + 3 * j])}\t# part {j}" for j in range(4)]
                 + ["\t.space\t5, 0xff"])
 
-    def ptr_records(self):
+    # (callee) a routine whose reads through an argument are those of a string or a block, not the
+    # fields of a record: the C library's, by name
+    LIB_ROUTINE = re.compile(r"(str|mem|sprintf|vsprintf|printf|Lib[A-Z])")
+
+    def arg_kinds(self):
+        """(`readers_callee` profiles, lane callee-walk) {("arg", F, slot): (targets, accesses, calls)}:
+        the fixed data addresses callers pass routine F in argument `slot` (a0 / a1 / d0 / d1, or
+        spN, the word at (N, sp) of the caller's frame), and what F reads through that argument
+        (tools/data_readers.py arg_layout: F's own loads and stores relative to it, and those of the
+        routines F hands it on to).  ptr_records() types each target as a record of that layout.
+        A slot whose layout says nothing about a record is left out, its reason in arg_skip."""
+        if hasattr(self, "_arg_kinds"):
+            return self._arg_kinds
+        self._arg_kinds, self.arg_skip = {}, {}
+        dr = getattr(self, "dr", None)
+        if not self.readers_callee or dr is None or not hasattr(dr, "arg_calls"):
+            return self._arg_kinds
+        for (F, r), cs in sorted(dr.arg_calls.items()):
+            ts = {c.key[1] for c in cs if c.key[0] == "abs" and self.in_data(c.key[1])}
+            if not ts:
+                continue
+            lay = [a for a in dr.arg_layout.get((F, r), ()) if a.off >= 0]
+            fixed = [a for a in lay if a.width and a.key == ("ptr", ("arg", F, r)) and a.inner != -1]
+            steps = dr.param_steps.get((F, r), set())
+            why = None
+            if self.LIB_ROUTINE.match(F):
+                why = "a library routine: what it reads is a string or a block, not fields"
+            elif not fixed:
+                why = (f"{F} reads nothing through it at a fixed offset"
+                       + (" (it hands it on, or stores it)" if lay else " (it stores it, or keeps it for later)"))
+            elif 1 in steps and all(a.width == 1 for a in fixed):
+                why = f"{F} reads it byte by byte in a loop (a string or a block)"
+            elif max(a.off + a.width for a in fixed) <= 1:
+                why = f"{F} reads only its first byte"
+            elif len({a.off for a in fixed}) == 1 and fixed[0].off == 0:
+                why = (f"{F} reads one field at +0 only (a scalar, or the first entry of an array it indexes"
+                       f" with a loop counter the walk takes as a constant)")
+            if why:
+                for t in ts:
+                    self.arg_skip.setdefault(t, []).append((F, r, why))
+                continue
+            self._arg_kinds[("arg", F, r)] = (ts, lay, cs)
+        return self._arg_kinds
+
+    def arg_evidence(self, fld):
+        """The block header's evidence for an ("arg", F, slot) kind: the routine, its address, the
+        slot and the calls that pass a target in it."""
+        _f, F, r = fld
+        a = self.dr.labels.get(F)
+        cs = self._arg_kinds[fld][2]
+        c0 = sorted(cs, key=lambda c: (c.cpu or 0, c.insn))[0]
+        more = len({(c.func, c.cpu, c.insn) for c in cs}) - 1
+        return (f"the layout {F}{f' 0x{a:08X}' if a is not None else ''} reads through its argument {r}"
+                f" (passed by {re.sub(r'_entry$', '', c0.func or '?')} 0x{c0.cpu or 0:08X}"
+                f" `{' '.join(c0.insn.split())}`" + (f", +{more} more calls" if more > 0 else "") + ")")
+
+    def arg_reserve(self):
+        """(callee) Before reader_tables() and variables(): the spans [target, target + the last field
+        the routine reads) of the blocks arg_kinds() will type.  A table or variable those passes would
+        make wholly inside one is a field of the record (the routine's read, carried into the caller by
+        data_readers.resolve_params), so they leave it to ptr_records(only_arg=True), and so is one that
+        starts in it and runs on past its end by no more than the span is long (a last field, and the
+        bytes after it up to the next label); a longer one is kept, and the record is then not made."""
+        import bisect
+        spans = []
+        for fld, (ts, lay, _cs) in self.arg_kinds().items():
+            need = max([a.off + a.width for a in lay if a.width and a.key == ("ptr", fld) and a.inner != -1] + [0])
+            for t in ts:
+                if need and self.free(t, need):
+                    spans.append((self.off(t), self.off(t) + need))
+        spans.sort()
+        self._arg_spans = spans
+        self._arg_deferred = []        # (start, end, width, signed) of the tables / variables left to a record
+        self._arg_span_starts = [s_ for s_, _e in spans]
+        self._arg_bisect = bisect
+
+    def in_arg_span(self, a, size):
+        """(callee) True when the size bytes at CPU address a start inside one arg_reserve() span and
+        end inside it, or past it by no more than its length (arg_reserve)."""
+        spans = getattr(self, "_arg_spans", None)
+        if not spans:
+            return False
+        o = self.off(a)
+        i = self._arg_bisect.bisect_right(self._arg_span_starts, o) - 1
+        while i >= 0 and spans[i][0] <= o:
+            s_, e_ = spans[i]
+            if o < e_ and o + size - e_ <= e_ - s_:
+                return True
+            i -= 1
+        return False
+
+    def indexed_tails(self):
+        """(callee) After the passes that type by readers: a pointed record whose kind the code also
+        reads a word of at a computed offset (`mov (d0, a0), a0`) and that the free words right after
+        it continue as addresses of this region (or 0): those words are the array the code indexes,
+        written `.long Label`.  (The callee walk finds fixed reads of such records' first words, so
+        their kind is no longer the "fields, then rows the code indexes" of ptr_records' tail: the
+        HD-SX3's names_978A31BC_p0, 13 string pointers of which the reads cover 7.)"""
+        import data_structs as DS
+        n = 0
+        for t, size, lab, g in getattr(self, "_indexed_records", ()):
+            o = self.off(t) + size
+            e = o
+            while o % 4 == 0 and e + 4 <= DATA_END and self.free(self.addr_of(e), 4):
+                v = int.from_bytes(self.rom[e:e + 4], "little")
+                if v and not self.in_data(v):
+                    break
+                e += 4
+            vals = [int.from_bytes(self.rom[k:k + 4], "little") for k in range(o, e, 4)]
+            while vals and vals[-1] == 0:
+                vals.pop()
+            if not any(vals):
+                continue
+            for v in vals:
+                if v:
+                    self.refs.add(v)
+            rd = DS.cite([a for _o, a in g.accs if a.inner == -1], 2)
+            a = self.addr_of(o)
+            self.add(a, 4 * len(vals), self.name_at(a, f"{lab}_Tail"), "pointer run",
+                     lambda gen, it, vals=vals, lab=lab, rd=rd: [
+                         f"{it.label}:\t# {len(vals)} pointers after {lab}: the array its kind's computed-offset"
+                         f" read indexes ({rd}) runs on past the fields the code reads at fixed offsets"
+                         f" [INFERENCE: every word 0 or an address of this region]"]
+                     + [f"\t.long\t{gen.ref(v)}" for v in vals])
+            n += 1
+        print(f"gen_data_s: {n} indexed record tails")
+
+    def ptr_records(self, only_arg=False):
         """Records a pointer leads to: for every pointer the code loads from a
         typed field or table entry and then reads through (data_readers' ("ptr",
         ("fld", K, off)) keys), the targets of that field are records whose fields
         are the offsets those reads use.  Targets reached through the same fields
         are one kind; a kind whose targets lie a constant distance apart takes it
         as the record size, otherwise a record ends after its last read field.
-        Nested pointers (a field of such a record) are followed the same way."""
+        Nested pointers (a field of such a record) are followed the same way.
+        only_arg (lane callee-walk, run after the reader-typed passes): the kinds are
+        arg_kinds()'s, the blocks a caller hands a routine, with what the routine reads
+        through that argument (and the records its pointer fields lead to)."""
         import bisect
         import data_structs as DS
         import data_struct_names as DN
         by_fld = collections.defaultdict(list)
-        for acc in self.dr.accesses:
+        for acc in (() if only_arg else self.dr.accesses):
             k = acc.key
             if k[0] == "ptr" and k[1][0] in ("fld", "tgt") and acc.off >= 0:
                 by_fld[k[1]].append(acc)
+        # (lane callee-walk) the blocks callers hand a routine, as records of what it reads through the
+        # argument; the records a pointer field of them leads to as well
+        for fld, (_ts, lay, _cs) in (self.arg_kinds().items() if only_arg else ()):
+            for acc in lay:
+                if acc.key[0] == "ptr" and acc.key[1][0] in ("fld", "arg"):
+                    by_fld[acc.key[1]].append(acc)
         # (data_struct_names.MODEL_POINTED) pointer fields the walk loses: a read of the target at
         # an offset the code computes, from the instruction the entry cites
         import data_readers as DR
-        for (lab, foff), (fn, cpu, insn, roff, rw, sg) in DN.pointed().items():
+        for (lab, foff), (fn, cpu, insn, roff, rw, sg) in (() if only_arg else DN.pointed().items()):
             for g in getattr(self, "struct_groups", []):
                 if g.label == lab:
                     fld = ("fld", ("rec", g.base, g.stride), foff)
@@ -1613,6 +1759,8 @@ class Gen:
                                       re.sub(r"_entry$", "", fn) + "_Selected" if fn else None)
         self.build_index()
         self._lmemo, self._tmemo = {}, {}
+        self._arg_fill = getattr(self, "_arg_fill", set())
+        self._indexed_records = getattr(self, "_indexed_records", [])
         targets = self.field_targets
         # kinds: fields whose targets overlap are one kind
         flds = [f for f in by_fld if targets(f)]
@@ -1684,6 +1832,19 @@ class Gen:
                 stride = min(room[t] for t in ts if room[t] >= need)
             # (readers_ext) records too short for the kind's size (a union whose variants hold fewer
             # fields: the resource-id trie's leaves) are a variant each, with the fields that fit
+            if only_arg and not tail and stride:
+                # (callee) two records of the kind a whole number of records apart with free bytes between:
+                # the records between are of the kind too [INFERENCE: an array the routine is handed
+                # elements of, some of them by no call the walk sees]
+                fill = []
+                for p_, q_ in zip(ts, ts[1:]):
+                    k_ = (q_ - p_) // stride
+                    if (q_ - p_) % stride == 0 and 2 <= k_ <= 8 and self.free(p_ + stride, q_ - p_ - stride):
+                        fill += [p_ + j * stride for j in range(1, k_)]
+                for t in fill:
+                    room[t] = stride
+                    self._arg_fill.add(t)
+                ts = sorted(set(ts) | set(fill))
             variants = [(stride, [t for t in ts if room[t] >= stride], "")]
             if self.readers_ext and not tail:
                 short = collections.defaultdict(list)
@@ -1692,10 +1853,11 @@ class Gen:
                         short[room[t]].append(t)
                 variants += [(r, short[r], f"_s{r}") for r in sorted(short, reverse=True)
                              if any(a.width and a.off + a.width <= r for a in fixed_accs)]
+            args_ = [f for f in fs if f[0] == "arg"]
             for stride, ts, vsuf in variants:
-                self._ptr_group(root, accs, stride, ts, tail, room, vsuf)
+                self._ptr_group(root, accs, stride, ts, tail, room, vsuf, args_)
 
-    def _ptr_group(self, root, accs, stride, ts, tail, room, vsuf=""):
+    def _ptr_group(self, root, accs, stride, ts, tail, room, vsuf="", args_=()):
         """One record kind of ptr_records: its macro, and an item per target."""
         import data_structs as DS
         import data_struct_names as DN
@@ -1704,6 +1866,11 @@ class Gen:
                 return
             g = DS.Group(ts[0], stride)
             g.tail = tail
+            # (callee) the routines whose reads through an argument give the layout
+            g.evidence = [self.arg_evidence(f) for f in args_[:2]] + (
+                [f"+{len(args_) - 2} more routines"] if len(args_) > 2 else [])
+            g.arg_of = {t: [f for f in args_ if t in self._arg_kinds[f][0]] for t in ts} if args_ else {}
+            g.arg_tail = {}
             g.accs = [(a.off, a) for a in accs if a.off < stride and (not vsuf or a.off + (a.width or 1) <= stride)]
             g.count = len(ts)
             g.fields = DS.layout(g, self, None, 0, offs=[self.off(t) for t in ts])
@@ -1729,7 +1896,24 @@ class Gen:
                 size = stride
                 if tail:
                     size = room[t] - (room[t] - stride) % tail[0]
+                elif args_:
+                    # (callee) a table or variable arg_reserve() left to this record that runs on past it
+                    # (to the next label): its bytes after the record are the record's tail, so they
+                    # stay typed
+                    o_ = self.off(t)
+                    run = [d for d in getattr(self, "_arg_deferred", ()) if o_ <= d[0] < o_ + stride < d[1]]
+                    if run:
+                        e_ = max(d[1] for d in run)
+                        if self.free(t + stride, e_ - o_ - stride) and not any(
+                                o_ + stride <= self.off(u) < e_ for u in ts if u != t):
+                            w_, sg_ = max(run, key=lambda d: d[1])[2:]
+                            if (e_ - o_ - stride) % w_ or (o_ + stride) % w_:
+                                w_, sg_ = 1, False
+                            size = e_ - o_
+                            g.arg_tail[t] = (w_, sg_)
                 self.add(t, size, lab, "pointed record", lambda gen, it, g=g: gen.render_pointed(it, g))
+                if not tail and any(a.inner == -1 and a.width == 4 for a in accs):
+                    self._indexed_records.append((t, size, lab, g))
 
     def _item_of(self, a):
         import bisect
@@ -1763,7 +1947,7 @@ class Gen:
                 out = {it.start + 4 * i + o for i in range(it.size // 4)}
             else:
                 out = {b + o}
-        elif K[0] == "ptr" and K[1][0] in ("fld", "tgt") and depth < 4:
+        elif K[0] == "ptr" and K[1][0] in ("fld", "tgt", "arg") and depth < 4:
             out = {t + o for t in self.field_targets(K[1], depth + 1)}
         self._lmemo[fld] = out
         return out
@@ -1772,6 +1956,8 @@ class Gen:
         """The data addresses the pointer field `fld` holds."""
         if fld[0] == "tgt":
             return {t for t in fld[1] if self.in_data(t)}
+        if fld[0] == "arg":
+            return set(self.arg_kinds().get(fld, ((),))[0])
         if fld not in self._tmemo:
             ts = set()
             for L in self.field_locs(fld, depth):
@@ -1787,6 +1973,8 @@ class Gen:
         if fld[0] == "tgt":
             nm = getattr(self, "_tgt_names", {}).get(fld)
             return nm or f"data_{min(fld[1]):08X}_Selected"
+        if fld[0] == "arg":
+            return f"{fld[1]}_Arg{fld[2][0].upper()}{fld[2][1:]}"
         K, o = fld[1], fld[2]
         if K[0] == "abs":
             it = self.item_containing(K[1] + o)
@@ -1802,6 +1990,27 @@ class Gen:
 
     def render_pointed(self, it, g):
         import data_structs as DS
+        args_ = getattr(g, "arg_of", {}).get(it.start)
+        if not args_ and it.start in getattr(self, "_arg_fill", ()):
+            return [f"{it.label}:\t# {g.macro} ({g.stride} bytes) [INFERENCE: between two records of the kind,"
+                    f" a whole number of records apart; no call the walk sees passes it]",
+                    DS.record_line(self, g, self.rom, self.off(it.start))]
+        if args_ and (not g.tail or it.size == g.stride):
+            # (callee) the block a routine is handed: which routine, in which argument, and who passes it
+            ev = "; ".join(self.arg_evidence(f) for f in args_[:2]) + (
+                f"; +{len(args_) - 2} more routines" if len(args_) > 2 else "")
+            out = [f"{it.label}:\t# {g.macro} ({g.stride} bytes): {ev}", DS.record_line(self, g, self.rom, self.off(it.start))]
+            if it.size > g.stride:
+                w, sg = g.arg_tail[it.start]
+                o = self.off(it.start) + g.stride
+                vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=sg)
+                        for i in range((it.size - g.stride) // w)]
+                kind = ("s" if sg else "u") + str(8 * w)
+                out.append(f"\t# then {len(vals)} x {kind} up to the next label, which no instruction is seen to read"
+                           f" (the table the field reads ran on into them)")
+                for i in range(0, len(vals), 16):
+                    out.append(f"\ttab_{kind}\t" + ", ".join(str(v) for v in vals[i:i + 16]) + f"\t# +{g.stride + w * i}")
+            return out
         if not g.tail or it.size == g.stride:
             return [f"{it.label}:\t# {g.macro} ({g.stride} bytes)", DS.record_line(self, g, self.rom, self.off(it.start))]
         w, signed, at = g.tail
@@ -1996,6 +2205,10 @@ class Gen:
             if n < 1:
                 continue
             signed = any(x.signed for x in xs if x.width == w)
+            if self.in_arg_span(a, w * n):
+                # (callee) a field of a block a routine is handed: ptr_records(only_arg=True)
+                self._arg_deferred.append((o, o + w * n, w, signed))
+                continue
             vals = [int.from_bytes(self.rom[o + w * i:o + w * i + w], "little", signed=signed) for i in range(n)]
             kind = ("s" if signed else "u") + str(8 * w)
             rd = sorted({(x.func, x.cpu, " ".join(x.insn.split())) for x in xs}, key=lambda r: (r[1] or 0, r[0] or "", r[2]))
@@ -3573,6 +3786,9 @@ class Gen:
             out = [f"\t# {n} bytes read by {'; '.join(rd[:3])}{more}; the read fields at their widths"
                    f" ({', '.join(kinds)}), {how} [INFERENCE: the fields no instruction is seen to read are"
                    f" not traced]"]
+        elif self.readers_callee:
+            out = [f"\t# {n} bytes the code takes the address of: {'; '.join(rd[:3])}{more}; {how}"
+                   f" ({', '.join(kinds)}); {self.arg_why(a, cites)}"]
         else:
             out = [f"\t# {n} bytes the code takes the address of: {'; '.join(rd[:3])}{more}; {how}"
                    f" ({', '.join(kinds)}) [INFERENCE: what the callee reads through the address is not traced]"]
@@ -3588,6 +3804,31 @@ class Gen:
             out.append(f"\t{mn}\t{vals}\t# +{elems[i][2] - a}")
             i = j
         return out
+
+    def arg_why(self, a, cites):
+        """(callee) Why a reader_rows() piece the code only takes the address of is not a record of
+        what a routine reads through it (data_readers.Reader(callee=), arg_kinds())."""
+        t = self.addr_of(a)
+        calls = sorted({(re.sub(r"_entry$", "", str(x.extra[0])), x.rw.split()[1]) for _q, x in cites
+                        if x.rw.startswith("arg") and x.extra and x.extra[0] != "via"})
+        why = []
+        for F, r in calls:
+            sk = [w for f_, r_, w in self.arg_skip.get(t, ()) if (f_, r_) == (F, r)]
+            if sk:
+                why.append(f"{F} ({r}): {sk[0]}")
+            elif ("arg", F, r) in self._arg_kinds:
+                why.append(f"{F} ({r}) reads fields of it, but the record would run into bytes another"
+                           f" item holds")
+            elif F.startswith("(") or not re.match(r"[A-Za-z_]", F):
+                why.append(f"an indirect call {F} ({r}): the routine is not known")
+            elif self.LIB_ROUTINE.match(F) or DR_LIBC.match(F):
+                why.append(f"{F} ({r}): a library routine: what it reads is a string or a block, not fields")
+            else:
+                why.append(f"{F} ({r}) reads nothing through it the walk sees")
+        if not why:
+            return ("the address is not seen reaching a call: it is kept in memory, met at a label from"
+                    " several paths, or returned [INFERENCE]")
+        return "the callee walk: " + "; ".join(why[:3]) + (f" (+{len(why) - 3} more)" if len(why) > 3 else "")
 
     def _gap_lines(self, a, b):
         d = self.rom[a:b]
@@ -3752,11 +3993,22 @@ class Gen:
             if P.get("string_arrays"):
                 self.string_arrays()
             self.text_runs()
+        if self.readers_callee:
+            self.arg_reserve()
         self.reader_tables()
         if P.get("structs"):
             self.variables()
             if P.get("readers_ext"):
                 self.pointer_runs()
+        if self.readers_callee:
+            # (lane callee-walk) the blocks a caller hands a routine, typed by what it reads through them;
+            # then what a span arg_reserve() kept for a record that did not fit, as before
+            self.ptr_records(only_arg=True)
+            self.indexed_tails()
+            self._arg_spans = []
+            self.reader_tables()
+            if P.get("structs"):
+                self.variables()
         self.short_strings()
         self.zlib_kinds()
         if P.get("residue"):

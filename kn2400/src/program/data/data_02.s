@@ -6209,7 +6209,10 @@ func_486FF3BA_Table:	# 13 x u32, 0..11; read by func_486FF3BA_L7e 0x486FF438: `m
 	tab_u32	2, 6, 1, 10, 11	# [8]
 
 Str_SRC:	.asciz "SRC"
-Str_ALT:	.asciz "ALT"
+
+names_4850E1E0_p4_0:	# REC_names_4850E1E0_p4 (4 bytes)
+	REC_names_4850E1E0_p4	f0=65, x1="LT\x00"
+
 Str_ALIGN:	.asciz "ALIGN"
 Str_VSPACE:	.asciz "VSPACE"
 Str_HSPACE:	.asciz "HSPACE"
@@ -6220,7 +6223,7 @@ Str_BORDER:	.asciz "BORDER"
 	.align	4, 0x00	# pad after Str_BORDER
 
 names_4850E1E0:
-	.long	Str_SRC, Str_ALT
+	.long	Str_SRC, names_4850E1E0_p4_0
 	.long	Str_ALIGN, Str_VSPACE
 	.long	Str_HSPACE, Str_WIDTH
 	.long	Str_HEIGHT, Str_LOWSRC
@@ -6944,7 +6947,7 @@ Str_Langage_NG:	.asciz "Langage NG"
 Str_Table_NG:	.asciz "Table NG"
 	.align	4, 0xFF	# pad after Str_Table_NG
 data_4850FB10:
-	# 8 bytes the code takes the address of: HelpScrollTextFunc_Ld1 0x487036D3 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); HelpScrollTextFunc_Ld1 0x487036D3 `mov data_4850FB10, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: HelpScrollTextFunc_Ld1 0x487036D3 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); HelpScrollTextFunc_Ld1 0x487036D3 `mov data_4850FB10, a1` (+0, as a base); byte rows (u8); the callee walk: strcspn (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	13, 0, 126, 48, 100, 255, 255, 255	# +0
 Str_English:	.asciz "English"
 Str_3d:	.asciz "%3d"
@@ -12679,11 +12682,9 @@ Str_KB_free:	.asciz "KB free ("
 	.align	4, 0xFF	# pad after Str_KB_free
 Str_used:	.asciz "% used)"
 
-func_486D0F3D_entry_L80_Var:	# s8, a constant; read / written by func_486D0F3D_entry_L80 0x486D0FC2: `movbu (a3), d0`; func_486D0F3D_entry_L80 0x486D0FC2: `movbu (d2, a3), d0` ...
-	.byte	0
+func_486D0F3D_entry_L80_Var:	# REC_func_486D0F3D_ArgA1 (4 bytes): the layout func_486D0F3D 0x486D0F3D reads through its argument a1 (passed by func_4871AE81_entry_L96 0x4871AF1C `call func_486D0F3D_entry, [d2,d3,a2,a3], 0x20`)
+	REC_func_486D0F3D_ArgA1	f1=-1, x2="\xFF\xFF"
 
-func_486D0F3D_entry_Lbd_Table:	# 3 x s8, -1..-1; read by func_486D0F3D_entry_Lbd 0x486D0FFF: `movbu (d2, a3), d0`
-	tab_s8	-1, -1, -1
 func_4871BED4_Table:	# 20 x u8, 0..19; read by MainSingleLoadSW : `movbu	(d0, a0), d1`; func_4871BED4 : `movbu	(d0, a0), d0`
 	tab_u8	0, 3, 6, 9, 12, 13, 16, 17, 14, 15, 18, 19, 1, 2, 4, 5	# [0]
 	tab_u8	7, 8, 10, 11	# [16]
@@ -14083,23 +14084,10 @@ func_5012EA5D_Table:	# 1 x u16, 65535..65535; read by func_5012EA5D_entry_L91 0x
 # census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x129308, 0x1293D0
 
-TgGlobalRegsB0LoadB_entry_Le_Var:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (a2), d0`
-	.word	4
-TgGlobalRegsB0LoadB_entry_Le_Var_2:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (2, a2), d0`
-	.word	2
-TgGlobalRegsB0LoadB_entry_Le_Var_3:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (4, a2), d0`
-	.word	128
-TgGlobalRegsB0LoadB_entry_Le_Var_4:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (6, a2), d0`
-	.word	12
-TgGlobalRegsB0LoadB_entry_Le_Var_5:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (8, a2), d0`
-	.word	32
-TgGlobalRegsB0LoadB_entry_Le_Var_6:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (0xa, a2), d0`
-	.word	37
-TgGlobalRegsB0LoadB_entry_Le_Var_7:	# u16, a constant; read / written by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (0xc, a2), d0`
-	.word	831
-
-TgGlobalRegsB0LoadB_entry_Le_Table:	# 9 x u16, 1..815; read by TgGlobalRegsB0LoadB_entry_Le 0x5013DE1E: `movhu (0xe, a2), d0`
-	tab_u16	1, 4, 2, 128, 12, 32, 37, 815, 1
+TgGlobalRegsB0LoadB_entry_Le_Var:	# REC_TgGlobalRegsB0LoadB_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadB 0x5013DE0B reads through its argument a0 (passed by func_48645B79_entry_L34 0x48645BB0 `call TgGlobalRegsB0LoadB_entry, [a2], 0x18`, +2 more calls)
+	REC_TgGlobalRegsB0LoadB_ArgA0	f0=4, f2=2, f4=128, f6=12, f8=32, f10=37, f12=831, f14=1
+	# then 8 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
+	tab_u16	4, 2, 128, 12, 32, 37, 815, 1	# +16
 
 func_5013DCEB_Var:	# u32, a constant; read / written by func_5013DCEB 0x5013DCEB: `mov (a2), d0`
 	.long	51602
@@ -14433,7 +14421,7 @@ TgElemStageFresh_Table_3:	# 35 x u16, 0..65532; read by TgElemStageFresh_entry_L
 	tab_u16	65512, 65516, 65520, 65524, 65528, 65532, 0, 32512, 0, 0, 0	# [24]
 	.align	4, 0xFF	# pad after TgElemStageFresh_Table_3
 
-TgPartGlidePlan_entry_L3b_Records:	# 128 x REC_TgPartGlidePlan_entry_L3b_Records (12 bytes each); read by TgPartGlidePlan_entry_L3b 0x501259C6 `mov (4, a0), d1`; TgPartGlidePlan_entry_L3b 0x501259C6 `mov (a0), d0`; TgPartGlidePlan_entry_L3b 0x501259C6 `call LibF64Div_entry, [d2,d3,a2,a3], 0x18`
+TgPartGlidePlan_entry_L3b_Records:	# 128 x REC_TgPartGlidePlan_entry_L3b_Records (12 bytes each); read by TgPartGlidePlan_entry_L3b 0x501259C6 `mov (4, a0), d1`; TgPartGlidePlan_entry_L3b 0x501259C6 `mov (a0), d0`; TgPartGlidePlan_entry_L3b 0x501259C6 `call LibF64CmpZero_entry, [d2,d3], 0x10` (+17)
 	REC_TgPartGlidePlan_entry_L3b_Records	f0=0xC8E33341, f4=0x4088A05E, x8="n\x01\x00\x00"	# [0]
 	REC_TgPartGlidePlan_entry_L3b_Records	f0=0x48A30701, f4=0x4078964D, x8="\xB7\x00\x00\x00"
 	REC_TgPartGlidePlan_entry_L3b_Records	f0=0x56F8345A, f4=0x406526FF, x8="O\x00\x00\x00"
@@ -14640,7 +14628,7 @@ ptrs_4852BC08:
 	.long	loc_501762A6
 	.long	func_501762BE
 
-func_5017761D_Table:	# 2 x u16, 0..18; read by func_5017761D 0x5017761D: `movhu (a0), d0`; func_501777C3 0x501777C3: `movhu (a0), d0` ...
+func_5017761D_Table:	# 2 x u16, 0..18; read by func_5017761D 0x5017761D: `movhu (a0), d0`; func_5017761D_entry_L2f 0x50177651: `movhu (a0), d0` ...
 	tab_u16	18, 0
 
 Str_Technics_Rhythms_2:	.asciz "Technics Rhythms"
@@ -14663,16 +14651,16 @@ ptrs_4852BC54:
 	.long	loc_50173348
 	.long	MemStyleVarRecDataSet
 
-func_5017761D_Table_2:	# 2 x u16, 0..60; read by func_5017761D 0x5017761D: `movhu (a0), d0`; func_501777C3 0x501777C3: `movhu (a0), d0` ...
+func_5017761D_Table_2:	# 2 x u16, 0..60; read by func_5017761D 0x5017761D: `movhu (a0), d0`; func_5017761D_entry_L2f 0x50177651: `movhu (a0), d0` ...
 	tab_u16	60, 0
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 data_4852BC7C:
-	# 6 bytes the code takes the address of: func_50175F8B 0x50175F8B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_50175F8B 0x50175F8B `mov data_4852BC7C, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 6 bytes the code takes the address of: func_50175F8B 0x50175F8B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_50175F8B 0x50175F8B `mov data_4852BC7C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 160, 0, 0, 8, 32	# +0
 data_4852BC82:
-	# 26 bytes the code takes the address of: func_50175F8B 0x50175F8B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_50175F8B 0x50175F8B `mov data_4852BC82, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 26 bytes the code takes the address of: func_50175F8B 0x50175F8B `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_50175F8B 0x50175F8B `mov data_4852BC82, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
@@ -14685,7 +14673,7 @@ Str_user_bank_0:	.asciz "  user bank 0   "
 Str_clear_2:	.asciz "     clear      "
 	.align	4, 0x00	# pad after Str_clear_2
 data_4852BD50:
-	# 76 bytes the code takes the address of: func_50175A42_entry_L45 0x50175A8C `add data_4852BD50, d3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 76 bytes the code takes the address of: func_50175A42_entry_L45 0x50175A8C `add data_4852BD50, d3` (+0, as a base); func_50175A42_entry_L79 0x50175AC0 `call func_48623435_entry, [d2,d3,a2,a3], 0x38` (+0, arg sp32); func_50175A42_entry_L22c 0x50175C73 `call func_48623428_entry, 0, 8` (+0, arg sp32) (+1 more); byte rows (u8); the callee walk: func_48623428 (sp32) reads nothing through it the walk sees; func_48623435 (sp32) reads nothing through it the walk sees; func_50170C28 (sp32) reads nothing through it the walk sees
 	tab_u8	17, 17, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0, 64, 2, 28, 64	# +16
 	tab_u8	108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0	# +32
@@ -22823,10 +22811,10 @@ Pad_PopSynth_2_Events:		# 4 bars of 4 beats, 354 bytes
 Str_TCMP:	.asciz "TCMP"
 	.space	11, 0x00
 data_4853370C:
-	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x50173056 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x50173056 `mov data_4853370C, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x50173056 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x50173056 `mov data_4853370C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	2, 88, 0, 0, 54, 112	# +0
 data_48533712:
-	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x50173056 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x50173056 `mov data_48533712, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x50173056 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x50173056 `mov data_48533712, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
@@ -22834,17 +22822,17 @@ Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x13377A, 0x1337DC
 data_485337DC:
-	# 16 bytes the code takes the address of: func_5017A5D9 0x5017A5D9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017A5D9 0x5017A5D9 `mov data_485337DC, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 16 bytes the code takes the address of: func_5017A5D9 0x5017A5D9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017A5D9 0x5017A5D9 `mov data_485337DC, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u32	0x230010, 0x0, 0x0, 0x0	# +0
 
 MemStyleVarRecInit_Table_2:	# 4 x u8, 0..0; read by MemStyleVarRecInit_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0
 data_485337F0:
-	# 20 bytes the code takes the address of: func_5017C6BA_entry_L37 0x5017C6F6 `add data_485337F0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5017C6BA_entry_L37 0x5017C6F6 `add data_485337F0, d0` (+0, as a base); func_5017C6BA_entry_L6c 0x5017C72B `call func_48623435_entry, [d2,d3,a2,a3], 0x38` (+0, arg sp36); func_5017C6BA_entry_L103 0x5017C7C2 `call func_5017C8BC_entry, [d2], 4` (+0, arg sp36) (+6 more); byte rows (u8); the callee walk: func_48623428 (sp36) reads nothing through it the walk sees; func_48623435 (sp36) reads nothing through it the walk sees; func_5017A5AD (sp36) reads nothing through it the walk sees (+2 more)
 	tab_u8	0, 16, 17, 17, 17, 17, 17, 0, 0, 0, 0, 0, 0, 3, 0, 0	# +0
 	tab_u8	0, 0, 0, 0	# +16
 data_48533804:
-	# 200 bytes the code takes the address of: func_5017A5D9 0x5017A5D9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017A5D9 0x5017A5D9 `mov data_48533804, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 200 bytes the code takes the address of: func_5017A5D9 0x5017A5D9 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017A5D9 0x5017A5D9 `mov data_48533804, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	255, 255, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 38, 64, 40, 0	# +0
 	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	6, 127, 33, 0, 32, 64, 0, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +32
@@ -22858,19 +22846,12 @@ data_48533804:
 	tab_u8	90, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +160
 	tab_u8	6, 127, 0, 0, 38, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +176
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# +192
-data_485338CC:
-	.space	1, 0x00
 
-LoadU24BE_Var:	# u8, a constant; read / written by LoadU24BE 0x5017D7CD: `movbu (a0), d1`
-	.byte	0
-LoadU24BE_Var_2:	# u8, a constant; read / written by LoadU24BE 0x5017D7CD: `movbu (a0), d0`
-	.byte	0
-
-LoadU24BE_Table:	# 10 x u8, 0..245; read by LoadU24BE 0x5017D7CD: `movbu (a0), d0`
-	tab_u8	5, 244, 244, 244, 244, 245, 0, 0, 0, 0
-data_485338D9:
-	# 15 bytes the code takes the address of: MemStyleAreaVarStreamsInit_entry_Ld 0x50173210 `mov data_485338D9, a2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 0, 9, 244, 244, 244, 244, 244, 244, 244, 244, 245, 255, 255	# +0
+MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+MemStyleAreaVarStreamsInit_entry_L3a_Selected_1:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_entry_L3a_Selected_1
 
 ptrs_485338E8:
 	.long	loc_50182029
@@ -22979,7 +22960,7 @@ func_50185A10_Table_5:	# 208 x u8, 0..1; read by func_50185A10_entry : `movbu	(d
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
 data_48533EAC:
-	# 537 bytes the code takes the address of: func_50189EF7 0x50189EF7 `call func_5018A213_entry, 0, 0x18` (+0, arg a0); func_50189EF7 0x50189EF7 `mov data_48533EAC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 537 bytes the code takes the address of: func_50189EF7 0x50189EF7 `call func_5018A213_entry, 0, 0x18` (+0, arg a0); func_50189EF7 0x50189EF7 `call func_5018A213_entry, 0, 0x18` (+0, arg sp16); func_50189EF7 0x50189EF7 `mov data_48533EAC, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A213 (a0): func_5018A213 reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A213 (sp16): func_5018A213 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A345 (a0): func_5018A345 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	251, 0, 243, 206, 50, 179, 255, 199, 6, 224, 0, 200, 2, 128, 0, 193	# +0
 	tab_u8	48, 15, 255, 240, 0, 0, 4, 240, 0, 0, 11, 240, 0, 0, 27, 0	# +16
 	tab_u8	8, 32, 255, 17, 64, 33, 255, 0, 1, 112, 0, 238, 0, 48, 0, 17	# +32
@@ -23015,7 +22996,7 @@ data_48533EAC:
 	tab_u8	220, 0, 0, 0, 0, 219, 0, 0, 0, 0, 211, 0, 0, 0, 0, 212	# +512
 	tab_u8	0, 0, 0, 0, 143, 0, 0, 0, 255	# +528
 data_485340C5:
-	# 112 bytes the code takes the address of: func_50189F14 0x50189F14 `call func_5018A213_entry, 0, 0x18` (+0, arg a0); func_50189F14 0x50189F14 `mov data_485340C5, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 112 bytes the code takes the address of: func_50189F14 0x50189F14 `call func_5018A213_entry, 0, 0x18` (+0, arg a0); func_50189F14 0x50189F14 `call func_5018A213_entry, 0, 0x18` (+0, arg sp16); func_50189F14 0x50189F14 `mov data_485340C5, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A213 (a0): func_5018A213 reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A213 (sp16): func_5018A213 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A345 (a0): func_5018A345 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	251, 0, 111, 206, 50, 179, 255, 199, 6, 224, 0, 200, 2, 128, 0, 193	# +0
 	tab_u8	48, 15, 255, 240, 0, 0, 4, 240, 0, 0, 11, 240, 0, 0, 14, 0	# +16
 	tab_u8	8, 32, 255, 17, 64, 33, 255, 0, 1, 112, 0, 238, 0, 48, 0, 17	# +32
@@ -23733,7 +23714,7 @@ data_4853F0C4:
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x13F0C4, 0x13F0CF
 data_4853F0CF:
-	# 105 bytes the code takes the address of: func_50189F31 0x50189F31 `call func_5018A213_entry, 0, 0x18` (+0, arg a0); func_50189F31 0x50189F31 `mov data_4853F0CF, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 105 bytes the code takes the address of: func_50189F31 0x50189F31 `call func_5018A213_entry, 0, 0x18` (+0, arg a0); func_50189F31 0x50189F31 `call func_5018A213_entry, 0, 0x18` (+0, arg sp16); func_50189F31 0x50189F31 `mov data_4853F0CF, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A213 (a0): func_5018A213 reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A213 (sp16): func_5018A213 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A345 (a0): func_5018A345 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 8, 1, 109, 0, 0, 0, 254, 0, 144, 0, 0, 0, 0, 145	# +0
 	tab_u8	0, 0, 0, 0, 146, 0, 0, 0, 0, 147, 0, 0, 0, 0, 148, 0	# +16
 	tab_u8	0, 0, 0, 149, 0, 0, 0, 0, 246, 0, 0, 0, 0, 249, 0, 0	# +32
@@ -23963,7 +23944,7 @@ func_50189FF6_Table:	# 37 x u8, 0..255; read by func_50189FF6_entry : `movbu	(d0
 	tab_u8	0, 179, 0, 47, 0, 16, 1, 31, 0, 45, 0, 24, 1, 73, 0, 43	# [16]
 	tab_u8	0, 16, 1, 194, 255	# [32]
 data_485414AD:
-	# 117 bytes the code takes the address of: func_50185F06_entry_L18b 0x50186096 `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L18b 0x50186096 `mov data_485414AD, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 117 bytes the code takes the address of: func_50185F06_entry_L18b 0x50186096 `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L18b 0x50186096 `call func_5018A23D_entry, 0, 0x18` (+0, arg sp24); func_50185F06_entry_L18b 0x50186096 `mov data_485414AD, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A23D (a0): func_5018A23D reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A23D (sp24): func_5018A23D reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A64E (a0): func_5018A64E reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 116, 0, 104, 12, 35, 198, 43, 10, 143, 71, 2, 115, 94, 35	# +0
 	tab_u8	130, 110, 218, 58, 120, 3, 4, 120, 254, 20, 113, 186, 80, 98, 182, 116	# +16
 	tab_u8	76, 248, 116, 49, 251, 161, 19, 150, 205, 243, 220, 57, 212, 245, 112, 184	# +32
@@ -23973,7 +23954,7 @@ data_485414AD:
 	tab_u8	254, 20, 113, 186, 80, 98, 182, 116, 76, 248, 116, 49, 251, 161, 19, 150	# +96
 	tab_u8	205, 243, 220, 57, 255	# +112
 data_48541522:
-	# 117 bytes the code takes the address of: func_50185F06_entry_L1a2 0x501860AD `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L1a2 0x501860AD `mov data_48541522, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 117 bytes the code takes the address of: func_50185F06_entry_L1a2 0x501860AD `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L1a2 0x501860AD `call func_5018A23D_entry, 0, 0x18` (+0, arg sp24); func_50185F06_entry_L1a2 0x501860AD `mov data_48541522, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A23D (a0): func_5018A23D reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A23D (sp24): func_5018A23D reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A64E (a0): func_5018A64E reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 116, 0, 104, 0, 0, 0, 21, 85, 85, 42, 170, 170, 64, 0	# +0
 	tab_u8	0, 85, 85, 85, 106, 170, 170, 127, 255, 255, 106, 170, 170, 85, 85, 85	# +16
 	tab_u8	64, 0, 0, 42, 170, 170, 21, 85, 85, 0, 0, 0, 234, 170, 170, 213	# +32
@@ -23983,7 +23964,7 @@ data_48541522:
 	tab_u8	255, 255, 106, 170, 170, 85, 85, 85, 64, 0, 0, 42, 170, 170, 21, 85	# +96
 	tab_u8	85, 234, 170, 170, 255	# +112
 data_48541597:
-	# 117 bytes the code takes the address of: func_50185F06_entry_L1b9 0x501860C4 `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L1b9 0x501860C4 `mov data_48541597, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 117 bytes the code takes the address of: func_50185F06_entry_L1b9 0x501860C4 `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L1b9 0x501860C4 `call func_5018A23D_entry, 0, 0x18` (+0, arg sp24); func_50185F06_entry_L1b9 0x501860C4 `mov data_48541597, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A23D (a0): func_5018A23D reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A23D (sp24): func_5018A23D reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A64E (a0): func_5018A64E reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 116, 0, 104, 20, 114, 37, 72, 125, 147, 119, 152, 87, 127, 255	# +0
 	tab_u8	255, 127, 255, 255, 127, 255, 255, 127, 255, 255, 127, 255, 255, 127, 255, 255	# +16
 	tab_u8	127, 255, 255, 84, 46, 136, 32, 253, 251, 235, 141, 218, 183, 130, 108, 136	# +32
@@ -23993,13 +23974,13 @@ data_48541597:
 	tab_u8	255, 255, 127, 255, 255, 127, 255, 255, 127, 255, 255, 84, 46, 136, 32, 253	# +96
 	tab_u8	251, 235, 141, 218, 255	# +112
 data_4854160C:
-	# 4 bytes the code takes the address of: func_50185F06_entry_Le2 0x50185FED `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_Le2 0x50185FED `mov data_4854160C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_50185F06_entry_Le2 0x50185FED `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_Le2 0x50185FED `call func_5018A23D_entry, 0, 0x18` (+0, arg sp24); func_50185F06_entry_Le2 0x50185FED `mov data_4854160C, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A23D (a0): func_5018A23D reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A23D (sp24): func_5018A23D reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A64E (a0): func_5018A64E reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 3, 255	# +0
 data_48541610:
-	# 4 bytes the code takes the address of: func_50185F06_entry_Lf9 0x50186004 `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_Lf9 0x50186004 `mov data_48541610, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_50185F06_entry_Lf9 0x50186004 `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_Lf9 0x50186004 `call func_5018A23D_entry, 0, 0x18` (+0, arg sp24); func_50185F06_entry_Lf9 0x50186004 `mov data_48541610, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A23D (a0): func_5018A23D reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A23D (sp24): func_5018A23D reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A64E (a0): func_5018A64E reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 3, 255	# +0
 data_48541614:
-	# 4 bytes the code takes the address of: func_50185F06_entry_L110 0x5018601B `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L110 0x5018601B `mov data_48541614, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_50185F06_entry_L110 0x5018601B `call func_5018A23D_entry, 0, 0x18` (+0, arg a0); func_50185F06_entry_L110 0x5018601B `call func_5018A23D_entry, 0, 0x18` (+0, arg sp24); func_50185F06_entry_L110 0x5018601B `mov data_48541614, d0` (+0, as a base) (+2 more); byte rows (u8); the callee walk: func_5018A23D (a0): func_5018A23D reads nothing through it at a fixed offset (it hands it on, or stores it); func_5018A23D (sp24): func_5018A23D reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5018A64E (a0): func_5018A64E reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	253, 0, 3, 255	# +0
 func_5018A345_Table:	# 6 x u16, 60..450; read by func_5018A345_entry_Le8 0x5018A432: `movhu	(d1, a1), d0`
 	tab_u16	351, 60, 179, 287, 329, 450
@@ -24650,18 +24631,18 @@ func_485E99F2_Table:	# 64 x u8, 0..63; read by func_485E99F2_entry : `movbu	(a2)
 	tab_u8	12, 19, 26, 33, 40, 48, 41, 34, 27, 20, 13, 6, 7, 14, 21, 28	# [16]
 	tab_u8	35, 42, 49, 56, 57, 50, 43, 36, 29, 22, 15, 23, 30, 37, 44, 51	# [32]
 	tab_u8	58, 59, 52, 45, 38, 31, 39, 46, 53, 60, 61, 54, 47, 55, 62, 63	# [48]
-func_485E9AA7_entry_L45_Table:	# 32 x u8, 0..5; read by func_485E9AA7_entry_L45 0x485E9AF1: `movbu (a0), d0`; func_485E9AA7_entry_L12b 0x485E9BD7: `movbu (a3), d0` ...
-	tab_u8	0, 1, 5, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0	# [0]
-	tab_u8	0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0	# [16]
 
-func_485E9AA7_entry_L6e_Records:	# 2 x REC_func_485E9AA7_entry_L6e_Records (16 bytes each); read by func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485EA291_entry_Le 0x485EA2A4 `movbu (a2), d0`
+func_485E9AA7_entry_L45_Table:	# 2 x REC_func_485E9AA7_entry_L45_Table (16 bytes each); read by func_485E9AA7_entry_L45 0x485E9AF1 `movbu (a0), d0`; func_485E9AA7_entry_L10a 0x485E9BB6 `movbu (a2), d0`; func_485EA291_entry_Le 0x485EA2A4 `movbu (a2), d0`
+	REC_func_485E9AA7_entry_L45_Table	x1="\x01\x05\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00"
+	REC_func_485E9AA7_entry_L45_Table	x1="\x03\x01\x01\x01\x01\x01\x01\x01\x01\x01\x00\x00\x00\x00\x00"
+func_485E9AA7_entry_L6e_Records:	# 2 x REC_func_485E9AA7_entry_L6e_Records (16 bytes each); read by func_485E9AA7_entry_L6e 0x485E9B1A `movbu (a0), d0`; func_485E9AA7_entry_L163 0x485E9C0F `movbu (a2), d0`; func_485E9AA7_entry_L178 0x485E9C24 `movbu (a3), d0` (+2)
 	REC_func_485E9AA7_entry_L6e_Records	x1="\x02\x01\x03\x03\x02\x04\x03\x05\x05\x04\x04\x00\x00\x01}"
 	REC_func_485E9AA7_entry_L6e_Records	x1="\x02\x01\x02\x04\x04\x03\x04\x07\x05\x04\x04\x00\x01\x02w"
 
 func_485E9AA7_entry_L134_Table:	# 32 x u8, 0..11; read by func_485E9AA7_entry_L134 0x485E9BE0: `movbu (a2), d0`; func_485EA291_entry_Le 0x485EA2A4: `movbu (a0), d0`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0	# [0]
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0	# [16]
-func_485EA291_entry_Le_Table:	# 512 x u8, 0..250; read by func_485EA291_entry_Le 0x485EA2A4: `movbu (a0), d0`
+func_485EA291_entry_Le_Table:	# 512 x u8, 0..250; read by func_485E9AA7_entry_L181 0x485E9C2D: `movbu (a2), d0`; func_485EA291_entry_Le 0x485EA2A4: `movbu (a0), d0`
 	tab_u8	1, 2, 3, 0, 4, 17, 5, 18, 33, 49, 65, 6, 19, 81, 97, 7	# [0]
 	tab_u8	34, 113, 20, 50, 129, 145, 161, 8, 35, 66, 177, 193, 21, 82, 209, 240	# [16]
 	tab_u8	36, 51, 98, 114, 130, 9, 10, 22, 23, 24, 25, 26, 37, 38, 39, 40	# [32]
@@ -24766,7 +24747,7 @@ InitPaletteRGB_Table_2:	# 256 x u32, 16711680..16777215; read by InitPaletteRGB_
 	tab_u32	16736352, 16736352, 16736352, 16736352, 16736352, 16711680, 16711680, 16711680	# [240]
 	tab_u32	16736352, 16736352, 16752800, 16752800, 16736352, 16736352, 16736352, 16777215	# [248]
 data_48542B30:
-	# 660 bytes the code takes the address of: InitSptClassTable 0x48605D47 `mov data_48542B30, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 660 bytes the code takes the address of: InitSptClassTable 0x48605D47 `call RegisterObjectTable, 0, 0` (+0, arg sp28); InitSptClassTable 0x48605D47 `mov data_48542B30, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: RegisterObjectTable (sp28): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	swordProc	# +0
 	tab_u32	0x20000	# +4
 	.long	data_484151E0+8, uwordProc	# +8
@@ -26649,132 +26630,58 @@ func_4860AA20_Table:	# 128 x u8, 0..112; read by func_4860AA20_entry : `movbu	(d
 Str_Jazz_Drawbars_U:	.asciz "<Jazz Drawbars> \x80U"
 # census: opaque -- unknown-dump: 693 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x146D9F, 0x147054
-data_48547054:
-	# 24 bytes the code takes the address of: func_50150244_entry_L1d 0x50150266 `mov data_48547054, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	65280, 53248	# +0
-	.long	TempoSyncSetDispatch	# +8
-	tab_u32	0, 0, 0	# +12
-data_4854706C:
+
+func_50150244_entry_L8c_Selected_0:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	f0=65280, f4=53248, p8=TempoSyncSetDispatch
 	.space	12, 0x00
-data_48547078:
+func_50150244_entry_L8c_Selected_1:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	
+func_50150244_entry_L8c_Selected_2:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	
+func_50150244_entry_L8c_Selected_3:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	f0=0xFF0000, f4=0x700000, p8=loc_4860948B
+# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x147090, 0x1470F0
+func_50150244_entry_L8c_Selected_4:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	f0=255, f4=121, p8=func_5014BCBC
 	.space	12, 0x00
-data_48547084:
-	# 108 bytes the code takes the address of: func_50150244_entry_L1d 0x50150266 `mov data_48547084, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFF0000, 0x700000, 0x4860948B, 0xFF0000, 0x700000	# +0
-	.long	func_48703E2C	# +20
-	tab_u32	0xFF0000, 0x700000	# +24
-	.long	func_48663F5A	# +32
-	tab_u32	0xFF00, 0x2000	# +36
-	.long	func_4862BBE5	# +44
-	tab_u32	0xFF00, 0x2000	# +48
-	.long	TempoSyncSetDispatch	# +56
-	tab_u32	0xFF00, 0x3000	# +60
-	.long	TempoSyncSetDispatch	# +68
-	tab_u32	0xFFFFFF, 0x702040	# +72
-	.long	func_4861619D	# +80
-	tab_u32	0xFF0000, 0x700000	# +84
-	.long	func_486FD701	# +92
-	tab_u32	0x0, 0x0, 0x0	# +96
-data_485470F0:
-	# 24 bytes the code takes the address of: func_50150244_entry_L1d 0x50150266 `mov data_485470F0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	255, 121	# +0
-	.long	func_5014BCBC	# +8
-	tab_u32	0, 0, 0	# +12
-data_48547108:
+func_50150244_entry_L8c_Selected_5:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	
+func_50150244_entry_L8c_Selected_6:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	
+func_50150244_entry_L8c_Selected_7:	# REC_func_50150244_entry_L8c_Selected (12 bytes)
+	REC_func_50150244_entry_L8c_Selected	
+func_50150302_entry_L9d_Selected_0:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFFFF00, f4=8192, p8=loc_501820BC
+# census: opaque -- unknown-dump: 144 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x147138, 0x1471C8
+func_50150302_entry_L9d_Selected_1:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFFFF00, f4=0x204000, p8=func_5014D4C5
+# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x1471D4, 0x147204
+func_50150302_entry_L9d_Selected_2:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFF0000, f4=0x600000, p8=func_5014D4C5
+# census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x147210, 0x147270
+func_50150302_entry_L9d_Selected_3:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFF0000, f4=0x700000, p8=func_4866206E
+# census: opaque -- unknown-dump: 240 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x14727C, 0x14736C
+func_50150302_entry_L9d_Selected_4:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFFFFFF, f4=0x900000, p8=loc_486094E6
+# census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x147378, 0x1473A8
+func_50150302_entry_L9d_Selected_5:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFFFFFF, f4=0xB0007E, p8=func_48612AD1
 	.space	12, 0x00
-data_48547114:
-	.space	12, 0x00
-data_48547120:
-	.space	12, 0x00
-data_4854712C:
-	# 156 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_4854712C, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFF00, 0x2000, 0x501820BC, 0xFF0000, 0x0	# +0
-	.long	func_5014D4C5	# +20
-	tab_u32	0xFFFF00, 0xC000	# +24
-	.long	func_5014FDE9	# +32
-	tab_u32	0xFF0000, 0x0	# +36
-	.long	func_50152322	# +44
-	tab_u32	0xFF0000, 0x0	# +48
-	.long	func_4860E7A9	# +56
-	tab_u32	0xFF0000, 0x0, 0x48633B7C, 0xFF0000, 0x0	# +60
-	.long	func_48612AD1	# +80
-	tab_u32	0xFF0000, 0x0, 0x5015DB64, 0xFF0000, 0x0, 0x4863AC1D, 0xFFFF00, 0x0	# +84
-	tab_u32	0x50151E57, 0xFF0000, 0x0	# +116
-	.long	func_5014BAB4	# +128
-	tab_u32	0xFFFFFF, 0x800E, 0x48724081, 0x0, 0x0, 0x0	# +132
-data_485471C8:
-	# 60 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_485471C8, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFF00, 0x204000	# +0
-	.long	func_5014D4C5	# +8
-	tab_u32	0xFF0000, 0x200000	# +12
-	.long	func_48612AD1	# +20
-	tab_u32	0xFF0000, 0x200000	# +24
-	.long	func_5014FDE9	# +32
-	tab_u32	0xFFFFFF, 0x20005C	# +36
-	.long	func_486FC671	# +44
-	tab_u32	0x0, 0x0, 0x0	# +48
-data_48547204:
-	# 108 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_48547204, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFF0000, 0x600000	# +0
-	.long	func_5014D4C5	# +8
-	tab_u32	0xFFFFFF, 0x600000, 0x48633B7C, 0xFFFFFF, 0x600010, 0x4861607E, 0xFFFFFF, 0x600012	# +12
-	.long	func_4861E1E9	# +44
-	tab_u32	0xFFFFFF, 0x600011, 0x4861E29F, 0xFF0000, 0x600000	# +48
-	.long	func_4860E7A9	# +68
-	tab_u32	0xFF0000, 0x600000, 0x4863AC1D, 0xFFFFFF, 0x600014, 0x486FE8D3, 0x0, 0x0	# +72
-	tab_u32	0x0	# +104
-data_48547270:
-	# 252 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_48547270, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFF0000, 0x700000	# +0
-	.long	func_4866206E	# +8
-	tab_u32	0xFFFFFF, 0x7020A6	# +12
-	.long	func_5014D4C5	# +20
-	tab_u32	0xFFFFFF, 0x7020A1	# +24
-	.long	func_50151E6F	# +32
-	tab_u32	0xFFFFFF, 0x702032, 0x486BB088, 0xFFFFFF, 0x708000, 0x486BFC89, 0xFFFFFF, 0x702004	# +36
-	.long	func_486595FE	# +68
-	tab_u32	0xFFFFFF, 0x7020A8, 0x486F6ABC, 0xFFFFFF, 0x702083, 0x486F6B21, 0xFFFFFF, 0x700000	# +72
-	.long	func_486F6B47	# +104
-	tab_u32	0xFFFFFF, 0x7020A4	# +108
-	.long	func_486418AF	# +116
-	tab_u32	0xFFFFFF, 0x702020	# +120
-	.long	func_486E7D48	# +128
-	tab_u32	0xFFFFFF, 0x702040	# +132
-	.long	func_486E7CB1	# +140
-	tab_u32	0xFFFFFF, 0x700000	# +144
-	.long	func_4862BC89	# +152
-	tab_u32	0xFFFFFF, 0x7020B0	# +156
-	.long	func_4861D234	# +164
-	tab_u32	0xFFFFFF, 0x702000, 0x486EF681, 0xFFFFFF, 0x702001, 0x486EF681, 0xFFFFFF, 0x700000	# +168
-	.long	func_50152322	# +200
-	tab_u32	0xFFFFFF, 0x7020BB, 0x48631744, 0xFFFFFF, 0x7020BB	# +204
-	.long	SdCardInsertMsgHandler	# +224
-	tab_u32	0xFFFFFF, 0x701008, 0x5015D1D7, 0x0, 0x0, 0x0	# +228
-data_4854736C:
-	# 60 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_4854736C, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0x900000, 0x486094E6, 0xFFFFFF, 0x900000	# +0
-	.long	func_486621BD	# +20
-	tab_u32	0xFF0000, 0x900000	# +24
-	.long	func_50152322	# +32
-	tab_u32	0xFFFFFF, 0x900000	# +36
-	.long	func_486FC671	# +44
-	tab_u32	0x0, 0x0, 0x0	# +48
-data_485473A8:
-	# 24 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_485473A8, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0xB0007E	# +0
-	.long	func_48612AD1	# +8
-	tab_u32	0x0, 0x0, 0x0	# +12
-data_485473C0:
-	# 36 bytes the code takes the address of: func_50150302_entry_L45 0x5015034C `mov data_485473C0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0xC00000	# +0
-	.long	func_486FC671	# +8
-	tab_u32	0xFFFFFF, 0xC00000	# +12
-	.long	func_48612AD1	# +20
-	tab_u32	0x0, 0x0, 0x0	# +24
-data_485473E4:
-	.space	12, 0x00
-data_485473F0:
-	.space	12, 0x00
+func_50150302_entry_L9d_Selected_6:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	f0=0xFFFFFF, f4=0xC00000, p8=func_486FC671
+# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x1473CC, 0x1473E4
+func_50150302_entry_L9d_Selected_7:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	
+func_50150302_entry_L9d_Selected_8:	# REC_func_50150302_entry_L9d_Selected (12 bytes)
+	REC_func_50150302_entry_L9d_Selected	
 
 func_4860E0FD_Table:	# 2048 x REC_func_4860E0FD_Table (2 bytes each); read by func_4860E0FD_entry_L4b 0x4860E14D `movbu (d0, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (1, a0), d0`; func_4860E0FD_entry_L62 0x4860E164 `movbu (d0, a0), d0`
 	REC_func_4860E0FD_Table		# [0]
@@ -29467,13 +29374,13 @@ Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x14B210, 0x14B224
 data_4854B224:
-	# 3 bytes the code takes the address of: func_4863182B_entry_L9e 0x486318CE `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4863182B_entry_L9e 0x486318CE `mov data_4854B224, d2` (+0, as a base); func_4863182B_entry_L149 0x48631979 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 3 bytes the code takes the address of: func_4863182B_entry_L9e 0x486318CE `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4863182B_entry_L9e 0x486318CE `mov data_4854B224, d2` (+0, as a base); func_4863182B_entry_L149 0x48631979 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	249, 255, 255	# +0
 Str_Technics:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x14B233, 0x14B247
 data_4854B247:
-	# 5 bytes the code takes the address of: func_48631AF5_entry_L9e 0x48631B98 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_48631AF5_entry_L9e 0x48631B98 `mov data_4854B247, d2` (+0, as a base); func_48631AF5_entry_L11b 0x48631C15 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 5 bytes the code takes the address of: func_48631AF5_entry_L9e 0x48631B98 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_48631AF5_entry_L9e 0x48631B98 `mov data_4854B247, d2` (+0, as a base); func_48631AF5_entry_L11b 0x48631C15 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 255, 255, 255, 255	# +0
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_50173EF8_L9 0x50173F01 `movbu (1, a0), d0`; func_50173F13_L9 0x50173F1C `movbu (2, a0), d0`; func_50173F2E_L9 0x50173F37 `movbu (3, a0), d0` (+12)
@@ -37892,18 +37799,14 @@ func_4863CDD8_Table:
 	.long	Str_No_effect
 	.long	Str_No_effect
 	.long	Str_No_effect
-# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x153864, 0x153884
-data_48553884:
-	# 2 bytes the code takes the address of: func_4863DE13 0x4863DE13 `mov data_48553884, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	16, 0	# +0
 
-Str_Reverb:	.asciz "     Reverb     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x153897, 0x15389E
-Str_Effect_Memory:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1538AF, 0x1538CC
+func_4863DE13_Result_p20_0:	# REC_func_4863DE13_Result_p20 (1 bytes), then 31 x u8 the code indexes from +0 (read by func_4863D95A_entry_L6b 0x4863D9CA `movbu (d0, a1), d1`)
+	REC_func_4863DE13_Result_p20	x0="\x00"
+	tab_u8	0, 0, 32, 1, 0, 1, 32, 2, 0, 2, 32, 3, 0, 3, 32, 4	# [0]
+	tab_u8	0, 4, 32, 5, 0, 5, 32, 6, 0, 6, 32, 7, 0, 7, 32	# [16]
+func_4863DE13_Result_0:	# REC_func_4863DE13_Result (20 bytes), then 13 x u32 the code indexes from +0 (read by func_4863D8A5_entry_L24 0x4863D8CE `movhu (d3, a2), d1`; func_4863D95A_entry_L3b 0x4863D99A `movhu (a2), d0`)
+	REC_func_4863DE13_Result	x0="\x10\x00     Reverb     \x00\x00"
+	tab_u32	1213544548, 1159725066, 1667589734, 1699553396, 2037542765, 8224, 0, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4863D8F2_Var:	# u16, a constant; read / written by func_4863D8F2 0x4863D8F2: `movhu (func_4863D8F2_Var), d0`; func_4863E41C_entry_Lfc 0x4863E51D: `movhu (func_4863D8F2_Var), d0`
 	.word	2
@@ -37921,102 +37824,80 @@ func_4863D95A_entry_Ld0_Records:	# 8 x REC_func_4863D95A_entry_Ld0_Records (128 
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x1570CE, 0x1570E2
 	.space	2028, 0xFF
-# census: opaque -- unknown-dump: 902 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1578CE, 0x157C54
-data_48557C54:
-	# 2 bytes the code takes the address of: func_4863DE13 0x4863DE13 `mov data_48557C54, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	3, 0	# +0
 
-Str_Reverb_2:	.asciz "     Reverb     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157C67, 0x157C6E
-Str_Chorus_2:	.asciz "     Chorus     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157C7F, 0x157C86
-Str_Ensemble:	.asciz "    Ensemble    "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157C97, 0x157C9E
-Str_Modulated_Chorus:	.asciz "Modulated Chorus"
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157CAF, 0x157CB6
-Str_Celeste:	.asciz "    Celeste     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157CC7, 0x157CCE
-Str_Mod_Celeste:	.asciz "  Mod. Celeste  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157CDF, 0x157CE6
-Str_Phaser_2:	.asciz "     Phaser     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157CF7, 0x157CFE
-Str_Flanger_3:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D0F, 0x157D16
-Str_Rotary_Speaker:	.asciz " Rotary Speaker "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D27, 0x157D2E
-Str_Rock_Rotary:	.asciz "  Rock Rotary   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D3F, 0x157D46
-Str_Tremolo:	.asciz "    Tremolo     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D57, 0x157D5E
-Str_Auto_Pan:	.asciz "    Auto Pan    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D6F, 0x157D76
-Str_Vibrato:	.asciz "    Vibrato     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D87, 0x157D8E
-Str_Ring_Modulator:	.asciz " Ring Modulator "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157D9F, 0x157DA6
-Str_Mixup:	.asciz "     Mixup      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157DB7, 0x157DBE
-Str_Parametric_EQ:	.asciz " Parametric EQ  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157DCF, 0x157DD6
-Str_Enhancer:	.asciz "    Enhancer    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157DE7, 0x157DEE
-Str_Exciter_2:	.asciz "    Exciter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157DFF, 0x157E06
-Str_Auto_Wah:	.asciz "    Auto Wah    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157E17, 0x157E1E
-Str_Distortion:	.asciz "   Distortion   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157E2F, 0x157E36
-Str_Overdrive:	.asciz "   Overdrive    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157E47, 0x157E4E
-Str_Fuzz:	.asciz "      Fuzz      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157E5F, 0x157E66
-Str_Limiter:	.asciz "    Limiter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157E77, 0x157E7E
-Str_Compressor:	.asciz "   Compressor   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157E8F, 0x157E96
-Str_Slow_Attacker:	.asciz " Slow Attacker  "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157EA7, 0x157EAE
-Str_Dual_Delay:	.asciz "   Dual Delay   "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157EBF, 0x157EC6
-Str_Cross_Delay:	.asciz "  Cross Delay   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157ED7, 0x157EDE
-Str_Multi_Tap_Delay:	.asciz "Multi Tap Delay "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157EEF, 0x157EF6
-Str_Delay_Complex:	.asciz " Delay Complex  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157F07, 0x157F0E
-Str_Effect_Memory_2:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x157F1F, 0x157F3C
+func_4863DE13_Result_p20_1:	# REC_func_4863DE13_Result_p20 (1 bytes), then 901 x u8 the code indexes from +0 (read by func_4863D95A_entry_L6b 0x4863D9CA `movbu (d0, a1), d1`)
+	REC_func_4863DE13_Result_p20	x0="\x09"
+	tab_u8	32, 9, 33, 9, 34, 16, 0, 16, 1, 16, 2, 16, 3, 16, 4, 16	# [0]
+	tab_u8	5, 16, 6, 16, 7, 16, 32, 16, 33, 16, 34, 16, 35, 16, 36, 16	# [16]
+	tab_u8	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 16, 15, 16	# [32]
+	tab_u8	40, 16, 41, 16, 42, 16, 43, 16, 44, 16, 16, 16, 17, 16, 18, 16	# [48]
+	tab_u8	19, 16, 20, 16, 21, 16, 22, 16, 23, 16, 48, 16, 49, 16, 50, 16	# [64]
+	tab_u8	51, 16, 52, 18, 0, 18, 1, 18, 2, 18, 3, 18, 4, 18, 5, 18	# [80]
+	tab_u8	6, 18, 7, 18, 32, 18, 33, 18, 34, 18, 35, 18, 36, 18, 8, 18	# [96]
+	tab_u8	9, 18, 10, 18, 11, 18, 12, 18, 13, 18, 14, 18, 15, 18, 40, 18	# [112]
+	tab_u8	41, 18, 42, 18, 43, 18, 44, 18, 16, 18, 17, 18, 18, 18, 19, 18	# [128]
+	tab_u8	20, 18, 21, 18, 22, 18, 23, 18, 48, 18, 49, 18, 50, 18, 51, 18	# [144]
+	tab_u8	52, 20, 0, 20, 1, 20, 2, 20, 3, 20, 4, 20, 5, 20, 6, 20	# [160]
+	tab_u8	7, 20, 32, 20, 33, 20, 34, 20, 35, 20, 36, 20, 8, 20, 9, 20	# [176]
+	tab_u8	10, 20, 11, 20, 12, 20, 13, 20, 14, 20, 15, 20, 40, 20, 41, 20	# [192]
+	tab_u8	42, 20, 43, 20, 44, 20, 16, 20, 17, 20, 18, 20, 19, 20, 20, 20	# [208]
+	tab_u8	21, 20, 22, 20, 23, 20, 48, 20, 49, 20, 50, 20, 51, 20, 52, 25	# [224]
+	tab_u8	0, 25, 1, 25, 2, 25, 3, 25, 4, 25, 5, 25, 6, 25, 7, 25	# [240]
+	tab_u8	32, 25, 33, 25, 34, 25, 35, 25, 36, 27, 0, 27, 1, 27, 2, 27	# [256]
+	tab_u8	3, 27, 4, 27, 5, 27, 6, 27, 7, 27, 32, 27, 33, 27, 34, 27	# [272]
+	tab_u8	35, 27, 36, 32, 0, 32, 1, 32, 2, 32, 3, 32, 4, 32, 5, 32	# [288]
+	tab_u8	6, 32, 32, 32, 33, 32, 34, 32, 35, 32, 36, 32, 37, 32, 8, 32	# [304]
+	tab_u8	9, 32, 10, 32, 11, 32, 12, 32, 13, 32, 14, 32, 40, 32, 41, 32	# [320]
+	tab_u8	42, 32, 43, 32, 44, 32, 45, 32, 16, 32, 17, 32, 18, 32, 19, 32	# [336]
+	tab_u8	20, 32, 21, 32, 22, 32, 48, 32, 49, 32, 50, 32, 51, 32, 52, 32	# [352]
+	tab_u8	53, 35, 0, 35, 1, 35, 2, 35, 3, 35, 4, 35, 5, 35, 6, 35	# [368]
+	tab_u8	32, 35, 33, 35, 34, 35, 35, 35, 36, 35, 37, 35, 8, 35, 9, 35	# [384]
+	tab_u8	10, 35, 11, 35, 12, 35, 13, 35, 14, 35, 40, 35, 41, 35, 42, 35	# [400]
+	tab_u8	43, 35, 44, 35, 45, 35, 16, 35, 17, 35, 18, 35, 19, 35, 20, 35	# [416]
+	tab_u8	21, 35, 22, 35, 48, 35, 49, 35, 50, 35, 51, 35, 52, 35, 53, 34	# [432]
+	tab_u8	0, 34, 1, 34, 2, 34, 3, 34, 4, 34, 5, 34, 6, 34, 32, 34	# [448]
+	tab_u8	33, 34, 34, 34, 35, 34, 36, 34, 37, 37, 0, 37, 1, 37, 2, 37	# [464]
+	tab_u8	3, 37, 4, 37, 5, 37, 6, 37, 7, 37, 32, 37, 33, 37, 34, 37	# [480]
+	tab_u8	35, 37, 36, 37, 37, 37, 38, 39, 0, 39, 1, 39, 2, 39, 3, 39	# [496]
+	tab_u8	4, 39, 5, 39, 6, 39, 7, 41, 0, 41, 1, 41, 2, 41, 3, 41	# [512]
+	tab_u8	32, 41, 33, 41, 34, 41, 35, 48, 0, 48, 1, 48, 2, 48, 3, 48	# [528]
+	tab_u8	4, 48, 5, 48, 6, 48, 7, 53, 32, 53, 33, 53, 34, 53, 35, 53	# [544]
+	tab_u8	36, 53, 37, 55, 0, 55, 1, 55, 2, 56, 32, 56, 33, 56, 34, 56	# [560]
+	tab_u8	35, 56, 36, 64, 0, 64, 1, 64, 2, 64, 3, 64, 4, 64, 5, 64	# [576]
+	tab_u8	32, 64, 33, 64, 34, 64, 35, 64, 36, 64, 37, 65, 0, 65, 1, 68	# [592]
+	tab_u8	0, 68, 1, 68, 2, 68, 3, 69, 0, 69, 1, 69, 2, 69, 3, 70	# [608]
+	tab_u8	0, 70, 1, 70, 2, 70, 3, 72, 0, 72, 1, 72, 2, 72, 3, 72	# [624]
+	tab_u8	4, 72, 5, 72, 6, 72, 7, 72, 32, 72, 33, 72, 34, 72, 35, 72	# [640]
+	tab_u8	36, 72, 37, 72, 38, 72, 39, 73, 0, 73, 1, 73, 2, 73, 3, 72	# [656]
+	tab_u8	8, 72, 9, 72, 10, 72, 11, 72, 12, 72, 13, 72, 14, 72, 15, 72	# [672]
+	tab_u8	40, 72, 41, 72, 42, 72, 43, 72, 44, 72, 45, 72, 46, 72, 47, 73	# [688]
+	tab_u8	8, 73, 9, 73, 10, 73, 11, 72, 16, 72, 17, 72, 18, 72, 19, 72	# [704]
+	tab_u8	20, 72, 21, 72, 22, 72, 23, 72, 48, 72, 49, 72, 50, 72, 51, 72	# [720]
+	tab_u8	52, 72, 53, 72, 54, 72, 55, 73, 16, 73, 17, 73, 18, 73, 19, 76	# [736]
+	tab_u8	0, 76, 1, 76, 2, 76, 3, 76, 4, 76, 5, 76, 6, 76, 7, 76	# [752]
+	tab_u8	32, 76, 33, 76, 34, 76, 35, 76, 36, 76, 37, 76, 38, 76, 39, 77	# [768]
+	tab_u8	0, 77, 1, 77, 2, 77, 3, 76, 8, 76, 9, 76, 10, 76, 11, 76	# [784]
+	tab_u8	12, 76, 13, 76, 14, 76, 15, 76, 40, 76, 41, 76, 42, 76, 43, 76	# [800]
+	tab_u8	44, 76, 45, 76, 46, 76, 47, 77, 8, 77, 9, 77, 10, 77, 11, 76	# [816]
+	tab_u8	16, 76, 17, 76, 18, 76, 19, 76, 20, 76, 21, 76, 22, 76, 23, 76	# [832]
+	tab_u8	48, 76, 49, 76, 50, 76, 51, 76, 52, 76, 53, 76, 54, 76, 55, 77	# [848]
+	tab_u8	16, 77, 17, 77, 18, 77, 19, 81, 0, 81, 1, 81, 2, 81, 3, 81	# [864]
+	tab_u8	4, 81, 5, 81, 6, 81, 7, 82, 0, 82, 32, 83, 0, 83, 32, 84	# [880]
+	tab_u8	0, 85, 0, 85, 32	# [896]
+func_4863DE13_Result_1:	# REC_func_4863DE13_Result (20 bytes), then 181 x u32 the code indexes from +0 (read by func_4863D8A5_entry_L24 0x4863D8CE `movhu (d3, a2), d1`; func_4863D95A_entry_L3b 0x4863D99A `movhu (a2), d0`)
+	REC_func_4863DE13_Result	x0="\x03\x00     Reverb     \x00\x00"
+	tab_u32	1213561038, 538968103, 1126178848, 1970433896, 538976371, 8224, 1213561044, 538968103, 1850023968, 1651336563, 538994028, 8224, 1213561122, 1867317287, 1634497892, 543450484	# [0]
+	tab_u32	1919903811, 29557, 1213561200, 538968077, 1698897952, 1953719660, 538976357, 8224, 1213561278, 538968077, 778334029, 1818575648, 1702130533, 8224, 1213561304, 538968103	# [16]
+	tab_u32	1344282656, 1702060392, 538976370, 8224, 1213561330, 538968103, 1816535072, 1701277281, 538976370, 8224, 1213561408, 1377828871, 1918989423, 1884495993, 1701536101, 8306	# [32]
+	tab_u32	1213561486, 538968070, 1801678674, 1953452576, 544830049, 8224, 1213561500, 538968072, 1918115872, 1819241829, 538976367, 8224, 1213561512, 538968071, 1967202336, 1344302964	# [48]
+	tab_u32	538996321, 8224, 1213561528, 538968072, 1767252000, 1952543330, 538976367, 8224, 1213561542, 1377828868, 543649385, 1969516365, 1869898092, 8306, 1213561558, 538968068	# [64]
+	tab_u32	1293951008, 1886746729, 538976288, 8224, 1213561566, 1344274440, 1835102817, 1769108581, 1363484771, 8224, 1213561574, 538968070, 1850023968, 1668178280, 538997349, 8224	# [80]
+	tab_u32	1213561590, 538968067, 2017796128, 1702127971, 538976370, 8224, 1213561602, 538968069, 1967202336, 1461743476, 538994785, 8224, 1213561608, 538968070, 1936278560, 1953656692	# [96]
+	tab_u32	544108393, 8224, 1213561618, 538968070, 1702252320, 1769104498, 538994038, 8224, 1213561630, 538968066, 538976288, 2054845766, 538976288, 8224, 1213561642, 538968068	# [112]
+	tab_u32	1766596640, 1702127981, 538976370, 8224, 1213561646, 538968068, 1836008224, 1936028272, 544370547, 8224, 1213561654, 1394606084, 544698220, 1635021889, 1919249251, 8224	# [128]
+	tab_u32	1213561662, 538968124, 1635075104, 1698963564, 544825708, 8224, 1213561670, 538968124, 1936683587, 1698963571, 544825708, 8224, 1213561790, 1967980552, 543781996, 544235860	# [144]
+	tab_u32	1634493764, 8313, 1213561910, 1142947847, 2036427877, 1836008224, 2019912816, 8224, 1213561926, 1159725066, 1667589734, 1699553396, 2037542765, 8224, 0, 538968064	# [160]
+	tab_u32	538976288, 538976288, 538976288, 8224, 0	# [176]
 
 func_4863D8F2_Var_2:	# u16, a constant; read / written by func_4863D8F2 0x4863D8F2: `movhu (func_4863D8F2_Var_2), d0`; func_4863E41C_entry_Lfc 0x4863E51D: `movhu (func_4863D8F2_Var_2), d0`
 	.word	30
@@ -38099,111 +37980,89 @@ func_4863D95A_entry_L126_Records:	# 1 x REC_func_4863D95A_entry_L126_Records (12
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x15B8BE, 0x15B8D2
 	.space	1644, 0xFF
-# census: opaque -- unknown-dump: 1010 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15BF3E, 0x15C330
-data_4855C330:
-	# 2 bytes the code takes the address of: func_4863DE13 0x4863DE13 `mov data_4855C330, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	3, 0	# +0
 
-Str_Reverb_3:	.asciz "     Reverb     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C343, 0x15C34A
-Str_Chorus_3:	.asciz "     Chorus     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C35B, 0x15C362
-Str_Ensemble_2:	.asciz "    Ensemble    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C373, 0x15C37A
-Str_Ensemble_D_W:	.asciz "  Ensemble D/W  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C38B, 0x15C392
-Str_Modulated_Chorus_2:	.asciz "Modulated Chorus"
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C3A3, 0x15C3AA
-Str_Mod_Chorus_D_W:	.asciz " Mod.Chorus D/W "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C3BB, 0x15C3C2
-Str_Celeste_2:	.asciz "    Celeste     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C3D3, 0x15C3DA
-Str_Mod_Celeste_2:	.asciz "  Mod. Celeste  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C3EB, 0x15C3F2
-Str_Phaser_3:	.asciz "     Phaser     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C403, 0x15C40A
-Str_Phaser_D_W:	.asciz "   Phaser D/W   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C41B, 0x15C422
-Str_Flanger_4:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C433, 0x15C43A
-Str_Flanger_D_W:	.asciz "  Flanger D/W   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C44B, 0x15C452
-Str_Rotary_Speaker_2:	.asciz " Rotary Speaker "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C463, 0x15C46A
-Str_Rock_Rotary_2:	.asciz "  Rock Rotary   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C47B, 0x15C482
-Str_Tremolo_2:	.asciz "    Tremolo     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C493, 0x15C49A
-Str_Auto_Pan_2:	.asciz "    Auto Pan    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C4AB, 0x15C4B2
-Str_Vibrato_2:	.asciz "    Vibrato     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C4C3, 0x15C4CA
-Str_Ring_Modulator_2:	.asciz " Ring Modulator "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C4DB, 0x15C4E2
-Str_Mixup_2:	.asciz "     Mixup      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C4F3, 0x15C4FA
-Str_Parametric_EQ_2:	.asciz " Parametric EQ  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C50B, 0x15C512
-Str_Enhancer_2:	.asciz "    Enhancer    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C523, 0x15C52A
-Str_Exciter_3:	.asciz "    Exciter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C53B, 0x15C542
-Str_Auto_Wah_2:	.asciz "    Auto Wah    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C553, 0x15C55A
-Str_Distortion_2:	.asciz "   Distortion   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C56B, 0x15C572
-Str_Overdrive_2:	.asciz "   Overdrive    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C583, 0x15C58A
-Str_Fuzz_2:	.asciz "      Fuzz      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C59B, 0x15C5A2
-Str_Limiter_2:	.asciz "    Limiter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C5B3, 0x15C5BA
-Str_Compressor_2:	.asciz "   Compressor   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C5CB, 0x15C5D2
-Str_Slow_Attacker_2:	.asciz " Slow Attacker  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C5E3, 0x15C5EA
-Str_Dual_Delay_2:	.asciz "   Dual Delay   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C5FB, 0x15C602
-Str_Cross_Delay_2:	.asciz "  Cross Delay   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C613, 0x15C61A
-Str_Multi_Tap_Delay_2:	.asciz "Multi Tap Delay "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C62B, 0x15C632
-Str_Delay_Complex_2:	.asciz " Delay Complex  "
-# census: opaque -- unknown-dump: 29 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x15C643, 0x15C660
+func_4863DE13_Result_p20_2:	# REC_func_4863DE13_Result_p20 (1 bytes), then 1009 x u8 the code indexes from +0 (read by func_4863D95A_entry_L6b 0x4863D9CA `movbu (d0, a1), d1`)
+	REC_func_4863DE13_Result_p20	x0="\x09"
+	tab_u8	32, 9, 33, 9, 34, 16, 0, 16, 1, 16, 2, 16, 3, 16, 4, 16	# [0]
+	tab_u8	5, 16, 6, 16, 7, 16, 32, 16, 33, 16, 34, 16, 35, 16, 36, 16	# [16]
+	tab_u8	8, 16, 9, 16, 10, 16, 11, 16, 12, 16, 13, 16, 14, 16, 15, 16	# [32]
+	tab_u8	40, 16, 41, 16, 42, 16, 43, 16, 44, 16, 16, 16, 17, 16, 18, 16	# [48]
+	tab_u8	19, 16, 20, 16, 21, 16, 22, 16, 23, 16, 48, 16, 49, 16, 50, 16	# [64]
+	tab_u8	51, 16, 52, 18, 0, 18, 1, 18, 2, 18, 3, 18, 4, 18, 5, 18	# [80]
+	tab_u8	6, 18, 7, 18, 32, 18, 33, 18, 34, 18, 35, 18, 36, 18, 8, 18	# [96]
+	tab_u8	9, 18, 10, 18, 11, 18, 12, 18, 13, 18, 14, 18, 15, 18, 40, 18	# [112]
+	tab_u8	41, 18, 42, 18, 43, 18, 44, 18, 16, 18, 17, 18, 18, 18, 19, 18	# [128]
+	tab_u8	20, 18, 21, 18, 22, 18, 23, 18, 48, 18, 49, 18, 50, 18, 51, 18	# [144]
+	tab_u8	52, 19, 0, 19, 1, 19, 2, 19, 3, 19, 4, 19, 5, 19, 6, 19	# [160]
+	tab_u8	7, 19, 32, 19, 33, 19, 34, 19, 35, 19, 36, 20, 0, 20, 1, 20	# [176]
+	tab_u8	2, 20, 3, 20, 4, 20, 5, 20, 6, 20, 7, 20, 32, 20, 33, 20	# [192]
+	tab_u8	34, 20, 35, 20, 36, 20, 8, 20, 9, 20, 10, 20, 11, 20, 12, 20	# [208]
+	tab_u8	13, 20, 14, 20, 15, 20, 40, 20, 41, 20, 42, 20, 43, 20, 44, 20	# [224]
+	tab_u8	16, 20, 17, 20, 18, 20, 19, 20, 20, 20, 21, 20, 22, 20, 23, 20	# [240]
+	tab_u8	48, 20, 49, 20, 50, 20, 51, 20, 52, 21, 0, 21, 1, 21, 2, 21	# [256]
+	tab_u8	3, 21, 4, 21, 5, 21, 6, 21, 7, 21, 32, 21, 33, 21, 34, 21	# [272]
+	tab_u8	35, 21, 36, 25, 0, 25, 1, 25, 2, 25, 3, 25, 4, 25, 5, 25	# [288]
+	tab_u8	6, 25, 7, 25, 32, 25, 33, 25, 34, 25, 35, 25, 36, 27, 0, 27	# [304]
+	tab_u8	1, 27, 2, 27, 3, 27, 4, 27, 5, 27, 6, 27, 7, 27, 32, 27	# [320]
+	tab_u8	33, 27, 34, 27, 35, 27, 36, 32, 0, 32, 1, 32, 2, 32, 3, 32	# [336]
+	tab_u8	4, 32, 5, 32, 6, 32, 32, 32, 33, 32, 34, 32, 35, 32, 36, 32	# [352]
+	tab_u8	37, 32, 8, 32, 9, 32, 10, 32, 11, 32, 12, 32, 13, 32, 14, 32	# [368]
+	tab_u8	40, 32, 41, 32, 42, 32, 43, 32, 44, 32, 45, 32, 16, 32, 17, 32	# [384]
+	tab_u8	18, 32, 19, 32, 20, 32, 21, 32, 22, 32, 48, 32, 49, 32, 50, 32	# [400]
+	tab_u8	51, 32, 52, 32, 53, 42, 0, 42, 1, 42, 2, 42, 3, 42, 4, 42	# [416]
+	tab_u8	5, 42, 6, 42, 32, 42, 33, 42, 34, 42, 35, 42, 36, 42, 37, 35	# [432]
+	tab_u8	0, 35, 1, 35, 2, 35, 3, 35, 4, 35, 5, 35, 6, 35, 32, 35	# [448]
+	tab_u8	33, 35, 34, 35, 35, 35, 36, 35, 37, 35, 8, 35, 9, 35, 10, 35	# [464]
+	tab_u8	11, 35, 12, 35, 13, 35, 14, 35, 40, 35, 41, 35, 42, 35, 43, 35	# [480]
+	tab_u8	44, 35, 45, 35, 16, 35, 17, 35, 18, 35, 19, 35, 20, 35, 21, 35	# [496]
+	tab_u8	22, 35, 48, 35, 49, 35, 50, 35, 51, 35, 52, 35, 53, 43, 0, 43	# [512]
+	tab_u8	1, 43, 2, 43, 3, 43, 4, 43, 5, 43, 6, 43, 32, 43, 33, 43	# [528]
+	tab_u8	34, 43, 35, 43, 36, 43, 37, 34, 0, 34, 1, 34, 2, 34, 3, 34	# [544]
+	tab_u8	4, 34, 5, 34, 6, 34, 32, 34, 33, 34, 34, 34, 35, 34, 36, 34	# [560]
+	tab_u8	37, 37, 0, 37, 1, 37, 2, 37, 3, 37, 4, 37, 5, 37, 6, 37	# [576]
+	tab_u8	7, 37, 32, 37, 33, 37, 34, 37, 35, 37, 36, 37, 37, 37, 38, 39	# [592]
+	tab_u8	0, 39, 1, 39, 2, 39, 3, 39, 4, 39, 5, 39, 6, 39, 7, 41	# [608]
+	tab_u8	0, 41, 1, 41, 2, 41, 3, 41, 32, 41, 33, 41, 34, 41, 35, 48	# [624]
+	tab_u8	0, 48, 1, 48, 2, 48, 3, 48, 4, 48, 5, 48, 6, 48, 7, 53	# [640]
+	tab_u8	32, 53, 33, 53, 34, 53, 35, 53, 36, 53, 37, 55, 0, 55, 1, 55	# [656]
+	tab_u8	2, 56, 32, 56, 33, 56, 34, 56, 35, 56, 36, 64, 0, 64, 1, 64	# [672]
+	tab_u8	2, 64, 3, 64, 4, 64, 5, 64, 32, 64, 33, 64, 34, 64, 35, 64	# [688]
+	tab_u8	36, 64, 37, 65, 0, 65, 1, 68, 0, 68, 1, 68, 2, 68, 3, 69	# [704]
+	tab_u8	0, 69, 1, 69, 2, 69, 3, 70, 0, 70, 1, 70, 2, 70, 3, 72	# [720]
+	tab_u8	0, 72, 1, 72, 2, 72, 3, 72, 4, 72, 5, 72, 6, 72, 7, 72	# [736]
+	tab_u8	32, 72, 33, 72, 34, 72, 35, 72, 36, 72, 37, 72, 38, 72, 39, 73	# [752]
+	tab_u8	0, 73, 1, 73, 2, 73, 3, 72, 8, 72, 9, 72, 10, 72, 11, 72	# [768]
+	tab_u8	12, 72, 13, 72, 14, 72, 15, 72, 40, 72, 41, 72, 42, 72, 43, 72	# [784]
+	tab_u8	44, 72, 45, 72, 46, 72, 47, 73, 8, 73, 9, 73, 10, 73, 11, 72	# [800]
+	tab_u8	16, 72, 17, 72, 18, 72, 19, 72, 20, 72, 21, 72, 22, 72, 23, 72	# [816]
+	tab_u8	48, 72, 49, 72, 50, 72, 51, 72, 52, 72, 53, 72, 54, 72, 55, 73	# [832]
+	tab_u8	16, 73, 17, 73, 18, 73, 19, 76, 0, 76, 1, 76, 2, 76, 3, 76	# [848]
+	tab_u8	4, 76, 5, 76, 6, 76, 7, 76, 32, 76, 33, 76, 34, 76, 35, 76	# [864]
+	tab_u8	36, 76, 37, 76, 38, 76, 39, 77, 0, 77, 1, 77, 2, 77, 3, 76	# [880]
+	tab_u8	8, 76, 9, 76, 10, 76, 11, 76, 12, 76, 13, 76, 14, 76, 15, 76	# [896]
+	tab_u8	40, 76, 41, 76, 42, 76, 43, 76, 44, 76, 45, 76, 46, 76, 47, 77	# [912]
+	tab_u8	8, 77, 9, 77, 10, 77, 11, 76, 16, 76, 17, 76, 18, 76, 19, 76	# [928]
+	tab_u8	20, 76, 21, 76, 22, 76, 23, 76, 48, 76, 49, 76, 50, 76, 51, 76	# [944]
+	tab_u8	52, 76, 53, 76, 54, 76, 55, 77, 16, 77, 17, 77, 18, 77, 19, 81	# [960]
+	tab_u8	0, 81, 1, 81, 2, 81, 3, 81, 4, 81, 5, 81, 6, 81, 7, 82	# [976]
+	tab_u8	0, 82, 32, 83, 0, 83, 32, 84, 0, 85, 0, 85, 32, 192, 32, 255	# [992]
+	tab_u8	255	# [1008]
+func_4863DE13_Result_2:	# REC_func_4863DE13_Result (20 bytes), then 199 x u32 the code indexes from +0 (read by func_4863D8A5_entry_L24 0x4863D8CE `movhu (d3, a2), d1`; func_4863D95A_entry_L3b 0x4863D99A `movhu (a2), d0`)
+	REC_func_4863DE13_Result	x0="\x03\x00     Reverb     \x00\x00"
+	tab_u32	1213579070, 538968103, 1126178848, 1970433896, 538976371, 8224, 1213579076, 538968103, 1850023968, 1651336563, 538994028, 8224, 1213579154, 538968077, 1702063685, 1701601901	# [0]
+	tab_u32	1462715424, 8224, 1213579232, 1867317287, 1634497892, 543450484, 1919903811, 29557, 1213579258, 1293942797, 1127113839, 1970433896, 792993907, 8279, 1213579336, 538968077	# [16]
+	tab_u32	1698897952, 1953719660, 538976357, 8224, 1213579362, 538968077, 778334029, 1818575648, 1702130533, 8224, 1213579388, 538968103, 1344282656, 1702060392, 538976370, 8224	# [32]
+	tab_u32	1213579414, 538968077, 1634226208, 544367987, 542584644, 8224, 1213579492, 538968103, 1816535072, 1701277281, 538976370, 8224, 1213579518, 538968077, 1851878470, 544367975	# [48]
+	tab_u32	542584644, 8224, 1213579596, 1377828871, 1918989423, 1884495993, 1701536101, 8306, 1213579622, 538968070, 1801678674, 1953452576, 544830049, 8224, 1213579636, 538968072	# [64]
+	tab_u32	1918115872, 1819241829, 538976367, 8224, 1213579648, 538968071, 1967202336, 1344302964, 538996321, 8224, 1213579664, 538968072, 1767252000, 1952543330, 538976367, 8224	# [80]
+	tab_u32	1213579678, 1377828868, 543649385, 1969516365, 1869898092, 8306, 1213579694, 538968068, 1293951008, 1886746729, 538976288, 8224, 1213579702, 1344274440, 1835102817, 1769108581	# [96]
+	tab_u32	1363484771, 8224, 1213579710, 538968070, 1850023968, 1668178280, 538997349, 8224, 1213579726, 538968067, 2017796128, 1702127971, 538976370, 8224, 1213579738, 538968069	# [112]
+	tab_u32	1967202336, 1461743476, 538994785, 8224, 1213579744, 538968070, 1936278560, 1953656692, 544108393, 8224, 1213579754, 538968070, 1702252320, 1769104498, 538994038, 8224	# [128]
+	tab_u32	1213579766, 538968066, 538976288, 2054845766, 538976288, 8224, 1213579778, 538968068, 1766596640, 1702127981, 538976370, 8224, 1213579782, 538968068, 1836008224, 1936028272	# [144]
+	tab_u32	544370547, 8224, 1213579790, 1394606084, 544698220, 1635021889, 1919249251, 8224, 1213579798, 538968124, 1635075104, 1698963564, 544825708, 8224, 1213579806, 538968124	# [160]
+	tab_u32	1936683587, 1698963571, 544825708, 8224, 1213579926, 1967980552, 543781996, 544235860, 1634493764, 8313, 1213580046, 1142947847, 2036427877, 1836008224, 2019912816, 8224	# [176]
+	tab_u32	1213580062, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [192]
+
 Str_empty_361:	.asciz "!"
 
 func_4863D95A_entry_L17c_Records:	# 1 x REC_func_4863D95A_entry_L17c_Records (128 bytes each); read by func_4863D95A_entry_L17c 0x4863DADB `movbu (a0), d0`; func_4863D95A_entry_L199 0x4863DAF8 `movbu (1, a0), d1`
@@ -38281,18 +38140,14 @@ func_4863D95A_entry_L17c_Records:	# 1 x REC_func_4863D95A_entry_L17c_Records (12
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x15FF62, 0x15FF8A
 	.space	1752, 0xFF
-# census: opaque -- unknown-dump: 22 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x160662, 0x160678
-data_48560678:
-	# a string, 2 bytes with its pad, read by func_4863DE13 0x4863DE13 `mov data_48560678, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"\n"
 
-Str_Band_Chorus:	.asciz "  Band Chorus   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x16068B, 0x160692
-Str_Effect_Memory_3:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1606A3, 0x1606C0
+func_4863DE13_Result_p20_3:	# REC_func_4863DE13_Result_p20 (1 bytes), then 21 x u8 the code indexes from +0 (read by func_4863D95A_entry_L6b 0x4863D9CA `movbu (d0, a1), d1`)
+	REC_func_4863DE13_Result_p20	x0="\x16"
+	tab_u8	0, 22, 1, 22, 2, 22, 3, 22, 32, 22, 33, 22, 34, 22, 35, 22	# [0]
+	tab_u8	36, 22, 37, 255, 255	# [16]
+func_4863DE13_Result_3:	# REC_func_4863DE13_Result (20 bytes), then 13 x u32 the code indexes from +0 (read by func_4863D8A5_entry_L24 0x4863D8CE `movhu (d3, a2), d1`; func_4863D95A_entry_L3b 0x4863D99A `movhu (a2), d0`)
+	REC_func_4863DE13_Result	x0="\n\x00  Band Chorus   \x00\x00"
+	tab_u32	1213597282, 1159725066, 1667589734, 1699553396, 2037542765, 8224, 0, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4863D8F2_Var_3:	# u16, a constant; read / written by func_4863D8F2 0x4863D8F2: `movhu (func_4863D8F2_Var_3), d0`; func_4863E41C_entry_Lfc 0x4863E51D: `movhu (func_4863D8F2_Var_3), d0`
 	.word	2
@@ -38306,15 +38161,13 @@ func_4863D95A_entry_L1d2_Records:	# 1 x REC_func_4863D95A_entry_L1d2_Records (12
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x1640C2, 0x1640D6
 	.space	1516, 0xFF
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1646C2, 0x1646CC
-data_485646CC:
-	# 2 bytes the code takes the address of: func_4863DE13 0x4863DE13 `mov data_485646CC, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	4, 0	# +0
 
-Str_Vocal_Reverb:	.asciz "  Vocal Reverb  "
-# census: opaque -- unknown-dump: 29 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1646DF, 0x1646FC
+func_4863DE13_Result_p20_4:	# REC_func_4863DE13_Result_p20 (1 bytes), then 9 x u8 the code indexes from +0 (read by func_4863D95A_entry_L6b 0x4863D9CA `movbu (d0, a1), d1`)
+	REC_func_4863DE13_Result_p20	x0="["
+	tab_u8	0, 91, 1, 91, 2, 91, 3, 255, 255	# [0]
+func_4863DE13_Result_4:	# REC_func_4863DE13_Result (20 bytes), then 7 x u32 the code indexes from +0 (read by func_4863D8A5_entry_L24 0x4863D8CE `movhu (d3, a2), d1`; func_4863D95A_entry_L3b 0x4863D99A `movhu (a2), d0`)
+	REC_func_4863DE13_Result	x0="\x04\x00  Vocal Reverb  \x00\x00"
+	tab_u32	1213613762, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4863D8F2_Var_4:	# u16, a constant; read / written by func_4863D8F2 0x4863D8F2: `movhu (func_4863D8F2_Var_4), d0`; func_4863E41C_entry_Lfc 0x4863E51D: `movhu (func_4863D8F2_Var_4), d0`
 	.word	1
@@ -38325,15 +38178,14 @@ func_4863D95A_entry_L227_Records:	# 1 x REC_func_4863D95A_entry_L227_Records (12
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x16747E, 0x167486
 	.space	4728, 0xFF
-# census: opaque -- unknown-dump: 26 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x1686FE, 0x168718
-data_48568718:
-	# 2 bytes the code takes the address of: func_4863DE13 0x4863DE13 `mov data_48568718, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	12, 0	# +0
 
-Str_Vocal_Effect:	.asciz "  Vocal Effect  "
-# census: opaque -- unknown-dump: 29 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x16872B, 0x168748
+func_4863DE13_Result_p20_5:	# REC_func_4863DE13_Result_p20 (1 bytes), then 25 x u8 the code indexes from +0 (read by func_4863D95A_entry_L6b 0x4863D9CA `movbu (d0, a1), d1`)
+	REC_func_4863DE13_Result_p20	x0="\xC0"
+	tab_u8	0, 192, 1, 192, 2, 192, 4, 192, 5, 192, 6, 192, 7, 192, 8, 192	# [0]
+	tab_u8	9, 192, 10, 192, 11, 192, 12, 255, 255	# [16]
+func_4863DE13_Result_5:	# REC_func_4863DE13_Result (20 bytes), then 7 x u32 the code indexes from +0 (read by func_4863D8A5_entry_L24 0x4863D8CE `movhu (d3, a2), d1`; func_4863D95A_entry_L3b 0x4863D99A `movhu (a2), d0`)
+	REC_func_4863DE13_Result	x0="\x0C\x00  Vocal Effect  \x00\x00"
+	tab_u32	1213630206, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4863D8F2_Var_5:	# u16, a constant; read / written by func_4863D8F2 0x4863D8F2: `movhu (func_4863D8F2_Var_5), d0`
 	.word	1
@@ -38892,17 +38744,10 @@ func_48645B79_entry_L34_Table:
 	.long	func_48645921
 	.long	func_48645921
 
-func_5013DCEB_Var_5:	# u32, a constant; read / written by func_5013DCEB 0x5013DCEB: `mov (a2), d0`
-	.long	32768
-func_5013DCEB_Var_6:	# u32, a constant; read / written by func_5013DCEB 0x5013DCEB: `mov (4, a2), d0`
-	.long	32768
-func_5013DCEB_Var_7:	# u32, a constant; read / written by func_5013DCEB 0x5013DCEB: `mov (8, a2), d0`
-	.long	32768
-func_5013DCEB_Var_8:	# u32, a constant; read / written by func_5013DCEB 0x5013DCEB: `mov (0xc, a2), d0`
-	.long	32768
-
-func_5013DCEB_Table_2:	# 2 x u16, 0..32; read by func_5013DCEB 0x5013DCEB: `movhu (0x10, a2), d0`
-	tab_u16	32, 0
+func_5013DCEB_Var_5:	# REC_func_5013DCEB_ArgA0 (18 bytes): the layout func_5013DCEB 0x5013DCEB reads through its argument a0 (passed by func_48645B79_entry_L34 0x48645BB0 `call func_5013DCEB_entry, [a2], 0x18`, +2 more calls)
+	REC_func_5013DCEB_ArgA0	f0=32768, f4=32768, f8=32768, f12=32768, f16=32
+	# then 1 x u16 up to the next label, which no instruction is seen to read (the table the field reads ran on into them)
+	tab_u16	0	# +18
 
 Str_JFIF:	.asciz "JFIF"
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -38917,7 +38762,7 @@ func_485EA803_entry_L30_Table_2:	# 20 x u8, 0..2; read by func_485EA803_entry_L3
 	tab_u8	1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 2, 1, 1, 0	# [0]
 	tab_u8	1, 1, 1, 0	# [16]
 data_4856F57D:
-	# 20 bytes the code takes the address of: func_485E8EDD_entry_L15 0x485E8EF7 `mov data_4856F57D, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_485E8EDD_entry_L15 0x485E8EF7 `mov data_4856F57D, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0	# +0
 	tab_u8	0, 1, 1, 0	# +16
 
@@ -40005,3 +39850,736 @@ data_4857151E:
 data_48571550:
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x171550, 0x171564
+
+StyleRecordTable:	# 720 x MusicStylistSetup (24 bytes each); read by MssNameFunc_Lcb 0x4863E96A `mov (4, a0), a1`; func_4863E9FF 0x4863E9FF `mov (4, a0), a1`; func_4863EA37 0x4863EA37 `mov (4, a0), a1` (+116)
+	MusicStylistSetup	panel=StylePanel_Hippie_Piano_1, name=Text_Hippie_Piano, era_pos=56, letter=15, letter_pos=30, x22="\x00\x00"	# [0]
+	MusicStylistSetup	panel=StylePanel_FlowerPower_Rock_2, name=Text_Hippie_Piano+17, setup=1, era_pos=35, letter=13, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Woddstock_Harp_3, name=Text_Hippie_Piano+34, setup=2, era_pos=129, letter=30, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_FolkRock_Guitars_4, name=Text_Hippie_Piano+51, setup=3, era_pos=38, letter=13, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Synth_OffTheWall_1, name=Text_Hippie_Piano+68, style=1, era=1, era_pos=121, letter=26, letter_pos=116, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Thrilling_Guitar_2, name=Text_Hippie_Piano+85, style=1, setup=1, era=1, era_pos=122, letter=27, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bad_Funk_Pop_3, name=Text_Hippie_Piano+102, style=1, setup=2, era=1, era_pos=11, letter=9, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Vid_Strings_4, name=Text_Hippie_Piano+119, style=1, setup=3, era=1, era_pos=87, letter=23, letter_pos=37, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dry_Rock_EP_1, name=Text_Hippie_Piano+136, style=2, era=2, era_pos=26, letter=11, letter_pos=30, x22="\x00\x00"	# [8]
+	MusicStylistSetup	panel=StylePanel_New_Phase_Rock_2, name=Text_Hippie_Piano+153, style=2, setup=1, era=2, era_pos=55, letter=21, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Rock_Organ_3, name=Text_Hippie_Piano+170, style=2, setup=2, era=2, era_pos=69, letter=23, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_US_Power_Pop_4, name=Text_Hippie_Piano+187, style=2, setup=3, era=2, era_pos=99, letter=28, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_MirrorballSmooch_1, name=Text_Hippie_Piano+204, style=3, era_pos=72, letter=20, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brothers_Ballad_2, name=Text_Hippie_Piano+221, style=3, setup=1, era_pos=21, letter=9, letter_pos=67, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SaturdayAcoustic_3, name=Text_Hippie_Piano+238, style=3, setup=2, era_pos=98, letter=26, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_PopOrchestra_4, name=Text_Hippie_Piano+255, style=3, setup=3, era_pos=6, letter=5, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_PopStar_Acoustic_1, name=Text_Hippie_Piano+272, genre=1, era=2, era_pos=74, letter=23, letter_pos=42, x22="\x00\x00"	# [16]
+	MusicStylistSetup	panel=StylePanel_Pop_Ballad_Layer_2, name=Text_Hippie_Piano+289, genre=1, setup=1, era=2, era_pos=67, letter=23, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chart_Sax_3, name=Text_Hippie_Piano+306, genre=1, setup=2, era=2, era_pos=16, letter=10, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Symphony_4, name=Text_Hippie_Piano+323, genre=1, setup=3, era=2, era_pos=71, letter=23, letter_pos=36, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Euro_Pop_Vision_1, name=Text_Hippie_Piano+340, style=4, era_pos=31, letter=12, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Platform_Keys_2, name=Text_Hippie_Piano+357, style=4, setup=1, era_pos=83, letter=23, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Super_Swede_Solo_3, name=Text_Hippie_Piano+374, style=4, setup=2, era_pos=119, letter=26, letter_pos=91, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_PopSensation_4, name=Text_Hippie_Piano+391, style=4, setup=3, era_pos=7, letter=5, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ricky_s_Guitar_1, name=Text_Hippie_Piano+408, style=5, era=3, era_pos=85, letter=25, letter_pos=18, x22="\x00\x00"	# [24]
+	MusicStylistSetup	panel=StylePanel_Latin_Sax_Life_2, name=Text_Hippie_Piano+425, style=5, setup=1, era=3, era_pos=52, letter=19, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_La_B3_3, name=Text_Hippie_Piano+442, style=5, setup=2, era=3, era_pos=50, letter=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_DiscoHorns_4, name=Text_Hippie_Piano+459, style=5, setup=3, era=3, era_pos=51, letter=19, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SoftLatinRomance_1, name=Text_Hippie_Piano+476, style=6, era=2, era_pos=83, letter=26, letter_pos=39, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Enrique_s_Guitar_2, name=Text_Hippie_Piano+493, style=6, setup=1, era=2, era_pos=27, letter=12, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LoveSong_Strings_3, name=Text_Hippie_Piano+510, style=6, setup=2, era=2, era_pos=52, letter=19, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_GuitarHeroBallad_4, name=Text_Hippie_Piano+527, style=6, setup=3, era=2, era_pos=32, letter=14, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hit_Parade_Organ_1, name=Text_Hippie_Piano+544, style=7, era=4, era_pos=25, letter=15, letter_pos=31, x22="\x00\x00"	# [32]
+	MusicStylistSetup	panel=StylePanel_Swivel_Hip_Vocal_2, name=Text_Hippie_Piano+561, style=7, setup=1, era=4, era_pos=50, letter=26, letter_pos=107, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Groovy_Orchestra_3, name=Text_Hippie_Piano+578, style=7, setup=2, era=4, era_pos=24, letter=14, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Unusual_Brass_4, name=Text_Hippie_Piano+595, style=7, setup=3, era=4, era_pos=55, letter=28, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Homecoming_Harp_1, name=Text_Hippie_Piano+612, genre=2, era_pos=58, letter=15, letter_pos=37, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tie_The_Geetar_2, name=Text_Hippie_Piano+629, genre=2, setup=1, era_pos=121, letter=27, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tony_DawnCountry_3, name=Text_Hippie_Piano+646, genre=2, setup=2, era_pos=122, letter=27, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ribbon_Orchestra_4, name=Text_Hippie_Piano+663, genre=2, setup=3, era_pos=93, letter=25, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Fab_Piano_1, name=Text_Hippie_Piano+680, style=8, era=4, era_pos=18, letter=13, x22="\x00\x00"	# [40]
+	MusicStylistSetup	panel=StylePanel_Strummed_Ballad_2, name=Text_Hippie_Piano+697, style=8, setup=1, era=4, era_pos=49, letter=26, letter_pos=75, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Yesterday_sVoice_3, name=Text_Hippie_Piano+714, style=8, setup=2, era=4, era_pos=63, letter=31, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Weeping_Guitar_4, name=Text_Hippie_Piano+731, style=8, setup=3, era=4, era_pos=62, letter=30, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Swing_Angle_1, name=Text_Hippie_Piano+748, style=9, era=3, era_pos=76, letter=23, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Retro_Pop_Keys_2, name=Text_Hippie_Piano+765, style=9, setup=1, era=3, era_pos=84, letter=25, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Swing_Wah_Wah_3, name=Text_Hippie_Piano+782, style=9, setup=2, era=3, era_pos=103, letter=26, letter_pos=100, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Jam_Brass_4, name=Text_Hippie_Piano+799, style=9, setup=3, era=3, era_pos=75, letter=23, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Soul_Suit_1, name=Text_Hippie_Piano+816, style=10, era=4, era_pos=47, letter=26, letter_pos=46, x22="\x00\x00"	# [48]
+	MusicStylistSetup	panel=StylePanel_Drifting_Strings_2, name=Text_Hippie_Piano+833, style=10, setup=1, era=4, era_pos=16, letter=11, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Motoring_Sax_3, name=Text_Hippie_Piano+850, style=10, setup=2, era=4, era_pos=30, letter=20, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Detroit_Horns_4, name=Text_Hippie_Piano+867, style=10, setup=3, era=4, era_pos=14, letter=11, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Soul_Harp_1, name=Text_Hippie_Piano+884, genre=1, style=1, era_pos=85, letter=23, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sunshine_Soul_2, name=Text_Hippie_Piano+901, genre=1, style=1, setup=1, era_pos=116, letter=26, letter_pos=88, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Soul_Singers_3, name=Text_Hippie_Piano+918, genre=1, style=1, setup=2, era_pos=86, letter=23, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Soul_Brass_Wood_4, name=Text_Hippie_Piano+935, genre=1, style=1, setup=3, era_pos=105, letter=26, letter_pos=43, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mini_Boys_1, name=Text_Hippie_Piano+952, genre=3, era=3, era_pos=59, letter=20, letter_pos=18, x22="\x00\x00"	# [56]
+	MusicStylistSetup	panel=StylePanel_Shining_Guys_2, name=Text_Hippie_Piano+969, genre=3, setup=1, era=3, era_pos=89, letter=26, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Take_This_Groove_3, name=Text_Hippie_Piano+986, genre=3, setup=2, era=3, era_pos=108, letter=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Teeny_Synth_4, name=Text_Hippie_Piano+1003, genre=3, setup=3, era=3, era_pos=109, letter=27, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Synth_Sweetheart_1, name=Text_Hippie_Piano+1020, style=11, era=3, era_pos=107, letter=26, letter_pos=117, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Stevie_s_Grand_2, name=Text_Hippie_Piano+1037, style=11, setup=1, era=3, era_pos=97, letter=26, letter_pos=65, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Wonder_Guitars_3, name=Text_Hippie_Piano+1054, style=11, setup=2, era=3, era_pos=112, letter=30, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Detroit_Voices_4, name=Text_Hippie_Piano+1071, style=11, setup=3, era=3, era_pos=30, letter=11, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Soulful_Tines_1, name=Text_Hippie_Piano+1088, genre=1, style=2, era=1, era_pos=106, letter=26, letter_pos=48, x22="\x00\x00"	# [64]
+	MusicStylistSetup	panel=StylePanel_Cool_Jazzy_Tabs_2, name=Text_Hippie_Piano+1105, genre=1, style=2, setup=1, era=1, era_pos=28, letter=10, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hot_Cool_3, name=Text_Hippie_Piano+1122, genre=1, style=2, setup=2, era=1, era_pos=57, letter=15, letter_pos=38, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LA_Horn_Section_4, name=Text_Hippie_Piano+1139, genre=1, style=2, setup=3, era=1, era_pos=67, letter=19, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_Rock_Organ_1, name=Text_Hippie_Piano+1156, style=12, era_pos=10, letter=5, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Egalitarian_Rock_2, name=Text_Hippie_Piano+1173, style=12, setup=1, era_pos=29, letter=12, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Super_Group_12_3, name=Text_Hippie_Piano+1190, style=12, setup=2, era_pos=118, letter=26, letter_pos=90, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_Lead_Guitar_4, name=Text_Hippie_Piano+1207, style=12, setup=3, era_pos=5, letter=5, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Africa_Synth_1, name=Text_Hippie_Piano+1224, style=13, era=1, era_pos=8, letter=8, letter_pos=11, x22="\x00\x00"	# [72]
+	MusicStylistSetup	panel=StylePanel_80s_Power_Organ_2, name=Text_Hippie_Piano+1241, style=13, setup=1, era=1, era_pos=5, letter=6, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Toe_Tow_Guitar_3, name=Text_Hippie_Piano+1258, style=13, setup=2, era=1, era_pos=124, letter=27, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Eighties_For_EG_4, name=Text_Hippie_Piano+1275, style=13, setup=3, era=1, era_pos=39, letter=12, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mellow_Metal_1, name=Text_Hippie_Piano+1292, style=14, era=2, era_pos=53, letter=20, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_RockFor_A_Nickel_2, name=Text_Hippie_Piano+1309, style=14, setup=1, era=2, era_pos=80, letter=25, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Metal_Pop_3, name=Text_Hippie_Piano+1326, style=14, setup=2, era=2, era_pos=33, letter=15, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Nu_Metal_4, name=Text_Hippie_Piano+1343, style=14, setup=3, era=2, era_pos=57, letter=21, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bottleneck_Pop_1, name=Text_Hippie_Piano+1360, style=15, era_pos=19, letter=9, letter_pos=53, x22="\x00\x00"	# [80]
+	MusicStylistSetup	panel=StylePanel_Pop_Praises_2, name=Text_Hippie_Piano+1377, style=15, setup=1, era_pos=84, letter=23, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Most_Fab_Lead_3, name=Text_Hippie_Piano+1394, style=15, setup=2, era_pos=73, letter=20, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_My_Sweet_Keys_4, name=Text_Hippie_Piano+1411, style=15, setup=3, era_pos=74, letter=20, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Eigties_Rock_EP_1, name=Text_Hippie_Piano+1428, style=16, era=1, era_pos=40, letter=12, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cop_Vocal_2, name=Text_Hippie_Piano+1445, style=16, setup=1, era=1, era_pos=29, letter=10, letter_pos=37, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Summer_s_Guitar_3, name=Text_Hippie_Piano+1462, style=16, setup=2, era=1, era_pos=112, letter=26, letter_pos=83, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Reggae_Rock_4, name=Text_Hippie_Piano+1479, style=16, setup=3, era=1, era_pos=91, letter=25, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Power_Chord_Riff_1, name=Text_Hippie_Piano+1496, style=17, era_pos=87, letter=23, letter_pos=45, x22="\x00\x00"	# [88]
+	MusicStylistSetup	panel=StylePanel_Deep_Solid_Rock_2, name=Text_Hippie_Piano+1513, style=17, setup=1, era_pos=26, letter=11, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Lord_s_Rock_C3_3, name=Text_Hippie_Piano+1530, style=17, setup=2, era_pos=66, letter=19, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_Rock_Legend_4, name=Text_Hippie_Piano+1547, style=17, setup=3, era_pos=9, letter=5, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_Funk_Solid_1, name=Text_Hippie_Piano+1564, style=18, era_pos=4, letter=5, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sunshine_Vocal_2, name=Text_Hippie_Piano+1581, style=18, setup=1, era_pos=117, letter=26, letter_pos=89, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_KC_s_Funk_Brass_3, name=Text_Hippie_Piano+1598, style=18, setup=2, era_pos=62, letter=18, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_Disco_Organ_4, name=Text_Hippie_Piano+1615, style=18, setup=3, era_pos=2, letter=5, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cop_Movie_EP_1, name=Text_Hippie_Piano+1632, style=19, era_pos=25, letter=10, letter_pos=36, x22="\x00\x00"	# [96]
+	MusicStylistSetup	panel=StylePanel_70s_Bronx_Brass_2, name=Text_Hippie_Piano+1649, style=19, setup=1, era_pos=1, letter=5, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Wah_Wah_Symphony_3, name=Text_Hippie_Piano+1666, style=19, setup=2, era_pos=126, letter=30, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Isaac_sOrchestra_4, name=Text_Hippie_Piano+1683, style=19, setup=3, era_pos=60, letter=16, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rollin_Keys_1, name=Text_Hippie_Piano+1700, style=20, era=5, era_pos=49, letter=25, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rockin_Organ_2, name=Text_Hippie_Piano+1717, style=20, setup=1, era=5, era_pos=48, letter=25, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_R_n_R_Big_Band_3, name=Text_Hippie_Piano+1734, style=20, setup=2, era=5, era_pos=45, letter=25, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sax_Drums_and_4, name=Text_Hippie_Piano+1751, style=20, setup=3, era=5, era_pos=51, letter=26, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Knebworth_Vocal_1, name=Text_Hippie_Piano+1768, style=21, era_pos=63, letter=18, letter_pos=6, x22="\x00\x00"	# [104]
+	MusicStylistSetup	panel=StylePanel_Logically_Guitar_2, name=Text_Hippie_Piano+1785, style=21, setup=1, era_pos=65, letter=19, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rock_Wurly_3, name=Text_Hippie_Piano+1802, style=21, setup=2, era_pos=95, letter=25, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Festival_Axe_4, name=Text_Hippie_Piano+1819, style=21, setup=3, era_pos=33, letter=13, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_B3_and_Roll_1, name=Text_Hippie_Piano+1836, style=22, era=5, era_pos=5, letter=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bill_s_Guitar_2, name=Text_Hippie_Piano+1853, style=22, setup=1, era=5, era_pos=9, letter=9, letter_pos=37, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jerry_s_Rock_3, name=Text_Hippie_Piano+1870, style=22, setup=2, era=5, era_pos=28, letter=17, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brass_Comets_4, name=Text_Hippie_Piano+1887, style=22, setup=3, era=5, era_pos=14, letter=9, letter_pos=58, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_True_Brit_Sax_1, name=Text_Hippie_Piano+1904, style=23, era_pos=123, letter=27, letter_pos=33, x22="\x00\x00"	# [112]
+	MusicStylistSetup	panel=StylePanel_Grand_Platforms_2, name=Text_Hippie_Piano+1921, style=23, setup=1, era_pos=46, letter=14, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70_s_Glitter_3, name=Text_Hippie_Piano+1938, style=23, setup=2, letter=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pinball_Organ_4, name=Text_Hippie_Piano+1955, style=23, setup=3, era_pos=82, letter=23, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mr_LA_Guitar_1, name=Text_Hippie_Piano+1972, genre=1, style=3, era=1, era_pos=75, letter=20, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tine_Grooves_2, name=Text_Hippie_Piano+1989, genre=1, style=3, setup=1, era=1, era_pos=123, letter=27, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Funky_Pop_3, name=Text_Hippie_Piano+2006, genre=1, style=3, setup=2, era=1, era_pos=47, letter=13, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pacific_Jazz_4, name=Text_Hippie_Piano+2023, genre=1, style=3, setup=3, era=1, era_pos=78, letter=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Soft_Funk_1, name=Text_Hippie_Piano+2040, genre=1, style=4, era=1, era_pos=103, letter=26, letter_pos=38, x22="\x00\x00"	# [120]
+	MusicStylistSetup	panel=StylePanel_Funky_Boy_2, name=Text_Hippie_Piano+2057, genre=1, style=4, setup=1, era=1, era_pos=46, letter=13, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Deep_String_Fuzz_3, name=Text_Hippie_Piano+2074, genre=1, style=4, setup=2, era=1, era_pos=33, letter=11, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Just_Be_Funkful_4, name=Text_Hippie_Piano+2091, genre=1, style=4, setup=3, era=1, era_pos=62, letter=17, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pale_Overdrive_1, name=Text_Hippie_Piano+2108, style=24, era=4, era_pos=37, letter=23, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Shades_Of_Rock_2, name=Text_Hippie_Piano+2125, style=24, setup=1, era=4, era_pos=43, letter=26, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Flower_Power_3, name=Text_Hippie_Piano+2142, style=24, setup=2, era=4, era_pos=20, letter=13, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Vestal_Symphony_4, name=Text_Hippie_Piano+2159, style=24, setup=3, era=4, era_pos=57, letter=29, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_R_B_Case_1, name=Text_Hippie_Piano+2176, genre=1, style=5, era=1, era_pos=88, letter=25, x22="\x00\x00"	# [128]
+	MusicStylistSetup	panel=StylePanel_Steamy_Soul_2, name=Text_Hippie_Piano+2193, genre=1, style=5, setup=1, era=1, era_pos=108, letter=26, letter_pos=63, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Funk_Tubes_3, name=Text_Hippie_Piano+2210, genre=1, style=5, setup=2, era=1, era_pos=45, letter=13, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Groovy_Buzz_4, name=Text_Hippie_Piano+2227, genre=1, style=5, setup=3, era=1, era_pos=52, letter=14, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hard_Keys_1, name=Text_Hippie_Piano+2244, style=25, era_pos=48, letter=15, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Organ_Quo_ta_2, name=Text_Hippie_Piano+2261, style=25, setup=1, era_pos=80, letter=22, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Metal_Lead_3, name=Text_Hippie_Piano+2278, style=25, setup=2, era_pos=71, letter=20, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hardcore_Piano_4, name=Text_Hippie_Piano+2295, style=25, setup=3, era_pos=49, letter=15, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Wheels_1, name=Text_Hippie_Piano+2312, style=26, era_pos=54, letter=15, letter_pos=19, x22="\x00\x00"	# [136]
+	MusicStylistSetup	panel=StylePanel_Shuffle_King_2, name=Text_Hippie_Piano+2329, style=26, setup=1, era_pos=101, letter=26, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Lizzy_Shuffle_3, name=Text_Hippie_Piano+2346, style=26, setup=2, era_pos=64, letter=19, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Headbanger_Reeds_4, name=Text_Hippie_Piano+2363, style=26, setup=3, era_pos=51, letter=15, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Stage_Rock_Band_1, name=Text_Hippie_Piano+2380, style=27, era_pos=109, letter=26, letter_pos=61, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Club_Band_Hero_2, name=Text_Hippie_Piano+2397, style=27, setup=1, era_pos=24, letter=10, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rolling_Wheels_3, name=Text_Hippie_Piano+2414, style=27, setup=2, era_pos=96, letter=25, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Everybody_Rock_4, name=Text_Hippie_Piano+2431, style=27, setup=3, era_pos=32, letter=12, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acoustic_Rock_1, name=Text_Hippie_Piano+2448, style=28, era=3, era_pos=5, letter=8, letter_pos=9, x22="\x00\x00"	# [144]
+	MusicStylistSetup	panel=StylePanel_Brit_Guitar_FX_2, name=Text_Hippie_Piano+2465, style=28, setup=1, era=3, era_pos=17, letter=9, letter_pos=66, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Water_Hole_Rock_3, name=Text_Hippie_Piano+2482, style=28, setup=2, era=3, era_pos=111, letter=30, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Duty_Rock_4, name=Text_Hippie_Piano+2499, style=28, setup=3, era=3, era_pos=39, letter=15, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ring_The_House_1, name=Text_Hippie_Piano+2516, genre=3, style=1, era=3, era_pos=86, letter=25, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dance_Atmosphere_2, name=Text_Hippie_Piano+2533, genre=3, style=1, setup=1, era=3, era_pos=27, letter=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_House_Breakdown_3, name=Text_Hippie_Piano+2550, genre=3, style=1, setup=2, era=3, era_pos=47, letter=15, letter_pos=41, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hit_Soloist_4, name=Text_Hippie_Piano+2567, genre=3, style=1, setup=3, era=3, era_pos=45, letter=15, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chart_Pulse_1, name=Text_Hippie_Piano+2584, genre=3, style=2, era=3, era_pos=21, letter=10, letter_pos=13, x22="\x00\x00"	# [152]
+	MusicStylistSetup	panel=StylePanel_One_More_Wow_2, name=Text_Hippie_Piano+2601, genre=3, style=2, setup=1, era=3, era_pos=66, letter=22, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hit_The_Axe_3, name=Text_Hippie_Piano+2618, genre=3, style=2, setup=2, era=3, era_pos=46, letter=15, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_String_Sampling_4, name=Text_Hippie_Piano+2635, genre=3, style=2, setup=3, era=3, era_pos=100, letter=26, letter_pos=74, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_80s_Pop_Song_EP_1, name=Text_Hippie_Piano+2652, genre=3, style=3, era=1, era_pos=4, letter=6, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_In_Vogue_Guitar_2, name=Text_Hippie_Piano+2669, genre=3, style=3, setup=1, era=1, era_pos=58, letter=16, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Who_s_That_Synth_3, name=Text_Hippie_Piano+2686, genre=3, style=3, setup=2, era=1, era_pos=130, letter=30, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_US_Pop_Strings_4, name=Text_Hippie_Piano+2703, genre=3, style=3, setup=3, era=1, era_pos=127, letter=28, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_EP_Dance_1, name=Text_Hippie_Piano+2720, genre=3, style=4, era=2, era_pos=28, letter=12, letter_pos=8, x22="\x00\x00"	# [160]
+	MusicStylistSetup	panel=StylePanel_Analogue_Dance_2, name=Text_Hippie_Piano+2737, genre=3, style=4, setup=1, era=2, era_pos=6, letter=8, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Fifth_Dance_3, name=Text_Hippie_Piano+2754, genre=3, style=4, setup=2, era=2, era_pos=30, letter=13, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Synth_Hit_4, name=Text_Hippie_Piano+2771, genre=3, style=4, setup=3, era=2, era_pos=88, letter=26, letter_pos=114, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_For_Robbie_1, name=Text_Hippie_Piano+2788, genre=3, style=5, era=2, era_pos=63, letter=23, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dance_Pop_Guitar_2, name=Text_Hippie_Piano+2805, genre=3, style=5, setup=1, era=2, era_pos=22, letter=11, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rock_Star_Organ_3, name=Text_Hippie_Piano+2822, genre=3, style=5, setup=2, era=2, era_pos=79, letter=25, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Overdrive_Dance_4, name=Text_Hippie_Piano+2839, genre=3, style=5, setup=3, era=2, era_pos=61, letter=22, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_People_s_Vocal_1, name=Text_Hippie_Piano+2856, genre=4, era_pos=81, letter=23, letter_pos=8, x22="\x00\x00"	# [168]
+	MusicStylistSetup	panel=StylePanel_70s_DiscoStrings_2, name=Text_Hippie_Piano+2873, genre=4, setup=1, era_pos=3, letter=5, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_NY_Disco_Piano_3, name=Text_Hippie_Piano+2890, genre=4, setup=2, era_pos=76, letter=21, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_YouthHostelBrass_4, name=Text_Hippie_Piano+2907, genre=4, setup=3, era_pos=131, letter=31, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Beach_Piano_1, name=Text_Hippie_Piano+2924, genre=4, style=1, era=3, era_pos=12, letter=9, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Saxes_Number_5_2, name=Text_Hippie_Piano+2941, genre=4, style=1, setup=1, era=3, era_pos=88, letter=26, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Live_Mambo_3, name=Text_Hippie_Piano+2958, genre=4, style=1, setup=2, era=3, era_pos=55, letter=19, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_PartyBrass_Mambo_4, name=Text_Hippie_Piano+2975, genre=4, style=1, setup=3, era=3, era_pos=70, letter=23, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Pop_Warmth_1, name=Text_Hippie_Piano+2992, genre=3, style=6, era=2, era_pos=47, letter=19, letter_pos=13, x22="\x00\x00"	# [176]
+	MusicStylistSetup	panel=StylePanel_Synthetic_Heat_2, name=Text_Hippie_Piano+3009, genre=3, style=6, setup=1, era=2, era_pos=89, letter=26, letter_pos=118, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Dance_Keys_3, name=Text_Hippie_Piano+3026, genre=3, style=6, setup=2, era=2, era_pos=45, letter=19, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LatinGuitar_Hero_4, name=Text_Hippie_Piano+3043, genre=3, style=6, setup=3, era=2, era_pos=49, letter=19, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Kitty_Guitars_1, name=Text_Hippie_Piano+3060, style=29, era=2, era_pos=44, letter=18, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Girl_Pop_Singers_2, name=Text_Hippie_Piano+3077, style=29, setup=1, era=2, era_pos=31, letter=14, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Atomic_Synth_3, name=Text_Hippie_Piano+3094, style=29, setup=2, era=2, era_pos=8, letter=8, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Blond_Strings_4, name=Text_Hippie_Piano+3111, style=29, setup=3, era=2, era_pos=14, letter=9, letter_pos=38, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Pop_Duet_1, name=Text_Hippie_Piano+3128, genre=3, style=7, era=2, era_pos=46, letter=19, letter_pos=12, x22="\x00\x00"	# [184]
+	MusicStylistSetup	panel=StylePanel_PopBrassEspaniol_2, name=Text_Hippie_Piano+3145, genre=3, style=7, setup=1, era=2, era_pos=73, letter=23, letter_pos=40, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Production_3, name=Text_Hippie_Piano+3162, genre=3, style=7, setup=2, era=2, era_pos=48, letter=19, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Studio_Latin_4, name=Text_Hippie_Piano+3179, genre=3, style=7, setup=3, era=2, era_pos=85, letter=26, letter_pos=77, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Famed_Vintage_1, name=Text_Hippie_Piano+3196, style=30, era=1, era_pos=42, letter=13, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brass_For_Profit_2, name=Text_Hippie_Piano+3213, style=30, setup=1, era=1, era_pos=22, letter=9, letter_pos=59, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Permed_Synth_3, name=Text_Hippie_Piano+3230, style=30, setup=2, era=1, era_pos=81, letter=23, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_RockSchoolGuitar_4, name=Text_Hippie_Piano+3247, style=30, setup=3, era=1, era_pos=93, letter=25, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Disco_Flutes_1, name=Text_Hippie_Piano+3264, genre=3, style=8, era_pos=27, letter=11, letter_pos=17, x22="\x00\x00"	# [192]
+	MusicStylistSetup	panel=StylePanel_String_Hustling_2, name=Text_Hippie_Piano+3281, genre=3, style=8, setup=1, era_pos=112, letter=26, letter_pos=72, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Seventies_Synth_3, name=Text_Hippie_Piano+3298, genre=3, style=8, setup=2, era_pos=100, letter=26, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Flares_Heaven_4, name=Text_Hippie_Piano+3315, genre=3, style=8, setup=3, era_pos=34, letter=13, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dry_Suit_Rhythm_1, name=Text_Hippie_Piano+3332, genre=1, style=6, era=4, era_pos=17, letter=11, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazzy_R_B_Pop_2, name=Text_Hippie_Piano+3349, genre=1, style=6, setup=1, era=4, era_pos=27, letter=17, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Up_Funk_Tenor_3, name=Text_Hippie_Piano+3366, genre=1, style=6, setup=2, era=4, era_pos=56, letter=28, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_R_B_Horns_4, name=Text_Hippie_Piano+3383, genre=1, style=6, setup=3, era=4, era_pos=38, letter=25, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brazil_Strings_1, name=Text_Hippie_Piano+3400, genre=3, style=9, era=1, era_pos=24, letter=9, letter_pos=63, x22="\x00\x00"	# [200]
+	MusicStylistSetup	panel=StylePanel_Samba_Section_2, name=Text_Hippie_Piano+3417, genre=3, style=9, setup=1, era=1, era_pos=94, letter=26, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mallet_Nights_3, name=Text_Hippie_Piano+3434, genre=3, style=9, setup=2, era=1, era_pos=71, letter=20, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Party_Time_Brass_4, name=Text_Hippie_Piano+3451, genre=3, style=9, setup=3, era=1, era_pos=80, letter=23, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Spanish_Disco_1, name=Text_Hippie_Piano+3468, genre=3, style=10, era=3, era_pos=93, letter=26, letter_pos=51, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_1_2_3_Dance_2, name=Text_Hippie_Piano+3485, genre=3, style=10, setup=1, era=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_90s_Latin_3, name=Text_Hippie_Piano+3502, genre=3, style=10, setup=2, era=3, era_pos=1, letter=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Summer_Hit_4, name=Text_Hippie_Piano+3519, genre=3, style=10, setup=3, era=3, era_pos=53, letter=19, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Disco_Hustling_1, name=Text_Hippie_Piano+3536, genre=3, style=11, era_pos=28, letter=11, letter_pos=18, x22="\x00\x00"	# [208]
+	MusicStylistSetup	panel=StylePanel_Love_s_Disco_2, name=Text_Hippie_Piano+3553, genre=3, style=11, setup=1, era_pos=68, letter=19, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Orchestra_Fever_3, name=Text_Hippie_Piano+3570, genre=3, style=11, setup=2, era_pos=78, letter=22, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_70s_Production_4, name=Text_Hippie_Piano+3587, genre=3, style=11, setup=3, era_pos=8, letter=5, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Line_Up_Dance_1, name=Text_Hippie_Piano+3604, genre=3, style=12, era=3, era_pos=54, letter=19, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Macadancer_2, name=Text_Hippie_Piano+3621, genre=3, style=12, setup=1, era=3, era_pos=57, letter=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Caribbean_Drive_3, name=Text_Hippie_Piano+3638, genre=3, style=12, setup=2, era=3, era_pos=19, letter=10, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dance_Island_4, name=Text_Hippie_Piano+3655, genre=3, style=12, setup=3, era=3, era_pos=28, letter=11, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bemused_Rastas_1, name=Text_Hippie_Piano+3672, style=31, era=1, era_pos=17, letter=9, letter_pos=26, x22="\x00\x00"	# [216]
+	MusicStylistSetup	panel=StylePanel_Beach_Band_2, name=Text_Hippie_Piano+3689, style=31, setup=1, era=1, era_pos=15, letter=9, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Analog_Reggae_3, name=Text_Hippie_Piano+3706, style=31, setup=2, era=1, era_pos=10, letter=8, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Barbados_Brass_4, name=Text_Hippie_Piano+3723, style=31, setup=3, era=1, era_pos=14, letter=9, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Beach_Dance_1, name=Text_Hippie_Piano+3740, genre=3, style=13, era=3, era_pos=11, letter=9, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Poly_Reggae_2, name=Text_Hippie_Piano+3757, genre=3, style=13, setup=1, era=3, era_pos=73, letter=23, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rasta_Dance_3, name=Text_Hippie_Piano+3774, genre=3, style=13, setup=2, era=3, era_pos=82, letter=25, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Club_Limbo_4, name=Text_Hippie_Piano+3791, genre=3, style=13, setup=3, era=3, era_pos=23, letter=10, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Day_Before_Today_1, name=Text_Hippie_Piano+3808, style=32, era=3, era_pos=29, letter=11, letter_pos=9, x22="\x00\x00"	# [224]
+	MusicStylistSetup	panel=StylePanel_Heavenly_Crying_2, name=Text_Hippie_Piano+3825, style=32, setup=1, era=3, era_pos=37, letter=15, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acoustic_Ballad_3, name=Text_Hippie_Piano+3842, style=32, setup=2, era=3, era_pos=3, letter=8, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bottleneck_Tears_4, name=Text_Hippie_Piano+3859, style=32, setup=3, era=3, era_pos=14, letter=9, letter_pos=54, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sweet_Ballad_1, name=Text_Hippie_Piano+3876, style=33, era=3, era_pos=102, letter=26, letter_pos=92, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_Love_Song_2, name=Text_Hippie_Piano+3893, style=33, setup=1, era=3, era_pos=72, letter=23, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Symphonic_Lament_3, name=Text_Hippie_Piano+3910, style=33, setup=2, era=3, era_pos=104, letter=26, letter_pos=109, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Power_Ballad_4, name=Text_Hippie_Piano+3927, style=33, setup=3, era=3, era_pos=80, letter=23, letter_pos=44, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chart_Guitarist_1, name=Text_Hippie_Piano+3944, style=34, era=2, era_pos=15, letter=10, letter_pos=12, x22="\x00\x00"	# [232]
+	MusicStylistSetup	panel=StylePanel_Pop_Star_Vocals_2, name=Text_Hippie_Piano+3961, style=34, setup=1, era=2, era_pos=70, letter=23, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_PopBalladStrings_3, name=Text_Hippie_Piano+3978, style=34, setup=2, era=2, era_pos=72, letter=23, letter_pos=39, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_TeenPop_Symphony_4, name=Text_Hippie_Piano+3995, style=34, setup=3, era=2, era_pos=94, letter=27, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acoustically_Pop_1, name=Text_Hippie_Piano+4012, style=35, era=2, era_pos=5, letter=8, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Life_To_The_West_2, name=Text_Hippie_Piano+4029, style=35, setup=1, era=2, era_pos=51, letter=19, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sax_Charting_3, name=Text_Hippie_Piano+4046, style=35, setup=2, era=2, era_pos=81, letter=26, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Arranging_4, name=Text_Hippie_Piano+4063, style=35, setup=3, era=2, era_pos=66, letter=23, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Karen_s_Keys_1, name=Text_Hippie_Piano+4080, style=36, era_pos=61, letter=18, letter_pos=1, x22="\x00\x00"	# [240]
+	MusicStylistSetup	panel=StylePanel_Strumming_Flares_2, name=Text_Hippie_Piano+4097, style=36, setup=1, era_pos=113, letter=26, letter_pos=76, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Boomer_Harp_3, name=Text_Hippie_Piano+4114, style=36, setup=2, era_pos=18, letter=9, letter_pos=51, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_WhiteGrandBallad_4, name=Text_Hippie_Piano+4131, style=36, setup=3, era_pos=128, letter=30, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_Ballad_1, name=Text_Hippie_Piano+4148, style=37, era=3, era_pos=71, letter=23, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Power_Ballad_2, name=Text_Hippie_Piano+4165, style=37, setup=1, era=3, era_pos=79, letter=23, letter_pos=43, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_HowDoYouReedThis_3, name=Text_Hippie_Piano+4182, style=37, setup=2, era=3, era_pos=48, letter=15, letter_pos=47, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_HeavyRock_Ballad_4, name=Text_Hippie_Piano+4199, style=37, setup=3, era=3, era_pos=42, letter=15, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_GuitarLove_1, name=Text_Hippie_Piano+4216, style=38, era=2, era_pos=65, letter=23, letter_pos=17, x22="\x00\x00"	# [248]
+	MusicStylistSetup	panel=StylePanel_ProductionValues_2, name=Text_Hippie_Piano+4233, style=38, setup=1, era=2, era_pos=76, letter=23, letter_pos=47, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Organic_Ballad_3, name=Text_Hippie_Piano+4250, style=38, setup=2, era=2, era_pos=60, letter=22, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Power_Orchestra_4, name=Text_Hippie_Piano+4267, style=38, setup=3, era=2, era_pos=75, letter=23, letter_pos=46, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brothers_Ballad_1, name=Text_Hippie_Piano+4284, style=39, era=3, era_pos=18, letter=9, letter_pos=68, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Beat_llReviveAll_2, name=Text_Hippie_Piano+4301, style=39, setup=1, era=3, era_pos=13, letter=9, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brit_Distortion_3, name=Text_Hippie_Piano+4318, style=39, setup=2, era=3, era_pos=16, letter=9, letter_pos=65, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SymphonicBritPop_4, name=Text_Hippie_Piano+4335, style=39, setup=3, era=3, era_pos=105, letter=26, letter_pos=111, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Eighties_Echoes_1, name=Text_Hippie_Piano+4352, style=40, era=1, era_pos=38, letter=12, letter_pos=3, x22="\x00\x00"	# [256]
+	MusicStylistSetup	panel=StylePanel_Fostered_Grand_2, name=Text_Hippie_Piano+4369, style=40, setup=1, era=1, era_pos=44, letter=13, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sax_Lament_3, name=Text_Hippie_Piano+4386, style=40, setup=2, era=1, era_pos=95, letter=26, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_St_Elmos_Horns_4, name=Text_Hippie_Piano+4403, style=40, setup=3, era=1, era_pos=107, letter=26, letter_pos=58, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Animated_Beauty_1, name=Text_Hippie_Piano+4420, genre=5, era=3, era_pos=7, letter=8, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dizzy_Knee_Time_2, name=Text_Hippie_Piano+4437, genre=5, setup=1, era=3, era_pos=31, letter=11, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Orchestral_Tale_3, name=Text_Hippie_Piano+4454, genre=5, setup=2, era=3, era_pos=68, letter=22, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tunes_For_Toons_4, name=Text_Hippie_Piano+4471, genre=5, setup=3, era=3, era_pos=110, letter=27, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Summer_Oboe_1, name=Text_Hippie_Piano+4488, genre=5, style=1, era=5, era_pos=60, letter=26, letter_pos=82, x22="\x00\x00"	# [264]
+	MusicStylistSetup	panel=StylePanel_Faithful_Strings_2, name=Text_Hippie_Piano+4505, genre=5, style=1, setup=1, era=5, era_pos=23, letter=13, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acker_s_Place_3, name=Text_Hippie_Piano+4522, genre=5, style=1, setup=2, era=5, era_pos=3, letter=8, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Singing_Pretty_4, name=Text_Hippie_Piano+4539, genre=5, style=1, setup=3, era=5, era_pos=56, letter=26, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Solid_R_B_Ballad_1, name=Text_Hippie_Piano+4556, style=41, era=4, era_pos=46, letter=26, letter_pos=40, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Blues_B3_Ballad_2, name=Text_Hippie_Piano+4573, style=41, setup=1, era=4, era_pos=4, letter=9, letter_pos=43, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_All_Saxed_Up_3, name=Text_Hippie_Piano+4590, style=41, setup=2, era=4, letter=8, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Screamin_R_B3_4, name=Text_Hippie_Piano+4607, style=41, setup=3, era=4, era_pos=42, letter=26, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Woodwind_Romance_1, name=Text_Hippie_Piano+4624, genre=5, style=2, era=6, era_pos=62, letter=30, letter_pos=20, x22="\x00\x00"	# [272]
+	MusicStylistSetup	panel=StylePanel_Love_Theme_Epic_2, name=Text_Hippie_Piano+4641, genre=5, style=2, setup=1, era=6, era_pos=34, letter=19, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Frankly_Woodwind_3, name=Text_Hippie_Piano+4658, genre=5, style=2, setup=2, era=6, era_pos=22, letter=13, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Movie_Grandeur_4, name=Text_Hippie_Piano+4675, genre=5, style=2, setup=3, era=6, era_pos=41, letter=20, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sunset_Anglais_1, name=Text_Hippie_Piano+4692, genre=5, style=3, era=1, era_pos=114, letter=26, letter_pos=87, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_West_End_Strings_2, name=Text_Hippie_Piano+4709, genre=5, style=3, setup=1, era=1, era_pos=129, letter=30, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Phantom_Soloist_3, name=Text_Hippie_Piano+4726, genre=5, style=3, setup=2, era=1, era_pos=82, letter=23, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Choral_Finale_4, name=Text_Hippie_Piano+4743, genre=5, style=3, setup=3, era=1, era_pos=26, letter=10, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Love_Song_Harp_1, name=Text_Hippie_Piano+4760, genre=6, era_pos=67, letter=19, letter_pos=31, x22="\x00\x00"	# [280]
+	MusicStylistSetup	panel=StylePanel_Close_Vocals_2, name=Text_Hippie_Piano+4777, genre=6, setup=1, era_pos=23, letter=10, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Suitcase_Ballad_3, name=Text_Hippie_Piano+4794, genre=6, setup=2, era_pos=114, letter=26, letter_pos=79, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Radio_Orchestra_4, name=Text_Hippie_Piano+4811, genre=6, setup=3, era_pos=88, letter=25, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Swingy_Groove_1, name=Text_Hippie_Piano+4828, genre=6, style=1, era=1, era_pos=117, letter=26, letter_pos=105, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mellow_Swing_2, name=Text_Hippie_Piano+4845, genre=6, style=1, setup=1, era=1, era_pos=72, letter=20, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_EP_Waltz_3, name=Text_Hippie_Piano+4862, genre=6, style=1, setup=2, era=1, era_pos=41, letter=12, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Swingy_Horn_4, name=Text_Hippie_Piano+4879, genre=6, style=1, setup=3, era=1, era_pos=118, letter=26, letter_pos=106, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Diner_Harmonica_1, name=Text_Hippie_Piano+4896, genre=6, style=2, era=5, era_pos=20, letter=11, letter_pos=15, x22="\x00\x00"	# [288]
+	MusicStylistSetup	panel=StylePanel_Bobby_Socks_Sax_2, name=Text_Hippie_Piano+4913, genre=6, style=2, setup=1, era=5, era_pos=10, letter=9, letter_pos=46, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Teddy_Boy_Tabs_3, name=Text_Hippie_Piano+4930, genre=6, style=2, setup=2, era=5, era_pos=62, letter=27, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Doo_Wap_Ballad_4, name=Text_Hippie_Piano+4947, genre=6, style=2, setup=3, era=5, era_pos=21, letter=11, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Stadium_Grand_1, name=Text_Hippie_Piano+4964, style=42, era=3, era_pos=96, letter=26, letter_pos=59, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_HeavyMetal_Cream_2, name=Text_Hippie_Piano+4981, style=42, setup=1, era=3, era_pos=41, letter=15, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Rock_Organ_3, name=Text_Hippie_Piano+4998, style=42, setup=2, era=3, era_pos=40, letter=15, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Ballad_Axe_4, name=Text_Hippie_Piano+5015, style=42, setup=3, era=3, era_pos=38, letter=15, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pan_s_Pipe_Dream_1, name=Text_Hippie_Piano+5032, genre=6, style=3, era=3, era_pos=69, letter=23, letter_pos=2, x22="\x00\x00"	# [296]
+	MusicStylistSetup	panel=StylePanel_Movie_Nights_2, name=Text_Hippie_Piano+5049, genre=6, style=3, setup=1, era=3, era_pos=60, letter=20, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cartoon_Epic_3, name=Text_Hippie_Piano+5066, genre=6, style=3, setup=2, era=3, era_pos=20, letter=10, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Emotional_Dreams_4, name=Text_Hippie_Piano+5083, genre=6, style=3, setup=3, era=3, era_pos=33, letter=12, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Olympic_Love_1, name=Text_Hippie_Piano+5100, genre=6, style=4, era=3, era_pos=65, letter=22, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballad_Stack_2, name=Text_Hippie_Piano+5117, genre=6, style=4, setup=1, era=3, era_pos=9, letter=9, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Storyteller_3, name=Text_Hippie_Piano+5134, genre=6, style=4, setup=2, era=3, era_pos=98, letter=26, letter_pos=66, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_String_Horner_4, name=Text_Hippie_Piano+5151, genre=6, style=4, setup=3, era=3, era_pos=99, letter=26, letter_pos=71, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Simple_6_Strings_1, name=Text_Hippie_Piano+5168, style=43, era_pos=102, letter=26, letter_pos=25, x22="\x00\x00"	# [304]
+	MusicStylistSetup	panel=StylePanel_8_Beat_Keys_2, name=Text_Hippie_Piano+5185, style=43, setup=1, era_pos=11, letter=6, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_B3_Basics_3, name=Text_Hippie_Piano+5202, style=43, setup=2, era_pos=12, letter=9, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Many_Keys_on_8_4, name=Text_Hippie_Piano+5219, style=43, setup=3, era_pos=69, letter=20, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SingingAboutLove_1, name=Text_Hippie_Piano+5236, genre=6, style=5, era=1, era_pos=98, letter=26, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_8_Beat_Defender_2, name=Text_Hippie_Piano+5253, genre=6, style=5, setup=1, era=1, era_pos=1, letter=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Smooth_Sax_3, name=Text_Hippie_Piano+5270, genre=6, style=5, setup=2, era=1, era_pos=102, letter=26, letter_pos=37, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Symphonic_Beat_4, name=Text_Hippie_Piano+5287, genre=6, style=5, setup=3, era=1, era_pos=119, letter=26, letter_pos=108, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_DX_Beat_1, name=Text_Hippie_Piano+5304, style=44, era=1, era_pos=35, letter=11, letter_pos=32, x22="\x00\x00"	# [312]
+	MusicStylistSetup	panel=StylePanel_Simply_Guitar_2, name=Text_Hippie_Piano+5321, style=44, setup=1, era=1, era_pos=97, letter=26, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Napoli_Nights_3, name=Text_Hippie_Piano+5338, style=44, setup=2, era=1, era_pos=76, letter=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_8_Beat_Spin_4, name=Text_Hippie_Piano+5355, style=44, setup=3, era=1, era_pos=2, letter=6, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Reed_It_Right_1, name=Text_Hippie_Piano+5372, genre=6, style=6, era_pos=90, letter=25, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sweet_Folk_2, name=Text_Hippie_Piano+5389, genre=6, style=6, setup=1, era_pos=120, letter=26, letter_pos=93, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SerenadeSymphony_3, name=Text_Hippie_Piano+5406, genre=6, style=6, setup=2, era_pos=99, letter=26, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Smoochy_Sax_4, name=Text_Hippie_Piano+5423, genre=6, style=6, setup=3, era_pos=104, letter=26, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Soul_To_Synth_1, name=Text_Hippie_Piano+5440, genre=1, style=7, era=1, era_pos=105, letter=26, letter_pos=47, x22="\x00\x00"	# [320]
+	MusicStylistSetup	panel=StylePanel_Soul_Pop_Guitar_2, name=Text_Hippie_Piano+5457, genre=1, style=7, setup=1, era=1, era_pos=104, letter=26, letter_pos=44, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Drawbars_3, name=Text_Hippie_Piano+5474, genre=1, style=7, setup=2, era=1, era_pos=83, letter=23, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Funky_Soul_Pop_4, name=Text_Hippie_Piano+5491, genre=1, style=7, setup=3, era=1, era_pos=48, letter=13, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Straight_Grand_1, name=Text_Hippie_Piano+5508, style=45, era=1, era_pos=109, letter=26, letter_pos=68, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Clicksteen_2, name=Text_Hippie_Piano+5525, style=45, setup=1, era=1, era_pos=27, letter=10, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Benson_16_3, name=Text_Hippie_Piano+5542, style=45, setup=2, era=1, era_pos=18, letter=9, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Happy_16_Sound_4, name=Text_Hippie_Piano+5559, style=45, setup=3, era=1, era_pos=53, letter=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Smooth_Rock_Harp_1, name=Text_Hippie_Piano+5576, style=46, era=1, era_pos=101, letter=26, letter_pos=36, x22="\x00\x00"	# [328]
+	MusicStylistSetup	panel=StylePanel_Benson_Groove_2, name=Text_Hippie_Piano+5593, style=46, setup=1, era=1, era_pos=19, letter=9, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_16_Instrumental_3, name=Text_Hippie_Piano+5610, style=46, setup=2, era=1, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Standards_4, name=Text_Hippie_Piano+5627, style=46, setup=3, era=1, era_pos=86, letter=23, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Easy_Fretting_1, name=Text_Hippie_Piano+5644, genre=6, style=7, era=1, era_pos=36, letter=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sweet_Muzak_2, name=Text_Hippie_Piano+5661, genre=6, style=7, setup=1, era=1, era_pos=115, letter=26, letter_pos=94, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_80s_Movie_Sax_3, name=Text_Hippie_Piano+5678, genre=6, style=7, setup=2, era=1, era_pos=3, letter=6, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Studio_Orchestra_4, name=Text_Hippie_Piano+5695, genre=6, style=7, setup=3, era=1, era_pos=111, letter=26, letter_pos=78, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Back_To_The_80s_1, name=Text_Hippie_Piano+5712, genre=6, style=8, era=3, era_pos=8, letter=9, letter_pos=3, x22="\x00\x00"	# [336]
+	MusicStylistSetup	panel=StylePanel_Romantic_16_Beat_2, name=Text_Hippie_Piano+5729, genre=6, style=8, setup=1, era=3, era_pos=87, letter=25, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Muzak_Ballad_3, name=Text_Hippie_Piano+5746, genre=6, style=8, setup=2, era=3, era_pos=62, letter=20, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pops_Orchestra_4, name=Text_Hippie_Piano+5763, genre=6, style=8, setup=3, era=3, era_pos=78, letter=23, letter_pos=41, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Higher_Reeds_1, name=Text_Hippie_Piano+5780, genre=1, style=8, era=1, era_pos=56, letter=15, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Floating_Strings_2, name=Text_Hippie_Piano+5797, genre=1, style=8, setup=1, era=1, era_pos=43, letter=13, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Shining_Soul_3, name=Text_Hippie_Piano+5814, genre=1, style=8, setup=2, era=1, era_pos=96, letter=26, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sweetest_Solos_4, name=Text_Hippie_Piano+5831, genre=1, style=8, setup=3, era=1, era_pos=116, letter=26, letter_pos=96, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Synth_Hook_1, name=Text_Hippie_Piano+5848, style=47, era=1, era_pos=120, letter=26, letter_pos=115, x22="\x00\x00"	# [344]
+	MusicStylistSetup	panel=StylePanel_Pop_Song_EP_2, name=Text_Hippie_Piano+5865, style=47, setup=1, era=1, era_pos=84, letter=23, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Pop_Mix_3, name=Text_Hippie_Piano+5882, style=47, setup=2, era=1, era_pos=60, letter=17, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Song_Solo_4, name=Text_Hippie_Piano+5899, style=47, setup=3, era=1, era_pos=85, letter=23, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballad_Anglais_1, name=Text_Hippie_Piano+5916, genre=6, style=9, era=1, era_pos=12, letter=9, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Boys_Girls_2, name=Text_Hippie_Piano+5933, genre=6, style=9, setup=1, era=1, era_pos=21, letter=9, letter_pos=56, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LA_Ballad_3, name=Text_Hippie_Piano+5950, genre=6, style=9, setup=2, era=1, era_pos=65, letter=19, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Orchestral_Love_4, name=Text_Hippie_Piano+5967, genre=6, style=9, setup=3, era=1, era_pos=77, letter=22, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_German_Tabs_1, name=Text_Hippie_Piano+5984, genre=4, style=2, era=1, era_pos=51, letter=14, letter_pos=1, x22="\x00\x00"	# [352]
+	MusicStylistSetup	panel=StylePanel_Happy_Hour_Pad_2, name=Text_Hippie_Piano+6001, genre=4, style=2, setup=1, era=1, era_pos=54, letter=15, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Party_Glam_3, name=Text_Hippie_Piano+6018, genre=4, style=2, setup=2, era=1, era_pos=79, letter=23, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Beer_and_Bells_4, name=Text_Hippie_Piano+6035, genre=4, style=2, setup=3, era=1, era_pos=16, letter=9, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_St_Angelo_1, name=Text_Hippie_Piano+6052, genre=4, style=3, era=3, era_pos=95, letter=26, letter_pos=57, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sunny_Island_2, name=Text_Hippie_Piano+6069, genre=4, style=3, setup=1, era=3, era_pos=101, letter=26, letter_pos=86, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Red_Sunset_3, name=Text_Hippie_Piano+6086, genre=4, style=3, setup=2, era=3, era_pos=83, letter=25, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Barbados_Nights_4, name=Text_Hippie_Piano+6103, genre=4, style=3, setup=3, era=3, era_pos=10, letter=9, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Shuffle_Squeeze_1, name=Text_Hippie_Piano+6120, style=48, era=5, era_pos=54, letter=26, letter_pos=23, x22="\x00\x00"	# [360]
+	MusicStylistSetup	panel=StylePanel_50s_Organ_Hits_2, name=Text_Hippie_Piano+6137, style=48, setup=1, era=5, era_pos=1, letter=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Lucky_Saxes_3, name=Text_Hippie_Piano+6154, style=48, setup=2, era=5, era_pos=35, letter=19, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rollin_BigBand_4, name=Text_Hippie_Piano+6171, style=48, setup=3, era=5, era_pos=50, letter=25, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hip_Guitar_1, name=Text_Hippie_Piano+6188, style=49, era=3, era_pos=43, letter=15, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Vocalist_2, name=Text_Hippie_Piano+6205, style=49, setup=1, era=3, era_pos=77, letter=23, letter_pos=38, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_90s_meet_60s_3, name=Text_Hippie_Piano+6222, style=49, setup=2, era=3, era_pos=2, letter=7, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Guitarist_4, name=Text_Hippie_Piano+6239, style=49, setup=3, era=3, era_pos=74, letter=23, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_88_Ballad_1, name=Text_Hippie_Piano+6256, genre=6, style=10, era=1, era_pos=7, letter=6, letter_pos=7, x22="\x00\x00"	# [368]
+	MusicStylistSetup	panel=StylePanel_Radio_Singers_2, name=Text_Hippie_Piano+6273, genre=6, style=10, setup=1, era=1, era_pos=89, letter=25, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Slow_Ballad_Keys_3, name=Text_Hippie_Piano+6290, genre=6, style=10, setup=2, era=1, era_pos=99, letter=26, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_80s_Synth_Lines_4, name=Text_Hippie_Piano+6307, genre=6, style=10, setup=3, era=1, era_pos=6, letter=6, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Love_And_Lost_1, name=Text_Hippie_Piano+6324, genre=4, style=4, era=3, era_pos=56, letter=19, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Majorca_Party_2, name=Text_Hippie_Piano+6341, genre=4, style=4, setup=1, era=3, era_pos=58, letter=20, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Spanish_Sun_3, name=Text_Hippie_Piano+6358, genre=4, style=4, setup=2, era=3, era_pos=94, letter=26, letter_pos=53, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Non_Stop_Party_4, name=Text_Hippie_Piano+6375, genre=4, style=4, setup=3, era=3, era_pos=64, letter=21, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_George_B_Swing_1, name=Text_Hippie_Piano+6392, genre=6, style=11, era=1, era_pos=50, letter=14, x22="\x00\x00"	# [376]
+	MusicStylistSetup	panel=StylePanel_LA_Roads_Groove_2, name=Text_Hippie_Piano+6409, genre=6, style=11, setup=1, era=1, era_pos=68, letter=19, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Modern_Big_Band_3, name=Text_Hippie_Piano+6426, genre=6, style=11, setup=2, era=1, era_pos=73, letter=20, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LA_Sax_Swing_4, name=Text_Hippie_Piano+6443, genre=6, style=11, setup=3, era=1, era_pos=69, letter=19, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Toot_s_Ballad_1, name=Text_Hippie_Piano+6460, genre=6, style=12, era=5, era_pos=64, letter=27, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Radio_Orchestra_2, name=Text_Hippie_Piano+6477, genre=6, style=12, setup=1, era=5, era_pos=46, letter=25, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SaxSectionBallad_3, name=Text_Hippie_Piano+6494, genre=6, style=12, setup=2, era=5, era_pos=52, letter=26, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Organ_Oldies_4, name=Text_Hippie_Piano+6511, genre=6, style=12, setup=3, era=5, era_pos=39, letter=22, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Atmospherics_1, name=Text_Hippie_Piano+6528, genre=3, style=14, era=2, era_pos=7, letter=8, letter_pos=20, x22="\x00\x00"	# [384]
+	MusicStylistSetup	panel=StylePanel_Mood_Current_2, name=Text_Hippie_Piano+6545, genre=3, style=14, setup=1, era=2, era_pos=54, letter=20, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Orchestra_Remix_3, name=Text_Hippie_Piano+6562, genre=3, style=14, setup=2, era=2, era_pos=59, letter=22, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Summer_Echoes_4, name=Text_Hippie_Piano+6579, genre=3, style=14, setup=3, era=2, era_pos=86, letter=26, letter_pos=81, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Square_Garage_1, name=Text_Hippie_Piano+6596, genre=3, style=15, era=2, era_pos=84, letter=26, letter_pos=56, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Noiz_Garage_2, name=Text_Hippie_Piano+6613, genre=3, style=15, setup=1, era=2, era_pos=56, letter=21, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pulse_Garage_3, name=Text_Hippie_Piano+6630, genre=3, style=15, setup=2, era=2, era_pos=77, letter=23, letter_pos=48, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Layer_Garage_4, name=Text_Hippie_Piano+6647, genre=3, style=15, setup=3, era=2, era_pos=50, letter=19, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Techno_Synth_1, name=Text_Hippie_Piano+6664, genre=3, style=16, era=2, era_pos=93, letter=27, letter_pos=11, x22="\x00\x00"	# [392]
+	MusicStylistSetup	panel=StylePanel_Techno_Ring_Mod_2, name=Text_Hippie_Piano+6681, genre=3, style=16, setup=1, era=2, era_pos=91, letter=27, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Techno_Noiz_3, name=Text_Hippie_Piano+6698, genre=3, style=16, setup=2, era=2, era_pos=90, letter=27, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Techno_Slide_4, name=Text_Hippie_Piano+6715, genre=3, style=16, setup=3, era=2, era_pos=92, letter=27, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Trance_Sweep_1, name=Text_Hippie_Piano+6732, genre=3, style=17, era=2, era_pos=96, letter=27, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Trance_Voice_2, name=Text_Hippie_Piano+6749, genre=3, style=17, setup=1, era=2, era_pos=97, letter=27, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_TrancePortamento_3, name=Text_Hippie_Piano+6766, genre=3, style=17, setup=2, era=2, era_pos=98, letter=27, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Trance_Pulse_4, name=Text_Hippie_Piano+6783, genre=3, style=17, setup=3, era=2, era_pos=95, letter=27, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acid_Jazz_Suit_1, name=Text_Hippie_Piano+6800, genre=3, style=18, era=2, era_pos=3, letter=8, letter_pos=4, x22="\x00\x00"	# [400]
+	MusicStylistSetup	panel=StylePanel_Acid_Jazz_Frets_2, name=Text_Hippie_Piano+6817, genre=3, style=18, setup=1, era=2, era_pos=1, letter=8, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acid_Jazz_B3_3, name=Text_Hippie_Piano+6834, genre=3, style=18, setup=2, era=2, letter=8, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acid_Jazz_Sax_4, name=Text_Hippie_Piano+6851, genre=3, style=18, setup=3, era=2, era_pos=2, letter=8, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Big_Beat_Organ_1, name=Text_Hippie_Piano+6868, genre=3, style=19, era=2, era_pos=11, letter=9, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Big_Beat_Guitar_2, name=Text_Hippie_Piano+6885, genre=3, style=19, setup=1, era=2, era_pos=10, letter=9, letter_pos=33, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_BigBeat_Suitcase_3, name=Text_Hippie_Piano+6902, genre=3, style=19, setup=2, era=2, era_pos=12, letter=9, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_BigBeatBad_Brass_4, name=Text_Hippie_Piano+6919, genre=3, style=19, setup=3, era=2, era_pos=13, letter=9, letter_pos=36, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_House_Marcato_1, name=Text_Hippie_Piano+6936, genre=3, style=20, era=2, era_pos=39, letter=15, letter_pos=43, x22="\x00\x00"	# [408]
+	MusicStylistSetup	panel=StylePanel_House_FM_2, name=Text_Hippie_Piano+6953, genre=3, style=20, setup=1, era=2, era_pos=38, letter=15, letter_pos=42, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_House_Sweep_3, name=Text_Hippie_Piano+6970, genre=3, style=20, setup=2, era=2, era_pos=40, letter=15, letter_pos=44, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_House_Symphonic_4, name=Text_Hippie_Piano+6987, genre=3, style=20, setup=3, era=2, era_pos=41, letter=15, letter_pos=45, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hip_Hop_Suitcase_1, name=Text_Hippie_Piano+7004, genre=3, style=21, era=2, era_pos=36, letter=15, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hip_Hop_Ring_2, name=Text_Hippie_Piano+7021, genre=3, style=21, setup=1, era=2, era_pos=35, letter=15, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hip_Hop_Pulse_3, name=Text_Hippie_Piano+7038, genre=3, style=21, setup=2, era=2, era_pos=34, letter=15, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hip_Hop_Synth_4, name=Text_Hippie_Piano+7055, genre=3, style=21, setup=3, era=2, era_pos=37, letter=15, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cool_Club_Piano_1, name=Text_Hippie_Piano+7072, genre=3, style=22, era=3, era_pos=24, letter=10, letter_pos=33, x22="\x00\x00"	# [416]
+	MusicStylistSetup	panel=StylePanel_Soul_Smith_2, name=Text_Hippie_Piano+7089, genre=3, style=22, setup=1, era=3, era_pos=91, letter=26, letter_pos=45, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Funky_Club_Solo_3, name=Text_Hippie_Piano+7106, genre=3, style=22, setup=2, era=3, era_pos=35, letter=13, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_R_B_Fusion_Band_4, name=Text_Hippie_Piano+7123, genre=3, style=22, setup=3, era=3, era_pos=81, letter=25, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chillout_Sunrise_1, name=Text_Hippie_Piano+7140, genre=3, style=23, era=2, era_pos=20, letter=10, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chillout_Pulse_2, name=Text_Hippie_Piano+7157, genre=3, style=23, setup=1, era=2, era_pos=18, letter=10, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chillout_Breeze_3, name=Text_Hippie_Piano+7174, genre=3, style=23, setup=2, era=2, era_pos=17, letter=10, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_ChillOut_Sampler_4, name=Text_Hippie_Piano+7191, genre=3, style=23, setup=3, era=2, era_pos=19, letter=10, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=VoiceDirPartRefFind_Table+2532, name=Text_Hippie_Piano+7208, genre=2, style=1, era=7, letter=1, letter_pos=1, x22="\x00\x00"	# [424]
+	MusicStylistSetup	panel=StylePanel_NashvilleSaunter_2, name=Text_Hippie_Piano+7225, genre=2, style=1, setup=1, era=7, era_pos=11, letter=21, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_FingerPickinGood_3, name=Text_Hippie_Piano+7242, genre=2, style=1, setup=2, era=7, era_pos=7, letter=13, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_BarnDanceSingers_4, name=Text_Hippie_Piano+7259, genre=2, style=1, setup=3, era=7, era_pos=1, letter=9, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Country_Roads_1, name=Text_Hippie_Piano+7276, genre=2, style=2, era=3, era_pos=25, letter=10, letter_pos=39, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Nashville_Rock_2, name=Text_Hippie_Piano+7293, genre=2, style=2, setup=1, era=3, era_pos=63, letter=21, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Southern_88_3, name=Text_Hippie_Piano+7310, genre=2, style=2, setup=2, era=3, era_pos=92, letter=26, letter_pos=49, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Yee_Harp_4, name=Text_Hippie_Piano+7327, genre=2, style=2, setup=3, era=3, era_pos=113, letter=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hayseed_Harpist_1, name=Text_Hippie_Piano+7344, genre=2, style=3, era=1, era_pos=55, letter=15, letter_pos=9, x22="\x00\x00"	# [432]
+	MusicStylistSetup	panel=StylePanel_Country_Rock_Sax_2, name=Text_Hippie_Piano+7361, genre=2, style=3, setup=1, era=1, era_pos=31, letter=10, letter_pos=40, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Kentucky_Keys_3, name=Text_Hippie_Piano+7378, genre=2, style=3, setup=2, era=1, era_pos=63, letter=18, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Key_Clickin_Good_4, name=Text_Hippie_Piano+7395, genre=2, style=3, setup=3, era=1, era_pos=64, letter=18, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hoe_Down_Fiddle_1, name=Text_Hippie_Piano+7412, genre=2, style=4, era=7, era_pos=8, letter=15, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Yeehah_Geetar_2, name=Text_Hippie_Piano+7429, genre=2, style=4, setup=1, era=7, era_pos=23, letter=31, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bluegrass_Steel_3, name=Text_Hippie_Piano+7446, genre=2, style=4, setup=2, era=7, era_pos=3, letter=9, letter_pos=42, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bluegrass_Saloon_4, name=Text_Hippie_Piano+7463, genre=2, style=4, setup=3, era=7, era_pos=2, letter=9, letter_pos=41, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Where_They_Play_1, name=Text_Hippie_Piano+7480, genre=2, style=5, era_pos=127, letter=30, letter_pos=13, x22="\x00\x00"	# [440]
+	MusicStylistSetup	panel=StylePanel_Home_On_TheGrand_2, name=Text_Hippie_Piano+7497, genre=2, style=5, setup=1, era_pos=57, letter=15, letter_pos=36, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_BarnDanceStrings_3, name=Text_Hippie_Piano+7514, genre=2, style=5, setup=2, era_pos=17, letter=9, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Not_CloudyAllDay_4, name=Text_Hippie_Piano+7531, genre=2, style=5, setup=3, era_pos=75, letter=21, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Spiritual_Tabs_1, name=Text_Hippie_Piano+7548, genre=1, style=9, era_pos=107, letter=26, letter_pos=55, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sunday_Service_2, name=Text_Hippie_Piano+7565, genre=1, style=9, setup=1, era_pos=115, letter=26, letter_pos=85, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Grand_Worship_3, name=Text_Hippie_Piano+7582, genre=1, style=9, setup=2, era_pos=47, letter=14, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brassy_Worship_4, name=Text_Hippie_Piano+7599, genre=1, style=9, setup=3, era_pos=20, letter=9, letter_pos=61, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Revival_Choir_1, name=Text_Hippie_Piano+7616, genre=1, style=10, era_pos=92, letter=25, letter_pos=16, x22="\x00\x00"	# [448]
+	MusicStylistSetup	panel=StylePanel_I_Want_To_Be_3_2, name=Text_Hippie_Piano+7633, genre=1, style=10, setup=1, era_pos=59, letter=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Raise_The_Roof_3, name=Text_Hippie_Piano+7650, genre=1, style=10, setup=2, era_pos=89, letter=25, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Spinning_Revival_4, name=Text_Hippie_Piano+7667, genre=1, style=10, setup=3, era_pos=106, letter=26, letter_pos=54, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Gospel_Duet_1, name=Text_Hippie_Piano+7684, genre=1, style=11, era_pos=42, letter=14, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sing_Praises_2, name=Text_Hippie_Piano+7701, genre=1, style=11, setup=1, era_pos=103, letter=26, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Glory_To_Him_3, name=Text_Hippie_Piano+7718, genre=1, style=11, setup=2, era_pos=40, letter=14, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Revival_Brass_4, name=Text_Hippie_Piano+7735, genre=1, style=11, setup=3, era_pos=91, letter=25, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Gospel_Groove_1, name=Text_Hippie_Piano+7752, genre=1, style=12, era_pos=43, letter=14, letter_pos=9, x22="\x00\x00"	# [456]
+	MusicStylistSetup	panel=StylePanel_Grand_Joy_2, name=Text_Hippie_Piano+7769, genre=1, style=12, setup=1, era_pos=45, letter=14, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Gospel_Standard_3, name=Text_Hippie_Piano+7786, genre=1, style=12, setup=2, era_pos=44, letter=14, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Gospel_Brass_4, name=Text_Hippie_Piano+7803, genre=1, style=12, setup=3, era_pos=41, letter=14, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Paradise_Voices_1, name=Text_Hippie_Piano+7820, genre=7, era=5, era_pos=41, letter=23, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hawaii_Vacation_2, name=Text_Hippie_Piano+7837, genre=7, setup=1, era=5, era_pos=27, letter=15, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Waikiki_Vibes_3, name=Text_Hippie_Piano+7854, genre=7, setup=2, era=5, era_pos=66, letter=30, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Maui_Flutes_4, name=Text_Hippie_Piano+7871, genre=7, setup=3, era=5, era_pos=36, letter=20, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hippie_Guitar_1, name=Text_Hippie_Piano+7888, genre=2, style=6, era_pos=55, letter=15, letter_pos=29, x22="\x00\x00"	# [464]
+	MusicStylistSetup	panel=StylePanel_Folk_Strumming_2, name=Text_Hippie_Piano+7905, genre=2, style=6, setup=1, era_pos=37, letter=13, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Folk_Singers_3, name=Text_Hippie_Piano+7922, genre=2, style=6, setup=2, era_pos=36, letter=13, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cajun_Beats_4, name=Text_Hippie_Piano+7939, genre=2, style=6, setup=3, era_pos=22, letter=10, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SouthernPianoBar_1, name=Text_Hippie_Piano+7956, genre=2, style=7, era=5, era_pos=57, letter=26, letter_pos=50, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rock_RollCountry_2, name=Text_Hippie_Piano+7973, genre=2, style=7, setup=1, era=5, era_pos=47, letter=25, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Down_Bluesy_3, name=Text_Hippie_Piano+7990, genre=2, style=7, setup=2, era=5, era_pos=22, letter=11, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tennessee_Blues_4, name=Text_Hippie_Piano+8007, genre=2, style=7, setup=3, era=5, era_pos=63, letter=27, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Colonel_s_March_1, name=Text_Hippie_Piano+8024, genre=7, style=1, era=65535, era_pos=65535, letter=10, letter_pos=29, x22="\x00\x00"	# [472]
+	MusicStylistSetup	panel=StylePanel_March_Past_2, name=Text_Hippie_Piano+8041, genre=7, style=1, setup=1, era=65535, era_pos=65535, letter=20, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Military_Band_3, name=Text_Hippie_Piano+8058, genre=7, style=1, setup=2, era=65535, era_pos=65535, letter=20, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_March_Finale_4, name=Text_Hippie_Piano+8075, genre=7, style=1, setup=3, era=65535, era_pos=65535, letter=20, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_River_March_1, name=Text_Hippie_Piano+8092, genre=7, style=2, era=7, era_pos=13, letter=25, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Marching_Duet_2, name=Text_Hippie_Piano+8109, genre=7, style=2, setup=1, era=7, era_pos=10, letter=20, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brass_And_Reeds_3, name=Text_Hippie_Piano+8126, genre=7, style=2, setup=2, era=7, era_pos=4, letter=9, letter_pos=57, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Top_Brass_4, name=Text_Hippie_Piano+8143, genre=7, style=2, setup=3, era=7, era_pos=21, letter=27, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Boehmen_1, name=Text_Hippie_Piano+8160, genre=7, style=3, era=1, era_pos=20, letter=9, letter_pos=47, x22="\x00\x00"	# [480]
+	MusicStylistSetup	panel=StylePanel_Trill_2, name=Text_Hippie_Piano+8177, genre=7, style=3, setup=1, era=1, era_pos=125, letter=27, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Let_s_Drink_3, name=Text_Hippie_Piano+8194, genre=7, style=3, setup=2, era=1, era_pos=70, letter=19, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Wiesn_Finale_4, name=Text_Hippie_Piano+8211, genre=7, style=3, setup=3, era=1, era_pos=131, letter=30, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Muckel_Polka_1, name=Text_Hippie_Piano+8228, genre=7, style=4, era=3, era_pos=61, letter=20, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Zither_Polka_2, name=Text_Hippie_Piano+8245, genre=7, style=4, setup=1, era=3, era_pos=114, letter=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Alpine_Style_3, name=Text_Hippie_Piano+8262, genre=7, style=4, setup=2, era=3, era_pos=6, letter=8, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dolomiti_Trumpet_4, name=Text_Hippie_Piano+8279, genre=7, style=4, setup=3, era=3, era_pos=32, letter=11, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sweet_Waltzing_1, name=Text_Hippie_Piano+8296, genre=5, style=4, era=6, era_pos=47, letter=26, letter_pos=95, x22="\x00\x00"	# [488]
+	MusicStylistSetup	panel=StylePanel_Wunderbar_Waltz_2, name=Text_Hippie_Piano+8313, genre=5, style=4, setup=1, era=6, era_pos=63, letter=30, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Come_Waltzing_3, name=Text_Hippie_Piano+8330, genre=5, style=4, setup=2, era=6, era_pos=12, letter=10, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Holiday_Waltz_4, name=Text_Hippie_Piano+8347, genre=5, style=4, setup=3, era=6, era_pos=26, letter=15, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Get_it_3_4_1, name=Text_Hippie_Piano+8364, genre=7, style=5, era=5, era_pos=25, letter=14, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Simple_3_4_Orch_2, name=Text_Hippie_Piano+8381, genre=7, style=5, setup=1, era=5, era_pos=55, letter=26, letter_pos=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_3_4_Organ_Star_3, name=Text_Hippie_Piano+8398, genre=7, style=5, setup=2, era=5, letter=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Walzin_Reeds_4, name=Text_Hippie_Piano+8415, genre=7, style=5, setup=3, era=5, era_pos=67, letter=30, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Simple_Slow_3_1, name=Text_Hippie_Piano+8432, genre=5, style=5, era=4, era_pos=44, letter=26, letter_pos=27, x22="\x00\x00"	# [496]
+	MusicStylistSetup	panel=StylePanel_GrandCharm_Waltz_2, name=Text_Hippie_Piano+8449, genre=5, style=5, setup=1, era=4, era_pos=23, letter=14, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Waltz_Sax_Man_3, name=Text_Hippie_Piano+8466, genre=5, style=5, setup=2, era=4, era_pos=58, letter=30, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Waltz_Voices_4, name=Text_Hippie_Piano+8483, genre=5, style=5, setup=3, era=4, era_pos=60, letter=30, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_French_Singers_1, name=Text_Hippie_Piano+8500, genre=7, style=6, era=65535, era_pos=65535, letter=13, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_A_Night_In_Paris_2, name=Text_Hippie_Piano+8517, genre=7, style=6, setup=1, era=65535, era_pos=65535, letter=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Romantic_Paris_3, name=Text_Hippie_Piano+8534, genre=7, style=6, setup=2, era=65535, era_pos=65535, letter=25, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Art_De_Triumphe_4, name=Text_Hippie_Piano+8551, genre=7, style=6, setup=3, era=65535, era_pos=65535, letter=8, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Waltz_Groove_1, name=Text_Hippie_Piano+8568, genre=8, era=6, era_pos=61, letter=30, letter_pos=3, x22="\x00\x00"	# [504]
+	MusicStylistSetup	panel=StylePanel_Jazz_Soloist_2, name=Text_Hippie_Piano+8585, genre=8, setup=1, era=6, era_pos=31, letter=17, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mellow_Horn_Jazz_3, name=Text_Hippie_Piano+8602, genre=8, setup=2, era=6, era_pos=37, letter=20, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Doo_Wah_Jazzing_4, name=Text_Hippie_Piano+8619, genre=8, setup=3, era=6, era_pos=18, letter=11, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cocktail_Waltz_1, name=Text_Hippie_Piano+8636, genre=5, style=6, era=4, era_pos=11, letter=10, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Concertina_Three_2, name=Text_Hippie_Piano+8653, genre=5, style=6, setup=1, era=4, era_pos=12, letter=10, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Waltz_Serenade_3, name=Text_Hippie_Piano+8670, genre=5, style=6, setup=2, era=4, era_pos=59, letter=30, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Movie_Strings_4, name=Text_Hippie_Piano+8687, genre=5, style=6, setup=3, era=4, era_pos=31, letter=20, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Straight_Bop_Sax_1, name=Text_Hippie_Piano+8704, genre=8, style=1, era=6, era_pos=46, letter=26, letter_pos=67, x22="\x00\x00"	# [512]
+	MusicStylistSetup	panel=StylePanel_Jazz_Trio_2, name=Text_Hippie_Piano+8721, genre=8, style=1, setup=1, era=6, era_pos=32, letter=17, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Horn_Domain_3, name=Text_Hippie_Piano+8738, genre=8, style=1, setup=2, era=6, era_pos=29, letter=17, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Jam_Duet_4, name=Text_Hippie_Piano+8755, genre=8, style=1, setup=3, era=6, era_pos=30, letter=17, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Good_Vives_Jazz_1, name=Text_Hippie_Piano+8772, genre=8, style=2, era=6, era_pos=23, letter=14, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_sax_midnight_jaz_2, name=Text_Hippie_Piano+8789, genre=8, style=2, setup=1, era=6, era_pos=43, letter=26, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Flute_Jazzer_3, name=Text_Hippie_Piano+8806, genre=8, style=2, setup=2, era=6, era_pos=21, letter=13, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cool_Jazz_Cats_4, name=Text_Hippie_Piano+8823, genre=8, style=2, setup=3, era=6, era_pos=13, letter=10, letter_pos=34, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Village_Sax_1, name=Text_Hippie_Piano+8840, genre=8, style=3, era=6, era_pos=60, letter=29, letter_pos=3, x22="\x00\x00"	# [520]
+	MusicStylistSetup	panel=StylePanel_Sheer_Jazz_2, name=Text_Hippie_Piano+8857, genre=8, style=3, setup=1, era=6, era_pos=45, letter=26, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bugle_Bros_3, name=Text_Hippie_Piano+8874, genre=8, style=3, setup=2, era=6, era_pos=7, letter=9, letter_pos=69, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Voices_4, name=Text_Hippie_Piano+8891, genre=8, style=3, setup=3, era=6, era_pos=33, letter=17, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_TheSandmanCometh_1, name=Text_Hippie_Piano+8908, genre=8, style=4, era=6, era_pos=56, letter=27, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_DooLahDoolyLaBap_2, name=Text_Hippie_Piano+8925, genre=8, style=4, setup=1, era=6, era_pos=19, letter=11, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_2Bap_Or_Not_2Bap_3, name=Text_Hippie_Piano+8942, genre=8, style=4, setup=2, era=6, letter=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_How_Do_You_DoWah_4, name=Text_Hippie_Piano+8959, genre=8, style=4, setup=3, era=6, era_pos=28, letter=15, letter_pos=46, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_BalladJazzVoices_1, name=Text_Hippie_Piano+8976, genre=8, style=5, era_pos=14, letter=9, letter_pos=9, x22="\x00\x00"	# [528]
+	MusicStylistSetup	panel=StylePanel_NY_Sweet_Jazz_2, name=Text_Hippie_Piano+8993, genre=8, style=5, setup=1, era_pos=77, letter=21, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Wah_Wah_Jazz_3, name=Text_Hippie_Piano+9010, genre=8, style=5, setup=2, era_pos=125, letter=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Unlimited_Jazz_4, name=Text_Hippie_Piano+9027, genre=8, style=5, setup=3, era_pos=124, letter=28, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Benny_Woodman_1, name=Text_Hippie_Piano+9044, genre=8, style=6, era=6, era_pos=3, letter=9, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Swinging_Saxes_2, name=Text_Hippie_Piano+9061, genre=8, style=6, setup=1, era=6, era_pos=53, letter=26, letter_pos=103, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Up_Tempo_Reeds_3, name=Text_Hippie_Piano+9078, genre=8, style=6, setup=2, era=6, era_pos=58, letter=28, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Swing_Crescendo_4, name=Text_Hippie_Piano+9095, genre=8, style=6, setup=3, era=6, era_pos=49, letter=26, letter_pos=98, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Lush_Big_Band_1, name=Text_Hippie_Piano+9112, genre=8, style=7, era=6, era_pos=35, letter=19, letter_pos=36, x22="\x00\x00"	# [536]
+	MusicStylistSetup	panel=StylePanel_SwingBrass_Shout_2, name=Text_Hippie_Piano+9129, genre=8, style=7, setup=1, era=6, era_pos=52, letter=26, letter_pos=102, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SwingBand_Warmth_3, name=Text_Hippie_Piano+9146, genre=8, style=7, setup=2, era=6, era_pos=51, letter=26, letter_pos=101, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SwingReedWriting_4, name=Text_Hippie_Piano+9163, genre=8, style=7, setup=3, era=6, era_pos=54, letter=26, letter_pos=104, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_SentimentalSwing_1, name=Text_Hippie_Piano+9180, genre=8, style=8, era=6, era_pos=44, letter=26, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Deep_Saxiness_2, name=Text_Hippie_Piano+9197, genre=8, style=8, setup=1, era=6, era_pos=17, letter=11, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Velvet_Big_Band_3, name=Text_Hippie_Piano+9214, genre=8, style=8, setup=2, era=6, era_pos=59, letter=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_DanceBand_Finish_4, name=Text_Hippie_Piano+9231, genre=8, style=8, setup=3, era=6, era_pos=16, letter=11, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sweetly_Swinging_1, name=Text_Hippie_Piano+9248, genre=8, style=9, era=6, era_pos=48, letter=26, letter_pos=97, x22="\x00\x00"	# [544]
+	MusicStylistSetup	panel=StylePanel_Radio_Big_Band_2, name=Text_Hippie_Piano+9265, genre=8, style=9, setup=1, era=6, era_pos=42, letter=25, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Doubling_Swing_3, name=Text_Hippie_Piano+9282, genre=8, style=9, setup=2, era=6, era_pos=20, letter=11, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_HatsOff_To_Swing_4, name=Text_Hippie_Piano+9299, genre=8, style=9, setup=3, era=6, era_pos=25, letter=15, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_ClarinetSerenade_1, name=Text_Hippie_Piano+9316, genre=8, style=10, era=6, era_pos=11, letter=10, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Miller_Reeds_2, name=Text_Hippie_Piano+9333, genre=8, style=10, setup=1, era=6, era_pos=39, letter=20, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dance_Band_Bones_3, name=Text_Hippie_Piano+9350, genre=8, style=10, setup=2, era=6, era_pos=15, letter=11, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Baritone_Miller_4, name=Text_Hippie_Piano+9367, genre=8, style=10, setup=3, era=6, era_pos=2, letter=9, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_6_String_Boogie_1, name=Text_Hippie_Piano+9384, genre=8, style=11, era=5, era_pos=2, letter=4, x22="\x00\x00"	# [552]
+	MusicStylistSetup	panel=StylePanel_Boogie_Dominoes_2, name=Text_Hippie_Piano+9401, genre=8, style=11, setup=1, era=5, era_pos=13, letter=9, letter_pos=50, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Boogie_335_3, name=Text_Hippie_Piano+9418, genre=8, style=11, setup=2, era=5, era_pos=11, letter=9, letter_pos=48, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Boogie_Brothers_4, name=Text_Hippie_Piano+9435, genre=8, style=11, setup=3, era=5, era_pos=12, letter=9, letter_pos=49, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Trad_Jazz_Pickin_1, name=Text_Hippie_Piano+9452, style=50, era=7, era_pos=22, letter=27, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Liquorice_Jazz_2, name=Text_Hippie_Piano+9469, style=50, setup=1, era=7, era_pos=9, letter=19, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dixieland_Piano_3, name=Text_Hippie_Piano+9486, style=50, setup=2, era=7, era_pos=6, letter=11, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dixie_Slide_4, name=Text_Hippie_Piano+9503, style=50, setup=3, era=7, era_pos=5, letter=11, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Analog_Fusion_1, name=Text_Hippie_Piano+9520, genre=8, style=12, era=1, era_pos=9, letter=8, letter_pos=15, x22="\x00\x00"	# [560]
+	MusicStylistSetup	panel=StylePanel_Crusin_Jazz_2, name=Text_Hippie_Piano+9537, genre=8, style=12, setup=1, era=1, era_pos=32, letter=10, letter_pos=42, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Fusion_Fretting_3, name=Text_Hippie_Piano+9554, genre=8, style=12, setup=2, era=1, era_pos=49, letter=13, letter_pos=29, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LA_Fusion_Layer_4, name=Text_Hippie_Piano+9571, genre=8, style=12, setup=3, era=1, era_pos=66, letter=19, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Floor_Show_Grand_1, name=Text_Hippie_Piano+9588, genre=8, style=13, era=4, era_pos=19, letter=13, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Night_Club_Vibes_2, name=Text_Hippie_Piano+9605, genre=8, style=13, setup=1, era=4, era_pos=32, letter=21, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cabaret_Flugel_3, name=Text_Hippie_Piano+9622, genre=8, style=13, setup=2, era=4, era_pos=7, letter=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Organ_Combo_4, name=Text_Hippie_Piano+9639, genre=8, style=13, setup=3, era=4, era_pos=36, letter=22, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Toots_Meets_Bill_1, name=Text_Hippie_Piano+9656, genre=8, style=14, era=4, era_pos=53, letter=27, letter_pos=25, x22="\x00\x00"	# [568]
+	MusicStylistSetup	panel=StylePanel_For_Evans_Sake_2, name=Text_Hippie_Piano+9673, genre=8, style=14, setup=1, era=4, era_pos=21, letter=13, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Blue_Set_3, name=Text_Hippie_Piano+9690, genre=8, style=14, setup=2, era=4, era_pos=3, letter=9, letter_pos=40, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Waltz_Combo_4, name=Text_Hippie_Piano+9707, genre=8, style=14, setup=3, era=4, era_pos=26, letter=17, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bad_B3_Blues_1, name=Text_Hippie_Piano+9724, genre=8, style=15, era=6, era_pos=1, letter=9, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hot_Metal_Blues_2, name=Text_Hippie_Piano+9741, genre=8, style=15, setup=1, era=6, era_pos=27, letter=15, letter_pos=39, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Blues_Bars_3, name=Text_Hippie_Piano+9758, genre=8, style=15, setup=2, era=6, era_pos=5, letter=9, letter_pos=44, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Blues_Harpist_4, name=Text_Hippie_Piano+9775, genre=8, style=15, setup=3, era=6, era_pos=6, letter=9, letter_pos=45, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_West_Coast_B3_1, name=Text_Hippie_Piano+9792, style=51, era=1, era_pos=128, letter=30, letter_pos=11, x22="\x00\x00"	# [576]
+	MusicStylistSetup	panel=StylePanel_Roads_to_Fusion_2, name=Text_Hippie_Piano+9809, style=51, setup=1, era=1, era_pos=92, letter=25, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Uptown_Brass_3, name=Text_Hippie_Piano+9826, style=51, setup=2, era=1, era_pos=126, letter=28, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Pop_Section_4, name=Text_Hippie_Piano+9843, style=51, setup=3, era=1, era_pos=61, letter=17, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Benson_Jazzing_1, name=Text_Hippie_Piano+9860, genre=8, style=16, era=4, era_pos=1, letter=9, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Later_Jimmy_Jazz_2, name=Text_Hippie_Piano+9877, genre=8, style=16, setup=1, era=4, era_pos=28, letter=19, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_On_Herbie_s_Road_3, name=Text_Hippie_Piano+9894, genre=8, style=16, setup=2, era=4, era_pos=34, letter=22, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Typically_Jazzy_4, name=Text_Hippie_Piano+9911, genre=8, style=16, setup=3, era=4, era_pos=54, letter=27, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Carmen_s_Keys_1, name=Text_Hippie_Piano+9928, genre=9, era=6, era_pos=8, letter=10, letter_pos=6, x22="\x00\x00"	# [584]
+	MusicStylistSetup	panel=StylePanel_Cha_Cha_Brass_2, name=Text_Hippie_Piano+9945, genre=9, setup=1, era=6, era_pos=10, letter=10, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mirrorball_Latin_3, name=Text_Hippie_Piano+9962, genre=9, setup=2, era=6, era_pos=40, letter=20, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cha_Cha_Big_Band_4, name=Text_Hippie_Piano+9979, genre=9, setup=3, era=6, era_pos=9, letter=10, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Quick_Brass_1, name=Text_Hippie_Piano+9996, genre=5, style=7, era=5, era_pos=44, letter=24, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sequin_Dance_2, name=Text_Hippie_Piano+10013, genre=5, style=7, setup=1, era=5, era_pos=53, letter=26, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Glitter_Vibes_3, name=Text_Hippie_Piano+10030, genre=5, style=7, setup=2, era=5, era_pos=26, letter=14, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballroom_Reedle_4, name=Text_Hippie_Piano+10047, genre=5, style=7, setup=3, era=5, era_pos=6, letter=9, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bert_s_Bone_1, name=Text_Hippie_Piano+10064, genre=5, style=8, era=4, era_pos=2, letter=9, letter_pos=32, x22="\x00\x00"	# [592]
+	MusicStylistSetup	panel=StylePanel_Teatime_Brass_2, name=Text_Hippie_Piano+10081, genre=5, style=8, setup=1, era=4, era_pos=51, letter=27, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Foxy_Singers_3, name=Text_Hippie_Piano+10098, genre=5, style=8, setup=2, era=4, era_pos=22, letter=13, letter_pos=20, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_The_Fox_Band_4, name=Text_Hippie_Piano+10115, genre=5, style=8, setup=3, era=4, era_pos=52, letter=27, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Spanish_Heat_1, name=Text_Hippie_Piano+10132, genre=5, style=9, era=7, era_pos=14, letter=26, letter_pos=52, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tango_Squeeze_2, name=Text_Hippie_Piano+10149, genre=5, style=9, setup=1, era=7, era_pos=19, letter=27, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tango_Clari_3, name=Text_Hippie_Piano+10166, genre=5, style=9, setup=2, era=7, era_pos=16, letter=27, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tango_Francais_4, name=Text_Hippie_Piano+10183, genre=5, style=9, setup=3, era=7, era_pos=17, letter=27, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Octostringy_1, name=Text_Hippie_Piano+10200, genre=5, style=10, era=4, era_pos=33, letter=22, letter_pos=1, x22="\x00\x00"	# [600]
+	MusicStylistSetup	panel=StylePanel_Dr_Guitar_2, name=Text_Hippie_Piano+10217, genre=5, style=10, setup=1, era=4, era_pos=15, letter=11, letter_pos=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Only_Play_Twice_3, name=Text_Hippie_Piano+10234, genre=5, style=10, setup=2, era=4, era_pos=35, letter=22, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_String_Finger_4, name=Text_Hippie_Piano+10251, genre=5, style=10, setup=3, era=4, era_pos=48, letter=26, letter_pos=69, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Blue_Eyes_Flute_1, name=Text_Hippie_Piano+10268, genre=8, style=17, era=6, era_pos=4, letter=9, letter_pos=39, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Unison_Riddle_2, name=Text_Hippie_Piano+10285, genre=8, style=17, setup=1, era=6, era_pos=57, letter=28, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Swing_Pickin_3, name=Text_Hippie_Piano+10302, genre=8, style=17, setup=2, era=6, era_pos=50, letter=26, letter_pos=99, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Crooner_Brass_4, name=Text_Hippie_Piano+10319, genre=8, style=17, setup=3, era=6, era_pos=14, letter=10, letter_pos=41, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Caesar_s_Strings_1, name=Text_Hippie_Piano+10336, genre=5, style=11, era=4, era_pos=8, letter=10, letter_pos=1, x22="\x00\x00"	# [608]
+	MusicStylistSetup	panel=StylePanel_Candelabra_Style_2, name=Text_Hippie_Piano+10353, genre=5, style=11, setup=1, era=4, era_pos=9, letter=10, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_LegendOfThePiano_3, name=Text_Hippie_Piano+10370, genre=5, style=11, setup=2, era=4, era_pos=29, letter=19, letter_pos=21, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Casino_Orchestra_4, name=Text_Hippie_Piano+10387, genre=5, style=11, setup=3, era=4, era_pos=10, letter=10, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Fast_Band_1, name=Text_Hippie_Piano+10404, genre=5, style=12, era=5, era_pos=24, letter=13, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Up_Beat_Alto_2, name=Text_Hippie_Piano+10421, genre=5, style=12, setup=1, era=5, era_pos=65, letter=28, letter_pos=3, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jive_Me_Home_3, name=Text_Hippie_Piano+10438, genre=5, style=12, setup=2, era=5, era_pos=29, letter=17, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Almost_R_Roll_4, name=Text_Hippie_Piano+10455, genre=5, style=12, setup=3, era=5, era_pos=4, letter=8, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Safari_Swing_1, name=Text_Hippie_Piano+10472, genre=5, style=13, era_pos=97, letter=26, x22="\x00\x00"	# [616]
+	MusicStylistSetup	panel=StylePanel_Wonderlights_2, name=Text_Hippie_Piano+10489, genre=5, style=13, setup=1, era_pos=130, letter=30, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_String_Fox_3, name=Text_Hippie_Piano+10506, genre=5, style=13, setup=2, era_pos=111, letter=26, letter_pos=70, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Foxy_Big_Band_4, name=Text_Hippie_Piano+10523, genre=5, style=13, setup=3, era_pos=39, letter=13, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Octave_Tango_1, name=Text_Hippie_Piano+10540, genre=9, style=1, era=7, era_pos=12, letter=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tango_Accordion_2, name=Text_Hippie_Piano+10557, genre=9, style=1, setup=1, era=7, era_pos=15, letter=27, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tango_Passion_3, name=Text_Hippie_Piano+10574, genre=9, style=1, setup=2, era=7, era_pos=18, letter=27, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tango_Unison_4, name=Text_Hippie_Piano+10591, genre=9, style=1, setup=3, era=7, era_pos=20, letter=27, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazzy_Cha_Cha_1, name=Text_Hippie_Piano+10608, genre=9, style=2, era=8, era_pos=5, letter=17, letter_pos=11, x22="\x00\x00"	# [624]
+	MusicStylistSetup	panel=StylePanel_Cha_Cha_Keys_2, name=Text_Hippie_Piano+10625, genre=9, style=2, setup=1, era=8, era_pos=2, letter=10, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballroom_Latin_3, name=Text_Hippie_Piano+10642, genre=9, style=2, setup=2, era=8, letter=9, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brass_For_Two_4, name=Text_Hippie_Piano+10659, genre=9, style=2, setup=3, era=8, era_pos=1, letter=9, letter_pos=60, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Muchos_Accordion_1, name=Text_Hippie_Piano+10676, genre=9, style=3, era=5, era_pos=38, letter=20, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Teatime_2, name=Text_Hippie_Piano+10693, genre=9, style=3, setup=1, era=5, era_pos=33, letter=19, letter_pos=17, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Beguine_Trumpet_3, name=Text_Hippie_Piano+10710, genre=9, style=3, setup=2, era=5, era_pos=8, letter=9, letter_pos=25, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latino_Brass_4, name=Text_Hippie_Piano+10727, genre=9, style=3, setup=3, era=5, era_pos=34, letter=19, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bossa_To_Suit_1, name=Text_Hippie_Piano+10744, genre=9, style=4, era=4, era_pos=5, letter=9, letter_pos=52, x22="\x00\x00"	# [632]
+	MusicStylistSetup	panel=StylePanel_Brazilian_Voices_2, name=Text_Hippie_Piano+10761, genre=9, style=4, setup=1, era=4, era_pos=6, letter=9, letter_pos=64, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Six_String_Bossa_3, name=Text_Hippie_Piano+10778, genre=9, style=4, setup=2, era=4, era_pos=45, letter=26, letter_pos=32, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Wanderly_Latin_4, name=Text_Hippie_Piano+10795, genre=9, style=4, setup=3, era=4, era_pos=61, letter=30, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sao_Paulo_Tabs_1, name=Text_Hippie_Piano+10812, genre=9, style=5, era=4, era_pos=41, letter=26, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cuban_Piano_2, name=Text_Hippie_Piano+10829, genre=9, style=5, setup=1, era=4, era_pos=13, letter=10, letter_pos=44, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Samba_Fretwork_3, name=Text_Hippie_Piano+10846, genre=9, style=5, setup=2, era=4, era_pos=40, letter=26, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Samba_Festival_4, name=Text_Hippie_Piano+10863, genre=9, style=5, setup=3, era=4, era_pos=39, letter=26, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Acoustics_1, name=Text_Hippie_Piano+10880, genre=9, style=6, era=5, era_pos=31, letter=19, letter_pos=8, x22="\x00\x00"	# [640]
+	MusicStylistSetup	panel=StylePanel_Cocktail_Beguine_2, name=Text_Hippie_Piano+10897, genre=9, style=6, setup=1, era=5, era_pos=16, letter=10, letter_pos=27, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Latin_Dance_Band_3, name=Text_Hippie_Piano+10914, genre=9, style=6, setup=2, era=5, era_pos=32, letter=19, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Symphonic_Latin_4, name=Text_Hippie_Piano+10931, genre=9, style=6, setup=3, era=5, era_pos=61, letter=26, letter_pos=110, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cuban_Serenade_1, name=Text_Hippie_Piano+10948, genre=9, style=7, era=5, era_pos=19, letter=10, letter_pos=45, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cuban_Dance_2, name=Text_Hippie_Piano+10965, genre=9, style=7, setup=1, era=5, era_pos=18, letter=10, letter_pos=43, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Beach_Rhumba_3, name=Text_Hippie_Piano+10982, genre=9, style=7, setup=2, era=5, era_pos=7, letter=9, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cherry_Rhumba_4, name=Text_Hippie_Piano+10999, genre=9, style=7, setup=3, era=5, era_pos=15, letter=10, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hot_Sauce_Flute_1, name=Text_Hippie_Piano+11016, genre=9, style=8, era=8, era_pos=4, letter=15, letter_pos=40, x22="\x00\x00"	# [648]
+	MusicStylistSetup	panel=StylePanel_Havana_Brass_2, name=Text_Hippie_Piano+11033, genre=9, style=8, setup=1, era=8, era_pos=3, letter=15, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Son_Amigos_3, name=Text_Hippie_Piano+11050, genre=9, style=8, setup=2, era=8, era_pos=7, letter=26, letter_pos=41, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Miami_Heat_4, name=Text_Hippie_Piano+11067, genre=9, style=8, setup=3, era=8, era_pos=6, letter=20, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Zither_Pop_1, name=Text_Hippie_Piano+11084, genre=9, style=9, era=3, era_pos=115, letter=32, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Bouzouki_Pop_2, name=Text_Hippie_Piano+11101, genre=9, style=9, setup=1, era=3, era_pos=15, letter=9, letter_pos=55, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Cumbus_Pop_3, name=Text_Hippie_Piano+11118, genre=9, style=9, setup=2, era=3, era_pos=26, letter=10, letter_pos=46, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Kanun_Pop_4, name=Text_Hippie_Piano+11135, genre=9, style=9, setup=3, era=3, era_pos=49, letter=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Simple_Dangdut_1, name=Text_Hippie_Piano+11152, genre=9, style=10, era=2, era_pos=82, letter=26, letter_pos=26, x22="\x00\x00"	# [656]
+	MusicStylistSetup	panel=StylePanel_Synth_Dangdut_2, name=Text_Hippie_Piano+11169, genre=9, style=10, setup=1, era=2, era_pos=87, letter=26, letter_pos=113, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Orchestra_Dangut_3, name=Text_Hippie_Piano+11186, genre=9, style=10, setup=2, era=2, era_pos=58, letter=22, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dance_Dangdut_4, name=Text_Hippie_Piano+11203, genre=9, style=10, setup=3, era=2, era_pos=21, letter=11, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dangdut_LoveSong_1, name=Text_Hippie_Piano+11220, genre=9, style=11, era=2, era_pos=24, letter=11, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Acoustic_Dangdut_2, name=Text_Hippie_Piano+11237, genre=9, style=11, setup=1, era=2, era_pos=4, letter=8, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dangdut_Flutes_3, name=Text_Hippie_Piano+11254, genre=9, style=11, setup=2, era=2, era_pos=23, letter=11, letter_pos=6, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Dangdut_Stage_4, name=Text_Hippie_Piano+11271, genre=9, style=11, setup=3, era=2, era_pos=25, letter=11, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jamaica_Jammin_1, name=Text_Hippie_Piano+11288, style=52, era=1, era_pos=59, letter=17, x22="\x00\x00"	# [664]
+	MusicStylistSetup	panel=StylePanel_Rasta_Wheels_2, name=Text_Hippie_Piano+11305, style=52, setup=1, era=1, era_pos=90, letter=25, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sun_Sea_Strat_3, name=Text_Hippie_Piano+11322, style=52, setup=2, era=1, era_pos=113, letter=26, letter_pos=84, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Caribbean_Warmth_4, name=Text_Hippie_Piano+11339, style=52, setup=3, era=1, era_pos=25, letter=10, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Brazil_Flute_1, name=Text_Hippie_Piano+11356, genre=9, style=12, era=1, era_pos=23, letter=9, letter_pos=62, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Disco_Brasilia_2, name=Text_Hippie_Piano+11373, genre=9, style=12, setup=1, era=1, era_pos=34, letter=11, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_String_Samba_3, name=Text_Hippie_Piano+11390, genre=9, style=12, setup=2, era=1, era_pos=110, letter=26, letter_pos=73, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Copacabana_Brass_4, name=Text_Hippie_Piano+11407, genre=9, style=12, setup=3, era=1, era_pos=30, letter=10, letter_pos=38, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mariachi_Guitars_1, name=Text_Hippie_Piano+11424, genre=9, style=13, era=6, era_pos=36, letter=20, letter_pos=7, x22="\x00\x00"	# [672]
+	MusicStylistSetup	panel=StylePanel_Mexican_Brass_2, name=Text_Hippie_Piano+11441, genre=9, style=13, setup=1, era=6, era_pos=38, letter=20, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Tex_Mex_Mix_3, name=Text_Hippie_Piano+11458, genre=9, style=13, setup=2, era=6, era_pos=55, letter=27, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_HatDance_Squeeze_4, name=Text_Hippie_Piano+11475, genre=9, style=13, setup=3, era=6, era_pos=24, letter=15, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Venetian_Love_1, name=Text_Hippie_Piano+11492, genre=9, style=14, era=65535, era_pos=65535, letter=29, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Party_In_Napoli_2, name=Text_Hippie_Piano+11509, genre=9, style=14, setup=1, era=65535, era_pos=65535, letter=23, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Sardinia_Reed_3, name=Text_Hippie_Piano+11526, genre=9, style=14, setup=2, era=65535, era_pos=65535, letter=26, letter_pos=5, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Full_Romance_4, name=Text_Hippie_Piano+11543, genre=9, style=14, setup=3, era=65535, era_pos=65535, letter=13, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Soprano_Ballad_1, name=Text_Hippie_Piano+11560, style=53, era=3, era_pos=90, letter=26, letter_pos=42, x22="\x00\x00"	# [680]
+	MusicStylistSetup	panel=StylePanel_Orchestral_Keys_2, name=Text_Hippie_Piano+11577, style=53, setup=1, era=3, era_pos=67, letter=22, letter_pos=9, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Symphony_Ballad_3, name=Text_Hippie_Piano+11594, style=53, setup=2, era=3, era_pos=106, letter=26, letter_pos=112, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heart_Strings_4, name=Text_Hippie_Piano+11611, style=53, setup=3, era=3, era_pos=36, letter=15, letter_pos=11, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_Pop_Groove_1, name=Text_Hippie_Piano+11628, style=54, era=2, era_pos=64, letter=23, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_BensonPop_Guitar_2, name=Text_Hippie_Piano+11645, style=54, setup=1, era=2, era_pos=9, letter=9, letter_pos=31, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jazz_Pop_Groove_3, name=Text_Hippie_Piano+11662, style=54, setup=2, era=2, era_pos=43, letter=17, letter_pos=4, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Overdrive_Swing_4, name=Text_Hippie_Piano+11679, style=54, setup=3, era=2, era_pos=62, letter=22, letter_pos=19, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_EP_Fusion_1, name=Text_Hippie_Piano+11696, style=55, era=2, era_pos=29, letter=12, letter_pos=9, x22="\x00\x00"	# [688]
+	MusicStylistSetup	panel=StylePanel_Rock_B3_Groove_2, name=Text_Hippie_Piano+11713, style=55, setup=1, era=2, era_pos=78, letter=25, letter_pos=22, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Jass_Pop_Unison_3, name=Text_Hippie_Piano+11730, style=55, setup=2, era=2, era_pos=42, letter=17, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Pop_Distortion_4, name=Text_Hippie_Piano+11747, style=55, setup=3, era=2, era_pos=68, letter=23, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_B3_Shuffle_1, name=Text_Hippie_Piano+11764, style=56, era_pos=13, letter=9, letter_pos=2, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Rock_Piano_Jive_2, name=Text_Hippie_Piano+11781, style=56, setup=1, era_pos=94, letter=25, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Shuffle_3, name=Text_Hippie_Piano+11798, style=56, setup=2, era_pos=53, letter=15, letter_pos=18, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Stand_Up_Shuffle_4, name=Text_Hippie_Piano+11815, style=56, setup=3, era_pos=110, letter=26, letter_pos=62, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Harp_Rock_1, name=Text_Hippie_Piano+11832, style=57, era_pos=50, letter=15, letter_pos=4, x22="\x00\x00"	# [696]
+	MusicStylistSetup	panel=StylePanel_Metal_B3_2, name=Text_Hippie_Piano+11849, style=57, setup=1, era_pos=70, letter=20, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Stadium_Piano_3, name=Text_Hippie_Piano+11866, style=57, setup=2, era_pos=108, letter=26, letter_pos=60, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Heavy_Rock_Brass_4, name=Text_Hippie_Piano+11883, style=57, setup=3, era_pos=52, letter=15, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballad_EP_Time_1, name=Text_Hippie_Piano+11900, style=58, era=1, era_pos=13, letter=9, letter_pos=7, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Smooth_Jazz_Sax_2, name=Text_Hippie_Piano+11917, style=58, setup=1, era=1, era_pos=100, letter=26, letter_pos=35, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Easy_Fretting_3, name=Text_Hippie_Piano+11934, style=58, setup=2, era=1, era_pos=37, letter=12, letter_pos=1, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_MOR_Orchestra_4, name=Text_Hippie_Piano+11951, style=58, setup=3, era=1, era_pos=74, letter=20, letter_pos=23, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_EP_Quickstep_1, name=Text_Hippie_Piano+11968, genre=5, style=14, era_pos=30, letter=12, letter_pos=10, x22="\x00\x00"	# [704]
+	MusicStylistSetup	panel=StylePanel_Organ_Quickstep_2, name=Text_Hippie_Piano+11985, genre=5, style=14, setup=1, era_pos=79, letter=22, letter_pos=14, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballroom_Sax_3, name=Text_Hippie_Piano+12002, genre=5, style=14, setup=2, era_pos=16, letter=9, letter_pos=13, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Ballroom_Combo_4, name=Text_Hippie_Piano+12019, genre=5, style=14, setup=3, era_pos=15, letter=9, letter_pos=10, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Suitcase_Waltz_1, name=Text_Hippie_Piano+12036, genre=5, style=15, era=5, era_pos=59, letter=26, letter_pos=80, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Organ_Waltz_2, name=Text_Hippie_Piano+12053, genre=5, style=15, setup=1, era=5, era_pos=40, letter=22, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_Waltz_3, name=Text_Hippie_Piano+12070, genre=5, style=15, setup=2, era=5, era_pos=43, letter=23, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Combo_Waltz_4, name=Text_Hippie_Piano+12087, genre=5, style=15, setup=3, era=5, era_pos=17, letter=10, letter_pos=30, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Hip_Suit_1, name=Text_Hippie_Piano+12104, style=59, era=3, era_pos=44, letter=15, letter_pos=28, x22="\x00\x00"	# [712]
+	MusicStylistSetup	panel=StylePanel_Acoustic_Groove_2, name=Text_Hippie_Piano+12121, style=59, setup=1, era=3, era_pos=4, letter=8, letter_pos=8, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Chilled_Sax_3, name=Text_Hippie_Piano+12138, style=59, setup=2, era=3, era_pos=22, letter=10, letter_pos=16, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Flugel_Hipness_4, name=Text_Hippie_Piano+12155, style=59, setup=3, era=3, era_pos=34, letter=13, letter_pos=12, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Steel_Ballad_1, name=Text_Hippie_Piano+12172, style=60, era=5, era_pos=58, letter=26, letter_pos=64, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Piano_Smooch_2, name=Text_Hippie_Piano+12189, style=60, setup=1, era=5, era_pos=42, letter=23, letter_pos=15, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Mouth_Organ_12_8_3, name=Text_Hippie_Piano+12206, style=60, setup=2, era=5, era_pos=37, letter=20, letter_pos=26, x22="\x00\x00"
+	MusicStylistSetup	panel=StylePanel_Last_Dance_4, name=Text_Hippie_Piano+12223, style=60, setup=3, era=5, era_pos=30, letter=19, letter_pos=6, x22="\x00\x00"
+func_4864000C_Records:	# 10 x REC_func_4864000C_Records (12 bytes each); read by func_4864000C 0x4864000C `mov (4, a0), a0`; func_4864001D_entry_L33 0x48640055 `mov (a0), d1`; func_4864001D_entry_L4f 0x48640071 `mov (4, a0), a0` (+32)
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12240, p4=data_4857151E, f8=7, x10="\x00\x00"	# [0]
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12257, p4=data_48571550, f8=8, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12274, p4=func_4864000C_Records_p4_5, f8=6, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12291, p4=func_4864000C_Records_p4_4, f8=5, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12308, p4=func_4864000C_Records_p4_3, f8=4, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12325, p4=Str_r_3, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12342, p4=func_4864000C_Records_p4_0, f8=1, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12359, p4=func_4864000C_Records_p4_2, f8=3, x10="\x00\x00"
+	REC_func_4864000C_Records	p0=Text_Hippie_Piano+12376, p4=func_4864000C_Records_p4_1, f8=2, x10="\x00\x00"	# [8]
+	REC_func_4864000C_Records	x10="\x00\x00"

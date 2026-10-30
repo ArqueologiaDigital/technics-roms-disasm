@@ -5386,7 +5386,7 @@ PCCOM_Methods:
 PCCOM_Functions:
 	.space	4, 0x00
 data_4879536C:
-	# 4 bytes the code takes the address of: InitializeBlock40 0x485835C4 `mov data_4879536C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeBlock40 0x485835C4 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeBlock40 0x485835C4 `mov data_4879536C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_486B1178	# +0
 
 # 1 ApFunction procedures; a function id is (0x282 << 16) | its index (the names are the parallel table at slot 0x28a)

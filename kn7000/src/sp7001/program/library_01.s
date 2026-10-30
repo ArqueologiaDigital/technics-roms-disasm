@@ -35807,7 +35807,7 @@ loc_4C0383B0:
     movhu   d1, (0x98040004)
     mov     TgGlobalRegsB0LoadB_Var, a0
     call    TgGlobalRegsB0LoadB_entry, [a2], 0x18
-    mov     data_486D222C, a0
+    mov     TgGlobalRegsA0LoadB_ArgA0_0, a0
     call    TgGlobalRegsA0LoadB_entry, [a2], 0x18
     mov     d2, d0
     mov     0x500ca0c0, a2

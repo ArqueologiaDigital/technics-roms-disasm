@@ -2253,7 +2253,7 @@ func_4865F924_Table:	# 8 x u8, 0..0; read by func_4865F924_entry : `movbu	(a1), 
 func_4865F924_Table_2:	# 8 x u8, 0..0; read by func_4865F924_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0
 data_4847D338:
-	# 12 bytes the code takes the address of: TestDiskFunc_L20 0x486603C8 `mov data_4847D338, d0` (+0, as a base); TestDiskFunc_L3d 0x486603E5 `mov data_4847D338, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestDiskFunc_L20 0x486603C8 `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); TestDiskFunc_L20 0x486603C8 `mov data_4847D338, d0` (+0, as a base); TestDiskFunc_L3d 0x486603E5 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+1 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	4, 0, 3, 1, 1, 0, 5, 1, 0, 0, 0, 0	# +0
 
 Str_OUT_3:	.asciz "OUT"
@@ -2430,20 +2430,20 @@ Str_2d_2d_6:	.asciz "%2d/%2d"
 Str_2d_2d_5:	.asciz "%2d/%2d"
 Str_2d_2d_4:	.asciz "%2d/%2d"
 data_4847D4DC:
-	# 12 bytes the code takes the address of: TestRgbwbFunc_L57 0x48660D3B `mov data_4847D4DC, d0` (+0, as a base); TestRgbwbFunc_L99 0x48660D7D `mov data_4847D4DC, d0` (+0, as a base); TestRgbwbFunc_Ldc 0x48660DC0 `mov data_4847D4DC, d0` (+0, as a base) (+4 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestRgbwbFunc_L57 0x48660D3B `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestRgbwbFunc_L57 0x48660D3B `call func_4865F810_entry, 0, 0x14` (+0, arg sp24); TestRgbwbFunc_L57 0x48660D3B `mov data_4847D4DC, d0` (+0, as a base) (+12 more); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_4865F810 (sp24): func_4865F810 reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	5, 0, 3, 1, 6, 0, 6, 1, 0, 0, 0, 0	# +0
 data_4847D4E8:
-	# 12 bytes the code takes the address of: TestCrosstarlRunFunc 0x48660F0B `mov data_4847D4E8, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestCrosstarlRunFunc 0x48660F0B `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestCrosstarlRunFunc 0x48660F0B `mov data_4847D4E8, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	6, 0, 3, 1, 7, 0, 6, 1, 0, 0, 0, 0	# +0
 data_4847D4F4:
-	# 12 bytes the code takes the address of: TestSampleFunc_L7f 0x48661013 `mov data_4847D4F4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestSampleFunc_L7f 0x48661013 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestSampleFunc_L7f 0x48661013 `mov data_4847D4F4, d0` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	7, 0, 3, 1, 8, 0, 6, 1, 0, 0, 0, 0	# +0
 data_4847D500:
-	# 12 bytes the code takes the address of: TestContrastRunFunc 0x48661033 `mov data_4847D500, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestContrastRunFunc 0x48661033 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestContrastRunFunc 0x48661033 `mov data_4847D500, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	8, 0, 3, 1, 9, 0, 6, 1, 0, 0, 0, 0	# +0
 Str_3d_216:	.asciz "%3d"
 data_4847D510:
-	# 12 bytes the code takes the address of: TestVideoOutRunFunc 0x4866130D `mov data_4847D510, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestVideoOutRunFunc 0x4866130D `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestVideoOutRunFunc 0x4866130D `mov data_4847D510, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	9, 0, 3, 1, 10, 0, 6, 1, 0, 0, 0, 0	# +0
 Str_CcEv_13:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_13
@@ -2549,7 +2549,7 @@ Str_OK_26:	.asciz "OK"
 	.align	4, 0xFF	# pad after Str_OK_26
 Str_OFF_142:	.asciz "OFF"
 data_4847D714:
-	# 12 bytes the code takes the address of: TestMICFunc_L125 0x48662024 `mov data_4847D714, d0` (+0, as a base); TestMICFunc_L14c 0x4866204B `mov data_4847D714, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestMICFunc_L125 0x48662024 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestMICFunc_L125 0x48662024 `mov data_4847D714, d0` (+0, as a base); TestMICFunc_L14c 0x4866204B `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24) (+1 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	10, 0, 3, 1, 25, 0, 6, 1, 0, 0, 0, 0	# +0
 
 TestMICFunc_Table:	# 4 x u16, 0..0; read by TestMICFunc 0x48661EFF: `movhu	(a1), d0`
@@ -2648,7 +2648,7 @@ SdTestFilter_L21_Table:	.asciz "\xBB p"
 Str_CcEv_11:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_11
 data_4847DA50:
-	# 12 bytes the code takes the address of: MainSDTestFunc_L30 0x48662DD8 `mov data_4847DA50, d0` (+0, as a base); MainSDTestFunc_L56 0x48662DFE `mov data_4847DA50, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: MainSDTestFunc_L30 0x48662DD8 `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); MainSDTestFunc_L30 0x48662DD8 `mov data_4847DA50, d0` (+0, as a base); MainSDTestFunc_L56 0x48662DFE `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+1 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	23, 0, 3, 1, 2, 0, 5, 1, 0, 0, 0, 0	# +0
 Str_OPEN:	.asciz "OPEN "
 	.align	4, 0xFF	# pad after Str_OPEN
@@ -2675,7 +2675,7 @@ Str_ANY_WRONG_DEVICE:	.asciz "ANY WRONG DEVICE"
 func_48663B9D_Table:	# 8 x u8, 0..255; read by func_48663B9D_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 255, 255
 data_4847DADC:
-	# 12 bytes the code takes the address of: Test7Func_L56 0x48663E9F `mov data_4847DADC, d0` (+0, as a base); Test7Func_L7f 0x48663EC8 `mov data_4847DADC, d0` (+0, as a base); Test7Func_La3 0x48663EEC `mov data_4847DADC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: Test7Func_L56 0x48663E9F `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); Test7Func_L56 0x48663E9F `mov data_4847DADC, d0` (+0, as a base); Test7Func_L7f 0x48663EC8 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+3 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	19, 0, 3, 1, 1, 0, 5, 1, 0, 0, 0, 0	# +0
 
 Bitmap_FDCstopBitmapCheck_Pixels:	# 12 x 12, 8 bit(s) a pixel, rows padded to even bytes: the bitmap FDCstopBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_FDCstopBitmapCheck_Pixels.png)
@@ -6263,11 +6263,10 @@ Str_TT_MDCOMP:	.asciz "TT_MDCOMP"
 	.align	4, 0xFF	# pad after Str_TT_MDCOMP
 Str_TT_MDPMLCTL:	.asciz "TT_MDPMLCTL"
 
-func_485FDD4C_Table:	# 4 x u16, 5..314; read by DrawDesignBox_entry_L22 0x485FDCFD: `movhu (a2), d0`; func_485FDD4C 0x485FDD4C: `movhu (a1), d1`
-	tab_u16	244, 5, 314, 22
-data_4848EBE4:
-	# 4 bytes the code takes the address of: AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); AcMidiPartGridBoxProc_L6a 0x48677255 `mov data_4848EBE4, a1` (+0, as a base); AcMidiControlGridBoxProc_L63 0x4867827A `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xE0118	# +0
+func_485FDD4C_Table:	# REC_DrawString_ArgA0 (8 bytes): the layout DrawString 0x485FCEC8 reads through its argument a0 (passed by DrawStringCentered 0x485FD3CB `call DrawString_entry, [d2,d3,a2,a3], 0x30`); the layout DrawStringCentered 0x485FD3CB reads through its argument a0 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls); +1 more routines
+	REC_DrawString_ArgA0	f0=244, f2=5, f4=314, f6=22
+DrawStringCentered_ArgA1_0:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	REC_DrawStringCentered_ArgA1	f0=280, f2=14
 
 Str_PAGE_1_3:	.asciz "PAGE 1/3"
 Str_PAGE_2_3:	.asciz "PAGE 2/3"
@@ -6620,15 +6619,13 @@ ptrs_4848FC78:
 	.long	Str_Are_You_Sure_6
 	.long	Str_Apakah_yakin_akan_dihapus_3
 	.long	data_4848FC67
-data_4848FC94:
-	# 8 bytes the code takes the address of: AcMidiPcgOutSendEditSwProc_L3c 0x4867AA73 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10` (+0, arg a0); AcMidiPcgOutSendEditSwProc_L3c 0x4867AA73 `mov data_4848FC94, a0` (+0, as a base); AcMidiPcgOutSendEditSwProc_L9b 0x4867AAD2 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10` (+0, arg a0) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xA8011A, 0xBA0275	# +0
-data_4848FC9C:
-	# 4 bytes the code takes the address of: AcMidiPcgOutSendEditSwProc_L9b 0x4867AAD2 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); AcMidiPcgOutSendEditSwProc_L9b 0x4867AAD2 `mov data_4848FC9C, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xB10131	# +0
-data_4848FCA0:
-	# 4 bytes the code takes the address of: AcMidiPcgOutSendEditSwProc_L3c 0x4867AA73 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); AcMidiPcgOutSendEditSwProc_L3c 0x4867AA73 `mov data_4848FCA0, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xB00264	# +0
+
+DrawString_ArgA0_1:	# REC_DrawString_ArgA0 (8 bytes): the layout DrawString 0x485FCEC8 reads through its argument a0 (passed by DrawStringCentered 0x485FD3CB `call DrawString_entry, [d2,d3,a2,a3], 0x30`); the layout DrawStringCentered 0x485FD3CB reads through its argument a0 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls); +1 more routines
+	REC_DrawString_ArgA0	f0=282, f2=168, f4=629, f6=186
+DrawStringCentered_ArgA1_1:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	REC_DrawStringCentered_ArgA1	f0=305, f2=177
+DrawStringCentered_ArgA1_2:	# REC_DrawStringCentered_ArgA1 (4 bytes): the layout DrawStringCentered 0x485FD3CB reads through its argument a1 (passed by AcMidiPartGridBoxProc_L6a 0x48677255 `call DrawStringCentered_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	REC_DrawStringCentered_ArgA1	f0=612, f2=176
 
 AcMidiPcgOutSendEditSwProc_Table:	# 12 x u8, 0..255; read by AcMidiPcgOutSendEditSwProc : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255
@@ -16717,18 +16714,18 @@ ptrs_484A7654:
 	.long	Text_43_2d_32+1260
 	.long	Text_43_2d_32+1270
 data_484A7854:
-	# 4 bytes the code takes the address of: func_486A63DD_entry_L20 0x486A6402 `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A63DD_entry_L20 0x486A6402 `mov data_484A7854, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_486A63DD_entry_L20 0x486A6402 `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A63DD_entry_L20 0x486A6402 `mov data_484A7854, a1` (+0, as a base); byte rows (u8); the callee walk: strcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	173, 184, 0, 255	# +0
 
 Str_empty_841:	.asciz "\xAD "
 	.align	4, 0xFF	# pad after Str_empty_841
 data_484A785C:
-	# 4 bytes the code takes the address of: func_486A63DD_entry_L3e 0x486A6420 `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A63DD_entry_L3e 0x486A6420 `mov data_484A785C, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_486A63DD_entry_L3e 0x486A6420 `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A63DD_entry_L3e 0x486A6420 `mov data_484A785C, a1` (+0, as a base); byte rows (u8); the callee walk: strcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	172, 184, 0, 255	# +0
 Str_empty_840:	.asciz "\xAC "
 	.align	4, 0xFF	# pad after Str_empty_840
 data_484A7864:
-	# 4 bytes the code takes the address of: func_486A63DD_entry_L5c 0x486A643E `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A63DD_entry_L5c 0x486A643E `mov data_484A7864, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_486A63DD_entry_L5c 0x486A643E `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A63DD_entry_L5c 0x486A643E `mov data_484A7864, a1` (+0, as a base); byte rows (u8); the callee walk: strcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	171, 184, 0, 255	# +0
 Str_empty_839:	.asciz "\xAB "
 	.align	4, 0xFF	# pad after Str_empty_839
@@ -17149,7 +17146,7 @@ Str_x_d:	.asciz "\xB2 x %d"
 Str_empty_807:	.asciz " + \xB3"
 	.align	4, 0xFF	# pad after Str_empty_807
 data_484A8F90:
-	# 4 bytes the code takes the address of: func_486A8055_entry_L42 0x486A809C `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A8055_entry_L42 0x486A809C `mov data_484A8F90, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_486A8055_entry_L42 0x486A809C `call strcpy_entry, [a2], 4` (+0, arg a1); func_486A8055_entry_L42 0x486A809C `mov data_484A8F90, a1` (+0, as a base); byte rows (u8); the callee walk: strcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	179, 0, 255, 255	# +0
 Str_s_11:	.asciz "     %s"
 Str_empty_806:	.asciz "                                       "
@@ -17626,9 +17623,9 @@ func_486AA53E_Table:	# 38 x u16, 25..65280; read by func_486AA53E_entry_L1d 0x48
 	tab_u16	8224, 8224, 8224, 8224, 8224, 8224, 8224, 8224, 8224, 8224, 8224, 8224	# [24]
 	tab_u16	8224, 65280	# [36]
 
-ptrs_484A9BD8:
-	.long	func_486AA53E_Table+8
-	.long	func_486AA53E_Table+41
+func_486A9982_entry_L30_Records:	# 2 x REC_func_486A9982_entry_L30_Records (4 bytes each); read by func_486A9982_entry_L30 0x486A99B8 `call func_486A8E26_entry, [d2,a2], 8`; func_486A9982_entry_L68 0x486A99F0 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c`; func_486A9982_entry_L7e 0x486A9A06 `call strcpy_entry, [a2], 4` (+2)
+	REC_func_486A9982_entry_L30_Records	s0="\x94\x9BJH"
+	REC_func_486A9982_entry_L30_Records	s0="\xB5\x9BJH"
 
 func_486A9982_Table:	# 4 x u32, 1133..1136; read by func_486A9982_entry : `mov	(d0, a0), d0`
 	tab_u32	1133, 1134, 1135, 1136
@@ -17637,11 +17634,11 @@ func_486A9982_Table_2:	# 4 x u32, 1108..1139; read by func_486A9982_entry : `mov
 func_486A9982_Table_3:	# 1 x u32, 4294967040..4294967040; read by func_486A9982_entry : `mov	(a0), a1`
 	tab_u32	4294967040
 data_484A9C04:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9982_entry_Lf8 0x486A9A80 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9982_entry_Lf8 0x486A9A80 `mov data_484A9C04, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9982_entry_Lf8 0x486A9A80 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 data_484A9C08:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9982_entry_Lf8 0x486A9A80 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9982_entry_Lf8 0x486A9A80 `mov data_484A9C08, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9982_entry_Lf8 0x486A9A80 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 
@@ -17650,11 +17647,11 @@ Str_empty_798:	.asciz "                               "
 func_486A9ABC_entry_L18_Table:	# 4 x u32, 1107..1140; read by func_486A9ABC_entry_L18 0x486A9ADA: `mov (d0, a3), d0`; func_486A9ABC_entry_L67 0x486A9B29: `mov (d2, a3), d0`
 	tab_u32	1107, 1110, 1137, 1140
 data_484A9C3C:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9B3C_entry_L33 0x486A9B74 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9B3C_entry_L33 0x486A9B74 `mov data_484A9C3C, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9B3C_entry_L33 0x486A9B74 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 data_484A9C40:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9B3C_entry_L33 0x486A9B74 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9B3C_entry_L33 0x486A9B74 `mov data_484A9C40, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9B3C_entry_L33 0x486A9B74 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 
@@ -17691,7 +17688,7 @@ Str_BRIGHTNESS_3:	.asciz "BRIGHTNESS"
 	.align	4, 0xFF	# pad after Str_BRIGHTNESS_3
 Str_CTL_ERR_2:	.asciz "CTL ERR"
 data_484A9D14:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9BA1_entry_L3cf 0x486A9F75 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9BA1_entry_L3cf 0x486A9F75 `mov data_484A9D14, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9BA1_entry_L3cf 0x486A9F75 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 Str_SOUND_15:	.asciz "SOUND"
@@ -17701,13 +17698,13 @@ Str_PITCH_BEND_2:	.asciz "PITCH BEND"
 	.align	4, 0xFF	# pad after Str_PITCH_BEND_2
 Str_CTL_ERR:	.asciz "CTL ERR"
 data_484A9D40:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9BA1_entry_L4cc 0x486AA072 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9BA1_entry_L4cc 0x486AA072 `mov data_484A9D40, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9BA1_entry_L4cc 0x486AA072 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 Str_EVENT_ERR:	.asciz "EVENT ERR"
 	.align	4, 0xFF	# pad after Str_EVENT_ERR
 data_484A9D50:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A9BA1_entry_L4ed 0x486AA093 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486A9BA1_entry_L4ed 0x486AA093 `mov data_484A9D50, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486A9BA1_entry_L4ed 0x486AA093 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 Str_ON_35:	.asciz "ON "
@@ -17719,11 +17716,11 @@ Str_CENTER_4:	.asciz "CENTER"
 Str_L_2d_2:	.asciz "  L %2d"
 Str_R_2d_2:	.asciz "  R %2d"
 data_484A9D7C:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486AA0BD_entry_L154 0x486AA216 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486AA0BD_entry_L154 0x486AA216 `mov data_484A9D7C, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486AA0BD_entry_L154 0x486AA216 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 data_484A9D80:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486AA0BD_entry_L184 0x486AA246 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486AA0BD_entry_L184 0x486AA246 `mov data_484A9D80, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486AA0BD_entry_L184 0x486AA246 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 
@@ -17767,11 +17764,11 @@ Str_FILTER_RESONANCE:	.asciz "FILTER RESONANCE"
 Str_BRIGHTNESS_2:	.asciz "BRIGHTNESS"
 	.align	4, 0xFF	# pad after Str_BRIGHTNESS_2
 data_484A9F24:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486AA53E_entry_L591 0x486AAAD4 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486AA53E_entry_L591 0x486AAAD4 `mov data_484A9F24, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486AA53E_entry_L591 0x486AAAD4 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 data_484A9F28:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486AA53E_entry_L591 0x486AAAD4 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486AA53E_entry_L591 0x486AAAD4 `mov data_484A9F28, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486AA53E_entry_L591 0x486AAAD4 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 Str_SOUND_14:	.asciz "SOUND"
@@ -17780,11 +17777,11 @@ Str_AFTER_TOUCH:	.asciz "AFTER TOUCH"
 Str_PITCH_BEND:	.asciz "PITCH BEND"
 	.align	4, 0xFF	# pad after Str_PITCH_BEND
 data_484A9F4C:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486AA53E_entry_L650 0x486AAB93 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486AA53E_entry_L650 0x486AAB93 `mov data_484A9F4C, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486AA53E_entry_L650 0x486AAB93 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 data_484A9F50:
-	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486AA53E_entry_L650 0x486AAB93 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_486AA53E_entry_L650 0x486AAB93 `mov data_484A9F50, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_486A8EAB 0x486A8EAB `call GetTitleNow_entry, 0, 0x10` (+0, arg sp56); func_486AA53E_entry_L650 0x486AAB93 `call func_486A8EAB_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
 	.asciz	""
 	.align	4, 0xFF
 
@@ -20774,10 +20771,8 @@ CmpPartSetGrid1_Table_3:	# 3 x u8, 0..5; read by CmpPartSetGrid1 : `movbu	(d1, a
 	tab_u8	0, 2, 5
 CmpPartSetGrid1_Table_4:	# 5 x u8, 11..255; read by CmpPartSetGrid1 : `movbu	(d0, a0), d0`
 	tab_u8	11, 127, 127, 255, 255
-CmpPartSetGrid1_L18a_Table:	# 4 x u32, 0..1; read by CmpPartSetGrid1_L18a 0x486B15F7: `mov	(-4, a0), d0`; CmpPartSetGrid1_L35b 0x486B17C8: `mov	(-4, a0), d1` ...
-	tab_u32	0, 1, 0, 1
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0B3420, 0x0B3428
+CmpPartSetGrid1_L18a_Table:	# 6 x u32, 0..1; read by CmpPartSetGrid1_L18a 0x486B15F7: `mov	(-4, a0), d0`; CmpPartSetGrid1_L35b 0x486B17C8: `mov	(-4, a0), d1` ...
+	tab_u32	0, 1, 0, 1, 0, 1
 
 Str_empty_780:	.asciz "--"
 	.align	4, 0xFF	# pad after Str_empty_780
@@ -20798,10 +20793,8 @@ CmpPartSetGrid2_Table_4:	# 5 x u8, 0..0; read by CmpPartSetGrid2 : `movbu	(d0, a
 	tab_u8	0, 0, 0, 0, 0
 CmpPartSetGrid2_Table_5:	# 6 x u8, 12..255; read by CmpPartSetGrid2 : `movbu	(d0, a0), d0`; CmpPartSetGrid2 : `movbu	(d0, a1), d0`
 	tab_u8	127, 127, 127, 127, 12, 255
-CmpPartSetGrid2_L186_Table:	# 4 x u32, 0..1; read by CmpPartSetGrid2_L186 0x486B1ADA: `mov	(-4, a0), d0`; CmpPartSetGrid2_L362 0x486B1CB6: `mov	(-4, a0), d0` ...
-	tab_u32	1, 0, 1, 1
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0B348C, 0x0B3490
+CmpPartSetGrid2_L186_Table:	# 5 x u32, 0..1; read by CmpPartSetGrid2_L186 0x486B1ADA: `mov	(-4, a0), d0`; CmpPartSetGrid2_L362 0x486B1CB6: `mov	(-4, a0), d0` ...
+	tab_u32	1, 0, 1, 1, 1
 
 Str_empty_777:	.asciz " -- "
 	.align	4, 0xFF	# pad after Str_empty_777
@@ -20832,10 +20825,8 @@ CmpPartSetGrid3_Table_4:	# 4 x u8, 0..40; read by CmpPartSetGrid3 : `movbu	(d0, 
 	tab_u8	0, 40, 0, 40
 CmpPartSetGrid3_Table_5:	# 4 x u8, 88..120; read by CmpPartSetGrid3 : `movbu	(d0, a0), d0`; CmpPartSetGrid3 : `movbu	(d0, a1), d0`
 	tab_u8	120, 88, 120, 88
-CmpPartSetGrid3_L182_Table:	# 4 x u32, 1..1; read by CmpPartSetGrid3_L182 0x486B2000: `mov	(-4, a0), d0`; CmpPartSetGrid3_L2d8 0x486B2156: `mov	(-4, a0), d1` ...
-	tab_u32	1, 1, 1, 1
-# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0B3508, 0x0B3518
+CmpPartSetGrid3_L182_Table:	# 8 x u32, 1..1; read by CmpPartSetGrid3_L182 0x486B2000: `mov	(-4, a0), d0`; CmpPartSetGrid3_L2d8 0x486B2156: `mov	(-4, a0), d1` ...
+	tab_u32	1, 1, 1, 1, 1, 1, 1, 1
 
 Str_empty_773:	.asciz "---"
 Str_sHz_2:	.asciz "%sHz"
@@ -23258,10 +23249,8 @@ PadPartSetGrid3_Table_4:	# 4 x u8, 0..40; read by PadPartSetGrid3 : `movbu	(d0, 
 	tab_u8	0, 40, 0, 40
 PadPartSetGrid3_Table_5:	# 4 x u8, 88..120; read by PadPartSetGrid3 : `movbu	(d0, a0), d0`; PadPartSetGrid3 : `movbu	(d0, a1), d0`
 	tab_u8	120, 88, 120, 88
-PadPartSetGrid3_L1a1_Table:	# 4 x u32, 1..1; read by PadPartSetGrid3_L1a1 0x486B9087: `mov	(-4, a0), d0`; PadPartSetGrid3_L315 0x486B91FB: `mov	(-4, a0), d0` ...
-	tab_u32	1, 1, 1, 1
-# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0BA138, 0x0BA140
+PadPartSetGrid3_L1a1_Table:	# 6 x u32, 1..1; read by PadPartSetGrid3_L1a1 0x486B9087: `mov	(-4, a0), d0`; PadPartSetGrid3_L315 0x486B91FB: `mov	(-4, a0), d0` ...
+	tab_u32	1, 1, 1, 1, 1, 1
 
 Str_empty_755:	.asciz "---"
 Str_empty_754:	.asciz "---"
@@ -34080,7 +34069,7 @@ SeqTrAsGridCheck_entry_L19b_Var:	# u32, a constant; read / written by SeqTrAsGri
 Str_empty_617:	.asciz "-- "
 Str_empty_616:	.asciz "-- "
 data_484DBC34:
-	# 28 bytes the code takes the address of: TrAsSureLangCheck_Lb9 0x486D90C3 `mov data_484DBC34, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: TrAsSureLangCheck_Lb9 0x486D90C3 `mov data_484DBC34, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0, 0x500664B0	# +0
 
 ptrs_484DBC50:
@@ -34270,27 +34259,50 @@ AcNoteEditBoxProc_Table_3:	# 47 x u8, 24..255; read by AcNoteEditBoxProc : `movb
 	tab_u8	24, 194, 77, 72, 27, 194, 77, 72, 30, 194, 77, 72, 33, 194, 77, 72	# [0]
 	tab_u8	36, 194, 77, 72, 39, 194, 77, 72, 42, 194, 77, 72, 45, 194, 77, 72	# [16]
 	tab_u8	48, 194, 77, 72, 51, 194, 77, 72, 54, 194, 77, 72, 255, 255, 255	# [32]
-data_484DC268:
-	# 4 bytes the code takes the address of: AcNoteEditBoxProc_L590 0x486DD975 `mov data_484DC268, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	175, 0, 255, 255	# +0
+
+DrawString_Impl_Var:	# s8, a constant; read / written by DrawString_Impl 0x485FCF9C: `movbu (a0), d0`; ConvertStrings_entry_L12 0x4860572A: `movbu (a2), d0` ...
+	.byte	-81
+ConvertStrings_entry_L3e_Var:	# s8, a constant; read / written by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`; LibStrlen 0x501232B7: `movbu (a1), d1`
+	.byte	0
+
+ConvertStrings_entry_L3e_Table:	# 2 x u8, 255..255; read by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`
+	tab_u8	255, 255
 
 Str_3s_5:	.asciz "%3s"
 Str_3s_4:	.asciz "%3s"
 Str_1d_3:	.asciz "%1d"
-data_484DC278:
-	# 4 bytes the code takes the address of: AcNoteEditBoxProc_Lbb9 0x486DDF9E `mov data_484DC278, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	129, 0, 255, 255	# +0
+
+DrawString_Impl_Var_2:	# s8, a constant; read / written by DrawString_Impl 0x485FCF9C: `movbu (a0), d0`; ConvertStrings_entry_L12 0x4860572A: `movbu (a2), d0` ...
+	.byte	-127
+ConvertStrings_entry_L3e_Var_2:	# s8, a constant; read / written by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`; LibStrlen 0x501232B7: `movbu (a1), d1`
+	.byte	0
+
+ConvertStrings_entry_L3e_Table_2:	# 2 x u8, 255..255; read by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_TRACK_2d:	.asciz "TRACK : %2d"
 Str_3d_10:	.asciz "%3d"
-data_484DC28C:
-	# 4 bytes the code takes the address of: AcDrumEditBoxProc_L3d6 0x486DE6F0 `mov data_484DC28C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	175, 0, 255, 255	# +0
+
+DrawString_Impl_Var_3:	# s8, a constant; read / written by DrawString_Impl 0x485FCF9C: `movbu (a0), d0`; ConvertStrings_entry_L12 0x4860572A: `movbu (a2), d0` ...
+	.byte	-81
+ConvertStrings_entry_L3e_Var_3:	# s8, a constant; read / written by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`; LibStrlen 0x501232B7: `movbu (a1), d1`
+	.byte	0
+
+ConvertStrings_entry_L3e_Table_3:	# 2 x u8, 255..255; read by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_3s_3:	.asciz "%3s"
 Str_3s_2:	.asciz "%3s"
 Str_1d_2:	.asciz "%1d"
-data_484DC29C:
-	# 4 bytes the code takes the address of: AcDrumEditBoxProc_L893 0x486DEBAD `mov data_484DC29C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	129, 0, 255, 255	# +0
+
+DrawString_Impl_Var_4:	# s8, a constant; read / written by DrawString_Impl 0x485FCF9C: `movbu (a0), d0`; ConvertStrings_entry_L12 0x4860572A: `movbu (a2), d0` ...
+	.byte	-127
+ConvertStrings_entry_L3e_Var_4:	# s8, a constant; read / written by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`; LibStrlen 0x501232B7: `movbu (a1), d1`
+	.byte	0
+
+ConvertStrings_entry_L3e_Table_4:	# 2 x u8, 255..255; read by ConvertStrings_entry_L3e 0x48605756: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_3d_9:	.asciz "%3d "
 	.align	4, 0xFF	# pad after Str_3d_9
 
@@ -35629,35 +35641,35 @@ Str_2d_16s_3:	.asciz "%2d:%16s"
 	.align	4, 0xFF	# pad after Str_2d_16s_3
 Str_ALL_SONGS:	.asciz "     ALL SONGS     "
 data_484DE878:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L5b4 0x486E4F17 `mov data_484DE878, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L5b4 0x486E4F17 `mov data_484DE878, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_484DE87C:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L65f 0x486E4FC2 `mov data_484DE87C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L65f 0x486E4FC2 `mov data_484DE87C, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 data_484DE880:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L7b8 0x486E511B `mov data_484DE880, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L7b8 0x486E511B `mov data_484DE880, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_484DE884:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L872 0x486E51D5 `mov data_484DE884, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L872 0x486E51D5 `mov data_484DE884, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 Str_END_2:	.asciz "END     "
 	.align	4, 0xFF	# pad after Str_END_2
 Str_REPEAT_5:	.asciz "REPEAT  "
 	.align	4, 0xFF	# pad after Str_REPEAT_5
 data_484DE8A0:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb19 0x486E547C `mov data_484DE8A0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb19 0x486E547C `mov data_484DE8A0, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 data_484DE8A4:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb23 0x486E5486 `mov data_484DE8A4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb23 0x486E5486 `mov data_484DE8A4, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_484DE8A8:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb23 0x486E5486 `mov data_484DE8A8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb23 0x486E5486 `mov data_484DE8A8, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 data_484DE8AC:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb3c 0x486E549F `mov data_484DE8AC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb3c 0x486E549F `mov data_484DE8AC, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_484DE8B0:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lc27 0x486E558A `mov data_484DE8B0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lc27 0x486E558A `mov data_484DE8B0, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 Str_OFF_30:	.asciz "OFF"
 Str_2d_5:	.asciz " %2d"
@@ -35778,17 +35790,8 @@ func_486EBD41_entry_Ld3_Records:	# 16 x REC_func_486EBD41_entry_Ld3_Records (8 b
 	REC_func_486EBD41_entry_Ld3_Records	p4=func_486EBD41_entry_L17a
 	REC_func_486EBD41_entry_Ld3_Records	p4=func_486EBD41_entry_L17a
 
-func_5018D239_Table_13:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_5018D239_Var_13:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x486ec834
-
-func_5018D239_Table_14:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_14:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	3072
+func_5018D239_Table_13:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=DiskWorkerTask, itskpri=3, x14="\x00\x00", stksz=3072
 
 func_5018C16D_Table_4:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0

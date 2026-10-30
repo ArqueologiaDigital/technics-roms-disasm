@@ -85081,13 +85081,13 @@ func_97834997_entry_L38:
 func_97834997_entry_L52:
 	mov	(0x20, sp), d0
 	mov	d0, (0x24, sp)
-	mov	data_978AF221, d0
+	mov	func_9780A35F_Table_2, d0
 	mov	d0, (0x18, sp)
 	mov	(0x1c, sp), a0
 	mov	sp, a1
 	add	0x20, a1
 	mov	-1, d0
-	mov	data_978AF220, d1
+	mov	func_9780A35F_Var_6, d1
 	call	func_97833C07_entry, [d2], 0x20
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
@@ -85221,14 +85221,14 @@ func_97834997_entry_L174:
 	call	func_9780AEBC_entry, 0, 0x14
 	bra	func_97834997_entry_L1db
 func_97834997_entry_L183:
-	mov	data_978AF28D, d0
+	mov	func_9780A35F_Table_3, d0
 	mov	d0, (0x18, sp)
 	mov	sp, a0
 	add	0x34, a0
 	mov	sp, a1
 	add	0x20, a1
 	mov	0x14, d0
-	mov	data_978AF28C, d1
+	mov	func_9780A35F_Var_7, d1
 	call	func_97833C07_entry, [d2], 0x20
 	mov	sp, a0
 	add	0x34, a0
@@ -85405,13 +85405,13 @@ func_97834BA2_entry_Lc2:
 	mov	(0x4c, sp), a0
 	mov	d0, (0x4c, a0)
 func_97834BA2_entry_Lcd:
-	mov	data_978AF2CD, d0
+	mov	func_9780A35F_Table_4, d0
 	mov	d0, (0x18, sp)
 	mov	(0x4c, sp), a0
 	mov	sp, a1
 	add	0x1c, a1
 	mov	0x48, d0
-	mov	data_978AF2CC, d1
+	mov	func_9780A35F_Var_8, d1
 	call	func_97833C07_entry, [d2], 0x20
 	mov	d0, (0x24, sp)
 	mov	(0x4c, sp), a0
@@ -85448,7 +85448,7 @@ func_97834BA2_entry_L12a:
 	mov	sp, a1
 	add	0x1c, a1
 	mov	0x48, d0
-	mov	data_978AF358, d1
+	mov	func_9780A35F_Var_9, d1
 	call	func_97833C07_entry, [d2], 0x20
 	mov	d0, (0x24, sp)
 	mov	(0x4c, sp), a0
@@ -85525,7 +85525,7 @@ func_97834BA2_entry_L1cc:
 	mov	sp, a1
 	add	0x1c, a1
 	mov	0x400, d0
-	mov	data_978AF3F4, d1
+	mov	func_9780A35F_Var_10, d1
 	call	func_97833C07_entry, [d2], 0x20
 	mov	d0, (0x24, sp)
 	cmp	0, d0
@@ -85545,14 +85545,14 @@ func_97834BA2_entry_L20c:
 func_97834BA2_entry_L213:
 	mov	(0x4c, sp), a0
 	mov	(0x2b70, a0), d1
-	mov	data_978AF3F9, d0
+	mov	func_9780A35F_Table_10, d0
 	mov	d0, (0x18, sp)
 	mov	0x48, a0
 	add	d1, a0
 	mov	sp, a1
 	add	0x1c, a1
 	mov	0x400, d0
-	mov	data_978AF3F8, d1
+	mov	func_9780A35F_Var_11, d1
 	call	func_97833C07_entry, [d2], 0x20
 	mov	d0, (0x24, sp)
 	cmp	0, d0
