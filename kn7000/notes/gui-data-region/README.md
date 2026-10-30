@@ -131,7 +131,7 @@ firmware has none for those objects.
 
 The 30 zlib streams of each build are its 10 demo songs, three streams each.  func_48457350
 (941 0x48457350; d0 = the song) takes song n's streams from three 12-entry tables in the
-initialised RAM (`ptrs_50000C20` / `_50000C50` / `_50000C80`) and inflates them with
+initialised RAM (`func_48457350_Table` / `_Table_2` / `_Table_3`; written `ptrs_50000C20` / `_50000C50` / `_50000C80` when this lane ran) and inflates them with
 func_48533758: the song record into Rec8E0TablePtr(0) (0x8E0 bytes), the event memory into
 0x5003D36C (0x9800 bytes) and a panel-memory bank into the buffer func_4C021A4E /
 func_4C021ADE give.  They are the formats of the floppies' .SQT and .PMT files, so the floppy
@@ -163,7 +163,7 @@ tables; it stays split and labelled, not typed (see the lane report).
 
 A pointer table may now hold code addresses (code region 1): a word with no name is written
 `loc_<ADDR>`, and `<data dir>/code_refs.txt` lists them; gen_program_s.py labels each one
-(or `.equ`s it when it is not an instruction start).  Example: `ptrs_485BC3EC`, the
+(or `.equ`s it when it is not an instruction start).  Example: `TechniChordCompute_Table_2` (`ptrs_485BC3EC` when this lane ran), the
 chord-type switch of TechniChordCompute (0x48472EBA), 42 entries.
 
 ### Event and method ids in the code
@@ -178,7 +178,7 @@ bytes check them (an id that disagreed would change an instruction).
 - **Reader tables.**  A labelled gap that the code reads through `mov LABEL, aN` and a load of one
   width (`movbu` / `movhu` / `mov`; signed when an `extb` / `exth` of the loaded register follows)
   is a table of that width, up to the next address anything names.  It is named after its first
-  reader (`TgElemNoteOnStd_Table` is the curve 0x486D1F54, 128 x u16, 0..8191) and its header
+  reader (`TgElemNoteOnStd_Table`, 128 x u16, 0..16383, read by TgElemNoteOnStd 0x4C030A98) and its header
   gives count, kind, range and the reading instruction (`tab_u8` ... `tab_u32`,
   `src/include/data_tables.inc`).  A table that mostly holds the all-ones value is written as a
   sparse map, entry by entry with its index (`map8` / `map16`, `map_none8` / `map_none16`).

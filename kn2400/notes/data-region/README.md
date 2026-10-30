@@ -53,7 +53,8 @@ titles, 23 modes; `milk_model --check` rules: 0 failures.
   0x213: names 0x485CFC18, 111 entries, an identifier run of 90) 21 entries late.
   `fn_table_pairing.py`: before 2,193 agree / 90 disagree; after 2,283 / 0.
 - **Demo songs**: `func_486183E3` inflates song n's three streams (record, events, panel memory;
-  `ptrs_50000C18` / `C48` / `C78`) through `func_486D4A2A`, as the KN7000's `func_48457350` /
+  `func_486183E3_entry_L44_Table` / `_Table_2` / `_Table_3`, written `ptrs_50000C18` / `C48` / `C78`
+  when this lane ran) through `func_486D4A2A`, as the KN7000's `func_48457350` /
   `func_48533758`. The record signature is 01 0E (measured on the 8 songs). All 24 streams are
   typed inside `.zlib 6` blocks (Python's zlib reproduces them).
 - **Built-in style**: `TechnicsRhythmsResource` 0x4852BD9C (IC18's format, one style), typed by

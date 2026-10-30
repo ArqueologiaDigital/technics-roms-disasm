@@ -61,7 +61,7 @@ that field (every record's value) are records too: their fields are the offsets 
 Targets reached through the same fields are one kind.  When a kind's targets lie a constant distance
 apart (and nothing else lies between), that distance is the record size; otherwise a record ends at
 its last read field.  Pointers in those records are followed the same way.  Example: StyleRecordTable
-(1,085 records of 24 bytes) points with its field +0 at 1,037 records of 160 bytes, each a built-in
+(1,080 records of 24 bytes) points with its field +0 at 1,037 records of 160 bytes, each a built-in
 style's panel settings.
 
 ## The other passes this lane added (gen_data_s, profiles with `structs=True`)

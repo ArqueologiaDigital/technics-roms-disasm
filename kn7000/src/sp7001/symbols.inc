@@ -2324,7 +2324,7 @@
 .equ GetGenreStyleCount, 0x48435AC8   # record+0x11
 .equ ResolveStyleId, 0x48435B22   # source-select &0x00700000 then LUT
 .equ StyleFlatOrdinalBuilder, 0x4843FAFC   # sums preceding genres' counts -> flat ordinal
-.equ ResourceIdTrie, 0x4858B918   # nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)
+.equ ResourceIdTrie, 0x4858B918   # nibble-indexed resource-id trie (walked by libROM func_4C01BB1A)
 .equ PanelButtonDispatch, 0x484ADB43   # walks the per-normSeg 12-byte descriptor array (bank A 0x48614978 / bank B 0x486149FC), 5 action types; posts events via PanelEventPost 0x484AE17D (canonical movm start; register-save call entry = +5, see kn7000_manual.sym)
 .equ PanelButtonDescPtrTable, 0x48614E6C   # per-normSeg -> 12-byte {event u16, +4 mask, +5 bit, +6 gate, +7 arg, +8 type}
 .equ PanelWireNormTable, 0x48613A94   # wire ADDR -> normSeg (KN7000 bank A; select flag @RAM 0x5006BE94==0)

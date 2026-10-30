@@ -125,8 +125,10 @@ the title TT_HDDEXT, whose screen is HDD_MAIN_MENU. The generator reads the KN60
 
 - The entry vectors' roles: what the firmware passes to them and expects back.
 - The plug-in has no direct call into the KN6000 firmware. It makes 2,625 indirect
-  `calls (aN)` (`grep -c 'calls	(a' src/program.s`), on pointers it loads at run time. Where
-  those pointers come from, and which firmware procedures they reach, has not been traced.
-- 414 small data pieces (6,623 bytes) are still binary (`../kn2400/notes/data-region/README.md`).
+  `calls (aN)` (`grep -c 'calls	(a' src/program.s`). Those that load the host's block-0 Function
+  table are traced (above: entry OFF / 4); the others, through pointers the plug-in builds at run time,
+  are not.
+- 40 small data pieces (266 bytes) are still generic `.incbin`s, and 101 (3,133 bytes) are declared opaque after the
+  reader search (`docs/coverage/data-incbin-2026-10-30-01.txt`, `../kn6000/notes/siblings-data-final/README.md`).
 - The 2,625 indirect calls could print the host routine's name for OFF (`plugin_registry.py` lists
   the 41 offsets); they are still numbers.

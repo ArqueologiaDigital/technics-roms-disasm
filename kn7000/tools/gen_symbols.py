@@ -69,7 +69,7 @@ MANUAL_SYMBOLS = [
     (0x48435AD9, "GetGenreStyleCount",    "record+0x11"),
     (0x48435B33, "ResolveStyleId",        "source-select &0x00700000 then LUT"),
     (0x4843FB0D, "StyleFlatOrdinalBuilder", "sums preceding genres' counts -> flat ordinal"),
-    (0x4858B424, "ResourceIdTrie",        "nibble-indexed resource-id trie (used by libROM 0x4C01BB1C)"),
+    (0x4858B424, "ResourceIdTrie",        "nibble-indexed resource-id trie (walked by libROM func_4C01BB1A)"),
 
     # Panel button/LED matrix (RE'd via the MAME driver; kn7000_mame/notes/panel-descriptor-map.md)
     (0x484ADB54, "PanelButtonDispatch",   "walks the per-normSeg 12-byte descriptor array (bank A 0x48614978 / bank B 0x486149FC), 5 action types; posts events via PanelEventPost 0x484AE17D (canonical movm start; register-save call entry = +5, see kn7000_manual.sym)"),
