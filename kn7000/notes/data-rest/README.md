@@ -135,6 +135,9 @@ covers.  The generated column is the bitmaps (`census: generated -- tools/table_
 
 ## What remains
 
+(Superseded 2026-10-30 by lane kn7000-final, `../data-final/README.md`: the extended reader walk and
+its passes type most of the pieces listed here; that README lists what is still generic or opaque.)
+
 - **Generic, read but untyped (941: 433 pieces, 17,416 bytes).**  Each holds an address some
   instruction reads, loads as a base or passes to a call, but no pass could give the bytes a type:
   mostly blocks handed to a library routine as a0 / a1 (`func_4C01C252`, `func_4C01A6ED`, the MILK

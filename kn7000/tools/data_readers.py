@@ -119,6 +119,9 @@ def join(a, b):
     """(ext) the value at a label two paths reach with a and b."""
     if a == b:
         return a
+    for p, q in ((a, b), (b, a)):
+        if p == ("C", 0) and q is not None and q[0] == "P" and q[1][0] == "fld":
+            return q            # NULL on one path, a pointer from a field on the other
     sa, sb = addrs_of(a), addrs_of(b)
     if sa is not None and sb is not None and sa | sb and len(sa | sb) <= TGT_MAX:
         return T(sa | sb)
@@ -147,7 +150,10 @@ class Reader:
         # returns there (a first walk collects each function's returned addresses)
         self.ext, self.returns, self.tgt_origin, self.returns_p = ext, {}, {}, {}
         files = [open(f, encoding="latin-1").read().split("\n") for f in sorted(glob.glob(src_glob))]
-        if ext:
+        # (two collecting walks: a wrapper returns what the function it calls returns)
+        for _round in range(2 if ext else 0):
+            self._ret, self._retbad = collections.defaultdict(set), set()
+            self._retv = collections.defaultdict(set)
             for lines in files:
                 self.walk(lines)
             self.accesses, self.calls = [], collections.Counter()
@@ -384,7 +390,7 @@ class Reader:
             parts = code.split(None, 1)
             op = parts[0]
             args = [x.strip() for x in self.split_args(parts[1])] if len(parts) > 1 else []
-            dead = op in ("bra", "jmp", "ret", "retf", "rets", "rti")
+            dead = op in ("bra", "jmp", "ret", "retf", "rets", "rti") or (self.ext and op == "lra")
             if (op.startswith("b") or op == "jmp") and args and args[0].startswith("loc_") and op not in (
                     "btst", "bset", "bclr"):
                 t = args[0]
@@ -636,8 +642,9 @@ class Reader:
                 self._ret[func] |= a
             # a pointer loaded from a typed field (a table entry the arguments select), the same on
             # every path that returns: the caller's a0 is that field's target
-            self._retv[func].add(v if v is not None and v[0] == "P" and v[1][0] == "fld" and v[2] == 0
-                                 and not v[3] else None)
+            if v != ("C", 0):            # (a NULL return: "not found")
+                self._retv[func].add(v if v is not None and v[0] == "P" and v[1][0] == "fld" and v[2] == 0
+                                     and not v[3] else None)
             return
         if op == "setlb" and self.ext:
             # the head of a hardware loop (setlb .. Lcc): a register the code set to a constant before

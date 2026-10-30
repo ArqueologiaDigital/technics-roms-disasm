@@ -46,3 +46,11 @@
 	.word	\x4, \propsize
 	.long	\data
 .endm
+# One entry of a table of the resource-id trie (tools/gen_data_s.py resource_trie): func_4C01BB1A
+# (lib 0x4C01BB1A) indexes a table by one nibble of the id; `target` is the leaf record (inner 0) or
+# the next table, of `count` entries (inner 1); target 0: no such id.
+.macro RES_TRIE_ENTRY target, inner, count
+	.long	\target
+	.byte	\inner, \count
+	.word	0
+.endm

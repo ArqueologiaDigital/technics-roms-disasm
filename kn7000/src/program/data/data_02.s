@@ -18186,7 +18186,7 @@ Str_SQT:	.asciz "SQT"
 ptrs_486AF69C_p4_0:	# REC_ptrs_486AF69C_p4 (4 bytes)
 	REC_ptrs_486AF69C_p4	f0=67, x1="LAS"
 
-Str_S_7:	.asciz "S"
+Str_S_8:	.asciz "S"
 Str_TITLE:	.asciz "TITLE"
 Str_POINT_3:	.asciz "POINT"
 Str_TEMPO0:	.asciz "TEMPO0"
@@ -34704,16 +34704,13 @@ DspWhitelistUnit9:	# 226 x u8, 0..255; read by DspEffectTypeValid 0x48406132: `m
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [192]
 	tab_u8	255, 255, 255, 2, 0, 0, 0, 0, 0, 0, 0, 0, 192, 4, 255, 255	# [208]
 	tab_u8	255, 255	# [224]
-data_486CEAAF:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CEAAF, 0x2CEAE8
-data_486CEAE8:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CEAE8, 0x2CEB3D
-data_486CEB3D:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CEB3D, 0x2CEB92
 
+func_484061F9_Table_p0_s57_0:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00\xF0\xC0\x05\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\xFF\xFF\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s85_0:	# REC_func_484061F9_Table_p0_s85 (85 bytes)
+	REC_func_484061F9_Table_p0_s85	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00\xC8\xC0\x07\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x01\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\xFF\xFF\xFF\x05\x00\x00\x00\x003333\xC0\x05\xFF\xFF\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s85_1:	# REC_func_484061F9_Table_p0_s85 (85 bytes)
+	REC_func_484061F9_Table_p0_s85	f0=24, x1="L\xCC\xCC\xCCo\\(\xF5\xC0\x04\xFF\xFF\xFF\x05\x00\x00\x00\x00\x7F\xFF\xFF\xFF\xC0\x0F\xC0\x1C\xFF\x05\x00\x00\x00\x00\x7F\xFF\xFF\xFF\xC0\x10\xC0\x1D\xFF\x06\x00\x00\x00\x00\x00\x00<K\x84$\xFF\xFF\xFF\x06\x00\x00\x00\x00\x00\x00<K\x84P\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x11\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_0:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00`\xC0\x07\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\x98\x01\xFF\x19\x82\x8F\\)}p\xA3\xD7\xC0\x06\xC0\n\xFF\x0B\x00\x00\x00d\x00\x00\x01,\x84$\x84@\xFF\x07@\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xC0\x05\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x09\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_1:	# REC_func_484061F9_Table_p0 (99 bytes)
@@ -34722,19 +34719,16 @@ func_484061F9_Table_p0_2:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00\xC8\xC0\x05\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00\xE9\xC0\x06\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00\xFA\xC0\x07\xFF\xFF\x03\x00\x00\x00\x00\xFF\xFF\xFFY\xC0\x0B\xFF\xFF\x03\x00\x00\x00\x00\xFF\xFF\xFF.\xC0\x0C\xFF\xFF\x03\x00\x00\x00\x00\xFF\xFF\xFF\x09\xC0\x0D\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\xFF\xFF\xFF\x14\x00\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 23 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CECBB, 0x2CECD2
-data_486CECD2:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CECD2, 0x2CED19
-data_486CED19:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CED19, 0x2CED6E
+func_484061F9_Table_p0_s71_0:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=14, x1="\x00\x00\x00\x00\x00\x00\x00\x00\x98\x04\xFF\xFF\xFF\x16\x00\x00\x00\x02\x00\x00\x00\x0E\xC0\x04\xFF\xFF\xFF\x05\x00\x00\x00\x00\"\x8F\\(\xC0\x0C\xFF\xFF\xFF\x0E\x00\x00\x00\x00\x00\x00\x00\x00\x98\x03\xFF\xFF\xFF\x02\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x0F\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s85_2:	# REC_func_484061F9_Table_p0_s85 (85 bytes)
+	REC_func_484061F9_Table_p0_s85	f0=6, x1="\x00\x00\x00\x00\x00\x00<K\x84\x0C\xFF\xFF\xFF\x06\x00\x00\x00\x00\x00\x00<K\x84)\xFF\xFF\xFF\x19\x85\x1E\xB8Rz\xE1G\xAE\xC0\x07\xFF\xFF\xFF\x19\x85\x1E\xB8Rz\xE1G\xAE\xC0\x09\xFF\xFF\xFF\x16\x00\x00\x00\x02\x00\x00\x00\x0E\xC0\x04\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_3:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=27, x1="\x00\x00\x00\x00\x00\x00\x00\x01\x84\x0D\xFF\xFF\xFF\x1B\x00\x00\x00\x00\x00\x00\x00\x01\x84\x11\xFF\xFF\xFF\x1B\x00\x00\x00\x00\x00\x00\x00\x01\x84\x15\xFF\xFF\xFF\x1B\x00\x00\x00\x00\x00\x00\x02\xA5\x84\x19\xFF\xFF\xFF\x1C\x00\x00\x00\x00\x7F\xFF\xFF\xFF\xC0\x0C\xC0\x11\xFF\x1C\x00\x00\x00\x00\x7F\xFF\xFF\xFF\xC0\x0D\xC0\x12\xFF\x1C\x00\x00\x00\x00\x7F\xFF\xFF\xFF\xC0\x0E\xC0\x13\xFF\x1C"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CEDD1, 0x2CEE09
-data_486CEE09:
-# census: opaque -- unknown-dump: 85 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CEE09, 0x2CEE5E
+func_484061F9_Table_p0_s85_3:	# REC_func_484061F9_Table_p0_s85 (85 bytes)
+	REC_func_484061F9_Table_p0_s85	f0=6, x1="\x00\x00\x00\x00\x00\x00<K\x84\x0C\xFF\xFF\xFF\x06\x00\x00\x00\x00\x00\x00<K\x84)\xFF\xFF\xFF\x19\x85\x1E\xB8Rz\xE1G\xAE\xC0\x07\xFF\xFF\xFF\x19\x85\x1E\xB8Rz\xE1G\xAE\xC0\x09\xFF\xFF\xFF\x16\x00\x00\x00\x02\x00\x00\x00\x0E\xC0\x04\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_4:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x01\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00+\xC0\x0F\xFF\xFF\xFF\x04\x00\x00\x00\x02\x00\x00\x00\x00\x98\x09\xFF\xFF\xFF\x08\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x14\xFF\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00?\xC0\x1A\xFF\xFF\xFF\x04\x00\x00\x00\x02\x00\x00\x00\x00\x98\x06\xFF\xFF\xFF\x08"
 # census: opaque -- unknown-dump: 28 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -34745,49 +34739,38 @@ func_484061F9_Table_p0_6:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=18, x1="\x00\x00\x00\x04\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x11\x00\x00\x00\x04\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x0C\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x0C\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x05\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\xC0\n\xFF\xFF\xFF\x01\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x0D\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x13\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_7:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=18, x1="\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x11\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x0C\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x0C\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x05\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\xC0\n\xFF\xFF\xFF\x01\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0D\xFF\xFF\xFF\xFF"
-data_486CF006:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF006, 0x2CF04D
-data_486CF04D:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF04D, 0x2CF094
-data_486CF094:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF094, 0x2CF0CD
+func_484061F9_Table_p0_s71_1:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	x1="\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x01\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x0F\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\x18\x00\x00\x00\x00\x7F\xFC\xB9#\xC0\n\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0B\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s71_2:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=18, x1="\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x11\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x0C\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x0C\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x05\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\n\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s57_1:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	f0=5, x1="\x00\x00\x00\x00\x03333\xC0\x06\xFF\xFF\xFF\x0D\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\x0D\x00\x00\x00\x01\x00\x00\x00\x00\xC0\n\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0B\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_8:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=22, x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x16\x00\x00\x00\x00\x00\x00\x00\x02\xC0\x04\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x01\xC0\x07\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x02\xC0\x07\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x01\xC0\x0C\xFF\xFF\xFF\x0F"
 # census: opaque -- unknown-dump: 98 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CF130, 0x2CF192
-data_486CF192:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF192, 0x2CF1CB
-data_486CF1CB:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF1CB, 0x2CF212
-data_486CF212:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF212, 0x2CF259
-data_486CF259:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF259, 0x2CF2A0
-data_486CF2A0:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF2A0, 0x2CF2D9
-data_486CF2D9:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF2D9, 0x2CF320
+func_484061F9_Table_p0_s57_2:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	f0=5, x1="\x00\x00\x00\x00@\x00\x00\x00\xC0\x06\xC0\x08\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\x98\x01\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s71_3:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=18, x1="\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x11\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x0C\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x0C\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x05\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\n\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s71_4:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=5, x1="\x00\x00\x00\x00@\x00\x00\x00\xC0\x06\xC0\x08\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\x98\x01\xFF\x07@\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xC0\x05\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s71_5:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00\xC8\xC0\x06\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\x98\x01\xFF\x07@\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xC0\x05\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s57_3:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	f0=23, x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x17\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x09\xFF\xFF\xFF\x17\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0E\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s71_6:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=5, x1="\x01\x06$\xDD0\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x17\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\x17\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x0B\xFF\xFF\xFF\x17\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x10\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_9:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x01\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x08\xFF\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00+\xC0\x0F\xFF\xFF\xFF\x04\x00\x00\x00\x02\x00\x00\x00\x00\x98\x09\xFF\xFF\xFF\x08\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x14\xFF\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00?\xC0\x1A\xFF\xFF\xFF\x04\x00\x00\x00\x02\x00\x00\x00\x00\x98\x06\xFF\xFF\xFF\x08"
 # census: opaque -- unknown-dump: 28 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CF383, 0x2CF39F
-data_486CF39F:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF39F, 0x2CF3D8
+func_484061F9_Table_p0_s57_4:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	f0=4, x1="\x00\x00\x00\x01\x00\x00\x00\x00\x98\x00\x98\x01\xFF\x07@\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xC0\x05\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x06\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_10:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00P\xC0\x07\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x00\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x02\xFF\xFF\xFF\x04\x00\x00\x00\x00\x00\x00\x00\x00\x98\x01\xFF\xFF\xFF\x07@\x00\x00\x00\x00\x00\x00\x00\xC0\x05\xC0\x06\xFF\x14\x00\x00\x00\x00\x00\x00\x00\x00\xC0(\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x09\xFF\xFF\xFF\xFF"
-data_486CF43B:
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CF43B, 0x2CF44A
+func_484061F9_Table_p0_s15_0:	# REC_func_484061F9_Table_p0_s15 (15 bytes)
+	REC_func_484061F9_Table_p0_s15	f0=2, x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x10\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_11:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=22, x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x04\xFF\xFF\xFF\x16\x00\x00\x00\x00\x00\x00\x00\x02\xC0\x04\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x01\xC0\x07\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x02\xC0\x07\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x0F\x00\x00\x00\x00\x00\x00\x00\x01\xC0\x0C\xFF\xFF\xFF\x0F"
 # census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -34832,9 +34815,10 @@ func_484061F9_Table_p0_22:	# REC_func_484061F9_Table_p0 (99 bytes)
 Str_empty_321:	.asciz " "
 # census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CFA08, 0x2CFA85
-data_486CFA85:
-# census: opaque -- unknown-dump: 71 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFA85, 0x2CFACC
+
+func_484061F9_Table_p0_s71_7:	# REC_func_484061F9_Table_p0_s71 (71 bytes)
+	REC_func_484061F9_Table_p0_s71	f0=24, x1="\x7F\xFC\xB9#\x0C\xCC\xCC\xCC\xC0\x0C\xFF\xFF\xFF\x18\x01\xCA\xC0\x83&fff\xC0\x07\xFF\xFF\xFF\x18&fff\x7F\xFC\xB9#\xC0\x06\xFF\xFF\xFF\x18\x00\x00\x00\x00@\x00\x00\x00\xC0\x08\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x12\xFF\xFF\xFF\xFF"
+
 Str_empty_318:	.asciz " "
 # census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CFACE, 0x2CFB4B
@@ -34843,53 +34827,42 @@ func_484061F9_Table_p0_23:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00\xF0\xC0\x05\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00\x04\xC0\x09\xFF\xFF\xFF\x04\x00\x00\x00\x03\x00\x00\x00\x00\x98\x00\xFF\xFF\x04\x00\x00\x00\x04\x00\x00\x00\x00\x98\x03\xFF\xFF\xFF\x16\x00\x00\x00\x00\x00\x00\x00\x00\xC0\n\xFF\xFF\x16\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x15\xFF\xFF\xFF\x16\x00\x00\x00\x00\x00\x00\x00\x02\xC0\n\xFF\xFF\x16\x00\x00\x00\x00"
 # census: opaque -- unknown-dump: 78 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CFBAE, 0x2CFBFC
-data_486CFBFC:
-# census: opaque -- unknown-dump: 69 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFBFC, 0x2CFC41
+func_484061F9_Table_p0_s69_0:	# REC_func_484061F9_Table_p0_s69 (69 bytes)
+	REC_func_484061F9_Table_p0_s69	f0=3, x1="\x00\x00\x00\x00\x00\x00\x00\xF0\xC0\x05\xFF\xFF\x03\x00\x00\x00\x00\x00\x00\x00\x04\xC0\x09\xFF\xFF\xFF\x04\x00\x00\x00\x03\x00\x00\x00\x00\x98\x00\xFF\xFF\x04\x00\x00\x00\x04\x00\x00\x00\x00\x98\x03\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0D\xC0\x11\xFF\xFF"
 
 Str_empty_317:	.asciz "!"
 # census: opaque -- unknown-dump: 641 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2CFC43, 0x2CFEC4
-data_486CFEC4:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFEC4, 0x2CFEEF
-data_486CFEEF:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFEEF, 0x2CFF4D
-data_486CFF4D:
-# census: opaque -- unknown-dump: 42 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFF4D, 0x2CFF77
-data_486CFF77:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFF77, 0x2CFFD5
-data_486CFFD5:
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2CFFD5, 0x2D0033
-data_486D0033:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D0033, 0x2D006C
-data_486D006C:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D006C, 0x2D00A5
-data_486D00A5:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D00A5, 0x2D00DE
-data_486D00DE:
-# census: opaque -- unknown-dump: 57 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D00DE, 0x2D0117
+
+func_484061F9_Table_p0_s43_0:	# REC_func_484061F9_Table_p0_s43 (43 bytes)
+	REC_func_484061F9_Table_p0_s43	f0=16, x1="\x00\x00\x00\x00\x00\x00\x00\xF0\x98\x00\xFF\xFF\xFF\x10\x00\x00\x00\x00\x00\x00\x00\xF0\x98\x01\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x07\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s94_0:	# REC_func_484061F9_Table_p0_s94 (94 bytes)
+	REC_func_484061F9_Table_p0_s94	f0=21, x1="\xFF\xFF\xFF[\xFF\xFF\xF9\x8E\x84\x1D\xFF\xFF\x15\xFF\xFF\xFF\x92\xFF\xFF\xFB\xB4\x84\"\xFF\xFF\x15\xFF\xFF\xFF\x9C\xFF\xFF\xFC\x18\x84(\xFF\xFF\x15\xFF\xFF\xFF\xA2\xFF\xFF\xFCY\x84K\xFF\xFF\x15\xFF\xFF\xFF\xC9\xFF\xFF\xFD\xDB\x84Q\xFF\xFF\x15\xFF\xFF\xFF\xB8\xFF\xFF\xFD0\x84V\xFF\xFF\xFF\x02\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x03\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s42_0:	# REC_func_484061F9_Table_p0_s42 (42 bytes)
+	REC_func_484061F9_Table_p0_s42	f0=21, x1="\xFF\xFF\xFC\xE0\xFF\xFF\xE0\xC0\x84\x1D\xFF\xFF\x15\xFF\xFF\xFF8\xFF\xFF\xF8.\x84Q\xFF\xFF\xFF\x02\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x03\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s94_1:	# REC_func_484061F9_Table_p0_s94 (94 bytes)
+	REC_func_484061F9_Table_p0_s94	f0=21, x1="\xFF\xFF\xFF\x1F\xFF\xFF\xF76\x84\x1D\xFF\xFF\x15\xFF\xFF\xFFj\xFF\xFF\xFA$\x84\"\xFF\xFF\x15\xFF\xFF\xFFt\xFF\xFF\xFA\x88\x84(\xFF\xFF\x15\xFF\xFF\xFF\x85\xFF\xFF\xFB-\x84K\xFF\xFF\x15\xFF\xFF\xFF\xB0\xFF\xFF\xFC\xE1\x84Q\xFF\xFF\x15\xFF\xFF\xFF\xA4\xFF\xFF\xFCh\x84V\xFF\xFF\xFF\x02\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x03\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s94_2:	# REC_func_484061F9_Table_p0_s94 (94 bytes)
+	REC_func_484061F9_Table_p0_s94	f0=21, x1="\xFF\xFF\xFE\xFC\xFF\xFF\xF5\xD8\x84\x1D\xFF\xFF\x15\xFF\xFF\xFFL\xFF\xFF\xF8\xF8\x84\"\xFF\xFF\x15\xFF\xFF\xFFX\xFF\xFF\xF9p\x84(\xFF\xFF\x15\xFF\xFF\xFFl\xFF\xFF\xFA8\x84K\xFF\xFF\x15\xFF\xFF\xFF\xA0\xFF\xFF\xFC@\x84Q\xFF\xFF\x15\xFF\xFF\xFF\x92\xFF\xFF\xFB\xB0\x84V\xFF\xFF\xFF\x02\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x03\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s57_5:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x01\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x18\xFF\xFF\xFF\x16\x00\x00\x00\x03\x00\x00\x00\x00\xC0\x1E\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0!\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s57_6:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x01\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x18\xFF\xFF\xFF\x16\x00\x00\x00\x03\x00\x00\x00\x00\xC0\x1E\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0!\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s57_7:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x01\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x18\xFF\xFF\xFF\x16\x00\x00\x00\x03\x00\x00\x00\x00\xC0\x1E\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0!\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s57_8:	# REC_func_484061F9_Table_p0_s57 (57 bytes)
+	REC_func_484061F9_Table_p0_s57	x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x0C\xFF\xFF\xFF\x01\x00\x00\x00\x02\x00\x00\x00\x00\xC0\x18\xFF\xFF\xFF\x16\x00\x00\x00\x03\x00\x00\x00\x00\xC0\x1E\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0!\xFF\xFF\xFF\xFF"
+
 Str_empty_315:	.asciz "\""
 # census: opaque -- unknown-dump: 139 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2D0119, 0x2D01A4
-data_486D01A4:
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D01A4, 0x2D01B3
-data_486D01B3:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D01B3, 0x2D01DE
-data_486D01DE:
-# census: opaque -- unknown-dump: 43 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D01DE, 0x2D0209
 
+func_484061F9_Table_p0_s15_1:	# REC_func_484061F9_Table_p0_s15 (15 bytes)
+	REC_func_484061F9_Table_p0_s15	f0=2, x1="\x00\x00\x00\x00\x00\x00\x00\x00\xC0%\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s43_1:	# REC_func_484061F9_Table_p0_s43 (43 bytes)
+	REC_func_484061F9_Table_p0_s43	f0=22, x1="\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x0B\xFF\xFF\xFF\x16\x00\x00\x00\x01\x00\x00\x00\x02\xC0\x0B\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x13\xFF\xFF\xFF\xFF"
+func_484061F9_Table_p0_s43_2:	# REC_func_484061F9_Table_p0_s43 (43 bytes)
+	REC_func_484061F9_Table_p0_s43	f0=22, x1="\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x16\xFF\xFF\xFF\x16\x00\x00\x00\x01\x00\x00\x00\x02\xC0\x16\xFF\xFF\xFF\x02\x00\x00\x00\x00\x00\x00\x00\x00\xC0\x1E\xFF\xFF\xFF\xFF"
 func_484061F9_Table_p0_24:	# REC_func_484061F9_Table_p0 (99 bytes)
 	REC_func_484061F9_Table_p0	f0=31, x1="\x00\x00\x00\x01\x00\x00\x00\x00\xC0\x05\xC0\x0D\xFF\x06\x00\x00\x00\x00\x00\x003\xAE\x84\x07\xFF\xFF\xFF\x06\x00\x00\x00\x00\x00\x003\xAE\x84/\xFF\xFF\xFF\x19\x85\x1E\xB8Rz\xE1G\xAE\xC0\x04\xFF\xFF\xFF\x19\x85\x1E\xB8Rz\xE1G\xAE\xC0\x0C\xFF\xFF\xFF\x1F\x00\x00\x00\x00\x00\x00\x00\x00\xC0\n\xC0\x0F\xFF\x03\x00\x00\x00\x00\x00\x00\x00\xF0\xC0\x09\xFF\xFF\xFF\x04"
 # census: opaque -- unknown-dump: 42 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -35536,12 +35509,10 @@ TgVoiceMigrateFind_Var:	# 8 x u8, 0..255; read by TgVoiceMigrateFind_entry 0x4C0
 
 TgSlotAllocate_Records_p0_0:	# REC_TgSlotAllocate_Records_p0 (15 bytes)
 	REC_TgSlotAllocate_Records_p0	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\x00\xFF"
-data_486D3853:
-# census: opaque -- unknown-dump: 14 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D3853, 0x2D3861
-data_486D3861:
-# census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program.rom", 0x2D3861, 0x2D386C
+TgSlotAllocate_Records_p0_s14_0:	# REC_TgSlotAllocate_Records_p0_s14 (14 bytes)
+	REC_TgSlotAllocate_Records_p0_s14	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\x81\x80\x01\xFF"
+TgSlotAllocate_Records_p0_s11_0:	# REC_TgSlotAllocate_Records_p0_s11 (11 bytes)
+	REC_TgSlotAllocate_Records_p0_s11	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\x03\x02\xFF"
 TgSlotAllocate_Records_p0_1:	# REC_TgSlotAllocate_Records_p0 (15 bytes)
 	REC_TgSlotAllocate_Records_p0	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\xFF\xFF\xFF\xFF\n\xD6\x01"
 # census: opaque -- unknown-dump: 13 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them

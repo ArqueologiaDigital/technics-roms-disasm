@@ -27072,11 +27072,11 @@ ptrs_50001958:	# 9 pointers, typed by value (every word 0 or an address of this 
 	.long	Str_PADS_13
 	.long	Str_PADS_14
 	.long	Str_B_PD
-	.long	Str_text_32
-	.long	Str_text_33
-	.long	Str_text_34
-	.long	Str_text_35
-	.long	Str_text_36
+	.long	Str_text_9
+	.long	Str_text_10
+	.long	Str_text_11
+	.long	Str_text_12
+	.long	Str_text_13
 
 func_4848FD75_Table:
 	.long	Str_TRACK_1
@@ -35313,7 +35313,7 @@ Str_empty_274:	.asciz "@"
 Str_C_3:	.asciz "C"
 	.align	4, 0x00	# pad after Str_C_3
 Str_Q_3:	.asciz "\xB4Q"
-Str_P_33:	.asciz "P"
+Str_P_44:	.asciz "P"
 	.space	11, 0x00
 Str_F_2:	.asciz "F"
 	.space	18, 0x00
@@ -37907,18 +37907,18 @@ DspDownloadAll_Table:
 	.long	0
 func_48408926_Table:
 	.long	0
-	.long	data_487000D7
-	.long	data_48700110
-	.long	data_48700165
+	.long	func_48408926_Table_p0_s57_0
+	.long	func_48408926_Table_p0_s85_0
+	.long	func_48408926_Table_p0_s85_1
 	.long	func_48408926_Table_p0_0
 	.long	func_48408926_Table_p0_1
 	.long	func_48408926_Table_p0_2
-	.long	data_48700110
-	.long	data_487002FA
-	.long	data_48700341
+	.long	func_48408926_Table_p0_s85_0
+	.long	func_48408926_Table_p0_s71_0
+	.long	func_48408926_Table_p0_s85_2
 	.long	func_48408926_Table_p0_3
 	.long	func_48408926_Table_p0_0
-	.long	data_48700431
+	.long	func_48408926_Table_p0_s85_3
 	.long	func_48408926_Table_p0_1
 	.long	func_48408926_Table_p0_2
 	.long	func_48408926_Table_p0_4
@@ -37941,29 +37941,29 @@ func_48408926_Table:
 	.long	func_48408926_Table_p0_5
 	.long	func_48408926_Table_p0_6
 	.long	func_48408926_Table_p0_7
-	.long	data_4870062E
-	.long	data_48700675
-	.long	data_487006BC
+	.long	func_48408926_Table_p0_s71_1
+	.long	func_48408926_Table_p0_s71_2
+	.long	func_48408926_Table_p0_s57_1
 	.long	0
 	.long	func_48408926_Table_p0_8
-	.long	data_487007BA
-	.long	data_487007F3
+	.long	func_48408926_Table_p0_s57_2
+	.long	func_48408926_Table_p0_s71_3
 	.long	0
 	.long	0
-	.long	data_487000D7
-	.long	data_48700110
+	.long	func_48408926_Table_p0_s57_0
+	.long	func_48408926_Table_p0_s85_0
 	.long	0
 	.long	0
-	.long	data_4870083A
+	.long	func_48408926_Table_p0_s71_4
 	.long	0
-	.long	data_48700881
-	.long	data_48700901
-	.long	data_487008C8
+	.long	func_48408926_Table_p0_s71_5
+	.long	func_48408926_Table_p0_s71_6
+	.long	func_48408926_Table_p0_s57_3
 	.long	func_48408926_Table_p0_9
-	.long	data_487009C7
+	.long	func_48408926_Table_p0_s57_4
 	.long	0
 	.long	func_48408926_Table_p0_10
-	.long	data_48700A63
+	.long	func_48408926_Table_p0_s15_0
 	.long	0
 	.long	0
 	.long	0
@@ -37989,32 +37989,27 @@ func_48408926_Table:
 	.long	func_48408926_Table_p0_29
 	.long	func_48408926_Table_p0_30
 	.long	func_48408926_Table_p0_23
-	.long	data_48701224
+	.long	func_48408926_Table_p0_s69_0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
-	.long	data_48701517
-	.long	data_48701575
-	.long	data_4870159F
-	.long	data_487015FD
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	data_4870165B
-	.long	data_48701694
-	.long	data_487016CD
-	.long	data_48701706
+	.long	func_48408926_Table_p0_s94_0
+	.long	func_48408926_Table_p0_s42_0
+	.long	func_48408926_Table_p0_s94_1
+	.long	func_48408926_Table_p0_s94_2
 	.long	0
 	.long	0
 	.long	0
 	.long	0
 	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_48408926_Table_p0_s57_5
+	.long	func_48408926_Table_p0_s57_6
+	.long	func_48408926_Table_p0_s57_7
+	.long	func_48408926_Table_p0_s57_8
 	.long	0
 	.long	0
 	.long	0
@@ -38026,10 +38021,15 @@ func_48408926_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	data_487014EC
-	.long	data_487017CC
-	.long	data_487017DB
-	.long	data_48701806
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	func_48408926_Table_p0_s43_0
+	.long	func_48408926_Table_p0_s15_1
+	.long	func_48408926_Table_p0_s43_1
+	.long	func_48408926_Table_p0_s43_2
 	.long	Str_empty_314
 	.long	0
 	.long	0
@@ -38050,7 +38050,7 @@ func_48408926_Table:
 	.long	0
 	.long	0
 	.long	0
-	.long	data_487010AD
+	.long	func_48408926_Table_p0_s71_7
 	.long	Str_empty_316
 	.long	0
 	.long	0

@@ -689,6 +689,73 @@ class Gen:
                     self.add(nr["table"], 4 * nr["count"], self.name_at(nr["table"], f"{bn}_{r['kind']}Names"),
                              "function names", render_names, slot)
 
+    def resource_trie(self):
+        """(KN7000 program builds) the resource-id trie under ResourceIdTrie: func_4C01BB1A (lib
+        0x4C01BB1A) takes nibble n of a 24-bit id from the top (shift 20, 16, ... 0) and indexes a
+        table of 8-byte entries {u32 target, u8 inner, u8 count, u16 0}: target 0 = no such id;
+        inner 0 = target is the leaf record, whose +0 u32 must equal the id; else target is the
+        next table, of `count` entries, and a nibble >= count is no such id.  The root has 16
+        entries.  Every table is typed (RES_TRIE_ENTRY, src/include/data_tables.inc); every leaf's
+        +0 is a location of the field func_4C01BB1A returns (`mov (a1), a0`), so ptr_records types
+        all 469 leaves as one kind with the reads its callers make through that return value."""
+        root = next((a for a, n in self.fixed.items() if n == "ResourceIdTrie"), None)
+        if root is None:
+            return
+        m = self.m
+        tables, leaves, seen = [], {}, set()
+
+        def walk(t, n):
+            if t in seen or not self.in_data(t) or not self.free(t, 8 * n) or n > 16:
+                return
+            seen.add(t)
+            tables.append((t, n))
+            for i in range(n):
+                p = m.u32(t + 8 * i)
+                inner, cnt = m.rom[self.off(t + 8 * i) + 4], m.rom[self.off(t + 8 * i) + 5]
+                if p and inner:
+                    walk(p, cnt)
+                elif p:
+                    leaves[t + 8 * i] = p
+        walk(root, 16)
+        self.extra_locs = getattr(self, "extra_locs", collections.defaultdict(set))
+        self.extra_locs[(("rec", root, 8), 0)] |= set(leaves)
+        # tables may share entries (a table that is the tail of another): one item per run of entries
+        starts = collections.defaultdict(list)
+        ents = set()
+        for t, n in tables:
+            starts[t].append(n)
+            ents.update(t + 8 * i for i in range(n))
+        runs, cur = [], None
+        for e in sorted(ents):
+            if cur and e == cur[1]:
+                cur[1] = e + 8
+            else:
+                cur = [e, e + 8]
+                runs.append(cur)
+        for a, b in runs:
+            rows = []
+            for e in range(a, b, 8):
+                p = m.u32(e)
+                if p:
+                    self.refs.add(p)
+                rows.append((e, p, m.rom[self.off(e) + 4], m.rom[self.off(e) + 5]))
+
+            def render(g, it, rows=rows, a=a):
+                out = [f"{it.label}:\t# entries of the resource-id trie, one per id nibble (func_4C01BB1A)"]
+                k = 0
+                for e, p, inner, c in rows:
+                    if e != a and e in starts:
+                        out.append(f"\t# +{e - a}: a table of {max(starts[e])} entries (ResourceIdTrieNode_{e:08X})")
+                        k = 0
+                    elif e == a and len(starts.get(e, [])) and a != root:
+                        k = 0
+                    out.append(f"\tRES_TRIE_ENTRY\t{g.ref(p)}, {inner}, {c}\t# [{k:X}]")
+                    k += 1
+                return out
+            lab = self.name_at(a, "ResourceIdTrie" if a == root else f"ResourceIdTrieNode_{a:08X}")
+            self.add(a, b - a, lab, "trie table", render)
+        print(f"gen_data_s: resource-id trie: {len(tables)} tables in {len(runs)} runs, {len(leaves)} leaves")
+
     def support_classes(self):
         """(KN7000 program builds) the SupportClass table, registry slot 0xD (InitSptClassTable,
         0x4842E5DC: class SupportClass, proc SupportClassProc, its count and table): 12-byte
@@ -1390,15 +1457,32 @@ class Gen:
                 # (data_readers ext) the records one function selects, of several sizes (the bytes
                 # their pointer fields point at sit between them): the fields every one of them holds
                 stride = min(room[t] for t in ts if room[t] >= need)
-            ts = [t for t in ts if room[t] >= stride]
+            # (readers_ext) records too short for the kind's size (a union whose variants hold fewer
+            # fields: the resource-id trie's leaves) are a variant each, with the fields that fit
+            variants = [(stride, [t for t in ts if room[t] >= stride], "")]
+            if self.readers_ext and not tail:
+                short = collections.defaultdict(list)
+                for t in ts:
+                    if 4 <= room[t] < stride:
+                        short[room[t]].append(t)
+                variants += [(r, short[r], f"_s{r}") for r in sorted(short, reverse=True)
+                             if any(a.width and a.off + a.width <= r for a in fixed_accs)]
+            for stride, ts, vsuf in variants:
+                self._ptr_group(root, accs, stride, ts, tail, room, vsuf)
+
+    def _ptr_group(self, root, accs, stride, ts, tail, room, vsuf=""):
+        """One record kind of ptr_records: its macro, and an item per target."""
+        import data_structs as DS
+        import data_struct_names as DN
+        if True:
             if not ts or stride > 0x2000:
-                continue
+                return
             g = DS.Group(ts[0], stride)
             g.tail = tail
-            g.accs = [(a.off, a) for a in accs if a.off < stride]
+            g.accs = [(a.off, a) for a in accs if a.off < stride and (not vsuf or a.off + (a.width or 1) <= stride)]
             g.count = len(ts)
             g.fields = DS.layout(g, self, None, 0, offs=[self.off(t) for t in ts])
-            cont = self.kind_name(root)
+            cont = self.kind_name(root) + vsuf
             g.label = cont
             kind, names = DN.lookup(cont, stride)
             g.macro = self.uniq(kind or ("REC_" + cont))
@@ -1438,9 +1522,9 @@ class Gen:
             return self._lmemo[fld]
         self._lmemo[fld] = set()
         K, o = fld[1], fld[2]
-        out = set()
+        out = set(getattr(self, "extra_locs", {}).get((K, o), ()))
         if K[0] == "abs":
-            out = {K[1] + o}
+            out |= {K[1] + o}
         elif K[0] == "rec":
             b, st = K[1], K[2]
             it = self._item_of(b) if self.in_data(b) else None
@@ -3064,6 +3148,7 @@ class Gen:
         if P.get("structs"):
             if P.get("readers_ext"):
                 self.support_classes()
+                self.resource_trie()
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
             self.name_value_tables()
             self.panel_memories()
