@@ -15330,7 +15330,7 @@ loc_4C02D380:
     add     d1, d3
     clr     d2
     mov     0, a2
-    mov     data_48585D28, d1
+    mov     TgPartModSlotSweep_Table, d1
     add     d0, d1
     mov     d1, (0x24, sp)
     mov     0x30, d1

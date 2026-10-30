@@ -92,6 +92,39 @@ def D(key, o):
     return ("D", key, o)
 
 
+def T(addrs):
+    """(ext) a pointer to one of the data addresses `addrs`: what reaches a label from several
+    paths that load different addresses (a switch selecting a record), a stack slot that holds
+    one of them, or what a function returns in a0 when every path returns one of them."""
+    return P(("tgt", frozenset(addrs)), 0)
+
+
+def addrs_of(v):
+    """The data addresses value v is one of (an A, or a T), else None."""
+    if v is None:
+        return None
+    if v == ("C", 0):
+        return set()           # NULL: a path that selects no record
+    if v[0] == "A":
+        return {v[1]}
+    if v[0] == "P" and v[1][0] == "tgt" and v[2] == 0 and not v[3]:
+        return set(v[1][1])
+    return None
+
+
+TGT_MAX = 512        # (ext) the most addresses a T value holds; a larger join is dropped
+
+
+def join(a, b):
+    """(ext) the value at a label two paths reach with a and b."""
+    if a == b:
+        return a
+    sa, sb = addrs_of(a), addrs_of(b)
+    if sa is not None and sb is not None and sa | sb and len(sa | sb) <= TGT_MAX:
+        return T(sa | sb)
+    return None
+
+
 def _num(t):
     t = t.strip()
     try:
@@ -103,13 +136,29 @@ def _num(t):
 class Reader:
     """The accesses of one program build's converted code."""
 
-    def __init__(self, src_glob, labels, in_data):
+    def __init__(self, src_glob, labels, in_data, ext=False):
         self.in_data = in_data          # CPU address -> bool
         self.labels = labels            # name -> CPU address (data and code)
         self.accesses = []
         self.calls = collections.Counter()
-        for f in sorted(glob.glob(src_glob)):
-            self.walk(open(f, encoding="latin-1").read().split("\n"))
+        # ext (lane kn7000-final): also follow values through the function's stack slots
+        # (`mov aN, (8, sp)` ... `mov (8, sp), a0`), join the data addresses different paths
+        # bring to a label into a T value (one of them), and give a call's a0 what the callee
+        # returns there (a first walk collects each function's returned addresses)
+        self.ext, self.returns, self.tgt_origin, self.returns_p = ext, {}, {}, {}
+        files = [open(f, encoding="latin-1").read().split("\n") for f in sorted(glob.glob(src_glob))]
+        if ext:
+            for lines in files:
+                self.walk(lines)
+            self.accesses, self.calls = [], collections.Counter()
+            self.returns = {f: a for f, a in self._ret.items() if a and f not in self._retbad
+                            and len(a) <= TGT_MAX}
+            # the function a set of records is the result of (gen_data_s names their kind after it)
+            self.tgt_origin = {frozenset(a): f for f, a in sorted(self.returns.items())}
+            self.returns_p = {f: next(iter(vs)) for f, vs in self._retv.items()
+                              if len(vs) == 1 and None not in vs and f not in self.returns}
+        for lines in files:
+            self.walk(lines)
         self.resolve_params()
         # what is left relative to a parameter nobody passes a data address in is not data evidence
         self.accesses = [a for a in self.accesses if not self.rooted(a.key)]
@@ -121,6 +170,8 @@ class Reader:
             p = key[1]
             if p[0] == "param":
                 return True
+            if p[0] != "fld":
+                return False
             key = p[1]
         return False
 
@@ -144,6 +195,8 @@ class Reader:
             p = key[1]
             if p[0] == "param":
                 return p
+            if p[0] != "fld":
+                return None
             key = p[1]
         return None
 
@@ -152,6 +205,10 @@ class Reader:
         passes in it (one level per round: a caller's own parameter passed on is
         resolved in the next)."""
         done = set()
+        # (ext) one access per (key, field, width, kind, instruction): a callee's read seen through
+        # many call sites that pass the same thing is one piece of evidence, and without this the
+        # rounds multiply (stack-slot tracking keeps the callees' spilled parameters)
+        seen = {(a.key, a.off, a.width, a.rw, a.insn, a.cpu) for a in self.accesses} if self.ext else None
         for _r in range(rounds):
             by_root = collections.defaultdict(list)
             for a in self.accesses:
@@ -173,6 +230,11 @@ class Reader:
                     r = self.rebase(x.key, x.off, root, c.key, c.off)
                     if r is None:
                         continue
+                    if seen is not None:
+                        sk = (r[0], r[1], x.width, x.rw, x.insn, x.cpu, c.func)
+                        if sk in seen:
+                            continue
+                        seen.add(sk)
                     new.append(x._replace(key=r[0], off=r[1],
                                           extra=x.extra if x.rw.startswith("arg") else ("via", c.func, c.cpu)))
             if not new:
@@ -266,9 +328,12 @@ class Reader:
                      r"^\((?P<idx>d[0-3])\s*,\s*(?P<base2>a[0-3])\)$|^\((?P<abs>[^,()]+)\)$")
 
     def walk(self, lines):
+        if not hasattr(self, "_ret"):
+            self._ret, self._retbad = collections.defaultdict(set), set()
+            self._retv = collections.defaultdict(set)
         st = {}
         pending = {}             # forward-branch target -> the state the branches carried there
-        func, cpu = None, None
+        func, cpu, header = None, None, None
         dead = False             # the previous instruction never falls through
         last_load = {}           # register -> index into self.accesses of the load that set it
         for ln in lines:
@@ -276,12 +341,20 @@ class Reader:
             mh = re.match(r"# (\S+)\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
             if mh:
                 cpu = int(mh.group(2), 16)
+                header = mh.group(1)
             if not code.strip():
                 continue
             ml = re.match(r"^([A-Za-z_.$][\w.$]*):", code)
             if ml:
                 n = ml.group(1)
-                if not n.startswith("loc_") and not n.endswith("_entry"):
+                # (ext) a named label inside a function (`DrawIcons_Impl_RowLoop:`, fallen into) is a
+                # branch label too: a function starts at a label its `# Name  (CPU ...)` header names,
+                # or one nothing falls into and no branch above reaches
+                fstart = not n.startswith("loc_") and not n.endswith("_entry")
+                if fstart and self.ext and header != n and not (dead and n not in pending):
+                    fstart = False
+                header = None
+                if fstart:
                     func, last_load = n, {}
                     # the arguments: a pointer in a0 / a1 / d0 / d1 is followed into the
                     # callers (resolve_params)
@@ -295,10 +368,15 @@ class Reader:
                     # jumps takes their common state, one also reached by falling in keeps only
                     # what agrees with it
                     came = pending.pop(n, None)
-                    if dead:
+                    if dead and came is None and self.ext:
+                        # reached only by a backward branch (a loop body the compiler puts before its
+                        # test): the frame's slots keep what the code before the loop stored there
+                        # [INFERENCE: a slot the loop rewrites, a stepped pointer, keeps its start]
+                        st, last_load = {k: v for k, v in st.items() if k.startswith("sp:")}, {}
+                    elif dead:
                         st, last_load = (dict(came) if came is not None else {}), {}
                     elif came is not None:
-                        st = {k: v for k, v in st.items() if came.get(k) == v}
+                        st = self.merge(st, came)
                 dead = False
                 code = code[ml.end():].strip()
                 if not code:
@@ -314,8 +392,30 @@ class Reader:
                 if op in self.LESS and "#cmp" in st:
                     pass                  # (the bound is applied by step below, on both paths)
                 prev = pending.get(t)
-                pending[t] = snap if prev is None else {k: v for k, v in prev.items() if snap.get(k) == v}
+                pending[t] = snap if prev is None else self.merge(prev, snap)
             self.step(op, args, st, last_load, func, cpu, code.strip())
+
+    def merge(self, a, b):
+        """The state at a label two paths reach with states a and b."""
+        if not self.ext:
+            return {k: v for k, v in a.items() if b.get(k) == v}
+        out = {}
+        for k, v in a.items():
+            if k in b:
+                w = b[k]
+                if k.startswith("sp:"):
+                    if v[1] == w[1]:
+                        j = join(v[0], w[0])
+                        if j is not None:
+                            out[k] = (j, v[1])
+                elif k.startswith("#"):
+                    if v == w:
+                        out[k] = v
+                else:
+                    j = join(v, w)
+                    if j is not None:
+                        out[k] = j
+        return out
 
     @staticmethod
     def split_args(s):
@@ -379,6 +479,19 @@ class Reader:
         if pc and op in self.LESS:
             st["#b" + pc[0]] = pc[1] + self.LESS[op]
             return
+        if op in WIDTH and len(args) == 2 and self.ext:
+            src, dst = args
+            ms = re.fullmatch(r"\((-?(?:0x[0-9a-fA-F]+|\d+))\s*,\s*sp\)", dst)
+            if ms and R(src):
+                st["sp:" + ms.group(1)] = (st.get(src), WIDTH[op])
+                return
+            ms = re.fullmatch(r"\((-?(?:0x[0-9a-fA-F]+|\d+))\s*,\s*sp\)", src)
+            if ms and R(dst):
+                v = st.get("sp:" + ms.group(1))
+                st[dst] = v[0] if v and v[1] == WIDTH[op] else None
+                st.pop("#b" + dst, None)
+                last_load.pop(dst, None)
+                return
         if op in WIDTH and len(args) == 2:
             src, dst = args
             w = WIDTH[op]
@@ -397,6 +510,11 @@ class Reader:
                 else:
                     st[dst] = None
                     last_load.pop(dst, None)
+                    if self.ext:
+                        # a bound a `cmp` gave the register's old value is not the loaded one's
+                        st.pop("#b" + dst, None)
+                        if w == 1:
+                            st["#b" + dst] = 256
                 return
             if dst.startswith("(") and (R(src) or src.startswith("-") or _num(src) is not None):
                 mk = self.mem(dst, st)
@@ -504,9 +622,35 @@ class Reader:
             for r in SCRATCH:
                 st[r] = None
                 last_load.pop(r, None)
+            if self.ext and tgt in self.returns:
+                st["a0"] = T(self.returns[tgt])
+            elif self.ext and tgt in self.returns_p:
+                st["a0"] = self.returns_p[tgt]
+            return
+        if op in ("ret", "retf", "rets") and self.ext and func:
+            v = st.get("a0")
+            a = addrs_of(v)
+            if a is None:
+                self._retbad.add(func)        # some path returns something else
+            else:
+                self._ret[func] |= a
+            # a pointer loaded from a typed field (a table entry the arguments select), the same on
+            # every path that returns: the caller's a0 is that field's target
+            self._retv[func].add(v if v is not None and v[0] == "P" and v[1][0] == "fld" and v[2] == 0
+                                 and not v[3] else None)
+            return
+        if op == "setlb" and self.ext:
+            # the head of a hardware loop (setlb .. Lcc): a register the code set to a constant before
+            # it is a loop counter or index here, not that constant
+            for r in REGS:
+                if st.get(r) is not None and st[r][0] == "C":
+                    st[r] = None
             return
         if op in ("movm", "ret", "retf", "rets", "rti"):
             return
+        if self.ext and op in ("add", "sub") and args and args[-1] == "sp":
+            for k in [k for k in st if k.startswith("sp:")]:
+                del st[k]
         # anything else that writes its last register operand: unknown
         if args and R(args[-1]) and op not in ("cmp", "btst", "bset", "bclr") and not op.startswith(("b", "l")):
             st[args[-1]] = None
@@ -529,7 +673,7 @@ def load(profile="941"):
             if not line.startswith(";"):
                 a, n, _ = line.split()
                 labels[n] = int(a, 16)
-    return Reader(os.path.join(KN7, G.P["src"], "*.s"), labels, G.Gen.in_data)
+    return Reader(os.path.join(KN7, G.P["src"], "*.s"), labels, G.Gen.in_data, ext=bool(G.P.get("readers_ext")))
 
 
 def main():

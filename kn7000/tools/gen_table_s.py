@@ -808,11 +808,18 @@ def plugin(d, plo, phi, clo, chi, a, ROMQ, used, equ):
     # operands of the code, and the code addresses it points at (code_refs.txt) get names
     datanames, coderefs = {}, []
     if a.plugin_data:
+        spans = []
         for line in open(os.path.join(a.plugin_data, "labels.sym")):
             if not line.startswith(";"):
                 f = line.split()
                 cpu = int(f[0], 16)
                 datanames.setdefault(cpu, f[1])
+                if int(f[2]) > 1:
+                    spans.append((cpu, int(f[2]), f[1]))
+        # an operand inside a typed item: Item+N
+        for cpu, size, nm in spans:
+            for v in range(cpu + 1, cpu + size):
+                datanames.setdefault(v, f"{nm}+{v - cpu}")
         for line in open(os.path.join(a.plugin_data, "code_refs.txt")):
             if line.startswith("0x"):
                 coderefs.append(int(line, 16))

@@ -5330,13 +5330,20 @@ names_50299424:
 	.long	Str_mvmew844njk8j8og97sq
 
 names_50299464:
-	.long	Str_j8ogwlphhecumj2kmvme, Str_mj2kghum4cdkfrhhj8og
-	.long	Str_frhhpku5d99w8jthmj2k, Str_8jthgff676lkwhjqfrhh
-	.long	Str_whjqhsm19b564rlr8jth, Str_4rlrtara3p7sfgfqwhjq
-	.long	Str_fgfql39ipkur4qrs4rlr, Str_4qrsnwaavg1hktk9fgfq
-	.long	Str_ktk9d9frapb5j5gu4qrs, Str_j5guniuhum49uiuektk9
-	.long	Str_m2ht1bvqgap26ucfj5gu, names_50299424
+	.long	Str_j8ogwlphhecumj2kmvme
+	.long	Str_mj2kghum4cdkfrhhj8og
+	.long	Str_frhhpku5d99w8jthmj2k
+	.long	Str_8jthgff676lkwhjqfrhh
+	.long	Str_whjqhsm19b564rlr8jth
+	.long	Str_4rlrtara3p7sfgfqwhjq
+	.long	Str_fgfql39ipkur4qrs4rlr
+	.long	Str_4qrsnwaavg1hktk9fgfq
+	.long	Str_ktk9d9frapb5j5gu4qrs
+	.long	Str_j5guniuhum49uiuektk9
+	.long	Str_m2ht1bvqgap26ucfj5gu
 
+ptr_50299490:
+	.long	names_50299424
 ptr_50299494:
 	.long	names_50299424+4
 .mnbase 0x48000000

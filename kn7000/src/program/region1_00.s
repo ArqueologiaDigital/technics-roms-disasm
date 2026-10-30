@@ -20374,7 +20374,7 @@ loc_4840D2B6:
     add     func_4840D29C_Records, a3
     add     0x11, d0
     mov     d0, (0xc, sp)
-    mov     data_48739095, d0
+    mov     func_4840D29C_Records_2, d0
     add     d1, d0
     mov     d0, (8, sp)
     mov     (0x4c, sp), d3
@@ -30626,31 +30626,31 @@ func_48412CA5:
     mov     (d0, a0), a0
     jmp     (a0)
 loc_48412CB9:
-    mov     data_4870B598, a0
+    mov     func_48412CA5_Result_0, a0
     bra     loc_48412D03
 loc_48412CC1:
-    mov     data_4870FDF4, a0
+    mov     func_48412CA5_Result_1, a0
     bra     loc_48412D03
 loc_48412CC9:
-    mov     data_48714A54, a0
+    mov     func_48412CA5_Result_2, a0
     bra     loc_48412D03
 loc_48412CD1:
-    mov     data_48714A54, a0
+    mov     func_48412CA5_Result_2, a0
     bra     loc_48412D03
 loc_48412CD9:
-    mov     data_48714A54, a0
+    mov     func_48412CA5_Result_2, a0
     bra     loc_48412D03
 loc_48412CE1:
-    mov     data_48714A54, a0
+    mov     func_48412CA5_Result_2, a0
     bra     loc_48412D03
 loc_48412CE9:
-    mov     data_48714A54, a0
+    mov     func_48412CA5_Result_2, a0
     bra     loc_48412D03
 loc_48412CF1:
-    mov     data_48718E70, a0
+    mov     func_48412CA5_Result_3, a0
     bra     loc_48412D03
 loc_48412CF9:
-    mov     data_4871CECC, a0
+    mov     func_48412CA5_Result_4, a0
     bra     loc_48412D03
 loc_48412D01:
     mov     0, a0

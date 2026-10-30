@@ -41,13 +41,13 @@ loc_48470C3A:
     mov     1, d2
     jmp     loc_48470D1D
 loc_48470C6B:
-    mov     data_485B9128, a0
+    mov     func_48401F32_Var_4, a0
     call    func_48401F32_entry, 0, 0xc
     cmp     d2, d0
     beq     loc_48470C7E
     jmp     loc_48470D1D
 loc_48470C7E:
-    mov     data_485B910C, a0
+    mov     func_48401F32_Var_3, a0
     call    func_48401F32_entry, 0, 0xc
     cmp     d2, d0
     beq     loc_48470C91
@@ -84,7 +84,7 @@ loc_48470CCE:
     clr     d2
     bra     loc_48470D1D
 loc_48470CD1:
-    mov     data_485B90D4, a0
+    mov     func_48401F32_Var_2, a0
     call    func_48401F32_entry, 0, 0xc
     cmp     d2, d0
     beq     loc_48470CE3
@@ -1336,12 +1336,12 @@ func_48471723_entry:
     ret     [d2,d3,a2,a3], 0x24
 loc_48471752:
     mov     d2, a0
-    mov     data_485B91BC, a1
+    mov     func_48471723_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     mov     3, a0
     add     d2, a0
-    mov     data_485B91BF, a1
+    mov     func_48471723_Block_2, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     movhu   (0x5004bbce), d0
@@ -1433,12 +1433,12 @@ loc_48471809:
     call    func_484715C5, 0, 0
     mov     0x27, a0
     add     d2, a0
-    mov     data_485B91C7, a1
+    mov     func_48471723_Block_3, a1
     mov     4, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x2b, a0
     add     d2, a0
-    mov     data_485B91CB, a1
+    mov     func_48471723_Block_4, a1
     mov     0xb, d0
     call    memcpy_entry, [a2,a3], 8
     movbu   (0x5004bbda), d0
@@ -1446,7 +1446,7 @@ loc_48471809:
     bne     loc_484718B9
     mov     0x36, a0
     add     d2, a0
-    mov     data_485B91DE, a1
+    mov     func_48471723_Block_6, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     bra     loc_484718E1
@@ -1456,7 +1456,7 @@ loc_484718B9:
     bne     loc_484718D8
     mov     0x36, a0
     add     d2, a0
-    mov     data_485B91D6, a1
+    mov     func_48471723_Block_5, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     bra     loc_484718E1
@@ -1467,7 +1467,7 @@ loc_484718D8:
 loc_484718E1:
     mov     0x1fe, a0
     add     d2, a0
-    mov     data_485B91E6, a1
+    mov     func_48471723_Block_7, a1
     mov     2, d0
     call    memcpy_entry, [a2,a3], 8
     mov     a3, d0
@@ -14932,7 +14932,7 @@ inflate_trees_dynamic_entry:
     mov     d2, d0
     mov     a2, (0x24, sp)
     mov     0x101, d1
-    mov     data_50000FB0, a1
+    mov     huft_build_Table, a1
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d1
     cmp     0, d0
@@ -14969,7 +14969,7 @@ loc_48477CBA:
     mov     d3, a0
     mov     (0x44, sp), d0
     clr     d1
-    mov     data_500010A8, a1
+    mov     huft_build_Table_2, a1
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     d0, d2
     cmp     0, d0
@@ -15112,7 +15112,7 @@ loc_48477DCC:
     mov     a2, a0
     mov     0x120, d0
     mov     0x101, d1
-    mov     data_50000FB0, a1
+    mov     huft_build_Table, a1
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     a2, a0
     mov     0x78, a1
@@ -15133,7 +15133,7 @@ loc_48477DCC:
     mov     d3, (0x24, sp)
     mov     0x1e, d0
     clr     d1
-    mov     data_500010A8, a1
+    mov     huft_build_Table_2, a1
     mov     a2, a0
     call    huft_build_entry, [d2,d3,a2,a3], 0x10
     mov     1, d0

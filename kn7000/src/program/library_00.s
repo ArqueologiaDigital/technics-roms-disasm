@@ -44082,7 +44082,7 @@ loc_4C015DE4:
     beq     loc_4C015E33
     bra     loc_4C015E41
 loc_4C015DFB:
-    mov     data_48588788, a0
+    mov     func_4C015D95_Selected_0, a0
     mov     0x0000b015, d0
     bra     loc_4C015E45
 loc_4C015E09:
@@ -48874,7 +48874,7 @@ loc_4C0186CB:
     beq     loc_4C018722
     bra     loc_4C018732
 loc_4C0186E2:
-    mov     data_48588788, a0
+    mov     func_4C015D95_Selected_0, a0
     and     d2, d3
     add     0xb015, d3
     bra     loc_4C018736
@@ -65131,31 +65131,31 @@ func_4C0216A3_entry:
     ret     [d2,d3,a2,a3], 0x24
 loc_4C0216C5:
     mov     (0x2c, sp), d0
-    mov     data_48731E44, d2
+    mov     func_4C0216A3_Selected_0, d2
     and     0x00ff0000, d0
     lsr     16, d0
     extbu   d0
     cmp     0, d0
     beq     loc_4C02172D
-    mov     data_48731E5C, d2
+    mov     func_4C0216A3_Selected_1, d2
     cmp     0x20, d0
     beq     loc_4C02172D
-    mov     data_48731E68, d2
+    mov     func_4C0216A3_Selected_2, d2
     cmp     0x60, d0
     beq     loc_4C02172D
-    mov     data_48731E74, d2
+    mov     func_4C0216A3_Selected_3, d2
     cmp     0x70, d0
     beq     loc_4C02172D
-    mov     data_48731EE0, d2
+    mov     func_4C0216A3_Selected_4, d2
     cmp     0xb0, d0
     beq     loc_4C02172D
-    mov     data_48731EF8, d2
+    mov     func_4C0216A3_Selected_5, d2
     cmp     0xc0, d0
     beq     loc_4C02172D
-    mov     data_48731F04, d2
+    mov     func_4C0216A3_Selected_6, d2
     cmp     0xd0, d0
     beq     loc_4C02172D
-    mov     data_48731F10, d2
+    mov     func_4C0216A3_Selected_7, d2
     cmp     0xe0, d0
     beq     loc_4C02172D
     mov     -1, d0
@@ -65234,23 +65234,23 @@ loc_4C0217A8:
 loc_4C0217AB:
     mov     (4, a0), a0
     jmp     (a0)
-    mov     data_48731F1C, d2
+    mov     func_4C021761_Selected_0, d2
     bra     loc_4C0217FC
-    mov     data_48731FB8, d2
+    mov     func_4C021761_Selected_1, d2
     bra     loc_4C0217FC
-    mov     data_48731FE8, d2
+    mov     func_4C021761_Selected_2, d2
     bra     loc_4C0217FC
-    mov     data_48732060, d2
+    mov     func_4C021761_Selected_3, d2
     bra     loc_4C0217FC
-    mov     data_487321A4, d2
+    mov     func_4C021761_Selected_4, d2
     bra     loc_4C0217FC
-    mov     data_487321D4, d2
+    mov     func_4C021761_Selected_5, d2
     bra     loc_4C0217FC
-    mov     data_487321EC, d2
+    mov     func_4C021761_Selected_6, d2
     bra     loc_4C0217FC
-    mov     data_48732210, d2
+    mov     func_4C021761_Selected_7, d2
     bra     loc_4C0217FC
-    mov     data_4873221C, d2
+    mov     func_4C021761_Selected_8, d2
     bra     loc_4C0217FC
 loc_4C0217F8:
     mov     -1, d0
@@ -68876,7 +68876,7 @@ func_4C023F80:
     add     -0x14, sp
 func_4C023F80_entry:
     mov     0x96804000, a0
-    mov     data_4858D734, a1
+    mov     func_4847F7FC_Table, a1
     mov     2, d0
     call    FlashProgram128Words, [d2,d3,a2,a3], 0x50
     ret     0, 0x14

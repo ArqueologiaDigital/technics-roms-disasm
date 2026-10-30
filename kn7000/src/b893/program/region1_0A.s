@@ -17774,7 +17774,7 @@ loc_4854AD3D:
     mov     1, d0
     movhu   d0, (0x50160620)
     mov     0x50160648, a0
-    mov     data_50007E90, a1
+    mov     SdReadBlockCmd_Var_2, a1
     call    SdCardRegRead_entry, [d2,d3,a2,a3], 0x24
     mov     d0, d2
     exthu   d0
@@ -18284,7 +18284,7 @@ SdCardInfoReset_entry:
     mov     d0, (0x18, a0)
     movhu   d0, (a0)
     mov     0x50082724, a0
-    mov     data_48757038, a1
+    mov     SdCardInfoReset_Block, a1
     mov     0x10, d0
     call    memcpy_entry, [a2,a3], 8
     clr     d0

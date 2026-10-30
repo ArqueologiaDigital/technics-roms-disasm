@@ -5729,7 +5729,7 @@ loc_48485AA7:
     clr     d2
 loc_48485AB4:
     mov     (0x14, sp), a2
-    mov     data_487376FC, a1
+    mov     func_48485945_Block, a1
     mov     a2, a0
     mov     0xa0, d0
     call    memcpy_entry, [a2,a3], 8
@@ -8677,7 +8677,7 @@ InitializeBlock01_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEBUG_MainFunctions, d0
+    mov     ptrs_48740DC4+4, d0
     mov     d0, (0x28, sp)
     mov     0x13, d0
     mov     a3, a0
@@ -8686,7 +8686,7 @@ InitializeBlock01_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48740DCC, d0
+    mov     ptrs_48740DC4+8, d0
     mov     d0, (0x28, sp)
     mov     0x1b, d0
     mov     a3, a0
@@ -11154,7 +11154,7 @@ InitializeBlock02_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     NAMING_MainFunctions, d0
+    mov     ptrs_48741068+4, d0
     mov     d0, (0x28, sp)
     mov     0x23, d0
     mov     a3, a0
@@ -11163,7 +11163,7 @@ InitializeBlock02_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48741070, d0
+    mov     ptrs_48741068+8, d0
     mov     d0, (0x28, sp)
     mov     0x2b, d0
     mov     a3, a0
@@ -13303,7 +13303,7 @@ InitializeBlock04_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     WELCOME_ApFunctions, d0
+    mov     ptrs_487413D8+4, d0
     mov     d0, (0x28, sp)
     mov     0x42, d0
     mov     a3, a0
@@ -13312,7 +13312,7 @@ InitializeBlock04_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_487413E0, d0
+    mov     ptrs_487413D8+8, d0
     mov     d0, (0x28, sp)
     mov     0x4a, d0
     mov     a3, a0
@@ -23774,7 +23774,7 @@ loc_48490911:
     exth    d0
     mov     d0, (0x28, sp)
     exth    d3
-    add     data_485EC67C, d3
+    add     TtSdkeyscl_Table_2, d3
     mov     d3, (0x24, sp)
     exth    d2
     mov     d2, (0x1c, sp)
@@ -27693,7 +27693,7 @@ InitializeBlock03_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     HOMEPAGE_ApFunctions, d0
+    mov     ptrs_48742B78+4, d0
     mov     d0, (0x28, sp)
     mov     0x32, d0
     mov     a3, a0
@@ -27702,7 +27702,7 @@ InitializeBlock03_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48742B80, d0
+    mov     ptrs_48742B78+8, d0
     mov     d0, (0x28, sp)
     mov     0x3a, d0
     mov     a3, a0
@@ -34061,7 +34061,7 @@ InitializeBlock06_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     SNDRHY_ApFunctions, d0
+    mov     ptrs_48748634+4, d0
     mov     d0, (0x28, sp)
     mov     0x62, d0
     mov     a3, a0
@@ -34070,7 +34070,7 @@ InitializeBlock06_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_4874863C, d0
+    mov     ptrs_48748634+8, d0
     mov     d0, (0x28, sp)
     mov     0x6a, d0
     mov     a3, a0

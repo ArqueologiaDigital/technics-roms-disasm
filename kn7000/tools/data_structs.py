@@ -78,7 +78,7 @@ def readers(g, labels_path, src_glob):
         n, v = line.split()
         labels[n] = int(v, 16)
     labels.update(g.prev_data_label)
-    return DR.Reader(src_glob, labels, g.in_data)
+    return DR.Reader(src_glob, labels, g.in_data, ext=getattr(g, "readers_ext", False))
 
 
 def groups(dr):
