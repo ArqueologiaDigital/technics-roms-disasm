@@ -205,40 +205,40 @@ BitmapDescriptorTable:
 ; Bitmap pixel runs (0x913118): 8bpp slices of the on-disk blob.
 ; Entry 0 is byte-identical to v10/maincpu/images/BitmapWormWearingHat.bin
 ; (the maincpu ROM carries its own copy at 0xea9f20).
-Bitmap_WormWearingHat:			.incbin "includes/generated/Bitmap_WormWearingHat.bin"	; 24x24 -- green worm in a straw hat (easter egg; same bytes as maincpu 0xea9f20 copy)
-Bitmap_TechnicsLogoOutline:		.incbin "includes/generated/Bitmap_TechnicsLogoOutline.bin"	; 307x45 -- olive "Technics" wordmark with white outline on transparent background
-Bitmap_VerticalFader:			.incbin "includes/generated/Bitmap_VerticalFader.bin"	; 27x48 -- on-screen fader: dark slot, black cap, tick scale on the right
-Bitmap_RedBarGauge:			.incbin "includes/generated/Bitmap_RedBarGauge.bin"	; 19x12 -- small bevelled panel with a red level bar (exact use not yet traced)
-Bitmap_RecordDot:			.incbin "includes/generated/Bitmap_RecordDot.bin"	; 17x17 -- dark-red filled circle (transport record symbol)
-Bitmap_TinyCross:			.incbin "includes/generated/Bitmap_TinyCross.bin"	; 3x3 -- white 3x3 plus/cross marker
-Bitmap_TransportFastForward:		.incbin "includes/generated/Bitmap_TransportFastForward.bin"	; 27x18
-Bitmap_TransportRewind:			.incbin "includes/generated/Bitmap_TransportRewind.bin"	; 27x18
-Bitmap_TransportPause:			.incbin "includes/generated/Bitmap_TransportPause.bin"	; 27x18
-Bitmap_TransportPlayStop:		.incbin "includes/generated/Bitmap_TransportPlayStop.bin"	; 27x18
-Bitmap_TransportSkipToStart:		.incbin "includes/generated/Bitmap_TransportSkipToStart.bin"	; 27x18
-Bitmap_TransportSkipToEnd:		.incbin "includes/generated/Bitmap_TransportSkipToEnd.bin"	; 27x18
-Bitmap_SoundIcon_Violin:		.incbin "includes/generated/Bitmap_SoundIcon_Violin.bin"	; 32x32 -- violin and bow
-Bitmap_SoundIcon_Trumpet:		.incbin "includes/generated/Bitmap_SoundIcon_Trumpet.bin"	; 32x32
-Bitmap_SoundIcon_DrumKit:		.incbin "includes/generated/Bitmap_SoundIcon_DrumKit.bin"	; 32x32
-Bitmap_SoundIcon_Flutes:		.incbin "includes/generated/Bitmap_SoundIcon_Flutes.bin"	; 32x32 -- concert flute over pan flute
-Bitmap_SoundIcon_ElectricGuitar:	.incbin "includes/generated/Bitmap_SoundIcon_ElectricGuitar.bin"	; 32x32
-Bitmap_SoundIcon_NoteInCloud:		.incbin "includes/generated/Bitmap_SoundIcon_NoteInCloud.bin"	; 32x32 -- eighth note inside a sparkling cloud (pad/atmosphere sounds)
-Bitmap_SoundIcon_MalletPercussion:	.incbin "includes/generated/Bitmap_SoundIcon_MalletPercussion.bin"	; 32x32 -- tubular chimes and timpani with mallets
-Bitmap_PageIconA:			.incbin "includes/generated/Bitmap_PageIconA.bin"	; 32x32 -- dog-eared page labelled "A"
-Bitmap_PageIconB:			.incbin "includes/generated/Bitmap_PageIconB.bin"	; 32x32 -- dog-eared page labelled "B"
-Bitmap_SoundIcon_MixerModule:		.incbin "includes/generated/Bitmap_SoundIcon_MixerModule.bin"	; 32x32 -- rack sound module above mixer faders
-Bitmap_SoundIcon_FiddleAndBanjo:	.incbin "includes/generated/Bitmap_SoundIcon_FiddleAndBanjo.bin"	; 32x32 -- crossed fiddle/bow with banjo head
-Bitmap_SoundIcon_GrandPiano:		.incbin "includes/generated/Bitmap_SoundIcon_GrandPiano.bin"	; 32x32
-Bitmap_SoundIcon_SaxAndClarinet:	.incbin "includes/generated/Bitmap_SoundIcon_SaxAndClarinet.bin"	; 32x32
-Bitmap_SoundIcon_FiddleAndMandolin:	.incbin "includes/generated/Bitmap_SoundIcon_FiddleAndMandolin.bin"	; 32x32 -- crossed fiddle/bow with oval mandolin body
-Bitmap_SoundIcon_SynthKeyboard:		.incbin "includes/generated/Bitmap_SoundIcon_SynthKeyboard.bin"	; 32x32 -- digital workstation keyboard
-Bitmap_SoundIcon_Drawbars:		.incbin "includes/generated/Bitmap_SoundIcon_Drawbars.bin"	; 32x32 -- three numbered organ drawbars pulled to different lengths
-Bitmap_SoundIcon_Accordion:		.incbin "includes/generated/Bitmap_SoundIcon_Accordion.bin"	; 32x32
-Bitmap_GreenLedButtonBright:		.incbin "includes/generated/Bitmap_GreenLedButtonBright.bin"	; 15x11 -- small green LED button, lit
-Bitmap_GreenLedButtonDim:		.incbin "includes/generated/Bitmap_GreenLedButtonDim.bin"	; 15x11 -- small green LED button, dimmed
-Bitmap_GeneralMidiSpecialLogo:		.incbin "includes/generated/Bitmap_GeneralMidiSpecialLogo.bin"	; 32x32 -- "GENERAL MIDI SPECIAL" text logo
-Bitmap_SoundIcon_Metronome:		.incbin "includes/generated/Bitmap_SoundIcon_Metronome.bin"	; 32x32
-Bitmap_SoundIcon_Microphone:		.incbin "includes/generated/Bitmap_SoundIcon_Microphone.bin"	; 32x32
+Bitmap_WormWearingHat:			.incbin "includes/generated/Bitmap_WormWearingHat.bin"	; 24x24 -- green worm in a straw hat (easter egg; same bytes as maincpu 0xea9f20 copy); census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_WormWearingHat.png
+Bitmap_TechnicsLogoOutline:		.incbin "includes/generated/Bitmap_TechnicsLogoOutline.bin"	; 307x45 -- olive "Technics" wordmark with white outline on transparent background; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TechnicsLogoOutline.png
+Bitmap_VerticalFader:			.incbin "includes/generated/Bitmap_VerticalFader.bin"	; 27x48 -- on-screen fader: dark slot, black cap, tick scale on the right; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_VerticalFader.png
+Bitmap_RedBarGauge:			.incbin "includes/generated/Bitmap_RedBarGauge.bin"	; 19x12 -- small bevelled panel with a red level bar (exact use not yet traced); census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_RedBarGauge.png
+Bitmap_RecordDot:			.incbin "includes/generated/Bitmap_RecordDot.bin"	; 17x17 -- dark-red filled circle (transport record symbol); census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_RecordDot.png
+Bitmap_TinyCross:			.incbin "includes/generated/Bitmap_TinyCross.bin"	; 3x3 -- white 3x3 plus/cross marker; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TinyCross.png
+Bitmap_TransportFastForward:		.incbin "includes/generated/Bitmap_TransportFastForward.bin"	; 27x18; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TransportFastForward.png
+Bitmap_TransportRewind:			.incbin "includes/generated/Bitmap_TransportRewind.bin"	; 27x18; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TransportRewind.png
+Bitmap_TransportPause:			.incbin "includes/generated/Bitmap_TransportPause.bin"	; 27x18; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TransportPause.png
+Bitmap_TransportPlayStop:		.incbin "includes/generated/Bitmap_TransportPlayStop.bin"	; 27x18; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TransportPlayStop.png
+Bitmap_TransportSkipToStart:		.incbin "includes/generated/Bitmap_TransportSkipToStart.bin"	; 27x18; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TransportSkipToStart.png
+Bitmap_TransportSkipToEnd:		.incbin "includes/generated/Bitmap_TransportSkipToEnd.bin"	; 27x18; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_TransportSkipToEnd.png
+Bitmap_SoundIcon_Violin:		.incbin "includes/generated/Bitmap_SoundIcon_Violin.bin"	; 32x32 -- violin and bow; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Violin.png
+Bitmap_SoundIcon_Trumpet:		.incbin "includes/generated/Bitmap_SoundIcon_Trumpet.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Trumpet.png
+Bitmap_SoundIcon_DrumKit:		.incbin "includes/generated/Bitmap_SoundIcon_DrumKit.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_DrumKit.png
+Bitmap_SoundIcon_Flutes:		.incbin "includes/generated/Bitmap_SoundIcon_Flutes.bin"	; 32x32 -- concert flute over pan flute; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Flutes.png
+Bitmap_SoundIcon_ElectricGuitar:	.incbin "includes/generated/Bitmap_SoundIcon_ElectricGuitar.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_ElectricGuitar.png
+Bitmap_SoundIcon_NoteInCloud:		.incbin "includes/generated/Bitmap_SoundIcon_NoteInCloud.bin"	; 32x32 -- eighth note inside a sparkling cloud (pad/atmosphere sounds); census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_NoteInCloud.png
+Bitmap_SoundIcon_MalletPercussion:	.incbin "includes/generated/Bitmap_SoundIcon_MalletPercussion.bin"	; 32x32 -- tubular chimes and timpani with mallets; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_MalletPercussion.png
+Bitmap_PageIconA:			.incbin "includes/generated/Bitmap_PageIconA.bin"	; 32x32 -- dog-eared page labelled "A"; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_PageIconA.png
+Bitmap_PageIconB:			.incbin "includes/generated/Bitmap_PageIconB.bin"	; 32x32 -- dog-eared page labelled "B"; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_PageIconB.png
+Bitmap_SoundIcon_MixerModule:		.incbin "includes/generated/Bitmap_SoundIcon_MixerModule.bin"	; 32x32 -- rack sound module above mixer faders; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_MixerModule.png
+Bitmap_SoundIcon_FiddleAndBanjo:	.incbin "includes/generated/Bitmap_SoundIcon_FiddleAndBanjo.bin"	; 32x32 -- crossed fiddle/bow with banjo head; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_FiddleAndBanjo.png
+Bitmap_SoundIcon_GrandPiano:		.incbin "includes/generated/Bitmap_SoundIcon_GrandPiano.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_GrandPiano.png
+Bitmap_SoundIcon_SaxAndClarinet:	.incbin "includes/generated/Bitmap_SoundIcon_SaxAndClarinet.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_SaxAndClarinet.png
+Bitmap_SoundIcon_FiddleAndMandolin:	.incbin "includes/generated/Bitmap_SoundIcon_FiddleAndMandolin.bin"	; 32x32 -- crossed fiddle/bow with oval mandolin body; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_FiddleAndMandolin.png
+Bitmap_SoundIcon_SynthKeyboard:		.incbin "includes/generated/Bitmap_SoundIcon_SynthKeyboard.bin"	; 32x32 -- digital workstation keyboard; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_SynthKeyboard.png
+Bitmap_SoundIcon_Drawbars:		.incbin "includes/generated/Bitmap_SoundIcon_Drawbars.bin"	; 32x32 -- three numbered organ drawbars pulled to different lengths; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Drawbars.png
+Bitmap_SoundIcon_Accordion:		.incbin "includes/generated/Bitmap_SoundIcon_Accordion.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Accordion.png
+Bitmap_GreenLedButtonBright:		.incbin "includes/generated/Bitmap_GreenLedButtonBright.bin"	; 15x11 -- small green LED button, lit; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_GreenLedButtonBright.png
+Bitmap_GreenLedButtonDim:		.incbin "includes/generated/Bitmap_GreenLedButtonDim.bin"	; 15x11 -- small green LED button, dimmed; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_GreenLedButtonDim.png
+Bitmap_GeneralMidiSpecialLogo:		.incbin "includes/generated/Bitmap_GeneralMidiSpecialLogo.bin"	; 32x32 -- "GENERAL MIDI SPECIAL" text logo; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_GeneralMidiSpecialLogo.png
+Bitmap_SoundIcon_Metronome:		.incbin "includes/generated/Bitmap_SoundIcon_Metronome.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Metronome.png
+Bitmap_SoundIcon_Microphone:		.incbin "includes/generated/Bitmap_SoundIcon_Microphone.bin"	; 32x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Bitmap_SoundIcon_Microphone.png
 
 	.fill 486, 1, 0xff
 
@@ -345,58 +345,58 @@ FrameDescriptorTable:
 	desc_entry	0, 0, 0		; terminator
 
 ; Frame pixel runs (0x9341B0)
-Frame_RoundCorner1_TL:			.incbin "includes/generated/Frame_RoundCorner1_TL.bin"	; 1x1
-Frame_RoundCorner1_TR:			.incbin "includes/generated/Frame_RoundCorner1_TR.bin"	; 1x1
-Frame_RoundCorner1_BR:			.incbin "includes/generated/Frame_RoundCorner1_BR.bin"	; 1x1
-Frame_RoundCorner1_BL:			.incbin "includes/generated/Frame_RoundCorner1_BL.bin"	; 1x1
-Frame_RoundCorner2_TL:			.incbin "includes/generated/Frame_RoundCorner2_TL.bin"	; 2x2
-Frame_RoundCorner2_TR:			.incbin "includes/generated/Frame_RoundCorner2_TR.bin"	; 2x2
-Frame_RoundCorner2_BR:			.incbin "includes/generated/Frame_RoundCorner2_BR.bin"	; 2x2
-Frame_RoundCorner2_BL:			.incbin "includes/generated/Frame_RoundCorner2_BL.bin"	; 2x2
-Frame_RoundCorner5_TL:			.incbin "includes/generated/Frame_RoundCorner5_TL.bin"	; 5x5
-Frame_RoundCorner5_TR:			.incbin "includes/generated/Frame_RoundCorner5_TR.bin"	; 5x5
-Frame_RoundCorner5_BR:			.incbin "includes/generated/Frame_RoundCorner5_BR.bin"	; 5x5
-Frame_RoundCorner5_BL:			.incbin "includes/generated/Frame_RoundCorner5_BL.bin"	; 5x5
-Frame_RoundCorner9_TL:			.incbin "includes/generated/Frame_RoundCorner9_TL.bin"	; 9x9
-Frame_RoundCorner9_TR:			.incbin "includes/generated/Frame_RoundCorner9_TR.bin"	; 9x9
-Frame_RoundCorner9_BR:			.incbin "includes/generated/Frame_RoundCorner9_BR.bin"	; 9x9
-Frame_RoundCorner9_BL:			.incbin "includes/generated/Frame_RoundCorner9_BL.bin"	; 9x9
-Frame_RoundCorner14_TL:			.incbin "includes/generated/Frame_RoundCorner14_TL.bin"	; 14x14
-Frame_RoundCorner14_TR:			.incbin "includes/generated/Frame_RoundCorner14_TR.bin"	; 14x14
-Frame_RoundCorner14_BR:			.incbin "includes/generated/Frame_RoundCorner14_BR.bin"	; 14x14
-Frame_RoundCorner14_BL:			.incbin "includes/generated/Frame_RoundCorner14_BL.bin"	; 14x14
-Frame_ChevronRight_5x12:		.incbin "includes/generated/Frame_ChevronRight_5x12.bin"	; 5x12
-Frame_ChevronRight_6x16:		.incbin "includes/generated/Frame_ChevronRight_6x16.bin"	; 6x16
-Frame_ChevronRight_8x24:		.incbin "includes/generated/Frame_ChevronRight_8x24.bin"	; 8x24
-Frame_ChevronRight_10x32:		.incbin "includes/generated/Frame_ChevronRight_10x32.bin"	; 10x32
-Frame_ChevronRight_15x48:		.incbin "includes/generated/Frame_ChevronRight_15x48.bin"	; 15x48
-Frame_ChevronLeft_5x12:			.incbin "includes/generated/Frame_ChevronLeft_5x12.bin"	; 5x12
-Frame_ChevronLeft_6x16:			.incbin "includes/generated/Frame_ChevronLeft_6x16.bin"	; 6x16
-Frame_ChevronLeft_8x24:			.incbin "includes/generated/Frame_ChevronLeft_8x24.bin"	; 8x24
-Frame_ChevronLeft_10x32:		.incbin "includes/generated/Frame_ChevronLeft_10x32.bin"	; 10x32
-Frame_ChevronLeft_15x48:		.incbin "includes/generated/Frame_ChevronLeft_15x48.bin"	; 15x48
-Frame_OnOffTabLeft_20x16:		.incbin "includes/generated/Frame_OnOffTabLeft_20x16.bin"	; 20x16
-Frame_OnOffTabLeft_24x24:		.incbin "includes/generated/Frame_OnOffTabLeft_24x24.bin"	; 24x24
-Frame_OnOffTabLeft_29x32:		.incbin "includes/generated/Frame_OnOffTabLeft_29x32.bin"	; 29x32
-Frame_OnOffTabLeft_34x48:		.incbin "includes/generated/Frame_OnOffTabLeft_34x48.bin"	; 34x48
-Frame_OnOffTabRight_20x16:		.incbin "includes/generated/Frame_OnOffTabRight_20x16.bin"	; 20x16
-Frame_OnOffTabRight_24x24:		.incbin "includes/generated/Frame_OnOffTabRight_24x24.bin"	; 24x24
-Frame_OnOffTabRight_29x32:		.incbin "includes/generated/Frame_OnOffTabRight_29x32.bin"	; 29x32
-Frame_OnOffTabRight_34x48:		.incbin "includes/generated/Frame_OnOffTabRight_34x48.bin"	; 34x48
-Frame_RedArrowLeft:			.incbin "includes/generated/Frame_RedArrowLeft.bin"	; 16x16
-Frame_RedArrowRight:			.incbin "includes/generated/Frame_RedArrowRight.bin"	; 16x16
-Frame_BevelCornerRaised_TL:		.incbin "includes/generated/Frame_BevelCornerRaised_TL.bin"	; 5x5
-Frame_BevelCornerRaised_TR:		.incbin "includes/generated/Frame_BevelCornerRaised_TR.bin"	; 5x5
-Frame_BevelCornerRaised_BR:		.incbin "includes/generated/Frame_BevelCornerRaised_BR.bin"	; 5x5
-Frame_BevelCornerRaised_BL:		.incbin "includes/generated/Frame_BevelCornerRaised_BL.bin"	; 5x5
-Frame_BevelCornerOutlined_TL:		.incbin "includes/generated/Frame_BevelCornerOutlined_TL.bin"	; 5x5
-Frame_BevelCornerOutlined_TR:		.incbin "includes/generated/Frame_BevelCornerOutlined_TR.bin"	; 5x5
-Frame_BevelCornerOutlined_BR:		.incbin "includes/generated/Frame_BevelCornerOutlined_BR.bin"	; 5x5
-Frame_BevelCornerOutlined_BL:		.incbin "includes/generated/Frame_BevelCornerOutlined_BL.bin"	; 5x5
-Frame_BevelCornerSunken_TL:		.incbin "includes/generated/Frame_BevelCornerSunken_TL.bin"	; 5x5
-Frame_BevelCornerSunken_TR:		.incbin "includes/generated/Frame_BevelCornerSunken_TR.bin"	; 5x5
-Frame_BevelCornerSunken_BR:		.incbin "includes/generated/Frame_BevelCornerSunken_BR.bin"	; 5x5
-Frame_BevelCornerSunken_BL:		.incbin "includes/generated/Frame_BevelCornerSunken_BL.bin"	; 5x5
-Frame_WideTabBar:			.incbin "includes/generated/Frame_WideTabBar.bin"	; 76x11
+Frame_RoundCorner1_TL:			.incbin "includes/generated/Frame_RoundCorner1_TL.bin"	; 1x1; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner1_TL.png
+Frame_RoundCorner1_TR:			.incbin "includes/generated/Frame_RoundCorner1_TR.bin"	; 1x1; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner1_TR.png
+Frame_RoundCorner1_BR:			.incbin "includes/generated/Frame_RoundCorner1_BR.bin"	; 1x1; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner1_BR.png
+Frame_RoundCorner1_BL:			.incbin "includes/generated/Frame_RoundCorner1_BL.bin"	; 1x1; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner1_BL.png
+Frame_RoundCorner2_TL:			.incbin "includes/generated/Frame_RoundCorner2_TL.bin"	; 2x2; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner2_TL.png
+Frame_RoundCorner2_TR:			.incbin "includes/generated/Frame_RoundCorner2_TR.bin"	; 2x2; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner2_TR.png
+Frame_RoundCorner2_BR:			.incbin "includes/generated/Frame_RoundCorner2_BR.bin"	; 2x2; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner2_BR.png
+Frame_RoundCorner2_BL:			.incbin "includes/generated/Frame_RoundCorner2_BL.bin"	; 2x2; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner2_BL.png
+Frame_RoundCorner5_TL:			.incbin "includes/generated/Frame_RoundCorner5_TL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner5_TL.png
+Frame_RoundCorner5_TR:			.incbin "includes/generated/Frame_RoundCorner5_TR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner5_TR.png
+Frame_RoundCorner5_BR:			.incbin "includes/generated/Frame_RoundCorner5_BR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner5_BR.png
+Frame_RoundCorner5_BL:			.incbin "includes/generated/Frame_RoundCorner5_BL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner5_BL.png
+Frame_RoundCorner9_TL:			.incbin "includes/generated/Frame_RoundCorner9_TL.bin"	; 9x9; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner9_TL.png
+Frame_RoundCorner9_TR:			.incbin "includes/generated/Frame_RoundCorner9_TR.bin"	; 9x9; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner9_TR.png
+Frame_RoundCorner9_BR:			.incbin "includes/generated/Frame_RoundCorner9_BR.bin"	; 9x9; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner9_BR.png
+Frame_RoundCorner9_BL:			.incbin "includes/generated/Frame_RoundCorner9_BL.bin"	; 9x9; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner9_BL.png
+Frame_RoundCorner14_TL:			.incbin "includes/generated/Frame_RoundCorner14_TL.bin"	; 14x14; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner14_TL.png
+Frame_RoundCorner14_TR:			.incbin "includes/generated/Frame_RoundCorner14_TR.bin"	; 14x14; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner14_TR.png
+Frame_RoundCorner14_BR:			.incbin "includes/generated/Frame_RoundCorner14_BR.bin"	; 14x14; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner14_BR.png
+Frame_RoundCorner14_BL:			.incbin "includes/generated/Frame_RoundCorner14_BL.bin"	; 14x14; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RoundCorner14_BL.png
+Frame_ChevronRight_5x12:		.incbin "includes/generated/Frame_ChevronRight_5x12.bin"	; 5x12; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronRight_5x12.png
+Frame_ChevronRight_6x16:		.incbin "includes/generated/Frame_ChevronRight_6x16.bin"	; 6x16; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronRight_6x16.png
+Frame_ChevronRight_8x24:		.incbin "includes/generated/Frame_ChevronRight_8x24.bin"	; 8x24; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronRight_8x24.png
+Frame_ChevronRight_10x32:		.incbin "includes/generated/Frame_ChevronRight_10x32.bin"	; 10x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronRight_10x32.png
+Frame_ChevronRight_15x48:		.incbin "includes/generated/Frame_ChevronRight_15x48.bin"	; 15x48; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronRight_15x48.png
+Frame_ChevronLeft_5x12:			.incbin "includes/generated/Frame_ChevronLeft_5x12.bin"	; 5x12; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronLeft_5x12.png
+Frame_ChevronLeft_6x16:			.incbin "includes/generated/Frame_ChevronLeft_6x16.bin"	; 6x16; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronLeft_6x16.png
+Frame_ChevronLeft_8x24:			.incbin "includes/generated/Frame_ChevronLeft_8x24.bin"	; 8x24; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronLeft_8x24.png
+Frame_ChevronLeft_10x32:		.incbin "includes/generated/Frame_ChevronLeft_10x32.bin"	; 10x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronLeft_10x32.png
+Frame_ChevronLeft_15x48:		.incbin "includes/generated/Frame_ChevronLeft_15x48.bin"	; 15x48; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_ChevronLeft_15x48.png
+Frame_OnOffTabLeft_20x16:		.incbin "includes/generated/Frame_OnOffTabLeft_20x16.bin"	; 20x16; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabLeft_20x16.png
+Frame_OnOffTabLeft_24x24:		.incbin "includes/generated/Frame_OnOffTabLeft_24x24.bin"	; 24x24; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabLeft_24x24.png
+Frame_OnOffTabLeft_29x32:		.incbin "includes/generated/Frame_OnOffTabLeft_29x32.bin"	; 29x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabLeft_29x32.png
+Frame_OnOffTabLeft_34x48:		.incbin "includes/generated/Frame_OnOffTabLeft_34x48.bin"	; 34x48; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabLeft_34x48.png
+Frame_OnOffTabRight_20x16:		.incbin "includes/generated/Frame_OnOffTabRight_20x16.bin"	; 20x16; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabRight_20x16.png
+Frame_OnOffTabRight_24x24:		.incbin "includes/generated/Frame_OnOffTabRight_24x24.bin"	; 24x24; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabRight_24x24.png
+Frame_OnOffTabRight_29x32:		.incbin "includes/generated/Frame_OnOffTabRight_29x32.bin"	; 29x32; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabRight_29x32.png
+Frame_OnOffTabRight_34x48:		.incbin "includes/generated/Frame_OnOffTabRight_34x48.bin"	; 34x48; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_OnOffTabRight_34x48.png
+Frame_RedArrowLeft:			.incbin "includes/generated/Frame_RedArrowLeft.bin"	; 16x16; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RedArrowLeft.png
+Frame_RedArrowRight:			.incbin "includes/generated/Frame_RedArrowRight.bin"	; 16x16; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_RedArrowRight.png
+Frame_BevelCornerRaised_TL:		.incbin "includes/generated/Frame_BevelCornerRaised_TL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerRaised_TL.png
+Frame_BevelCornerRaised_TR:		.incbin "includes/generated/Frame_BevelCornerRaised_TR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerRaised_TR.png
+Frame_BevelCornerRaised_BR:		.incbin "includes/generated/Frame_BevelCornerRaised_BR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerRaised_BR.png
+Frame_BevelCornerRaised_BL:		.incbin "includes/generated/Frame_BevelCornerRaised_BL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerRaised_BL.png
+Frame_BevelCornerOutlined_TL:		.incbin "includes/generated/Frame_BevelCornerOutlined_TL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerOutlined_TL.png
+Frame_BevelCornerOutlined_TR:		.incbin "includes/generated/Frame_BevelCornerOutlined_TR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerOutlined_TR.png
+Frame_BevelCornerOutlined_BR:		.incbin "includes/generated/Frame_BevelCornerOutlined_BR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerOutlined_BR.png
+Frame_BevelCornerOutlined_BL:		.incbin "includes/generated/Frame_BevelCornerOutlined_BL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerOutlined_BL.png
+Frame_BevelCornerSunken_TL:		.incbin "includes/generated/Frame_BevelCornerSunken_TL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerSunken_TL.png
+Frame_BevelCornerSunken_TR:		.incbin "includes/generated/Frame_BevelCornerSunken_TR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerSunken_TR.png
+Frame_BevelCornerSunken_BR:		.incbin "includes/generated/Frame_BevelCornerSunken_BR.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerSunken_BR.png
+Frame_BevelCornerSunken_BL:		.incbin "includes/generated/Frame_BevelCornerSunken_BL.bin"	; 5x5; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_BevelCornerSunken_BL.png
+Frame_WideTabBar:			.incbin "includes/generated/Frame_WideTabBar.bin"	; 76x11; census: generated -- scripts/build/ui_bitmaps_images.py, from table_data/images/ui_bitmaps/Frame_WideTabBar.png
 
 	.fill 3084, 1, 0xff
