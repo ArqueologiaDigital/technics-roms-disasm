@@ -494631,7 +494631,7 @@ func_48705C5A_L75:
 	bset	0x20, (0x36008004)
 	bclr	0x20, (0x36008004)
 	call	func_4870587E_entry, [d2,d3,a2,a3], 0x54
-	jmp	func_48728591
+	jmp	KernelStart
 # func_48705C5A + 0x159: no traced path reaches what follows (--decode-gaps)
 	jmp	dly_tsk_entry_Lb2
 	mov	0x20000070, a0
@@ -551286,7 +551286,7 @@ func_487280F5_entry_L63:
 	call	func_486BF78F_entry, 0, 8
 	ret	0, 0xc
 
-func_48728165:
+KernelInit:
 	movm	[d2,d3,a2], (sp)
 	add	-0x20, sp
 	and	0xf7ff, psw
@@ -551551,15 +551551,15 @@ func_48728165:
 	mov	d0, (0x50380c98)
 	clr	d0
 	call	func_5018BA39_entry, [d2,a2], 8
-	call	func_4872859C, 0, 0
+	call	KernelInitHook, 0, 0
 	call	func_5018DDA4, 0, 0
 	ret	[d2,d3,a2], 0x2c
 
-func_4872841C:
+KernelWaitRelease:
 	movm	[d2,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4872841C_entry:
+KernelWaitRelease_entry:
 	exth	d0
 	asl2	d0
 	mov	0x50380000, a0
@@ -551570,14 +551570,14 @@ func_4872841C_entry:
 	movhu	(0xc, a3), d2
 	and	0xff00, d1
 	cmp	0x100, d1
-	bge	func_4872841C_entry_L20
-	jmp	func_4872841C_entry_L12f
-func_4872841C_entry_L20:
+	bge	KernelWaitRelease_entry_L20
+	jmp	KernelWaitRelease_entry_L12f
+KernelWaitRelease_entry_L20:
 	cmp	0x7800, d1
-	ble	func_4872841C_entry_L29
-	jmp	func_4872841C_entry_L12f
-func_4872841C_entry_L29:
-	mov	func_4872841C_entry_L29_Records, a1
+	ble	KernelWaitRelease_entry_L29
+	jmp	KernelWaitRelease_entry_L12f
+KernelWaitRelease_entry_L29:
+	mov	0x485e41c4, a1
 	add	-0xff, d1
 	mov	a1, a0
 	mov	0xf, d0
@@ -551586,25 +551586,25 @@ func_4872841C_entry_L29:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d1, d0
-	beq	func_4872841C_entry_L57
+	beq	KernelWaitRelease_entry_L57
 	setlb
 	cmp	0, d0
-	bne	func_4872841C_entry_L49
-	jmp	func_4872841C_entry_L12f
-func_4872841C_entry_L49:
+	bne	KernelWaitRelease_entry_L49
+	jmp	KernelWaitRelease_entry_L12f
+KernelWaitRelease_entry_L49:
 	add	8, a0
-	cmp	data_485E4244, a0
-	bcs	func_4872841C_entry_L54
+	cmp	0x485e4244, a0
+	bcs	KernelWaitRelease_entry_L54
 	mov	a1, a0
-func_4872841C_entry_L54:
+KernelWaitRelease_entry_L54:
 	mov	(a0), d0
 	cmp	d1, d0
 	lne
-func_4872841C_entry_L57:
+KernelWaitRelease_entry_L57:
 	mov	(4, a0), a0
 	jmp	(a0)
 loc_4872847D:
-	jmp	func_4872841C_entry_L14e
+	jmp	KernelWaitRelease_entry_L14e
 loc_48728480:
 	mov	a3, a0
 	exthu	d2
@@ -551615,7 +551615,7 @@ loc_48728480:
 	mov	d0, a1
 	add	0x503803a8, a1
 	call	func_5018BAA5_entry, [a2], 4
-	jmp	func_4872841C_entry_L14e
+	jmp	KernelWaitRelease_entry_L14e
 loc_4872849A:
 	mov	a3, a0
 	exthu	d2
@@ -551626,7 +551626,7 @@ loc_4872849A:
 	mov	d2, a1
 	add	0x50380218, a1
 	call	func_5018BAA5_entry, [a2], 4
-	jmp	func_4872841C_entry_L14e
+	jmp	KernelWaitRelease_entry_L14e
 loc_487284B4:
 	mov	a3, a0
 	exthu	d2
@@ -551637,7 +551637,7 @@ loc_487284B4:
 	mov	d2, a1
 	add	0x50380538, a1
 	call	func_5018BAA5_entry, [a2], 4
-	jmp	func_4872841C_entry_L14e
+	jmp	KernelWaitRelease_entry_L14e
 loc_487284CE:
 	mov	a3, a0
 	exthu	d2
@@ -551649,7 +551649,7 @@ loc_487284CE:
 	mov	8, a1
 	add	d0, a1
 	call	func_5018BAA5_entry, [a2], 4
-	jmp	func_4872841C_entry_L14e
+	jmp	KernelWaitRelease_entry_L14e
 loc_487284EA:
 	mov	a3, a0
 	exthu	d2
@@ -551660,7 +551660,7 @@ loc_487284EA:
 	mov	d0, a1
 	add	0x50380600, a1
 	call	func_5018BAA5_entry, [a2], 4
-	bra	func_4872841C_entry_L14e
+	bra	KernelWaitRelease_entry_L14e
 loc_48728503:
 	mov	a3, a0
 	exthu	d2
@@ -551673,7 +551673,7 @@ loc_48728503:
 	add	8, a1
 	call	func_5018BAA5_entry, [a2], 4
 loc_4872851C:
-	bra	func_4872841C_entry_L14e
+	bra	KernelWaitRelease_entry_L14e
 loc_4872851E:
 	mov	a3, a0
 	exthu	d2
@@ -551684,7 +551684,7 @@ loc_4872851E:
 	mov	d2, a1
 	add	0x503809e8, a1
 	call	func_5018BAA5_entry, [a2], 4
-	bra	func_4872841C_entry_L14e
+	bra	KernelWaitRelease_entry_L14e
 loc_48728537:
 	mov	a3, a0
 	exthu	d2
@@ -551696,11 +551696,11 @@ loc_48728537:
 	add	0x50380964, a1
 	call	func_5018BAA5_entry, [a2], 4
 loc_4872854E:
-	bra	func_4872841C_entry_L14e
-func_4872841C_entry_L12f:
+	bra	KernelWaitRelease_entry_L14e
+KernelWaitRelease_entry_L12f:
 	movhu	(a2), d0
 	btst	0x8000, d0
-	beq	func_4872841C_entry_L164
+	beq	KernelWaitRelease_entry_L164
 	mov	a3, a0
 	exthu	d2
 	mov	0x14, d0
@@ -551710,36 +551710,36 @@ func_4872841C_entry_L12f:
 	mov	d2, a1
 	add	0x50380088, a1
 	call	func_5018BAA5_entry, [a2], 4
-func_4872841C_entry_L14e:
+KernelWaitRelease_entry_L14e:
 	mov	(0x38, a3), a0
 	cmp	0, a0
-	bne	func_4872841C_entry_L15c
+	bne	KernelWaitRelease_entry_L15c
 	mov	(0x34, a3), a0
 	cmp	0, a0
-	beq	func_4872841C_entry_L164
-func_4872841C_entry_L15c:
+	beq	KernelWaitRelease_entry_L164
+KernelWaitRelease_entry_L15c:
 	mov	a3, a0
 	call	func_5018C5B5_entry, [a2,a3], 8
-func_4872841C_entry_L164:
+KernelWaitRelease_entry_L164:
 	ret	[d2,a2,a3], 0x1c
 
-func_48728588:
+KernelErrorHook:
 	retf	0, 0
 
-func_4872858B:
+KernelErrorHook2:
 	retf	0, 0
 
-func_4872858E:
+KernelWaitAbortHook:
 	retf	0, 0
 
-func_48728591:
+KernelStart:
 	mov	(func_48728591_Var), a3
 	mov	a3, sp
-	jmp	func_48728165
+	jmp	KernelInit
 
-func_4872859C:
+KernelInitHook:
 	ret	0, 0
-# func_4872859C + 0x3: no traced path reaches what follows (--decode-gaps)
+# KernelInitHook + 0x3: no traced path reaches what follows (--decode-gaps)
 	movhu	(0x34000118), d0
 	and	0xff0f, d0
 	movhu	d0, (0x34000118)
@@ -752722,7 +752722,7 @@ func_5018B6B9_L38:
 	mov	a2, a0
 	call	func_5018BCCA_entry, [d2,d3], 8
 	exth	d0
-	call	func_4872841C_entry, [d2,a2,a3], 0x1c
+	call	KernelWaitRelease_entry, [d2,a2,a3], 0x1c
 	mov	0xe, a3
 	add	a2, a3
 	movhu	(a3), d0
@@ -752752,7 +752752,7 @@ func_5018B6B9_L7d:
 	call	func_5018BAE5, 0, 0
 	mov	a2, a0
 	mov	-0x55, d0
-	call	func_4872858E, 0, 0
+	call	KernelWaitAbortHook, 0, 0
 func_5018B6B9_L9b:
 	movhu	(a3), d0
 	and	0x02, d0
@@ -752918,7 +752918,7 @@ func_5018B8CA_entry:
 	beq	func_5018B8CA_entry_L19
 	mov	-0x26, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018B8CA_entry_L6e
 func_5018B8CA_entry_L19:
@@ -752930,7 +752930,7 @@ func_5018B8CA_entry_L19:
 	call	func_5018BAE5, 0, 0
 	mov	-0x26, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018B8CA_entry_L6e
 func_5018B8CA_entry_L40:
@@ -754239,7 +754239,7 @@ func_5018C315_entry:
 	beq	func_5018C315_entry_L21
 	mov	-0x1b, d0
 	mov	-0x23, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x23, d0
 	ret	[d2,a2], 0x18
 func_5018C315_entry_L21:
@@ -754272,7 +754272,7 @@ func_5018C315_entry_L45:
 func_5018C315_entry_L6a:
 	mov	-0x1b, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018C315_entry_L97
 func_5018C315_entry_L79:
@@ -754387,7 +754387,7 @@ func_5018C440_entry_L2a:
 func_5018C440_entry_L41:
 	mov	-0x8f, d0
 	mov	-0x3f, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	ret	[d2,d3,a2,a3], 0x34
 func_5018C440_entry_L52:
@@ -754400,7 +754400,7 @@ func_5018C440_entry_L52:
 func_5018C440_entry_L69:
 	mov	-0x8f, d0
 	mov	-0x21, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x21, d0
 	ret	[d2,d3,a2,a3], 0x34
 func_5018C440_entry_L7a:
@@ -754454,7 +754454,7 @@ func_5018C440_entry_La9:
 func_5018C440_entry_Ld6:
 	mov	-0x8f, d0
 	mov	-0x3f, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	ret	[d2,d3,a2,a3], 0x34
 func_5018C440_entry_Le7:
@@ -754477,7 +754477,7 @@ func_5018C440_entry_Lee:
 func_5018C440_entry_L113:
 	mov	-0x8f, d0
 	mov	-0x3f, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	bra	func_5018C440_entry_L16d
 func_5018C440_entry_L123:
@@ -754654,7 +754654,7 @@ func_5018C6A1_entry:
 func_5018C6A1_entry_L39:
 	mov	-0x8d, d0
 	mov	-0x3f, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	ret	[d2,a2,a3], 0x24
 func_5018C6A1_entry_L4a:
@@ -754669,7 +754669,7 @@ func_5018C6A1_entry_L4a:
 func_5018C6A1_entry_L65:
 	mov	-0x8d, d0
 	mov	-0x55, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x55, d0
 	bra	func_5018C6A1_entry_Lab
 func_5018C6A1_entry_L75:
@@ -754689,7 +754689,7 @@ func_5018C6A1_entry_L75:
 func_5018C6A1_entry_L9a:
 	mov	-0x8d, d0
 	mov	-0x3f, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	bra	func_5018C6A1_entry_Lab
 func_5018C6A1_entry_Laa:
@@ -754769,7 +754769,7 @@ func_5018C7E4_entry:
 	beq	func_5018C7E4_entry_L1e
 	mov	-0x2e, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	ret	[d2,d3,a2,a3], 0x24
 func_5018C7E4_entry_L1e:
@@ -754781,7 +754781,7 @@ func_5018C7E4_entry_L1e:
 	call	func_5018BAE5, 0, 0
 	mov	-0x2e, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	ret	[d2,d3,a2,a3], 0x24
 func_5018C7E4_entry_L46:
@@ -755218,7 +755218,7 @@ func_5018CB8A_entry:
 func_5018CB8A_entry_L21:
 	mov	-0x3d, d0
 	mov	d2, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 func_5018CB8A_entry_L2b:
 	mov	d2, d0
 	ret	[d2], 0x14
@@ -755345,7 +755345,7 @@ func_5018CC83_entry:
 	beq	func_5018CC83_entry_L2b
 	mov	-0x89, d0
 	mov	-0xa, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0xa, d0
 	bra	func_5018CC83_entry_L66
 func_5018CC83_entry_L2b:
@@ -755776,7 +755776,7 @@ func_5018CFE0_entry:
 	beq	func_5018CFE0_entry_L1a
 	mov	-0x35, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018CFE0_entry_L78
 func_5018CFE0_entry_L1a:
@@ -755788,7 +755788,7 @@ func_5018CFE0_entry_L1a:
 	call	func_5018BAE5, 0, 0
 	mov	-0x35, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018CFE0_entry_L78
 func_5018CFE0_entry_L41:
@@ -756081,7 +756081,7 @@ func_5018D239_entry:
 func_5018D239_entry_L3f:
 	mov	-0x11, d0
 	mov	d2, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	d2, d0
 func_5018D239_entry_L4a:
 	ret	[d2,d3,a2], 0x2c
@@ -756380,7 +756380,7 @@ func_5018D4DE_entry:
 	beq	func_5018D4DE_entry_L1b
 	mov	-0x3d, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018D4DE_entry_L7d
 func_5018D4DE_entry_L1b:
@@ -756392,7 +756392,7 @@ func_5018D4DE_entry_L1b:
 	call	func_5018BAE5, 0, 0
 	mov	-0x3d, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018D4DE_entry_L7d
 func_5018D4DE_entry_L42:
@@ -756518,7 +756518,7 @@ func_5018D5EF_entry_L2a:
 func_5018D5EF_entry_L4e:
 	mov	-0x27, d0
 	mov	-0x49, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x49, d0
 	bra	func_5018D5EF_entry_L8f
 func_5018D5EF_entry_L5d:
@@ -756619,7 +756619,7 @@ func_5018D712_entry:
 	beq	func_5018D712_entry_L18
 	mov	-0x16, d0
 	mov	-0x3f, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	bra	func_5018D712_entry_L4c
 func_5018D712_entry_L18:
 	mov	(0x5038002c), a2
@@ -756748,7 +756748,7 @@ func_5018D82D_entry:
 func_5018D82D_entry_Lc:
 	mov	-7, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018D82D_entry_L46
 func_5018D82D_entry_L1b:
@@ -756775,7 +756775,7 @@ func_5018D879_entry:
 	beq	func_5018D879_entry_L19
 	mov	-0x1d, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018D879_entry_L48
 func_5018D879_entry_L19:
@@ -757056,7 +757056,7 @@ func_5018DAD9_entry_Lf:
 func_5018DAD9_entry_L3a:
 	mov	-0x1c, d0
 	mov	-0x45, d1
-	call	func_48728588, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_5018DAD9_entry_La0
 func_5018DAD9_entry_L49:
@@ -757120,7 +757120,7 @@ func_5018DB81_entry:
 	call	func_5018BE38, 0, 0
 	mov	-0x21, d0
 	mov	-0x3f, d1
-	call	func_4872858B, 0, 0
+	call	KernelErrorHook2, 0, 0
 	mov	-0x3f, d0
 	bra	func_5018DB81_entry_L7d
 func_5018DB81_entry_L31:
@@ -757134,7 +757134,7 @@ func_5018DB81_entry_L31:
 	call	func_5018BE38, 0, 0
 	mov	-0x21, d0
 	mov	-0x49, d1
-	call	func_4872858B, 0, 0
+	call	KernelErrorHook2, 0, 0
 	mov	-0x49, d0
 	bra	func_5018DB81_entry_L7d
 func_5018DB81_entry_L53:
@@ -757295,7 +757295,7 @@ get_tid_entry:
 	call	func_5018BE33, 0, 0
 	mov	d0, (0xc, sp)
 	and	0xf7ff, psw
-	movhu	(get_tid_Table), d0
+	movhu	(0x485e425c), d0
 	clr	d2
 	exth	d0
 	inc	d0
@@ -757405,7 +757405,7 @@ loc_cpu_entry:
 	beq	loc_cpu_entry_L19
 	mov	-8, d0
 	mov	-0x45, d1
-	call	func_4872858B, 0, 0
+	call	KernelErrorHook2, 0, 0
 	mov	-0x45, d0
 	bra	loc_cpu_entry_L26
 loc_cpu_entry_L19:
@@ -757478,7 +757478,7 @@ dly_tsk_entry_L20:
 	clr	d0
 	ret	[d2,a2], 0x18
 # dly_tsk_entry + 0x24: no traced path reaches what follows (--decode-gaps)
-	jmp	func_48728591
+	jmp	KernelStart
 	.space	3, 0xff
 	movm	[d2,d3,a2,a3,other3], (sp)
 	add	-0xc, sp
