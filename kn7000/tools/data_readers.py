@@ -604,7 +604,7 @@ class Reader:
                 ijmp = {k: v for k, v in st.items() if not k.startswith("#") and (
                     (k.startswith("sp:") and v and addrs_of(v[0])) or
                     (not k.startswith("sp:") and v is not None and (
-                        addrs_of(v) or (v[0] in "PD" and v[1][0] == "param"))))}
+                        addrs_of(v) is not None or (v[0] in "PD" and v[1][0] == "param"))))}
             if self.callee:
                 # (callee) a branch back to a label above, or a hardware loop's Lcc back to its setlb:
                 # a parameter pointer stepped since then is stepped by a loop
