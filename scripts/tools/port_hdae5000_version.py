@@ -934,16 +934,27 @@ class Anchors:
         return dict(reversed(out))
 
 
-def long_block_seeds(full, n=64):
+def long_block_seeds(full, bld, n=64):
     """Seeds from the block aligner's long identical blocks in the code (>= n bytes: long
     enough not to be one look-alike against its neighbour), for code no name or pointer
-    table reaches (the PC-link command handlers)."""
-    return [(s + BASE, sb + BASE) for s, e, sb in full if e - s >= n and s + BASE < CODE_END]
+    table reaches (the PC-link command handlers).  A block starts at any byte, so the seed
+    is the first instruction line that starts inside it: a walk from the middle of an
+    instruction pairs garbage, and spans cut there overlap once widened to whole lines."""
+    starts = {s for f, n_, s, e in bld.lines if e > s and is_insn(bld.text(f, n_))}
+    out = []
+    for s, e, sb in full:
+        if e - s < n or s + BASE >= CODE_END:
+            continue
+        for k in range(s, e - 8):
+            if k + BASE in starts:
+                out.append((k + BASE, sb + (k - s) + BASE))
+                break
+    return out
 
 
 def cmd_anchors(ver, write=True):
     bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
-    seeds = registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full)
+    seeds = registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full, bld)
     an = Anchors(bld.img, ref, seeds)
     rm = an.rom_map()
     print("%d registry seeds; %d ROM anchors (%d monotonic); %d instructions paired; %d RAM addresses"
@@ -1384,8 +1395,10 @@ def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False
     elif anchored:
         # the spans between consecutive anchors of the lockstep walk (Anchors) whose bytes
         # differ: each changed stretch of code between two points the walk pinned down
-        an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full))
-        pts = [(w, b) for w, b in sorted(an.rom_map().items()) if w < CODE_END and b < CODE_END]
+        an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full, bld))
+        line_starts = set(bld.starts)
+        pts = [(w, b) for w, b in sorted(an.rom_map().items())
+               if w < CODE_END and b < CODE_END and w in line_starts]
         ctx.anchor_pts = pts
         for w, b in pts:                        # anchors name their target address too
             n = [x for a, x in bld.syms if a == w and not x.startswith("__PM_")]
@@ -1540,6 +1553,16 @@ def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False
         plans.append((f, n_first, n_last, out, idx, b0, b1))
         # a constant the line wants moved is left to `fix`, which can tell one constant
         # with two meanings from one that moved (resolve_votes)
+    # spans of one round can overlap once expand() widens them to whole lines; applying two
+    # plans to the same lines would emit the target's instructions twice
+    kept, taken = [], collections.defaultdict(list)
+    for p in sorted(plans, key=lambda p: (p[0], p[1], -(p[2] - p[1]))):
+        f, n0, n1 = p[0], p[1], p[2]
+        if any(a <= n1 and n0 <= b for a, b in taken[f]):
+            continue
+        taken[f].append((n0, n1))
+        kept.append(p)
+    plans = kept
     for p in plans:
         p[3][:] = farptr_pass(p[3], ctx)
     # place the labels created this round
