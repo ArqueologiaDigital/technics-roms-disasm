@@ -3703,7 +3703,7 @@ func_9780229B_L11:
 	mov	d1, a1
 	add	0x97945e7c, a1
 	mov	0x10, d0
-	.byte	0xdd, 0xb5, 0x7f, 0x00, 0x00, 0x30, 0x08	# call 0x9780a273, [a2,a3], 8
+	call	strncpy_entry:32, [a2,a3], 8
 	clr	d0
 	movbu	d0, (0x24, sp)
 	movbu	(0x58, sp), d0
@@ -4182,7 +4182,7 @@ func_978025A8_entry_L2e:
 	asl2	d1
 	mov	d1, a0
 	add	d0, a0
-	.byte	0xfc, 0x44, 0x03, 0x20, 0x03, 0x00	# movbu (0x00032003, a1), d0
+	movbu	(0x00032003, a0), d1
 	mov	(0x18, sp), a0
 	mov	(4, a0), d2
 	asl	8, d1
@@ -85766,7 +85766,7 @@ func_97834F63_entry:
 	jmp	func_97834F63_entry_Le6
 func_97834F63_entry_L23:
 	mov	(0x24, sp), a0
-	.byte	0xfc, 0x04, 0x28, 0x48, 0x01, 0x00	# mov (0x00014828, a1), d0
+	mov	(0x00014828, a0), d1
 	add	0x18, d1
 	mov	d1, (0x00014828, a0)
 	mov	(0x24, sp), a0
@@ -85852,7 +85852,7 @@ func_97834F63_entry_Lcc:
 func_97834F63_entry_Le6:
 	mov	(0x24, sp), a0
 	mov	(0x2ee0, a0), d2
-	.byte	0xfc, 0x04, 0x28, 0x48, 0x01, 0x00	# mov (0x00014828, a1), d0
+	mov	(0x00014828, a0), d1
 	mov	0xc, d0
 	nop
 	nop
@@ -85885,7 +85885,7 @@ func_97835087_entry:
 	mov	a1, (0x44, sp)
 	mov	d0, (0x48, sp)
 	mov	d0, a0
-	.byte	0xfc, 0x08, 0x48, 0x48, 0x01, 0x00	# mov (0x00014848, a2), d0
+	mov	(0x00014848, a0), d2
 	mov	a1, a0
 	mov	(0x14, a0), d0
 	sub	d0, d2
@@ -85895,7 +85895,7 @@ func_97835087_entry:
 	clr	d0
 	mov	d0, (0x1c, sp)
 	mov	(0x48, sp), a0
-	.byte	0xfc, 0x04, 0x2c, 0x48, 0x01, 0x00	# mov (0x0001482c, a1), d0
+	mov	(0x0001482c, a0), d1
 	cmp	0, d1
 	beq	func_97835087_entry_L2a
 	bra	func_97835087_entry_L81
@@ -85922,7 +85922,7 @@ func_97835087_entry_L2a:
 	bra	func_97835087_entry_L96
 func_97835087_entry_L64:
 	mov	(0x48, sp), a0
-	.byte	0xfc, 0x04, 0x2c, 0x48, 0x01, 0x00	# mov (0x0001482c, a1), d0
+	mov	(0x0001482c, a0), d1
 	mov	1, d0
 	sub	d0, d1
 	mov	d1, (0x0001482c, a0)
@@ -85932,7 +85932,7 @@ func_97835087_entry_L64:
 	call	func_97834F63_entry, [d2], 0x14
 func_97835087_entry_L81:
 	mov	(0x48, sp), a0
-	.byte	0xfc, 0x04, 0x2c, 0x48, 0x01, 0x00	# mov (0x0001482c, a1), d0
+	mov	(0x0001482c, a0), d1
 	cmp	0, d1
 	bls	func_97835087_entry_L8f
 	bra	func_97835087_entry_L64
@@ -85957,7 +85957,7 @@ func_97835087_entry_La8:
 	jmp	func_97835087_entry_L241
 func_97835087_entry_Lae:
 	mov	(0x48, sp), a0
-	.byte	0xfc, 0x04, 0x28, 0x48, 0x01, 0x00	# mov (0x00014828, a1), d0
+	mov	(0x00014828, a0), d1
 	add	0x18, d1
 	mov	d1, (0x00014828, a0)
 	mov	(0x48, sp), a0
@@ -86075,7 +86075,7 @@ func_97835087_entry_L179:
 	bra	func_97835087_entry_L20a
 func_97835087_entry_L1b2:
 	mov	(0x48, sp), a0
-	.byte	0xfc, 0x04, 0x28, 0x48, 0x01, 0x00	# mov (0x00014828, a1), d0
+	mov	(0x00014828, a0), d1
 	mov	0x18, d0
 	sub	d0, d1
 	mov	d1, (0x00014828, a0)
@@ -86175,7 +86175,7 @@ func_978352F0_entry:
 	bra	func_978352F0_entry_L38
 func_978352F0_entry_L27:
 	mov	(0x3a4c, sp), a0
-	.byte	0xfc, 0x04, 0x50, 0x48, 0x01, 0x00	# mov (0x00014850, a1), d0
+	mov	(0x00014850, a0), d1
 	mov	(0x28, sp), d0
 	cmp	d1, d0
 	bhi	func_978352F0_entry_L38
@@ -86258,7 +86258,7 @@ func_978352F0_entry_L131:
 	bra	func_978352F0_entry_L131
 func_978352F0_entry_L13a:
 	mov	(0x3a4c, sp), a0
-	.byte	0xfc, 0x04, 0x44, 0x48, 0x01, 0x00	# mov (0x00014844, a1), d0
+	mov	(0x00014844, a0), d1
 	mov	d1, (0x2ef0, a0)
 	mov	data_978AF464, d0
 	mov	(0x3a4c, sp), a0

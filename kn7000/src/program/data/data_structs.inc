@@ -3717,6 +3717,14 @@
 	.ascii	\s0
 .endm
 
+# REC_KernelServiceHash: 8-byte records (KernelServiceHash, 16 records); fields, and what reads them:
+#   +0   f0           u32            KernelWaitRelease 0x487B8E2F `mov (a0), d0`
+#   +4   p4           ptr            no reader seen
+.macro REC_KernelServiceHash f0=0, p4=0
+	.long	\f0
+	.long	\p4
+.endm
+
 # REC_func_48400084_Records: 4-byte records (func_48400084_Records, 3 records); fields, and what reads them:
 #   +0   f0           u8             func_48400084 0x48400084 `movbu (func_48400084_Records), d0`; func_48400084 0x48400084 `movbu d0, (func_48400084_Records)`
 #   +1   x1           u8[3]          no reader seen

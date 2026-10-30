@@ -12837,6 +12837,7 @@ loc_48447F2F:
 # func_48447F33  (CPU 0x48447f33): no symbol file names this function
 func_48447F33:
     add     -0x24, sp
+func_48447F33_entry:
     mov     0xc, d0
     mov     func_4C03C87B_Var_20, a0
     call    func_4C03C7EF, 0, 0
@@ -26997,7 +26998,7 @@ loc_4844F3D3:
     cmp     0x24, d0
     bhi     loc_4844F3E2
     exthu   d1
-    mov     func_4844F3B5_Table_2, a0
+    mov     func_4844F3B5_Table, a0
     movbu   (d1, a0), d2
 loc_4844F3E2:
     mov     d2, d0

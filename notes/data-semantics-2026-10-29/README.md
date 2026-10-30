@@ -198,6 +198,13 @@ bytes declared unread turned out to be record parts. Every gate passed on main a
 `kn7000/build/*.labels` seed deleted.
 
 Left open: the reader walk does not follow an argument into the callee, so the reader-row blocks keep the
-reader's widths rather than the callee's layout; KN7000 `func_487B8E34` (301 B of interrupt-handler code)
-is declared `unknown-dump`, `code` would be the honest kind, and converting it as code better still;
-`func_4C03B799_Table` (353 x s16) may run on into the kernel's handler code in the KN7000 data region.
+reader's widths rather than the callee's layout.
+
+Resolved by lane code-island (2026-10-30, `kn7000/notes/code-island/README.md`): KN7000 `func_487B8E34` and
+the opaque pieces after it were the MILK kernel's flash tail, 1,113 bytes of code between the data region
+and the library image (KernelInit, KernelWaitRelease, whose call entry `func_487B8E34` was, three `retf`
+hooks, KernelStart, ...).  `gen_program_s.py` (TAIL_CODE) now finds that code from the calls and jumps that
+land in the data region and emits it as instructions in all four program builds; `gen_data_s.py` ends the
+data region where it starts.  `func_4C03B799_Table` was one halfword (`KernelParams + 0x16`, func_4C03B799
+reads no other) and two unread ones; its entries [3] on were KernelInit's code.  The siblings' 278
+`.byte`-escaped instructions are instructions too (`gen_image_s.py`).

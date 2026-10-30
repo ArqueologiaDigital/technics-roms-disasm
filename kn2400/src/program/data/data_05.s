@@ -30307,24 +30307,24 @@ SdPlaylistDbClear_entry_L17a_Table:	# 4 x u8, 0..255; read by SdPlaylistDbClear_
 Str_MILK_MN10300_Ver1_0R1:	.asciz "MILK MN10300 Ver1.0R1"
 	.align	4, 0xFF	# pad after Str_MILK_MN10300_Ver1_0R1
 
-func_4872841C_entry_L29_Records:	# 16 x REC_func_4872841C_entry_L29_Records (8 bytes each); read by func_4872841C_entry_L29 0x4872844A `mov (a0), d0`; func_4872841C_entry_L54 0x48728475 `mov (a0), d0`; func_4872841C_entry_L57 0x48728478 `mov (4, a0), a0`
-	REC_func_4872841C_entry_L29_Records	p4=func_4872841C_entry_L12f	# [0]
-	REC_func_4872841C_entry_L29_Records	f0=24321, p4=loc_4872847D
-	REC_func_4872841C_entry_L29_Records	f0=7937, p4=loc_48728480
-	REC_func_4872841C_entry_L29_Records	f0=16129, p4=loc_4872849A
-	REC_func_4872841C_entry_L29_Records	f0=3841, p4=loc_487284B4
-	REC_func_4872841C_entry_L29_Records	f0=12033, p4=loc_487284CE
-	REC_func_4872841C_entry_L29_Records	f0=513, p4=loc_487284EA
-	REC_func_4872841C_entry_L29_Records	f0=1, p4=loc_48728503
-	REC_func_4872841C_entry_L29_Records	f0=1025, p4=loc_4872851C	# [8]
-	REC_func_4872841C_entry_L29_Records	f0=1793, p4=loc_4872851E
-	REC_func_4872841C_entry_L29_Records	f0=5889, p4=loc_48728537
-	REC_func_4872841C_entry_L29_Records	f0=30465, p4=loc_4872854E
-	REC_func_4872841C_entry_L29_Records	p4=func_4872841C_entry_L12f
-	REC_func_4872841C_entry_L29_Records	p4=func_4872841C_entry_L12f
-	REC_func_4872841C_entry_L29_Records	p4=func_4872841C_entry_L12f
-	REC_func_4872841C_entry_L29_Records	p4=func_4872841C_entry_L12f
-data_485E4244:
+KernelServiceHash:	# 16 x REC_KernelServiceHash (8 bytes each); read by KernelWaitRelease_entry_L29 0x4872844A `mov (a0), d0`; KernelWaitRelease_entry_L54 0x48728475 `mov (a0), d0`; KernelWaitRelease_entry_L57 0x48728478 `mov (4, a0), a0`
+	REC_KernelServiceHash	p4=KernelWaitRelease_entry_L12f	# [0]
+	REC_KernelServiceHash	f0=24321, p4=loc_4872847D
+	REC_KernelServiceHash	f0=7937, p4=loc_48728480
+	REC_KernelServiceHash	f0=16129, p4=loc_4872849A
+	REC_KernelServiceHash	f0=3841, p4=loc_487284B4
+	REC_KernelServiceHash	f0=12033, p4=loc_487284CE
+	REC_KernelServiceHash	f0=513, p4=loc_487284EA
+	REC_KernelServiceHash	f0=1, p4=loc_48728503
+	REC_KernelServiceHash	f0=1025, p4=loc_4872851C	# [8]
+	REC_KernelServiceHash	f0=1793, p4=loc_4872851E
+	REC_KernelServiceHash	f0=5889, p4=loc_48728537
+	REC_KernelServiceHash	f0=30465, p4=loc_4872854E
+	REC_KernelServiceHash	p4=KernelWaitRelease_entry_L12f
+	REC_KernelServiceHash	p4=KernelWaitRelease_entry_L12f
+	REC_KernelServiceHash	p4=KernelWaitRelease_entry_L12f
+	REC_KernelServiceHash	p4=KernelWaitRelease_entry_L12f
+KernelRamLayout:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x1E4244, 0x1E4248
 
@@ -30336,10 +30336,10 @@ func_5018CCF1_Var_2:	# u32, a constant; read / written by func_5018CCF1 0x5018CC
 func_5018CD2D_entry_L51_Table:	# 2 x u32, 1345850624..1346093055; read by func_5018CD2D_entry_L51 0x5018CD80: `mov (func_5018CD2D_entry_L51_Table), d0`
 	tab_u32	1346093055, 1345850624
 
-func_48728591_Var:	# u32, a constant; read / written by func_48728591 0x48728591: `mov (func_48728591_Var), a3`; func_5018CCF1 0x5018CCF1: `mov (func_48728591_Var), a0` ...
+func_48728591_Var:	# u32, a constant; read / written by KernelStart 0x48728591: `mov (func_48728591_Var), a3`; func_5018CCF1 0x5018CCF1: `mov (func_48728591_Var), a0` ...
 	.long	0x503813e8
 
-get_tid_Table:	# 8 x s16, 10..20; read by get_tid 0x5018DD18: `movhu (get_tid_Table), d0`
+KernelParams:	# 8 x s16, 10..20; read by get_tid 0x5018DD18: `movhu (0x485e425c), d0`
 	tab_s16	10, 20, 20, 20, 10, 10, 10, 10
 
 func_5018B6B9_Ld9_Var:	# s16, a constant; read / written by func_5018B6B9_Ld9 0x5018B792: `movhu (func_5018B6B9_Ld9_Var), d0`

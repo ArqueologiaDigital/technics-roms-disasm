@@ -12372,7 +12372,7 @@ loc_48407AE0:
     bset    0x20, (0x36008004)
     bclr    0x20, (0x36008004)
     call    func_484D782E_entry, [d2,d3,a2,a3], 0x54
-    jmp     loc_487B7684
+    jmp     KernelStart
     jmp     LibIrqScheduler
     mov     0x20000070, a0
     movhu   (a0), d0

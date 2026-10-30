@@ -9469,10 +9469,3 @@ rodata_48585E88:
 
 # ---- data / resources region: typed source, tools/gen_data_s.py ----
 .include "src/program/data/data.s"
-
-# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library
-#      image the boot self-loads to 0x4C000000 starts at file offset
-#      0x3B8FD1 (notes/library-rom-loading.md); converted lib functions
-#      are assembled under the shifted .mnbase so their labels and
-#      PC-relative encodings are the 0x4C link addresses. ----
-.mnbase 0x4BC4702F   # lib window: CPU 0x4C000000 = file 0x3B8FD1

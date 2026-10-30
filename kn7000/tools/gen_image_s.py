@@ -81,7 +81,7 @@ CONDB = {"beq", "bne", "bgt", "bge", "ble", "blt", "bhi", "bcc", "bcs", "bls",
          "bvc", "bvs", "bnc", "bns"}
 STOPS = {"ret", "retf", "rets", "rti", "lra"}
 REGS = {"d0", "d1", "d2", "d3", "a0", "a1", "a2", "a3", "sp", "pc", "mdr", "psw",
-        "lir", "lar"}
+        "lir", "lar", "other", "other0", "other2", "other3"}   # (movm's register-list members, as kn7asm)
 MAX_FUNC = 0x10000         # longest stretch decoded from one entry
 
 
@@ -181,6 +181,11 @@ class Image:
                 k = b[1] & 3
                 mnem = ("mov", "mov", "movbu", "movhu")[k]
                 ops = re.sub(r"^d\d+", f"{'a' if k == 0 else 'd'}{(b[1] >> 2) & 3}", ops)
+            if len(b) == 6 and b[0] == 0xFC and b[1] < 0x80 and not b[1] & 0x10:
+                # FC load (d32, aN): unidasm swaps the registers (gen_program_s.disasm_function)
+                typ = (b[1] >> 5) & 3
+                disp = int.from_bytes(b[2:6], "little")
+                ops = f"(0x{disp:08x}, a{b[1] & 3}), {'a' if typ == 1 else 'd'}{(b[1] >> 2) & 3}"
             out.append((cur, b, mnem, ops))
             cur += len(b)
         return out
@@ -539,8 +544,9 @@ def main():
                     continue
                 ad, nm, size = line.split()
                 ad, size = int(ad, 16), int(size)
-                if nm in taken and nm not in data_label.values():
-                    continue         # a code name wins (kn7asm checks they agree)
+                if nm in taken and nm not in data_label.values() and names.get(ad) != nm:
+                    continue         # a code name wins (kn7asm checks they agree); a symbol-file
+                                     # name of this very data address is the data label itself
                 data_label[ad] = nm
                 if size:
                     data_items.append((ad, ad + size, nm))
@@ -584,6 +590,13 @@ def main():
             enc = ASM.encode(mnem, ops, cpu_of(o))
         except Exception:
             enc = None
+        if enc != b:
+            # the spellings gen_program_s.py writes for the encodings the linker left long:
+            # `call T:32` where d16 reaches, `mov 0x30:32, d0`, a udf immediate's width
+            import gen_program_s as GP
+            alt = GP.reencode(mnem, ops, b, cpu_of(o))
+            if alt is not None:
+                ops, enc = alt, b
         if enc == b:
             t = target_of(mnem, ops)
             t = img.off(t) if t is not None else None

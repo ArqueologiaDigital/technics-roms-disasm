@@ -1,0 +1,4 @@
+; tools/gen_program_s.py (TAIL_CODE): the code at the end of the data region,
+; file offsets [lo, hi); tools/gen_data_s.py ends the data region at lo
+; (CPU 0x487B7258..0x487B76B1, 8 functions)
+0x3B7258 0x3B76B1

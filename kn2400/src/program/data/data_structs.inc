@@ -3671,10 +3671,10 @@
 	.ascii	\s0
 .endm
 
-# REC_func_4872841C_entry_L29_Records: 8-byte records (func_4872841C_entry_L29_Records, 16 records); fields, and what reads them:
-#   +0   f0           u32            func_4872841C_entry_L29 0x4872844A `mov (a0), d0`; func_4872841C_entry_L54 0x48728475 `mov (a0), d0`
-#   +4   p4           ptr            func_4872841C_entry_L57 0x48728478 `mov (4, a0), a0`
-.macro REC_func_4872841C_entry_L29_Records f0=0, p4=0
+# REC_KernelServiceHash: 8-byte records (KernelServiceHash, 16 records); fields, and what reads them:
+#   +0   f0           u32            KernelWaitRelease_entry_L29 0x4872844A `mov (a0), d0`; KernelWaitRelease_entry_L54 0x48728475 `mov (a0), d0`
+#   +4   p4           ptr            KernelWaitRelease_entry_L57 0x48728478 `mov (4, a0), a0`
+.macro REC_KernelServiceHash f0=0, p4=0
 	.long	\f0
 	.long	\p4
 .endm
