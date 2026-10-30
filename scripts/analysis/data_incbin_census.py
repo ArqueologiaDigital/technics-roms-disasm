@@ -23,6 +23,14 @@ CLASSES (first match wins)
   generated   the path contains `generated/` (KN5000 compiled C: byte-exact clang output, see CLAUDE.md), or the
               directive's line or the comment line right above it carries `census: generated -- <generator>`:
               the bytes come out of a committed generator from committed source.
+              FROM MEDIA (convention set 2026-10-30, lane media-files): an include made from a standalone media
+              file through a committed lossless converter is `generated`, and its marker names the converter and
+              the media file: `census: generated -- <tool>, from <file>.png|wav|mid|...` (or "from the .png
+              beside it").  The bytes the assembler reads are the converter's output, so the class says how
+              they are made; the "from media" column counts these entries (`from_media` in the json), so the
+              table shows how much of `generated` a user can open in an ordinary viewer or sound program.
+              Example: every PCM recording of the KN5000 and KN7000 wave ROMs, from its WAV file
+              (scripts/build/pcm_wav.py).
   media       the file has a self-describing format a viewer reads directly: jpg jpeg bmp png gif tif wav aif mid
               (the file IS the semantic representation; its container is documented by its own standard).
   opaque      the line, or the comment line right above, carries `census: opaque -- <kind>: <why>`: the bytes have
@@ -102,6 +110,7 @@ MEDIA = {"jpg", "jpeg", "bmp", "png", "gif", "tif", "tiff", "wav", "aif", "aiff"
 KINDS = {"pcm", "compressed", "code", "unknown-dump", "personal", "fill"}
 INC = re.compile(rb'^\s*(?:[A-Za-z_.$][\w.$]*:\s*)?\.(incbin_range|incbin)\s+"([^"]+)"\s*(?:,\s*([^,;#\s]+))?\s*(?:,\s*([^,;#\s]+))?')
 MARK = re.compile(rb'census:\s*(generated|opaque)\s*--\s*(.*)')
+FROM_MEDIA = re.compile(r'\bfrom\b.*?\.(?:' + "|".join(sorted(MEDIA)) + r')\b', re.I)
 
 
 def tracked_files():
@@ -193,7 +202,10 @@ def census():
                         if loc is not None:
                             size = loc.stat().st_size - (a or 0)
                     cls, why = classify(line, prev, path)
-                    rows.append({"file": f, "line": ln, "path": path, "size": size, "class": cls, "why": why})
+                    row = {"file": f, "line": ln, "path": path, "size": size, "class": cls, "why": why}
+                    if cls == "generated" and FROM_MEDIA.search(why):
+                        row["from_media"] = True
+                    rows.append(row)
                 if line.strip():
                     prev = line
         res[tree] = rows
@@ -208,17 +220,21 @@ def summarize(res):
             rr = [r for r in rows if r["class"] == c]
             s[c] = {"n": len(rr), "bytes": sum(r["size"] or 0 for r in rr),
                     "unsized": sum(1 for r in rr if r["size"] is None)}
+        fm = [r for r in rows if r.get("from_media")]
+        s["generated"]["from_media"] = {"n": len(fm), "bytes": sum(r["size"] or 0 for r in fm)}
         summ[tree] = s
     return summ
 
 
 def table(summ):
-    head = ["tree", "generated", "media", "opaque", "generic n", "generic bytes", "unsized"]
+    head = ["tree", "generated", "from media", "media", "opaque", "generic n", "generic bytes", "unsized"]
     body = []
     for t, s in summ.items():
-        body.append([t, f'{s["generated"]["n"]} / {s["generated"]["bytes"]:,}', f'{s["media"]["n"]} / {s["media"]["bytes"]:,}',
+        fm = s["generated"].get("from_media", {"n": 0, "bytes": 0})
+        body.append([t, f'{s["generated"]["n"]} / {s["generated"]["bytes"]:,}', f'{fm["n"]} / {fm["bytes"]:,}',
+                     f'{s["media"]["n"]} / {s["media"]["bytes"]:,}',
                      f'{s["opaque"]["n"]} / {s["opaque"]["bytes"]:,}', str(s["generic"]["n"]), f'{s["generic"]["bytes"]:,}',
-                     str(sum(s[c]["unsized"] for c in s))])
+                     str(sum(s[c]["unsized"] for c in ("generated", "media", "opaque", "generic")))])
     w = [max(len(r[i]) for r in [head] + body) for i in range(len(head))]
     out = ["| " + " | ".join(h.ljust(w[i]) for i, h in enumerate(head)) + " |",
            "|" + "|".join("-" * (x + 2) for x in w) + "|"]
@@ -235,7 +251,8 @@ def main():
     a = ap.parse_args()
     res = census()
     summ = summarize(res)
-    txt = "class columns are `count / bytes`; unsized = entries whose file is not present (build the tree first)\n\n" + table(summ)
+    txt = ("class columns are `count / bytes`; from media = the generated entries made from a standalone media file;"
+           " unsized = entries whose file is not present (build the tree first)\n\n") + table(summ)
     print(txt)
     if a.list:
         for t, rows in res.items():
