@@ -544,8 +544,9 @@ def main():
                     continue
                 ad, nm, size = line.split()
                 ad, size = int(ad, 16), int(size)
-                if nm in taken and nm not in data_label.values():
-                    continue         # a code name wins (kn7asm checks they agree)
+                if nm in taken and nm not in data_label.values() and names.get(ad) != nm:
+                    continue         # a code name wins (kn7asm checks they agree); a symbol-file
+                                     # name of this very data address is the data label itself
                 data_label[ad] = nm
                 if size:
                     data_items.append((ad, ad + size, nm))
