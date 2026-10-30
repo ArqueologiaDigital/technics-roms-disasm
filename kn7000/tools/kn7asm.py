@@ -675,7 +675,12 @@ class Assembler:
         if name in self.symbols and self.symbols[name] != addr:
             self.fail(f"label {name!r} is at {addr:#x} but was "
                       f".equ'd to {self.symbols[name]:#x}")
-        self.labels[name] = self.symbols[name] = addr
+        self.labels[name] = addr
+        # An .equ'd name keeps its .equ value: it is constant in every pass, so the
+        # constant caches may hold it, while an early pass's address of the label is
+        # only an estimate (the check above fails the build if the two end up differing).
+        if name not in self.equ_names:
+            self.symbols[name] = addr
 
     def seed(self, path):
         """Take a previous build's label addresses (write_labels) as the first
