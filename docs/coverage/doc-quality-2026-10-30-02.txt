@@ -1,0 +1,346 @@
+doc-quality census, 2026-10-30, measured at 14131393
+tool: scripts/analysis/doc_quality_census.py (rules in its docstring)
+
+image                                       v10         v9         v7       v142       v141    subboot  tabledata customdata   hdae5000     prom_a     prom_b     prom_c     prom_d    program      table        cnv program942     kn2400     kn6000     kn6500      hdsx3
+files                                       140        140        140          5          5          1         26          1         11         48         49         33          4         36        176          7         36         21         24         21         16
+routines                                   8735       8732       8915        957        957         42        236          0        601       5447       4685        858          0      21121          0        951      21192      21234      19015      19060       1018
+  with a header                            3264       1457       1287        802        802         17        211          0        409       4074       3393        845          0        841          0        295        850          7          2          2          0
+  header coverage %                        37.4       16.7       14.4       83.8       83.8       40.5       89.4          -       68.0       74.8       72.4       98.5          -        4.0          -       31.0        4.0        0.0        0.0        0.0        0.0
+call targets                               5408       5408       5391        726        726         20        150          0        337       2258       1773        757          0       7586          0        754       7594       7430       6300       6321        454
+  routines by reason: address              2278       2277       2265         66         66          9         30          0        211       1891        652         20          0       7344          0          7       7472       7865       7693       7668        149
+  routines by reason: xfile_jump            119        119        124         11         11          0          2          0          2          0        552          6          0          1          0          0          1          0          0          0          0
+  routines by reason: unreferenced          930        928       1135        154        154         13         54          0         51       1298       1708         75          0       6190          0        190       6125       5939       5022       5071        415
+  routines by reason: banner                  0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0
+  not routines: blocks_jump                8478       8478       8520       1051       1051          8         59          0        412       3404         89          3          0      35661          0      15182      35678      34918      26806      26835       7454
+  not routines: blocks_case                1298       1298       1298        258        258          0         18          0        358          0          0          0          0          2          0          0          2          2          2          2          0
+  not routines: blocks_declared            3237       3236       3229        511        511         58        192          0        624        698       2926       2827          0          1          0          0          1         10         10         10          0
+(a) routines without a header              5471       7275       7628        155        155         25         25          0        192       1373       1292         13          0      20280          0        656      20342      21227      19013      19058       1018
+(a) call targets without a header          2679       4485       4608         90         90         14         15          0          0        322        220          0          0       7454          0        512       7462       7423       6298       6319        454
+(b) (number) operand in the image             0          0          0        630        630          0          0          0          0          0          0          0          0          1          0          0          1          0          1          1          0
+(b) (number) operand elsewhere            18421      18391      18473         54         54        186        900          0        670       5768       8593       2134          0      20523          0          0      20541      18923      16959      16983       3537
+(b) immediate pointer in the image            0          0          0          0          0          1          0          0          0          0          0          0          0          1          0          0          1        450        572        521          1
+(b) numeric branch target                     4          4          7          0          0          0          0          0          0          8         73          0          0          0          0          0          0          0          0          0          0
+(b) Label+N branch target                     0          0          0          0          0          0         92          0          1         29         33          6          0          0          0          0          0          0          0          0          0
+(c) .L<hex> locals                            0          0          0          0          0          0          0          0          0       9760          0          7          0          0          0          0          0          0          0          0          0
+(c) .Lc_<hex> locals                          0          0        507          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0          0
+(c) loc_<hex> locals                          0          0          0          0          0          0          0          0          0          0          0          0          0      61449          0      18922      61489       4961       5066       5055         24
+(c) Parent__<hex> locals                      0          0          0          0          0          0          0          0          0         20          2       4712          0          0          0          0          0          0          0          0          0
+(d) .byte runs after fall-through            61         64         77         12         12          0          0          0          0         74         66          0          0          0          0          0          0         83         72         84         12
+(d) ... their bytes                         151        156       1017         46         46          0          0          0          0        226        217          0          0          0          0          0          0        447        345        464         73
+(d) .byte runs after a terminator            93         97         98         24         23          0          0          0          0         64         78          1          0          0          0          0          0          7          6          3          0
+(d) ... their bytes                        3001       3313       4331         42         41          0          0          0          0       4763       2311          1          0          0          0          0          0         51         44         16          0
+(e) placeholder routine names                 0          0          0          0          0          0          0          0          0        135        725        182          0       6496          0        606       6500       6933       5919       5931        483
+(f) byte-emitter macro uses                   0          0          0          0          0          0          0          0          0          0          9          0          0          0          0          0          0          0          0          0          0
+
+worst files per debt (at most five per image)
+  (a) routines without a header
+    v10            480  v10/maincpu/sequencer/accompaniment_engine.s
+    v10            390  v10/maincpu/display/scoop_display.s
+    v10            389  v10/maincpu/sequencer/sequencer_engine.s
+    v9            1236  v9/maincpu/sequencer/accompaniment_engine.s
+    v9             556  v9/maincpu/sequencer/sequencer_engine.s
+    v9             433  v9/maincpu/display/scoop_display.s
+    v7            1376  v7/maincpu/sequencer/accompaniment_engine.s
+    v7             548  v7/maincpu/sequencer/sequencer_engine.s
+    v7             465  v7/maincpu/display/scoop_display.s
+    v142           108  v142/subcpu/kn5000_subprogram_v142.s
+    v142            43  v142/subcpu/subcpu_vectors.s
+    v142             4  v142/subcpu/subcpu_data_tables.s
+    v141           108  v141/subcpu/kn5000_subprogram_v141.s
+    v141            43  v141/subcpu/subcpu_vectors.s
+    v141             4  v141/subcpu/subcpu_data_tables.s
+    subboot         25  subcpu/boot/kn5000_subcpu_boot.s
+    tabledata       10  table_data/kn5000_table_data.s
+    tabledata        7  table_data/boot_cpserial.s
+    tabledata        5  table_data/boot_cpserial_states.s
+    hdae5000       106  hdae5000/hdae5000_ui_display.s
+    hdae5000        47  hdae5000/hdae5000_hd_driver.s
+    hdae5000        29  hdae5000/hdae5000_filesystem.s
+    prom_a         252  wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s
+    prom_a         155  wsa1/prom_a/modules/f84000_f855ff_ring_buffers.s
+    prom_a         127  wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s
+    prom_b        1147  wsa1/prom_b/modules/f40000_f44017_routine_directory.s
+    prom_b          26  wsa1/prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s
+    prom_b          24  wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s
+    prom_c          13  wsa1/kernel/kernel.s
+    program       3482  kn7000/src/program/region1_02.s
+    program       1725  kn7000/src/program/region1_01.s
+    program       1609  kn7000/src/program/region1_09.s
+    cnv            105  kn7000/src/cnv/gem_wx2.s
+    cnv            100  kn7000/src/cnv/korg.s
+    cnv             96  kn7000/src/cnv/gem_ws2.s
+    program942    3487  kn7000/src/sp7001/program/region1_02.s
+    program942    1721  kn7000/src/sp7001/program/region1_01.s
+    program942    1609  kn7000/src/sp7001/program/region1_09.s
+    kn2400       21227  kn2400/src/program.s
+    kn6000       19013  kn6000/src/program.s
+    kn6500       19058  kn6500/src/program.s
+    hdsx3         1018  hdsx3/src/program.s
+  (a) call targets without a header
+    v10            314  v10/maincpu/sequencer/sequencer_engine.s
+    v10            269  v10/maincpu/display/scoop_display.s
+    v10            235  v10/maincpu/audio/note_voice_mapping.s
+    v9             905  v9/maincpu/sequencer/accompaniment_engine.s
+    v9             480  v9/maincpu/sequencer/sequencer_engine.s
+    v9             312  v9/maincpu/display/scoop_display.s
+    v7             922  v7/maincpu/sequencer/accompaniment_engine.s
+    v7             467  v7/maincpu/sequencer/sequencer_engine.s
+    v7             342  v7/maincpu/display/scoop_display.s
+    v142            87  v142/subcpu/kn5000_subprogram_v142.s
+    v142             3  v142/subcpu/subcpu_data_tables.s
+    v141            87  v141/subcpu/kn5000_subprogram_v141.s
+    v141             3  v141/subcpu/subcpu_data_tables.s
+    subboot         14  subcpu/boot/kn5000_subcpu_boot.s
+    tabledata        6  table_data/boot_cpserial.s
+    tabledata        5  table_data/kn5000_table_data.s
+    tabledata        4  table_data/boot_cpserial_states.s
+    prom_a          57  wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s
+    prom_a          50  wsa1/prom_a/modules/fa6000_fa9fff_midi_in_out.s
+    prom_a          30  wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s
+    prom_b         172  wsa1/prom_b/modules/f40000_f44017_routine_directory.s
+    prom_b          13  wsa1/prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s
+    prom_b          11  wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s
+    program       1773  kn7000/src/program/region1_02.s
+    program        845  kn7000/src/program/library_00.s
+    program        739  kn7000/src/program/region1_01.s
+    cnv             87  kn7000/src/cnv/gem_wx2.s
+    cnv             82  kn7000/src/cnv/korg.s
+    cnv             80  kn7000/src/cnv/gem_ws2.s
+    program942    1773  kn7000/src/sp7001/program/region1_02.s
+    program942     845  kn7000/src/sp7001/program/library_00.s
+    program942     736  kn7000/src/sp7001/program/region1_01.s
+    kn2400        7423  kn2400/src/program.s
+    kn6000        6298  kn6000/src/program.s
+    kn6500        6319  kn6500/src/program.s
+    hdsx3          454  hdsx3/src/program.s
+  (b) (number) operand in the image
+    v142           626  v142/subcpu/kn5000_subprogram_v142.s
+    v142             4  v142/subcpu/subcpu_data_tables.s
+    v141           626  v141/subcpu/kn5000_subprogram_v141.s
+    v141             4  v141/subcpu/subcpu_data_tables.s
+    program          1  kn7000/src/program/region1_06.s
+    program942       1  kn7000/src/sp7001/program/region1_06.s
+    kn6000           1  kn6000/src/program.s
+    kn6500           1  kn6500/src/program.s
+  (b) (number) operand elsewhere
+    v10           4269  v10/maincpu/sequencer/accompaniment_engine.s
+    v10           2292  v10/maincpu/sequencer/sequencer_engine.s
+    v10           1208  v10/maincpu/display/scoop_display.s
+    v9            4269  v9/maincpu/sequencer/accompaniment_engine.s
+    v9            2292  v9/maincpu/sequencer/sequencer_engine.s
+    v9            1208  v9/maincpu/display/scoop_display.s
+    v7            4299  v7/maincpu/sequencer/accompaniment_engine.s
+    v7            2293  v7/maincpu/sequencer/sequencer_engine.s
+    v7            1208  v7/maincpu/display/scoop_display.s
+    v142            54  v142/subcpu/kn5000_subprogram_v142.s
+    v141            54  v141/subcpu/kn5000_subprogram_v141.s
+    subboot        186  subcpu/boot/kn5000_subcpu_boot.s
+    tabledata      406  table_data/boot_fdc_driver.s
+    tabledata      152  table_data/kn5000_table_data.s
+    tabledata      134  table_data/boot_cpserial_states.s
+    hdae5000       551  hdae5000/hdae5000_ui_display.s
+    hdae5000        45  hdae5000/hd-ae5000_v2_06i.s
+    hdae5000        35  hdae5000/hdae5000_hd_driver.s
+    prom_a         797  wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s
+    prom_a         758  wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s
+    prom_a         552  wsa1/prom_a/modules/faa000_fad7ff_param_message_module.s
+    prom_b        1547  wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s
+    prom_b        1244  wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s
+    prom_b        1168  wsa1/prom_b/modules/f67400_f6efff_step_record.s
+    prom_c         523  wsa1/prom_c/p7/p7_module.s
+    prom_c         518  wsa1/prom_c/field_accessors.s
+    prom_c         333  wsa1/prom_c/tone_db/tone_db_module.s
+    program       4059  kn7000/src/program/region1_02.s
+    program       2517  kn7000/src/program/region1_09.s
+    program       2164  kn7000/src/program/region1_0A.s
+    program942    4059  kn7000/src/sp7001/program/region1_02.s
+    program942    2517  kn7000/src/sp7001/program/region1_09.s
+    program942    2164  kn7000/src/sp7001/program/region1_0A.s
+    kn2400       18923  kn2400/src/program.s
+    kn6000       16959  kn6000/src/program.s
+    kn6500       16983  kn6500/src/program.s
+    hdsx3         3537  hdsx3/src/program.s
+  (b) immediate pointer in the image
+    subboot          1  subcpu/boot/kn5000_subcpu_boot.s
+    program          1  kn7000/src/program/region1_00.s
+    program942       1  kn7000/src/sp7001/program/region1_00.s
+    kn2400         450  kn2400/src/program.s
+    kn6000         572  kn6000/src/program.s
+    kn6500         521  kn6500/src/program.s
+    hdsx3            1  hdsx3/src/program.s
+  (b) numeric branch target
+    v10              2  v10/maincpu/sequencer/accompaniment_engine.s
+    v10              1  v10/maincpu/ui/ui_playback_modes.s
+    v10              1  v10/maincpu/sequencer/sequencer_engine.s
+    v9               2  v9/maincpu/sequencer/accompaniment_engine.s
+    v9               1  v9/maincpu/ui/ui_playback_modes.s
+    v9               1  v9/maincpu/sequencer/sequencer_engine.s
+    v7               4  v7/maincpu/sequencer/accompaniment_engine.s
+    v7               3  v7/maincpu/sequencer/sequencer_engine.s
+    prom_a           4  wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s
+    prom_a           2  wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s
+    prom_a           1  wsa1/prom_a/modules/f8a000_f8bbff_panel_wire_to_group.s
+    prom_b          48  wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s
+    prom_b          20  wsa1/prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s
+    prom_b           5  wsa1/prom_b/modules/f40000_f44017_routine_directory.s
+  (b) Label+N branch target
+    tabledata       86  table_data/kn5000_table_data.s
+    tabledata        3  table_data/boot_cpserial.s
+    tabledata        1  table_data/shared/boot_call_init_handlers.s
+    hdae5000         1  hdae5000/hdae5000_ui_display.s
+    prom_a          14  wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s
+    prom_a           9  wsa1/prom_a/modules/faa000_fad7ff_param_message_module.s
+    prom_a           6  wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s
+    prom_b          11  wsa1/prom_b/modules/f40000_f44017_routine_directory.s
+    prom_b          11  wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s
+    prom_b          10  wsa1/prom_b/modules/f7d000_f7ffff_panel_screen_methods.s
+    prom_c           6  wsa1/prom_c/boot/reset_and_vectors.s
+  (c) .L<hex> locals
+    prom_a        1742  wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s
+    prom_a         989  wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s
+    prom_a         874  wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s
+    prom_c           7  wsa1/kernel/kernel.s
+  (c) .Lc_<hex> locals
+    v7             197  v7/maincpu/sequencer/accompaniment_engine.s
+    v7              46  v7/maincpu/display/scoop_display.s
+    v7              35  v7/maincpu/display/scoop_editor_data.s
+  (c) loc_<hex> locals
+    program       7166  kn7000/src/program/region1_05.s
+    program       6392  kn7000/src/program/region1_02.s
+    program       4826  kn7000/src/program/region1_09.s
+    cnv           3275  kn7000/src/cnv/korg.s
+    cnv           3231  kn7000/src/cnv/gem_wx2.s
+    cnv           2749  kn7000/src/cnv/gem_ws2.s
+    program942    7165  kn7000/src/sp7001/program/region1_05.s
+    program942    6394  kn7000/src/sp7001/program/region1_02.s
+    program942    4826  kn7000/src/sp7001/program/region1_09.s
+    kn2400        4961  kn2400/src/program.s
+    kn6000        5066  kn6000/src/program.s
+    kn6500        5055  kn6500/src/program.s
+    hdsx3           24  hdsx3/src/program.s
+  (c) Parent__<hex> locals
+    prom_a          10  wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s
+    prom_a           3  wsa1/prom_a/modules/f94c00_f993ff_debug_monitor_and_param_scripts.s
+    prom_a           3  wsa1/prom_a/modules/f99800_f9bfff_midi_settings_screens.s
+    prom_b           2  wsa1/prom_b/modules/f0e800_f1b3ff_blink_and_dsp_effect_editor.s
+    prom_c        1381  wsa1/prom_c/tone_db/tone_db_module.s
+    prom_c         667  wsa1/prom_c/p7/p7_module.s
+    prom_c         561  wsa1/prom_c/field_accessors.s
+  (d) .byte runs after fall-through
+    v10             12  v10/maincpu/sequencer/accompaniment_engine.s
+    v10             10  v10/maincpu/audio/audio_control_engine.s
+    v10              9  v10/maincpu/audio/note_voice_mapping.s
+    v9              12  v9/maincpu/sequencer/accompaniment_engine.s
+    v9              12  v9/maincpu/audio/note_voice_mapping.s
+    v9              10  v9/maincpu/audio/audio_control_engine.s
+    v7              11  v7/maincpu/sequencer/sequencer_engine.s
+    v7               9  v7/maincpu/sequencer/accompaniment_engine.s
+    v7               8  v7/maincpu/storage/flash_floppy_handlers.s
+    v142            12  v142/subcpu/kn5000_subprogram_v142.s
+    v141            12  v141/subcpu/kn5000_subprogram_v141.s
+    prom_a          14  wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s
+    prom_a          13  wsa1/prom_a/modules/f94c00_f993ff_debug_monitor_and_param_scripts.s
+    prom_a          10  wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s
+    prom_b          32  wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s
+    prom_b           9  wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s
+    prom_b           6  wsa1/prom_b/modules/f36800_f387ff_sysex_param_ranges.s
+    kn2400          83  kn2400/src/program.s
+    kn6000          72  kn6000/src/program.s
+    kn6500          84  kn6500/src/program.s
+    hdsx3           12  hdsx3/src/program.s
+  (d) ... their bytes
+    v10             29  v10/maincpu/audio/audio_control_engine.s
+    v10             20  v10/maincpu/boot/system_handlers.s
+    v10             15  v10/maincpu/audio/semenu_routines.s
+    v9              29  v9/maincpu/audio/audio_control_engine.s
+    v9              20  v9/maincpu/boot/system_handlers.s
+    v9              20  v9/maincpu/audio/note_voice_mapping.s
+    v7             795  v7/maincpu/sequencer/accompaniment_engine.s
+    v7              56  v7/maincpu/storage/flash_floppy_handlers.s
+    v7              22  v7/maincpu/sequencer/sequencer_engine.s
+    v142            46  v142/subcpu/kn5000_subprogram_v142.s
+    v141            46  v141/subcpu/kn5000_subprogram_v141.s
+    prom_a          47  wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s
+    prom_a          28  wsa1/prom_a/modules/f94c00_f993ff_debug_monitor_and_param_scripts.s
+    prom_a          23  wsa1/prom_a/modules/f80000_f81fff_sequencer_job_button_tables.s
+    prom_b         105  wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s
+    prom_b          35  wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s
+    prom_b          16  wsa1/prom_b/modules/f36800_f387ff_sysex_param_ranges.s
+    kn2400         447  kn2400/src/program.s
+    kn6000         345  kn6000/src/program.s
+    kn6500         464  kn6500/src/program.s
+    hdsx3           73  hdsx3/src/program.s
+  (d) .byte runs after a terminator
+    v10             42  v10/maincpu/sequencer/accompaniment_engine.s
+    v10             18  v10/maincpu/display/scoop_display.s
+    v10              6  v10/maincpu/midi/midi_dispatch_handlers.s
+    v9              42  v9/maincpu/sequencer/accompaniment_engine.s
+    v9              18  v9/maincpu/display/scoop_display.s
+    v9               6  v9/maincpu/midi/midi_dispatch_handlers.s
+    v7              44  v7/maincpu/sequencer/accompaniment_engine.s
+    v7              21  v7/maincpu/display/scoop_display.s
+    v7               4  v7/maincpu/sequencer/smf_tonegen_core.s
+    v142            22  v142/subcpu/subcpu_fp_math.s
+    v142             2  v142/subcpu/kn5000_subprogram_v142.s
+    v141            22  v141/subcpu/subcpu_fp_math.s
+    v141             1  v141/subcpu/kn5000_subprogram_v141.s
+    prom_a          12  wsa1/prom_a/modules/f8c000_f8d9ff_panel_leds.s
+    prom_a          12  wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s
+    prom_a          10  wsa1/prom_a/modules/f8a000_f8bbff_panel_wire_to_group.s
+    prom_b          35  wsa1/prom_b/modules/f67400_f6efff_step_record.s
+    prom_b          19  wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s
+    prom_b           6  wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s
+    prom_c           1  wsa1/prom_c/boot/boot_and_main.s
+    kn2400           7  kn2400/src/program.s
+    kn6000           6  kn6000/src/program.s
+    kn6500           3  kn6500/src/program.s
+  (d) ... their bytes
+    v10           1320  v10/maincpu/sequencer/accompaniment_engine.s
+    v10            723  v10/maincpu/display/scoop_display.s
+    v10            345  v10/maincpu/sequencer/rhythm_routines.s
+    v9            1320  v9/maincpu/sequencer/accompaniment_engine.s
+    v9             723  v9/maincpu/display/scoop_display.s
+    v9             345  v9/maincpu/sequencer/rhythm_routines.s
+    v7            2288  v7/maincpu/sequencer/accompaniment_engine.s
+    v7            1152  v7/maincpu/display/scoop_display.s
+    v7             345  v7/maincpu/sequencer/rhythm_routines.s
+    v142            40  v142/subcpu/subcpu_fp_math.s
+    v142             2  v142/subcpu/kn5000_subprogram_v142.s
+    v141            40  v141/subcpu/subcpu_fp_math.s
+    v141             1  v141/subcpu/kn5000_subprogram_v141.s
+    prom_a        2566  wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s
+    prom_a         407  wsa1/prom_a/modules/f82000_f83fff_main_task_reset_and_interrupts.s
+    prom_a         367  wsa1/prom_a/modules/fc0000_fc3fff_msg0716_module.s
+    prom_b         651  wsa1/prom_b/modules/f67400_f6efff_step_record.s
+    prom_b         531  wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s
+    prom_b         379  wsa1/prom_b/modules/f09800_f0c7ff_sound_edit_screens.s
+    prom_c           1  wsa1/prom_c/boot/boot_and_main.s
+    kn2400          51  kn2400/src/program.s
+    kn6000          44  kn6000/src/program.s
+    kn6500          16  kn6500/src/program.s
+  (e) placeholder routine names
+    prom_a          30  wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s
+    prom_a          16  wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s
+    prom_a          14  wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s
+    prom_b         453  wsa1/prom_b/modules/f40000_f44017_routine_directory.s
+    prom_b         104  wsa1/prom_b/modules/f67400_f6efff_step_record.s
+    prom_b          27  wsa1/prom_b/modules/f47800_f48bff_bstore_cursor_and_seq_cycle.s
+    prom_c          47  wsa1/prom_c/tone_db/tone_db_module.s
+    prom_c          30  wsa1/prom_c/field_accessors.s
+    prom_c          27  wsa1/prom_c/p7/p7_module.s
+    program       1781  kn7000/src/program/region1_02.s
+    program        647  kn7000/src/program/library_00.s
+    program        588  kn7000/src/program/region1_05.s
+    cnv             99  kn7000/src/cnv/gem_wx2.s
+    cnv             94  kn7000/src/cnv/korg.s
+    cnv             90  kn7000/src/cnv/gem_ws2.s
+    program942    1781  kn7000/src/sp7001/program/region1_02.s
+    program942     647  kn7000/src/sp7001/program/library_00.s
+    program942     588  kn7000/src/sp7001/program/region1_05.s
+    kn2400        6933  kn2400/src/program.s
+    kn6000        5919  kn6000/src/program.s
+    kn6500        5931  kn6500/src/program.s
+    hdsx3          483  hdsx3/src/program.s
+  (f) byte-emitter macro uses
+    prom_b           5  wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s
+    prom_b           4  wsa1/prom_b/modules/f67400_f6efff_step_record.s

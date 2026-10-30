@@ -172,3 +172,32 @@ Open items:
 - the KN7000 demo-song streams are u8 rows, really 4-byte events;
 - recursive structures other than the resource-id trie are typed one level deep;
 - HD-AE5000 v1.15i and v1.10i still have no tree.
+
+## Generic 0 (2026-10-30, `docs/coverage/data-incbin-2026-10-30-02`)
+
+Lane generic-zero took the eight trees above to generic 0, in the generators (`gen_data_s.py` pass
+`reader_rows`, `gen_image_s.py --rows`), with no new opaque declaration. Every tree in the census is now
+generic 0. What the last pieces became (`kn7000/notes/data-final/README.md` and
+`kn6000/notes/siblings-data-final/README.md`, sections "generic-zero"; probe
+`kn7000/notes/data-final-probes/reader_rows_stats.py`):
+
+- the KN7000 30-byte "switch records" were records whose first bytes an earlier pass had taken for short
+  strings; `record_start()` stops that, and they are typed (`REC_func_484C01F1_Result`, resource-id-trie
+  leaves, the SysEx each points at); the same fix types `func_4C02CA6A_Records_p0` (KN6000 / KN6500) and
+  `func_5014A95C_Records_p0` (KN2400);
+- every other piece that some instruction reads is written as rows at the reads' width and signedness
+  (`tab_u8` ... `tab_u32`), address words as `.long Label` / `Label+N`, with a header naming the readers;
+  most are blocks whose address the code only passes to a routine, so the callee decides the layout;
+- the KN6000 / KN6500 code file's two `.incbin_range`s (115 + 586 B) are typed: `FirmwareVersionByte`, the
+  kernel's version string, `KernelServiceHash`, `KernelRamLayout`, `KernelParams`, and its two interrupt
+  dispatchers as code;
+- the KN2400's `RamCodeTrailer` has a reader after all (`func_4870587E`); its notes are corrected.
+
+Opaque fell with it (KN7000 ~82 KB -> ~64 KB per build, KN6000 79,522 -> 70,137, KN6500 83,667 -> 74,371):
+bytes declared unread turned out to be record parts. Every gate passed on main after the merge with every
+`kn7000/build/*.labels` seed deleted.
+
+Left open: the reader walk does not follow an argument into the callee, so the reader-row blocks keep the
+reader's widths rather than the callee's layout; KN7000 `func_487B8E34` (301 B of interrupt-handler code)
+is declared `unknown-dump`, `code` would be the honest kind, and converting it as code better still;
+`func_4C03B799_Table` (353 x s16) may run on into the kernel's handler code in the KN7000 data region.
