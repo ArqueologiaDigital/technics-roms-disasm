@@ -183,7 +183,7 @@ generic 0. What the last pieces became (`kn7000/notes/data-final/README.md` and
 
 - the KN7000 30-byte "switch records" were records whose first bytes an earlier pass had taken for short
   strings; `record_start()` stops that, and they are typed (`REC_func_484C01F1_Result`, resource-id-trie
-  leaves, the SysEx each points at); the same fix types `func_4C02CA6A_Records_p0` (KN6000 / KN6500) and
+  leaves, the SysEx each points at); the same fix types `func_4C02CA6A_Records_p0` (KN6000; `func_4C02CBDA_Records_p0` on the KN6500) and
   `func_5014A95C_Records_p0` (KN2400);
 - every other piece that some instruction reads is written as rows at the reads' width and signedness
   (`tab_u8` ... `tab_u32`), address words as `.long Label` / `Label+N`, with a header naming the readers;
