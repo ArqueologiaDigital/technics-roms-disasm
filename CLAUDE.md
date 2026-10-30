@@ -208,6 +208,11 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,759   | 0x800000 - 0x9FFEF0                                        |
 | `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,197   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 | `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 7,099   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v1_15i_symbols_reference.txt` | HDAE5000 expansion v1.15i                         | 6,709   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v1_10i_symbols_reference.txt` | HDAE5000 expansion v1.10i                         | 6,698   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+
+The two HD-AE5000 v1 rows were added 2026-10-30 (lane open/hdae-v1), from
+`l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.
 
 **In sync as of 2026-10-24** (counts above from that day's
 `python3 scripts/analysis/l2_symbol_reference.py --check`, which reports 100 %
@@ -1313,6 +1318,8 @@ When encountering disputed interpretations:
 | custom_data (IC19)  | `custom_data/kn5000_custom_data.s`                               | 100.00%    | 100.0%                | 0 B           |
 | hdae5000            | `hdae5000/hd-ae5000_v2_06i.s`                                    | 100.00%    | 100.0%                | 0 B           |
 | hdae5000 v2.01i     | `hdae5000_v2_01i/hd-ae5000_v2_01i.s` (ported from v2.06i)        | 100.00%    | 100.0%                | 0 B           |
+| hdae5000 v1.15i     | `hdae5000_v1_15i/hd-ae5000_v1_15i.s` (ported from v2.01i)        | 100.00%    | 100.0%                | 0 B           |
+| hdae5000 v1.10i     | `hdae5000_v1_10i/hd-ae5000_v1_10i.s` (ported from v1.15i)        | 100.00%    | 100.0%                | 0 B           |
 
 The two kinds of column answer different questions and must not be conflated. **Byte-match** is
 `python scripts/build/compare_roms.py`; measured 2026-10-24 after the wave 1 merges it printed `romset bytematch:

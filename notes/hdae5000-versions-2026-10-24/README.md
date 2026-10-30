@@ -1,15 +1,17 @@
 # HD-AE5000 versions: v2.06i, v2.01i, v1.15i, v1.10i
 
-Lane `wave2/hdae5000-versions`, 2026-10-24. The HD-AE5000 expansion ROM (IC4, 512 KiB at
-0x280000) is dumped in four versions. v2.06i has the byte-exact source tree `hdae5000/`. This
-note sizes the other three, records what differs, and says how v2.01i got its own tree,
-`hdae5000_v2_01i/`, which `make gate` now rebuilds byte-identical.
+Lane `wave2/hdae5000-versions`, 2026-10-24, and lane `open/hdae-v1`, 2026-10-30. The HD-AE5000
+expansion ROM (IC4, 512 KiB at 0x280000) is dumped in four versions, and each has a byte-exact
+source tree that `make gate` rebuilds: `hdae5000/` (v2.06i), `hdae5000_v2_01i/`,
+`hdae5000_v1_15i/` and `hdae5000_v1_10i/`. This note sizes the ports, records what differs, and
+says how each tree was made.
 
 ## Inputs
 
 The dumps are in the private romset (`~/compartilhado/technics_roms/roms/kn5000/`, read-only, never
-committed). `hd-ae5000.ic4` there is byte-identical to v1.15i. The Makefile copies v2.01i's dump to
-`original_ROMs/hd-ae5000_v2_01i.ic4` (git-ignored) and checks its SHA-1, as it does for KN5000 v8.
+committed). `hd-ae5000.ic4` there is byte-identical to v1.15i. The Makefile copies the v2.01i, v1.15i
+and v1.10i dumps to `original_ROMs/hd-ae5000_<ver>.ic4` (git-ignored) and checks their SHA-1, as it
+does for KN5000 v8.
 
 | version | file                   | SHA-1                                      | version string (offset) |
 |---------|------------------------|--------------------------------------------|-------------------------|
@@ -171,37 +173,151 @@ The trees are kept in step the way `v9/` and `v7/` are kept with `v10/`. A renam
 applied to `hdae5000_v2_01i/` with the same sed script. The two review tools above show where the
 trees drift apart.
 
-## v1.15i and v1.10i: not ported
+## v1.15i and v1.10i: byte-exact trees
 
-Only the sizing above was done for them, plus one trial run of the porting tool on v1.15i. That run
-was thrown away and nothing of it is committed.
+Lane `open/hdae-v1`, 2026-10-30. `hdae5000_v1_15i/` and `hdae5000_v1_10i/` rebuild their dumps
+byte for byte: `make gate` reports `hd-ae5000_v1_15i IDENTICAL` and `hd-ae5000_v1_10i IDENTICAL`,
+and `verify-hdae5000-v115i-reference` / `-v110i-reference` check the git-ignored reference copies
+(`HDAE5000_V115_REF`, `HDAE5000_V110_REF` in the Makefile). v1.15i was ported from v2.01i, which
+`hdae5000_version_delta.py` puts closer than v2.06i (234,727 B of estimated change against
+238,707 B), and v1.10i from v1.15i.
 
-- After `init`, `fix` and three `code / strings / fix` rounds, `status v1_15i` still showed 2,099
-  hunks, with 121,119 of 524,288 bytes equal in place. The `fix` pass oscillated: the same 4
-  constants flipped between two values on every round, because two uses of each wanted different
-  values. v2.01i got there from 1,682 hunks.
-- `uitables` refused v1.15i: "#3 caption arena not NUL-terminated". Its UI records do not follow
-  v2.x's per-class body lengths (`UI_F` in the tool), so v1.x needs its own record model first.
-  The table locations themselves are found generically, by
-  `python3 scripts/tools/port_hdae5000_version.py tables v2_06i v2_01i v1_15i v1_10i`:
+| tree               | ported from | objects (RAM) | classes | ApFunctions | messages (0x1EA) | events (0x1CA) | source coverage                         |
+|--------------------|-------------|---------------|---------|-------------|------------------|----------------|-----------------------------------------|
+| `hdae5000/`        | -           | 789 (20)      | 13      | 69          | 18               | 13             | 100.0%, 0 B verbatim                    |
+| `hdae5000_v2_01i/` | v2.06i      | 786 (20)      | 13      | 67          | 18               | 13             | 100.0%, 0 B verbatim                    |
+| `hdae5000_v1_15i/` | v2.01i      | 758 (15)      | 10      | 63          | 13               | 3              | 100.0% (138,388 B asm), 0 B verbatim    |
+| `hdae5000_v1_10i/` | v1.15i      | 755 (15)      | 10      | 63          | 13               | 3              | as v1.15i (`kn5000_source_coverage.py`) |
 
-  | version | object table | name table | objects | class-name table |
-  |---------|--------------|------------|---------|------------------|
-  | v2.06i  | 0x2a5d2c     | 0x2a6984   | 789     | 0x2f9832         |
-  | v2.01i  | 0x2a5558     | 0x2a61a4   | 786     | 0x2f8d0e         |
-  | v1.15i  | 0x2a16a4     | 0x2a2280   | 758     | 0x2e128e         |
-  | v1.10i  | 0x2a1572     | 0x2a2142   | 755     | 0x2e10fe         |
+The registry counts are the tables `HDAE5000_Handler_Registration` registers, read from each ROM
+(`port_hdae5000_version.py`'s `registered_table`); the object counts come from
+`scripts/converters/hdae5000_ui_tree.py`, which now models v1.x too (its layout check holds for all
+four versions).
 
-- v1.x also has no FilePanel picture, and its boot splash differs (a `VERSION_ASSETS` entry in
-  `scripts/build/hdae5000_images.py` each).
+### What v1.x lacks, or has, against v2.x
 
-A v1.15i tree is therefore a lane of its own:
+Each item names the evidence; the hand edit that removed it from the port is in brackets
+(`port-edits-v1_15i/`, whose scripts carry the details).
 
-1. a v1.x record model for `uitables`;
-2. the pictures;
-3. then the same port loop, starting from `port_hdae5000_version.py init v1_15i` (it reads the dump
-   from the private romset when `original_ROMs/hd-ae5000_v1_15i.ic4` is absent);
-4. then v1.10i, from the v1.15i tree.
+**No lyrics.** "TLhd", "TLtr", ".TLX", ".TTX", "XLT.", "LyricBox" and "FDFileSelect" occur 0 times
+in either v1 dump (1 to 7 times each in v2.01i). So v1.x has:
+
+- no LyricBox class or HDAE5000_LyricBoxProc, none of the Lyrics_* routines, no song-position post
+  to a lyric box in HDAE5000_Frame_Handler (EV_TICKS) [04, 04h];
+- no floppy lyric selector (FDFileSelect class, FdLyricList_*) [04];
+- no ninth part (TLX). Load, save, copy, delete and the PC link handle eight parts: the part-mask
+  bit 8 tests, the part signature "TLhd", the ninth "show the flag" block, the TLX floppy search,
+  the PC-link part mask's high byte (v2.x HDAE5000_RAM_PportPartMaskHi) are absent, and
+  HDAE5000_TypeSel_TemplateAllNo has eight flags [04b, 04c, 04j, 05b, 05d];
+- three setting bytes in sector 1 (QuickLoadMode, LoadByNumberMode, JumpAfterLoad, 0x229da9-ab),
+  not four: no LyricJump and none of the five "show the lyrics after load" blocks [04f];
+- language messages 1-62 and 200-212: no message 64 ("Jump after Load") [04i];
+- no ApFunctions SfxTlxBitCheck, DelTlxEditCheck, LyricJumpEditCheck, BitmapButt01 (and no 42 x 15
+  button picture), no EV_* lyric events (the event-name table has EV_SeqStop, EV_AfterLoad,
+  EV_TimerBack only) [04, 05, 06].
+
+**No file-selection backdrop.** No TtlScreenR3 class or procedure, no HDAE5000_Alloc_Memory_3, and
+no FilePanel picture: v2.06i's and v2.01i's are both absent from the image [00, 04].
+
+**Messages renumbered.** No MT_SelectAll (no select-all soft button in HDAE5000_SelectListProc, no
+select-all case in HDAE5000_CopyToHDScreen), so every method after MT_SelectSAVE is one lower:
+MT_SetStrAdr is 0x01ea0009 (31 uses in v1.15i, 0 of 0x01ea000a), MT_SelectDEL 0x01ea000b,
+MT_SelectDelFile 0x01ea000c. The v1 trees therefore have their own `shared/event_codes.s`
+(generated by `07_event_codes.py`); FILE_LOAD_Screen's switch has 13 cases [04g, 04k, 07]. No
+MT_Fd* methods either.
+
+**PC link.** Services 0-27 (v2.x 0-30: no XAP flash, no main-CPU hook services 28-30) [04d].
+Command 01 neither latches packet bytes 1-2 nor checks the PC program's version (no "Error : Wrong
+Dll Ver" record), and its info block is 0xbf bytes (v2.x 0xca: no TLX description, no file-format
+version at +200 / +201); command 20 is a bare `jp` to CommandDone [04e]. In both v1 dumps the
+service table's entry 12 is not a pointer: it holds its stub's address AND 0xfff (0x000005c0 for
+0x2915c0 in v1.15i, 0x000004c4 for 0x2914c4 in v1.10i), so service 12 cannot be dispatched;
+[INFERENCE] a fault of the link [11].
+
+**Smaller items.**
+
+- The boot splash is v1.x's own: no "Version 2" line, "Startup !" for "Start-up !"
+  (`hdae5000_v1_15i/images/HDAE5000_SplashScreen_v1_15i.png`; v1.10i has the same bytes) [02].
+- The version string ("V1.15i" / "V1.10i") sits in front of the title logo's palette, not after
+  the HDD icon [05f].
+- The .data image (copied to RAM 0x23c914 in both v1 dumps, 0x9d4 bytes) has no file-format
+  version words and no lyric lines; HDAE5000_Frame_Handler first increments a byte at 0x22b3da
+  that nothing reads (HDAE5000_RAM_FrameCount) [08, 13].
+- The unreferenced VarInt codec, the SMF header reader and HDAE5000_StrUpr of v2.x are absent [04d].
+- Every version's ROM header holds, after "XAPR", a pointer to the end of its .data image
+  (v2.06i 0x2fa134, v2.01i 0x2f95e6, v1.15i 0x2e198a, v1.10i 0x2e17fa); the v1 trees spell it
+  `.long HDAE5000_Init_Data_End` (the v2.x trees still spell it as text and bytes) [13].
+- The naming keyboard's two character tables end with a pointer to an empty string right after
+  them (the v2.x trees spell that word as bytes and a "." string) [05e].
+
+**v1.10i against v1.15i** (`routine-diff-v1_10i.txt`: 538 routines each, 533 the same, 5 changed):
+
+- no language message 62 (v1.15i's evaluation date, "Evaluation 07-07-98"): messages 1-61 and
+  200-212 (`port-edits-v1_10i/04_no_message_62.py`);
+- the overwrite query ATTEN_OVER_FILE is fixed German text ("!ACHTUNG!", "Sie überschreiben einen
+  bestehenden Titel. Sind Sie sicher?", "JA" / "NEIN") where v1.15i uses language messages 210,
+  211 and 28; v1.10i's message 28 reads "You are going to overwrite a FLS entry. Are you sure?"
+  (v1.15i: "... an existing entry ...");
+- HDAE5000_LoadSong_Pmt, HDAE5000_SaveSong_Rcm, HDAE5000_HD_WriteStream and
+  HDAE5000_PPORT_Svc27 differ in code.
+
+### How the trees were made
+
+The 2026-10-24 trial failed on two things, both fixed in `scripts/tools/port_hdae5000_version.py`:
+
+- **`fix` oscillated** because one constant had uses that wanted different values. `fix` and the
+  new `afix` now decide each constant from all its uses (`resolve_votes`): the value of the uses
+  that already emit the target's bytes stays, a use spelled `name+N` that wants another address
+  moves its offset (v1.x's save options have one part fewer, so v2.x's SaveOptions+11 is +10), and
+  any other use gets a symbol of its own.
+- **`uitables` refused v1.x** because the old record model assumed v2.x's body lengths. The GUI
+  converter (`hdae5000_ui_tree.py`) reads each class's fields from the firmware, so it only needed
+  the v1.x layout: the HD-AE5000's own class ids are per version (v1.x has 10 classes, so
+  AcLanguageText1 is 0x016a0009), the .data image's RAM base is read from the boot copy loop, and a
+  tree being ported is given its labels' target addresses (`--syms`).
+
+The block aligner then still put routine i of a family of look-alikes (LBN*BitCheck, the per-part
+blocks) against routine i+1, and every transplant made there was wrong. The new **anchored passes**
+pin the alignment to the firmware: seeds are the procedures both images register under the same
+name, the pointer tables those reach, and long identical blocks; from each seed both instruction
+streams are walked in lockstep, and every operand pair becomes an anchor (`anchors`), a constant
+vote (`afix`) or the end of a span to realign (`code --anchored`).
+
+`port-edits-v1_15i/replay.sh` (and `port-edits-v1_10i/replay.sh`) rebuild each tree from its source
+tree in about 12 minutes: the removals first (so that no pass ever aligns code the target lacks),
+then the anchored passes, then the clean-ups. Unlike `port-edits/`, these scripts stay replayable;
+each folder's README gives the order.
+
+Review tools, each run against the tree the port came from (`--base`):
+
+| tool                                                   | v1.15i (base v2.01i)                                     | v1.10i (base v1.15i)                                     |
+|--------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
+| `hdae5000_version_label_check.py`                      | 0 piles, 0 orphans, 117 moved, 6 rename suggestions      | 0 piles, 0 orphans, 55 moved, 1 rename suggestion        |
+| `hdae5000_version_stale_comments.py`                   | 0 in every check, 0 left                                 | 0 in every check, 0 left                                 |
+| `hdae5000_obj_constants_check.py` (in `make gate`)     | 758 constants, 0 errors                                  | 755 constants, 0 errors                                  |
+| `port_hdae5000_version.py farptrs`                     | 0 pairs to respell                                       | 0 pairs to respell                                       |
+
+The label check now leaves out the GUI's macro-made labels (the converter checks the GUI against
+the ROM), and its marker build skips `.macro` bodies (since the GUI became a macro tree the
+v2.06i tree had not assembled in it). Its "moved" rows are code that really changed, as for
+v2.01i. The 7 rename suggestions are left for a review: 3 in the part-bit chain of
+HDAE5000_PPORT_Cmd09_SendFilesToPc, whose eight look-alike blocks still carry v2.x's
+`.Lsfsb_bit<k>` labels one block off (`HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip` / `_Skip2` /
+`_Skip3` name the right instructions), 1 in SaveOptSwEventCatch, 2 in CopyFdSongToHd_Pmt and,
+in v1.10i, `.Lrfsb_exit`.
+
+### Website page draft (technics-docs `hdae5000.md`, section "Versions")
+
+> Four versions of the HD-AE5000 ROM are dumped, and all four are now rebuilt byte for byte from
+> source: v2.06i (`hdae5000/`), v2.01i, v1.15i and v1.10i (`hdae5000_v2_01i/`, `_v1_15i/`,
+> `_v1_10i/`). The v1 firmware is the HD-AE5000 without lyrics: no lyric display, no lyric files
+> (.TLX) on the hard disk or the floppy, and so eight song parts where v2 has nine. It also lacks
+> the file-selection backdrop picture, the "select all" soft button, the PC link's XAP flash
+> service and the PC program version check, and its boot screen has no "Version 2" line. Because
+> it has no MT_SelectAll method, the HD-AE5000's own message numbers after MT_SelectSAVE are one
+> lower than in v2. In both v1 dumps, entry 12 of the PC-link service table is not a valid
+> pointer, so that service cannot run. v1.10i differs from v1.15i in five routines, one language
+> message (the evaluation date) and its overwrite query, which is German-only.
 
 ## Follow-ups
 
@@ -213,4 +329,8 @@ A v1.15i tree is therefore a lane of its own:
 - **Documentation website.** `../technics-docs` (`hdae5000.md`, `rom-reconstruction.md`) does not yet
   say that v2.01i is a byte-exact target, or what differs between the versions. The section
   "What v2.01i lacks, or has, against v2.06i" above is the text to start from.
-- **v1.15i and v1.10i**, as above.
+- **v1.x review.** The label check's 7 rename suggestions (above) and its "moved" rows.
+- **v2.x header and terminator.** The v2.x trees could spell the ROM header's image-end pointer and
+  the naming tables' empty-string pointer as the v1 trees now do (byte-neutral).
+- **Dispatch census, semantic score, doc-quality.** Not one of them measures the v2.01i tree, so
+  the v1 trees were not added either; adding the HD-AE5000 versions is one decision for all three.
