@@ -72,13 +72,20 @@ class Group:
 
 
 def readers(g, labels_path, src_glob):
-    """data_readers.Reader over the build's converted code, with every label gen_data_s knows."""
-    labels = {}
-    for line in open(labels_path):
-        n, v = line.split()
-        labels[n] = int(v, 16)
+    """data_readers.Reader over the build's converted code, with every label gen_data_s knows
+    (labels_path: a build's `name hex` labels file, or a {name: address} dict)."""
+    if isinstance(labels_path, dict):
+        labels = dict(labels_path)
+    else:
+        labels = {}
+        for line in open(labels_path):
+            n, v = line.split()
+            labels[n] = int(v, 16)
     labels.update(g.prev_data_label)
-    return DR.Reader(src_glob, labels, g.in_data, ext=getattr(g, "readers_ext", False))
+    # (the siblings, a profile with a `root`) parameter accesses kept once each: DR.resolve_params_distinct
+    # (the KN7000 program builds, `readers_ext`) stack slots, joins and return values: DR.Reader(ext=)
+    return DR.Reader(src_glob, labels, g.in_data, distinct=bool(getattr(g, "distinct_readers", False)),
+                     ext=getattr(g, "readers_ext", False))
 
 
 def groups(dr):
@@ -241,9 +248,16 @@ def name_fields(g, names):
         f.name = n
 
 
+# (gen_data_s.configure: the siblings) cite an array's own loads and stores before the accesses
+# carried in from a callee through a parameter (`via`) and the calls it is passed to
+PREFER_DIRECT = False
+
+
 def cite(accs, k=2):
     seen, out = set(), []
-    for a in sorted(accs, key=lambda a: (a.cpu or 0, a.func or "", a.insn)):
+    order = (lambda a: (a.cpu or 0, a.func or "", a.insn)) if not PREFER_DIRECT else \
+        (lambda a: (not a.width or bool(a.extra), a.cpu or 0, a.func or "", a.insn))
+    for a in sorted(accs, key=order):
         key = (a.func, a.insn)
         if key in seen:
             continue

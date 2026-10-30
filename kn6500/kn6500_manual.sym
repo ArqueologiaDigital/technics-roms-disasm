@@ -11,3 +11,10 @@
 ;
 ; ---- data ---------------------------------------------------------------------
 0x4C2E5304  TechnicsRhythmsResource    ; the built-in "Technics Rhythms" style resource (IC18's format, one style " 8 Beat 1"): the fallback the style module stores to data_50005900 when the table ROM's resource does not check (KN6000 v7.1: func_4C0557E9); typed by ../kn7000/tools/program_rhythm.py
+0x4C36F724  StyleRecordTable           ; the built-in Music Stylist setups, 1080 x 24 bytes (the KN6000's, kn6000/notes/siblings-data-final/README.md); +0 -> a 144-byte one-touch setting (func_4C04C6C2 answers 0x90)
+0x4C36E5AC  StyleGenreTable            ; the Music Stylist genres, 11 x {name, style list}: func_4C1642A9 indexes it by StyleRecordTable.genre * 8
+0x4C375C64  StyleEraTable              ; the Music Stylist eras, 10 x {name, setups, era}: func_4C165FFB walks it
+0x4C36EEB8  StyleAlphabetTable         ; the Music Stylist alphabet index, 35 x {letter, setups}: func_4C165521 indexes it by StyleRecordTable.letter * 8
+0x4C3108F8  NoteConvRules              ; 128 x 8-byte note-conversion rules {is_melody, alt_chord, no_third_adj, no_transpose, table}: func_4C058353 (the KN6000's func_4C05805C)
+0x4C2B7668  FactoryPanelMemory         ; the factory PANEL MEMORY banks (the .PMT bank layout, as the KN6000's): func_4C03D5A1 copies the .PMT header (func_4C03D5A1_Table) and 0x2D8D0 bytes from here to the backup RAM 0x840007C2 / 0x840007D2; typed by ../kn7000/tools/gen_data_s.py panel_banks()
+0x4C2EB7C8  TechnicsPadsResource       ; the built-in "Technics Pads" PERFORMANCE PAD bank (the table flash's segment 4 format): TechnicsPadsResourceInit stores it when the table flash's resource does not check; typed by ../kn7000/tools/gen_data_s.py pads()

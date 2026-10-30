@@ -38,6 +38,7 @@
 ; ---- activation data ----
 0x483F8B74  KssKeystreamRecords     ; 27 static keystream records, 20 base-35 chars + NUL each (stride 0x15); the key's first char selects the pair used
 0x483F782C  KssMsgWrongPassword     ; 'Falsches Passwort'
+0x50299490  KssKeyStringsPtr        ; (RAM image) the pointer the key check passes in d0 to KssKeyTransform and func_483EF161 (table.s, after KssKeyStripDashes); its initial value points at the RAM image's list of 20-character key strings at 0x50299424 (named so the data generation and the code agree on one label: lane kn7000-final)
 0x483F88F0  KssStrPluginCtrl        ; 'PluginCtrl', then the plug-in type names 'BASE', 'mr7', 'MIDI', ...
 0x483F8900  KssStrMr7               ; 'mr7': the field-3 target (param2) for this plug-in
 0x483F892C  KssActivationFilePath   ; 'C:\TECHNICS\DATA\CTDV10KL.CDF' -- the SD-card file caching the typed key (the RE note's 0x483F893D is the bare filename inside it)

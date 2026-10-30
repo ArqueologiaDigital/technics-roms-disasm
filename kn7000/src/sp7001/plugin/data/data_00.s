@@ -374,85 +374,85 @@ Str_SYSTEM_PLUG_IN:	.asciz "SYSTEM PLUG-IN"
 
 	.space	1, 0xFF
 
-	TtlScreen	PLUG_Main, sub=Ce_Main, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=Main_window, title=Str_SYSTEM_PLUG_IN, icon=1	# title "SYSTEM PLUG-IN"
-		IvCatchEvent	Ce_Main, super=PLUG_Main, next=PLUG_Main_ScreenMenu1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_Ap_CE_Main
+	TtlScreen	Main, sub=Ce_Main, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Black, index=0xFFFF, exit=TT_PS, window=Main_window, title=Str_SYSTEM_PLUG_IN, icon=1	# title "SYSTEM PLUG-IN"
+		IvCatchEvent	Ce_Main, super=Main, next=Main_ScreenMenu1, flag=VF_Const|VF_InvisibleBox, X=0, Y=0, W=32, H=32, func=FN_Ap_CE_Main
 
 Str_empty:	.asciz ""
 
 	.space	3, 0xFF
 
-		AcScreenMenu	PLUG_Main_ScreenMenu1, super=PLUG_Main, next=PLUG_Main_TextBox1, prev=Ce_Main, flag=VF_Const, X=8, Y=28, W=100, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_Blue, editsw=ES_Left1, selected=PLUG_Main_ScreenMenu1_selected, str=Str_empty, screen=Debug_id	# str ""
+		AcScreenMenu	Main_ScreenMenu1, super=Main, next=Main_TextBox1, prev=Ce_Main, flag=VF_Const, X=8, Y=28, W=100, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_Blue, editsw=ES_Left1, selected=Main_ScreenMenu1_selected, str=Str_empty, screen=Debug_id	# str ""
 
 Str_empty_2:	.asciz ""
 
 	.space	3, 0xFF
 
-		VwTextBox	PLUG_Main_TextBox1, super=PLUG_Main, sub=PLUG_Main_KssTextBox1, prev=PLUG_Main_ScreenMenu1, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_White, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_2	# text ""
+		VwTextBox	Main_TextBox1, super=Main, sub=Main_KssTextBox1, prev=Main_ScreenMenu1, flag=VF_Const, X=0, Y=0, W=640, H=240, color=CL_White, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_2	# text ""
 
 Str_SYSTEM_PLUG_iN_SP7001:	.asciz "-- SYSTEM PLUG-iN SP7001 --"
 
-			PsKssTextBox	PLUG_Main_KssTextBox1, super=PLUG_Main_TextBox1, sub=PLUG_Main_TextBox2, next=PLUG_Main_ScreenMenu_SD_SETTINGS, flag=VF_Const, X=0, Y=0, W=640, H=42, color=CL_Transparent, index=0xFFFF, font=11, fontcolor=CL_Red, is_3d=1, padding=500, auto_wrap=1, init_str=Str_SYSTEM_PLUG_iN_SP7001, str_adr=PLUG_Main_KssTextBox1_str_adr	# init_str "-- SYSTEM PLUG-iN SP7001 --"
+			PsKssTextBox	Main_KssTextBox1, super=Main_TextBox1, sub=Main_TextBox2, next=Main_ScreenMenu_SD_SETTINGS, flag=VF_Const, X=0, Y=0, W=640, H=42, color=CL_Transparent, index=0xFFFF, font=11, fontcolor=CL_Red, is_3d=1, padding=500, auto_wrap=1, init_str=Str_SYSTEM_PLUG_iN_SP7001, str_adr=Main_KssTextBox1_str_adr	# init_str "-- SYSTEM PLUG-iN SP7001 --"
 
 Str_empty_3:	.asciz ""
 
 	.space	3, 0xFF
 
-				VwTextBox	PLUG_Main_TextBox2, super=PLUG_Main_KssTextBox1, flag=VF_Const, X=8, Y=38, W=624, H=2, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_3	# text ""
+				VwTextBox	Main_TextBox2, super=Main_KssTextBox1, flag=VF_Const, X=8, Y=38, W=624, H=2, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_3	# text ""
 
 Str_SD_SETTINGS:	.asciz "SD SETTINGS"
 
-			AcScreenMenu	PLUG_Main_ScreenMenu_SD_SETTINGS, super=PLUG_Main_TextBox1, next=PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, prev=PLUG_Main_KssTextBox1, flag=VF_Const, X=8, Y=71, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=PLUG_Main_ScreenMenu_SD_SETTINGS_selected, str=Str_SD_SETTINGS, screen=PLUG_Settings_id, icon=219	# str "SD SETTINGS"
+			AcScreenMenu	Main_ScreenMenu_SD_SETTINGS, super=Main_TextBox1, next=Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, prev=Main_KssTextBox1, flag=VF_Const, X=8, Y=71, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left2, selected=Main_ScreenMenu_SD_SETTINGS_selected, str=Str_SD_SETTINGS, screen=Settings_id, icon=219	# str "SD SETTINGS"
 
 Str_CUSTOM_STYLE_LOAD_SAVE:	.asciz "CUSTOM STYLE LOAD/SAVE"
 
 	.space	1, 0xFF
 
-			AcTitleMenu	PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, super=PLUG_Main_TextBox1, next=PLUG_Main_ScreenMenu_SELECT_SONG, prev=PLUG_Main_ScreenMenu_SD_SETTINGS, flag=VF_Const, X=8, Y=157, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_Navy, editsw=ES_Left4, selected=PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA_selected, str=Str_CUSTOM_STYLE_LOAD_SAVE, title=TT_SDCCUS, icon=223	# str "CUSTOM STYLE LOAD/SAVE"
+			AcTitleMenu	Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, super=Main_TextBox1, next=Main_ScreenMenu_SELECT_SONG, prev=Main_ScreenMenu_SD_SETTINGS, flag=VF_Const, X=8, Y=157, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_Navy, editsw=ES_Left4, selected=Main_TitleMenu_CUSTOM_STYLE_LOAD_SA_selected, str=Str_CUSTOM_STYLE_LOAD_SAVE, title=TT_SDCCUS, icon=223	# str "CUSTOM STYLE LOAD/SAVE"
 
 Str_SELECT_SONG:	.asciz "SELECT SONG"
 
-			AcScreenMenu	PLUG_Main_ScreenMenu_SELECT_SONG, super=PLUG_Main_TextBox1, next=PLUG_Main_TitleMenu_SD_AUDIO_PLAY, prev=PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, flag=VF_Const, X=412, Y=71, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=PLUG_Main_ScreenMenu_SELECT_SONG_selected, str=Str_SELECT_SONG, screen=SelDir_id, icon=219	# str "SELECT SONG"
+			AcScreenMenu	Main_ScreenMenu_SELECT_SONG, super=Main_TextBox1, next=Main_TitleMenu_SD_AUDIO_PLAY, prev=Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, flag=VF_Const, X=412, Y=71, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right2, selected=Main_ScreenMenu_SELECT_SONG_selected, str=Str_SELECT_SONG, screen=SelDir_id, icon=219	# str "SELECT SONG"
 
 Str_SD_AUDIO_PLAY:	.asciz "SD-AUDIO PLAY"
 
 	.space	2, 0xFF
 
-			AcTitleMenu	PLUG_Main_TitleMenu_SD_AUDIO_PLAY, super=PLUG_Main_TextBox1, next=PLUG_Main_ScreenMenu_SD_JUKE_BOX, prev=PLUG_Main_ScreenMenu_SELECT_SONG, flag=VF_Const, X=8, Y=114, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_Navy, editsw=ES_Left3, selected=PLUG_Main_TitleMenu_SD_AUDIO_PLAY_selected, str=Str_SD_AUDIO_PLAY, title=TT_SDAUDPLY, icon=218	# str "SD-AUDIO PLAY"
+			AcTitleMenu	Main_TitleMenu_SD_AUDIO_PLAY, super=Main_TextBox1, next=Main_ScreenMenu_SD_JUKE_BOX, prev=Main_ScreenMenu_SELECT_SONG, flag=VF_Const, X=8, Y=114, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=1, fontcolor=CL_Navy, editsw=ES_Left3, selected=Main_TitleMenu_SD_AUDIO_PLAY_selected, str=Str_SD_AUDIO_PLAY, title=TT_SDAUDPLY, icon=218	# str "SD-AUDIO PLAY"
 
 Str_SD_JUKE_BOX:	.asciz "SD JUKE BOX"
 
-			AcScreenMenu	PLUG_Main_ScreenMenu_SD_JUKE_BOX, super=PLUG_Main_TextBox1, next=PLUG_Main_ScreenMenu_SELECT_C_L_S, prev=PLUG_Main_TitleMenu_SD_AUDIO_PLAY, flag=VF_Const, X=412, Y=114, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=PLUG_Main_ScreenMenu_SD_JUKE_BOX_selected, str=Str_SD_JUKE_BOX, screen=JukeBox_id, icon=234	# str "SD JUKE BOX"
+			AcScreenMenu	Main_ScreenMenu_SD_JUKE_BOX, super=Main_TextBox1, next=Main_ScreenMenu_SELECT_C_L_S, prev=Main_TitleMenu_SD_AUDIO_PLAY, flag=VF_Const, X=412, Y=114, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right3, selected=Main_ScreenMenu_SD_JUKE_BOX_selected, str=Str_SD_JUKE_BOX, screen=JukeBox_id, icon=234	# str "SD JUKE BOX"
 
 Str_SELECT_C_L_S:	.asciz "SELECT C.L.S."
 
 	.space	2, 0xFF
 
-			AcScreenMenu	PLUG_Main_ScreenMenu_SELECT_C_L_S, super=PLUG_Main_TextBox1, next=PLUG_Main_ScreenMenu_CUSTOM_LYRICS, prev=PLUG_Main_ScreenMenu_SD_JUKE_BOX, flag=VF_Const, X=412, Y=157, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=PLUG_Main_ScreenMenu_SELECT_C_L_S_selected, str=Str_SELECT_C_L_S, screen=ClsDir_id, icon=217	# str "SELECT C.L.S."
+			AcScreenMenu	Main_ScreenMenu_SELECT_C_L_S, super=Main_TextBox1, next=Main_ScreenMenu_CUSTOM_LYRICS, prev=Main_ScreenMenu_SD_JUKE_BOX, flag=VF_Const, X=412, Y=157, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right4, selected=Main_ScreenMenu_SELECT_C_L_S_selected, str=Str_SELECT_C_L_S, screen=ClsDir_id, icon=217	# str "SELECT C.L.S."
 
 Str_CUSTOM_LYRICS:	.asciz "CUSTOM LYRICS"
 
 	.space	2, 0xFF
 
-			AcScreenMenu	PLUG_Main_ScreenMenu_CUSTOM_LYRICS, super=PLUG_Main_TextBox1, next=PLUG_Main_TextBox3, prev=PLUG_Main_ScreenMenu_SELECT_C_L_S, flag=VF_Const, X=8, Y=200, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=PLUG_Main_ScreenMenu_CUSTOM_LYRICS_selected, str=Str_CUSTOM_LYRICS, screen=PLUG_Lyrics_id, icon=228	# str "CUSTOM LYRICS"
-			PsTextBox	PLUG_Main_TextBox3, super=PLUG_Main_TextBox1, sub=PLUG_Main_KssTextBox2, next=PLUG_Main_TextBox_PROTECTION_OP_MODE_T, prev=PLUG_Main_ScreenMenu_CUSTOM_LYRICS, flag=VF_Const, X=238, Y=60, W=164, H=158, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3
+			AcScreenMenu	Main_ScreenMenu_CUSTOM_LYRICS, super=Main_TextBox1, next=Main_TextBox3, prev=Main_ScreenMenu_SELECT_C_L_S, flag=VF_Const, X=8, Y=200, W=220, H=38, color=CL_Transparent, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left5, selected=Main_ScreenMenu_CUSTOM_LYRICS_selected, str=Str_CUSTOM_LYRICS, screen=Lyrics_id, icon=228	# str "CUSTOM LYRICS"
+			PsTextBox	Main_TextBox3, super=Main_TextBox1, sub=Main_KssTextBox2, next=Main_TextBox_PROTECTION_OP_MODE_T, prev=Main_ScreenMenu_CUSTOM_LYRICS, flag=VF_Const, X=238, Y=60, W=164, H=158, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3
 
 Str_SYSTEM_INFOS:	.asciz "SYSTEM - INFOS"
 
 	.space	1, 0xFF
 
-				PsKssTextBox	PLUG_Main_KssTextBox2, super=PLUG_Main_TextBox3, sub=PLUG_Main_TextBox4, next=Tb_Main_Infos, flag=VF_Const, X=255, Y=59, W=130, H=18, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_White, is_3d=1, auto_wrap=1, init_str=Str_SYSTEM_INFOS, str_adr=PLUG_Main_KssTextBox2_str_adr	# init_str "SYSTEM - INFOS"
+				PsKssTextBox	Main_KssTextBox2, super=Main_TextBox3, sub=Main_TextBox4, next=Tb_Main_Infos, flag=VF_Const, X=255, Y=59, W=130, H=18, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_White, is_3d=1, auto_wrap=1, init_str=Str_SYSTEM_INFOS, str_adr=Main_KssTextBox2_str_adr	# init_str "SYSTEM - INFOS"
 
 Str_empty_4:	.asciz ""
 
 	.space	3, 0xFF
 
-					VwTextBox	PLUG_Main_TextBox4, super=PLUG_Main_KssTextBox2, flag=VF_Const, X=255, Y=76, W=130, H=2, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_4	# text ""
+					VwTextBox	Main_TextBox4, super=Main_KssTextBox2, flag=VF_Const, X=255, Y=76, W=130, H=2, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_Black, alignment=1, lines=3, text=Str_empty_4	# text ""
 
 Str_empty_5:	.asciz ""
 
 	.space	3, 0xFF
 
-				VwTextBox	Tb_Main_Infos, super=PLUG_Main_TextBox3, sub=Tb_Main_CompileDate, prev=PLUG_Main_KssTextBox2, flag=VF_Const, X=332, Y=84, W=92, H=140, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Black, alignment=1, lines=7, text=Str_empty_5	# text ""
+				VwTextBox	Tb_Main_Infos, super=Main_TextBox3, sub=Tb_Main_CompileDate, prev=Main_KssTextBox2, flag=VF_Const, X=332, Y=84, W=92, H=140, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Black, alignment=1, lines=7, text=Str_empty_5	# text ""
 
 Str_Tentative_develop_No_20_09_2002:	.asciz "Tentative develop.-No. 20-09-2002"
 
@@ -462,7 +462,7 @@ Str_Tentative_develop_No_20_09_2002:	.asciz "Tentative develop.-No. 20-09-2002"
 
 Str_PROTECTION_OP_MODE_TAP_TEMPO_LYRICS_SIZE:	.asciz "PROTECTION  : OP-MODE     : TAP-TEMPO   : LYRICS SIZE : SD TOTAL    : SD FREE     : REG-CODE    : SOFTWARE:V1.0"
 
-			VwTextBox	PLUG_Main_TextBox_PROTECTION_OP_MODE_T, super=PLUG_Main_TextBox1, prev=PLUG_Main_TextBox3, flag=VF_Const, X=240, Y=84, W=94, H=154, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Black, alignment=1, lines=8, text=Str_PROTECTION_OP_MODE_TAP_TEMPO_LYRICS_SIZE	# text "PROTECTION  : OP-MODE     : TAP-TEMPO   "
+			VwTextBox	Main_TextBox_PROTECTION_OP_MODE_T, super=Main_TextBox1, prev=Main_TextBox3, flag=VF_Const, X=240, Y=84, W=94, H=154, color=CL_Transparent, index=0xFFFF, font=3, fontcolor=CL_Black, alignment=1, lines=8, text=Str_PROTECTION_OP_MODE_TAP_TEMPO_LYRICS_SIZE	# text "PROTECTION  : OP-MODE     : TAP-TEMPO   "
 
 Str_KssBg:	.asciz "KssBg"
 
@@ -1057,7 +1057,7 @@ Str_empty_22:	.asciz ""
 
 		AcScreenMenu	HELP_WORKSHOP_SEL_ScreenMenu1, super=HELP_WORKSHOP_SEL, next=HELP_WORKSHOP_SEL_EditSwLine1, prev=HELP_WORKSHOP_SEL_ScreenMenu_OK, flag=VF_Const, X=550, Y=71, W=80, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, align=1, editsw=ES_Right2, selected=HELP_WORKSHOP_SEL_ScreenMenu1_selected, str=Str_empty_22, screen=HELP_WORKSHOP_CONTENT_id	# str ""
 		VwEditSwLine	HELP_WORKSHOP_SEL_EditSwLine1, super=HELP_WORKSHOP_SEL, next=HELP_WORKSHOP_SEL_ExitScreen1, prev=HELP_WORKSHOP_SEL_ScreenMenu1, flag=VF_Const, X=633, Y=52, W=1, H=32, color=CL_FireRed, linemode=1, editsw=ES_None
-		IvExitScreen	HELP_WORKSHOP_SEL_ExitScreen1, super=HELP_WORKSHOP_SEL, next=HELP_WORKSHOP_SEL_KssTextBox1, prev=HELP_WORKSHOP_SEL_EditSwLine1, flag=VF_Const|VF_InvisibleBox, X=0, Y=76, W=32, H=32, screen=PLUG_Main_id
+		IvExitScreen	HELP_WORKSHOP_SEL_ExitScreen1, super=HELP_WORKSHOP_SEL, next=HELP_WORKSHOP_SEL_KssTextBox1, prev=HELP_WORKSHOP_SEL_EditSwLine1, flag=VF_Const|VF_InvisibleBox, X=0, Y=76, W=32, H=32, screen=Main_id
 
 Str_SELECT_HELP_WORKSHOP:	.asciz "SELECT HELP WORKSHOP"
 
@@ -1098,52 +1098,52 @@ Str_KssBg_7:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	PLUG_Lyrics, sub=PLUG_Lyrics_KssTextBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Silver, index=0xFFFF, exit=TT_PS, window=PLUG_Lyrics_window, title=Str_KssBg_7, icon=1	# title "KssBg"
+	KssBgScreen	Lyrics, sub=Lyrics_KssTextBox1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Silver, index=0xFFFF, exit=TT_PS, window=Lyrics_window, title=Str_KssBg_7, icon=1	# title "KssBg"
 
 Str_COPY_TLX_TO_SD:	.asciz "COPY TLX TO SD"
 
 	.space	1, 0xFF
 
-		PsKssTextBox	PLUG_Lyrics_KssTextBox1, super=PLUG_Lyrics, next=PLUG_Lyrics_KssTextBox2, flag=VF_Const, X=520, Y=211, W=119, H=28, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_FireRed, auto_wrap=1, init_str=Str_COPY_TLX_TO_SD, str_adr=PLUG_Lyrics_KssTextBox1_str_adr	# init_str "COPY TLX TO SD"
+		PsKssTextBox	Lyrics_KssTextBox1, super=Lyrics, next=Lyrics_KssTextBox2, flag=VF_Const, X=520, Y=211, W=119, H=28, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=5, fontcolor=CL_FireRed, auto_wrap=1, init_str=Str_COPY_TLX_TO_SD, str_adr=Lyrics_KssTextBox1_str_adr	# init_str "COPY TLX TO SD"
 
 Str_APC_CHORD:	.asciz "APC CHORD:"
 
 	.space	1, 0xFF
 
-		PsKssTextBox	PLUG_Lyrics_KssTextBox2, super=PLUG_Lyrics, sub=PLUG_Lyrics_ChordBox1, next=PLUG_Lyrics_KssTextBox3, prev=PLUG_Lyrics_KssTextBox1, flag=VF_Const, X=164, Y=211, W=190, H=28, color=CL_White, border=BD_Round2, index=0xFFFF, font=5, fontcolor=CL_Blue, align=1, auto_wrap=1, init_str=Str_APC_CHORD, str_adr=PLUG_Lyrics_KssTextBox2_str_adr	# init_str "APC CHORD:"
-			AcChordBox	PLUG_Lyrics_ChordBox1, super=PLUG_Lyrics_KssTextBox2, flag=VF_Const, X=244, Y=215, W=100, H=20, color=CL_White, index=0xFFFF, font=4, fontcolor=CL_Black
+		PsKssTextBox	Lyrics_KssTextBox2, super=Lyrics, sub=Lyrics_ChordBox1, next=Lyrics_KssTextBox3, prev=Lyrics_KssTextBox1, flag=VF_Const, X=164, Y=211, W=190, H=28, color=CL_White, border=BD_Round2, index=0xFFFF, font=5, fontcolor=CL_Blue, align=1, auto_wrap=1, init_str=Str_APC_CHORD, str_adr=Lyrics_KssTextBox2_str_adr	# init_str "APC CHORD:"
+			AcChordBox	Lyrics_ChordBox1, super=Lyrics_KssTextBox2, flag=VF_Const, X=244, Y=215, W=100, H=20, color=CL_White, index=0xFFFF, font=4, fontcolor=CL_Black
 
 Str_Title:	.asciz "Title    : "
 
-		PsKssTextBox	PLUG_Lyrics_KssTextBox3, super=PLUG_Lyrics, sub=Tb_Lyrics_SongName, next=PLUG_Lyrics_KssTextBox4, prev=PLUG_Lyrics_KssTextBox2, flag=VF_Const, X=0, Y=0, W=412, H=20, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_Title, str_adr=PLUG_Lyrics_KssTextBox3_str_adr	# init_str "Title    : "
+		PsKssTextBox	Lyrics_KssTextBox3, super=Lyrics, sub=Tb_Lyrics_SongName, next=Lyrics_KssTextBox4, prev=Lyrics_KssTextBox2, flag=VF_Const, X=0, Y=0, W=412, H=20, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_Title, str_adr=Lyrics_KssTextBox3_str_adr	# init_str "Title    : "
 
 Str_Let_it_be:	.asciz "Let it be"
 
 	.space	2, 0xFF
 
-			PsKssTextBox	Tb_Lyrics_SongName, super=PLUG_Lyrics_KssTextBox3, flag=VF_Const, X=92, Y=2, W=300, H=16, color=CL_Silver, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, padding=248, init_str=Str_Let_it_be, str_adr=Tb_Lyrics_SongName_str_adr	# init_str "Let it be"
+			PsKssTextBox	Tb_Lyrics_SongName, super=Lyrics_KssTextBox3, flag=VF_Const, X=92, Y=2, W=300, H=16, color=CL_Silver, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, padding=248, init_str=Str_Let_it_be, str_adr=Tb_Lyrics_SongName_str_adr	# init_str "Let it be"
 
 Str_Interpr:	.asciz "Interpr. : "
 
-		PsKssTextBox	PLUG_Lyrics_KssTextBox4, super=PLUG_Lyrics, sub=Tb_Lyrics_Interpreter, next=PLUG_Lyrics_KssTextBox5, prev=PLUG_Lyrics_KssTextBox3, flag=VF_Const, X=0, Y=20, W=412, H=20, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_Interpr, str_adr=PLUG_Lyrics_KssTextBox4_str_adr	# init_str "Interpr. : "
+		PsKssTextBox	Lyrics_KssTextBox4, super=Lyrics, sub=Tb_Lyrics_Interpreter, next=Lyrics_KssTextBox5, prev=Lyrics_KssTextBox3, flag=VF_Const, X=0, Y=20, W=412, H=20, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_Interpr, str_adr=Lyrics_KssTextBox4_str_adr	# init_str "Interpr. : "
 
 Str_fasdsfd:	.asciz "fasdsfd"
 
-			PsKssTextBox	Tb_Lyrics_Interpreter, super=PLUG_Lyrics_KssTextBox4, flag=VF_Const, X=90, Y=22, W=280, H=16, color=CL_Silver, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, padding=248, init_str=Str_fasdsfd, str_adr=Tb_Lyrics_Interpreter_str_adr	# init_str "fasdsfd"
+			PsKssTextBox	Tb_Lyrics_Interpreter, super=Lyrics_KssTextBox4, flag=VF_Const, X=90, Y=22, W=280, H=16, color=CL_Silver, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, padding=248, init_str=Str_fasdsfd, str_adr=Tb_Lyrics_Interpreter_str_adr	# init_str "fasdsfd"
 
 Str_Info_Line:	.asciz "Info-Line: "
 
-		PsKssTextBox	PLUG_Lyrics_KssTextBox5, super=PLUG_Lyrics, sub=Tb_Lyrics_Info, next=Tb_Lyrics_Measure, prev=PLUG_Lyrics_KssTextBox4, flag=VF_Const, X=0, Y=40, W=412, H=20, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_Info_Line, str_adr=PLUG_Lyrics_KssTextBox5_str_adr	# init_str "Info-Line: "
+		PsKssTextBox	Lyrics_KssTextBox5, super=Lyrics, sub=Tb_Lyrics_Info, next=Tb_Lyrics_Measure, prev=Lyrics_KssTextBox4, flag=VF_Const, X=0, Y=40, W=412, H=20, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_Info_Line, str_adr=Lyrics_KssTextBox5_str_adr	# init_str "Info-Line: "
 
 Str_fasdsfd_2:	.asciz "fasdsfd"
 
-			PsKssTextBox	Tb_Lyrics_Info, super=PLUG_Lyrics_KssTextBox5, flag=VF_Const, X=94, Y=42, W=280, H=16, color=CL_Silver, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, padding=248, init_str=Str_fasdsfd_2, str_adr=Tb_Lyrics_Info_str_adr	# init_str "fasdsfd"
+			PsKssTextBox	Tb_Lyrics_Info, super=Lyrics_KssTextBox5, flag=VF_Const, X=94, Y=42, W=280, H=16, color=CL_Silver, index=0xFFFF, font=5, fontcolor=CL_Black, align=1, padding=248, init_str=Str_fasdsfd_2, str_adr=Tb_Lyrics_Info_str_adr	# init_str "fasdsfd"
 
 Str_empty_24:	.asciz ""
 
 	.space	3, 0xFF
 
-		PsKssTextBox	Tb_Lyrics_Measure, super=PLUG_Lyrics, sub=Tb_Lyrics_Measure_KssTextBox1, next=Tb_Lyrics_LyricsChord, prev=PLUG_Lyrics_KssTextBox5, flag=VF_Const, X=460, Y=212, W=50, H=14, color=CL_White, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_empty_24, str_adr=Tb_Lyrics_Measure_str_adr	# init_str ""
+		PsKssTextBox	Tb_Lyrics_Measure, super=Lyrics, sub=Tb_Lyrics_Measure_KssTextBox1, next=Tb_Lyrics_LyricsChord, prev=Lyrics_KssTextBox5, flag=VF_Const, X=460, Y=212, W=50, H=14, color=CL_White, index=0xFFFF, font=3, fontcolor=CL_Black, align=1, auto_wrap=1, init_str=Str_empty_24, str_adr=Tb_Lyrics_Measure_str_adr	# init_str ""
 
 Str_SONG_TIMING:	.asciz "SONG TIMING:"
 
@@ -1161,13 +1161,13 @@ Str_A7:	.asciz "A7"
 
 	.space	1, 0xFF
 
-		PsKssTextBox	Tb_Lyrics_LyricsChord, super=PLUG_Lyrics, next=PLUG_Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, prev=Tb_Lyrics_Measure, flag=VF_Const, X=418, Y=16, W=116, H=40, color=CL_White, border=BD_Round2, index=0xFFFF, font=10, fontcolor=CL_Blue, is_3d=1, auto_wrap=1, init_str=Str_A7, str_adr=Tb_Lyrics_LyricsChord_str_adr	# init_str "A7"
+		PsKssTextBox	Tb_Lyrics_LyricsChord, super=Lyrics, next=Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, prev=Tb_Lyrics_Measure, flag=VF_Const, X=418, Y=16, W=116, H=40, color=CL_White, border=BD_Round2, index=0xFFFF, font=10, fontcolor=CL_Blue, is_3d=1, auto_wrap=1, init_str=Str_A7, str_adr=Tb_Lyrics_LyricsChord_str_adr	# init_str "A7"
 
 Str_CUSTOM_LYRICS_CHORD:	.asciz "CUSTOM LYRICS CHORD"
 
-		VwEditSwLabel	PLUG_Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, super=PLUG_Lyrics, next=PLUG_Lyrics_TempoBox1, prev=Tb_Lyrics_LyricsChord, flag=VF_Const, X=416, Y=4, W=118, H=11, str=Str_CUSTOM_LYRICS_CHORD, font=3, fontcolor=CL_White, editsw=ES_None	# str "CUSTOM LYRICS CHORD"
-		AcTempoBox	PLUG_Lyrics_TempoBox1, super=PLUG_Lyrics, next=Spec_Lyrics, prev=PLUG_Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, flag=VF_Const, X=542, Y=0, W=98, H=60, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=11, fontcolor=CL_Black
-		KssXLyricsBox	Spec_Lyrics, super=PLUG_Lyrics, prev=PLUG_Lyrics_TempoBox1, flag=VF_Const, X=0, Y=62, W=640, H=148, color=CL_White, index=0xFFFF, pEnable=Spec_Lyrics_pEnable
+		VwEditSwLabel	Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, super=Lyrics, next=Lyrics_TempoBox1, prev=Tb_Lyrics_LyricsChord, flag=VF_Const, X=416, Y=4, W=118, H=11, str=Str_CUSTOM_LYRICS_CHORD, font=3, fontcolor=CL_White, editsw=ES_None	# str "CUSTOM LYRICS CHORD"
+		AcTempoBox	Lyrics_TempoBox1, super=Lyrics, next=Spec_Lyrics, prev=Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, flag=VF_Const, X=542, Y=0, W=98, H=60, color=CL_Silver, border=BD_3D_UP1, index=0xFFFF, font=11, fontcolor=CL_Black
+		KssXLyricsBox	Spec_Lyrics, super=Lyrics, prev=Lyrics_TempoBox1, flag=VF_Const, X=0, Y=62, W=640, H=148, color=CL_White, index=0xFFFF, pEnable=Spec_Lyrics_pEnable
 
 Str_KssBg_8:	.asciz "KssBg"
 
@@ -1187,7 +1187,7 @@ Str_empty_26:	.asciz ""
 
 		AcScreenMenu	PLUG_IN_ScreenMenu1, super=PLUG_IN, next=PLUG_IN_EditSwLine1, prev=PLUG_IN_ScreenMenu_OK, flag=VF_Const, X=550, Y=71, W=80, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, align=1, editsw=ES_Right2, selected=PLUG_IN_ScreenMenu1_selected, str=Str_empty_26, screen=0xFFFFFFFF	# str ""
 		VwEditSwLine	PLUG_IN_EditSwLine1, super=PLUG_IN, next=PLUG_IN_ExitScreen1, prev=PLUG_IN_ScreenMenu1, flag=VF_Const, X=633, Y=52, W=1, H=32, color=CL_FireRed, linemode=1, editsw=ES_None
-		IvExitScreen	PLUG_IN_ExitScreen1, super=PLUG_IN, next=PLUG_IN_KssTextBox2, prev=PLUG_IN_EditSwLine1, flag=VF_Const|VF_InvisibleBox, X=0, Y=76, W=32, H=32, screen=PLUG_Main_id
+		IvExitScreen	PLUG_IN_ExitScreen1, super=PLUG_IN, next=PLUG_IN_KssTextBox2, prev=PLUG_IN_EditSwLine1, flag=VF_Const|VF_InvisibleBox, X=0, Y=76, W=32, H=32, screen=Main_id
 
 Str_SELECT_PLUG_iN:	.asciz "SELECT PLUG-iN"
 
@@ -1207,7 +1207,7 @@ Str_KssBg_9:	.asciz "KssBg"
 	.space	2, 0xFF
 
 	KssBgScreen	JukeBox, sub=JukeBox_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_Maroon, index=0xFFFF, exit=TT_PS, window=JukeBox_window, image_id=32872, title=Str_KssBg_9, icon=1	# title "KssBg"
-		IvExitScreen	JukeBox_ExitScreen1, super=JukeBox, next=JukeBox_KssTextBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, screen=PLUG_Main_id
+		IvExitScreen	JukeBox_ExitScreen1, super=JukeBox, next=JukeBox_KssTextBox1, flag=VF_Const|VF_InvisibleBox, X=0, Y=32, W=32, H=32, screen=Main_id
 
 Str_SD_JUKE_BOX_2:	.asciz "SD JUKE BOX"
 
@@ -1297,17 +1297,17 @@ Str_KssBg_10:	.asciz "KssBg"
 
 	.space	2, 0xFF
 
-	KssBgScreen	PLUG_Settings, sub=PLUG_Settings_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=PLUG_Settings_window, image_id=32872, title=Str_KssBg_10, icon=1	# title "KssBg"
-		IvExitScreen	PLUG_Settings_ExitScreen1, super=PLUG_Settings, next=PLUG_Settings_TrackSwitch1, flag=VF_Const|VF_InvisibleBox, X=376, Y=0, W=32, H=32, screen=PLUG_Main_id
-		AcTrackSwitch	PLUG_Settings_TrackSwitch1, super=PLUG_Settings, next=PLUG_Settings_TrackSwitch2, prev=PLUG_Settings_ExitScreen1, flag=VF_Const, X=4, Y=164, W=32, H=29, onoff=PLUG_Settings_TrackSwitch1_onoff, part=PLUG_Settings_TrackSwitch1_part, recplay=PLUG_Settings_TrackSwitch1_part+2
-		AcTrackSwitch	PLUG_Settings_TrackSwitch2, super=PLUG_Settings, next=PLUG_Settings_KssTextBox1, prev=PLUG_Settings_TrackSwitch1, flag=VF_Const, X=4, Y=164, W=32, H=29, onoff=PLUG_Settings_TrackSwitch2_onoff, part=PLUG_Settings_TrackSwitch2_part, recplay=PLUG_Settings_TrackSwitch2_part+2
+	KssBgScreen	Settings, sub=Settings_ExitScreen1, flag=VF_Fixed|VF_Const, X=0, Y=0, W=640, H=240, color=CL_DarkGray, index=0xFFFF, exit=TT_PS, window=Settings_window, image_id=32872, title=Str_KssBg_10, icon=1	# title "KssBg"
+		IvExitScreen	Settings_ExitScreen1, super=Settings, next=Settings_TrackSwitch1, flag=VF_Const|VF_InvisibleBox, X=376, Y=0, W=32, H=32, screen=Main_id
+		AcTrackSwitch	Settings_TrackSwitch1, super=Settings, next=Settings_TrackSwitch2, prev=Settings_ExitScreen1, flag=VF_Const, X=4, Y=164, W=32, H=29, onoff=Settings_TrackSwitch1_onoff, part=Settings_TrackSwitch1_part, recplay=Settings_TrackSwitch1_part+2
+		AcTrackSwitch	Settings_TrackSwitch2, super=Settings, next=Settings_KssTextBox1, prev=Settings_TrackSwitch1, flag=VF_Const, X=4, Y=164, W=32, H=29, onoff=Settings_TrackSwitch2_onoff, part=Settings_TrackSwitch2_part, recplay=Settings_TrackSwitch2_part+2
 
 Str_SD_PLUG_IN_SETTINGS:	.asciz "SD PLUG-IN SETTINGS"
 
-		PsKssTextBox	PLUG_Settings_KssTextBox1, super=PLUG_Settings, next=PLUG_Settings_WindowPage1, prev=PLUG_Settings_TrackSwitch2, flag=VF_Const, X=0, Y=0, W=500, H=34, color=CL_Transparent, index=0xFFFF, font=11, fontcolor=CL_White, align=1, is_3d=1, padding=500, auto_wrap=1, init_str=Str_SD_PLUG_IN_SETTINGS, str_adr=PLUG_Settings_KssTextBox1_str_adr	# init_str "SD PLUG-IN SETTINGS"
-		AcWindowPage	PLUG_Settings_WindowPage1, super=PLUG_Settings, next=PLUG_Settings_PageControl1, prev=PLUG_Settings_KssTextBox1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=PLUG_Settings_WindowPage1_page, pagemin=1, pagemax=2
-		IvPageControl	PLUG_Settings_PageControl1, super=PLUG_Settings, next=PLUG_Settings_PageControl2, prev=PLUG_Settings_WindowPage1, flag=VF_Const|VF_InvisibleBox, X=248, Y=0, W=32, H=32, page=1, window=WinSettings_id
-		IvPageControl	PLUG_Settings_PageControl2, super=PLUG_Settings, prev=PLUG_Settings_PageControl1, flag=VF_Const|VF_InvisibleBox, X=280, Y=0, W=32, H=32, page=2, window=WinSettings2_id
+		PsKssTextBox	Settings_KssTextBox1, super=Settings, next=Settings_WindowPage1, prev=Settings_TrackSwitch2, flag=VF_Const, X=0, Y=0, W=500, H=34, color=CL_Transparent, index=0xFFFF, font=11, fontcolor=CL_White, align=1, is_3d=1, padding=500, auto_wrap=1, init_str=Str_SD_PLUG_IN_SETTINGS, str_adr=Settings_KssTextBox1_str_adr	# init_str "SD PLUG-IN SETTINGS"
+		AcWindowPage	Settings_WindowPage1, super=Settings, next=Settings_PageControl1, prev=Settings_KssTextBox1, flag=VF_Const, X=564, Y=5, W=71, H=18, color=CL_PageBack, border=BD_3D_DOWN1, index=0xFFFF, page=Settings_WindowPage1_page, pagemin=1, pagemax=2
+		IvPageControl	Settings_PageControl1, super=Settings, next=Settings_PageControl2, prev=Settings_WindowPage1, flag=VF_Const|VF_InvisibleBox, X=248, Y=0, W=32, H=32, page=1, window=WinSettings_id
+		IvPageControl	Settings_PageControl2, super=Settings, prev=Settings_PageControl1, flag=VF_Const|VF_InvisibleBox, X=280, Y=0, W=32, H=32, page=2, window=WinSettings2_id
 
 	Window	WinSettings, sub=WinSettings_KssEditBox_WRITE_PROTECT, flag=VF_Const, X=0, Y=34, W=640, H=206, color=CL_DarkGray, index=0xFFFF, parent=WinSettings_parent, child=WinSettings_child
 
@@ -1444,7 +1444,7 @@ Str_empty_36:	.asciz ""
 
 		AcScreenMenu	ClsDir_ScreenMenu1, super=ClsDir, next=ClsDir_EditSwLine1, prev=ClsDir_ScreenMenu_OK, flag=VF_Const, X=550, Y=71, W=80, H=38, color=CL_Transparent, index=0xFFFF, fontcolor=CL_White, align=1, editsw=ES_Right2, selected=ClsDir_ScreenMenu1_selected, str=Str_empty_36, screen=Cls_id	# str ""
 		VwEditSwLine	ClsDir_EditSwLine1, super=ClsDir, next=ClsDir_ExitScreen1, prev=ClsDir_ScreenMenu1, flag=VF_Const, X=633, Y=52, W=1, H=32, color=CL_FireRed, linemode=1, editsw=ES_None
-		IvExitScreen	ClsDir_ExitScreen1, super=ClsDir, next=ClsDir_KssTextBox1, prev=ClsDir_EditSwLine1, flag=VF_Const|VF_InvisibleBox, X=0, Y=76, W=32, H=32, screen=PLUG_Main_id
+		IvExitScreen	ClsDir_ExitScreen1, super=ClsDir, next=ClsDir_KssTextBox1, prev=ClsDir_EditSwLine1, flag=VF_Const|VF_InvisibleBox, X=0, Y=76, W=32, H=32, screen=Main_id
 
 Str_C_L_S_SELECT:	.asciz "C.L.S. SELECT"
 
@@ -3285,25 +3285,25 @@ PLUG_MainFunctionNames:
 
 # 479 objects of block PLUG; object <name> is index <name>_ix, id <name>_id = (0x2f0 << 16) | <name>_ix
 PLUG_Viewables:
-	OBJ	PLUG_Main, PLUG_Viewables, 0x2f0
+	OBJ	Main, PLUG_Viewables, 0x2f0
 	OBJ	Ce_Main, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_ScreenMenu1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TextBox1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_KssTextBox1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TextBox2, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_ScreenMenu_SD_SETTINGS, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_ScreenMenu_SELECT_SONG, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TitleMenu_SD_AUDIO_PLAY, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_ScreenMenu_SD_JUKE_BOX, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_ScreenMenu_SELECT_C_L_S, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_ScreenMenu_CUSTOM_LYRICS, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TextBox3, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_KssTextBox2, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TextBox4, PLUG_Viewables, 0x2f0
+	OBJ	Main_ScreenMenu1, PLUG_Viewables, 0x2f0
+	OBJ	Main_TextBox1, PLUG_Viewables, 0x2f0
+	OBJ	Main_KssTextBox1, PLUG_Viewables, 0x2f0
+	OBJ	Main_TextBox2, PLUG_Viewables, 0x2f0
+	OBJ	Main_ScreenMenu_SD_SETTINGS, PLUG_Viewables, 0x2f0
+	OBJ	Main_TitleMenu_CUSTOM_STYLE_LOAD_SA, PLUG_Viewables, 0x2f0
+	OBJ	Main_ScreenMenu_SELECT_SONG, PLUG_Viewables, 0x2f0
+	OBJ	Main_TitleMenu_SD_AUDIO_PLAY, PLUG_Viewables, 0x2f0
+	OBJ	Main_ScreenMenu_SD_JUKE_BOX, PLUG_Viewables, 0x2f0
+	OBJ	Main_ScreenMenu_SELECT_C_L_S, PLUG_Viewables, 0x2f0
+	OBJ	Main_ScreenMenu_CUSTOM_LYRICS, PLUG_Viewables, 0x2f0
+	OBJ	Main_TextBox3, PLUG_Viewables, 0x2f0
+	OBJ	Main_KssTextBox2, PLUG_Viewables, 0x2f0
+	OBJ	Main_TextBox4, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Main_Infos, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Main_CompileDate, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Main_TextBox_PROTECTION_OP_MODE_T, PLUG_Viewables, 0x2f0
+	OBJ	Main_TextBox_PROTECTION_OP_MODE_T, PLUG_Viewables, 0x2f0
 	OBJ	SelDir, PLUG_Viewables, 0x2f0
 	OBJ	SelDir_IndexWideES1, PLUG_Viewables, 0x2f0
 	OBJ	SelDir_EditSwLine1, PLUG_Viewables, 0x2f0
@@ -3510,22 +3510,22 @@ PLUG_Viewables:
 	OBJ	HELP_WORKSHOP_CONTENT_ExitScreen1, PLUG_Viewables, 0x2f0
 	OBJ	HELP_WORKSHOP_CONTENT_KssTextBox1, PLUG_Viewables, 0x2f0
 	OBJ	LST_HELP_WS, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_KssTextBox1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_KssTextBox2, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_ChordBox1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_KssTextBox3, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_KssTextBox1, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_KssTextBox2, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_ChordBox1, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_KssTextBox3, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_SongName, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_KssTextBox4, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_KssTextBox4, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_Interpreter, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_KssTextBox5, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_KssTextBox5, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_Info, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_Measure, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_Measure_KssTextBox1, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_TimeSig, PLUG_Viewables, 0x2f0
 	OBJ	Tb_Lyrics_LyricsChord, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Lyrics_TempoBox1, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD, PLUG_Viewables, 0x2f0
+	OBJ	Lyrics_TempoBox1, PLUG_Viewables, 0x2f0
 	OBJ	Spec_Lyrics, PLUG_Viewables, 0x2f0
 	OBJ	PLUG_IN, PLUG_Viewables, 0x2f0
 	OBJ	PLUG_IN_IndexWideES1, PLUG_Viewables, 0x2f0
@@ -3555,14 +3555,14 @@ PLUG_Viewables:
 	OBJ	JukeBox_IndexWideES1, PLUG_Viewables, 0x2f0
 	OBJ	Es_JukeBox_SelectCancel, PLUG_Viewables, 0x2f0
 	OBJ	Tb_JukeBox_Help, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_ExitScreen1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_TrackSwitch1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_TrackSwitch2, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_KssTextBox1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_WindowPage1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_PageControl1, PLUG_Viewables, 0x2f0
-	OBJ	PLUG_Settings_PageControl2, PLUG_Viewables, 0x2f0
+	OBJ	Settings, PLUG_Viewables, 0x2f0
+	OBJ	Settings_ExitScreen1, PLUG_Viewables, 0x2f0
+	OBJ	Settings_TrackSwitch1, PLUG_Viewables, 0x2f0
+	OBJ	Settings_TrackSwitch2, PLUG_Viewables, 0x2f0
+	OBJ	Settings_KssTextBox1, PLUG_Viewables, 0x2f0
+	OBJ	Settings_WindowPage1, PLUG_Viewables, 0x2f0
+	OBJ	Settings_PageControl1, PLUG_Viewables, 0x2f0
+	OBJ	Settings_PageControl2, PLUG_Viewables, 0x2f0
 	OBJ	WinSettings, PLUG_Viewables, 0x2f0
 	OBJ	WinSettings_KssEditBox_WRITE_PROTECT, PLUG_Viewables, 0x2f0
 	OBJ	WinSettings_KssEditBox_WRITE_CONFIRMATION, PLUG_Viewables, 0x2f0
@@ -3768,25 +3768,25 @@ PLUG_Viewables:
 	.space	4, 0x00
 
 PLUG_ResNames:
-	.long	RN_Main	# PLUG_Main
+	.long	RN_Main	# Main
 	.long	RN_Ce_Main	# Ce_Main
-	.long	RN_empty	# PLUG_Main_ScreenMenu1
-	.long	RN_empty_2	# PLUG_Main_TextBox1
-	.long	RN_empty_3	# PLUG_Main_KssTextBox1
-	.long	RN_empty_4	# PLUG_Main_TextBox2
-	.long	RN_empty_5	# PLUG_Main_ScreenMenu_SD_SETTINGS
-	.long	RN_empty_6	# PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA
-	.long	RN_empty_7	# PLUG_Main_ScreenMenu_SELECT_SONG
-	.long	RN_empty_8	# PLUG_Main_TitleMenu_SD_AUDIO_PLAY
-	.long	RN_empty_9	# PLUG_Main_ScreenMenu_SD_JUKE_BOX
-	.long	RN_empty_10	# PLUG_Main_ScreenMenu_SELECT_C_L_S
-	.long	RN_empty_11	# PLUG_Main_ScreenMenu_CUSTOM_LYRICS
-	.long	RN_empty_12	# PLUG_Main_TextBox3
-	.long	RN_empty_13	# PLUG_Main_KssTextBox2
-	.long	RN_empty_14	# PLUG_Main_TextBox4
+	.long	RN_empty	# Main_ScreenMenu1
+	.long	RN_empty_2	# Main_TextBox1
+	.long	RN_empty_3	# Main_KssTextBox1
+	.long	RN_empty_4	# Main_TextBox2
+	.long	RN_empty_5	# Main_ScreenMenu_SD_SETTINGS
+	.long	RN_empty_6	# Main_TitleMenu_CUSTOM_STYLE_LOAD_SA
+	.long	RN_empty_7	# Main_ScreenMenu_SELECT_SONG
+	.long	RN_empty_8	# Main_TitleMenu_SD_AUDIO_PLAY
+	.long	RN_empty_9	# Main_ScreenMenu_SD_JUKE_BOX
+	.long	RN_empty_10	# Main_ScreenMenu_SELECT_C_L_S
+	.long	RN_empty_11	# Main_ScreenMenu_CUSTOM_LYRICS
+	.long	RN_empty_12	# Main_TextBox3
+	.long	RN_empty_13	# Main_KssTextBox2
+	.long	RN_empty_14	# Main_TextBox4
 	.long	RN_Tb_Main_Infos	# Tb_Main_Infos
 	.long	RN_Tb_Main_CompileDate	# Tb_Main_CompileDate
-	.long	RN_empty_15	# PLUG_Main_TextBox_PROTECTION_OP_MODE_T
+	.long	RN_empty_15	# Main_TextBox_PROTECTION_OP_MODE_T
 	.long	RN_SelDir	# SelDir
 	.long	RN_empty_16	# SelDir_IndexWideES1
 	.long	RN_empty_17	# SelDir_EditSwLine1
@@ -3993,22 +3993,22 @@ PLUG_ResNames:
 	.long	RN_empty_155	# HELP_WORKSHOP_CONTENT_ExitScreen1
 	.long	RN_empty_156	# HELP_WORKSHOP_CONTENT_KssTextBox1
 	.long	RN_LST_HELP_WS	# LST_HELP_WS
-	.long	RN_Lyrics	# PLUG_Lyrics
-	.long	RN_empty_157	# PLUG_Lyrics_KssTextBox1
-	.long	RN_empty_158	# PLUG_Lyrics_KssTextBox2
-	.long	RN_empty_159	# PLUG_Lyrics_ChordBox1
-	.long	RN_empty_160	# PLUG_Lyrics_KssTextBox3
+	.long	RN_Lyrics	# Lyrics
+	.long	RN_empty_157	# Lyrics_KssTextBox1
+	.long	RN_empty_158	# Lyrics_KssTextBox2
+	.long	RN_empty_159	# Lyrics_ChordBox1
+	.long	RN_empty_160	# Lyrics_KssTextBox3
 	.long	RN_Tb_Lyrics_SongName	# Tb_Lyrics_SongName
-	.long	RN_empty_161	# PLUG_Lyrics_KssTextBox4
+	.long	RN_empty_161	# Lyrics_KssTextBox4
 	.long	RN_Tb_Lyrics_Interpreter	# Tb_Lyrics_Interpreter
-	.long	RN_empty_162	# PLUG_Lyrics_KssTextBox5
+	.long	RN_empty_162	# Lyrics_KssTextBox5
 	.long	RN_Tb_Lyrics_Info	# Tb_Lyrics_Info
 	.long	RN_Tb_Lyrics_Measure	# Tb_Lyrics_Measure
 	.long	RN_empty_163	# Tb_Lyrics_Measure_KssTextBox1
 	.long	RN_Tb_Lyrics_TimeSig	# Tb_Lyrics_TimeSig
 	.long	RN_Tb_Lyrics_LyricsChord	# Tb_Lyrics_LyricsChord
-	.long	RN_empty_164	# PLUG_Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD
-	.long	RN_empty_165	# PLUG_Lyrics_TempoBox1
+	.long	RN_empty_164	# Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD
+	.long	RN_empty_165	# Lyrics_TempoBox1
 	.long	RN_Spec_Lyrics	# Spec_Lyrics
 	.long	RN_PLUG_IN	# PLUG_IN
 	.long	RN_empty_166	# PLUG_IN_IndexWideES1
@@ -4038,14 +4038,14 @@ PLUG_ResNames:
 	.long	RN_empty_179	# JukeBox_IndexWideES1
 	.long	RN_Es_JukeBox_SelectCancel	# Es_JukeBox_SelectCancel
 	.long	RN_Tb_JukeBox_Help	# Tb_JukeBox_Help
-	.long	RN_Settings	# PLUG_Settings
-	.long	RN_empty_180	# PLUG_Settings_ExitScreen1
-	.long	RN_empty_181	# PLUG_Settings_TrackSwitch1
-	.long	RN_empty_182	# PLUG_Settings_TrackSwitch2
-	.long	RN_empty_183	# PLUG_Settings_KssTextBox1
-	.long	RN_empty_184	# PLUG_Settings_WindowPage1
-	.long	RN_empty_185	# PLUG_Settings_PageControl1
-	.long	RN_empty_186	# PLUG_Settings_PageControl2
+	.long	RN_Settings	# Settings
+	.long	RN_empty_180	# Settings_ExitScreen1
+	.long	RN_empty_181	# Settings_TrackSwitch1
+	.long	RN_empty_182	# Settings_TrackSwitch2
+	.long	RN_empty_183	# Settings_KssTextBox1
+	.long	RN_empty_184	# Settings_WindowPage1
+	.long	RN_empty_185	# Settings_PageControl1
+	.long	RN_empty_186	# Settings_PageControl2
 	.long	RN_WinSettings	# WinSettings
 	.long	RN_empty_187	# WinSettings_KssEditBox_WRITE_PROTECT
 	.long	RN_empty_188	# WinSettings_KssEditBox_WRITE_CONFIRMATION
@@ -4293,28 +4293,28 @@ KssRamImage:	# the initialised-RAM image's flash copy: 5272 bytes the start-up c
 
 Main_window:
 	.long	0xFFFFFFFF
-PLUG_Main_ScreenMenu1_selected:
+Main_ScreenMenu1_selected:
 	.long	0
 
-PLUG_Main_KssTextBox1_str_adr:
+Main_KssTextBox1_str_adr:
 	.long	0x00C5CF2D	# initial value
 
-PLUG_Main_ScreenMenu_SD_SETTINGS_selected:
+Main_ScreenMenu_SD_SETTINGS_selected:
 	.long	0
-PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA_selected:
+Main_TitleMenu_CUSTOM_STYLE_LOAD_SA_selected:
 	.long	0
-PLUG_Main_ScreenMenu_SELECT_SONG_selected:
+Main_ScreenMenu_SELECT_SONG_selected:
 	.long	0
-PLUG_Main_TitleMenu_SD_AUDIO_PLAY_selected:
+Main_TitleMenu_SD_AUDIO_PLAY_selected:
 	.long	0
-PLUG_Main_ScreenMenu_SD_JUKE_BOX_selected:
+Main_ScreenMenu_SD_JUKE_BOX_selected:
 	.long	0
-PLUG_Main_ScreenMenu_SELECT_C_L_S_selected:
+Main_ScreenMenu_SELECT_C_L_S_selected:
 	.long	0
-PLUG_Main_ScreenMenu_CUSTOM_LYRICS_selected:
+Main_ScreenMenu_CUSTOM_LYRICS_selected:
 	.long	0
 
-PLUG_Main_KssTextBox2_str_adr:
+Main_KssTextBox2_str_adr:
 	.long	0x00C5CFAF	# initial value
 Tb_Main_CompileDate_str_adr:
 	.long	0x00C68BDA	# initial value
@@ -4553,22 +4553,22 @@ HELP_WORKSHOP_CONTENT_KssTextBox1_str_adr:
 LST_HELP_WS_extension:
 	.long	0x015148C8	# initial value
 
-PLUG_Lyrics_window:
+Lyrics_window:
 	.long	0xFFFFFFFF
 
-PLUG_Lyrics_KssTextBox1_str_adr:
+Lyrics_KssTextBox1_str_adr:
 	.long	0x00C5D351	# initial value
-PLUG_Lyrics_KssTextBox2_str_adr:
+Lyrics_KssTextBox2_str_adr:
 	.long	0x00C5D360	# initial value
-PLUG_Lyrics_KssTextBox3_str_adr:
+Lyrics_KssTextBox3_str_adr:
 	.long	0x00C5D36B	# initial value
 Tb_Lyrics_SongName_str_adr:
 	.long	0x00C5D377	# initial value
-PLUG_Lyrics_KssTextBox4_str_adr:
+Lyrics_KssTextBox4_str_adr:
 	.long	0x00C5D381	# initial value
 Tb_Lyrics_Interpreter_str_adr:
 	.long	0x00C5D38D	# initial value
-PLUG_Lyrics_KssTextBox5_str_adr:
+Lyrics_KssTextBox5_str_adr:
 	.long	0x00C5D395	# initial value
 Tb_Lyrics_Info_str_adr:
 	.long	0x00C5D3A1	# initial value
@@ -4635,20 +4635,20 @@ Es_JukeBox_SelectCancel_str_adr:
 Tb_JukeBox_Help_str_adr:
 	.long	0x00C5D437	# initial value
 
-PLUG_Settings_window:
+Settings_window:
 	.long	0xFFFFFFFF
-PLUG_Settings_TrackSwitch1_onoff:
+Settings_TrackSwitch1_onoff:
 	.long	0
-PLUG_Settings_TrackSwitch1_part:
+Settings_TrackSwitch1_part:
 	.long	0
-PLUG_Settings_TrackSwitch2_onoff:
+Settings_TrackSwitch2_onoff:
 	.long	0
-PLUG_Settings_TrackSwitch2_part:
+Settings_TrackSwitch2_part:
 	.long	0
 
-PLUG_Settings_KssTextBox1_str_adr:
+Settings_KssTextBox1_str_adr:
 	.long	0x00C5D43E	# initial value
-PLUG_Settings_WindowPage1_page:
+Settings_WindowPage1_page:
 	.long	0xFFFF0001	# initial value
 
 WinSettings_parent:
@@ -5330,19 +5330,14 @@ names_50299424:
 	.long	Str_mvmew844njk8j8og97sq
 
 names_50299464:
-	.long	Str_j8ogwlphhecumj2kmvme
-	.long	Str_mj2kghum4cdkfrhhj8og
-	.long	Str_frhhpku5d99w8jthmj2k
-	.long	Str_8jthgff676lkwhjqfrhh
-	.long	Str_whjqhsm19b564rlr8jth
-	.long	Str_4rlrtara3p7sfgfqwhjq
-	.long	Str_fgfql39ipkur4qrs4rlr
-	.long	Str_4qrsnwaavg1hktk9fgfq
-	.long	Str_ktk9d9frapb5j5gu4qrs
-	.long	Str_j5guniuhum49uiuektk9
-	.long	Str_m2ht1bvqgap26ucfj5gu
+	.long	Str_j8ogwlphhecumj2kmvme, Str_mj2kghum4cdkfrhhj8og
+	.long	Str_frhhpku5d99w8jthmj2k, Str_8jthgff676lkwhjqfrhh
+	.long	Str_whjqhsm19b564rlr8jth, Str_4rlrtara3p7sfgfqwhjq
+	.long	Str_fgfql39ipkur4qrs4rlr, Str_4qrsnwaavg1hktk9fgfq
+	.long	Str_ktk9d9frapb5j5gu4qrs, Str_j5guniuhum49uiuektk9
 
-ptr_50299490:
+	.long	Str_m2ht1bvqgap26ucfj5gu
+KssKeyStringsPtr:
 	.long	names_50299424
 ptr_50299494:
 	.long	names_50299424+4

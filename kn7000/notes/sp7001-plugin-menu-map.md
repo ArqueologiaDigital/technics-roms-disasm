@@ -14,29 +14,29 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
 
 ## Block PLUG
 
-### PLUG_Main
+### Main
 
 `TtlScreen`, opened by TT_PLUGIN
 
-- `TtlScreen` **PLUG_Main**, title "SYSTEM PLUG-IN", (0,0 640x240), exit -> TT_PS
+- `TtlScreen` **Main**, title "SYSTEM PLUG-IN", (0,0 640x240), exit -> TT_PS
   - `IvCatchEvent` **Ce_Main**, (0,0 32x32)
-  - `AcScreenMenu` **PLUG_Main_ScreenMenu1**, (8,28 100x38), screen Debug
-  - `VwTextBox` **PLUG_Main_TextBox1**, (0,0 640x240)
-    - `PsKssTextBox` **PLUG_Main_KssTextBox1**, init_str "-- SYSTEM PLUG-iN SP7001 --", (0,0 640x42)
-      - `VwTextBox` **PLUG_Main_TextBox2**, (8,38 624x2)
-    - `AcScreenMenu` **PLUG_Main_ScreenMenu_SD_SETTINGS**, str "SD SETTINGS", (8,71 220x38), screen PLUG_Settings
-    - `AcTitleMenu` **PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA**, str "CUSTOM STYLE LOAD/SAVE", (8,157 220x38), title -> TT_SDCCUS
-    - `AcScreenMenu` **PLUG_Main_ScreenMenu_SELECT_SONG**, str "SELECT SONG", (412,71 220x38), screen SelDir
-    - `AcTitleMenu` **PLUG_Main_TitleMenu_SD_AUDIO_PLAY**, str "SD-AUDIO PLAY", (8,114 220x38), title -> TT_SDAUDPLY
-    - `AcScreenMenu` **PLUG_Main_ScreenMenu_SD_JUKE_BOX**, str "SD JUKE BOX", (412,114 220x38), screen JukeBox
-    - `AcScreenMenu` **PLUG_Main_ScreenMenu_SELECT_C_L_S**, str "SELECT C.L.S.", (412,157 220x38), screen ClsDir
-    - `AcScreenMenu` **PLUG_Main_ScreenMenu_CUSTOM_LYRICS**, str "CUSTOM LYRICS", (8,200 220x38), screen PLUG_Lyrics
-    - `PsTextBox` **PLUG_Main_TextBox3**, (238,60 164x158)
-      - `PsKssTextBox` **PLUG_Main_KssTextBox2**, init_str "SYSTEM - INFOS", (255,59 130x18)
-        - `VwTextBox` **PLUG_Main_TextBox4**, (255,76 130x2)
+  - `AcScreenMenu` **Main_ScreenMenu1**, (8,28 100x38), screen Debug
+  - `VwTextBox` **Main_TextBox1**, (0,0 640x240)
+    - `PsKssTextBox` **Main_KssTextBox1**, init_str "-- SYSTEM PLUG-iN SP7001 --", (0,0 640x42)
+      - `VwTextBox` **Main_TextBox2**, (8,38 624x2)
+    - `AcScreenMenu` **Main_ScreenMenu_SD_SETTINGS**, str "SD SETTINGS", (8,71 220x38), screen Settings
+    - `AcTitleMenu` **Main_TitleMenu_CUSTOM_STYLE_LOAD_SA**, str "CUSTOM STYLE LOAD/SAVE", (8,157 220x38), title -> TT_SDCCUS
+    - `AcScreenMenu` **Main_ScreenMenu_SELECT_SONG**, str "SELECT SONG", (412,71 220x38), screen SelDir
+    - `AcTitleMenu` **Main_TitleMenu_SD_AUDIO_PLAY**, str "SD-AUDIO PLAY", (8,114 220x38), title -> TT_SDAUDPLY
+    - `AcScreenMenu` **Main_ScreenMenu_SD_JUKE_BOX**, str "SD JUKE BOX", (412,114 220x38), screen JukeBox
+    - `AcScreenMenu` **Main_ScreenMenu_SELECT_C_L_S**, str "SELECT C.L.S.", (412,157 220x38), screen ClsDir
+    - `AcScreenMenu` **Main_ScreenMenu_CUSTOM_LYRICS**, str "CUSTOM LYRICS", (8,200 220x38), screen Lyrics
+    - `PsTextBox` **Main_TextBox3**, (238,60 164x158)
+      - `PsKssTextBox` **Main_KssTextBox2**, init_str "SYSTEM - INFOS", (255,59 130x18)
+        - `VwTextBox` **Main_TextBox4**, (255,76 130x2)
       - `VwTextBox` **Tb_Main_Infos**, (332,84 92x140)
         - `PsKssTextBox` **Tb_Main_CompileDate**, init_str "Tentative develop.-No. 20-09-2002", (330,219 72x12)
-    - `VwTextBox` **PLUG_Main_TextBox_PROTECTION_OP_MODE_T**, text "PROTECTION  : OP-MODE     : TAP-TEMPO   ", (240,84 94x154)
+    - `VwTextBox` **Main_TextBox_PROTECTION_OP_MODE_T**, text "PROTECTION  : OP-MODE     : TAP-TEMPO   ", (240,84 94x154)
 
 ### SelDir
 
@@ -282,7 +282,7 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
   - `AcScreenMenu` **HELP_WORKSHOP_SEL_ScreenMenu_OK**, str "OK", (550,36 80x26), screen HELP_WORKSHOP_CONTENT
   - `AcScreenMenu` **HELP_WORKSHOP_SEL_ScreenMenu1**, (550,71 80x38), screen HELP_WORKSHOP_CONTENT
   - `VwEditSwLine` **HELP_WORKSHOP_SEL_EditSwLine1**, (633,52 1x32)
-  - `IvExitScreen` **HELP_WORKSHOP_SEL_ExitScreen1**, (0,76 32x32), screen PLUG_Main
+  - `IvExitScreen` **HELP_WORKSHOP_SEL_ExitScreen1**, (0,76 32x32), screen Main
   - `PsKssTextBox` **HELP_WORKSHOP_SEL_KssTextBox1**, init_str "SELECT HELP WORKSHOP", (0,0 480x42)
   - `AcKssList` **HELP_WORKSHOP_SEL_KssList1**, (100,36 440x172)
 
@@ -299,26 +299,26 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
   - `PsKssTextBox` **HELP_WORKSHOP_CONTENT_KssTextBox1**, init_str "HELP WORKSHOP", (0,0 480x42)
   - `AcKssList` **LST_HELP_WS**, (100,36 440x172)
 
-### PLUG_Lyrics
+### Lyrics
 
 `KssBgScreen`
 
-- `KssBgScreen` **PLUG_Lyrics**, title "KssBg", (0,0 640x240), exit -> TT_PS
-  - `PsKssTextBox` **PLUG_Lyrics_KssTextBox1**, init_str "COPY TLX TO SD", (520,211 119x28)
-  - `PsKssTextBox` **PLUG_Lyrics_KssTextBox2**, init_str "APC CHORD:", (164,211 190x28)
-    - `AcChordBox` **PLUG_Lyrics_ChordBox1**, (244,215 100x20)
-  - `PsKssTextBox` **PLUG_Lyrics_KssTextBox3**, init_str "Title    : ", (0,0 412x20)
+- `KssBgScreen` **Lyrics**, title "KssBg", (0,0 640x240), exit -> TT_PS
+  - `PsKssTextBox` **Lyrics_KssTextBox1**, init_str "COPY TLX TO SD", (520,211 119x28)
+  - `PsKssTextBox` **Lyrics_KssTextBox2**, init_str "APC CHORD:", (164,211 190x28)
+    - `AcChordBox` **Lyrics_ChordBox1**, (244,215 100x20)
+  - `PsKssTextBox` **Lyrics_KssTextBox3**, init_str "Title    : ", (0,0 412x20)
     - `PsKssTextBox` **Tb_Lyrics_SongName**, init_str "Let it be", (92,2 300x16)
-  - `PsKssTextBox` **PLUG_Lyrics_KssTextBox4**, init_str "Interpr. : ", (0,20 412x20)
+  - `PsKssTextBox` **Lyrics_KssTextBox4**, init_str "Interpr. : ", (0,20 412x20)
     - `PsKssTextBox` **Tb_Lyrics_Interpreter**, init_str "fasdsfd", (90,22 280x16)
-  - `PsKssTextBox` **PLUG_Lyrics_KssTextBox5**, init_str "Info-Line: ", (0,40 412x20)
+  - `PsKssTextBox` **Lyrics_KssTextBox5**, init_str "Info-Line: ", (0,40 412x20)
     - `PsKssTextBox` **Tb_Lyrics_Info**, init_str "fasdsfd", (94,42 280x16)
   - `PsKssTextBox` **Tb_Lyrics_Measure**, (460,212 50x14)
     - `PsKssTextBox` **Tb_Lyrics_Measure_KssTextBox1**, init_str "SONG TIMING:", (360,211 156x28)
       - `PsKssTextBox` **Tb_Lyrics_TimeSig**, (468,224 40x14)
   - `PsKssTextBox` **Tb_Lyrics_LyricsChord**, init_str "A7", (418,16 116x40)
-  - `VwEditSwLabel` **PLUG_Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD**, str "CUSTOM LYRICS CHORD", (416,4 118x11)
-  - `AcTempoBox` **PLUG_Lyrics_TempoBox1**, (542,0 98x60)
+  - `VwEditSwLabel` **Lyrics_EditSwLabel_CUSTOM_LYRICS_CHORD**, str "CUSTOM LYRICS CHORD", (416,4 118x11)
+  - `AcTempoBox` **Lyrics_TempoBox1**, (542,0 98x60)
   - `KssXLyricsBox` **Spec_Lyrics**, (0,62 640x148)
 
 ### PLUG_IN
@@ -331,7 +331,7 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
     - `PsKssTextBox` **PLUG_IN_KssTextBox1**, init_str "OK", (522,34 108x24)
   - `AcScreenMenu` **PLUG_IN_ScreenMenu1**, (550,71 80x38)
   - `VwEditSwLine` **PLUG_IN_EditSwLine1**, (633,52 1x32)
-  - `IvExitScreen` **PLUG_IN_ExitScreen1**, (0,76 32x32), screen PLUG_Main
+  - `IvExitScreen` **PLUG_IN_ExitScreen1**, (0,76 32x32), screen Main
   - `PsKssTextBox` **PLUG_IN_KssTextBox2**, init_str "SELECT PLUG-iN", (0,0 480x42)
   - `AcScreenMenu` **PLUG_IN_ScreenMenu_READ_FROM_FD**, str "READ FROM FD", (522,212 108x23)
   - `AcKssList` **PLUG_IN_KssList1**, (164,58 312x120)
@@ -341,7 +341,7 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
 `KssBgScreen`
 
 - `KssBgScreen` **JukeBox**, title "KssBg", (0,0 640x240), exit -> TT_PS
-  - `IvExitScreen` **JukeBox_ExitScreen1**, (0,32 32x32), screen PLUG_Main
+  - `IvExitScreen` **JukeBox_ExitScreen1**, (0,32 32x32), screen Main
   - `PsKssTextBox` **JukeBox_KssTextBox1**, init_str "SD JUKE BOX", (0,0 480x42)
   - `PsKssTextBox` **JukeBox_KssTextBox2**, init_str "Selected Song : ", (148,40 320x26)
     - `PsKssTextBox` **Tb_JukeBox_SongName**, init_str "name", (272,44 188x18)
@@ -359,18 +359,18 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
     - `PsKssTextBox` **Es_JukeBox_SelectCancel**, init_str "text", (284,212 68x20)
   - `PsKssTextBox` **Tb_JukeBox_Help**, (240,77 160x120)
 
-### PLUG_Settings
+### Settings
 
 `KssBgScreen`
 
-- `KssBgScreen` **PLUG_Settings**, title "KssBg", (0,0 640x240), exit -> TT_PS
-  - `IvExitScreen` **PLUG_Settings_ExitScreen1**, (376,0 32x32), screen PLUG_Main
-  - `AcTrackSwitch` **PLUG_Settings_TrackSwitch1**, (4,164 32x29)
-  - `AcTrackSwitch` **PLUG_Settings_TrackSwitch2**, (4,164 32x29)
-  - `PsKssTextBox` **PLUG_Settings_KssTextBox1**, init_str "SD PLUG-IN SETTINGS", (0,0 500x34)
-  - `AcWindowPage` **PLUG_Settings_WindowPage1**, (564,5 71x18)
-  - `IvPageControl` **PLUG_Settings_PageControl1**, (248,0 32x32), window WinSettings
-  - `IvPageControl` **PLUG_Settings_PageControl2**, (280,0 32x32), window WinSettings2
+- `KssBgScreen` **Settings**, title "KssBg", (0,0 640x240), exit -> TT_PS
+  - `IvExitScreen` **Settings_ExitScreen1**, (376,0 32x32), screen Main
+  - `AcTrackSwitch` **Settings_TrackSwitch1**, (4,164 32x29)
+  - `AcTrackSwitch` **Settings_TrackSwitch2**, (4,164 32x29)
+  - `PsKssTextBox` **Settings_KssTextBox1**, init_str "SD PLUG-IN SETTINGS", (0,0 500x34)
+  - `AcWindowPage` **Settings_WindowPage1**, (564,5 71x18)
+  - `IvPageControl` **Settings_PageControl1**, (248,0 32x32), window WinSettings
+  - `IvPageControl` **Settings_PageControl2**, (280,0 32x32), window WinSettings2
 
 ### WinSettings
 
@@ -430,7 +430,7 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
   - `AcScreenMenu` **ClsDir_ScreenMenu_OK**, str "OK", (550,30 80x28), screen Cls
   - `AcScreenMenu` **ClsDir_ScreenMenu1**, (550,71 80x38), screen Cls
   - `VwEditSwLine` **ClsDir_EditSwLine1**, (633,52 1x32)
-  - `IvExitScreen` **ClsDir_ExitScreen1**, (0,76 32x32), screen PLUG_Main
+  - `IvExitScreen` **ClsDir_ExitScreen1**, (0,76 32x32), screen Main
   - `PsKssTextBox` **ClsDir_KssTextBox1**, init_str "C.L.S. SELECT", (0,0 480x32)
   - `AcKssList` **Lst_ClsDir**, (19,30 522x184)
   - `AcIndexEditSw` **ClsDir_IndexEditSw1**, (124,216 32x23)
@@ -650,9 +650,9 @@ Per object: class, name, label text, rect (X,Y WxH), and where a title menu or e
 
 ## Titles
 
-| title       | screen    | led to from                              |
-|-------------|-----------|------------------------------------------|
-| TT_PLUGIN   | PLUG_Main |                                          |
-| TT_PS       |           |                                          |
-| TT_SDAUDPLY |           | PLUG_Main_TitleMenu_SD_AUDIO_PLAY        |
-| TT_SDCCUS   |           | PLUG_Main_TitleMenu_CUSTOM_STYLE_LOAD_SA |
+| title       | screen | led to from                         |
+|-------------|--------|-------------------------------------|
+| TT_PLUGIN   | Main   |                                     |
+| TT_PS       |        |                                     |
+| TT_SDAUDPLY |        | Main_TitleMenu_SD_AUDIO_PLAY        |
+| TT_SDCCUS   |        | Main_TitleMenu_CUSTOM_STYLE_LOAD_SA |

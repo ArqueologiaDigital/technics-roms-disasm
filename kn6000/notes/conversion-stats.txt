@@ -6,7 +6,7 @@ instructions                579401 (+75 .byte escapes)
 nop padding bytes           5
 unreached code decoded       13356 (--decode-gaps; +11 bytes of 0xFF fill)
 code-range bytes left binary 3 (in 1 .incbin_range pieces)
-local labels                46489
+local labels                49526
 movm pointer targets rejected (paths do not end) 0
 entries found right after reached code          1290 (0 rejected, with jmp targets)
 entries found as a jmp target                   3

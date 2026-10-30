@@ -10,7 +10,7 @@
 .equ OTB_PLUG, 0x000C002F
 
 # 1 titles
-.equ TT_PLUGIN, 0x000F013F	# screen PLUG_Main
+.equ TT_PLUGIN, 0x000F013F	# screen Main
 
 # 0 modes
 

@@ -34823,7 +34823,7 @@ TableRomImageEnd:
     mov     a2, a0
     call    KssKeyStripDashes, [d2,a2,a3], 0x24
     mov     a3, a1
-    mov     (ptr_50299490), d0
+    mov     (KssKeyStringsPtr), d0
     mov     a2, a0
     call    func_483EF161_entry, [d2,a2,a3], 0x20
     cmp     0, d0
@@ -34851,7 +34851,7 @@ TableRomImageEnd:
     mov     sp, a3
     add     0x28, a3
     mov     a3, a1
-    mov     (ptr_50299490), d0
+    mov     (KssKeyStringsPtr), d0
     mov     a2, a0
     call    KssKeyTransform, [d2,a2,a3], 0x20
     cmp     0, d0

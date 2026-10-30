@@ -37,6 +37,21 @@
 .macro map_none16 n
 	.space	2 * \n, 0xFF
 .endm
+# A multiplicative hash table (the SX-KN6000's built-in sound tables; the KN7000 'JK' archive's are the
+# same, with offsets): a descriptor {u16 mult, u16 nbuckets}, then nbuckets bucket pointers, each the
+# head of a chain of entries {u32 next, key, payload}; an entry with key k is in bucket
+# k * mult % nbuckets.  hash_desc: the descriptor; hash_ent32 / hash_ent16: an entry's link and key
+# (the payload follows as its own lines).
+.macro hash_desc mult, nbuckets
+	.word	\mult, \nbuckets
+.endm
+.macro hash_ent32 next, key
+	.long	\next
+	.long	\key
+.endm
+.macro hash_ent16 next, key
+	.long	\next
+	.word	\key
 # One entry of the SupportClass table (registry slot 0xD, tools/gen_data_s.py support_classes):
 # SupportClassProc (0x4842AAF0) indexes it by an id's low half, 12 bytes an entry: MT_GetInstance
 # answers the entry's address, MT_GetPropSize its +6 halfword, any other message is passed to the

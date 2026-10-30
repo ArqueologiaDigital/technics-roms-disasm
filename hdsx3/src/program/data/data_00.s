@@ -7,12 +7,12 @@
 
 Str_Error_u_3:	.asciz "Error : %u"
 	.align	4, 0xFF	# pad after Str_Error_u_3
-Str_empty_489:	.asciz "                          "
+Str_empty_442:	.asciz "                          "
 data_9783DEFF:
-	.align	4, 0x00	# pad after Str_empty_489
+	.align	4, 0x00	# pad after Str_empty_442
 
 ptrs_9783DF00:
-	.long	Str_empty_489
+	.long	Str_empty_442
 	.long	data_9783DEFF
 
 Str_Pio_Time_in_ns_u:	.asciz "Pio Time in ns : %u"
@@ -112,7 +112,7 @@ Str_0x:	.asciz "0x"
 Str_0X:	.asciz "0X"
 	.align	4, 0xFF	# pad after Str_0X
 
-ptrs_9783E40C:
+vsprintf_core_entry_Lc8_Table:
 	.long	loc_97808109
 	.long	vsprintf_core_entry_L259
 	.long	loc_97808123
@@ -165,32 +165,45 @@ ptrs_9783E40C:
 	.long	vsprintf_core_entry_L259
 	.long	vsprintf_core_entry_L259
 	.long	loc_978080B1
-data_9783E4DC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E4DC, 0x03E55C
 
-Str_C_2:	.asciz "C"
-data_9783E55E:
-	.space	1, 0x00
-data_9783E55F:
-	.align	4, 0x00
-data_9783E560:
-	.space	1, 0x00
-data_9783E561:
-	.space	1, 0x00
-data_9783E562:
-	.space	1, 0x00
-data_9783E563:
-	.align	4, 0x00
+func_9780836B_entry_L10_Records:	# 17 x REC_func_9780836B_entry_L10_Records (8 bytes each); read by func_9780836B_entry_L10 0x97808380 `mov (a0), d0`; func_9780836B_entry_L41 0x978083B1 `mov (a0), d0`; func_9780836B_entry_L46 0x978083B6 `mov (4, a0), a0`
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f	# [0]
+	REC_func_9780836B_entry_L10_Records	f0=49, p4=loc_978083C3
+	REC_func_9780836B_entry_L10_Records	f0=33, p4=loc_978083F3
+	REC_func_9780836B_entry_L10_Records	f0=1, p4=loc_978083FB
+	REC_func_9780836B_entry_L10_Records	f0=36, p4=loc_978083CB
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f	# [8]
+	REC_func_9780836B_entry_L10_Records	f0=105, p4=loc_978083DB
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	p4=func_9780836B_entry_L8f
+	REC_func_9780836B_entry_L10_Records	f0=44, p4=loc_978083D3
+	REC_func_9780836B_entry_L10_Records	f0=109, p4=loc_978083E3
+	REC_func_9780836B_entry_L10_Records	f0=46, p4=loc_978083BB
+	REC_func_9780836B_entry_L10_Records	f0=77, p4=loc_978083EB
+	REC_func_9780836B_entry_L10_Records	f0=67	# [16]
 data_9783E564:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E564, 0x03E568
+
 Str_C:	.asciz "C"
-Str_empty_395:	.asciz "."
+Str_empty_441:	.asciz "."
 data_9783E56C:
 	.space	1, 0x00
 data_9783E56D:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E56D, 0x03E5F1
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/hdsx3_extapr.rom", 0x03E56D, 0x03E570
+
+data_978AFD7C_p0_0:	# REC_data_978AFD7C_p0 (4 bytes)
+	REC_data_978AFD7C_p0	x0="\x00\x10\x10\x10"
+# census: opaque -- unknown-dump: 125 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x03E574, 0x03E5F1
 	.space	128, 0x00
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x03E671, 0x03E674
+
 Str_Infinity_3:	.asciz "Infinity"
 	.align	4, 0xFF	# pad after Str_Infinity_3
 Str_Infinity_2:	.asciz "Infinity"
@@ -198,7 +211,7 @@ Str_Infinity_2:	.asciz "Infinity"
 Str_Infinity:	.asciz "Infinity"
 	.align	4, 0xFF	# pad after Str_Infinity
 
-PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal_entry : `mov	(a1), d0`
+PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal 0x9780903D: `mov	(a1), d0`
 	tab_u32	1, 0, 0, 0, 0
 LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero : `mov	(a0), d1`
 	tab_u32	0, 0
@@ -996,6 +1009,7 @@ FnName_KssXRegisterLineProc:	.asciz "KssXRegisterLineProc"
 FnName_KssXLyricsBoxProc:	.asciz "KssXLyricsBoxProc"
 FnName_LFDFileSelectProc:	.asciz "LFDFileSelectProc"
 FnName_AcRotStrBoxProc:	.asciz "AcRotStrBoxProc"
+# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x040A0E, 0x040A10
 FnName_KssTitleFunc:	.asciz "KssTitleFunc"
 FnName_KssDirBoxFunc:	.asciz "KssDirBoxFunc"
@@ -1004,6 +1018,7 @@ FnName_KssCopyToHDScreen:	.asciz "KssCopyToHDScreen"
 FnName_KssCopySMFToHDScreen:	.asciz "KssCopySMFToHDScreen"
 FnName_SmfFilterFunc:	.asciz "SmfFilterFunc"
 FnName_KssSelectListTestFunc:	.asciz "KssSelectListTestFunc"
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x040A85, 0x040A88
 Str_empty:	.asciz ""
 	.align	4, 0xFF	# pad after Str_empty
@@ -5334,6 +5349,7 @@ RN_NewClsLocationLabel:	.asciz "NewClsLocationLabel"
 RN_empty_776:	.asciz ""
 RN_PleaseWait_Win:	.asciz "PleaseWait_Win"
 RN_empty_777:	.asciz ""
+# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0514AE, 0x0514B0
 Str_TT_HDDEXT:	.asciz "TT_HDDEXT"
 	.align	4, 0xFF	# pad after Str_TT_HDDEXT
@@ -5452,6 +5468,7 @@ data_9789D88C:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09D88C, 0x09D88E
 
 Str_WSL:	.asciz "WSL."
+# census: opaque -- unknown-dump: 25 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x09D893, 0x09D8AC
 Str_CFE:	.asciz "CFE."
 Str_DM:	.asciz "DM."
@@ -5488,22 +5505,41 @@ Str_01_02_03_04_05_06_07_08_09_10_11_12_13_1:	.asciz "01:                   \x09
 Str_empty_487:	.asciz "."
 	.align	4, 0xFF	# pad after Str_empty_487
 Str_XXX:	.asciz "XXX"
-Str_LSW_2:	.asciz ".LSW"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB09, 0x09DB22
-Str_EFC:	.asciz ".EFC"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB27, 0x09DB2C
-Str_FAV_5:	.asciz ".FAV"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB31, 0x09DB36
-Str_AST:	.asciz ".AST"
-Str_MID_7:	.asciz ".MID"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB40, 0x09DB45
-Str_KIF_3:	.asciz ".KIF"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB4A, 0x09DB68
-Str_USR:	.asciz ".USR"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB6D, 0x09DB81
-Str_SXU:	.asciz ".SXU"
-Str_SEQ_5:	.asciz ".SEQ"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09DB8B, 0x09DBA4
+
+Text_LSW:	# 32 strings of 4 characters, NUL-terminated
+	.asciz	".LSW"
+	.asciz	".PMT"
+	.asciz	".SQT"
+	.asciz	".CMP"
+	.asciz	".TM "
+	.asciz	".MSP"
+	.asciz	".EFC"
+	.asciz	".MD "
+	.asciz	".FAV"
+	.asciz	".HMP"
+	.asciz	".AST"
+	.asciz	".MID"
+	.asciz	".TLX"
+	.asciz	".KIF"
+	.asciz	".US1"
+	.asciz	".US2"
+	.asciz	".US3"
+	.asciz	".US4"
+	.asciz	".US5"
+	.asciz	".US6"
+	.asciz	".USR"
+	.asciz	".SXD"
+	.asciz	".SXF"
+	.asciz	".SXC"
+	.asciz	".SXY"
+	.asciz	".SXU"
+	.asciz	".SEQ"
+	.asciz	".SQF"
+	.asciz	".RCM"
+	.asciz	".TTX"
+	.asciz	".XXX"
+	.asciz	".XXX"
+
 Str_empty_486:	.asciz "            \x09"
 	.align	4, 0xFF	# pad after Str_empty_486
 Str_PCLK:	.asciz "PCLK"
@@ -5765,17 +5801,17 @@ ptrs_9789EC80:
 	.long	Str_Please_select_a_Directory_with_enough_fr
 	.long	Str_More_information_on_the_web_www_keysofts
 	.long	Str_Warn2_is_long_Message_Message_2_is_long
-ptrs_9789ECA4:
+KssPsWarnBoxProc_L74_Table:
 	.long	ptrs_9789DDC8
 	.long	ptrs_9789DDEC
 	.long	ptrs_9789DE14
 	.long	ptrs_9789DE40
-ptrs_9789ECB4:
+KssPsWarnBoxProc_L3ea_Table:
 	.long	ptrs_9789DF94
 	.long	ptrs_9789E148
 	.long	ptrs_9789E2C4
 	.long	ptrs_9789E440
-ptrs_9789ECC4:
+KssPsWarnBoxProc_L74b_Table:
 	.long	ptrs_9789E62C
 	.long	ptrs_9789E880
 	.long	ptrs_9789EA80
@@ -5923,17 +5959,17 @@ ptrs_9789F160:
 	.long	Str_Ask_sec_3_S
 	.long	Str_Ask_sec_4_S
 	.long	Str_Ask_sec_5_S
-ptrs_9789F174:
+KssPsAskBoxProc_L74_Table:
 	.long	ptrs_9789ECFC
 	.long	ptrs_9789ED20
 	.long	ptrs_9789ED48
 	.long	ptrs_9789ED74
-ptrs_9789F184:
+KssPsAskBoxProc_L3ea_Table:
 	.long	ptrs_9789EE0C
 	.long	ptrs_9789EE98
 	.long	ptrs_9789EF4C
 	.long	ptrs_9789F000
-ptrs_9789F194:
+KssPsAskBoxProc_L751_Table:
 	.long	ptrs_9789F04C
 	.long	ptrs_9789F0A8
 	.long	ptrs_9789F104
@@ -6149,32 +6185,27 @@ ptrs_978A0140:
 
 Str_ok_F:	.asciz "ok(F)"
 Str_failed_F:	.asciz "failed(F)"
-
-ptrs_978A0158:
-	.long	Str_ok_F
-	.long	Str_failed_F
-
-Str_ok_S:	.asciz "ok(S)"
+# census: opaque -- unknown-dump: 14 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0158, 0x0A0166
 Str_failed_S:	.asciz "failed(S)"
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0170, 0x0A0178
 
-ptrs_978A0170:
-	.long	Str_ok_S
-	.long	Str_failed_S
-ptrs_978A0178:
+KssTimerShowProc_L68_Table:
 	.long	ptrs_9789F1D8
 	.long	ptrs_9789F210
 	.long	ptrs_9789F248
 	.long	ptrs_9789F280
-ptrs_978A0188:
+KssTimerShowProc_L259_Table:
 	.long	ptrs_9789F5C4
 	.long	ptrs_9789F968
 	.long	ptrs_9789FD20
 	.long	ptrs_978A00D8
-ptrs_978A0198:
+KssTimerShowProc_L310_Table:
 	.long	ptrs_978A012C
 	.long	ptrs_978A0140
-	.long	ptrs_978A0158
-	.long	ptrs_978A0170
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A01A0, 0x0A01A8
 
 Str_My_HardDisk:	.asciz "My HardDisk"
 Str_Partition_1:	.asciz "Partition 1"
@@ -6227,82 +6258,294 @@ Str_Txt2:	.asciz "Txt2"
 ptrs_978A03B4:
 	.long	Str_HardDisk_parameter_reading_Please_wait
 	.long	Str_Txt2
-ptrs_978A03BC:
+KssInitialWaitProc_L31_Table:
 	.long	ptrs_978A02F8
 	.long	ptrs_978A033C
 	.long	ptrs_978A0378
 	.long	ptrs_978A03B4
-data_978A03CC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03CC, 0x0A03D4
-data_978A03D4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03D4, 0x0A03DC
-data_978A03DC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03DC, 0x0A03E4
-data_978A03E4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03E4, 0x0A03EC
-data_978A03EC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03EC, 0x0A03F4
-data_978A03F4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03F4, 0x0A03FC
-data_978A03FC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A03FC, 0x0A0404
-data_978A0404:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0404, 0x0A040C
-data_978A040C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A040C, 0x0A041C
-data_978A041C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A041C, 0x0A0424
-data_978A0424:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0424, 0x0A042C
-data_978A042C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A042C, 0x0A0434
-data_978A0434:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0434, 0x0A043C
-data_978A043C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A043C, 0x0A0444
-data_978A0444:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0444, 0x0A044C
-data_978A044C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A044C, 0x0A0454
-data_978A0454:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0454, 0x0A045C
-data_978A045C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A045C, 0x0A0464
-data_978A0464:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0464, 0x0A046C
-data_978A046C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A046C, 0x0A0474
-data_978A0474:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0474, 0x0A047C
-data_978A047C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A047C, 0x0A0484
-data_978A0484:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0484, 0x0A048C
+
+func_97827B50_Var:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	496
+func_97827B50_Var_2:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_3:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	514
+func_97827B50_Var_4:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_5:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	536
+func_97827B50_Var_6:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_7:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	554
+func_97827B50_Var_8:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_9:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	576
+func_97827B50_Var_10:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_11:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	594
+func_97827B50_Var_12:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_13:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	602
+func_97827B50_Var_14:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_15:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	634
+func_97827B50_Var_16:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_17:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	494
+func_97827B50_Var_18:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	192
+func_97827B50_Var_19:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	630
+func_97827B50_Var_20:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	206
+func_978279FE_Var:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	486
+
+func_978279FE_Table:	# 2 x u16, 214..514; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 514
+
+func_978279FE_Var_2:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	235
+func_978279FE_Var_3:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	526
+
+func_978279FE_Table_2:	# 2 x u16, 214..554; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 554
+
+func_978279FE_Var_4:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	235
+func_978279FE_Var_5:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	566
+
+func_978279FE_Table_3:	# 2 x u16, 214..594; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 594
+
+func_978279FE_Var_6:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	235
+func_978279FE_Var_7:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	480
+
+func_978279FE_Table_4:	# 2 x u16, 186..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	186, 630
+func_978279FE_Table_5:	# 5 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	tab_u16	238, 570, 123, 630, 145
+
+func_97827B50_Var_21:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	20
+func_97827B50_Var_22:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	128
+func_97827B50_Var_23:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	70
+func_97827B50_Var_24:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	160
+func_97827B50_Var_25:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	580
+func_97827B50_Var_26:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	128
+func_97827B50_Var_27:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	625
+func_97827B50_Var_28:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	160
+func_978279FE_Var_8:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	5
+
+func_978279FE_Table_6:	# 2 x u16, 75..123; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	123, 75
+
+func_978279FE_Var_9:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	145
+func_978279FE_Var_10:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	575
+
+func_978279FE_Table_7:	# 2 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	123, 630
+
+func_978279FE_Var_11:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	145
+func_97827B50_Var_29:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	214
+func_97827B50_Var_30:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	191
+func_97827B50_Var_31:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	229
+func_97827B50_Var_32:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	210
+func_97827B50_Var_33:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	254
+func_97827B50_Var_34:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	191
+func_97827B50_Var_35:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	269
+func_97827B50_Var_36:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	210
+func_97827B50_Var_37:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	294
+func_97827B50_Var_38:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	191
+func_97827B50_Var_39:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	309
+func_97827B50_Var_40:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	210
+func_97827B50_Var_41:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	334
+func_97827B50_Var_42:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	191
+func_97827B50_Var_43:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	349
+func_97827B50_Var_44:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	210
+func_97827B50_Var_45:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	374
+func_97827B50_Var_46:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	191
+func_97827B50_Var_47:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	389
+func_97827B50_Var_48:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	210
+func_97827B50_Var_49:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	214
+func_97827B50_Var_50:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_51:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	229
+func_97827B50_Var_52:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_53:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	254
+func_97827B50_Var_54:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_55:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	269
+func_97827B50_Var_56:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_57:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	294
+func_97827B50_Var_58:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_59:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	309
+func_97827B50_Var_60:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_61:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	334
+func_97827B50_Var_62:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_63:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	349
+func_97827B50_Var_64:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_97827B50_Var_65:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	374
+func_97827B50_Var_66:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_67:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	389
+func_97827B50_Var_68:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
 
 Str_P_3:	.asciz "P"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A048E, 0x0A0494
-data_978A0494:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0494, 0x0A049C
-data_978A049C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A049C, 0x0A04A4
-data_978A04A4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04A4, 0x0A04AC
-data_978A04AC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04AC, 0x0A04B4
-data_978A04B4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04B4, 0x0A04BC
-data_978A04BC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04BC, 0x0A04C4
-data_978A04C4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04C4, 0x0A04CC
-data_978A04CC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04CC, 0x0A04D4
-data_978A04D4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04D4, 0x0A04DC
-data_978A04DC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04DC, 0x0A04E4
-data_978A04E4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A04E4, 0x0A04EC
+
+func_97827B50_Var_69:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	220
+func_97827B50_Var_70:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	200
+func_97827B50_Var_71:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	235
+func_978279FE_Var_12:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	204
+
+func_978279FE_Table_8:	# 2 x u16, 186..236; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	186, 236
+
+func_978279FE_Var_13:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	209
+func_978279FE_Var_14:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	244
+
+func_978279FE_Table_9:	# 2 x u16, 186..276; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	186, 276
+
+func_978279FE_Var_15:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	209
+func_978279FE_Var_16:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	284
+
+func_978279FE_Table_10:	# 2 x u16, 186..316; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	186, 316
+
+func_978279FE_Var_17:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	209
+func_978279FE_Var_18:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	324
+
+func_978279FE_Table_11:	# 2 x u16, 186..356; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	186, 356
+
+func_978279FE_Var_19:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	209
+func_978279FE_Var_20:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	364
+
+func_978279FE_Table_12:	# 2 x u16, 186..396; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	186, 396
+
+func_978279FE_Var_21:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	209
+func_978279FE_Var_22:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	204
+
+func_978279FE_Table_13:	# 2 x u16, 214..236; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 236
+
+func_978279FE_Var_23:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	237
+func_978279FE_Var_24:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	244
+
+func_978279FE_Table_14:	# 2 x u16, 214..276; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 276
+
+func_978279FE_Var_25:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	237
+func_978279FE_Var_26:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	284
+
+func_978279FE_Table_15:	# 2 x u16, 214..316; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 316
+
+func_978279FE_Var_27:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	237
+func_978279FE_Var_28:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	324
+
+func_978279FE_Table_16:	# 2 x u16, 214..356; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 356
+
+func_978279FE_Var_29:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	237
+func_978279FE_Var_30:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	364
+
+func_978279FE_Table_17:	# 2 x u16, 214..396; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 396
+
+func_978279FE_Var_31:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	237
+func_978279FE_Var_32:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	4
+
+func_978279FE_Table_18:	# 2 x u16, 196..214; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	214, 196
+
+func_978279FE_Var_33:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	237
+
 Str_1_12:	.asciz "1"
 	.align	4, 0xFF	# pad after Str_1_12
 Str_2_12:	.asciz "2"
@@ -6405,18 +6648,56 @@ Str_empty_482:	.asciz "--------------"
 	.align	4, 0xFF	# pad after Str_empty_482
 Str_0_ii:	.asciz "%%0%ii"
 	.align	4, 0xFF	# pad after Str_0_ii
-data_978A063C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A063C, 0x0A0644
-data_978A0644:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0644, 0x0A064C
-data_978A064C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A064C, 0x0A0654
-data_978A0654:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0654, 0x0A065C
-data_978A065C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A065C, 0x0A0664
-data_978A0664:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0664, 0x0A066C
+
+func_97827B50_Var_72:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	336
+func_97827B50_Var_73:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	217
+func_97827B50_Var_74:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	354
+func_97827B50_Var_75:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	232
+func_97827B50_Var_76:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	376
+func_97827B50_Var_77:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	217
+func_97827B50_Var_78:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	394
+func_97827B50_Var_79:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	232
+func_97827B50_Var_80:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	416
+func_97827B50_Var_81:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	217
+func_97827B50_Var_82:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	434
+func_97827B50_Var_83:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	232
+func_978279FE_Var_34:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	321
+
+func_978279FE_Table_19:	# 2 x u16, 212..359; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	212, 359
+
+func_978279FE_Var_35:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	234
+func_978279FE_Var_36:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	361
+
+func_978279FE_Table_20:	# 2 x u16, 212..399; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	212, 399
+
+func_978279FE_Var_37:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	234
+func_978279FE_Var_38:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	401
+
+func_978279FE_Table_21:	# 2 x u16, 212..439; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	212, 439
+
+func_978279FE_Var_39:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	234
+
 Str_1_4:	.asciz "1"
 	.align	4, 0xFF	# pad after Str_1_4
 Str_2_5:	.asciz "2"
@@ -6538,285 +6819,290 @@ Str_VEUILLEZ_PATIENTER_2:	.asciz "VEUILLEZ PATIENTER!"
 Str_POR_FAVOR_ESPERE_2:	.asciz "\xA1POR FAVOR, ESPERE!"
 Str_PLEASE_WAIT_3:	.asciz "PLEASE WAIT!"
 Str_SILAHKAN_TUNGGU_2:	.asciz "SILAHKAN TUNGGU!"
-data_978A08CD:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A08CD, 0x0A08E4
 
-ptrs_978A08E4:
+AcKssPleaseWaitProc_L1dc_Table_p0_0:	# REC_AcKssPleaseWaitProc_L1dc_Table_p0 (4 bytes)
+	REC_AcKssPleaseWaitProc_L1dc_Table_p0	f0=-92, f1=-73, x2="\xA4\xD0"
+# census: opaque -- unknown-dump: 19 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/hdsx3_extapr.rom", 0x0A08D1, 0x0A08E4
+
+AcKssPleaseWaitProc_L1dc_Table:
 	.long	Str_PLEASE_WAIT_4
 	.long	Str_BITTE_WARTEN_2
 	.long	Str_VEUILLEZ_PATIENTER_2
 	.long	Str_POR_FAVOR_ESPERE_2
 	.long	Str_PLEASE_WAIT_3
 	.long	Str_SILAHKAN_TUNGGU_2
-	.long	data_978A08CD
+	.long	AcKssPleaseWaitProc_L1dc_Table_p0_0
 
-Str_20_21:	.asciz "~20"
-Str_5F_3:	.asciz "~5F"
-Str_30_3:	.asciz "~30"
-Str_31_3:	.asciz "~31"
-Str_32_3:	.asciz "~32"
-Str_33_3:	.asciz "~33"
-Str_34_3:	.asciz "~34"
-Str_35_3:	.asciz "~35"
-Str_36_3:	.asciz "~36"
-Str_37_3:	.asciz "~37"
-Str_38_3:	.asciz "~38"
-Str_39_3:	.asciz "~39"
-Str_41_3:	.asciz "~41"
-Str_42_3:	.asciz "~42"
-Str_43_3:	.asciz "~43"
-Str_44_3:	.asciz "~44"
-Str_45_3:	.asciz "~45"
-Str_46_3:	.asciz "~46"
-Str_47_3:	.asciz "~47"
-Str_48_3:	.asciz "~48"
-Str_49_3:	.asciz "~49"
-Str_4A_3:	.asciz "~4A"
-Str_4B_3:	.asciz "~4B"
-Str_4C_3:	.asciz "~4C"
-Str_4D_3:	.asciz "~4D"
-Str_4E_3:	.asciz "~4E"
-Str_4F_3:	.asciz "~4F"
-Str_50_3:	.asciz "~50"
-Str_51_3:	.asciz "~51"
-Str_52_3:	.asciz "~52"
-Str_53_3:	.asciz "~53"
-Str_54_3:	.asciz "~54"
-Str_55_3:	.asciz "~55"
-Str_56_3:	.asciz "~56"
-Str_57_3:	.asciz "~57"
-Str_58_3:	.asciz "~58"
-Str_59_3:	.asciz "~59"
-Str_5A_3:	.asciz "~5A"
-Str_61_2:	.asciz "~61"
-Str_62_2:	.asciz "~62"
-Str_63_2:	.asciz "~63"
-Str_64_2:	.asciz "~64"
-Str_65_2:	.asciz "~65"
-Str_66_2:	.asciz "~66"
-Str_67_2:	.asciz "~67"
-Str_68_2:	.asciz "~68"
-Str_69_2:	.asciz "~69"
-Str_6A_2:	.asciz "~6A"
-Str_6B_2:	.asciz "~6B"
-Str_6C_2:	.asciz "~6C"
-Str_6D_2:	.asciz "~6D"
-Str_6E_2:	.asciz "~6E"
-Str_6F_2:	.asciz "~6F"
-Str_70_2:	.asciz "~70"
-Str_71_2:	.asciz "~71"
-Str_72_2:	.asciz "~72"
-Str_73_2:	.asciz "~73"
-Str_74_2:	.asciz "~74"
-Str_75_2:	.asciz "~75"
-Str_76_2:	.asciz "~76"
-Str_77_2:	.asciz "~77"
-Str_78_2:	.asciz "~78"
-Str_79_2:	.asciz "~79"
-Str_7A_2:	.asciz "~7A"
-Str_21_2:	.asciz "~21"
-Str_23_2:	.asciz "~23"
-Str_24_2:	.asciz "~24"
-Str_25_2:	.asciz "~25"
-Str_26_2:	.asciz "~26"
-Str_40_2:	.asciz "~40"
-Str_5E_2:	.asciz "~5E"
-Str_27_2:	.asciz "~27"
-Str_60_2:	.asciz "~60"
-Str_2C_2:	.asciz "~2C"
-Str_3B_2:	.asciz "~3B"
-Str_2B_2:	.asciz "~2B"
-Str_2D_2:	.asciz "~2D"
-Str_3D_2:	.asciz "~3D"
-Str_28_2:	.asciz "~28"
-Str_29_2:	.asciz "~29"
-Str_5B_2:	.asciz "~5B"
-Str_5D_2:	.asciz "~5D"
-Str_7B_2:	.asciz "~7B"
-Str_7D_2:	.asciz "~7D"
-Str_AE_2:	.asciz "~AE"
-Str_AF_2:	.asciz "~AF"
-Str_2E_2:	.asciz "~2E"
-Str_22_2:	.asciz "~22"
+Text_20:	# 88 strings of 3 characters, NUL-terminated
+	.asciz	"~20"
+	.asciz	"~5F"
+	.asciz	"~30"
+	.asciz	"~31"
+	.asciz	"~32"
+	.asciz	"~33"
+	.asciz	"~34"
+	.asciz	"~35"
+	.asciz	"~36"
+	.asciz	"~37"
+	.asciz	"~38"
+	.asciz	"~39"
+	.asciz	"~41"
+	.asciz	"~42"
+	.asciz	"~43"
+	.asciz	"~44"
+	.asciz	"~45"
+	.asciz	"~46"
+	.asciz	"~47"
+	.asciz	"~48"
+	.asciz	"~49"
+	.asciz	"~4A"
+	.asciz	"~4B"
+	.asciz	"~4C"
+	.asciz	"~4D"
+	.asciz	"~4E"
+	.asciz	"~4F"
+	.asciz	"~50"
+	.asciz	"~51"
+	.asciz	"~52"
+	.asciz	"~53"
+	.asciz	"~54"
+	.asciz	"~55"
+	.asciz	"~56"
+	.asciz	"~57"
+	.asciz	"~58"
+	.asciz	"~59"
+	.asciz	"~5A"
+	.asciz	"~61"
+	.asciz	"~62"
+	.asciz	"~63"
+	.asciz	"~64"
+	.asciz	"~65"
+	.asciz	"~66"
+	.asciz	"~67"
+	.asciz	"~68"
+	.asciz	"~69"
+	.asciz	"~6A"
+	.asciz	"~6B"
+	.asciz	"~6C"
+	.asciz	"~6D"
+	.asciz	"~6E"
+	.asciz	"~6F"
+	.asciz	"~70"
+	.asciz	"~71"
+	.asciz	"~72"
+	.asciz	"~73"
+	.asciz	"~74"
+	.asciz	"~75"
+	.asciz	"~76"
+	.asciz	"~77"
+	.asciz	"~78"
+	.asciz	"~79"
+	.asciz	"~7A"
+	.asciz	"~21"
+	.asciz	"~23"
+	.asciz	"~24"
+	.asciz	"~25"
+	.asciz	"~26"
+	.asciz	"~40"
+	.asciz	"~5E"
+	.asciz	"~27"
+	.asciz	"~60"
+	.asciz	"~2C"
+	.asciz	"~3B"
+	.asciz	"~2B"
+	.asciz	"~2D"
+	.asciz	"~3D"
+	.asciz	"~28"
+	.asciz	"~29"
+	.asciz	"~5B"
+	.asciz	"~5D"
+	.asciz	"~7B"
+	.asciz	"~7D"
+	.asciz	"~AE"
+	.asciz	"~AF"
+	.asciz	"~2E"
+	.asciz	"~22"
 
 ptrs_978A0A60:
-	.long	Str_20_21
-	.long	Str_5F_3
-	.long	Str_30_3
-	.long	Str_31_3
-	.long	Str_32_3
-	.long	Str_33_3
-	.long	Str_34_3
-	.long	Str_35_3
-	.long	Str_36_3
-	.long	Str_37_3
-	.long	Str_38_3
-	.long	Str_39_3
-	.long	Str_41_3
-	.long	Str_42_3
-	.long	Str_43_3
-	.long	Str_44_3
-	.long	Str_45_3
-	.long	Str_46_3
-	.long	Str_47_3
-	.long	Str_48_3
-	.long	Str_49_3
-	.long	Str_4A_3
-	.long	Str_4B_3
-	.long	Str_4C_3
-	.long	Str_4D_3
-	.long	Str_4E_3
-	.long	Str_4F_3
-	.long	Str_50_3
-	.long	Str_51_3
-	.long	Str_52_3
-	.long	Str_53_3
-	.long	Str_54_3
-	.long	Str_55_3
-	.long	Str_56_3
-	.long	Str_57_3
-	.long	Str_58_3
-	.long	Str_59_3
-	.long	Str_5A_3
-	.long	Str_61_2
-	.long	Str_62_2
-	.long	Str_63_2
-	.long	Str_64_2
-	.long	Str_65_2
-	.long	Str_66_2
-	.long	Str_67_2
-	.long	Str_68_2
-	.long	Str_69_2
-	.long	Str_6A_2
-	.long	Str_6B_2
-	.long	Str_6C_2
-	.long	Str_6D_2
-	.long	Str_6E_2
-	.long	Str_6F_2
-	.long	Str_70_2
-	.long	Str_71_2
-	.long	Str_72_2
-	.long	Str_73_2
-	.long	Str_74_2
-	.long	Str_75_2
-	.long	Str_76_2
-	.long	Str_77_2
-	.long	Str_78_2
-	.long	Str_79_2
-	.long	Str_7A_2
-	.long	Str_21_2
-	.long	Str_23_2
-	.long	Str_24_2
-	.long	Str_25_2
-	.long	Str_26_2
-	.long	Str_40_2
-	.long	Str_5E_2
-	.long	Str_27_2
-	.long	Str_60_2
-	.long	Str_2C_2
-	.long	Str_3B_2
-	.long	Str_2B_2
-	.long	Str_2D_2
-	.long	Str_3D_2
-	.long	Str_28_2
-	.long	Str_29_2
-	.long	Str_5B_2
-	.long	Str_5D_2
-	.long	Str_7B_2
-	.long	Str_7D_2
-	.long	Str_AE_2
-	.long	Str_AF_2
-	.long	Str_2E_2
-	.long	Str_22_2
+	.long	Text_20
+	.long	Text_20+4
+	.long	Text_20+8
+	.long	Text_20+12
+	.long	Text_20+16
+	.long	Text_20+20
+	.long	Text_20+24
+	.long	Text_20+28
+	.long	Text_20+32
+	.long	Text_20+36
+	.long	Text_20+40
+	.long	Text_20+44
+	.long	Text_20+48
+	.long	Text_20+52
+	.long	Text_20+56
+	.long	Text_20+60
+	.long	Text_20+64
+	.long	Text_20+68
+	.long	Text_20+72
+	.long	Text_20+76
+	.long	Text_20+80
+	.long	Text_20+84
+	.long	Text_20+88
+	.long	Text_20+92
+	.long	Text_20+96
+	.long	Text_20+100
+	.long	Text_20+104
+	.long	Text_20+108
+	.long	Text_20+112
+	.long	Text_20+116
+	.long	Text_20+120
+	.long	Text_20+124
+	.long	Text_20+128
+	.long	Text_20+132
+	.long	Text_20+136
+	.long	Text_20+140
+	.long	Text_20+144
+	.long	Text_20+148
+	.long	Text_20+152
+	.long	Text_20+156
+	.long	Text_20+160
+	.long	Text_20+164
+	.long	Text_20+168
+	.long	Text_20+172
+	.long	Text_20+176
+	.long	Text_20+180
+	.long	Text_20+184
+	.long	Text_20+188
+	.long	Text_20+192
+	.long	Text_20+196
+	.long	Text_20+200
+	.long	Text_20+204
+	.long	Text_20+208
+	.long	Text_20+212
+	.long	Text_20+216
+	.long	Text_20+220
+	.long	Text_20+224
+	.long	Text_20+228
+	.long	Text_20+232
+	.long	Text_20+236
+	.long	Text_20+240
+	.long	Text_20+244
+	.long	Text_20+248
+	.long	Text_20+252
+	.long	Text_20+256
+	.long	Text_20+260
+	.long	Text_20+264
+	.long	Text_20+268
+	.long	Text_20+272
+	.long	Text_20+276
+	.long	Text_20+280
+	.long	Text_20+284
+	.long	Text_20+288
+	.long	Text_20+292
+	.long	Text_20+296
+	.long	Text_20+300
+	.long	Text_20+304
+	.long	Text_20+308
+	.long	Text_20+312
+	.long	Text_20+316
+	.long	Text_20+320
+	.long	Text_20+324
+	.long	Text_20+328
+	.long	Text_20+332
+	.long	Text_20+336
+	.long	Text_20+340
+	.long	Text_20+344
+	.long	Text_20+348
 	.long	0
 
-Str_5F_2:	.asciz "~5F"
-Str_30_2:	.asciz "~30"
-Str_31_2:	.asciz "~31"
-Str_32_2:	.asciz "~32"
-Str_33_2:	.asciz "~33"
-Str_34_2:	.asciz "~34"
-Str_35_2:	.asciz "~35"
-Str_36_2:	.asciz "~36"
-Str_37_2:	.asciz "~37"
-Str_38_2:	.asciz "~38"
-Str_39_2:	.asciz "~39"
-Str_41_2:	.asciz "~41"
-Str_42_2:	.asciz "~42"
-Str_43_2:	.asciz "~43"
-Str_44_2:	.asciz "~44"
-Str_45_2:	.asciz "~45"
-Str_46_2:	.asciz "~46"
-Str_47_2:	.asciz "~47"
-Str_48_2:	.asciz "~48"
-Str_49_2:	.asciz "~49"
-Str_4A_2:	.asciz "~4A"
-Str_4B_2:	.asciz "~4B"
-Str_4C_2:	.asciz "~4C"
-Str_4D_2:	.asciz "~4D"
-Str_4E_2:	.asciz "~4E"
-Str_4F_2:	.asciz "~4F"
-Str_50_2:	.asciz "~50"
-Str_51_2:	.asciz "~51"
-Str_52_2:	.asciz "~52"
-Str_53_2:	.asciz "~53"
-Str_54_2:	.asciz "~54"
-Str_55_2:	.asciz "~55"
-Str_56_2:	.asciz "~56"
-Str_57_2:	.asciz "~57"
-Str_58_2:	.asciz "~58"
-Str_59_2:	.asciz "~59"
-Str_5A_2:	.asciz "~5A"
+Text_5F:	# 37 strings of 3 characters, NUL-terminated
+	.asciz	"~5F"
+	.asciz	"~30"
+	.asciz	"~31"
+	.asciz	"~32"
+	.asciz	"~33"
+	.asciz	"~34"
+	.asciz	"~35"
+	.asciz	"~36"
+	.asciz	"~37"
+	.asciz	"~38"
+	.asciz	"~39"
+	.asciz	"~41"
+	.asciz	"~42"
+	.asciz	"~43"
+	.asciz	"~44"
+	.asciz	"~45"
+	.asciz	"~46"
+	.asciz	"~47"
+	.asciz	"~48"
+	.asciz	"~49"
+	.asciz	"~4A"
+	.asciz	"~4B"
+	.asciz	"~4C"
+	.asciz	"~4D"
+	.asciz	"~4E"
+	.asciz	"~4F"
+	.asciz	"~50"
+	.asciz	"~51"
+	.asciz	"~52"
+	.asciz	"~53"
+	.asciz	"~54"
+	.asciz	"~55"
+	.asciz	"~56"
+	.asciz	"~57"
+	.asciz	"~58"
+	.asciz	"~59"
+	.asciz	"~5A"
 
 ptrs_978A0C58:
-	.long	Str_5F_2
-	.long	Str_30_2
-	.long	Str_31_2
-	.long	Str_32_2
-	.long	Str_33_2
-	.long	Str_34_2
-	.long	Str_35_2
-	.long	Str_36_2
-	.long	Str_37_2
-	.long	Str_38_2
-	.long	Str_39_2
-	.long	Str_41_2
-	.long	Str_42_2
-	.long	Str_43_2
-	.long	Str_44_2
-	.long	Str_45_2
-	.long	Str_46_2
-	.long	Str_47_2
-	.long	Str_48_2
-	.long	Str_49_2
-	.long	Str_4A_2
-	.long	Str_4B_2
-	.long	Str_4C_2
-	.long	Str_4D_2
-	.long	Str_4E_2
-	.long	Str_4F_2
-	.long	Str_50_2
-	.long	Str_51_2
-	.long	Str_52_2
-	.long	Str_53_2
-	.long	Str_54_2
-	.long	Str_55_2
-	.long	Str_56_2
-	.long	Str_57_2
-	.long	Str_58_2
-	.long	Str_59_2
-	.long	Str_5A_2
+	.long	Text_5F
+	.long	Text_5F+4
+	.long	Text_5F+8
+	.long	Text_5F+12
+	.long	Text_5F+16
+	.long	Text_5F+20
+	.long	Text_5F+24
+	.long	Text_5F+28
+	.long	Text_5F+32
+	.long	Text_5F+36
+	.long	Text_5F+40
+	.long	Text_5F+44
+	.long	Text_5F+48
+	.long	Text_5F+52
+	.long	Text_5F+56
+	.long	Text_5F+60
+	.long	Text_5F+64
+	.long	Text_5F+68
+	.long	Text_5F+72
+	.long	Text_5F+76
+	.long	Text_5F+80
+	.long	Text_5F+84
+	.long	Text_5F+88
+	.long	Text_5F+92
+	.long	Text_5F+96
+	.long	Text_5F+100
+	.long	Text_5F+104
+	.long	Text_5F+108
+	.long	Text_5F+112
+	.long	Text_5F+116
+	.long	Text_5F+120
+	.long	Text_5F+124
+	.long	Text_5F+128
+	.long	Text_5F+132
+	.long	Text_5F+136
+	.long	Text_5F+140
+	.long	Text_5F+144
 	.long	0
-ptrs_978A0CF0:
+KssNamingWindowProc_L4d8_Table:
 	.long	ptrs_978A0A60
 	.long	ptrs_978A0C58
 
-Str_empty_479:	.asciz " "
-Str_empty_478:	.asciz "_"
+Str_empty_440:	.asciz " "
+Str_empty_439:	.asciz "_"
 
-ptrs_978A0CFC:
-	.long	Str_empty_479
-	.long	Str_empty_478
+KssNamingWindowProc_L1a5_Table:
+	.long	Str_empty_440
+	.long	Str_empty_439
 
 Str_7f:	.asciz "~7f"
 Str_empty_477:	.asciz " "
@@ -6826,20 +7112,20 @@ Str_empty_476:	.asciz " "
 Str_empty_475:	.asciz " "
 	.align	4, 0xFF	# pad after Str_empty_475
 Str_80:	.asciz "~80"
-Str_CURRENT_PANEL_8:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_8:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_4:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_4:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_4:	.asciz "SEQUENCER"
-Str_COMPOSER_8:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_8:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_8:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_12:	.asciz "EFFECT"
-Str_USER_MIDI_8:	.asciz "USER MIDI"
-Str_FAVORITES_8:	.asciz "FAVORITES"
-Str_HOME_PAGE_8:	.asciz "HOME PAGE"
+Str_COMPOSER_4:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_4:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_4:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_8:	.asciz "EFFECT"
+Str_USER_MIDI_4:	.asciz "USER MIDI"
+Str_FAVORITES_4:	.asciz "FAVORITES"
+Str_HOME_PAGE_4:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_4:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_4:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_6:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_8:	.asciz "INFO FILE"
+Str_INFO_FILE_4:	.asciz "INFO FILE"
 Str_USER_1_FILE_4:	.asciz "USER 1 FILE"
 Str_USER_2_FILE_4:	.asciz "USER 2 FILE"
 Str_USER_3_FILE_4:	.asciz "USER 3 FILE"
@@ -6859,20 +7145,20 @@ Str_OLD_RCM_4:	.asciz "OLD RCM"
 Str_NO_ENTRY_10:	.asciz " - NO ENTRY - "
 
 ptrs_978A0E7C:
-	.long	Str_CURRENT_PANEL_8
-	.long	Str_PANEL_MEMORY_8
+	.long	Str_CURRENT_PANEL_4
+	.long	Str_PANEL_MEMORY_4
 	.long	Str_SEQUENCER_4
-	.long	Str_COMPOSER_8
-	.long	Str_SOUND_MEMORY_8
-	.long	Str_MANUAL_SEQ_PAD_8
-	.long	Str_EFFECT_12
-	.long	Str_USER_MIDI_8
-	.long	Str_FAVORITES_8
-	.long	Str_HOME_PAGE_8
+	.long	Str_COMPOSER_4
+	.long	Str_SOUND_MEMORY_4
+	.long	Str_MANUAL_SEQ_PAD_4
+	.long	Str_EFFECT_8
+	.long	Str_USER_MIDI_4
+	.long	Str_FAVORITES_4
+	.long	Str_HOME_PAGE_4
 	.long	Str_CUSTOM_STYLES_4
 	.long	Str_MIDI_FILE_4
 	.long	Str_CUSTOM_LYRICS_6
-	.long	Str_INFO_FILE_8
+	.long	Str_INFO_FILE_4
 	.long	Str_USER_1_FILE_4
 	.long	Str_USER_2_FILE_4
 	.long	Str_USER_3_FILE_4
@@ -6891,20 +7177,20 @@ ptrs_978A0E7C:
 	.long	Str_OLD_RCM_4
 	.long	Str_NO_ENTRY_10
 
-Str_CURRENT_PANEL_7:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_7:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_3:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_3:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_3:	.asciz "SEQUENCER"
-Str_COMPOSER_7:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_7:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_7:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_11:	.asciz "EFFECT"
-Str_USER_MIDI_7:	.asciz "USER MIDI"
-Str_FAVORITES_7:	.asciz "FAVORITES"
-Str_HOME_PAGE_7:	.asciz "HOME PAGE"
+Str_COMPOSER_3:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_3:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_3:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_7:	.asciz "EFFECT"
+Str_USER_MIDI_3:	.asciz "USER MIDI"
+Str_FAVORITES_3:	.asciz "FAVORITES"
+Str_HOME_PAGE_3:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_3:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_3:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_5:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_7:	.asciz "INFO FILE"
+Str_INFO_FILE_3:	.asciz "INFO FILE"
 Str_USER_1_FILE_3:	.asciz "USER 1 FILE"
 Str_USER_2_FILE_3:	.asciz "USER 2 FILE"
 Str_USER_3_FILE_3:	.asciz "USER 3 FILE"
@@ -6924,20 +7210,20 @@ Str_OLD_RCM_3:	.asciz "OLD RCM"
 Str_Kein_Eintrag:	.asciz "-Kein Eintrag-"
 
 ptrs_978A105C:
-	.long	Str_CURRENT_PANEL_7
-	.long	Str_PANEL_MEMORY_7
+	.long	Str_CURRENT_PANEL_3
+	.long	Str_PANEL_MEMORY_3
 	.long	Str_SEQUENCER_3
-	.long	Str_COMPOSER_7
-	.long	Str_SOUND_MEMORY_7
-	.long	Str_MANUAL_SEQ_PAD_7
-	.long	Str_EFFECT_11
-	.long	Str_USER_MIDI_7
-	.long	Str_FAVORITES_7
-	.long	Str_HOME_PAGE_7
+	.long	Str_COMPOSER_3
+	.long	Str_SOUND_MEMORY_3
+	.long	Str_MANUAL_SEQ_PAD_3
+	.long	Str_EFFECT_7
+	.long	Str_USER_MIDI_3
+	.long	Str_FAVORITES_3
+	.long	Str_HOME_PAGE_3
 	.long	Str_CUSTOM_STYLES_3
 	.long	Str_MIDI_FILE_3
 	.long	Str_CUSTOM_LYRICS_5
-	.long	Str_INFO_FILE_7
+	.long	Str_INFO_FILE_3
 	.long	Str_USER_1_FILE_3
 	.long	Str_USER_2_FILE_3
 	.long	Str_USER_3_FILE_3
@@ -6956,20 +7242,20 @@ ptrs_978A105C:
 	.long	Str_OLD_RCM_3
 	.long	Str_Kein_Eintrag
 
-Str_CURRENT_PANEL_6:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_6:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_2:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_2:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_2:	.asciz "SEQUENCER"
-Str_COMPOSER_6:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_6:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_6:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_10:	.asciz "EFFECT"
-Str_USER_MIDI_6:	.asciz "USER MIDI"
-Str_FAVORITES_6:	.asciz "FAVORITES"
-Str_HOME_PAGE_6:	.asciz "HOME PAGE"
+Str_COMPOSER_2:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_2:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_2:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_6:	.asciz "EFFECT"
+Str_USER_MIDI_2:	.asciz "USER MIDI"
+Str_FAVORITES_2:	.asciz "FAVORITES"
+Str_HOME_PAGE_2:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_2:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_2:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_4:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_6:	.asciz "INFO FILE"
+Str_INFO_FILE_2:	.asciz "INFO FILE"
 Str_USER_1_FILE_2:	.asciz "USER 1 FILE"
 Str_USER_2_FILE_2:	.asciz "USER 2 FILE"
 Str_USER_3_FILE_2:	.asciz "USER 3 FILE"
@@ -6990,20 +7276,20 @@ Str_No_Entry_F:	.asciz "-No Entry(F)-"
 	.align	4, 0xFF	# pad after Str_No_Entry_F
 
 ptrs_978A123C:
-	.long	Str_CURRENT_PANEL_6
-	.long	Str_PANEL_MEMORY_6
+	.long	Str_CURRENT_PANEL_2
+	.long	Str_PANEL_MEMORY_2
 	.long	Str_SEQUENCER_2
-	.long	Str_COMPOSER_6
-	.long	Str_SOUND_MEMORY_6
-	.long	Str_MANUAL_SEQ_PAD_6
-	.long	Str_EFFECT_10
-	.long	Str_USER_MIDI_6
-	.long	Str_FAVORITES_6
-	.long	Str_HOME_PAGE_6
+	.long	Str_COMPOSER_2
+	.long	Str_SOUND_MEMORY_2
+	.long	Str_MANUAL_SEQ_PAD_2
+	.long	Str_EFFECT_6
+	.long	Str_USER_MIDI_2
+	.long	Str_FAVORITES_2
+	.long	Str_HOME_PAGE_2
 	.long	Str_CUSTOM_STYLES_2
 	.long	Str_MIDI_FILE_2
 	.long	Str_CUSTOM_LYRICS_4
-	.long	Str_INFO_FILE_6
+	.long	Str_INFO_FILE_2
 	.long	Str_USER_1_FILE_2
 	.long	Str_USER_2_FILE_2
 	.long	Str_USER_3_FILE_2
@@ -7022,20 +7308,20 @@ ptrs_978A123C:
 	.long	Str_OLD_RCM_2
 	.long	Str_No_Entry_F
 
-Str_CURRENT_PANEL_5:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_5:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY:	.asciz "PANEL MEMORY"
 Str_SEQUENCER:	.asciz "SEQUENCER"
-Str_COMPOSER_5:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_5:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_5:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_9:	.asciz "EFFECT"
-Str_USER_MIDI_5:	.asciz "USER MIDI"
-Str_FAVORITES_5:	.asciz "FAVORITES"
-Str_HOME_PAGE_5:	.asciz "HOME PAGE"
+Str_COMPOSER:	.asciz "COMPOSER"
+Str_SOUND_MEMORY:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_5:	.asciz "EFFECT"
+Str_USER_MIDI:	.asciz "USER MIDI"
+Str_FAVORITES:	.asciz "FAVORITES"
+Str_HOME_PAGE:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_3:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_5:	.asciz "INFO FILE"
+Str_INFO_FILE:	.asciz "INFO FILE"
 Str_USER_1_FILE:	.asciz "USER 1 FILE"
 Str_USER_2_FILE:	.asciz "USER 2 FILE"
 Str_USER_3_FILE:	.asciz "USER 3 FILE"
@@ -7056,20 +7342,20 @@ Str_No_Entry_S:	.asciz "-No Entry(S)-"
 	.align	4, 0xFF	# pad after Str_No_Entry_S
 
 ptrs_978A141C:
-	.long	Str_CURRENT_PANEL_5
-	.long	Str_PANEL_MEMORY_5
+	.long	Str_CURRENT_PANEL
+	.long	Str_PANEL_MEMORY
 	.long	Str_SEQUENCER
-	.long	Str_COMPOSER_5
-	.long	Str_SOUND_MEMORY_5
-	.long	Str_MANUAL_SEQ_PAD_5
-	.long	Str_EFFECT_9
-	.long	Str_USER_MIDI_5
-	.long	Str_FAVORITES_5
-	.long	Str_HOME_PAGE_5
+	.long	Str_COMPOSER
+	.long	Str_SOUND_MEMORY
+	.long	Str_MANUAL_SEQ_PAD
+	.long	Str_EFFECT_5
+	.long	Str_USER_MIDI
+	.long	Str_FAVORITES
+	.long	Str_HOME_PAGE
 	.long	Str_CUSTOM_STYLES
 	.long	Str_MIDI_FILE
 	.long	Str_CUSTOM_LYRICS_3
-	.long	Str_INFO_FILE_5
+	.long	Str_INFO_FILE
 	.long	Str_USER_1_FILE
 	.long	Str_USER_2_FILE
 	.long	Str_USER_3_FILE
@@ -7087,7 +7373,7 @@ ptrs_978A141C:
 	.long	Str_OLD_SQF
 	.long	Str_OLD_RCM
 	.long	Str_No_Entry_S
-ptrs_978A1498:
+KssLoadSaveDel_DISPProc_Lcca_Table:
 	.long	ptrs_978A0E7C
 	.long	ptrs_978A105C
 	.long	ptrs_978A123C
@@ -7413,17 +7699,17 @@ ptrs_978A1DC8:
 	.long	Str_Failed_Song_save_aborted_S
 	.long	Str_Failed_Song_load_aborted_S
 	.long	Str_Failed_User_Param_save_bad_S
-ptrs_978A1E08:
+KssLoadSaveDel_DISPProc_L968_Table:
 	.long	ptrs_978A1528
 	.long	ptrs_978A15D8
 	.long	ptrs_978A1670
 	.long	ptrs_978A1708
-ptrs_978A1E18:
+KssLoadSaveDel_DISPProc_La84_Table:
 	.long	ptrs_978A177C
 	.long	ptrs_978A17F0
 	.long	ptrs_978A1864
 	.long	ptrs_978A18D8
-ptrs_978A1E28:
+KssLoadSaveDel_DISPProc_Lba6_Table:
 	.long	ptrs_978A19D8
 	.long	ptrs_978A1B28
 	.long	ptrs_978A1C78
@@ -7458,117 +7744,120 @@ Str_empty_452:	.asciz " : "
 Str_s_s_6:	.asciz "%s : %s"
 Str_s_lu_s_lu:	.asciz "%s : %lu  %s : %lu"
 	.align	4, 0xFF	# pad after Str_s_lu_s_lu
-Str_61:	.asciz "~61"
-Str_62:	.asciz "~62"
-Str_63:	.asciz "~63"
-Str_64:	.asciz "~64"
-Str_65:	.asciz "~65"
-Str_66:	.asciz "~66"
-Str_67:	.asciz "~67"
-Str_68:	.asciz "~68"
-Str_69:	.asciz "~69"
-Str_6A:	.asciz "~6A"
-Str_6B:	.asciz "~6B"
-Str_6C:	.asciz "~6C"
-Str_6D:	.asciz "~6D"
-Str_6E:	.asciz "~6E"
-Str_6F:	.asciz "~6F"
-Str_70:	.asciz "~70"
-Str_71:	.asciz "~71"
-Str_72:	.asciz "~72"
-Str_73:	.asciz "~73"
-Str_74:	.asciz "~74"
-Str_75:	.asciz "~75"
-Str_76:	.asciz "~76"
-Str_77:	.asciz "~77"
-Str_78:	.asciz "~78"
-Str_79:	.asciz "~79"
-Str_7A:	.asciz "~7A"
+
+Text_61:	# 26 strings of 3 characters, NUL-terminated
+	.asciz	"~61"
+	.asciz	"~62"
+	.asciz	"~63"
+	.asciz	"~64"
+	.asciz	"~65"
+	.asciz	"~66"
+	.asciz	"~67"
+	.asciz	"~68"
+	.asciz	"~69"
+	.asciz	"~6A"
+	.asciz	"~6B"
+	.asciz	"~6C"
+	.asciz	"~6D"
+	.asciz	"~6E"
+	.asciz	"~6F"
+	.asciz	"~70"
+	.asciz	"~71"
+	.asciz	"~72"
+	.asciz	"~73"
+	.asciz	"~74"
+	.asciz	"~75"
+	.asciz	"~76"
+	.asciz	"~77"
+	.asciz	"~78"
+	.asciz	"~79"
+	.asciz	"~7A"
 
 ptrs_978A1F34:
-	.long	Str_61
-	.long	Str_62
-	.long	Str_63
-	.long	Str_64
-	.long	Str_65
-	.long	Str_66
-	.long	Str_67
-	.long	Str_68
-	.long	Str_69
-	.long	Str_6A
-	.long	Str_6B
-	.long	Str_6C
-	.long	Str_6D
-	.long	Str_6E
-	.long	Str_6F
-	.long	Str_70
-	.long	Str_71
-	.long	Str_72
-	.long	Str_73
-	.long	Str_74
-	.long	Str_75
-	.long	Str_76
-	.long	Str_77
-	.long	Str_78
-	.long	Str_79
-	.long	Str_7A
+	.long	Text_61
+	.long	Text_61+4
+	.long	Text_61+8
+	.long	Text_61+12
+	.long	Text_61+16
+	.long	Text_61+20
+	.long	Text_61+24
+	.long	Text_61+28
+	.long	Text_61+32
+	.long	Text_61+36
+	.long	Text_61+40
+	.long	Text_61+44
+	.long	Text_61+48
+	.long	Text_61+52
+	.long	Text_61+56
+	.long	Text_61+60
+	.long	Text_61+64
+	.long	Text_61+68
+	.long	Text_61+72
+	.long	Text_61+76
+	.long	Text_61+80
+	.long	Text_61+84
+	.long	Text_61+88
+	.long	Text_61+92
+	.long	Text_61+96
+	.long	Text_61+100
 
-Str_41:	.asciz "~41"
-Str_42:	.asciz "~42"
-Str_43:	.asciz "~43"
-Str_44:	.asciz "~44"
-Str_45:	.asciz "~45"
-Str_46:	.asciz "~46"
-Str_47:	.asciz "~47"
-Str_48:	.asciz "~48"
-Str_49:	.asciz "~49"
-Str_4A:	.asciz "~4A"
-Str_4B:	.asciz "~4B"
-Str_4C:	.asciz "~4C"
-Str_4D:	.asciz "~4D"
-Str_4E:	.asciz "~4E"
-Str_4F:	.asciz "~4F"
-Str_50:	.asciz "~50"
-Str_51:	.asciz "~51"
-Str_52:	.asciz "~52"
-Str_53:	.asciz "~53"
-Str_54:	.asciz "~54"
-Str_55:	.asciz "~55"
-Str_56:	.asciz "~56"
-Str_57:	.asciz "~57"
-Str_58:	.asciz "~58"
-Str_59:	.asciz "~59"
-Str_5A:	.asciz "~5A"
+Text_41:	# 26 strings of 3 characters, NUL-terminated
+	.asciz	"~41"
+	.asciz	"~42"
+	.asciz	"~43"
+	.asciz	"~44"
+	.asciz	"~45"
+	.asciz	"~46"
+	.asciz	"~47"
+	.asciz	"~48"
+	.asciz	"~49"
+	.asciz	"~4A"
+	.asciz	"~4B"
+	.asciz	"~4C"
+	.asciz	"~4D"
+	.asciz	"~4E"
+	.asciz	"~4F"
+	.asciz	"~50"
+	.asciz	"~51"
+	.asciz	"~52"
+	.asciz	"~53"
+	.asciz	"~54"
+	.asciz	"~55"
+	.asciz	"~56"
+	.asciz	"~57"
+	.asciz	"~58"
+	.asciz	"~59"
+	.asciz	"~5A"
 
 ptrs_978A2004:
-	.long	Str_41
-	.long	Str_42
-	.long	Str_43
-	.long	Str_44
-	.long	Str_45
-	.long	Str_46
-	.long	Str_47
-	.long	Str_48
-	.long	Str_49
-	.long	Str_4A
-	.long	Str_4B
-	.long	Str_4C
-	.long	Str_4D
-	.long	Str_4E
-	.long	Str_4F
-	.long	Str_50
-	.long	Str_51
-	.long	Str_52
-	.long	Str_53
-	.long	Str_54
-	.long	Str_55
-	.long	Str_56
-	.long	Str_57
-	.long	Str_58
-	.long	Str_59
-	.long	Str_5A
+	.long	Text_41
+	.long	Text_41+4
+	.long	Text_41+8
+	.long	Text_41+12
+	.long	Text_41+16
+	.long	Text_41+20
+	.long	Text_41+24
+	.long	Text_41+28
+	.long	Text_41+32
+	.long	Text_41+36
+	.long	Text_41+40
+	.long	Text_41+44
+	.long	Text_41+48
+	.long	Text_41+52
+	.long	Text_41+56
+	.long	Text_41+60
+	.long	Text_41+64
+	.long	Text_41+68
+	.long	Text_41+72
+	.long	Text_41+76
+	.long	Text_41+80
+	.long	Text_41+84
+	.long	Text_41+88
+	.long	Text_41+92
+	.long	Text_41+96
+	.long	Text_41+100
 
-Str_20_20:	.asciz "~20"
+Str_20_15:	.asciz "~20"
 Str_5F:	.asciz "~5F"
 Str_30:	.asciz "~30"
 Str_31:	.asciz "~31"
@@ -7580,11 +7869,6 @@ Str_36:	.asciz "~36"
 Str_37:	.asciz "~37"
 Str_38:	.asciz "~38"
 Str_39:	.asciz "~39"
-Str_20_19:	.asciz "~20"
-Str_20_18:	.asciz "~20"
-Str_20_17:	.asciz "~20"
-Str_20_16:	.asciz "~20"
-Str_20_15:	.asciz "~20"
 Str_20_14:	.asciz "~20"
 Str_20_13:	.asciz "~20"
 Str_20_12:	.asciz "~20"
@@ -7594,9 +7878,14 @@ Str_20_9:	.asciz "~20"
 Str_20_8:	.asciz "~20"
 Str_20_7:	.asciz "~20"
 Str_20_6:	.asciz "~20"
+Str_20_5:	.asciz "~20"
+Str_20_4:	.asciz "~20"
+Str_20_3:	.asciz "~20"
+Str_20_2:	.asciz "~20"
+Str_20:	.asciz "~20"
 
 ptrs_978A20D4:
-	.long	Str_20_20
+	.long	Str_20_15
 	.long	Str_5F
 	.long	Str_30
 	.long	Str_31
@@ -7608,11 +7897,6 @@ ptrs_978A20D4:
 	.long	Str_37
 	.long	Str_38
 	.long	Str_39
-	.long	Str_20_19
-	.long	Str_20_18
-	.long	Str_20_17
-	.long	Str_20_16
-	.long	Str_20_15
 	.long	Str_20_14
 	.long	Str_20_13
 	.long	Str_20_12
@@ -7622,68 +7906,74 @@ ptrs_978A20D4:
 	.long	Str_20_8
 	.long	Str_20_7
 	.long	Str_20_6
-
-Str_21:	.asciz "~21"
-Str_23:	.asciz "~23"
-Str_24:	.asciz "~24"
-Str_25:	.asciz "~25"
-Str_26:	.asciz "~26"
-Str_40:	.asciz "~40"
-Str_5E:	.asciz "~5E"
-Str_27:	.asciz "~27"
-Str_60:	.asciz "~60"
-Str_7B:	.asciz "~7B"
-Str_7D:	.asciz "~7D"
-Str_AE:	.asciz "~AE"
-Str_AF:	.asciz "~AF"
-Str_2C:	.asciz "~2C"
-Str_3B:	.asciz "~3B"
-Str_2B:	.asciz "~2B"
-Str_2D:	.asciz "~2D"
-Str_3D:	.asciz "~3D"
-Str_28:	.asciz "~28"
-Str_29:	.asciz "~29"
-Str_5B:	.asciz "~5B"
-Str_5D:	.asciz "~5D"
-Str_20_5:	.asciz "~20"
-Str_20_4:	.asciz "~20"
-Str_20_3:	.asciz "~20"
-Str_20_2:	.asciz "~20"
-Str_20:	.asciz "~20"
-Str_2E:	.asciz "~2E"
-Str_22:	.asciz "~22"
-
-ptrs_978A21B0:
-	.long	Str_21
-	.long	Str_23
-	.long	Str_24
-	.long	Str_25
-	.long	Str_26
-	.long	Str_40
-	.long	Str_5E
-	.long	Str_27
-	.long	Str_60
-	.long	Str_7B
-	.long	Str_7D
-	.long	Str_AE
-	.long	Str_AF
-	.long	Str_2C
-	.long	Str_3B
-	.long	Str_2B
-	.long	Str_2D
-	.long	Str_3D
-	.long	Str_28
-	.long	Str_29
-	.long	Str_5B
-	.long	Str_5D
 	.long	Str_20_5
 	.long	Str_20_4
 	.long	Str_20_3
 	.long	Str_20_2
 	.long	Str_20
-	.long	Str_2E
-	.long	Str_22
-ptrs_978A2224:
+
+Text_21:	# 29 strings of 3 characters, NUL-terminated
+	.asciz	"~21"
+	.asciz	"~23"
+	.asciz	"~24"
+	.asciz	"~25"
+	.asciz	"~26"
+	.asciz	"~40"
+	.asciz	"~5E"
+	.asciz	"~27"
+	.asciz	"~60"
+	.asciz	"~7B"
+	.asciz	"~7D"
+	.asciz	"~AE"
+	.asciz	"~AF"
+	.asciz	"~2C"
+	.asciz	"~3B"
+	.asciz	"~2B"
+	.asciz	"~2D"
+	.asciz	"~3D"
+	.asciz	"~28"
+	.asciz	"~29"
+	.asciz	"~5B"
+	.asciz	"~5D"
+	.asciz	"~20"
+	.asciz	"~20"
+	.asciz	"~20"
+	.asciz	"~20"
+	.asciz	"~20"
+	.asciz	"~2E"
+	.asciz	"~22"
+
+ptrs_978A21B0:
+	.long	Text_21
+	.long	Text_21+4
+	.long	Text_21+8
+	.long	Text_21+12
+	.long	Text_21+16
+	.long	Text_21+20
+	.long	Text_21+24
+	.long	Text_21+28
+	.long	Text_21+32
+	.long	Text_21+36
+	.long	Text_21+40
+	.long	Text_21+44
+	.long	Text_21+48
+	.long	Text_21+52
+	.long	Text_21+56
+	.long	Text_21+60
+	.long	Text_21+64
+	.long	Text_21+68
+	.long	Text_21+72
+	.long	Text_21+76
+	.long	Text_21+80
+	.long	Text_21+84
+	.long	Text_21+88
+	.long	Text_21+92
+	.long	Text_21+96
+	.long	Text_21+100
+	.long	Text_21+104
+	.long	Text_21+108
+	.long	Text_21+112
+KssNamingEditSwProc_L3c_Table:
 	.long	ptrs_978A1F34
 	.long	ptrs_978A2004
 	.long	ptrs_978A20D4
@@ -7710,7 +8000,7 @@ Str_NX_8d_NX:	.asciz "  NX ~8d NX  "
 Str_GM_GM2_8d_NX:	.asciz "GM/GM2 ~8d NX"
 Str_PREV_TEC_8dNX:	.asciz "PREV.TEC~8dNX"
 
-ptrs_978A22AC:
+SmfFilterFunc_L10_Table:
 	.long	Str_GM_GM2_8dGM2
 	.long	Str_NX_8d_NX
 	.long	Str_GM_GM2_8d_NX
@@ -7962,17 +8252,17 @@ ptrs_978A2BAC:
 	.long	Str_First_Receive_bad
 	.long	Str_Second_Receive_bad
 	.long	Str_Reset_Communication_ok_S
-ptrs_978A2BCC:
+KssCOMM_DISPProc_Lb4_Table:
 	.long	ptrs_978A243C
 	.long	ptrs_978A2500
 	.long	ptrs_978A25C0
 	.long	ptrs_978A2680
-ptrs_978A2BDC:
+KssCOMM_DISPProc_L1d0_Table:
 	.long	ptrs_978A26EC
 	.long	ptrs_978A275C
 	.long	ptrs_978A27D8
 	.long	ptrs_978A2854
-ptrs_978A2BEC:
+KssCOMM_DISPProc_L345_Table:
 	.long	ptrs_978A2918
 	.long	ptrs_978A29F4
 	.long	ptrs_978A2AD0
@@ -7987,8 +8277,10 @@ data_978A2C10:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C10, 0x0A2C14
 
 Str_empty_444:	.asciz "("
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C16, 0x0A2C1C
 Str_empty_443:	.asciz "("
+# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C1E, 0x0A2C20
 data_978A2C20:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C20, 0x0A2C28
@@ -8032,172 +8324,62 @@ Str_s_iPPStage_PPS_DEBUGINFO:	.asciz "s_iPPStage : PPS_DEBUGINFO"
 	.align	4, 0xFF	# pad after Str_s_iPPStage_PPS_DEBUGINFO
 Str_s_iPPStage_PPS_DATAACCESS:	.asciz "s_iPPStage : PPS_DATAACCESS"
 Str_s_iConnectionActiv_i:	.asciz "s_iConnectionActiv : %i"
-data_978A2D8C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2D8C, 0x0A2D8E
-data_978A2D8E:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2D8E, 0x0A2D90
+
+KssFileSfx_DISPProc_L131_Var:	# s16, a constant; read / written by KssFileSfx_DISPProc_L131 0x9781E483: `movhu (KssFileSfx_DISPProc_L131_Var), d0`; KssFileSfx_DISPProc_L252 0x9781E5A4: `movhu (KssFileSfx_DISPProc_L131_Var), d0` ...
+	.word	1
+KssFileSfx_DISPProc_L131_Var_2:	# s16, a constant; read / written by KssFileSfx_DISPProc_L131 0x9781E483: `movhu (KssFileSfx_DISPProc_L131_Var_2), d0`; KssFileSfx_DISPProc_L252 0x9781E5A4: `movhu (KssFileSfx_DISPProc_L131_Var_2), d0` ...
+	.word	1
+
 Str_CDIR:	.asciz "CDIR"
 	.align	4, 0xFF	# pad after Str_CDIR
-Str_CURRENT_PANEL_4:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_4:	.asciz "PANEL MEMORY"
-Str_SEQUENCER_SMF_4:	.asciz "SEQUENCER/SMF"
-Str_COMPOSER_4:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_4:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_4:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_8:	.asciz "EFFECT"
-Str_USER_MIDI_4:	.asciz "USER MIDI"
-Str_FAVORITES_4:	.asciz "FAVORITES"
-Str_HOME_PAGE_4:	.asciz "HOME PAGE"
-Str_CUST0M_STYLES_4:	.asciz "CUST0M STYLES"
-Str_CUST0M_LYRICS_4:	.asciz "CUST0M LYRICS"
-Str_INFO_FILE_4:	.asciz "INFO FILE"
-	.align	4, 0xFF	# pad after Str_INFO_FILE_4
-
-ptrs_978A2E34:
-	.long	Str_CURRENT_PANEL_4
-	.long	Str_PANEL_MEMORY_4
-	.long	Str_SEQUENCER_SMF_4
-	.long	Str_COMPOSER_4
-	.long	Str_SOUND_MEMORY_4
-	.long	Str_MANUAL_SEQ_PAD_4
-	.long	Str_EFFECT_8
-	.long	Str_USER_MIDI_4
-	.long	Str_FAVORITES_4
-	.long	Str_HOME_PAGE_4
-	.long	Str_CUST0M_STYLES_4
-	.long	Str_CUST0M_LYRICS_4
-	.long	Str_INFO_FILE_4
-
-Str_CURRENT_PANEL_3:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_3:	.asciz "PANEL MEMORY"
-Str_SEQUENCER_SMF_3:	.asciz "SEQUENCER/SMF"
-Str_COMPOSER_3:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_3:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_3:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_7:	.asciz "EFFECT"
-Str_USER_MIDI_3:	.asciz "USER MIDI"
-Str_FAVORITES_3:	.asciz "FAVORITES"
-Str_HOME_PAGE_3:	.asciz "HOME PAGE"
-Str_CUST0M_STYLES_3:	.asciz "CUST0M STYLES"
-Str_CUST0M_LYRICS_3:	.asciz "CUST0M LYRICS"
-Str_INFO_FILE_3:	.asciz "INFO FILE"
-	.align	4, 0xFF	# pad after Str_INFO_FILE_3
-
-ptrs_978A2F04:
-	.long	Str_CURRENT_PANEL_3
-	.long	Str_PANEL_MEMORY_3
-	.long	Str_SEQUENCER_SMF_3
-	.long	Str_COMPOSER_3
-	.long	Str_SOUND_MEMORY_3
-	.long	Str_MANUAL_SEQ_PAD_3
-	.long	Str_EFFECT_7
-	.long	Str_USER_MIDI_3
-	.long	Str_FAVORITES_3
-	.long	Str_HOME_PAGE_3
-	.long	Str_CUST0M_STYLES_3
-	.long	Str_CUST0M_LYRICS_3
-	.long	Str_INFO_FILE_3
-
-Str_CURRENT_PANEL_2:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_2:	.asciz "PANEL MEMORY"
-Str_SEQUENCER_SMF_2:	.asciz "SEQUENCER/SMF"
-Str_COMPOSER_2:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_2:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_2:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_6:	.asciz "EFFECT"
-Str_USER_MIDI_2:	.asciz "USER MIDI"
-Str_FAVORITES_2:	.asciz "FAVORITES"
-Str_HOME_PAGE_2:	.asciz "HOME PAGE"
-Str_CUST0M_STYLES_2:	.asciz "CUST0M STYLES"
-Str_CUST0M_LYRICS_2:	.asciz "CUST0M LYRICS"
-Str_INFO_FILE_2:	.asciz "INFO FILE"
-	.align	4, 0xFF	# pad after Str_INFO_FILE_2
-
-ptrs_978A2FD4:
-	.long	Str_CURRENT_PANEL_2
-	.long	Str_PANEL_MEMORY_2
-	.long	Str_SEQUENCER_SMF_2
-	.long	Str_COMPOSER_2
-	.long	Str_SOUND_MEMORY_2
-	.long	Str_MANUAL_SEQ_PAD_2
-	.long	Str_EFFECT_6
-	.long	Str_USER_MIDI_2
-	.long	Str_FAVORITES_2
-	.long	Str_HOME_PAGE_2
-	.long	Str_CUST0M_STYLES_2
-	.long	Str_CUST0M_LYRICS_2
-	.long	Str_INFO_FILE_2
-
-Str_CURRENT_PANEL:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_5:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_5:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_SMF:	.asciz "SEQUENCER/SMF"
-Str_COMPOSER:	.asciz "COMPOSER"
-Str_SOUND_MEMORY:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_5:	.asciz "EFFECT"
-Str_USER_MIDI:	.asciz "USER MIDI"
-Str_FAVORITES:	.asciz "FAVORITES"
-Str_HOME_PAGE:	.asciz "HOME PAGE"
+Str_COMPOSER_5:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_5:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_5:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_9:	.asciz "EFFECT"
+Str_USER_MIDI_5:	.asciz "USER MIDI"
+Str_FAVORITES_5:	.asciz "FAVORITES"
+Str_HOME_PAGE_5:	.asciz "HOME PAGE"
 Str_CUST0M_STYLES:	.asciz "CUST0M STYLES"
 Str_CUST0M_LYRICS:	.asciz "CUST0M LYRICS"
-Str_INFO_FILE:	.asciz "INFO FILE"
-	.align	4, 0xFF	# pad after Str_INFO_FILE
+Str_INFO_FILE_5:	.asciz "INFO FILE"
+	.align	4, 0xFF	# pad after Str_INFO_FILE_5
 
-ptrs_978A30A4:
-	.long	Str_CURRENT_PANEL
-	.long	Str_PANEL_MEMORY
-	.long	Str_SEQUENCER_SMF
-	.long	Str_COMPOSER
-	.long	Str_SOUND_MEMORY
-	.long	Str_MANUAL_SEQ_PAD
-	.long	Str_EFFECT_5
-	.long	Str_USER_MIDI
-	.long	Str_FAVORITES
-	.long	Str_HOME_PAGE
-	.long	Str_CUST0M_STYLES
-	.long	Str_CUST0M_LYRICS
-	.long	Str_INFO_FILE
+names_978A31BC_p0_0:	# REC_names_978A31BC_p0 (1 bytes), then 169 x u32 the code indexes from +0 (read by KssSetSfx_DISPProc_L2e7 0x9781F37D `mov (d0, a0), a0`; KssSetSfx_DISPProc_L2e7 0x9781F37D `mov (d0, a0), d0`)
+	REC_names_978A31BC_p0	x0="\x98"
+	tab_u32	2794949165, 3013052973, 3247933997, 3398928941, 3617032749, 3868690989, 3986131501, 4153903661, 26708525, 194480686, 429361710, 664242734, 1134004782, 1163022933, 1344296014, 1279610433	# [0]
+	tab_u32	1312903168, 1293962309, 1380928837, 1163067481, 1313166673, 793920835, 4607315, 1347243843, 1380275023, 1431261952, 1293960270, 1380928837, 1095565401, 1279350094, 1363497760, 1145131040	# [16]
+	tab_u32	1179010304, 5522245, 1380275029, 1145654560, 1095106633, 1230131030, 5457236, 1162694472, 1195462688, 1430454341, 1295012947, 1498698528, 5457228, 1414747459, 1277185328, 1128878681	# [32]
+	tab_u32	1313407059, 1176522566, 4541513, 1761607679, 1989642798, 2207746606, 2442627630, 2593622574, 2811726382, 3063384622, 3180825134, 3348597294, 3516369454, 3684141614, 3919022638, 4153903662	# [48]
+	tab_u32	1134004782, 1163022933, 1344296014, 1279610433, 1312903168, 1293962309, 1380928837, 1163067481, 1313166673, 793920835, 4607315, 1347243843, 1380275023, 1431261952, 1293960270, 1380928837	# [64]
+	tab_u32	1095565401, 1279350094, 1363497760, 1145131040, 1179010304, 5522245, 1380275029, 1145654560, 1095106633, 1230131030, 5457236, 1162694472, 1195462688, 1430454341, 1295012947, 1498698528	# [80]
+	tab_u32	5457228, 1414747459, 1277185328, 1128878681, 1313407059, 1176522566, 4541513, 956301311, 1184336431, 1402440239, 1637321263, 1788316207, 2006420015, 2258078255, 2375518767, 2543290927	# [96]
+	tab_u32	2711063087, 2878835247, 3113716271, 3348597295, 1134004783, 1163022933, 1344296014, 1279610433, 1312903168, 1293962309, 1380928837, 1163067481, 1313166673, 793920835, 4607315, 1347243843	# [112]
+	tab_u32	1380275023, 1431261952, 1293960270, 1380928837, 1095565401, 1279350094, 1363497760, 1145131040, 1179010304, 5522245, 1380275029, 1145654560, 1095106633, 1230131030, 5457236, 1162694472	# [128]
+	tab_u32	1195462688, 1430454341, 1295012947, 1498698528, 5457228, 1414747459, 1277185328, 1128878681, 1313407059, 1176522566, 4541513, 150994943, 379030064, 597133872, 832014896, 983009840	# [144]
+	tab_u32	1201113648, 1452771888, 1570212400, 1737984560, 1905756720, 2073528880, 2308409904, 2543290928, 764906032	# [160]
 
-Str_empty_442:	.asciz "---"
-Str_YES_22:	.asciz "YES"
-Str_NO_26:	.asciz "NO"
-Str_SQT_4:	.asciz "SQT"
-Str_SMF_5:	.asciz "SMF"
-Str_DEL_7:	.asciz "DEL"
-Str_3BK_4:	.asciz "3BK"
-Str_ALL_4:	.asciz "ALL"
-	.align	4, 0xFF	# pad after Str_ALL_4
+Str_text:	.asciz "--"
+Str_YES_19:	.asciz "YES"
+Str_NO_23:	.asciz "NO"
+Str_SQT:	.asciz "SQT"
+Str_SMF_2:	.asciz "SMF"
+Str_DEL_4:	.asciz "DEL"
+Str_3BK:	.asciz "3BK"
+Str_ALL:	.asciz "ALL"
+	.align	4, 0xFF	# pad after Str_ALL
 
-ptrs_978A30F8:
-	.long	Str_empty_442
-	.long	Str_YES_22
-	.long	Str_NO_26
-	.long	Str_SQT_4
-	.long	Str_SMF_5
-	.long	Str_DEL_7
-	.long	Str_3BK_4
-	.long	Str_ALL_4
+KssSetSfx_DISPProc_L822_Table_p0_0:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
+	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A31BC_p0_0+676
 
-Str_empty_441:	.asciz "---"
-Str_YES_21:	.asciz "YES"
-Str_NO_25:	.asciz "NO "
-Str_SQT_3:	.asciz "SQT"
-Str_SMF_4:	.asciz "SMF"
-Str_DEL_6:	.asciz "DEL"
-Str_3BK_3:	.asciz "3BK"
-Str_ALL_3:	.asciz "ALL"
+names_978A30FC:
+	.long	Str_YES_19, Str_NO_23
+	.long	Str_SQT, Str_SMF_2
+	.long	Str_DEL_4, Str_3BK
+	.long	Str_ALL, 0x2D2D2D
 
-ptrs_978A3138:
-	.long	Str_empty_441
-	.long	Str_YES_21
-	.long	Str_NO_25
-	.long	Str_SQT_3
-	.long	Str_SMF_4
-	.long	Str_DEL_6
-	.long	Str_3BK_3
-	.long	Str_ALL_3
-
-Str_empty_440:	.asciz "---"
 Str_YES_20:	.asciz "YES"
 Str_NO_24:	.asciz "NO "
 Str_SQT_2:	.asciz "SQT"
@@ -8206,64 +8388,93 @@ Str_DEL_5:	.asciz "DEL"
 Str_3BK_2:	.asciz "3BK"
 Str_ALL_2:	.asciz "ALL"
 
-ptrs_978A3178:
-	.long	Str_empty_440
-	.long	Str_YES_20
-	.long	Str_NO_24
-	.long	Str_SQT_2
-	.long	Str_SMF_3
-	.long	Str_DEL_5
-	.long	Str_3BK_2
-	.long	Str_ALL_2
+KssSetSfx_DISPProc_L822_Table_p0_1:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
+	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A30FC+28
 
-Str_empty_439:	.asciz "---"
-Str_YES_19:	.asciz "YES"
-Str_NO_23:	.asciz "NO "
-Str_SQT:	.asciz "SQT"
-Str_SMF_2:	.asciz "SMF"
-Str_DEL_4:	.asciz "DEL"
-Str_3BK:	.asciz "3BK"
-Str_ALL:	.asciz "ALL"
+names_978A313C:
+	.long	Str_YES_20, Str_NO_24
+	.long	Str_SQT_2, Str_SMF_3
+	.long	Str_DEL_5, Str_3BK_2
+	.long	Str_ALL_2, 0x2D2D2D
 
-ptrs_978A31B8:
-	.long	Str_empty_439
-	.long	Str_YES_19
-	.long	Str_NO_23
-	.long	Str_SQT
-	.long	Str_SMF_2
-	.long	Str_DEL_4
-	.long	Str_3BK
-	.long	Str_ALL
-ptrs_978A31D8:
-	.long	ptrs_978A2E34
-	.long	ptrs_978A2F04
-	.long	ptrs_978A2FD4
-	.long	ptrs_978A30A4
-ptrs_978A31E8:
-	.long	ptrs_978A30F8
-	.long	ptrs_978A3138
-	.long	ptrs_978A3178
-	.long	ptrs_978A31B8
-data_978A31F8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A31F8, 0x0A31FA
-data_978A31FA:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A31FA, 0x0A31FC
-data_978A31FC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A31FC, 0x0A31FE
-data_978A31FE:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A31FE, 0x0A3200
-data_978A3200:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3200, 0x0A3202
-data_978A3202:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3202, 0x0A3204
+Str_YES_21:	.asciz "YES"
+Str_NO_25:	.asciz "NO "
+Str_SQT_3:	.asciz "SQT"
+Str_SMF_4:	.asciz "SMF"
+Str_DEL_6:	.asciz "DEL"
+Str_3BK_3:	.asciz "3BK"
+Str_ALL_3:	.asciz "ALL"
+
+KssSetSfx_DISPProc_L822_Table_p0_2:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
+	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A313C+28
+
+names_978A317C:
+	.long	Str_YES_21, Str_NO_25
+	.long	Str_SQT_3, Str_SMF_4
+	.long	Str_DEL_6, Str_3BK_3
+	.long	Str_ALL_3, 0x2D2D2D
+
+Str_YES_22:	.asciz "YES"
+
+names_978A31BC_p0_1:	# REC_names_978A31BC_p0 (1 bytes)
+	REC_names_978A31BC_p0	x0="N"
+
+Str_O_2:	.asciz "O "
+Str_SQT_4:	.asciz "SQT"
+
+names_978A31BC_p0_2:	# REC_names_978A31BC_p0 (1 bytes)
+	REC_names_978A31BC_p0	x0="S"
+
+Str_MF:	.asciz "MF"
+Str_DEL_7:	.asciz "DEL"
+
+names_978A31BC_p0_3:	# REC_names_978A31BC_p0 (1 bytes)
+	REC_names_978A31BC_p0	x0="3"
+
+Str_BK:	.asciz "BK"
+Str_ALL_4:	.asciz "ALL"
+
+KssSetSfx_DISPProc_L822_Table_p0_3:	# REC_KssSetSfx_DISPProc_L822_Table_p0 (4 bytes)
+	REC_KssSetSfx_DISPProc_L822_Table_p0	p0=names_978A317C+28
+
+names_978A31BC:
+	.long	Str_YES_22, names_978A31BC_p0_1
+	.long	Str_SQT_4, names_978A31BC_p0_2
+	.long	Str_DEL_7, names_978A31BC_p0_3
+	.long	Str_ALL_4, names_978A31BC_p0_0
+	# 3 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
+	.long	names_978A31BC_p0_0+208
+	.long	names_978A31BC_p0_0+416
+	.long	names_978A31BC_p0_0+624
+
+KssSetSfx_DISPProc_L822_Table:
+	.long	KssSetSfx_DISPProc_L822_Table_p0_0
+	.long	KssSetSfx_DISPProc_L822_Table_p0_1
+	.long	KssSetSfx_DISPProc_L822_Table_p0_2
+	.long	KssSetSfx_DISPProc_L822_Table_p0_3
+
+KssSetSfx_DISPProc_L9a_Var:	# s16, a constant; read / written by KssSetSfx_DISPProc_L9a 0x9781F130: `movhu (KssSetSfx_DISPProc_L9a_Var), d0`
+	.word	8
+KssSetSfx_DISPProc_L9a_Var_2:	# s16, a constant; read / written by KssSetSfx_DISPProc_L9a 0x9781F130: `movhu (KssSetSfx_DISPProc_L9a_Var_2), d0`
+	.word	8
+KssSetSfx_DISPProc_L9a_Var_3:	# s16, a constant; read / written by KssSetSfx_DISPProc_L9a 0x9781F130: `movhu (KssSetSfx_DISPProc_L9a_Var_3), d0`
+	.word	200
+KssSetSfx_DISPProc_L9a_Var_4:	# s16, a constant; read / written by KssSetSfx_DISPProc_L9a 0x9781F130: `movhu (KssSetSfx_DISPProc_L9a_Var_4), d0`
+	.word	18
+KssSetSfx_DISPProc_L50f_Var:	# s16, a constant; read / written by KssSetSfx_DISPProc_L50f 0x9781F5A5: `movhu (KssSetSfx_DISPProc_L50f_Var), d0`
+	.word	180
+KssSetSfx_DISPProc_L50f_Var_2:	# s16, a constant; read / written by KssSetSfx_DISPProc_L50f 0x9781F5A5: `movhu (KssSetSfx_DISPProc_L50f_Var_2), d0`; KssSetSfx_DISPProc_Lb17 0x9781FBAD: `movhu (KssSetSfx_DISPProc_L50f_Var_2), d0`
+	.word	8
 
 Str_2_3:	.asciz "2"
-data_978A3206:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3206, 0x0A3208
-data_978A3208:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3208, 0x0A320A
-data_978A320A:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A320A, 0x0A320C
+
+KssSetSfx_DISPProc_L50f_Var_3:	# s16, a constant; read / written by KssSetSfx_DISPProc_L50f 0x9781F5A5: `movhu (KssSetSfx_DISPProc_L50f_Var_3), d0`; KssSetSfx_DISPProc_Lb17 0x9781FBAD: `movhu (KssSetSfx_DISPProc_L50f_Var_3), d0`
+	.word	18
+KssSetSfx_DISPProc_L2e7_Var:	# s16, a constant; read / written by KssSetSfx_DISPProc_L2e7 0x9781F37D: `movhu (KssSetSfx_DISPProc_L2e7_Var), d0`; KssSetSfx_DISPProc_L822 0x9781F8B8: `movhu (KssSetSfx_DISPProc_L2e7_Var), d0` ...
+	.word	1
+KssSetSfx_DISPProc_L2e7_Var_2:	# s16, a constant; read / written by KssSetSfx_DISPProc_L2e7 0x9781F37D: `movhu (KssSetSfx_DISPProc_L2e7_Var_2), d0`; KssSetSfx_DISPProc_L822 0x9781F8B8: `movhu (KssSetSfx_DISPProc_L2e7_Var_2), d0` ...
+	.word	1
+
 Str_SSFX_2:	.asciz "SSFX"
 	.align	4, 0xFF	# pad after Str_SSFX_2
 Str_DLCF_2:	.asciz "DLCF"
@@ -8293,8 +8504,10 @@ Str_COPY_FD_TO_HDD_TECH_FORMAT:	.asciz "COPY FD TO HDD: TECH-FORMAT"
 Str_d2_Kopiere_FD_auf_HDD_Technics_Format:	.asciz "d2\x8A\x97Kopiere FD auf HDD: Technics-Format"
 Str_2_COPY_FD_TO_HDD_TECH_FORMAT_2:	.asciz "\x842\x8A\x97COPY FD TO HDD: TECH-FORMAT"
 Str_2_COPY_FD_TO_HDD_TECH_FORMAT:	.asciz "\xAC2\x8A\x97COPY FD TO HDD: TECH-FORMAT"
-data_978A32E8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A32E8, 0x0A32EC
+
+KssCopyFdToHD_DISPProc_L709_Table_p0_0:	# REC_KssCopyFdToHD_DISPProc_L709_Table_p0 (4 bytes)
+	REC_KssCopyFdToHD_DISPProc_L709_Table_p0	p0=Str_2_COPY_FD_TO_HDD_TECH_FORMAT+4
+
 Str_SAVE_FSB_OK_3:	.asciz "SAVE FSB OK!"
 Str_SAVE_SONG_TO_HDD_OK_3:	.asciz "SAVE SONG TO HDD OK!"
 Str_Load_Song_from_FD_Ok_3:	.asciz "Load Song from FD Ok"
@@ -8462,12 +8675,12 @@ ptrs_978A37E8:
 	.long	Str_Failed_Song_save_aborted_4
 	.long	Str_Failed_Song_load_aborted_4
 	.long	Str_Failed_No_more_Directory_4
-ptrs_978A3828:
+KssCopyFdToHD_DISPProc_L709_Table:
 	.long	Str_d2_Kopiere_FD_auf_HDD_Technics_Format
 	.long	Str_2_COPY_FD_TO_HDD_TECH_FORMAT_2
 	.long	Str_2_COPY_FD_TO_HDD_TECH_FORMAT
-	.long	data_978A32E8
-ptrs_978A3838:
+	.long	KssCopyFdToHD_DISPProc_L709_Table_p0_0
+KssCopyFdToHD_DISPProc_L9d3_Table:
 	.long	ptrs_978A33F0
 	.long	ptrs_978A3568
 	.long	ptrs_978A36A8
@@ -8492,8 +8705,10 @@ Str_8_COPY_FD_TO_HDD_SMF_2:	.asciz "\x808\x8A\x97COPY FD TO HDD SMF"
 	.align	4, 0xFF	# pad after Str_8_COPY_FD_TO_HDD_SMF_2
 Str_8_COPY_FD_TO_HDD_SMF:	.asciz "\x988\x8A\x97COPY FD TO HDD SMF"
 	.align	4, 0xFF	# pad after Str_8_COPY_FD_TO_HDD_SMF
-data_978A38C4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A38C4, 0x0A38C8
+
+KssCopySmfFdToHD_DISPProc_L47a_Table_p0_0:	# REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0 (4 bytes)
+	REC_KssCopySmfFdToHD_DISPProc_L47a_Table_p0	p0=Str_8_COPY_FD_TO_HDD_SMF+4
+
 Str_Save_FSB_OK_3:	.asciz "Save FSB = OK"
 Str_Save_Song_to_HD_OK_3:	.asciz "Save Song to HD = OK"
 Str_Load_Song_from_FD_OK_3:	.asciz "Load Song from FD = OK"
@@ -8657,12 +8872,12 @@ ptrs_978A3DC4:
 	.long	Str_Failed_Song_save_aborted
 	.long	Str_Failed_Song_load_aborted
 	.long	Str_Failed_No_more_Directory
-ptrs_978A3E04:
+KssCopySmfFdToHD_DISPProc_L47a_Table:
 	.long	Str_h8_COPY_FD_TO_HDD_SMF
 	.long	Str_8_COPY_FD_TO_HDD_SMF_2
 	.long	Str_8_COPY_FD_TO_HDD_SMF
-	.long	data_978A38C4
-ptrs_978A3E14:
+	.long	KssCopySmfFdToHD_DISPProc_L47a_Table_p0_0
+KssCopySmfFdToHD_DISPProc_L93e_Table:
 	.long	ptrs_978A39CC
 	.long	ptrs_978A3B3C
 	.long	ptrs_978A3C80
@@ -8725,24 +8940,15 @@ Str_not_written:	.asciz "not written"
 Str_1_2_DRUMS_BASS_STEREO_3_4_ALL_ACC_STEREO:	.asciz "1&2:DRUMS/BASS STEREO - 3&4:ALL ACC STEREO"
 Str_MONO_TEST:	.asciz "MONO TEST"
 
-KssAudioOutputProc_Table_2:	# 1 x u32, 2542419560..2542419560; read by KssAudioOutputProc : `mov	(d0, a0), a0`
-	tab_u32	2542419560
-data_978A3FD0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FD0, 0x0A3FD4
-data_978A3FD4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FD4, 0x0A3FD8
-data_978A3FD8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FD8, 0x0A3FDC
-data_978A3FDC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FDC, 0x0A3FE0
-data_978A3FE0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FE0, 0x0A3FE4
-data_978A3FE4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FE4, 0x0A3FE8
-data_978A3FE8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A3FE8, 0x0A3FEC
-
-ptrs_978A3FEC:
+KssAudioOutputProc_Table_2:
+	.long	Str_SEP_OUTPUT_PRESET_FOR_APC
+	.long	Str_STEREO_OUTPUT_1
+	.long	Str_STEREO_OUTPUT_2
+	.long	Str_AUX_RETURN
+	.long	Str_EXPRESSION_PEDAL_CONTROL
+	.long	Str_PART_SELECT
+	.long	Str_FOR_SEQ
+	.long	Str_ON_4
 	.long	Str_OFF
 	.long	Str_01
 	.long	Str_02
@@ -8760,103 +8966,280 @@ ptrs_978A3FEC:
 	.long	Str_14
 	.long	Str_15
 	.long	Str_16
-data_978A4030:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4030, 0x0A4034
-data_978A4034:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4034, 0x0A4038
-data_978A4038:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4038, 0x0A403C
-data_978A403C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A403C, 0x0A4040
-data_978A4040:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4040, 0x0A4044
-data_978A4044:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4044, 0x0A4048
-data_978A4048:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4048, 0x0A404C
-data_978A404C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A404C, 0x0A4050
-data_978A4050:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4050, 0x0A4058
+	.long	Str_1_2_DRUMS_STEREO_3_4_BASS_STEREO
+	.long	Str_1_2_DRUMS_STEREO_3_4_BASS_ACC_STEREO
+	.long	Str_no_change
+	.long	Str_changed
+	.long	Str_written
+	.long	Str_not_written
+	.long	Str_1_2_DRUMS_BASS_STEREO_3_4_ALL_ACC_STEREO
+	.long	Str_MONO_TEST
+
+func_97827B50_Var_84:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	23
+func_97827B50_Var_85:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	82
+func_97827B50_Var_86:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	260
+func_97827B50_Var_87:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	117
 
 Str_F_3:	.asciz "F"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A405A, 0x0A4060
-data_978A4060:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4060, 0x0A4068
-data_978A4068:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4068, 0x0A4070
-data_978A4070:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4070, 0x0A4078
-data_978A4078:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4078, 0x0A4080
-data_978A4080:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4080, 0x0A4088
-data_978A4088:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4088, 0x0A4090
-data_978A4090:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4090, 0x0A4098
-data_978A4098:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4098, 0x0A40A0
-data_978A40A0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40A0, 0x0A40A8
-data_978A40A8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40A8, 0x0A40B0
-data_978A40B0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40B0, 0x0A40B8
-data_978A40B8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40B8, 0x0A40C0
-data_978A40C0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40C0, 0x0A40C8
+
+func_97827B50_Var_88:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	110
+func_97827B50_Var_89:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_90:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	135
+func_97827B50_Var_91:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	390
+func_97827B50_Var_92:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	110
+func_97827B50_Var_93:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_94:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	135
+func_97827B50_Var_95:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	23
+func_97827B50_Var_96:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	134
+func_97827B50_Var_97:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_98:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	159
+func_97827B50_Var_99:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	335
+func_97827B50_Var_100:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	134
+func_97827B50_Var_101:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_102:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	159
+func_97827B50_Var_103:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	23
+func_97827B50_Var_104:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	168
+func_97827B50_Var_105:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_106:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	193
+func_97827B50_Var_107:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	335
+func_97827B50_Var_108:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	168
+func_97827B50_Var_109:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_110:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	193
+func_97827B50_Var_111:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	23
+func_97827B50_Var_112:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	196
+func_97827B50_Var_113:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	160
+func_97827B50_Var_114:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	221
+func_97827B50_Var_115:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	170
+func_97827B50_Var_116:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	196
+func_97827B50_Var_117:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_118:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	221
+func_97827B50_Var_119:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	335
+func_97827B50_Var_120:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	196
+func_97827B50_Var_121:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	480
+func_97827B50_Var_122:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	221
+func_97827B50_Var_123:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	485
+func_97827B50_Var_124:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	196
+func_97827B50_Var_125:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_126:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	221
+func_97827B50_Var_127:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	23
+func_97827B50_Var_128:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	211
+func_97827B50_Var_129:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	160
+func_97827B50_Var_130:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_131:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	170
+func_97827B50_Var_132:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	211
+func_97827B50_Var_133:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_134:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_135:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	335
+func_97827B50_Var_136:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	211
+func_97827B50_Var_137:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	480
+func_97827B50_Var_138:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_139:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	485
+func_97827B50_Var_140:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	211
+func_97827B50_Var_141:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_142:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
 data_978A40C8:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A40C8, 0x0A40D0
-data_978A40D0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40D0, 0x0A40D8
-data_978A40D8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40D8, 0x0A40E0
-data_978A40E0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40E0, 0x0A40E8
-data_978A40E8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40E8, 0x0A40F0
-data_978A40F0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40F0, 0x0A40F8
-data_978A40F8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40F8, 0x0A4100
-data_978A4100:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4100, 0x0A4108
+func_97827C18_Var:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	262
+func_97827C18_Var_2:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	55
+func_97827C18_Var_3:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	400
+func_97827C18_Var_4:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	62
+func_97827C18_Var_5:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	400
+func_97827C18_Var_6:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	55
+func_97827C18_Var_7:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	538
+func_97827C18_Var_8:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	62
+func_97827C18_Var_9:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	260
+func_97827C18_Var_10:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	79
+func_97827C18_Var_11:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	626
+func_97827C18_Var_12:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	99
+func_97827C18_Var_13:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	273
+func_97827C18_Var_14:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	130
+func_97827C18_Var_15:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	308
+func_97827C18_Var_16:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	150
+func_97827C18_Var_17:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	587
+func_97827C18_Var_18:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	130
+func_97827C18_Var_19:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	622
+func_97827C18_Var_20:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	150
+func_97827C18_Var_21:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	273
+func_97827C18_Var_22:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	164
+func_97827C18_Var_23:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	308
+func_97827C18_Var_24:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	184
+func_97827C18_Var_25:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	587
+func_97827C18_Var_26:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	164
+func_97827C18_Var_27:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	622
+func_97827C18_Var_28:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	184
+
 Str_t_2:	.asciz "t"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A410A, 0x0A4110
-data_978A4110:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4110, 0x0A4118
-data_978A4118:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4118, 0x0A4120
-data_978A4120:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4120, 0x0A4128
-data_978A4128:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4128, 0x0A4130
-data_978A4130:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4130, 0x0A4138
-data_978A4138:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4138, 0x0A4140
+
+func_97827C18_Var_29:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	195
+func_97827C18_Var_30:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	157
+func_97827C18_Var_31:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	225
+func_97827C18_Var_32:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	267
+func_97827C18_Var_33:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	195
+func_97827C18_Var_34:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	308
+func_97827C18_Var_35:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	225
+func_97827C18_Var_36:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	432
+func_97827C18_Var_37:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	195
+func_97827C18_Var_38:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	473
+func_97827C18_Var_39:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	225
+func_97827C18_Var_40:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
+	.word	581
+func_97827C18_Var_41:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+	.word	195
+func_97827C18_Var_42:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+	.word	622
+func_97827C18_Var_43:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+	.word	225
+func_978279FE_Var_40:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	12
+
+func_978279FE_Table_22:	# 2 x u16, 105..317; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	105, 317
+
+func_978279FE_Var_41:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	232
+func_978279FE_Var_42:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	323
+
+func_978279FE_Table_23:	# 2 x u16, 105..629; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	105, 629
+
+func_978279FE_Var_43:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	232
+func_978279FE_Var_44:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	260
+
+func_978279FE_Table_24:	# 2 x u16, 50..540; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	50, 540
+
+func_978279FE_Var_45:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	70
 data_978A4140:
+# census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4140, 0x0A4148
 data_978A4148:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4148, 0x0A4150
 data_978A4150:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4150, 0x0A4158
 data_978A4158:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4158, 0x0A4160
 data_978A4160:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4160, 0x0A4168
 data_978A4168:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4168, 0x0A4170
 data_978A4170:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4170, 0x0A4178
 data_978A4178:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4178, 0x0A4180
 data_978A4180:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4180, 0x0A4188
 
-ptrs_978A4188:
+KssAudioOutputProc_L412_Table:
 	.long	data_978A4140
 	.long	data_978A4148
 	.long	data_978A4150
@@ -8910,7 +9293,7 @@ Str_7_3:	.asciz "7"
 Str_8_4:	.asciz "8"
 Str_9_2:	.asciz "9"
 
-ptrs_978A4244:
+func_97827E32_entry_L9_Table:
 	.long	Str_a
 	.long	Str_b
 	.long	Str_c
@@ -8966,16 +9349,21 @@ Str_01i_s:	.asciz "%01i:%s"
 Str_02i_s_3:	.asciz "%02i:%s"
 Str_03i_s_3:	.asciz "%03i:%s"
 Str_s_2:	.asciz "%s"
+# census: opaque -- unknown-dump: 125 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4323, 0x0A43A0
-data_978A43A0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A43A0, 0x0A43A4
+
+KSSCLSListProc_L354_Var:	# u32, a constant; read / written by KSSCLSListProc_L354 0x9782910E: `mov (KSSCLSListProc_L354_Var), d0`
+	.long	0x978a4324
+
 Str_03i_s_2:	.asciz "%03i:%s"
 Str_02i_s_s:	.asciz "%02i:%s%s"
 	.align	4, 0xFF	# pad after Str_02i_s_s
 Str_01_99_Luftballons_Nena_x02_MMMMMMMMMMMMM:	.asciz "01:99 Luftballons Nena______x02:MMMMMMMMMMMMMMMMMMMMMMMMMM AS ALx03x04x05x06:Weine nicht kleine Eva MMMx07x08x09x10x11x12x13x14x15x16x17x18x19x20x21x22:KKKKKKKKKKKKKKKKKKKKKKKKKK AS ALx23x24x25x26x27x28x29x30x31x32"
 	.align	4, 0xFF	# pad after Str_01_99_Luftballons_Nena_x02_MMMMMMMMMMMMM
-data_978A4490:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4490, 0x0A4494
+
+KSSCLSFileListProc_L55e_Var:	# u32, a constant; read / written by KSSCLSFileListProc_L55e 0x9782A103: `mov (KSSCLSFileListProc_L55e_Var), d0`
+	.long	0x978a43b8
+
 Str_PANIC_6:	.asciz "PANIC"
 	.align	4, 0xFF	# pad after Str_PANIC_6
 Str_PANIC_5:	.asciz "PANIC"
@@ -9004,210 +9392,623 @@ Str_FLSR:	.asciz "FLSR"
 Str_NOTS:	.asciz "NOTS"
 	.align	4, 0xFF	# pad after Str_NOTS
 Str_JUKE_BOX_12:	.asciz "JUKE BOX"
+# census: opaque -- unknown-dump: 7 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A44FD, 0x0A4504
-data_978A4504:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4504, 0x0A4508
-data_978A4508:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4508, 0x0A450C
-data_978A450C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A450C, 0x0A4510
-data_978A4510:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4510, 0x0A4518
-data_978A4518:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4518, 0x0A4520
-data_978A4520:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4520, 0x0A4528
-data_978A4528:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4528, 0x0A4530
-data_978A4530:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4530, 0x0A4538
-data_978A4538:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4538, 0x0A4540
-data_978A4540:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4540, 0x0A4548
-data_978A4548:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4548, 0x0A4550
-data_978A4550:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4550, 0x0A4558
+
+KssxJukeBoxProc_L13c_Var:	# u32, a constant; read / written by KssxJukeBoxProc_L13c 0x9782B6A9: `mov (KssxJukeBoxProc_L13c_Var), a0`
+	.long	0x978a44f4
+KssxJukeBoxProc_L13c_Var_2:	# u32, a constant; read / written by KssxJukeBoxProc_L13c 0x9782B6A9: `mov (KssxJukeBoxProc_L13c_Var_2), a0`
+	.long	0x978a44fd
+KssxJukeBoxProc_L13c_Var_3:	# u32, a constant; read / written by KssxJukeBoxProc_L13c 0x9782B6A9: `mov (KssxJukeBoxProc_L13c_Var_3), a0`; KssxJukeBoxProc_L422 0x9782B98F: `mov (KssxJukeBoxProc_L13c_Var_3), a0` ...
+	.long	0x978a44fe
+func_97827B50_Var_143:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	15
+func_97827B50_Var_144:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	82
+func_97827B50_Var_145:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	260
+func_97827B50_Var_146:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	104
+func_97827B50_Var_147:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	15
+func_97827B50_Var_148:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	126
+func_97827B50_Var_149:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	260
+func_97827B50_Var_150:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	148
+func_97827B50_Var_151:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	15
+func_97827B50_Var_152:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	168
+func_97827B50_Var_153:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	260
+func_97827B50_Var_154:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	190
+func_97827B50_Var_155:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	15
+func_97827B50_Var_156:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	211
+func_97827B50_Var_157:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	260
+func_97827B50_Var_158:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	233
+func_97827B50_Var_159:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	385
+func_97827B50_Var_160:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	82
+func_97827B50_Var_161:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	630
+func_97827B50_Var_162:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	104
+func_97827B50_Var_163:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	385
+func_97827B50_Var_164:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	126
+func_97827B50_Var_165:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	630
+func_97827B50_Var_166:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	148
+func_97827B50_Var_167:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	385
+func_97827B50_Var_168:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	168
+func_97827B50_Var_169:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	630
+func_97827B50_Var_170:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	190
+func_97827B50_Var_171:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	385
+func_97827B50_Var_172:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	211
+func_97827B50_Var_173:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	630
+func_97827B50_Var_174:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	233
+func_97827B50_Var_175:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	4
+func_97827B50_Var_176:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	2
+func_97827B50_Var_177:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	260
+func_97827B50_Var_178:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	36
+
 Str_F_2:	.asciz "F"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A455A, 0x0A4560
-data_978A4560:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4560, 0x0A4568
+
+func_97827B50_Var_179:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	110
+func_97827B50_Var_180:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_181:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	135
+func_97827B50_Var_182:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	302
+func_97827B50_Var_183:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	210
+func_97827B50_Var_184:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	340
+func_97827B50_Var_185:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	238
 data_978A4568:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4568, 0x0A4570
-data_978A4570:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4570, 0x0A4578
-data_978A4578:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4578, 0x0A4580
-data_978A4580:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4580, 0x0A4588
-data_978A4588:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4588, 0x0A4590
-data_978A4590:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4590, 0x0A4598
-data_978A4598:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4598, 0x0A45A0
-data_978A45A0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45A0, 0x0A45A8
-data_978A45A8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45A8, 0x0A45B0
-data_978A45B0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45B0, 0x0A45B8
-data_978A45B8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45B8, 0x0A45C0
-data_978A45C0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45C0, 0x0A45C8
-data_978A45C8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45C8, 0x0A45D0
-data_978A45D0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45D0, 0x0A45D8
-data_978A45D8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45D8, 0x0A45E0
-data_978A45E0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45E0, 0x0A45E8
-data_978A45E8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45E8, 0x0A45F0
-data_978A45F0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A45F0, 0x0A45F8
+func_978279FE_Var_46:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	281
 
-ptrs_978A45F8:
-	.long	data_978A4578
-	.long	data_978A4580
-	.long	data_978A4588
-	.long	data_978A4590
-	.long	data_978A4598
-	.long	data_978A45A0
-	.long	data_978A45A8
-	.long	data_978A45B0
-data_978A4618:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4618, 0x0A4658
-data_978A4658:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4658, 0x0A465C
-data_978A465C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A465C, 0x0A4660
-data_978A4660:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4660, 0x0A4664
-data_978A4664:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4664, 0x0A4668
-data_978A4668:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4668, 0x0A466C
-data_978A466C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A466C, 0x0A4670
-data_978A4670:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4670, 0x0A4674
-data_978A4674:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4674, 0x0A4678
-data_978A4678:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4678, 0x0A467C
-data_978A467C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A467C, 0x0A4680
-data_978A4680:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4680, 0x0A4684
-data_978A4684:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4684, 0x0A4688
-data_978A4688:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4688, 0x0A468C
-data_978A468C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A468C, 0x0A4690
-data_978A4690:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4690, 0x0A4694
-data_978A4694:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4694, 0x0A4698
-data_978A4698:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4698, 0x0A469C
-data_978A469C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A469C, 0x0A46A0
-data_978A46A0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46A0, 0x0A46A4
-data_978A46A4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46A4, 0x0A46A8
-data_978A46A8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46A8, 0x0A46AC
-data_978A46AC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46AC, 0x0A46B0
-data_978A46B0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46B0, 0x0A46B4
-data_978A46B4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46B4, 0x0A46B8
-data_978A46B8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46B8, 0x0A46C0
+func_978279FE_Table_25:	# 2 x u16, 203..360; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	203, 360
+
+func_978279FE_Var_47:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	231
+func_978279FE_Var_48:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_26:	# 2 x u16, 79..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	79, 259
+
+func_978279FE_Var_49:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	99
+func_978279FE_Var_50:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_27:	# 2 x u16, 123..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	123, 259
+
+func_978279FE_Var_51:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	143
+func_978279FE_Var_52:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_28:	# 2 x u16, 165..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	165, 259
+
+func_978279FE_Var_53:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	185
+func_978279FE_Var_54:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_29:	# 2 x u16, 208..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 259
+
+func_978279FE_Var_55:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	228
+func_978279FE_Var_56:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_30:	# 2 x u16, 79..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	79, 630
+
+func_978279FE_Var_57:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	99
+func_978279FE_Var_58:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_31:	# 2 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	123, 630
+
+func_978279FE_Var_59:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	143
+func_978279FE_Var_60:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_32:	# 2 x u16, 165..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	165, 630
+
+func_978279FE_Var_61:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	185
+func_978279FE_Var_62:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_33:	# 2 x u16, 208..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 630
+
+func_978279FE_Var_63:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	228
+func_978279FE_Var_64:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_34:	# 2 x u16, 79..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	79, 259
+
+func_978279FE_Var_65:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	99
+func_978279FE_Var_66:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_35:	# 2 x u16, 123..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	123, 259
+
+func_978279FE_Var_67:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	143
+func_978279FE_Var_68:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_36:	# 2 x u16, 165..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	165, 259
+
+func_978279FE_Var_69:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	185
+func_978279FE_Var_70:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	9
+
+func_978279FE_Table_37:	# 2 x u16, 208..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 259
+
+func_978279FE_Var_71:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	228
+func_978279FE_Var_72:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_38:	# 2 x u16, 79..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	79, 630
+
+func_978279FE_Var_73:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	99
+func_978279FE_Var_74:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_39:	# 2 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	123, 630
+
+func_978279FE_Var_75:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	143
+func_978279FE_Var_76:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_40:	# 2 x u16, 165..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	165, 630
+
+func_978279FE_Var_77:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	185
+func_978279FE_Var_78:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	380
+
+func_978279FE_Table_41:	# 2 x u16, 208..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 630
+
+func_978279FE_Var_79:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	228
+
+KssxJukeBoxProc_L75b_Table:
+	.long	func_978279FE_Var_48
+	.long	func_978279FE_Var_50
+	.long	func_978279FE_Var_52
+	.long	func_978279FE_Var_54
+	.long	func_978279FE_Var_56
+	.long	func_978279FE_Var_58
+	.long	func_978279FE_Var_60
+	.long	func_978279FE_Var_62
+
+func_9782C60B_Table:	# 64 x u8, 0..255; read by func_9782C60B 0x9782C60B: `movbu (func_9782C60B_Table), d0`
+	tab_u8	0, 255, 255, 255, 48, 46, 46, 57, 0, 65, 0, 66, 0, 67, 0, 68	# [0]
+	tab_u8	0, 69, 0, 70, 0, 71, 0, 72, 0, 73, 47, 74, 0, 75, 0, 76	# [16]
+	tab_u8	0, 77, 0, 78, 0, 79, 0, 80, 47, 81, 0, 82, 0, 83, 0, 84	# [32]
+	tab_u8	0, 85, 0, 86, 0, 87, 0, 88, 47, 89, 0, 90, 0, 255, 255, 255	# [48]
+
+KssxAlphabetBoxProc_Led_Var:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var), a0`
+	.long	0x978a461c
+KssxAlphabetBoxProc_Led_Var_2:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_2), a0`
+	.long	0x978a4621
+KssxAlphabetBoxProc_Led_Var_3:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_3), a0`
+	.long	0x978a4623
+KssxAlphabetBoxProc_Led_Var_4:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_4), a0`
+	.long	0x978a4625
+KssxAlphabetBoxProc_Led_Var_5:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_5), a0`
+	.long	0x978a4627
+KssxAlphabetBoxProc_Led_Var_6:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_6), a0`
+	.long	0x978a4629
+KssxAlphabetBoxProc_Led_Var_7:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_7), a0`
+	.long	0x978a462b
+KssxAlphabetBoxProc_Led_Var_8:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_8), a0`
+	.long	0x978a462d
+KssxAlphabetBoxProc_Led_Var_9:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_9), a0`
+	.long	0x978a462f
+KssxAlphabetBoxProc_Led_Var_10:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_10), a0`
+	.long	0x978a4631
+KssxAlphabetBoxProc_Led_Var_11:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_11), a0`
+	.long	0x978a4635
+KssxAlphabetBoxProc_Led_Var_12:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_12), a0`
+	.long	0x978a4637
+KssxAlphabetBoxProc_Led_Var_13:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_13), a0`
+	.long	0x978a4639
+KssxAlphabetBoxProc_Led_Var_14:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_14), a0`
+	.long	0x978a463b
+KssxAlphabetBoxProc_Led_Var_15:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_15), a0`
+	.long	0x978a463d
+KssxAlphabetBoxProc_Led_Var_16:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_16), a0`
+	.long	0x978a463f
+KssxAlphabetBoxProc_Led_Var_17:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_17), a0`
+	.long	0x978a4643
+KssxAlphabetBoxProc_Led_Var_18:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_18), a0`
+	.long	0x978a4645
+KssxAlphabetBoxProc_Led_Var_19:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_19), a0`
+	.long	0x978a4647
+KssxAlphabetBoxProc_Led_Var_20:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_20), a0`
+	.long	0x978a4649
+KssxAlphabetBoxProc_Led_Var_21:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_21), a0`
+	.long	0x978a464b
+KssxAlphabetBoxProc_Led_Var_22:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_22), a0`
+	.long	0x978a464d
+KssxAlphabetBoxProc_Led_Var_23:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_23), a0`
+	.long	0x978a464f
+KssxAlphabetBoxProc_Led_Var_24:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_24), a0`
+	.long	0x978a4653
+func_97827B50_Var_186:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	8
+func_97827B50_Var_187:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_188:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	40
+func_97827B50_Var_189:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
 
 Str_8_3:	.asciz "8"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46C2, 0x0A46C8
+
+func_97827B50_Var_190:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_191:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	100
+func_97827B50_Var_192:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+
 Str_empty_427:	.asciz "`"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46CA, 0x0A46D0
-data_978A46D0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46D0, 0x0A46D8
-data_978A46D8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46D8, 0x0A46E0
-data_978A46E0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46E0, 0x0A46E8
-data_978A46E8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46E8, 0x0A46F0
-data_978A46F0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46F0, 0x0A46F8
-data_978A46F8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A46F8, 0x0A4700
-data_978A4700:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4700, 0x0A4708
-data_978A4708:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4708, 0x0A4710
-data_978A4710:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4710, 0x0A4718
-data_978A4718:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4718, 0x0A4720
+
+func_97827B50_Var_193:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_194:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	120
+func_97827B50_Var_195:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_196:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	136
+func_97827B50_Var_197:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_198:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	180
+func_97827B50_Var_199:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_200:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	176
+func_97827B50_Var_201:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_202:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	200
+func_97827B50_Var_203:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_204:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	216
+func_97827B50_Var_205:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_206:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	240
+func_97827B50_Var_207:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_208:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	414
+func_97827B50_Var_209:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_210:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	440
+func_97827B50_Var_211:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_212:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	454
+func_97827B50_Var_213:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_214:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	480
+func_97827B50_Var_215:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_216:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	494
+func_97827B50_Var_217:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_218:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	540
+func_97827B50_Var_219:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_220:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	526
+func_97827B50_Var_221:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_222:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	570
+func_97827B50_Var_223:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_224:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	574
+func_97827B50_Var_225:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_226:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	599
+func_97827B50_Var_227:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_228:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	614
+func_97827B50_Var_229:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_230:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_231:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_232:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	16
+func_97827B50_Var_233:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_234:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	60
+func_97827B50_Var_235:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+
 Str_8_2:	.asciz "8"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4722, 0x0A4728
+
+func_97827B50_Var_236:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_237:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	100
+func_97827B50_Var_238:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+
 Str_empty_426:	.asciz "`"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A472A, 0x0A4730
-data_978A4730:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4730, 0x0A4738
-data_978A4738:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4738, 0x0A4740
-data_978A4740:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4740, 0x0A4748
-data_978A4748:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4748, 0x0A4750
-data_978A4750:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4750, 0x0A4758
-data_978A4758:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4758, 0x0A4760
-data_978A4760:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4760, 0x0A4768
-data_978A4768:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4768, 0x0A4770
-data_978A4770:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4770, 0x0A4778
-data_978A4778:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4778, 0x0A4780
-data_978A4780:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4780, 0x0A4788
-data_978A4788:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4788, 0x0A4790
+
+func_97827B50_Var_239:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_240:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	120
+func_97827B50_Var_241:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_242:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	128
+func_97827B50_Var_243:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_244:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	160
+func_97827B50_Var_245:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_246:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	176
+func_97827B50_Var_247:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_248:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	190
+func_97827B50_Var_249:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_250:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	216
+func_97827B50_Var_251:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_252:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	240
+func_97827B50_Var_253:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_254:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	414
+func_97827B50_Var_255:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_256:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	440
+func_97827B50_Var_257:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_258:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	454
+func_97827B50_Var_259:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_260:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	480
+func_97827B50_Var_261:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_262:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	494
+func_97827B50_Var_263:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_264:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	520
+func_97827B50_Var_265:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_266:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	534
+func_97827B50_Var_267:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_268:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	570
+func_97827B50_Var_269:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_270:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	566
+func_97827B50_Var_271:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_272:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	600
+func_97827B50_Var_273:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_274:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	614
+func_97827B50_Var_275:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	225
+func_97827B50_Var_276:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	640
+func_97827B50_Var_277:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_978279FE_Var_80:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	2
+
+func_978279FE_Table_42:	# 2 x u16, 224..240; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	224, 240
+
+func_978279FE_Var_81:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	240
+func_978279FE_Var_82:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	400
+
+func_978279FE_Table_43:	# 2 x u16, 224..638; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	224, 638
+
+func_978279FE_Var_83:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	240
+func_978279FE_Var_84:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	0
+
+func_978279FE_Table_44:	# 2 x u16, 41..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 41
+
+func_978279FE_Var_85:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+
 Str_empty_425:	.asciz "("
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4792, 0x0A4798
+
+func_978279FE_Table_45:	# 2 x u16, 81..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 81
+
+func_978279FE_Var_86:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+
 Str_P_2:	.asciz "P"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A479A, 0x0A47A0
+
+func_978279FE_Table_46:	# 2 x u16, 121..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 121
+
+func_978279FE_Var_87:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+
 Str_x_2:	.asciz "x"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47A2, 0x0A47A8
-data_978A47A8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47A8, 0x0A47B0
-data_978A47B0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47B0, 0x0A47B8
-data_978A47B8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47B8, 0x0A47C0
-data_978A47C0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47C0, 0x0A47C8
-data_978A47C8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47C8, 0x0A47D0
-data_978A47D0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47D0, 0x0A47D8
-data_978A47D8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47D8, 0x0A47E0
-data_978A47E0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47E0, 0x0A47E8
-data_978A47E8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A47E8, 0x0A47F0
+
+func_978279FE_Table_47:	# 2 x u16, 161..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 161
+
+func_978279FE_Var_88:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_89:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	160
+
+func_978279FE_Table_48:	# 2 x u16, 201..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 201
+
+func_978279FE_Var_90:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_91:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	200
+
+func_978279FE_Table_49:	# 2 x u16, 208..241; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 241
+
+func_978279FE_Var_92:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_93:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	240
+
+func_978279FE_Table_50:	# 2 x u16, 208..401; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 401
+
+func_978279FE_Var_94:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_95:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	400
+
+func_978279FE_Table_51:	# 2 x u16, 208..441; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 441
+
+func_978279FE_Var_96:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_97:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	440
+
+func_978279FE_Table_52:	# 2 x u16, 208..481; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 481
+
+func_978279FE_Var_98:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_99:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	480
+
+func_978279FE_Table_53:	# 2 x u16, 208..521; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 521
+
+func_978279FE_Var_100:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_101:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	520
+
+func_978279FE_Table_54:	# 2 x u16, 208..561; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 561
+
+func_978279FE_Var_102:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_103:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	560
+
+func_978279FE_Table_55:	# 2 x u16, 208..601; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 601
+
+func_978279FE_Var_104:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
+func_978279FE_Var_105:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
+	.word	600
+
+func_978279FE_Table_56:	# 2 x u16, 208..639; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
+	tab_u16	208, 639
+
+func_978279FE_Var_106:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+	.word	239
 
 HamaAlphabeticFileListProc_Table:	# 60 x s16, -256..29545; read by HamaAlphabeticFileListProc : `movhu	(0x32, a0), d2`
 	tab_s16	260, 33, 259, 204, 12592, 16698, 28780, 24936, 25954, 26996, 21347, 29295	# [0]
@@ -9215,8 +10016,9 @@ HamaAlphabeticFileListProc_Table:	# 60 x s16, -256..29545; read by HamaAlphabeti
 	tab_s16	2359, 14384, 12297, 2361, 12337, 12553, 2353, 12849, 12553, 2355, 13361, 12553	# [24]
 	tab_s16	2357, 13873, 12553, 2359, 14385, 12553, 2361, 12338, 12809, 2353, 12850, 12809	# [36]
 	tab_s16	2355, 13362, 12809, 2357, 13874, 12809, 2359, 14386, 12809, 2361, 12339, -256	# [48]
-data_978A4868:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4868, 0x0A486C
+
+HamaAlphabeticFileListProc_L7a0_Var:	# u32, a constant; read / written by HamaAlphabeticFileListProc_L7a0 0x9782D3C0: `mov (HamaAlphabeticFileListProc_L7a0_Var), d0`
+	.long	0x978a47f8
 
 Str_0_2:	.asciz "0"
 	.align	4, 0xFF	# pad after Str_0_2
@@ -9285,12 +10087,16 @@ Str_003i_02i:	.asciz "%003i%02i"
 	.align	4, 0xFF	# pad after Str_003i_02i
 Str_01_SelectList_max16_02_03_04_05_06_07_08:	.asciz " 01:SelectList max16\x09 02:\x09 03\x09 04\x09 05\x09 06\x09 07\x09 08\x09 09\x09 10\x09 11:Evergreens fast1\x09 12\x09 13\x09 14\x09 15\x09 16\x09 17\x0918\x0919\x0920\x0921\x0922\x0923\x0924\x0925\x0926\x0927\x0928\x0929\x0930"
 	.align	4, 0xFF	# pad after Str_01_SelectList_max16_02_03_04_05_06_07_08
-data_978A4A18:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4A18, 0x0A4A1C
+
+HamaSelectListProc_L351_Var:	# u32, a constant; read / written by HamaSelectListProc_L351 0x9782E651: `mov (HamaSelectListProc_L351_Var), d0`
+	.long	0x978a4988
+
 Str_03i_s:	.asciz "%03i:%s"
 Str_01_Song_Namen_with_max_26_ch_02_03_04_05:	.asciz " 01:Song Namen with max. 26 ch\x09 02:\x09 03\x09 04\x09 05\x09 06\x09 07\x09 08\x09 09\x09 10\x09 11:Evergreens fast1\x09 12\x09 13\x09 14\x09 15\x09 16\x09 17\x0918\x0919\x0920\x0921\x0922\x0923\x0924\x0925\x0926\x0927\x0928\x0929\x0930"
-data_978A4ABC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4ABC, 0x0A4AC0
+
+HamaSelectFileListProc_L52d_Var:	# u32, a constant; read / written by HamaSelectFileListProc_L52d 0x9782F321: `mov (HamaSelectFileListProc_L52d_Var), d0`
+	.long	0x978a4a24
+
 Str_03i_2:	.asciz "%03i"
 	.align	4, 0xFF	# pad after Str_03i_2
 Str_02i_s:	.asciz "%02i:%s"
@@ -9378,7 +10184,7 @@ Str_POR_FAVOR_ESPERE:	.asciz "\xA1POR FAVOR, ESPERE!..................."
 Str_PLEASE_WAIT:	.asciz "PLEASE WAIT!............"
 Str_SILAHKAN_TUNGGU:	.asciz "SILAHKAN TUNGGU!................"
 
-ptrs_978A4D80:
+WaitingFunc_entry_L2e_Table:
 	.long	Str_PLEASE_WAIT_2
 	.long	Str_BITTE_WARTEN
 	.long	Str_VEUILLEZ_PATIENTER
@@ -9389,20 +10195,20 @@ ptrs_978A4D80:
 func_978339B0_Table:	# 16 x u8, 255..255; read by func_978339B0_entry : `movbu	(a1), d0`
 	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 
-Str_CURRENT_PANEL_9:	.asciz "CURRENT PANEL"
-Str_PANEL_MEMORY_9:	.asciz "PANEL MEMORY"
+Str_CURRENT_PANEL_6:	.asciz "CURRENT PANEL"
+Str_PANEL_MEMORY_6:	.asciz "PANEL MEMORY"
 Str_SEQUENCER_5:	.asciz "SEQUENCER"
-Str_COMPOSER_9:	.asciz "COMPOSER"
-Str_SOUND_MEMORY_9:	.asciz "SOUND MEMORY"
-Str_MANUAL_SEQ_PAD_9:	.asciz "MANUAL SEQ PAD"
-Str_EFFECT_13:	.asciz "EFFECT"
-Str_USER_MIDI_9:	.asciz "USER MIDI"
-Str_FAVORITES_9:	.asciz "FAVORITES"
-Str_HOME_PAGE_9:	.asciz "HOME PAGE"
+Str_COMPOSER_6:	.asciz "COMPOSER"
+Str_SOUND_MEMORY_6:	.asciz "SOUND MEMORY"
+Str_MANUAL_SEQ_PAD_6:	.asciz "MANUAL SEQ PAD"
+Str_EFFECT_10:	.asciz "EFFECT"
+Str_USER_MIDI_6:	.asciz "USER MIDI"
+Str_FAVORITES_6:	.asciz "FAVORITES"
+Str_HOME_PAGE_6:	.asciz "HOME PAGE"
 Str_CUSTOM_STYLES_5:	.asciz "CUSTOM STYLES"
 Str_MIDI_FILE_5:	.asciz "MIDI FILE"
 Str_CUSTOM_LYRICS_7:	.asciz "CUSTOM LYRICS"
-Str_INFO_FILE_9:	.asciz "INFO FILE"
+Str_INFO_FILE_6:	.asciz "INFO FILE"
 
 func_97833A24_Table:	# 57 x u8, 3..255; read by func_97833A24 : `movbu	(a1), d0`
 	tab_u8	168, 77, 138, 151, 182, 77, 138, 151, 195, 77, 138, 151, 205, 77, 138, 151	# [0]
@@ -9416,29 +10222,10 @@ Str_No_Entry:	.asciz "||||||| - No Entry - |||||||"
 	.align	4, 0xFF	# pad after Str_No_Entry
 Str_empty_396:	.asciz "|"
 	.align	4, 0xFF	# pad after Str_empty_396
-Str_FONT_color_red_size_1_LOAD_SAVE_DELETE_S:	.asciz "<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>NEWS:</FONT><BR>From now on you will find the MIDI2TLX converter tool and some samples with CUSTOM LYRICS on the update disk.<BR>Copy the shorten samples with COPY FD TO HDD to the hard disk drive. Afterwards if you load such a Song, automatically the CUSTOM LYRICS page will appear.<BR>"
-Str_You_can_use_the_same_disk_now_also_to_in:	.asciz "You can use the same disk now also to install the MIDI2TLX convert on your (Windows) computer.<BR>With inserted disk press START/Execute and type A:setup and follow the installation procedure.<BR>Further information's you will find on our Web-Page or later on the Help-Workshop.<H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>"
-Str_Since_the_actual_lyrics_function_is_very:	.asciz "Since the actual lyrics function is very limited, SX6 is capable of offering a separate file (*.TLX) for better handling and visibility. If your TLX file is Lyrics plus chord sysmbols, we have included a large white field for these harmonic details. Below the Lyrics box there is also an APC CHORDS box. This box shows you the chord symbols if your music was recorded with APC.<BR>"
-Str_For_loading_or_copy_new_TLX_files_just_p:	.asciz "For loading or copy new TLX files, just press the Copy TLX to HD button. Change the CUSTOM LYRICS font size (small/medium/big) on the SETUP &amp; TOOLS page 3/3.<H6><FONT color=red>- DELETE -</FONT></H6>"
-Str_Unfortunately_the_description_of_the_DEL:	.asciz "Unfortunately the description of the DELETE functions were lost in the English version of the owners manual.<BR>"
-Str_Because_this_is_also_a_direct_HDD_access:	.asciz "Because this is also a direct HDD access function, the WRITE PROTECT must be set to the -OFF- mode (SETUP &amp; TOOLS - PAGE 2/3 - WRITE PROTECT = OFF).<BR>On the SELECT SONG display, you will find a button to delete the song located in the lower left of your screen.<BR> The button to delete an entire directory is located on the top left of your screen.<BR>"
-Str_BR_FONT_color_red_Attention_FONT_CAUTION:	.asciz "<BR><FONT color=red>Attention:</FONT> CAUTION - These functions have no undo possibilities!<BR>To enable the warning page to appear before an item is deleted, the  -WIRTE CONFIRMATION- parameter must be set in the ON position. This must be done before a file can be deleted."
-Str_FONT_color_red_size_1_LOAD_SAVE_DELETE_S_2:	.asciz "<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>----------------------------------------------------------------------<FONT color=blue>NEU: </FONT>Ab sofort finden Sie auf der Update Diskette auch das MIDI2TLX Konvertierungsmodul f\xFCr den Computer sowie einige Muster zu CUSTOM LYRICS.<BR>Kopieren Sie die gek\xFCrzten Beispielsongs mit der Funktion COPY FD TO HDD auf die Festplatte.<BR>"
-Str_Wenn_Sie_anschliessend_einen_dieser_Song:	.asciz "Wenn Sie anschliessend einen dieser Songs laden, werden sie sehen, dass sofort das CUSTOM LYRICS Display erscheint.<BR>Sie k\xF6nnen die selbe Update Diskette nun im Computer verwenden, um das Installationsprogramm des MIDI2TLX Konverter's zu starten.<BR>"
-Str_Mit_eingelegter_Diskette_dr_cken_Sie_STA:	.asciz "Mit eingelegter Diskette dr\xFCcken Sie START/Ausf\xFChren und schreiben A:setup.<BR>Nun folgen Sie einfach den Anweisungen des Installationsprogrammes.<BR>Weitere Infos finden Sie auf unsere Web-Page oder sp\xE4ter im Help-Workshop.<H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>"
-Str_Da_die_normalen_Lyrics_nur_einfachste_Da:	.asciz "Da die normalen Lyrics nur einfachste Darstellung offerieren, hat nun SX6 mit dem *.Tlx file weitergehende Funktionen."
-Str_Wenn_Ihr_tlx_File_nebst_den_Custom_Lyric:	.asciz "Wenn Ihr *.tlx File nebst den Custom Lyrics auch noch Akkorde enth\xE4lt, werden diese in der CUSTOM LYRICS CHORD Box gut sichtbar angezeigt. Unter der Lyrics Box befindet sich die Anzeigfe f\xFCr die APC Akkorde, wenn Ihr Song mit der APC Begleitung erstellt wurde.<BR>Wenn Sie nachtr\xE4glich TLX files kopieren wollen, dr\xFCcken Sie die Copy TLX to HD Taste.Achtung: Ihre Darbietung wird sofort gestoppt!<BR><H6><FONT color=red>- DELETE -</FONT></H6>"
-Str_Die_Beschreibung_dieser_Funktion_Directo:	.asciz "Die Beschreibung dieser Funktion (Directory Delelte und Song Delete) ging leider in der Bedienungsanleitung vergessen.<BR>Da es sich auch bei diesen Anwendungen um Schreibzugriffe auf die Festplatte handelt, muss zuerst der Schreibschutz entfernt werden (SETUP und TOOLS - PAGE 2/3 - WRITE PROTECT=OFF).<BR>"
-Str_Auf_den_Seiten_SELECT_SONG_befinden_sich:	.asciz "Auf den Seiten SELECT SONG befinden sich die Tasten zum L\xF6schen eines Songs am Display links unten. Diejenige zum L\xF6schen eines gesamten Verzeichnisses oben links.<BR><BR>"
-Str_FONT_color_red_Wichtig_FONT_Diese_Funkti:	.asciz "<FONT color=red>Wichtig:</FONT> Diese Funktionen k\xF6nnen nicht r\xFCckg\xE4ngig gemacht werden! Nur wenn der WIRTE CONFIRMATION Parameter auf ON steht, erscheint vor einem unwiderruflichen L\xF6schen eine Best\xE4tigungsseite."
-Str_FONT_color_red_size_1_LOAD_SAVE_DELETE_S_3:	.asciz "<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>----------------------------------------------------------------------Explications en francaise Vien plus tard ....."
-Str_FONT_color_red_size_1_LOAD_SAVE_DELETE_S_4:	.asciz "<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>NEWS:</FONT>From now on you will find the MIDI2TLX converter tools and some samples with CUSTOM LYRICSon the update disk.<BR>Copy the shorten samples with COPY FD TO HDD to the hard disk drive. Afterwards if you load such a Song, automatically the CUSTOM LYRICS page will appear.<BR>"
-Str_You_can_use_the_same_disk_now_also_to_in_2:	.asciz " You can use the same disk now also to install the MIDI2TLX convert on your (Windows)-computer.<BR>With inserted disk press START/Execute and type A:setup and follow the installation procedure.<BR>Further information's you will find on our Web-Page or later on the Help-Workshop.<BR><H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>"
-Str_Since_the_actual_lyrics_function_is_very_2:	.asciz "Since the actual lyrics function is very limited, SX6 is capable to offer an individual file (*.TLX) for a better handling and visibility. If your TLX file as not only Lyrics on the file but also chord sysmbols, there is a big white field for theseharmony informations. Below the Lyrics box there is also an APC CHORDS box. This box show you the chord symbols if yourmusic was recorded with APC.<BR>"
-Str_For_loading_or_copy_new_TLX_files_just_p_2:	.asciz "For loading or copy new TLX files just press the Copy TLX to HD button.Change the CUSTOM LYRICS font size (small/medium/big) on the SETUP &amp; TOOLS page 3/3.<H6><FONT color=red>- DELETE -</FONT></H6>"
-Str_Unfortunately_the_description_of_the_DEL_2:	.asciz "Unfortunately the description of the DELETE functions went lost in the english owners manual.<BR>"
-Str_Because_this_is_also_a_direct_HDD_access_2:	.asciz "Because this is also a direct HDD access function, the WRITE PROTECT must be set to OFF mode (SETUP &amp; TOOLS - PAGE 2/3 - WRITE PROTECT = OFF).<BR>On the SELECT SONG display you will find the button to delete a song down left. The button to delete an entier directory is top left.<BR>"
-Str_BR_FONT_color_red_Attention_FONT_These_f:	.asciz "<BR><FONT color=red>Attention:</FONT> These funktions have no undo possibilities! Only if the WIRTE CONFIRMATION parameter is ON, there will be a warning page for unrecover delete."
+
+func_97833B38_entry_L34_Records_p0_0:	# REC_func_97833B38_entry_L34_Records_p0 (6433 bytes)
+	REC_func_97833B38_entry_L34_Records_p0	f0=60, f1=70, x2="ONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>NEWS:</FONT><BR>From now on you will find the MIDI2TLX converter tool and some samples with CUSTOM LYRICS on the update disk.<BR>Copy the shorten samples with COPY FD TO HDD to the hard disk drive. Afterwards if you load such a Song, automatically the CUSTOM LYRICS page will appear.<BR>\x00You can use the same disk now also to install the MIDI2TLX convert on your (Windows) computer.<BR>With inserted disk press START/Execute and type A:setup and follow the installation procedure.<BR>Further information's you will find on our Web-Page or later on the Help-Workshop.<H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>\x00Since the actual lyrics function is very limited, SX6 is capable of offering a separate file (*.TLX) for better handling and visibility. If your TLX file is Lyrics plus chord sysmbols, we have included a large white field for these harmonic details. Below the Lyrics box there is also an APC CHORDS box. This box shows you the chord symbols if your music was recorded with APC.<BR>\x00For loading or copy new TLX files, just press the Copy TLX to HD button. Change the CUSTOM LYRICS font size (small/medium/big) on the SETUP &amp; TOOLS page 3/3.<H6><FONT color=red>- DELETE -</FONT></H6>\x00Unfortunately the description of the DELETE functions were lost in the English version of the owners manual.<BR>\x00Because this is also a direct HDD access function, the WRITE PROTECT must be set to the -OFF- mode (SETUP &amp; TOOLS - PAGE 2/3 - WRITE PROTECT = OFF).<BR>On the SELECT SONG display, you will find a button to delete the song located in the lower left of your screen.<BR> The button to delete an entire directory is located on the top left of your screen.<BR>\x00<BR><FONT color=red>Attention:</FONT> CAUTION - These functions have no undo possibilities!<BR>To enable the warning page to appear before an item is deleted, the  -WIRTE CONFIRMATION- parameter must be set in the ON position. This must be done before a file can be deleted.\x00<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>----------------------------------------------------------------------<FONT color=blue>NEU: </FONT>Ab sofort finden Sie auf der Update Diskette auch das MIDI2TLX Konvertierungsmodul f\xFCr den Computer sowie einige Muster zu CUSTOM LYRICS.<BR>Kopieren Sie die gek\xFCrzten Beispielsongs mit der Funktion COPY FD TO HDD auf die Festplatte.<BR>\x00Wenn Sie anschliessend einen dieser Songs laden, werden sie sehen, dass sofort das CUSTOM LYRICS Display erscheint.<BR>Sie k\xF6nnen die selbe Update Diskette nun im Computer verwenden, um das Installationsprogramm des MIDI2TLX Konverter's zu starten.<BR>\x00Mit eingelegter Diskette dr\xFCcken Sie START/Ausf\xFChren und schreiben A:setup.<BR>Nun folgen Sie einfach den Anweisungen des Installationsprogrammes.<BR>Weitere Infos finden Sie auf unsere Web-Page oder sp\xE4ter im Help-Workshop.<H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>\x00Da die normalen Lyrics nur einfachste Darstellung offerieren, hat nun SX6 mit dem *.Tlx file weitergehende Funktionen.\x00Wenn Ihr *.tlx File nebst den Custom Lyrics auch noch Akkorde enth\xE4lt, werden diese in der CUSTOM LYRICS CHORD Box gut sichtbar angezeigt. Unter der Lyrics Box befindet sich die Anzeigfe f\xFCr die APC Akkorde, wenn Ihr Song mit der APC Begleitung erstellt wurde.<BR>Wenn Sie nachtr\xE4glich TLX files kopieren wollen, dr\xFCcken Sie die Copy TLX to HD Taste.Achtung: Ihre Darbietung wird sofort gestoppt!<BR><H6><FONT color=red>- DELETE -</FONT></H6>\x00Die Beschreibung dieser Funktion (Directory Delelte und Song Delete) ging leider in der Bedienungsanleitung vergessen.<BR>Da es sich auch bei diesen Anwendungen um Schreibzugriffe auf die Festplatte handelt, muss zuerst der Schreibschutz entfernt werden (SETUP und TOOLS - PAGE 2/3 - WRITE PROTECT=OFF).<BR>\x00Auf den Seiten SELECT SONG befinden sich die Tasten zum L\xF6schen eines Songs am Display links unten. Diejenige zum L\xF6schen eines gesamten Verzeichnisses oben links.<BR><BR>\x00<FONT color=red>Wichtig:</FONT> Diese Funktionen k\xF6nnen nicht r\xFCckg\xE4ngig gemacht werden! Nur wenn der WIRTE CONFIRMATION Parameter auf ON steht, erscheint vor einem unwiderruflichen L\xF6schen eine Best\xE4tigungsseite.\x00<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>----------------------------------------------------------------------Explications en francaise Vien plus tard .....\x00<FONT color=red size=1>LOAD/SAVE/DELETE SONGS, CUSTOM LYRICS</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>NEWS:</FONT>From now on you will find the MIDI2TLX converter tools and some samples with CUSTOM LYRICSon the update disk.<BR>Copy the shorten samples with COPY FD TO HDD to the hard disk drive. Afterwards if you load such a Song, automatically the CUSTOM LYRICS page will appear.<BR>\x00 You can use the same disk now also to install the MIDI2TLX convert on your (Windows)-computer.<BR>With inserted disk press START/Execute and type A:setup and follow the installation procedure.<BR>Further information's you will find on our Web-Page or later on the Help-Workshop.<BR><H6><FONT color=red>- CUSTOM LYRICS -</FONT></H6>\x00Since the actual lyrics function is very limited, SX6 is capable to offer an individual file (*.TLX) for a better handling and visibility. If your TLX file as not only Lyrics on the file but also chord sysmbols, there is a big white field for theseharmony informations. Below the Lyrics box there is also an APC CHORDS box. This box show you the chord symbols if yourmusic was recorded with APC.<BR>\x00For loading or copy new TLX files just press the Copy TLX to HD button.Change the CUSTOM LYRICS font size (small/medium/big) on the SETUP &amp; TOOLS page 3/3.<H6><FONT color=red>- DELETE -</FONT></H6>\x00Unfortunately the description of the DELETE functions went lost in the english owners manual.<BR>\x00Because this is also a direct HDD access function, the WRITE PROTECT must be set to OFF mode (SETUP &amp; TOOLS - PAGE 2/3 - WRITE PROTECT = OFF).<BR>On the SELECT SONG display you will find the button to delete a song down left. The button to delete an entier directory is top left.<BR>\x00<BR><FONT color=red>Attention:</FONT> These funktions have no undo possibilities! Only if the WIRTE CONFIRMATION parameter is ON, there will be a warning page for unrecover delete.\x00"
+
 Str_FONT_color_red_size_1_JUKE_BOX_FONT_BR_F:	.asciz "<FONT color=red size=1>JUKE BOX</FONT><BR>---------------------------------------------------------------------<FONT color=blue>Even though the Juke box was announced for version V2.0 we already implemented this nice feature.</FONT><H6><FONT color=red>- SET MODE -</FONT></H6>In Version 1.1 you will find a parameter to chose between Standard and Alphabetical lists. That means, if you press the -SET- button on the JUKE BOX you will find the -ALPHA LIST- display instead of the DIRECTORY SELECT page.<BR>"
 Str_Again_the_English_owner_s_manual_has_no:	.asciz "Again the English owner's manual has no JUKE BOX access with the -PAGE- buttons but you can use the -TAB TEMPO- function instead.<BR>"
 Str_FONT_color_red_size_1_JUKE_BOX_FONT_BR_F_2:	.asciz "<FONT color=red size=1>JUKE BOX</FONT><BR>----------------------------------------------------------------------<FONT color=blue>Obwohl diese Funktion erst f\xFCr die Version 2.0 angek\xFCndigt war, ist sie nun bereits verf\xFCgbar.</FONT><H6><FONT color=red>- SET MODE -</FONT></H6>In der aktuellen Version finden Sie f\xFCr die Juke Box einen Parameter in SETUP &amp; TOOLS, der die Auswahl zwischen Standard (Select Song) und Alphalist zum setzen der JUKE BOX erm\xF6glicht."
@@ -9450,26 +10237,13 @@ Str_FONT_color_red_size_1_LOAD_BY_NUMBER_FON:	.asciz "<FONT color=red size=1>LOA
 Str_FONT_color_red_size_1_LOAD_BY_NUMBER_FON_2:	.asciz "<FONT color=red size=1>LOAD BY NUMBER</FONT><BR>----------------------------------------------------------------------<FONT color=blue>Es sind keine zus\xE4tzlichen Funktionen f\xFCr Load By Number implementiert worden.</FONT><H6><FONT color=red>- LOADED SONG -</FONT></H6>Wir haben aber ein Zusatzfeld f\xFCr die Angabe des letzten angew\xE4hlten Titels eingef\xFCgt, damit sind Sie immer \xFCber den aktuell geladenen Titel informiert sind.<BR>"
 Str_FONT_color_red_size_1_LOAD_BY_NUMBER_FON_3:	.asciz "<FONT color=red size=1>LOAD BY NUMBER</FONT><BR>---------------------------------------------------------------------Explications en francaise vien plus tard ....."
 Str_FONT_color_red_size_1_LOAD_BY_NUMBER_FON_4:	.asciz "<FONT color=red size=1>LOAD BY NUMBER</FONT><BR>----------------------------------------------------------------------<FONT color=blue>There are no specific points to explain apart from the owners manual.</FONT><BR><H6><FONT color=red>- LOADED SONG -</FONT></H6>Additional text box with the last selected title. So you are informed any time about the actual memory.<BR>"
-Str_FONT_color_red_size_1_LATEST_NEWS_July_2:	.asciz "<FONT color=red size=1>LATEST NEWS (July 24. 2001)</FONT><BR>----------------------------------------------------------------------<FONT color=blue>Welcome to the News page! With every new upgrade, you will find the latest details on these pages.</FONT><BR><BR><FONT color=red>- ALPHABETIC SORTED LIST -</FONT><BR>To save memory and gain speed and full line sorting we did redesigned, rewritten the ALPHABETIC SORTED list.<BR><BR><FONT color=red>- CUSTOM LYRICS -</FONT><BR>"
-Str_More_explanations_about_the_CUSTOM_LYRIC:	.asciz "More explanations about the CUSTOM LYRICS and MIDI2TLX program!<BR>MIDI2TLX and samples now on the Update disk!<BR>On the BASIC section, you will find all information about the CUSTOM LYRICS.<BR><BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>"
-Str_Some_improvements_here_BR_Check_the_SETU:	.asciz "Some improvements here!<BR>Check the SETUP and TOOLS page for an explanation of the new function TAB TEMPO ACCESS.<BR><BR><FONT color=red>- AUTOSTART on C.L.S. -</FONT><BR>Some improvements here!<BR>Please check the C.L.S. section for more details.<BR><BR><FONT color=red>- SEQ PLAY LED Control -</FONT><BR>Since the -DISK- and -SEQ PLAY- LED are controlled by the KN6000, it was always a problem to set these led settings with our software.<BR>"
-Str_Now_we_have_improved_the_way_to_control:	.asciz "Now we have improved the way to control both leds.<BR>If you played a SEQ song, and you load a song not using the SEQ, still the SEQ led is on but we switch OFF all the active SEQ tracks. So, you will have no more problems with starting SEQ.<BR>"
-Str_BR_FONT_color_red_CUSTOM_STYLE_SAVE_FONT:	.asciz "<BR><FONT color=red>- CUSTOM STYLE SAVE -</FONT><BR>Since the Custom Style File is located in the FlashROM compressed and has no known uncompressed size, we need to find another way to save that file in comparison to the rest of the files.<BR>Now the save time is 20-35 seconds depend on the size of AST file.<BR><BR>"
-Str_FONT_color_red_QUICK_or_FULL_FORMAT_FONT:	.asciz "<FONT color=red>- QUICK or FULL FORMAT -</FONT><BR>For very quick format of a specific partition you can select now the QUICK format.<BR>This format doesn't scan the HDD and is therefore very quick.<BR><BR><FONT color=red>- MORE PERSONAL SETTINGS -</FONT><BR>In addition to the standard SAVE OPTION SET, we also offer the loaded file parameter from HDD as new SAVE OPTION parameter. You will never miss any file when you overwrite a song!<BR>"
-Str_Also_for_the_new_KN6000_The_AfterLoadPag:	.asciz "Also for the new KN6000, The AfterLoadPage parameter offers more flexibility for the HD-SX6<BR><BR><FONT color=red>- ALPHABETIC SORTED LIST -</FONT><BR>We have added a link button to fill the JUKE BOX and check the list with the first 5 characters.<BR>More details in the corresponding folder.<BR><BR><FONT color=red>- CUSTOM LOAD SCRIPT (C.L.S.) has improved -</FONT><BR>Also for this section, please check the details on the C.L.S. folder.<BR>"
-Str_FONT_color_red_size_1_LETZTE_INFOS_24_Ju:	.asciz "<FONT color=red size=1>LETZTE INFOS - 24. Juli 2001 -</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>Willkommen auf den Hilfe-Seiten von HD-SX6. Alle neuen Funktionen werden hier dokumentiert.</FONT><BR><BR><FONT color=red>- ALPAHABETIC SORTED -</FONT><BR>Um Speicher zu sparen und eine schnellere und eine 26 Zeichen umfassende Sortierung zu erreichen, wurde die ALPHABETIC SORTED Liste neu programmiert.<BR><BR><FONT color=red>- C.L.S. -</FONT><BR>"
-Str_Im_C_L_S_wurden_kleinere_Probleme_beseit:	.asciz "Im C.L.S. wurden kleinere Probleme beseitigt. Leider sind aber immer noch einige -Ungereimtheiten- seitens des Sequenzers im KN6000/6500 bekannt.<BR><BR><FONT color=red>- CUSTOM LYRICS -</FONT><BR>Weitere detaillierte Informationen zum Thema CUSTOM LYRICS!<BR>MIDI2TLX und Ausschnitte aus Beispielsongs nun auf der Update Diskette!<BR>Im Abschnitt BASIC finden Sie alle neuen Informationen zum Thema CUSTOM LYRICS.<BR>"
-Str_BR_FONT_color_red_TAB_TEMPO_ACCESS_FONT:	.asciz "<BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>Verbesserungen hier!<BR>Schauen Sie unter SETUP &amp; TOOLS nach, um alle n\xF6tigen Erl\xE4uterungen zu diesem Bereich zu erfahren.<BR><BR><FONT color=red>- AUTOSTART on C.L.S. -</FONT><BR>Verbesserungen hier!<BR>"
-Str_In_der_Sektion_C_L_S_finden_Sie_die_Deta:	.asciz "In der Sektion C.L.S. finden Sie die Details dazu.<BR><BR><FONT color=black>Beim Wechsel des Registers traten Systemabst\xFCrze in dieses Seiten auf. Mit dieser Revision sind diese Probleme behoben.<BR>Einige der neuen Funktionen sind in der Bedienungsanleitung nicht beschrieben, da sie erst in der letzten Phase der Entwicklung hinzukamen."
-Str_Auf_diesen_Seiten_HELP_PAGES_finden_Sie:	.asciz " Auf diesen Seiten (HELP-PAGES) finden Sie Hinweise zu solchen neuen Funktionen.<BR>Dr\xFCcken Sie die Zeilen Auf/Ab- (Links 2/3) oder die Seiten Auf/Ab- (Links 1/4) Tasten um den Text zu verschieben. Benutzen Sie die unteren Kn\xF6pfe um die Sektionen zu wechseln.</FONT><BR><BR><FONT color=red>- SEQ PLAY LED Kontrolle -</FONT><BR>Da sowohl die SEQ PLAY, wie auch die DISK Led vom KN6000 kontrolliert werden,"
-Str_war_es_f_r_uns_schon_fr_her_sehr_schwier:	.asciz " war es f\xFCr uns schon fr\xFCher sehr schwierig, diese und andere Funktionen anzusprechen.<BR>Nach langem Suchen haben wir eine Kompromissl\xF6sung gefunden.<BR>Wird nach dem Laden eines MIDI oder Technics Songs eine Bank ohne Sequenzer File geladen, wird zwar die LED nicht ausgeschalten, aber zu mindest die SEQ"
-Str_Spuren_werden_deaktiviert_so_dass_keine:	.asciz " Spuren werden deaktiviert, so dass keine Probleme in dieser Hinsicht auf der B\xFChne mehr vorkommen sollten.<BR><BR><FONT color=red>- CUSTOM STYLE SAVE -</FONT><BR>Weil die Custom Style Datei im lokalen FlashROM komprimiert abgelegt ist und wir die wahre Gr\xF6sse solcher Dateien erst nach dem Abspeichern kennen, waren in der ersten Version mehrere 100 Schritte n\xF6tig, um diese grossen Dateien"
-Str_richtig_auf_die_Festplatte_zu_schreiben:	.asciz " richtig auf die Festplatte zu schreiben.<BR>Mit einem -Trick- ist es uns nun gelungen auf eine v\xF6llig andere Art dieses Problem zu l\xF6sen. Die Speicherzeit dauert nun lediglich 20-40 Sekunden, je nach Dateigr\xF6sse.<BR> <BR><FONT color=red>- QUICK/FULL FORMAT -</FONT><BR>Details zum neuen Format Modus finden Sie auf der SETUP and TOOLS Seite.<BR>"
-Str_DERNIER_NOUVEAUTES_Juillet_24_2001_BR_BR:	.asciz "DERNIER NOUVEAUTES <Juillet 24 2001><BR>------------------------------------------------------------------<BR>Explications en francaise vien plus tard ....."
-Str_FONT_color_red_size_1_LATEST_NEWS_April:	.asciz "<FONT color=red size=1>LATEST NEWS (April 02. 2001)</FONT><BR>----------------------------------------------------------------------<FONT color=blue>Welcome to the News page. With every new update you will find the latest informations on this pages.</FONT><BR><BR><FONT color=red>- CUSTOM LYRICS -</FONT><BR>MIDI2TLX and samples now on the Update disk!<BR>On the BASIC section you will find all informations about the CUSTOM LYRICS news.<BR><BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>"
-Str_Some_improvements_here_BR_Check_the_SETU_2:	.asciz "Some improvements here!<BR>Check the SETUP and TOOLS page for the explanation of the new function TAB TEMPO ACCESS.<BR><BR><FONT color=red>- AUTOSTART on C.L.S. -</FONT><BR>Some improvements here!<BR>Please check the C.L.S. section for more details.<BR><BR><FONT color=red>- SEQ PLAY LED Control -</FONT><BR>Since the DISK and SEQ PLAY led is controlled by the KN6000, it was always a problem to set theses led from our side.<BR>"
+
+func_97833B38_entry_L34_Records_p0_1:	# REC_func_97833B38_entry_L34_Records_p0 (6433 bytes)
+	REC_func_97833B38_entry_L34_Records_p0	f0=60, f1=70, x2="ONT color=red size=1>LATEST NEWS (July 24. 2001)</FONT><BR>----------------------------------------------------------------------<FONT color=blue>Welcome to the News page! With every new upgrade, you will find the latest details on these pages.</FONT><BR><BR><FONT color=red>- ALPHABETIC SORTED LIST -</FONT><BR>To save memory and gain speed and full line sorting we did redesigned, rewritten the ALPHABETIC SORTED list.<BR><BR><FONT color=red>- CUSTOM LYRICS -</FONT><BR>\x00More explanations about the CUSTOM LYRICS and MIDI2TLX program!<BR>MIDI2TLX and samples now on the Update disk!<BR>On the BASIC section, you will find all information about the CUSTOM LYRICS.<BR><BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>\x00Some improvements here!<BR>Check the SETUP and TOOLS page for an explanation of the new function TAB TEMPO ACCESS.<BR><BR><FONT color=red>- AUTOSTART on C.L.S. -</FONT><BR>Some improvements here!<BR>Please check the C.L.S. section for more details.<BR><BR><FONT color=red>- SEQ PLAY LED Control -</FONT><BR>Since the -DISK- and -SEQ PLAY- LED are controlled by the KN6000, it was always a problem to set these led settings with our software.<BR>\x00Now we have improved the way to control both leds.<BR>If you played a SEQ song, and you load a song not using the SEQ, still the SEQ led is on but we switch OFF all the active SEQ tracks. So, you will have no more problems with starting SEQ.<BR>\x00<BR><FONT color=red>- CUSTOM STYLE SAVE -</FONT><BR>Since the Custom Style File is located in the FlashROM compressed and has no known uncompressed size, we need to find another way to save that file in comparison to the rest of the files.<BR>Now the save time is 20-35 seconds depend on the size of AST file.<BR><BR>\x00<FONT color=red>- QUICK or FULL FORMAT -</FONT><BR>For very quick format of a specific partition you can select now the QUICK format.<BR>This format doesn't scan the HDD and is therefore very quick.<BR><BR><FONT color=red>- MORE PERSONAL SETTINGS -</FONT><BR>In addition to the standard SAVE OPTION SET, we also offer the loaded file parameter from HDD as new SAVE OPTION parameter. You will never miss any file when you overwrite a song!<BR>\x00Also for the new KN6000, The AfterLoadPage parameter offers more flexibility for the HD-SX6<BR><BR><FONT color=red>- ALPHABETIC SORTED LIST -</FONT><BR>We have added a link button to fill the JUKE BOX and check the list with the first 5 characters.<BR>More details in the corresponding folder.<BR><BR><FONT color=red>- CUSTOM LOAD SCRIPT (C.L.S.) has improved -</FONT><BR>Also for this section, please check the details on the C.L.S. folder.<BR>\x00<FONT color=red size=1>LETZTE INFOS - 24. Juli 2001 -</FONT><BR>-----------------------------------------------------------------------<FONT color=blue>Willkommen auf den Hilfe-Seiten von HD-SX6. Alle neuen Funktionen werden hier dokumentiert.</FONT><BR><BR><FONT color=red>- ALPAHABETIC SORTED -</FONT><BR>Um Speicher zu sparen und eine schnellere und eine 26 Zeichen umfassende Sortierung zu erreichen, wurde die ALPHABETIC SORTED Liste neu programmiert.<BR><BR><FONT color=red>- C.L.S. -</FONT><BR>\x00Im C.L.S. wurden kleinere Probleme beseitigt. Leider sind aber immer noch einige -Ungereimtheiten- seitens des Sequenzers im KN6000/6500 bekannt.<BR><BR><FONT color=red>- CUSTOM LYRICS -</FONT><BR>Weitere detaillierte Informationen zum Thema CUSTOM LYRICS!<BR>MIDI2TLX und Ausschnitte aus Beispielsongs nun auf der Update Diskette!<BR>Im Abschnitt BASIC finden Sie alle neuen Informationen zum Thema CUSTOM LYRICS.<BR>\x00<BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>Verbesserungen hier!<BR>Schauen Sie unter SETUP &amp; TOOLS nach, um alle n\xF6tigen Erl\xE4uterungen zu diesem Bereich zu erfahren.<BR><BR><FONT color=red>- AUTOSTART on C.L.S. -</FONT><BR>Verbesserungen hier!<BR>\x00In der Sektion C.L.S. finden Sie die Details dazu.<BR><BR><FONT color=black>Beim Wechsel des Registers traten Systemabst\xFCrze in dieses Seiten auf. Mit dieser Revision sind diese Probleme behoben.<BR>Einige der neuen Funktionen sind in der Bedienungsanleitung nicht beschrieben, da sie erst in der letzten Phase der Entwicklung hinzukamen.\x00 Auf diesen Seiten (HELP-PAGES) finden Sie Hinweise zu solchen neuen Funktionen.<BR>Dr\xFCcken Sie die Zeilen Auf/Ab- (Links 2/3) oder die Seiten Auf/Ab- (Links 1/4) Tasten um den Text zu verschieben. Benutzen Sie die unteren Kn\xF6pfe um die Sektionen zu wechseln.</FONT><BR><BR><FONT color=red>- SEQ PLAY LED Kontrolle -</FONT><BR>Da sowohl die SEQ PLAY, wie auch die DISK Led vom KN6000 kontrolliert werden,\x00 war es f\xFCr uns schon fr\xFCher sehr schwierig, diese und andere Funktionen anzusprechen.<BR>Nach langem Suchen haben wir eine Kompromissl\xF6sung gefunden.<BR>Wird nach dem Laden eines MIDI oder Technics Songs eine Bank ohne Sequenzer File geladen, wird zwar die LED nicht ausgeschalten, aber zu mindest die SEQ\x00 Spuren werden deaktiviert, so dass keine Probleme in dieser Hinsicht auf der B\xFChne mehr vorkommen sollten.<BR><BR><FONT color=red>- CUSTOM STYLE SAVE -</FONT><BR>Weil die Custom Style Datei im lokalen FlashROM komprimiert abgelegt ist und wir die wahre Gr\xF6sse solcher Dateien erst nach dem Abspeichern kennen, waren in der ersten Version mehrere 100 Schritte n\xF6tig, um diese grossen Dateien\x00 richtig auf die Festplatte zu schreiben.<BR>Mit einem -Trick- ist es uns nun gelungen auf eine v\xF6llig andere Art dieses Problem zu l\xF6sen. Die Speicherzeit dauert nun lediglich 20-40 Sekunden, je nach Dateigr\xF6sse.<BR> <BR><FONT color=red>- QUICK/FULL FORMAT -</FONT><BR>Details zum neuen Format Modus finden Sie auf der SETUP and TOOLS Seite.<BR>\x00DERNIER NOUVEAUTES <Juillet 24 2001><BR>------------------------------------------------------------------<BR>Explications en francaise vien plus tard .....\x00<FONT color=red size=1>LATEST NEWS (April 02. 2001)</FONT><BR>----------------------------------------------------------------------<FONT color=blue>Welcome to the News page. With every new update you will find the latest informations on this pages.</FONT><BR><BR><FONT color=red>- CUSTOM LYRICS -</FONT><BR>MIDI2TLX and samples now on the Update disk!<BR>On the BASIC section you will find all informations about the CUSTOM LYRICS news.<BR><BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>\x00Some improvements here!<BR>Check the SETUP and TOOLS page for the explanation of the new function TAB TEMPO ACCESS.<BR><BR><FONT color=red>- AUTOSTART on C.L.S. -</FONT><BR>Some improvements "
+
+Str_here_BR_Please_check_the_C_L_S_section_f:	.asciz "here!<BR>Please check the C.L.S. section for more details.<BR><BR><FONT color=red>- SEQ PLAY LED Control -</FONT><BR>Since the DISK and SEQ PLAY led is controlled by the KN6000, it was always a problem to set theses led from our side.<BR>"
 Str_Now_we_found_a_way_to_control_both_led_a:	.asciz "Now we found a way to control both led a little bit in a better way.<BR>If you played a SEQ song and you load a song not using the SEQ, still the SEQ led is on but we switch OFF all the active SEQ tracks. So, no more problems with starting SEQ.<BR>"
-Str_BR_FONT_color_red_CUSTOM_STYLE_SAVE_FONT_2:	.asciz "<BR><FONT color=red>- CUSTOM STYLE SAVE -</FONT><BR>Since the Custom Style File is located in the FlashROM compressed and has no known uncompressed size, we need to find another way to save that file compared to the rest of the files.<BR>Now the save time is 20-35 seconds depend on the size of AST file.<BR><BR>"
+Str_BR_FONT_color_red_CUSTOM_STYLE_SAVE_FONT:	.asciz "<BR><FONT color=red>- CUSTOM STYLE SAVE -</FONT><BR>Since the Custom Style File is located in the FlashROM compressed and has no known uncompressed size, we need to find another way to save that file compared to the rest of the files.<BR>Now the save time is 20-35 seconds depend on the size of AST file.<BR><BR>"
 Str_FONT_color_red_QUICK_FULL_FORMAT_FONT_BR:	.asciz "<FONT color=red>- QUICK/FULL FORMAT -</FONT><BR>For very quick format of a specific partition you can select now the QUICK format.<BR>This format don't scan the HDD and is therefore very quick.<BR><BR><FONT color=red>- MORE PERSONAL SETTINGS -</FONT><BR>In addition to the standard SAVE OPTION SET we offer the loaded file parameter from HDD as new SAVE OPTION parameter. You will never miss any file when you overwrite a song!<BR>"
 Str_Also_for_the_new_KN6000_AfterLoadPage_pa:	.asciz "Also for the new KN6000 AfterLoadPage parameter offer more flexibility of HD-SX6<BR><BR><FONT color=red>- ALPHABETIC SORTED LIST -</FONT><BR>We have add a link button to fill the JUKE BOX and check the list with the first 5 characters.<BR>More details on the corresponding folder.<BR><BR><FONT color=red>- CUSTOM LOAD SCRIPT (C.L.S.) has improved -</FONT><BR>Also for this section, please check the details on the C.L.S. folder.<BR><BR>"
 Str_FONT_color_red_HDD_INFOS_FONT_BR_On_the:	.asciz "<FONT color=red>- HDD INFOS -</FONT><BR>On the ABOUT&amp;HELP you will find now the hard disk drive name, type and the serial number of it."
@@ -9515,37 +10289,22 @@ Str_BR_BR_FONT_color_red_AutoStart_debug_FON_2:	.asciz "<BR><BR><FONT color=red>
 Str_If_you_add_AutoStart_and_AutoLoad_you_sh_2:	.asciz "If you add AutoStart and AutoLoad you should keep in mind that a medley chain is working!<BR>With active C.L.S. the cursor is marked gray instead of a red frame.<BR>We have add a Warning pages to all button on the C.L.S. page if C.L.S. is active. Also there is a warning page to remind you to save modification on the C.L.S. if you try to leafe the C.L.S. Edit page without saving your modifications.<BR>"
 Str_BR_FONT_color_red_AutoStart_FONT_BR_With_2:	.asciz "<BR><FONT color=red>- AutoStart -</FONT><BR>With the help from the software developers in Japan, the C.L.S. is now ready for AL and AS.<BR>Please note that a chain will be created if you are using AL. During C.L.S. play, you will  need to break the chain by pressing  PANIC. Also every button pressed on the actual C.L.S. page causes the  warning page.<BR>"
 Str_More_Tips_and_Hints_in_the_coming_HELP_W_2:	.asciz "More Tips and Hints in the coming HELP-WORKSHOP."
-Str_FONT_color_red_size_1_SETUP_and_TOOLS_FO:	.asciz "<FONT color=red size=1>SETUP and TOOLS</FONT><BR>-----------------------------------------------------------------------<FONT color=red>- TAB TEMPO ACCESS -</FONT><BR><BR><FONT color=blue>Improvements: </FONT>We add a parameter request to FontSize for the DIR LIST Parameter.<BR>That means, if you have DISPLAY FONT SIZE : BIG, also TAB TEMPO access will show the BigFont display. Also we found a bug of SEQ PLAY handling since the V7 of KN6000 came out.<BR>"
-Str_Some_customers_complained_that_the_Quick:	.asciz "Some customers complained that the QuickLoad needed to much time and hand movements.<BR>We agree! QuickLoad needed to be press and hold the DISK button for 3 seconds and also the button is too far to the right side.<BR>"
-Str_We_offered_this_solution_TAB_TEMPO_ACCES:	.asciz "We offered this solution: TAB TEMPO ACCESS!<BR>Since then the  TAB TEMPO button has no reaction on the first push, and its location is much more convenience to handle during playback, we have selected that button for a much better access to the desired HD-SX6 page. On the SETUP and TOOLS page 2/3 you will find the parameter button for the pages and the OFF command.<BR><BR>"
-Str_FONT_color_red_HDD_FORMAT_CODE_FONT_BR_J:	.asciz "<FONT color=red>- HDD FORMAT CODE -</FONT><BR>Just for your information: We have changed the code for the HDD format procedure to a 8-digit number.<BR>If you really want to format your entire HDD or even a single partition type this:<BR><FONT color=red size=1>--- 7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Attention:</FONT> Don't experiment with this function!<BR><BR>"
-Str_FONT_color_red_Would_you_like_to_store_y:	.asciz "<FONT color=red>Would you like to store your individual settings?</FONT><BR>Just follow this:<BR>- Set all the SETUP and TOOLS parameter as you like.<BR>- Turn OFF the write protection and change to the PAGE 3/3.<BR>- Press SAVE OPTION and again in the following page.<BR>To get the most flexible data handling system, it is important to have various parameter for your personal use..<BR>"
-Str_With_the_new_parameter_SAVE_OPTION_MODE:	.asciz "- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode, a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you did not check the file option box!<BR>"
-Str_BR_There_is_another_new_parameter_BR_BR:	.asciz "<BR>There is another new parameter: <BR><BR><FONT color=red>- KN6000 AfterLoadPage -</FONT><BR>When you normally load a Song/Title including a sequencer, the sequencer main page will appear. Many musicians complained with our previous products. We then changed and set this always to the home page.<BR>"
-Str_With_the_version_1_0_on_HD_SX6_you_can_n:	.asciz "With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n"
-Str_FONT_color_navy_size_1_SETUP_and_TOOLS_F:	.asciz "<FONT color=navy size=1>SETUP and TOOLS</FONT><BR>-----------------------------------------------------------------------<FONT color=red>- TAB TEMPO ACCESS -</FONT><BR><BR><FONT color=blue>Verbesserungen: </FONT><BR>Die DIR LIST ist jetzt mit einer Abfrage der eingestelleten Schriftgr\xF6sse gekoppelt.<BR>Das heisst: Wenn Sie den Parameter DISPLAY FONT SIZE auf BIG eingestellt haben, erscheint auch nach dem Zugriff \xFCber TAB TEMPO mit Einstellung DIR LIST die Directory liste in grosser Schrift.<BR>"
-Str_Zudem_sind_mit_der_V7_des_KN6000_auch_hi:	.asciz "Zudem sind mit der V7 des KN6000 auch hier einige Probleme mit der SEQ PLAY Funktion aufgetreten, die jetzt behoben sind.<BR><BR>"
-Str_Einige_Kunden_haben_sich_negative_ber_di:	.asciz "Einige Kunden haben sich negative \xFCber die Quickload Funktion und die Position des DISK Knopfes ge\xE4ussert.<BR>Wir verstehen diese Kritik. F\xFCr ein QuickLoad muss die DISK Taste 3 Sekunden gedr\xFCckt werden und zus\xE4tzlich ist meistens nur die linke Hand daf\xFCr kurzzeitig frei und somit muss eine hand\xFCbergreiffende Verrenkung erfolgen.<BR>"
-Str_Wir_offerieren_folgende_L_sung_TAB_TEMPO:	.asciz "Wir offerieren folgende L\xF6sung: TAB TEMPO ACCESS!<BR>Da nur die TAB TEMPO Taste keine sofort Wirkung hat und Ihre Position sehr viel besser zur Hand geht, haben wir dies Taste f\xFCr einen noch schnelleren Zugriff auf die gew\xFCnschte HD-SX6 Seite missbraucht. Auf der SETUP &amp; TOOLS Seite 2/3 finden Sie unten rechts den Parameter f\xFCr die gew\xFCnschten Seiten oder den OFF Befehl, damit auch das TAB TEMPO wieder normal funktioniert.<BR><BR><FONT color=red>- HDD FORMAT CODE -</FONT><BR>"
-Str_Achtung_Entgegen_der_Bedienungsanleitung:	.asciz "Achtung: Entgegen der Bedienungsanleitung wurde der Format-Code ge\xE4ndert(!) und auf einen 8-stellige Zahl erweitert.<BR>Sollten Sie tats\xE4chlich Ihre Festplatte oder auch nur eine einzelne Partition formatieren wollen, benutzen Sie folgenden Code:<BR>"
-Str_BR_FONT_color_red_size_1_7_3_2_9_8_1_2_5:	.asciz "<BR><FONT color=red size=1>---  7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Achtung:</FONT> Experimentieren Sie nicht mit dieser Funktion!<BR><BR><FONT color=red>M\xF6chten Sie Ihre pers\xF6nlichen Einstellungen speichern?</FONT><BR>So geht's:<BR>"
-Str_Stellen_Sie_alle_Parameter_der_SETUP_and:	.asciz "- Stellen Sie alle Parameter der SETUP and TOOLS nach Ihren W\xFCnschen ein.<BR>- Heben Sie den Schreibschutz auf und wechseln Sie in die PAGE 3/3.<BR>- Dr\xFCcken Sie SAVE OPTIONS und in der Folgeseite nochmals SAVE OPTIONS.<BR><BR>Um ein m\xF6glichst flexibles Datenverwaltungssystem zu erhalten, sind immer mehr freie Parameter n\xF6tig.<BR>"
-Str_Mit_dem_neuen_Parameter_FONT_color_red_S:	.asciz "Mit dem neuen Parameter <FONT color=red>SAVE OPTION MODE</FONT> k\xF6nnen Sie zwischen den vorgegebenen Speicheroptinen oder der geladenen Optionen w\xE4hlen.<BR>Ein weiterer neuer Parameter: <FONT color=red>- KN6000 AfterLoadPage -</FONT><BR>Bereits bei den Vorg\xE4ngermodellen haben uns Musiker gebenten, doch nicht die Standard SEQ Hauptseite nach dem Laden eines Sequencers anzuzeigen, sondern die Home-Page zu zeigen.<BR>"
-Str_Da_dies_entgegen_der_Ladefunktion_des_KN:	.asciz "Da dies entgegen der Ladefunktion des KN6000 ist, haben wir einen Parameter geschaffen, den Sie selber setzen k\xF6nnen.<BR>F\xFCr den Fall, dass Sie bewusst eine gesamte Partition l\xF6schen m\xF6chten, wurde die <FONT color=red>QUICK Format</FONT> Funktion geschaffen.<BR>Die Anwendung des QUICK Formats setzt aber aus Sicherheitsgr\xFCnden eine vorherige Formatierung der Festplatte im FULL Format voraus!"
-Str_FONT_color_navy_size_1_SETUP_and_TOOLS_F_2:	.asciz "<FONT color=navy size=1>SETUP and TOOLS</FONT><BR>---------------------------------------------------------------------<BR>Plus des information en francais dans la prochaine update ...<BR><FONT color=red>- HDD FORMAT CODE -</FONT><BR>"
-Str_Just_for_your_information_We_have_change:	.asciz "Just for your information: We have changed the code for the HDD format procedure to a 8-digit number.<BR>If you really want to format your entyre HDD ore even e single partition type this:<BR><FONT color=red size=1>---  7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Attention:</FONT> Don't experiment with this function!<BR><BR>"
-Str_FONT_color_red_Would_you_like_to_store_y_2:	.asciz "<FONT color=red>Would you like to store your individual settings?</FONT><BR>Just follow this:- Set all the SETUP and TOOLS parameter as you like.- Turn OFF the write protection and change to the PAGE 3/3.- Press SAVE OPTION and again in the following page.<BR>To get the most flexible data handling system, it is important to have various parameter for your personal use.<BR>"
-Str_With_the_new_parameter_SAVE_OPTION_MODE_2:	.asciz "- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you dit not checked the file option box!<BR>"
+
+func_97833B38_entry_L34_Records_p0_2:	# REC_func_97833B38_entry_L34_Records_p0 (6433 bytes)
+	REC_func_97833B38_entry_L34_Records_p0	f0=60, f1=70, x2="ONT color=red size=1>SETUP and TOOLS</FONT><BR>-----------------------------------------------------------------------<FONT color=red>- TAB TEMPO ACCESS -</FONT><BR><BR><FONT color=blue>Improvements: </FONT>We add a parameter request to FontSize for the DIR LIST Parameter.<BR>That means, if you have DISPLAY FONT SIZE : BIG, also TAB TEMPO access will show the BigFont display. Also we found a bug of SEQ PLAY handling since the V7 of KN6000 came out.<BR>\x00Some customers complained that the QuickLoad needed to much time and hand movements.<BR>We agree! QuickLoad needed to be press and hold the DISK button for 3 seconds and also the button is too far to the right side.<BR>\x00We offered this solution: TAB TEMPO ACCESS!<BR>Since then the  TAB TEMPO button has no reaction on the first push, and its location is much more convenience to handle during playback, we have selected that button for a much better access to the desired HD-SX6 page. On the SETUP and TOOLS page 2/3 you will find the parameter button for the pages and the OFF command.<BR><BR>\x00<FONT color=red>- HDD FORMAT CODE -</FONT><BR>Just for your information: We have changed the code for the HDD format procedure to a 8-digit number.<BR>If you really want to format your entire HDD or even a single partition type this:<BR><FONT color=red size=1>--- 7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Attention:</FONT> Don't experiment with this function!<BR><BR>\x00<FONT color=red>Would you like to store your individual settings?</FONT><BR>Just follow this:<BR>- Set all the SETUP and TOOLS parameter as you like.<BR>- Turn OFF the write protection and change to the PAGE 3/3.<BR>- Press SAVE OPTION and again in the following page.<BR>To get the most flexible data handling system, it is important to have various parameter for your personal use..<BR>\x00- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode, a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you did not check the file option box!<BR>\x00<BR>There is another new parameter: <BR><BR><FONT color=red>- KN6000 AfterLoadPage -</FONT><BR>When you normally load a Song/Title including a sequencer, the sequencer main page will appear. Many musicians complained with our previous products. We then changed and set this always to the home page.<BR>\x00With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n\x00<FONT color=navy size=1>SETUP and TOOLS</FONT><BR>-----------------------------------------------------------------------<FONT color=red>- TAB TEMPO ACCESS -</FONT><BR><BR><FONT color=blue>Verbesserungen: </FONT><BR>Die DIR LIST ist jetzt mit einer Abfrage der eingestelleten Schriftgr\xF6sse gekoppelt.<BR>Das heisst: Wenn Sie den Parameter DISPLAY FONT SIZE auf BIG eingestellt haben, erscheint auch nach dem Zugriff \xFCber TAB TEMPO mit Einstellung DIR LIST die Directory liste in grosser Schrift.<BR>\x00Zudem sind mit der V7 des KN6000 auch hier einige Probleme mit der SEQ PLAY Funktion aufgetreten, die jetzt behoben sind.<BR><BR>\x00Einige Kunden haben sich negative \xFCber die Quickload Funktion und die Position des DISK Knopfes ge\xE4ussert.<BR>Wir verstehen diese Kritik. F\xFCr ein QuickLoad muss die DISK Taste 3 Sekunden gedr\xFCckt werden und zus\xE4tzlich ist meistens nur die linke Hand daf\xFCr kurzzeitig frei und somit muss eine hand\xFCbergreiffende Verrenkung erfolgen.<BR>\x00Wir offerieren folgende L\xF6sung: TAB TEMPO ACCESS!<BR>Da nur die TAB TEMPO Taste keine sofort Wirkung hat und Ihre Position sehr viel besser zur Hand geht, haben wir dies Taste f\xFCr einen noch schnelleren Zugriff auf die gew\xFCnschte HD-SX6 Seite missbraucht. Auf der SETUP &amp; TOOLS Seite 2/3 finden Sie unten rechts den Parameter f\xFCr die gew\xFCnschten Seiten oder den OFF Befehl, damit auch das TAB TEMPO wieder normal funktioniert.<BR><BR><FONT color=red>- HDD FORMAT CODE -</FONT><BR>\x00Achtung: Entgegen der Bedienungsanleitung wurde der Format-Code ge\xE4ndert(!) und auf einen 8-stellige Zahl erweitert.<BR>Sollten Sie tats\xE4chlich Ihre Festplatte oder auch nur eine einzelne Partition formatieren wollen, benutzen Sie folgenden Code:<BR>\x00<BR><FONT color=red size=1>---  7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Achtung:</FONT> Experimentieren Sie nicht mit dieser Funktion!<BR><BR><FONT color=red>M\xF6chten Sie Ihre pers\xF6nlichen Einstellungen speichern?</FONT><BR>So geht's:<BR>\x00- Stellen Sie alle Parameter der SETUP and TOOLS nach Ihren W\xFCnschen ein.<BR>- Heben Sie den Schreibschutz auf und wechseln Sie in die PAGE 3/3.<BR>- Dr\xFCcken Sie SAVE OPTIONS und in der Folgeseite nochmals SAVE OPTIONS.<BR><BR>Um ein m\xF6glichst flexibles Datenverwaltungssystem zu erhalten, sind immer mehr freie Parameter n\xF6tig.<BR>\x00Mit dem neuen Parameter <FONT color=red>SAVE OPTION MODE</FONT> k\xF6nnen Sie zwischen den vorgegebenen Speicheroptinen oder der geladenen Optionen w\xE4hlen.<BR>Ein weiterer neuer Parameter: <FONT color=red>- KN6000 AfterLoadPage -</FONT><BR>Bereits bei den Vorg\xE4ngermodellen haben uns Musiker gebenten, doch nicht die Standard SEQ Hauptseite nach dem Laden eines Sequencers anzuzeigen, sondern die Home-Page zu zeigen.<BR>\x00Da dies entgegen der Ladefunktion des KN6000 ist, haben wir einen Parameter geschaffen, den Sie selber setzen k\xF6nnen.<BR>F\xFCr den Fall, dass Sie bewusst eine gesamte Partition l\xF6schen m\xF6chten, wurde die <FONT color=red>QUICK Format</FONT> Funktion geschaffen.<BR>Die Anwendung des QUICK Formats setzt aber aus Sicherheitsgr\xFCnden eine vorherige Formatierung der Festplatte im FULL Format voraus!\x00<FONT color=navy size=1>SETUP and TOOLS</FONT><BR>---------------------------------------------------------------------<BR>Plus des information en francais dans la prochaine update ...<BR><FONT color=red>- HDD FORMAT CODE -</FONT><BR>\x00Just for your information: We have changed the code for the HDD format procedure to a 8-digit number.<BR>If you really want to format your entyre HDD ore even e single partition type this:<BR><FONT color=red size=1>---  7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Attention:</FONT> Don't experiment with this function!<BR><BR>\x00<FONT color=red>Would you like to store your individual setting"
+
+Str_s_FONT_BR_Just_follow_this_Set_all_the_S:	.asciz "s?</FONT><BR>Just follow this:- Set all the SETUP and TOOLS parameter as you like.- Turn OFF the write protection and change to the PAGE 3/3.- Press SAVE OPTION and again in the following page.<BR>To get the most flexible data handling system, it is important to have various parameter for your personal use.<BR>"
+Str_With_the_new_parameter_SAVE_OPTION_MODE:	.asciz "- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you dit not checked the file option box!<BR>"
 Str_BR_There_is_an_other_new_parameter_FONT:	.asciz "<BR>There is an other new parameter: <FONT color=red>- KN6000 AfterLoadPage -.</FONT><BR>When you normaly load a Song/Title including a sequencer, the sequencer main page will appear. Many musicians complaind allredy with our previous products about that. We than changed and set allways to the home page.<BR>"
-Str_With_the_version_1_0_on_HD_SX6_you_can_n_2:	.asciz "With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n"
-Str_FONT_color_navy_size_1_SETUP_and_TOOLS_F_3:	.asciz "<FONT color=navy size=1>SETUP and TOOLS</FONT><BR>---------------------------------------------------------------------<BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>Some customers complained that the QuickLoad need to much time and hand movements.<BR>We agree! QuickLoad need to be press and hold the DISK button for 3 seconds and also the button is very much right side.<BR>"
+Str_With_the_version_1_0_on_HD_SX6_you_can_n:	.asciz "With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n"
+Str_FONT_color_navy_size_1_SETUP_and_TOOLS_F:	.asciz "<FONT color=navy size=1>SETUP and TOOLS</FONT><BR>---------------------------------------------------------------------<BR><FONT color=red>- TAB TEMPO ACCESS -</FONT><BR>Some customers complained that the QuickLoad need to much time and hand movements.<BR>We agree! QuickLoad need to be press and hold the DISK button for 3 seconds and also the button is very much right side.<BR>"
 Str_We_offer_this_solution_TAB_TEMPO_ACCESS:	.asciz "We offer this solution: TAB TEMPO ACCESS!<BR>Since the TAB TEMPO button has no reaction on the first push and his location is much more convenience to handle during play we have selected that button for a much better access to the desired HD-SX6 page. On the SETUP and TOOLS page 2/3 you will find the parameter button for the pages and the OFF command.<BR><BR>"
-Str_FONT_color_red_HDD_FORMAT_CODE_FONT_BR_J_2:	.asciz "<FONT color=red>- HDD FORMAT CODE -</FONT><BR>Just for your information: We have changed the code for the HDD format procedure to a 8-digit number.<BR>If you really want to format your entyre HDD ore even e single partition type this:<BR><FONT color=red size=1>---  7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Attention:</FONT> Don't experiment with this function!<BR><BR>"
-Str_FONT_color_red_Would_you_like_to_store_y_3:	.asciz "<FONT color=red>Would you like to store your individual settings?</FONT><BR>Just follow this:- Set all the SETUP and TOOLS parameter as you like.- Turn OFF the write protection and change to the PAGE 3/3.- Press SAVE OPTION and again in the following page.<BR>To get the most flexible data handling system, it is important to have various parameter for your personal use.<BR>"
-Str_With_the_new_parameter_SAVE_OPTION_MODE_3:	.asciz "- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you dit not checked the file option box!<BR>"
+Str_FONT_color_red_HDD_FORMAT_CODE_FONT_BR_J:	.asciz "<FONT color=red>- HDD FORMAT CODE -</FONT><BR>Just for your information: We have changed the code for the HDD format procedure to a 8-digit number.<BR>If you really want to format your entyre HDD ore even e single partition type this:<BR><FONT color=red size=1>---  7 3 2 9 8 1 2 5  ---</FONT><BR><BR><FONT color=red>Attention:</FONT> Don't experiment with this function!<BR><BR>"
+Str_FONT_color_red_Would_you_like_to_store_y:	.asciz "<FONT color=red>Would you like to store your individual settings?</FONT><BR>Just follow this:- Set all the SETUP and TOOLS parameter as you like.- Turn OFF the write protection and change to the PAGE 3/3.- Press SAVE OPTION and again in the following page.<BR>To get the most flexible data handling system, it is important to have various parameter for your personal use.<BR>"
+Str_With_the_new_parameter_SAVE_OPTION_MODE_2:	.asciz "- With the new parameter SAVE OPTION MODE you can select between the STANDARD setting or the more comfortable HDD LOAD mode.<BR>Using this mode a buffer memory will keep all the files you have loaded from HDD and set the same parameter when you will write that song to a free place or overwrite on the same place. So, no more lost files because you dit not checked the file option box!<BR>"
 Str_BR_There_is_an_other_new_parameter_FONT_2:	.asciz "<BR>There is an other new parameter: <FONT color=red>- KN6000 AfterLoadPage -.</FONT><BR>When you normaly load a Song/Title including a sequencer, the sequencer main page will appear. Many musicians complaind allredy with our previous products about that. We than changed and set allways to the home page.<BR>"
-Str_With_the_version_1_0_on_HD_SX6_you_can_n_3:	.asciz "With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n"
-	.align	4, 0xFF	# pad after Str_With_the_version_1_0_on_HD_SX6_you_can_n_3
+Str_With_the_version_1_0_on_HD_SX6_you_can_n_2:	.asciz "With the version 1.0 on HD-SX6 you can now set the parameter to jump to the SEQ main page or to the home page. Please note: This parameter is only working with JumpAfterLoade mode: HD-SX6.\n"
+	.align	4, 0xFF	# pad after Str_With_the_version_1_0_on_HD_SX6_you_can_n_2
 Str_0123456789_2:	.asciz "0123456789"
 	.align	4, 0xFF	# pad after Str_0123456789_2
 Str_ABCDEF:	.asciz "ABCDEF"
@@ -9722,8 +10481,8 @@ Str_uuml:	.asciz "uuml"
 Str_yacute:	.asciz "yacute"
 Str_thorn:	.asciz "thorn"
 Str_yuml:	.asciz "yuml"
-Str_text:	.asciz ";"
-	.align	4, 0xFF	# pad after Str_text
+Str_text_2:	.asciz ";"
+	.align	4, 0xFF	# pad after Str_text_2
 Str_color:	.asciz "color"
 	.align	4, 0xFF	# pad after Str_color
 Str_color_i:	.asciz "color %i"
@@ -9737,7 +10496,20 @@ func_978343AC_Table:	# 20 x u8, 0..10; read by func_978343AC : `movbu	(a1), d0`
 
 Str_Value_for_attribute_size_is_invalid:	.asciz "Value for attribute size is invalid"
 Str_FONT:	.asciz "FONT"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF15D, 0x0AF178
+Str_P_4:	.asciz "P"
+Str_BR:	.asciz "BR"
+Str_H1:	.asciz "H1"
+Str_H2:	.asciz "H2"
+Str_H3:	.asciz "H3"
+Str_H4:	.asciz "H4"
+Str_H5:	.asciz "H5"
+Str_H6:	.asciz "H6"
+
+func_97834719_Table_p0_0:	# REC_func_97834719_Table_p0 (1 bytes)
+	REC_func_97834719_Table_p0	
+	.space	1, 0x00
+
+Str_empty_395:	.asciz ">"
 Str_Didnt_found_tagname_s_in_hashtable:	.asciz "Didnt found tagname \"%s\" in hashtable"
 	.align	4, 0xFF	# pad after Str_Didnt_found_tagname_s_in_hashtable
 Str_Empty_elements_are_not_allowed_to_have_e:	.asciz "Empty elements are not allowed to have endtag"
@@ -9747,12 +10519,17 @@ Str_Belonging_tag_not_found_stack_empty:	.asciz "Belonging tag not found (stack 
 Str_Belonging_tag_not_found:	.asciz "Belonging tag not found"
 data_978AF210:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF210, 0x0AF218
-data_978AF218:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF218, 0x0AF220
+
+func_9780A35F_Var:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	32
+
+func_9780A35F_Table:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF220:
 	.space	1, 0x00
 data_978AF221:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF221, 0x0AF22C
+
 Str_x:	.asciz "#x"
 Str_X:	.asciz "#X"
 	.align	4, 0xFF	# pad after Str_X
@@ -9776,40 +10553,60 @@ data_978AF2CD:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF2CD, 0x0AF2D8
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_4:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_3:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-_"
-data_978AF350:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF350, 0x0AF358
+
+func_9780A35F_Var_2:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	32
+
+func_9780A35F_Table_2:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF358:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF358, 0x0AF35F
 data_978AF35F:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF35F, 0x0AF368
+
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_2:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-_"
-data_978AF3E0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3E0, 0x0AF3E8
 
+func_9780A35F_Var_3:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	32
+
+func_9780A35F_Table_3:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	10, 11, 9, 13, 12, 0, -1
 func_97834BA2_Table:	# 4 x u8, 0..255; read by func_97834BA2_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 255, 255
-data_978AF3EC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3EC, 0x0AF3F4
+
+func_9780A35F_Var_4:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	32
+
+func_9780A35F_Table_4:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF3F4:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3F4, 0x0AF3F8
 data_978AF3F8:
 	.space	1, 0x00
 data_978AF3F9:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3F9, 0x0AF404
-data_978AF404:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF404, 0x0AF40C
+
+func_9780A35F_Var_5:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	32
+
+func_9780A35F_Table_5:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF40C:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF40C, 0x0AF410
 data_978AF410:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF410, 0x0AF418
 
-Str_Hallo_FONT_face_Arial_size_3_color_80706:	.asciz "Hallo <FONT face=\"Arial\" size=3 color=\"#807060\"> Senorflo </FONT> Bye Bye "
-	.align	4, 0xFF	# pad after Str_Hallo_FONT_face_Arial_size_3_color_80706
+func_97834719_Table_p136_0:	# REC_func_97834719_Table_p136 (4 bytes)
+	REC_func_97834719_Table_p136	f0=72, f1=97, x2="ll"
+
+Str_o_FONT_face_Arial_size_3_color_807060_Se:	.asciz "o <FONT face=\"Arial\" size=3 color=\"#807060\"> Senorflo </FONT> Bye Bye "
+	.align	4, 0xFF	# pad after Str_o_FONT_face_Arial_size_3_color_807060_Se
 data_978AF464:
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF464, 0x0AF468
 Str_Parsed_Tag_s_i:	.asciz "Parsed Tag:\"%s\" ,%i"
 Str_Attribute_i_is_s_with_value_s_i_i:	.asciz "Attribute %i is \"%s\" with value \"%s\",%i,%i"
+# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF4A7, 0x0AF4AA
 Str_TOO_MANY_LINES:	.asciz "!!!TOO MANY LINES!!!"
 	.align	4, 0xFF	# pad after Str_TOO_MANY_LINES
@@ -9826,34 +10623,111 @@ Str_ALPHAB_10:	.asciz "ALPHAB."
 Str_LIST_10:	.asciz "LIST"
 Str_S_OUTPUT_10:	.asciz "S-OUTPUT"
 Str_MIXER_10:	.asciz "MIXER"
+# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF510, 0x0AF517
 Str_SETUP_10:	.asciz "SETUP &"
 Str_TOOLS_10:	.asciz "TOOLS"
+# census: opaque -- unknown-dump: 51 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF525, 0x0AF558
-data_978AF558:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF558, 0x0AF560
+
+func_97827B50_Var_278:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	15
+func_97827B50_Var_279:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	216
+func_97827B50_Var_280:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	68
+func_97827B50_Var_281:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+
 Str_T:	.asciz "T"
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF562, 0x0AF568
-data_978AF568:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF568, 0x0AF570
-data_978AF570:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF570, 0x0AF578
-data_978AF578:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF578, 0x0AF580
-data_978AF580:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF580, 0x0AF588
-data_978AF588:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF588, 0x0AF590
-data_978AF590:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF590, 0x0AF598
-data_978AF598:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF598, 0x0AF5A0
-data_978AF5A0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF5A0, 0x0AF5A8
-data_978AF5A8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF5A8, 0x0AF5B0
-data_978AF5B0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF5B0, 0x0AF5B8
+
+func_97827B50_Var_282:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	216
+func_97827B50_Var_283:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	156
+func_97827B50_Var_284:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_285:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	168
+func_97827B50_Var_286:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_287:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	230
+func_97827B50_Var_288:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_289:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	170
+func_97827B50_Var_290:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	223
+func_97827B50_Var_291:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	220
+func_97827B50_Var_292:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_293:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	260
+func_97827B50_Var_294:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	216
+func_97827B50_Var_295:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	320
+func_97827B50_Var_296:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_297:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	328
+func_97827B50_Var_298:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_299:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	380
+func_97827B50_Var_300:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_301:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	338
+func_97827B50_Var_302:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	223
+func_97827B50_Var_303:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	375
+func_97827B50_Var_304:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_305:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	404
+func_97827B50_Var_306:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_307:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	480
+func_97827B50_Var_308:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_309:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	416
+func_97827B50_Var_310:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	223
+func_97827B50_Var_311:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	480
+func_97827B50_Var_312:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_313:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	500
+func_97827B50_Var_314:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	216
+func_97827B50_Var_315:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	564
+func_97827B50_Var_316:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_317:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	574
+func_97827B50_Var_318:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	209
+func_97827B50_Var_319:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	648
+func_97827B50_Var_320:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+func_97827B50_Var_321:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
+	.word	584
+func_97827B50_Var_322:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+	.word	223
+func_97827B50_Var_323:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+	.word	648
+func_97827B50_Var_324:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+	.word	236
+
 Str_BASICS_10:	.asciz "BASICS"
 	.align	4, 0xFF	# pad after Str_BASICS_10
 Str_JUKE_BOX_9:	.asciz "JUKE BOX"
@@ -10194,35 +11068,25 @@ Str_MID:	.asciz ".MID"
 Str_rb:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb
 
-ptrs_978AFD20:
-	.long	Str_C_2
-	.long	data_9783E55E
-	.long	data_9783E55F
-	.long	data_9783E560
-	.long	data_9783E561
-	.long	data_9783E562
-	.long	data_9783E563
-	.long	data_9783E564
-	.space	8, 0x7F
-ptrs_978AFD48:
-	.long	Str_C
-	.long	Str_empty_395
-	.long	data_9783E56C
-	.long	data_9783E56D
-	.long	0
-	.space	8, 0x00
-data_978AFD64:
-	.space	4, 0x00
-data_978AFD68:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AFD68, 0x0AFD7C
-data_978AFD7C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AFD7C, 0x0AFD80
+localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x9780851A `mov (0x10, a1), a0`; localeconv 0x9780851A `mov (0x14, a1), a0`; localeconv 0x9780851A `mov (0x18, a1), a0` (+12)
+	REC_localeconv_Records	p0=func_9780836B_entry_L10_Records+128, p4=func_9780836B_entry_L10_Records+130, p8=func_9780836B_entry_L10_Records+131, p12=func_9780836B_entry_L10_Records+132, p16=func_9780836B_entry_L10_Records+133, p20=func_9780836B_entry_L10_Records+134, p24=func_9780836B_entry_L10_Records+135, p28=data_9783E564, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
+localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x9780851A `mov (0xc, a1), a0`; localeconv 0x9780851A `mov (4, a1), a0`; localeconv 0x9780851A `mov (8, a1), a0`
+	REC_localeconv_Records_2	p0=Str_C, p4=Str_empty_441, p8=data_9783E56C, p12=data_9783E56D
+	REC_localeconv_Records_2	
 
-doubles_978AFD80:	# IEEE-754 doubles (lo word, hi word)
-	.long	0x9999999A, 0x3FB99999	# 5
-	.long	0x00000000, 0x40140000	# 0.301029996
-	.long	0x509F79FF, 0x3FD34413	# 1
-	.long	0x00000000, 0x3FF00000	# 10
+localeconv_Table:	# 5 x u32, 0..2542003825; read by localeconv 0x9780851A: `mov (localeconv_Table), d0`
+	tab_u32	0, 0, 2542003825, 1, 2542003568
+PfOutField_entry_L56_Var:	# 3 x u32, 1069128089..2576980378; read by PfOutField_entry_L56 0x97808240: `mov (PfOutField_entry_L56_Var), a0`; PfParseWidthPrecSize_entry_L65 0x9780847E: `mov (PfOutField_entry_L56_Var), d0` ...
+	tab_u32	2542003568, 2576980378, 1069128089
+PfDoubleToDecimal_entry_L3a3_Var:	# 2 x u32, 0..1075052544; read by PfDoubleToDecimal_entry : `mov	(a0), d0`
+	tab_u32	0, 1075052544
+PfDoubleToDecimal_entry_L1e1_Var:	# 2 x u32, 1070810131..1352628735; read by PfDoubleToDecimal_entry : `mov	(a0), d0`; PfDoubleToDecimal_entry : `mov	(a0), d2`
+	tab_u32	1352628735, 1070810131
+
+PfDoubleToDecimal_entry_L290_Records:	# 1 x REC_PfDoubleToDecimal_entry_L290_Records (8 bytes each); read by PfDoubleToDecimal_entry_L290 0x978092D2 `mov (0xc, a0), d1`; PfDoubleToDecimal_entry_L290 0x978092D2 `mov (8, a0), d0`; PfDoubleToDecimal_entry_L2cc 0x9780930E `mov (-4, a0), d1` (+3)
+	REC_PfDoubleToDecimal_entry_L290_Records	f4=0x3FF00000
+
+doubles_978AFDA0:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x00000000, 0x40240000	# 100
 	.long	0x00000000, 0x40590000	# 1000
 	.long	0x00000000, 0x408F4000	# 10000
@@ -10234,9 +11098,11 @@ doubles_978AFD80:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x00000000, 0x41CDCD65	# 1e+10
 	.long	0x20000000, 0x4202A05F	# 1e+11
 	.long	0xE8000000, 0x42374876	# 1e+12
+# census: opaque -- unknown-dump: 843 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AFDF8, 0x0B0143
 
 Str_a9X_B:	.asciz "\x90!a9X\xC4B"
+# census: opaque -- unknown-dump: 1525 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B014B, 0x0B0740
 
 # 55 classes; a class id is (0x168 << 16) | its index here (ClassProc 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)
@@ -12305,80 +13171,85 @@ V_HDD_MAIN_MENU_ResNames:
 	.long	RN_empty_776	# NewClsScreen_ExitScreen1
 	.long	RN_PleaseWait_Win	# PleaseWait_Win
 	.long	RN_empty_777	# PleaseWait_Win_RotStrBox1
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3E80, 0x0B3E84
 
 .mnbase 0x9785C17C   # the initialised-RAM image: labels are the RAM addresses ResetEntry copies it to
 
-data_97910000:
-	.space	1, 0x00
-data_97910001:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3E85, 0x0B3E88
-data_97910004:
-	.space	4, 0x00
-data_97910008:
-	.space	4, 0x00
-data_9791000C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3E90, 0x0B3E94
-data_97910010:
-	.space	4, 0xFF
-data_97910014:
-	.space	4, 0xFF
-data_97910018:
-	.space	4, 0xFF
-data_9791001C:
-	.space	4, 0xFF
-data_97910020:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3EA4, 0x0B3EA8
-data_97910024:
-	.space	4, 0x00
-data_97910028:
-	.space	4, 0x00
-data_9791002C:
-	.space	4, 0x00
-data_97910030:
-	.space	4, 0xFF
-data_97910034:
-	.space	4, 0x00
-data_97910038:
-	.space	4, 0xFF
-data_9791003C:
-	.space	4, 0x00
-data_97910040:
-	.space	4, 0xFF
-data_97910044:
-	.space	4, 0x00
-data_97910048:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3ECC, 0x0B3ED0
-data_9791004C:
-	.space	4, 0x00
-data_97910050:
-	.space	4, 0x00
-data_97910054:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3ED8, 0x0B3EDC
-data_97910058:
-	.space	4, 0x00
-data_9791005C:
-	.space	4, 0x00
-data_97910060:
-	.space	4, 0x00
-data_97910064:
-	.space	4, 0x00
-data_97910068:
-	.space	4, 0x00
-data_9791006C:
-	.space	4, 0x00
-data_97910070:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3EF4, 0x0B3EF8
-data_97910074:
-	.space	4, 0x00
-data_97910078:
-	.space	4, 0xFF
-data_9791007C:
-	.space	4, 0x00
-data_97910080:
-	.space	4, 0x00
-data_97910084:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F08, 0x0B3F0C
+
+func_97805FD0_L26_Var:	# 4 x REC_func_97805FD0_L26_Var (4 bytes each); read by func_97800082_L2a 0x978000AC `mov d0, (a1)`; func_97805FD0_L26 0x97805FF6 `movbu d0, (func_97805FD0_L26_Var)`; func_978060B7_entry_L24 0x978060DE `movbu d0, (func_97805FD0_L26_Var+1)` (+4)
+	REC_func_97805FD0_L26_Var	x2="\xFF\xFF"
+	REC_func_97805FD0_L26_Var	x2="\x00\x00"
+	REC_func_97805FD0_L26_Var	x2="\x00\x00"
+	REC_func_97805FD0_L26_Var	f0=1, x2="\x00\x00"
+
+func_97805272_entry_L25_Var:	# u32, initial value of a RAM variable; read / written by func_97805272_entry_L25 0x9780529C: `mov (func_97805272_entry_L25_Var), d0`; func_97805272_entry_L57 0x978052CE: `mov d0, (func_97805272_entry_L25_Var)` ...
+	.long	0xffffffff
+func_978074EE_Var:	# u32, initial value of a RAM variable; read / written by func_978074EE 0x978074EE: `mov d0, (func_978074EE_Var)`; func_97807514 0x97807514: `mov (func_978074EE_Var), d1` ...
+	.long	0xffffffff
+func_97802835_entry_L40_Var:	# u32, initial value of a RAM variable; read / written by func_97802835_entry_L40 0x97802878: `mov (func_97802835_entry_L40_Var), d0`; func_97803C8A_entry_L110 0x97803D9D: `mov d0, (func_97802835_entry_L40_Var)` ...
+	.long	0xffffffff
+func_97802835_entry_Lb_Var:	# u32, initial value of a RAM variable; read / written by func_97802835_entry_Lb 0x97802843: `mov (func_97802835_entry_Lb_Var), d0`; func_97802835_entry_L17 0x9780284F: `mov d0, (func_97802835_entry_Lb_Var)` ...
+	.long	0xffffffff
+
+func_97805272_entry_L50_Table:	# 4 x u8, 0..255; read by func_97805272_entry_L50 0x978052C7: `movbu d0, (func_97805272_entry_L50_Table)`; func_97805272_entry_La8 0x9780531F: `movbu d0, (func_97805272_entry_L50_Table)` ...
+	tab_u8	0, 255, 255, 255
+
+func_97802E3E_Var:	# u32, initial value of a RAM variable; read / written by func_97802E3E 0x97802E3E: `mov (func_97802E3E_Var), d0`; func_97803C8A 0x97803C8A: `mov d0, (func_97802E3E_Var)` ...
+	.long	0
+func_97803508_Var:	# u32, initial value of a RAM variable; read / written by func_97803508 0x97803508: `mov (func_97803508_Var), d0`; func_97803508_entry_L27 0x97803532: `mov (func_97803508_Var), d0` ...
+	.long	0
+func_97804369_Var:	# u32, initial value of a RAM variable; read / written by func_97804369 0x97804369: `mov (func_97804369_Var), d0`; func_97804369_entry_L23 0x9780438F: `mov d0, (func_97804369_Var)` ...
+	.long	0
+func_9780303B_Var:	# u32, initial value of a RAM variable; read / written by func_9780303B 0x9780303B: `mov (func_9780303B_Var), d0`; func_9780303B 0x9780303B: `mov d0, (func_9780303B_Var)` ...
+	.long	0xffffffff
+func_9780303B_Var_2:	# u32, initial value of a RAM variable; read / written by func_9780303B 0x9780303B: `mov (func_9780303B_Var_2), d0`; func_9780303B 0x9780303B: `mov d0, (func_9780303B_Var_2)` ...
+	.long	0
+func_9780303B_Var_3:	# u32, initial value of a RAM variable; read / written by func_9780303B 0x9780303B: `mov (func_9780303B_Var_3), d0`; func_9780303B 0x9780303B: `mov d0, (func_9780303B_Var_3)` ...
+	.long	0xffffffff
+func_9780303B_Var_4:	# u32, initial value of a RAM variable; read / written by func_9780303B 0x9780303B: `mov (func_9780303B_Var_4), d0`; func_9780303B 0x9780303B: `mov d0, (func_9780303B_Var_4)` ...
+	.long	0
+func_9780303B_Var_5:	# u32, initial value of a RAM variable; read / written by func_9780303B 0x9780303B: `mov d0, (func_9780303B_Var_5)`; func_978032C8_L7a 0x97803342: `mov (func_9780303B_Var_5), d1` ...
+	.long	0xffffffff
+func_9780303B_Var_6:	# u32, initial value of a RAM variable; read / written by func_9780303B 0x9780303B: `mov d0, (func_9780303B_Var_6)`; func_978032C8_L8f 0x97803357: `mov (func_9780303B_Var_6), d1` ...
+	.long	0
+
+func_978030B2_entry_L64_Table:	# 4 x u8, 0..255; read by func_978030B2_entry_L64 0x97803119: `movbu (func_978030B2_entry_L64_Table), d0`; func_978030B2_entry_L64 0x97803119: `movbu d0, (func_978030B2_entry_L64_Table)` ...
+	tab_u8	0, 255, 255, 255
+
+func_97804369_entry_L23_Var:	# u32, initial value of a RAM variable; read / written by func_97804369_entry_L23 0x9780438F: `mov d0, (func_97804369_entry_L23_Var)`; func_97805089_entry_L10 0x9780509C: `mov (func_97804369_entry_L23_Var), d0`
+	.long	0
+func_978035DB_Var:	# u32, initial value of a RAM variable; read / written by func_978035DB 0x978035DB: `mov d0, (func_978035DB_Var)`; func_978035F9 0x978035F9: `mov (func_978035DB_Var), d0`
+	.long	0
+
+func_978035DB_Table:	# 4 x u8, 1..255; read by func_978035DB 0x978035DB: `movbu d0, (func_978035DB_Table)`; func_978035F0 0x978035F0: `movbu (func_978035DB_Table), d0`
+	tab_u8	1, 255, 255, 255
+
+func_978037B3_Var:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var)`; func_978037B3_L61 0x97803814: `mov (func_978037B3_Var), d0` ...
+	.long	0
+func_978037B3_Var_2:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_2)`; func_978037B3_Lb3 0x97803866: `mov (func_978037B3_Var_2), d0` ...
+	.long	0
+func_978037B3_Var_3:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_3)`; func_978037B3_L4a 0x978037FD: `mov (func_978037B3_Var_3), d0` ...
+	.long	0
+func_978037B3_Var_4:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_4)`; func_978037B3_L116 0x978038C9: `mov (func_978037B3_Var_4), d0` ...
+	.long	0
+func_978037B3_Var_5:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_5)`; func_978037B3_Lb3 0x97803866: `mov (func_978037B3_Var_5), d0` ...
+	.long	0
+func_978037B3_Var_6:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_6)`; func_978037B3_L116 0x978038C9: `mov d0, (func_978037B3_Var_6)` ...
+	.long	0
+func_978037B3_Var_7:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_7)`; func_978037B3_L61 0x97803814: `mov (func_978037B3_Var_7), d1` ...
+	.long	0xffffffe2
+func_978037B3_Var_8:	# u32, initial value of a RAM variable; read / written by func_978037B3 0x978037B3: `mov d0, (func_978037B3_Var_8)`; func_978037B3_L83 0x97803836: `mov (func_978037B3_Var_8), d1` ...
+	.long	0
+func_97806366_Var:	# u32, initial value of a RAM variable; read / written by func_97806366 0x97806366: `mov d0, (func_97806366_Var)`; func_97806CC0_entry_L72 0x97806D37: `mov (func_97806366_Var), d1` ...
+	.long	0xffffffff
+func_97806366_Var_2:	# u32, initial value of a RAM variable; read / written by func_97806366 0x97806366: `mov d0, (func_97806366_Var_2)`; func_97806CC0_entry_L7f 0x97806D44: `mov (func_97806366_Var_2), d0` ...
+	.long	0
+func_97806F25_entry_Lcf_Var:	# u32, initial value of a RAM variable; read / written by func_97806F25_entry_Lcf 0x97806FF7: `mov d0, (func_97806F25_entry_Lcf_Var)`
+	.long	0
+
+func_97806F25_entry_L24_Table:	# 4 x u8, 0..255; read by func_97806F25_entry_L24 0x97806F4C: `movbu d0, (func_97806F25_entry_L24_Table)`
+	tab_u8	0, 255, 255, 255
 HDD_MAIN_MENU_window:
 	.space	4, 0xFF
 BackGnd2_ScreenMenu_SETUP_TOOLS_selected:
@@ -12396,14 +13267,17 @@ BackGnd2_ScreenMenu_SELECT_C_L_S_selected:
 SELECT_NUMBER_window:
 	.space	4, 0xFF
 LoadOptionWndLBNPg_page:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F2C, 0x0B3F30
 SETUP_TOOLS_window:
 	.space	4, 0xFF
 SET_TOOLS_PAGECTRL_page:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F34, 0x0B3F38
 SEPARATE_OUTPUT_MIXER_window:
 	.space	4, 0xFF
 SEPARATE_OUTPUT_MIXER_KssAudioOutput1_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F3C, 0x0B3F40
 SEPARATE_OUTPUT_MIXER_KssAudioOutput1_en_paradraw:
 	.space	4, 0x00
@@ -12428,6 +13302,7 @@ EXP_PEDAL2_selected:
 CUSTOM_LYRICS_window:
 	.space	4, 0xFF
 TlxSongName_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F6C, 0x0B3F70
 
 TlxInterpreter_str_adr:	.asciz "0\xD4P"
@@ -12438,6 +13313,7 @@ TlxBox_pEnable:
 	.space	4, 0x00
 TlxChord_str_adr:	.asciz "6\xD4P"
 CUSTOM_LYRICS_KssLabel_CUSTOM_LYRICS_CHORDS_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3F88, 0x0B3F8C
 HDD_FLS_SELECT_window:
 	.space	4, 0xFF
@@ -12450,6 +13326,7 @@ HDD_FLS_SELECT_ScreenMenu1_selected:
 CLS_Dir_List_str_adr:
 	.space	4, 0x00
 CLS_Dir_List_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FA0, 0x0B3FA4
 CLS_Dir_List_en_paradraw:
 	.space	4, 0x00
@@ -12458,8 +13335,10 @@ FILE_DEL_OPTIONS_window:
 FILE_DEL_OPTIONS_ScreenMenu_DELETE_selected:
 	.space	4, 0x00
 FileDelSetSfxBox_pulSelectable:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FB0, 0x0B3FB4
 FileDelSetSfxBox_pulYesNo:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FB4, 0x0B3FB8
 SORTED_LIST_window:
 	.space	4, 0xFF
@@ -12480,40 +13359,50 @@ SETUP_TOOL2_child:
 SETUP_TOOL2_ScreenMenu_ABOUT_HELP_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_1_selected:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FDC, 0x0B3FE0
 HDD_SETTOOLSPAR_1_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FE0, 0x0B3FE4
 HDD_SETTOOLSPAR_2_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_2_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FE8, 0x0B3FEC
 HDD_SETTOOLSPAR_3_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_3_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FF0, 0x0B3FF4
 HDD_SETTOOLSPAR_4_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_4_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B3FF8, 0x0B3FFC
 HDD_SETTOOLSPAR_5_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_5_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4000, 0x0B4004
 HDD_SETTOOLSPAR_6_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_6_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4008, 0x0B400C
 HDD_SETTOOLSPAR_7_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_7_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4010, 0x0B4014
 HDD_SETTOOLSPAR_8_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_8_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4018, 0x0B401C
 HDD_SETTOOLSPAR_12_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_12_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4020, 0x0B4024
 DATA_LINK_window:
 	.space	4, 0xFF
@@ -12526,18 +13415,24 @@ CUSTOM_LYRICS_OPTION_window:
 LyricsPassiveColor_selected:
 	.space	4, 0x00
 LyricsPassiveColor_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4038, 0x0B403C
 LyricsActiveColor_selected:
 	.space	4, 0x00
 LyricsActiveColor_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4040, 0x0B4044
 LyricsLoadMode_selected:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4044, 0x0B4048
 LyricsLoadMode_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4048, 0x0B404C
 CLPARA4_selected:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B404C, 0x0B4050
 CLPARA4_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4050, 0x0B4054
 PROTECT_OPTIONS_window:
 	.space	4, 0xFF
@@ -12562,6 +13457,7 @@ BigFont_DirSelect_window:
 DIR_SelectBig_str_adr:
 	.space	4, 0x00
 DIR_SelectBig_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4080, 0x0B4084
 DIR_SelectBig_en_paradraw:
 	.space	4, 0x00
@@ -12578,20 +13474,25 @@ BigFont_DirSelect_ScreenMenu3_selected:
 BigFont_FileSelect_window:
 	.space	4, 0xFF
 LoadOptionWndPgBF_page:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40A0, 0x0B40A4
 HELP_WORKSHOP_window:
 	.space	4, 0xFF
 HELP_WORKSHOP_KssXRegisterLine1_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40A8, 0x0B40AC
 HELP_WORKSHOP_KssXRegisterLine1_en_paradraw:
 	.space	4, 0x00
 ABOUT_HELP_window:
 	.space	4, 0xFF
 LabelHDSerialNo_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40B4, 0x0B40B8
 LabelHDParameter_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40B8, 0x0B40BC
 LabelHDModelNo_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40BC, 0x0B40C0
 LBN_1_parent:
 	.space	4, 0xFF
@@ -12618,10 +13519,12 @@ LBN_2_child:
 LoadOptionLBN_pulSelectable:
 	.space	4, 0x00
 LoadOptionLBN_pulYesNo:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40E8, 0x0B40EC
 SELECT_PLUG2_window:
 	.space	4, 0xFF
 SELECT_PLUG2_ListBox1_selected:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B40F0, 0x0B40F4
 SELECT_PLUG2_ScreenMenu_LOAD_selected:
 	.space	4, 0x00
@@ -12684,28 +13587,33 @@ KSS_EDIT_NAME_WND_KssNamingEditSw25_page:
 KSS_EDIT_NAME_WND_KssNamingEditSw26_page:
 	.space	4, 0x00
 KSS_EDIT_NAME_WND_IndexToggle_ABC_onoff:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B416C, 0x0B4170
 KSS_EDIT_NAME_WND_IndexToggle_123_onoff:
 	.space	4, 0x00
 KSS_EDIT_NAME_WND_IndexPushSw1_sw:
 	.space	4, 0x00
 KssCursBox_cursor:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4178, 0x0B417C
 HDD_SAVE_OPTIONS_window:
 	.space	4, 0xFF
 FileSaveSetSfxBox_pulSelectable:
 	.space	4, 0x00
 FileSaveSetSfxBox_pulYesNo:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4184, 0x0B4188
 ALPHA_SORTED_LIST_window:
 	.space	4, 0xFF
 ALPHA_SORTED_LIST_KssxAlphabetBox1_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B418C, 0x0B4190
 ALPHA_SORTED_LIST_KssxAlphabetBox1_en_paradraw:
 	.space	4, 0x00
 ALPHA_SORTED_LIST_HamaAlphabeticFileList1_str_adr:
 	.space	4, 0x00
 ALPHA_SORTED_LIST_HamaAlphabeticFileList1_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4198, 0x0B419C
 ALPHA_SORTED_LIST_HamaAlphabeticFileList1_en_paradraw:
 	.space	4, 0x00
@@ -12728,6 +13636,7 @@ JUKE_BOX_ScreenMenu7_selected:
 JUKE_BOX_ScreenMenu8_selected:
 	.space	4, 0x00
 JUKE_BOX_KssxJukeBox1_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B41C4, 0x0B41C8
 JUKE_BOX_KssxJukeBox1_en_paradraw:
 	.space	4, 0x00
@@ -12742,12 +13651,15 @@ FILE_SELECT_WIN1_parent:
 FILE_SELECT_WIN1_child:
 	.space	4, 0xFF
 SelectedDirInFile_sel_num:
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B41E0, 0x0B41E2
 SelectedDirInFile_sel_dir:
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B41E2, 0x0B41E4
 SelectedDirInFile_paintok:
 	.space	4, 0x00
 SelectedDirInFile_aicok:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B41E8, 0x0B41EC
 WP_OBJ_DELDIR_selected:
 	.space	4, 0x00
@@ -12758,8 +13670,10 @@ FILE_SELECT_WIN2_parent:
 FILE_SELECT_WIN2_child:
 	.space	4, 0xFF
 FileLoadSetSfxBox_pulSelectable:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B41FC, 0x0B4200
 FileLoadSetSfxBox_pulYesNo:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4200, 0x0B4204
 FILE_SELECT_WIN2_KssAcActualDFStrBox1_paintok:
 	.space	4, 0x00
@@ -12784,16 +13698,20 @@ TestUSBPPScreen_window:
 HDD_FILE_SELECT_window:
 	.space	4, 0xFF
 LoadOptionWndPg_page:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4230, 0x0B4234
 HDD_DIR_SELECT_window:
 	.space	4, 0xFF
 SelectedDirectory_sel_num:
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4238, 0x0B423A
 SelectedDirectory_sel_area:
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B423A, 0x0B423C
 SelectedDirectory_paintok:
 	.space	4, 0x00
 SelectedDirectory_aicok:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4240, 0x0B4244
 HDD_DIR_SELECT_ScreenMenu_OK_selected:
 	.space	4, 0x00
@@ -12810,18 +13728,23 @@ HDD_DIR_NAMING_window:
 CP_HD_SELDIR_window:
 	.space	4, 0xFF
 SelectedCopyDest_sel_num:
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4260, 0x0B4262
 SelectedCopyDest_sel_area:
+# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4262, 0x0B4264
 SelectedCopyDest_paintok:
 	.space	4, 0x00
 SelectedCopyDest_aicok:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4268, 0x0B426C
 COPY_FD_TO_HDD_window:
 	.space	4, 0xFF
 CP_FD_LIST_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4270, 0x0B4274
 CP_FD_LIST_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4274, 0x0B4278
 CP_FD_LIST_en_paradraw:
 	.space	4, 0x00
@@ -12834,6 +13757,7 @@ ScrBut_EditFLS_selected:
 CLS_FILE_BOX_str_adr:
 	.space	4, 0x00
 CLS_FILE_BOX_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B428C, 0x0B4290
 CLS_FILE_BOX_en_paradraw:
 	.space	4, 0x00
@@ -12846,6 +13770,7 @@ CLS_EDIT_ScreenMenu_SEARCH_selected:
 CLS_EDIT_BOX_str_adr:
 	.space	4, 0x00
 CLS_EDIT_BOX_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B42A4, 0x0B42A8
 CLS_EDIT_BOX_en_paradraw:
 	.space	4, 0x00
@@ -12856,6 +13781,7 @@ CLS_DIR_SEL_ScreenMenu_OK_selected:
 SelectedFLSDest_str_adr:
 	.space	4, 0x00
 SelectedFLSDest_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B42B8, 0x0B42BC
 SelectedFLSDest_en_paradraw:
 	.space	4, 0x00
@@ -12866,6 +13792,7 @@ FLSLink_selected:
 FlsFileList_str_adr:
 	.space	4, 0x00
 FlsFileList_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B42CC, 0x0B42D0
 FlsFileList_en_paradraw:
 	.space	4, 0x00
@@ -12940,6 +13867,7 @@ PASSWORD_NAMING_NamingEditSw26_page:
 PASSWORD_NAMING_CursorBox1_cursor:
 	.space	4, 0xFF
 PASSWORD_NAMING_IndexToggle_ABC_onoff:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4360, 0x0B4364
 PASSWORD_NAMING_IndexToggle_123_onoff:
 	.space	4, 0x00
@@ -12978,6 +13906,7 @@ CP_SMF_HDD_window:
 CP_SMF_SelectList_str_adr:
 	.space	4, 0x00
 CP_SMF_SelectList_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B43AC, 0x0B43B0
 CP_SMF_SelectList_en_paradraw:
 	.space	4, 0x00
@@ -13000,22 +13929,27 @@ WP_OBJ_FRMTHD_selected:
 HDD_SETTOOLSPAR_9_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_9_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B43D8, 0x0B43DC
 HDD_SETTOOLSPAR_10_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_10_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B43E0, 0x0B43E4
 HDD_SETTOOLSPAR_11_selected:
 	.space	4, 0x00
 HDD_SETTOOLSPAR_11_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B43E8, 0x0B43EC
 SETUP_TOOL3_KssParaEditEntry1_selected:
 	.space	4, 0x00
 SETUP_TOOL3_KssParaEditEntry1_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B43F0, 0x0B43F4
 SETUP_TOOL3_KssParaEditEntry2_selected:
 	.space	4, 0x00
 SETUP_TOOL3_KssParaEditEntry2_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B43F8, 0x0B43FC
 JUKE_BOX_WIN_parent:
 	.space	4, 0xFF
@@ -13028,6 +13962,7 @@ BigFileFont_Win1_child:
 File_SelectBig_str_adr:
 	.space	4, 0x00
 File_SelectBig_sel_num:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4410, 0x0B4414
 File_SelectBig_en_paradraw:
 	.space	4, 0x00
@@ -13046,10 +13981,13 @@ NewClsScreen_window:
 NewClsSfx_selected:
 	.space	4, 0xFF
 NewClsList_extension:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4434, 0x0B4438
 NewClsNameLabel_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B4438, 0x0B443C
 NewClsLocationLabel_str_adr:
+# census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B443C, 0x0B4440
 PleaseWait_Win_parent:
 	.space	4, 0xFF
@@ -13089,121 +14027,143 @@ PleaseWait_Win_RotStrBox1_paintok:
 		AcFuncEditSw	WP_OBJ_SaveFileBF, super=BigFileFont_Win1, sub=WP_OBJ_SaveFileBF_StrBox_SAVE_TITLE, next=BigFileFont_Win1_IndexEditSw4, prev=BigFileFont_Win1_Label_LOAD, flag=VF_Invisible, X=530, Y=212, W=100, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Right5, func=FN_CheckWetherPlaceIsFree
 			VwStrBox	WP_OBJ_SaveFileBF_StrBox_SAVE_TITLE, super=WP_OBJ_SaveFileBF, X=538, Y=214, W=92, H=19, color=CL_Transparent, index=0xFFFF, font=5, fontcolor=CL_Red, str=Str_SAVE_TITLE_2	# str "SAVE TITLE"
 		AcFuncEditSw	WP_OBJ_DelDirBF, super=BigFileFont_Win1, sub=WP_OBJ_DelDirBF_Label_DEL_DIR, prev=BigFileFont_Win1_IndexEditSw6, flag=VF_Invisible, X=10, Y=32, W=100, H=22, color=CL_Transparent, border=BD_3D_UP1, index=0xFFFF, font=4, fontcolor=CL_Black, editsw=ES_Left1, func=FN_CheckWetherPlaceIsFull
-data_97910C14:
-	.space	1, 0x00
-data_97910C15:
-	.space	1, 0x00
-data_97910C16:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4A9A, 0x0B4A9C
-data_97910C18:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4A9C, 0x0B4A9E
-data_97910C1A:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4A9E, 0x0B4AA0
-data_97910C1C:
-	.space	2, 0x00
-data_97910C1E:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AA2, 0x0B4AA4
-data_97910C20:
-	.space	4, 0x00
-data_97910C24:
-	.space	4, 0x00
-data_97910C28:
-	.space	4, 0x00
-data_97910C2C:
-	.space	4, 0x00
+
+KSSPsDirBoxProc_L9e6_Var:	# u8, initial value of a RAM variable; read / written by KSSPsDirBoxProc_L9e6 0x9780BA09: `movbu (KSSPsDirBoxProc_L9e6_Var), d0`; KSSPsDirBoxProc_L9e6 0x9780BA09: `movbu d0, (KSSPsDirBoxProc_L9e6_Var)` ...
+	.byte	0
+KSSPsDirBoxProc_L9e6_Var_2:	# u8, initial value of a RAM variable; read / written by KSSPsDirBoxProc_L9e6 0x9780BA09: `movbu d1, (KSSPsDirBoxProc_L9e6_Var_2)`; KSSPsDirBoxProc_La5e 0x9780BA81: `movbu (KSSPsDirBoxProc_L9e6_Var_2), d0` ...
+	.byte	0
+KSSPsDirBoxProc_L9e6_Var_3:	# s16, initial value of a RAM variable; read / written by KSSPsDirBoxProc_L9e6 0x9780BA09: `movhu (KSSPsDirBoxProc_L9e6_Var_3), d2`; KSSPsDirBoxProc_La5e 0x9780BA81: `movhu (KSSPsDirBoxProc_L9e6_Var_3), d0` ...
+	.word	1
+KSSPsFileBoxProc_Lc88_Var:	# s16, initial value of a RAM variable; read / written by KSSPsFileBoxProc_Lc88 0x9780D86D: `movhu (KSSPsFileBoxProc_Lc88_Var), d0`; KSSPsFileBoxProc_Lda9 0x9780D98E: `movhu (KSSPsFileBoxProc_Lc88_Var), d0` ...
+	.word	1
+KSSPsFileBoxProc_Lc67_Var:	# s16, initial value of a RAM variable; read / written by KSSPsFileBoxProc_Lc67 0x9780D84C: `movhu (KSSPsFileBoxProc_Lc67_Var), d0`; KSSPsFileBoxProc_Lc88 0x9780D86D: `movhu (KSSPsFileBoxProc_Lc67_Var), d0` ...
+	.word	1
+KSSPsDirBoxProc_L6f8_Var:	# s16, initial value of a RAM variable; read / written by KSSPsDirBoxProc_L6f8 0x9780B71B: `movhu (KSSPsDirBoxProc_L6f8_Var), d0`; KSSPsDirBoxProc_L706 0x9780B729: `movhu (KSSPsDirBoxProc_L6f8_Var), d0` ...
+	.word	0
+
+KSSPsDirBoxProc_L6eb_Table:	# 2 x u8, 1..255; read by KSSPsDirBoxProc_L6eb 0x9780B70E: `movbu (KSSPsDirBoxProc_L6eb_Table), d0`; KSSPsFileBoxProc_L74f 0x9780D334: `movbu (KSSPsDirBoxProc_L6eb_Table), d0`
+	tab_u8	1, 255
+
+KssCOMM_DISPProc_L1d0_Var:	# u32, initial value of a RAM variable; read / written by KssCOMM_DISPProc_L1d0 0x9781DC06: `mov (KssCOMM_DISPProc_L1d0_Var), d0`; KssCatch_USBPP_Leb 0x9781E01D: `mov (KssCOMM_DISPProc_L1d0_Var), d0` ...
+	.long	0
+KssInitialWaitProc_L193_Var:	# u32, initial value of a RAM variable; read / written by KssInitialWaitProc_L193 0x97812872: `mov d0, (KssInitialWaitProc_L193_Var)`; KssCOMM_DISPProc_L239 0x9781DC6F: `mov (KssInitialWaitProc_L193_Var), d0` ...
+	.long	0
+KssInitialWaitProc_L193_Var_2:	# u32, initial value of a RAM variable; read / written by KssInitialWaitProc_L193 0x97812872: `mov d0, (KssInitialWaitProc_L193_Var_2)`; KssCOMM_DISPProc_L345 0x9781DD7B: `mov (KssInitialWaitProc_L193_Var_2), d0` ...
+	.long	0
+KssTimerShowProc_L68_Var:	# u32, initial value of a RAM variable; read / written by KssTimerShowProc_L68 0x9781199B: `mov (KssTimerShowProc_L68_Var), d0`; KssTimerShowProc_Ld02 0x97812635: `mov d0, (KssTimerShowProc_L68_Var)` ...
+	.long	0
 
 Str_empty_394:	.asciz "                              "
 	.align	4, 0x00	# pad after Str_empty_394
-data_97910C50:
-	.space	2, 0x00
-data_97910C52:
-	.align	4, 0x00
-data_97910C54:
-	.space	4, 0x00
-data_97910C58:
-	.space	4, 0x00
-data_97910C5C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AE0, 0x0B4AE4
-data_97910C60:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AE4, 0x0B4AE8
-data_97910C64:
-	.space	4, 0x00
-data_97910C68:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AEC, 0x0B4AF0
-data_97910C6C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AF0, 0x0B4AF4
-data_97910C70:
-	.space	1, 0x02
-data_97910C71:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AF5, 0x0B4AF8
-data_97910C74:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AF8, 0x0B4AFC
-data_97910C78:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4AFC, 0x0B4B00
-data_97910C7C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B00, 0x0B4B04
-data_97910C80:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B04, 0x0B4B08
-data_97910C84:
-	.space	4, 0x00
-data_97910C88:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B0C, 0x0B4B10
-data_97910C8C:
-	.space	2, 0x00
-data_97910C8E:
-	.align	4, 0x00
-data_97910C90:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B14, 0x0B4B18
-data_97910C94:
-	.space	4, 0x00
-data_97910C98:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B1C, 0x0B4B20
-data_97910C9C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B20, 0x0B4B24
-data_97910CA0:
-	.space	4, 0x00
-data_97910CA4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B28, 0x0B4B2A
-data_97910CA6:
-	.align	4, 0x00
-data_97910CA8:
-	.space	2, 0x00
-data_97910CAA:
-	.align	4, 0x00
-data_97910CAC:
-	.space	4, 0x00
-data_97910CB0:
-	.space	1, 0x01
-data_97910CB1:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B35, 0x0B4B38
-data_97910CB4:
-	.space	4, 0x00
-data_97910CB8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B3C, 0x0B4B40
-data_97910CBC:
-	.space	4, 0x00
-data_97910CC0:
-	.space	4, 0x00
-data_97910CC4:
-	.space	4, 0x00
-data_97910CC8:
-	.space	4, 0x00
-data_97910CCC:
-	.space	4, 0x00
-data_97910CD0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B54, 0x0B4B58
-data_97910CD4:
-	.space	4, 0x00
-data_97910CD8:
-	.space	4, 0x00
-data_97910CDC:
-	.space	1, 0x00
-data_97910CDD:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4B61, 0x0B4B64
+
+func_9781BF69_entry_Lf5_Var:	# u16, initial value of a RAM variable; read / written by func_9781BF69_entry_Lf5 0x9781C061: `movhu (func_9781BF69_entry_Lf5_Var), d0`; func_9781BF69_entry_L117 0x9781C083: `movhu (func_9781BF69_entry_Lf5_Var), d0`
+	.word	0
+func_9781BF69_entry_Lf5_Var_2:	# u16, initial value of a RAM variable; read / written by func_9781BF69_entry_Lf5 0x9781C061: `movhu (func_9781BF69_entry_Lf5_Var_2), d0`; func_9781BF69_entry_Lf5 0x9781C061: `movhu d1, (func_9781BF69_entry_Lf5_Var_2)` ...
+	.word	0
+KssTimerShowProc_L746_Var:	# u32, initial value of a RAM variable; read / written by KssTimerShowProc_L746 0x97812079: `mov (KssTimerShowProc_L746_Var), d1`; KssTimerShowProc_L982 0x978122B5: `mov (KssTimerShowProc_L746_Var), d0` ...
+	.long	0
+KssTimerShowProc_L448_Var:	# u32, initial value of a RAM variable; read / written by KssTimerShowProc_L448 0x97811D7B: `mov (KssTimerShowProc_L448_Var), d0`; KssTimerShowProc_L4fa 0x97811E2D: `mov (KssTimerShowProc_L448_Var), d0` ...
+	.long	0
+KssTimerShowProc_Lb9d_Var:	# u32, initial value of a RAM variable; read / written by KssTimerShowProc_Lb9d 0x978124D0: `mov (KssTimerShowProc_Lb9d_Var), d1`; KssCatch_FormatBox_L69b 0x978130E5: `mov d0, (KssTimerShowProc_Lb9d_Var)` ...
+	.long	2
+KssTimerShowProc_L448_Var_2:	# u32, initial value of a RAM variable; read / written by KssTimerShowProc_L448 0x97811D7B: `mov (KssTimerShowProc_L448_Var_2), d0`; KssCatch_FormatBox_L69b 0x978130E5: `mov d0, (KssTimerShowProc_L448_Var_2)` ...
+	.long	1
+KSSPsDirBoxProc_Ld3c_Var:	# u32, initial value of a RAM variable; read / written by KSSPsDirBoxProc_Ld3c 0x9780BD5F: `mov d0, (KSSPsDirBoxProc_Ld3c_Var)`; KSSPsFileBoxProc_L266 0x9780CE4B: `mov (KSSPsDirBoxProc_Ld3c_Var), d0` ...
+	.long	0
+KssLoadSaveDel_DISPProc_L280_Var:	# u32, initial value of a RAM variable; read / written by KssLoadSaveDel_DISPProc_L280 0x97818016: `mov d0, (KssLoadSaveDel_DISPProc_L280_Var)`; func_9781F001_entry_L3b 0x9781F03F: `mov (KssLoadSaveDel_DISPProc_L280_Var), d0`
+	.long	0x2007f
+KssLoadSaveDel_DISPProc_L280_Var_2:	# u32, initial value of a RAM variable; read / written by KssLoadSaveDel_DISPProc_L280 0x97818016: `mov d0, (KssLoadSaveDel_DISPProc_L280_Var_2)`; func_9781F001_entry_L3b 0x9781F03F: `mov (KssLoadSaveDel_DISPProc_L280_Var_2), d0`
+	.long	127
+KssLoadSaveDel_DISPProc_L280_Var_3:	# u8, initial value of a RAM variable; read / written by KssLoadSaveDel_DISPProc_L280 0x97818016: `movbu d0, (KssLoadSaveDel_DISPProc_L280_Var_3)`; func_9781F001_entry_L3b 0x9781F03F: `movbu (KssLoadSaveDel_DISPProc_L280_Var_3), d0`
+	.byte	2
+
+func_9780AA01_Table:	# 3 x u8, 0..255; read by func_9780AA01 0x9780AA01: `movbu (func_9780AA01_Table), d0`; func_9780AA01_L11 0x9780AA12: `movbu (func_9780AA01_Table), d0` ...
+	tab_u8	0, 255, 255
+
+KssLoadSaveDel_DISPProc_L280_Var_4:	# u32, initial value of a RAM variable; read / written by KssLoadSaveDel_DISPProc_L280 0x97818016: `mov (KssLoadSaveDel_DISPProc_L280_Var_4), d0`; func_9781EA5D_entry_L1c0 0x9781EC20: `mov d0, (KssLoadSaveDel_DISPProc_L280_Var_4)` ...
+	.long	127
+func_9781F001_entry_L25_Var:	# u32, initial value of a RAM variable; read / written by func_9781F001_entry_L25 0x9781F029: `mov d0, (func_9781F001_entry_L25_Var)`; func_9781F001_entry_L3b 0x9781F03F: `mov d0, (func_9781F001_entry_L25_Var)` ...
+	.long	0x2007f
+
+KssLoadSaveDel_DISPProc_L280_Table:	# 4 x u8, 2..255; read by KssLoadSaveDel_DISPProc_L280 0x97818016: `movbu (KssLoadSaveDel_DISPProc_L280_Table), d0`; func_9781F001_entry_L3b 0x9781F03F: `movbu d0, (KssLoadSaveDel_DISPProc_L280_Table)` ...
+	tab_u8	2, 255, 255, 255
+KssInitialWaitProc_Lee_Table:	# 4 x u8, 0..255; read by KssInitialWaitProc_Lee 0x978127CD: `movbu d0, (KssInitialWaitProc_Lee_Table)`; KssInitialWaitProc_L17f 0x9781285E: `movbu d0, (KssInitialWaitProc_Lee_Table)` ...
+	tab_u8	0, 255, 255, 255
+
+Debug_Wind_RW_L10f_Var:	# u32, initial value of a RAM variable; read / written by Debug_Wind_RW_L10f 0x9780AC03: `mov (Debug_Wind_RW_L10f_Var), d0`; Debug_Wind_RW_L10f 0x9780AC03: `mov d0, (Debug_Wind_RW_L10f_Var)` ...
+	.long	0
+func_97810A48_Var:	# u32, initial value of a RAM variable; read / written by func_97810A48 0x97810A48: `mov d0, (func_97810A48_Var)`
+	.long	0x770000
+KssPsWarnBoxProc_L74_Var:	# u16, initial value of a RAM variable; read / written by KssPsWarnBoxProc_L74 0x9780FF6A: `movhu (KssPsWarnBoxProc_L74_Var), d0`; func_97810A48_entry_L11 0x97810A5C: `movhu d0, (KssPsWarnBoxProc_L74_Var)`
+	.word	0
+KssPsWarnBoxProc_L3ea_Var:	# u16, initial value of a RAM variable; read / written by KssPsWarnBoxProc_L3ea 0x978102E0: `movhu (KssPsWarnBoxProc_L3ea_Var), d0`; func_97810A48_entry_L21 0x97810A6C: `movhu d0, (KssPsWarnBoxProc_L3ea_Var)`
+	.word	0
+
+KssPsWarnBoxProc_L74b_Table_2:	# 2 x u16, 0..65535; read by KssPsWarnBoxProc_L74b 0x97810641: `movhu (KssPsWarnBoxProc_L74b_Table_2), d0`; func_97810A48_entry_L31 0x97810A7C: `movhu d0, (KssPsWarnBoxProc_L74b_Table_2)`
+	tab_u16	0, 65535
+
+func_97810A48_entry_L39_Var:	# u32, initial value of a RAM variable; read / written by func_97810A48_entry_L39 0x97810A84: `mov d0, (func_97810A48_entry_L39_Var)`
+	.long	0
+func_97811734_Var:	# u32, initial value of a RAM variable; read / written by func_97811734 0x97811734: `mov d0, (func_97811734_Var)`; KssCatch_AskBox_Lb5 0x97811868: `mov (func_97811734_Var), d0`
+	.long	0x770000
+func_97811734_Var_2:	# u32, initial value of a RAM variable; read / written by func_97811734 0x97811734: `mov d0, (func_97811734_Var_2)`; KssCatch_AskBox_L146 0x978118F9: `mov (func_97811734_Var_2), d0`
+	.long	0x770000
+func_97811734_Var_3:	# u32, initial value of a RAM variable; read / written by func_97811734 0x97811734: `mov d0, (func_97811734_Var_3)`; KssCatch_AskBox_Lb5 0x97811868: `mov (func_97811734_Var_3), d1`
+	.long	0
+
+func_97811734_Table:	# 2 x u8, 0..255; read by func_97811734 0x97811734: `movbu d0, (func_97811734_Table)`; KssCatch_AskBox_La9 0x9781185C: `movbu (func_97811734_Table), d0` ...
+	tab_u8	0, 255
+
+KssPsAskBoxProc_L74_Var:	# u16, initial value of a RAM variable; read / written by KssPsAskBoxProc_L74 0x97810C4A: `movhu (KssPsAskBoxProc_L74_Var), d0`; func_97811734_entry_L2a 0x97811761: `movhu d0, (KssPsAskBoxProc_L74_Var)`
+	.word	0
+KssPsAskBoxProc_L3ea_Var:	# u16, initial value of a RAM variable; read / written by KssPsAskBoxProc_L3ea 0x97810FC0: `movhu (KssPsAskBoxProc_L3ea_Var), d0`; func_97811734_entry_L3a 0x97811771: `movhu d0, (KssPsAskBoxProc_L3ea_Var)`
+	.word	0
+KssPsAskBoxProc_L751_Var:	# u16, initial value of a RAM variable; read / written by KssPsAskBoxProc_L751 0x97811327: `movhu (KssPsAskBoxProc_L751_Var), d0`; func_97811734_entry_L4a 0x97811781: `movhu d0, (KssPsAskBoxProc_L751_Var)`
+	.word	0
+func_97811734_entry_L52_Var:	# u32, initial value of a RAM variable; read / written by func_97811734_entry_L52 0x97811789: `mov d0, (func_97811734_entry_L52_Var)`
+	.long	0
+func_97817C21_Var:	# u8, initial value of a RAM variable; read / written by func_97817C21 0x97817C21: `movbu d0, (func_97817C21_Var)`; KssLoadSaveDel_DISPProc_L1a3 0x97817F39: `movbu (func_97817C21_Var), d0`
+	.byte	1
+
+KssCatch_AskBox_Le1_Table:	# 3 x u8, 0..255; read by KssCatch_AskBox_Le1 0x97811894: `movbu d0, (KssCatch_AskBox_Le1_Table)`; KssCatch_AskBox_L10a 0x978118BD: `movbu d0, (KssCatch_AskBox_Le1_Table)` ...
+	tab_u8	0, 255, 255
+
+KssTimerShowProc_L107_Var:	# u32, initial value of a RAM variable; read / written by KssTimerShowProc_L107 0x97811A3A: `mov (KssTimerShowProc_L107_Var), d0`; KssTimerShowProc_L113 0x97811A46: `mov d0, (KssTimerShowProc_L107_Var)` ...
+	.long	0
+
+KssInitialWaitProc_L17f_Table:	# 4 x u8, 0..255; read by KssInitialWaitProc_L17f 0x9781285E: `movbu (KssInitialWaitProc_L17f_Table), d0`; KssTitleFunc_L152 0x978217E5: `movbu (KssInitialWaitProc_L17f_Table), d0` ...
+	tab_u8	0, 255, 255, 255
+
+func_97821B96_Var:	# u32, initial value of a RAM variable; read / written by func_97821B96 0x97821B96: `mov (func_97821B96_Var), d0`; func_97821B96_entry_L21 0x97821BBA: `mov (func_97821B96_Var), d0` ...
+	.long	0
+KssCatch_LBNEntryBox_L683_Var:	# u32, initial value of a RAM variable; read / written by KssCatch_LBNEntryBox_L683 0x97813D8A: `mov d0, (KssCatch_LBNEntryBox_L683_Var)`; KssCatch_LBNEntryBox_L6db 0x97813DE2: `mov (KssCatch_LBNEntryBox_L683_Var), d0` ...
+	.long	0
+KssCatch_LBNEntryBox_L480_Var:	# u32, initial value of a RAM variable; read / written by KssCatch_LBNEntryBox_L480 0x97813B87: `mov (KssCatch_LBNEntryBox_L480_Var), d0`; KssCatch_LBNEntryBox_L683 0x97813D8A: `mov d0, (KssCatch_LBNEntryBox_L480_Var)` ...
+	.long	0
+KssParaEditEntryProc_L54b_Var:	# u32, initial value of a RAM variable; read / written by KssParaEditEntryProc_L54b 0x9781504F: `mov d0, (KssParaEditEntryProc_L54b_Var)`; KssParaEditEntryProc_L55d 0x97815061: `mov d0, (KssParaEditEntryProc_L54b_Var)` ...
+	.long	0
+KssParaEditEntryProc_Laf_Var:	# u32, initial value of a RAM variable; read / written by KssParaEditEntryProc_Laf 0x97814BB3: `mov (KssParaEditEntryProc_Laf_Var), d0`; KssParaEditEntryProc_L437 0x97814F3B: `mov d0, (KssParaEditEntryProc_Laf_Var)` ...
+	.long	0
+
+CheckCPActionCatch_L95_Table:	# 4 x u8, 0..255; read by CheckCPActionCatch_L95 0x9781ACC5: `movbu (CheckCPActionCatch_L95_Table), d0`; CheckCPActionCatch_Lfe 0x9781AD2E: `movbu (CheckCPActionCatch_L95_Table), d0` ...
+	tab_u8	0, 255, 255, 255
+
+KssFileSfx_DISPProc_L4e_Var:	# u32, initial value of a RAM variable; read / written by KssFileSfx_DISPProc_L4e 0x9781E3A0: `mov (KssFileSfx_DISPProc_L4e_Var), d0`; KssFileSfx_DISPProc_Lc1 0x9781E413: `mov (KssFileSfx_DISPProc_L4e_Var), d0` ...
+	.long	0
+KssFileSfx_DISPProc_L4e_Var_2:	# u32, initial value of a RAM variable; read / written by KssFileSfx_DISPProc_L4e 0x9781E3A0: `mov (KssFileSfx_DISPProc_L4e_Var_2), d1`; KssFileSfx_DISPProc_Lcd 0x9781E41F: `mov (KssFileSfx_DISPProc_L4e_Var_2), d0` ...
+	.long	0
+KssSetSfx_DISPProc_L5f4_Var:	# u8, initial value of a RAM variable; read / written by KssSetSfx_DISPProc_L5f4 0x9781F68A: `movbu (KssSetSfx_DISPProc_L5f4_Var), d0`; KssSetSfx_DISPProc_L5f4 0x9781F68A: `movbu d0, (KssSetSfx_DISPProc_L5f4_Var)` ...
+	.byte	0
+
+KssSetSfx_DISPProc_L698_Table:	# 3 x u8, 0..255; read by KssSetSfx_DISPProc_L698 0x9781F72E: `movbu (KssSetSfx_DISPProc_L698_Table), d0`; KssSetSfx_DISPProc_L698 0x9781F72E: `movbu d0, (KssSetSfx_DISPProc_L698_Table)` ...
+	tab_u8	0, 255, 255
+
 Str_empty_393:	.asciz "                "
 	.align	4, 0xFF	# pad after Str_empty_393
-data_97910CF4:
-	.space	8, 0x00
+
+KSSXCatch_FlsLink_L68_Table:	# 2 x u32, 0..0; read by KSSXCatch_FlsLink_L68 0x978299E8: `mov d0, (KSSXCatch_FlsLink_L68_Table)`; KSSCLSFileListProc_L11a 0x97829CBF: `mov (KSSXCatch_FlsLink_L68_Table), d0` ...
+	tab_u32	0, 0
+
 Str_empty_392:	.asciz "                           "
 Str_empty_391:	.asciz "                           "
 Str_empty_390:	.asciz "                           "
@@ -13212,54 +14172,61 @@ Str_empty_388:	.asciz "                           "
 Str_empty_387:	.asciz "                           "
 Str_empty_386:	.asciz "                           "
 Str_empty_385:	.asciz "                           "
-data_97910DDC:
-	.space	4, 0x00
-data_97910DE0:
-	.space	1, 0x7F
-data_97910DE1:
-	.space	1, 0x7F
-data_97910DE2:
-	.space	1, 0x7F
-data_97910DE3:
-	.align	4, 0x7F
-data_97910DE4:
-	.space	1, 0x00
-data_97910DE5:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4C69, 0x0B4C6C
-data_97910DE8:
-	.space	4, 0x00
-data_97910DEC:
-	.space	4, 0x00
-data_97910DF0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4C74, 0x0B4C7C
-data_97910DF8:
-	.space	4, 0x00
-data_97910DFC:
-	.space	4, 0x00
-data_97910E00:
-	.space	4, 0x00
-data_97910E04:
-	.space	4, 0x00
-data_97910E08:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4C8C, 0x0B4C90
-data_97910E0C:
-	.space	4, 0x00
-data_97910E10:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4C94, 0x0B4C98
-data_97910E14:
-	.space	8, 0x00
 
-ptrs_97910E1C:
-	.long	Str_FONT_color_red_size_1_LOAD_SAVE_DELETE_S
-	.long	Str_You_can_use_the_same_disk_now_also_to_in
-	.long	Str_Since_the_actual_lyrics_function_is_very
-	.long	Str_For_loading_or_copy_new_TLX_files_just_p
-	.long	Str_Unfortunately_the_description_of_the_DEL
-	.long	Str_Because_this_is_also_a_direct_HDD_access
-	.long	Str_BR_FONT_color_red_Attention_FONT_CAUTION
+HamaSelectListProc_L821_Var:	# u32, initial value of a RAM variable; read / written by HamaSelectListProc_L821 0x9782EB21: `mov d0, (HamaSelectListProc_L821_Var)`; HamaSelectFileListProc_L218 0x9782F00C: `movhu (HamaSelectListProc_L821_Var), d0` ...
 	.long	0
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B4CC0, 0x0B5194
-	.space	172, 0x00
+func_97826E5A_entry_L3e_Var:	# u8, initial value of a RAM variable; read / written by func_97826E5A_entry_L3e 0x97826E9B: `movbu d0, (func_97826E5A_entry_L3e_Var)`; func_97826E5A_entry_L48 0x97826EA5: `movbu d0, (func_97826E5A_entry_L3e_Var)` ...
+	.byte	127
+func_97826E5A_entry_L64_Var:	# u8, initial value of a RAM variable; read / written by func_97826E5A_entry_L64 0x97826EC1: `movbu d0, (func_97826E5A_entry_L64_Var)`; func_97826E5A_entry_L6e 0x97826ECB: `movbu d0, (func_97826E5A_entry_L64_Var)` ...
+	.byte	127
+func_978270CB_entry_Lfd_Var:	# u8, initial value of a RAM variable; read / written by func_978270CB_entry_Lfd 0x978271CB: `movbu d0, (func_978270CB_entry_Lfd_Var)`; func_978270CB_entry_L107 0x978271D5: `movbu d0, (func_978270CB_entry_Lfd_Var)`
+	.byte	127
+func_978270CB_entry_L11a_Var:	# u8, initial value of a RAM variable; read / written by func_978270CB_entry_L11a 0x978271E8: `movbu d0, (func_978270CB_entry_L11a_Var)`; func_978270CB_entry_L124 0x978271F2: `movbu d0, (func_978270CB_entry_L11a_Var)`
+	.byte	127
+func_978237D9_Var:	# u8, initial value of a RAM variable; read / written by func_978237D9 0x978237D9: `movbu d0, (func_978237D9_Var)`; KssCopyFdToHD_DISPProc_L65 0x9782388E: `movbu (func_978237D9_Var), d0` ...
+	.byte	0
+
+func_978246FC_Table:	# 3 x u8, 0..255; read by func_978246FC 0x978246FC: `movbu d0, (func_978246FC_Table)`; KssCopySmfFdToHD_DISPProc_L65 0x978247B1: `movbu (func_978246FC_Table), d0` ...
+	tab_u8	0, 255, 255
+
+KssCopySmfFdToHD_DISPProc_L36b_Var:	# u32, initial value of a RAM variable; read / written by KssCopySmfFdToHD_DISPProc_L36b 0x97824AB7: `mov (KssCopySmfFdToHD_DISPProc_L36b_Var), d0`; func_978251C6_entry_L53 0x9782521E: `mov d0, (KssCopySmfFdToHD_DISPProc_L36b_Var)` ...
+	.long	0
+func_97825707_Var:	# u32, initial value of a RAM variable; read / written by func_97825707 0x97825707: `mov d0, (func_97825707_Var)`; KssAudioOutputProc_L460 0x97825B7B: `mov (func_97825707_Var), d0` ...
+	.long	0
+
+func_97825707_Table:	# 2 x u32, 0..1; read by func_97825707 0x97825707: `mov d0, (func_97825707_Table)`; KssAudioOutputProc_L4ce 0x97825BE9: `mov (func_97825707_Table), d0` ...
+	tab_u32	1, 0
+
+KssCatch_NewClsScreen_L62_Var:	# u32, initial value of a RAM variable; read / written by KssCatch_NewClsScreen_L62 0x97827EEC: `mov (KssCatch_NewClsScreen_L62_Var), d0`; KssCatch_NewClsScreen_Lc9 0x97827F53: `mov (KssCatch_NewClsScreen_L62_Var), d0` ...
+	.long	0
+KSSCLSFileListProc_L183_Var:	# u32, initial value of a RAM variable; read / written by KSSCLSFileListProc_L183 0x97829D28: `mov d0, (KSSCLSFileListProc_L183_Var)`; KSSCLSFileListProc_L230 0x97829DD5: `mov (KSSCLSFileListProc_L183_Var), d0` ...
+	.long	0
+KSSCLSFileListProc_L183_Var_2:	# u32, initial value of a RAM variable; read / written by KSSCLSFileListProc_L183 0x97829D28: `mov (KSSCLSFileListProc_L183_Var_2), d0`; KSSCLSFileListProc_L261 0x97829E06: `mov (KSSCLSFileListProc_L183_Var_2), d0` ...
+	.long	0
+HamaAlphabeticFileListProc_L6f6_Var:	# u32, initial value of a RAM variable; read / written by HamaAlphabeticFileListProc_L6f6 0x9782D316: `mov d0, (HamaAlphabeticFileListProc_L6f6_Var)`; HamaAlphabeticFileListProc_L81f 0x9782D43F: `mov (HamaAlphabeticFileListProc_L6f6_Var), d0` ...
+	.long	0
+
+HamaSelectListProc_L3c9_Table:	# 2 x u16, 0..65535; read by HamaSelectListProc_L3c9 0x9782E6C9: `movhu (HamaSelectListProc_L3c9_Table), d1`; HamaSelectListProc_L3c9 0x9782E6C9: `movhu (HamaSelectListProc_L3c9_Table), d2` ...
+	tab_u16	0, 65535
+
+HamaSelectFileListProc_L1e7_Var:	# u32, initial value of a RAM variable; read / written by HamaSelectFileListProc_L1e7 0x9782EFDB: `mov (HamaSelectFileListProc_L1e7_Var), d0`; HamaSelectFileListProc_L1f3 0x9782EFE7: `mov d0, (HamaSelectFileListProc_L1e7_Var)` ...
+	.long	0
+KssTextProc_Le6_Var:	# u32, initial value of a RAM variable; read / written by KssTextProc_Le6 0x97830558: `mov d0, (KssTextProc_Le6_Var)`; KssTextProc_L147 0x978305B9: `mov (KssTextProc_Le6_Var), d0` ...
+	.long	1
+
+func_97830A01_Table:	# 2 x u32, 0..0; read by func_97830A01 0x97830A01: `mov (func_97830A01_Table), d0`; func_97830A01_entry_L2e 0x97830A34: `mov d0, (func_97830A01_Table)`
+	tab_u32	0, 0
+
+func_97833B38_entry_L34_Records:	# 9 x REC_func_97833B38_entry_L34_Records (160 bytes each); read by func_97833B38_entry_L34 0x97833B71 `mov (d0, a0), d0`; func_97833B38_entry_L59 0x97833B96 `mov (d0, a0), a0`; func_97833B38_entry_L59 0x97833B96 `mov (d0, a0), a1`
+	REC_func_97833B38_entry_L34_Records	2542423736, 2542424183, 2542424511, 2542424893, 2542425097, 2542425210, 2542425570, 0, 0, 0, 2542425845, 2542426253, 2542426506, 2542426780, 2542426899, 2542427342, 2542427650, 2542427822, 0, 0, 2542428036, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542428224, 2542428667, 2542429000, 2542429400, 2542429602, 2542429700, 2542429988, 0, 0, 0	# [0]
+	REC_func_97833B38_entry_L34_Records	2542430169, 2542430675, 0, 0, 0, 0, 0, 0, 0, 0, 2542430809, 2542431272, 0, 0, 0, 0, 0, 0, 0, 0, 2542431440, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542431599, 2542432088, 0, 0, 0, 0, 0, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	2542432224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542432609, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542433038, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542433202, 0, 0, 0, 0, 0, 0, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	2542433572, 2542434047, 2542434294, 2542434740, 2542434986, 2542435304, 2542435747, 0, 0, 0, 2542436193, 2542436695, 2542437114, 2542437374, 2542437713, 2542438118, 2542438425, 2542438817, 0, 0, 2542439164, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542439321, 2542439814, 2542440244, 2542440493, 2542440806, 2542441238, 2542441675, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	2542441815, 2542442275, 2542442607, 2542443074, 0, 0, 0, 0, 0, 0, 2542443265, 2542443722, 2542444138, 2542444420, 2542444709, 2542445022, 0, 0, 0, 0, 2542445191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542445347, 2542445790, 2542445962, 2542446283, 0, 0, 0, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	2542446472, 2542446818, 2542447088, 0, 0, 0, 0, 0, 0, 0, 2542447195, 2542447539, 2542447792, 0, 0, 0, 0, 0, 0, 0, 2542447935, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542448112, 2542448457, 2542448722, 0, 0, 0, 0, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	2542448828, 2542449256, 2542449627, 2542450032, 2542450389, 0, 0, 0, 0, 0, 2542450438, 2542450850, 2542451285, 2542451567, 2542451881, 2542452257, 0, 0, 0, 0, 2542452315, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2542452489, 2542452922, 2542453293, 2542453698, 2542454055, 0, 0, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	2542454104, 2542454563, 2542454783, 2542455159, 2542455537, 2542455926, 2542456315, 2542456618, 0, 0, 2542456808, 2542457308, 2542457438, 2542457774, 2542458259, 2542458510, 2542458759, 2542459092, 2542459511, 0, 2542459905, 2542460140, 2542460474, 2542460850, 2542461240, 2542461550, 0, 0, 0, 0, 2542461740, 2542462121, 2542462483, 2542462863, 2542463239, 2542463629, 2542463939, 0, 0, 0
+	REC_func_97833B38_entry_L34_Records	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [8]
 
 names_979113BC:
 	.long	Str_sp, 32
@@ -13391,116 +14358,130 @@ names_979113BC:
 	.long	Str_yacute, 253
 	.long	Str_thorn, 254
 	.long	Str_yuml, 255
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B5648, 0x0B5650
-data_979117CC:
-	.space	4, 0x00
+	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
+	.long	Str_text_2
+	.long	0
 
-func_97834719_Table:	# 34 x u32, 0..2542465398; read by func_97834719_entry : `mov	(d0, a0), a0`; func_97834719_entry : `mov	(d0, a0), a1`
-	tab_u32	2542465368, 3, 2541962156, 2542465373, 1, 2541962142, 2542465375, 2	# [0]
-	tab_u32	2541962114, 2542465378, 0, 2541961865, 2542465381, 0, 2541961865, 2542465384	# [8]
-	tab_u32	0, 2541961865, 2542465387, 0, 2541961865, 2542465390, 0, 2541961865	# [16]
-	tab_u32	2542465393, 0, 2541961865, 2542465396, 3, 2541961861, 2542465398, 0	# [24]
-	tab_u32	0, 0	# [32]
-data_97911858:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B56DC, 0x0B56E0
-data_9791185C:
-	.space	4, 0x00
-data_97911860:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B56E4, 0x0B56EC
-data_97911868:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B56EC, 0x0B56F0
-data_9791186C:
-	.space	4, 0x00
-data_97911870:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B56F4, 0x0B56F8
-data_97911874:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B56F8, 0x0B56FC
-data_97911878:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B56FC, 0x0B5708
-data_97911884:
-	.space	1, 0x00
-data_97911885:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B5709, 0x0B570C
-data_97911888:
-	.space	4, 0x00
-data_9791188C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B5710, 0x0B5714
-data_97911890:
-	.space	4, 0x00
-data_97911894:
-	.space	4, 0x00
-data_97911898:
-	.space	2, 0x00
-data_9791189A:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B571E, 0x0B5720
-data_9791189C:
-	.space	4, 0x00
-data_979118A0:
-	.space	4, 0x00
-data_979118A4:
-	.space	4, 0x00
-data_979118A8:
-	.space	4, 0x00
-data_979118AC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B5730, 0x0B5734
-data_979118B0:
-	.space	4, 0xFF
-data_979118B4:
-	.space	4, 0x00
-data_979118B8:
-	.space	4, 0x00
-data_979118BC:
-	.space	4, 0x00
-data_979118C0:
-	.space	4, 0xFF
-data_979118C4:
-	.space	4, 0xFF
-data_979118C8:
-	.space	4, 0x00
-data_979118CC:
-	.space	2, 0x00
-data_979118CE:
-	.space	1, 0x00
-data_979118CF:
-	.align	4, 0x00
-data_979118D0:
-	.space	1, 0x00
-data_979118D1:
-	.space	1, 0x00
-data_979118D2:
-	.space	1, 0x00
-data_979118D3:
-	.align	4, 0x00
-data_979118D4:
-	.space	1, 0x00
-data_979118D5:
-	.space	1, 0x00
-data_979118D6:
-	.space	1, 0x00
-data_979118D7:
-	.align	4, 0x00
-data_979118D8:
-	.space	1, 0x00
-data_979118D9:
-	.space	1, 0x00
-data_979118DA:
-	.space	1, 0x00
-data_979118DB:
-	.align	4, 0x00
-data_979118DC:
-	.space	1, 0x00
-data_979118DD:
-	.space	1, 0x00
-data_979118DE:
-	.space	1, 0x00
-data_979118DF:
-	.align	4, 0x00
-data_979118E0:
-	.space	4, 0x00
-data_979118E4:
-	.space	4, 0x00
-data_979118E8:
-	.space	4, 0x00
+func_978341C0_Var:	# u32, initial value of a RAM variable; read / written by func_978341C0 0x978341C0: `mov (func_978341C0_Var), d0`; func_978341C0_entry_L71 0x97834234: `mov d0, (func_978341C0_Var)`
+	.long	0
+
+func_97834719_Table:	# 12 x REC_func_97834719_Table (12 bytes each); read by func_97834719_entry_L2a 0x97834745 `mov (d0, a0), a1`; func_97834719_entry_L58 0x97834773 `mov (d0, a0), a0`; func_9783403D 0x9783403D `call func_97834109_entry, 0, 0x18` (+1)
+	REC_func_97834719_Table	p0=Str_FONT, x4="\x03\x00\x00\x00", p8=func_978343AC	# [0]
+	REC_func_97834719_Table	p0=Str_P_4, x4="\x01\x00\x00\x00", p8=loc_9783439E
+	REC_func_97834719_Table	p0=Str_BR, x4="\x02\x00\x00\x00", p8=loc_97834382
+	REC_func_97834719_Table	p0=Str_H1, x4="\x00\x00\x00\x00", p8=loc_97834289
+	REC_func_97834719_Table	p0=Str_H2, x4="\x00\x00\x00\x00", p8=loc_97834289
+	REC_func_97834719_Table	p0=Str_H3, x4="\x00\x00\x00\x00", p8=loc_97834289
+	REC_func_97834719_Table	p0=Str_H4, x4="\x00\x00\x00\x00", p8=loc_97834289
+	REC_func_97834719_Table	p0=Str_H5, x4="\x00\x00\x00\x00", p8=loc_97834289
+	REC_func_97834719_Table	p0=Str_H6, x4="\x00\x00\x00\x00", p8=loc_97834289	# [8]
+	REC_func_97834719_Table	p0=func_97834719_Table_p0_0, x4="\x03\x00\x00\x00", p8=loc_97834285
+	REC_func_97834719_Table	p0=Str_empty_395, x4="\x00\x00\x00\x00"
+	REC_func_97834719_Table	x4="\x18\xF4\x8A\x97"
+
+func_978355D3_L266_Table:	# 4 x s16, -1..4; read by func_978355D3_L266 0x97835839: `movhu (func_978355D3_L266_Table), d1`
+	tab_s16	4, -1, 3, 0
+
+func_978355D3_Lc0_Var:	# u32, initial value of a RAM variable; read / written by func_978355D3_Lc0 0x97835693: `mov (func_978355D3_Lc0_Var), d0`; func_978355D3_Lce 0x978356A1: `mov (func_978355D3_Lc0_Var), d0`
+	.long	5
+func_978355D3_L284_Var:	# u32, initial value of a RAM variable; read / written by func_978355D3_L284 0x97835857: `mov (func_978355D3_L284_Var), d0`; func_978355D3_L401 0x978359D4: `mov (func_978355D3_L284_Var), d0` ...
+	.long	0
+func_978355D3_Lda_Var:	# u32, initial value of a RAM variable; read / written by func_978355D3_Lda 0x978356AD: `mov (func_978355D3_Lda_Var), d0`; func_978355D3_L72c 0x97835CFF: `mov d0, (func_978355D3_Lda_Var)` ...
+	.long	3
+func_978355D3_L284_Var_2:	# u32, initial value of a RAM variable; read / written by func_978355D3_L284 0x97835857: `mov (func_978355D3_L284_Var_2), d0`; func_978355D3_L284 0x97835857: `mov (func_978355D3_L284_Var_2), d1` ...
+	.long	6
+
+func_978355D3_L5c4_Table:	# 3 x u32, 0..1; read by func_978355D3_L5c4 0x97835B97: `mov (func_978355D3_L5c4_Table), d1`; func_978355D3_L624 0x97835BF7: `mov (func_978355D3_L5c4_Table), d1` ...
+	tab_u32	1, 0, 0
+
+func_97839D3B_L1e_Var:	# u8, initial value of a RAM variable; read / written by func_97839D3B_L1e 0x97839D59: `movbu (func_97839D3B_L1e_Var), d0`; func_97839D3B_L47 0x97839D82: `movbu (func_97839D3B_L1e_Var), d0` ...
+	.byte	0
+
+func_97839E68_entry_L32_Table:	# 3 x u8, 0..255; read by func_97839E68_entry_L32 0x97839E9D: `movbu d0, (func_97839E68_entry_L32_Table)`; func_97839E68_entry_L3c 0x97839EA7: `movbu d0, (func_97839E68_entry_L32_Table)`
+	tab_u8	0, 255, 255
+
+func_97839D3B_Var:	# u32, initial value of a RAM variable; read / written by func_97839D3B 0x97839D3B: `mov d0, (func_97839D3B_Var)`
+	.long	0
+func_978392F9_L1e_Var:	# u32, initial value of a RAM variable; read / written by func_978392F9_L1e 0x97839317: `mov d0, (func_978392F9_L1e_Var)`; func_978395CA 0x978395CA: `mov (func_978392F9_L1e_Var), d0` ...
+	.long	1
+func_9783959D_Var:	# u32, initial value of a RAM variable; read / written by func_9783959D 0x9783959D: `mov (func_9783959D_Var), d0`; func_9783959D_entry_L19 0x978395B9: `mov d0, (func_9783959D_Var)` ...
+	.long	0
+func_97839570_Var:	# u32, initial value of a RAM variable; read / written by func_97839570 0x97839570: `mov (func_97839570_Var), d0`; func_97839570_entry_L19 0x9783958C: `mov d0, (func_97839570_Var)` ...
+	.long	0
+func_978392A2_Var:	# u16, initial value of a RAM variable; read / written by func_978392A2 0x978392A2: `movhu (func_978392A2_Var), d0`; func_978392A2 0x978392A2: `movhu d0, (func_978392A2_Var)`
+	.word	0
+func_978392A2_Var_2:	# u16, initial value of a RAM variable; read / written by func_978392A2 0x978392A2: `movhu d0, (func_978392A2_Var_2)`
+	.word	1024
+func_978392A2_Var_3:	# u32, initial value of a RAM variable; read / written by func_978392A2 0x978392A2: `mov d0, (func_978392A2_Var_3)`
+	.long	0
+func_978392F9_L1e_Var_2:	# u32, initial value of a RAM variable; read / written by func_978392F9_L1e 0x97839317: `mov d0, (func_978392F9_L1e_Var_2)`; func_978392F9_L51 0x9783934A: `mov d0, (func_978392F9_L1e_Var_2)` ...
+	.long	0
+func_978392F9_L1e_Var_3:	# u32, initial value of a RAM variable; read / written by func_978392F9_L1e 0x97839317: `mov d0, (func_978392F9_L1e_Var_3)`; func_978392F9_L51 0x9783934A: `mov d0, (func_978392F9_L1e_Var_3)` ...
+	.long	0
+func_978392F9_Var:	# u32, initial value of a RAM variable; read / written by func_978392F9 0x978392F9: `mov d0, (func_978392F9_Var)`; func_97839372_L19 0x9783938B: `mov (func_978392F9_Var), d0` ...
+	.long	0
+func_978392F9_Var_2:	# u32, initial value of a RAM variable; read / written by func_978392F9 0x978392F9: `mov d0, (func_978392F9_Var_2)`; func_97839372_L38 0x978393AA: `mov (func_978392F9_Var_2), d0` ...
+	.long	1
+
+func_978392F9_L1e_Table:	# 4 x u8, 255..255; read by func_978392F9_L1e 0x97839317: `movbu d0, (func_978392F9_L1e_Table)`; func_978392F9_L51 0x9783934A: `movbu d0, (func_978392F9_L1e_Table)` ...
+	tab_u8	255, 255, 255, 255
+
+func_9783A3F5_Var:	# u32, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `mov d0, (func_9783A3F5_Var)`
+	.long	0
+func_9783A3F5_Var_2:	# u32, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `mov d0, (func_9783A3F5_Var_2)`; func_9783BB6D 0x9783BB6D: `mov d0, (func_9783A3F5_Var_2)` ...
+	.long	0
+func_9783BAEA_Var:	# u32, initial value of a RAM variable; read / written by func_9783BAEA 0x9783BAEA: `mov d0, (func_9783BAEA_Var)`; func_9783BB0D 0x9783BB0D: `mov (func_9783BAEA_Var), d0`
+	.long	0
+func_9783A475_entry_L20c_Var:	# u32, initial value of a RAM variable; read / written by func_9783A475_entry_L20c 0x9783A684: `mov d0, (func_9783A475_entry_L20c_Var)`; func_9783A475_entry_L354 0x9783A7CC: `mov d0, (func_9783A475_entry_L20c_Var)` ...
+	.long	0xffffffff
+func_9783A475_entry_L20c_Var_2:	# u32, initial value of a RAM variable; read / written by func_9783A475_entry_L20c 0x9783A684: `mov d0, (func_9783A475_entry_L20c_Var_2)`; func_9783A475_entry_L354 0x9783A7CC: `mov d0, (func_9783A475_entry_L20c_Var_2)` ...
+	.long	0xffffffff
+func_9783A3EC_Var:	# u32, initial value of a RAM variable; read / written by func_9783A3EC 0x9783A3EC: `mov (func_9783A3EC_Var), d0`; func_9783A475_entry_L20c 0x9783A684: `mov d0, (func_9783A3EC_Var)` ...
+	.long	0
+func_9783BAF5_Var:	# u16, initial value of a RAM variable; read / written by func_9783BAF5 0x9783BAF5: `movhu d0, (func_9783BAF5_Var)`; func_9783BB3E 0x9783BB3E: `movhu (func_9783BAF5_Var), d0` ...
+	.word	0
+func_9783A3F5_Var_3:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_3)`
+	.byte	0
+func_9783A3F5_Var_4:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_4)`
+	.byte	0
+func_9783A3F5_Var_5:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_5)`
+	.byte	0
+func_9783AA10_entry_L58_Var:	# u8, initial value of a RAM variable; read / written by func_9783AA10_entry_L58 0x9783AA6D: `movbu d0, (func_9783AA10_entry_L58_Var)`; func_9783AA10_entry_L94 0x9783AAA9: `movbu d0, (func_9783AA10_entry_L58_Var)` ...
+	.byte	0
+func_9783A3F5_Var_6:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_6)`; func_9783BB6D 0x9783BB6D: `movbu (func_9783A3F5_Var_6), d0` ...
+	.byte	0
+func_9783A3F5_Var_7:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_7)`
+	.byte	0
+func_9783A3F5_Var_8:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_8)`; func_9783BD14_L29 0x9783BD3D: `movbu (func_9783A3F5_Var_8), d0` ...
+	.byte	0
+func_9783A3F5_Var_9:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_9)`; func_9783BD14_L41 0x9783BD55: `movbu (func_9783A3F5_Var_9), d0` ...
+	.byte	0
+func_9783A3F5_Var_10:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_10)`; func_9783BD14_L5f 0x9783BD73: `movbu (func_9783A3F5_Var_10), d0` ...
+	.byte	0
+func_9783A3F5_Var_11:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_11)`; func_9783BDE9 0x9783BDE9: `movbu (func_9783A3F5_Var_11), d0` ...
+	.byte	0
+func_9783A3F5_Var_12:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_12)`; func_9783BE85 0x9783BE85: `movbu (func_9783A3F5_Var_12), d0` ...
+	.byte	0
+func_9783A3F5_Var_13:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_13)`; func_9783BE17 0x9783BE17: `movbu (func_9783A3F5_Var_13), d0` ...
+	.byte	0
+func_9783A3F5_Var_14:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_14)`; func_9783BB0D 0x9783BB0D: `movbu (func_9783A3F5_Var_14), d0` ...
+	.byte	0
+func_9783A3F5_Var_15:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_15)`; func_9783BDFF 0x9783BDFF: `movbu (func_9783A3F5_Var_15), d0` ...
+	.byte	0
+func_9783A3F5_Var_16:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_16)`; func_9783BC09 0x9783BC09: `movbu (func_9783A3F5_Var_16), d0` ...
+	.byte	0
+func_9783A3F5_Var_17:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_17)`; func_9783BC7F 0x9783BC7F: `movbu (func_9783A3F5_Var_17), d0` ...
+	.byte	0
+func_9783A3F5_Var_18:	# u8, initial value of a RAM variable; read / written by func_9783A3F5 0x9783A3F5: `movbu d0, (func_9783A3F5_Var_18)`; func_9783BC1A 0x9783BC1A: `movbu (func_9783A3F5_Var_18), d0` ...
+	.byte	0
+func_9783A3CE_Var:	# u8, initial value of a RAM variable; read / written by func_9783A3CE 0x9783A3CE: `movbu d0, (func_9783A3CE_Var)`; func_9783A3DA 0x9783A3DA: `movbu (func_9783A3CE_Var), d0`
+	.byte	0
+func_9783B74D_Var:	# u32, initial value of a RAM variable; read / written by func_9783B74D 0x9783B74D: `mov (func_9783B74D_Var), d0`; func_9783B816_entry_Le9 0x9783B903: `mov d0, (func_9783B74D_Var)` ...
+	.long	0
+func_9783DC78_L12_Var:	# u32, initial value of a RAM variable; read / written by func_9783DC78_L12 0x9783DC8A: `mov (func_9783DC78_L12_Var), d0`; func_9783DC78_L12 0x9783DC8A: `mov d1, (func_9783DC78_L12_Var)`
+	.long	0
+func_9780011C_entry_L4a_Var:	# u32, initial value of a RAM variable; read / written by func_9780011C_entry_L4a 0x97800169: `mov (func_9780011C_entry_L4a_Var), d0`; func_9780011C_entry_L4a 0x97800169: `mov d0, (func_9780011C_entry_L4a_Var)` ...
+	.long	0
 
 # 44 ApFunction procedures; a function id is (0x128 << 16) | its index (the names are the parallel table at slot 0x328)
 Module08_ApFunctions:
@@ -13595,6 +14576,7 @@ Module08_ApFunctionNames:
 	.long	FnName_KssXCustomLyricsSetupCatch
 	.long	FnName_KssCatch_NewClsScreen
 	.long	FnName_KssxCatch_ClsNotSaved
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B58D4, 0x0B58D8
 
 ClassFields_KssVwBox:
@@ -14357,6 +15339,7 @@ Module08_FunctionNames:
 	.long	FnName_KssXLyricsBoxProc
 	.long	FnName_LFDFileSelectProc
 	.long	FnName_AcRotStrBoxProc
+# census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B63A0, 0x0B63A4
 
 # 7 MainFunction procedures; a function id is (0x148 << 16) | its index (the names are the parallel table at slot 0x348)
@@ -14378,39 +15361,47 @@ Module08_MainFunctionNames:
 	.long	FnName_KssCopySMFToHDScreen
 	.long	FnName_SmfFilterFunc
 	.long	FnName_KssSelectListTestFunc
+# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0B63E0, 0x0B63E8
-data_97912564:
-	.space	4, 0x00
-data_97912568:
-	.space	4, 0x00
-data_9791256C:
-	.space	4, 0x00
-data_97912570:
-	.space	4, 0x00
-data_97912574:
-	.space	8, 0x00
-data_9791257C:
-	.space	4, 0x00
-data_97912580:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6404, 0x0B640C
-data_97912588:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B640C, 0x0B641C
-data_97912598:
-	.space	2, 0x00
-data_9791259A:
-	.align	4, 0x00
-data_9791259C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6420, 0x0B6424
-data_979125A0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6424, 0x0B6428
-data_979125A4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6428, 0x0B642C
-data_979125A8:
-	.space	4, 0x00
-data_979125AC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B6430, 0x0B6434
-data_979125B0:
-	.space	4, 0xFF
+
+func_97837743_L48f_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L48f 0x97837BD2: `mov (func_97837743_L48f_Var), d0`; func_97837743_L48f 0x97837BD2: `mov d0, (func_97837743_L48f_Var)`
+	.long	0
+func_97837743_L461_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L461 0x97837BA4: `mov d0, (func_97837743_L461_Var)`; func_97837743_L470 0x97837BB3: `mov (func_97837743_L461_Var), d0` ...
+	.long	0
+func_97837743_L58e_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L58e 0x97837CD1: `mov (func_97837743_L58e_Var), d0`; func_97837743_L58e 0x97837CD1: `mov d0, (func_97837743_L58e_Var)`
+	.long	0
+func_97837743_L50b_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L50b 0x97837C4E: `mov (func_97837743_L50b_Var), d0`; func_97837743_L50b 0x97837C4E: `mov d0, (func_97837743_L50b_Var)`
+	.long	0
+
+func_97837743_L603_Table:	# 2 x u32, 0..0; read by func_97837743_L603 0x97837D46: `mov (func_97837743_L603_Table), d0`; func_97837743_L603 0x97837D46: `mov d0, (func_97837743_L603_Table)`
+	tab_u32	0, 0
+
+func_97837743_L39b_Var:	# u32, initial value of a RAM variable; read / written by func_97837743_L39b 0x97837ADE: `mov (func_97837743_L39b_Var), d0`; func_97837743_L39b 0x97837ADE: `mov d0, (func_97837743_L39b_Var)`
+	.long	0
+
+func_97837D7C_entry_L118_Table:	# 2 x u32, 0..1; read by func_97837D7C_entry_L118 0x97837E99: `mov (func_97837D7C_entry_L118_Table), d0`; func_97837D7C_entry_L118 0x97837E99: `mov d0, (func_97837D7C_entry_L118_Table)`
+	tab_u32	0, 1
+KssParaEditEntryProc_L54b_Table:	# 4 x u32, 0..4294901760; read by KssParaEditEntryProc_L54b 0x9781504F: `mov d0, (KssParaEditEntryProc_L54b_Table)`; KssParaEditEntryProc_L55d 0x97815061: `mov d0, (KssParaEditEntryProc_L54b_Table)` ...
+	tab_u32	1, 0, 0, 4294901760
+
+KSSCLSFileListProc_L10ad_Var:	# u16, initial value of a RAM variable; read / written by KSSCLSFileListProc_L10ad 0x9782AC52: `movhu d0, (KSSCLSFileListProc_L10ad_Var)`; KSSCLSFileListProc_L15b8 0x9782B15D: `movhu (KSSCLSFileListProc_L10ad_Var), d0` ...
+	.word	0
+KSSCLSFileListProc_L92c_Var:	# u16, initial value of a RAM variable; read / written by KSSCLSFileListProc_L92c 0x9782A4D1: `movhu (KSSCLSFileListProc_L92c_Var), d1`; KSSCLSFileListProc_L10ad 0x9782AC52: `movhu d0, (KSSCLSFileListProc_L92c_Var)` ...
+	.word	0
+KssTitleFunc_Ld5_Var:	# u32, initial value of a RAM variable; read / written by KssTitleFunc_Ld5 0x97821768: `mov (KssTitleFunc_Ld5_Var), d0`; KSSCLSFileListProc_L491 0x9782A036: `mov (KssTitleFunc_Ld5_Var), d0` ...
+	.long	255
+KssLoadSaveDel_DISPProc_L1de6_Var:	# u32, initial value of a RAM variable; read / written by KssLoadSaveDel_DISPProc_L1de6 0x97819B7C: `mov (KssLoadSaveDel_DISPProc_L1de6_Var), d0`; KssLoadSaveDel_DISPProc_L1e11 0x97819BA7: `mov d0, (KssLoadSaveDel_DISPProc_L1de6_Var)` ...
+	.long	255
+KssTitleFunc_Le1_Var:	# u32, initial value of a RAM variable; read / written by KssTitleFunc_Le1 0x97821774: `mov (KssTitleFunc_Le1_Var), d0`; KssTitleFunc_Led 0x97821780: `mov d0, (KssTitleFunc_Le1_Var)` ...
+	.long	255
+KSSCLSFileListProc_Le71_Var:	# u32, initial value of a RAM variable; read / written by KSSCLSFileListProc_Le71 0x9782AA16: `mov d0, (KSSCLSFileListProc_Le71_Var)`; KSSCLSFileListProc_L1656 0x9782B1FB: `mov d0, (KSSCLSFileListProc_Le71_Var)` ...
+	.long	0
+
+func_978315A6_Table:	# 4 x u8, 0..255; read by func_978315A6 0x978315A6: `movbu d0, (func_978315A6_Table)`
+	tab_u8	0, 255, 255, 255
+
+KssXLyricsBoxProc_Lff_Var:	# u32, initial value of a RAM variable; read / written by KssXLyricsBoxProc_Lff 0x97830BA4: `mov d0, (KssXLyricsBoxProc_Lff_Var)`; KssXLyricsBoxProc_L128 0x97830BCD: `mov d0, (KssXLyricsBoxProc_Lff_Var)` ...
+	.long	0xffffffff
 
 func_97837D7C_Table:	# 18 x s8, 0..83; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
 	tab_s8	18, 1, 16, 0, 0, 0, 0, 8, 83, 75, 0, 16, 0, 1, 1, 2	# [0]
@@ -14430,30 +15421,33 @@ func_97837D7C_Table_5:	# 31 x s8, 0..118; read by func_97837D7C_entry : `movbu	(
 func_97837D7C_Table_6:	# 32 x s8, -1..88; read by func_97837D7C_entry : `movbu	(d0, a0), d0`; func_97838A05_entry : `movbu	(d0, a0), d1`
 	tab_s8	31, 3, 83, 0, 88, 0, 54, 0, 45, 0, 49, 0, 50, 0, 51, 0	# [0]
 	tab_s8	52, 0, 45, 0, 53, 0, 54, 0, 55, 0, 56, 0, 57, 0, 0, -1	# [16]
-data_9791264C:
-	.space	4, 0x00
-data_97912650:
-	.space	4, 0x00
-data_97912654:
-	.space	4, 0x00
-data_97912658:
-	.space	4, 0x00
-data_9791265C:
-	.space	4, 0x00
-data_97912660:
-	.space	4, 0x00
-func_97839FA8_Table:	# 16 x u16, 1..32768; read by func_97839FA8 : `movhu	(d0, a0), d0`; func_97839FF6 : `movhu	(d0, a0), d2`
+
+func_9783730D_Var:	# u32, initial value of a RAM variable; read / written by func_9783730D 0x9783730D: `mov (func_9783730D_Var), d0`; func_97837743_L22 0x97837765: `mov d0, (func_9783730D_Var)` ...
+	.long	0
+func_97838E82_L28_Var:	# u32, initial value of a RAM variable; read / written by func_97838E82_L28 0x97838EAA: `mov (func_97838E82_L28_Var), d0`; func_97838E82_Lae 0x97838F30: `mov (func_97838E82_L28_Var), d0` ...
+	.long	0
+func_97839056_L38_Var:	# u32, initial value of a RAM variable; read / written by func_97839056_L38 0x9783908E: `mov d0, (func_97839056_L38_Var)`
+	.long	0
+func_97838E82_L153_Var:	# u32, initial value of a RAM variable; read / written by func_97838E82_L153 0x97838FD5: `mov (func_97838E82_L153_Var), d0`; func_97839056_L38 0x9783908E: `mov d0, (func_97838E82_L153_Var)`
+	.long	0
+func_97838D88_Var:	# u32, initial value of a RAM variable; read / written by func_97838D88 0x97838D88: `mov (func_97838D88_Var), d0`; func_97838E82 0x97838E82: `mov (func_97838D88_Var), d0` ...
+	.long	0
+KssCatch_USBPP_L286_Var:	# u32, initial value of a RAM variable; read / written by KssCatch_USBPP_L286 0x9781E1B8: `mov (KssCatch_USBPP_L286_Var), d0`; func_9783A0FA 0x9783A0FA: `mov d0, (KssCatch_USBPP_L286_Var)`
+	.long	0
+
+func_97839FA8_Table:	# 16 x u16, 1..32768; read by func_97839FA8_L1c 0x97839FC4: `movhu	(d0, a0), d0`; func_97839FF6_L14 0x9783A00A: `movhu	(d0, a0), d1` ...
 	tab_u16	1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048	# [0]
 	tab_u16	4096, 8192, 16384, 32768	# [12]
-func_97839FA8_Table_2:	# 16 x u16, 32767..65534; read by func_97839FA8 : `movhu	(d0, a1), d2`
+func_97839FA8_Table_2:	# 16 x u16, 32767..65534; read by func_97839FA8_L32 0x97839FDA: `movhu	(d0, a1), d2`
 	tab_u16	65534, 65533, 65531, 65527, 65519, 65503, 65471, 65407, 65279, 65023, 64511, 63487	# [0]
 	tab_u16	61439, 57343, 49151, 32767	# [12]
 func_9783A02E_Table:	# 8 x u8, 1..128; read by func_9783A02E : `movbu	(d0, a0), d0`; func_9783A073_entry : `movbu	(d0, a0), d2`
 	tab_u8	1, 2, 4, 8, 16, 32, 64, 128
 func_9783A02E_Table_2:	# 8 x u8, 127..254; read by func_9783A02E : `movbu	(d0, a0), d0`
 	tab_u8	254, 253, 251, 247, 239, 223, 191, 127
-data_979126B4:
-	.space	4, 0x00
+
+func_978003E3_entry_L595_Var:	# u32, initial value of a RAM variable; read / written by func_978003E3_entry_L595 0x9780097B: `mov (func_978003E3_entry_L595_Var), a0`; func_97803C8A_entry_L110 0x97803D9D: `mov (func_978003E3_entry_L595_Var), a0` ...
+	.long	0
 
 Str_This_is_Test_data_for_initial:	.asciz "This is Test data for initial"
 	.align	4, 0xFF	# pad after Str_This_is_Test_data_for_initial

@@ -64,7 +64,7 @@ func_97800082_L17:
 	cmp	0, d1
 	ble	func_97800082_L32
 	mov	0x978b3e84, a0
-	mov	data_97910000, a1
+	mov	func_97805FD0_L26_Var, a1
 func_97800082_L2a:
 	mov	(a0), d0
 	inc4	a0
@@ -199,9 +199,9 @@ func_9780011C_entry_L4a:
 	mov	sp, a0
 	add	0x1c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	mov	-1, d0
 	jmp	func_9780011C_entry_L2c1
 func_9780011C_entry_L98:
@@ -281,9 +281,9 @@ func_9780011C_entry_L15b:
 	movbu	d0, (0x18, sp)
 	clr	d0
 	call	func_97803477_entry, 0, 0x14
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	mov	-3, d0
 	jmp	func_9780011C_entry_L2c1
 func_9780011C_entry_L183:
@@ -388,9 +388,9 @@ func_9780011C_entry_L261:
 	movbu	d0, (0x18, sp)
 	clr	d0
 	call	func_97803477_entry, 0, 0x14
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	mov	-5, d0
 	bra	func_9780011C_entry_L2c1
 func_9780011C_entry_L288:
@@ -409,9 +409,9 @@ func_9780011C_entry_L2a7:
 	mov	0xb, d0
 	clr	d1
 	call	func_978035DB, 0, 0
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	mov	-6, d0
 	bra	func_9780011C_entry_L2c1
 func_9780011C_entry_L2c0:
@@ -668,9 +668,9 @@ func_978003E3_entry_L29b:
 	mov	(0x3c, sp), d0
 	add	-0x14, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	jmp	func_978003E3_entry_L595
 func_978003E3_entry_L2b1:
 	movbu	(0x97912706), d0
@@ -1019,21 +1019,21 @@ func_978003E3_entry_L595:
 	mov	-1, d0
 	ret	0, 0
 	add	-0xc, sp
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x88, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x104, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x88, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x84, a0), a0
 	calls	(a0)
@@ -4441,15 +4441,15 @@ func_97802835_entry:
 	bne	func_97802835_entry_Lb
 	bra	func_97802835_entry_L40
 func_97802835_entry_Lb:
-	mov	(data_9791001C), d0
+	mov	(func_97802835_entry_Lb_Var), d0
 	cmp	0, d0
 	blt	func_97802835_entry_L17
 	bra	func_97802835_entry_L1e
 func_97802835_entry_L17:
 	clr	d0
-	mov	d0, (data_9791001C)
+	mov	d0, (func_97802835_entry_Lb_Var)
 func_97802835_entry_L1e:
-	mov	(data_9791001C), d0
+	mov	(func_97802835_entry_Lb_Var), d0
 	movbu	d0, (0xc, sp)
 	movbu	(0xc, sp), d0
 	call	func_97803C8A_entry, 0, 0x28
@@ -4458,11 +4458,11 @@ func_97802835_entry_L1e:
 	bra	func_97802835_entry_L40
 func_97802835_entry_L35:
 	mov	-1, d0
-	mov	d0, (data_9791001C)
+	mov	d0, (func_97802835_entry_Lb_Var)
 	clr	d0
 	bra	func_97802835_entry_L49
 func_97802835_entry_L40:
-	mov	(data_97910018), d0
+	mov	(func_97802835_entry_L40_Var), d0
 	asl	12, d0
 func_97802835_entry_L49:
 	ret	0, 0x10
@@ -4585,7 +4585,7 @@ func_97802884_entry_Lc0:
 func_97802884_entry_Lc9:
 	jmp	func_97802884_entry_L19f
 func_97802884_entry_Lcc:
-	mov	(data_9791000C), d0
+	mov	(func_97805FD0_L26_Var+12), d0
 	mov	(0x14, sp), a0
 	mov	d0, (a0)
 	clr	d0
@@ -4818,7 +4818,7 @@ func_97802A33_entry_Lc4:
 	bra	func_97802A33_entry_Ld8
 func_97802A33_entry_Lcc:
 	mov	(0x1c, sp), d0
-	mov	d0, (data_9791000C)
+	mov	d0, (func_97805FD0_L26_Var+12)
 	clr	d0
 	jmp	func_97802A33_entry_L2a4
 func_97802A33_entry_Ld8:
@@ -5224,7 +5224,7 @@ func_97802D58_entry_L81:
 	ret	[d2], 0x10
 
 func_97802DE1:
-	mov	(data_9791001C), d0
+	mov	(func_97802835_entry_Lb_Var), d0
 	ret	0, 0
 
 func_97802DEA:
@@ -5275,7 +5275,7 @@ func_97802DF3_entry_L45:
 	ret	0, 0x10
 
 func_97802E3E:
-	mov	(data_97910024), d0
+	mov	(func_97802E3E_Var), d0
 	cmp	0, d0
 	bne	func_97802E3E_Lc
 	bra	func_97802E3E_Lf
@@ -5531,32 +5531,32 @@ func_9780303B:
 	mov	d0, (8, sp)
 	mov	Str_Rdy_x_x_Drq_x_x_MasterFaults_lu, d0
 	mov	d0, (0xc, sp)
-	mov	(data_97910030), d0
+	mov	(func_9780303B_Var), d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910034), d0
+	mov	(func_9780303B_Var_2), d0
 	mov	d0, (0x14, sp)
-	mov	(data_97910038), d0
+	mov	(func_9780303B_Var_3), d0
 	mov	d0, (0x18, sp)
-	mov	(data_9791003C), d0
+	mov	(func_9780303B_Var_4), d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	mov	d0, (0x20, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x24, a0
 	call	func_9780AEBC_entry, 0, 0x14
 	mov	-1, d0
-	mov	d0, (data_97910030)
+	mov	d0, (func_9780303B_Var)
 	clr	d0
-	mov	d0, (data_97910034)
+	mov	d0, (func_9780303B_Var_2)
 	mov	-1, d0
-	mov	d0, (data_97910038)
+	mov	d0, (func_9780303B_Var_3)
 	clr	d0
-	mov	d0, (data_9791003C)
+	mov	d0, (func_9780303B_Var_4)
 	mov	-1, d0
-	mov	d0, (data_97910040)
+	mov	d0, (func_9780303B_Var_5)
 	clr	d0
-	mov	d0, (data_97910044)
+	mov	d0, (func_9780303B_Var_6)
 	ret	0, 0x58
 
 func_978030B2:
@@ -5586,22 +5586,22 @@ func_978030B2_entry_L2b:
 	bra	func_978030B2_entry_Lab
 func_978030B2_entry_L3a:
 	mov	(0x14, sp), d0
-	mov	(data_97910030), d1
+	mov	(func_9780303B_Var), d1
 	cmp	d1, d0
 	bcs	func_978030B2_entry_L47
 	bra	func_978030B2_entry_L4f
 func_978030B2_entry_L47:
 	mov	(0x14, sp), d0
-	mov	d0, (data_97910030)
+	mov	d0, (func_9780303B_Var)
 func_978030B2_entry_L4f:
 	mov	(0x14, sp), d0
-	mov	(data_97910034), d1
+	mov	(func_9780303B_Var_2), d1
 	cmp	d1, d0
 	bhi	func_978030B2_entry_L5c
 	bra	func_978030B2_entry_L64
 func_978030B2_entry_L5c:
 	mov	(0x14, sp), d0
-	mov	d0, (data_97910034)
+	mov	d0, (func_9780303B_Var_2)
 func_978030B2_entry_L64:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5609,14 +5609,14 @@ func_978030B2_entry_L64:
 	movbu	d0, (0x97913946)
 	clr	d0
 	call	func_97803477_entry, 0, 0x14
-	movbu	d0, (data_97910048)
+	movbu	d0, (func_978030B2_entry_L64_Table)
 	mov	sp, a0
 	mov	a0, d0
 	add	0x18, d0
 	mov	d0, (8, sp)
 	mov	Str_Error_u_2, d0
 	mov	d0, (0xc, sp)
-	movbu	(data_97910048), d0
+	movbu	(func_978030B2_entry_L64_Table), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
@@ -5626,22 +5626,22 @@ func_978030B2_entry_L64:
 	bra	func_978030B2_entry_L105
 func_978030B2_entry_Lab:
 	mov	(0x14, sp), d0
-	mov	(data_97910030), d1
+	mov	(func_9780303B_Var), d1
 	cmp	d1, d0
 	bcs	func_978030B2_entry_Lb8
 	bra	func_978030B2_entry_Lc0
 func_978030B2_entry_Lb8:
 	mov	(0x14, sp), d0
-	mov	d0, (data_97910030)
+	mov	d0, (func_9780303B_Var)
 func_978030B2_entry_Lc0:
 	mov	(0x14, sp), d0
-	mov	(data_97910034), d1
+	mov	(func_9780303B_Var_2), d1
 	cmp	d1, d0
 	bhi	func_978030B2_entry_Lcd
 	bra	func_978030B2_entry_Ld5
 func_978030B2_entry_Lcd:
 	mov	(0x14, sp), d0
-	mov	d0, (data_97910034)
+	mov	d0, (func_9780303B_Var_2)
 func_978030B2_entry_Ld5:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5686,22 +5686,22 @@ func_978031BD_L2e:
 	bra	func_978031BD_Lae
 func_978031BD_L3d:
 	mov	(0x14, sp), d0
-	mov	(data_97910038), d1
+	mov	(func_9780303B_Var_3), d1
 	cmp	d1, d0
 	bcs	func_978031BD_L4a
 	bra	func_978031BD_L52
 func_978031BD_L4a:
 	mov	(0x14, sp), d0
-	mov	d0, (data_97910038)
+	mov	d0, (func_9780303B_Var_3)
 func_978031BD_L52:
 	mov	(0x14, sp), d0
-	mov	(data_9791003C), d1
+	mov	(func_9780303B_Var_4), d1
 	cmp	d1, d0
 	bhi	func_978031BD_L5f
 	bra	func_978031BD_L67
 func_978031BD_L5f:
 	mov	(0x14, sp), d0
-	mov	d0, (data_9791003C)
+	mov	d0, (func_9780303B_Var_4)
 func_978031BD_L67:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5709,14 +5709,14 @@ func_978031BD_L67:
 	movbu	d0, (0x97913946)
 	clr	d0
 	call	func_97803477_entry, 0, 0x14
-	movbu	d0, (data_97910048)
+	movbu	d0, (func_978030B2_entry_L64_Table)
 	mov	sp, a0
 	mov	a0, d0
 	add	0x18, d0
 	mov	d0, (8, sp)
 	mov	Str_Error_u, d0
 	mov	d0, (0xc, sp)
-	movbu	(data_97910048), d0
+	movbu	(func_978030B2_entry_L64_Table), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
@@ -5726,22 +5726,22 @@ func_978031BD_L67:
 	bra	func_978031BD_L108
 func_978031BD_Lae:
 	mov	(0x14, sp), d0
-	mov	(data_97910038), d1
+	mov	(func_9780303B_Var_3), d1
 	cmp	d1, d0
 	bcs	func_978031BD_Lbb
 	bra	func_978031BD_Lc3
 func_978031BD_Lbb:
 	mov	(0x14, sp), d0
-	mov	d0, (data_97910038)
+	mov	d0, (func_9780303B_Var_3)
 func_978031BD_Lc3:
 	mov	(0x14, sp), d0
-	mov	(data_9791003C), d1
+	mov	(func_9780303B_Var_4), d1
 	cmp	d1, d0
 	bhi	func_978031BD_Ld0
 	bra	func_978031BD_Ld8
 func_978031BD_Ld0:
 	mov	(0x14, sp), d0
-	mov	d0, (data_9791003C)
+	mov	d0, (func_9780303B_Var_4)
 func_978031BD_Ld8:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5782,7 +5782,7 @@ func_978032C8_L28:
 	movbu	d0, (0x97913946)
 	clr	d0
 	call	func_97803477_entry, 0, 0x14
-	movbu	d0, (data_97910048)
+	movbu	d0, (func_978030B2_entry_L64_Table)
 	mov	-2, d0
 	jmp	func_978032C8_Lc7
 func_978032C8_L4c:
@@ -5805,22 +5805,22 @@ func_978032C8_L6e:
 	bra	func_978032C8_Lba
 func_978032C8_L7a:
 	mov	(0x10, sp), d0
-	mov	(data_97910040), d1
+	mov	(func_9780303B_Var_5), d1
 	cmp	d1, d0
 	bcs	func_978032C8_L87
 	bra	func_978032C8_L8f
 func_978032C8_L87:
 	mov	(0x10, sp), d0
-	mov	d0, (data_97910040)
+	mov	d0, (func_9780303B_Var_5)
 func_978032C8_L8f:
 	mov	(0x10, sp), d0
-	mov	(data_97910044), d1
+	mov	(func_9780303B_Var_6), d1
 	cmp	d1, d0
 	bhi	func_978032C8_L9c
 	bra	func_978032C8_La4
 func_978032C8_L9c:
 	mov	(0x10, sp), d0
-	mov	d0, (data_97910044)
+	mov	d0, (func_9780303B_Var_6)
 func_978032C8_La4:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5855,22 +5855,22 @@ func_97803392_L8:
 	bra	func_97803392_L7c
 func_97803392_L2f:
 	mov	(0x10, sp), d0
-	mov	(data_97910030), d1
+	mov	(func_9780303B_Var), d1
 	cmp	d1, d0
 	bcs	func_97803392_L3c
 	bra	func_97803392_L44
 func_97803392_L3c:
 	mov	(0x10, sp), d0
-	mov	d0, (data_97910030)
+	mov	d0, (func_9780303B_Var)
 func_97803392_L44:
 	mov	(0x10, sp), d0
-	mov	(data_97910034), d1
+	mov	(func_9780303B_Var_2), d1
 	cmp	d1, d0
 	bhi	func_97803392_L51
 	bra	func_97803392_L59
 func_97803392_L51:
 	mov	(0x10, sp), d0
-	mov	d0, (data_97910034)
+	mov	d0, (func_9780303B_Var_2)
 func_97803392_L59:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5878,7 +5878,7 @@ func_97803392_L59:
 	movbu	d0, (0x97913946)
 	clr	d0
 	call	func_97803477_entry, 0, 0x14
-	movbu	d0, (data_97910048)
+	movbu	d0, (func_978030B2_entry_L64_Table)
 	mov	-2, d0
 	bra	func_97803392_Le2
 func_97803392_L7c:
@@ -5889,22 +5889,22 @@ func_97803392_L7c:
 	bra	func_97803392_Lcb
 func_97803392_L8b:
 	mov	(0x10, sp), d0
-	mov	(data_97910030), d1
+	mov	(func_9780303B_Var), d1
 	cmp	d1, d0
 	bcs	func_97803392_L98
 	bra	func_97803392_La0
 func_97803392_L98:
 	mov	(0x10, sp), d0
-	mov	d0, (data_97910030)
+	mov	d0, (func_9780303B_Var)
 func_97803392_La0:
 	mov	(0x10, sp), d0
-	mov	(data_97910034), d1
+	mov	(func_9780303B_Var_2), d1
 	cmp	d1, d0
 	bhi	func_97803392_Lad
 	bra	func_97803392_Lb5
 func_97803392_Lad:
 	mov	(0x10, sp), d0
-	mov	d0, (data_97910034)
+	mov	d0, (func_9780303B_Var_2)
 func_97803392_Lb5:
 	mov	0x9806001e, d0
 	mov	6, d1
@@ -5988,7 +5988,7 @@ func_97803508_entry:
 	movbu	d0, (0x18, sp)
 	mov	-1, d0
 	mov	d0, (0xc, sp)
-	mov	(data_97910028), d0
+	mov	(func_97803508_Var), d0
 	cmp	0, d0
 	bne	func_97803508_entry_L13
 	bra	func_97803508_entry_L16
@@ -6005,7 +6005,7 @@ func_97803508_entry_L1f:
 	call	func_97803546_entry, 0, 0x4c
 	mov	d0, (0xc, sp)
 func_97803508_entry_L27:
-	mov	(data_97910028), d0
+	mov	(func_97803508_Var), d0
 	cmp	0, d0
 	bne	func_97803508_entry_L33
 	bra	func_97803508_entry_L36
@@ -6023,7 +6023,7 @@ func_97803546:
 func_97803546_entry:
 	movbu	d0, (0x54, sp)
 	clr	d0
-	mov	d0, (data_97910028)
+	mov	d0, (func_97803508_Var)
 	movbu	(0x54, sp), d0
 	call	func_97803972_entry, 0, 0x30
 	mov	d0, (0x14, sp)
@@ -6060,7 +6060,7 @@ func_97803546_entry_L57:
 	mov	0x979898fc, a0
 	call	func_97800A99_entry, [d2], 8
 	mov	1, d0
-	mov	d0, (data_97910028)
+	mov	d0, (func_97803508_Var)
 	clr	d0
 	bra	func_97803546_entry_L8f
 func_97803546_entry_L6d:
@@ -6083,17 +6083,17 @@ func_97803546_entry_L8f:
 func_978035DB:
 	movbu	d1, (0xc, sp)
 	mov	d0, (8, sp)
-	mov	d0, (data_97910050)
+	mov	d0, (func_978035DB_Var)
 	mov	d1, d0
-	movbu	d0, (data_97910054)
+	movbu	d0, (func_978035DB_Table)
 	ret	0, 0
 
 func_978035F0:
-	movbu	(data_97910054), d0
+	movbu	(func_978035DB_Table), d0
 	ret	0, 0
 
 func_978035F9:
-	mov	(data_97910050), d0
+	mov	(func_978035DB_Var), d0
 	ret	0, 0
 
 func_97803602:
@@ -6162,7 +6162,7 @@ func_97803602_entry_Lb6:
 	bra	func_97803602_entry_Lce
 func_97803602_entry_Lc2:
 	clr	d0
-	movbu	d0, (data_97910048)
+	movbu	d0, (func_978030B2_entry_L64_Table)
 	mov	(0x20, sp), d0
 	jmp	func_97803602_entry_L14b
 func_97803602_entry_Lce:
@@ -6279,18 +6279,18 @@ func_9780378F_L21:
 func_978037B3:
 	add	-0x8c, sp
 	clr	d0
-	mov	d0, (data_97910058)
+	mov	d0, (func_978037B3_Var)
 	mov	0xa, d0
-	mov	d0, (data_9791005C)
+	mov	d0, (func_978037B3_Var_2)
 	clr	d0
-	mov	d0, (data_97910060)
-	mov	d0, (data_97910064)
-	mov	d0, (data_97910068)
-	mov	d0, (data_9791006C)
+	mov	d0, (func_978037B3_Var_3)
+	mov	d0, (func_978037B3_Var_4)
+	mov	d0, (func_978037B3_Var_5)
+	mov	d0, (func_978037B3_Var_6)
 	mov	-0x1e, d0
-	mov	d0, (data_97910070)
+	mov	d0, (func_978037B3_Var_7)
 	clr	d0
-	mov	d0, (data_97910074)
+	mov	d0, (func_978037B3_Var_8)
 func_978037B3_L3b:
 	mov	1, d0
 	call	func_97803972_entry, 0, 0x30
@@ -6299,7 +6299,7 @@ func_978037B3_L3b:
 	beq	func_978037B3_L4a
 	bra	func_978037B3_L59
 func_978037B3_L4a:
-	mov	(data_97910060), d0
+	mov	(func_978037B3_Var_3), d0
 	cmp	0x7d0, d0
 	bcc	func_978037B3_L59
 	jmp	func_978037B3_L19e
@@ -6309,88 +6309,88 @@ func_978037B3_L59:
 	bne	func_978037B3_L61
 	bra	func_978037B3_L98
 func_978037B3_L61:
-	mov	(data_97910058), d0
+	mov	(func_978037B3_Var), d0
 	inc	d0
-	mov	d0, (data_97910058)
+	mov	d0, (func_978037B3_Var)
 	mov	(0x24, sp), d0
-	mov	(data_97910070), d1
+	mov	(func_978037B3_Var_7), d1
 	cmp	d1, d0
 	bgt	func_978037B3_L7b
 	bra	func_978037B3_L83
 func_978037B3_L7b:
 	mov	(0x24, sp), d0
-	mov	d0, (data_97910070)
+	mov	d0, (func_978037B3_Var_7)
 func_978037B3_L83:
 	mov	(0x24, sp), d0
-	mov	(data_97910074), d1
+	mov	(func_978037B3_Var_8), d1
 	cmp	d1, d0
 	blt	func_978037B3_L90
 	bra	func_978037B3_L98
 func_978037B3_L90:
 	mov	(0x24, sp), d0
-	mov	d0, (data_97910074)
+	mov	d0, (func_978037B3_Var_8)
 func_978037B3_L98:
-	mov	(data_97910058), d0
+	mov	(func_978037B3_Var), d0
 	cmp	0x14, d0
 	bcs	func_978037B3_La4
 	bra	func_978037B3_Lb3
 func_978037B3_La4:
-	mov	(data_97910060), d0
+	mov	(func_978037B3_Var_3), d0
 	cmp	0x7d0, d0
 	bcc	func_978037B3_Lb3
 	jmp	func_978037B3_L1ab
 func_978037B3_Lb3:
-	mov	(data_97910068), d0
-	mov	(data_97910058), d1
+	mov	(func_978037B3_Var_5), d0
+	mov	(func_978037B3_Var), d1
 	add	d1, d0
-	mov	d0, (data_97910068)
+	mov	d0, (func_978037B3_Var_5)
 	mov	sp, a0
 	mov	a0, d0
 	add	0x28, d0
 	mov	d0, (8, sp)
 	mov	Str_Result_of_lu_li_li_good_lu_bad_lu, d0
 	mov	d0, (0xc, sp)
-	mov	(data_9791005C), d0
+	mov	(func_978037B3_Var_2), d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910070), d0
+	mov	(func_978037B3_Var_7), d0
 	mov	d0, (0x14, sp)
-	mov	(data_97910074), d0
+	mov	(func_978037B3_Var_8), d0
 	mov	d0, (0x18, sp)
-	mov	(data_97910060), d0
+	mov	(func_978037B3_Var_3), d0
 	mov	d0, (0x1c, sp)
-	mov	(data_97910068), d0
+	mov	(func_978037B3_Var_5), d0
 	mov	d0, (0x20, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
 	add	0x28, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_97910058), d0
+	mov	(func_978037B3_Var), d0
 	cmp	0, d0
 	beq	func_978037B3_L116
 	bra	func_978037B3_L135
 func_978037B3_L116:
-	mov	(data_9791005C), d0
-	mov	d0, (data_9791006C)
-	mov	(data_97910064), d0
-	mov	(data_97910060), d1
+	mov	(func_978037B3_Var_2), d0
+	mov	d0, (func_978037B3_Var_6)
+	mov	(func_978037B3_Var_4), d0
+	mov	(func_978037B3_Var_3), d1
 	add	d1, d0
-	mov	d0, (data_97910064)
+	mov	d0, (func_978037B3_Var_4)
 func_978037B3_L135:
-	mov	(data_9791005C), d0
+	mov	(func_978037B3_Var_2), d0
 	cmp	0xffffff, d0
 	bcs	func_978037B3_L145
 	bra	func_978037B3_L170
 func_978037B3_L145:
-	mov	(data_9791005C), d0
+	mov	(func_978037B3_Var_2), d0
 	inc	d0
-	mov	d0, (data_9791005C)
+	mov	d0, (func_978037B3_Var_2)
 	clr	d0
-	mov	d0, (data_97910060)
-	mov	d0, (data_97910058)
+	mov	d0, (func_978037B3_Var_3)
+	mov	d0, (func_978037B3_Var)
 	mov	-0x1e, d0
-	mov	d0, (data_97910070)
+	mov	d0, (func_978037B3_Var_7)
 	clr	d0
-	mov	d0, (data_97910074)
+	mov	d0, (func_978037B3_Var_8)
 	bra	func_978037B3_L1ab
 func_978037B3_L170:
 	mov	sp, a0
@@ -6399,9 +6399,9 @@ func_978037B3_L170:
 	mov	d0, (8, sp)
 	mov	Str_Best_Result_of_lu_lu, d0
 	mov	d0, (0xc, sp)
-	mov	(data_9791006C), d0
+	mov	(func_978037B3_Var_6), d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910064), d0
+	mov	(func_978037B3_Var_4), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
@@ -6409,11 +6409,11 @@ func_978037B3_L170:
 	call	func_9780AEBC_entry, 0, 0x14
 	bra	func_978037B3_L1bc
 func_978037B3_L19e:
-	mov	(data_97910060), d0
+	mov	(func_978037B3_Var_3), d0
 	inc	d0
-	mov	d0, (data_97910060)
+	mov	d0, (func_978037B3_Var_3)
 func_978037B3_L1ab:
-	mov	(data_97910058), d0
+	mov	(func_978037B3_Var), d0
 	cmp	0x10000, d0
 	bcc	func_978037B3_L1bc
 	jmp	func_978037B3_L3b
@@ -6482,9 +6482,9 @@ func_97803972_entry_L79:
 	mul	d1, d0
 	add	-3, d0
 	mov	d0, (0x2c, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	jmp	func_97803972_entry_L1a0
 func_97803972_entry_L95:
 	mov	0xff, d0
@@ -6511,9 +6511,9 @@ func_97803972_entry_Lba:
 	mul	d1, d0
 	add	-4, d0
 	mov	d0, (0x2c, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	jmp	func_97803972_entry_L1a0
 func_97803972_entry_Ld6:
 	mov	0xff, d0
@@ -6540,9 +6540,9 @@ func_97803972_entry_Lfc:
 	mul	d1, d0
 	add	-7, d0
 	mov	d0, (0x2c, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	jmp	func_97803972_entry_L1a0
 func_97803972_entry_L118:
 	mov	0xff, d0
@@ -6569,9 +6569,9 @@ func_97803972_entry_L13e:
 	mul	d1, d0
 	add	-8, d0
 	mov	d0, (0x2c, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	bra	func_97803972_entry_L1a0
 func_97803972_entry_L159:
 	mov	8, d0
@@ -6599,9 +6599,9 @@ func_97803972_entry_L182:
 	mul	d1, d0
 	add	-9, d0
 	mov	d0, (0x2c, sp)
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 	bra	func_97803972_entry_L1a0
 func_97803972_entry_L19d:
 	clr	d0
@@ -6631,9 +6631,9 @@ func_97803B1A_entry:
 	bne	func_97803B1A_entry_L27
 	bra	func_97803B1A_entry_L34
 func_97803B1A_entry_L27:
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 func_97803B1A_entry_L34:
 	mov	(0x28, sp), d0
 	ret	0, 0x2c
@@ -6660,9 +6660,9 @@ func_97803B56:
 	bne	func_97803B56_L32
 	bra	func_97803B56_L3f
 func_97803B56_L32:
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 func_97803B56_L3f:
 	mov	(0x28, sp), d0
 	ret	0, 0x2c
@@ -6688,9 +6688,9 @@ func_97803B9A_entry:
 	bne	func_97803B9A_entry_L27
 	bra	func_97803B9A_entry_L34
 func_97803B9A_entry_L27:
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 func_97803B9A_entry_L34:
 	mov	(0x28, sp), d0
 	ret	0, 0x2c
@@ -6714,9 +6714,9 @@ func_97803BD6:
 	bne	func_97803BD6_L28
 	bra	func_97803BD6_L35
 func_97803BD6_L28:
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 func_97803BD6_L35:
 	mov	(0x28, sp), d0
 	ret	0, 0x2c
@@ -6740,9 +6740,9 @@ func_97803C10:
 	bne	func_97803C10_L2a
 	bra	func_97803C10_L37
 func_97803C10_L2a:
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 func_97803C10_L37:
 	mov	(0x28, sp), d0
 	ret	0, 0x2c
@@ -6768,9 +6768,9 @@ func_97803C4C:
 	bne	func_97803C4C_L2c
 	bra	func_97803C4C_L39
 func_97803C4C_L2c:
-	mov	(data_979118E8), d0
+	mov	(func_9780011C_entry_L4a_Var), d0
 	inc	d0
-	mov	d0, (data_979118E8)
+	mov	d0, (func_9780011C_entry_L4a_Var)
 func_97803C4C_L39:
 	mov	(0x28, sp), d0
 	ret	0, 0x2c
@@ -6781,7 +6781,7 @@ func_97803C8A:
 func_97803C8A_entry:
 	movbu	d0, (0x30, sp)
 	clr	d0
-	mov	d0, (data_97910024)
+	mov	d0, (func_97802E3E_Var)
 	movbu	(0x30, sp), d0
 	cmp	3, d0
 	bge	func_97803C8A_entry_L13
@@ -6900,15 +6900,15 @@ func_97803C8A_entry_L109:
 	jmp	func_97803C8A_entry_L260
 func_97803C8A_entry_L110:
 	movbu	(0x30, sp), d0
-	mov	d0, (data_9791001C)
+	mov	d0, (func_97802835_entry_Lb_Var)
 	call	func_978055A7, 0, 0
 	movbu	(0x30, sp), d0
 	call	func_978051CC_entry, 0, 0x24
-	mov	d0, (data_97910018)
+	mov	d0, (func_97802835_entry_L40_Var)
 	call	func_97821E4F_entry, 0, 0x14
 	mov	1, d0
-	mov	d0, (data_97910024)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97802E3E_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -6916,7 +6916,7 @@ func_97803C8A_entry_L110:
 	mov	SelectedDirectory_id, d0
 	mov	EV_OptionSelectDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -6924,7 +6924,7 @@ func_97803C8A_entry_L110:
 	mov	SelectedDirectory_id, d0
 	mov	EV_GetSelectedDir, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -6932,7 +6932,7 @@ func_97803C8A_entry_L110:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -6940,7 +6940,7 @@ func_97803C8A_entry_L110:
 	mov	SelectedDirectory_id, d0
 	mov	MT_PsSetArea, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -6948,7 +6948,7 @@ func_97803C8A_entry_L110:
 	mov	SelectedDirInFile_id, d0
 	mov	EV_SetDirBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -6956,7 +6956,7 @@ func_97803C8A_entry_L110:
 	mov	SelectedDirInFile_id, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -6993,7 +6993,7 @@ func_97803C8A_entry_L25d:
 	bra	func_97803C8A_entry_L281
 func_97803C8A_entry_L260:
 	mov	-1, d0
-	mov	d0, (data_9791001C)
+	mov	d0, (func_97802835_entry_Lb_Var)
 	mov	6, d0
 	mov	sp, a0
 	add	0x24, a0
@@ -7574,7 +7574,7 @@ func_97804369_entry:
 	mov	0x16, d0
 	mov	1, d1
 	call	func_978035DB, 0, 0
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	bne	func_97804369_entry_L1e
 	bra	func_97804369_entry_L23
@@ -7582,14 +7582,14 @@ func_97804369_entry_L1e:
 	mov	-1, d0
 	jmp	func_97804369_entry_L119
 func_97804369_entry_L23:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
 	mov	1, d0
-	mov	d0, (data_9791002C)
+	mov	d0, (func_97804369_Var)
 	clr	d0
-	mov	d0, (data_9791004C)
+	mov	d0, (func_97804369_entry_L23_Var)
 	mov	1, d0
 	call	func_97803508_entry, 0, 0x10
 	mov	d0, (0x14, sp)
@@ -7648,21 +7648,21 @@ func_97804369_entry_L84:
 	bne	func_97804369_entry_Lde
 	bra	func_97804369_entry_Lf2
 func_97804369_entry_Lde:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	mov	(0x14, sp), d0
 	bra	func_97804369_entry_L119
 func_97804369_entry_Lf2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	movbu	(0x20, sp), d0
 	bra	func_97804369_entry_L119
 func_97804369_entry_L107:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -7674,7 +7674,7 @@ func_97804488:
 	add	-0x28, sp
 
 func_97804488_entry:
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97804488_entry_Lc
 	bra	func_97804488_entry_L11
@@ -7682,7 +7682,7 @@ func_97804488_entry_Lc:
 	mov	-1, d0
 	jmp	func_97804488_entry_Lb1
 func_97804488_entry_L11:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -7737,7 +7737,7 @@ func_97804488_entry_L9c:
 	clr	d0
 	mov	d0, (0x24, sp)
 func_97804488_entry_L9f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -7750,7 +7750,7 @@ func_9780453F:
 
 func_9780453F_entry:
 	movbu	d0, (0x30, sp)
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_9780453F_entry_Lf
 	bra	func_9780453F_entry_L14
@@ -7766,7 +7766,7 @@ func_9780453F_entry_L1d:
 	mov	-2, d0
 	jmp	func_9780453F_entry_L11c
 func_9780453F_entry_L22:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -7855,14 +7855,14 @@ func_9780453F_entry_Lf1:
 	mov	d0, (0x24, sp)
 	bra	func_9780453F_entry_L10a
 func_9780453F_entry_Lf7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	clr	d0
 	bra	func_9780453F_entry_L11c
 func_9780453F_entry_L10a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -7877,7 +7877,7 @@ func_97804661:
 func_97804661_entry:
 	movbu	d0, (0x44, sp)
 	mov	d1, (0x48, sp)
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97804661_entry_L11
 	bra	func_97804661_entry_L16
@@ -7885,7 +7885,7 @@ func_97804661_entry_L11:
 	mov	-1, d0
 	jmp	func_97804661_entry_L1a2
 func_97804661_entry_L16:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -8039,14 +8039,14 @@ func_97804661_entry_L177:
 	mov	d0, (0x20, sp)
 	bra	func_97804661_entry_L190
 func_97804661_entry_L17d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	clr	d0
 	bra	func_97804661_entry_L1a2
 func_97804661_entry_L190:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8060,7 +8060,7 @@ func_9780480B:
 
 func_9780480B_entry:
 	movbu	d0, (0x6c, sp)
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_9780480B_entry_Lf
 	bra	func_9780480B_entry_L14
@@ -8392,7 +8392,7 @@ func_97804B72:
 
 func_97804B72_entry:
 	movbu	d0, (0x1c, sp)
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97804B72_entry_Lf
 	bra	func_97804B72_entry_L14
@@ -8400,7 +8400,7 @@ func_97804B72_entry_Lf:
 	mov	-1, d0
 	jmp	func_97804B72_entry_La4
 func_97804B72_entry_L14:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -8449,14 +8449,14 @@ func_97804B72_entry_L79:
 	mov	d0, (0x10, sp)
 	bra	func_97804B72_entry_L92
 func_97804B72_entry_L7f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	clr	d0
 	bra	func_97804B72_entry_La4
 func_97804B72_entry_L92:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8471,7 +8471,7 @@ func_97804C1C:
 func_97804C1C_entry:
 	movbu	d0, (0x78, sp)
 	mov	d1, (0x7c, sp)
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97804C1C_entry_L11
 	bra	func_97804C1C_entry_L16
@@ -8492,7 +8492,7 @@ func_97804C1C_entry_L28:
 	mov	-2, d0
 	jmp	func_97804C1C_entry_L1eb
 func_97804C1C_entry_L2d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -8562,7 +8562,7 @@ func_97804C1C_entry_Lbb:
 	beq	func_97804C1C_entry_Lda
 	bra	func_97804C1C_entry_L116
 func_97804C1C_entry_Lda:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8612,7 +8612,7 @@ func_97804C1C_entry_L14c:
 	bge	func_97804C1C_entry_L154
 	bra	func_97804C1C_entry_L16d
 func_97804C1C_entry_L154:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8634,7 +8634,7 @@ func_97804C1C_entry_L16d:
 	bcc	func_97804C1C_entry_L192
 	bra	func_97804C1C_entry_L1aa
 func_97804C1C_entry_L192:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8660,7 +8660,7 @@ func_97804C1C_entry_L1aa:
 	sub	d3, d0
 	mov	d1, a0
 	mov	d0, (d2, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8856,7 +8856,7 @@ func_97804FD6:
 
 func_97804FD6_entry:
 	movbu	d0, (0x1c, sp)
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97804FD6_entry_Lf
 	bra	func_97804FD6_entry_L13
@@ -8864,7 +8864,7 @@ func_97804FD6_entry_Lf:
 	mov	-1, d0
 	bra	func_97804FD6_entry_L76
 func_97804FD6_entry_L13:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -8891,14 +8891,14 @@ func_97804FD6_entry_L4b:
 	mov	d0, (0x10, sp)
 	bra	func_97804FD6_entry_L64
 func_97804FD6_entry_L51:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	clr	d0
 	bra	func_97804FD6_entry_L76
 func_97804FD6_entry_L64:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8908,7 +8908,7 @@ func_97804FD6_entry_L76:
 
 func_97805052:
 	add	-8, sp
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97805052_Lf
 	bra	func_97805052_L13
@@ -8916,11 +8916,11 @@ func_97805052_Lf:
 	mov	-1, d0
 	bra	func_97805052_L34
 func_97805052_L13:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -8932,7 +8932,7 @@ func_97805089:
 	add	-0x48, sp
 
 func_97805089_entry:
-	mov	(data_9791002C), d0
+	mov	(func_97804369_Var), d0
 	cmp	0, d0
 	beq	func_97805089_entry_Lc
 	bra	func_97805089_entry_L10
@@ -8941,17 +8941,17 @@ func_97805089_entry_Lc:
 	bra	func_97805089_entry_L48
 func_97805089_entry_L10:
 	clr	d0
-	mov	d0, (data_9791002C)
+	mov	d0, (func_97804369_Var)
 	mov	sp, a0
 	mov	a0, d0
 	add	0x14, d0
 	mov	d0, (8, sp)
 	mov	Str_Total_Faults_li, d0
 	mov	d0, (0xc, sp)
-	mov	(data_9791004C), d0
+	mov	(func_97804369_entry_L23_Var), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_9791004C), d0
+	mov	(func_97804369_entry_L23_Var), d0
 	cmp	0, d0
 	bgt	func_97805089_entry_L3f
 	bra	func_97805089_entry_L47
@@ -8969,12 +8969,12 @@ func_978050D7:
 	add	-0x20, sp
 	movbu	d0, (0x30, sp)
 	mov	1, d0
-	mov	d0, (data_9791002C)
+	mov	d0, (func_97804369_Var)
 	movbu	(0x30, sp), d0
 	clr	d1
 	call	func_97804661_entry, [d2], 0x3c
 	clr	d0
-	mov	d0, (data_9791002C)
+	mov	d0, (func_97804369_Var)
 	mov	d0, (0x14, sp)
 	jmp	func_978050D7_La7
 func_978050D7_L25:
@@ -9205,7 +9205,7 @@ func_97805272_entry_L20:
 	mov	-1, d0
 	jmp	func_97805272_entry_Lb0
 func_97805272_entry_L25:
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	0, d0
 	bge	func_97805272_entry_L31
 	bra	func_97805272_entry_L57
@@ -9226,10 +9226,10 @@ func_97805272_entry_L4c:
 	bra	func_97805272_entry_Lb0
 func_97805272_entry_L50:
 	clr	d0
-	movbu	d0, (data_97910020)
+	movbu	d0, (func_97805272_entry_L50_Table)
 func_97805272_entry_L57:
 	mov	(0x3c, sp), d0
-	mov	d0, (data_97910010)
+	mov	d0, (func_97805272_entry_L25_Var)
 	add	d0, d0
 	mov	0x97987688, a0
 	movhu	(d0, a0), d1
@@ -9262,7 +9262,7 @@ func_97805272_entry_La4:
 	bra	func_97805272_entry_Lb0
 func_97805272_entry_La8:
 	clr	d0
-	movbu	d0, (data_97910020)
+	movbu	d0, (func_97805272_entry_L50_Table)
 	clr	d0
 func_97805272_entry_Lb0:
 	ret	[d2], 0x30
@@ -9273,7 +9273,7 @@ func_9780532A:
 
 func_9780532A_entry:
 	movbu	d0, (0x38, sp)
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	0, d0
 	blt	func_9780532A_entry_Lf
 	bra	func_9780532A_entry_L13
@@ -9289,7 +9289,7 @@ func_9780532A_entry_L13:
 	mov	d0, a0
 	add	0x979127f4, a0
 	mov	(0x64, a0), d1
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	d1, d0
 	bcc	func_9780532A_entry_L32
 	bra	func_9780532A_entry_L36
@@ -9297,7 +9297,7 @@ func_9780532A_entry_L32:
 	mov	-2, d0
 	bra	func_9780532A_entry_L8d
 func_9780532A_entry_L36:
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	add	d0, d0
 	mov	0x97987688, a0
 	movhu	(d0, a0), d1
@@ -9330,7 +9330,7 @@ func_9780532A_entry_L81:
 	bra	func_9780532A_entry_L8d
 func_9780532A_entry_L85:
 	clr	d0
-	movbu	d0, (data_97910020)
+	movbu	d0, (func_97805272_entry_L50_Table)
 	clr	d0
 func_9780532A_entry_L8d:
 	ret	[d2], 0x30
@@ -9347,7 +9347,7 @@ func_978053BF_entry:
 	bgt	func_978053BF_entry_Lf
 	bra	func_978053BF_entry_L31
 func_978053BF_entry_Lf:
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	0, d0
 	bne	func_978053BF_entry_L1b
 	bra	func_978053BF_entry_L53
@@ -9363,7 +9363,7 @@ func_978053BF_entry_L2c:
 	mov	-1, d0
 	jmp	func_978053BF_entry_L11e
 func_978053BF_entry_L31:
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	-1, d0
 	beq	func_978053BF_entry_L3d
 	bra	func_978053BF_entry_L53
@@ -9379,7 +9379,7 @@ func_978053BF_entry_L4e:
 	mov	-2, d0
 	jmp	func_978053BF_entry_L11e
 func_978053BF_entry_L53:
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	-1, d0
 	beq	func_978053BF_entry_L5f
 	bra	func_978053BF_entry_L64
@@ -9398,7 +9398,7 @@ func_978053BF_entry_L69:
 	beq	func_978053BF_entry_L79
 	bra	func_978053BF_entry_Laf
 func_978053BF_entry_L79:
-	mov	(data_97910010), d1
+	mov	(func_97805272_entry_L25_Var), d1
 	asl	12, d1
 	mov	(0x14, sp), d0
 	add	d0, d1
@@ -9441,13 +9441,13 @@ func_978053BF_entry_Lbe:
 	add	0x979127f4, d0
 	mov	d0, a0
 	mov	(0x64, a0), d0
-	mov	(data_97910010), d1
+	mov	(func_97805272_entry_L25_Var), d1
 	cmp	d0, d1
 	blt	func_978053BF_entry_Ldd
 	bra	func_978053BF_entry_Lf8
 func_978053BF_entry_Ldd:
 	movbu	(0x28, sp), d0
-	mov	(data_97910010), d1
+	mov	(func_97805272_entry_L25_Var), d1
 	inc	d1
 	call	func_97805272_entry, [d2], 0x30
 	mov	d0, (0x10, sp)
@@ -9469,7 +9469,7 @@ func_978053BF_entry_Lfc:
 	add	0x979127f4, d0
 	mov	d0, a0
 	mov	(0x60, a0), d2
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	cmp	d2, d0
 	bcc	func_978053BF_entry_L11c
 	jmp	func_978053BF_entry_L64
@@ -9490,7 +9490,7 @@ func_978054E5_entry:
 	mov	d0, (0x10, sp)
 	lsr	12, d0
 	mov	d0, (0x14, sp)
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	mov	(0x14, sp), d1
 	cmp	d0, d1
 	bne	func_978054E5_entry_L1f
@@ -9509,7 +9509,7 @@ func_978054E5_entry_L31:
 	mov	-1, d0
 	bra	func_978054E5_entry_La6
 func_978054E5_entry_L40:
-	mov	(data_97910010), d0
+	mov	(func_97805272_entry_L25_Var), d0
 	asl	12, d0
 	mov	(0x10, sp), d1
 	sub	d0, d1
@@ -9527,15 +9527,15 @@ func_978054E5_entry_L60:
 	mov	(0x1c, sp), d1
 	movbu	d0, (d1, a0)
 	mov	1, d0
-	movbu	d0, (data_97910020)
+	movbu	d0, (func_97805272_entry_L50_Table)
 	movbu	(0x30, sp), d0
 	cmp	0, d0
 	beq	func_978054E5_entry_L7e
 	bra	func_978054E5_entry_L8b
 func_978054E5_entry_L7e:
-	mov	(data_97910018), d0
+	mov	(func_97802835_entry_L40_Var), d0
 	inc	d0
-	mov	d0, (data_97910018)
+	mov	d0, (func_97802835_entry_L40_Var)
 func_978054E5_entry_L8b:
 	movbu	(0x30, sp), d0
 	and	0x01, d0
@@ -9543,16 +9543,16 @@ func_978054E5_entry_L8b:
 	beq	func_978054E5_entry_L97
 	bra	func_978054E5_entry_La5
 func_978054E5_entry_L97:
-	mov	(data_97910018), d0
+	mov	(func_97802835_entry_L40_Var), d0
 	add	-1, d0
-	mov	d0, (data_97910018)
+	mov	d0, (func_97802835_entry_L40_Var)
 func_978054E5_entry_La5:
 	clr	d0
 func_978054E5_entry_La6:
 	ret	[d2], 0x24
 
 func_97805593:
-	movbu	(data_97910020), d0
+	movbu	(func_97805272_entry_L50_Table), d0
 	cmp	0, d0
 	beq	func_97805593_Lc
 	bra	func_97805593_Lf
@@ -9566,12 +9566,12 @@ func_97805593_L11:
 
 func_978055A7:
 	mov	-1, d0
-	mov	d0, (data_97910010)
+	mov	d0, (func_97805272_entry_L25_Var)
 	ret	0, 0
 
 func_978055B2:
 	mov	d0, (8, sp)
-	mov	d0, (data_97910010)
+	mov	d0, (func_97805272_entry_L25_Var)
 	ret	0, 0
 
 func_978055BD:
@@ -9794,25 +9794,25 @@ func_9780578C_entry:
 	mov	a0, (0x38, sp)
 	movhu	d1, (0x30, sp)
 	movhu	d0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x16c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x29c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x264, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x234, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -9882,7 +9882,7 @@ func_9780578C_entry_Lda:
 func_9780578C_entry_Le7:
 	call	func_9780640E_entry, 0, 0x50
 	mov	d0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -9910,7 +9910,7 @@ func_9780578C_entry_L120:
 	mov	-2, d0
 	bra	func_9780578C_entry_L182
 func_9780578C_entry_L12f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -9919,7 +9919,7 @@ func_9780578C_entry_L12f:
 	mov	-3, d0
 	bra	func_9780578C_entry_L182
 func_9780578C_entry_L14e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -9946,29 +9946,29 @@ func_97805914:
 func_97805914_entry:
 	movhu	d1, (0x2c, sp)
 	movhu	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x170, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x16c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x29c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x264, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x234, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -10019,7 +10019,7 @@ func_97805914_entry_Lce:
 func_97805914_entry_Le7:
 	call	func_97803B1A_entry, 0, 0x2c
 func_97805914_entry_Lec:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -10028,7 +10028,7 @@ func_97805914_entry_Lec:
 	beq	func_97805914_entry_L104
 	bra	func_97805914_entry_L117
 func_97805914_entry_L104:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x2a4, a0), a0
 	calls	(a0)
@@ -10040,7 +10040,7 @@ func_97805914_entry_L117:
 	mov	-2, d0
 	bra	func_97805914_entry_L15a
 func_97805914_entry_L126:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -10079,29 +10079,29 @@ func_97805A74_entry_L13:
 	mov	-1, d0
 	jmp	func_97805A74_entry_L37f
 func_97805A74_entry_L23:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x170, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x16c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x29c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x264, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x234, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -10340,7 +10340,7 @@ func_97805A74_entry_L29c:
 	bne	func_97805A74_entry_L2af
 	bra	func_97805A74_entry_L2cf
 func_97805A74_entry_L2af:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -10358,7 +10358,7 @@ func_97805A74_entry_L2cf:
 	bne	func_97805A74_entry_L2e7
 	bra	func_97805A74_entry_L306
 func_97805A74_entry_L2e7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -10386,14 +10386,14 @@ func_97805A74_entry_L319:
 func_97805A74_entry_L32b:
 	call	func_97803B1A_entry, 0, 0x2c
 func_97805A74_entry_L330:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 	clr	d0
 	bra	func_97805A74_entry_L37f
 func_97805A74_entry_L343:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -10639,10 +10639,10 @@ func_97805F89_entry_L28:
 	ret	0, 0x10
 # func_97805F89_entry + 0x2b: no traced path reaches what follows (--decode-gaps)
 	mov	1, d0
-	mov	d0, (data_97910004)
+	mov	d0, (func_97805FD0_L26_Var+4)
 	ret	0, 0
 	mov	1, d0
-	mov	d0, (data_97910008)
+	mov	d0, (func_97805FD0_L26_Var+8)
 	ret	0, 0
 	add	-0x24, sp
 
@@ -10667,7 +10667,7 @@ func_97805FD0_L21:
 	jmp	func_97805FD0_Le4
 func_97805FD0_L26:
 	mov	1, d0
-	movbu	d0, (data_97910000)
+	movbu	d0, (func_97805FD0_L26_Var)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x9791393c)
 	movhu	(0x30, sp), d0
@@ -10719,7 +10719,7 @@ func_97805FD0_Lbd:
 	mov	1, d0
 	movbu	d0, (0x97913945)
 	clr	d0
-	mov	d0, (data_97910004)
+	mov	d0, (func_97805FD0_L26_Var+4)
 func_97805FD0_Le4:
 	ret	0, 0x24
 
@@ -10746,7 +10746,7 @@ func_978060B7_entry_L1f:
 	jmp	func_978060B7_entry_Le4
 func_978060B7_entry_L24:
 	mov	1, d0
-	movbu	d0, (data_97910001)
+	movbu	d0, (func_97805FD0_L26_Var+1)
 	clr	d0
 	mov	d0, (0x9798fd98)
 	movhu	(0x20, sp), d0
@@ -10797,7 +10797,7 @@ func_978060B7_entry_Ld1:
 	bra	func_978060B7_entry_Le4
 func_978060B7_entry_Ld5:
 	clr	d0
-	mov	d0, (data_97910008)
+	mov	d0, (func_97805FD0_L26_Var+8)
 	bra	func_978060B7_entry_Le4
 func_978060B7_entry_Lde:
 	mov	-2, d0
@@ -10821,7 +10821,7 @@ func_978061A1_entry:
 	mov	d0, (0x97913934)
 	movbu	(0x10, sp), d0
 	movbu	d0, (0x97913944)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x88, a0), a0
 	calls	(a0)
@@ -11041,10 +11041,10 @@ func_97806366_entry:
 	movbu	(0x14, sp), d0
 	movbu	d0, (0x97913944)
 	mov	-1, d0
-	mov	d0, (data_97910078)
+	mov	d0, (func_97806366_Var)
 	clr	d0
-	mov	d0, (data_9791007C)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97806366_Var_2)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x88, a0), a0
 	calls	(a0)
@@ -11087,13 +11087,13 @@ func_978063D7_entry:
 	ret	0, 0xc
 
 func_978063F3:
-	movbu	(data_97910000), d0
+	movbu	(func_97805FD0_L26_Var), d0
 	cmp	2, d0
 	beq	func_978063F3_Lc
 	bra	func_978063F3_L16
 func_978063F3_Lc:
 	clr	d0
-	movbu	d0, (data_97910000)
+	movbu	d0, (func_97805FD0_L26_Var)
 	clr	d0
 	bra	func_978063F3_L18
 func_978063F3_L16:
@@ -11107,7 +11107,7 @@ func_9780640E:
 func_9780640E_entry:
 	call	func_97802DE1, 0, 0
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11116,7 +11116,7 @@ func_9780640E_entry:
 	beq	func_9780640E_entry_L1e
 	bra	func_9780640E_entry_L2e
 func_9780640E_entry_L1e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11247,7 +11247,7 @@ func_97806567:
 	add	-8, sp
 
 func_97806567_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11256,7 +11256,7 @@ func_97806567_entry:
 	beq	func_97806567_entry_L17
 	bra	func_97806567_entry_L27
 func_97806567_entry_L17:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11269,7 +11269,7 @@ func_97806595:
 	add	-0x50, sp
 
 func_97806595_entry:
-	mov	(data_97910004), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	beq	func_97806595_entry_Lc
 	bra	func_97806595_entry_L18
@@ -11279,7 +11279,7 @@ func_97806595_entry_Lc:
 	bne	func_97806595_entry_L18
 	bra	func_97806595_entry_L70
 func_97806595_entry_L18:
-	mov	(data_97910004), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_97806595_entry_L24
 	bra	func_97806595_entry_L31
@@ -11292,8 +11292,8 @@ func_97806595_entry_L31:
 	call	func_9780AEBC_entry, 0, 0x14
 func_97806595_entry_L3c:
 	mov	1, d0
-	mov	d0, (data_97910004)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97805FD0_L26_Var+4)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11302,7 +11302,7 @@ func_97806595_entry_L3c:
 	beq	func_97806595_entry_L5b
 	bra	func_97806595_entry_L6b
 func_97806595_entry_L5b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11318,7 +11318,7 @@ func_97806595_entry_L70:
 	bne	func_97806595_entry_L89
 	bra	func_97806595_entry_Ldd
 func_97806595_entry_L89:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11327,7 +11327,7 @@ func_97806595_entry_L89:
 	beq	func_97806595_entry_La0
 	bra	func_97806595_entry_Lb0
 func_97806595_entry_La0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11382,7 +11382,7 @@ func_97806595_entry_L116:
 	movbu	(0x97913944), d0
 	mov	1, d1
 	movbu	d1, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11391,13 +11391,13 @@ func_97806595_entry_L116:
 	beq	func_97806595_entry_L15b
 	bra	func_97806595_entry_L16b
 func_97806595_entry_L15b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
 func_97806595_entry_L16b:
 	mov	2, d0
-	movbu	d0, (data_97910000)
+	movbu	d0, (func_97805FD0_L26_Var)
 func_97806595_entry_L173:
 	clr	d0
 func_97806595_entry_L174:
@@ -11420,7 +11420,7 @@ func_97806711_entry_Lc:
 	mov	1, d0
 	bra	func_97806711_entry_L4c
 func_97806711_entry_L24:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11429,7 +11429,7 @@ func_97806711_entry_L24:
 	beq	func_97806711_entry_L3b
 	bra	func_97806711_entry_L4b
 func_97806711_entry_L3b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11445,12 +11445,12 @@ func_97806763:
 func_97806763_entry:
 	movbu	d1, (0x78, sp)
 	mov	d0, (0x74, sp)
-	mov	(data_97910004), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_97806763_entry_L11
 	bra	func_97806763_entry_L26
 func_97806763_entry_L11:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11598,12 +11598,12 @@ func_978068AF_entry:
 	mov	a0, (0x34, sp)
 	mov	d1, (0x3c, sp)
 	mov	d0, (0x38, sp)
-	mov	(data_97910004), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_978068AF_entry_L12
 	bra	func_978068AF_entry_L27
 func_978068AF_entry_L12:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11740,12 +11740,12 @@ func_978069C7_entry:
 	mov	a0, (0x34, sp)
 	mov	d0, (0x38, sp)
 	mov	d1, (0x3c, sp)
-	mov	(data_97910004), d0
+	mov	(func_97805FD0_L26_Var+4), d0
 	cmp	0, d0
 	bne	func_978069C7_entry_L12
 	bra	func_978069C7_entry_L27
 func_978069C7_entry_L12:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -11814,7 +11814,7 @@ func_978069C7_entry_L8b:
 	mov	1, d2
 	mov	d0, a0
 	movbu	d2, (d1, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -11823,13 +11823,13 @@ func_978069C7_entry_L8b:
 	beq	func_978069C7_entry_Ld1
 	bra	func_978069C7_entry_Le1
 func_978069C7_entry_Ld1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
 func_978069C7_entry_Le1:
 	mov	2, d0
-	movbu	d0, (data_97910000)
+	movbu	d0, (func_97805FD0_L26_Var)
 	clr	d0
 	jmp	func_978069C7_entry_L1f3
 func_978069C7_entry_Led:
@@ -12110,21 +12110,21 @@ func_97806CC0_entry_L5c:
 	mov	d0, (0x34, sp)
 func_97806CC0_entry_L72:
 	mov	(0x2c, sp), d0
-	mov	(data_97910078), d1
+	mov	(func_97806366_Var), d1
 	cmp	d0, d1
 	beq	func_97806CC0_entry_L7f
 	bra	func_97806CC0_entry_L8d
 func_97806CC0_entry_L7f:
-	mov	(data_9791007C), d0
+	mov	(func_97806366_Var_2), d0
 	mov	(0x34, sp), d1
 	cmp	d1, d0
 	bcs	func_97806CC0_entry_L8d
 	jmp	func_97806CC0_entry_L12c
 func_97806CC0_entry_L8d:
 	mov	(0x2c, sp), d0
-	mov	d0, (data_97910078)
+	mov	d0, (func_97806366_Var)
 	mov	(0x34, sp), d0
-	mov	d0, (data_9791007C)
+	mov	d0, (func_97806366_Var_2)
 	movbu	(0x54, sp), d0
 	movbu	(0x2c, sp), d1
 	extbu	d1
@@ -12222,7 +12222,7 @@ func_97806E2A:
 func_97806E2A_entry:
 	movhu	d1, (0x34, sp)
 	movhu	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -12273,7 +12273,7 @@ func_97806E2A_entry_L5d:
 func_97806E2A_entry_L73:
 	call	func_97807009_entry, 0, 8
 	mov	d0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -12288,7 +12288,7 @@ func_97806E2A_entry_L96:
 	mov	-2, d0
 	bra	func_97806E2A_entry_Lac
 func_97806E2A_entry_L9a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -12319,9 +12319,9 @@ func_97806EF6_entry:
 	movbu	(0x14, sp), d0
 	movbu	d0, (0x97913944)
 	mov	-1, d0
-	mov	d0, (data_97910078)
+	mov	d0, (func_97806366_Var)
 	clr	d0
-	mov	d0, (data_9791007C)
+	mov	d0, (func_97806366_Var_2)
 	ret	0, 0xc
 
 func_97806F25:
@@ -12347,7 +12347,7 @@ func_97806F25_entry_L1f:
 	jmp	func_97806F25_entry_Lde
 func_97806F25_entry_L24:
 	mov	1, d0
-	movbu	d0, (data_97910084)
+	movbu	d0, (func_97806F25_entry_L24_Table)
 	movhu	(0x20, sp), d0
 	movhu	d0, (0x9791393c)
 	movhu	(0x24, sp), d0
@@ -12396,7 +12396,7 @@ func_97806F25_entry_Lcb:
 	bra	func_97806F25_entry_Lde
 func_97806F25_entry_Lcf:
 	clr	d0
-	mov	d0, (data_97910080)
+	mov	d0, (func_97806F25_entry_Lcf_Var)
 	bra	func_97806F25_entry_Lde
 func_97806F25_entry_Ld8:
 	mov	-2, d0
@@ -12410,7 +12410,7 @@ func_97807009:
 	add	-8, sp
 
 func_97807009_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -12419,7 +12419,7 @@ func_97807009_entry:
 	beq	func_97807009_entry_L17
 	bra	func_97807009_entry_L27
 func_97807009_entry_L17:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -12959,7 +12959,7 @@ func_978074EE:
 
 func_978074EE_entry:
 	mov	-1, d0
-	mov	d0, (data_97910014)
+	mov	d0, (func_978074EE_Var)
 	mov	0x9791292c, a0
 	clr	d0
 	mov	0x1000, d1
@@ -12985,19 +12985,19 @@ func_97807514_entry:
 	mov	(d1, a0), d2
 	mov	d2, (0x20, sp)
 	mov	d2, d0
-	mov	(data_97910014), d1
+	mov	(func_978074EE_Var), d1
 	cmp	d1, d0
 	bne	func_97807514_entry_L28
 	bra	func_97807514_entry_L86
 func_97807514_entry_L28:
 	mov	(0x20, sp), d0
-	mov	d0, (data_97910014)
+	mov	d0, (func_978074EE_Var)
 	mov	0x1000, d0
 	mov	d0, (0x18, sp)
 	mov	0x24, d0
 	mov	d0, (0x1c, sp)
 	mov	0xa, d0
-	mov	(data_97910014), d1
+	mov	(func_978074EE_Var), d1
 	mov	0x9791292c, a0
 	mov	sp, a1
 	add	0x24, a1
@@ -13012,7 +13012,7 @@ func_97807514_entry_L59:
 	mov	0x25, d0
 	mov	d0, (0x1c, sp)
 	mov	0xa, d0
-	mov	(data_97910014), d1
+	mov	(func_978074EE_Var), d1
 	mov	0x9791292c, a0
 	mov	sp, a1
 	add	0x24, a1
@@ -13056,7 +13056,7 @@ func_978075AC_entry_L18:
 	asl2	d1
 	mov	d0, a0
 	mov	(d1, a0), d2
-	mov	d2, (data_97910014)
+	mov	d2, (func_978074EE_Var)
 	mov	(0x20, sp), d0
 	mov	0x68, d1
 	nop
@@ -13065,7 +13065,7 @@ func_978075AC_entry_L18:
 	mov	d1, a0
 	add	0x979127f4, a0
 	mov	(0x40, a0), d1
-	mov	(data_97910014), d0
+	mov	(func_978074EE_Var), d0
 	cmp	d1, d0
 	bcc	func_978075AC_entry_L50
 	bra	func_978075AC_entry_Lc9
@@ -13079,7 +13079,7 @@ func_978075AC_entry_L50:
 	mov	d0, a0
 	mov	(0x48, a0), d0
 	add	-8, d0
-	mov	(data_97910014), d1
+	mov	(func_978074EE_Var), d1
 	cmp	d0, d1
 	blt	func_978075AC_entry_L70
 	bra	func_978075AC_entry_Lc9
@@ -13089,7 +13089,7 @@ func_978075AC_entry_L70:
 	mov	0x26, d0
 	mov	d0, (0x1c, sp)
 	mov	0xb, d0
-	mov	(data_97910014), d1
+	mov	(func_978074EE_Var), d1
 	mov	0x9791292c, a0
 	mov	sp, a1
 	add	0x24, a1
@@ -13104,7 +13104,7 @@ func_978075AC_entry_L99:
 	mov	0x27, d0
 	mov	d0, (0x1c, sp)
 	mov	0xb, d0
-	mov	(data_97910014), d1
+	mov	(func_978074EE_Var), d1
 	mov	0x9791292c, a0
 	mov	sp, a1
 	add	0x24, a1
@@ -13222,29 +13222,29 @@ func_9780777B_L13:
 func_9780777B_L18:
 	clr	d0
 	mov	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x170, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x16c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x29c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x264, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x234, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -13938,7 +13938,7 @@ func_9780777B_L61f:
 func_9780777B_L631:
 	call	func_97803B1A_entry, 0, 0x2c
 func_9780777B_L636:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -14224,7 +14224,7 @@ vsprintf_core_entry_Lc0:
 vsprintf_core_entry_Lc8:
 	add	-0x45, d0
 	asl2	d0
-	mov	ptrs_9783E40C, a0
+	mov	vsprintf_core_entry_Lc8_Table, a0
 	mov	(d0, a0), a0
 	jmp	(a0)
 loc_97807FF0:
@@ -14575,7 +14575,7 @@ PfOutField_entry_L56:
 	mov	0x30, d0
 	movbu	d0, (0x1c, sp)
 	movbu	(a0), d0
-	mov	(data_978AFD7C), a0
+	mov	(PfOutField_entry_L56_Var), a0
 	extb	d0
 	inc	a0
 	movbu	(d0, a0), d0
@@ -14756,7 +14756,7 @@ func_9780836B_entry:
 	nop
 	clr	d0
 	mov	d0, (a1)
-	mov	data_9783E4DC, a3
+	mov	func_9780836B_entry_L10_Records, a3
 func_9780836B_entry_L10:
 	movbu	(a2), d1
 	extb	d1
@@ -14782,7 +14782,7 @@ func_9780836B_entry_L10:
 	nop
 	beq	func_9780836B_entry_L8f
 	add	8, a0
-	cmp	Str_C_2, a0
+	cmp	func_9780836B_entry_L10_Records+128, a0
 	nop
 	blt	func_9780836B_entry_L41
 	mov	a3, a0
@@ -14795,46 +14795,55 @@ func_9780836B_entry_L41:
 func_9780836B_entry_L46:
 	mov	(4, a0), a0
 	jmp	(a0)
+loc_978083BB:
 	mov	(a1), d0
 	nop
 	or	0x01, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083C3:
 	mov	(a1), d0
 	nop
 	or	0x02, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083CB:
 	mov	(a1), d0
 	nop
 	or	0x04, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083D3:
 	mov	(a1), d0
 	nop
 	or	0x08, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083DB:
 	mov	(a1), d0
 	nop
 	or	0x10, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083E3:
 	mov	(a1), d0
 	nop
 	or	0x20, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083EB:
 	mov	(a1), d0
 	nop
 	or	0x80, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083F3:
 	mov	(a1), d0
 	nop
 	or	0x40, d0
 	mov	d0, (a1)
 	bra	func_9780836B_entry_L9d
+loc_978083FB:
 	mov	0, a0
 	bra	func_9780836B_entry_La1
 func_9780836B_entry_L8f:
@@ -14923,7 +14932,7 @@ PfParseWidthPrecSize_entry_L3f:
 	bra	PfParseWidthPrecSize_entry_L8d
 PfParseWidthPrecSize_entry_L65:
 	movbu	(a0), d2
-	mov	(data_978AFD7C), d0
+	mov	(PfOutField_entry_L56_Var), d0
 	extb	d2
 	inc	d0
 	mov	d0, a1
@@ -15030,13 +15039,13 @@ strncmp_entry_L2a:
 	retf	[a2], 4
 
 localeconv:
-	mov	(data_978AFD68), d0
+	mov	(localeconv_Table), d0
 	mov	0x28, d1
 	asl	4, d0
 	mov	d0, a1
-	add	ptrs_978AFD48, a1
+	add	localeconv_Records_2, a1
 	mov	(4, a1), a0
-	mov	(data_978AFD64), d0
+	mov	(localeconv_Records_2+28), d0
 	mov	a0, (0x97913a8c)
 	mov	(8, a1), a0
 	nop
@@ -15047,7 +15056,7 @@ localeconv:
 	mov	d0, a1
 	mov	a0, (0x97913a94)
 	nop
-	add	ptrs_978AFD20, a1
+	add	localeconv_Records, a1
 	mov	(4, a1), a0
 	mov	a0, (0x97913a98)
 	mov	(8, a1), a0
@@ -15753,7 +15762,7 @@ PfFormatE_entry_L99:
 	add	d0, d3
 	mov	d3, (0x2c, sp)
 	mov	(0x88, sp), a0
-	mov	(data_978AFD7C), a1
+	mov	(PfOutField_entry_L56_Var), a1
 	movbu	(a0), d2
 	inc	a1
 	extb	d2
@@ -15964,7 +15973,7 @@ PfFormatG_entry_Lb7:
 	add	d0, d1
 	mov	d1, a0
 	movbu	(a0), d3
-	mov	(data_978AFD7C), a0
+	mov	(PfOutField_entry_L56_Var), a0
 	extb	d3
 	inc	a0
 	movbu	(d3, a0), d0
@@ -16094,7 +16103,7 @@ PfFormatG_entry_L18b:
 	bra	PfFormatG_entry_L1c3
 PfFormatG_entry_L18e:
 	mov	(0x8c, sp), a0
-	mov	(data_978AFD7C), a1
+	mov	(PfOutField_entry_L56_Var), a1
 	mov	-1, d2
 	add	d3, d2
 	add	d2, a0
@@ -16746,12 +16755,12 @@ PfDoubleToDecimal_entry:
 	inc	d1
 	nop
 	lne
-	mov	doubles_978AFD80+24, a2
+	mov	PfDoubleToDecimal_entry_L290_Records, a2
 	mov	(a2), d0
 	mov	(4, a2), d1
 	mov	d0, (0x1c, sp)
 	mov	d1, (0x20, sp)
-	mov	doubles_978AFD80+32, a0
+	mov	doubles_978AFDA0, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x24, sp)
@@ -16977,7 +16986,7 @@ PfDoubleToDecimal_entry_L19d:
 	bcc	PfDoubleToDecimal_entry_L19d
 	jmp	PfDoubleToDecimal_entry_L33c
 PfDoubleToDecimal_entry_L1e1:
-	mov	doubles_978AFD80+16, a0
+	mov	PfDoubleToDecimal_entry_L1e1_Var, a0
 	mov	(a0), d2
 	mov	(4, a0), d3
 	mov	d2, (0x2c, sp)
@@ -17001,7 +17010,7 @@ PfDoubleToDecimal_entry_L1e1:
 	mov	d1, (0xc, sp)
 	call	LibF64CmpZero_entry, [d2,d3], 0x10
 	bgt	PfDoubleToDecimal_entry_L24b
-	mov	doubles_978AFD80+16, a0
+	mov	PfDoubleToDecimal_entry_L1e1_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (8, sp)
@@ -17019,7 +17028,7 @@ PfDoubleToDecimal_entry_L1e1:
 	call	LibF64ToI32_entry, [d3,a3], 0x10
 	bra	PfDoubleToDecimal_entry_L278
 PfDoubleToDecimal_entry_L24b:
-	mov	doubles_978AFD80+16, a0
+	mov	PfDoubleToDecimal_entry_L1e1_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (8, sp)
@@ -17182,7 +17191,7 @@ PfDoubleToDecimal_entry_L34b:
 	nop
 	bcs	PfDoubleToDecimal_entry_L34b
 PfDoubleToDecimal_entry_L3a3:
-	mov	doubles_978AFD80+8, a0
+	mov	PfDoubleToDecimal_entry_L3a3_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x1c, sp)
@@ -17197,7 +17206,7 @@ PfDoubleToDecimal_entry_L3a3:
 	mov	d1, (0x14, sp)
 	call	LibF64Cmp_entry, [d2,d3], 0x10
 	bgt	PfDoubleToDecimal_entry_L3f9
-	mov	doubles_978AFD80+8, a0
+	mov	PfDoubleToDecimal_entry_L3a3_Var, a0
 	mov	(a0), d0
 	mov	(4, a0), d1
 	mov	d0, (0x1c, sp)
@@ -18827,7 +18836,7 @@ StrToLongCore_entry_L16:
 StrToLongCore_entry_L20:
 	mov	a2, (0x34, sp)
 	movbu	(a2), d0
-	mov	(data_978AFD7C), a0
+	mov	(PfOutField_entry_L56_Var), a0
 	extb	d0
 	inc	a0
 	movbu	(d0, a0), d0
@@ -18991,7 +19000,7 @@ StrToLongCore_entry_L13f:
 	jmp	StrToLongCore_entry_L1f8
 StrToLongCore_entry_L14a:
 	movbu	(a2), d1
-	mov	(data_978AFD7C), d0
+	mov	(PfOutField_entry_L56_Var), d0
 	extb	d1
 	inc	d0
 	mov	d0, a0
@@ -19125,7 +19134,7 @@ tolower:
 	movm	[d2], (sp)
 
 tolower_entry:
-	mov	(data_978AFD7C), a0
+	mov	(PfOutField_entry_L56_Var), a0
 	mov	d0, d2
 	inc	a0
 	movbu	(d2, a0), d1
@@ -19156,7 +19165,7 @@ func_9780A1EB:
 	movm	[d2], (sp)
 
 func_9780A1EB_entry:
-	mov	(data_978AFD7C), a0
+	mov	(PfOutField_entry_L56_Var), a0
 	mov	d0, d2
 	inc	a0
 	movbu	(d2, a0), d1
@@ -19568,7 +19577,7 @@ func_9780A414:
 func_9780A414_entry:
 	mov	CLASS_Class, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x170, a0), a1
 	mov	a1, (0x20, sp)
@@ -19576,7 +19585,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_Classes, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x168, d0
@@ -19585,7 +19594,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_ResEvent, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x144, a0), a1
 	mov	a1, (0x20, sp)
@@ -19593,7 +19602,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_ResEvents, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x188, d0
@@ -19602,7 +19611,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_ResMethod, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x148, a0), a1
 	mov	a1, (0x20, sp)
@@ -19610,7 +19619,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_ResMethods, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x1a8, d0
@@ -19619,7 +19628,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_ApFunction, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x250, a0), a1
 	mov	a1, (0x20, sp)
@@ -19627,7 +19636,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_ApFunctions, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x128, d0
@@ -19636,7 +19645,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_ApFunction, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x250, a0), a1
 	mov	a1, (0x20, sp)
@@ -19644,7 +19653,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_ApFunctionNames, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x328, d0
@@ -19653,7 +19662,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_Function, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x24c, a0), a1
 	mov	a1, (0x20, sp)
@@ -19661,7 +19670,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_Functions, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x108, d0
@@ -19670,7 +19679,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_Function, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x24c, a0), a1
 	mov	a1, (0x20, sp)
@@ -19678,7 +19687,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_FunctionNames, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x308, d0
@@ -19687,7 +19696,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_MainFunction, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x254, a0), a1
 	mov	a1, (0x20, sp)
@@ -19695,7 +19704,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_MainFunctions, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x148, d0
@@ -19704,7 +19713,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_MainFunction, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x254, a0), a1
 	mov	a1, (0x20, sp)
@@ -19712,7 +19721,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	Module08_MainFunctionNames, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x348, d0
@@ -19721,7 +19730,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_Viewable, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x288, a0), a1
 	mov	a1, (0x20, sp)
@@ -19729,7 +19738,7 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	V_HDD_MAIN_MENU_Viewables, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x77, d0
@@ -19738,7 +19747,7 @@ func_9780A414_entry:
 	calls	(a1)
 	mov	CLASS_ResName, d0
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x150, a0), a1
 	mov	a1, (0x20, sp)
@@ -19746,14 +19755,14 @@ func_9780A414_entry:
 	movhu	d0, (0x24, sp)
 	mov	V_HDD_MAIN_MENU_ResNames, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xec, a0), a1
 	mov	0x277, d0
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x278, a0), a1
 	mov	0x00770000, d0
@@ -20051,7 +20060,7 @@ func_9780A8A1_entry_L6b:
 func_9780A912:
 	add	-0x14, sp
 	mov	a0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a1
 	mov	sp, a0
@@ -20157,7 +20166,7 @@ func_9780A9BB_entry_Ld:
 	asl2	d1
 	add	d0, d1
 	mov	d1, a0
-	add	Str_LSW_2, a0
+	add	Text_LSW, a0
 	mov	(0x24, sp), a1
 	mov	(0x28, sp), d0
 	call	strncmp_entry, [a2], 4
@@ -20187,16 +20196,16 @@ func_9780A9BB_entry_L40:
 func_9780AA01:
 	add	-4, sp
 	mov	d0, (0xc, sp)
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	cmp	0x14, d0
 	blt	func_9780AA01_L11
 	bra	func_9780AA01_L1e
 func_9780AA01_L11:
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	inc	d0
-	movbu	d0, (data_97910C71)
+	movbu	d0, (func_9780AA01_Table)
 func_9780AA01_L1e:
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	add	-1, d0
 	movbu	d0, (0, sp)
 	bra	func_9780AA01_L47
@@ -20224,7 +20233,7 @@ func_9780AA01_L50:
 
 func_9780AA5C:
 	add	-8, sp
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	cmp	0, d0
 	beq	func_9780AA5C_Lf
 	bra	func_9780AA5C_L12
@@ -20232,9 +20241,9 @@ func_9780AA5C_Lf:
 	clr	d0
 	bra	func_9780AA5C_L58
 func_9780AA5C_L12:
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	add	-1, d0
-	movbu	d0, (data_97910C71)
+	movbu	d0, (func_9780AA01_Table)
 	mov	(0x97913e88), d0
 	mov	d0, (0, sp)
 	clr	d0
@@ -20254,7 +20263,7 @@ func_9780AA5C_L2e:
 	movbu	d0, (4, sp)
 func_9780AA5C_L48:
 	movbu	(4, sp), d1
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	cmp	d0, d1
 	bge	func_9780AA5C_L56
 	bra	func_9780AA5C_L2e
@@ -20266,7 +20275,7 @@ func_9780AA5C_L58:
 func_9780AAB7:
 	add	-4, sp
 	clr	d0
-	movbu	d0, (data_97910C71)
+	movbu	d0, (func_9780AA01_Table)
 	movbu	d0, (0, sp)
 	bra	func_9780AAB7_L23
 func_9780AAB7_Lf:
@@ -20280,14 +20289,14 @@ func_9780AAB7_Lf:
 	movbu	d0, (0, sp)
 func_9780AAB7_L23:
 	movbu	(0, sp), d1
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	cmp	d0, d1
 	bge	func_9780AAB7_L31
 	bra	func_9780AAB7_Lf
 func_9780AAB7_L31:
 	ret	0, 4
 # func_9780AAB7 + 0x34: no traced path reaches what follows (--decode-gaps)
-	movbu	(data_97910C71), d0
+	movbu	(func_9780AA01_Table), d0
 	ret	0, 0
 
 Debug_Wind_RW:
@@ -20314,7 +20323,7 @@ Debug_Wind_RW_L36:
 	mov	1, d0
 	jmp	Debug_Wind_RW_L381
 Debug_Wind_RW_L3b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x1d4, sp), d0
@@ -20322,7 +20331,7 @@ Debug_Wind_RW_L3b:
 	mov	(0x1cc, sp), d0
 	mov	(0x1d0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_PCLK, d0
@@ -20333,7 +20342,7 @@ Debug_Wind_RW_L3b:
 	clr	d0
 	jmp	Debug_Wind_RW_L381
 Debug_Wind_RW_L7f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x1d4, sp), d0
@@ -20392,9 +20401,9 @@ Debug_Wind_RW_Ld8:
 	call	func_9780AEBC_entry, 0, 0x14
 	jmp	Debug_Wind_RW_L363
 Debug_Wind_RW_L10f:
-	mov	(data_97910C84), d0
+	mov	(Debug_Wind_RW_L10f_Var), d0
 	inc	d0
-	mov	d0, (data_97910C84)
+	mov	d0, (Debug_Wind_RW_L10f_Var)
 	mov	0xa, d1
 	nop
 	nop
@@ -20462,7 +20471,7 @@ Debug_Wind_RW_L18c:
 	inc	d0
 	mov	d0, (0x1c, sp)
 Debug_Wind_RW_L19f:
-	mov	(data_97910C84), d0
+	mov	(Debug_Wind_RW_L10f_Var), d0
 	inc	d0
 	mov	0xa, d1
 	nop
@@ -20475,16 +20484,16 @@ Debug_Wind_RW_L19f:
 Debug_Wind_RW_L1b4:
 	jmp	Debug_Wind_RW_L363
 Debug_Wind_RW_L1b7:
-	mov	(data_97910C84), d0
+	mov	(Debug_Wind_RW_L10f_Var), d0
 	cmp	0, d0
 	bgt	Debug_Wind_RW_L1c3
 	bra	Debug_Wind_RW_L1d1
 Debug_Wind_RW_L1c3:
-	mov	(data_97910C84), d0
+	mov	(Debug_Wind_RW_L10f_Var), d0
 	add	-1, d0
-	mov	d0, (data_97910C84)
+	mov	d0, (Debug_Wind_RW_L10f_Var)
 Debug_Wind_RW_L1d1:
-	mov	(data_97910C84), d0
+	mov	(Debug_Wind_RW_L10f_Var), d0
 	mov	0xa, d1
 	nop
 	nop
@@ -20552,7 +20561,7 @@ Debug_Wind_RW_L247:
 	inc	d0
 	mov	d0, (0x28, sp)
 Debug_Wind_RW_L25b:
-	mov	(data_97910C84), d0
+	mov	(Debug_Wind_RW_L10f_Var), d0
 	inc	d0
 	mov	0xa, d1
 	nop
@@ -20638,7 +20647,7 @@ Debug_Wind_RW_L273:
 	add	0x160, a0
 	call	func_9780AEBC_entry, 0, 0x14
 Debug_Wind_RW_L363:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x1d4, sp), d0
@@ -20696,7 +20705,7 @@ func_9780AEBC:
 
 func_9780AEBC_entry:
 	mov	a0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x1c, sp), d0
@@ -20704,7 +20713,7 @@ func_9780AEBC_entry:
 	mov	DebRwMemo_id, d0
 	mov	EV_MEMODRAW, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -20712,21 +20721,21 @@ func_9780AEBC_entry:
 	mov	DebRwMemo_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x88, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x104, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x88, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x84, a0), a0
 	calls	(a0)
@@ -20783,7 +20792,7 @@ TestSevKSSBoxProc_L2c:
 	mov	1, d0
 	bra	TestSevKSSBoxProc_La7
 TestSevKSSBoxProc_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -20791,7 +20800,7 @@ TestSevKSSBoxProc_L30:
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_TSKB, d0
@@ -20802,7 +20811,7 @@ TestSevKSSBoxProc_L30:
 	clr	d0
 	bra	TestSevKSSBoxProc_La7
 TestSevKSSBoxProc_L6b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -20812,7 +20821,7 @@ TestSevKSSBoxProc_L6b:
 	calls	(a0)
 	mov	d0, (0x14, sp)
 TestSevKSSBoxProc_L8d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -20937,7 +20946,7 @@ KSSPsDirBoxProc_L11c:
 KSSPsDirBoxProc_L13f:
 	mov	1, d0
 	mov	d0, (0x97913e34)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -20969,7 +20978,7 @@ KSSPsDirBoxProc_L181:
 	beq	KSSPsDirBoxProc_L18d
 	bra	KSSPsDirBoxProc_L1ca
 KSSPsDirBoxProc_L18d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -20977,7 +20986,7 @@ KSSPsDirBoxProc_L18d:
 	mov	(0x110, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -20987,7 +20996,7 @@ KSSPsDirBoxProc_L18d:
 	calls	(a0)
 	jmp	KSSPsDirBoxProc_L256
 KSSPsDirBoxProc_L1ca:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x52c, a0), a0
 	calls	(a0)
@@ -20995,7 +21004,7 @@ KSSPsDirBoxProc_L1ca:
 	bne	KSSPsDirBoxProc_L1e0
 	bra	KSSPsDirBoxProc_L21c
 KSSPsDirBoxProc_L1e0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -21003,7 +21012,7 @@ KSSPsDirBoxProc_L1e0:
 	mov	(0x110, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -21013,7 +21022,7 @@ KSSPsDirBoxProc_L1e0:
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L256
 KSSPsDirBoxProc_L21c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -21021,7 +21030,7 @@ KSSPsDirBoxProc_L21c:
 	mov	(0x110, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -21030,7 +21039,7 @@ KSSPsDirBoxProc_L21c:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsDirBoxProc_L256:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -21040,7 +21049,7 @@ KSSPsDirBoxProc_L268:
 	mov	sp, a0
 	add	0x2c, a0
 	call	func_97802884_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -21050,7 +21059,7 @@ KSSPsDirBoxProc_L268:
 	calls	(a0)
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L294:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -21058,7 +21067,7 @@ KSSPsDirBoxProc_L294:
 	mov	(0x110, sp), d0
 	mov	(0x114, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -21069,7 +21078,7 @@ KSSPsDirBoxProc_L294:
 	beq	KSSPsDirBoxProc_L2d4
 	bra	KSSPsDirBoxProc_L2f1
 KSSPsDirBoxProc_L2d4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -21092,7 +21101,7 @@ KSSPsDirBoxProc_L2fe:
 	beq	KSSPsDirBoxProc_L30a
 	bra	KSSPsDirBoxProc_L33e
 KSSPsDirBoxProc_L30a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x110, sp), d0
@@ -21114,7 +21123,7 @@ KSSPsDirBoxProc_L30a:
 	movhu	d0, (0x38, sp)
 	bra	KSSPsDirBoxProc_L36d
 KSSPsDirBoxProc_L33e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x110, sp), d0
@@ -21155,7 +21164,7 @@ KSSPsDirBoxProc_L385:
 	movhu	d1, (0x50, sp)
 	movhu	(0x50, sp), d0
 	movhu	d0, (0x54, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -21196,7 +21205,7 @@ KSSPsDirBoxProc_L3e3:
 	beq	KSSPsDirBoxProc_L3ef
 	bra	KSSPsDirBoxProc_L42c
 KSSPsDirBoxProc_L3ef:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -21204,7 +21213,7 @@ KSSPsDirBoxProc_L3ef:
 	mov	(0x110, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -21214,7 +21223,7 @@ KSSPsDirBoxProc_L3ef:
 	calls	(a0)
 	jmp	KSSPsDirBoxProc_L4b8
 KSSPsDirBoxProc_L42c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x52c, a0), a0
 	calls	(a0)
@@ -21222,7 +21231,7 @@ KSSPsDirBoxProc_L42c:
 	bne	KSSPsDirBoxProc_L442
 	bra	KSSPsDirBoxProc_L47e
 KSSPsDirBoxProc_L442:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -21230,7 +21239,7 @@ KSSPsDirBoxProc_L442:
 	mov	(0x110, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -21240,7 +21249,7 @@ KSSPsDirBoxProc_L442:
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L4b8
 KSSPsDirBoxProc_L47e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -21248,7 +21257,7 @@ KSSPsDirBoxProc_L47e:
 	mov	(0x110, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -21257,13 +21266,13 @@ KSSPsDirBoxProc_L47e:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsDirBoxProc_L4b8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 KSSPsDirBoxProc_L4ca:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x28, sp), a0
@@ -21279,13 +21288,13 @@ KSSPsDirBoxProc_L4ca:
 KSSPsDirBoxProc_L4f2:
 	mov	1, d0
 	mov	d0, (0x97913e30)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21294,7 +21303,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	d1, (0x10, sp)
 	mov	MT_PsSetSelect, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21303,7 +21312,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	d1, (0x10, sp)
 	mov	MT_PsSetArea, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21314,7 +21323,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	MT_PsSetMaxArea, d1
 	mov	d2, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21325,7 +21334,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	MT_PsSetColumn, d1
 	mov	d2, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21335,7 +21344,7 @@ KSSPsDirBoxProc_L4f2:
 	mov	d1, (0x10, sp)
 	mov	MT_PsSetRow, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21355,7 +21364,7 @@ KSSPsDirBoxProc_L4f2:
 	nop
 	mul	d1, d2
 	movhu	d2, (0x97913abc)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -21370,13 +21379,13 @@ KSSPsDirBoxProc_L4f2:
 KSSPsDirBoxProc_L611:
 	clr	d0
 	mov	d0, (0x97913e34)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x28, sp), a0
@@ -21388,7 +21397,7 @@ KSSPsDirBoxProc_L611:
 	mov	MT_PsSetSelect, d1
 	mov	d2, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x28, sp), a0
@@ -21403,7 +21412,7 @@ KSSPsDirBoxProc_L611:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L67a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -21423,7 +21432,7 @@ KSSPsDirBoxProc_L69e:
 	beq	KSSPsDirBoxProc_L6ac
 	bra	KSSPsDirBoxProc_L6c6
 KSSPsDirBoxProc_L6ac:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedCopyDest_id, d0
@@ -21431,7 +21440,7 @@ KSSPsDirBoxProc_L6ac:
 	mov	a0, (0x30, sp)
 	bra	KSSPsDirBoxProc_L6de
 KSSPsDirBoxProc_L6c6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedDirectory_id, d0
@@ -21443,12 +21452,12 @@ KSSPsDirBoxProc_L6de:
 	bne	KSSPsDirBoxProc_L6eb
 	jmp	KSSPsDirBoxProc_L7eb
 KSSPsDirBoxProc_L6eb:
-	movbu	(data_97910C1E), d0
+	movbu	(KSSPsDirBoxProc_L6eb_Table), d0
 	cmp	1, d0
 	beq	KSSPsDirBoxProc_L6f8
 	jmp	KSSPsDirBoxProc_L7cc
 KSSPsDirBoxProc_L6f8:
-	movhu	(data_97910C1C), d0
+	movhu	(KSSPsDirBoxProc_L6f8_Var), d0
 	exth	d0
 	cmp	0, d0
 	bgt	KSSPsDirBoxProc_L706
@@ -21456,7 +21465,7 @@ KSSPsDirBoxProc_L6f8:
 KSSPsDirBoxProc_L706:
 	mov	(0x28, sp), a0
 	mov	(0x34, a0), a0
-	movhu	(data_97910C1C), d0
+	movhu	(KSSPsDirBoxProc_L6f8_Var), d0
 	movhu	d0, (a0)
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a3
@@ -21464,7 +21473,7 @@ KSSPsDirBoxProc_L706:
 	exth	d3
 	movhu	(0x2c, a0), d2
 	exth	d2
-	movhu	(data_97910C1C), d0
+	movhu	(KSSPsDirBoxProc_L6f8_Var), d0
 	exth	d0
 	add	-1, d0
 	nop
@@ -21487,8 +21496,8 @@ KSSPsDirBoxProc_L706:
 	mov	(0x38, a0), a0
 	movhu	d0, (a0)
 	clr	d0
-	movhu	d0, (data_97910C1C)
-	mov	(data_979126B4), a0
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedDirInFile_id, d0
@@ -21503,7 +21512,7 @@ KSSPsDirBoxProc_L706:
 	mov	(0x34, sp), a0
 	mov	(0x38, a0), a0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -21511,7 +21520,7 @@ KSSPsDirBoxProc_L706:
 	mov	SelectedDirInFile_id, d0
 	mov	MT_PsSetSelect, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x28, sp), a0
@@ -21523,7 +21532,7 @@ KSSPsDirBoxProc_L706:
 	mov	MT_PsSetDir, d1
 	calls	(a1)
 KSSPsDirBoxProc_L7cc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -21549,7 +21558,7 @@ KSSPsDirBoxProc_L7f5:
 	mov	(0x38, a0), a0
 	movhu	d0, (a0)
 KSSPsDirBoxProc_L80e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x110, sp), d0
@@ -21615,7 +21624,7 @@ KSSPsDirBoxProc_L896:
 	movhu	(0x40, sp), d0
 	inc	d0
 	movhu	d0, (0x40, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x110, sp), d0
@@ -21652,7 +21661,7 @@ KSSPsDirBoxProc_L896:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -21683,7 +21692,7 @@ KSSPsDirBoxProc_L896:
 	add	0x78, a0
 	mov	0x14, d0
 	call	func_9780AF46_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -21731,7 +21740,7 @@ KSSPsDirBoxProc_L992:
 	bge	KSSPsDirBoxProc_L9a1
 	jmp	KSSPsDirBoxProc_L85c
 KSSPsDirBoxProc_L9a1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -21742,7 +21751,7 @@ KSSPsDirBoxProc_L9a1:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L9c2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -21764,7 +21773,7 @@ KSSPsDirBoxProc_L9e6:
 	mov	(0x28, sp), a0
 	movhu	(0x2e, a0), d3
 	exth	d3
-	movhu	(data_97910C16), d2
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d2
 	exth	d2
 	movhu	(0x97913abc), d0
 	exth	d0
@@ -21778,7 +21787,7 @@ KSSPsDirBoxProc_L9e6:
 	extbu	d0
 	mov	d3, d1
 	call	LibDiv32, 0, 0
-	movbu	d0, (data_97910C14)
+	movbu	d0, (KSSPsDirBoxProc_L9e6_Var)
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a0
 	movhu	(a0), d0
@@ -21786,7 +21795,7 @@ KSSPsDirBoxProc_L9e6:
 	mov	(0x28, sp), a0
 	movhu	(0x2e, a0), d3
 	exth	d3
-	movhu	(data_97910C16), d2
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d2
 	exth	d2
 	movhu	(0x97913abc), d1
 	exth	d1
@@ -21796,19 +21805,19 @@ KSSPsDirBoxProc_L9e6:
 	mul	d0, d1
 	sub	d1, d2
 	add	-1, d2
-	movbu	(data_97910C14), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var), d0
 	nop
 	nop
 	mul	d3, d0
 	mov	d2, d1
 	sub	d0, d1
-	movbu	d1, (data_97910C15)
+	movbu	d1, (KSSPsDirBoxProc_L9e6_Var_2)
 	mov	(0x118, sp), d0
 	cmp	1, d0
 	beq	KSSPsDirBoxProc_La5e
 	jmp	KSSPsDirBoxProc_Lb74
 KSSPsDirBoxProc_La5e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x110, sp), d0
@@ -21838,7 +21847,7 @@ KSSPsDirBoxProc_La5e:
 	movhu	(0x4a, sp), d2
 	exth	d2
 	movhu	(0x3c, sp), d1
-	movbu	(data_97910C15), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var_2), d0
 	nop
 	nop
 	mul	d0, d1
@@ -21854,7 +21863,7 @@ KSSPsDirBoxProc_La5e:
 	movhu	(0x48, sp), d2
 	exth	d2
 	movhu	(0x38, sp), d1
-	movbu	(data_97910C14), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var), d0
 	nop
 	nop
 	mul	d0, d1
@@ -21865,7 +21874,7 @@ KSSPsDirBoxProc_La5e:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -21873,7 +21882,7 @@ KSSPsDirBoxProc_La5e:
 	mov	sp, a1
 	add	0x50, a1
 	calls	(a2)
-	movhu	(data_97910C16), d0
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d0
 	exth	d0
 	add	-1, d0
 	mov	sp, a0
@@ -21886,7 +21895,7 @@ KSSPsDirBoxProc_La5e:
 	mov	d0, (8, sp)
 	mov	Str_03i_s_8, d0
 	mov	d0, (0xc, sp)
-	movhu	(data_97910C16), d0
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d0
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	sp, a0
@@ -21898,7 +21907,7 @@ KSSPsDirBoxProc_La5e:
 	add	0x78, a0
 	mov	0x14, d0
 	call	func_9780AF46_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -21926,8 +21935,8 @@ KSSPsDirBoxProc_Lb74:
 	mov	(0x28, sp), a0
 	mov	(0x34, a0), a0
 	movhu	(a0), d0
-	movhu	d0, (data_97910C16)
-	movhu	(data_97910C16), d0
+	movhu	d0, (KSSPsDirBoxProc_L9e6_Var_3)
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d0
 	exth	d0
 	add	-1, d0
 	mov	sp, a0
@@ -21940,7 +21949,7 @@ KSSPsDirBoxProc_Lb74:
 	mov	d0, (8, sp)
 	mov	Str_03i_s_7, d0
 	mov	d0, (0xc, sp)
-	movhu	(data_97910C16), d0
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d0
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	sp, a0
@@ -21959,7 +21968,7 @@ KSSPsDirBoxProc_Lb74:
 	mov	(0x28, sp), a0
 	movhu	(0x2e, a0), d3
 	exth	d3
-	movhu	(data_97910C16), d2
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d2
 	exth	d2
 	movhu	(0x97913abc), d0
 	exth	d0
@@ -21973,7 +21982,7 @@ KSSPsDirBoxProc_Lb74:
 	extbu	d0
 	mov	d3, d1
 	call	LibDiv32, 0, 0
-	movbu	d0, (data_97910C14)
+	movbu	d0, (KSSPsDirBoxProc_L9e6_Var)
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a0
 	movhu	(a0), d0
@@ -21981,7 +21990,7 @@ KSSPsDirBoxProc_Lb74:
 	mov	(0x28, sp), a0
 	movhu	(0x2e, a0), d3
 	exth	d3
-	movhu	(data_97910C16), d2
+	movhu	(KSSPsDirBoxProc_L9e6_Var_3), d2
 	exth	d2
 	movhu	(0x97913abc), d1
 	exth	d1
@@ -21991,14 +22000,14 @@ KSSPsDirBoxProc_Lb74:
 	mul	d0, d1
 	sub	d1, d2
 	add	-1, d2
-	movbu	(data_97910C14), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var), d0
 	nop
 	nop
 	mul	d3, d0
 	mov	d2, d1
 	sub	d0, d1
-	movbu	d1, (data_97910C15)
-	mov	(data_979126B4), a0
+	movbu	d1, (KSSPsDirBoxProc_L9e6_Var_2)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x110, sp), d0
@@ -22028,7 +22037,7 @@ KSSPsDirBoxProc_Lb74:
 	movhu	(0x4a, sp), d2
 	exth	d2
 	movhu	(0x3c, sp), d1
-	movbu	(data_97910C15), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var_2), d0
 	nop
 	nop
 	mul	d0, d1
@@ -22044,7 +22053,7 @@ KSSPsDirBoxProc_Lb74:
 	movhu	(0x48, sp), d2
 	exth	d2
 	movhu	(0x38, sp), d1
-	movbu	(data_97910C14), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var), d0
 	nop
 	nop
 	mul	d0, d1
@@ -22055,7 +22064,7 @@ KSSPsDirBoxProc_Lb74:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -22067,7 +22076,7 @@ KSSPsDirBoxProc_Lb74:
 	mov	sp, a1
 	add	0x78, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -22095,7 +22104,7 @@ KSSPsDirBoxProc_Lb74:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_Ld18:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22107,8 +22116,8 @@ KSSPsDirBoxProc_Ld18:
 	bra	KSSPsDirBoxProc_Ld5d
 KSSPsDirBoxProc_Ld3c:
 	clr	d0
-	mov	d0, (data_97910C64)
-	mov	(data_979126B4), a0
+	mov	d0, (KSSPsDirBoxProc_Ld3c_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedCopyDest_id, d0
@@ -22116,7 +22125,7 @@ KSSPsDirBoxProc_Ld3c:
 	mov	a0, (0x30, sp)
 	bra	KSSPsDirBoxProc_Ld75
 KSSPsDirBoxProc_Ld5d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedDirectory_id, d0
@@ -22133,7 +22142,7 @@ KSSPsDirBoxProc_Ld75:
 	mov	(0x30, sp), a0
 	mov	(0x34, a0), a0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedDirInFile_id, d0
@@ -22148,7 +22157,7 @@ KSSPsDirBoxProc_Ld75:
 	mov	(0x34, sp), a0
 	mov	(0x38, a0), a0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -22156,7 +22165,7 @@ KSSPsDirBoxProc_Ld75:
 	mov	SelectedDirInFile_id, d0
 	mov	MT_PsSetSelect, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x28, sp), a0
@@ -22174,7 +22183,7 @@ KSSPsDirBoxProc_Ld75:
 	call	func_97802F10, 0, 0
 	clr	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -22185,7 +22194,7 @@ KSSPsDirBoxProc_Ld75:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_Le38:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22196,7 +22205,7 @@ KSSPsDirBoxProc_Le38:
 	exth	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_Le57:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22207,7 +22216,7 @@ KSSPsDirBoxProc_Le57:
 	beq	KSSPsDirBoxProc_Le7b
 	bra	KSSPsDirBoxProc_Le95
 KSSPsDirBoxProc_Le7b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedCopyDest_id, d0
@@ -22215,7 +22224,7 @@ KSSPsDirBoxProc_Le7b:
 	mov	a0, (0x30, sp)
 	bra	KSSPsDirBoxProc_Lead
 KSSPsDirBoxProc_Le95:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	SelectedDirectory_id, d0
@@ -22240,7 +22249,7 @@ KSSPsDirBoxProc_Lead:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_Leda:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22251,13 +22260,13 @@ KSSPsDirBoxProc_Leda:
 	exth	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_Lef9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -22266,7 +22275,7 @@ KSSPsDirBoxProc_Lef9:
 	mov	d1, (0x10, sp)
 	mov	(0x114, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -22290,7 +22299,7 @@ KSSPsDirBoxProc_Lf61:
 	beq	KSSPsDirBoxProc_Lf6f
 	bra	KSSPsDirBoxProc_Lf91
 KSSPsDirBoxProc_Lf6f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x118, sp), d0
@@ -22300,7 +22309,7 @@ KSSPsDirBoxProc_Lf6f:
 	calls	(a0)
 	bra	KSSPsDirBoxProc_Lfb1
 KSSPsDirBoxProc_Lf91:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x118, sp), d0
@@ -22312,7 +22321,7 @@ KSSPsDirBoxProc_Lfb1:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_Lfb5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -22320,7 +22329,7 @@ KSSPsDirBoxProc_Lfb5:
 	mov	(0x110, sp), d0
 	mov	(0x114, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22348,7 +22357,7 @@ KSSPsDirBoxProc_L1009:
 	beq	KSSPsDirBoxProc_L1017
 	bra	KSSPsDirBoxProc_L103a
 KSSPsDirBoxProc_L1017:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -22359,7 +22368,7 @@ KSSPsDirBoxProc_L1017:
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L105b
 KSSPsDirBoxProc_L103a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -22369,7 +22378,7 @@ KSSPsDirBoxProc_L103a:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsDirBoxProc_L105b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x118, sp), d0
@@ -22381,7 +22390,7 @@ KSSPsDirBoxProc_L1079:
 	clr	d0
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L107d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22390,7 +22399,7 @@ KSSPsDirBoxProc_L107d:
 	mov	(0x44, a0), a0
 	clr	d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -22400,7 +22409,7 @@ KSSPsDirBoxProc_L107d:
 	calls	(a0)
 	jmp	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L10b9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22422,7 +22431,7 @@ KSSPsDirBoxProc_L10e2:
 	mov	1, d0
 	mov	d0, (a0)
 KSSPsDirBoxProc_L10ea:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -22432,7 +22441,7 @@ KSSPsDirBoxProc_L10ea:
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L110a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x110, sp), d0
@@ -22454,7 +22463,7 @@ KSSPsDirBoxProc_L1133:
 	mov	1, d0
 	mov	d0, (a0)
 KSSPsDirBoxProc_L113b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -22464,7 +22473,7 @@ KSSPsDirBoxProc_L113b:
 	calls	(a0)
 	bra	KSSPsDirBoxProc_L1179
 KSSPsDirBoxProc_L115b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x118, sp), d0
@@ -22606,7 +22615,7 @@ KssDirBoxFunc_L119:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ac0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22615,7 +22624,7 @@ KssDirBoxFunc_L119:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22624,7 +22633,7 @@ KssDirBoxFunc_L119:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22634,7 +22643,7 @@ KssDirBoxFunc_L119:
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e3c)
 	mov	d0, (0x97913e34)
@@ -22655,7 +22664,7 @@ KssDirBoxFunc_L1cf:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ac8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22664,7 +22673,7 @@ KssDirBoxFunc_L1cf:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22673,7 +22682,7 @@ KssDirBoxFunc_L1cf:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22684,7 +22693,7 @@ KssDirBoxFunc_L1cf:
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L24f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22692,7 +22701,7 @@ KssDirBoxFunc_L24f:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22700,7 +22709,7 @@ KssDirBoxFunc_L24f:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22725,7 +22734,7 @@ KssDirBoxFunc_L2cd:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ac0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22734,7 +22743,7 @@ KssDirBoxFunc_L2cd:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22743,7 +22752,7 @@ KssDirBoxFunc_L2cd:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22753,7 +22762,7 @@ KssDirBoxFunc_L2cd:
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e3c)
 	mov	d0, (0x97913e34)
@@ -22775,7 +22784,7 @@ KssDirBoxFunc_L386:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ac8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22784,7 +22793,7 @@ KssDirBoxFunc_L386:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22793,7 +22802,7 @@ KssDirBoxFunc_L386:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22804,7 +22813,7 @@ KssDirBoxFunc_L386:
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L407:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22812,7 +22821,7 @@ KssDirBoxFunc_L407:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22820,7 +22829,7 @@ KssDirBoxFunc_L407:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22844,7 +22853,7 @@ KssDirBoxFunc_L47e:
 	exth	d1
 	sub	d1, d0
 	movhu	d0, (0x97913ac0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22853,7 +22862,7 @@ KssDirBoxFunc_L47e:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22862,7 +22871,7 @@ KssDirBoxFunc_L47e:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22872,7 +22881,7 @@ KssDirBoxFunc_L47e:
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e3c)
 	mov	d0, (0x97913e34)
@@ -22894,7 +22903,7 @@ KssDirBoxFunc_L53e:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ac8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22903,7 +22912,7 @@ KssDirBoxFunc_L53e:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22912,7 +22921,7 @@ KssDirBoxFunc_L53e:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -22923,7 +22932,7 @@ KssDirBoxFunc_L53e:
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L5bf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22931,7 +22940,7 @@ KssDirBoxFunc_L5bf:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22939,7 +22948,7 @@ KssDirBoxFunc_L5bf:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -22966,7 +22975,7 @@ KssDirBoxFunc_L63e:
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x97913ac0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22975,7 +22984,7 @@ KssDirBoxFunc_L63e:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22984,7 +22993,7 @@ KssDirBoxFunc_L63e:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -22994,7 +23003,7 @@ KssDirBoxFunc_L63e:
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e3c)
 	mov	d0, (0x97913e34)
@@ -23015,7 +23024,7 @@ KssDirBoxFunc_L6fb:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ac8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23024,7 +23033,7 @@ KssDirBoxFunc_L6fb:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23033,7 +23042,7 @@ KssDirBoxFunc_L6fb:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23044,7 +23053,7 @@ KssDirBoxFunc_L6fb:
 	calls	(a0)
 	jmp	KssDirBoxFunc_La3b
 KssDirBoxFunc_L77b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -23052,7 +23061,7 @@ KssDirBoxFunc_L77b:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -23060,7 +23069,7 @@ KssDirBoxFunc_L77b:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetSelectedBankNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -23084,7 +23093,7 @@ KssDirBoxFunc_L7f2:
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x97913ac0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -23093,7 +23102,7 @@ KssDirBoxFunc_L7f2:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -23102,7 +23111,7 @@ KssDirBoxFunc_L7f2:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -23112,7 +23121,7 @@ KssDirBoxFunc_L7f2:
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e3c)
 	mov	d0, (0x97913e34)
@@ -23120,7 +23129,7 @@ KssDirBoxFunc_L7f2:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ac8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23129,7 +23138,7 @@ KssDirBoxFunc_L7f2:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23138,7 +23147,7 @@ KssDirBoxFunc_L7f2:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23161,7 +23170,7 @@ KssDirBoxFunc_L91e:
 	exth	d1
 	sub	d1, d0
 	movhu	d0, (0x97913ac0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -23170,7 +23179,7 @@ KssDirBoxFunc_L91e:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -23179,7 +23188,7 @@ KssDirBoxFunc_L91e:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac0), d0
@@ -23189,7 +23198,7 @@ KssDirBoxFunc_L91e:
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
 	movhu	(0x97913ac0), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e3c)
 	mov	d0, (0x97913e34)
@@ -23197,7 +23206,7 @@ KssDirBoxFunc_L91e:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ac8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23206,7 +23215,7 @@ KssDirBoxFunc_L91e:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23215,7 +23224,7 @@ KssDirBoxFunc_L91e:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ac8), d0
@@ -23344,7 +23353,7 @@ KSSPsFileBoxProc_L11c:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L145:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -23376,7 +23385,7 @@ KSSPsFileBoxProc_L17f:
 	beq	KSSPsFileBoxProc_L18b
 	bra	KSSPsFileBoxProc_L1c8
 KSSPsFileBoxProc_L18b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -23384,7 +23393,7 @@ KSSPsFileBoxProc_L18b:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -23394,7 +23403,7 @@ KSSPsFileBoxProc_L18b:
 	calls	(a0)
 	jmp	KSSPsFileBoxProc_L254
 KSSPsFileBoxProc_L1c8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x52c, a0), a0
 	calls	(a0)
@@ -23402,7 +23411,7 @@ KSSPsFileBoxProc_L1c8:
 	bne	KSSPsFileBoxProc_L1de
 	bra	KSSPsFileBoxProc_L21a
 KSSPsFileBoxProc_L1de:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -23410,7 +23419,7 @@ KSSPsFileBoxProc_L1de:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -23420,7 +23429,7 @@ KSSPsFileBoxProc_L1de:
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L254
 KSSPsFileBoxProc_L21a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -23428,7 +23437,7 @@ KSSPsFileBoxProc_L21a:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -23437,7 +23446,7 @@ KSSPsFileBoxProc_L21a:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsFileBoxProc_L254:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -23447,7 +23456,7 @@ KSSPsFileBoxProc_L266:
 	mov	sp, a0
 	add	0x2c, a0
 	call	func_97802884_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -23456,7 +23465,7 @@ KSSPsFileBoxProc_L266:
 	mov	EV_SetSelectedDir, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -23465,7 +23474,7 @@ KSSPsFileBoxProc_L266:
 	mov	EV_SetSelectedNumber, d1
 	calls	(a0)
 	mov	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	(0x30, sp), d0
@@ -23473,7 +23482,7 @@ KSSPsFileBoxProc_L266:
 	mov	-1, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	(0x34, sp), d0
@@ -23481,12 +23490,12 @@ KSSPsFileBoxProc_L266:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_97910C64), d0
+	mov	(KSSPsDirBoxProc_Ld3c_Var), d0
 	cmp	0, d0
 	bne	KSSPsFileBoxProc_L2f3
 	bra	KSSPsFileBoxProc_L317
 KSSPsFileBoxProc_L2f3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -23495,9 +23504,9 @@ KSSPsFileBoxProc_L2f3:
 	mov	EV_INDEXSW_DOWN_AIC, d1
 	calls	(a0)
 	clr	d0
-	mov	d0, (data_97910C64)
+	mov	d0, (KSSPsDirBoxProc_Ld3c_Var)
 KSSPsFileBoxProc_L317:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -23507,7 +23516,7 @@ KSSPsFileBoxProc_L317:
 	calls	(a0)
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L338:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -23515,7 +23524,7 @@ KSSPsFileBoxProc_L338:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -23526,7 +23535,7 @@ KSSPsFileBoxProc_L338:
 	beq	KSSPsFileBoxProc_L378
 	bra	KSSPsFileBoxProc_L395
 KSSPsFileBoxProc_L378:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -23549,7 +23558,7 @@ KSSPsFileBoxProc_L3a2:
 	beq	KSSPsFileBoxProc_L3ae
 	bra	KSSPsFileBoxProc_L3e2
 KSSPsFileBoxProc_L3ae:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x108, sp), d0
@@ -23571,7 +23580,7 @@ KSSPsFileBoxProc_L3ae:
 	movhu	d0, (0x38, sp)
 	bra	KSSPsFileBoxProc_L411
 KSSPsFileBoxProc_L3e2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -23612,7 +23621,7 @@ KSSPsFileBoxProc_L429:
 	movhu	d1, (0x4c, sp)
 	movhu	(0x4c, sp), d0
 	movhu	d0, (0x50, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -23653,7 +23662,7 @@ KSSPsFileBoxProc_L487:
 	beq	KSSPsFileBoxProc_L493
 	bra	KSSPsFileBoxProc_L4d0
 KSSPsFileBoxProc_L493:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -23661,7 +23670,7 @@ KSSPsFileBoxProc_L493:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -23671,7 +23680,7 @@ KSSPsFileBoxProc_L493:
 	calls	(a0)
 	jmp	KSSPsFileBoxProc_L55c
 KSSPsFileBoxProc_L4d0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x52c, a0), a0
 	calls	(a0)
@@ -23679,7 +23688,7 @@ KSSPsFileBoxProc_L4d0:
 	bne	KSSPsFileBoxProc_L4e6
 	bra	KSSPsFileBoxProc_L522
 KSSPsFileBoxProc_L4e6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -23687,7 +23696,7 @@ KSSPsFileBoxProc_L4e6:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -23697,7 +23706,7 @@ KSSPsFileBoxProc_L4e6:
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L55c
 KSSPsFileBoxProc_L522:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -23705,7 +23714,7 @@ KSSPsFileBoxProc_L522:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -23714,13 +23723,13 @@ KSSPsFileBoxProc_L522:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsFileBoxProc_L55c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 KSSPsFileBoxProc_L56e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x28, sp), a0
@@ -23734,7 +23743,7 @@ KSSPsFileBoxProc_L56e:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L596:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -23742,7 +23751,7 @@ KSSPsFileBoxProc_L596:
 	mov	a0, (0x28, sp)
 	mov	1, d0
 	mov	d0, (0x97913e38)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23751,7 +23760,7 @@ KSSPsFileBoxProc_L596:
 	mov	d1, (0x10, sp)
 	mov	MT_PsSetSelect, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23760,7 +23769,7 @@ KSSPsFileBoxProc_L596:
 	mov	d1, (0x10, sp)
 	mov	MT_PsSetDir, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23771,7 +23780,7 @@ KSSPsFileBoxProc_L596:
 	mov	MT_PsSetMaxArea, d1
 	mov	d2, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23782,7 +23791,7 @@ KSSPsFileBoxProc_L596:
 	mov	MT_PsSetColumn, d1
 	mov	d2, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23793,7 +23802,7 @@ KSSPsFileBoxProc_L596:
 	mov	MT_PsSetRow, d1
 	mov	d2, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23812,7 +23821,7 @@ KSSPsFileBoxProc_L596:
 	nop
 	mul	d1, d2
 	movhu	d2, (0x97913ad0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -23826,7 +23835,7 @@ KSSPsFileBoxProc_L596:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L6b6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -23834,7 +23843,7 @@ KSSPsFileBoxProc_L6b6:
 	mov	a0, (0x28, sp)
 	clr	d0
 	mov	d0, (0x97913e3c)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x28, sp), a0
@@ -23846,7 +23855,7 @@ KSSPsFileBoxProc_L6b6:
 	mov	MT_PsSetSelect, d1
 	mov	d2, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x28, sp), a0
@@ -23861,7 +23870,7 @@ KSSPsFileBoxProc_L6b6:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L71f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -23881,12 +23890,12 @@ KSSPsFileBoxProc_L743:
 	bne	KSSPsFileBoxProc_L74f
 	bra	KSSPsFileBoxProc_L7a4
 KSSPsFileBoxProc_L74f:
-	movbu	(data_97910C1E), d0
+	movbu	(KSSPsDirBoxProc_L6eb_Table), d0
 	cmp	1, d0
 	beq	KSSPsFileBoxProc_L75b
 	bra	KSSPsFileBoxProc_L785
 KSSPsFileBoxProc_L75b:
-	movhu	(data_97910C1C), d0
+	movhu	(KSSPsDirBoxProc_L6f8_Var), d0
 	exth	d0
 	cmp	0, d0
 	bgt	KSSPsFileBoxProc_L768
@@ -23894,16 +23903,16 @@ KSSPsFileBoxProc_L75b:
 KSSPsFileBoxProc_L768:
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a0
-	movhu	(data_97910C1C), d0
+	movhu	(KSSPsDirBoxProc_L6f8_Var), d0
 	movhu	d0, (a0)
 	mov	(0x28, sp), a0
 	mov	(0x34, a0), a0
 	mov	1, d0
 	movhu	d0, (a0)
 	clr	d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 KSSPsFileBoxProc_L785:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -23923,7 +23932,7 @@ KSSPsFileBoxProc_L7ae:
 	mov	(0x110, sp), d0
 	movhu	d0, (a0)
 KSSPsFileBoxProc_L7b9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	DirActualTitle_id, d0
@@ -23946,7 +23955,7 @@ KSSPsFileBoxProc_L7b9:
 	exth	d0
 	add	0x78, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -23983,7 +23992,7 @@ KSSPsFileBoxProc_L7b9:
 	add	0x74, a0
 	mov	0x14, d0
 	call	func_9780AF46_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24007,7 +24016,7 @@ KSSPsFileBoxProc_L7b9:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	DirNextTitle_id, d0
@@ -24030,7 +24039,7 @@ KSSPsFileBoxProc_L7b9:
 	exth	d0
 	add	0x78, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -24083,7 +24092,7 @@ KSSPsFileBoxProc_L92a:
 	add	0x74, a0
 	mov	0x14, d0
 	call	func_9780AF46_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24105,7 +24114,7 @@ KSSPsFileBoxProc_L92a:
 	mov	0xf8, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -24140,7 +24149,7 @@ KSSPsFileBoxProc_L9b3:
 	movhu	d0, (0x40, sp)
 	jmp	KSSPsFileBoxProc_Lb3a
 KSSPsFileBoxProc_L9ba:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -24176,7 +24185,7 @@ KSSPsFileBoxProc_L9ba:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -24221,7 +24230,7 @@ KSSPsFileBoxProc_L9ba:
 	beq	KSSPsFileBoxProc_La77
 	bra	KSSPsFileBoxProc_Laad
 KSSPsFileBoxProc_La77:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24259,7 +24268,7 @@ KSSPsFileBoxProc_Laad:
 	ble	KSSPsFileBoxProc_Lac1
 	bra	KSSPsFileBoxProc_Laf4
 KSSPsFileBoxProc_Lac1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24289,7 +24298,7 @@ KSSPsFileBoxProc_Laf4:
 	add	0x74, a0
 	mov	0x1d, d0
 	call	func_9780AF46_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24348,7 +24357,7 @@ KSSPsFileBoxProc_Lb5f:
 	bgt	KSSPsFileBoxProc_Lb74
 	jmp	KSSPsFileBoxProc_Lc22
 KSSPsFileBoxProc_Lb74:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -24394,7 +24403,7 @@ KSSPsFileBoxProc_Lb74:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -24402,7 +24411,7 @@ KSSPsFileBoxProc_Lb74:
 	mov	sp, a1
 	add	0x4c, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	Str_End_of_Directory, d0
@@ -24423,7 +24432,7 @@ KSSPsFileBoxProc_Lb74:
 	mov	d2, d0
 	calls	(a2)
 KSSPsFileBoxProc_Lc22:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -24434,7 +24443,7 @@ KSSPsFileBoxProc_Lc22:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_Lc43:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24450,17 +24459,17 @@ KSSPsFileBoxProc_Lc63:
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_Lc67:
 	clr	d0
-	movbu	d0, (data_97910C14)
-	movhu	(data_97910C1A), d0
+	movbu	d0, (KSSPsDirBoxProc_L9e6_Var)
+	movhu	(KSSPsFileBoxProc_Lc67_Var), d0
 	exth	d0
 	add	-1, d0
-	movbu	d0, (data_97910C15)
+	movbu	d0, (KSSPsDirBoxProc_L9e6_Var_2)
 	mov	(0x110, sp), d0
 	cmp	1, d0
 	beq	KSSPsFileBoxProc_Lc88
 	jmp	KSSPsFileBoxProc_Lda9
 KSSPsFileBoxProc_Lc88:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -24490,7 +24499,7 @@ KSSPsFileBoxProc_Lc88:
 	movhu	(0x46, sp), d2
 	exth	d2
 	movhu	(0x3c, sp), d1
-	movbu	(data_97910C15), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var_2), d0
 	nop
 	nop
 	mul	d0, d1
@@ -24506,7 +24515,7 @@ KSSPsFileBoxProc_Lc88:
 	movhu	(0x44, sp), d2
 	exth	d2
 	movhu	(0x38, sp), d1
-	movbu	(data_97910C14), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var), d0
 	nop
 	nop
 	mul	d0, d1
@@ -24517,7 +24526,7 @@ KSSPsFileBoxProc_Lc88:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -24527,10 +24536,10 @@ KSSPsFileBoxProc_Lc88:
 	calls	(a2)
 	mov	1, d0
 	mov	d0, (0x14, sp)
-	movhu	(data_97910C18), d0
+	movhu	(KSSPsFileBoxProc_Lc88_Var), d0
 	exth	d0
 	add	-1, d0
-	movhu	(data_97910C1A), d1
+	movhu	(KSSPsFileBoxProc_Lc67_Var), d1
 	exth	d1
 	add	-1, d1
 	mov	sp, a0
@@ -24542,7 +24551,7 @@ KSSPsFileBoxProc_Lc88:
 	mov	d0, (8, sp)
 	mov	Str_02i_s_6, d0
 	mov	d0, (0xc, sp)
-	movhu	(data_97910C1A), d0
+	movhu	(KSSPsFileBoxProc_Lc67_Var), d0
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	sp, a0
@@ -24554,7 +24563,7 @@ KSSPsFileBoxProc_Lc88:
 	add	0x74, a0
 	mov	0x1d, d0
 	call	func_9780AF46_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24582,17 +24591,17 @@ KSSPsFileBoxProc_Lda9:
 	mov	(0x28, sp), a0
 	mov	(0x34, a0), a0
 	movhu	(a0), d0
-	movhu	d0, (data_97910C1A)
+	movhu	d0, (KSSPsFileBoxProc_Lc67_Var)
 	mov	(0x28, sp), a0
 	mov	(0x38, a0), a0
 	movhu	(a0), d0
-	movhu	d0, (data_97910C18)
+	movhu	d0, (KSSPsFileBoxProc_Lc88_Var)
 	mov	1, d0
 	mov	d0, (0x14, sp)
-	movhu	(data_97910C18), d0
+	movhu	(KSSPsFileBoxProc_Lc88_Var), d0
 	exth	d0
 	add	-1, d0
-	movhu	(data_97910C1A), d1
+	movhu	(KSSPsFileBoxProc_Lc67_Var), d1
 	exth	d1
 	add	-1, d1
 	mov	sp, a0
@@ -24604,7 +24613,7 @@ KSSPsFileBoxProc_Lda9:
 	mov	d0, (8, sp)
 	mov	Str_02i_s_5, d0
 	mov	d0, (0xc, sp)
-	movhu	(data_97910C1A), d0
+	movhu	(KSSPsFileBoxProc_Lc67_Var), d0
 	exth	d0
 	mov	d0, (0x10, sp)
 	mov	sp, a0
@@ -24617,12 +24626,12 @@ KSSPsFileBoxProc_Lda9:
 	mov	0x1d, d0
 	call	func_9780AF46_entry, 0, 0x18
 	clr	d0
-	movbu	d0, (data_97910C14)
-	movhu	(data_97910C1A), d0
+	movbu	d0, (KSSPsDirBoxProc_L9e6_Var)
+	movhu	(KSSPsFileBoxProc_Lc67_Var), d0
 	exth	d0
 	add	-1, d0
-	movbu	d0, (data_97910C15)
-	mov	(data_979126B4), a0
+	movbu	d0, (KSSPsDirBoxProc_L9e6_Var_2)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -24652,7 +24661,7 @@ KSSPsFileBoxProc_Lda9:
 	movhu	(0x46, sp), d2
 	exth	d2
 	movhu	(0x3c, sp), d1
-	movbu	(data_97910C15), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var_2), d0
 	nop
 	nop
 	mul	d0, d1
@@ -24667,7 +24676,7 @@ KSSPsFileBoxProc_Lda9:
 	movhu	(0x44, sp), d2
 	exth	d2
 	movhu	(0x38, sp), d1
-	movbu	(data_97910C14), d0
+	movbu	(KSSPsDirBoxProc_L9e6_Var), d0
 	nop
 	nop
 	mul	d0, d1
@@ -24678,7 +24687,7 @@ KSSPsFileBoxProc_Lda9:
 	movhu	(0x38, sp), d0
 	add	d1, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -24690,7 +24699,7 @@ KSSPsFileBoxProc_Lda9:
 	mov	sp, a1
 	add	0x74, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	sp, a0
@@ -24716,7 +24725,7 @@ KSSPsFileBoxProc_Lda9:
 	mov	d2, d0
 	calls	(a2)
 	call	func_9781EA5D_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -24727,7 +24736,7 @@ KSSPsFileBoxProc_Lda9:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_Lf33:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24741,7 +24750,7 @@ KSSPsFileBoxProc_Lf33:
 	sub	d1, d0
 	exthu	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -24752,7 +24761,7 @@ KSSPsFileBoxProc_Lf33:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_Lf81:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24763,7 +24772,7 @@ KSSPsFileBoxProc_Lf81:
 	exth	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_Lfa0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24777,7 +24786,7 @@ KSSPsFileBoxProc_Lfa0:
 	sub	d1, d0
 	exthu	d0
 	call	func_97802F10, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -24788,7 +24797,7 @@ KSSPsFileBoxProc_Lfa0:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_Lfee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24799,13 +24808,13 @@ KSSPsFileBoxProc_Lfee:
 	exth	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L100d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -24814,7 +24823,7 @@ KSSPsFileBoxProc_L100d:
 	mov	d1, (0x10, sp)
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -24838,7 +24847,7 @@ KSSPsFileBoxProc_L1075:
 	beq	KSSPsFileBoxProc_L1083
 	bra	KSSPsFileBoxProc_L10a5
 KSSPsFileBoxProc_L1083:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x110, sp), d0
@@ -24848,7 +24857,7 @@ KSSPsFileBoxProc_L1083:
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L10c5
 KSSPsFileBoxProc_L10a5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x110, sp), d0
@@ -24860,7 +24869,7 @@ KSSPsFileBoxProc_L10c5:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L10c9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -24868,7 +24877,7 @@ KSSPsFileBoxProc_L10c9:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24896,7 +24905,7 @@ KSSPsFileBoxProc_L111d:
 	beq	KSSPsFileBoxProc_L112b
 	bra	KSSPsFileBoxProc_L114e
 KSSPsFileBoxProc_L112b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -24907,7 +24916,7 @@ KSSPsFileBoxProc_L112b:
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L116f
 KSSPsFileBoxProc_L114e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x28, sp), a1
@@ -24917,7 +24926,7 @@ KSSPsFileBoxProc_L114e:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 KSSPsFileBoxProc_L116f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x110, sp), d0
@@ -24929,7 +24938,7 @@ KSSPsFileBoxProc_L118d:
 	clr	d0
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L1191:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24938,7 +24947,7 @@ KSSPsFileBoxProc_L1191:
 	mov	(0x44, a0), a0
 	clr	d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -24948,7 +24957,7 @@ KSSPsFileBoxProc_L1191:
 	calls	(a0)
 	jmp	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L11cd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -24970,7 +24979,7 @@ KSSPsFileBoxProc_L11f6:
 	mov	1, d0
 	mov	d0, (a0)
 KSSPsFileBoxProc_L11fe:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -24980,7 +24989,7 @@ KSSPsFileBoxProc_L11fe:
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L121e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -25002,7 +25011,7 @@ KSSPsFileBoxProc_L1247:
 	mov	1, d0
 	mov	d0, (a0)
 KSSPsFileBoxProc_L124f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -25012,7 +25021,7 @@ KSSPsFileBoxProc_L124f:
 	calls	(a0)
 	bra	KSSPsFileBoxProc_L128d
 KSSPsFileBoxProc_L126f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -25143,7 +25152,7 @@ KssFileBoxFunc_L104:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ad4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad4), d0
@@ -25152,7 +25161,7 @@ KssFileBoxFunc_L104:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -25176,7 +25185,7 @@ KssFileBoxFunc_L166:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ad6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25185,7 +25194,7 @@ KssFileBoxFunc_L166:
 	mov	-1, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad4), d0
@@ -25194,7 +25203,7 @@ KssFileBoxFunc_L166:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25204,7 +25213,7 @@ KssFileBoxFunc_L166:
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e34)
 	jmp	KssFileBoxFunc_L42e
@@ -25224,7 +25233,7 @@ KssFileBoxFunc_L210:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ad4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad4), d0
@@ -25233,7 +25242,7 @@ KssFileBoxFunc_L210:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	mov	1, d0
@@ -25255,7 +25264,7 @@ KssFileBoxFunc_L26d:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ad6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25264,7 +25273,7 @@ KssFileBoxFunc_L26d:
 	mov	-1, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad4), d0
@@ -25273,7 +25282,7 @@ KssFileBoxFunc_L26d:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25283,7 +25292,7 @@ KssFileBoxFunc_L26d:
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e34)
 	jmp	KssFileBoxFunc_L42e
@@ -25298,7 +25307,7 @@ KssFileBoxFunc_L30c:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913ad6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25307,7 +25316,7 @@ KssFileBoxFunc_L30c:
 	mov	-1, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad4), d0
@@ -25316,7 +25325,7 @@ KssFileBoxFunc_L30c:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25326,7 +25335,7 @@ KssFileBoxFunc_L30c:
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e34)
 	jmp	KssFileBoxFunc_L42e
@@ -25343,7 +25352,7 @@ KssFileBoxFunc_L3a9:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913ad6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25352,7 +25361,7 @@ KssFileBoxFunc_L3a9:
 	mov	-1, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad4), d0
@@ -25361,7 +25370,7 @@ KssFileBoxFunc_L3a9:
 	mov	-1, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movhu	(0x97913ad6), d0
@@ -25371,7 +25380,7 @@ KssFileBoxFunc_L3a9:
 	mov	EV_SetFileSfx, d1
 	calls	(a0)
 	movhu	(0x97913ad6), d0
-	movhu	d0, (data_97910C1C)
+	movhu	d0, (KSSPsDirBoxProc_L6f8_Var)
 	mov	1, d0
 	mov	d0, (0x97913e34)
 KssFileBoxFunc_L42e:
@@ -25430,7 +25439,7 @@ KssPsMenuBoxProc_L64:
 	clr	d0
 	jmp	KssPsMenuBoxProc_L5a8
 KssPsMenuBoxProc_L6d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -25438,13 +25447,13 @@ KssPsMenuBoxProc_L6d:
 	mov	(0x74, sp), d0
 	mov	(0x78, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x314, a0), a0
 	mov	(0x20, sp), a1
@@ -25454,19 +25463,19 @@ KssPsMenuBoxProc_L6d:
 	clr	d0
 	jmp	KssPsMenuBoxProc_L5a8
 KssPsMenuBoxProc_Lb3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	0x100, d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	0x100, d0
@@ -25477,7 +25486,7 @@ KssPsMenuBoxProc_Lb3:
 	beq	KssPsMenuBoxProc_Lf9
 	bra	KssPsMenuBoxProc_L147
 KssPsMenuBoxProc_Lf9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -25491,12 +25500,12 @@ KssPsMenuBoxProc_Lf9:
 	beq	KssPsMenuBoxProc_L11f
 	bra	KssPsMenuBoxProc_L150
 KssPsMenuBoxProc_L11f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x24, sp), a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x28, sp), a0
@@ -25508,7 +25517,7 @@ KssPsMenuBoxProc_L147:
 	mov	(0x7c, sp), a1
 	call	strcpy_entry, [a2], 4
 KssPsMenuBoxProc_L150:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -25517,7 +25526,7 @@ KssPsMenuBoxProc_L150:
 	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -25526,7 +25535,7 @@ KssPsMenuBoxProc_L150:
 	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -25535,7 +25544,7 @@ KssPsMenuBoxProc_L150:
 	mov	MT_GetIcon, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x74, sp), d0
@@ -25556,7 +25565,7 @@ KssPsMenuBoxProc_L1c5:
 	beq	KssPsMenuBoxProc_L1d2
 	bra	KssPsMenuBoxProc_L1c5
 KssPsMenuBoxProc_L1d2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2f4, a0), a1
 	mov	(0x20, sp), a0
@@ -25564,7 +25573,7 @@ KssPsMenuBoxProc_L1d2:
 	mov	sp, a0
 	add	0x4c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x2c, sp), d0
@@ -25618,14 +25627,14 @@ KssPsMenuBoxProc_L24e:
 	add	-4, d0
 	movhu	d0, (0x48, sp)
 KssPsMenuBoxProc_L257:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x24, sp), a0
 	mov	(0x28, sp), a1
 	mov	(0x2c, sp), d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x48, sp), d0
@@ -25654,7 +25663,7 @@ KssPsMenuBoxProc_L2a1:
 	bne	KssPsMenuBoxProc_L2ab
 	bra	KssPsMenuBoxProc_L2c9
 KssPsMenuBoxProc_L2ab:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x28, sp), a0
@@ -25686,7 +25695,7 @@ KssPsMenuBoxProc_L2c9:
 	sub	d1, d0
 	add	2, d0
 	movhu	d0, (0x52, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	(0x28, sp), d0
@@ -25732,7 +25741,7 @@ KssPsMenuBoxProc_L339:
 	bhi	KssPsMenuBoxProc_L353
 	bra	KssPsMenuBoxProc_L373
 KssPsMenuBoxProc_L353:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x28, sp), a0
@@ -25745,7 +25754,7 @@ KssPsMenuBoxProc_L353:
 	movhu	d1, (0x50, sp)
 	bra	KssPsMenuBoxProc_L397
 KssPsMenuBoxProc_L373:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	movhu	(0x38, sp), d1
@@ -25778,7 +25787,7 @@ KssPsMenuBoxProc_L397:
 	sub	d0, d2
 	add	2, d2
 	movhu	d2, (0x52, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	(0x28, sp), d0
@@ -25815,7 +25824,7 @@ KssPsMenuBoxProc_L397:
 	sub	d0, d1
 	add	2, d1
 	movhu	d1, (0x52, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x38, sp), d0
@@ -25884,7 +25893,7 @@ KssPsMenuBoxProc_L466:
 	exth	d0
 	add	0x19, d0
 	movhu	d0, (0x5e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -25892,7 +25901,7 @@ KssPsMenuBoxProc_L466:
 	mov	0xc0, d0
 	mov	0x18, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xc4, a0), a1
 	mov	sp, a0
@@ -25900,12 +25909,12 @@ KssPsMenuBoxProc_L466:
 	mov	(0x30, sp), d0
 	calls	(a1)
 KssPsMenuBoxProc_L4d2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x24, sp), a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x28, sp), a0
@@ -25913,7 +25922,7 @@ KssPsMenuBoxProc_L4d2:
 	clr	d0
 	jmp	KssPsMenuBoxProc_L5a8
 KssPsMenuBoxProc_L4fa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2a0, a0), a0
 	mov	(0x74, sp), d0
@@ -25922,13 +25931,13 @@ KssPsMenuBoxProc_L4fa:
 	bne	KssPsMenuBoxProc_L512
 	bra	KssPsMenuBoxProc_L557
 KssPsMenuBoxProc_L512:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x7c, sp), d0
@@ -25949,7 +25958,7 @@ KssPsMenuBoxProc_L557:
 	clr	d0
 	bra	KssPsMenuBoxProc_L5a8
 KssPsMenuBoxProc_L55a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -25958,7 +25967,7 @@ KssPsMenuBoxProc_L55a:
 	mov	(0x20, a0), d0
 	bra	KssPsMenuBoxProc_L5a8
 KssPsMenuBoxProc_L573:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -25971,7 +25980,7 @@ KssPsMenuBoxProc_L58d:
 	clr	d0
 	bra	KssPsMenuBoxProc_L5a8
 KssPsMenuBoxProc_L590:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -26009,7 +26018,7 @@ KssAcTitleMenuProc_L2d:
 KssAcTitleMenuProc_L3a:
 	jmp	KssAcTitleMenuProc_L216
 KssAcTitleMenuProc_L3d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -26017,7 +26026,7 @@ KssAcTitleMenuProc_L3d:
 	mov	(0x24, sp), d0
 	mov	(0x28, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26028,13 +26037,13 @@ KssAcTitleMenuProc_L3d:
 	clr	d0
 	jmp	KssAcTitleMenuProc_L22e
 KssAcTitleMenuProc_L74:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -26052,7 +26061,7 @@ KssAcTitleMenuProc_Lab:
 	bne	KssAcTitleMenuProc_Lb7
 	jmp	KssAcTitleMenuProc_L1c2
 KssAcTitleMenuProc_Lb7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_AcTitleMenu, d0
@@ -26064,7 +26073,7 @@ KssAcTitleMenuProc_Lb7:
 	beq	KssAcTitleMenuProc_Ldd
 	bra	KssAcTitleMenuProc_Lf6
 KssAcTitleMenuProc_Ldd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5d4, a0), a0
 	mov	(0x14, sp), a1
@@ -26073,7 +26082,7 @@ KssAcTitleMenuProc_Ldd:
 	calls	(a0)
 	jmp	KssAcTitleMenuProc_L1bf
 KssAcTitleMenuProc_Lf6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_AcModeMenu, d0
@@ -26085,7 +26094,7 @@ KssAcTitleMenuProc_Lf6:
 	beq	KssAcTitleMenuProc_L11c
 	bra	KssAcTitleMenuProc_L135
 KssAcTitleMenuProc_L11c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	(0x14, sp), a1
@@ -26094,7 +26103,7 @@ KssAcTitleMenuProc_L11c:
 	calls	(a0)
 	jmp	KssAcTitleMenuProc_L1bf
 KssAcTitleMenuProc_L135:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_AcScreenMenu, d0
@@ -26106,7 +26115,7 @@ KssAcTitleMenuProc_L135:
 	beq	KssAcTitleMenuProc_L15b
 	bra	KssAcTitleMenuProc_L17b
 KssAcTitleMenuProc_L15b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), a1
@@ -26117,7 +26126,7 @@ KssAcTitleMenuProc_L15b:
 	calls	(a0)
 	bra	KssAcTitleMenuProc_L1bf
 KssAcTitleMenuProc_L17b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_AcWindowMenu, d0
@@ -26129,7 +26138,7 @@ KssAcTitleMenuProc_L17b:
 	beq	KssAcTitleMenuProc_L1a1
 	bra	KssAcTitleMenuProc_L1bf
 KssAcTitleMenuProc_L1a1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), a1
@@ -26142,7 +26151,7 @@ KssAcTitleMenuProc_L1bf:
 	clr	d0
 	bra	KssAcTitleMenuProc_L22e
 KssAcTitleMenuProc_L1c2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -26152,7 +26161,7 @@ KssAcTitleMenuProc_L1c2:
 	calls	(a0)
 	bra	KssAcTitleMenuProc_L22e
 KssAcTitleMenuProc_L1dc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
@@ -26164,7 +26173,7 @@ KssAcTitleMenuProc_L1dc:
 	clr	d0
 	bra	KssAcTitleMenuProc_L22e
 KssAcTitleMenuProc_L1fd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
@@ -26173,7 +26182,7 @@ KssAcTitleMenuProc_L1fd:
 	mov	(0x38, a0), d0
 	bra	KssAcTitleMenuProc_L22e
 KssAcTitleMenuProc_L216:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -26210,7 +26219,7 @@ KssAcIndexEditSwProc_L2c:
 KssAcIndexEditSwProc_L39:
 	jmp	KssAcIndexEditSwProc_L431
 KssAcIndexEditSwProc_L3c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -26218,7 +26227,7 @@ KssAcIndexEditSwProc_L3c:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsWideESBox, d0
@@ -26230,13 +26239,13 @@ KssAcIndexEditSwProc_L3c:
 	bne	KssAcIndexEditSwProc_L7a
 	bra	KssAcIndexEditSwProc_Laf
 KssAcIndexEditSwProc_L7a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), a1
@@ -26247,13 +26256,13 @@ KssAcIndexEditSwProc_L7a:
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_Le2
 KssAcIndexEditSwProc_Laf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
 	calls	(a0)
 	mov	a0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x18, sp), a1
@@ -26266,7 +26275,7 @@ KssAcIndexEditSwProc_Le2:
 	clr	d0
 	jmp	KssAcIndexEditSwProc_L449
 KssAcIndexEditSwProc_Le6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsWideESBox, d0
@@ -26278,7 +26287,7 @@ KssAcIndexEditSwProc_Le6:
 	bne	KssAcIndexEditSwProc_L10c
 	bra	KssAcIndexEditSwProc_L142
 KssAcIndexEditSwProc_L10c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
@@ -26286,7 +26295,7 @@ KssAcIndexEditSwProc_L10c:
 	mov	a0, (0x14, sp)
 	mov	(0x34, sp), d0
 	movbu	d0, (0x30, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26296,7 +26305,7 @@ KssAcIndexEditSwProc_L10c:
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L176
 KssAcIndexEditSwProc_L142:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
@@ -26304,7 +26313,7 @@ KssAcIndexEditSwProc_L142:
 	mov	a0, (0x18, sp)
 	mov	(0x34, sp), d0
 	movbu	d0, (0x2c, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26316,7 +26325,7 @@ KssAcIndexEditSwProc_L176:
 	clr	d0
 	jmp	KssAcIndexEditSwProc_L449
 KssAcIndexEditSwProc_L17a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2a0, a0), a0
 	mov	(0x2c, sp), d0
@@ -26325,7 +26334,7 @@ KssAcIndexEditSwProc_L17a:
 	bne	KssAcIndexEditSwProc_L193
 	jmp	KssAcIndexEditSwProc_L33a
 KssAcIndexEditSwProc_L193:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -26337,7 +26346,7 @@ KssAcIndexEditSwProc_L193:
 	bne	KssAcIndexEditSwProc_L1b6
 	jmp	KssAcIndexEditSwProc_L33a
 KssAcIndexEditSwProc_L1b6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26352,7 +26361,7 @@ KssAcIndexEditSwProc_L1b6:
 	bne	KssAcIndexEditSwProc_L1df
 	jmp	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L1df:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsWideESBox, d0
@@ -26364,7 +26373,7 @@ KssAcIndexEditSwProc_L1df:
 	bne	KssAcIndexEditSwProc_L205
 	bra	KssAcIndexEditSwProc_L221
 KssAcIndexEditSwProc_L205:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
@@ -26374,7 +26383,7 @@ KssAcIndexEditSwProc_L205:
 	movbu	d0, (0x1c, sp)
 	bra	KssAcIndexEditSwProc_L23b
 KssAcIndexEditSwProc_L221:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
@@ -26459,7 +26468,7 @@ KssAcIndexEditSwProc_L2af:
 	bne	KssAcIndexEditSwProc_L2b8
 	bra	KssAcIndexEditSwProc_L2d8
 KssAcIndexEditSwProc_L2b8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x20, sp), d0
@@ -26470,7 +26479,7 @@ KssAcIndexEditSwProc_L2b8:
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L2d8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x20, sp), d0
@@ -26481,7 +26490,7 @@ KssAcIndexEditSwProc_L2d8:
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L2f8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x20, sp), d0
@@ -26492,7 +26501,7 @@ KssAcIndexEditSwProc_L2f8:
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L336
 KssAcIndexEditSwProc_L318:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x20, sp), d0
@@ -26505,7 +26514,7 @@ KssAcIndexEditSwProc_L336:
 	clr	d0
 	jmp	KssAcIndexEditSwProc_L449
 KssAcIndexEditSwProc_L33a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -26515,7 +26524,7 @@ KssAcIndexEditSwProc_L33a:
 	calls	(a0)
 	jmp	KssAcIndexEditSwProc_L449
 KssAcIndexEditSwProc_L355:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2a0, a0), a0
 	mov	(0x2c, sp), d0
@@ -26524,7 +26533,7 @@ KssAcIndexEditSwProc_L355:
 	bne	KssAcIndexEditSwProc_L36e
 	jmp	KssAcIndexEditSwProc_L417
 KssAcIndexEditSwProc_L36e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -26537,7 +26546,7 @@ KssAcIndexEditSwProc_L36e:
 	bne	KssAcIndexEditSwProc_L393
 	jmp	KssAcIndexEditSwProc_L417
 KssAcIndexEditSwProc_L393:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26552,7 +26561,7 @@ KssAcIndexEditSwProc_L393:
 	bne	KssAcIndexEditSwProc_L3bb
 	bra	KssAcIndexEditSwProc_L414
 KssAcIndexEditSwProc_L3bb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -26560,7 +26569,7 @@ KssAcIndexEditSwProc_L3bb:
 	mov	-1, d0
 	mov	EV_SWOFF, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -26569,7 +26578,7 @@ KssAcIndexEditSwProc_L3bb:
 	mov	-1, d0
 	mov	EV_SWOFF, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x20, sp), d0
@@ -26582,7 +26591,7 @@ KssAcIndexEditSwProc_L414:
 	clr	d0
 	bra	KssAcIndexEditSwProc_L449
 KssAcIndexEditSwProc_L417:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -26592,7 +26601,7 @@ KssAcIndexEditSwProc_L417:
 	calls	(a0)
 	bra	KssAcIndexEditSwProc_L449
 KssAcIndexEditSwProc_L431:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -26650,7 +26659,7 @@ KssPsToggleBoxProc_L62:
 KssPsToggleBoxProc_L6f:
 	jmp	KssPsToggleBoxProc_L474
 KssPsToggleBoxProc_L72:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -26658,13 +26667,13 @@ KssPsToggleBoxProc_L72:
 	mov	(0x4c, sp), d0
 	mov	(0x50, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2f4, a0), a1
 	mov	(0x20, sp), a0
@@ -26678,7 +26687,7 @@ KssPsToggleBoxProc_L72:
 	bne	KssPsToggleBoxProc_Lc2
 	bra	KssPsToggleBoxProc_Ld8
 KssPsToggleBoxProc_Lc2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x314, a0), a0
 	mov	(0x20, sp), a1
@@ -26686,7 +26695,7 @@ KssPsToggleBoxProc_Lc2:
 	mov	d1, d0
 	calls	(a0)
 KssPsToggleBoxProc_Ld8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -26699,7 +26708,7 @@ KssPsToggleBoxProc_Ld8:
 	clr	d0
 	jmp	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_Lfc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -26707,13 +26716,13 @@ KssPsToggleBoxProc_Lfc:
 	mov	(0x4c, sp), d0
 	mov	(0x50, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26735,21 +26744,21 @@ KssPsToggleBoxProc_L152:
 	mov	(0x54, sp), d0
 	mov	d0, (a0)
 KssPsToggleBoxProc_L15a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x4c, sp), d0
 	mov	sp, a0
 	add	0x2c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x4c, sp), d0
 	mov	sp, a0
 	add	0x34, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -26770,7 +26779,7 @@ KssPsToggleBoxProc_L1a6:
 	ble	KssPsToggleBoxProc_L1b1
 	bra	KssPsToggleBoxProc_L1cb
 KssPsToggleBoxProc_L1b1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -26780,7 +26789,7 @@ KssPsToggleBoxProc_L1b1:
 	calls	(a1)
 	bra	KssPsToggleBoxProc_L1e3
 KssPsToggleBoxProc_L1cb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -26789,7 +26798,7 @@ KssPsToggleBoxProc_L1cb:
 	mov	0xa, d1
 	calls	(a1)
 KssPsToggleBoxProc_L1e3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	(0x20, sp), a0
@@ -26812,7 +26821,7 @@ KssPsToggleBoxProc_L20c:
 	ble	KssPsToggleBoxProc_L217
 	bra	KssPsToggleBoxProc_L231
 KssPsToggleBoxProc_L217:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -26822,7 +26831,7 @@ KssPsToggleBoxProc_L217:
 	calls	(a1)
 	bra	KssPsToggleBoxProc_L249
 KssPsToggleBoxProc_L231:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -26831,7 +26840,7 @@ KssPsToggleBoxProc_L231:
 	mov	7, d1
 	calls	(a1)
 KssPsToggleBoxProc_L249:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	(0x20, sp), a0
@@ -26850,13 +26859,13 @@ KssPsToggleBoxProc_L26e:
 	clr	d0
 	jmp	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L272:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2a0, a0), a0
 	mov	(0x4c, sp), d0
@@ -26865,7 +26874,7 @@ KssPsToggleBoxProc_L272:
 	bne	KssPsToggleBoxProc_L29e
 	bra	KssPsToggleBoxProc_L2d0
 KssPsToggleBoxProc_L29e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x54, sp), d0
@@ -26886,7 +26895,7 @@ KssPsToggleBoxProc_L2d0:
 	clr	d0
 	jmp	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L2d4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -26898,7 +26907,7 @@ KssPsToggleBoxProc_L2d4:
 	bne	KssPsToggleBoxProc_L2f2
 	bra	KssPsToggleBoxProc_L30f
 KssPsToggleBoxProc_L2f2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -26908,7 +26917,7 @@ KssPsToggleBoxProc_L2f2:
 	calls	(a0)
 	bra	KssPsToggleBoxProc_L32b
 KssPsToggleBoxProc_L30f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -26922,7 +26931,7 @@ KssPsToggleBoxProc_L32b:
 	mov	(a0), d0
 	jmp	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L334:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -26935,7 +26944,7 @@ KssPsToggleBoxProc_L334:
 	bne	KssPsToggleBoxProc_L354
 	bra	KssPsToggleBoxProc_L370
 KssPsToggleBoxProc_L354:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x54, sp), d0
@@ -26947,7 +26956,7 @@ KssPsToggleBoxProc_L370:
 	clr	d0
 	jmp	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L374:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -26957,7 +26966,7 @@ KssPsToggleBoxProc_L374:
 	mov	(a0), d0
 	jmp	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L38f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -26965,7 +26974,7 @@ KssPsToggleBoxProc_L38f:
 	mov	(0x4c, sp), d0
 	mov	(0x50, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2a0, a0), a0
 	mov	(0x4c, sp), d0
@@ -26974,7 +26983,7 @@ KssPsToggleBoxProc_L38f:
 	bne	KssPsToggleBoxProc_L3bf
 	bra	KssPsToggleBoxProc_L3dd
 KssPsToggleBoxProc_L3bf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -26984,20 +26993,20 @@ KssPsToggleBoxProc_L3bf:
 	calls	(a0)
 	bra	KssPsToggleBoxProc_L458
 KssPsToggleBoxProc_L3dd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x4c, sp), d0
 	mov	sp, a0
 	add	0x34, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2f4, a0), a1
 	mov	(0x20, sp), a0
@@ -27024,7 +27033,7 @@ KssPsToggleBoxProc_L43c:
 	mov	0x27f, d0
 	movhu	d0, (0x38, sp)
 KssPsToggleBoxProc_L442:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -27035,7 +27044,7 @@ KssPsToggleBoxProc_L458:
 	clr	d0
 	bra	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L45b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -27044,7 +27053,7 @@ KssPsToggleBoxProc_L45b:
 	mov	(0x18, a0), d0
 	bra	KssPsToggleBoxProc_L48c
 KssPsToggleBoxProc_L474:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -27096,7 +27105,7 @@ KssTtlScreenProc_L53:
 KssTtlScreenProc_L60:
 	jmp	KssTtlScreenProc_L1b3
 KssTtlScreenProc_L63:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsPageBox, d0
@@ -27105,7 +27114,7 @@ KssTtlScreenProc_L63:
 	mov	MT_SearchClass, d1
 	calls	(a0)
 	mov	d0, (0x97913ae4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -27116,7 +27125,7 @@ KssTtlScreenProc_L63:
 	clr	d0
 	jmp	KssTtlScreenProc_L1cb
 KssTtlScreenProc_La5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -27124,14 +27133,14 @@ KssTtlScreenProc_La5:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x30, sp), d0
 	mov	sp, a0
 	add	0x20, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27140,13 +27149,13 @@ KssTtlScreenProc_La5:
 	mov	MT_GetIcon, d1
 	calls	(a0)
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	0x100, d0
 	calls	(a0)
 	mov	a0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x18, sp), d0
@@ -27154,12 +27163,12 @@ KssTtlScreenProc_La5:
 	mov	(0x30, sp), d0
 	mov	MT_GetString, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x18, sp), a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27170,7 +27179,7 @@ KssTtlScreenProc_La5:
 	clr	d0
 	bra	KssTtlScreenProc_L1cb
 KssTtlScreenProc_L150:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -27189,7 +27198,7 @@ KssTtlScreenProc_L176:
 	clr	d0
 	bra	KssTtlScreenProc_L1cb
 KssTtlScreenProc_L179:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -27198,7 +27207,7 @@ KssTtlScreenProc_L179:
 	mov	(0x2c, a0), d0
 	bra	KssTtlScreenProc_L1cb
 KssTtlScreenProc_L192:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -27210,7 +27219,7 @@ KssTtlScreenProc_L192:
 	clr	d0
 	bra	KssTtlScreenProc_L1cb
 KssTtlScreenProc_L1b3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -27257,7 +27266,7 @@ KssBgScreenProc_L45:
 KssBgScreenProc_L52:
 	jmp	KssBgScreenProc_L112
 KssBgScreenProc_L55:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsPageBox, d0
@@ -27266,7 +27275,7 @@ KssBgScreenProc_L55:
 	mov	MT_SearchClass, d1
 	calls	(a0)
 	mov	d0, (0x97913ae8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -27277,7 +27286,7 @@ KssBgScreenProc_L55:
 	clr	d0
 	jmp	KssBgScreenProc_L12a
 KssBgScreenProc_L97:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -27288,7 +27297,7 @@ KssBgScreenProc_L97:
 	clr	d0
 	bra	KssBgScreenProc_L12a
 KssBgScreenProc_Lb2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -27304,7 +27313,7 @@ KssBgScreenProc_Lcd:
 	clr	d0
 	bra	KssBgScreenProc_L12a
 KssBgScreenProc_Ld8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x20, sp), d0
@@ -27313,7 +27322,7 @@ KssBgScreenProc_Ld8:
 	mov	(0x2c, a0), d0
 	bra	KssBgScreenProc_L12a
 KssBgScreenProc_Lf1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x20, sp), d0
@@ -27325,7 +27334,7 @@ KssBgScreenProc_Lf1:
 	clr	d0
 	bra	KssBgScreenProc_L12a
 KssBgScreenProc_L112:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -27373,7 +27382,7 @@ KssPsMultiLangTextBoxProc_L47:
 KssPsMultiLangTextBoxProc_L54:
 	jmp	KssPsMultiLangTextBoxProc_L785
 KssPsMultiLangTextBoxProc_L57:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x84, sp), d0
@@ -27381,7 +27390,7 @@ KssPsMultiLangTextBoxProc_L57:
 	mov	(0x7c, sp), d0
 	mov	(0x80, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27392,7 +27401,7 @@ KssPsMultiLangTextBoxProc_L57:
 	clr	d0
 	jmp	KssPsMultiLangTextBoxProc_L79d
 KssPsMultiLangTextBoxProc_L8e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x84, sp), d0
@@ -27400,13 +27409,13 @@ KssPsMultiLangTextBoxProc_L8e:
 	mov	(0x7c, sp), d0
 	mov	(0x80, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x7c, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27415,7 +27424,7 @@ KssPsMultiLangTextBoxProc_L8e:
 	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27424,7 +27433,7 @@ KssPsMultiLangTextBoxProc_L8e:
 	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27433,14 +27442,14 @@ KssPsMultiLangTextBoxProc_L8e:
 	mov	MT_GetBackFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x4e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x7c, sp), d0
 	mov	sp, a0
 	add	0x5c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27465,7 +27474,7 @@ KssPsMultiLangTextBoxProc_L153:
 	mov	d1, a0
 	add	a0, d0
 	movhu	d0, (0x50, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	movhu	(0x50, sp), d0
@@ -27479,7 +27488,7 @@ KssPsMultiLangTextBoxProc_L153:
 	inc	d1
 	mov	d2, d0
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -27497,7 +27506,7 @@ KssPsMultiLangTextBoxProc_L153:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x64, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -27530,7 +27539,7 @@ KssPsMultiLangTextBoxProc_L201:
 	mov	a0, (0x38, sp)
 	bra	KssPsMultiLangTextBoxProc_L25b
 KssPsMultiLangTextBoxProc_L20c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27539,7 +27548,7 @@ KssPsMultiLangTextBoxProc_L20c:
 	mov	MT_GetDigitValue, d1
 	calls	(a0)
 	mov	d0, (0x3c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -27567,7 +27576,7 @@ KssPsMultiLangTextBoxProc_L25b:
 	movbu	d0, (0x48, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x60, sp), d0
@@ -27728,7 +27737,7 @@ KssPsMultiLangTextBoxProc_L3a1:
 	inc	d0
 	movhu	d0, (0x60, sp)
 KssPsMultiLangTextBoxProc_L3c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -27764,7 +27773,7 @@ KssPsMultiLangTextBoxProc_L3f8:
 	exth	d0
 	add	0x96, d0
 	movhu	d0, (0x64, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x38, sp), d0
@@ -27813,7 +27822,7 @@ KssPsMultiLangTextBoxProc_L471:
 	exth	d0
 	add	0x96, d0
 	movhu	d0, (0x64, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	0x9798ad1e, d0
@@ -27897,7 +27906,7 @@ KssPsMultiLangTextBoxProc_L52f:
 	add	-1, d0
 	movhu	d0, (0x60, sp)
 KssPsMultiLangTextBoxProc_L553:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -27933,7 +27942,7 @@ KssPsMultiLangTextBoxProc_L58a:
 	exth	d0
 	add	0x96, d0
 	movhu	d0, (0x64, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x38, sp), d0
@@ -27982,7 +27991,7 @@ KssPsMultiLangTextBoxProc_L603:
 	exth	d0
 	add	0x96, d0
 	movhu	d0, (0x64, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	0x9798ad1e, d0
@@ -28045,7 +28054,7 @@ KssPsMultiLangTextBoxProc_L6a0:
 	bge	KssPsMultiLangTextBoxProc_L6ae
 	jmp	KssPsMultiLangTextBoxProc_L1f5
 KssPsMultiLangTextBoxProc_L6ae:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -28053,7 +28062,7 @@ KssPsMultiLangTextBoxProc_L6ae:
 	clr	d0
 	jmp	KssPsMultiLangTextBoxProc_L79d
 KssPsMultiLangTextBoxProc_L6c4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x7c, sp), d0
@@ -28114,7 +28123,7 @@ KssPsMultiLangTextBoxProc_L731:
 	mov	(0x30, a0), d0
 	bra	KssPsMultiLangTextBoxProc_L79d
 KssPsMultiLangTextBoxProc_L738:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x7c, sp), d0
@@ -28123,7 +28132,7 @@ KssPsMultiLangTextBoxProc_L738:
 	mov	(0x20, a0), d0
 	bra	KssPsMultiLangTextBoxProc_L79d
 KssPsMultiLangTextBoxProc_L751:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x7c, sp), d0
@@ -28133,7 +28142,7 @@ KssPsMultiLangTextBoxProc_L751:
 	exth	d0
 	bra	KssPsMultiLangTextBoxProc_L79d
 KssPsMultiLangTextBoxProc_L76b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x7c, sp), d0
@@ -28143,7 +28152,7 @@ KssPsMultiLangTextBoxProc_L76b:
 	exth	d0
 	bra	KssPsMultiLangTextBoxProc_L79d
 KssPsMultiLangTextBoxProc_L785:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x84, sp), d0
@@ -28178,7 +28187,7 @@ KssAcLanguageTextProc_L2c:
 	clr	d0
 	jmp	KssAcLanguageTextProc_Lb3
 KssAcLanguageTextProc_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -28200,7 +28209,7 @@ KssAcLanguageTextProc_L30:
 	movbu	(0x979898ec), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	sp, a1
@@ -28216,7 +28225,7 @@ KssAcLanguageTextProc_L93:
 	mov	Str_KssLang, d0
 	bra	KssAcLanguageTextProc_Lb3
 KssAcLanguageTextProc_L9b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x60, sp), d0
@@ -28289,7 +28298,7 @@ KssPsWarnBoxProc_L2d:
 KssPsWarnBoxProc_L3a:
 	jmp	KssPsWarnBoxProc_Lb37
 KssPsWarnBoxProc_L3d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -28297,7 +28306,7 @@ KssPsWarnBoxProc_L3d:
 	mov	(0x74, sp), d0
 	mov	(0x78, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -28308,7 +28317,7 @@ KssPsWarnBoxProc_L3d:
 	clr	d0
 	jmp	KssPsWarnBoxProc_Lb4f
 KssPsWarnBoxProc_L74:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -28316,7 +28325,7 @@ KssPsWarnBoxProc_L74:
 	mov	(0x74, sp), d0
 	mov	(0x78, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -28339,9 +28348,9 @@ KssPsWarnBoxProc_L74:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_9789ECA4, a0
+	mov	KssPsWarnBoxProc_L74_Table, a0
 	mov	(d0, a0), a0
-	movhu	(data_97910C8C), d0
+	movhu	(KssPsWarnBoxProc_L74_Var), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x2c, sp)
@@ -28360,7 +28369,7 @@ KssPsWarnBoxProc_Lf3:
 	movhu	(0x3a, a0), d1
 	add	d0, d1
 	movhu	d1, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	movhu	(0x48, sp), d1
@@ -28376,7 +28385,7 @@ KssPsWarnBoxProc_Lf3:
 	mov	d1, a1
 	mov	a1, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -28394,7 +28403,7 @@ KssPsWarnBoxProc_Lf3:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -28432,7 +28441,7 @@ KssPsWarnBoxProc_L196:
 	movbu	d0, (0x40, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x58, sp), d0
@@ -28584,7 +28593,7 @@ KssPsWarnBoxProc_L2c9:
 	inc	d0
 	movhu	d0, (0x58, sp)
 KssPsWarnBoxProc_L2e9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -28656,7 +28665,7 @@ KssPsWarnBoxProc_L373:
 	add	-1, d0
 	movhu	d0, (0x5e, sp)
 KssPsWarnBoxProc_L385:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -28706,7 +28715,7 @@ KssPsWarnBoxProc_L3dc:
 	bge	KssPsWarnBoxProc_L3ea
 	jmp	KssPsWarnBoxProc_L196
 KssPsWarnBoxProc_L3ea:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -28729,9 +28738,9 @@ KssPsWarnBoxProc_L3ea:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_9789ECB4, a0
+	mov	KssPsWarnBoxProc_L3ea_Table, a0
 	mov	(d0, a0), a0
-	movhu	(data_97910C8E), d0
+	movhu	(KssPsWarnBoxProc_L3ea_Var), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x2c, sp)
@@ -28750,7 +28759,7 @@ KssPsWarnBoxProc_L451:
 	movhu	(0x52, a0), d1
 	add	d0, d1
 	movhu	d1, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a1
 	movhu	(0x48, sp), d0
@@ -28767,7 +28776,7 @@ KssPsWarnBoxProc_L451:
 	inc	a1
 	mov	a1, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -28785,7 +28794,7 @@ KssPsWarnBoxProc_L451:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -28823,7 +28832,7 @@ KssPsWarnBoxProc_L4f7:
 	movbu	d0, (0x40, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x58, sp), d0
@@ -28975,7 +28984,7 @@ KssPsWarnBoxProc_L62a:
 	inc	d0
 	movhu	d0, (0x58, sp)
 KssPsWarnBoxProc_L64a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -29047,7 +29056,7 @@ KssPsWarnBoxProc_L6d4:
 	add	-1, d0
 	movhu	d0, (0x5e, sp)
 KssPsWarnBoxProc_L6e6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -29097,7 +29106,7 @@ KssPsWarnBoxProc_L73d:
 	bge	KssPsWarnBoxProc_L74b
 	jmp	KssPsWarnBoxProc_L4f7
 KssPsWarnBoxProc_L74b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -29120,9 +29129,9 @@ KssPsWarnBoxProc_L74b:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_9789ECC4, a0
+	mov	KssPsWarnBoxProc_L74b_Table, a0
 	mov	(d0, a0), a0
-	movhu	(data_97910C90), d0
+	movhu	(KssPsWarnBoxProc_L74b_Table_2), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x2c, sp)
@@ -29142,7 +29151,7 @@ KssPsWarnBoxProc_L7b2:
 	mov	d1, a0
 	add	a0, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	movhu	(0x48, sp), d1
@@ -29156,7 +29165,7 @@ KssPsWarnBoxProc_L7b2:
 	movhu	(0x48, sp), d1
 	inc	d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -29174,7 +29183,7 @@ KssPsWarnBoxProc_L7b2:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -29211,7 +29220,7 @@ KssPsWarnBoxProc_L853:
 	movbu	d0, (0x40, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x58, sp), d0
@@ -29364,7 +29373,7 @@ KssPsWarnBoxProc_L989:
 	inc	d0
 	movhu	d0, (0x58, sp)
 KssPsWarnBoxProc_L9a9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -29436,7 +29445,7 @@ KssPsWarnBoxProc_La33:
 	add	-1, d0
 	movhu	d0, (0x5e, sp)
 KssPsWarnBoxProc_La45:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -29486,7 +29495,7 @@ KssPsWarnBoxProc_La9c:
 	bge	KssPsWarnBoxProc_Laaa
 	jmp	KssPsWarnBoxProc_L853
 KssPsWarnBoxProc_Laaa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -29496,7 +29505,7 @@ KssPsWarnBoxProc_Laaa:
 KssPsWarnBoxProc_Lac0:
 	mov	(0x7c, sp), d0
 	mov	d0, (0x3c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -29541,7 +29550,7 @@ KssPsWarnBoxProc_Lb18:
 	clr	d0
 	bra	KssPsWarnBoxProc_Lb4f
 KssPsWarnBoxProc_Lb1b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -29552,7 +29561,7 @@ KssPsWarnBoxProc_Lb1b:
 	clr	d0
 	bra	KssPsWarnBoxProc_Lb4f
 KssPsWarnBoxProc_Lb37:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -29569,14 +29578,14 @@ func_97810A48:
 func_97810A48_entry:
 	mov	d1, (0x20, sp)
 	mov	d0, (0x1c, sp)
-	mov	d0, (data_97910C88)
+	mov	d0, (func_97810A48_Var)
 	mov	d1, d0
 	cmp	2, d0
 	blt	func_97810A48_entry_L11
 	bra	func_97810A48_entry_L19
 func_97810A48_entry_L11:
 	mov	(0x20, sp), d0
-	movhu	d0, (data_97910C8C)
+	movhu	d0, (KssPsWarnBoxProc_L74_Var)
 func_97810A48_entry_L19:
 	mov	(0x24, sp), d0
 	cmp	9, d0
@@ -29584,7 +29593,7 @@ func_97810A48_entry_L19:
 	bra	func_97810A48_entry_L29
 func_97810A48_entry_L21:
 	mov	(0x24, sp), d0
-	movhu	d0, (data_97910C8E)
+	movhu	d0, (KssPsWarnBoxProc_L3ea_Var)
 func_97810A48_entry_L29:
 	mov	(0x28, sp), d0
 	cmp	9, d0
@@ -29592,11 +29601,11 @@ func_97810A48_entry_L29:
 	bra	func_97810A48_entry_L39
 func_97810A48_entry_L31:
 	mov	(0x28, sp), d0
-	movhu	d0, (data_97910C90)
+	movhu	d0, (KssPsWarnBoxProc_L74b_Table_2)
 func_97810A48_entry_L39:
 	mov	(0x2c, sp), d0
-	mov	d0, (data_97910C94)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97810A48_entry_L39_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -29630,7 +29639,7 @@ KssCatch_WarnBox_L2d:
 	mov	1, d0
 	jmp	KssCatch_WarnBox_L125
 KssCatch_WarnBox_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -29638,7 +29647,7 @@ KssCatch_WarnBox_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_WARN, d0
@@ -29649,7 +29658,7 @@ KssCatch_WarnBox_L32:
 	clr	d0
 	jmp	KssCatch_WarnBox_L125
 KssCatch_WarnBox_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -29721,7 +29730,7 @@ KssCatch_WarnBox_Le8:
 	beq	KssCatch_WarnBox_Lee
 	bra	KssCatch_WarnBox_L10d
 KssCatch_WarnBox_Lee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -29730,7 +29739,7 @@ KssCatch_WarnBox_Lee:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_WarnBox_L10d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -29768,7 +29777,7 @@ KssPsAskBoxProc_L2d:
 KssPsAskBoxProc_L3a:
 	jmp	KssPsAskBoxProc_Lb43
 KssPsAskBoxProc_L3d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -29776,7 +29785,7 @@ KssPsAskBoxProc_L3d:
 	mov	(0x74, sp), d0
 	mov	(0x78, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -29787,7 +29796,7 @@ KssPsAskBoxProc_L3d:
 	clr	d0
 	jmp	KssPsAskBoxProc_Lb5b
 KssPsAskBoxProc_L74:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -29795,7 +29804,7 @@ KssPsAskBoxProc_L74:
 	mov	(0x74, sp), d0
 	mov	(0x78, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -29818,9 +29827,9 @@ KssPsAskBoxProc_L74:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_9789F174, a0
+	mov	KssPsAskBoxProc_L74_Table, a0
 	mov	(d0, a0), a0
-	movhu	(data_97910CA6), d0
+	movhu	(KssPsAskBoxProc_L74_Var), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x2c, sp)
@@ -29839,7 +29848,7 @@ KssPsAskBoxProc_Lf3:
 	movhu	(0x3a, a0), d1
 	add	d0, d1
 	movhu	d1, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	movhu	(0x48, sp), d1
@@ -29855,7 +29864,7 @@ KssPsAskBoxProc_Lf3:
 	mov	d1, a1
 	mov	a1, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -29873,7 +29882,7 @@ KssPsAskBoxProc_Lf3:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -29911,7 +29920,7 @@ KssPsAskBoxProc_L196:
 	movbu	d0, (0x40, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x58, sp), d0
@@ -30063,7 +30072,7 @@ KssPsAskBoxProc_L2c9:
 	inc	d0
 	movhu	d0, (0x58, sp)
 KssPsAskBoxProc_L2e9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -30135,7 +30144,7 @@ KssPsAskBoxProc_L373:
 	add	-1, d0
 	movhu	d0, (0x5e, sp)
 KssPsAskBoxProc_L385:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -30185,7 +30194,7 @@ KssPsAskBoxProc_L3dc:
 	bge	KssPsAskBoxProc_L3ea
 	jmp	KssPsAskBoxProc_L196
 KssPsAskBoxProc_L3ea:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -30208,9 +30217,9 @@ KssPsAskBoxProc_L3ea:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_9789F184, a0
+	mov	KssPsAskBoxProc_L3ea_Table, a0
 	mov	(d0, a0), a0
-	movhu	(data_97910CA8), d0
+	movhu	(KssPsAskBoxProc_L3ea_Var), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x2c, sp)
@@ -30229,7 +30238,7 @@ KssPsAskBoxProc_L451:
 	movhu	(0x52, a0), d1
 	add	d0, d1
 	movhu	d1, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a1
 	movhu	(0x48, sp), d0
@@ -30246,7 +30255,7 @@ KssPsAskBoxProc_L451:
 	inc	a1
 	mov	a1, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -30264,7 +30273,7 @@ KssPsAskBoxProc_L451:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -30302,7 +30311,7 @@ KssPsAskBoxProc_L4fb:
 	movbu	d0, (0x40, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x58, sp), d0
@@ -30454,7 +30463,7 @@ KssPsAskBoxProc_L630:
 	inc	d0
 	movhu	d0, (0x58, sp)
 KssPsAskBoxProc_L650:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -30526,7 +30535,7 @@ KssPsAskBoxProc_L6da:
 	add	-1, d0
 	movhu	d0, (0x5e, sp)
 KssPsAskBoxProc_L6ec:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -30576,7 +30585,7 @@ KssPsAskBoxProc_L743:
 	bge	KssPsAskBoxProc_L751
 	jmp	KssPsAskBoxProc_L4fb
 KssPsAskBoxProc_L751:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -30599,9 +30608,9 @@ KssPsAskBoxProc_L751:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_9789F194, a0
+	mov	KssPsAskBoxProc_L751_Table, a0
 	mov	(d0, a0), a0
-	movhu	(data_97910CAA), d0
+	movhu	(KssPsAskBoxProc_L751_Var), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x2c, sp)
@@ -30621,7 +30630,7 @@ KssPsAskBoxProc_L7b8:
 	mov	d1, a0
 	add	a0, d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	movhu	(0x48, sp), d1
@@ -30635,7 +30644,7 @@ KssPsAskBoxProc_L7b8:
 	movhu	(0x48, sp), d1
 	inc	d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x2c, sp), a0
@@ -30653,7 +30662,7 @@ KssPsAskBoxProc_L7b8:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x28, sp), d0
@@ -30690,7 +30699,7 @@ KssPsAskBoxProc_L85d:
 	movbu	d0, (0x40, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	movhu	(0x58, sp), d0
@@ -30843,7 +30852,7 @@ KssPsAskBoxProc_L995:
 	inc	d0
 	movhu	d0, (0x58, sp)
 KssPsAskBoxProc_L9b5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -30915,7 +30924,7 @@ KssPsAskBoxProc_La3f:
 	add	-1, d0
 	movhu	d0, (0x5e, sp)
 KssPsAskBoxProc_La51:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x34, sp), d0
@@ -30965,7 +30974,7 @@ KssPsAskBoxProc_Laa8:
 	bge	KssPsAskBoxProc_Lab6
 	jmp	KssPsAskBoxProc_L85d
 KssPsAskBoxProc_Lab6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x30, sp), a0
@@ -30975,7 +30984,7 @@ KssPsAskBoxProc_Lab6:
 KssPsAskBoxProc_Lacc:
 	mov	(0x7c, sp), d0
 	mov	d0, (0x3c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -31020,7 +31029,7 @@ KssPsAskBoxProc_Lb24:
 	clr	d0
 	bra	KssPsAskBoxProc_Lb5b
 KssPsAskBoxProc_Lb27:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x74, sp), d0
@@ -31031,7 +31040,7 @@ KssPsAskBoxProc_Lb27:
 	clr	d0
 	bra	KssPsAskBoxProc_Lb5b
 KssPsAskBoxProc_Lb43:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x7c, sp), d0
@@ -31048,20 +31057,20 @@ func_97811734:
 func_97811734_entry:
 	mov	d1, (0x20, sp)
 	mov	d0, (0x1c, sp)
-	mov	d0, (data_97910C98)
+	mov	d0, (func_97811734_Var)
 	mov	d1, d0
-	mov	d0, (data_97910C9C)
+	mov	d0, (func_97811734_Var_2)
 	mov	(0x24, sp), d0
-	mov	d0, (data_97910CA0)
+	mov	d0, (func_97811734_Var_3)
 	movbu	(0x28, sp), d0
-	movbu	d0, (data_97910CA4)
+	movbu	d0, (func_97811734_Table)
 	mov	(0x2c, sp), d0
 	cmp	2, d0
 	blt	func_97811734_entry_L2a
 	bra	func_97811734_entry_L32
 func_97811734_entry_L2a:
 	mov	(0x2c, sp), d0
-	movhu	d0, (data_97910CA6)
+	movhu	d0, (KssPsAskBoxProc_L74_Var)
 func_97811734_entry_L32:
 	mov	(0x30, sp), d0
 	cmp	5, d0
@@ -31069,7 +31078,7 @@ func_97811734_entry_L32:
 	bra	func_97811734_entry_L42
 func_97811734_entry_L3a:
 	mov	(0x30, sp), d0
-	movhu	d0, (data_97910CA8)
+	movhu	d0, (KssPsAskBoxProc_L3ea_Var)
 func_97811734_entry_L42:
 	mov	(0x34, sp), d0
 	cmp	5, d0
@@ -31077,11 +31086,11 @@ func_97811734_entry_L42:
 	bra	func_97811734_entry_L52
 func_97811734_entry_L4a:
 	mov	(0x34, sp), d0
-	movhu	d0, (data_97910CAA)
+	movhu	d0, (KssPsAskBoxProc_L751_Var)
 func_97811734_entry_L52:
 	mov	(0x38, sp), d0
-	mov	d0, (data_97910CAC)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97811734_entry_L52_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -31115,7 +31124,7 @@ KssCatch_AskBox_L2d:
 	mov	1, d0
 	jmp	KssCatch_AskBox_L17d
 KssCatch_AskBox_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -31123,7 +31132,7 @@ KssCatch_AskBox_L32:
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_ASK, d0
@@ -31134,7 +31143,7 @@ KssCatch_AskBox_L32:
 	clr	d0
 	jmp	KssCatch_AskBox_L17d
 KssCatch_AskBox_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -31160,28 +31169,28 @@ KssCatch_AskBox_La0:
 KssCatch_AskBox_La6:
 	jmp	KssCatch_AskBox_L165
 KssCatch_AskBox_La9:
-	movbu	(data_97910CA4), d0
+	movbu	(func_97811734_Table), d0
 	cmp	0, d0
 	beq	KssCatch_AskBox_Lb5
 	bra	KssCatch_AskBox_Ld4
 KssCatch_AskBox_Lb5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910C98), d0
-	mov	(data_97910CA0), d1
+	mov	(func_97811734_Var), d0
+	mov	(func_97811734_Var_3), d1
 	calls	(a0)
 KssCatch_AskBox_Ld4:
-	movbu	(data_97910CA4), d0
+	movbu	(func_97811734_Table), d0
 	cmp	0x65, d0
 	beq	KssCatch_AskBox_Le1
 	jmp	KssCatch_AskBox_L165
 KssCatch_AskBox_Le1:
 	mov	0x65, d0
-	movbu	d0, (data_97910CB1)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssCatch_AskBox_Le1_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -31192,7 +31201,7 @@ KssCatch_AskBox_Le1:
 	bra	KssCatch_AskBox_L165
 KssCatch_AskBox_L10a:
 	clr	d0
-	movbu	d0, (data_97910CB1)
+	movbu	d0, (KssCatch_AskBox_Le1_Table)
 	mov	8, d0
 	mov	sp, a0
 	add	0x14, a0
@@ -31202,7 +31211,7 @@ KssCatch_AskBox_L10a:
 	beq	KssCatch_AskBox_L125
 	bra	KssCatch_AskBox_L146
 KssCatch_AskBox_L125:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -31212,16 +31221,16 @@ KssCatch_AskBox_L125:
 	calls	(a0)
 	bra	KssCatch_AskBox_L165
 KssCatch_AskBox_L146:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910C9C), d0
+	mov	(func_97811734_Var_2), d0
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_AskBox_L165:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -31277,7 +31286,7 @@ KssTimerShowProc_L64:
 	clr	d0
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L68:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x8c, sp), d0
@@ -31285,7 +31294,7 @@ KssTimerShowProc_L68:
 	mov	(0x84, sp), d0
 	mov	(0x88, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x84, sp), d0
@@ -31305,13 +31314,13 @@ KssTimerShowProc_L68:
 	call	LibDiv32, 0, 0
 	add	d3, d0
 	movhu	d0, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A0178, a0
+	mov	KssTimerShowProc_L68_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), a1
 	movhu	(0x24, a1), d1
@@ -31333,19 +31342,19 @@ KssTimerShowProc_L68:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_97910C2C), d0
+	mov	(KssTimerShowProc_L68_Var), d0
 	cmp	0, d0
 	bne	KssTimerShowProc_L107
 	bra	KssTimerShowProc_L136
 KssTimerShowProc_L107:
-	mov	(data_97910CB4), d0
+	mov	(KssTimerShowProc_L107_Var), d0
 	cmp	0, d0
 	beq	KssTimerShowProc_L113
 	bra	KssTimerShowProc_L136
 KssTimerShowProc_L113:
 	mov	1, d0
-	mov	d0, (data_97910CB4)
-	mov	(data_979126B4), a0
+	mov	d0, (KssTimerShowProc_L107_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -31357,7 +31366,7 @@ KssTimerShowProc_L136:
 	clr	d0
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L13a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x84, sp), d0
@@ -31418,7 +31427,7 @@ KssTimerShowProc_L13a:
 	call	LibDiv32, 0, 0
 	add	d2, d0
 	movhu	d0, (0x97913b02)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31441,19 +31450,19 @@ KssTimerShowProc_L255:
 	clr	d0
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L259:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x84, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A0188, a0
+	mov	KssTimerShowProc_L259_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x8c, sp), d0
 	asl2	d0
@@ -31496,7 +31505,7 @@ KssTimerShowProc_L2f0:
 	clr	d0
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L2f4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x84, sp), d0
@@ -31507,13 +31516,13 @@ KssTimerShowProc_L2f4:
 	beq	KssTimerShowProc_L310
 	bra	KssTimerShowProc_L35c
 KssTimerShowProc_L310:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A0198, a0
+	mov	KssTimerShowProc_L310_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x8c, sp), d0
 	asl2	d0
@@ -31535,13 +31544,13 @@ KssTimerShowProc_L310:
 	calls	(a2)
 	bra	KssTimerShowProc_L3a6
 KssTimerShowProc_L35c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A0198, a0
+	mov	KssTimerShowProc_L310_Table, a0
 	mov	(d0, a0), a1
 	mov	(0x8c, sp), a0
 	mov	a0, d0
@@ -31576,7 +31585,7 @@ KssTimerShowProc_L3a6:
 	clr	d0
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L3d7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31633,9 +31642,9 @@ KssTimerShowProc_L43c:
 KssTimerShowProc_L445:
 	jmp	KssTimerShowProc_Ld30
 KssTimerShowProc_L448:
-	mov	(data_97910C58), d0
+	mov	(KssTimerShowProc_L448_Var), d0
 	movbu	d0, (0x97913b04)
-	mov	(data_97910C60), d0
+	mov	(KssTimerShowProc_L448_Var_2), d0
 	cmp	0, d0
 	beq	KssTimerShowProc_L460
 	bra	KssTimerShowProc_L466
@@ -31647,7 +31656,7 @@ KssTimerShowProc_L466:
 	mov	3, d0
 	mov	d0, (0x28, sp)
 KssTimerShowProc_L46a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -31670,7 +31679,7 @@ KssTimerShowProc_L46a:
 	beq	KssTimerShowProc_L4ba
 	bra	KssTimerShowProc_L4e2
 KssTimerShowProc_L4ba:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31696,7 +31705,7 @@ KssTimerShowProc_L4eb:
 	beq	KssTimerShowProc_L4fa
 	bra	KssTimerShowProc_L564
 KssTimerShowProc_L4fa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -31704,7 +31713,7 @@ KssTimerShowProc_L4fa:
 	mov	(0x84, sp), d0
 	mov	MT_NextResLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -31712,9 +31721,9 @@ KssTimerShowProc_L4fa:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_97910C58), d0
+	mov	(KssTimerShowProc_L448_Var), d0
 	movbu	d0, (0x97913b04)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31728,7 +31737,7 @@ KssTimerShowProc_L4fa:
 	calls	(a0)
 	jmp	KssTimerShowProc_L5ff
 KssTimerShowProc_L564:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -31769,7 +31778,7 @@ KssTimerShowProc_L5b9:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31785,7 +31794,7 @@ KssTimerShowProc_L5ff:
 	clr	d0
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L603:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31807,7 +31816,7 @@ KssTimerShowProc_L62b:
 	beq	KssTimerShowProc_L640
 	bra	KssTimerShowProc_L6a7
 KssTimerShowProc_L640:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -31815,7 +31824,7 @@ KssTimerShowProc_L640:
 	mov	(0x84, sp), d0
 	mov	MT_NextResLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x97913b04), d1
@@ -31827,7 +31836,7 @@ KssTimerShowProc_L640:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31862,7 +31871,7 @@ KssTimerShowProc_L6b5:
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
 KssTimerShowProc_L6e0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -31882,7 +31891,7 @@ KssTimerShowProc_L6e0:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31899,14 +31908,14 @@ KssTimerShowProc_L742:
 	jmp	KssTimerShowProc_Ld4b
 KssTimerShowProc_L746:
 	movbu	(0x97913b04), d0
-	mov	(data_97910C54), d1
+	mov	(KssTimerShowProc_L746_Var), d1
 	call	func_97804661_entry, [d2], 0x3c
 	mov	d0, (0x2c, sp)
 	cmp	0, d0
 	beq	KssTimerShowProc_L761
 	bra	KssTimerShowProc_L7c8
 KssTimerShowProc_L761:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -31914,7 +31923,7 @@ KssTimerShowProc_L761:
 	mov	(0x84, sp), d0
 	mov	MT_NextResLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x97913b04), d1
@@ -31926,7 +31935,7 @@ KssTimerShowProc_L761:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -31961,7 +31970,7 @@ KssTimerShowProc_L7d6:
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
 KssTimerShowProc_L801:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -31981,7 +31990,7 @@ KssTimerShowProc_L801:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32004,7 +32013,7 @@ KssTimerShowProc_L867:
 	beq	KssTimerShowProc_L87c
 	bra	KssTimerShowProc_L8e3
 KssTimerShowProc_L87c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32012,7 +32021,7 @@ KssTimerShowProc_L87c:
 	mov	(0x84, sp), d0
 	mov	MT_NextResLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x97913b04), d1
@@ -32024,7 +32033,7 @@ KssTimerShowProc_L87c:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32059,7 +32068,7 @@ KssTimerShowProc_L8f1:
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
 KssTimerShowProc_L91c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -32079,7 +32088,7 @@ KssTimerShowProc_L91c:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32097,7 +32106,7 @@ KssTimerShowProc_L97e:
 KssTimerShowProc_L982:
 	mov	1, d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910C54), d0
+	mov	(KssTimerShowProc_L746_Var), d0
 	mov	d0, (0x14, sp)
 	movbu	(0x97913b04), d0
 	clr	d1
@@ -32113,7 +32122,7 @@ KssTimerShowProc_L9a5:
 KssTimerShowProc_L9ac:
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_97910C54), d0
+	mov	(KssTimerShowProc_L746_Var), d0
 	mov	d0, (0x14, sp)
 	movbu	(0x97913b04), d0
 	mov	(0x34, sp), d1
@@ -32125,7 +32134,7 @@ KssTimerShowProc_L9ac:
 	bne	KssTimerShowProc_L9d2
 	jmp	KssTimerShowProc_La71
 KssTimerShowProc_L9d2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -32166,7 +32175,7 @@ KssTimerShowProc_La27:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32190,7 +32199,7 @@ KssTimerShowProc_La76:
 	bge	KssTimerShowProc_La81
 	jmp	KssTimerShowProc_L9ac
 KssTimerShowProc_La81:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32198,7 +32207,7 @@ KssTimerShowProc_La81:
 	mov	(0x84, sp), d0
 	mov	MT_NextResLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x97913b04), d1
@@ -32210,7 +32219,7 @@ KssTimerShowProc_La81:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32224,7 +32233,7 @@ KssTimerShowProc_La81:
 	calls	(a0)
 	jmp	KssTimerShowProc_Lb83
 KssTimerShowProc_Lae8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -32265,7 +32274,7 @@ KssTimerShowProc_Lb3d:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32288,7 +32297,7 @@ KssTimerShowProc_Lb87:
 	beq	KssTimerShowProc_Lb9d
 	jmp	KssTimerShowProc_Lc64
 KssTimerShowProc_Lb9d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32300,12 +32309,12 @@ KssTimerShowProc_Lb9d:
 	inc	d0
 	movbu	d0, (0x97913b04)
 	movbu	(0x97913b04), d0
-	mov	(data_97910C5C), d1
+	mov	(KssTimerShowProc_Lb9d_Var), d1
 	cmp	d1, d0
 	bls	KssTimerShowProc_Lbd6
 	bra	KssTimerShowProc_Lc21
 KssTimerShowProc_Lbd6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x97913b04), d1
@@ -32317,7 +32326,7 @@ KssTimerShowProc_Lbd6:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32331,7 +32340,7 @@ KssTimerShowProc_Lbd6:
 	calls	(a0)
 	jmp	KssTimerShowProc_Lcff
 KssTimerShowProc_Lc21:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x10, d0
@@ -32339,7 +32348,7 @@ KssTimerShowProc_Lc21:
 	mov	(0x84, sp), d0
 	mov	MT_NextMsgLineDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32353,7 +32362,7 @@ KssTimerShowProc_Lc21:
 	calls	(a0)
 	jmp	KssTimerShowProc_Lcff
 KssTimerShowProc_Lc64:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -32394,7 +32403,7 @@ KssTimerShowProc_Lcb9:
 	mov	sp, a0
 	add	0x3c, a0
 	call	func_9780AEBC_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x84, sp), d0
@@ -32411,15 +32420,15 @@ KssTimerShowProc_Lcff:
 	bra	KssTimerShowProc_Ld4b
 KssTimerShowProc_Ld02:
 	clr	d0
-	mov	d0, (data_97910CB4)
-	mov	d0, (data_97910C2C)
+	mov	d0, (KssTimerShowProc_L107_Var)
+	mov	d0, (KssTimerShowProc_L68_Var)
 	call	func_97805089_entry, 0, 0x48
 	clr	d0
 	bra	KssTimerShowProc_Ld4b
 KssTimerShowProc_Ld19:
 	clr	d0
-	mov	d0, (data_97910CB4)
-	mov	d0, (data_97910C2C)
+	mov	d0, (KssTimerShowProc_L107_Var)
+	mov	d0, (KssTimerShowProc_L68_Var)
 	call	func_97805089_entry, 0, 0x48
 	clr	d0
 	bra	KssTimerShowProc_Ld4b
@@ -32427,7 +32436,7 @@ KssTimerShowProc_Ld30:
 	clr	d0
 	bra	KssTimerShowProc_Ld4b
 KssTimerShowProc_Ld33:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x8c, sp), d0
@@ -32469,7 +32478,7 @@ func_97812681_entry_L31:
 	mov	(0x28, sp), d0
 	movhu	d0, (0x97913f80)
 func_97812681_entry_L39:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32501,7 +32510,7 @@ KssInitialWaitProc_L21:
 KssInitialWaitProc_L2e:
 	jmp	KssInitialWaitProc_L2aa
 KssInitialWaitProc_L31:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -32509,7 +32518,7 @@ KssInitialWaitProc_L31:
 	mov	(0x48, sp), d0
 	mov	(0x4c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x48, sp), d0
@@ -32535,13 +32544,13 @@ KssInitialWaitProc_L31:
 	mov	2, d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x36, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A03BC, a0
+	mov	KssInitialWaitProc_L31_Table, a0
 	mov	(d0, a0), a0
 	mov	(a0), d0
 	mov	d0, (0x10, sp)
@@ -32556,7 +32565,7 @@ KssInitialWaitProc_L31:
 	mov	1, d0
 	clr	d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x48, sp), d0
@@ -32575,7 +32584,7 @@ KssInitialWaitProc_Lea:
 	jmp	KssInitialWaitProc_L2c2
 KssInitialWaitProc_Lee:
 	mov	1, d0
-	movbu	d0, (data_97910C80)
+	movbu	d0, (KssInitialWaitProc_Lee_Table)
 	call	func_97802DEA, 0, 0
 	mov	d0, (0x24, sp)
 	call	func_97802DE1, 0, 0
@@ -32638,8 +32647,8 @@ KssInitialWaitProc_L164:
 	jmp	KssInitialWaitProc_L2c2
 KssInitialWaitProc_L17f:
 	clr	d0
-	movbu	d0, (data_97910C80)
-	movbu	(data_97910CB8), d0
+	movbu	d0, (KssInitialWaitProc_Lee_Table)
+	movbu	(KssInitialWaitProc_L17f_Table), d0
 	cmp	0, d0
 	beq	KssInitialWaitProc_L193
 	jmp	KssInitialWaitProc_L29a
@@ -32651,13 +32660,13 @@ KssInitialWaitProc_L193:
 	call	func_9783A129_entry, 0, 0x20
 	call	func_97839EF1_entry, 0, 0xc
 	mov	1, d0
-	mov	d0, (data_97910C24)
-	mov	d0, (data_97910C28)
+	mov	d0, (KssInitialWaitProc_L193_Var)
+	mov	d0, (KssInitialWaitProc_L193_Var_2)
 	mov	0, a0
 	clr	d0
 	clr	d1
 	call	func_978392F9, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -32665,7 +32674,7 @@ KssInitialWaitProc_L193:
 	mov	COMM_DISP_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -32676,14 +32685,14 @@ KssInitialWaitProc_L193:
 	clr	d0
 	call	func_97839B9F_entry, 0, 0x10
 	clr	d0
-	mov	d0, (data_97910C24)
+	mov	d0, (KssInitialWaitProc_L193_Var)
 	mov	3, d0
-	mov	d0, (data_97910C28)
+	mov	d0, (KssInitialWaitProc_L193_Var_2)
 	mov	0, a0
 	clr	d0
 	clr	d1
 	call	func_978392F9, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -32691,7 +32700,7 @@ KssInitialWaitProc_L193:
 	mov	COMM_DISP_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -32699,7 +32708,7 @@ KssInitialWaitProc_L193:
 	mov	COMM_DISP_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	0x00770000, d0
@@ -32722,7 +32731,7 @@ KssInitialWaitProc_L2a7:
 	clr	d0
 	bra	KssInitialWaitProc_L2c2
 KssInitialWaitProc_L2aa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -32744,7 +32753,7 @@ func_978129A4_entry:
 	beq	func_978129A4_entry_Le
 	bra	func_978129A4_entry_L50
 func_978129A4_entry_Le:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32757,7 +32766,7 @@ func_978129A4_entry_Le:
 	bne	func_978129A4_entry_L35
 	bra	func_978129A4_entry_L50
 func_978129A4_entry_L35:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32771,7 +32780,7 @@ func_978129A4_entry_L50:
 	beq	func_978129A4_entry_L59
 	bra	func_978129A4_entry_L78
 func_978129A4_entry_L59:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -32785,7 +32794,7 @@ func_978129A4_entry_L78:
 	beq	func_978129A4_entry_L81
 	bra	func_978129A4_entry_La0
 func_978129A4_entry_L81:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -32840,7 +32849,7 @@ KssCatch_FormatBox_L62:
 	mov	1, d0
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L67:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -32854,37 +32863,37 @@ KssCatch_FormatBox_L67:
 	bne	KssCatch_FormatBox_L8f
 	jmp	KssCatch_FormatBox_L11c
 KssCatch_FormatBox_L8f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	FormatPart1_id, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	FormatPart2_id, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	FormatPart3_id, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	FormatPartAll_id, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	FormatModeFastButton_id, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	FormatModeNormalButton_id, d0
@@ -32892,22 +32901,22 @@ KssCatch_FormatBox_L8f:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_L266
 KssCatch_FormatBox_L11c:
-	mov	data_978A03F4, a0
+	mov	func_978279FE_Var, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A03FC, a0
+	mov	func_978279FE_Var_3, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A0404, a0
+	mov	func_978279FE_Var_5, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A040C, a0
+	mov	func_978279FE_Var_7, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A042C, a0
+	mov	func_978279FE_Var_8, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A0434, a0
+	mov	func_978279FE_Var_10, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	0xff, d0
@@ -32917,7 +32926,7 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_12, a0
-	mov	data_978A03CC, a1
+	mov	func_97827B50_Var, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -32927,7 +32936,7 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_12, a0
-	mov	data_978A03D4, a1
+	mov	func_97827B50_Var_5, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -32937,7 +32946,7 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_11, a0
-	mov	data_978A03DC, a1
+	mov	func_97827B50_Var_9, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -32947,7 +32956,7 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALL_10, a0
-	mov	data_978A03E4, a1
+	mov	func_97827B50_Var_13, a1
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -32957,7 +32966,7 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_PARTITION_SELECT_2, a0
-	mov	data_978A03EC, a1
+	mov	func_97827B50_Var_17, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -32967,7 +32976,7 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_QUICK_3, a0
-	mov	data_978A041C, a1
+	mov	func_97827B50_Var_21, a1
 	clr	d0
 	mov	0xfc, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -32978,42 +32987,42 @@ KssCatch_FormatBox_L11c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_FULL_4, a0
-	mov	data_978A0424, a1
+	mov	func_97827B50_Var_25, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 KssCatch_FormatBox_L266:
-	mov	data_978A0494, a0
+	mov	func_978279FE_Var_12, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A049C, a0
+	mov	func_978279FE_Var_14, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04A4, a0
+	mov	func_978279FE_Var_16, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04AC, a0
+	mov	func_978279FE_Var_18, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04B4, a0
+	mov	func_978279FE_Var_20, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04BC, a0
+	mov	func_978279FE_Var_22, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04C4, a0
+	mov	func_978279FE_Var_24, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04CC, a0
+	mov	func_978279FE_Var_26, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04D4, a0
+	mov	func_978279FE_Var_28, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04DC, a0
+	mov	func_978279FE_Var_30, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A04E4, a0
+	mov	func_978279FE_Var_32, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	0xff, d0
@@ -33023,7 +33032,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_11, a0
-	mov	data_978A043C, a1
+	mov	func_97827B50_Var_29, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33034,7 +33043,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_10, a0
-	mov	data_978A0444, a1
+	mov	func_97827B50_Var_33, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33045,7 +33054,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_5_3, a0
-	mov	data_978A044C, a1
+	mov	func_97827B50_Var_37, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33056,7 +33065,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_7_4, a0
-	mov	data_978A0454, a1
+	mov	func_97827B50_Var_41, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33067,7 +33076,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_9_3, a0
-	mov	data_978A045C, a1
+	mov	func_97827B50_Var_45, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33078,7 +33087,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_0_4, a0
-	mov	data_978A0464, a1
+	mov	func_97827B50_Var_49, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33089,7 +33098,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_11, a0
-	mov	data_978A046C, a1
+	mov	func_97827B50_Var_53, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33100,7 +33109,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_4_3, a0
-	mov	data_978A0474, a1
+	mov	func_97827B50_Var_57, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33111,7 +33120,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_6_3, a0
-	mov	data_978A047C, a1
+	mov	func_97827B50_Var_61, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33122,7 +33131,7 @@ KssCatch_FormatBox_L266:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_8_5, a0
-	mov	data_978A0484, a1
+	mov	func_97827B50_Var_65, a1
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33137,7 +33146,7 @@ KssCatch_FormatBox_L266:
 	mov	4, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33148,7 +33157,7 @@ KssCatch_FormatBox_L266:
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L4ab:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -33163,7 +33172,7 @@ KssCatch_FormatBox_L4ab:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_10, a0
-	mov	data_978A03CC, a1
+	mov	func_97827B50_Var, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33173,7 +33182,7 @@ KssCatch_FormatBox_L4ab:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_10, a0
-	mov	data_978A03D4, a1
+	mov	func_97827B50_Var_5, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33183,7 +33192,7 @@ KssCatch_FormatBox_L4ab:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_9, a0
-	mov	data_978A03DC, a1
+	mov	func_97827B50_Var_9, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33193,7 +33202,7 @@ KssCatch_FormatBox_L4ab:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALL_9, a0
-	mov	data_978A03E4, a1
+	mov	func_97827B50_Var_13, a1
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33203,7 +33212,7 @@ KssCatch_FormatBox_L4ab:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_PARTITION_SELECT, a0
-	mov	data_978A03EC, a1
+	mov	func_97827B50_Var_17, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33213,7 +33222,7 @@ KssCatch_FormatBox_L4ab:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_FULL_3, a0
-	mov	data_978A0424, a1
+	mov	func_97827B50_Var_25, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33359,7 +33368,7 @@ KssCatch_FormatBox_L69b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_8, a0
-	mov	data_978A03CC, a1
+	mov	func_97827B50_Var, a1
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33369,7 +33378,7 @@ KssCatch_FormatBox_L69b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_9, a0
-	mov	data_978A03D4, a1
+	mov	func_97827B50_Var_5, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33379,7 +33388,7 @@ KssCatch_FormatBox_L69b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_8, a0
-	mov	data_978A03DC, a1
+	mov	func_97827B50_Var_9, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33389,14 +33398,14 @@ KssCatch_FormatBox_L69b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALL_8, a0
-	mov	data_978A03E4, a1
+	mov	func_97827B50_Var_13, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	clr	d0
-	mov	d0, (data_97910C60)
+	mov	d0, (KssTimerShowProc_L448_Var_2)
 	clr	d0
-	mov	d0, (data_97910C58)
-	mov	d0, (data_97910C5C)
+	mov	d0, (KssTimerShowProc_L448_Var)
+	mov	d0, (KssTimerShowProc_Lb9d_Var)
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L73c:
 	mov	0xff, d0
@@ -33406,7 +33415,7 @@ KssCatch_FormatBox_L73c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_7, a0
-	mov	data_978A03CC, a1
+	mov	func_97827B50_Var, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33416,7 +33425,7 @@ KssCatch_FormatBox_L73c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_8, a0
-	mov	data_978A03D4, a1
+	mov	func_97827B50_Var_5, a1
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33426,7 +33435,7 @@ KssCatch_FormatBox_L73c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_7, a0
-	mov	data_978A03DC, a1
+	mov	func_97827B50_Var_9, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33436,14 +33445,14 @@ KssCatch_FormatBox_L73c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALL_7, a0
-	mov	data_978A03E4, a1
+	mov	func_97827B50_Var_13, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	clr	d0
-	mov	d0, (data_97910C60)
+	mov	d0, (KssTimerShowProc_L448_Var_2)
 	mov	1, d0
-	mov	d0, (data_97910C58)
-	mov	d0, (data_97910C5C)
+	mov	d0, (KssTimerShowProc_L448_Var)
+	mov	d0, (KssTimerShowProc_Lb9d_Var)
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L7df:
@@ -33454,7 +33463,7 @@ KssCatch_FormatBox_L7df:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_6, a0
-	mov	data_978A03CC, a1
+	mov	func_97827B50_Var, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33464,7 +33473,7 @@ KssCatch_FormatBox_L7df:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_7, a0
-	mov	data_978A03D4, a1
+	mov	func_97827B50_Var_5, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33474,7 +33483,7 @@ KssCatch_FormatBox_L7df:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_6, a0
-	mov	data_978A03DC, a1
+	mov	func_97827B50_Var_9, a1
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33484,14 +33493,14 @@ KssCatch_FormatBox_L7df:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALL_6, a0
-	mov	data_978A03E4, a1
+	mov	func_97827B50_Var_13, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	clr	d0
-	mov	d0, (data_97910C60)
+	mov	d0, (KssTimerShowProc_L448_Var_2)
 	mov	2, d0
-	mov	d0, (data_97910C58)
-	mov	d0, (data_97910C5C)
+	mov	d0, (KssTimerShowProc_L448_Var)
+	mov	d0, (KssTimerShowProc_Lb9d_Var)
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L882:
@@ -33502,7 +33511,7 @@ KssCatch_FormatBox_L882:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_5, a0
-	mov	data_978A03CC, a1
+	mov	func_97827B50_Var, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33512,7 +33521,7 @@ KssCatch_FormatBox_L882:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_6, a0
-	mov	data_978A03D4, a1
+	mov	func_97827B50_Var_5, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33522,7 +33531,7 @@ KssCatch_FormatBox_L882:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_5, a0
-	mov	data_978A03DC, a1
+	mov	func_97827B50_Var_9, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -33532,15 +33541,15 @@ KssCatch_FormatBox_L882:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALL_5, a0
-	mov	data_978A03E4, a1
+	mov	func_97827B50_Var_13, a1
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	1, d0
-	mov	d0, (data_97910C60)
+	mov	d0, (KssTimerShowProc_L448_Var_2)
 	clr	d0
-	mov	d0, (data_97910C58)
+	mov	d0, (KssTimerShowProc_L448_Var)
 	mov	2, d0
-	mov	d0, (data_97910C5C)
+	mov	d0, (KssTimerShowProc_Lb9d_Var)
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L927:
@@ -33551,7 +33560,7 @@ KssCatch_FormatBox_L927:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_QUICK_2, a0
-	mov	data_978A041C, a1
+	mov	func_97827B50_Var_21, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33562,12 +33571,12 @@ KssCatch_FormatBox_L927:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_FULL_2, a0
-	mov	data_978A0424, a1
+	mov	func_97827B50_Var_25, a1
 	clr	d0
 	mov	0xfc, d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	1, d0
-	mov	d0, (data_97910C54)
+	mov	d0, (KssTimerShowProc_L746_Var)
 	clr	d0
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L97d:
@@ -33578,7 +33587,7 @@ KssCatch_FormatBox_L97d:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_QUICK, a0
-	mov	data_978A041C, a1
+	mov	func_97827B50_Var_21, a1
 	clr	d0
 	mov	0xfc, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -33589,15 +33598,15 @@ KssCatch_FormatBox_L97d:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_FULL, a0
-	mov	data_978A0424, a1
+	mov	func_97827B50_Var_25, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	clr	d0
-	mov	d0, (data_97910C54)
+	mov	d0, (KssTimerShowProc_L746_Var)
 	jmp	KssCatch_FormatBox_Lcba
 KssCatch_FormatBox_L9d1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33607,7 +33616,7 @@ KssCatch_FormatBox_L9d1:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_L9ef:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -33617,7 +33626,7 @@ KssCatch_FormatBox_L9ef:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La0e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -33627,7 +33636,7 @@ KssCatch_FormatBox_La0e:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La2d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	5, d0
@@ -33637,7 +33646,7 @@ KssCatch_FormatBox_La2d:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La4c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	7, d0
@@ -33647,7 +33656,7 @@ KssCatch_FormatBox_La4c:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La6b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	9, d0
@@ -33657,7 +33666,7 @@ KssCatch_FormatBox_La6b:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_La8a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33667,7 +33676,7 @@ KssCatch_FormatBox_La8a:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Laa8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	2, d0
@@ -33677,7 +33686,7 @@ KssCatch_FormatBox_Laa8:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lac7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	4, d0
@@ -33687,7 +33696,7 @@ KssCatch_FormatBox_Lac7:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lae6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	6, d0
@@ -33697,7 +33706,7 @@ KssCatch_FormatBox_Lae6:
 	calls	(a0)
 	jmp	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lb05:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	8, d0
@@ -33713,7 +33722,7 @@ KssCatch_FormatBox_Lb24:
 	bcc	KssCatch_FormatBox_Lb37
 	bra	KssCatch_FormatBox_Lb56
 KssCatch_FormatBox_Lb37:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33754,7 +33763,7 @@ KssCatch_FormatBox_Lb56:
 	add	0x34, a0
 	mov	0x97913b08, a1
 	call	strcat_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33762,7 +33771,7 @@ KssCatch_FormatBox_Lb56:
 	mov	FormatNrStr_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	sp, a0
@@ -33786,7 +33795,7 @@ KssCatch_FormatBox_Lc0c:
 	bra	KssCatch_FormatBox_Lc42
 KssCatch_FormatBox_Lc27:
 	mov	1, d0
-	mov	d0, (data_97910C2C)
+	mov	d0, (KssTimerShowProc_L68_Var)
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	d0, (0x14, sp)
@@ -33796,7 +33805,7 @@ KssCatch_FormatBox_Lc27:
 	bra	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lc42:
 	clr	d0
-	mov	d0, (data_97910C2C)
+	mov	d0, (KssTimerShowProc_L68_Var)
 	bra	KssCatch_FormatBox_Lca2
 KssCatch_FormatBox_Lc4b:
 	clr	d0
@@ -33805,7 +33814,7 @@ KssCatch_FormatBox_Lc4b:
 	add	0x34, a0
 	mov	Str_empty_483, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33813,7 +33822,7 @@ KssCatch_FormatBox_Lc4b:
 	mov	FormatNrStr_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	sp, a0
@@ -33823,7 +33832,7 @@ KssCatch_FormatBox_Lc4b:
 	mov	MT_ParaDraw, d1
 	calls	(a1)
 KssCatch_FormatBox_Lca2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -33909,7 +33918,7 @@ KssCatch_LBNEntryBox_L8d:
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x5c, sp), d0
@@ -33917,7 +33926,7 @@ KssCatch_LBNEntryBox_L8d:
 	mov	(0x54, sp), d0
 	mov	(0x58, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_LBND, d0
@@ -33928,7 +33937,7 @@ KssCatch_LBNEntryBox_L8d:
 	clr	d0
 	jmp	KssCatch_LBNEntryBox_L9ff
 KssCatch_LBNEntryBox_Leb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
@@ -33944,7 +33953,7 @@ KssCatch_LBNEntryBox_L111:
 	beq	KssCatch_LBNEntryBox_L117
 	bra	KssCatch_LBNEntryBox_L132
 KssCatch_LBNEntryBox_L117:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -33953,7 +33962,7 @@ KssCatch_LBNEntryBox_L117:
 	mov	MT_LoadActionLBNNr, d1
 	calls	(a0)
 KssCatch_LBNEntryBox_L132:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34070,7 +34079,7 @@ KssCatch_LBNEntryBox_L21c:
 KssCatch_LBNEntryBox_L227:
 	jmp	KssCatch_LBNEntryBox_L39d
 KssCatch_LBNEntryBox_L22a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34080,7 +34089,7 @@ KssCatch_LBNEntryBox_L22a:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L248:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -34090,7 +34099,7 @@ KssCatch_LBNEntryBox_L248:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L267:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	2, d0
@@ -34100,7 +34109,7 @@ KssCatch_LBNEntryBox_L267:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L286:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -34110,7 +34119,7 @@ KssCatch_LBNEntryBox_L286:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L2a5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	4, d0
@@ -34120,7 +34129,7 @@ KssCatch_LBNEntryBox_L2a5:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L2c4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	5, d0
@@ -34130,7 +34139,7 @@ KssCatch_LBNEntryBox_L2c4:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L2e3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	6, d0
@@ -34140,7 +34149,7 @@ KssCatch_LBNEntryBox_L2e3:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L302:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	7, d0
@@ -34150,7 +34159,7 @@ KssCatch_LBNEntryBox_L302:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L321:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	8, d0
@@ -34160,7 +34169,7 @@ KssCatch_LBNEntryBox_L321:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L340:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	9, d0
@@ -34170,7 +34179,7 @@ KssCatch_LBNEntryBox_L340:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L35f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -34180,7 +34189,7 @@ KssCatch_LBNEntryBox_L35f:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L37e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -34190,7 +34199,7 @@ KssCatch_LBNEntryBox_L37e:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L39d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
@@ -34208,7 +34217,7 @@ KssCatch_LBNEntryBox_L3c3:
 KssCatch_LBNEntryBox_L3c9:
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L3cc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34216,7 +34225,7 @@ KssCatch_LBNEntryBox_L3cc:
 	mov	(0x54, sp), d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34224,7 +34233,7 @@ KssCatch_LBNEntryBox_L3cc:
 	mov	DirNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34243,7 +34252,7 @@ KssCatch_LBNEntryBox_L428:
 	beq	KssCatch_LBNEntryBox_L43c
 	bra	KssCatch_LBNEntryBox_L45e
 KssCatch_LBNEntryBox_L43c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -34253,7 +34262,7 @@ KssCatch_LBNEntryBox_L43c:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L45e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -34263,12 +34272,12 @@ KssCatch_LBNEntryBox_L45e:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L480:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	cmp	5, d0
 	beq	KssCatch_LBNEntryBox_L48d
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L48d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34276,7 +34285,7 @@ KssCatch_LBNEntryBox_L48d:
 	mov	LoadOptionLBN_id, d0
 	mov	MT_GetSfxLoad, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34290,7 +34299,7 @@ KssCatch_LBNEntryBox_L48d:
 	bgt	KssCatch_LBNEntryBox_L4d6
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L4d6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34298,7 +34307,7 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34306,7 +34315,7 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34319,7 +34328,7 @@ KssCatch_LBNEntryBox_L4d6:
 	call	LibDiv32, 0, 0
 	exthu	d0
 	call	func_97802F04, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a2
 	mov	(0x28, sp), d0
@@ -34332,7 +34341,7 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	SelectedDirectory_id, d0
 	mov	EV_GetSelectedDir, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a2
 	mov	(0x28, sp), d0
@@ -34345,7 +34354,7 @@ KssCatch_LBNEntryBox_L4d6:
 	mov	SelectedCopyDest_id, d0
 	mov	EV_GetSelectedDir, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34363,7 +34372,7 @@ KssCatch_LBNEntryBox_L5cf:
 	add	-1, d0
 	exthu	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -34371,7 +34380,7 @@ KssCatch_LBNEntryBox_L5cf:
 	mov	-1, d0
 	mov	EV_DRWSTRG, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34414,45 +34423,45 @@ KssCatch_LBNEntryBox_L642:
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L683:
 	clr	d0
-	mov	d0, (data_97910CC4)
-	mov	d0, (data_97910CC0)
+	mov	d0, (KssCatch_LBNEntryBox_L480_Var)
+	mov	d0, (KssCatch_LBNEntryBox_L683_Var)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L693:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	inc	d0
-	mov	d0, (data_97910CC4)
+	mov	d0, (KssCatch_LBNEntryBox_L480_Var)
 	cmp	1, d0
 	bne	KssCatch_LBNEntryBox_L6a6
 	bra	KssCatch_LBNEntryBox_L6db
 KssCatch_LBNEntryBox_L6a6:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	cmp	2, d0
 	bne	KssCatch_LBNEntryBox_L6b2
 	bra	KssCatch_LBNEntryBox_L6db
 KssCatch_LBNEntryBox_L6b2:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	cmp	3, d0
 	bne	KssCatch_LBNEntryBox_L6be
 	bra	KssCatch_LBNEntryBox_L6db
 KssCatch_LBNEntryBox_L6be:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	cmp	4, d0
 	bne	KssCatch_LBNEntryBox_L6cb
 	jmp	KssCatch_LBNEntryBox_L78f
 KssCatch_LBNEntryBox_L6cb:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	cmp	5, d0
 	bne	KssCatch_LBNEntryBox_L6d8
 	jmp	KssCatch_LBNEntryBox_L78f
 KssCatch_LBNEntryBox_L6d8:
 	jmp	KssCatch_LBNEntryBox_L8dd
 KssCatch_LBNEntryBox_L6db:
-	mov	(data_97910CC0), d0
+	mov	(KssCatch_LBNEntryBox_L683_Var), d0
 	cmp	0, d0
 	bne	KssCatch_LBNEntryBox_L6e7
 	bra	KssCatch_LBNEntryBox_L706
 KssCatch_LBNEntryBox_L6e7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34461,7 +34470,7 @@ KssCatch_LBNEntryBox_L6e7:
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 KssCatch_LBNEntryBox_L706:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
@@ -34475,7 +34484,7 @@ KssCatch_LBNEntryBox_L706:
 	blt	KssCatch_LBNEntryBox_L731
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L731:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34483,7 +34492,7 @@ KssCatch_LBNEntryBox_L731:
 	mov	(0x54, sp), d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34491,7 +34500,7 @@ KssCatch_LBNEntryBox_L731:
 	mov	DirNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34502,7 +34511,7 @@ KssCatch_LBNEntryBox_L731:
 	clr	d0
 	jmp	KssCatch_LBNEntryBox_L9ff
 KssCatch_LBNEntryBox_L78f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
@@ -34516,7 +34525,7 @@ KssCatch_LBNEntryBox_L78f:
 	blt	KssCatch_LBNEntryBox_L7b9
 	bra	KssCatch_LBNEntryBox_L81f
 KssCatch_LBNEntryBox_L7b9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34524,7 +34533,7 @@ KssCatch_LBNEntryBox_L7b9:
 	mov	(0x54, sp), d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34532,7 +34541,7 @@ KssCatch_LBNEntryBox_L7b9:
 	mov	DirNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34541,16 +34550,16 @@ KssCatch_LBNEntryBox_L7b9:
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	1, d0
-	mov	d0, (data_97910CC0)
+	mov	d0, (KssCatch_LBNEntryBox_L683_Var)
 	clr	d0
 	jmp	KssCatch_LBNEntryBox_L9ff
 KssCatch_LBNEntryBox_L81f:
-	mov	(data_97910CC4), d0
+	mov	(KssCatch_LBNEntryBox_L480_Var), d0
 	cmp	5, d0
 	beq	KssCatch_LBNEntryBox_L82c
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L82c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34561,7 +34570,7 @@ KssCatch_LBNEntryBox_L82c:
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
 	call	func_9781EA47, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34575,7 +34584,7 @@ KssCatch_LBNEntryBox_L82c:
 	mov	(0x28, sp), d0
 	mov	(0x34, sp), d1
 	call	func_9781EC2F_entry, 0, 0x10
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34592,7 +34601,7 @@ KssCatch_LBNEntryBox_L82c:
 	beq	KssCatch_LBNEntryBox_L8bf
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L8bf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34602,7 +34611,7 @@ KssCatch_LBNEntryBox_L8bf:
 	calls	(a0)
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L8dd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34610,7 +34619,7 @@ KssCatch_LBNEntryBox_L8dd:
 	mov	(0x54, sp), d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34618,7 +34627,7 @@ KssCatch_LBNEntryBox_L8dd:
 	mov	DirNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34627,8 +34636,8 @@ KssCatch_LBNEntryBox_L8dd:
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
 	mov	1, d0
-	mov	d0, (data_97910CC4)
-	mov	(data_979126B4), a0
+	mov	d0, (KssCatch_LBNEntryBox_L480_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x5c, sp), d0
@@ -34642,7 +34651,7 @@ KssCatch_LBNEntryBox_L8dd:
 	blt	KssCatch_LBNEntryBox_L969
 	jmp	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L969:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34650,7 +34659,7 @@ KssCatch_LBNEntryBox_L969:
 	mov	(0x54, sp), d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -34661,7 +34670,7 @@ KssCatch_LBNEntryBox_L969:
 	clr	d0
 	bra	KssCatch_LBNEntryBox_L9ff
 KssCatch_LBNEntryBox_L9a7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34671,7 +34680,7 @@ KssCatch_LBNEntryBox_L9a7:
 	calls	(a0)
 	bra	KssCatch_LBNEntryBox_L9e7
 KssCatch_LBNEntryBox_L9c8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34680,7 +34689,7 @@ KssCatch_LBNEntryBox_L9c8:
 	mov	MT_IncrDigit, d1
 	calls	(a0)
 KssCatch_LBNEntryBox_L9e7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x5c, sp), d0
@@ -34743,7 +34752,7 @@ KssVwDigitBoxProc_L6f:
 KssVwDigitBoxProc_L7c:
 	jmp	KssVwDigitBoxProc_L730
 KssVwDigitBoxProc_L7f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -34751,13 +34760,13 @@ KssVwDigitBoxProc_L7f:
 	mov	(0x70, sp), d0
 	mov	(0x74, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34768,7 +34777,7 @@ KssVwDigitBoxProc_L7f:
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_Lca:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -34895,7 +34904,7 @@ KssVwDigitBoxProc_L1c4:
 	bge	KssVwDigitBoxProc_L1d7
 	bra	KssVwDigitBoxProc_L230
 KssVwDigitBoxProc_L1d7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -34933,7 +34942,7 @@ KssVwDigitBoxProc_L230:
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L234:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -34946,7 +34955,7 @@ KssVwDigitBoxProc_L234:
 	mov	(0x38, a0), a0
 	clr	d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x78, sp), d0
@@ -34983,7 +34992,7 @@ KssVwDigitBoxProc_L2b3:
 	clr	d0
 	mov	d0, d1
 	call	func_9781EC2F_entry, 0, 0x10
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35008,7 +35017,7 @@ KssVwDigitBoxProc_L2ef:
 	mov	-1, d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L2f4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -35077,7 +35086,7 @@ KssVwDigitBoxProc_L31c:
 	bne	KssVwDigitBoxProc_L381
 	bra	KssVwDigitBoxProc_L3a2
 KssVwDigitBoxProc_L381:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -35088,7 +35097,7 @@ KssVwDigitBoxProc_L381:
 	mov	(0x28, sp), d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L3a2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35099,7 +35108,7 @@ KssVwDigitBoxProc_L3a2:
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L3c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -35139,7 +35148,7 @@ KssVwDigitBoxProc_L403:
 	exth	d0
 	inc	d0
 	movhu	d0, (a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35147,7 +35156,7 @@ KssVwDigitBoxProc_L403:
 	mov	(0x70, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35158,7 +35167,7 @@ KssVwDigitBoxProc_L403:
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
 	call	func_9781EA47, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35172,7 +35181,7 @@ KssVwDigitBoxProc_L403:
 	mov	(0x28, sp), d0
 	mov	(0x2c, sp), d1
 	call	func_9781EC2F_entry, 0, 0x10
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35183,7 +35192,7 @@ KssVwDigitBoxProc_L403:
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L4ae:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -35223,7 +35232,7 @@ KssVwDigitBoxProc_L4f0:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35231,7 +35240,7 @@ KssVwDigitBoxProc_L4f0:
 	mov	(0x70, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35242,7 +35251,7 @@ KssVwDigitBoxProc_L4f0:
 	mov	d0, (0x28, sp)
 	mov	(0x28, sp), d0
 	call	func_9781EA47, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35256,7 +35265,7 @@ KssVwDigitBoxProc_L4f0:
 	mov	(0x28, sp), d0
 	mov	(0x2c, sp), d1
 	call	func_9781EC2F_entry, 0, 0x10
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35267,7 +35276,7 @@ KssVwDigitBoxProc_L4f0:
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L59c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -35317,7 +35326,7 @@ KssVwDigitBoxProc_L61e:
 	mov	(0x34, a0), a0
 	movhu	(a0), d0
 	movhu	d0, (0x32, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	DirNumberLBN_id, d0
@@ -35363,7 +35372,7 @@ KssVwDigitBoxProc_L6a7:
 	clr	d0
 	jmp	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L6ab:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -35400,7 +35409,7 @@ KssVwDigitBoxProc_L6ed:
 	mov	(0x34, a0), a0
 	mov	(0x78, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35411,7 +35420,7 @@ KssVwDigitBoxProc_L6ed:
 	clr	d0
 	bra	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L714:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -35422,7 +35431,7 @@ KssVwDigitBoxProc_L714:
 	exth	d0
 	bra	KssVwDigitBoxProc_L748
 KssVwDigitBoxProc_L730:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -35749,7 +35758,7 @@ func_97814A01_entry_L7d:
 	sub	d0, d2
 	movhu	d2, (0x1c, sp)
 func_97814A01_entry_L8c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -35765,7 +35774,7 @@ func_97814A01_entry_L8c:
 	movhu	d0, (0x24, sp)
 	movhu	(0x1a, sp), d0
 	movhu	d0, (0x26, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -35779,7 +35788,7 @@ func_97814A01_entry_L8c:
 	movhu	d0, (0x24, sp)
 	movhu	(0x1e, sp), d0
 	movhu	d0, (0x26, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -35843,7 +35852,7 @@ KssParaEditEntryProc_L6f:
 KssParaEditEntryProc_L7c:
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L7f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x88, sp), d0
@@ -35851,7 +35860,7 @@ KssParaEditEntryProc_L7f:
 	mov	(0x80, sp), d0
 	mov	(0x84, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -35860,7 +35869,7 @@ KssParaEditEntryProc_L7f:
 	clr	d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_Laf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x88, sp), d0
@@ -35868,42 +35877,42 @@ KssParaEditEntryProc_Laf:
 	mov	(0x80, sp), d0
 	mov	(0x84, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_97910CCC), d0
+	mov	(KssParaEditEntryProc_Laf_Var), d0
 	cmp	1, d0
 	beq	KssParaEditEntryProc_Le8
 	jmp	KssParaEditEntryProc_L1bd
 KssParaEditEntryProc_Le8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A0654, a0
+	mov	func_978279FE_Var_34, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A065C, a0
+	mov	func_978279FE_Var_36, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A0664, a0
+	mov	func_978279FE_Var_38, a0
 	mov	7, d0
 	calls	(a1)
-	mov	data_978A0654, a0
+	mov	func_978279FE_Var_34, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A065C, a0
+	mov	func_978279FE_Var_36, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A0664, a0
+	mov	func_978279FE_Var_38, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	0xff, d0
@@ -35913,7 +35922,7 @@ KssParaEditEntryProc_Le8:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_4, a0
-	mov	data_978A063C, a1
+	mov	func_97827B50_Var_72, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -35923,7 +35932,7 @@ KssParaEditEntryProc_Le8:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_5, a0
-	mov	data_978A0644, a1
+	mov	func_97827B50_Var_76, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -35933,7 +35942,7 @@ KssParaEditEntryProc_Le8:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_4, a0
-	mov	data_978A064C, a1
+	mov	func_97827B50_Var_80, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 KssParaEditEntryProc_L1bd:
@@ -35947,7 +35956,7 @@ KssParaEditEntryProc_L1cb:
 	clr	d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L1cf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -35986,7 +35995,7 @@ KssParaEditEntryProc_L225:
 	add	0x38, a0
 	mov	Str_empty_481, a1
 	call	strcat_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x80, sp), d0
@@ -36003,7 +36012,7 @@ KssParaEditEntryProc_L225:
 	mov	2, d1
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x6a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -36037,7 +36046,7 @@ KssParaEditEntryProc_L225:
 	beq	KssParaEditEntryProc_L2b0
 	bra	KssParaEditEntryProc_L2cc
 KssParaEditEntryProc_L2b0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -36049,7 +36058,7 @@ KssParaEditEntryProc_L2cc:
 	clr	d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L2d0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -36071,7 +36080,7 @@ KssParaEditEntryProc_L2d0:
 	beq	KssParaEditEntryProc_L303
 	jmp	KssParaEditEntryProc_L39f
 KssParaEditEntryProc_L303:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x80, sp), d0
@@ -36116,7 +36125,7 @@ KssParaEditEntryProc_L360:
 	mov	0x24, d0
 	call	func_9780AF46_entry, 0, 0x18
 KssParaEditEntryProc_L36c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -36143,7 +36152,7 @@ KssParaEditEntryProc_L39f:
 	clr	d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L3a3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -36152,7 +36161,7 @@ KssParaEditEntryProc_L3a3:
 	mov	MT_GetPageNow, d1
 	calls	(a0)
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x88, sp), d0
@@ -36206,7 +36215,7 @@ KssParaEditEntryProc_L42d:
 KssParaEditEntryProc_L434:
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L437:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -36215,7 +36224,7 @@ KssParaEditEntryProc_L437:
 	mov	MT_Draw, d1
 	calls	(a0)
 	clr	d0
-	mov	d0, (data_97910CCC)
+	mov	d0, (KssParaEditEntryProc_Laf_Var)
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L460:
 	movhu	(0x34, sp), d0
@@ -36225,32 +36234,32 @@ KssParaEditEntryProc_L460:
 	jmp	KssParaEditEntryProc_L54b
 KssParaEditEntryProc_L46b:
 	mov	1, d0
-	mov	d0, (data_97910CCC)
-	mov	(data_979126B4), a0
+	mov	d0, (KssParaEditEntryProc_Laf_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A0654, a0
+	mov	func_978279FE_Var_34, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A065C, a0
+	mov	func_978279FE_Var_36, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A0664, a0
+	mov	func_978279FE_Var_38, a0
 	mov	7, d0
 	calls	(a1)
-	mov	data_978A0654, a0
+	mov	func_978279FE_Var_34, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A065C, a0
+	mov	func_978279FE_Var_36, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A0664, a0
+	mov	func_978279FE_Var_38, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	0xff, d0
@@ -36260,7 +36269,7 @@ KssParaEditEntryProc_L46b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_1_3, a0
-	mov	data_978A063C, a1
+	mov	func_97827B50_Var_72, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -36270,7 +36279,7 @@ KssParaEditEntryProc_L46b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_2_4, a0
-	mov	data_978A0644, a1
+	mov	func_97827B50_Var_76, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	mov	0xff, d0
@@ -36280,30 +36289,30 @@ KssParaEditEntryProc_L46b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_3_3, a0
-	mov	data_978A064C, a1
+	mov	func_97827B50_Var_80, a1
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L54b:
 	mov	1, d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	clr	d0
-	mov	d0, (data_97910CC8)
+	mov	d0, (KssParaEditEntryProc_L54b_Var)
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L55d:
 	mov	1, d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	mov	1, d0
-	mov	d0, (data_97910CC8)
+	mov	d0, (KssParaEditEntryProc_L54b_Var)
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L570:
 	mov	1, d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	mov	2, d0
-	mov	d0, (data_97910CC8)
+	mov	d0, (KssParaEditEntryProc_L54b_Var)
 	jmp	KssParaEditEntryProc_L71d
 KssParaEditEntryProc_L583:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -36324,14 +36333,14 @@ KssParaEditEntryProc_L583:
 	bra	KssParaEditEntryProc_L5e3
 KssParaEditEntryProc_L5b0:
 	mov	2, d0
-	mov	(data_97910CC8), d1
+	mov	(KssParaEditEntryProc_L54b_Var), d1
 	call	func_97802A33_entry, 0, 0x10
 	mov	d0, (0x30, sp)
 	cmp	0, d0
 	beq	KssParaEditEntryProc_L5c7
 	bra	KssParaEditEntryProc_L5df
 KssParaEditEntryProc_L5c7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x88, sp), d0
@@ -36369,7 +36378,7 @@ KssParaEditEntryProc_L600:
 	beq	KssParaEditEntryProc_L617
 	bra	KssParaEditEntryProc_L62f
 KssParaEditEntryProc_L617:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x88, sp), d0
@@ -36381,7 +36390,7 @@ KssParaEditEntryProc_L62f:
 	clr	d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L633:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -36418,7 +36427,7 @@ KssParaEditEntryProc_L679:
 	mov	(0x64, a0), d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L681:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -36442,7 +36451,7 @@ KssParaEditEntryProc_L6ad:
 	mov	(0x54, a0), d0
 	jmp	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L6b5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -36468,7 +36477,7 @@ KssParaEditEntryProc_L6e1:
 	exth	d0
 	bra	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L6e9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x80, sp), d0
@@ -36494,7 +36503,7 @@ KssParaEditEntryProc_L715:
 	exth	d0
 	bra	KssParaEditEntryProc_L735
 KssParaEditEntryProc_L71d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x88, sp), d0
@@ -36549,7 +36558,7 @@ func_9781523C_L4c:
 	mov	0x1d, d0
 	movhu	d0, (0x26, sp)
 func_9781523C_L51:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2dc, a0), a2
 	mov	0xc0, d0
@@ -36564,7 +36573,7 @@ func_9781523C_L51:
 	exth	d0
 	add	d1, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -36574,7 +36583,7 @@ func_9781523C_L51:
 	calls	(a2)
 	mov	4, d0
 	mov	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x68, sp), a0
@@ -36645,7 +36654,7 @@ func_9781523C_Lec:
 func_9781523C_L127:
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x68, sp), a0
@@ -36705,14 +36714,14 @@ func_9781523C_L19a:
 func_9781523C_L1a9:
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x68, sp), a0
 	calls	(a1)
 	movhu	d0, (0x28, sp)
 func_9781523C_L1c2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	(0x68, sp), d0
@@ -36741,7 +36750,7 @@ func_9781523C_L1c2:
 	movhu	d0, (0x3e, sp)
 	bra	func_9781523C_L27a
 func_9781523C_L208:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd4, a0), a2
 	mov	(0x68, sp), d0
@@ -36765,7 +36774,7 @@ func_9781523C_L208:
 	movhu	d0, (0x3e, sp)
 	bra	func_9781523C_L27a
 func_9781523C_L23f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd8, a0), a2
 	mov	(0x68, sp), d0
@@ -36812,14 +36821,14 @@ func_9781523C_L282:
 	exth	d0
 	add	0x18, d0
 	movhu	d0, (0x46, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0x40, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xc4, a0), a1
 	mov	sp, a0
@@ -36865,7 +36874,7 @@ KssVwBoxProc_L46:
 KssVwBoxProc_L53:
 	jmp	KssVwBoxProc_L25a
 KssVwBoxProc_L56:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x3c, sp), d0
@@ -36873,7 +36882,7 @@ KssVwBoxProc_L56:
 	mov	(0x34, sp), d0
 	mov	(0x38, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -36882,7 +36891,7 @@ KssVwBoxProc_L56:
 	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -36891,7 +36900,7 @@ KssVwBoxProc_L56:
 	mov	MT_GetBoxBorder, d1
 	calls	(a0)
 	movhu	d0, (0x1e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsEditSwBox, d0
@@ -36903,7 +36912,7 @@ KssVwBoxProc_L56:
 	bne	KssVwBoxProc_Ld0
 	bra	KssVwBoxProc_Le6
 KssVwBoxProc_Ld0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x518, a0), a0
 	calls	(a0)
@@ -36911,14 +36920,14 @@ KssVwBoxProc_Ld0:
 	bne	KssVwBoxProc_Le6
 	bra	KssVwBoxProc_L118
 KssVwBoxProc_Le6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x34, sp), d0
 	mov	sp, a0
 	add	0x24, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -36930,14 +36939,14 @@ KssVwBoxProc_Le6:
 	calls	(a1)
 	bra	KssVwBoxProc_L166
 KssVwBoxProc_L118:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x34, sp), d0
 	mov	sp, a0
 	add	0x24, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -36946,7 +36955,7 @@ KssVwBoxProc_L118:
 	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -36960,14 +36969,14 @@ KssVwBoxProc_L166:
 	clr	d0
 	jmp	KssVwBoxProc_L272
 KssVwBoxProc_L16a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x34, sp), d0
 	mov	sp, a0
 	add	0x24, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -36981,7 +36990,7 @@ KssVwBoxProc_L16a:
 	bne	KssVwBoxProc_L1a5
 	bra	KssVwBoxProc_L1c2
 KssVwBoxProc_L1a5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x304, a0), a1
 	mov	0x1a, d0
@@ -36993,7 +37002,7 @@ KssVwBoxProc_L1a5:
 	calls	(a1)
 	bra	KssVwBoxProc_L1df
 KssVwBoxProc_L1c2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x304, a0), a1
 	movhu	(0x1c, sp), d0
@@ -37008,7 +37017,7 @@ KssVwBoxProc_L1df:
 	clr	d0
 	jmp	KssVwBoxProc_L272
 KssVwBoxProc_L1e3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x34, sp), d0
@@ -37018,7 +37027,7 @@ KssVwBoxProc_L1e3:
 	exth	d0
 	bra	KssVwBoxProc_L272
 KssVwBoxProc_L1fd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x34, sp), d0
@@ -37038,7 +37047,7 @@ KssVwBoxProc_L223:
 	clr	d0
 	bra	KssVwBoxProc_L272
 KssVwBoxProc_L226:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x34, sp), d0
@@ -37048,7 +37057,7 @@ KssVwBoxProc_L226:
 	exth	d0
 	bra	KssVwBoxProc_L272
 KssVwBoxProc_L240:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x34, sp), d0
@@ -37058,7 +37067,7 @@ KssVwBoxProc_L240:
 	exth	d0
 	bra	KssVwBoxProc_L272
 KssVwBoxProc_L25a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x3c, sp), d0
@@ -37096,7 +37105,7 @@ KssPsParaBoxProc_L2e:
 KssPsParaBoxProc_L3b:
 	jmp	KssPsParaBoxProc_L1cf
 KssPsParaBoxProc_L3e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -37104,14 +37113,14 @@ KssPsParaBoxProc_L3e:
 	mov	(0x4c, sp), d0
 	mov	(0x50, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x4c, sp), d0
 	mov	sp, a0
 	add	0x34, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -37119,13 +37128,13 @@ KssPsParaBoxProc_L3e:
 	mov	sp, a1
 	add	0x3c, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -37134,7 +37143,7 @@ KssPsParaBoxProc_L3e:
 	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -37143,7 +37152,7 @@ KssPsParaBoxProc_L3e:
 	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -37152,7 +37161,7 @@ KssPsParaBoxProc_L3e:
 	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x32, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	0x100, d0
@@ -37163,7 +37172,7 @@ KssPsParaBoxProc_L3e:
 	beq	KssPsParaBoxProc_L10b
 	bra	KssPsParaBoxProc_L147
 KssPsParaBoxProc_L10b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -37177,7 +37186,7 @@ KssPsParaBoxProc_L10b:
 	beq	KssPsParaBoxProc_L131
 	bra	KssPsParaBoxProc_L152
 KssPsParaBoxProc_L131:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x2c, sp), a0
@@ -37189,7 +37198,7 @@ KssPsParaBoxProc_L147:
 	mov	(0x54, sp), a1
 	call	strcpy_entry, [a2], 4
 KssPsParaBoxProc_L152:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x2c, sp), d0
@@ -37208,7 +37217,7 @@ KssPsParaBoxProc_L152:
 	movhu	(0x32, sp), d1
 	exth	d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x2c, sp), a0
@@ -37222,7 +37231,7 @@ KssPsParaBoxProc_L194:
 	clr	d0
 	bra	KssPsParaBoxProc_L1e7
 KssPsParaBoxProc_L19c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -37231,7 +37240,7 @@ KssPsParaBoxProc_L19c:
 	mov	(0x20, a0), d0
 	bra	KssPsParaBoxProc_L1e7
 KssPsParaBoxProc_L1b5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -37241,7 +37250,7 @@ KssPsParaBoxProc_L1b5:
 	exth	d0
 	bra	KssPsParaBoxProc_L1e7
 KssPsParaBoxProc_L1cf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -37262,13 +37271,13 @@ KssUserBitmapProc:
 	beq	KssUserBitmapProc_L14
 	bra	KssUserBitmapProc_L65
 KssUserBitmapProc_L14:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	mov	(0x14, sp), a1
@@ -37279,7 +37288,7 @@ KssUserBitmapProc_L14:
 	mov	EV_GetSelectedArea, d1
 	mov	d2, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -37290,7 +37299,7 @@ KssUserBitmapProc_L14:
 	clr	d0
 	bra	KssUserBitmapProc_L7d
 KssUserBitmapProc_L65:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -37338,7 +37347,7 @@ KssParaTextEntryProc_L48:
 KssParaTextEntryProc_L55:
 	jmp	KssParaTextEntryProc_L343
 KssParaTextEntryProc_L58:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x80, sp), d0
@@ -37346,13 +37355,13 @@ KssParaTextEntryProc_L58:
 	mov	(0x78, sp), d0
 	mov	(0x7c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x78, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -37391,7 +37400,7 @@ KssParaTextEntryProc_Lda:
 	add	0x30, a0
 	mov	Str_empty_480, a1
 	call	strcat_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x78, sp), d0
@@ -37409,7 +37418,7 @@ KssParaTextEntryProc_Lda:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x62, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -37432,7 +37441,7 @@ KssParaTextEntryProc_Lda:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -37443,7 +37452,7 @@ KssParaTextEntryProc_Lda:
 	clr	d0
 	jmp	KssParaTextEntryProc_L35b
 KssParaTextEntryProc_L16d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x80, sp), d0
@@ -37451,7 +37460,7 @@ KssParaTextEntryProc_L16d:
 	mov	(0x78, sp), d0
 	mov	(0x7c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x78, sp), d0
@@ -37473,7 +37482,7 @@ KssParaTextEntryProc_L16d:
 	beq	KssParaTextEntryProc_L1b8
 	jmp	KssParaTextEntryProc_L255
 KssParaTextEntryProc_L1b8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x78, sp), d0
@@ -37519,7 +37528,7 @@ KssParaTextEntryProc_L216:
 	mov	0x24, d0
 	call	func_9780AF46_entry, 0, 0x18
 KssParaTextEntryProc_L222:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -37546,7 +37555,7 @@ KssParaTextEntryProc_L255:
 	clr	d0
 	jmp	KssParaTextEntryProc_L35b
 KssParaTextEntryProc_L259:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x78, sp), d0
@@ -37583,7 +37592,7 @@ KssParaTextEntryProc_L29f:
 	mov	(0x34, a0), d0
 	jmp	KssParaTextEntryProc_L35b
 KssParaTextEntryProc_L2a7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x78, sp), d0
@@ -37607,7 +37616,7 @@ KssParaTextEntryProc_L2d3:
 	mov	(0x24, a0), d0
 	jmp	KssParaTextEntryProc_L35b
 KssParaTextEntryProc_L2db:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x78, sp), d0
@@ -37633,7 +37642,7 @@ KssParaTextEntryProc_L307:
 	exth	d0
 	bra	KssParaTextEntryProc_L35b
 KssParaTextEntryProc_L30f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x78, sp), d0
@@ -37659,7 +37668,7 @@ KssParaTextEntryProc_L33b:
 	exth	d0
 	bra	KssParaTextEntryProc_L35b
 KssParaTextEntryProc_L343:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x80, sp), d0
@@ -37687,15 +37696,15 @@ func_97815D4C_entry_L12:
 	bra	func_97815D4C_entry_L22
 func_97815D4C_entry_L1b:
 	clr	d0
-	movbu	d0, (data_97910C80)
+	movbu	d0, (KssInitialWaitProc_Lee_Table)
 func_97815D4C_entry_L22:
-	movbu	(data_97910C80), d0
+	movbu	(KssInitialWaitProc_Lee_Table), d0
 	cmp	0, d0
 	beq	func_97815D4C_entry_L2e
 	bra	func_97815D4C_entry_L38
 func_97815D4C_entry_L2e:
 	mov	1, d0
-	movbu	d0, (data_97910C80)
+	movbu	d0, (KssInitialWaitProc_Lee_Table)
 	bra	func_97815D4C_entry_L3c
 func_97815D4C_entry_L38:
 	mov	-3, d0
@@ -38487,7 +38496,7 @@ func_97816515:
 	bgt	func_97816515_Lf
 	bra	func_97816515_L30
 func_97816515_Lf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -38497,7 +38506,7 @@ func_97816515_Lf:
 	calls	(a0)
 	bra	func_97816515_L4f
 func_97816515_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -38547,7 +38556,7 @@ AcKssPleaseWaitProc_L54:
 AcKssPleaseWaitProc_L57:
 	clr	d0
 	movhu	d0, (0x97913b5c)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x48, sp), d0
@@ -38558,7 +38567,7 @@ AcKssPleaseWaitProc_L57:
 	clr	d0
 	jmp	AcKssPleaseWaitProc_L2e9
 AcKssPleaseWaitProc_L7a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3ec, a0), a0
 	mov	(0x40, sp), d0
@@ -38570,7 +38579,7 @@ AcKssPleaseWaitProc_L7a:
 	mov	0xa, d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x48, sp), d0
@@ -38581,7 +38590,7 @@ AcKssPleaseWaitProc_L7a:
 	clr	d0
 	jmp	AcKssPleaseWaitProc_L2e9
 AcKssPleaseWaitProc_Lb9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x48, sp), d0
@@ -38589,7 +38598,7 @@ AcKssPleaseWaitProc_Lb9:
 	mov	(0x40, sp), d0
 	mov	(0x44, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -38600,14 +38609,14 @@ AcKssPleaseWaitProc_Lb9:
 	clr	d0
 	jmp	AcKssPleaseWaitProc_L2e9
 AcKssPleaseWaitProc_Lf0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x40, sp), d0
 	mov	sp, a0
 	add	0x2c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -38616,7 +38625,7 @@ AcKssPleaseWaitProc_Lf0:
 	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -38624,7 +38633,7 @@ AcKssPleaseWaitProc_Lf0:
 	movhu	(0x24, sp), d0
 	exth	d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x48, sp), d0
@@ -38632,7 +38641,7 @@ AcKssPleaseWaitProc_Lf0:
 	mov	(0x40, sp), d0
 	mov	(0x44, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3ec, a0), a0
 	mov	(0x40, sp), d0
@@ -38650,7 +38659,7 @@ AcKssPleaseWaitProc_Lf0:
 	beq	AcKssPleaseWaitProc_L182
 	bra	AcKssPleaseWaitProc_L1a7
 AcKssPleaseWaitProc_L182:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x40, sp), d0
@@ -38664,7 +38673,7 @@ AcKssPleaseWaitProc_L182:
 	calls	(a0)
 	bra	AcKssPleaseWaitProc_L1ca
 AcKssPleaseWaitProc_L1a7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x40, sp), d0
@@ -38689,7 +38698,7 @@ AcKssPleaseWaitProc_L1dc:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A08E4, a0
+	mov	AcKssPleaseWaitProc_L1dc_Table, a0
 	mov	(d0, a0), a0
 	call	LibStrlen, 0, 0
 	movhu	d0, (0x26, sp)
@@ -38740,7 +38749,7 @@ AcKssPleaseWaitProc_L24b:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A08E4, a0
+	mov	AcKssPleaseWaitProc_L1dc_Table, a0
 	mov	(d0, a0), d2
 	mov	(0x1c, sp), a0
 	movhu	(0x28, sp), d0
@@ -38762,7 +38771,7 @@ AcKssPleaseWaitProc_L27a:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A08E4, a0
+	mov	AcKssPleaseWaitProc_L1dc_Table, a0
 	mov	(d0, a0), a1
 	add	d1, d1
 	mov	(0x1c, sp), d0
@@ -38783,7 +38792,7 @@ AcKssPleaseWaitProc_L2b0:
 	clr	d0
 	bra	AcKssPleaseWaitProc_L2e9
 AcKssPleaseWaitProc_L2b3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x48, sp), d0
@@ -38795,7 +38804,7 @@ AcKssPleaseWaitProc_L2b3:
 	mov	(0x20, sp), d0
 	bra	AcKssPleaseWaitProc_L2e9
 AcKssPleaseWaitProc_L2d1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x48, sp), d0
@@ -38821,7 +38830,7 @@ func_97816853_entry:
 	movhu	d0, (0x97913f8e)
 	call	func_97802F52, 0, 0
 	movhu	d0, (0x97913f8c)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -38958,7 +38967,7 @@ KssNamingWindowProc_L123:
 	beq	KssNamingWindowProc_L12f
 	bra	KssNamingWindowProc_L159
 KssNamingWindowProc_L12f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x70, sp), d0
@@ -38977,7 +38986,7 @@ KssNamingWindowProc_L159:
 	movhu	d0, (0x97913baa)
 	movhu	d0, (0x97913bac)
 	movhu	d0, (0x97913bb0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	clr	d0
@@ -38994,7 +39003,7 @@ KssNamingWindowProc_L19d:
 	mov	0x20, d0
 	movhu	d0, (0x97913ba8)
 KssNamingWindowProc_L1a5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	clr	d0
@@ -39005,7 +39014,7 @@ KssNamingWindowProc_L1a5:
 	movhu	d0, (0x97913bb8)
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CFC, a0
+	mov	KssNamingWindowProc_L1a5_Table, a0
 	mov	(d0, a0), d1
 	mov	d1, (0x97913bbc)
 	movhu	(0x97913bb8), d0
@@ -39013,13 +39022,13 @@ KssNamingWindowProc_L1a5:
 	bne	KssNamingWindowProc_L1eb
 	bra	KssNamingWindowProc_L213
 KssNamingWindowProc_L1eb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	0x36, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	0x37, d0
@@ -39027,13 +39036,13 @@ KssNamingWindowProc_L1eb:
 	calls	(a0)
 	bra	KssNamingWindowProc_L23b
 KssNamingWindowProc_L213:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	0x36, d0
 	mov	1, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	0x37, d0
@@ -39072,7 +39081,7 @@ KssNamingWindowProc_L26c:
 	bne	KssNamingWindowProc_L281
 	bra	KssNamingWindowProc_L2e3
 KssNamingWindowProc_L281:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	mov	0x97913b60, d0
@@ -39080,7 +39089,7 @@ KssNamingWindowProc_L281:
 	mov	(0x97913ba4), d0
 	mov	MT_GetString, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x6c, d0
@@ -39088,7 +39097,7 @@ KssNamingWindowProc_L281:
 	mov	(0x70, sp), d0
 	mov	EV_INDEXSELECT, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x006c0000, d0
@@ -39102,7 +39111,7 @@ KssNamingWindowProc_L2e3:
 	mov	0x97913b81, a1
 	call	strcpy_entry, [a2], 4
 KssNamingWindowProc_L2f6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -39110,7 +39119,7 @@ KssNamingWindowProc_L2f6:
 	mov	(0x70, sp), d0
 	mov	(0x74, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	0x65, d0
@@ -39118,7 +39127,7 @@ KssNamingWindowProc_L2f6:
 	mov	(0x70, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	0x64, d0
@@ -39126,7 +39135,7 @@ KssNamingWindowProc_L2f6:
 	mov	(0x70, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -39138,7 +39147,7 @@ KssNamingWindowProc_L35c:
 	movhu	d0, (0x97913bae)
 	movhu	d0, (0x97913bb2)
 	movhu	d0, (0x97913bb6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bac), d0
@@ -39146,7 +39155,7 @@ KssNamingWindowProc_L35c:
 	mov	(0x70, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -39154,7 +39163,7 @@ KssNamingWindowProc_L35c:
 	mov	(0x70, sp), d0
 	mov	(0x74, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -39174,7 +39183,7 @@ KssNamingWindowProc_L3d8:
 	mov	0x97913b60, a1
 	call	strcpy_entry, [a2], 4
 KssNamingWindowProc_L3eb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -39195,14 +39204,14 @@ KssNamingWindowProc_L407:
 KssNamingWindowProc_L421:
 	clr	d0
 	mov	d0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x70, sp), d0
 	mov	sp, a0
 	add	0x40, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -39220,7 +39229,7 @@ KssNamingWindowProc_L421:
 	bgt	KssNamingWindowProc_L468
 	bra	KssNamingWindowProc_L490
 KssNamingWindowProc_L468:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	Str_7f, d0
@@ -39236,7 +39245,7 @@ KssNamingWindowProc_L468:
 	calls	(a2)
 	bra	KssNamingWindowProc_L4b6
 KssNamingWindowProc_L490:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	Str_empty_477, d0
@@ -39269,7 +39278,7 @@ KssNamingWindowProc_L4c7:
 KssNamingWindowProc_L4d8:
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x97913bb4), d1
 	movhu	(0x34, sp), d0
@@ -39297,7 +39306,7 @@ KssNamingWindowProc_L510:
 	bne	KssNamingWindowProc_L518
 	bra	KssNamingWindowProc_L53e
 KssNamingWindowProc_L518:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	Str_empty_476, d0
@@ -39313,12 +39322,12 @@ KssNamingWindowProc_L518:
 	calls	(a2)
 	bra	KssNamingWindowProc_L57a
 KssNamingWindowProc_L53e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x97913bb4), d1
 	movhu	(0x34, sp), d0
@@ -39355,7 +39364,7 @@ KssNamingWindowProc_L58b:
 KssNamingWindowProc_L596:
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x97913bb4), d1
 	movhu	(0x34, sp), d0
@@ -39372,7 +39381,7 @@ KssNamingWindowProc_L5b9:
 	bne	KssNamingWindowProc_L5c1
 	bra	KssNamingWindowProc_L5e7
 KssNamingWindowProc_L5c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	Str_empty_475, d0
@@ -39388,7 +39397,7 @@ KssNamingWindowProc_L5c1:
 	calls	(a2)
 	bra	KssNamingWindowProc_L60b
 KssNamingWindowProc_L5e7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	Str_80, d0
@@ -39403,14 +39412,14 @@ KssNamingWindowProc_L5e7:
 	mov	d0, d1
 	calls	(a2)
 KssNamingWindowProc_L60b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x70, sp), d0
 	mov	sp, a0
 	add	0x40, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -39434,7 +39443,7 @@ KssNamingWindowProc_L60b:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x52, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -39461,7 +39470,7 @@ KssNamingWindowProc_L690:
 KssNamingWindowProc_L6a1:
 	mov	0x0000ffff, d0
 	movhu	d0, (0x97913bb6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bac), d2
@@ -39481,7 +39490,7 @@ KssNamingWindowProc_L6e9:
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
 KssNamingWindowProc_L6ed:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -39559,7 +39568,7 @@ KssNamingWindowProc_L780:
 	movhu	(0x97913baa), d0
 	add	-1, d0
 	movhu	d0, (0x97913baa)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -39567,7 +39576,7 @@ KssNamingWindowProc_L780:
 	mov	(0x70, sp), d0
 	mov	MT_SetCursor, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x78, sp), d0
@@ -39587,7 +39596,7 @@ KssNamingWindowProc_L7dc:
 	movhu	(0x97913baa), d0
 	inc	d0
 	movhu	d0, (0x97913baa)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -39595,7 +39604,7 @@ KssNamingWindowProc_L7dc:
 	mov	(0x70, sp), d0
 	mov	MT_SetCursor, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x78, sp), d0
@@ -39615,13 +39624,13 @@ KssNamingWindowProc_L831:
 	movhu	d0, (0x97913bb4)
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x97913bb4), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	d1, a0
@@ -39633,7 +39642,7 @@ KssNamingWindowProc_L831:
 	movhu	(0x97913baa), d0
 	mov	0x97913b60, a0
 	movbu	d1, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -39641,7 +39650,7 @@ KssNamingWindowProc_L831:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bb4), d0
@@ -39649,7 +39658,7 @@ KssNamingWindowProc_L831:
 	mov	(0x70, sp), d0
 	mov	MT_SeleDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x78, sp), d0
@@ -39661,7 +39670,7 @@ KssNamingWindowProc_L831:
 KssNamingWindowProc_L8df:
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x97913bb4), d0
 	inc	d0
@@ -39678,13 +39687,13 @@ KssNamingWindowProc_L902:
 	movhu	d0, (0x97913bb4)
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x97913bb4), d0
 	asl2	d0
 	mov	(d0, a0), d1
 	mov	d1, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	d1, a0
@@ -39696,7 +39705,7 @@ KssNamingWindowProc_L902:
 	movhu	(0x97913baa), d0
 	mov	0x97913b60, a0
 	movbu	d1, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -39704,7 +39713,7 @@ KssNamingWindowProc_L902:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bb4), d0
@@ -39712,7 +39721,7 @@ KssNamingWindowProc_L902:
 	mov	(0x70, sp), d0
 	mov	MT_SeleDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x78, sp), d0
@@ -39752,7 +39761,7 @@ KssNamingWindowProc_L9e8:
 	movhu	(0x97913baa), d0
 	mov	0x97913b60, a0
 	movbu	d2, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -39760,7 +39769,7 @@ KssNamingWindowProc_L9e8:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -39800,7 +39809,7 @@ KssNamingWindowProc_La7a:
 	add	-1, d0
 	mov	0x97913b60, a0
 	movbu	d2, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -39808,7 +39817,7 @@ KssNamingWindowProc_La7a:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -39897,7 +39906,7 @@ KssNamingWindowProc_Lb6f:
 	mov	d2, d0
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	movhu	(0x97913ba8), d0
@@ -39925,7 +39934,7 @@ KssNamingWindowProc_Lb6f:
 	add	0x97913b60, a0
 	mov	(0x2c, sp), a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x2c, sp), a0
@@ -39984,7 +39993,7 @@ KssNamingWindowProc_Lc56:
 	bge	KssNamingWindowProc_Lc65
 	bra	KssNamingWindowProc_Lc3a
 KssNamingWindowProc_Lc65:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -39992,7 +40001,7 @@ KssNamingWindowProc_Lc65:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -40024,7 +40033,7 @@ KssNamingWindowProc_Lcce:
 	bge	KssNamingWindowProc_Lcdd
 	bra	KssNamingWindowProc_Lcb2
 KssNamingWindowProc_Lcdd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -40032,7 +40041,7 @@ KssNamingWindowProc_Lcdd:
 	mov	KssCursBox_id, d0
 	mov	MT_SetCursor, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -40040,7 +40049,7 @@ KssNamingWindowProc_Lcdd:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -40059,7 +40068,7 @@ KssNamingWindowProc_Ld4a:
 	mov	0x9798ad1e, a1
 	mov	0x1a, d0
 	call	strncpy_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -40067,7 +40076,7 @@ KssNamingWindowProc_Ld4a:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x34, sp), d0
@@ -40086,7 +40095,7 @@ KssNamingWindowProc_Ldad:
 	mov	0x97913ed8, a1
 	mov	0x10, d0
 	call	strncpy_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -40104,7 +40113,7 @@ KssNamingWindowProc_Ldf3:
 	mov	0x97913ef9, a1
 	mov	0x10, d0
 	call	strncpy_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -40126,7 +40135,7 @@ KssNamingWindowProc_Le3b:
 	clr	d0
 	movbu	d0, (0x9798ad38)
 	call	func_9781F001_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40205,7 +40214,7 @@ KssNamingWindowProc_Lf58:
 	beq	KssNamingWindowProc_Lf6c
 	bra	KssNamingWindowProc_Lf8d
 KssNamingWindowProc_Lf6c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40215,7 +40224,7 @@ KssNamingWindowProc_Lf6c:
 	calls	(a0)
 	bra	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lf8d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40234,7 +40243,7 @@ KssNamingWindowProc_Lfae:
 	beq	KssNamingWindowProc_Lfc2
 	bra	KssNamingWindowProc_Lfe3
 KssNamingWindowProc_Lfc2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40244,7 +40253,7 @@ KssNamingWindowProc_Lfc2:
 	calls	(a0)
 	bra	KssNamingWindowProc_L1002
 KssNamingWindowProc_Lfe3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40256,7 +40265,7 @@ KssNamingWindowProc_L1002:
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
 KssNamingWindowProc_L1006:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -40280,7 +40289,7 @@ KssNamingWindowProc_L1035:
 	mov	1, d0
 KssNamingWindowProc_L1037:
 	movhu	d0, (0x97913bb0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bac), d0
@@ -40294,7 +40303,7 @@ KssNamingWindowProc_L1069:
 	clr	d0
 	jmp	KssNamingWindowProc_L136d
 KssNamingWindowProc_L106d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -40310,7 +40319,7 @@ KssNamingWindowProc_L106d:
 	bne	KssNamingWindowProc_L1094
 	jmp	KssNamingWindowProc_L1156
 KssNamingWindowProc_L1094:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x28, sp), a0
@@ -40322,7 +40331,7 @@ KssNamingWindowProc_L1094:
 	movhu	(0x97913baa), d0
 	mov	0x97913b60, a0
 	movbu	d1, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -40330,7 +40339,7 @@ KssNamingWindowProc_L1094:
 	mov	KssCursBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bb4), d0
@@ -40348,7 +40357,7 @@ KssNamingWindowProc_L1111:
 	movhu	(0x97913baa), d0
 	inc	d0
 	movhu	d0, (0x97913baa)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -40356,7 +40365,7 @@ KssNamingWindowProc_L1111:
 	mov	(0x70, sp), d0
 	mov	MT_SetCursor, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x78, sp), d0
@@ -40371,7 +40380,7 @@ KssNamingWindowProc_L115a:
 	mov	0x97913b60, a0
 	mov	(0x78, sp), a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -40400,7 +40409,7 @@ KssNamingWindowProc_L11a7:
 	beq	KssNamingWindowProc_L11bb
 	bra	KssNamingWindowProc_L11df
 KssNamingWindowProc_L11bb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x78, sp), d0
@@ -40411,7 +40420,7 @@ KssNamingWindowProc_L11bb:
 	mov	EV_YOUARESELECTED, d1
 	calls	(a0)
 KssNamingWindowProc_L11df:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bac), d0
@@ -40424,7 +40433,7 @@ KssNamingWindowProc_L11df:
 KssNamingWindowProc_L1203:
 	movhu	(0x78, sp), d0
 	movhu	d0, (0x97913baa)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -40432,7 +40441,7 @@ KssNamingWindowProc_L1203:
 	mov	KssCursBox_id, d0
 	mov	MT_SetCursor, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913b60, d0
@@ -40444,7 +40453,7 @@ KssNamingWindowProc_L1203:
 	movhu	d0, (0x34, sp)
 	bra	KssNamingWindowProc_L1297
 KssNamingWindowProc_L125a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	(0x28, sp), a0
@@ -40470,7 +40479,7 @@ KssNamingWindowProc_L128f:
 KssNamingWindowProc_L1297:
 	movhu	(0x97913bb8), d0
 	asl2	d0
-	mov	ptrs_978A0CF0, a0
+	mov	KssNamingWindowProc_L4d8_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x34, sp), d0
 	exth	d0
@@ -40481,7 +40490,7 @@ KssNamingWindowProc_L1297:
 	beq	KssNamingWindowProc_L12b5
 	bra	KssNamingWindowProc_L125a
 KssNamingWindowProc_L12b5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913bb4), d0
@@ -40496,7 +40505,7 @@ KssNamingWindowProc_L12d9:
 	mov	(0x78, sp), d1
 	mov	0x97913b60, a0
 	movbu	d1, (d0, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x97913baa), d0
@@ -40507,7 +40516,7 @@ KssNamingWindowProc_L12d9:
 	clr	d0
 	bra	KssNamingWindowProc_L136d
 KssNamingWindowProc_L130c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -40523,7 +40532,7 @@ KssNamingWindowProc_L130c:
 	beq	KssNamingWindowProc_L1334
 	bra	KssNamingWindowProc_L1352
 KssNamingWindowProc_L1334:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x78, sp), d0
@@ -40536,7 +40545,7 @@ KssNamingWindowProc_L1352:
 	clr	d0
 	bra	KssNamingWindowProc_L136d
 KssNamingWindowProc_L1355:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x78, sp), d0
@@ -40553,13 +40562,13 @@ func_97817C21:
 func_97817C21_entry:
 	mov	d1, (0x20, sp)
 	movbu	d0, (0x1c, sp)
-	movbu	d0, (data_97910CB1)
+	movbu	d0, (KssCatch_AskBox_Le1_Table)
 	mov	d1, d0
 	mov	d0, (0x97913f70)
 	mov	(0x24, sp), d0
 	mov	d0, (0x97913f74)
 	mov	1, d0
-	movbu	d0, (data_97910CB0)
+	movbu	d0, (func_97817C21_Var)
 	movbu	(0x1c, sp), d0
 	cmp	0x64, d0
 	bne	func_97817C21_entry_L2b
@@ -40581,7 +40590,7 @@ func_97817C21_entry_L3d:
 	beq	func_97817C21_entry_L43
 	bra	func_97817C21_entry_L78
 func_97817C21_entry_L43:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40633,7 +40642,7 @@ CheckWetherPlaceIsFree_L3e:
 	call	func_97811734_entry, 0, 0x14
 	bra	CheckWetherPlaceIsFree_La6
 CheckWetherPlaceIsFree_L66:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40643,7 +40652,7 @@ CheckWetherPlaceIsFree_L66:
 	calls	(a0)
 	bra	CheckWetherPlaceIsFree_La6
 CheckWetherPlaceIsFree_L87:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40668,7 +40677,7 @@ CheckWetherPlaceIsFull:
 	bhi	CheckWetherPlaceIsFull_L2a
 	bra	CheckWetherPlaceIsFull_L49
 CheckWetherPlaceIsFull_L2a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -40712,7 +40721,7 @@ KssLoadSaveDel_DISPProc_L46:
 KssLoadSaveDel_DISPProc_L55:
 	jmp	KssLoadSaveDel_DISPProc_L2137
 KssLoadSaveDel_DISPProc_L58:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x12c, sp), d0
@@ -40720,17 +40729,17 @@ KssLoadSaveDel_DISPProc_L58:
 	mov	(0x124, sp), d0
 	mov	(0x128, sp), d1
 	calls	(a0)
-	movbu	(data_97910CB1), d0
+	movbu	(KssCatch_AskBox_Le1_Table), d0
 	cmp	0x64, d0
 	bge	KssLoadSaveDel_DISPProc_L83
 	jmp	KssLoadSaveDel_DISPProc_L3b0
 KssLoadSaveDel_DISPProc_L83:
-	movbu	(data_97910CB1), d0
+	movbu	(KssCatch_AskBox_Le1_Table), d0
 	cmp	0x6e, d0
 	ble	KssLoadSaveDel_DISPProc_L90
 	jmp	KssLoadSaveDel_DISPProc_L3b0
 KssLoadSaveDel_DISPProc_L90:
-	movbu	(data_97910CB1), d0
+	movbu	(KssCatch_AskBox_Le1_Table), d0
 	cmp	0x64, d0
 	bne	KssLoadSaveDel_DISPProc_L9c
 	bra	KssLoadSaveDel_DISPProc_Lbb
@@ -40753,7 +40762,7 @@ KssLoadSaveDel_DISPProc_Lb1:
 KssLoadSaveDel_DISPProc_Lb8:
 	jmp	KssLoadSaveDel_DISPProc_L3b0
 KssLoadSaveDel_DISPProc_Lbb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -40761,7 +40770,7 @@ KssLoadSaveDel_DISPProc_Lbb:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x64, d0
@@ -40769,7 +40778,7 @@ KssLoadSaveDel_DISPProc_Lbb:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -40795,7 +40804,7 @@ KssLoadSaveDel_DISPProc_L138:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L13c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	8, d0
@@ -40803,7 +40812,7 @@ KssLoadSaveDel_DISPProc_L13c:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x64, d0
@@ -40811,7 +40820,7 @@ KssLoadSaveDel_DISPProc_L13c:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -40827,7 +40836,7 @@ KssLoadSaveDel_DISPProc_L13c:
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L1a3:
 	call	func_978255C6_entry, 0, 0xc
-	movbu	(data_97910CB0), d0
+	movbu	(func_97817C21_Var), d0
 	cmp	0, d0
 	bgt	KssLoadSaveDel_DISPProc_L1b6
 	bra	KssLoadSaveDel_DISPProc_L1e6
@@ -40841,7 +40850,7 @@ KssLoadSaveDel_DISPProc_L1b6:
 	call	func_9781F066, 0, 0
 	movbu	d0, (0x97913bc8)
 KssLoadSaveDel_DISPProc_L1e6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x12c, d0
@@ -40855,7 +40864,7 @@ KssLoadSaveDel_DISPProc_L1e6:
 	beq	KssLoadSaveDel_DISPProc_L217
 	bra	KssLoadSaveDel_DISPProc_L237
 KssLoadSaveDel_DISPProc_L217:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x6b, d0
@@ -40865,7 +40874,7 @@ KssLoadSaveDel_DISPProc_L217:
 	calls	(a0)
 	bra	KssLoadSaveDel_DISPProc_L255
 KssLoadSaveDel_DISPProc_L237:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x64, d0
@@ -40874,7 +40883,7 @@ KssLoadSaveDel_DISPProc_L237:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L255:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -40896,11 +40905,11 @@ KssLoadSaveDel_DISPProc_L280:
 	call	func_97802F64, 0, 0
 	movhu	d0, (0x97913bc6)
 	mov	(0x97913bc0), d0
-	mov	d0, (data_97910C68)
-	mov	(data_97910C74), d0
-	mov	d0, (data_97910C6C)
-	movbu	(data_97910C7C), d0
-	movbu	d0, (data_97910C70)
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var)
+	mov	(KssLoadSaveDel_DISPProc_L280_Var_4), d0
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_2)
+	movbu	(KssLoadSaveDel_DISPProc_L280_Table), d0
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Var_3)
 	clr	d0
 	mov	d0, (0x14, sp)
 	movhu	(0x97913bc4), d0
@@ -40915,7 +40924,7 @@ KssLoadSaveDel_DISPProc_L280:
 	call	strncpy_entry, [a2,a3], 8
 	call	func_9781F066, 0, 0
 	movbu	d0, (0x97913bc8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x190, d0
@@ -40923,7 +40932,7 @@ KssLoadSaveDel_DISPProc_L280:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -40938,7 +40947,7 @@ KssLoadSaveDel_DISPProc_L280:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L349:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	7, d0
@@ -40946,7 +40955,7 @@ KssLoadSaveDel_DISPProc_L349:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x64, d0
@@ -40954,7 +40963,7 @@ KssLoadSaveDel_DISPProc_L349:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -40969,7 +40978,7 @@ KssLoadSaveDel_DISPProc_L349:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L3b0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd4, d0
@@ -40977,7 +40986,7 @@ KssLoadSaveDel_DISPProc_L3b0:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -40997,7 +41006,7 @@ KssLoadSaveDel_DISPProc_L3fc:
 	beq	KssLoadSaveDel_DISPProc_L40a
 	jmp	KssLoadSaveDel_DISPProc_L8d8
 KssLoadSaveDel_DISPProc_L40a:
-	movbu	(data_97910CB1), d0
+	movbu	(KssCatch_AskBox_Le1_Table), d0
 	cmp	0x64, d0
 	bne	KssLoadSaveDel_DISPProc_L416
 	bra	KssLoadSaveDel_DISPProc_L435
@@ -41020,13 +41029,13 @@ KssLoadSaveDel_DISPProc_L42b:
 KssLoadSaveDel_DISPProc_L432:
 	jmp	KssLoadSaveDel_DISPProc_L923
 KssLoadSaveDel_DISPProc_L435:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x124, sp), d0
 	mov	0x97913bcc, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	0x97913bcc, a0
@@ -41055,7 +41064,7 @@ KssLoadSaveDel_DISPProc_L4a0:
 	bne	KssLoadSaveDel_DISPProc_L4a8
 	bra	KssLoadSaveDel_DISPProc_L4f3
 KssLoadSaveDel_DISPProc_L4a8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd3, d0
@@ -41063,7 +41072,7 @@ KssLoadSaveDel_DISPProc_L4a8:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41078,7 +41087,7 @@ KssLoadSaveDel_DISPProc_L4a8:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L4f3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xc8, d0
@@ -41086,7 +41095,7 @@ KssLoadSaveDel_DISPProc_L4f3:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41101,13 +41110,13 @@ KssLoadSaveDel_DISPProc_L4f3:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L53d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x124, sp), d0
 	mov	0x97913bcc, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	0x97913bcc, a0
@@ -41136,7 +41145,7 @@ KssLoadSaveDel_DISPProc_L5a8:
 	bne	KssLoadSaveDel_DISPProc_L5b0
 	bra	KssLoadSaveDel_DISPProc_L5fb
 KssLoadSaveDel_DISPProc_L5b0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd3, d0
@@ -41144,7 +41153,7 @@ KssLoadSaveDel_DISPProc_L5b0:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41159,7 +41168,7 @@ KssLoadSaveDel_DISPProc_L5b0:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L5fb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xc8, d0
@@ -41167,7 +41176,7 @@ KssLoadSaveDel_DISPProc_L5fb:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41201,7 +41210,7 @@ KssLoadSaveDel_DISPProc_L66b:
 	call	func_9783DE07_entry, 0, 0x14
 KssLoadSaveDel_DISPProc_L674:
 	mov	1, d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	mov	(0x97913bc0), d0
 	mov	d0, (0x10, sp)
 	movhu	(0x97913bc4), d0
@@ -41213,7 +41222,7 @@ KssLoadSaveDel_DISPProc_L674:
 	bne	KssLoadSaveDel_DISPProc_L6a5
 	bra	KssLoadSaveDel_DISPProc_L6f0
 KssLoadSaveDel_DISPProc_L6a5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd5, d0
@@ -41221,7 +41230,7 @@ KssLoadSaveDel_DISPProc_L6a5:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41236,7 +41245,7 @@ KssLoadSaveDel_DISPProc_L6a5:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L6f0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xc9, d0
@@ -41244,7 +41253,7 @@ KssLoadSaveDel_DISPProc_L6f0:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41269,7 +41278,7 @@ KssLoadSaveDel_DISPProc_L73a:
 	bne	KssLoadSaveDel_DISPProc_L75d
 	bra	KssLoadSaveDel_DISPProc_L7a8
 KssLoadSaveDel_DISPProc_L75d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd6, d0
@@ -41277,7 +41286,7 @@ KssLoadSaveDel_DISPProc_L75d:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41302,7 +41311,7 @@ KssLoadSaveDel_DISPProc_L7b7:
 	and	0x0800, d0
 	mov	d0, (0x2c, sp)
 KssLoadSaveDel_DISPProc_L7c3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xca, d0
@@ -41310,7 +41319,7 @@ KssLoadSaveDel_DISPProc_L7c3:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41343,7 +41352,7 @@ KssLoadSaveDel_DISPProc_L831:
 	bne	KssLoadSaveDel_DISPProc_L839
 	bra	KssLoadSaveDel_DISPProc_L884
 KssLoadSaveDel_DISPProc_L839:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd7, d0
@@ -41351,7 +41360,7 @@ KssLoadSaveDel_DISPProc_L839:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41369,7 +41378,7 @@ KssLoadSaveDel_DISPProc_L884:
 	clr	d0
 	mov	1, d1
 	call	func_97825707, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xcb, d0
@@ -41377,7 +41386,7 @@ KssLoadSaveDel_DISPProc_L884:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41392,7 +41401,7 @@ KssLoadSaveDel_DISPProc_L884:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L8d8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd2, d0
@@ -41400,7 +41409,7 @@ KssLoadSaveDel_DISPProc_L8d8:
 	mov	(0x124, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x124, sp), d0
@@ -41418,13 +41427,13 @@ KssLoadSaveDel_DISPProc_L923:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L927:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x124, sp), d0
 	mov	0x97913bcc, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	0x97913bcc, a0
@@ -41448,13 +41457,13 @@ KssLoadSaveDel_DISPProc_L968:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a1
 	mov	(0x12c, sp), a0
 	mov	a0, d0
@@ -41493,13 +41502,13 @@ KssLoadSaveDel_DISPProc_L968:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x12c, sp), d0
 	asl2	d0
@@ -41533,13 +41542,13 @@ KssLoadSaveDel_DISPProc_La84:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x12c, sp), d0
 	mov	0x64, d1
@@ -41579,13 +41588,13 @@ KssLoadSaveDel_DISPProc_La84:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x12c, sp), d0
 	mov	0x64, d1
@@ -41621,13 +41630,13 @@ KssLoadSaveDel_DISPProc_Lba6:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E28, a0
+	mov	KssLoadSaveDel_DISPProc_Lba6_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x12c, sp), d0
 	mov	0xc8, d1
@@ -41667,13 +41676,13 @@ KssLoadSaveDel_DISPProc_Lba6:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E28, a0
+	mov	KssLoadSaveDel_DISPProc_Lba6_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x12c, sp), d0
 	mov	0xc8, d1
@@ -41705,7 +41714,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a0
 	mov	a0, (0x10, sp)
@@ -41725,7 +41734,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -41764,7 +41773,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -41812,7 +41821,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x14, a0), a0
 	mov	a0, (0x10, sp)
@@ -41822,7 +41831,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x18, a0), a0
 	mov	a0, (0x18, sp)
@@ -41843,7 +41852,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -41882,7 +41891,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -41924,7 +41933,7 @@ KssLoadSaveDel_DISPProc_Lcca:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(a0), a1
 	mov	sp, a0
@@ -41943,7 +41952,7 @@ KssLoadSaveDel_DISPProc_L1000:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -41954,7 +41963,7 @@ KssLoadSaveDel_DISPProc_L1020:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -41968,7 +41977,7 @@ KssLoadSaveDel_DISPProc_L103e:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -41992,7 +42001,7 @@ KssLoadSaveDel_DISPProc_L1097:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x14, a0), a1
 	mov	sp, a0
@@ -42003,7 +42012,7 @@ KssLoadSaveDel_DISPProc_L10b7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x18, a0), a1
 	mov	sp, a0
@@ -42014,7 +42023,7 @@ KssLoadSaveDel_DISPProc_L10d7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42028,7 +42037,7 @@ KssLoadSaveDel_DISPProc_L10f5:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42047,7 +42056,7 @@ KssLoadSaveDel_DISPProc_L1142:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(0xc, a0), a1
 	mov	sp, a0
@@ -42064,7 +42073,7 @@ KssLoadSaveDel_DISPProc_L1174:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x10, a0), a1
 	mov	sp, a0
@@ -42075,7 +42084,7 @@ KssLoadSaveDel_DISPProc_L1194:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42089,7 +42098,7 @@ KssLoadSaveDel_DISPProc_L11b2:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0xc, a0), a1
 	mov	sp, a0
@@ -42108,7 +42117,7 @@ KssLoadSaveDel_DISPProc_L11ff:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42119,7 +42128,7 @@ KssLoadSaveDel_DISPProc_L121f:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42139,7 +42148,7 @@ KssLoadSaveDel_DISPProc_L123d:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42178,7 +42187,7 @@ KssLoadSaveDel_DISPProc_L123d:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42220,7 +42229,7 @@ KssLoadSaveDel_DISPProc_L123d:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x10, a0), a1
 	mov	sp, a0
@@ -42239,7 +42248,7 @@ KssLoadSaveDel_DISPProc_L13b3:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42250,7 +42259,7 @@ KssLoadSaveDel_DISPProc_L13d3:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42264,7 +42273,7 @@ KssLoadSaveDel_DISPProc_L13f1:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x14, a0), a1
 	mov	sp, a0
@@ -42283,7 +42292,7 @@ KssLoadSaveDel_DISPProc_L143e:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42294,7 +42303,7 @@ KssLoadSaveDel_DISPProc_L145e:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42308,7 +42317,7 @@ KssLoadSaveDel_DISPProc_L147c:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x18, a0), a1
 	mov	sp, a0
@@ -42327,7 +42336,7 @@ KssLoadSaveDel_DISPProc_L14c9:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42338,7 +42347,7 @@ KssLoadSaveDel_DISPProc_L14e9:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42352,7 +42361,7 @@ KssLoadSaveDel_DISPProc_L1507:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x1c, a0), a1
 	mov	sp, a0
@@ -42371,7 +42380,7 @@ KssLoadSaveDel_DISPProc_L1556:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42382,7 +42391,7 @@ KssLoadSaveDel_DISPProc_L1576:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42396,7 +42405,7 @@ KssLoadSaveDel_DISPProc_L1594:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x20, a0), a1
 	mov	sp, a0
@@ -42415,7 +42424,7 @@ KssLoadSaveDel_DISPProc_L15e4:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42426,7 +42435,7 @@ KssLoadSaveDel_DISPProc_L1604:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42446,7 +42455,7 @@ KssLoadSaveDel_DISPProc_L1622:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42485,7 +42494,7 @@ KssLoadSaveDel_DISPProc_L1622:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42527,7 +42536,7 @@ KssLoadSaveDel_DISPProc_L1622:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x24, a0), a1
 	mov	sp, a0
@@ -42546,7 +42555,7 @@ KssLoadSaveDel_DISPProc_L179b:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42557,7 +42566,7 @@ KssLoadSaveDel_DISPProc_L17bb:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42571,7 +42580,7 @@ KssLoadSaveDel_DISPProc_L17d9:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x28, a0), a1
 	mov	sp, a0
@@ -42590,7 +42599,7 @@ KssLoadSaveDel_DISPProc_L1829:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42601,7 +42610,7 @@ KssLoadSaveDel_DISPProc_L1849:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42615,7 +42624,7 @@ KssLoadSaveDel_DISPProc_L1867:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x30, a0), a1
 	mov	sp, a0
@@ -42634,7 +42643,7 @@ KssLoadSaveDel_DISPProc_L18b7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42645,7 +42654,7 @@ KssLoadSaveDel_DISPProc_L18d7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42659,7 +42668,7 @@ KssLoadSaveDel_DISPProc_L18f5:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x34, a0), a1
 	mov	sp, a0
@@ -42678,7 +42687,7 @@ KssLoadSaveDel_DISPProc_L1945:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a1
 	mov	sp, a0
@@ -42689,7 +42698,7 @@ KssLoadSaveDel_DISPProc_L1965:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E18, a0
+	mov	KssLoadSaveDel_DISPProc_La84_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a1
 	mov	sp, a0
@@ -42709,7 +42718,7 @@ KssLoadSaveDel_DISPProc_L1983:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42748,7 +42757,7 @@ KssLoadSaveDel_DISPProc_L1983:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42786,7 +42795,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a0
 	mov	a0, (0x10, sp)
@@ -42808,7 +42817,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42847,7 +42856,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42895,7 +42904,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x14, a0), a0
 	mov	a0, (0x10, sp)
@@ -42905,7 +42914,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1E08, a0
+	mov	KssLoadSaveDel_DISPProc_L968_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x18, a0), a0
 	mov	a0, (0x18, sp)
@@ -42926,7 +42935,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -42965,7 +42974,7 @@ KssLoadSaveDel_DISPProc_L1a77:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913bd6)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	sp, a0
@@ -43010,7 +43019,7 @@ KssLoadSaveDel_DISPProc_L1d91:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L1d95:
-	movbu	(data_97910CB1), d0
+	movbu	(KssCatch_AskBox_Le1_Table), d0
 	cmp	0x64, d0
 	bne	KssLoadSaveDel_DISPProc_L1da1
 	bra	KssLoadSaveDel_DISPProc_L1dbc
@@ -43034,8 +43043,8 @@ KssLoadSaveDel_DISPProc_L1db9:
 	jmp	KssLoadSaveDel_DISPProc_L2131
 KssLoadSaveDel_DISPProc_L1dbc:
 	clr	d0
-	movbu	d0, (data_97910CB1)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssCatch_AskBox_Le1_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43046,12 +43055,12 @@ KssLoadSaveDel_DISPProc_L1dbc:
 	clr	d0
 	jmp	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L1de6:
-	mov	(data_979125A0), d0
+	mov	(KssLoadSaveDel_DISPProc_L1de6_Var), d0
 	cmp	0, d0
 	beq	KssLoadSaveDel_DISPProc_L1df2
 	bra	KssLoadSaveDel_DISPProc_L1e11
 KssLoadSaveDel_DISPProc_L1df2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43061,9 +43070,9 @@ KssLoadSaveDel_DISPProc_L1df2:
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1e11:
 	mov	0xff, d0
-	mov	d0, (data_979125A0)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 	clr	d0
-	movbu	d0, (data_97910CB1)
+	movbu	d0, (KssCatch_AskBox_Le1_Table)
 	mov	5, d0
 	mov	sp, a0
 	add	0x28, a0
@@ -43096,7 +43105,7 @@ KssLoadSaveDel_DISPProc_L1e60:
 	bne	KssLoadSaveDel_DISPProc_L1e72
 	bra	KssLoadSaveDel_DISPProc_L1eb0
 KssLoadSaveDel_DISPProc_L1e72:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x210, a0), a0
 	calls	(a0)
@@ -43105,13 +43114,13 @@ KssLoadSaveDel_DISPProc_L1e72:
 	bne	KssLoadSaveDel_DISPProc_L1e89
 	bra	KssLoadSaveDel_DISPProc_L1e9a
 KssLoadSaveDel_DISPProc_L1e89:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x214, a0), a0
 	clr	d0
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1e9a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
@@ -43128,7 +43137,7 @@ KssLoadSaveDel_DISPProc_L1eb0:
 	beq	KssLoadSaveDel_DISPProc_L1ec4
 	bra	KssLoadSaveDel_DISPProc_L1f03
 KssLoadSaveDel_DISPProc_L1ec4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x210, a0), a0
 	calls	(a0)
@@ -43137,14 +43146,14 @@ KssLoadSaveDel_DISPProc_L1ec4:
 	bne	KssLoadSaveDel_DISPProc_L1edb
 	bra	KssLoadSaveDel_DISPProc_L1eee
 KssLoadSaveDel_DISPProc_L1edb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	0xc, d0
 	clr	d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1eee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
@@ -43152,7 +43161,7 @@ KssLoadSaveDel_DISPProc_L1eee:
 	calls	(a0)
 	bra	KssLoadSaveDel_DISPProc_L1f55
 KssLoadSaveDel_DISPProc_L1f03:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x210, a0), a0
 	calls	(a0)
@@ -43161,13 +43170,13 @@ KssLoadSaveDel_DISPProc_L1f03:
 	bne	KssLoadSaveDel_DISPProc_L1f1a
 	bra	KssLoadSaveDel_DISPProc_L1f42
 KssLoadSaveDel_DISPProc_L1f1a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	0xc, d0
@@ -43175,7 +43184,7 @@ KssLoadSaveDel_DISPProc_L1f1a:
 	calls	(a0)
 	bra	KssLoadSaveDel_DISPProc_L1f55
 KssLoadSaveDel_DISPProc_L1f42:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
@@ -43188,7 +43197,7 @@ KssLoadSaveDel_DISPProc_L1f55:
 	beq	KssLoadSaveDel_DISPProc_L1f67
 	bra	KssLoadSaveDel_DISPProc_L1f86
 KssLoadSaveDel_DISPProc_L1f67:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43197,12 +43206,12 @@ KssLoadSaveDel_DISPProc_L1f67:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssLoadSaveDel_DISPProc_L1f86:
-	mov	(data_979125A0), d0
+	mov	(KssLoadSaveDel_DISPProc_L1de6_Var), d0
 	cmp	0, d0
 	beq	KssLoadSaveDel_DISPProc_L1f92
 	bra	KssLoadSaveDel_DISPProc_L1fb1
 KssLoadSaveDel_DISPProc_L1f92:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43228,7 +43237,7 @@ KssLoadSaveDel_DISPProc_L1fc9:
 	bne	KssLoadSaveDel_DISPProc_L1fdb
 	bra	KssLoadSaveDel_DISPProc_L201c
 KssLoadSaveDel_DISPProc_L1fdb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x210, a0), a0
 	calls	(a0)
@@ -43237,14 +43246,14 @@ KssLoadSaveDel_DISPProc_L1fdb:
 	bne	KssLoadSaveDel_DISPProc_L1ff2
 	bra	KssLoadSaveDel_DISPProc_L2006
 KssLoadSaveDel_DISPProc_L1ff2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x214, a0), a0
 	clr	d0
 	calls	(a0)
 	jmp	KssLoadSaveDel_DISPProc_L2103
 KssLoadSaveDel_DISPProc_L2006:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
@@ -43252,7 +43261,7 @@ KssLoadSaveDel_DISPProc_L2006:
 	calls	(a0)
 	jmp	KssLoadSaveDel_DISPProc_L2103
 KssLoadSaveDel_DISPProc_L201c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x210, a0), a0
 	calls	(a0)
@@ -43261,13 +43270,13 @@ KssLoadSaveDel_DISPProc_L201c:
 	bne	KssLoadSaveDel_DISPProc_L2033
 	bra	KssLoadSaveDel_DISPProc_L205b
 KssLoadSaveDel_DISPProc_L2033:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
 	clr	d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	0xc, d0
@@ -43275,7 +43284,7 @@ KssLoadSaveDel_DISPProc_L2033:
 	calls	(a0)
 	bra	KssLoadSaveDel_DISPProc_L206e
 KssLoadSaveDel_DISPProc_L205b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5cc, a0), a0
 	mov	1, d0
@@ -43288,7 +43297,7 @@ KssLoadSaveDel_DISPProc_L206e:
 	beq	KssLoadSaveDel_DISPProc_L2080
 	bra	KssLoadSaveDel_DISPProc_L20a3
 KssLoadSaveDel_DISPProc_L2080:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43308,7 +43317,7 @@ KssLoadSaveDel_DISPProc_L20a3:
 	beq	KssLoadSaveDel_DISPProc_L20b7
 	bra	KssLoadSaveDel_DISPProc_L20d9
 KssLoadSaveDel_DISPProc_L20b7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43324,7 +43333,7 @@ KssLoadSaveDel_DISPProc_L20d9:
 	bhi	KssLoadSaveDel_DISPProc_L20e1
 	bra	KssLoadSaveDel_DISPProc_L2103
 KssLoadSaveDel_DISPProc_L20e1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43335,12 +43344,12 @@ KssLoadSaveDel_DISPProc_L20e1:
 	clr	d0
 	bra	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L2103:
-	mov	(data_979125A0), d0
+	mov	(KssLoadSaveDel_DISPProc_L1de6_Var), d0
 	cmp	0, d0
 	beq	KssLoadSaveDel_DISPProc_L210f
 	bra	KssLoadSaveDel_DISPProc_L212e
 KssLoadSaveDel_DISPProc_L210f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -43358,7 +43367,7 @@ KssLoadSaveDel_DISPProc_L2134:
 	clr	d0
 	bra	KssLoadSaveDel_DISPProc_L2155
 KssLoadSaveDel_DISPProc_L2137:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x12c, sp), d0
@@ -43486,13 +43495,13 @@ KssNamingEditSwProc_L2c:
 KssNamingEditSwProc_L39:
 	jmp	KssNamingEditSwProc_L2d3
 KssNamingEditSwProc_L3c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43505,7 +43514,7 @@ KssNamingEditSwProc_L3c:
 	mov	(0x30, a0), a0
 	mov	(a0), d0
 	asl2	d0
-	mov	ptrs_978A2224, a0
+	mov	KssNamingEditSwProc_L3c_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x18, sp), d0
 	exth	d0
@@ -43516,7 +43525,7 @@ KssNamingEditSwProc_L3c:
 	bne	KssNamingEditSwProc_L8c
 	bra	KssNamingEditSwProc_Lc1
 KssNamingEditSwProc_L8c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -43524,7 +43533,7 @@ KssNamingEditSwProc_L8c:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43534,14 +43543,14 @@ KssNamingEditSwProc_L8c:
 	calls	(a0)
 	bra	KssNamingEditSwProc_L127
 KssNamingEditSwProc_Lc1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x30, sp), d0
 	mov	sp, a0
 	add	0x1c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2f4, a0), a1
 	mov	(0x14, sp), a0
@@ -43568,7 +43577,7 @@ KssNamingEditSwProc_L10c:
 	mov	0x27f, d0
 	movhu	d0, (0x20, sp)
 KssNamingEditSwProc_L112:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -43579,7 +43588,7 @@ KssNamingEditSwProc_L127:
 	clr	d0
 	jmp	KssNamingEditSwProc_L2eb
 KssNamingEditSwProc_L12b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x38, sp), d0
@@ -43592,13 +43601,13 @@ KssNamingEditSwProc_L12b:
 	bne	KssNamingEditSwProc_L150
 	jmp	KssNamingEditSwProc_L214
 KssNamingEditSwProc_L150:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43624,14 +43633,14 @@ KssNamingEditSwProc_L196:
 	bne	KssNamingEditSwProc_L1a1
 	bra	KssNamingEditSwProc_L214
 KssNamingEditSwProc_L1a1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x14, sp), a0
 	mov	(0x30, a0), a0
 	mov	(a0), d0
 	asl2	d0
-	mov	ptrs_978A2224, a0
+	mov	KssNamingEditSwProc_L3c_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x18, sp), d0
 	exth	d0
@@ -43650,14 +43659,14 @@ KssNamingEditSwProc_L1d5:
 	beq	KssNamingEditSwProc_L1e0
 	bra	KssNamingEditSwProc_L214
 KssNamingEditSwProc_L1e0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x14, sp), a0
 	mov	(0x30, a0), a0
 	mov	(a0), d0
 	asl2	d0
-	mov	ptrs_978A2224, a0
+	mov	KssNamingEditSwProc_L3c_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x18, sp), d0
 	exth	d0
@@ -43670,7 +43679,7 @@ KssNamingEditSwProc_L1e0:
 	clr	d0
 	jmp	KssNamingEditSwProc_L2eb
 KssNamingEditSwProc_L214:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -43680,7 +43689,7 @@ KssNamingEditSwProc_L214:
 	calls	(a0)
 	jmp	KssNamingEditSwProc_L2eb
 KssNamingEditSwProc_L22f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -43688,7 +43697,7 @@ KssNamingEditSwProc_L22f:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -43697,7 +43706,7 @@ KssNamingEditSwProc_L22f:
 	mov	(0x30, a0), a0
 	mov	(0x38, sp), d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43708,13 +43717,13 @@ KssNamingEditSwProc_L22f:
 	clr	d0
 	bra	KssNamingEditSwProc_L2eb
 KssNamingEditSwProc_L27f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43727,7 +43736,7 @@ KssNamingEditSwProc_L27f:
 	mov	(0x30, a0), a0
 	mov	(a0), d0
 	asl2	d0
-	mov	ptrs_978A2224, a0
+	mov	KssNamingEditSwProc_L3c_Table, a0
 	mov	(d0, a0), a0
 	movhu	(0x18, sp), d0
 	exth	d0
@@ -43738,7 +43747,7 @@ KssNamingEditSwProc_L27f:
 	clr	d0
 	bra	KssNamingEditSwProc_L2eb
 KssNamingEditSwProc_L2d3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -43776,7 +43785,7 @@ KssCursorBoxProc_L36:
 KssCursorBoxProc_L45:
 	jmp	KssCursorBoxProc_L586
 KssCursorBoxProc_L48:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x270, sp), d0
@@ -43784,7 +43793,7 @@ KssCursorBoxProc_L48:
 	mov	(0x268, sp), d0
 	mov	(0x26c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x268, sp), d0
@@ -43796,7 +43805,7 @@ KssCursorBoxProc_L48:
 	clr	d0
 	jmp	KssCursorBoxProc_L5a4
 KssCursorBoxProc_L87:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x270, sp), d0
@@ -43804,7 +43813,7 @@ KssCursorBoxProc_L87:
 	mov	(0x268, sp), d0
 	mov	(0x26c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x268, sp), d0
@@ -43827,7 +43836,7 @@ KssCursorBoxProc_Ld8:
 	clr	d0
 	jmp	KssCursorBoxProc_L5a4
 KssCursorBoxProc_Ldc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x268, sp), d0
@@ -43838,7 +43847,7 @@ KssCursorBoxProc_Ldc:
 	beq	KssCursorBoxProc_Lfc
 	bra	KssCursorBoxProc_L12a
 KssCursorBoxProc_Lfc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	sp, a1
@@ -43869,14 +43878,14 @@ KssCursorBoxProc_L138:
 	bne	KssCursorBoxProc_L147
 	jmp	KssCursorBoxProc_L561
 KssCursorBoxProc_L147:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x268, sp), d0
 	mov	sp, a0
 	add	0x140, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -43898,7 +43907,7 @@ KssCursorBoxProc_L186:
 	beq	KssCursorBoxProc_L193
 	bra	KssCursorBoxProc_L186
 KssCursorBoxProc_L193:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43907,7 +43916,7 @@ KssCursorBoxProc_L193:
 	mov	MT_GetFont, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43916,7 +43925,7 @@ KssCursorBoxProc_L193:
 	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -43925,7 +43934,7 @@ KssCursorBoxProc_L193:
 	mov	MT_GetFontColor, d1
 	calls	(a0)
 	movhu	d0, (0x36, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	sp, a0
@@ -43933,19 +43942,19 @@ KssCursorBoxProc_L193:
 	mov	(0x2c, sp), d0
 	calls	(a1)
 	movhu	d0, (0x38, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x2c, sp), d0
 	calls	(a0)
 	movhu	d0, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x2c, sp), d0
 	calls	(a0)
 	movhu	d0, (0x3c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x2c, sp), d0
@@ -44008,7 +44017,7 @@ KssCursorBoxProc_L2b5:
 	sub	d1, d0
 	movhu	d0, (0x148, sp)
 KssCursorBoxProc_L2c6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	sp, a0
@@ -44029,7 +44038,7 @@ KssCursorBoxProc_L2c6:
 	clr	d0
 	mov	(0x30, sp), a0
 	movbu	d0, (1, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x30, sp), a0
@@ -44039,7 +44048,7 @@ KssCursorBoxProc_L2c6:
 	clr	d0
 	mov	(0x30, sp), a0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	sp, a0
@@ -44057,7 +44066,7 @@ KssCursorBoxProc_L2c6:
 	exth	d0
 	add	d1, d0
 	movhu	d0, (0x150, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -44065,7 +44074,7 @@ KssCursorBoxProc_L2c6:
 	mov	sp, a1
 	add	0x254, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x164, a0), a2
 	mov	sp, a0
@@ -44086,7 +44095,7 @@ KssCursorBoxProc_L2c6:
 	clr	d0
 	mov	(0x30, sp), a0
 	movbu	d0, (1, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -44118,7 +44127,7 @@ KssCursorBoxProc_L2c6:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x14a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -44159,7 +44168,7 @@ KssCursorBoxProc_L2c6:
 	exth	d0
 	add	-2, d0
 	movhu	d0, (0x14a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -44200,7 +44209,7 @@ KssCursorBoxProc_L2c6:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x256, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	(0x30, sp), d0
@@ -44244,7 +44253,7 @@ KssCursorBoxProc_L2c6:
 	exth	d0
 	add	-2, d0
 	movhu	d0, (0x256, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x420, a0), a2
 	mov	(0x30, sp), d0
@@ -44268,7 +44277,7 @@ KssCursorBoxProc_L561:
 	clr	d0
 	bra	KssCursorBoxProc_L5a4
 KssCursorBoxProc_L564:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x268, sp), d0
@@ -44280,7 +44289,7 @@ KssCursorBoxProc_L564:
 	clr	d0
 	bra	KssCursorBoxProc_L5a4
 KssCursorBoxProc_L586:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x270, sp), d0
@@ -44316,7 +44325,7 @@ KSSDirNameScreen_L2c:
 	mov	1, d0
 	bra	KSSDirNameScreen_Laa
 KSSDirNameScreen_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44324,7 +44333,7 @@ KSSDirNameScreen_L30:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_DNSC_2, d0
@@ -44335,7 +44344,7 @@ KSSDirNameScreen_L30:
 	clr	d0
 	bra	KSSDirNameScreen_Laa
 KSSDirNameScreen_L6b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44349,7 +44358,7 @@ KSSDirNameScreen_L6b:
 	clr	d0
 	bra	KSSDirNameScreen_Laa
 KSSDirNameScreen_L92:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44384,7 +44393,7 @@ KSSFlsNameScreen_L2c:
 	mov	1, d0
 	bra	KSSFlsNameScreen_Lab
 KSSFlsNameScreen_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44392,7 +44401,7 @@ KSSFlsNameScreen_L30:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_DNSC, d0
@@ -44403,7 +44412,7 @@ KSSFlsNameScreen_L30:
 	clr	d0
 	bra	KSSFlsNameScreen_Lab
 KSSFlsNameScreen_L6b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44417,7 +44426,7 @@ KSSFlsNameScreen_L6b:
 	clr	d0
 	bra	KSSFlsNameScreen_Lab
 KSSFlsNameScreen_L93:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44452,7 +44461,7 @@ KSSFileNameScreen_L2c:
 	mov	1, d0
 	bra	KSSFileNameScreen_Lab
 KSSFileNameScreen_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44460,7 +44469,7 @@ KSSFileNameScreen_L30:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_FNSC, d0
@@ -44471,7 +44480,7 @@ KSSFileNameScreen_L30:
 	clr	d0
 	bra	KSSFileNameScreen_Lab
 KSSFileNameScreen_L6b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44485,7 +44494,7 @@ KSSFileNameScreen_L6b:
 	clr	d0
 	bra	KSSFileNameScreen_Lab
 KSSFileNameScreen_L93:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -44520,7 +44529,7 @@ KSSSETUPTOOLSP1TitleSwCatch_L2d:
 	mov	1, d0
 	jmp	KSSSETUPTOOLSP1TitleSwCatch_L10b
 KSSSETUPTOOLSP1TitleSwCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -44528,7 +44537,7 @@ KSSSETUPTOOLSP1TitleSwCatch_L32:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CcSt, d0
@@ -44539,7 +44548,7 @@ KSSSETUPTOOLSP1TitleSwCatch_L32:
 	clr	d0
 	jmp	KSSSETUPTOOLSP1TitleSwCatch_L10b
 KSSSETUPTOOLSP1TitleSwCatch_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -44588,7 +44597,7 @@ KSSSETUPTOOLSP1TitleSwCatch_Ldb:
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 KSSSETUPTOOLSP1TitleSwCatch_Lf3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -44623,7 +44632,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L2d:
 	mov	1, d0
 	jmp	KSSSETUPTOOLSP2TitleSwCatch_Lc3
 KSSSETUPTOOLSP2TitleSwCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -44631,7 +44640,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L32:
 	mov	(0x24, sp), d0
 	mov	(0x28, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CcS2, d0
@@ -44642,7 +44651,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L32:
 	clr	d0
 	bra	KSSSETUPTOOLSP2TitleSwCatch_Lc3
 KSSSETUPTOOLSP2TitleSwCatch_L6d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -44663,7 +44672,7 @@ KSSSETUPTOOLSP2TitleSwCatch_L93:
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 KSSSETUPTOOLSP2TitleSwCatch_Lab:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -44698,7 +44707,7 @@ CheckCPActionCatch_L2d:
 	mov	1, d0
 	jmp	CheckCPActionCatch_L17f
 CheckCPActionCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -44706,7 +44715,7 @@ CheckCPActionCatch_L32:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CcCA, d0
@@ -44717,7 +44726,7 @@ CheckCPActionCatch_L32:
 	clr	d0
 	jmp	CheckCPActionCatch_L17f
 CheckCPActionCatch_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -44729,7 +44738,7 @@ CheckCPActionCatch_L6e:
 	beq	CheckCPActionCatch_L95
 	jmp	CheckCPActionCatch_L167
 CheckCPActionCatch_L95:
-	movbu	(data_97910CD0), d0
+	movbu	(CheckCPActionCatch_L95_Table), d0
 	cmp	1, d0
 	beq	CheckCPActionCatch_La1
 	bra	CheckCPActionCatch_Lfe
@@ -44766,7 +44775,7 @@ CheckCPActionCatch_Le3:
 	mov	SETUP_TOOLS_id, d1
 	call	func_978237D9_entry, 0, 0x14
 CheckCPActionCatch_Lfe:
-	movbu	(data_97910CD0), d0
+	movbu	(CheckCPActionCatch_L95_Table), d0
 	cmp	2, d0
 	beq	CheckCPActionCatch_L10a
 	bra	CheckCPActionCatch_L167
@@ -44803,7 +44812,7 @@ CheckCPActionCatch_L14c:
 	mov	SETUP_TOOLS_id, d1
 	call	func_978246FC_entry, 0, 0x14
 CheckCPActionCatch_L167:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -44883,7 +44892,7 @@ KssCopyToHDScreen_L8f:
 	bne	KssCopyToHDScreen_L9b
 	bra	KssCopyToHDScreen_Lbd
 KssCopyToHDScreen_L9b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -44932,8 +44941,8 @@ KssCopyToHDScreen_L10f:
 	bra	KssCopyToHDScreen_L144
 KssCopyToHDScreen_L116:
 	mov	2, d0
-	movbu	d0, (data_97910CD0)
-	mov	(data_979126B4), a0
+	movbu	d0, (CheckCPActionCatch_L95_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45037,7 +45046,7 @@ KssCopySMFToHDScreen_Lbc:
 	bne	KssCopySMFToHDScreen_Lc8
 	bra	KssCopySMFToHDScreen_Lea
 KssCopySMFToHDScreen_Lc8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45106,8 +45115,8 @@ KssCopySMFToHDScreen_L162:
 	bra	KssCopySMFToHDScreen_L1df
 KssCopySMFToHDScreen_L169:
 	mov	1, d0
-	movbu	d0, (data_97910CD0)
-	mov	(data_979126B4), a0
+	movbu	d0, (CheckCPActionCatch_L95_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45161,7 +45170,7 @@ func_9781B0DD_entry:
 	mov	Str_empty_486, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
@@ -45173,7 +45182,7 @@ func_9781B0DD_entry:
 	mov	Str_01_02_03_04_05_06_07_08_09_10_11_12_13_1, a1
 	mov	0x1cd, d0
 	call	memcpy_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913bfc, d0
@@ -45181,7 +45190,7 @@ func_9781B0DD_entry:
 	mov	CP_FD_LIST_id, d0
 	mov	MT_SetStrAdr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
@@ -45189,7 +45198,7 @@ func_9781B0DD_entry:
 	mov	CP_FD_LIST_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45197,7 +45206,7 @@ func_9781B0DD_entry:
 	mov	CP_FD_LINE1_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45235,7 +45244,7 @@ func_9781B1EA_entry:
 	mov	Str_empty_486, a1
 	mov	0xe, d0
 	call	memcpy_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
@@ -45423,7 +45432,7 @@ func_9781B37B_entry:
 	clr	d0
 	movhu	d0, (0x1c, sp)
 	call	func_9780A8A1_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
@@ -45437,28 +45446,28 @@ func_9781B37B_entry_L2a:
 	jmp	func_9781B37B_entry_L473
 func_9781B37B_entry_L31:
 	mov	1, d0
-	movbu	d0, (data_97910CD0)
+	movbu	d0, (CheckCPActionCatch_L95_Table)
 	clr	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x16c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x29c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x264, a0), a0
 	mov	1, d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x234, a0), a0
 	clr	d0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45486,7 +45495,7 @@ func_9781B37B_entry_Lc7:
 	bge	func_9781B37B_entry_Ld0
 	bra	func_9781B37B_entry_Lb3
 func_9781B37B_entry_Ld0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x138, a0), a0
 	calls	(a0)
@@ -45501,7 +45510,7 @@ func_9781B37B_entry_Le8:
 	mov	(0x14, sp), a1
 	call	memcpy_entry, [a2,a3], 8
 func_9781B37B_entry_L100:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
@@ -45509,7 +45518,7 @@ func_9781B37B_entry_L100:
 	mov	CP_FD_VOLLABEL_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
@@ -45517,7 +45526,7 @@ func_9781B37B_entry_L100:
 	mov	CP_SMF_FD_VOLLABEL_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x13c, a0), a2
 	mov	Str_empty_451, a0
@@ -45729,7 +45738,7 @@ func_9781B37B_entry_L33c:
 	mov	6, d0
 	call	memcpy_entry, [a2,a3], 8
 func_9781B37B_entry_L370:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x140, a0), a1
 	mov	(0x18, sp), d0
@@ -45740,7 +45749,7 @@ func_9781B37B_entry_L370:
 	bne	func_9781B37B_entry_L38c
 	jmp	func_9781B37B_entry_L26d
 func_9781B37B_entry_L38c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x144, a0), a0
 	mov	(0x18, sp), d0
@@ -45785,7 +45794,7 @@ func_9781B37B_entry_L3e6:
 	bge	func_9781B37B_entry_L3ef
 	bra	func_9781B37B_entry_L3a4
 func_9781B37B_entry_L3ef:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913bfc, d0
@@ -45793,7 +45802,7 @@ func_9781B37B_entry_L3ef:
 	mov	CP_FD_LIST_id, d0
 	mov	MT_SetStrAdr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
@@ -45801,7 +45810,7 @@ func_9781B37B_entry_L3ef:
 	mov	CP_FD_LIST_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45809,7 +45818,7 @@ func_9781B37B_entry_L3ef:
 	mov	CP_FD_LINE1_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45883,7 +45892,7 @@ func_9781B868:
 	add	-0x18, sp
 
 func_9781B868_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
@@ -45930,7 +45939,7 @@ func_9781B868_entry_L6c:
 	bge	func_9781B868_entry_L75
 	bra	func_9781B868_entry_L2a
 func_9781B868_entry_L75:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913bfc, d0
@@ -45938,7 +45947,7 @@ func_9781B868_entry_L75:
 	mov	CP_FD_LIST_id, d0
 	mov	MT_SetStrAdr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
@@ -45946,7 +45955,7 @@ func_9781B868_entry_L75:
 	mov	CP_FD_LIST_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45954,7 +45963,7 @@ func_9781B868_entry_L75:
 	mov	CP_FD_LINE1_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -45996,7 +46005,7 @@ KssAcParaStrBoxProc_L3a:
 KssAcParaStrBoxProc_L47:
 	jmp	KssAcParaStrBoxProc_L185
 KssAcParaStrBoxProc_L4a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
@@ -46005,7 +46014,7 @@ KssAcParaStrBoxProc_L4a:
 	mov	(0x2c, a0), a0
 	mov	1, d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -46015,7 +46024,7 @@ KssAcParaStrBoxProc_L4a:
 	calls	(a0)
 	jmp	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_L7f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -46023,13 +46032,13 @@ KssAcParaStrBoxProc_L7f:
 	mov	(0x24, sp), d0
 	mov	(0x28, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x14, sp), a1
@@ -46041,7 +46050,7 @@ KssAcParaStrBoxProc_L7f:
 	clr	d0
 	jmp	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_Lca:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
@@ -46056,7 +46065,7 @@ KssAcParaStrBoxProc_Le8:
 	clr	d0
 	jmp	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_Lec:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -46066,7 +46075,7 @@ KssAcParaStrBoxProc_Lec:
 	calls	(a0)
 	jmp	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_L10b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
@@ -46075,7 +46084,7 @@ KssAcParaStrBoxProc_L10b:
 	mov	(0x2c, a0), a0
 	clr	d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -46085,7 +46094,7 @@ KssAcParaStrBoxProc_L10b:
 	calls	(a0)
 	bra	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_L13e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x24, sp), d0
@@ -46107,7 +46116,7 @@ KssAcParaStrBoxProc_L163:
 	mov	1, d0
 	mov	d0, (a0)
 KssAcParaStrBoxProc_L16b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -46117,7 +46126,7 @@ KssAcParaStrBoxProc_L16b:
 	calls	(a0)
 	bra	KssAcParaStrBoxProc_L19d
 KssAcParaStrBoxProc_L185:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -46138,12 +46147,12 @@ SmfFilterFunc:
 SmfFilterFunc_L10:
 	call	func_9783A3DA, 0, 0
 	movbu	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	movbu	(0x14, sp), d0
 	asl2	d0
-	mov	ptrs_978A22AC, a1
+	mov	SmfFilterFunc_L10_Table, a1
 	mov	(d0, a1), d0
 	mov	d0, (0x10, sp)
 	mov	SMFFilterBox_id, d0
@@ -46187,7 +46196,7 @@ KssAcActualDFStrBoxProc_L38:
 KssAcActualDFStrBoxProc_L45:
 	jmp	KssAcActualDFStrBoxProc_L1ac
 KssAcActualDFStrBoxProc_L48:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x28, sp), d0
@@ -46196,7 +46205,7 @@ KssAcActualDFStrBoxProc_L48:
 	mov	(0x28, a0), a0
 	mov	1, d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -46206,7 +46215,7 @@ KssAcActualDFStrBoxProc_L48:
 	calls	(a0)
 	jmp	KssAcActualDFStrBoxProc_L1c4
 KssAcActualDFStrBoxProc_L7d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -46214,7 +46223,7 @@ KssAcActualDFStrBoxProc_L7d:
 	mov	(0x28, sp), d0
 	mov	(0x2c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -46225,7 +46234,7 @@ KssAcActualDFStrBoxProc_L7d:
 	clr	d0
 	jmp	KssAcActualDFStrBoxProc_L1c4
 KssAcActualDFStrBoxProc_Lb4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x28, sp), d0
@@ -46257,7 +46266,7 @@ KssAcActualDFStrBoxProc_Ld6:
 	movhu	(0x1e, sp), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	0x97913bd8, d0
@@ -46267,7 +46276,7 @@ KssAcActualDFStrBoxProc_Ld6:
 	calls	(a0)
 	jmp	KssAcActualDFStrBoxProc_L1c4
 KssAcActualDFStrBoxProc_L132:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x28, sp), d0
@@ -46276,7 +46285,7 @@ KssAcActualDFStrBoxProc_L132:
 	mov	(0x28, a0), a0
 	clr	d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -46286,7 +46295,7 @@ KssAcActualDFStrBoxProc_L132:
 	calls	(a0)
 	bra	KssAcActualDFStrBoxProc_L1c4
 KssAcActualDFStrBoxProc_L165:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x28, sp), d0
@@ -46308,7 +46317,7 @@ KssAcActualDFStrBoxProc_L18a:
 	mov	1, d0
 	mov	d0, (a0)
 KssAcActualDFStrBoxProc_L192:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -46318,7 +46327,7 @@ KssAcActualDFStrBoxProc_L192:
 	calls	(a0)
 	bra	KssAcActualDFStrBoxProc_L1c4
 KssAcActualDFStrBoxProc_L1ac:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -46333,7 +46342,7 @@ func_9781BD17:
 	add	-0x14, sp
 
 func_9781BD17_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97913f38, d0
@@ -46341,7 +46350,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_FD_VOLLABEL_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46349,7 +46358,7 @@ func_9781BD17_entry:
 	mov	SMFFilterBox_id, d0
 	mov	EV_PAINT, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	-1, d0
@@ -46357,7 +46366,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_SelectList_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46365,7 +46374,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_FD_LINE1_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46373,7 +46382,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_FD_LINE2_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46381,7 +46390,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_FD_LINE3_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46389,7 +46398,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_FD_LINE4_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46397,7 +46406,7 @@ func_9781BD17_entry:
 	mov	CP_SMF_FD_LINE5_id, d0
 	mov	MT_Draw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -46480,7 +46489,7 @@ func_9781BEB7:
 	add	-0x10, sp
 	mov	d1, (0x1c, sp)
 	mov	d0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	calls	(a0)
@@ -46679,7 +46688,7 @@ func_9781BF69_entry_Lc1:
 func_9781BF69_entry_Lcd:
 	bra	func_9781BF69_entry_L129
 func_9781BF69_entry_Lcf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -46693,11 +46702,11 @@ func_9781BF69_entry_Lcf:
 func_9781BF69_entry_Lf5:
 	movhu	(0x2c, sp), d1
 	exthu	d1
-	movhu	(data_97910C50), d0
+	movhu	(func_9781BF69_entry_Lf5_Var), d0
 	exthu	d0
 	add	d0, d1
-	movhu	d1, (data_97910C52)
-	movhu	(data_97910C52), d0
+	movhu	d1, (func_9781BF69_entry_Lf5_Var_2)
+	movhu	(func_9781BF69_entry_Lf5_Var_2), d0
 	call	func_9781C9E0_L3, 0, 0x2c
 	exth	d0
 	mov	d0, (0x18, sp)
@@ -46705,10 +46714,10 @@ func_9781BF69_entry_Lf5:
 func_9781BF69_entry_L117:
 	movhu	(0x2c, sp), d1
 	exthu	d1
-	movhu	(data_97910C50), d0
+	movhu	(func_9781BF69_entry_Lf5_Var), d0
 	exthu	d0
 	add	d0, d1
-	movhu	d1, (data_97910C52)
+	movhu	d1, (func_9781BF69_entry_Lf5_Var_2)
 func_9781BF69_entry_L129:
 	clr	d0
 	ret	0, 0x1c
@@ -46737,7 +46746,7 @@ AttenCpToHDSwCatch_L2d:
 	mov	1, d0
 	jmp	AttenCpToHDSwCatch_L128
 AttenCpToHDSwCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -46745,7 +46754,7 @@ AttenCpToHDSwCatch_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CpWp, d0
@@ -46756,7 +46765,7 @@ AttenCpToHDSwCatch_L32:
 	clr	d0
 	jmp	AttenCpToHDSwCatch_L128
 AttenCpToHDSwCatch_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -46828,7 +46837,7 @@ AttenCpToHDSwCatch_Le8:
 	beq	AttenCpToHDSwCatch_Lee
 	bra	AttenCpToHDSwCatch_L10d
 AttenCpToHDSwCatch_Lee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x10c, a0), a0
 	clr	d0
@@ -46840,7 +46849,7 @@ AttenCpToHDSwCatch_L10d:
 	clr	d0
 	bra	AttenCpToHDSwCatch_L128
 AttenCpToHDSwCatch_L110:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -46875,7 +46884,7 @@ AttenCpToMarkSwCatch_L2d:
 	mov	1, d0
 	jmp	AttenCpToMarkSwCatch_L128
 AttenCpToMarkSwCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -46883,7 +46892,7 @@ AttenCpToMarkSwCatch_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CpHD, d0
@@ -46894,7 +46903,7 @@ AttenCpToMarkSwCatch_L32:
 	clr	d0
 	jmp	AttenCpToMarkSwCatch_L128
 AttenCpToMarkSwCatch_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -46966,7 +46975,7 @@ AttenCpToMarkSwCatch_Le8:
 	beq	AttenCpToMarkSwCatch_Lee
 	bra	AttenCpToMarkSwCatch_L10d
 AttenCpToMarkSwCatch_Lee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x10c, a0), a0
 	clr	d0
@@ -46978,7 +46987,7 @@ AttenCpToMarkSwCatch_L10d:
 	clr	d0
 	bra	AttenCpToMarkSwCatch_L128
 AttenCpToMarkSwCatch_L110:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -47013,7 +47022,7 @@ AttenCpToNoDirNameSwCatch_L2d:
 	mov	1, d0
 	jmp	AttenCpToNoDirNameSwCatch_L128
 AttenCpToNoDirNameSwCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -47021,7 +47030,7 @@ AttenCpToNoDirNameSwCatch_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CpNn, d0
@@ -47032,7 +47041,7 @@ AttenCpToNoDirNameSwCatch_L32:
 	clr	d0
 	jmp	AttenCpToNoDirNameSwCatch_L128
 AttenCpToNoDirNameSwCatch_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -47104,7 +47113,7 @@ AttenCpToNoDirNameSwCatch_Le8:
 	beq	AttenCpToNoDirNameSwCatch_Lee
 	bra	AttenCpToNoDirNameSwCatch_L10d
 AttenCpToNoDirNameSwCatch_Lee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x10c, a0), a0
 	clr	d0
@@ -47116,7 +47125,7 @@ AttenCpToNoDirNameSwCatch_L10d:
 	clr	d0
 	bra	AttenCpToNoDirNameSwCatch_L128
 AttenCpToNoDirNameSwCatch_L110:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -47151,7 +47160,7 @@ SetupToolsP2SwCatch_L2d:
 	mov	1, d0
 	jmp	SetupToolsP2SwCatch_L5c3
 SetupToolsP2SwCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -47159,7 +47168,7 @@ SetupToolsP2SwCatch_L32:
 	mov	(0x24, sp), d0
 	mov	(0x28, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CpS2, d0
@@ -47170,7 +47179,7 @@ SetupToolsP2SwCatch_L32:
 	clr	d0
 	jmp	SetupToolsP2SwCatch_L5c3
 SetupToolsP2SwCatch_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -47217,7 +47226,7 @@ SetupToolsP2SwCatch_Lc9:
 SetupToolsP2SwCatch_Ld4:
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_Ld7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_1_id, d0
@@ -47229,7 +47238,7 @@ SetupToolsP2SwCatch_Ld7:
 	bne	SetupToolsP2SwCatch_Lf9
 	bra	SetupToolsP2SwCatch_L11c
 SetupToolsP2SwCatch_Lf9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47239,7 +47248,7 @@ SetupToolsP2SwCatch_Lf9:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L11c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_2_id, d0
@@ -47251,7 +47260,7 @@ SetupToolsP2SwCatch_L11c:
 	bne	SetupToolsP2SwCatch_L13e
 	bra	SetupToolsP2SwCatch_L161
 SetupToolsP2SwCatch_L13e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47261,7 +47270,7 @@ SetupToolsP2SwCatch_L13e:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L161:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_3_id, d0
@@ -47273,7 +47282,7 @@ SetupToolsP2SwCatch_L161:
 	bne	SetupToolsP2SwCatch_L183
 	bra	SetupToolsP2SwCatch_L1a6
 SetupToolsP2SwCatch_L183:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47283,7 +47292,7 @@ SetupToolsP2SwCatch_L183:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L1a6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_4_id, d0
@@ -47295,7 +47304,7 @@ SetupToolsP2SwCatch_L1a6:
 	bne	SetupToolsP2SwCatch_L1c8
 	bra	SetupToolsP2SwCatch_L1eb
 SetupToolsP2SwCatch_L1c8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47305,7 +47314,7 @@ SetupToolsP2SwCatch_L1c8:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L1eb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_5_id, d0
@@ -47317,7 +47326,7 @@ SetupToolsP2SwCatch_L1eb:
 	bne	SetupToolsP2SwCatch_L20d
 	bra	SetupToolsP2SwCatch_L230
 SetupToolsP2SwCatch_L20d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47327,7 +47336,7 @@ SetupToolsP2SwCatch_L20d:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L230:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_6_id, d0
@@ -47339,7 +47348,7 @@ SetupToolsP2SwCatch_L230:
 	bne	SetupToolsP2SwCatch_L252
 	bra	SetupToolsP2SwCatch_L275
 SetupToolsP2SwCatch_L252:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47349,7 +47358,7 @@ SetupToolsP2SwCatch_L252:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L275:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_7_id, d0
@@ -47361,7 +47370,7 @@ SetupToolsP2SwCatch_L275:
 	bne	SetupToolsP2SwCatch_L297
 	bra	SetupToolsP2SwCatch_L2b7
 SetupToolsP2SwCatch_L297:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47370,7 +47379,7 @@ SetupToolsP2SwCatch_L297:
 	mov	MT_CalcParam, d1
 	calls	(a0)
 SetupToolsP2SwCatch_L2b7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_8_id, d0
@@ -47382,7 +47391,7 @@ SetupToolsP2SwCatch_L2b7:
 	bne	SetupToolsP2SwCatch_L2d9
 	bra	SetupToolsP2SwCatch_L2fc
 SetupToolsP2SwCatch_L2d9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47392,7 +47401,7 @@ SetupToolsP2SwCatch_L2d9:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L2fc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_12_id, d0
@@ -47404,7 +47413,7 @@ SetupToolsP2SwCatch_L2fc:
 	bne	SetupToolsP2SwCatch_L31f
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L31f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -47414,7 +47423,7 @@ SetupToolsP2SwCatch_L31f:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L342:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_1_id, d0
@@ -47426,7 +47435,7 @@ SetupToolsP2SwCatch_L342:
 	bne	SetupToolsP2SwCatch_L364
 	bra	SetupToolsP2SwCatch_L387
 SetupToolsP2SwCatch_L364:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47436,7 +47445,7 @@ SetupToolsP2SwCatch_L364:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L387:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_2_id, d0
@@ -47448,7 +47457,7 @@ SetupToolsP2SwCatch_L387:
 	bne	SetupToolsP2SwCatch_L3a9
 	bra	SetupToolsP2SwCatch_L3cc
 SetupToolsP2SwCatch_L3a9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47458,7 +47467,7 @@ SetupToolsP2SwCatch_L3a9:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L3cc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_3_id, d0
@@ -47470,7 +47479,7 @@ SetupToolsP2SwCatch_L3cc:
 	bne	SetupToolsP2SwCatch_L3ee
 	bra	SetupToolsP2SwCatch_L411
 SetupToolsP2SwCatch_L3ee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47480,7 +47489,7 @@ SetupToolsP2SwCatch_L3ee:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L411:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_4_id, d0
@@ -47492,7 +47501,7 @@ SetupToolsP2SwCatch_L411:
 	bne	SetupToolsP2SwCatch_L433
 	bra	SetupToolsP2SwCatch_L456
 SetupToolsP2SwCatch_L433:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47502,7 +47511,7 @@ SetupToolsP2SwCatch_L433:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L456:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_5_id, d0
@@ -47514,7 +47523,7 @@ SetupToolsP2SwCatch_L456:
 	bne	SetupToolsP2SwCatch_L478
 	bra	SetupToolsP2SwCatch_L49b
 SetupToolsP2SwCatch_L478:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47524,7 +47533,7 @@ SetupToolsP2SwCatch_L478:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L49b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_6_id, d0
@@ -47536,7 +47545,7 @@ SetupToolsP2SwCatch_L49b:
 	bne	SetupToolsP2SwCatch_L4bd
 	bra	SetupToolsP2SwCatch_L4e0
 SetupToolsP2SwCatch_L4bd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47546,7 +47555,7 @@ SetupToolsP2SwCatch_L4bd:
 	calls	(a0)
 	jmp	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L4e0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_7_id, d0
@@ -47558,7 +47567,7 @@ SetupToolsP2SwCatch_L4e0:
 	bne	SetupToolsP2SwCatch_L502
 	bra	SetupToolsP2SwCatch_L522
 SetupToolsP2SwCatch_L502:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47567,7 +47576,7 @@ SetupToolsP2SwCatch_L502:
 	mov	MT_CalcParam, d1
 	calls	(a0)
 SetupToolsP2SwCatch_L522:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_8_id, d0
@@ -47579,7 +47588,7 @@ SetupToolsP2SwCatch_L522:
 	bne	SetupToolsP2SwCatch_L544
 	bra	SetupToolsP2SwCatch_L566
 SetupToolsP2SwCatch_L544:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47589,7 +47598,7 @@ SetupToolsP2SwCatch_L544:
 	calls	(a0)
 	bra	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L566:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	HDD_SETTOOLSPAR_12_id, d0
@@ -47601,7 +47610,7 @@ SetupToolsP2SwCatch_L566:
 	bne	SetupToolsP2SwCatch_L588
 	bra	SetupToolsP2SwCatch_L5a8
 SetupToolsP2SwCatch_L588:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -47613,7 +47622,7 @@ SetupToolsP2SwCatch_L5a8:
 	clr	d0
 	bra	SetupToolsP2SwCatch_L5c3
 SetupToolsP2SwCatch_L5ab:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -47726,7 +47735,7 @@ func_9781CA82_L2c:
 	mov	1, d0
 	bra	func_9781CA82_La7
 func_9781CA82_L30:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -47734,7 +47743,7 @@ func_9781CA82_L30:
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_WrCn, d0
@@ -47745,7 +47754,7 @@ func_9781CA82_L30:
 	clr	d0
 	bra	func_9781CA82_La7
 func_9781CA82_L6b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x28, sp), d0
@@ -47755,7 +47764,7 @@ func_9781CA82_L6b:
 	calls	(a0)
 	mov	d0, (0x14, sp)
 func_9781CA82_L8d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -47784,79 +47793,79 @@ func_9781CB2C_entry_L12:
 	clr	d0
 	mov	d0, (0x10, sp)
 func_9781CB2C_entry_L15:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	ScrBut_EditDirName_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	ScrBut_EditDirNameBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	ScrBut_EditFlsName_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	ScrBut_EditFLS_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_LINE_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_DELDIR_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_DELFILE_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_DelFileBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_DelDirBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_SaveFileBF_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_SAVEFILE_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_FRMTHD_id, d0
 	mov	(0x10, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x29c, a0), a0
 	mov	WP_OBJ_SAVESET_id, d0
@@ -47931,7 +47940,7 @@ FDFileSelectProc_L98:
 FDFileSelectProc_La5:
 	jmp	FDFileSelectProc_L949
 FDFileSelectProc_La8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -47939,13 +47948,13 @@ FDFileSelectProc_La8:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xa4, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -47953,7 +47962,7 @@ FDFileSelectProc_La8:
 	mov	(0xa4, sp), d0
 	mov	MT_DrawFDText, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -47964,7 +47973,7 @@ FDFileSelectProc_La8:
 	clr	d0
 	jmp	FDFileSelectProc_L961
 FDFileSelectProc_L10e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -47972,13 +47981,13 @@ FDFileSelectProc_L10e:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xa4, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -47986,7 +47995,7 @@ FDFileSelectProc_L10e:
 	mov	(0xa4, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -47994,7 +48003,7 @@ FDFileSelectProc_L10e:
 	mov	(0xa4, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -48002,7 +48011,7 @@ FDFileSelectProc_L10e:
 	mov	0x97913e48, a0
 	mov	data_978A22F0, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -48029,7 +48038,7 @@ FDFileSelectProc_L10e:
 	clr	d0
 	jmp	FDFileSelectProc_L961
 FDFileSelectProc_L1f5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -48069,7 +48078,7 @@ FDFileSelectProc_L22f:
 	exth	d0
 	add	3, d0
 	movhu	d0, (0x32, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_450, d0
@@ -48083,7 +48092,7 @@ FDFileSelectProc_L22f:
 	mov	3, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x97913e46), d1
@@ -48142,7 +48151,7 @@ FDFileSelectProc_L2e0:
 	exth	d0
 	add	3, d0
 	movhu	d0, (0x32, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_449, d0
@@ -48156,7 +48165,7 @@ FDFileSelectProc_L2e0:
 	mov	3, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x97913e46), d1
@@ -48224,7 +48233,7 @@ FDFileSelectProc_L390:
 	bgt	FDFileSelectProc_L3c8
 	bra	FDFileSelectProc_L3f2
 FDFileSelectProc_L3c8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_mid_2, d0
@@ -48240,7 +48249,7 @@ FDFileSelectProc_L3c8:
 	calls	(a2)
 	bra	FDFileSelectProc_L41a
 FDFileSelectProc_L3f2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_448, d0
@@ -48287,13 +48296,13 @@ FDFileSelectProc_L42f:
 	movhu	d0, (0x2c, sp)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x97913bec)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	0x97913be8, a0
 	mov	0xf5, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -48309,13 +48318,13 @@ FDFileSelectProc_L42f:
 	movhu	d0, (0x2c, sp)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x97913bec)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	0x97913be8, a0
 	mov	0xf5, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -48331,13 +48340,13 @@ FDFileSelectProc_L42f:
 	movhu	d0, (0x2c, sp)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x97913bec)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	0x97913be8, a0
 	mov	0xf5, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -48348,7 +48357,7 @@ FDFileSelectProc_L42f:
 	movhu	d0, (0x97913bea)
 	movhu	(0x2e, sp), d0
 	movhu	d0, (0x97913bee)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_447, d0
@@ -48407,7 +48416,7 @@ FDFileSelectProc_L5c2:
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 FDFileSelectProc_L5f4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -48454,7 +48463,7 @@ FDFileSelectProc_L681:
 	clr	d0
 	jmp	FDFileSelectProc_L961
 FDFileSelectProc_L685:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -48462,7 +48471,7 @@ FDFileSelectProc_L685:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -48472,7 +48481,7 @@ FDFileSelectProc_L685:
 	calls	(a0)
 	jmp	FDFileSelectProc_L949
 FDFileSelectProc_L6bc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -48480,7 +48489,7 @@ FDFileSelectProc_L6bc:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x83, d0
@@ -48599,7 +48608,7 @@ FDFileSelectProc_L7cf:
 	movhu	(0x97913e46), d0
 	add	-1, d0
 	movhu	d0, (0x97913e46)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -48612,7 +48621,7 @@ FDFileSelectProc_L7fa:
 	movhu	(0x97913e42), d0
 	add	-1, d0
 	movhu	d0, (0x97913e42)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -48621,7 +48630,7 @@ FDFileSelectProc_L7fa:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 FDFileSelectProc_L823:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xac, sp), d0
@@ -48652,7 +48661,7 @@ FDFileSelectProc_L86f:
 	movhu	(0x97913e46), d0
 	inc	d0
 	movhu	d0, (0x97913e46)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -48665,7 +48674,7 @@ FDFileSelectProc_L899:
 	movhu	(0x97913e42), d0
 	inc	d0
 	movhu	d0, (0x97913e42)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -48674,7 +48683,7 @@ FDFileSelectProc_L899:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 FDFileSelectProc_L8c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xac, sp), d0
@@ -48684,7 +48693,7 @@ FDFileSelectProc_L8c1:
 	calls	(a0)
 	bra	FDFileSelectProc_L946
 FDFileSelectProc_L8db:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
@@ -48697,7 +48706,7 @@ FDFileSelectProc_L8f2:
 	beq	FDFileSelectProc_L8f8
 	bra	FDFileSelectProc_L946
 FDFileSelectProc_L8f8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -48715,7 +48724,7 @@ FDFileSelectProc_L8f8:
 	add	0x34, a0
 	mov	Str_MID_5, a1
 	call	strcat_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -48723,7 +48732,7 @@ FDFileSelectProc_L946:
 	clr	d0
 	bra	FDFileSelectProc_L961
 FDFileSelectProc_L949:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -48741,7 +48750,7 @@ func_9781D5E3_entry:
 	add	-0x194, sp
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
@@ -48754,11 +48763,11 @@ func_9781D5E3_entry_L1e:
 	beq	func_9781D5E3_entry_L25
 	jmp	func_9781D5E3_entry_L197
 func_9781D5E3_entry_L25:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x138, a0), a0
 	calls	(a0)
@@ -48791,7 +48800,7 @@ func_9781D5E3_entry_L88:
 func_9781D5E3_entry_L9b:
 	mov	Str_MID_4, a0
 	call	func_9780A8A1_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x13c, a0), a2
 	mov	Str_empty_445, a0
@@ -48814,7 +48823,7 @@ func_9781D5E3_entry_Ld5:
 	call	func_9781D814_entry, 0, 0x84
 	mov	d0, (0x14, sp)
 func_9781D5E3_entry_Le1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x140, a0), a1
 	mov	(0x1c, sp), d0
@@ -48825,7 +48834,7 @@ func_9781D5E3_entry_Le1:
 	bne	func_9781D5E3_entry_Lfc
 	bra	func_9781D5E3_entry_Ld5
 func_9781D5E3_entry_Lfc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x144, a0), a0
 	mov	(0x1c, sp), d0
@@ -48872,7 +48881,7 @@ func_9781D5E3_entry_L179:
 	bge	func_9781D5E3_entry_L187
 	bra	func_9781D5E3_entry_L114
 func_9781D5E3_entry_L187:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -49128,7 +49137,7 @@ func_9781D9B5:
 	add	-0x14, sp
 
 func_9781D9B5_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	2, d0
@@ -49148,7 +49157,7 @@ func_9781D9DB_entry:
 	beq	func_9781D9DB_entry_Lc
 	bra	func_9781D9DB_entry_L2c
 func_9781D9DB_entry_Lc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	4, d0
@@ -49162,7 +49171,7 @@ func_9781D9DB_entry_L2c:
 	beq	func_9781D9DB_entry_L35
 	bra	func_9781D9DB_entry_L55
 func_9781D9DB_entry_L35:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	5, d0
@@ -49205,7 +49214,7 @@ KssCOMM_DISPProc_L3b:
 KssCOMM_DISPProc_L48:
 	jmp	KssCOMM_DISPProc_L4e1
 KssCOMM_DISPProc_L4b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xc8, sp), d0
@@ -49214,7 +49223,7 @@ KssCOMM_DISPProc_L4b:
 	mov	(0x30, a0), a0
 	mov	1, d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xd0, sp), d0
@@ -49224,7 +49233,7 @@ KssCOMM_DISPProc_L4b:
 	calls	(a0)
 	jmp	KssCOMM_DISPProc_L4f9
 KssCOMM_DISPProc_L80:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xc8, sp), d0
@@ -49233,7 +49242,7 @@ KssCOMM_DISPProc_L80:
 	mov	(0x30, a0), a0
 	clr	d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xd0, sp), d0
@@ -49243,7 +49252,7 @@ KssCOMM_DISPProc_L80:
 	calls	(a0)
 	jmp	KssCOMM_DISPProc_L4f9
 KssCOMM_DISPProc_Lb4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xd0, sp), d0
@@ -49251,13 +49260,13 @@ KssCOMM_DISPProc_Lb4:
 	mov	(0xc8, sp), d0
 	mov	(0xcc, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(a0), d0
 	mov	d0, (0x10, sp)
@@ -49268,13 +49277,13 @@ KssCOMM_DISPProc_Lb4:
 	mov	1, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(4, a0), a0
 	mov	a0, (0x10, sp)
@@ -49285,13 +49294,13 @@ KssCOMM_DISPProc_Lb4:
 	mov	1, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(8, a0), a0
 	mov	a0, (0x10, sp)
@@ -49302,7 +49311,7 @@ KssCOMM_DISPProc_Lb4:
 	mov	3, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -49313,7 +49322,7 @@ KssCOMM_DISPProc_Lb4:
 	clr	d0
 	jmp	KssCOMM_DISPProc_L4f9
 KssCOMM_DISPProc_L19e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xc8, sp), d0
@@ -49338,21 +49347,21 @@ KssCOMM_DISPProc_L1c8:
 	beq	KssCOMM_DISPProc_L1d0
 	bra	KssCOMM_DISPProc_L229
 KssCOMM_DISPProc_L1d0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A2C2C, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BDC, a0
+	mov	KssCOMM_DISPProc_L1d0_Table, a0
 	mov	(d0, a0), a0
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	asl2	d0
 	mov	(d0, a0), d0
 	mov	d0, (0x10, sp)
@@ -49374,21 +49383,21 @@ KssCOMM_DISPProc_L231:
 	beq	KssCOMM_DISPProc_L239
 	bra	KssCOMM_DISPProc_L294
 KssCOMM_DISPProc_L239:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A2C40, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BDC, a0
+	mov	KssCOMM_DISPProc_L1d0_Table, a0
 	mov	(d0, a0), a0
-	mov	(data_97910C24), d0
+	mov	(KssInitialWaitProc_L193_Var), d0
 	add	4, d0
 	asl2	d0
 	mov	(d0, a0), d0
@@ -49406,7 +49415,7 @@ KssCOMM_DISPProc_L294:
 	beq	KssCOMM_DISPProc_L29d
 	jmp	KssCOMM_DISPProc_L335
 KssCOMM_DISPProc_L29d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A2C54, a0
@@ -49419,7 +49428,7 @@ KssCOMM_DISPProc_L29d:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(0xc, a0), a0
 	mov	a0, (0xc, sp)
@@ -49436,7 +49445,7 @@ KssCOMM_DISPProc_L29d:
 	mov	(0x979a4a88), d0
 	mov	d0, (0x24, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -49461,21 +49470,21 @@ KssCOMM_DISPProc_L33d:
 	beq	KssCOMM_DISPProc_L345
 	bra	KssCOMM_DISPProc_L39e
 KssCOMM_DISPProc_L345:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A2C68, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BEC, a0
+	mov	KssCOMM_DISPProc_L345_Table, a0
 	mov	(d0, a0), a0
-	mov	(data_97910C28), d0
+	mov	(KssInitialWaitProc_L193_Var_2), d0
 	asl2	d0
 	mov	(d0, a0), d0
 	mov	d0, (0x10, sp)
@@ -49492,7 +49501,7 @@ KssCOMM_DISPProc_L39e:
 	beq	KssCOMM_DISPProc_L3a7
 	jmp	KssCOMM_DISPProc_L479
 KssCOMM_DISPProc_L3a7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A2C54, a0
@@ -49501,7 +49510,7 @@ KssCOMM_DISPProc_L3a7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x10, a0), a1
 	mov	sp, a0
@@ -49522,7 +49531,7 @@ KssCOMM_DISPProc_L3a7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x14, a0), a1
 	mov	sp, a0
@@ -49533,7 +49542,7 @@ KssCOMM_DISPProc_L3a7:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	movbu	(0x2c, sp), d0
 	asl2	d0
@@ -49541,7 +49550,7 @@ KssCOMM_DISPProc_L3a7:
 	mov	sp, a0
 	add	0x30, a0
 	call	strcat_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -49561,19 +49570,19 @@ KssCOMM_DISPProc_L479:
 	beq	KssCOMM_DISPProc_L481
 	bra	KssCOMM_DISPProc_L4d4
 KssCOMM_DISPProc_L481:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A2C54, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A2BCC, a0
+	mov	KssCOMM_DISPProc_Lb4_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x18, a0), a0
 	mov	a0, (0x10, sp)
@@ -49592,7 +49601,7 @@ KssCOMM_DISPProc_L4d7:
 	clr	d0
 	bra	KssCOMM_DISPProc_L4f9
 KssCOMM_DISPProc_L4e1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xd0, sp), d0
@@ -49627,7 +49636,7 @@ KssCatch_USBPP_L2d:
 	mov	1, d0
 	jmp	KssCatch_USBPP_L41d
 KssCatch_USBPP_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x68, sp), d0
@@ -49635,7 +49644,7 @@ KssCatch_USBPP_L32:
 	mov	(0x60, sp), d0
 	mov	(0x64, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_USPP, d0
@@ -49646,7 +49655,7 @@ KssCatch_USBPP_L32:
 	clr	d0
 	jmp	KssCatch_USBPP_L41d
 KssCatch_USBPP_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x68, sp), d0
@@ -49708,7 +49717,7 @@ KssCatch_USBPP_Le1:
 KssCatch_USBPP_Le8:
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_Leb:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	0, d0
 	beq	KssCatch_USBPP_Lf7
 	bra	KssCatch_USBPP_L13a
@@ -49719,7 +49728,7 @@ KssCatch_USBPP_Lf7:
 	bra	KssCatch_USBPP_L10e
 KssCatch_USBPP_L104:
 	mov	1, d0
-	mov	d0, (data_97910C20)
+	mov	d0, (KssCOMM_DISPProc_L1d0_Var)
 	bra	KssCatch_USBPP_L13a
 KssCatch_USBPP_L10e:
 	call	func_97839570_entry, 0, 0xc
@@ -49728,7 +49737,7 @@ KssCatch_USBPP_L10e:
 	bra	KssCatch_USBPP_L125
 KssCatch_USBPP_L11b:
 	mov	2, d0
-	mov	d0, (data_97910C20)
+	mov	d0, (KssCOMM_DISPProc_L1d0_Var)
 	bra	KssCatch_USBPP_L13a
 KssCatch_USBPP_L125:
 	call	func_9783959D_entry, 0, 0xc
@@ -49737,9 +49746,9 @@ KssCatch_USBPP_L125:
 	bra	KssCatch_USBPP_L13a
 KssCatch_USBPP_L132:
 	mov	3, d0
-	mov	d0, (data_97910C20)
+	mov	d0, (KssCOMM_DISPProc_L1d0_Var)
 KssCatch_USBPP_L13a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -49749,12 +49758,12 @@ KssCatch_USBPP_L13a:
 	calls	(a0)
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L15c:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	0, d0
 	bgt	KssCatch_USBPP_L168
 	bra	KssCatch_USBPP_L1da
 KssCatch_USBPP_L168:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	2, d0
 	beq	KssCatch_USBPP_L175
 	jmp	KssCatch_USBPP_L405
@@ -49762,13 +49771,13 @@ KssCatch_USBPP_L175:
 	mov	1, d0
 	call	func_97839B9F_entry, 0, 0x10
 	mov	1, d0
-	mov	d0, (data_97910C24)
-	mov	d0, (data_97910C28)
+	mov	d0, (KssInitialWaitProc_L193_Var)
+	mov	d0, (KssInitialWaitProc_L193_Var_2)
 	mov	0, a0
 	clr	d0
 	clr	d1
 	call	func_978392F9, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -49776,7 +49785,7 @@ KssCatch_USBPP_L175:
 	mov	COMM_DISP_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -49787,8 +49796,8 @@ KssCatch_USBPP_L175:
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L1da:
 	clr	d0
-	mov	d0, (data_97910C28)
-	mov	(data_979126B4), a0
+	mov	d0, (KssInitialWaitProc_L193_Var_2)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -49798,12 +49807,12 @@ KssCatch_USBPP_L1da:
 	calls	(a0)
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L204:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	0, d0
 	bgt	KssCatch_USBPP_L211
 	jmp	KssCatch_USBPP_L405
 KssCatch_USBPP_L211:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	2, d0
 	beq	KssCatch_USBPP_L21e
 	jmp	KssCatch_USBPP_L405
@@ -49814,8 +49823,8 @@ KssCatch_USBPP_L21e:
 	clr	d1
 	call	func_978392F9, 0, 0
 	mov	7, d0
-	mov	d0, (data_97910C28)
-	mov	(data_979126B4), a0
+	mov	d0, (KssInitialWaitProc_L193_Var_2)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -49858,7 +49867,7 @@ KssCatch_USBPP_L286:
 	mov	d0, (8, sp)
 	mov	Str_g_ReadToMuch_lu, d0
 	mov	d0, (0xc, sp)
-	mov	(data_97912660), d0
+	mov	(KssCatch_USBPP_L286_Var), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
@@ -49916,7 +49925,7 @@ KssCatch_USBPP_L361:
 	mov	d0, (8, sp)
 	mov	Str_s_iConnectionActiv_i, d0
 	mov	d0, (0xc, sp)
-	mov	(data_97910C24), d0
+	mov	(KssInitialWaitProc_L193_Var), d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
 	mov	sp, a0
@@ -49924,12 +49933,12 @@ KssCatch_USBPP_L361:
 	call	func_9780AEBC_entry, 0, 0x14
 	bra	KssCatch_USBPP_L405
 KssCatch_USBPP_L38b:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	0, d0
 	bgt	KssCatch_USBPP_L397
 	bra	KssCatch_USBPP_L405
 KssCatch_USBPP_L397:
-	mov	(data_97910C20), d0
+	mov	(KssCOMM_DISPProc_L1d0_Var), d0
 	cmp	2, d0
 	beq	KssCatch_USBPP_L3a3
 	bra	KssCatch_USBPP_L405
@@ -49937,14 +49946,14 @@ KssCatch_USBPP_L3a3:
 	clr	d0
 	call	func_97839B9F_entry, 0, 0x10
 	clr	d0
-	mov	d0, (data_97910C24)
+	mov	d0, (KssInitialWaitProc_L193_Var)
 	mov	3, d0
-	mov	d0, (data_97910C28)
+	mov	d0, (KssInitialWaitProc_L193_Var_2)
 	mov	0, a0
 	clr	d0
 	clr	d1
 	call	func_978392F9, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -49952,7 +49961,7 @@ KssCatch_USBPP_L3a3:
 	mov	COMM_DISP_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -49961,7 +49970,7 @@ KssCatch_USBPP_L3a3:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 KssCatch_USBPP_L405:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x68, sp), d0
@@ -49989,7 +49998,7 @@ KssFileSfx_DISPProc_L14:
 KssFileSfx_DISPProc_L20:
 	jmp	KssFileSfx_DISPProc_L52c
 KssFileSfx_DISPProc_L23:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x58, sp), d0
@@ -50005,11 +50014,11 @@ KssFileSfx_DISPProc_L47:
 	call	func_9781EA5D_entry, 0, 8
 	bra	KssFileSfx_DISPProc_L5f
 KssFileSfx_DISPProc_L4e:
-	mov	(data_97910CD4), d0
-	mov	(data_97910CD8), d1
+	mov	(KssFileSfx_DISPProc_L4e_Var), d0
+	mov	(KssFileSfx_DISPProc_L4e_Var_2), d1
 	call	func_9781EC2F_entry, 0, 0x10
 KssFileSfx_DISPProc_L5f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -50020,7 +50029,7 @@ KssFileSfx_DISPProc_L5f:
 	clr	d0
 	jmp	KssFileSfx_DISPProc_L544
 KssFileSfx_DISPProc_L7e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x58, sp), d0
@@ -50028,7 +50037,7 @@ KssFileSfx_DISPProc_L7e:
 	mov	(0x50, sp), d0
 	mov	(0x54, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x50, sp), d0
@@ -50043,20 +50052,20 @@ KssFileSfx_DISPProc_Lb6:
 	mov	d0, (0x24, sp)
 	bra	KssFileSfx_DISPProc_Lf9
 KssFileSfx_DISPProc_Lc1:
-	mov	(data_97910CD4), d0
+	mov	(KssFileSfx_DISPProc_L4e_Var), d0
 	cmp	0, d0
 	bgt	KssFileSfx_DISPProc_Lcd
 	bra	KssFileSfx_DISPProc_Lf6
 KssFileSfx_DISPProc_Lcd:
-	mov	(data_97910CD8), d0
+	mov	(KssFileSfx_DISPProc_L4e_Var_2), d0
 	cmp	0, d0
 	bgt	KssFileSfx_DISPProc_Ld9
 	bra	KssFileSfx_DISPProc_Lf6
 KssFileSfx_DISPProc_Ld9:
-	mov	(data_97910CD4), d0
+	mov	(KssFileSfx_DISPProc_L4e_Var), d0
 	add	-1, d0
 	exthu	d0
-	mov	(data_97910CD8), d1
+	mov	(KssFileSfx_DISPProc_L4e_Var_2), d1
 	add	-1, d1
 	exthu	d1
 	call	func_97802D58_entry, [d2], 0x10
@@ -50068,14 +50077,14 @@ KssFileSfx_DISPProc_Lf6:
 KssFileSfx_DISPProc_Lf9:
 	mov	1, d0
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x50, sp), d0
 	mov	sp, a0
 	add	0x30, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -50088,13 +50097,13 @@ KssFileSfx_DISPProc_Lf9:
 	bne	KssFileSfx_DISPProc_L131
 	jmp	KssFileSfx_DISPProc_L227
 KssFileSfx_DISPProc_L131:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x78, a0), a0
 	mov	a0, (0x10, sp)
@@ -50114,35 +50123,35 @@ KssFileSfx_DISPProc_L131:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x78, a0), a0
 	mov	a0, (0x10, sp)
@@ -50162,25 +50171,25 @@ KssFileSfx_DISPProc_L131:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x3a, sp)
@@ -50207,13 +50216,13 @@ KssFileSfx_DISPProc_L244:
 	beq	KssFileSfx_DISPProc_L252
 	jmp	KssFileSfx_DISPProc_L331
 KssFileSfx_DISPProc_L252:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x2c, sp), d0
 	asl2	d0
@@ -50235,35 +50244,35 @@ KssFileSfx_DISPProc_L252:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x2c, sp), d0
 	asl2	d0
@@ -50285,25 +50294,25 @@ KssFileSfx_DISPProc_L252:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
 	jmp	KssFileSfx_DISPProc_L40d
 KssFileSfx_DISPProc_L331:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x2c, sp), d0
 	asl2	d0
@@ -50325,35 +50334,35 @@ KssFileSfx_DISPProc_L331:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x2c, sp), d0
 	asl2	d0
@@ -50375,13 +50384,13 @@ KssFileSfx_DISPProc_L331:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
@@ -50409,14 +50418,14 @@ KssFileSfx_DISPProc_L40d:
 	bcc	KssFileSfx_DISPProc_L43d
 	jmp	KssFileSfx_DISPProc_L244
 KssFileSfx_DISPProc_L43d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x50, sp), d0
 	mov	sp, a0
 	add	0x30, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -50429,13 +50438,13 @@ KssFileSfx_DISPProc_L43d:
 	beq	KssFileSfx_DISPProc_L471
 	jmp	KssFileSfx_DISPProc_L529
 KssFileSfx_DISPProc_L471:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x78, a0), a0
 	mov	a0, (0x10, sp)
@@ -50455,35 +50464,35 @@ KssFileSfx_DISPProc_L471:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A2D8C), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A2D8E), d0
+	movhu	(KssFileSfx_DISPProc_L131_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A1498, a0
+	mov	KssLoadSaveDel_DISPProc_Lcca_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x78, a0), a0
 	mov	a0, (0x10, sp)
@@ -50503,7 +50512,7 @@ KssFileSfx_DISPProc_L529:
 	clr	d0
 	bra	KssFileSfx_DISPProc_L544
 KssFileSfx_DISPProc_L52c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x58, sp), d0
@@ -50538,7 +50547,7 @@ KssCatch_DirSelectScreen_L2d:
 	mov	1, d0
 	jmp	KssCatch_DirSelectScreen_L199
 KssCatch_DirSelectScreen_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -50546,7 +50555,7 @@ KssCatch_DirSelectScreen_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_CDIR, d0
@@ -50557,7 +50566,7 @@ KssCatch_DirSelectScreen_L32:
 	clr	d0
 	jmp	KssCatch_DirSelectScreen_L199
 KssCatch_DirSelectScreen_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -50579,7 +50588,7 @@ KssCatch_DirSelectScreen_L9a:
 KssCatch_DirSelectScreen_La0:
 	jmp	KssCatch_DirSelectScreen_L181
 KssCatch_DirSelectScreen_La3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -50587,7 +50596,7 @@ KssCatch_DirSelectScreen_La3:
 	mov	LoadOptionWndPg_id, d0
 	mov	MT_SetPage, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -50597,7 +50606,7 @@ KssCatch_DirSelectScreen_La3:
 	calls	(a0)
 	jmp	KssCatch_DirSelectScreen_L181
 KssCatch_DirSelectScreen_Le5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -50605,7 +50614,7 @@ KssCatch_DirSelectScreen_Le5:
 	mov	LoadOptionWndLBNPg_id, d0
 	mov	MT_SetPage, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -50613,7 +50622,7 @@ KssCatch_DirSelectScreen_Le5:
 	mov	LBNCatching_id, d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -50621,7 +50630,7 @@ KssCatch_DirSelectScreen_Le5:
 	mov	DirNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -50629,7 +50638,7 @@ KssCatch_DirSelectScreen_Le5:
 	mov	FileNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -50638,7 +50647,7 @@ KssCatch_DirSelectScreen_Le5:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_DirSelectScreen_L181:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -50649,19 +50658,19 @@ KssCatch_DirSelectScreen_L181:
 KssCatch_DirSelectScreen_L199:
 	ret	0, 0x14
 # KssCatch_DirSelectScreen + 0x19c: no traced path reaches what follows (--decode-gaps)
-	mov	(data_97910CD4), d0
+	mov	(KssFileSfx_DISPProc_L4e_Var), d0
 	ret	0, 0
-	mov	(data_97910CD8), d0
+	mov	(KssFileSfx_DISPProc_L4e_Var_2), d0
 	ret	0, 0
 
 func_9781EA47:
 	mov	d0, (8, sp)
-	mov	d0, (data_97910CD4)
+	mov	d0, (KssFileSfx_DISPProc_L4e_Var)
 	ret	0, 0
 
 func_9781EA52:
 	mov	d0, (8, sp)
-	mov	d0, (data_97910CD8)
+	mov	d0, (KssFileSfx_DISPProc_L4e_Var_2)
 	ret	0, 0
 
 func_9781EA5D:
@@ -50810,7 +50819,7 @@ func_9781EA5D_entry_L1b0:
 	mov	d0, (0x97913f1c)
 func_9781EA5D_entry_L1c0:
 	mov	(0x97913f1c), d0
-	mov	d0, (data_97910C74)
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
 	ret	0, 8
 
 func_9781EC2F:
@@ -50982,7 +50991,7 @@ func_9781EC2F_entry_L1de:
 	mov	d0, (0x97913f1c)
 func_9781EC2F_entry_L1ee:
 	mov	(0x97913f1c), d0
-	mov	d0, (data_97910C74)
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
 func_9781EC2F_entry_L1fa:
 	ret	0, 0x10
 
@@ -51130,7 +51139,7 @@ func_9781EE2F_L1b3:
 	mov	d0, (0x97913f1c)
 func_9781EE2F_L1c3:
 	mov	(0x97913f1c), d0
-	mov	d0, (data_97910C74)
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
 	ret	0, 8
 
 func_9781F001:
@@ -51151,27 +51160,27 @@ func_9781F001_entry:
 	bra	func_9781F001_entry_L3b
 func_9781F001_entry_L25:
 	mov	0x7f, d0
-	mov	d0, (data_97910C74)
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
 	mov	0x0002007f, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 	bra	func_9781F001_entry_L5f
 func_9781F001_entry_L3b:
-	mov	(data_97910C6C), d0
-	mov	d0, (data_97910C74)
-	mov	(data_97910C68), d0
-	mov	d0, (data_97910C78)
-	movbu	(data_97910C70), d0
-	movbu	d0, (data_97910C7C)
+	mov	(KssLoadSaveDel_DISPProc_L280_Var_2), d0
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
+	mov	(KssLoadSaveDel_DISPProc_L280_Var), d0
+	mov	d0, (func_9781F001_entry_L25_Var)
+	movbu	(KssLoadSaveDel_DISPProc_L280_Var_3), d0
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 func_9781F001_entry_L5f:
 	ret	0, 0x14
 
 func_9781F066:
-	movbu	(data_97910C7C), d0
+	movbu	(KssLoadSaveDel_DISPProc_L280_Table), d0
 	ret	0, 0
 
 func_9781F06F:
 	movbu	d0, (8, sp)
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 	ret	0, 0
 
 func_9781F07B:
@@ -51179,7 +51188,7 @@ func_9781F07B:
 	ret	0, 0
 
 func_9781F084:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	ret	0, 0
 
 func_9781F08D:
@@ -51248,7 +51257,7 @@ KssSetSfx_DISPProc_L8a:
 KssSetSfx_DISPProc_L97:
 	jmp	KssSetSfx_DISPProc_L12e4
 KssSetSfx_DISPProc_L9a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x60, sp), d0
@@ -51256,7 +51265,7 @@ KssSetSfx_DISPProc_L9a:
 	mov	(0x58, sp), d0
 	mov	(0x5c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -51264,25 +51273,25 @@ KssSetSfx_DISPProc_L9a:
 	mov	a0, (0x20, sp)
 	movhu	(0xe, a0), d2
 	exth	d2
-	movhu	(data_978A31F8), d0
+	movhu	(KssSetSfx_DISPProc_L9a_Var), d0
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x30, sp)
 	movhu	(0x12, a0), d2
 	exth	d2
-	movhu	(data_978A31FC), d0
+	movhu	(KssSetSfx_DISPProc_L9a_Var_3), d0
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x34, sp)
 	movhu	(0x10, a0), d2
 	exth	d2
-	movhu	(data_978A31FA), d0
+	movhu	(KssSetSfx_DISPProc_L9a_Var_2), d0
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x32, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A31FE), d0
+	movhu	(KssSetSfx_DISPProc_L9a_Var_4), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x36, sp)
@@ -51304,7 +51313,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d1
 	add	-4, d1
 	movhu	d1, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51329,7 +51338,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51353,7 +51362,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d1
 	add	-4, d1
 	movhu	d1, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51378,7 +51387,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51402,7 +51411,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d1
 	add	-4, d1
 	movhu	d1, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51427,7 +51436,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51451,7 +51460,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d1
 	add	-4, d1
 	movhu	d1, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51476,7 +51485,7 @@ KssSetSfx_DISPProc_L9a:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x42, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -51488,13 +51497,13 @@ KssSetSfx_DISPProc_L9a:
 	clr	d0
 	mov	d0, (0x24, sp)
 KssSetSfx_DISPProc_L2e7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31D8, a0
+	mov	names_978A31BC+28, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	asl2	d0
@@ -51526,13 +51535,13 @@ KssSetSfx_DISPProc_L2e7:
 	exth	d0
 	add	0xfa, d0
 	movhu	d0, (0x38, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31D8, a0
+	mov	names_978A31BC+28, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	add	6, d0
@@ -51567,35 +51576,35 @@ KssSetSfx_DISPProc_L2e7:
 	movhu	d0, (0x38, sp)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31D8, a0
+	mov	names_978A31BC+28, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	asl2	d0
@@ -51627,13 +51636,13 @@ KssSetSfx_DISPProc_L2e7:
 	exth	d0
 	add	0xfa, d0
 	movhu	d0, (0x38, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31D8, a0
+	mov	names_978A31BC+28, a0
 	mov	(d0, a0), a0
 	mov	(0x24, sp), d0
 	add	6, d0
@@ -51668,13 +51677,13 @@ KssSetSfx_DISPProc_L2e7:
 	movhu	d0, (0x38, sp)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
@@ -51697,7 +51706,7 @@ KssSetSfx_DISPProc_L2e7:
 	bge	KssSetSfx_DISPProc_L4f0
 	jmp	KssSetSfx_DISPProc_L2e7
 KssSetSfx_DISPProc_L4f0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -51708,7 +51717,7 @@ KssSetSfx_DISPProc_L4f0:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L50f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x60, sp), d0
@@ -51716,7 +51725,7 @@ KssSetSfx_DISPProc_L50f:
 	mov	(0x58, sp), d0
 	mov	(0x5c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -51724,7 +51733,7 @@ KssSetSfx_DISPProc_L50f:
 	mov	a0, (0x20, sp)
 	movhu	(0xe, a0), d2
 	exth	d2
-	movhu	(data_978A3200), d0
+	movhu	(KssSetSfx_DISPProc_L50f_Var), d0
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x30, sp)
@@ -51736,13 +51745,13 @@ KssSetSfx_DISPProc_L50f:
 	movhu	d2, (0x34, sp)
 	movhu	(0x10, a0), d2
 	exth	d2
-	movhu	(data_978A3202), d0
+	movhu	(KssSetSfx_DISPProc_L50f_Var_2), d0
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x32, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A3206), d0
+	movhu	(KssSetSfx_DISPProc_L50f_Var_3), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x36, sp)
@@ -51811,11 +51820,11 @@ KssSetSfx_DISPProc_L5e8:
 	beq	KssSetSfx_DISPProc_L5f4
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L5f4:
-	movbu	(data_97910CDC), d0
+	movbu	(KssSetSfx_DISPProc_L5f4_Var), d0
 	movbu	d0, (0x2c, sp)
 	mov	3, d0
 	movbu	d0, (0x2d, sp)
-	movbu	d0, (data_97910CDC)
+	movbu	d0, (KssSetSfx_DISPProc_L5f4_Var)
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L60b:
 	mov	2, d0
@@ -51844,11 +51853,11 @@ KssSetSfx_DISPProc_L630:
 	beq	KssSetSfx_DISPProc_L63c
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L63c:
-	movbu	(data_97910CDC), d0
+	movbu	(KssSetSfx_DISPProc_L5f4_Var), d0
 	movbu	d0, (0x2c, sp)
 	mov	4, d0
 	movbu	d0, (0x2d, sp)
-	movbu	d0, (data_97910CDC)
+	movbu	d0, (KssSetSfx_DISPProc_L5f4_Var)
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L653:
 	mov	(0x28, sp), d0
@@ -51876,7 +51885,7 @@ KssSetSfx_DISPProc_L67b:
 	mov	5, d0
 	movbu	d0, (0x2d, sp)
 KssSetSfx_DISPProc_L680:
-	movbu	(data_97910C7C), d0
+	movbu	(KssLoadSaveDel_DISPProc_L280_Table), d0
 	cmp	1, d0
 	beq	KssSetSfx_DISPProc_L68c
 	bra	KssSetSfx_DISPProc_L6af
@@ -51887,11 +51896,11 @@ KssSetSfx_DISPProc_L68c:
 	beq	KssSetSfx_DISPProc_L698
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L698:
-	movbu	(data_97910CDD), d0
+	movbu	(KssSetSfx_DISPProc_L698_Table), d0
 	movbu	d0, (0x2c, sp)
 	mov	6, d0
 	movbu	d0, (0x2d, sp)
-	movbu	d0, (data_97910CDD)
+	movbu	d0, (KssSetSfx_DISPProc_L698_Table)
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L6af:
 	mov	(0x20, sp), a0
@@ -51900,11 +51909,11 @@ KssSetSfx_DISPProc_L6af:
 	beq	KssSetSfx_DISPProc_L6bb
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L6bb:
-	movbu	(data_97910CDD), d0
+	movbu	(KssSetSfx_DISPProc_L698_Table), d0
 	movbu	d0, (0x2c, sp)
 	mov	7, d0
 	movbu	d0, (0x2d, sp)
-	movbu	d0, (data_97910CDD)
+	movbu	d0, (KssSetSfx_DISPProc_L698_Table)
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L6d2:
 	mov	2, d0
@@ -51970,10 +51979,10 @@ KssSetSfx_DISPProc_L740:
 	beq	KssSetSfx_DISPProc_L74c
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L74c:
-	movbu	(data_97910CDC), d0
+	movbu	(KssSetSfx_DISPProc_L5f4_Var), d0
 	movbu	d0, (0x2c, sp)
 	movbu	(0x2d, sp), d0
-	movbu	d0, (data_97910CDC)
+	movbu	d0, (KssSetSfx_DISPProc_L5f4_Var)
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L761:
 	mov	2, d0
@@ -52002,10 +52011,10 @@ KssSetSfx_DISPProc_L786:
 	beq	KssSetSfx_DISPProc_L792
 	jmp	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L792:
-	movbu	(data_97910CDC), d0
+	movbu	(KssSetSfx_DISPProc_L5f4_Var), d0
 	movbu	d0, (0x2c, sp)
 	movbu	(0x2d, sp), d0
-	movbu	d0, (data_97910CDC)
+	movbu	d0, (KssSetSfx_DISPProc_L5f4_Var)
 	bra	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L7a6:
 	mov	(0x28, sp), d0
@@ -52039,10 +52048,10 @@ KssSetSfx_DISPProc_L7d3:
 	beq	KssSetSfx_DISPProc_L7de
 	bra	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L7de:
-	movbu	(data_97910CDD), d0
+	movbu	(KssSetSfx_DISPProc_L698_Table), d0
 	movbu	d0, (0x2c, sp)
 	movbu	(0x2d, sp), d0
-	movbu	d0, (data_97910CDD)
+	movbu	d0, (KssSetSfx_DISPProc_L698_Table)
 	bra	KssSetSfx_DISPProc_L822
 KssSetSfx_DISPProc_L7f2:
 	mov	2, d0
@@ -52071,13 +52080,13 @@ KssSetSfx_DISPProc_L81d:
 	mov	5, d0
 	movbu	d0, (0x2c, sp)
 KssSetSfx_DISPProc_L822:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31E8, a0
+	mov	KssSetSfx_DISPProc_L822_Table, a0
 	mov	(d0, a0), a0
 	movbu	(0x2c, sp), d0
 	asl2	d0
@@ -52099,35 +52108,35 @@ KssSetSfx_DISPProc_L822:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31E8, a0
+	mov	KssSetSfx_DISPProc_L822_Table, a0
 	mov	(d0, a0), a0
 	movbu	(0x2c, sp), d0
 	asl2	d0
@@ -52149,35 +52158,35 @@ KssSetSfx_DISPProc_L822:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31E8, a0
+	mov	KssSetSfx_DISPProc_L822_Table, a0
 	mov	(d0, a0), a0
 	movbu	(0x2d, sp), d0
 	asl2	d0
@@ -52199,35 +52208,35 @@ KssSetSfx_DISPProc_L822:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31E8, a0
+	mov	KssSetSfx_DISPProc_L822_Table, a0
 	mov	(d0, a0), a0
 	movbu	(0x2d, sp), d0
 	asl2	d0
@@ -52249,37 +52258,37 @@ KssSetSfx_DISPProc_L822:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x3a, sp)
 	jmp	KssSetSfx_DISPProc_Lb0f
 KssSetSfx_DISPProc_La1d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31E8, a0
+	mov	KssSetSfx_DISPProc_L822_Table, a0
 	mov	(d0, a0), a0
 	mov	(a0), d0
 	mov	d0, (0x10, sp)
@@ -52299,35 +52308,35 @@ KssSetSfx_DISPProc_La1d:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	sub	d0, d1
 	movhu	d1, (0x3a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A31E8, a0
+	mov	KssSetSfx_DISPProc_L822_Table, a0
 	mov	(d0, a0), a0
 	mov	(a0), d0
 	mov	d0, (0x10, sp)
@@ -52347,25 +52356,25 @@ KssSetSfx_DISPProc_La1d:
 	calls	(a2)
 	movhu	(0x30, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x30, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x32, sp)
 	movhu	(0x38, sp), d1
 	exth	d1
-	movhu	(data_978A3208), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x38, sp)
 	movhu	(0x3a, sp), d1
 	exth	d1
-	movhu	(data_978A320A), d0
+	movhu	(KssSetSfx_DISPProc_L2e7_Var_2), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x3a, sp)
@@ -52386,13 +52395,13 @@ KssSetSfx_DISPProc_Lb17:
 	mov	(0x20, sp), a0
 	movhu	(0x10, a0), d2
 	exth	d2
-	movhu	(data_978A3202), d0
+	movhu	(KssSetSfx_DISPProc_L50f_Var_2), d0
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x32, sp)
 	movhu	(0x32, sp), d1
 	exth	d1
-	movhu	(data_978A3206), d0
+	movhu	(KssSetSfx_DISPProc_L50f_Var_3), d0
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x36, sp)
@@ -52428,14 +52437,14 @@ KssSetSfx_DISPProc_Lb87:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_Lb8b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
 	mov	0x2000, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 	mov	(0x34, a0), a0
 	mov	(a0), d0
 	and	0x01, d0
@@ -52443,9 +52452,9 @@ KssSetSfx_DISPProc_Lb8b:
 	beq	KssSetSfx_DISPProc_Lbb5
 	bra	KssSetSfx_DISPProc_Lbc2
 KssSetSfx_DISPProc_Lbb5:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	inc	d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lbc2:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52455,9 +52464,9 @@ KssSetSfx_DISPProc_Lbc2:
 	beq	KssSetSfx_DISPProc_Lbd1
 	bra	KssSetSfx_DISPProc_Lbdf
 KssSetSfx_DISPProc_Lbd1:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	2, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lbdf:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52472,14 +52481,14 @@ KssSetSfx_DISPProc_Lbee:
 	beq	KssSetSfx_DISPProc_Lbfa
 	bra	KssSetSfx_DISPProc_Lc0a
 KssSetSfx_DISPProc_Lbfa:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	4, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 	bra	KssSetSfx_DISPProc_Lc1a
 KssSetSfx_DISPProc_Lc0a:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x800, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lc1a:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52489,9 +52498,9 @@ KssSetSfx_DISPProc_Lc1a:
 	beq	KssSetSfx_DISPProc_Lc29
 	bra	KssSetSfx_DISPProc_Lc37
 KssSetSfx_DISPProc_Lc29:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	8, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lc37:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52501,9 +52510,9 @@ KssSetSfx_DISPProc_Lc37:
 	beq	KssSetSfx_DISPProc_Lc46
 	bra	KssSetSfx_DISPProc_Lc54
 KssSetSfx_DISPProc_Lc46:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x10, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lc54:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52513,9 +52522,9 @@ KssSetSfx_DISPProc_Lc54:
 	beq	KssSetSfx_DISPProc_Lc63
 	bra	KssSetSfx_DISPProc_Lc71
 KssSetSfx_DISPProc_Lc63:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x20, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lc71:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52525,9 +52534,9 @@ KssSetSfx_DISPProc_Lc71:
 	beq	KssSetSfx_DISPProc_Lc80
 	bra	KssSetSfx_DISPProc_Lc8e
 KssSetSfx_DISPProc_Lc80:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x40, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lc8e:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52537,9 +52546,9 @@ KssSetSfx_DISPProc_Lc8e:
 	beq	KssSetSfx_DISPProc_Lc9f
 	bra	KssSetSfx_DISPProc_Lcaf
 KssSetSfx_DISPProc_Lc9f:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x80, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lcaf:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52549,9 +52558,9 @@ KssSetSfx_DISPProc_Lcaf:
 	beq	KssSetSfx_DISPProc_Lcc1
 	bra	KssSetSfx_DISPProc_Lcd1
 KssSetSfx_DISPProc_Lcc1:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x100, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lcd1:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52561,9 +52570,9 @@ KssSetSfx_DISPProc_Lcd1:
 	beq	KssSetSfx_DISPProc_Lce3
 	bra	KssSetSfx_DISPProc_Lcf3
 KssSetSfx_DISPProc_Lce3:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x200, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Lcf3:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52573,9 +52582,9 @@ KssSetSfx_DISPProc_Lcf3:
 	beq	KssSetSfx_DISPProc_Ld05
 	bra	KssSetSfx_DISPProc_Ld15
 KssSetSfx_DISPProc_Ld05:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x400, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Ld15:
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
@@ -52585,14 +52594,14 @@ KssSetSfx_DISPProc_Ld15:
 	beq	KssSetSfx_DISPProc_Ld27
 	bra	KssSetSfx_DISPProc_Ld37
 KssSetSfx_DISPProc_Ld27:
-	mov	(data_97910C78), d0
+	mov	(func_9781F001_entry_L25_Var), d0
 	add	0x1000, d0
-	mov	d0, (data_97910C78)
+	mov	d0, (func_9781F001_entry_L25_Var)
 KssSetSfx_DISPProc_Ld37:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_Ld3b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -52756,7 +52765,7 @@ KssSetSfx_DISPProc_Lee7:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_Leeb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -52931,7 +52940,7 @@ KssSetSfx_DISPProc_L10ba:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L10be:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -52940,7 +52949,7 @@ KssSetSfx_DISPProc_L10be:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L10d6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -52951,12 +52960,12 @@ KssSetSfx_DISPProc_L10d6:
 	mov	d0, (a0)
 	mov	(0x20, sp), a0
 	mov	(0x34, a0), a0
-	mov	(data_97910C74), d0
+	mov	(KssLoadSaveDel_DISPProc_L280_Var_4), d0
 	mov	d0, (a0)
-	movbu	(data_97910C7C), d0
+	movbu	(KssLoadSaveDel_DISPProc_L280_Table), d0
 	mov	(0x20, sp), a0
 	movbu	d0, (0x38, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -52967,7 +52976,7 @@ KssSetSfx_DISPProc_L10d6:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L112b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -53009,7 +53018,7 @@ KssSetSfx_DISPProc_L1171:
 	bne	KssSetSfx_DISPProc_L117e
 	bra	KssSetSfx_DISPProc_L119a
 KssSetSfx_DISPProc_L117e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -53021,7 +53030,7 @@ KssSetSfx_DISPProc_L119a:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L119e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -53058,7 +53067,7 @@ KssSetSfx_DISPProc_L11da:
 	or	d1, d0
 	mov	d0, (a1)
 KssSetSfx_DISPProc_L11e8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -53070,7 +53079,7 @@ KssSetSfx_DISPProc_L1204:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L1208:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -53105,7 +53114,7 @@ KssSetSfx_DISPProc_L1241:
 	bne	KssSetSfx_DISPProc_L124e
 	bra	KssSetSfx_DISPProc_L126a
 KssSetSfx_DISPProc_L124e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -53117,7 +53126,7 @@ KssSetSfx_DISPProc_L126a:
 	clr	d0
 	jmp	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L126e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x58, sp), d0
@@ -53162,7 +53171,7 @@ KssSetSfx_DISPProc_L12b8:
 	bne	KssSetSfx_DISPProc_L12c5
 	bra	KssSetSfx_DISPProc_L12e1
 KssSetSfx_DISPProc_L12c5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -53174,7 +53183,7 @@ KssSetSfx_DISPProc_L12e1:
 	clr	d0
 	bra	KssSetSfx_DISPProc_L12fc
 KssSetSfx_DISPProc_L12e4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x60, sp), d0
@@ -53209,7 +53218,7 @@ KssCatch_SetSfx_L2d:
 	mov	1, d0
 	jmp	KssCatch_SetSfx_L398
 KssCatch_SetSfx_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -53217,7 +53226,7 @@ KssCatch_SetSfx_L32:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_SSFX_2, d0
@@ -53237,7 +53246,7 @@ KssCatch_SetSfx_L6e:
 	beq	KssCatch_SetSfx_L82
 	bra	KssCatch_SetSfx_La6
 KssCatch_SetSfx_L82:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -53248,7 +53257,7 @@ KssCatch_SetSfx_L82:
 	movhu	d0, (0x24, sp)
 	bra	KssCatch_SetSfx_Lc8
 KssCatch_SetSfx_La6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -53409,7 +53418,7 @@ KssCatch_SetSfx_L1dc:
 	bge	KssCatch_SetSfx_L1e5
 	bra	KssCatch_SetSfx_L1d2
 KssCatch_SetSfx_L1e5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x18, sp), d0
@@ -53442,7 +53451,7 @@ KssCatch_SetSfx_L223:
 	bge	KssCatch_SetSfx_L22c
 	bra	KssCatch_SetSfx_L219
 KssCatch_SetSfx_L22c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x18, sp), d0
@@ -53451,7 +53460,7 @@ KssCatch_SetSfx_L22c:
 	mov	MT_LetYesNo, d1
 	calls	(a0)
 KssCatch_SetSfx_L24c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -53461,7 +53470,7 @@ KssCatch_SetSfx_L24c:
 	calls	(a0)
 	jmp	KssCatch_SetSfx_L398
 KssCatch_SetSfx_L267:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x38, sp), d0
@@ -53487,7 +53496,7 @@ KssCatch_SetSfx_L29b:
 KssCatch_SetSfx_L2a1:
 	jmp	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L2a4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53499,7 +53508,7 @@ KssCatch_SetSfx_L2a4:
 KssCatch_SetSfx_L2c6:
 	mov	1, d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53510,13 +53519,13 @@ KssCatch_SetSfx_L2c6:
 	jmp	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L2f0:
 	mov	1, d0
-	mov	d0, (data_97910C64)
+	mov	d0, (KSSPsDirBoxProc_Ld3c_Var)
 	call	func_97802ECA_entry, 0, 0x10
 	cmp	0, d0
 	bhi	KssCatch_SetSfx_L305
 	bra	KssCatch_SetSfx_L380
 KssCatch_SetSfx_L305:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -53556,7 +53565,7 @@ KssCatch_SetSfx_L369:
 	mov	HDD_FILE_SELECT_id, d1
 	call	func_97817C21_entry, 0, 0x14
 KssCatch_SetSfx_L380:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -53591,7 +53600,7 @@ KssxCatch_DeleteDirectory_L2d:
 	mov	1, d0
 	jmp	KssxCatch_DeleteDirectory_L2ea
 KssxCatch_DeleteDirectory_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -53599,7 +53608,7 @@ KssxCatch_DeleteDirectory_L32:
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_DLCF_2, d0
@@ -53610,7 +53619,7 @@ KssxCatch_DeleteDirectory_L32:
 	clr	d0
 	jmp	KssxCatch_DeleteDirectory_L2ea
 KssxCatch_DeleteDirectory_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x4c, sp), d0
@@ -53642,7 +53651,7 @@ KssxCatch_DeleteDirectory_Laf:
 KssxCatch_DeleteDirectory_Lb2:
 	call	func_97802F49, 0, 0
 	movhu	d0, (0x38, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53651,12 +53660,12 @@ KssxCatch_DeleteDirectory_Lb2:
 	mov	EV_SHOW, d1
 	calls	(a0)
 	mov	1, d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	clr	d0
 	mov	d0, (0x20, sp)
 	bra	KssxCatch_DeleteDirectory_L142
 KssxCatch_DeleteDirectory_Le8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53711,7 +53720,7 @@ KssxCatch_DeleteDirectory_L14a:
 	mov	d0, (0x28, sp)
 	clr	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53728,7 +53737,7 @@ KssxCatch_DeleteDirectory_L14a:
 	beq	KssxCatch_DeleteDirectory_L1c9
 	bra	KssxCatch_DeleteDirectory_L1ea
 KssxCatch_DeleteDirectory_L1c9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53738,7 +53747,7 @@ KssxCatch_DeleteDirectory_L1c9:
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L209
 KssxCatch_DeleteDirectory_L1ea:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53768,7 +53777,7 @@ KssxCatch_DeleteDirectory_L228:
 	beq	KssxCatch_DeleteDirectory_L23c
 	bra	KssxCatch_DeleteDirectory_L25d
 KssxCatch_DeleteDirectory_L23c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53778,7 +53787,7 @@ KssxCatch_DeleteDirectory_L23c:
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L2d2
 KssxCatch_DeleteDirectory_L25d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53797,7 +53806,7 @@ KssxCatch_DeleteDirectory_L27e:
 	beq	KssxCatch_DeleteDirectory_L292
 	bra	KssxCatch_DeleteDirectory_L2b3
 KssxCatch_DeleteDirectory_L292:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53807,7 +53816,7 @@ KssxCatch_DeleteDirectory_L292:
 	calls	(a0)
 	bra	KssxCatch_DeleteDirectory_L2d2
 KssxCatch_DeleteDirectory_L2b3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -53816,7 +53825,7 @@ KssxCatch_DeleteDirectory_L2b3:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssxCatch_DeleteDirectory_L2d2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -53851,7 +53860,7 @@ KssCatch_SetLBNSfx_L2d:
 	mov	1, d0
 	jmp	KssCatch_SetLBNSfx_L291
 KssCatch_SetLBNSfx_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -53859,7 +53868,7 @@ KssCatch_SetLBNSfx_L32:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_SLSF, d0
@@ -53870,7 +53879,7 @@ KssCatch_SetLBNSfx_L32:
 	clr	d0
 	jmp	KssCatch_SetLBNSfx_L291
 KssCatch_SetLBNSfx_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54030,7 +54039,7 @@ KssCatch_SetLBNSfx_L1a4:
 	bge	KssCatch_SetLBNSfx_L1ad
 	bra	KssCatch_SetLBNSfx_L19a
 KssCatch_SetLBNSfx_L1ad:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54063,7 +54072,7 @@ KssCatch_SetLBNSfx_L1eb:
 	bge	KssCatch_SetLBNSfx_L1f4
 	bra	KssCatch_SetLBNSfx_L1e1
 KssCatch_SetLBNSfx_L1f4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54072,7 +54081,7 @@ KssCatch_SetLBNSfx_L1f4:
 	mov	MT_LetYesNo, d1
 	calls	(a0)
 KssCatch_SetLBNSfx_L214:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -54082,7 +54091,7 @@ KssCatch_SetLBNSfx_L214:
 	calls	(a0)
 	bra	KssCatch_SetLBNSfx_L291
 KssCatch_SetLBNSfx_L22e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -54098,7 +54107,7 @@ KssCatch_SetLBNSfx_L254:
 	beq	KssCatch_SetLBNSfx_L25a
 	bra	KssCatch_SetLBNSfx_L279
 KssCatch_SetLBNSfx_L25a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54107,7 +54116,7 @@ KssCatch_SetLBNSfx_L25a:
 	mov	MT_GetSfxLoad, d1
 	calls	(a0)
 KssCatch_SetLBNSfx_L279:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -54142,7 +54151,7 @@ KssCatch_SetSfxSave_L2d:
 	mov	1, d0
 	jmp	KssCatch_SetSfxSave_L48c
 KssCatch_SetSfxSave_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -54150,7 +54159,7 @@ KssCatch_SetSfxSave_L32:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_SSFX, d0
@@ -54311,17 +54320,17 @@ KssCatch_SetSfxSave_L185:
 	beq	KssCatch_SetSfxSave_L18d
 	bra	KssCatch_SetSfxSave_L1ab
 KssCatch_SetSfxSave_L18d:
-	movbu	(data_97910C7C), d0
+	movbu	(KssLoadSaveDel_DISPProc_L280_Table), d0
 	cmp	0, d0
 	beq	KssCatch_SetSfxSave_L199
 	bra	KssCatch_SetSfxSave_L1a3
 KssCatch_SetSfxSave_L199:
 	mov	1, d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 	bra	KssCatch_SetSfxSave_L1ab
 KssCatch_SetSfxSave_L1a3:
 	mov	2, d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 KssCatch_SetSfxSave_L1ab:
 	mov	(0x34, sp), d0
 	cmp	4, d0
@@ -54336,7 +54345,7 @@ KssCatch_SetSfxSave_L1bf:
 	mov	1, d0
 	movbu	d0, (0x97913f2c)
 KssCatch_SetSfxSave_L1c7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54374,14 +54383,14 @@ KssCatch_SetSfxSave_L20f:
 	beq	KssCatch_SetSfxSave_L219
 	bra	KssCatch_SetSfxSave_L257
 KssCatch_SetSfxSave_L219:
-	movbu	(data_97910C7C), d0
+	movbu	(KssLoadSaveDel_DISPProc_L280_Table), d0
 	cmp	2, d0
 	beq	KssCatch_SetSfxSave_L225
 	bra	KssCatch_SetSfxSave_L250
 KssCatch_SetSfxSave_L225:
 	mov	1, d0
-	movbu	d0, (data_97910C7C)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54392,7 +54401,7 @@ KssCatch_SetSfxSave_L225:
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L250:
 	clr	d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 KssCatch_SetSfxSave_L257:
 	mov	(0x34, sp), d0
 	cmp	0x84, d0
@@ -54402,7 +54411,7 @@ KssCatch_SetSfxSave_L261:
 	clr	d0
 	movbu	d0, (0x97913f2c)
 KssCatch_SetSfxSave_L268:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54412,7 +54421,7 @@ KssCatch_SetSfxSave_L268:
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L28b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -54455,7 +54464,7 @@ KssCatch_SetSfxSave_L2d8:
 	beq	KssCatch_SetSfxSave_L2ec
 	bra	KssCatch_SetSfxSave_L30e
 KssCatch_SetSfxSave_L2ec:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -54465,7 +54474,7 @@ KssCatch_SetSfxSave_L2ec:
 	calls	(a0)
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L30e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -54476,12 +54485,12 @@ KssCatch_SetSfxSave_L30e:
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L330:
 	mov	2, d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 	mov	1, d0
 	movbu	d0, (0x97913f2c)
 	mov	0x7f, d0
-	mov	d0, (data_97910C74)
-	mov	(data_979126B4), a0
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54492,11 +54501,11 @@ KssCatch_SetSfxSave_L330:
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L36a:
 	clr	d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 	movbu	d0, (0x97913f2c)
 	mov	0x780, d0
-	mov	d0, (data_97910C74)
-	mov	(data_979126B4), a0
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54507,12 +54516,12 @@ KssCatch_SetSfxSave_L36a:
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L3a2:
 	mov	2, d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 	mov	1, d0
 	movbu	d0, (0x97913f2c)
 	mov	0xfff, d0
-	mov	d0, (data_97910C74)
-	mov	(data_979126B4), a0
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54523,11 +54532,11 @@ KssCatch_SetSfxSave_L3a2:
 	jmp	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L3dd:
 	clr	d0
-	movbu	d0, (data_97910C7C)
+	movbu	d0, (KssLoadSaveDel_DISPProc_L280_Table)
 	movbu	d0, (0x97913f2c)
 	clr	d0
-	mov	d0, (data_97910C74)
-	mov	(data_979126B4), a0
+	mov	d0, (KssLoadSaveDel_DISPProc_L280_Var_4)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	d0, (0x10, sp)
@@ -54536,7 +54545,7 @@ KssCatch_SetSfxSave_L3dd:
 	calls	(a0)
 	bra	KssCatch_SetSfxSave_L474
 KssCatch_SetSfxSave_L411:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54566,7 +54575,7 @@ KssCatch_SetSfxSave_L45d:
 	mov	HDD_FILE_SELECT_id, d1
 	call	func_97817C21_entry, 0, 0x14
 KssCatch_SetSfxSave_L474:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -54601,7 +54610,7 @@ KssCatch_SetSfxDel_L2d:
 	mov	1, d0
 	jmp	KssCatch_SetSfxDel_L375
 KssCatch_SetSfxDel_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -54609,7 +54618,7 @@ KssCatch_SetSfxDel_L32:
 	mov	(0x2c, sp), d0
 	mov	(0x30, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_DSFX, d0
@@ -54765,7 +54774,7 @@ KssCatch_SetSfxDel_L177:
 	bge	KssCatch_SetSfxDel_L180
 	bra	KssCatch_SetSfxDel_L16d
 KssCatch_SetSfxDel_L180:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54798,7 +54807,7 @@ KssCatch_SetSfxDel_L1bf:
 	bge	KssCatch_SetSfxDel_L1c8
 	bra	KssCatch_SetSfxDel_L1b5
 KssCatch_SetSfxDel_L1c8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54808,7 +54817,7 @@ KssCatch_SetSfxDel_L1c8:
 	calls	(a0)
 	jmp	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L1eb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -54834,7 +54843,7 @@ KssCatch_SetSfxDel_L21e:
 KssCatch_SetSfxDel_L225:
 	jmp	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L228:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -54848,7 +54857,7 @@ KssCatch_SetSfxDel_L228:
 	movhu	d0, (0x97913f94)
 	call	func_97802F64, 0, 0
 	movhu	d0, (0x97913f96)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -54864,7 +54873,7 @@ KssCatch_SetSfxDel_L28e:
 	mov	d0, (0x1c, sp)
 	bra	KssCatch_SetSfxDel_L2c1
 KssCatch_SetSfxDel_L297:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54892,7 +54901,7 @@ KssCatch_SetSfxDel_L2cc:
 	mov	d0, (0x1c, sp)
 	bra	KssCatch_SetSfxDel_L2ff
 KssCatch_SetSfxDel_L2d5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x14, sp), d0
@@ -54923,7 +54932,7 @@ KssCatch_SetSfxDel_L309:
 	beq	KssCatch_SetSfxDel_L31d
 	bra	KssCatch_SetSfxDel_L33e
 KssCatch_SetSfxDel_L31d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -54933,7 +54942,7 @@ KssCatch_SetSfxDel_L31d:
 	calls	(a0)
 	bra	KssCatch_SetSfxDel_L35d
 KssCatch_SetSfxDel_L33e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -54942,7 +54951,7 @@ KssCatch_SetSfxDel_L33e:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_SetSfxDel_L35d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -54977,7 +54986,7 @@ KssCatch_DeleteConfirm_L2d:
 	mov	1, d0
 	jmp	KssCatch_DeleteConfirm_L1d8
 KssCatch_DeleteConfirm_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -54985,7 +54994,7 @@ KssCatch_DeleteConfirm_L32:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_DLCF, d0
@@ -54996,7 +55005,7 @@ KssCatch_DeleteConfirm_L32:
 	clr	d0
 	jmp	KssCatch_DeleteConfirm_L1d8
 KssCatch_DeleteConfirm_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x38, sp), d0
@@ -55023,8 +55032,8 @@ KssCatch_DeleteConfirm_La8:
 	jmp	KssCatch_DeleteConfirm_L1c0
 KssCatch_DeleteConfirm_Lab:
 	mov	1, d0
-	mov	d0, (data_97912588)
-	mov	(data_979126B4), a0
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55042,7 +55051,7 @@ KssCatch_DeleteConfirm_Lab:
 	movhu	(0x97913f96), d1
 	call	func_978055BD_entry, [d2], 0x2c
 	mov	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55059,7 +55068,7 @@ KssCatch_DeleteConfirm_Lab:
 	beq	KssCatch_DeleteConfirm_L12a
 	bra	KssCatch_DeleteConfirm_L14b
 KssCatch_DeleteConfirm_L12a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55069,7 +55078,7 @@ KssCatch_DeleteConfirm_L12a:
 	calls	(a0)
 	bra	KssCatch_DeleteConfirm_L1c0
 KssCatch_DeleteConfirm_L14b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55088,7 +55097,7 @@ KssCatch_DeleteConfirm_L16c:
 	beq	KssCatch_DeleteConfirm_L180
 	bra	KssCatch_DeleteConfirm_L1a1
 KssCatch_DeleteConfirm_L180:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55098,7 +55107,7 @@ KssCatch_DeleteConfirm_L180:
 	calls	(a0)
 	bra	KssCatch_DeleteConfirm_L1c0
 KssCatch_DeleteConfirm_L1a1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55107,7 +55116,7 @@ KssCatch_DeleteConfirm_L1a1:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssCatch_DeleteConfirm_L1c0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -55217,19 +55226,19 @@ KssTitleFunc_Lc8:
 	call	func_978129A4_entry, 0, 0x14
 	jmp	KssTitleFunc_L1a2
 KssTitleFunc_Ld5:
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	cmp	0, d0
 	beq	KssTitleFunc_Le1
 	bra	KssTitleFunc_L152
 KssTitleFunc_Le1:
-	mov	(data_979125A4), d0
+	mov	(KssTitleFunc_Le1_Var), d0
 	cmp	0, d0
 	beq	KssTitleFunc_Led
 	bra	KssTitleFunc_L152
 KssTitleFunc_Led:
 	mov	0xff, d0
-	mov	d0, (data_979125A4)
-	mov	(data_979126B4), a0
+	mov	d0, (KssTitleFunc_Le1_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55237,13 +55246,13 @@ KssTitleFunc_Led:
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	EV_SHOW, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	0x01880000, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55253,12 +55262,12 @@ KssTitleFunc_Led:
 	calls	(a0)
 	bra	KssTitleFunc_L1a2
 KssTitleFunc_L152:
-	movbu	(data_97910CB8), d0
+	movbu	(KssInitialWaitProc_L17f_Table), d0
 	cmp	1, d0
 	beq	KssTitleFunc_L15e
 	bra	KssTitleFunc_L1a2
 KssTitleFunc_L15e:
-	mov	(data_97910C64), d0
+	mov	(KSSPsDirBoxProc_Ld3c_Var), d0
 	cmp	0, d0
 	bne	KssTitleFunc_L16a
 	bra	KssTitleFunc_L17c
@@ -55268,7 +55277,7 @@ KssTitleFunc_L16a:
 	mov	d0, d1
 	call	func_97821B96_entry, 0, 0x18
 	clr	d0
-	mov	d0, (data_97910C64)
+	mov	d0, (KSSPsDirBoxProc_Ld3c_Var)
 	bra	KssTitleFunc_L1a2
 KssTitleFunc_L17c:
 	clr	d0
@@ -55279,7 +55288,7 @@ KssTitleFunc_L17c:
 	bra	KssTitleFunc_L1a2
 KssTitleFunc_L189:
 	mov	1, d0
-	movbu	d0, (data_97910CB8)
+	movbu	d0, (KssInitialWaitProc_L17f_Table)
 	bra	KssTitleFunc_L1a2
 KssTitleFunc_L193:
 	clr	d0
@@ -55320,7 +55329,7 @@ Main_Wind_KSS_L2d:
 	mov	1, d0
 	jmp	Main_Wind_KSS_L139
 Main_Wind_KSS_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -55328,7 +55337,7 @@ Main_Wind_KSS_L32:
 	mov	(0x28, sp), d0
 	mov	(0x2c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_MWKS, d0
@@ -55339,7 +55348,7 @@ Main_Wind_KSS_L32:
 	clr	d0
 	jmp	Main_Wind_KSS_L139
 Main_Wind_KSS_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x30, sp), d0
@@ -55378,7 +55387,7 @@ Main_Wind_KSS_Lb3:
 	beq	Main_Wind_KSS_Lc7
 	bra	Main_Wind_KSS_Le8
 Main_Wind_KSS_Lc7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55388,7 +55397,7 @@ Main_Wind_KSS_Lc7:
 	calls	(a0)
 	bra	Main_Wind_KSS_L121
 Main_Wind_KSS_Le8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55407,7 +55416,7 @@ Main_Wind_KSS_L109:
 	clr	d1
 	call	func_97810A48_entry, 0, 0x14
 Main_Wind_KSS_L121:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x30, sp), d0
@@ -55469,7 +55478,7 @@ func_97821976_entry_L65:
 	call	LibDiv32, 0, 0
 	exthu	d0
 	call	func_97802F04, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a2
 	movbu	(0x15, sp), d0
@@ -55482,7 +55491,7 @@ func_97821976_entry_L65:
 	mov	SelectedDirectory_id, d0
 	mov	EV_GetSelectedDir, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a2
 	movbu	(0x15, sp), d0
@@ -55499,7 +55508,7 @@ func_97821976_entry_Ld6:
 	movbu	(0x15, sp), d0
 	exthu	d0
 	call	func_97802F10, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x15, sp), d1
@@ -55508,7 +55517,7 @@ func_97821976_entry_Ld6:
 	mov	SelectedDirectory_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movbu	(0x15, sp), d1
@@ -55519,7 +55528,7 @@ func_97821976_entry_Ld6:
 	calls	(a0)
 	clr	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	movbu	(0x15, sp), d0
@@ -55529,7 +55538,7 @@ func_97821976_entry_Ld6:
 	mov	SelectedDirInFile_id, d0
 	mov	EV_GetSelectedNumber, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -55537,7 +55546,7 @@ func_97821976_entry_Ld6:
 	mov	SelectedDirInFile_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -55547,7 +55556,7 @@ func_97821976_entry_Ld6:
 	calls	(a0)
 	jmp	func_97821976_entry_L218
 func_97821976_entry_L18f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	movbu	(0x14, sp), d0
@@ -55557,7 +55566,7 @@ func_97821976_entry_L18f:
 	mov	SelectedDirInFile_id, d0
 	mov	EV_SetFileBoxParam, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -55576,7 +55585,7 @@ func_97821976_entry_L1d5:
 	call	LibDiv32, 0, 0
 	exthu	d0
 	call	func_97802F04, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4e4, a0), a0
 	clr	d0
@@ -55594,29 +55603,29 @@ func_97821B96_entry:
 	movhu	d1, (0x24, sp)
 	movbu	d0, (0x20, sp)
 	mov	4, d0
-	mov	data_97910CBC, a0
+	mov	func_97821B96_Var, a0
 	call	func_97802884_entry, 0, 8
-	mov	(data_97910CBC), d0
+	mov	(func_97821B96_Var), d0
 	cmp	0, d0
 	bne	func_97821B96_entry_L21
 	bra	func_97821B96_entry_L58
 func_97821B96_entry_L21:
-	mov	(data_97910CBC), d0
+	mov	(func_97821B96_Var), d0
 	cmp	1, d0
 	bne	func_97821B96_entry_L2e
 	jmp	func_97821B96_entry_Le7
 func_97821B96_entry_L2e:
-	mov	(data_97910CBC), d0
+	mov	(func_97821B96_Var), d0
 	cmp	2, d0
 	bne	func_97821B96_entry_L3b
 	jmp	func_97821B96_entry_L1ac
 func_97821B96_entry_L3b:
-	mov	(data_97910CBC), d0
+	mov	(func_97821B96_Var), d0
 	cmp	3, d0
 	bne	func_97821B96_entry_L48
 	jmp	func_97821B96_entry_L205
 func_97821B96_entry_L48:
-	mov	(data_97910CBC), d0
+	mov	(func_97821B96_Var), d0
 	cmp	4, d0
 	bne	func_97821B96_entry_L55
 	jmp	func_97821B96_entry_L25d
@@ -55629,8 +55638,8 @@ func_97821B96_entry_L58:
 	movhu	(0x24, sp), d1
 	call	func_97821976_entry, [d2,a2], 0x20
 	clr	d0
-	movbu	d0, (data_97910CB8)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssInitialWaitProc_L17f_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	1, d0
@@ -55647,7 +55656,7 @@ func_97821B96_entry_L58:
 	beq	func_97821B96_entry_La3
 	bra	func_97821B96_entry_Lc5
 func_97821B96_entry_La3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55657,7 +55666,7 @@ func_97821B96_entry_La3:
 	calls	(a0)
 	jmp	func_97821B96_entry_L2b3
 func_97821B96_entry_Lc5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55668,8 +55677,8 @@ func_97821B96_entry_Lc5:
 	jmp	func_97821B96_entry_L2b3
 func_97821B96_entry_Le7:
 	clr	d0
-	movbu	d0, (data_97910CB8)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssInitialWaitProc_L17f_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	1, d0
@@ -55677,7 +55686,7 @@ func_97821B96_entry_Le7:
 	mov	LoadOptionWndLBNPg_id, d0
 	mov	MT_SetPage, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55685,7 +55694,7 @@ func_97821B96_entry_Le7:
 	mov	LBNCatching_id, d0
 	mov	MT_ResetLBNNr, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55693,7 +55702,7 @@ func_97821B96_entry_Le7:
 	mov	DirNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55701,7 +55710,7 @@ func_97821B96_entry_Le7:
 	mov	FileNumberLBN_id, d0
 	mov	MT_ResetDigitBox, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55709,7 +55718,7 @@ func_97821B96_entry_Le7:
 	mov	SELECT_NUMBER_id, d0
 	mov	EV_SHOW, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55725,8 +55734,8 @@ func_97821B96_entry_L1ac:
 	movhu	(0x24, sp), d1
 	call	func_97821976_entry, [d2,a2], 0x20
 	clr	d0
-	movbu	d0, (data_97910CB8)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssInitialWaitProc_L17f_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	1, d0
@@ -55734,7 +55743,7 @@ func_97821B96_entry_L1ac:
 	mov	LoadOptionWndPg_id, d0
 	mov	MT_SetPage, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55750,8 +55759,8 @@ func_97821B96_entry_L205:
 	movhu	(0x24, sp), d1
 	call	func_97821976_entry, [d2,a2], 0x20
 	clr	d0
-	movbu	d0, (data_97910CB8)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssInitialWaitProc_L17f_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	1, d0
@@ -55759,7 +55768,7 @@ func_97821B96_entry_L205:
 	mov	LoadOptionWndPg_id, d0
 	mov	MT_SetPage, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -55775,8 +55784,8 @@ func_97821B96_entry_L25d:
 	movhu	(0x24, sp), d1
 	call	func_97821976_entry, [d2,a2], 0x20
 	clr	d0
-	movbu	d0, (data_97910CB8)
-	mov	(data_979126B4), a0
+	movbu	d0, (KssInitialWaitProc_L17f_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	1, d0
@@ -55784,7 +55793,7 @@ func_97821B96_entry_L25d:
 	mov	LoadOptionWndPg_id, d0
 	mov	MT_SetPage, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -56032,7 +56041,7 @@ SelectFDCPListProc_Lcc:
 SelectFDCPListProc_Ld9:
 	jmp	SelectFDCPListProc_La31
 SelectFDCPListProc_Ldc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -56040,7 +56049,7 @@ SelectFDCPListProc_Ldc:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -56051,7 +56060,7 @@ SelectFDCPListProc_Ldc:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L114:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -56059,7 +56068,7 @@ SelectFDCPListProc_L114:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56074,7 +56083,7 @@ SelectFDCPListProc_L114:
 	bne	SelectFDCPListProc_L151
 	bra	SelectFDCPListProc_L199
 SelectFDCPListProc_L151:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -56082,7 +56091,7 @@ SelectFDCPListProc_L151:
 	mov	(0xb0, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -56090,13 +56099,13 @@ SelectFDCPListProc_L151:
 	mov	(0xb0, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 SelectFDCPListProc_L199:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -56110,7 +56119,7 @@ SelectFDCPListProc_L199:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L1c5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -56118,7 +56127,7 @@ SelectFDCPListProc_L1c5:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56130,7 +56139,7 @@ SelectFDCPListProc_L1c5:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L1fa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -56138,7 +56147,7 @@ SelectFDCPListProc_L1fa:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56150,7 +56159,7 @@ SelectFDCPListProc_L1fa:
 	bge	SelectFDCPListProc_L231
 	jmp	SelectFDCPListProc_L2e7
 SelectFDCPListProc_L231:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xb0, sp), d0
@@ -56199,7 +56208,7 @@ SelectFDCPListProc_L278:
 	beq	SelectFDCPListProc_L29f
 	bra	SelectFDCPListProc_L2ba
 SelectFDCPListProc_L29f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -56210,7 +56219,7 @@ SelectFDCPListProc_L29f:
 	calls	(a2)
 	bra	SelectFDCPListProc_L2d2
 SelectFDCPListProc_L2ba:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -56235,7 +56244,7 @@ SelectFDCPListProc_L2e7:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L2eb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56252,7 +56261,7 @@ SelectFDCPListProc_L311:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L315:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xb0, sp), d0
@@ -56407,7 +56416,7 @@ SelectFDCPListProc_L3d1:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x4e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x20, sp), a1
@@ -56415,14 +56424,14 @@ SelectFDCPListProc_L3d1:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x20, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x20, sp), a1
@@ -56462,14 +56471,14 @@ SelectFDCPListProc_L4e1:
 	beq	SelectFDCPListProc_L4ed
 	bra	SelectFDCPListProc_L532
 SelectFDCPListProc_L4ed:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0x88, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -56488,7 +56497,7 @@ SelectFDCPListProc_L4ed:
 	calls	(a2)
 	jmp	SelectFDCPListProc_L63e
 SelectFDCPListProc_L532:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -56498,7 +56507,7 @@ SelectFDCPListProc_L532:
 	add	0x88, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -56519,7 +56528,7 @@ SelectFDCPListProc_L532:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -56535,7 +56544,7 @@ SelectFDCPListProc_L598:
 	beq	SelectFDCPListProc_L5a4
 	bra	SelectFDCPListProc_L5f2
 SelectFDCPListProc_L5a4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -56545,7 +56554,7 @@ SelectFDCPListProc_L5a4:
 	add	0x88, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -56568,7 +56577,7 @@ SelectFDCPListProc_L5a4:
 	calls	(a2)
 	bra	SelectFDCPListProc_L63e
 SelectFDCPListProc_L5f2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -56578,7 +56587,7 @@ SelectFDCPListProc_L5f2:
 	add	0x88, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -56620,7 +56629,7 @@ SelectFDCPListProc_L65c:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L660:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56641,7 +56650,7 @@ SelectFDCPListProc_L660:
 	blt	SelectFDCPListProc_L692
 	bra	SelectFDCPListProc_L6b5
 SelectFDCPListProc_L692:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -56667,7 +56676,7 @@ SelectFDCPListProc_L6b5:
 	bge	SelectFDCPListProc_L6cc
 	bra	SelectFDCPListProc_L6ef
 SelectFDCPListProc_L6cc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -56679,7 +56688,7 @@ SelectFDCPListProc_L6cc:
 	calls	(a0)
 	bra	SelectFDCPListProc_L70d
 SelectFDCPListProc_L6ef:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x3c, sp), d0
@@ -56692,7 +56701,7 @@ SelectFDCPListProc_L70d:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L711:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56705,7 +56714,7 @@ SelectFDCPListProc_L711:
 	mov	(0x34, a0), a0
 	mov	(0xb8, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x3e, sp), d0
@@ -56714,7 +56723,7 @@ SelectFDCPListProc_L711:
 	mov	(0xb0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -56725,7 +56734,7 @@ SelectFDCPListProc_L711:
 	mov	(0xb0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -56740,13 +56749,13 @@ SelectFDCPListProc_L711:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L79e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -56761,7 +56770,7 @@ SelectFDCPListProc_L79e:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L7da:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56773,7 +56782,7 @@ SelectFDCPListProc_L7da:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L7f8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -56783,7 +56792,7 @@ SelectFDCPListProc_L7f8:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x40, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -56792,7 +56801,7 @@ SelectFDCPListProc_L7f8:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -56856,7 +56865,7 @@ SelectFDCPListProc_L8a5:
 	beq	SelectFDCPListProc_L8b0
 	bra	SelectFDCPListProc_L8d8
 SelectFDCPListProc_L8b0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -56878,7 +56887,7 @@ SelectFDCPListProc_L8d8:
 	beq	SelectFDCPListProc_L8e3
 	bra	SelectFDCPListProc_L90b
 SelectFDCPListProc_L8e3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -56900,7 +56909,7 @@ SelectFDCPListProc_L90b:
 	beq	SelectFDCPListProc_L916
 	bra	SelectFDCPListProc_L938
 SelectFDCPListProc_L916:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -56919,7 +56928,7 @@ SelectFDCPListProc_L938:
 	beq	SelectFDCPListProc_L943
 	bra	SelectFDCPListProc_L965
 SelectFDCPListProc_L943:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -56934,7 +56943,7 @@ SelectFDCPListProc_L965:
 	clr	d0
 	jmp	SelectFDCPListProc_La49
 SelectFDCPListProc_L969:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -56949,7 +56958,7 @@ SelectFDCPListProc_L969:
 	bne	SelectFDCPListProc_L992
 	bra	SelectFDCPListProc_L9aa
 SelectFDCPListProc_L992:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xb8, sp), d0
@@ -56964,7 +56973,7 @@ SelectFDCPListProc_L9aa:
 	bne	SelectFDCPListProc_L9b5
 	bra	SelectFDCPListProc_L9ff
 SelectFDCPListProc_L9b5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x2c, sp), d0
@@ -56972,7 +56981,7 @@ SelectFDCPListProc_L9b5:
 	mov	(0xb0, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x2c, sp), d0
@@ -56980,7 +56989,7 @@ SelectFDCPListProc_L9b5:
 	mov	(0xb0, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -56989,13 +56998,13 @@ SelectFDCPListProc_L9ff:
 	clr	d0
 	bra	SelectFDCPListProc_La49
 SelectFDCPListProc_La02:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -57005,7 +57014,7 @@ SelectFDCPListProc_La02:
 	mov	(0xb4, sp), d1
 	calls	(a0)
 SelectFDCPListProc_La31:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -57113,7 +57122,7 @@ KssXCustomLyricsSetupCatch_L2d:
 	mov	1, d0
 	jmp	KssXCustomLyricsSetupCatch_L148
 KssXCustomLyricsSetupCatch_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -57121,7 +57130,7 @@ KssXCustomLyricsSetupCatch_L32:
 	mov	(0x20, sp), d0
 	mov	(0x24, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_ClO, d0
@@ -57164,7 +57173,7 @@ KssXCustomLyricsSetupCatch_L9a:
 KssXCustomLyricsSetupCatch_La4:
 	jmp	KssXCustomLyricsSetupCatch_L12d
 KssXCustomLyricsSetupCatch_La7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	CLPARA4_id, d0
@@ -57176,7 +57185,7 @@ KssXCustomLyricsSetupCatch_La7:
 	bne	KssXCustomLyricsSetupCatch_Lc9
 	bra	KssXCustomLyricsSetupCatch_L12d
 KssXCustomLyricsSetupCatch_Lc9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -57186,7 +57195,7 @@ KssXCustomLyricsSetupCatch_Lc9:
 	calls	(a0)
 	bra	KssXCustomLyricsSetupCatch_L12d
 KssXCustomLyricsSetupCatch_Leb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	CLPARA4_id, d0
@@ -57198,7 +57207,7 @@ KssXCustomLyricsSetupCatch_Leb:
 	bne	KssXCustomLyricsSetupCatch_L10d
 	bra	KssXCustomLyricsSetupCatch_L12d
 KssXCustomLyricsSetupCatch_L10d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -57210,7 +57219,7 @@ KssXCustomLyricsSetupCatch_L12d:
 	clr	d0
 	bra	KssXCustomLyricsSetupCatch_L148
 KssXCustomLyricsSetupCatch_L130:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x28, sp), d0
@@ -57336,7 +57345,7 @@ SelectFDCPSMFListProc_Lcc:
 SelectFDCPSMFListProc_Ld9:
 	jmp	SelectFDCPSMFListProc_Lb22
 SelectFDCPSMFListProc_Ldc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb4, sp), d0
@@ -57344,7 +57353,7 @@ SelectFDCPSMFListProc_Ldc:
 	mov	(0xac, sp), d0
 	mov	(0xb0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -57355,7 +57364,7 @@ SelectFDCPSMFListProc_Ldc:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L114:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb4, sp), d0
@@ -57363,7 +57372,7 @@ SelectFDCPSMFListProc_L114:
 	mov	(0xac, sp), d0
 	mov	(0xb0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -57378,7 +57387,7 @@ SelectFDCPSMFListProc_L114:
 	bne	SelectFDCPSMFListProc_L151
 	bra	SelectFDCPSMFListProc_L199
 SelectFDCPSMFListProc_L151:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -57386,7 +57395,7 @@ SelectFDCPSMFListProc_L151:
 	mov	(0xac, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -57394,13 +57403,13 @@ SelectFDCPSMFListProc_L151:
 	mov	(0xac, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 SelectFDCPSMFListProc_L199:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -57409,7 +57418,7 @@ SelectFDCPSMFListProc_L199:
 	mov	d1, (0x10, sp)
 	mov	EV_SHOW, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -57423,7 +57432,7 @@ SelectFDCPSMFListProc_L199:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L1e3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb4, sp), d0
@@ -57431,7 +57440,7 @@ SelectFDCPSMFListProc_L1e3:
 	mov	(0xac, sp), d0
 	mov	(0xb0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -57443,7 +57452,7 @@ SelectFDCPSMFListProc_L1e3:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L218:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb4, sp), d0
@@ -57451,7 +57460,7 @@ SelectFDCPSMFListProc_L218:
 	mov	(0xac, sp), d0
 	mov	(0xb0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -57463,7 +57472,7 @@ SelectFDCPSMFListProc_L218:
 	bge	SelectFDCPSMFListProc_L24f
 	jmp	SelectFDCPSMFListProc_L304
 SelectFDCPSMFListProc_L24f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xac, sp), d0
@@ -57511,7 +57520,7 @@ SelectFDCPSMFListProc_L296:
 	beq	SelectFDCPSMFListProc_L2bc
 	bra	SelectFDCPSMFListProc_L2d7
 SelectFDCPSMFListProc_L2bc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -57522,7 +57531,7 @@ SelectFDCPSMFListProc_L2bc:
 	calls	(a2)
 	bra	SelectFDCPSMFListProc_L2ef
 SelectFDCPSMFListProc_L2d7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -57547,7 +57556,7 @@ SelectFDCPSMFListProc_L304:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L308:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -57562,7 +57571,7 @@ SelectFDCPSMFListProc_L326:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L32a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xac, sp), d0
@@ -57697,7 +57706,7 @@ SelectFDCPSMFListProc_L3d5:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x4a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x20, sp), a1
@@ -57705,7 +57714,7 @@ SelectFDCPSMFListProc_L3d5:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x20, sp), a1
@@ -57713,7 +57722,7 @@ SelectFDCPSMFListProc_L3d5:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x20, sp), a1
@@ -57752,14 +57761,14 @@ SelectFDCPSMFListProc_L4e5:
 	beq	SelectFDCPSMFListProc_L4f2
 	jmp	SelectFDCPSMFListProc_L595
 SelectFDCPSMFListProc_L4f2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0x84, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -57798,7 +57807,7 @@ SelectFDCPSMFListProc_L54f:
 	movhu	d0, (0x90, sp)
 	movhu	(0x8c, sp), d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_438, d0
@@ -57815,7 +57824,7 @@ SelectFDCPSMFListProc_L54f:
 	calls	(a2)
 	jmp	SelectFDCPSMFListProc_L701
 SelectFDCPSMFListProc_L595:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -57825,7 +57834,7 @@ SelectFDCPSMFListProc_L595:
 	add	0x84, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -57868,7 +57877,7 @@ SelectFDCPSMFListProc_L5fb:
 	movhu	d0, (0x90, sp)
 	movhu	(0x8c, sp), d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_437, d0
@@ -57884,7 +57893,7 @@ SelectFDCPSMFListProc_L5fb:
 	clr	d1
 	calls	(a2)
 SelectFDCPSMFListProc_L63e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -57893,7 +57902,7 @@ SelectFDCPSMFListProc_L63e:
 	calls	(a1)
 	jmp	SelectFDCPSMFListProc_L701
 SelectFDCPSMFListProc_L658:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -57903,7 +57912,7 @@ SelectFDCPSMFListProc_L658:
 	add	0x84, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -57946,7 +57955,7 @@ SelectFDCPSMFListProc_L6be:
 	movhu	d0, (0x90, sp)
 	movhu	(0x8c, sp), d0
 	movhu	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_436, d0
@@ -57982,7 +57991,7 @@ SelectFDCPSMFListProc_L71f:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L723:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -58003,7 +58012,7 @@ SelectFDCPSMFListProc_L723:
 	blt	SelectFDCPSMFListProc_L755
 	bra	SelectFDCPSMFListProc_L779
 SelectFDCPSMFListProc_L755:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -58030,7 +58039,7 @@ SelectFDCPSMFListProc_L779:
 	bge	SelectFDCPSMFListProc_L790
 	bra	SelectFDCPSMFListProc_L7b3
 SelectFDCPSMFListProc_L790:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -58042,7 +58051,7 @@ SelectFDCPSMFListProc_L790:
 	calls	(a0)
 	bra	SelectFDCPSMFListProc_L7d1
 SelectFDCPSMFListProc_L7b3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x38, sp), d0
@@ -58055,7 +58064,7 @@ SelectFDCPSMFListProc_L7d1:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L7d5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -58068,7 +58077,7 @@ SelectFDCPSMFListProc_L7d5:
 	mov	(0x34, a0), a0
 	mov	(0xb4, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x3a, sp), d0
@@ -58077,7 +58086,7 @@ SelectFDCPSMFListProc_L7d5:
 	mov	(0xac, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -58088,7 +58097,7 @@ SelectFDCPSMFListProc_L7d5:
 	mov	(0xac, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -58103,13 +58112,13 @@ SelectFDCPSMFListProc_L7d5:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L862:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -58124,7 +58133,7 @@ SelectFDCPSMFListProc_L862:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L89e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -58136,7 +58145,7 @@ SelectFDCPSMFListProc_L89e:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_L8bc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb4, sp), d0
@@ -58146,7 +58155,7 @@ SelectFDCPSMFListProc_L8bc:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x3c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -58155,7 +58164,7 @@ SelectFDCPSMFListProc_L8bc:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
@@ -58219,7 +58228,7 @@ SelectFDCPSMFListProc_L969:
 	beq	SelectFDCPSMFListProc_L974
 	bra	SelectFDCPSMFListProc_L99c
 SelectFDCPSMFListProc_L974:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -58241,7 +58250,7 @@ SelectFDCPSMFListProc_L99c:
 	beq	SelectFDCPSMFListProc_L9a7
 	bra	SelectFDCPSMFListProc_L9cf
 SelectFDCPSMFListProc_L9a7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -58263,7 +58272,7 @@ SelectFDCPSMFListProc_L9cf:
 	beq	SelectFDCPSMFListProc_L9da
 	bra	SelectFDCPSMFListProc_L9fc
 SelectFDCPSMFListProc_L9da:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -58282,7 +58291,7 @@ SelectFDCPSMFListProc_L9fc:
 	beq	SelectFDCPSMFListProc_La07
 	bra	SelectFDCPSMFListProc_La29
 SelectFDCPSMFListProc_La07:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -58301,7 +58310,7 @@ SelectFDCPSMFListProc_La29:
 	beq	SelectFDCPSMFListProc_La34
 	bra	SelectFDCPSMFListProc_La56
 SelectFDCPSMFListProc_La34:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -58316,7 +58325,7 @@ SelectFDCPSMFListProc_La56:
 	clr	d0
 	jmp	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_La5a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x3c, sp), d0
@@ -58331,7 +58340,7 @@ SelectFDCPSMFListProc_La5a:
 	bne	SelectFDCPSMFListProc_La83
 	bra	SelectFDCPSMFListProc_La9b
 SelectFDCPSMFListProc_La83:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xb4, sp), d0
@@ -58346,7 +58355,7 @@ SelectFDCPSMFListProc_La9b:
 	bne	SelectFDCPSMFListProc_Laa6
 	bra	SelectFDCPSMFListProc_Laf0
 SelectFDCPSMFListProc_Laa6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x28, sp), d0
@@ -58354,7 +58363,7 @@ SelectFDCPSMFListProc_Laa6:
 	mov	(0xac, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x28, sp), d0
@@ -58362,7 +58371,7 @@ SelectFDCPSMFListProc_Laa6:
 	mov	(0xac, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -58371,13 +58380,13 @@ SelectFDCPSMFListProc_Laf0:
 	clr	d0
 	bra	SelectFDCPSMFListProc_Lb3a
 SelectFDCPSMFListProc_Laf3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xac, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -58387,7 +58396,7 @@ SelectFDCPSMFListProc_Laf3:
 	mov	(0xb0, sp), d1
 	calls	(a0)
 SelectFDCPSMFListProc_Lb22:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb4, sp), d0
@@ -58404,7 +58413,7 @@ func_978237D9:
 func_978237D9_entry:
 	mov	d1, (0x20, sp)
 	movbu	d0, (0x1c, sp)
-	movbu	d0, (data_97910DE4)
+	movbu	d0, (func_978237D9_Var)
 	mov	d1, d0
 	mov	d0, (0x97916ec4)
 	mov	(0x24, sp), d0
@@ -58416,7 +58425,7 @@ func_978237D9_entry:
 	beq	func_978237D9_entry_L2b
 	bra	func_978237D9_entry_L4a
 func_978237D9_entry_L2b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -58469,7 +58478,7 @@ KssCopyFdToHD_DISPProc_L55:
 KssCopyFdToHD_DISPProc_L62:
 	jmp	KssCopyFdToHD_DISPProc_Laf4
 KssCopyFdToHD_DISPProc_L65:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x70, sp), d0
@@ -58477,13 +58486,13 @@ KssCopyFdToHD_DISPProc_L65:
 	mov	(0x68, sp), d0
 	mov	(0x6c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x68, sp), d0
 	mov	0x97913fa4, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	0x97913fa4, a0
@@ -58505,7 +58514,7 @@ KssCopyFdToHD_DISPProc_L65:
 	exth	d0
 	add	-0x23, d0
 	movhu	d0, (0x2e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -58528,7 +58537,7 @@ KssCopyFdToHD_DISPProc_L65:
 	exth	d0
 	add	5, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -58553,7 +58562,7 @@ KssCopyFdToHD_DISPProc_L65:
 	exth	d0
 	add	0x132, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -58578,7 +58587,7 @@ KssCopyFdToHD_DISPProc_L65:
 	exth	d0
 	add	0x269, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -58594,31 +58603,6 @@ KssCopyFdToHD_DISPProc_L65:
 	movhu	(0x97913fa6), d0
 	exth	d0
 	add	0x23, d0
-	movhu	d0, (0x36, sp)
-	movhu	(0x97913fa4), d0
-	exth	d0
-	add	5, d0
-	movhu	d0, (0x30, sp)
-	movhu	(0x97913fa4), d0
-	exth	d0
-	add	0x269, d0
-	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
-	mov	(0x100c, a0), a0
-	mov	(0x9c, a0), a2
-	mov	sp, a0
-	add	0x30, a0
-	mov	sp, a1
-	add	0x34, a1
-	mov	0xf8, d0
-	calls	(a2)
-	movhu	(0x97913faa), d0
-	exth	d0
-	add	-0x23, d0
-	movhu	d0, (0x32, sp)
-	movhu	(0x97913faa), d0
-	exth	d0
-	add	-0x23, d0
 	movhu	d0, (0x36, sp)
 	movhu	(0x97913fa4), d0
 	exth	d0
@@ -58628,7 +58612,7 @@ KssCopyFdToHD_DISPProc_L65:
 	exth	d0
 	add	0x269, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -58637,19 +58621,44 @@ KssCopyFdToHD_DISPProc_L65:
 	add	0x34, a1
 	mov	0xf8, d0
 	calls	(a2)
-	movbu	(data_97910DE4), d0
+	movhu	(0x97913faa), d0
+	exth	d0
+	add	-0x23, d0
+	movhu	d0, (0x32, sp)
+	movhu	(0x97913faa), d0
+	exth	d0
+	add	-0x23, d0
+	movhu	d0, (0x36, sp)
+	movhu	(0x97913fa4), d0
+	exth	d0
+	add	5, d0
+	movhu	d0, (0x30, sp)
+	movhu	(0x97913fa4), d0
+	exth	d0
+	add	0x269, d0
+	movhu	d0, (0x34, sp)
+	mov	(func_978003E3_entry_L595_Var), a0
+	mov	(0x100c, a0), a0
+	mov	(0x9c, a0), a2
+	mov	sp, a0
+	add	0x30, a0
+	mov	sp, a1
+	add	0x34, a1
+	mov	0xf8, d0
+	calls	(a2)
+	movbu	(func_978237D9_Var), d0
 	cmp	0x78, d0
 	beq	KssCopyFdToHD_DISPProc_L27c
 	bra	KssCopyFdToHD_DISPProc_L2d1
 KssCopyFdToHD_DISPProc_L27c:
-	movbu	(data_97910DE4), d0
+	movbu	(func_978237D9_Var), d0
 	cmp	0x78, d0
 	beq	KssCopyFdToHD_DISPProc_L288
 	bra	KssCopyFdToHD_DISPProc_L2d1
 KssCopyFdToHD_DISPProc_L288:
 	mov	2, d0
 	call	func_9781F06F, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -58657,7 +58666,7 @@ KssCopyFdToHD_DISPProc_L288:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58672,7 +58681,7 @@ KssCopyFdToHD_DISPProc_L288:
 	clr	d0
 	jmp	KssCopyFdToHD_DISPProc_Lb0c
 KssCopyFdToHD_DISPProc_L2d1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd4, d0
@@ -58680,7 +58689,7 @@ KssCopyFdToHD_DISPProc_L2d1:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58700,7 +58709,7 @@ KssCopyFdToHD_DISPProc_L317:
 	beq	KssCopyFdToHD_DISPProc_L325
 	jmp	KssCopyFdToHD_DISPProc_L400
 KssCopyFdToHD_DISPProc_L325:
-	movbu	(data_97910DE4), d0
+	movbu	(func_978237D9_Var), d0
 	cmp	0x78, d0
 	beq	KssCopyFdToHD_DISPProc_L332
 	jmp	KssCopyFdToHD_DISPProc_L444
@@ -58713,7 +58722,7 @@ KssCopyFdToHD_DISPProc_L332:
 	bne	KssCopyFdToHD_DISPProc_L345
 	bra	KssCopyFdToHD_DISPProc_L389
 KssCopyFdToHD_DISPProc_L345:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd3, d0
@@ -58721,7 +58730,7 @@ KssCopyFdToHD_DISPProc_L345:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58745,7 +58754,7 @@ KssCopyFdToHD_DISPProc_L389:
 	movhu	d0, (0x97913f9e)
 	movhu	(0x97913f9e), d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -58753,7 +58762,7 @@ KssCopyFdToHD_DISPProc_L389:
 	mov	TheActualDF_id, d0
 	mov	EV_PAINT, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58767,7 +58776,7 @@ KssCopyFdToHD_DISPProc_L389:
 	calls	(a0)
 	bra	KssCopyFdToHD_DISPProc_L444
 KssCopyFdToHD_DISPProc_L400:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd2, d0
@@ -58775,7 +58784,7 @@ KssCopyFdToHD_DISPProc_L400:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58803,7 +58812,7 @@ KssCopyFdToHD_DISPProc_L448:
 	bge	KssCopyFdToHD_DISPProc_L46e
 	bra	KssCopyFdToHD_DISPProc_L4b2
 KssCopyFdToHD_DISPProc_L46e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd6, d0
@@ -58811,7 +58820,7 @@ KssCopyFdToHD_DISPProc_L46e:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58832,7 +58841,7 @@ KssCopyFdToHD_DISPProc_L4b2:
 	blt	KssCopyFdToHD_DISPProc_L4bf
 	bra	KssCopyFdToHD_DISPProc_L503
 KssCopyFdToHD_DISPProc_L4bf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd6, d0
@@ -58840,7 +58849,7 @@ KssCopyFdToHD_DISPProc_L4bf:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58861,7 +58870,7 @@ KssCopyFdToHD_DISPProc_L503:
 	bge	KssCopyFdToHD_DISPProc_L510
 	bra	KssCopyFdToHD_DISPProc_L554
 KssCopyFdToHD_DISPProc_L510:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xcb, d0
@@ -58869,7 +58878,7 @@ KssCopyFdToHD_DISPProc_L510:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58889,7 +58898,7 @@ KssCopyFdToHD_DISPProc_L554:
 	bhi	KssCopyFdToHD_DISPProc_L560
 	bra	KssCopyFdToHD_DISPProc_L5a1
 KssCopyFdToHD_DISPProc_L560:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x65, d0
@@ -58897,7 +58906,7 @@ KssCopyFdToHD_DISPProc_L560:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58911,7 +58920,7 @@ KssCopyFdToHD_DISPProc_L560:
 	calls	(a0)
 	bra	KssCopyFdToHD_DISPProc_L5e5
 KssCopyFdToHD_DISPProc_L5a1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd6, d0
@@ -58919,7 +58928,7 @@ KssCopyFdToHD_DISPProc_L5a1:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -58937,7 +58946,7 @@ KssCopyFdToHD_DISPProc_L5e5:
 	clr	d0
 	jmp	KssCopyFdToHD_DISPProc_Lb0c
 KssCopyFdToHD_DISPProc_L5e9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x12e, d0
@@ -58946,7 +58955,7 @@ KssCopyFdToHD_DISPProc_L5e9:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	1, d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	mov	(0x97913f98), d0
 	mov	d0, (0x10, sp)
 	movhu	(0x97913f9c), d0
@@ -58977,7 +58986,7 @@ KssCopyFdToHD_DISPProc_L65e:
 	call	func_97802F10, 0, 0
 	movhu	(0x97913f9e), d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -58985,7 +58994,7 @@ KssCopyFdToHD_DISPProc_L65e:
 	mov	TheActualDF_id, d0
 	mov	EV_PAINT, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59000,13 +59009,13 @@ KssCopyFdToHD_DISPProc_L65e:
 	clr	d0
 	jmp	KssCopyFdToHD_DISPProc_Lb0c
 KssCopyFdToHD_DISPProc_L6cc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x68, sp), d0
 	mov	0x97913fa4, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	0x97913fa4, a0
@@ -59029,13 +59038,13 @@ KssCopyFdToHD_DISPProc_L709:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913fae)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A3828, a0
+	mov	KssCopyFdToHD_DISPProc_L709_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x70, sp), d0
 	asl2	d0
@@ -59072,13 +59081,13 @@ KssCopyFdToHD_DISPProc_L709:
 	exth	d0
 	add	-1, d0
 	movhu	d0, (0x97913fae)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A3828, a0
+	mov	KssCopyFdToHD_DISPProc_L709_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x70, sp), d0
 	asl2	d0
@@ -59214,7 +59223,7 @@ KssCopyFdToHD_DISPProc_L935:
 	movhu	d0, (0x97913fa4)
 	movhu	(0x97913fa4), d0
 	movhu	d0, (0x97913fac)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	0x9798ad1e, d0
@@ -59246,13 +59255,13 @@ KssCopyFdToHD_DISPProc_L9d3:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913fae)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A3838, a0
+	mov	KssCopyFdToHD_DISPProc_L9d3_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x70, sp), d0
 	mov	0xc8, d1
@@ -59284,7 +59293,7 @@ KssCopyFdToHD_DISPProc_La51:
 	mov	Str_OK_6, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -59305,8 +59314,8 @@ KssCopyFdToHD_DISPProc_La9f:
 	bra	KssCopyFdToHD_DISPProc_Lb0c
 KssCopyFdToHD_DISPProc_Laa2:
 	clr	d0
-	movbu	d0, (data_97910DE4)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_978237D9_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -59318,8 +59327,8 @@ KssCopyFdToHD_DISPProc_Laa2:
 	bra	KssCopyFdToHD_DISPProc_Lb0c
 KssCopyFdToHD_DISPProc_Lacb:
 	clr	d0
-	movbu	d0, (data_97910DE4)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_978237D9_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -59330,7 +59339,7 @@ KssCopyFdToHD_DISPProc_Lacb:
 	clr	d0
 	bra	KssCopyFdToHD_DISPProc_Lb0c
 KssCopyFdToHD_DISPProc_Laf4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x70, sp), d0
@@ -59395,7 +59404,7 @@ func_97824338_entry_Lb2:
 	mov	(0x97913fc0), d0
 	sub	0x20000000, d0
 	mov	d0, (0x97913fc0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -59412,21 +59421,21 @@ func_97824338_entry_Lb2:
 	mov	0x20, d0
 	mov	0x20, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
 	mov	sp, a0
 	add	0x20, a0
 	mov	Str_rb_15, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x150, a0), a1
 	mov	sp, a0
 	add	0x124, a0
 	mov	0x20, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
@@ -59480,7 +59489,7 @@ func_97824338_entry_L1bd:
 	mov	(0x168, sp), a1
 	call	strcpy_entry, [a2], 4
 func_97824338_entry_L1ce:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -59571,21 +59580,21 @@ func_97824338_entry_L2da:
 	clr	d0
 	mov	0xa, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
 	mov	sp, a0
 	add	0x20, a0
 	mov	Str_rb_14, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x150, a0), a1
 	mov	sp, a0
 	add	0x14c, a0
 	mov	0xa, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
@@ -59648,7 +59657,7 @@ func_978246FC:
 func_978246FC_entry:
 	mov	d1, (0x20, sp)
 	movbu	d0, (0x1c, sp)
-	movbu	d0, (data_97910DE5)
+	movbu	d0, (func_978246FC_Table)
 	mov	d1, d0
 	mov	d0, (0x97916ed0)
 	mov	(0x24, sp), d0
@@ -59660,7 +59669,7 @@ func_978246FC_entry:
 	beq	func_978246FC_entry_L2b
 	bra	func_978246FC_entry_L4a
 func_978246FC_entry_L2b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -59713,7 +59722,7 @@ KssCopySmfFdToHD_DISPProc_L55:
 KssCopySmfFdToHD_DISPProc_L62:
 	jmp	KssCopySmfFdToHD_DISPProc_La5f
 KssCopySmfFdToHD_DISPProc_L65:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x70, sp), d0
@@ -59721,17 +59730,17 @@ KssCopySmfFdToHD_DISPProc_L65:
 	mov	(0x68, sp), d0
 	mov	(0x6c, sp), d1
 	calls	(a0)
-	movbu	(data_97910DE5), d0
+	movbu	(func_978246FC_Table), d0
 	cmp	0x78, d0
 	beq	KssCopySmfFdToHD_DISPProc_L89
 	bra	KssCopySmfFdToHD_DISPProc_Ld7
 KssCopySmfFdToHD_DISPProc_L89:
-	movbu	(data_97910DE5), d0
+	movbu	(func_978246FC_Table), d0
 	cmp	0x78, d0
 	beq	KssCopySmfFdToHD_DISPProc_L95
 	bra	KssCopySmfFdToHD_DISPProc_Ld7
 KssCopySmfFdToHD_DISPProc_L95:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -59739,7 +59748,7 @@ KssCopySmfFdToHD_DISPProc_L95:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59754,7 +59763,7 @@ KssCopySmfFdToHD_DISPProc_L95:
 	clr	d0
 	jmp	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_Ld7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd4, d0
@@ -59762,7 +59771,7 @@ KssCopySmfFdToHD_DISPProc_Ld7:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59782,7 +59791,7 @@ KssCopySmfFdToHD_DISPProc_L11d:
 	beq	KssCopySmfFdToHD_DISPProc_L12b
 	jmp	KssCopySmfFdToHD_DISPProc_L1da
 KssCopySmfFdToHD_DISPProc_L12b:
-	movbu	(data_97910DE5), d0
+	movbu	(func_978246FC_Table), d0
 	cmp	0x78, d0
 	beq	KssCopySmfFdToHD_DISPProc_L138
 	jmp	KssCopySmfFdToHD_DISPProc_L21e
@@ -59795,7 +59804,7 @@ KssCopySmfFdToHD_DISPProc_L138:
 	bne	KssCopySmfFdToHD_DISPProc_L14b
 	bra	KssCopySmfFdToHD_DISPProc_L18f
 KssCopySmfFdToHD_DISPProc_L14b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd3, d0
@@ -59803,7 +59812,7 @@ KssCopySmfFdToHD_DISPProc_L14b:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59825,7 +59834,7 @@ KssCopySmfFdToHD_DISPProc_L18f:
 	movhu	d0, (0x97913fc8)
 	mov	(0x97916ed8), d0
 	movhu	d0, (0x97913fca)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59839,7 +59848,7 @@ KssCopySmfFdToHD_DISPProc_L18f:
 	calls	(a0)
 	bra	KssCopySmfFdToHD_DISPProc_L21e
 KssCopySmfFdToHD_DISPProc_L1da:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd2, d0
@@ -59847,7 +59856,7 @@ KssCopySmfFdToHD_DISPProc_L1da:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59874,7 +59883,7 @@ KssCopySmfFdToHD_DISPProc_L222:
 	bge	KssCopySmfFdToHD_DISPProc_L242
 	bra	KssCopySmfFdToHD_DISPProc_L286
 KssCopySmfFdToHD_DISPProc_L242:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd6, d0
@@ -59882,7 +59891,7 @@ KssCopySmfFdToHD_DISPProc_L242:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59903,7 +59912,7 @@ KssCopySmfFdToHD_DISPProc_L286:
 	blt	KssCopySmfFdToHD_DISPProc_L293
 	bra	KssCopySmfFdToHD_DISPProc_L2d7
 KssCopySmfFdToHD_DISPProc_L293:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xd6, d0
@@ -59911,7 +59920,7 @@ KssCopySmfFdToHD_DISPProc_L293:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59932,7 +59941,7 @@ KssCopySmfFdToHD_DISPProc_L2d7:
 	bge	KssCopySmfFdToHD_DISPProc_L2e4
 	bra	KssCopySmfFdToHD_DISPProc_L328
 KssCopySmfFdToHD_DISPProc_L2e4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0xcb, d0
@@ -59940,7 +59949,7 @@ KssCopySmfFdToHD_DISPProc_L2e4:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59955,7 +59964,7 @@ KssCopySmfFdToHD_DISPProc_L2e4:
 	clr	d0
 	jmp	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_L328:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x65, d0
@@ -59963,7 +59972,7 @@ KssCopySmfFdToHD_DISPProc_L328:
 	mov	(0x68, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -59978,7 +59987,7 @@ KssCopySmfFdToHD_DISPProc_L328:
 	clr	d0
 	jmp	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_L36b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x12e, d0
@@ -59987,8 +59996,8 @@ KssCopySmfFdToHD_DISPProc_L36b:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 	mov	1, d0
-	mov	d0, (data_97912588)
-	mov	(data_97910DE8), d0
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
+	mov	(KssCopySmfFdToHD_DISPProc_L36b_Var), d0
 	cmp	1, d0
 	beq	KssCopySmfFdToHD_DISPProc_L39c
 	bra	KssCopySmfFdToHD_DISPProc_L3bc
@@ -60028,7 +60037,7 @@ KssCopySmfFdToHD_DISPProc_L408:
 	exth	d0
 	inc	d0
 	movhu	d0, (0x97913fcc)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x68, sp), d0
@@ -60043,13 +60052,13 @@ KssCopySmfFdToHD_DISPProc_L408:
 	clr	d0
 	jmp	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_L43d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x68, sp), d0
 	mov	0x97913fd0, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	0x97913fd0, a0
@@ -60076,7 +60085,7 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	-0x23, d0
 	movhu	d0, (0x2e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -60099,7 +60108,7 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	5, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -60124,7 +60133,7 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	0xd2, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -60149,7 +60158,7 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	0x19e, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -60174,7 +60183,7 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	0x26a, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -60190,31 +60199,6 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	movhu	(0x97913fd2), d0
 	exth	d0
 	add	0x23, d0
-	movhu	d0, (0x36, sp)
-	movhu	(0x97913fd0), d0
-	exth	d0
-	add	5, d0
-	movhu	d0, (0x30, sp)
-	movhu	(0x97913fd0), d0
-	exth	d0
-	add	0x26a, d0
-	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
-	mov	(0x100c, a0), a0
-	mov	(0x9c, a0), a2
-	mov	sp, a0
-	add	0x30, a0
-	mov	sp, a1
-	add	0x34, a1
-	mov	0xf8, d0
-	calls	(a2)
-	movhu	(0x97913fd6), d0
-	exth	d0
-	add	-0x23, d0
-	movhu	d0, (0x32, sp)
-	movhu	(0x97913fd6), d0
-	exth	d0
-	add	-0x23, d0
 	movhu	d0, (0x36, sp)
 	movhu	(0x97913fd0), d0
 	exth	d0
@@ -60224,7 +60208,32 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	0x26a, d0
 	movhu	d0, (0x34, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
+	mov	(0x100c, a0), a0
+	mov	(0x9c, a0), a2
+	mov	sp, a0
+	add	0x30, a0
+	mov	sp, a1
+	add	0x34, a1
+	mov	0xf8, d0
+	calls	(a2)
+	movhu	(0x97913fd6), d0
+	exth	d0
+	add	-0x23, d0
+	movhu	d0, (0x32, sp)
+	movhu	(0x97913fd6), d0
+	exth	d0
+	add	-0x23, d0
+	movhu	d0, (0x36, sp)
+	movhu	(0x97913fd0), d0
+	exth	d0
+	add	5, d0
+	movhu	d0, (0x30, sp)
+	movhu	(0x97913fd0), d0
+	exth	d0
+	add	0x26a, d0
+	movhu	d0, (0x34, sp)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -60245,13 +60254,13 @@ KssCopySmfFdToHD_DISPProc_L47a:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913fda)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A3E04, a0
+	mov	KssCopySmfFdToHD_DISPProc_L47a_Table, a0
 	mov	(d0, a0), a1
 	mov	(0x70, sp), a0
 	mov	a0, d0
@@ -60435,7 +60444,7 @@ KssCopySmfFdToHD_DISPProc_L8a0:
 	movhu	d0, (0x97913fd0)
 	movhu	(0x97913fd0), d0
 	movhu	d0, (0x97913fd8)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	0x9798ad1e, d0
@@ -60467,13 +60476,13 @@ KssCopySmfFdToHD_DISPProc_L93e:
 	exth	d0
 	add	0xa, d0
 	movhu	d0, (0x97913fda)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A3E14, a0
+	mov	KssCopySmfFdToHD_DISPProc_L93e_Table, a0
 	mov	(d0, a0), a0
 	mov	(0x70, sp), d0
 	mov	0xc8, d1
@@ -60505,7 +60514,7 @@ KssCopySmfFdToHD_DISPProc_L9bc:
 	mov	Str_OK_5, d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -60526,8 +60535,8 @@ KssCopySmfFdToHD_DISPProc_La0a:
 	bra	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_La0d:
 	clr	d0
-	movbu	d0, (data_97910DE5)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_978246FC_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -60539,8 +60548,8 @@ KssCopySmfFdToHD_DISPProc_La0d:
 	bra	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_La36:
 	clr	d0
-	movbu	d0, (data_97910DE5)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_978246FC_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -60551,7 +60560,7 @@ KssCopySmfFdToHD_DISPProc_La36:
 	clr	d0
 	bra	KssCopySmfFdToHD_DISPProc_La77
 KssCopySmfFdToHD_DISPProc_La5f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x70, sp), d0
@@ -60639,7 +60648,7 @@ func_978251C6_entry_L53:
 	add	d1, a1
 	mov	3, d0
 	call	strncat_entry, [a2,a3], 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -60655,8 +60664,8 @@ func_978251C6_entry_L53:
 	mov	0x9798ad1e, a0
 	call	func_9783C3D4_entry, 0, 0x1c
 	clr	d0
-	mov	d0, (data_97910DE8)
-	mov	(data_979126B4), a0
+	mov	d0, (KssCopySmfFdToHD_DISPProc_L36b_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
 	mov	sp, a0
@@ -60669,13 +60678,13 @@ func_978251C6_entry_L53:
 	bra	func_978251C6_entry_L140
 func_978251C6_entry_L138:
 	mov	1, d0
-	mov	d0, (data_97910DE8)
+	mov	d0, (KssCopySmfFdToHD_DISPProc_L36b_Var)
 func_978251C6_entry_L140:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
-	mov	(data_97910DE8), d0
+	mov	(KssCopySmfFdToHD_DISPProc_L36b_Var), d0
 	cmp	1, d0
 	beq	func_978251C6_entry_L15c
 	bra	func_978251C6_entry_L16c
@@ -60696,7 +60705,7 @@ func_978251C6_entry_L16c:
 	add	0x58, a0
 	mov	0x9798ad1e, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
 	mov	sp, a0
@@ -60708,7 +60717,7 @@ func_978251C6_entry_L16c:
 	bge	func_978251C6_entry_L1bd
 	jmp	func_978251C6_entry_L28c
 func_978251C6_entry_L1bd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
@@ -60721,21 +60730,21 @@ func_978251C6_entry_L1bd:
 	mov	0x20, d0
 	mov	0x20, d1
 	call	memset_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
 	mov	sp, a0
 	add	0x58, a0
 	mov	Str_rb_11, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x150, a0), a1
 	mov	sp, a0
 	add	0x30, a0
 	mov	0x20, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
@@ -60786,7 +60795,7 @@ func_978251C6_entry_L28c:
 	add	0x58, a1
 	call	strcpy_entry, [a2], 4
 func_978251C6_entry_L29c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
@@ -60864,7 +60873,7 @@ KssCatch_SaveOptionsAndPassWords_L2d:
 	mov	1, d0
 	jmp	KssCatch_SaveOptionsAndPassWords_L101
 KssCatch_SaveOptionsAndPassWords_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -60872,7 +60881,7 @@ KssCatch_SaveOptionsAndPassWords_L32:
 	mov	(0x24, sp), d0
 	mov	(0x28, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_SOPW, d0
@@ -60883,7 +60892,7 @@ KssCatch_SaveOptionsAndPassWords_L32:
 	clr	d0
 	jmp	KssCatch_SaveOptionsAndPassWords_L101
 KssCatch_SaveOptionsAndPassWords_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -60933,7 +60942,7 @@ KssCatch_SaveOptionsAndPassWords_Ld2:
 	mov	0x00770000, d1
 	call	func_97817C21_entry, 0, 0x14
 KssCatch_SaveOptionsAndPassWords_Le9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -61040,9 +61049,9 @@ func_9782565B_entry_La6:
 func_97825707:
 	mov	d1, (0xc, sp)
 	mov	d0, (8, sp)
-	mov	d0, (data_97910DEC)
+	mov	d0, (func_97825707_Var)
 	mov	d1, d0
-	mov	d0, (data_97910DF0)
+	mov	d0, (func_97825707_Table)
 	ret	0, 0
 
 KssAudioOutputProc:
@@ -61112,7 +61121,7 @@ KssAudioOutputProc_L97:
 KssAudioOutputProc_La4:
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_La7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -61120,7 +61129,7 @@ KssAudioOutputProc_La7:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -61135,7 +61144,7 @@ KssAudioOutputProc_La7:
 	bne	KssAudioOutputProc_Le4
 	bra	KssAudioOutputProc_L12c
 KssAudioOutputProc_Le4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -61143,7 +61152,7 @@ KssAudioOutputProc_Le4:
 	mov	(0x3c, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -61151,7 +61160,7 @@ KssAudioOutputProc_Le4:
 	mov	(0x3c, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -61160,7 +61169,7 @@ KssAudioOutputProc_L12c:
 	clr	d0
 	jmp	KssAudioOutputProc_L1325
 KssAudioOutputProc_L130:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -61168,7 +61177,7 @@ KssAudioOutputProc_L130:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -61180,7 +61189,7 @@ KssAudioOutputProc_L130:
 	clr	d0
 	jmp	KssAudioOutputProc_L1325
 KssAudioOutputProc_L165:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -61188,13 +61197,13 @@ KssAudioOutputProc_L165:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	data_978A4128, a0
+	mov	func_978279FE_Var_40, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4130, a0
+	mov	func_978279FE_Var_42, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4138, a0
+	mov	func_978279FE_Var_44, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	(KssAudioOutputProc_Table_2), a0
@@ -61204,11 +61213,11 @@ KssAudioOutputProc_L165:
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4050, a1
+	mov	func_97827B50_Var_84, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FD0), a0
+	mov	(KssAudioOutputProc_Table_2+4), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -61219,150 +61228,150 @@ KssAudioOutputProc_L165:
 	clr	d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FD4), a0
+	mov	(KssAudioOutputProc_Table_2+8), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4060, a1
+	mov	func_97827B50_Var_91, a1
 	clr	d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FD8), a0
+	mov	(KssAudioOutputProc_Table_2+12), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4068, a1
+	mov	func_97827B50_Var_95, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FD8), a0
+	mov	(KssAudioOutputProc_Table_2+12), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4070, a1
+	mov	func_97827B50_Var_99, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FDC), a0
+	mov	(KssAudioOutputProc_Table_2+16), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4078, a1
+	mov	func_97827B50_Var_103, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FDC), a0
+	mov	(KssAudioOutputProc_Table_2+16), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4080, a1
+	mov	func_97827B50_Var_107, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE0), a0
+	mov	(KssAudioOutputProc_Table_2+20), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4088, a1
+	mov	func_97827B50_Var_111, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE0), a0
+	mov	(KssAudioOutputProc_Table_2+20), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4090, a1
+	mov	func_97827B50_Var_115, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE0), a0
+	mov	(KssAudioOutputProc_Table_2+20), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4098, a1
+	mov	func_97827B50_Var_119, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE0), a0
+	mov	(KssAudioOutputProc_Table_2+20), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40A0, a1
+	mov	func_97827B50_Var_123, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE4), a0
+	mov	(KssAudioOutputProc_Table_2+24), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40A8, a1
+	mov	func_97827B50_Var_127, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE4), a0
+	mov	(KssAudioOutputProc_Table_2+24), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40B0, a1
+	mov	func_97827B50_Var_131, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE4), a0
+	mov	(KssAudioOutputProc_Table_2+24), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40B8, a1
+	mov	func_97827B50_Var_135, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A3FE4), a0
+	mov	(KssAudioOutputProc_Table_2+24), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40C0, a1
+	mov	func_97827B50_Var_139, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -61373,7 +61382,7 @@ KssAudioOutputProc_L165:
 	clr	d0
 	jmp	KssAudioOutputProc_L1325
 KssAudioOutputProc_L3b4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -61381,7 +61390,7 @@ KssAudioOutputProc_L3b4:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -61419,24 +61428,24 @@ KssAudioOutputProc_L403:
 	beq	KssAudioOutputProc_L412
 	bra	KssAudioOutputProc_L433
 KssAudioOutputProc_L412:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	(0x28, sp), d0
 	asl2	d0
-	mov	ptrs_978A4188, a0
+	mov	KssAudioOutputProc_L412_Table, a0
 	mov	(d0, a0), d1
 	mov	d1, a0
 	mov	0x1a, d0
 	calls	(a1)
 	bra	KssAudioOutputProc_L453
 KssAudioOutputProc_L433:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	(0x28, sp), d0
 	asl2	d0
-	mov	ptrs_978A4188, a0
+	mov	KssAudioOutputProc_L412_Table, a0
 	mov	(d0, a0), d1
 	mov	d1, a0
 	mov	0xf8, d0
@@ -61451,68 +61460,68 @@ KssAudioOutputProc_L458:
 	bge	KssAudioOutputProc_L460
 	bra	KssAudioOutputProc_L403
 KssAudioOutputProc_L460:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A40C8, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_97910DEC), d0
+	mov	(func_97825707_Var), d0
 	cmp	0, d0
 	beq	KssAudioOutputProc_L485
 	bra	KssAudioOutputProc_L4aa
 KssAudioOutputProc_L485:
-	mov	(data_978A4038), a0
+	mov	(KssAudioOutputProc_Table_2+108), a0
 	mov	0xf8, d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40D0, a1
+	mov	func_97827C18_Var, a1
 	mov	3, d0
 	mov	4, d1
 	call	func_97827C18_entry, [a2], 0x30
 	bra	KssAudioOutputProc_L4ce
 KssAudioOutputProc_L4aa:
-	mov	(data_978A403C), a0
+	mov	(KssAudioOutputProc_Table_2+112), a0
 	mov	0xf8, d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40D0, a1
+	mov	func_97827C18_Var, a1
 	mov	3, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
 KssAudioOutputProc_L4ce:
-	mov	(data_97910DF0), d0
+	mov	(func_97825707_Table), d0
 	cmp	0, d0
 	bne	KssAudioOutputProc_L4da
 	bra	KssAudioOutputProc_L4ff
 KssAudioOutputProc_L4da:
-	mov	(data_978A4040), a0
+	mov	(KssAudioOutputProc_Table_2+116), a0
 	mov	0xf8, d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40D8, a1
+	mov	func_97827C18_Var_5, a1
 	mov	3, d0
 	mov	4, d1
 	call	func_97827C18_entry, [a2], 0x30
 	bra	KssAudioOutputProc_L523
 KssAudioOutputProc_L4ff:
-	mov	(data_978A4044), a0
+	mov	(KssAudioOutputProc_Table_2+120), a0
 	mov	0xf8, d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40D8, a1
+	mov	func_97827C18_Var_5, a1
 	mov	3, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61537,10 +61546,10 @@ KssAudioOutputProc_L53c:
 	beq	KssAudioOutputProc_L545
 	jmp	KssAudioOutputProc_L63f
 KssAudioOutputProc_L545:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A40E0, a0
+	mov	func_97827C18_Var_9, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f4e), d0
@@ -61548,14 +61557,14 @@ KssAudioOutputProc_L545:
 	beq	KssAudioOutputProc_L56a
 	bra	KssAudioOutputProc_L58b
 KssAudioOutputProc_L56a:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E0, a1
+	mov	func_97827C18_Var_9, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61565,14 +61574,14 @@ KssAudioOutputProc_L58b:
 	beq	KssAudioOutputProc_L597
 	bra	KssAudioOutputProc_L5b8
 KssAudioOutputProc_L597:
-	mov	(data_978A4030), a0
+	mov	(KssAudioOutputProc_Table_2+100), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E0, a1
+	mov	func_97827C18_Var_9, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61582,14 +61591,14 @@ KssAudioOutputProc_L5b8:
 	beq	KssAudioOutputProc_L5c4
 	bra	KssAudioOutputProc_L5e5
 KssAudioOutputProc_L5c4:
-	mov	(data_978A4034), a0
+	mov	(KssAudioOutputProc_Table_2+104), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E0, a1
+	mov	func_97827C18_Var_9, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61599,14 +61608,14 @@ KssAudioOutputProc_L5e5:
 	beq	KssAudioOutputProc_L5f1
 	bra	KssAudioOutputProc_L612
 KssAudioOutputProc_L5f1:
-	mov	(data_978A4048), a0
+	mov	(KssAudioOutputProc_Table_2+124), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E0, a1
+	mov	func_97827C18_Var_9, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61616,14 +61625,14 @@ KssAudioOutputProc_L612:
 	beq	KssAudioOutputProc_L61e
 	bra	KssAudioOutputProc_L63f
 KssAudioOutputProc_L61e:
-	mov	(data_978A404C), a0
+	mov	(KssAudioOutputProc_Table_2+128), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E0, a1
+	mov	func_97827C18_Var_9, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61638,10 +61647,10 @@ KssAudioOutputProc_L647:
 	beq	KssAudioOutputProc_L64f
 	bra	KssAudioOutputProc_L6c2
 KssAudioOutputProc_L64f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A40E8, a0
+	mov	func_97827C18_Var_13, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f4f), d0
@@ -61649,14 +61658,14 @@ KssAudioOutputProc_L64f:
 	beq	KssAudioOutputProc_L674
 	bra	KssAudioOutputProc_L695
 KssAudioOutputProc_L674:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E8, a1
+	mov	func_97827C18_Var_13, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61666,14 +61675,14 @@ KssAudioOutputProc_L695:
 	beq	KssAudioOutputProc_L6a1
 	bra	KssAudioOutputProc_L6c2
 KssAudioOutputProc_L6a1:
-	mov	(data_978A3FE8), a0
+	mov	(KssAudioOutputProc_Table_2+28), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40E8, a1
+	mov	func_97827C18_Var_13, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61688,10 +61697,10 @@ KssAudioOutputProc_L6ca:
 	beq	KssAudioOutputProc_L6d2
 	bra	KssAudioOutputProc_L745
 KssAudioOutputProc_L6d2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A40F0, a0
+	mov	func_97827C18_Var_17, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f50), d0
@@ -61699,14 +61708,14 @@ KssAudioOutputProc_L6d2:
 	beq	KssAudioOutputProc_L6f7
 	bra	KssAudioOutputProc_L718
 KssAudioOutputProc_L6f7:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40F0, a1
+	mov	func_97827C18_Var_17, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61716,14 +61725,14 @@ KssAudioOutputProc_L718:
 	beq	KssAudioOutputProc_L724
 	bra	KssAudioOutputProc_L745
 KssAudioOutputProc_L724:
-	mov	(data_978A3FE8), a0
+	mov	(KssAudioOutputProc_Table_2+28), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40F0, a1
+	mov	func_97827C18_Var_17, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61738,10 +61747,10 @@ KssAudioOutputProc_L74d:
 	beq	KssAudioOutputProc_L755
 	bra	KssAudioOutputProc_L7c8
 KssAudioOutputProc_L755:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A40F8, a0
+	mov	func_97827C18_Var_21, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f51), d0
@@ -61749,14 +61758,14 @@ KssAudioOutputProc_L755:
 	beq	KssAudioOutputProc_L77a
 	bra	KssAudioOutputProc_L79b
 KssAudioOutputProc_L77a:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40F8, a1
+	mov	func_97827C18_Var_21, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61766,14 +61775,14 @@ KssAudioOutputProc_L79b:
 	beq	KssAudioOutputProc_L7a7
 	bra	KssAudioOutputProc_L7c8
 KssAudioOutputProc_L7a7:
-	mov	(data_978A3FE8), a0
+	mov	(KssAudioOutputProc_Table_2+28), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A40F8, a1
+	mov	func_97827C18_Var_21, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61788,10 +61797,10 @@ KssAudioOutputProc_L7d0:
 	beq	KssAudioOutputProc_L7d8
 	bra	KssAudioOutputProc_L84b
 KssAudioOutputProc_L7d8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A4100, a0
+	mov	func_97827C18_Var_25, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f52), d0
@@ -61799,14 +61808,14 @@ KssAudioOutputProc_L7d8:
 	beq	KssAudioOutputProc_L7fd
 	bra	KssAudioOutputProc_L81e
 KssAudioOutputProc_L7fd:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4100, a1
+	mov	func_97827C18_Var_25, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61816,14 +61825,14 @@ KssAudioOutputProc_L81e:
 	beq	KssAudioOutputProc_L82a
 	bra	KssAudioOutputProc_L84b
 KssAudioOutputProc_L82a:
-	mov	(data_978A3FE8), a0
+	mov	(KssAudioOutputProc_Table_2+28), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4100, a1
+	mov	func_97827C18_Var_25, a1
 	clr	d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61838,7 +61847,7 @@ KssAudioOutputProc_L853:
 	beq	KssAudioOutputProc_L85b
 	bra	KssAudioOutputProc_L8d1
 KssAudioOutputProc_L85b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	Str_t_2, a0
@@ -61849,7 +61858,7 @@ KssAudioOutputProc_L85b:
 	beq	KssAudioOutputProc_L880
 	bra	KssAudioOutputProc_L8a4
 KssAudioOutputProc_L880:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
@@ -61888,10 +61897,10 @@ KssAudioOutputProc_L8d9:
 	beq	KssAudioOutputProc_L8e1
 	bra	KssAudioOutputProc_L957
 KssAudioOutputProc_L8e1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A4110, a0
+	mov	func_97827C18_Var_32, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f54), d0
@@ -61899,14 +61908,14 @@ KssAudioOutputProc_L8e1:
 	beq	KssAudioOutputProc_L906
 	bra	KssAudioOutputProc_L92a
 KssAudioOutputProc_L906:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4110, a1
+	mov	func_97827C18_Var_32, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61923,7 +61932,7 @@ KssAudioOutputProc_L92a:
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4110, a1
+	mov	func_97827C18_Var_32, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61938,10 +61947,10 @@ KssAudioOutputProc_L95f:
 	beq	KssAudioOutputProc_L967
 	bra	KssAudioOutputProc_L9dd
 KssAudioOutputProc_L967:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A4118, a0
+	mov	func_97827C18_Var_36, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f55), d0
@@ -61949,14 +61958,14 @@ KssAudioOutputProc_L967:
 	beq	KssAudioOutputProc_L98c
 	bra	KssAudioOutputProc_L9b0
 KssAudioOutputProc_L98c:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4118, a1
+	mov	func_97827C18_Var_36, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61973,7 +61982,7 @@ KssAudioOutputProc_L9b0:
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4118, a1
+	mov	func_97827C18_Var_36, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -61988,10 +61997,10 @@ KssAudioOutputProc_L9e5:
 	beq	KssAudioOutputProc_L9ed
 	bra	KssAudioOutputProc_La63
 KssAudioOutputProc_L9ed:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A4120, a0
+	mov	func_97827C18_Var_40, a0
 	mov	0xff, d0
 	calls	(a1)
 	movbu	(0x97916f56), d0
@@ -61999,14 +62008,14 @@ KssAudioOutputProc_L9ed:
 	beq	KssAudioOutputProc_La12
 	bra	KssAudioOutputProc_La36
 KssAudioOutputProc_La12:
-	mov	(ptrs_978A3FEC), a0
+	mov	(KssAudioOutputProc_Table_2+32), a0
 	clr	d0
 	mov	d0, (0x18, sp)
 	mov	0xff, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4120, a1
+	mov	func_97827C18_Var_40, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -62023,7 +62032,7 @@ KssAudioOutputProc_La36:
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4120, a1
+	mov	func_97827C18_Var_40, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827C18_entry, [a2], 0x30
@@ -62031,7 +62040,7 @@ KssAudioOutputProc_La63:
 	clr	d0
 	jmp	KssAudioOutputProc_L1325
 KssAudioOutputProc_La67:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -62039,7 +62048,7 @@ KssAudioOutputProc_La67:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -62050,7 +62059,7 @@ KssAudioOutputProc_La67:
 	bne	KssAudioOutputProc_La9c
 	bra	KssAudioOutputProc_Lae4
 KssAudioOutputProc_La9c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -62058,7 +62067,7 @@ KssAudioOutputProc_La9c:
 	mov	(0x3c, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -62066,7 +62075,7 @@ KssAudioOutputProc_La9c:
 	mov	(0x3c, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -62077,7 +62086,7 @@ KssAudioOutputProc_Lae4:
 	beq	KssAudioOutputProc_Laf0
 	bra	KssAudioOutputProc_Lb0b
 KssAudioOutputProc_Laf0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62091,7 +62100,7 @@ KssAudioOutputProc_Lb0b:
 	beq	KssAudioOutputProc_Lb17
 	bra	KssAudioOutputProc_Lb32
 KssAudioOutputProc_Lb17:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62103,7 +62112,7 @@ KssAudioOutputProc_Lb32:
 	clr	d0
 	jmp	KssAudioOutputProc_L1325
 KssAudioOutputProc_Lb36:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -62111,13 +62120,13 @@ KssAudioOutputProc_Lb36:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x44, sp), d0
@@ -62179,7 +62188,7 @@ KssAudioOutputProc_Lbde:
 	mov	(0x24, a0), a0
 	clr	d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62189,7 +62198,7 @@ KssAudioOutputProc_Lbde:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lc05:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62211,7 +62220,7 @@ KssAudioOutputProc_Lc31:
 	mov	(0x24, a0), a0
 	mov	1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62221,7 +62230,7 @@ KssAudioOutputProc_Lc31:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lc59:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62243,7 +62252,7 @@ KssAudioOutputProc_Lc85:
 	mov	(0x24, a0), a0
 	mov	3, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62253,7 +62262,7 @@ KssAudioOutputProc_Lc85:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lcad:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62275,7 +62284,7 @@ KssAudioOutputProc_Lcd9:
 	mov	(0x24, a0), a0
 	mov	2, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62285,7 +62294,7 @@ KssAudioOutputProc_Lcd9:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ld01:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62307,7 +62316,7 @@ KssAudioOutputProc_Ld2d:
 	mov	(0x24, a0), a0
 	mov	4, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62317,7 +62326,7 @@ KssAudioOutputProc_Ld2d:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ld55:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62339,7 +62348,7 @@ KssAudioOutputProc_Ld81:
 	mov	(0x24, a0), a0
 	mov	5, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62355,7 +62364,7 @@ KssAudioOutputProc_Lda9:
 	beq	KssAudioOutputProc_Ldb6
 	bra	KssAudioOutputProc_Ldd4
 KssAudioOutputProc_Ldb6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62365,7 +62374,7 @@ KssAudioOutputProc_Ldb6:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Ldd4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62387,7 +62396,7 @@ KssAudioOutputProc_Le00:
 	mov	(0x24, a0), a0
 	mov	6, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62403,7 +62412,7 @@ KssAudioOutputProc_Le28:
 	beq	KssAudioOutputProc_Le35
 	bra	KssAudioOutputProc_Le53
 KssAudioOutputProc_Le35:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62413,7 +62422,7 @@ KssAudioOutputProc_Le35:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Le53:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62435,7 +62444,7 @@ KssAudioOutputProc_Le7f:
 	mov	(0x24, a0), a0
 	mov	7, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62451,7 +62460,7 @@ KssAudioOutputProc_Lea7:
 	beq	KssAudioOutputProc_Leb4
 	bra	KssAudioOutputProc_Led2
 KssAudioOutputProc_Leb4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62461,7 +62470,7 @@ KssAudioOutputProc_Leb4:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Led2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62483,7 +62492,7 @@ KssAudioOutputProc_Lefe:
 	mov	(0x24, a0), a0
 	mov	8, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -62499,7 +62508,7 @@ KssAudioOutputProc_Lf26:
 	beq	KssAudioOutputProc_Lf33
 	bra	KssAudioOutputProc_Lf51
 KssAudioOutputProc_Lf33:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62509,7 +62518,7 @@ KssAudioOutputProc_Lf33:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_Lf51:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -62547,8 +62556,8 @@ KssAudioOutputProc_Lf6f:
 	mov	8, d0
 	call	func_97801FB5_entry, 0, 4
 	mov	1, d0
-	mov	d0, (data_97910DF0)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97825707_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-3, d0
@@ -62558,7 +62567,7 @@ KssAudioOutputProc_Lf6f:
 	calls	(a0)
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_L101c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -62636,10 +62645,10 @@ KssAudioOutputProc_L109b:
 	movbu	d0, (d1, a0)
 KssAudioOutputProc_L10ca:
 	mov	1, d0
-	mov	d0, (data_97910DEC)
+	mov	d0, (func_97825707_Var)
 	clr	d0
-	mov	d0, (data_97910DF0)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97825707_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x24, sp), a0
@@ -62665,7 +62674,7 @@ KssAudioOutputProc_L10ca:
 	call	func_97826E5A_entry, 0, 0x10
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_L1120:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -62749,10 +62758,10 @@ KssAudioOutputProc_L11ae:
 	movbu	d0, (d1, a0)
 KssAudioOutputProc_L11df:
 	mov	1, d0
-	mov	d0, (data_97910DEC)
+	mov	d0, (func_97825707_Var)
 	clr	d0
-	mov	d0, (data_97910DF0)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97825707_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x24, sp), a0
@@ -62778,7 +62787,7 @@ KssAudioOutputProc_L11df:
 	call	func_97826E5A_entry, 0, 0x10
 	jmp	KssAudioOutputProc_L130d
 KssAudioOutputProc_L1235:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -62838,10 +62847,10 @@ KssAudioOutputProc_L1286:
 	mov	0x97916f4e, a0
 	movbu	d0, (d1, a0)
 	mov	1, d0
-	mov	d0, (data_97910DEC)
+	mov	d0, (func_97825707_Var)
 	clr	d0
-	mov	d0, (data_97910DF0)
-	mov	(data_979126B4), a0
+	mov	d0, (func_97825707_Table)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x24, sp), a0
@@ -62866,7 +62875,7 @@ KssAudioOutputProc_L1286:
 	movbu	(0x2c, sp), d1
 	call	func_97826E5A_entry, 0, 0x10
 KssAudioOutputProc_L130d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -62892,7 +62901,7 @@ func_97826A43_Le:
 	beq	func_97826A43_L19
 	bra	func_97826A43_Le
 func_97826A43_L19:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x1d8, a0), a1
 	mov	sp, a0
@@ -63447,11 +63456,11 @@ func_97826E5A_entry_L32:
 	bra	func_97826E5A_entry_L48
 func_97826E5A_entry_L3e:
 	mov	0x7f, d0
-	movbu	d0, (data_97910DE0)
+	movbu	d0, (func_97826E5A_entry_L3e_Var)
 	bra	func_97826E5A_entry_L4f
 func_97826E5A_entry_L48:
 	clr	d0
-	movbu	d0, (data_97910DE0)
+	movbu	d0, (func_97826E5A_entry_L3e_Var)
 func_97826E5A_entry_L4f:
 	movbu	(0x18, sp), d0
 	cmp	2, d0
@@ -63464,14 +63473,14 @@ func_97826E5A_entry_L58:
 	bra	func_97826E5A_entry_L6e
 func_97826E5A_entry_L64:
 	mov	0x7f, d0
-	movbu	d0, (data_97910DE1)
+	movbu	d0, (func_97826E5A_entry_L64_Var)
 	bra	func_97826E5A_entry_L75
 func_97826E5A_entry_L6e:
 	clr	d0
-	movbu	d0, (data_97910DE1)
+	movbu	d0, (func_97826E5A_entry_L64_Var)
 func_97826E5A_entry_L75:
-	movbu	(data_97910DE0), d0
-	movbu	(data_97910DE1), d1
+	movbu	(func_97826E5A_entry_L3e_Var), d0
+	movbu	(func_97826E5A_entry_L64_Var), d1
 	call	func_9782758D_entry, [d2], 0x10
 func_97826E5A_entry_L86:
 	movbu	(0x18, sp), d0
@@ -63667,7 +63676,7 @@ func_97827085:
 	movbu	d0, (0x13, sp)
 	movbu	(0xd, sp), d0
 	movbu	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x1d8, a0), a1
 	mov	sp, a0
@@ -63724,11 +63733,11 @@ func_978270CB_entry:
 	bra	func_978270CB_entry_Lcd
 func_978270CB_entry_Lc3:
 	mov	0x7f, d0
-	movbu	d0, (data_97910DE0)
+	movbu	d0, (func_97826E5A_entry_L3e_Var)
 	bra	func_978270CB_entry_Ld4
 func_978270CB_entry_Lcd:
 	clr	d0
-	movbu	d0, (data_97910DE0)
+	movbu	d0, (func_97826E5A_entry_L3e_Var)
 func_978270CB_entry_Ld4:
 	movbu	(0x97916f50), d0
 	cmp	1, d0
@@ -63736,11 +63745,11 @@ func_978270CB_entry_Ld4:
 	bra	func_978270CB_entry_Lea
 func_978270CB_entry_Le0:
 	mov	0x7f, d0
-	movbu	d0, (data_97910DE1)
+	movbu	d0, (func_97826E5A_entry_L64_Var)
 	bra	func_978270CB_entry_Lf1
 func_978270CB_entry_Lea:
 	clr	d0
-	movbu	d0, (data_97910DE1)
+	movbu	d0, (func_97826E5A_entry_L64_Var)
 func_978270CB_entry_Lf1:
 	movbu	(0x97916f51), d0
 	cmp	1, d0
@@ -63748,11 +63757,11 @@ func_978270CB_entry_Lf1:
 	bra	func_978270CB_entry_L107
 func_978270CB_entry_Lfd:
 	mov	0x7f, d0
-	movbu	d0, (data_97910DE2)
+	movbu	d0, (func_978270CB_entry_Lfd_Var)
 	bra	func_978270CB_entry_L10e
 func_978270CB_entry_L107:
 	clr	d0
-	movbu	d0, (data_97910DE2)
+	movbu	d0, (func_978270CB_entry_Lfd_Var)
 func_978270CB_entry_L10e:
 	movbu	(0x97916f52), d0
 	cmp	1, d0
@@ -63760,11 +63769,11 @@ func_978270CB_entry_L10e:
 	bra	func_978270CB_entry_L124
 func_978270CB_entry_L11a:
 	mov	0x7f, d0
-	movbu	d0, (data_97910DE3)
+	movbu	d0, (func_978270CB_entry_L11a_Var)
 	bra	func_978270CB_entry_L12b
 func_978270CB_entry_L124:
 	clr	d0
-	movbu	d0, (data_97910DE3)
+	movbu	d0, (func_978270CB_entry_L11a_Var)
 func_978270CB_entry_L12b:
 	call	func_97827388_entry, 0, 0x18
 	clr	d0
@@ -64095,8 +64104,8 @@ func_978274B0_entry_L20:
 	mov	4, d0
 	movbu	d0, (0x97916d81)
 	call	func_978279E2_entry, 0, 0xc
-	movbu	(data_97910DE0), d0
-	movbu	(data_97910DE1), d1
+	movbu	(func_97826E5A_entry_L3e_Var), d0
+	movbu	(func_97826E5A_entry_L64_Var), d1
 	call	func_9782758D_entry, [d2], 0x10
 	clr	d0
 func_978274B0_entry_L71:
@@ -64520,8 +64529,8 @@ func_9782771D_entry_L194:
 	bra	func_9782771D_entry_L1b5
 func_9782771D_entry_L19c:
 	call	func_978279E2_entry, 0, 0xc
-	movbu	(data_97910DE0), d0
-	movbu	(data_97910DE1), d1
+	movbu	(func_97826E5A_entry_L3e_Var), d0
+	movbu	(func_97826E5A_entry_L64_Var), d1
 	call	func_9782758D_entry, [d2], 0x10
 	clr	d0
 	bra	func_9782771D_entry_L1b7
@@ -64669,7 +64678,7 @@ func_978279E2:
 	add	-0xc, sp
 
 func_978279E2_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x1d8, a0), a1
 	mov	0x97916d81, a0
@@ -64696,7 +64705,7 @@ func_978279FE_entry:
 	beq	func_978279FE_entry_L26
 	jmp	func_978279FE_entry_Lb3
 func_978279FE_entry_L26:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64710,7 +64719,7 @@ func_978279FE_entry_L26:
 	movhu	d1, (0x16, sp)
 	movhu	(4, a0), d1
 	movhu	d1, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64724,7 +64733,7 @@ func_978279FE_entry_L26:
 	movhu	d1, (0x14, sp)
 	movhu	(6, a0), d1
 	movhu	d1, (0x1a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64738,7 +64747,7 @@ func_978279FE_entry_L26:
 	movhu	d1, (0x16, sp)
 	movhu	(a0), d1
 	movhu	d1, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64753,7 +64762,7 @@ func_978279FE_entry_Lb3:
 	beq	func_978279FE_entry_Lbd
 	jmp	func_978279FE_entry_L14a
 func_978279FE_entry_Lbd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64767,7 +64776,7 @@ func_978279FE_entry_Lbd:
 	movhu	d1, (0x16, sp)
 	movhu	(4, a0), d1
 	movhu	d1, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64781,7 +64790,7 @@ func_978279FE_entry_Lbd:
 	movhu	d1, (0x14, sp)
 	movhu	(6, a0), d1
 	movhu	d1, (0x1a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64795,7 +64804,7 @@ func_978279FE_entry_Lbd:
 	movhu	d1, (0x16, sp)
 	movhu	(a0), d1
 	movhu	d1, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -64841,7 +64850,7 @@ func_97827B50_entry:
 	movhu	d0, (0x28, sp)
 	movhu	(0x22, sp), d0
 	movhu	d0, (0x2a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	(0x38, sp), d0
@@ -64881,7 +64890,7 @@ func_97827B50_entry:
 	movhu	d0, (0x28, sp)
 	movhu	(0x22, sp), d0
 	movhu	d0, (0x2a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	(0x38, sp), d0
@@ -64928,7 +64937,7 @@ func_97827C18_entry:
 	mov	(0x50, sp), d0
 	add	d0, d1
 	movhu	d1, (0x26, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -64936,7 +64945,7 @@ func_97827C18_entry:
 	mov	sp, a1
 	add	0x28, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	(0x38, sp), d0
@@ -64972,7 +64981,7 @@ func_97827C18_entry:
 	mov	(0x50, sp), d1
 	sub	d1, d0
 	movhu	d0, (0x26, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x424, a0), a2
 	mov	sp, a0
@@ -64980,7 +64989,7 @@ func_97827C18_entry:
 	mov	sp, a1
 	add	0x28, a1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xd0, a0), a2
 	mov	(0x38, sp), d0
@@ -65004,7 +65013,7 @@ func_97827CF4_entry:
 	mov	a0, (0x20, sp)
 	mov	d1, (0x1c, sp)
 	mov	d0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	calls	(a0)
@@ -65043,7 +65052,7 @@ func_97827D4A:
 
 func_97827D4A_entry:
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -65059,19 +65068,19 @@ func_97827D6D:
 
 func_97827D6D_entry:
 	mov	d0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	calls	(a0)
 	mov	a0, (0x10, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	4, d0
 	calls	(a0)
 	mov	(0x10, sp), a1
 	mov	a0, (0x54, a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	0x14, d0
@@ -65100,7 +65109,7 @@ func_97827D6D_entry:
 	mov	(0x54, a0), a0
 	mov	(a0), a0
 	mov	d1, (0x10, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a1
 	mov	(0x10, sp), a0
@@ -65142,7 +65151,7 @@ func_97827E32_entry:
 func_97827E32_entry_L9:
 	mov	(0, sp), d0
 	asl2	d0
-	mov	ptrs_978A4244, a0
+	mov	func_97827E32_entry_L9_Table, a0
 	mov	(d0, a0), a1
 	mov	(0xc, sp), a0
 	mov	(a0), a0
@@ -65228,7 +65237,7 @@ KssCatch_NewClsScreen_L5d:
 	mov	d0, (0x18, sp)
 	bra	KssCatch_NewClsScreen_Lc1
 KssCatch_NewClsScreen_L62:
-	mov	(data_97910DF8), d0
+	mov	(KssCatch_NewClsScreen_L62_Var), d0
 	mov	(0x18, sp), d1
 	mov	sp, a0
 	add	0x28, a0
@@ -65273,12 +65282,12 @@ KssCatch_NewClsScreen_Lc1:
 	bge	KssCatch_NewClsScreen_Lc9
 	bra	KssCatch_NewClsScreen_L62
 KssCatch_NewClsScreen_Lc9:
-	mov	(data_97910DF8), d0
+	mov	(KssCatch_NewClsScreen_L62_Var), d0
 	mov	sp, a0
 	add	0x38, a0
 	clr	d1
 	call	func_9780237F_entry, 0, 0x48
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	sp, a1
@@ -65294,7 +65303,7 @@ KssCatch_NewClsScreen_Lc9:
 	mov	NewClsSfx_id, d0
 	call	func_97833A24, 0, 0
 KssCatch_NewClsScreen_L110:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xc4, sp), d0
@@ -65302,18 +65311,18 @@ KssCatch_NewClsScreen_L110:
 	mov	(0xbc, sp), d0
 	mov	(0xc0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xbc, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_97910DF8), d0
+	mov	(KssCatch_NewClsScreen_L62_Var), d0
 	mov	sp, a0
 	add	0x6c, a0
 	clr	d1
 	call	func_9780237F_entry, 0, 0x48
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	sp, a0
@@ -65325,7 +65334,7 @@ KssCatch_NewClsScreen_L110:
 	mov	NewClsList_id, d0
 	call	func_97827D4A_entry, 0, 0x14
 	mov	d0, (0x24, sp)
-	mov	(data_97910DF8), d0
+	mov	(KssCatch_NewClsScreen_L62_Var), d0
 	mov	(0x24, sp), d1
 	mov	sp, a0
 	add	0xa0, a0
@@ -65360,7 +65369,7 @@ KssCatch_NewClsScreen_L1c4:
 	mov	d0, (0xc, sp)
 	call	sprintf_entry, [a2], 0x20
 KssCatch_NewClsScreen_L1da:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	sp, a0
@@ -65377,7 +65386,7 @@ KssCatch_NewClsScreen_L1da:
 	clr	d0
 	bra	KssCatch_NewClsScreen_L229
 KssCatch_NewClsScreen_L211:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xc4, sp), d0
@@ -65460,7 +65469,7 @@ KSSSelectListProc_La5:
 KSSSelectListProc_Lb2:
 	jmp	KSSSelectListProc_Lb93
 KSSSelectListProc_Lb5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -65468,7 +65477,7 @@ KSSSelectListProc_Lb5:
 	mov	(0xec, sp), d0
 	mov	(0xf0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
@@ -65524,7 +65533,7 @@ KSSSelectListProc_L136:
 	bcs	KSSSelectListProc_L14e
 	bra	KSSSelectListProc_L1b1
 KSSSelectListProc_L14e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x28, sp), a0
@@ -65538,7 +65547,7 @@ KSSSelectListProc_L14e:
 	mov	(0x54, a0), a0
 	mov	(a0), a0
 	mov	d1, (0x10, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a1
 	mov	(0x28, sp), a0
@@ -65562,7 +65571,7 @@ KSSSelectListProc_L14e:
 	mov	d1, d0
 	call	func_97827E32_entry, 0, 4
 KSSSelectListProc_L1b1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x28, sp), a0
@@ -65577,7 +65586,7 @@ KSSSelectListProc_L1b1:
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L1da:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -65585,7 +65594,7 @@ KSSSelectListProc_L1da:
 	mov	(0xec, sp), d0
 	mov	(0xf0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
@@ -65615,7 +65624,7 @@ KSSSelectListProc_L227:
 	beq	KSSSelectListProc_L23b
 	bra	KSSSelectListProc_L259
 KSSSelectListProc_L23b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -65625,7 +65634,7 @@ KSSSelectListProc_L23b:
 	calls	(a0)
 	bra	KSSSelectListProc_L274
 KSSSelectListProc_L259:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -65640,7 +65649,7 @@ KSSSelectListProc_L274:
 	bne	KSSSelectListProc_L27f
 	bra	KSSSelectListProc_L2c7
 KSSSelectListProc_L27f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -65648,7 +65657,7 @@ KSSSelectListProc_L27f:
 	mov	(0xec, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -65656,7 +65665,7 @@ KSSSelectListProc_L27f:
 	mov	(0xec, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -65665,7 +65674,7 @@ KSSSelectListProc_L2c7:
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L2cb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -65675,7 +65684,7 @@ KSSSelectListProc_L2cb:
 	calls	(a0)
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L2e6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -65685,7 +65694,7 @@ KSSSelectListProc_L2e6:
 	calls	(a0)
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L301:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -65693,7 +65702,7 @@ KSSSelectListProc_L301:
 	mov	(0xec, sp), d0
 	mov	(0xf0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
@@ -65707,7 +65716,7 @@ KSSSelectListProc_L301:
 	bge	KSSSelectListProc_L33d
 	jmp	KSSSelectListProc_L3fc
 KSSSelectListProc_L33d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xec, sp), d0
@@ -65771,7 +65780,7 @@ KSSSelectListProc_L3ae:
 	movhu	d1, (0x64, sp)
 	movhu	(0x64, sp), d0
 	movhu	d0, (0x68, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -65795,7 +65804,7 @@ KSSSelectListProc_L3e9:
 	bge	KSSSelectListProc_L3fc
 	bra	KSSSelectListProc_L3ae
 KSSSelectListProc_L3fc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -65806,13 +65815,13 @@ KSSSelectListProc_L3fc:
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L41c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xec, sp), d0
@@ -66201,7 +66210,7 @@ KSSSelectListProc_L79c:
 	movhu	(0x40, a0), d0
 	movhu	d0, (0x52, sp)
 KSSSelectListProc_L7b0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -66209,7 +66218,7 @@ KSSSelectListProc_L7b0:
 	movhu	(0x50, sp), d0
 	exth	d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -66232,7 +66241,7 @@ KSSSelectListProc_L7b0:
 	movhu	(0x4e, sp), d1
 	exth	d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -66254,7 +66263,7 @@ KSSSelectListProc_L82e:
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L832:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
@@ -66395,7 +66404,7 @@ KSSSelectListProc_L918:
 	beq	KSSSelectListProc_L955
 	bra	KSSSelectListProc_L99a
 KSSSelectListProc_L955:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x54, sp), d0
@@ -66404,7 +66413,7 @@ KSSSelectListProc_L955:
 	mov	(0xec, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x28, sp), a0
@@ -66418,7 +66427,7 @@ KSSSelectListProc_L955:
 	calls	(a1)
 	bra	KSSSelectListProc_L9b5
 KSSSelectListProc_L99a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -66430,7 +66439,7 @@ KSSSelectListProc_L9b5:
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L9b9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
@@ -66442,13 +66451,13 @@ KSSSelectListProc_L9b9:
 	exth	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_L9d9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -66459,7 +66468,7 @@ KSSSelectListProc_L9d9:
 	clr	d0
 	jmp	KSSSelectListProc_Lbab
 KSSSelectListProc_La0c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -66467,13 +66476,13 @@ KSSSelectListProc_La0c:
 	mov	(0xec, sp), d0
 	mov	(0xf0, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xec, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -66570,7 +66579,7 @@ KSSSelectListProc_Laea:
 	bne	KSSSelectListProc_Lafc
 	bra	KSSSelectListProc_Lb18
 KSSSelectListProc_Lafc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x34, sp), d0
@@ -66585,7 +66594,7 @@ KSSSelectListProc_Lb18:
 	bne	KSSSelectListProc_Lb23
 	bra	KSSSelectListProc_Lb3b
 KSSSelectListProc_Lb23:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xf4, sp), d0
@@ -66600,7 +66609,7 @@ KSSSelectListProc_Lb3b:
 	bne	KSSSelectListProc_Lb46
 	bra	KSSSelectListProc_Lb90
 KSSSelectListProc_Lb46:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x30, sp), d0
@@ -66608,7 +66617,7 @@ KSSSelectListProc_Lb46:
 	mov	(0xec, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x30, sp), d0
@@ -66616,7 +66625,7 @@ KSSSelectListProc_Lb46:
 	mov	(0xec, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -66625,7 +66634,7 @@ KSSSelectListProc_Lb90:
 	clr	d0
 	bra	KSSSelectListProc_Lbab
 KSSSelectListProc_Lb93:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xf4, sp), d0
@@ -66682,7 +66691,7 @@ KssSelectListTestFunc_L55:
 	clr	d0
 	jmp	KssSelectListTestFunc_L14d
 KssSelectListTestFunc_L6a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x97913fec), d0
@@ -66706,7 +66715,7 @@ KssSelectListTestFunc_L6a:
 	mov	a0, d0
 	mov	a1, a0
 	call	func_97828C64, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97913ff0, d0
@@ -66717,13 +66726,13 @@ KssSelectListTestFunc_L6a:
 	clr	d0
 	bra	KssSelectListTestFunc_L14d
 KssSelectListTestFunc_Ld2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x2c, sp), d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -66732,7 +66741,7 @@ KssSelectListTestFunc_Ld2:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -66748,7 +66757,7 @@ KssSelectListTestFunc_Ld2:
 	clr	d0
 	bra	KssSelectListTestFunc_L14d
 KssSelectListTestFunc_L133:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x34, sp), d0
@@ -66850,7 +66859,7 @@ KSSCLSListProc_Lcc:
 KSSCLSListProc_Ld9:
 	jmp	KSSCLSListProc_Lbab
 KSSCLSListProc_Ldc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -66858,7 +66867,7 @@ KSSCLSListProc_Ldc:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -66869,7 +66878,7 @@ KSSCLSListProc_Ldc:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L114:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -66877,7 +66886,7 @@ KSSCLSListProc_L114:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -66892,7 +66901,7 @@ KSSCLSListProc_L114:
 	bne	KSSCLSListProc_L151
 	bra	KSSCLSListProc_L199
 KSSCLSListProc_L151:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -66900,7 +66909,7 @@ KSSCLSListProc_L151:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -66908,7 +66917,7 @@ KSSCLSListProc_L151:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -66944,7 +66953,7 @@ KSSCLSListProc_L1d9:
 	call	LibDiv32, 0, 0
 	movhu	d0, (0x9791406c)
 KSSCLSListProc_L1ee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -66956,7 +66965,7 @@ KSSCLSListProc_L1ee:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L210:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -66964,7 +66973,7 @@ KSSCLSListProc_L210:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -66976,7 +66985,7 @@ KSSCLSListProc_L210:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L245:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -66984,7 +66993,7 @@ KSSCLSListProc_L245:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -66996,7 +67005,7 @@ KSSCLSListProc_L245:
 	bge	KSSCLSListProc_L27c
 	jmp	KSSCLSListProc_L332
 KSSCLSListProc_L27c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xe0, sp), d0
@@ -67045,7 +67054,7 @@ KSSCLSListProc_L2c3:
 	beq	KSSCLSListProc_L2ea
 	bra	KSSCLSListProc_L305
 KSSCLSListProc_L2ea:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -67056,7 +67065,7 @@ KSSCLSListProc_L2ea:
 	calls	(a2)
 	bra	KSSCLSListProc_L31d
 KSSCLSListProc_L305:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -67081,7 +67090,7 @@ KSSCLSListProc_L332:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L336:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -67093,7 +67102,7 @@ KSSCLSListProc_L336:
 	beq	KSSCLSListProc_L354
 	bra	KSSCLSListProc_L35e
 KSSCLSListProc_L354:
-	mov	(data_978A43A0), d0
+	mov	(KSSCLSListProc_L354_Var), d0
 	mov	d0, (0x24, sp)
 	bra	KSSCLSListProc_L366
 KSSCLSListProc_L35e:
@@ -67112,7 +67121,7 @@ KSSCLSListProc_L372:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L376:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xe0, sp), d0
@@ -67244,14 +67253,14 @@ KSSCLSListProc_L43b:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x52, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x20, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x20, sp), a1
@@ -67259,7 +67268,7 @@ KSSCLSListProc_L43b:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x20, sp), a1
@@ -67300,14 +67309,14 @@ KSSCLSListProc_L530:
 	beq	KSSCLSListProc_L53c
 	bra	KSSCLSListProc_L583
 KSSCLSListProc_L53c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0xc0, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -67326,7 +67335,7 @@ KSSCLSListProc_L53c:
 	calls	(a2)
 	jmp	KSSCLSListProc_L695
 KSSCLSListProc_L583:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -67336,7 +67345,7 @@ KSSCLSListProc_L583:
 	add	0xc0, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -67357,7 +67366,7 @@ KSSCLSListProc_L583:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -67373,7 +67382,7 @@ KSSCLSListProc_L5eb:
 	beq	KSSCLSListProc_L5f7
 	bra	KSSCLSListProc_L647
 KSSCLSListProc_L5f7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -67383,7 +67392,7 @@ KSSCLSListProc_L5f7:
 	add	0xc0, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -67406,7 +67415,7 @@ KSSCLSListProc_L5f7:
 	calls	(a2)
 	bra	KSSCLSListProc_L695
 KSSCLSListProc_L647:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -67416,7 +67425,7 @@ KSSCLSListProc_L647:
 	add	0xc0, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -67458,7 +67467,7 @@ KSSCLSListProc_L6b3:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L6b7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -67493,7 +67502,7 @@ KSSCLSListProc_L6e9:
 	blt	KSSCLSListProc_L700
 	bra	KSSCLSListProc_L721
 KSSCLSListProc_L700:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -67530,7 +67539,7 @@ KSSCLSListProc_L737:
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x40, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -67538,7 +67547,7 @@ KSSCLSListProc_L737:
 	mov	(0xe0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -67585,7 +67594,7 @@ KSSCLSListProc_L7c2:
 	mul	d2, d3
 	sub	d3, d0
 	movhu	d0, (0x40, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -67593,7 +67602,7 @@ KSSCLSListProc_L7c2:
 	mov	(0xe0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -67606,7 +67615,7 @@ KSSCLSListProc_L820:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L824:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -67619,7 +67628,7 @@ KSSCLSListProc_L824:
 	mov	(0x34, a0), a0
 	mov	(0xe8, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x42, sp), d0
@@ -67628,7 +67637,7 @@ KSSCLSListProc_L824:
 	mov	(0xe0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -67657,7 +67666,7 @@ KSSCLSListProc_L824:
 	movhu	(0x2c, sp), d0
 	exthu	d0
 	call	func_97802F1C, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67672,13 +67681,13 @@ KSSCLSListProc_L824:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L8d9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67693,7 +67702,7 @@ KSSCLSListProc_L8d9:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L915:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -67705,7 +67714,7 @@ KSSCLSListProc_L915:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_L933:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -67715,7 +67724,7 @@ KSSCLSListProc_L933:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x44, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -67724,7 +67733,7 @@ KSSCLSListProc_L933:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -67788,7 +67797,7 @@ KSSCLSListProc_L9e0:
 	beq	KSSCLSListProc_L9eb
 	bra	KSSCLSListProc_La13
 KSSCLSListProc_L9eb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67810,7 +67819,7 @@ KSSCLSListProc_La13:
 	beq	KSSCLSListProc_La1e
 	bra	KSSCLSListProc_La46
 KSSCLSListProc_La1e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67832,7 +67841,7 @@ KSSCLSListProc_La46:
 	beq	KSSCLSListProc_La51
 	bra	KSSCLSListProc_La79
 KSSCLSListProc_La51:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67854,7 +67863,7 @@ KSSCLSListProc_La79:
 	beq	KSSCLSListProc_La84
 	bra	KSSCLSListProc_Laac
 KSSCLSListProc_La84:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67876,7 +67885,7 @@ KSSCLSListProc_Laac:
 	beq	KSSCLSListProc_Lab7
 	bra	KSSCLSListProc_Ladf
 KSSCLSListProc_Lab7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -67894,7 +67903,7 @@ KSSCLSListProc_Ladf:
 	clr	d0
 	jmp	KSSCLSListProc_Lbc3
 KSSCLSListProc_Lae3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x44, sp), d0
@@ -67909,7 +67918,7 @@ KSSCLSListProc_Lae3:
 	bne	KSSCLSListProc_Lb0c
 	bra	KSSCLSListProc_Lb24
 KSSCLSListProc_Lb0c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xe8, sp), d0
@@ -67924,7 +67933,7 @@ KSSCLSListProc_Lb24:
 	bne	KSSCLSListProc_Lb2f
 	bra	KSSCLSListProc_Lb79
 KSSCLSListProc_Lb2f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x30, sp), d0
@@ -67932,7 +67941,7 @@ KSSCLSListProc_Lb2f:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x30, sp), d0
@@ -67940,7 +67949,7 @@ KSSCLSListProc_Lb2f:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -67949,13 +67958,13 @@ KSSCLSListProc_Lb79:
 	clr	d0
 	bra	KSSCLSListProc_Lbc3
 KSSCLSListProc_Lb7c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -67965,7 +67974,7 @@ KSSCLSListProc_Lb7c:
 	mov	(0xe4, sp), d1
 	calls	(a0)
 KSSCLSListProc_Lbab:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -67995,13 +68004,13 @@ KSSXCatch_FlsLink_L20:
 	mov	1, d0
 	bra	KSSXCatch_FlsLink_L8b
 KSSXCatch_FlsLink_L24:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	FLSLink_id, d0
 	calls	(a0)
 	mov	a0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), d0
@@ -68017,12 +68026,12 @@ KSSXCatch_FlsLink_L24:
 	bra	KSSXCatch_FlsLink_L70
 KSSXCatch_FlsLink_L68:
 	mov	1, d0
-	mov	d0, (data_97910CF4)
+	mov	d0, (KSSXCatch_FlsLink_L68_Table)
 KSSXCatch_FlsLink_L70:
 	clr	d0
 	bra	KSSXCatch_FlsLink_L8b
 KSSXCatch_FlsLink_L73:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x2c, sp), d0
@@ -68066,7 +68075,7 @@ func_97829A0E_L3d:
 func_97829A0E_L4a:
 	jmp	func_97829A0E_L14f
 func_97829A0E_L4d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x54, sp), d0
@@ -68122,7 +68131,7 @@ func_97829A0E_Ld6:
 	clr	d0
 	bra	func_97829A0E_L150
 func_97829A0E_Ld9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x5c, sp), d0
@@ -68130,7 +68139,7 @@ func_97829A0E_Ld9:
 	mov	(0x54, sp), d0
 	mov	(0x58, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x54, sp), d0
@@ -68186,13 +68195,13 @@ func_97829B61:
 
 func_97829B61_entry:
 	movbu	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
 	mov	-1, d0
 	mov	EV_CHANGE_TITLE, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	movbu	(0x1c, sp), d0
@@ -68300,7 +68309,7 @@ KSSCLSFileListProc_L108:
 KSSCLSFileListProc_L117:
 	jmp	KSSCLSFileListProc_L16e1
 KSSCLSFileListProc_L11a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x230, sp), d0
@@ -68308,13 +68317,13 @@ KSSCLSFileListProc_L11a:
 	mov	(0x228, sp), d0
 	mov	(0x22c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
 	calls	(a0)
 	mov	a0, (0x2c, sp)
-	mov	(data_97910CF4), d0
+	mov	(KSSXCatch_FlsLink_L68_Table), d0
 	cmp	1, d0
 	beq	KSSCLSFileListProc_L15a
 	bra	KSSCLSFileListProc_L1c3
@@ -68337,7 +68346,7 @@ KSSCLSFileListProc_L183:
 	call	func_97802F52, 0, 0
 	exthu	d0
 	mov	d0, (0x30, sp)
-	mov	(data_97910E00), d0
+	mov	(KSSCLSFileListProc_L183_Var_2), d0
 	mov	d0, (0x34, sp)
 	mov	0xff, d0
 	mov	d0, (0xc4, sp)
@@ -68348,10 +68357,10 @@ KSSCLSFileListProc_L183:
 	add	0xbc, a0
 	call	func_9780244C_entry, [d2,d3], 8
 	clr	d0
-	mov	d0, (data_97910CF4)
+	mov	d0, (KSSXCatch_FlsLink_L68_Table)
 	mov	1, d0
 	mov	d0, (0x979167e4)
-	mov	d0, (data_97910DFC)
+	mov	d0, (KSSCLSFileListProc_L183_Var)
 	bra	KSSCLSFileListProc_L1d1
 KSSCLSFileListProc_L1c3:
 	call	func_9780279E, 0, 0
@@ -68368,7 +68377,7 @@ KSSCLSFileListProc_L1d1:
 	bne	KSSCLSFileListProc_L1e4
 	bra	KSSCLSFileListProc_L230
 KSSCLSFileListProc_L1e4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -68376,7 +68385,7 @@ KSSCLSFileListProc_L1e4:
 	mov	(0x228, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -68384,18 +68393,18 @@ KSSCLSFileListProc_L1e4:
 	mov	(0x228, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 KSSCLSFileListProc_L230:
-	mov	(data_97910DFC), d0
+	mov	(KSSCLSFileListProc_L183_Var), d0
 	cmp	0, d0
 	bne	KSSCLSFileListProc_L23c
 	bra	KSSCLSFileListProc_L261
 KSSCLSFileListProc_L23c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -68404,17 +68413,17 @@ KSSCLSFileListProc_L23c:
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
-	mov	d0, (data_97910DFC)
+	mov	d0, (KSSCLSFileListProc_L183_Var)
 KSSCLSFileListProc_L261:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	mov	(data_97910E00), d0
+	mov	(KSSCLSFileListProc_L183_Var_2), d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x2c, sp), a1
@@ -68426,7 +68435,7 @@ KSSCLSFileListProc_L261:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L2a5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x230, sp), d0
@@ -68434,7 +68443,7 @@ KSSCLSFileListProc_L2a5:
 	mov	(0x228, sp), d0
 	mov	(0x22c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -68446,7 +68455,7 @@ KSSCLSFileListProc_L2a5:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L2e2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -68458,7 +68467,7 @@ KSSCLSFileListProc_L2e2:
 	bge	KSSCLSFileListProc_L303
 	jmp	KSSCLSFileListProc_L3c4
 KSSCLSFileListProc_L303:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x228, sp), d0
@@ -68506,7 +68515,7 @@ KSSCLSFileListProc_L34e:
 	beq	KSSCLSFileListProc_L374
 	bra	KSSCLSFileListProc_L393
 KSSCLSFileListProc_L374:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -68517,7 +68526,7 @@ KSSCLSFileListProc_L374:
 	calls	(a2)
 	bra	KSSCLSFileListProc_L3af
 KSSCLSFileListProc_L393:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -68546,7 +68555,7 @@ KSSCLSFileListProc_L3c4:
 	mov	0x979167d4, a0
 	mov	0x20, d1
 	call	func_9780237F_entry, 0, 0x48
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	CLS_NAME2_id, d0
@@ -68576,7 +68585,7 @@ KSSCLSFileListProc_L3c4:
 	mov	d1, (0xc, sp)
 	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0xd6, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	0x979167d4, d0
@@ -68592,7 +68601,7 @@ KSSCLSFileListProc_L3c4:
 	clr	d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -68603,7 +68612,7 @@ KSSCLSFileListProc_L3c4:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L491:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x230, sp), d0
@@ -68611,13 +68620,13 @@ KSSCLSFileListProc_L491:
 	mov	(0x228, sp), d0
 	mov	(0x22c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	-1, d0
 	mov	0x979a2be8, a0
 	calls	(a1)
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	cmp	0, d0
 	beq	KSSCLSFileListProc_L4d3
 	bra	KSSCLSFileListProc_L4f9
@@ -68647,7 +68656,7 @@ KSSCLSFileListProc_L4f9:
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
 KSSCLSFileListProc_L51d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -68658,7 +68667,7 @@ KSSCLSFileListProc_L51d:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L53e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -68670,7 +68679,7 @@ KSSCLSFileListProc_L53e:
 	beq	KSSCLSFileListProc_L55e
 	bra	KSSCLSFileListProc_L568
 KSSCLSFileListProc_L55e:
-	mov	(data_978A4490), d0
+	mov	(KSSCLSFileListProc_L55e_Var), d0
 	mov	d0, (0x3c, sp)
 	bra	KSSCLSFileListProc_L570
 KSSCLSFileListProc_L568:
@@ -68689,7 +68698,7 @@ KSSCLSFileListProc_L57c:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L580:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x228, sp), d0
@@ -68861,14 +68870,14 @@ KSSCLSFileListProc_L6b8:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0xd6, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x2c, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x2c, sp), a1
@@ -68876,7 +68885,7 @@ KSSCLSFileListProc_L6b8:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x2c, sp), a1
@@ -68899,7 +68908,7 @@ KSSCLSFileListProc_L6b8:
 	add	d0, d3
 	add	a2, d3
 	movhu	d3, (0xd6, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x2c, sp), a0
@@ -68909,7 +68918,7 @@ KSSCLSFileListProc_L6b8:
 	calls	(a1)
 	exth	d0
 	mov	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x2c, sp), a0
@@ -69052,12 +69061,12 @@ KSSCLSFileListProc_L8c4:
 	movhu	d0, (0xb2, sp)
 	movhu	(0x18, a0), d0
 	movhu	d0, (0xb4, sp)
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	cmp	0, d0
 	beq	KSSCLSFileListProc_L92c
 	bra	KSSCLSFileListProc_L941
 KSSCLSFileListProc_L92c:
-	movhu	(data_9791259A), d1
+	movhu	(KSSCLSFileListProc_L92c_Var), d1
 	movhu	(0xa6, sp), d0
 	cmp	d0, d1
 	beq	KSSCLSFileListProc_L93a
@@ -69109,7 +69118,7 @@ KSSCLSFileListProc_L988:
 	mov	0x1a, d0
 	movhu	d0, (0xb4, sp)
 KSSCLSFileListProc_L98d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -69117,7 +69126,7 @@ KSSCLSFileListProc_L98d:
 	movhu	(0xb2, sp), d0
 	exth	d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -69135,7 +69144,7 @@ KSSCLSFileListProc_L98d:
 	movhu	(0xb0, sp), d1
 	exth	d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a3
 	mov	sp, a0
@@ -69156,7 +69165,7 @@ KSSCLSFileListProc_L98d:
 	mov	a0, a1
 	mov	a2, a0
 	calls	(a3)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -69174,7 +69183,7 @@ KSSCLSFileListProc_L98d:
 	movhu	(0xb0, sp), d1
 	exth	d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -69213,7 +69222,7 @@ KSSCLSFileListProc_L98d:
 	mov	(0x54, sp), d1
 	sub	d1, d0
 	movhu	d0, (0x180, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -69232,7 +69241,7 @@ KSSCLSFileListProc_L98d:
 	mov	(0x54, sp), d1
 	sub	d1, d0
 	movhu	d0, (0x180, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -69262,7 +69271,7 @@ KSSCLSFileListProc_Lb09:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_Lb0d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -69283,7 +69292,7 @@ KSSCLSFileListProc_Lb0d:
 	blt	KSSCLSFileListProc_Lb42
 	bra	KSSCLSFileListProc_Lb66
 KSSCLSFileListProc_Lb42:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x2c, sp), a1
@@ -69310,7 +69319,7 @@ KSSCLSFileListProc_Lb66:
 	bge	KSSCLSFileListProc_Lb7d
 	bra	KSSCLSFileListProc_Lba0
 KSSCLSFileListProc_Lb7d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x2c, sp), a1
@@ -69322,7 +69331,7 @@ KSSCLSFileListProc_Lb7d:
 	calls	(a0)
 	bra	KSSCLSFileListProc_Lbc0
 KSSCLSFileListProc_Lba0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0xb6, sp), d0
@@ -69335,7 +69344,7 @@ KSSCLSFileListProc_Lbc0:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_Lbc4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -69348,7 +69357,7 @@ KSSCLSFileListProc_Lbc4:
 	mov	(0x34, a0), a0
 	mov	(0x230, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -69360,7 +69369,7 @@ KSSCLSFileListProc_Lbc4:
 	mov	(0x34, a0), a0
 	movhu	(a0), d0
 	exth	d0
-	mov	d0, (data_97910E00)
+	mov	d0, (KSSCLSFileListProc_L183_Var_2)
 	call	func_97802F52, 0, 0
 	exthu	d0
 	mov	d0, (0x58, sp)
@@ -69380,7 +69389,7 @@ KSSCLSFileListProc_Lbc4:
 	movhu	(0x188, sp), d0
 	exthu	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -69420,14 +69429,14 @@ KSSCLSFileListProc_Lcaa:
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 KSSCLSFileListProc_Lcd0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	LOC_DIR_FILE1_id, d0
 	mov	sp, a0
 	add	0xcc, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	LOC_DIR_FILE2_id, d0
@@ -69457,7 +69466,7 @@ KSSCLSFileListProc_Lcd0:
 	mov	d1, (0xc, sp)
 	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0xd6, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -69475,7 +69484,7 @@ KSSCLSFileListProc_Lcd0:
 	clr	d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -69490,13 +69499,13 @@ KSSCLSFileListProc_Lcd0:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_Lda5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
 	calls	(a0)
 	mov	a0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -69514,7 +69523,7 @@ KSSCLSFileListProc_Lda5:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_Ldeb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -69528,7 +69537,7 @@ KSSCLSFileListProc_Ldeb:
 KSSCLSFileListProc_Le0d:
 	clr	d0
 	movhu	d0, (0xba, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x230, sp), d0
@@ -69536,7 +69545,7 @@ KSSCLSFileListProc_Le0d:
 	mov	(0x228, sp), d0
 	mov	(0x22c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -69545,7 +69554,7 @@ KSSCLSFileListProc_Le0d:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x60, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
@@ -69558,7 +69567,7 @@ KSSCLSFileListProc_Le0d:
 	beq	KSSCLSFileListProc_Le71
 	bra	KSSCLSFileListProc_Lece
 KSSCLSFileListProc_Le71:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3ec, a0), a0
 	mov	-1, d0
@@ -69571,11 +69580,11 @@ KSSCLSFileListProc_Le71:
 	mov	(0x228, sp), d1
 	calls	(a0)
 	mov	0xff, d0
-	mov	d0, (data_9791259C)
-	mov	d0, (data_979125A0)
+	mov	d0, (KssTitleFunc_Ld5_Var)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 	clr	d0
-	mov	d0, (data_979125A8)
-	mov	(data_979126B4), a0
+	mov	d0, (KSSCLSFileListProc_Le71_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -69586,7 +69595,7 @@ KSSCLSFileListProc_Le71:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_Lece:
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	cmp	0, d0
 	beq	KSSCLSFileListProc_Leda
 	bra	KSSCLSFileListProc_Lee9
@@ -69612,7 +69621,7 @@ KSSCLSFileListProc_Lf02:
 	call	func_9782B423_entry, 0, 0x14
 	bra	KSSCLSFileListProc_Lf2e
 KSSCLSFileListProc_Lf0f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -69679,7 +69688,7 @@ KSSCLSFileListProc_Lf98:
 	beq	KSSCLSFileListProc_Lfa5
 	bra	KSSCLSFileListProc_Lfea
 KSSCLSFileListProc_Lfa5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -69689,7 +69698,7 @@ KSSCLSFileListProc_Lfa5:
 	calls	(a0)
 	mov	0x20, d0
 	movhu	d0, (0xba, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -69706,7 +69715,7 @@ KSSCLSFileListProc_Lfea:
 	beq	KSSCLSFileListProc_Lff7
 	bra	KSSCLSFileListProc_L103c
 KSSCLSFileListProc_Lff7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -69716,7 +69725,7 @@ KSSCLSFileListProc_Lff7:
 	calls	(a0)
 	mov	-0x20, d0
 	movhu	d0, (0xba, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -69734,7 +69743,7 @@ KSSCLSFileListProc_L103c:
 	jmp	KSSCLSFileListProc_L1111
 KSSCLSFileListProc_L104a:
 	mov	1, d0
-	mov	d0, (data_97910DFC)
+	mov	d0, (KSSCLSFileListProc_L183_Var)
 	call	func_97802F52, 0, 0
 	exthu	d0
 	mov	d0, (0x64, sp)
@@ -69753,9 +69762,9 @@ KSSCLSFileListProc_L104a:
 	jmp	KSSCLSFileListProc_L110d
 KSSCLSFileListProc_L107d:
 	mov	0xff, d0
-	mov	d0, (data_9791259C)
+	mov	d0, (KssTitleFunc_Ld5_Var)
 	mov	(0x1ac, sp), d0
-	mov	d0, (data_979125A0)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
@@ -69767,19 +69776,19 @@ KSSCLSFileListProc_L107d:
 	bra	KSSCLSFileListProc_L10d0
 KSSCLSFileListProc_L10ad:
 	clr	d0
-	mov	d0, (data_9791259C)
+	mov	d0, (KssTitleFunc_Ld5_Var)
 	mov	(0x1ac, sp), d0
-	mov	d0, (data_979125A0)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 	mov	(0x64, sp), d0
-	movhu	d0, (data_97912598)
+	movhu	d0, (KSSCLSFileListProc_L10ad_Var)
 	mov	(0x68, sp), d0
-	movhu	d0, (data_9791259A)
+	movhu	d0, (KSSCLSFileListProc_L92c_Var)
 	bra	KSSCLSFileListProc_L10e3
 KSSCLSFileListProc_L10d0:
 	mov	0xff, d0
-	mov	d0, (data_9791259C)
+	mov	d0, (KssTitleFunc_Ld5_Var)
 	mov	(0x1ac, sp), d0
-	mov	d0, (data_979125A0)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 KSSCLSFileListProc_L10e3:
 	mov	(0x979167e4), d0
 	cmp	1, d0
@@ -69814,7 +69823,7 @@ KSSCLSFileListProc_L111e:
 	call	func_9780279E, 0, 0
 	clr	d0
 	mov	d0, (0x979167e4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -69857,7 +69866,7 @@ KSSCLSFileListProc_L1175:
 	call	func_9780244C_entry, [d2,d3], 8
 	mov	1, d0
 	mov	d0, (0x979167e4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x2c, sp), a0
@@ -69868,7 +69877,7 @@ KSSCLSFileListProc_L1175:
 	mov	(0x228, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -69891,7 +69900,7 @@ KSSCLSFileListProc_L1206:
 	bra	KSSCLSFileListProc_L121f
 KSSCLSFileListProc_L1213:
 	mov	1, d0
-	mov	d0, (data_97910DFC)
+	mov	d0, (KSSCLSFileListProc_L183_Var)
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L121f:
@@ -69948,7 +69957,7 @@ KSSCLSFileListProc_L1272:
 	call	func_9780244C_entry, [d2,d3], 8
 	mov	1, d0
 	mov	d0, (0x979167e4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -69956,7 +69965,7 @@ KSSCLSFileListProc_L1272:
 	mov	(0x228, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -70026,7 +70035,7 @@ KSSCLSFileListProc_L1341:
 	call	func_9780244C_entry, [d2,d3], 8
 	mov	1, d0
 	mov	d0, (0x979167e4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -70034,7 +70043,7 @@ KSSCLSFileListProc_L1341:
 	mov	(0x228, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -70093,7 +70102,7 @@ KSSCLSFileListProc_L1414:
 	call	func_9780244C_entry, [d2,d3], 8
 	mov	1, d0
 	mov	d0, (0x979167e4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x2c, sp), a0
@@ -70155,7 +70164,7 @@ KSSCLSFileListProc_L14ad:
 	call	func_9780244C_entry, [d2,d3], 8
 	mov	1, d0
 	mov	d0, (0x979167e4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x2c, sp), a0
@@ -70172,7 +70181,7 @@ KSSCLSFileListProc_L14ed:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L14f1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0xba, sp), d0
@@ -70187,7 +70196,7 @@ KSSCLSFileListProc_L14f1:
 	bne	KSSCLSFileListProc_L151c
 	bra	KSSCLSFileListProc_L153a
 KSSCLSFileListProc_L151c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x230, sp), d0
@@ -70202,7 +70211,7 @@ KSSCLSFileListProc_L153a:
 	bne	KSSCLSFileListProc_L1545
 	bra	KSSCLSFileListProc_L159b
 KSSCLSFileListProc_L1545:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x60, sp), d0
@@ -70210,7 +70219,7 @@ KSSCLSFileListProc_L1545:
 	mov	(0x228, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x60, sp), d0
@@ -70218,7 +70227,7 @@ KSSCLSFileListProc_L1545:
 	mov	(0x228, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -70230,46 +70239,46 @@ KSSCLSFileListProc_L159b:
 	clr	d0
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L159f:
-	movhu	(data_9791259A), d0
+	movhu	(KSSCLSFileListProc_L92c_Var), d0
 	inc	d0
-	movhu	d0, (data_9791259A)
-	movhu	(data_9791259A), d0
+	movhu	d0, (KSSCLSFileListProc_L92c_Var)
+	movhu	(KSSCLSFileListProc_L92c_Var), d0
 	cmp	0x20, d0
 	bge	KSSCLSFileListProc_L15b8
 	bra	KSSCLSFileListProc_L15df
 KSSCLSFileListProc_L15b8:
-	movhu	(data_97912598), d0
+	movhu	(KSSCLSFileListProc_L10ad_Var), d0
 	inc	d0
-	movhu	d0, (data_97912598)
-	movhu	(data_97912598), d0
+	movhu	d0, (KSSCLSFileListProc_L10ad_Var)
+	movhu	(KSSCLSFileListProc_L10ad_Var), d0
 	cmp	0x78, d0
 	bge	KSSCLSFileListProc_L15d1
 	bra	KSSCLSFileListProc_L15d8
 KSSCLSFileListProc_L15d1:
 	clr	d0
-	movhu	d0, (data_97912598)
+	movhu	d0, (KSSCLSFileListProc_L10ad_Var)
 KSSCLSFileListProc_L15d8:
 	clr	d0
-	movhu	d0, (data_9791259A)
+	movhu	d0, (KSSCLSFileListProc_L92c_Var)
 KSSCLSFileListProc_L15df:
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	mov	d0, (0x9c, sp)
-	movhu	(data_97912598), d0
-	movhu	(data_9791259A), d1
+	movhu	(KSSCLSFileListProc_L10ad_Var), d0
+	movhu	(KSSCLSFileListProc_L92c_Var), d1
 	mov	sp, a0
 	add	0x200, a0
 	call	func_978025A8_entry, [d2], 8
 	mov	d0, (0xa0, sp)
 	mov	(0x208, sp), d0
-	mov	d0, (data_9791259C)
+	mov	d0, (KssTitleFunc_Ld5_Var)
 	mov	(0x20c, sp), d0
-	mov	d0, (data_979125A0)
-	movhu	(data_97912598), d0
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
+	movhu	(KSSCLSFileListProc_L10ad_Var), d0
 	call	func_97802F1C, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
-	movhu	(data_9791259A), d0
+	movhu	(KSSCLSFileListProc_L92c_Var), d0
 	mov	d0, (0x10, sp)
 	mov	(0x228, sp), d0
 	mov	MT_SetSelNum, d1
@@ -70285,8 +70294,8 @@ KSSCLSFileListProc_L164d:
 	jmp	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L1656:
 	mov	1, d0
-	mov	d0, (data_979125A8)
-	mov	(data_979126B4), a0
+	mov	d0, (KSSCLSFileListProc_Le71_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	-1, d0
@@ -70301,7 +70310,7 @@ KSSCLSFileListProc_L1656:
 	bra	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L1685:
 	clr	d0
-	mov	d0, (data_979125A8)
+	mov	d0, (KSSCLSFileListProc_Le71_Var)
 	mov	-1, d0
 	mov	d0, (0x10, sp)
 	mov	0x66, d0
@@ -70314,13 +70323,13 @@ KSSCLSFileListProc_L16a2:
 	clr	d0
 	bra	KSSCLSFileListProc_L16ff
 KSSCLSFileListProc_L16ac:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x228, sp), d0
 	calls	(a0)
 	mov	a0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x2c, sp), a1
@@ -70330,7 +70339,7 @@ KSSCLSFileListProc_L16ac:
 	mov	(0x22c, sp), d1
 	calls	(a0)
 KSSCLSFileListProc_L16e1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x230, sp), d0
@@ -70348,7 +70357,7 @@ func_9782B2AB:
 func_9782B2AB_entry:
 	mov	d0, (0x1c, sp)
 	mov	d0, (0x97916f68)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -70382,7 +70391,7 @@ KssxCatch_FlsRunning_L2d:
 	mov	1, d0
 	jmp	KssxCatch_FlsRunning_L148
 KssxCatch_FlsRunning_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -70390,7 +70399,7 @@ KssxCatch_FlsRunning_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_FLSR, d0
@@ -70401,7 +70410,7 @@ KssxCatch_FlsRunning_L32:
 	clr	d0
 	jmp	KssxCatch_FlsRunning_L148
 KssxCatch_FlsRunning_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -70428,11 +70437,11 @@ KssxCatch_FlsRunning_La6:
 	jmp	KssxCatch_FlsRunning_L130
 KssxCatch_FlsRunning_La9:
 	mov	0xff, d0
-	mov	d0, (data_9791259C)
-	mov	d0, (data_979125A0)
+	mov	d0, (KssTitleFunc_Ld5_Var)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 	clr	d0
-	mov	d0, (data_979125A8)
-	mov	(data_979126B4), a0
+	mov	d0, (KSSCLSFileListProc_Le71_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	2, d0
@@ -70443,7 +70452,7 @@ KssxCatch_FlsRunning_La9:
 	clr	d0
 	bra	KssxCatch_FlsRunning_L148
 KssxCatch_FlsRunning_Le2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	2, d0
@@ -70451,12 +70460,12 @@ KssxCatch_FlsRunning_Le2:
 	mov	(0x97916f68), d0
 	mov	EV_SHOW, d1
 	calls	(a0)
-	mov	(data_979125A8), d0
+	mov	(KSSCLSFileListProc_Le71_Var), d0
 	cmp	1, d0
 	beq	KssxCatch_FlsRunning_L10e
 	bra	KssxCatch_FlsRunning_L12d
 KssxCatch_FlsRunning_L10e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -70468,7 +70477,7 @@ KssxCatch_FlsRunning_L12d:
 	clr	d0
 	bra	KssxCatch_FlsRunning_L148
 KssxCatch_FlsRunning_L130:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -70485,7 +70494,7 @@ func_9782B423:
 func_9782B423_entry:
 	mov	d0, (0x1c, sp)
 	mov	d0, (0x97916f6c)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -70519,7 +70528,7 @@ KssxCatch_ClsNotSaved_L2d:
 	mov	1, d0
 	jmp	KssxCatch_ClsNotSaved_L11a
 KssxCatch_ClsNotSaved_L32:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -70527,7 +70536,7 @@ KssxCatch_ClsNotSaved_L32:
 	mov	(0x1c, sp), d0
 	mov	(0x20, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_NOTS, d0
@@ -70538,7 +70547,7 @@ KssxCatch_ClsNotSaved_L32:
 	clr	d0
 	jmp	KssxCatch_ClsNotSaved_L11a
 KssxCatch_ClsNotSaved_L6e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x24, sp), d0
@@ -70575,11 +70584,11 @@ KssxCatch_ClsNotSaved_La8:
 	bra	KssxCatch_ClsNotSaved_L11a
 KssxCatch_ClsNotSaved_Lcb:
 	mov	0xff, d0
-	mov	d0, (data_9791259C)
-	mov	d0, (data_979125A0)
+	mov	d0, (KssTitleFunc_Ld5_Var)
+	mov	d0, (KssLoadSaveDel_DISPProc_L1de6_Var)
 	clr	d0
-	mov	d0, (data_979125A8)
-	mov	(data_979126B4), a0
+	mov	d0, (KSSCLSFileListProc_Le71_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	d0, (0x10, sp)
@@ -70589,7 +70598,7 @@ KssxCatch_ClsNotSaved_Lcb:
 	clr	d0
 	bra	KssxCatch_ClsNotSaved_L11a
 KssxCatch_ClsNotSaved_L102:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x24, sp), d0
@@ -70633,7 +70642,7 @@ KssxJukeBoxProc_L3d:
 KssxJukeBoxProc_L4a:
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_L4d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -70641,7 +70650,7 @@ KssxJukeBoxProc_L4d:
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x44, sp), d0
@@ -70656,7 +70665,7 @@ KssxJukeBoxProc_L4d:
 	bne	KssxJukeBoxProc_L8a
 	bra	KssxJukeBoxProc_Ld2
 KssxJukeBoxProc_L8a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -70664,7 +70673,7 @@ KssxJukeBoxProc_L8a:
 	mov	(0x44, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -70672,7 +70681,7 @@ KssxJukeBoxProc_L8a:
 	mov	(0x44, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -70691,7 +70700,7 @@ KssxJukeBoxProc_Lf6:
 	clr	d0
 	jmp	KssxJukeBoxProc_Lf0c
 KssxJukeBoxProc_Lfa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -70699,7 +70708,7 @@ KssxJukeBoxProc_Lfa:
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x44, sp), d0
@@ -70713,7 +70722,7 @@ KssxJukeBoxProc_Lfa:
 	clr	d0
 	jmp	KssxJukeBoxProc_Lf0c
 KssxJukeBoxProc_L13c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -70728,7 +70737,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_392, a0
-	mov	data_978A4510, a1
+	mov	func_97827B50_Var_143, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70739,7 +70748,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_391, a0
-	mov	data_978A4518, a1
+	mov	func_97827B50_Var_147, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70750,7 +70759,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_390, a0
-	mov	data_978A4520, a1
+	mov	func_97827B50_Var_151, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70761,7 +70770,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_389, a0
-	mov	data_978A4528, a1
+	mov	func_97827B50_Var_155, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70772,7 +70781,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_388, a0
-	mov	data_978A4530, a1
+	mov	func_97827B50_Var_159, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70783,7 +70792,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_387, a0
-	mov	data_978A4538, a1
+	mov	func_97827B50_Var_163, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70794,7 +70803,7 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_386, a0
-	mov	data_978A4540, a1
+	mov	func_97827B50_Var_167, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -70805,70 +70814,70 @@ KssxJukeBoxProc_L13c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_385, a0
-	mov	data_978A4548, a1
+	mov	func_97827B50_Var_171, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	data_978A45B8, a0
+	mov	func_978279FE_Var_64, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45C0, a0
+	mov	func_978279FE_Var_66, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45C8, a0
+	mov	func_978279FE_Var_68, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45D0, a0
+	mov	func_978279FE_Var_70, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45D8, a0
+	mov	func_978279FE_Var_72, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45E0, a0
+	mov	func_978279FE_Var_74, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45E8, a0
+	mov	func_978279FE_Var_76, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45F0, a0
+	mov	func_978279FE_Var_78, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4578, a0
+	mov	func_978279FE_Var_48, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4580, a0
+	mov	func_978279FE_Var_50, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4588, a0
+	mov	func_978279FE_Var_52, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4590, a0
+	mov	func_978279FE_Var_54, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4598, a0
+	mov	func_978279FE_Var_56, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45A0, a0
+	mov	func_978279FE_Var_58, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45A8, a0
+	mov	func_978279FE_Var_60, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A45B0, a0
+	mov	func_978279FE_Var_62, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A4504), a0
+	mov	(KssxJukeBoxProc_L13c_Var), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4550, a1
+	mov	func_97827B50_Var_175, a1
 	mov	0xb, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4508), a0
+	mov	(KssxJukeBoxProc_L13c_Var_2), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -70879,27 +70888,27 @@ KssxJukeBoxProc_L13c:
 	clr	d0
 	mov	0xfc, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A4568, a0
 	mov	0xf7, d0
 	calls	(a1)
-	mov	data_978A4570, a0
+	mov	func_978279FE_Var_46, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A450C), a0
+	mov	(KssxJukeBoxProc_L13c_Var_3), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4560, a1
+	mov	func_97827B50_Var_182, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -70910,7 +70919,7 @@ KssxJukeBoxProc_L13c:
 	clr	d0
 	jmp	KssxJukeBoxProc_Lf0c
 KssxJukeBoxProc_L3ca:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -70918,7 +70927,7 @@ KssxJukeBoxProc_L3ca:
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x44, sp), d0
@@ -70948,141 +70957,141 @@ KssxJukeBoxProc_L415:
 	beq	KssxJukeBoxProc_L422
 	jmp	KssxJukeBoxProc_L535
 KssxJukeBoxProc_L422:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45B8, a0
+	mov	func_978279FE_Var_64, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45C0, a0
+	mov	func_978279FE_Var_66, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45C8, a0
+	mov	func_978279FE_Var_68, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45D0, a0
+	mov	func_978279FE_Var_70, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45D8, a0
+	mov	func_978279FE_Var_72, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45E0, a0
+	mov	func_978279FE_Var_74, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45E8, a0
+	mov	func_978279FE_Var_76, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45F0, a0
+	mov	func_978279FE_Var_78, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A4570, a0
+	mov	func_978279FE_Var_46, a0
 	mov	0xf9, d0
 	calls	(a1)
-	mov	data_978A4570, a0
+	mov	func_978279FE_Var_46, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A450C), a0
+	mov	(KssxJukeBoxProc_L13c_Var_3), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4560, a1
+	mov	func_97827B50_Var_182, a1
 	mov	4, d0
 	mov	7, d1
 	call	func_97827B50_entry, [a2], 0x30
 	jmp	KssxJukeBoxProc_L63f
 KssxJukeBoxProc_L535:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45B8, a0
+	mov	func_978279FE_Var_64, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45C0, a0
+	mov	func_978279FE_Var_66, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45C8, a0
+	mov	func_978279FE_Var_68, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45D0, a0
+	mov	func_978279FE_Var_70, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45D8, a0
+	mov	func_978279FE_Var_72, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45E0, a0
+	mov	func_978279FE_Var_74, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45E8, a0
+	mov	func_978279FE_Var_76, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
-	mov	data_978A45F0, a0
+	mov	func_978279FE_Var_78, a0
 	mov	7, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	data_978A4568, a0
 	mov	7, d0
 	calls	(a1)
-	mov	data_978A4570, a0
+	mov	func_978279FE_Var_46, a0
 	mov	0xff, d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A450C), a0
+	mov	(KssxJukeBoxProc_L13c_Var_3), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4560, a1
+	mov	func_97827B50_Var_182, a1
 	mov	4, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71094,7 +71103,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_392, a0
-	mov	data_978A4510, a1
+	mov	func_97827B50_Var_143, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71105,7 +71114,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_391, a0
-	mov	data_978A4518, a1
+	mov	func_97827B50_Var_147, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71116,7 +71125,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_390, a0
-	mov	data_978A4520, a1
+	mov	func_97827B50_Var_151, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71127,7 +71136,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_389, a0
-	mov	data_978A4528, a1
+	mov	func_97827B50_Var_155, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71138,7 +71147,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_388, a0
-	mov	data_978A4530, a1
+	mov	func_97827B50_Var_159, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71149,7 +71158,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_387, a0
-	mov	data_978A4538, a1
+	mov	func_97827B50_Var_163, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71160,7 +71169,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_386, a0
-	mov	data_978A4540, a1
+	mov	func_97827B50_Var_167, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71171,7 +71180,7 @@ KssxJukeBoxProc_L63f:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_empty_385, a0
-	mov	data_978A4548, a1
+	mov	func_97827B50_Var_171, a1
 	clr	d0
 	mov	d0, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -71188,24 +71197,24 @@ KssxJukeBoxProc_L74c:
 	beq	KssxJukeBoxProc_L75b
 	bra	KssxJukeBoxProc_L77c
 KssxJukeBoxProc_L75b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	(0x2c, sp), d0
 	asl2	d0
-	mov	ptrs_978A45F8, a0
+	mov	KssxJukeBoxProc_L75b_Table, a0
 	mov	(d0, a0), d1
 	mov	d1, a0
 	mov	0x1a, d0
 	calls	(a1)
 	bra	KssxJukeBoxProc_L79c
 KssxJukeBoxProc_L77c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	(0x2c, sp), d0
 	asl2	d0
-	mov	ptrs_978A45F8, a0
+	mov	KssxJukeBoxProc_L75b_Table, a0
 	mov	(d0, a0), d1
 	mov	d1, a0
 	mov	0xf8, d0
@@ -71223,7 +71232,7 @@ KssxJukeBoxProc_L7a9:
 	clr	d0
 	jmp	KssxJukeBoxProc_Lf0c
 KssxJukeBoxProc_L7ad:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -71231,13 +71240,13 @@ KssxJukeBoxProc_L7ad:
 	mov	(0x44, sp), d0
 	mov	(0x48, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x44, sp), d0
 	calls	(a0)
 	mov	a0, (0x28, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x4c, sp), d0
@@ -71302,7 +71311,7 @@ KssxJukeBoxProc_L859:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71346,7 +71355,7 @@ KssxJukeBoxProc_L8e7:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71363,7 +71372,7 @@ KssxJukeBoxProc_L916:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71407,7 +71416,7 @@ KssxJukeBoxProc_L9a4:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71424,7 +71433,7 @@ KssxJukeBoxProc_L9d3:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71468,7 +71477,7 @@ KssxJukeBoxProc_La61:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71485,7 +71494,7 @@ KssxJukeBoxProc_La90:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71529,7 +71538,7 @@ KssxJukeBoxProc_Lb1e:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71540,7 +71549,7 @@ KssxJukeBoxProc_Lb1e:
 	jmp	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Lb4d:
 	call	func_9782C60B_entry, 0, 0x18
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71557,7 +71566,7 @@ KssxJukeBoxProc_Lb71:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71601,7 +71610,7 @@ KssxJukeBoxProc_Lbff:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71618,7 +71627,7 @@ KssxJukeBoxProc_Lc2e:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71662,7 +71671,7 @@ KssxJukeBoxProc_Lcbc:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71679,7 +71688,7 @@ KssxJukeBoxProc_Lceb:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71723,7 +71732,7 @@ KssxJukeBoxProc_Ld79:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71740,7 +71749,7 @@ KssxJukeBoxProc_Lda8:
 	mov	1, d1
 	sub	d1, d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-2, d0
@@ -71784,7 +71793,7 @@ KssxJukeBoxProc_Le36:
 	mov	d0, (0x30, sp)
 	clr	d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -71803,7 +71812,7 @@ KssxJukeBoxProc_Le65:
 	beq	KssxJukeBoxProc_Le79
 	bra	KssxJukeBoxProc_Le98
 KssxJukeBoxProc_Le79:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -71826,7 +71835,7 @@ KssxJukeBoxProc_Lea0:
 	beq	KssxJukeBoxProc_Leb4
 	bra	KssxJukeBoxProc_Led5
 KssxJukeBoxProc_Leb4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -71836,7 +71845,7 @@ KssxJukeBoxProc_Leb4:
 	calls	(a0)
 	bra	KssxJukeBoxProc_Lef4
 KssxJukeBoxProc_Led5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -71845,7 +71854,7 @@ KssxJukeBoxProc_Led5:
 	mov	EV_SHOW, d1
 	calls	(a0)
 KssxJukeBoxProc_Lef4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x4c, sp), d0
@@ -71999,7 +72008,7 @@ func_9782C60B:
 	add	-0x18, sp
 
 func_9782C60B_entry:
-	movbu	(data_978A4618), d0
+	movbu	(func_9782C60B_Table), d0
 	movbu	d0, (0x14, sp)
 	mov	1, d0
 	mov	d0, (0x10, sp)
@@ -72090,7 +72099,7 @@ KssxAlphabetBoxProc_L1f:
 KssxAlphabetBoxProc_L2c:
 	jmp	KssxAlphabetBoxProc_L520
 KssxAlphabetBoxProc_L2f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -72098,7 +72107,7 @@ KssxAlphabetBoxProc_L2f:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -72113,7 +72122,7 @@ KssxAlphabetBoxProc_L2f:
 	bne	KssxAlphabetBoxProc_L6c
 	bra	KssxAlphabetBoxProc_Lb4
 KssxAlphabetBoxProc_L6c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -72121,7 +72130,7 @@ KssxAlphabetBoxProc_L6c:
 	mov	(0x30, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -72129,7 +72138,7 @@ KssxAlphabetBoxProc_L6c:
 	mov	(0x30, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -72138,7 +72147,7 @@ KssxAlphabetBoxProc_Lb4:
 	clr	d0
 	jmp	KssxAlphabetBoxProc_L538
 KssxAlphabetBoxProc_Lb8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -72146,7 +72155,7 @@ KssxAlphabetBoxProc_Lb8:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -72158,7 +72167,7 @@ KssxAlphabetBoxProc_Lb8:
 	clr	d0
 	jmp	KssxAlphabetBoxProc_L538
 KssxAlphabetBoxProc_Led:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -72166,7 +72175,7 @@ KssxAlphabetBoxProc_Led:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -72174,13 +72183,13 @@ KssxAlphabetBoxProc_Led:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	data_978A4778, a0
+	mov	func_978279FE_Var_80, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4780, a0
+	mov	func_978279FE_Var_82, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A4788, a0
+	mov	func_978279FE_Var_84, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
 	mov	Str_empty_425, a0
@@ -72192,45 +72201,45 @@ KssxAlphabetBoxProc_Led:
 	mov	Str_x_2, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47A8, a0
+	mov	func_978279FE_Var_89, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47B0, a0
+	mov	func_978279FE_Var_91, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47B8, a0
+	mov	func_978279FE_Var_93, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47C0, a0
+	mov	func_978279FE_Var_95, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47C8, a0
+	mov	func_978279FE_Var_97, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47D0, a0
+	mov	func_978279FE_Var_99, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47D8, a0
+	mov	func_978279FE_Var_101, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47E0, a0
+	mov	func_978279FE_Var_103, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	data_978A47E8, a0
+	mov	func_978279FE_Var_105, a0
 	clr	d0
 	call	func_978279FE_entry, [a2], 0x20
-	mov	(data_978A4658), a0
+	mov	(KssxAlphabetBoxProc_Led_Var), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46B8, a1
+	mov	func_97827B50_Var_186, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A465C), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_2), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -72241,7 +72250,7 @@ KssxAlphabetBoxProc_Led:
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4660), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_3), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -72252,117 +72261,117 @@ KssxAlphabetBoxProc_Led:
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4664), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_4), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46D0, a1
+	mov	func_97827B50_Var_196, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4668), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_5), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46D8, a1
+	mov	func_97827B50_Var_200, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A466C), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_6), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46E0, a1
+	mov	func_97827B50_Var_204, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4670), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_7), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46E8, a1
+	mov	func_97827B50_Var_208, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4674), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_8), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46F0, a1
+	mov	func_97827B50_Var_212, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4678), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_9), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A46F8, a1
+	mov	func_97827B50_Var_216, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A467C), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_10), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4700, a1
+	mov	func_97827B50_Var_220, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4680), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_11), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4708, a1
+	mov	func_97827B50_Var_224, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4684), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_12), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4710, a1
+	mov	func_97827B50_Var_228, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4688), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_13), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4718, a1
+	mov	func_97827B50_Var_232, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A468C), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_14), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -72373,7 +72382,7 @@ KssxAlphabetBoxProc_Led:
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4690), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_15), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
@@ -72384,106 +72393,106 @@ KssxAlphabetBoxProc_Led:
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4694), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_16), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4730, a1
+	mov	func_97827B50_Var_242, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A4698), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_17), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4738, a1
+	mov	func_97827B50_Var_246, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A469C), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_18), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4740, a1
+	mov	func_97827B50_Var_250, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A46A0), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_19), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4748, a1
+	mov	func_97827B50_Var_254, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A46A4), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_20), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4750, a1
+	mov	func_97827B50_Var_258, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A46A8), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_21), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4758, a1
+	mov	func_97827B50_Var_262, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A46AC), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_22), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4760, a1
+	mov	func_97827B50_Var_266, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A46B0), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_23), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4768, a1
+	mov	func_97827B50_Var_270, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_978A46B4), a0
+	mov	(KssxAlphabetBoxProc_Led_Var_24), a0
 	mov	0xff, d0
 	mov	d0, (0x18, sp)
 	mov	0xf7, d0
 	mov	d0, (0x1c, sp)
 	mov	1, d0
 	mov	d0, (0x20, sp)
-	mov	data_978A4770, a1
+	mov	func_97827B50_Var_274, a1
 	mov	5, d0
 	clr	d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -72494,7 +72503,7 @@ KssxAlphabetBoxProc_Led:
 	clr	d0
 	bra	KssxAlphabetBoxProc_L538
 KssxAlphabetBoxProc_L520:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -72597,7 +72606,7 @@ HamaAlphabeticFileListProc_Lfb:
 HamaAlphabeticFileListProc_L10a:
 	jmp	HamaAlphabeticFileListProc_L13dc
 HamaAlphabeticFileListProc_L10d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -72605,7 +72614,7 @@ HamaAlphabeticFileListProc_L10d:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -72616,7 +72625,7 @@ HamaAlphabeticFileListProc_L10d:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L14d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -72624,7 +72633,7 @@ HamaAlphabeticFileListProc_L14d:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -72639,7 +72648,7 @@ HamaAlphabeticFileListProc_L14d:
 	bne	HamaAlphabeticFileListProc_L192
 	bra	HamaAlphabeticFileListProc_L1de
 HamaAlphabeticFileListProc_L192:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -72647,7 +72656,7 @@ HamaAlphabeticFileListProc_L192:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -72655,23 +72664,23 @@ HamaAlphabeticFileListProc_L192:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 HamaAlphabeticFileListProc_L1de:
-	mov	(data_97912588), d0
+	mov	(KssParaEditEntryProc_L54b_Table), d0
 	cmp	1, d0
 	beq	HamaAlphabeticFileListProc_L1ea
 	bra	HamaAlphabeticFileListProc_L1fc
 HamaAlphabeticFileListProc_L1ea:
 	clr	d0
-	mov	d0, (data_97912588)
+	mov	d0, (KssParaEditEntryProc_L54b_Table)
 	call	func_9782E057_entry, [d2], 0x8c
 	mov	d0, (0x979167f0)
 HamaAlphabeticFileListProc_L1fc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -72679,7 +72688,7 @@ HamaAlphabeticFileListProc_L1fc:
 	mov	(0x108, sp), d0
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -72691,7 +72700,7 @@ HamaAlphabeticFileListProc_L1fc:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L23b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -72699,7 +72708,7 @@ HamaAlphabeticFileListProc_L23b:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -72711,7 +72720,7 @@ HamaAlphabeticFileListProc_L23b:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L278:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -72719,7 +72728,7 @@ HamaAlphabeticFileListProc_L278:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -72731,7 +72740,7 @@ HamaAlphabeticFileListProc_L278:
 	bge	HamaAlphabeticFileListProc_L2b7
 	jmp	HamaAlphabeticFileListProc_L36f
 HamaAlphabeticFileListProc_L2b7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -72780,7 +72789,7 @@ HamaAlphabeticFileListProc_L300:
 	beq	HamaAlphabeticFileListProc_L327
 	bra	HamaAlphabeticFileListProc_L342
 HamaAlphabeticFileListProc_L327:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -72791,7 +72800,7 @@ HamaAlphabeticFileListProc_L327:
 	calls	(a2)
 	bra	HamaAlphabeticFileListProc_L35a
 HamaAlphabeticFileListProc_L342:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -72816,7 +72825,7 @@ HamaAlphabeticFileListProc_L36f:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L373:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x110, sp), d0
@@ -72842,7 +72851,7 @@ HamaAlphabeticFileListProc_L3ae:
 	mov	0x66, d0
 	mov	ALPHA_SORTED_LIST_id, d1
 	call	func_97817C21_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -73103,7 +73112,7 @@ HamaAlphabeticFileListProc_L6e7:
 	bcs	HamaAlphabeticFileListProc_L6f6
 	jmp	HamaAlphabeticFileListProc_L13dc
 HamaAlphabeticFileListProc_L6f6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -73118,7 +73127,7 @@ HamaAlphabeticFileListProc_L6f6:
 	clr	d2
 	mov	d2, mdr
 	divu	d1, d0
-	mov	d0, (data_97910E04)
+	mov	d0, (HamaAlphabeticFileListProc_L6f6_Var)
 	mov	(0x24, sp), d1
 	nop
 	nop
@@ -73126,7 +73135,7 @@ HamaAlphabeticFileListProc_L6f6:
 	mov	(0x979a245c), d1
 	sub	d0, d1
 	mov	d1, (0x979167f4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	d1, d0
@@ -73136,7 +73145,7 @@ HamaAlphabeticFileListProc_L6f6:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -73146,7 +73155,7 @@ HamaAlphabeticFileListProc_L6f6:
 	calls	(a0)
 	jmp	HamaAlphabeticFileListProc_L13dc
 HamaAlphabeticFileListProc_L780:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -73158,7 +73167,7 @@ HamaAlphabeticFileListProc_L780:
 	beq	HamaAlphabeticFileListProc_L7a0
 	bra	HamaAlphabeticFileListProc_L7aa
 HamaAlphabeticFileListProc_L7a0:
-	mov	(data_978A4868), d0
+	mov	(HamaAlphabeticFileListProc_L7a0_Var), d0
 	mov	d0, (0x28, sp)
 	bra	HamaAlphabeticFileListProc_L7b2
 HamaAlphabeticFileListProc_L7aa:
@@ -73177,7 +73186,7 @@ HamaAlphabeticFileListProc_L7be:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L7c2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -73223,7 +73232,7 @@ HamaAlphabeticFileListProc_L81f:
 	nop
 	nop
 	mulu	d1, d2
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d2
@@ -73274,7 +73283,7 @@ HamaAlphabeticFileListProc_L87b:
 	nop
 	nop
 	mulu	d1, d0
-	mov	(data_97910E04), d1
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d1
 	nop
 	nop
 	mulu	d1, d0
@@ -73368,7 +73377,7 @@ HamaAlphabeticFileListProc_L958:
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d1
 	exth	d1
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d1
@@ -73401,7 +73410,7 @@ HamaAlphabeticFileListProc_L9a3:
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d1
 	exth	d1
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d1
@@ -73431,7 +73440,7 @@ HamaAlphabeticFileListProc_L9f0:
 	mov	(0x20, sp), a0
 	movhu	(0x32, a0), d1
 	exth	d1
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d1
@@ -73529,21 +73538,21 @@ HamaAlphabeticFileListProc_La64:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x6e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x20, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x20, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x20, sp), a1
@@ -73581,14 +73590,14 @@ HamaAlphabeticFileListProc_Lb55:
 	beq	HamaAlphabeticFileListProc_Lb61
 	bra	HamaAlphabeticFileListProc_Lba8
 HamaAlphabeticFileListProc_Lb61:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0xe8, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -73607,7 +73616,7 @@ HamaAlphabeticFileListProc_Lb61:
 	calls	(a2)
 	jmp	HamaAlphabeticFileListProc_Lcc8
 HamaAlphabeticFileListProc_Lba8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -73617,7 +73626,7 @@ HamaAlphabeticFileListProc_Lba8:
 	add	0xe8, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -73638,7 +73647,7 @@ HamaAlphabeticFileListProc_Lba8:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -73654,7 +73663,7 @@ HamaAlphabeticFileListProc_Lc10:
 	beq	HamaAlphabeticFileListProc_Lc1c
 	bra	HamaAlphabeticFileListProc_Lc7a
 HamaAlphabeticFileListProc_Lc1c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -73670,7 +73679,7 @@ HamaAlphabeticFileListProc_Lc1c:
 	bls	HamaAlphabeticFileListProc_Lc46
 	jmp	HamaAlphabeticFileListProc_Lcc8
 HamaAlphabeticFileListProc_Lc46:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -73693,7 +73702,7 @@ HamaAlphabeticFileListProc_Lc46:
 	calls	(a2)
 	bra	HamaAlphabeticFileListProc_Lcc8
 HamaAlphabeticFileListProc_Lc7a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -73703,7 +73712,7 @@ HamaAlphabeticFileListProc_Lc7a:
 	add	0xe8, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -73751,7 +73760,7 @@ HamaAlphabeticFileListProc_Lce6:
 	mov	(0x34, a0), a0
 	movhu	(a0), d1
 	exth	d1
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d2
@@ -73763,7 +73772,7 @@ HamaAlphabeticFileListProc_Lce6:
 	bhi	HamaAlphabeticFileListProc_Ld17
 	bra	HamaAlphabeticFileListProc_Ld3d
 HamaAlphabeticFileListProc_Ld17:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x979167f0), d0
@@ -73777,7 +73786,7 @@ HamaAlphabeticFileListProc_Ld3d:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_Ld41:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -73798,15 +73807,15 @@ HamaAlphabeticFileListProc_Ld41:
 	blt	HamaAlphabeticFileListProc_Ld77
 	jmp	HamaAlphabeticFileListProc_Le11
 HamaAlphabeticFileListProc_Ld77:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	cmp	0, d0
 	bhi	HamaAlphabeticFileListProc_Ld84
 	jmp	HamaAlphabeticFileListProc_Le11
 HamaAlphabeticFileListProc_Ld84:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	mov	1, d1
 	sub	d1, d0
-	mov	d0, (data_97910E04)
+	mov	d0, (HamaAlphabeticFileListProc_L6f6_Var)
 	mov	(0x20, sp), a0
 	movhu	(0x30, a0), d2
 	exth	d2
@@ -73818,7 +73827,7 @@ HamaAlphabeticFileListProc_Ld84:
 	mov	-1, d0
 	add	d2, d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -73835,7 +73844,7 @@ HamaAlphabeticFileListProc_Ld84:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -73843,7 +73852,7 @@ HamaAlphabeticFileListProc_Ld84:
 	mov	(0x108, sp), d0
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -73866,17 +73875,17 @@ HamaAlphabeticFileListProc_Le11:
 	bge	HamaAlphabeticFileListProc_Le28
 	bra	HamaAlphabeticFileListProc_Le9f
 HamaAlphabeticFileListProc_Le28:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	cmp	0xef, d0
 	bcs	HamaAlphabeticFileListProc_Le36
 	bra	HamaAlphabeticFileListProc_Le9f
 HamaAlphabeticFileListProc_Le36:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	inc	d0
-	mov	d0, (data_97910E04)
+	mov	d0, (HamaAlphabeticFileListProc_L6f6_Var)
 	clr	d0
 	movhu	d0, (0x5c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -73884,7 +73893,7 @@ HamaAlphabeticFileListProc_Le36:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -73892,7 +73901,7 @@ HamaAlphabeticFileListProc_Le36:
 	mov	(0x108, sp), d0
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -73907,7 +73916,7 @@ HamaAlphabeticFileListProc_Le9f:
 	blt	HamaAlphabeticFileListProc_Lea9
 	bra	HamaAlphabeticFileListProc_Lecd
 HamaAlphabeticFileListProc_Lea9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -73934,7 +73943,7 @@ HamaAlphabeticFileListProc_Lecd:
 	bge	HamaAlphabeticFileListProc_Lee4
 	bra	HamaAlphabeticFileListProc_Lf08
 HamaAlphabeticFileListProc_Lee4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -73947,7 +73956,7 @@ HamaAlphabeticFileListProc_Lee4:
 	calls	(a0)
 	bra	HamaAlphabeticFileListProc_Lf28
 HamaAlphabeticFileListProc_Lf08:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x5c, sp), d0
@@ -73960,7 +73969,7 @@ HamaAlphabeticFileListProc_Lf28:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_Lf2c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -73973,7 +73982,7 @@ HamaAlphabeticFileListProc_Lf2c:
 	mov	(0x34, a0), a0
 	mov	(0x110, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x5e, sp), d0
@@ -73998,7 +74007,7 @@ HamaAlphabeticFileListProc_Lf7a:
 	nop
 	nop
 	mulu	d2, d1
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d1
@@ -74049,7 +74058,7 @@ HamaAlphabeticFileListProc_Lfdc:
 	nop
 	nop
 	mulu	d2, d1
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	nop
 	nop
 	mulu	d0, d1
@@ -74091,7 +74100,7 @@ HamaAlphabeticFileListProc_L1029:
 	exthu	d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -74099,7 +74108,7 @@ HamaAlphabeticFileListProc_L1029:
 	mov	FileSfxBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -74110,7 +74119,7 @@ HamaAlphabeticFileListProc_L1029:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -74125,13 +74134,13 @@ HamaAlphabeticFileListProc_L1029:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L10c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -74146,7 +74155,7 @@ HamaAlphabeticFileListProc_L10c1:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L10ff:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -74158,7 +74167,7 @@ HamaAlphabeticFileListProc_L10ff:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L1121:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -74168,7 +74177,7 @@ HamaAlphabeticFileListProc_L1121:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x60, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -74177,7 +74186,7 @@ HamaAlphabeticFileListProc_L1121:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -74214,16 +74223,16 @@ HamaAlphabeticFileListProc_L11af:
 	beq	HamaAlphabeticFileListProc_L11bc
 	jmp	HamaAlphabeticFileListProc_L1243
 HamaAlphabeticFileListProc_L11bc:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	cmp	0, d0
 	bhi	HamaAlphabeticFileListProc_L11c9
 	jmp	HamaAlphabeticFileListProc_L1302
 HamaAlphabeticFileListProc_L11c9:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	mov	1, d1
 	sub	d1, d0
-	mov	d0, (data_97910E04)
-	mov	(data_979126B4), a0
+	mov	d0, (HamaAlphabeticFileListProc_L6f6_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x20, sp), a1
@@ -74239,7 +74248,7 @@ HamaAlphabeticFileListProc_L11c9:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -74247,7 +74256,7 @@ HamaAlphabeticFileListProc_L11c9:
 	mov	(0x108, sp), d0
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -74264,15 +74273,15 @@ HamaAlphabeticFileListProc_L1243:
 	beq	HamaAlphabeticFileListProc_L1250
 	bra	HamaAlphabeticFileListProc_L12c6
 HamaAlphabeticFileListProc_L1250:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	cmp	0xef, d0
 	bcs	HamaAlphabeticFileListProc_L125f
 	jmp	HamaAlphabeticFileListProc_L1302
 HamaAlphabeticFileListProc_L125f:
-	mov	(data_97910E04), d0
+	mov	(HamaAlphabeticFileListProc_L6f6_Var), d0
 	inc	d0
-	mov	d0, (data_97910E04)
-	mov	(data_979126B4), a0
+	mov	d0, (HamaAlphabeticFileListProc_L6f6_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -74280,7 +74289,7 @@ HamaAlphabeticFileListProc_L125f:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -74288,7 +74297,7 @@ HamaAlphabeticFileListProc_L125f:
 	mov	(0x108, sp), d0
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -74307,7 +74316,7 @@ HamaAlphabeticFileListProc_L12c6:
 HamaAlphabeticFileListProc_L12d3:
 	mov	1, d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -74321,7 +74330,7 @@ HamaAlphabeticFileListProc_L12fe:
 	clr	d0
 	jmp	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L1302:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x60, sp), d0
@@ -74336,7 +74345,7 @@ HamaAlphabeticFileListProc_L1302:
 	bne	HamaAlphabeticFileListProc_L132d
 	bra	HamaAlphabeticFileListProc_L134b
 HamaAlphabeticFileListProc_L132d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x110, sp), d0
@@ -74351,7 +74360,7 @@ HamaAlphabeticFileListProc_L134b:
 	bne	HamaAlphabeticFileListProc_L1356
 	bra	HamaAlphabeticFileListProc_L13a4
 HamaAlphabeticFileListProc_L1356:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x4c, sp), d0
@@ -74359,7 +74368,7 @@ HamaAlphabeticFileListProc_L1356:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x4c, sp), d0
@@ -74367,7 +74376,7 @@ HamaAlphabeticFileListProc_L1356:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -74376,13 +74385,13 @@ HamaAlphabeticFileListProc_L13a4:
 	clr	d0
 	bra	HamaAlphabeticFileListProc_L13fa
 HamaAlphabeticFileListProc_L13a7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -74392,7 +74401,7 @@ HamaAlphabeticFileListProc_L13a7:
 	mov	(0x10c, sp), d1
 	calls	(a0)
 HamaAlphabeticFileListProc_L13dc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -74865,7 +74874,7 @@ HamaSelectListProc_Lcc:
 HamaSelectListProc_Ld9:
 	jmp	HamaSelectListProc_Lad9
 HamaSelectListProc_Ldc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -74873,7 +74882,7 @@ HamaSelectListProc_Ldc:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -74884,7 +74893,7 @@ HamaSelectListProc_Ldc:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L114:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -74892,7 +74901,7 @@ HamaSelectListProc_L114:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -74907,7 +74916,7 @@ HamaSelectListProc_L114:
 	bne	HamaSelectListProc_L151
 	bra	HamaSelectListProc_L199
 HamaSelectListProc_L151:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -74915,7 +74924,7 @@ HamaSelectListProc_L151:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -74923,7 +74932,7 @@ HamaSelectListProc_L151:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -74959,7 +74968,7 @@ HamaSelectListProc_L1d6:
 	call	LibDiv32, 0, 0
 	mov	d0, (0x979167fc)
 HamaSelectListProc_L1ec:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -74971,7 +74980,7 @@ HamaSelectListProc_L1ec:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L20e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -74979,7 +74988,7 @@ HamaSelectListProc_L20e:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -74991,7 +75000,7 @@ HamaSelectListProc_L20e:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L243:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -74999,7 +75008,7 @@ HamaSelectListProc_L243:
 	mov	(0xe0, sp), d0
 	mov	(0xe4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -75011,7 +75020,7 @@ HamaSelectListProc_L243:
 	bge	HamaSelectListProc_L27a
 	jmp	HamaSelectListProc_L32f
 HamaSelectListProc_L27a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xe0, sp), d0
@@ -75059,7 +75068,7 @@ HamaSelectListProc_L2c1:
 	beq	HamaSelectListProc_L2e7
 	bra	HamaSelectListProc_L302
 HamaSelectListProc_L2e7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -75070,7 +75079,7 @@ HamaSelectListProc_L2e7:
 	calls	(a2)
 	bra	HamaSelectListProc_L31a
 HamaSelectListProc_L302:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -75095,7 +75104,7 @@ HamaSelectListProc_L32f:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L333:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -75107,7 +75116,7 @@ HamaSelectListProc_L333:
 	beq	HamaSelectListProc_L351
 	bra	HamaSelectListProc_L35b
 HamaSelectListProc_L351:
-	mov	(data_978A4A18), d0
+	mov	(HamaSelectListProc_L351_Var), d0
 	mov	d0, (0x24, sp)
 	bra	HamaSelectListProc_L363
 HamaSelectListProc_L35b:
@@ -75126,7 +75135,7 @@ HamaSelectListProc_L36f:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L373:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xe0, sp), d0
@@ -75160,7 +75169,7 @@ HamaSelectListProc_L373:
 	mov	d0, (0x28, sp)
 	jmp	HamaSelectListProc_L699
 HamaSelectListProc_L3c9:
-	movhu	(data_97910E08), d2
+	movhu	(HamaSelectListProc_L3c9_Table), d2
 	mov	(0x979167f8), d0
 	nop
 	nop
@@ -75178,7 +75187,7 @@ HamaSelectListProc_L3c9:
 	mov	d0, (8, sp)
 	mov	Str_03i_s, d0
 	mov	d0, (0xc, sp)
-	movhu	(data_97910E08), d1
+	movhu	(HamaSelectListProc_L3c9_Table), d1
 	mov	(0x979167f8), d0
 	nop
 	nop
@@ -75259,14 +75268,14 @@ HamaSelectListProc_L438:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x52, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x20, sp), a1
 	mov	(0x20, a1), d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x20, sp), a1
@@ -75274,7 +75283,7 @@ HamaSelectListProc_L438:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x20, sp), a1
@@ -75314,14 +75323,14 @@ HamaSelectListProc_L52d:
 	beq	HamaSelectListProc_L539
 	bra	HamaSelectListProc_L580
 HamaSelectListProc_L539:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0xc0, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -75340,7 +75349,7 @@ HamaSelectListProc_L539:
 	calls	(a2)
 	jmp	HamaSelectListProc_L692
 HamaSelectListProc_L580:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -75350,7 +75359,7 @@ HamaSelectListProc_L580:
 	add	0xc0, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -75371,7 +75380,7 @@ HamaSelectListProc_L580:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -75387,7 +75396,7 @@ HamaSelectListProc_L5e8:
 	beq	HamaSelectListProc_L5f4
 	bra	HamaSelectListProc_L644
 HamaSelectListProc_L5f4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -75397,7 +75406,7 @@ HamaSelectListProc_L5f4:
 	add	0xc0, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -75420,7 +75429,7 @@ HamaSelectListProc_L5f4:
 	calls	(a2)
 	bra	HamaSelectListProc_L692
 HamaSelectListProc_L644:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x20, sp), a0
@@ -75430,7 +75439,7 @@ HamaSelectListProc_L644:
 	add	0xc0, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -75472,7 +75481,7 @@ HamaSelectListProc_L6b0:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L6b4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -75507,7 +75516,7 @@ HamaSelectListProc_L6e6:
 	blt	HamaSelectListProc_L6fd
 	bra	HamaSelectListProc_L71e
 HamaSelectListProc_L6fd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -75524,14 +75533,14 @@ HamaSelectListProc_L71e:
 	blt	HamaSelectListProc_L728
 	bra	HamaSelectListProc_L795
 HamaSelectListProc_L728:
-	movhu	(data_97910E08), d0
+	movhu	(HamaSelectListProc_L3c9_Table), d0
 	cmp	0, d0
 	bgt	HamaSelectListProc_L734
 	bra	HamaSelectListProc_L795
 HamaSelectListProc_L734:
-	movhu	(data_97910E08), d0
+	movhu	(HamaSelectListProc_L3c9_Table), d0
 	add	-1, d0
-	movhu	d0, (data_97910E08)
+	movhu	d0, (HamaSelectListProc_L3c9_Table)
 	mov	(0x20, sp), a0
 	movhu	(0x30, a0), d2
 	exth	d2
@@ -75544,7 +75553,7 @@ HamaSelectListProc_L734:
 	exth	d0
 	add	d0, d2
 	movhu	d2, (0x40, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -75552,7 +75561,7 @@ HamaSelectListProc_L734:
 	mov	(0xe0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -75577,16 +75586,16 @@ HamaSelectListProc_L795:
 	bge	HamaSelectListProc_L7ac
 	bra	HamaSelectListProc_L81d
 HamaSelectListProc_L7ac:
-	movhu	(data_97910E08), d1
+	movhu	(HamaSelectListProc_L3c9_Table), d1
 	mov	(0x979167fc), d0
 	add	-1, d0
 	cmp	d0, d1
 	blt	HamaSelectListProc_L7bf
 	bra	HamaSelectListProc_L81d
 HamaSelectListProc_L7bf:
-	movhu	(data_97910E08), d0
+	movhu	(HamaSelectListProc_L3c9_Table), d0
 	inc	d0
-	movhu	d0, (data_97910E08)
+	movhu	d0, (HamaSelectListProc_L3c9_Table)
 	mov	(0x20, sp), a0
 	movhu	(0x30, a0), d3
 	exth	d3
@@ -75599,7 +75608,7 @@ HamaSelectListProc_L7bf:
 	mul	d2, d3
 	sub	d3, d0
 	movhu	d0, (0x40, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -75607,7 +75616,7 @@ HamaSelectListProc_L7bf:
 	mov	(0xe0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x40, sp), d0
@@ -75620,7 +75629,7 @@ HamaSelectListProc_L81d:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L821:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -75633,7 +75642,7 @@ HamaSelectListProc_L821:
 	mov	(0x34, a0), a0
 	mov	(0xe8, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x42, sp), d0
@@ -75642,7 +75651,7 @@ HamaSelectListProc_L821:
 	mov	(0xe0, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x20, sp), a0
@@ -75658,7 +75667,7 @@ HamaSelectListProc_L821:
 	exth	d2
 	movhu	(0x30, a0), d3
 	exth	d3
-	movhu	(data_97910E08), d0
+	movhu	(HamaSelectListProc_L3c9_Table), d0
 	nop
 	nop
 	mul	d2, d0
@@ -75672,8 +75681,8 @@ HamaSelectListProc_L821:
 	exthu	d0
 	call	func_97802F10, 0, 0
 	mov	(0x2c, sp), d0
-	mov	d0, (data_97910DDC)
-	mov	(data_979126B4), a0
+	mov	d0, (HamaSelectListProc_L821_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -75688,13 +75697,13 @@ HamaSelectListProc_L821:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L8de:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x20, sp), a0
@@ -75709,7 +75718,7 @@ HamaSelectListProc_L8de:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L91a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -75721,7 +75730,7 @@ HamaSelectListProc_L91a:
 	clr	d0
 	jmp	HamaSelectListProc_Laf1
 HamaSelectListProc_L938:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -75731,7 +75740,7 @@ HamaSelectListProc_L938:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x44, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -75740,7 +75749,7 @@ HamaSelectListProc_L938:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
@@ -75825,7 +75834,7 @@ HamaSelectListProc_La04:
 	add	-0x13, d1
 	movhu	d1, (0x44, sp)
 HamaSelectListProc_La11:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x44, sp), d0
@@ -75840,7 +75849,7 @@ HamaSelectListProc_La11:
 	bne	HamaSelectListProc_La3a
 	bra	HamaSelectListProc_La52
 HamaSelectListProc_La3a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xe8, sp), d0
@@ -75855,7 +75864,7 @@ HamaSelectListProc_La52:
 	bne	HamaSelectListProc_La5d
 	bra	HamaSelectListProc_Laa7
 HamaSelectListProc_La5d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x30, sp), d0
@@ -75863,7 +75872,7 @@ HamaSelectListProc_La5d:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x30, sp), d0
@@ -75871,7 +75880,7 @@ HamaSelectListProc_La5d:
 	mov	(0xe0, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -75880,13 +75889,13 @@ HamaSelectListProc_Laa7:
 	clr	d0
 	bra	HamaSelectListProc_Laf1
 HamaSelectListProc_Laaa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xe0, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x20, sp), a1
@@ -75896,7 +75905,7 @@ HamaSelectListProc_Laaa:
 	mov	(0xe4, sp), d1
 	calls	(a0)
 HamaSelectListProc_Lad9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xe8, sp), d0
@@ -76004,7 +76013,7 @@ HamaSelectFileListProc_L104:
 HamaSelectFileListProc_L113:
 	jmp	HamaSelectFileListProc_L1275
 HamaSelectFileListProc_L116:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -76012,7 +76021,7 @@ HamaSelectFileListProc_L116:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -76023,7 +76032,7 @@ HamaSelectFileListProc_L116:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L156:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -76031,7 +76040,7 @@ HamaSelectFileListProc_L156:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -76046,7 +76055,7 @@ HamaSelectFileListProc_L156:
 	bne	HamaSelectFileListProc_L19b
 	bra	HamaSelectFileListProc_L1e7
 HamaSelectFileListProc_L19b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -76054,7 +76063,7 @@ HamaSelectFileListProc_L19b:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -76062,18 +76071,18 @@ HamaSelectFileListProc_L19b:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
 	calls	(a0)
 HamaSelectFileListProc_L1e7:
-	mov	(data_97910E0C), d0
+	mov	(HamaSelectFileListProc_L1e7_Var), d0
 	cmp	0, d0
 	bne	HamaSelectFileListProc_L1f3
 	bra	HamaSelectFileListProc_L218
 HamaSelectFileListProc_L1f3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -76082,9 +76091,9 @@ HamaSelectFileListProc_L1f3:
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 	clr	d0
-	mov	d0, (data_97910E0C)
+	mov	d0, (HamaSelectFileListProc_L1e7_Var)
 HamaSelectFileListProc_L218:
-	movhu	(data_97910DDC), d0
+	movhu	(HamaSelectListProc_L821_Var), d0
 	exthu	d0
 	call	func_97802F10, 0, 0
 	mov	(0x2c, sp), a0
@@ -76092,7 +76101,7 @@ HamaSelectFileListProc_L218:
 	movhu	(a0), d0
 	exthu	d0
 	call	func_97802F34, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -76100,7 +76109,7 @@ HamaSelectFileListProc_L218:
 	mov	FileSfxBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x2c, sp), a1
@@ -76112,7 +76121,7 @@ HamaSelectFileListProc_L218:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L276:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -76120,7 +76129,7 @@ HamaSelectFileListProc_L276:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -76132,7 +76141,7 @@ HamaSelectFileListProc_L276:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L2b3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -76140,7 +76149,7 @@ HamaSelectFileListProc_L2b3:
 	mov	(0x108, sp), d0
 	mov	(0x10c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -76160,7 +76169,7 @@ HamaSelectFileListProc_L2b3:
 	bge	HamaSelectFileListProc_L304
 	jmp	HamaSelectFileListProc_L3bc
 HamaSelectFileListProc_L304:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -76209,7 +76218,7 @@ HamaSelectFileListProc_L34d:
 	beq	HamaSelectFileListProc_L374
 	bra	HamaSelectFileListProc_L38f
 HamaSelectFileListProc_L374:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -76220,7 +76229,7 @@ HamaSelectFileListProc_L374:
 	calls	(a2)
 	bra	HamaSelectFileListProc_L3a7
 HamaSelectFileListProc_L38f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x9c, a0), a2
 	mov	sp, a0
@@ -76250,7 +76259,7 @@ HamaSelectFileListProc_L3bc:
 	add	0x64, a0
 	mov	1, d1
 	call	func_9780229B, 0, 0x48
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	BigFont_DirBox2_id, d0
@@ -76280,7 +76289,7 @@ HamaSelectFileListProc_L3bc:
 	mov	d1, (0xc, sp)
 	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0x5e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -76298,7 +76307,7 @@ HamaSelectFileListProc_L3bc:
 	clr	d0
 	mov	0xf9, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	BigFont_DirNr_id, d0
@@ -76334,11 +76343,11 @@ HamaSelectFileListProc_L3bc:
 	mov	d0, (8, sp)
 	mov	Str_03i_2, d0
 	mov	d0, (0xc, sp)
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	inc	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -76359,7 +76368,7 @@ HamaSelectFileListProc_L3bc:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L50d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -76371,7 +76380,7 @@ HamaSelectFileListProc_L50d:
 	beq	HamaSelectFileListProc_L52d
 	bra	HamaSelectFileListProc_L537
 HamaSelectFileListProc_L52d:
-	mov	(data_978A4ABC), d0
+	mov	(HamaSelectFileListProc_L52d_Var), d0
 	mov	d0, (0x34, sp)
 	bra	HamaSelectFileListProc_L53f
 HamaSelectFileListProc_L537:
@@ -76390,7 +76399,7 @@ HamaSelectFileListProc_L54b:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L54f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x108, sp), d0
@@ -76426,7 +76435,7 @@ HamaSelectFileListProc_L54f:
 HamaSelectFileListProc_L5a7:
 	mov	0x20, d0
 	mov	d0, (0x14, sp)
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	movhu	(0x42, sp), d1
 	mov	sp, a0
 	add	0x80, a0
@@ -76511,7 +76520,7 @@ HamaSelectFileListProc_L603:
 	call	LibDiv32, 0, 0
 	add	d0, d2
 	movhu	d2, (0x5e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x2c, sp), a1
@@ -76519,7 +76528,7 @@ HamaSelectFileListProc_L603:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, a3
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x15c, a0), a0
 	mov	(0x2c, sp), a1
@@ -76527,7 +76536,7 @@ HamaSelectFileListProc_L603:
 	mov	d1, d0
 	calls	(a0)
 	mov	d0, d2
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x2c, sp), a1
@@ -76567,14 +76576,14 @@ HamaSelectFileListProc_L6f8:
 	beq	HamaSelectFileListProc_L704
 	bra	HamaSelectFileListProc_L74b
 HamaSelectFileListProc_L704:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
 	add	0xe8, a0
 	mov	0xff, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -76593,7 +76602,7 @@ HamaSelectFileListProc_L704:
 	calls	(a2)
 	jmp	HamaSelectFileListProc_L85d
 HamaSelectFileListProc_L74b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x2c, sp), a0
@@ -76603,7 +76612,7 @@ HamaSelectFileListProc_L74b:
 	add	0xe8, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -76624,7 +76633,7 @@ HamaSelectFileListProc_L74b:
 	mov	d3, d1
 	mov	d2, d0
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -76640,7 +76649,7 @@ HamaSelectFileListProc_L7b3:
 	beq	HamaSelectFileListProc_L7bf
 	bra	HamaSelectFileListProc_L80f
 HamaSelectFileListProc_L7bf:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x2c, sp), a0
@@ -76650,7 +76659,7 @@ HamaSelectFileListProc_L7bf:
 	add	0xe8, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -76673,7 +76682,7 @@ HamaSelectFileListProc_L7bf:
 	calls	(a2)
 	bra	HamaSelectFileListProc_L85d
 HamaSelectFileListProc_L80f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x2c, sp), a0
@@ -76683,7 +76692,7 @@ HamaSelectFileListProc_L80f:
 	add	0xe8, a0
 	mov	d1, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -76722,12 +76731,12 @@ HamaSelectFileListProc_L864:
 	bge	HamaSelectFileListProc_L87b
 	jmp	HamaSelectFileListProc_L5a7
 HamaSelectFileListProc_L87b:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	mov	sp, a0
 	add	0x64, a0
 	mov	1, d1
 	call	func_9780229B, 0, 0x48
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	BigFont_DirBox2_id, d0
@@ -76757,7 +76766,7 @@ HamaSelectFileListProc_L87b:
 	mov	d1, (0xc, sp)
 	call	LibF64ToI16_entry, [d3,a3], 0x10
 	movhu	d0, (0x5e, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	Str_empty_419, d0
@@ -76773,7 +76782,7 @@ HamaSelectFileListProc_L87b:
 	clr	d0
 	mov	0xf9, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -76791,7 +76800,7 @@ HamaSelectFileListProc_L87b:
 	clr	d0
 	mov	0xf9, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	BigFont_DirNr_id, d0
@@ -76827,11 +76836,11 @@ HamaSelectFileListProc_L87b:
 	mov	d0, (8, sp)
 	mov	Str_03i, d0
 	mov	d0, (0xc, sp)
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	inc	d0
 	mov	d0, (0x10, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	Str_empty_418, d0
@@ -76847,7 +76856,7 @@ HamaSelectFileListProc_L87b:
 	clr	d0
 	mov	0xf9, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	sp, a0
@@ -76868,7 +76877,7 @@ HamaSelectFileListProc_L87b:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_La1a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -76883,7 +76892,7 @@ HamaSelectFileListProc_La1a:
 	exth	d0
 	add	d0, d1
 	movhu	d1, (0x4c, sp)
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	cmp	0, d0
 	bhi	HamaSelectFileListProc_La52
 	jmp	HamaSelectFileListProc_Lb08
@@ -76894,11 +76903,11 @@ HamaSelectFileListProc_La52:
 	blt	HamaSelectFileListProc_La5d
 	jmp	HamaSelectFileListProc_Lb08
 HamaSelectFileListProc_La5d:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	mov	1, d1
 	sub	d1, d0
-	mov	d0, (data_97910DDC)
-	mov	(data_979126B4), a0
+	mov	d0, (HamaSelectListProc_L821_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -76917,7 +76926,7 @@ HamaSelectFileListProc_La5d:
 	mov	-1, d0
 	add	d2, d0
 	movhu	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -76925,7 +76934,7 @@ HamaSelectFileListProc_La5d:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x2c, sp), a1
@@ -76941,7 +76950,7 @@ HamaSelectFileListProc_La5d:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -76950,7 +76959,7 @@ HamaSelectFileListProc_La5d:
 	mov	MT_ChangeSelNum, d1
 	calls	(a0)
 HamaSelectFileListProc_Lb08:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	cmp	0xef, d0
 	bcs	HamaSelectFileListProc_Lb17
 	jmp	HamaSelectFileListProc_Lbb8
@@ -76969,10 +76978,10 @@ HamaSelectFileListProc_Lb17:
 	bge	HamaSelectFileListProc_Lb2f
 	jmp	HamaSelectFileListProc_Lbb8
 HamaSelectFileListProc_Lb2f:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	inc	d0
-	mov	d0, (data_97910DDC)
-	mov	(data_979126B4), a0
+	mov	d0, (HamaSelectListProc_L821_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -76982,7 +76991,7 @@ HamaSelectFileListProc_Lb2f:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -76990,7 +76999,7 @@ HamaSelectFileListProc_Lb2f:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -76998,7 +77007,7 @@ HamaSelectFileListProc_Lb2f:
 	mov	(0x108, sp), d0
 	mov	MT_SetSelNum, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -77027,7 +77036,7 @@ HamaSelectFileListProc_Lbc2:
 	blt	HamaSelectFileListProc_Lbd9
 	bra	HamaSelectFileListProc_Lbfc
 HamaSelectFileListProc_Lbd9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x4c, sp), d0
@@ -77065,7 +77074,7 @@ HamaSelectFileListProc_Lc12:
 	mov	d0, d1
 	add	d2, d1
 	movhu	d1, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -77073,7 +77082,7 @@ HamaSelectFileListProc_Lc12:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x4c, sp), d0
@@ -77120,7 +77129,7 @@ HamaSelectFileListProc_Lca2:
 	mul	d2, d3
 	sub	d3, d1
 	movhu	d1, (0x4c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -77128,7 +77137,7 @@ HamaSelectFileListProc_Lca2:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x4c, sp), d0
@@ -77141,7 +77150,7 @@ HamaSelectFileListProc_Ld04:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_Ld08:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -77154,7 +77163,7 @@ HamaSelectFileListProc_Ld08:
 	mov	(0x34, a0), a0
 	mov	(0x110, sp), d0
 	movhu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x4e, sp), d0
@@ -77163,7 +77172,7 @@ HamaSelectFileListProc_Ld08:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x2c, sp), a0
@@ -77174,7 +77183,7 @@ HamaSelectFileListProc_Ld08:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a1)
-	movhu	(data_97910DDC), d0
+	movhu	(HamaSelectListProc_L821_Var), d0
 	exthu	d0
 	call	func_97802F10, 0, 0
 	mov	(0x2c, sp), a0
@@ -77183,7 +77192,7 @@ HamaSelectFileListProc_Ld08:
 	exthu	d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -77191,7 +77200,7 @@ HamaSelectFileListProc_Ld08:
 	mov	FileSfxBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -77206,13 +77215,13 @@ HamaSelectFileListProc_Ld08:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_Lde0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
 	calls	(a0)
 	mov	a0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -77227,7 +77236,7 @@ HamaSelectFileListProc_Lde0:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_Le1e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -77239,7 +77248,7 @@ HamaSelectFileListProc_Le1e:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_Le40:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -77249,7 +77258,7 @@ HamaSelectFileListProc_Le40:
 	calls	(a0)
 	clr	d0
 	movhu	d0, (0x50, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -77258,7 +77267,7 @@ HamaSelectFileListProc_Le40:
 	mov	MT_GetIndex, d1
 	calls	(a0)
 	mov	d0, (0x3c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
@@ -77330,7 +77339,7 @@ HamaSelectFileListProc_Lf0e:
 	bra	HamaSelectFileListProc_Lf27
 HamaSelectFileListProc_Lf1b:
 	mov	1, d0
-	mov	d0, (data_97910E0C)
+	mov	d0, (HamaSelectFileListProc_L1e7_Var)
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_Lf27:
@@ -77341,7 +77350,7 @@ HamaSelectFileListProc_Lf27:
 	beq	HamaSelectFileListProc_Lf34
 	bra	HamaSelectFileListProc_Lf5c
 HamaSelectFileListProc_Lf34:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -77363,7 +77372,7 @@ HamaSelectFileListProc_Lf5c:
 	beq	HamaSelectFileListProc_Lf69
 	bra	HamaSelectFileListProc_Lf91
 HamaSelectFileListProc_Lf69:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -77387,7 +77396,7 @@ HamaSelectFileListProc_Lf91:
 HamaSelectFileListProc_Lf9e:
 	mov	1, d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -77405,16 +77414,16 @@ HamaSelectFileListProc_Lfc9:
 	beq	HamaSelectFileListProc_Lfd7
 	jmp	HamaSelectFileListProc_L1079
 HamaSelectFileListProc_Lfd7:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	cmp	0, d0
 	bhi	HamaSelectFileListProc_Lfe4
 	jmp	HamaSelectFileListProc_L1075
 HamaSelectFileListProc_Lfe4:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	mov	1, d1
 	sub	d1, d0
-	mov	d0, (data_97910DDC)
-	movhu	(data_97910DDC), d0
+	mov	d0, (HamaSelectListProc_L821_Var)
+	movhu	(HamaSelectListProc_L821_Var), d0
 	exthu	d0
 	call	func_97802F10, 0, 0
 	mov	(0x2c, sp), a0
@@ -77423,7 +77432,7 @@ HamaSelectFileListProc_Lfe4:
 	exthu	d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -77431,7 +77440,7 @@ HamaSelectFileListProc_Lfe4:
 	mov	FileSfxBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -77439,7 +77448,7 @@ HamaSelectFileListProc_Lfe4:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -77458,15 +77467,15 @@ HamaSelectFileListProc_L1079:
 	beq	HamaSelectFileListProc_L1087
 	jmp	HamaSelectFileListProc_L1128
 HamaSelectFileListProc_L1087:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	cmp	0xef, d0
 	bcs	HamaSelectFileListProc_L1096
 	jmp	HamaSelectFileListProc_L1124
 HamaSelectFileListProc_L1096:
-	mov	(data_97910DDC), d0
+	mov	(HamaSelectListProc_L821_Var), d0
 	inc	d0
-	mov	d0, (data_97910DDC)
-	movhu	(data_97910DDC), d0
+	mov	d0, (HamaSelectListProc_L821_Var)
+	movhu	(HamaSelectListProc_L821_Var), d0
 	exthu	d0
 	call	func_97802F10, 0, 0
 	mov	(0x2c, sp), a0
@@ -77475,7 +77484,7 @@ HamaSelectFileListProc_L1096:
 	exthu	d0
 	call	func_97802F34, 0, 0
 	call	func_9781EA5D_entry, 0, 8
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -77483,7 +77492,7 @@ HamaSelectFileListProc_L1096:
 	mov	FileSfxBox_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -77491,7 +77500,7 @@ HamaSelectFileListProc_L1096:
 	mov	(0x108, sp), d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -77506,7 +77515,7 @@ HamaSelectFileListProc_L1128:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L112c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	movhu	(0x50, sp), d0
@@ -77521,7 +77530,7 @@ HamaSelectFileListProc_L112c:
 	bne	HamaSelectFileListProc_L1157
 	bra	HamaSelectFileListProc_L1175
 HamaSelectFileListProc_L1157:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0x110, sp), d0
@@ -77536,7 +77545,7 @@ HamaSelectFileListProc_L1175:
 	bne	HamaSelectFileListProc_L1180
 	bra	HamaSelectFileListProc_L11ce
 HamaSelectFileListProc_L1180:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	mov	(0x3c, sp), d0
@@ -77544,7 +77553,7 @@ HamaSelectFileListProc_L1180:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	mov	(0x3c, sp), d0
@@ -77552,7 +77561,7 @@ HamaSelectFileListProc_L1180:
 	mov	(0x108, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -77561,7 +77570,7 @@ HamaSelectFileListProc_L11ce:
 	clr	d0
 	jmp	HamaSelectFileListProc_L1293
 HamaSelectFileListProc_L11d2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -77569,7 +77578,7 @@ HamaSelectFileListProc_L11d2:
 	mov	WARNING_DIR_DEL_id, d0
 	mov	EV_SHOW, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	(0x2c, sp), a0
@@ -77585,7 +77594,7 @@ HamaSelectFileListProc_L11d2:
 HamaSelectFileListProc_L1217:
 	mov	1, d0
 	mov	d0, (0x979a2460)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -77595,13 +77604,13 @@ HamaSelectFileListProc_L1217:
 	calls	(a0)
 	bra	HamaSelectFileListProc_L1275
 HamaSelectFileListProc_L1240:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x108, sp), d0
 	calls	(a0)
 	mov	a0, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	(0x2c, sp), a1
@@ -77611,7 +77620,7 @@ HamaSelectFileListProc_L1240:
 	mov	(0x10c, sp), d1
 	calls	(a0)
 HamaSelectFileListProc_L1275:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x110, sp), d0
@@ -77642,7 +77651,7 @@ AboutNHelpScreen_L21:
 	mov	1, d0
 	jmp	AboutNHelpScreen_L135
 AboutNHelpScreen_L26:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x3c, sp), d0
@@ -77653,7 +77662,7 @@ AboutNHelpScreen_L26:
 	mov	0x97916808, a0
 	mov	0x32, d0
 	call	func_97800F69_entry, 0, 0x14
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97916808, d0
@@ -77668,7 +77677,7 @@ AboutNHelpScreen_L26:
 	mov	Str_empty_417, a1
 	call	func_9780A35F_entry, [d2,a2,a3], 0xc
 	mov	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	d0, a0
@@ -77694,7 +77703,7 @@ AboutNHelpScreen_L26:
 	mov	(0x28, sp), d0
 	mov	d0, (0x18, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x9791686c, d0
@@ -77703,7 +77712,7 @@ AboutNHelpScreen_L26:
 	mov	MT_SetString, d1
 	calls	(a0)
 AboutNHelpScreen_L11d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x3c, sp), d0
@@ -77741,7 +77750,7 @@ KssLabelProc_L2e:
 KssLabelProc_L3b:
 	jmp	KssLabelProc_L291
 KssLabelProc_L3e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -77749,7 +77758,7 @@ KssLabelProc_L3e:
 	mov	(0x48, sp), d0
 	mov	(0x4c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x48, sp), d0
@@ -77764,13 +77773,13 @@ KssLabelProc_L3e:
 	beq	KssLabelProc_L7c
 	bra	KssLabelProc_Le0
 KssLabelProc_L7c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x48, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x24, sp), a0
@@ -77789,7 +77798,7 @@ KssLabelProc_L7c:
 	add	d2, d1
 	add	4, d1
 	movhu	d1, (0x12, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x24, sp), a1
@@ -77808,7 +77817,7 @@ KssLabelProc_Le0:
 	clr	d0
 	jmp	KssLabelProc_L2a9
 KssLabelProc_Le4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -77816,7 +77825,7 @@ KssLabelProc_Le4:
 	mov	(0x48, sp), d0
 	mov	(0x4c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x48, sp), d0
@@ -77836,7 +77845,7 @@ KssLabelProc_L126:
 	clr	d0
 	jmp	KssLabelProc_L2a9
 KssLabelProc_L12a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -77844,20 +77853,20 @@ KssLabelProc_L12a:
 	mov	(0x48, sp), d0
 	mov	(0x4c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x48, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0x48, sp), d0
 	mov	sp, a0
 	add	0x28, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x24, sp), a0
@@ -77905,7 +77914,7 @@ KssLabelProc_L1b3:
 	beq	KssLabelProc_L1d6
 	bra	KssLabelProc_L20b
 KssLabelProc_L1d6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x24, sp), a0
@@ -77929,7 +77938,7 @@ KssLabelProc_L1d6:
 	calls	(a2)
 	bra	KssLabelProc_L23a
 KssLabelProc_L20b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x50, sp), a0
@@ -77953,7 +77962,7 @@ KssLabelProc_L23a:
 	clr	d0
 	bra	KssLabelProc_L2a9
 KssLabelProc_L23d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x48, sp), d0
@@ -77977,7 +77986,7 @@ KssLabelProc_L268:
 	beq	KssLabelProc_L273
 	bra	KssLabelProc_L28e
 KssLabelProc_L273:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -77989,7 +77998,7 @@ KssLabelProc_L28e:
 	clr	d0
 	bra	KssLabelProc_L2a9
 KssLabelProc_L291:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x50, sp), d0
@@ -78032,7 +78041,7 @@ KssTextProc_L45:
 KssTextProc_L54:
 	jmp	KssTextProc_L56a
 KssTextProc_L57:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x490, sp), d0
@@ -78040,7 +78049,7 @@ KssTextProc_L57:
 	mov	(0x488, sp), d0
 	mov	(0x48c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x488, sp), d0
@@ -78052,7 +78061,7 @@ KssTextProc_L57:
 	clr	d0
 	jmp	KssTextProc_L588
 KssTextProc_L96:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x490, sp), d0
@@ -78060,7 +78069,7 @@ KssTextProc_L96:
 	mov	(0x488, sp), d0
 	mov	(0x48c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x488, sp), d0
@@ -78080,7 +78089,7 @@ KssTextProc_Le2:
 	clr	d0
 	jmp	KssTextProc_L588
 KssTextProc_Le6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x490, sp), d0
@@ -78088,15 +78097,15 @@ KssTextProc_Le6:
 	mov	(0x488, sp), d0
 	mov	(0x48c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x488, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
 	clr	d0
-	mov	d0, (data_97910E10)
-	mov	(data_979126B4), a0
+	mov	d0, (KssTextProc_Le6_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	(0x24, sp), a0
@@ -78109,7 +78118,7 @@ KssTextProc_Le6:
 	clr	d0
 	jmp	KssTextProc_L588
 KssTextProc_L147:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	clr	d0
@@ -78117,18 +78126,18 @@ KssTextProc_L147:
 	mov	(0x488, sp), d0
 	mov	(0x48c, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x488, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_97910E10), d0
+	mov	(KssTextProc_Le6_Var), d0
 	cmp	0, d0
 	bne	KssTextProc_L184
 	bra	KssTextProc_L1a1
 KssTextProc_L184:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	clr	d0
@@ -78138,14 +78147,14 @@ KssTextProc_L184:
 	calls	(a0)
 KssTextProc_L1a1:
 	mov	1, d0
-	mov	d0, (data_97910E10)
+	mov	d0, (KssTextProc_Le6_Var)
 	mov	(0x24, sp), a0
 	mov	(0x38, a0), a0
 	mov	(0x490, sp), d0
 	mov	d0, (a0)
 	mov	(0x488, sp), d0
 	call	func_97830A01_entry, [d2], 0x10
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x488, sp), d0
@@ -78280,7 +78289,7 @@ KssTextProc_L2bf:
 	movbu	d0, (0x5c, sp)
 	clr	d0
 	movbu	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x24, sp), a0
@@ -78370,7 +78379,7 @@ KssTextProc_L352:
 	bne	KssTextProc_L365
 	jmp	KssTextProc_L281
 KssTextProc_L365:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x24, sp), a1
@@ -78521,7 +78530,7 @@ KssTextProc_L4ba:
 	movhu	(0x66, sp), d0
 	movhu	d0, (0x46e, sp)
 KssTextProc_L4c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	(0x54, sp), d0
@@ -78580,7 +78589,7 @@ KssTextProc_L531:
 	clr	d0
 	bra	KssTextProc_L588
 KssTextProc_L534:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x488, sp), d0
@@ -78601,7 +78610,7 @@ KssTextProc_L567:
 	clr	d0
 	bra	KssTextProc_L588
 KssTextProc_L56a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x490, sp), d0
@@ -78619,7 +78628,7 @@ func_97830A01:
 
 func_97830A01_entry:
 	mov	d0, (0x18, sp)
-	mov	(data_97910E14), d0
+	mov	(func_97830A01_Table), d0
 	cmp	0, d0
 	beq	func_97830A01_entry_Le
 	bra	func_97830A01_entry_L36
@@ -78643,7 +78652,7 @@ func_97830A01_entry_L24:
 	bra	func_97830A01_entry_L13
 func_97830A01_entry_L2e:
 	mov	1, d0
-	mov	d0, (data_97910E14)
+	mov	d0, (func_97830A01_Table)
 func_97830A01_entry_L36:
 	mov	(0x18, sp), d0
 	sub	0x770000, d0
@@ -78780,7 +78789,7 @@ KssXLyricsBoxProc_Lcb:
 KssXLyricsBoxProc_Ld8:
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_Ldb:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -78796,7 +78805,7 @@ KssXLyricsBoxProc_Lff:
 	mov	1, d0
 	mov	d0, (a0)
 	mov	(0x4c, sp), d0
-	mov	d0, (data_979125B0)
+	mov	d0, (KssXLyricsBoxProc_Lff_Var)
 	mov	1, d0
 	mov	d0, (0x979a3fbc)
 	jmp	KssXLyricsBoxProc_Lae6
@@ -78805,7 +78814,7 @@ KssXLyricsBoxProc_L11e:
 	mov	d0, (0x979a3fbc)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_L128:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
@@ -78815,10 +78824,10 @@ KssXLyricsBoxProc_L128:
 	clr	d0
 	mov	d0, (a0)
 	mov	-1, d0
-	mov	d0, (data_979125B0)
+	mov	d0, (KssXLyricsBoxProc_Lff_Var)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_L150:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -78831,7 +78840,7 @@ KssXLyricsBoxProc_L150:
 	bne	KssXLyricsBoxProc_L174
 	bra	KssXLyricsBoxProc_L1c6
 KssXLyricsBoxProc_L174:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -78839,7 +78848,7 @@ KssXLyricsBoxProc_L174:
 	mov	(0x4c, sp), d0
 	mov	EV_DRWSTRGACT, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -78847,7 +78856,7 @@ KssXLyricsBoxProc_L174:
 	mov	(0x4c, sp), d0
 	mov	EV_SETPOSITION, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -78859,7 +78868,7 @@ KssXLyricsBoxProc_L1c6:
 	clr	d0
 	jmp	KssXLyricsBoxProc_Lafe
 KssXLyricsBoxProc_L1ca:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -78872,7 +78881,7 @@ KssXLyricsBoxProc_L1ca:
 	bne	KssXLyricsBoxProc_L1ee
 	bra	KssXLyricsBoxProc_L20c
 KssXLyricsBoxProc_L1ee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -78882,7 +78891,7 @@ KssXLyricsBoxProc_L1ee:
 	calls	(a0)
 	jmp	KssXLyricsBoxProc_L2e4
 KssXLyricsBoxProc_L20c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_No_Custom_Lyrics_loaded, d0
@@ -78890,7 +78899,7 @@ KssXLyricsBoxProc_L20c:
 	mov	TlxSongName_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_416, d0
@@ -78898,7 +78907,7 @@ KssXLyricsBoxProc_L20c:
 	mov	TlxInterpreter_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_415, d0
@@ -78906,7 +78915,7 @@ KssXLyricsBoxProc_L20c:
 	mov	TlxTimeSig_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_414, d0
@@ -78914,7 +78923,7 @@ KssXLyricsBoxProc_L20c:
 	mov	TlxInfo_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_413, d0
@@ -78922,7 +78931,7 @@ KssXLyricsBoxProc_L20c:
 	mov	TlxChord_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_412, d0
@@ -78934,13 +78943,13 @@ KssXLyricsBoxProc_L2e4:
 	clr	d0
 	jmp	KssXLyricsBoxProc_Lafe
 KssXLyricsBoxProc_L2e8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x4c, sp), d0
 	calls	(a0)
 	mov	a0, (0x97916cd4)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	clr	d0
@@ -78972,7 +78981,7 @@ KssXLyricsBoxProc_L322:
 	mov	0x979a4096, a0
 	movbu	(d0, a0), d0
 	movhu	d0, (0x36, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_411, d0
@@ -79002,7 +79011,7 @@ KssXLyricsBoxProc_L322:
 	bgt	KssXLyricsBoxProc_L3c5
 	bra	KssXLyricsBoxProc_L40b
 KssXLyricsBoxProc_L3c5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x30, sp), d0
@@ -79026,7 +79035,7 @@ KssXLyricsBoxProc_L3c5:
 	calls	(a2)
 	bra	KssXLyricsBoxProc_L44f
 KssXLyricsBoxProc_L40b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x30, sp), d0
@@ -79064,7 +79073,7 @@ KssXLyricsBoxProc_L465:
 	beq	KssXLyricsBoxProc_L46e
 	jmp	KssXLyricsBoxProc_L546
 KssXLyricsBoxProc_L46e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3e3d, d0
@@ -79072,7 +79081,7 @@ KssXLyricsBoxProc_L46e:
 	mov	TlxSongName_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3dd9, d0
@@ -79080,7 +79089,7 @@ KssXLyricsBoxProc_L46e:
 	mov	TlxInterpreter_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3f9b, d0
@@ -79088,7 +79097,7 @@ KssXLyricsBoxProc_L46e:
 	mov	TlxTimeSig_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3ea1, d0
@@ -79096,7 +79105,7 @@ KssXLyricsBoxProc_L46e:
 	mov	TlxInfo_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3dd2, d0
@@ -79104,7 +79113,7 @@ KssXLyricsBoxProc_L46e:
 	mov	TlxChord_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3fa5, d0
@@ -79128,7 +79137,7 @@ KssXLyricsBoxProc_L552:
 KssXLyricsBoxProc_L55a:
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_L55d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	0x979a3509, d0
@@ -79146,7 +79155,7 @@ KssXLyricsBoxProc_L55d:
 	calls	(a2)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_L59e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	0x979a3509, d0
@@ -79204,7 +79213,7 @@ KssXLyricsBoxProc_L64b:
 	mov	(0x9798fda0), d0
 	mov	d0, (0x9798fdb4)
 KssXLyricsBoxProc_L657:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x4c, sp), d0
@@ -79230,14 +79239,14 @@ KssXLyricsBoxProc_L657:
 	movhu	(0x9798fd9c), d0
 	sub	d0, d1
 	movhu	d1, (0x97916cde)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a1
 	mov	(0x9798fdb4), d0
 	mov	Str_empty_410, a0
 	calls	(a1)
 	movhu	d0, (0x9798fdb2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x9798fdb4), d0
@@ -79378,7 +79387,7 @@ KssXLyricsBoxProc_L829:
 	mov	d0, d1
 	call	func_97831F65_entry, [d2], 0x9c
 	movhu	d0, (0x979a4186)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -79397,7 +79406,7 @@ KssXLyricsBoxProc_L87c:
 	call	func_97831CA9_entry, 0, 0x1c
 	clr	d0
 	mov	d0, (0x97916ce0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -79432,12 +79441,12 @@ KssXLyricsBoxProc_L8d8:
 	movhu	d0, (0x979a2cb0)
 	clr	d0
 	movhu	d0, (0x979a2cb2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	mov	EV_TICKS, d1
 	calls	(a0)
 KssXLyricsBoxProc_L917:
@@ -79475,7 +79484,7 @@ KssXLyricsBoxProc_L973:
 	movhu	(0x979a3fb4), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3fa5, d0
@@ -79485,7 +79494,7 @@ KssXLyricsBoxProc_L973:
 	calls	(a0)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_L9c1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	1, d0
@@ -79497,7 +79506,7 @@ KssXLyricsBoxProc_L9c1:
 	mov	d0, d1
 	call	func_97831F65_entry, [d2], 0x9c
 	movhu	d0, (0x979a4186)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -79507,7 +79516,7 @@ KssXLyricsBoxProc_L9c1:
 	calls	(a0)
 	jmp	KssXLyricsBoxProc_Lae6
 KssXLyricsBoxProc_La08:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x54, sp), d0
@@ -79537,7 +79546,7 @@ KssXLyricsBoxProc_La40:
 KssXLyricsBoxProc_La46:
 	jmp	KssXLyricsBoxProc_Lae3
 KssXLyricsBoxProc_La49:
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	cmp	0, d0
 	beq	KssXLyricsBoxProc_La55
 	bra	KssXLyricsBoxProc_La64
@@ -79547,7 +79556,7 @@ KssXLyricsBoxProc_La55:
 	clr	d0
 	jmp	KssXLyricsBoxProc_Lafe
 KssXLyricsBoxProc_La64:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -79598,7 +79607,7 @@ KssXLyricsBoxProc_Lae3:
 	clr	d0
 	bra	KssXLyricsBoxProc_Lafe
 KssXLyricsBoxProc_Lae6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x54, sp), d0
@@ -79618,12 +79627,12 @@ func_978315A6:
 	clr	d0
 	mov	d0, (0x979a2cbc)
 	clr	d0
-	movbu	d0, (data_979125AC)
+	movbu	d0, (func_978315A6_Table)
 	ret	0, 0x14
 
 func_978315CB:
 	add	-8, sp
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
@@ -79636,11 +79645,11 @@ func_978315CB_L1a:
 	beq	func_978315CB_L20
 	bra	func_978315CB_L43
 func_978315CB_L20:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -79676,7 +79685,7 @@ func_97831613_entry_L22:
 	bhi	func_97831613_entry_L2f
 	bra	func_97831613_entry_L4e
 func_97831613_entry_L2f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -79738,7 +79747,7 @@ func_97831613_entry_Lbd:
 	mov	(0x979a3fc8), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x97916ce4, d0
@@ -79746,7 +79755,7 @@ func_97831613_entry_Lbd:
 	mov	TlxSongName_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_409, d0
@@ -79754,7 +79763,7 @@ func_97831613_entry_Lbd:
 	mov	TlxInterpreter_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_408, d0
@@ -79762,7 +79771,7 @@ func_97831613_entry_Lbd:
 	mov	TlxChord_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_407, d0
@@ -79770,7 +79779,7 @@ func_97831613_entry_Lbd:
 	mov	TlxInfo_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_406, d0
@@ -79778,7 +79787,7 @@ func_97831613_entry_Lbd:
 	mov	TlxMeasure_id, d0
 	mov	MT_ParaDraw, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_empty_405, d0
@@ -79841,12 +79850,12 @@ func_97831613_entry_L230:
 	beq	func_97831613_entry_L23a
 	jmp	func_97831613_entry_L5fd
 func_97831613_entry_L23a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	mov	EV_Initlyrics, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5fd
@@ -79898,12 +79907,12 @@ func_97831613_entry_L2dd:
 	beq	func_97831613_entry_L2e6
 	bra	func_97831613_entry_L305
 func_97831613_entry_L2e6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	mov	EV_Initlyrics, d1
 	calls	(a0)
 func_97831613_entry_L305:
@@ -79934,12 +79943,12 @@ func_97831613_entry_L305:
 	beq	func_97831613_entry_L363
 	bra	func_97831613_entry_L382
 func_97831613_entry_L363:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	mov	EV_Alldraw, d1
 	calls	(a0)
 func_97831613_entry_L382:
@@ -79987,12 +79996,12 @@ func_97831613_entry_L3ed:
 	beq	func_97831613_entry_L3f7
 	jmp	func_97831613_entry_L5e3
 func_97831613_entry_L3f7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
 	mov	d0, (0x10, sp)
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	mov	EV_Initlyrics, d1
 	calls	(a0)
 	jmp	func_97831613_entry_L5e3
@@ -80048,7 +80057,7 @@ func_97831613_entry_L495:
 	movbu	(0x979a3fb1), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3f9b, d0
@@ -80079,7 +80088,7 @@ func_97831613_entry_L517:
 	mov	0x979a3ea1, a0
 	add	0x979a3d53, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3ea1, d0
@@ -80098,7 +80107,7 @@ func_97831613_entry_L573:
 	mov	0x979a3ea1, a0
 	mov	0x979a3d53, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3ea1, d0
@@ -80111,7 +80120,7 @@ func_97831613_entry_L5ac:
 	mov	0x979a3dd2, a0
 	mov	0x979a3d53, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3dd2, d0
@@ -80342,7 +80351,7 @@ func_97831CA9_entry_L1d4:
 	movhu	(0x979a3fb4), d0
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x979a3fa5, d0
@@ -81251,7 +81260,7 @@ LFDFileSelectProc_L98:
 LFDFileSelectProc_La5:
 	jmp	LFDFileSelectProc_L92a
 LFDFileSelectProc_La8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -81259,13 +81268,13 @@ LFDFileSelectProc_La8:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xa4, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -81273,7 +81282,7 @@ LFDFileSelectProc_La8:
 	mov	(0xa4, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -81281,7 +81290,7 @@ LFDFileSelectProc_La8:
 	mov	(0xa4, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -81289,7 +81298,7 @@ LFDFileSelectProc_La8:
 	mov	0x979a477e, a0
 	mov	data_978A4C18, a1
 	call	strcpy_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81300,7 +81309,7 @@ LFDFileSelectProc_La8:
 	clr	d0
 	jmp	LFDFileSelectProc_L942
 LFDFileSelectProc_L14e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -81311,7 +81320,7 @@ LFDFileSelectProc_L14e:
 	clr	d0
 	jmp	LFDFileSelectProc_L942
 LFDFileSelectProc_L16a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -81319,13 +81328,13 @@ LFDFileSelectProc_L16a:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xa4, sp), d0
 	calls	(a0)
 	mov	a0, (0x20, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81333,7 +81342,7 @@ LFDFileSelectProc_L16a:
 	mov	(0xa4, sp), d0
 	mov	EV_Scrollline, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81373,7 +81382,7 @@ LFDFileSelectProc_L1ef:
 	exth	d0
 	add	3, d0
 	movhu	d0, (0x32, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_402, d0
@@ -81387,7 +81396,7 @@ LFDFileSelectProc_L1ef:
 	mov	3, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x979a477c), d1
@@ -81446,7 +81455,7 @@ LFDFileSelectProc_L2a3:
 	exth	d0
 	add	3, d0
 	movhu	d0, (0x32, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_401, d0
@@ -81460,7 +81469,7 @@ LFDFileSelectProc_L2a3:
 	mov	3, d0
 	mov	0xff, d1
 	calls	(a2)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	movhu	(0x979a477c), d1
@@ -81528,7 +81537,7 @@ LFDFileSelectProc_L353:
 	bgt	LFDFileSelectProc_L38b
 	bra	LFDFileSelectProc_L3b5
 LFDFileSelectProc_L38b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_mid, d0
@@ -81544,7 +81553,7 @@ LFDFileSelectProc_L38b:
 	calls	(a2)
 	bra	LFDFileSelectProc_L3dd
 LFDFileSelectProc_L3b5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_400, d0
@@ -81591,13 +81600,13 @@ LFDFileSelectProc_L3f2:
 	movhu	d0, (0x2c, sp)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x97916d20)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	0x97916d1c, a0
 	mov	0xf5, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -81613,13 +81622,13 @@ LFDFileSelectProc_L3f2:
 	movhu	d0, (0x2c, sp)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x97916d20)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	0x97916d1c, a0
 	mov	0xf5, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -81635,13 +81644,13 @@ LFDFileSelectProc_L3f2:
 	movhu	d0, (0x2c, sp)
 	movhu	(0x2c, sp), d0
 	movhu	d0, (0x97916d20)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	0x97916d1c, a0
 	mov	0xf5, d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xac, a0), a1
 	mov	sp, a0
@@ -81652,7 +81661,7 @@ LFDFileSelectProc_L3f2:
 	movhu	d0, (0x97916d1e)
 	movhu	(0x2e, sp), d0
 	movhu	d0, (0x97916d22)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	Str_empty_399, d0
@@ -81711,7 +81720,7 @@ LFDFileSelectProc_L587:
 	mov	d0, (0x14, sp)
 	call	sprintf_entry, [a2], 0x20
 LFDFileSelectProc_L5b9:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xcc, a0), a2
 	mov	sp, a0
@@ -81758,7 +81767,7 @@ LFDFileSelectProc_L646:
 	clr	d0
 	jmp	LFDFileSelectProc_L942
 LFDFileSelectProc_L64a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -81766,7 +81775,7 @@ LFDFileSelectProc_L64a:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	3, d0
@@ -81776,7 +81785,7 @@ LFDFileSelectProc_L64a:
 	calls	(a0)
 	jmp	LFDFileSelectProc_L92a
 LFDFileSelectProc_L681:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -81784,7 +81793,7 @@ LFDFileSelectProc_L681:
 	mov	(0xa4, sp), d0
 	mov	(0xa8, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	0x83, d0
@@ -81903,7 +81912,7 @@ LFDFileSelectProc_L794:
 	movhu	(0x979a477c), d0
 	add	-1, d0
 	movhu	d0, (0x979a477c)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81916,7 +81925,7 @@ LFDFileSelectProc_L7bf:
 	movhu	(0x979a4778), d0
 	add	-1, d0
 	movhu	d0, (0x979a4778)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81925,7 +81934,7 @@ LFDFileSelectProc_L7bf:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 LFDFileSelectProc_L7e8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xac, sp), d0
@@ -81956,7 +81965,7 @@ LFDFileSelectProc_L834:
 	movhu	(0x979a477c), d0
 	inc	d0
 	movhu	d0, (0x979a477c)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81969,7 +81978,7 @@ LFDFileSelectProc_L85e:
 	movhu	(0x979a4778), d0
 	inc	d0
 	movhu	d0, (0x979a4778)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -81978,7 +81987,7 @@ LFDFileSelectProc_L85e:
 	mov	MT_ParaDraw, d1
 	calls	(a0)
 LFDFileSelectProc_L886:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x400, a0), a0
 	mov	(0xac, sp), d0
@@ -81988,7 +81997,7 @@ LFDFileSelectProc_L886:
 	calls	(a0)
 	jmp	LFDFileSelectProc_L927
 LFDFileSelectProc_L8a1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
@@ -82001,7 +82010,7 @@ LFDFileSelectProc_L8b8:
 	beq	LFDFileSelectProc_L8be
 	bra	LFDFileSelectProc_L90c
 LFDFileSelectProc_L8be:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
@@ -82019,12 +82028,12 @@ LFDFileSelectProc_L8be:
 	add	0x34, a0
 	mov	Str_TLX_3, a1
 	call	strcat_entry, [a2], 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
 LFDFileSelectProc_L90c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -82036,7 +82045,7 @@ LFDFileSelectProc_L927:
 	clr	d0
 	bra	LFDFileSelectProc_L942
 LFDFileSelectProc_L92a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xac, sp), d0
@@ -82051,7 +82060,7 @@ func_97833050:
 	add	-0x194, sp
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
@@ -82064,11 +82073,11 @@ func_97833050_L1e:
 	beq	func_97833050_L25
 	jmp	func_97833050_L16b
 func_97833050_L25:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d0, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x138, a0), a0
 	calls	(a0)
@@ -82112,7 +82121,7 @@ func_97833050_La9:
 	call	func_978331C4_entry, 0, 0x84
 	mov	d0, (0x14, sp)
 func_97833050_Lb5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x140, a0), a1
 	mov	(0x1c, sp), d0
@@ -82123,7 +82132,7 @@ func_97833050_Lb5:
 	bne	func_97833050_Ld0
 	bra	func_97833050_La9
 func_97833050_Ld0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x144, a0), a0
 	mov	(0x1c, sp), d0
@@ -82170,7 +82179,7 @@ func_97833050_L14d:
 	bge	func_97833050_L15b
 	bra	func_97833050_Le8
 func_97833050_L15b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4d4, a0), a0
 	calls	(a0)
@@ -82473,7 +82482,7 @@ WaitingFunc_entry_L2e:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A4D80, a0
+	mov	WaitingFunc_entry_L2e_Table, a0
 	mov	(d0, a0), a1
 	mov	sp, a0
 	add	0x18, a0
@@ -82486,7 +82495,7 @@ WaitingFunc_entry_L2e:
 	movbu	(0x979898ec), d0
 	add	-0x31, d0
 	asl2	d0
-	mov	ptrs_978A4D80, a0
+	mov	WaitingFunc_entry_L2e_Table, a0
 	mov	(d0, a0), a0
 	call	LibStrlen, 0, 0
 	mov	d2, a0
@@ -82496,7 +82505,7 @@ WaitingFunc_entry_L2e:
 	mov	a2, a1
 	call	func_97833353_entry, 0, 0x14
 	movhu	d0, (0x97916d2e)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	sp, a0
@@ -82556,7 +82565,7 @@ AcRotStrBoxProc_L55:
 AcRotStrBoxProc_L62:
 	jmp	AcRotStrBoxProc_L2d1
 AcRotStrBoxProc_L65:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -82565,7 +82574,7 @@ AcRotStrBoxProc_L65:
 	mov	(0x30, a0), a0
 	mov	1, d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82573,7 +82582,7 @@ AcRotStrBoxProc_L65:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	mov	(0x1c, sp), a1
@@ -82586,7 +82595,7 @@ AcRotStrBoxProc_L65:
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_Lb8:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -82595,7 +82604,7 @@ AcRotStrBoxProc_Lb8:
 	mov	(0x30, a0), a0
 	clr	d0
 	mov	d0, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82603,7 +82612,7 @@ AcRotStrBoxProc_Lb8:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3ec, a0), a0
 	mov	(0x1c, sp), a1
@@ -82619,7 +82628,7 @@ AcRotStrBoxProc_Lb8:
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L113:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82627,13 +82636,13 @@ AcRotStrBoxProc_L113:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
 	calls	(a0)
 	mov	a0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	mov	(0x1c, sp), a1
@@ -82646,13 +82655,13 @@ AcRotStrBoxProc_L113:
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L15f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
 	calls	(a0)
 	mov	a0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x258, a0), a0
 	mov	(0x1c, sp), a1
@@ -82664,13 +82673,13 @@ AcRotStrBoxProc_L15f:
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L196:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
 	calls	(a0)
 	mov	a0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3ec, a0), a0
 	mov	(0x1c, sp), a1
@@ -82693,14 +82702,14 @@ AcRotStrBoxProc_L1dc:
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L1e0:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0x3c, sp), d0
 	mov	sp, a0
 	add	0x28, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -82709,7 +82718,7 @@ AcRotStrBoxProc_L1e0:
 	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	sp, a0
@@ -82717,7 +82726,7 @@ AcRotStrBoxProc_L1e0:
 	movhu	(0x24, sp), d0
 	exth	d0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82725,7 +82734,7 @@ AcRotStrBoxProc_L1e0:
 	mov	(0x3c, sp), d0
 	mov	(0x40, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3e4, a0), a0
 	mov	(0x1c, sp), a1
@@ -82741,7 +82750,7 @@ AcRotStrBoxProc_L1e0:
 	clr	d0
 	jmp	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L26c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x3c, sp), d0
@@ -82763,7 +82772,7 @@ AcRotStrBoxProc_L291:
 	mov	1, d0
 	mov	d0, (a0)
 AcRotStrBoxProc_L299:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82773,7 +82782,7 @@ AcRotStrBoxProc_L299:
 	calls	(a0)
 	bra	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L2b3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82785,7 +82794,7 @@ AcRotStrBoxProc_L2b3:
 	mov	(0x20, sp), d0
 	bra	AcRotStrBoxProc_L2e9
 AcRotStrBoxProc_L2d1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x44, sp), d0
@@ -82895,7 +82904,7 @@ func_9783384D_L51:
 	beq	func_9783384D_L65
 	bra	func_9783384D_L86
 func_9783384D_L65:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -82905,7 +82914,7 @@ func_9783384D_L65:
 	calls	(a0)
 	bra	func_9783384D_La5
 func_9783384D_L86:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -82922,7 +82931,7 @@ func_9783384D_La9:
 	beq	func_9783384D_Lb1
 	bra	func_9783384D_Ld4
 func_9783384D_Lb1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -82938,7 +82947,7 @@ func_9783384D_Ld4:
 	beq	func_9783384D_Ldc
 	bra	func_9783384D_Lfe
 func_9783384D_Ldc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -82954,7 +82963,7 @@ func_9783384D_Lfe:
 	beq	func_9783384D_L106
 	bra	func_9783384D_L128
 func_9783384D_L106:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -82970,7 +82979,7 @@ func_9783384D_L128:
 	beq	func_9783384D_L130
 	bra	func_9783384D_L152
 func_9783384D_L130:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -83010,7 +83019,7 @@ func_978339B0_entry_Lb:
 	beq	func_978339B0_entry_L16
 	bra	func_978339B0_entry_Lb
 func_978339B0_entry_L16:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a1
 	mov	sp, a0
@@ -83019,15 +83028,15 @@ func_978339B0_entry_L16:
 	mov	FN_MainSEQ_ApcToSmfCnv_SE, d0
 	clr	d1
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x11c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x11c, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5a4, a0), a0
 	mov	0x00a8000a, d0
@@ -83077,7 +83086,7 @@ func_97833A24_L53:
 	bcc	func_97833A24_L5b
 	bra	func_97833A24_L3e
 func_97833A24_L5b:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	sp, a1
@@ -83092,7 +83101,7 @@ func_97833A24_L5b:
 	beq	func_97833A24_L84
 	bra	func_97833A24_La8
 func_97833A24_L84:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	Str_No_Entry, d0
@@ -83138,7 +83147,7 @@ func_97833A24_Le6:
 	bcc	func_97833A24_Lee
 	bra	func_97833A24_Lb1
 func_97833A24_Lee:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a1
 	mov	sp, a0
@@ -83194,7 +83203,7 @@ func_97833B38_entry_L34:
 	nop
 	nop
 	mul	d0, d1
-	add	ptrs_97910E1C, d1
+	add	func_97833B38_entry_L34_Records, d1
 	mov	(0x28, sp), d0
 	mov	0x28, d2
 	nop
@@ -83214,7 +83223,7 @@ func_97833B38_entry_L59:
 	nop
 	nop
 	mul	d0, d2
-	add	ptrs_97910E1C, d2
+	add	func_97833B38_entry_L34_Records, d2
 	mov	(0x28, sp), d1
 	mov	0x28, d0
 	nop
@@ -83234,7 +83243,7 @@ func_97833B38_entry_L59:
 	nop
 	mul	d1, d0
 	mov	d0, a0
-	add	ptrs_97910E1C, a0
+	add	func_97833B38_entry_L34_Records, a0
 	mov	(0x28, sp), d0
 	mov	0x28, d1
 	nop
@@ -83786,7 +83795,7 @@ func_97833F9F_entry:
 	clr	d0
 	mov	(0x18, sp), a0
 	mov	d0, (0xc, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x1c, sp), d0
@@ -83842,7 +83851,7 @@ func_97834011:
 	bne	func_97834011_Le
 	bra	func_97834011_L23
 func_97834011_Le:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x14, sp), a0
@@ -84082,7 +84091,7 @@ func_978341C0_entry:
 	mov	a0, (0x24, sp)
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	(data_979117CC), d0
+	mov	(func_978341C0_Var), d0
 	cmp	0, d0
 	beq	func_978341C0_entry_L13
 	bra	func_978341C0_entry_L79
@@ -84124,7 +84133,7 @@ func_978341C0_entry_L5b:
 	bra	func_978341C0_entry_L23
 func_978341C0_entry_L71:
 	mov	1, d0
-	mov	d0, (data_979117CC)
+	mov	d0, (func_978341C0_Var)
 func_978341C0_entry_L79:
 	mov	0x97917d20, a0
 	mov	(0x24, sp), a1
@@ -84162,8 +84171,10 @@ func_978341C0_entry_La3:
 	ret	0, 0
 	clr	d0
 	ret	0, 0
+loc_97834285:
 	clr	d0
 	ret	0, 0
+loc_97834289:
 	add	-0x1c, sp
 	mov	a1, (0x28, sp)
 	mov	a0, (0x24, sp)
@@ -84285,6 +84296,7 @@ func_978341C0_entry_L189:
 	mov	d1, (0x964, a0)
 func_978341C0_entry_L1bc:
 	ret	0, 0x1c
+loc_97834382:
 	mov	a1, (0xc, sp)
 	mov	a1, a0
 	mov	(0xe84, a0), a1
@@ -84294,6 +84306,7 @@ func_978341C0_entry_L1bc:
 	mov	d0, (0x0001482c, a1)
 	clr	d0
 	ret	0, 0
+loc_9783439E:
 	add	-4, sp
 	mov	a0, (0xc, sp)
 	mov	(0x4c, a0), d0
@@ -85056,7 +85069,7 @@ func_97834997_entry_L1f:
 	bra	func_97834997_entry_L52
 func_97834997_entry_L38:
 	mov	(0x20, sp), a0
-	mov	data_978AF218, a1
+	mov	func_9780A35F_Var, a1
 	call	func_97833CF3_entry, 0, 0x14
 	mov	a0, (0x20, sp)
 	mov	0x20, d0
@@ -85423,7 +85436,7 @@ func_97834BA2_entry_L10e:
 	jmp	func_97834BA2_entry_L3bb
 func_97834BA2_entry_L118:
 	mov	(0x1c, sp), a0
-	mov	data_978AF350, a1
+	mov	func_9780A35F_Var_2, a1
 	call	func_97833CF3_entry, 0, 0x14
 	mov	a0, (0x1c, sp)
 	jmp	func_97834BA2_entry_L387
@@ -85459,7 +85472,7 @@ func_97834BA2_entry_L173:
 	mov	d0, (a0)
 func_97834BA2_entry_L178:
 	mov	(0x1c, sp), a0
-	mov	data_978AF3E0, a1
+	mov	func_9780A35F_Var_3, a1
 	call	func_97833CF3_entry, 0, 0x14
 	mov	a0, (0x1c, sp)
 	movbu	(a0), d1
@@ -85479,7 +85492,7 @@ func_97834BA2_entry_L191:
 	inc	d0
 	mov	d0, (0x1c, sp)
 	mov	d0, a0
-	mov	data_978AF3EC, a1
+	mov	func_9780A35F_Var_4, a1
 	call	func_97833CF3_entry, 0, 0x14
 	mov	a0, (0x1c, sp)
 	movbu	(a0), d1
@@ -85553,7 +85566,7 @@ func_97834BA2_entry_L23e:
 	jmp	func_97834BA2_entry_L3bb
 func_97834BA2_entry_L248:
 	mov	(0x1c, sp), a0
-	mov	data_978AF404, a1
+	mov	func_9780A35F_Var_5, a1
 	call	func_97833CF3_entry, 0, 0x14
 	mov	a0, (0x1c, sp)
 	mov	(0x4c, sp), a0
@@ -85800,7 +85813,7 @@ func_97834F63_entry_L48:
 	nop
 	mulu	d0, d1
 	mov	a0, (d1, a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x20, sp), a1
@@ -85891,7 +85904,7 @@ func_97835087_entry_L2a:
 	mov	(0x00014828, a0), a0
 	mov	(0xc, a0), d0
 	mov	d0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x168, a0), a2
 	mov	(0x48, sp), a0
@@ -85992,7 +86005,7 @@ func_97835087_entry_Le0:
 	inc	d2
 	mov	d1, a0
 	mov	d2, (4, a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x44, sp), a1
@@ -86038,7 +86051,7 @@ func_97835087_entry_L16d:
 	bne	func_97835087_entry_L179
 	jmp	func_97835087_entry_L241
 func_97835087_entry_L179:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x16c, a0), a1
 	mov	(0x44, sp), a0
@@ -86140,7 +86153,7 @@ func_97835087_entry_L24a:
 func_978352D9:
 	add	-0x10, sp
 	mov	0x97917d4c, a0
-	mov	(data_97911858), a1
+	mov	(func_97834719_Table+136), a1
 	call	func_978352F0_entry, [d2,a2], 8
 	ret	0, 0x10
 
@@ -86156,7 +86169,7 @@ func_978352F0_entry:
 	mov	d0, a0
 	call	LibStrlen, 0, 0
 	mov	d0, (0x28, sp)
-	mov	(data_9791185C), d0
+	mov	(func_97834719_Table+140), d0
 	cmp	0, d0
 	beq	func_978352F0_entry_L27
 	bra	func_978352F0_entry_L38
@@ -86168,13 +86181,13 @@ func_978352F0_entry_L27:
 	bhi	func_978352F0_entry_L38
 	bra	func_978352F0_entry_L7c
 func_978352F0_entry_L38:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x15c, a0), a1
 	mov	(0x3a4c, sp), a0
 	mov	(0x0001484c, a0), a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x28, sp), d0
@@ -86186,12 +86199,12 @@ func_978352F0_entry_L38:
 	mov	d0, (0x2c, sp)
 	bra	func_978352F0_entry_Lc0
 func_978352F0_entry_L7c:
-	mov	(data_9791185C), d0
+	mov	(func_97834719_Table+140), d0
 	cmp	0, d0
 	beq	func_978352F0_entry_L88
 	bra	func_978352F0_entry_Lc0
 func_978352F0_entry_L88:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x160, a0), a0
 	mov	(0x28, sp), d0
@@ -86204,7 +86217,7 @@ func_978352F0_entry_L88:
 	mov	(0x28, sp), d0
 	mov	d0, (0x00014850, a0)
 	mov	1, d0
-	mov	d0, (data_9791185C)
+	mov	d0, (func_97834719_Table+140)
 func_978352F0_entry_Lc0:
 	clr	d0
 	mov	(0x3a4c, sp), a0
@@ -86465,7 +86478,7 @@ func_978355D3_L70:
 func_978355D3_L7d:
 	jmp	func_978355D3_Laf1
 func_978355D3_L80:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -86473,7 +86486,7 @@ func_978355D3_L80:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -86488,18 +86501,18 @@ func_978355D3_L80:
 	beq	func_978355D3_Lc0
 	bra	func_978355D3_Lce
 func_978355D3_Lc0:
-	mov	(data_97911868), d0
+	mov	(func_978355D3_Lc0_Var), d0
 	mov	d0, (0x9792d548)
 	bra	func_978355D3_Lda
 func_978355D3_Lce:
-	mov	(data_97911868), d0
+	mov	(func_978355D3_Lc0_Var), d0
 	mov	d0, (0x9792d548)
 func_978355D3_Lda:
-	mov	(data_97911870), d0
+	mov	(func_978355D3_Lda_Var), d0
 	movbu	(0x979898ec), d1
 	call	func_97833B38_entry, [d2], 0x1c
 	mov	a0, (0x9792c5a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -86510,7 +86523,7 @@ func_978355D3_Lda:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L110:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -86518,13 +86531,13 @@ func_978355D3_L110:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0xb0, sp), d0
@@ -86554,7 +86567,7 @@ func_978355D3_L185:
 	beq	func_978355D3_L190
 	bra	func_978355D3_L185
 func_978355D3_L190:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -86562,20 +86575,20 @@ func_978355D3_L190:
 	mov	(0xb0, sp), d0
 	mov	(0xb4, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0xb0, sp), d0
 	mov	sp, a0
 	add	0x78, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
 	calls	(a0)
 	mov	a0, (0x24, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -86584,7 +86597,7 @@ func_978355D3_L190:
 	mov	MT_GetBoxColor, d1
 	calls	(a0)
 	movhu	d0, (0x58, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -86593,7 +86606,7 @@ func_978355D3_L190:
 	mov	MT_GetBoxBorder, d1
 	calls	(a0)
 	movhu	d0, (0x5a, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	CLASS_PsEditSwBox, d0
@@ -86605,7 +86618,7 @@ func_978355D3_L190:
 	bne	func_978355D3_L233
 	bra	func_978355D3_L249
 func_978355D3_L233:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x518, a0), a0
 	calls	(a0)
@@ -86613,7 +86626,7 @@ func_978355D3_L233:
 	bne	func_978355D3_L249
 	bra	func_978355D3_L266
 func_978355D3_L249:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
@@ -86625,14 +86638,14 @@ func_978355D3_L249:
 	calls	(a1)
 	bra	func_978355D3_L284
 func_978355D3_L266:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2e0, a0), a1
 	mov	sp, a0
 	add	0x78, a0
 	movhu	(0x5a, sp), d0
 	exth	d0
-	movhu	(data_97911860), d1
+	movhu	(func_978355D3_L266_Table), d1
 	exth	d1
 	calls	(a1)
 func_978355D3_L284:
@@ -86640,12 +86653,12 @@ func_978355D3_L284:
 	exth	d2
 	movhu	(0x7a, sp), d1
 	exth	d1
-	mov	(data_97911874), d0
+	mov	(func_978355D3_L284_Var_2), d0
 	sub	d1, d2
 	add	d0, d0
 	sub	d0, d2
 	mov	d2, (0x2c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x9792d548), d0
@@ -86661,7 +86674,7 @@ func_978355D3_L284:
 	mov	d0, (0x34, sp)
 	movhu	(0x78, sp), d0
 	exth	d0
-	mov	(data_97911874), d1
+	mov	(func_978355D3_L284_Var_2), d1
 	add	d1, d0
 	movhu	d0, (0x78, sp)
 	movhu	(0x7a, sp), d2
@@ -86669,14 +86682,14 @@ func_978355D3_L284:
 	mov	(0x34, sp), d0
 	mov	2, d1
 	call	LibDiv32, 0, 0
-	mov	(data_97911874), d1
+	mov	(func_978355D3_L284_Var_2), d1
 	add	d1, d2
 	add	d0, d2
 	movhu	d2, (0x82, sp)
 	movhu	(0x78, sp), d0
 	exth	d0
 	mov	d0, (0x38, sp)
-	mov	(data_9791186C), d0
+	mov	(func_978355D3_L284_Var), d0
 	mov	d0, (0x3c, sp)
 	jmp	func_978355D3_L401
 func_978355D3_L302:
@@ -86753,7 +86766,7 @@ func_978355D3_L316:
 	add	d0, a0
 	mov	(0x10, a0), d0
 	mov	d0, (0x48, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xdc, a0), a2
 	mov	d0, (0x10, sp)
@@ -86802,7 +86815,7 @@ func_978355D3_L3e1:
 	inc	d0
 	mov	d0, (0x3c, sp)
 func_978355D3_L401:
-	mov	(data_9791186C), d0
+	mov	(func_978355D3_L284_Var), d0
 	mov	(0x30, sp), d1
 	add	d1, d0
 	mov	(0x3c, sp), d1
@@ -86813,14 +86826,14 @@ func_978355D3_L412:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L416:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d8, a0), a1
 	mov	(0xb0, sp), d0
 	mov	sp, a0
 	add	0x84, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -86834,7 +86847,7 @@ func_978355D3_L416:
 	bne	func_978355D3_L453
 	bra	func_978355D3_L472
 func_978355D3_L453:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x304, a0), a1
 	mov	0x1a, d0
@@ -86846,7 +86859,7 @@ func_978355D3_L453:
 	calls	(a1)
 	bra	func_978355D3_L491
 func_978355D3_L472:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x304, a0), a1
 	movhu	(0x5c, sp), d0
@@ -86861,7 +86874,7 @@ func_978355D3_L491:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L495:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0xb8, sp), d0
@@ -86951,15 +86964,15 @@ func_978355D3_L542:
 func_978355D3_L549:
 	jmp	func_978355D3_La7d
 func_978355D3_L54c:
-	mov	(data_9791186C), d0
+	mov	(func_978355D3_L284_Var), d0
 	cmp	0, d0
 	bgt	func_978355D3_L558
 	bra	func_978355D3_L581
 func_978355D3_L558:
-	mov	(data_9791186C), d0
+	mov	(func_978355D3_L284_Var), d0
 	add	-1, d0
-	mov	d0, (data_9791186C)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_L284_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -86973,15 +86986,15 @@ func_978355D3_L581:
 func_978355D3_L585:
 	mov	(0x9792d544), d0
 	add	-1, d0
-	mov	(data_9791186C), d1
+	mov	(func_978355D3_L284_Var), d1
 	cmp	d0, d1
 	blt	func_978355D3_L598
 	bra	func_978355D3_L5c0
 func_978355D3_L598:
-	mov	(data_9791186C), d0
+	mov	(func_978355D3_L284_Var), d0
 	inc	d0
-	mov	d0, (data_9791186C)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_L284_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -86993,14 +87006,14 @@ func_978355D3_L5c0:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L5c4:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0xb0, sp), d0
 	mov	sp, a0
 	add	0x8c, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x9792d548), d0
@@ -87010,7 +87023,7 @@ func_978355D3_L5c4:
 	exth	d0
 	movhu	(0x8e, sp), d1
 	exth	d1
-	mov	(data_97911874), d3
+	mov	(func_978355D3_L284_Var_2), d3
 	sub	d1, d0
 	mov	d3, d1
 	add	d3, d1
@@ -87019,25 +87032,25 @@ func_978355D3_L5c4:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	mov	d0, (0x4c, sp)
-	mov	(data_97911878), d1
+	mov	(func_978355D3_L5c4_Table), d1
 	sub	d1, d0
-	mov	(data_9791186C), d1
+	mov	(func_978355D3_L284_Var), d1
 	cmp	d0, d1
 	bge	func_978355D3_L624
 	bra	func_978355D3_L63e
 func_978355D3_L624:
 	mov	(0x4c, sp), d0
-	mov	(data_97911878), d1
+	mov	(func_978355D3_L5c4_Table), d1
 	sub	d1, d0
-	mov	(data_9791186C), d1
+	mov	(func_978355D3_L284_Var), d1
 	sub	d0, d1
-	mov	d1, (data_9791186C)
+	mov	d1, (func_978355D3_L284_Var)
 	bra	func_978355D3_L645
 func_978355D3_L63e:
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 func_978355D3_L645:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87048,14 +87061,14 @@ func_978355D3_L645:
 	clr	d0
 	jmp	func_978355D3_Lb09
 func_978355D3_L664:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2d0, a0), a1
 	mov	(0xb0, sp), d0
 	mov	sp, a0
 	add	0x94, a0
 	calls	(a1)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x158, a0), a0
 	mov	(0x9792d548), d0
@@ -87065,7 +87078,7 @@ func_978355D3_L664:
 	exth	d0
 	movhu	(0x96, sp), d1
 	exth	d1
-	mov	(data_97911874), d3
+	mov	(func_978355D3_L284_Var_2), d3
 	sub	d1, d0
 	mov	d3, d1
 	add	d3, d1
@@ -87074,30 +87087,30 @@ func_978355D3_L664:
 	mov	d2, d1
 	call	LibDiv32, 0, 0
 	mov	d0, (0x50, sp)
-	mov	(data_97911878), d1
+	mov	(func_978355D3_L5c4_Table), d1
 	sub	d1, d0
 	mov	(0x9792d544), d1
 	sub	d0, d1
 	mov	d1, d0
 	add	-1, d0
-	mov	(data_9791186C), d1
+	mov	(func_978355D3_L284_Var), d1
 	cmp	d0, d1
 	blt	func_978355D3_L6cf
 	bra	func_978355D3_L6e8
 func_978355D3_L6cf:
 	mov	(0x50, sp), d0
-	mov	(data_97911878), d1
+	mov	(func_978355D3_L5c4_Table), d1
 	sub	d1, d0
-	mov	(data_9791186C), d1
+	mov	(func_978355D3_L284_Var), d1
 	add	d1, d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	bra	func_978355D3_L6f6
 func_978355D3_L6e8:
 	mov	(0x9792d544), d0
 	add	-1, d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 func_978355D3_L6f6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87121,9 +87134,9 @@ func_978355D3_L72c:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_L284_Var)
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87131,7 +87144,7 @@ func_978355D3_L72c:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87154,10 +87167,10 @@ func_978355D3_L798:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	1, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87165,7 +87178,7 @@ func_978355D3_L798:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87188,10 +87201,10 @@ func_978355D3_L806:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	2, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87199,7 +87212,7 @@ func_978355D3_L806:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87222,10 +87235,10 @@ func_978355D3_L874:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	3, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87233,7 +87246,7 @@ func_978355D3_L874:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87256,10 +87269,10 @@ func_978355D3_L8e2:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	4, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87267,7 +87280,7 @@ func_978355D3_L8e2:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87290,10 +87303,10 @@ func_978355D3_L950:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	5, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87301,7 +87314,7 @@ func_978355D3_L950:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87324,10 +87337,10 @@ func_978355D3_L9be:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	6, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87335,7 +87348,7 @@ func_978355D3_L9be:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87358,10 +87371,10 @@ func_978355D3_La2a:
 	mov	d0, (0x9792c5a0)
 	mov	d0, (0x9792d54c)
 	clr	d0
-	mov	d0, (data_9791186C)
+	mov	d0, (func_978355D3_L284_Var)
 	mov	7, d0
-	mov	d0, (data_97911870)
-	mov	(data_979126B4), a0
+	mov	d0, (func_978355D3_Lda_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87369,7 +87382,7 @@ func_978355D3_La2a:
 	mov	(0xb0, sp), d0
 	mov	MT_ChangeProperty, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	clr	d0
@@ -87378,7 +87391,7 @@ func_978355D3_La2a:
 	mov	MT_Draw, d1
 	calls	(a0)
 func_978355D3_La7d:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -87397,7 +87410,7 @@ func_978355D3_Laa0:
 	clr	d0
 	bra	func_978355D3_Lb09
 func_978355D3_Laa3:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -87407,7 +87420,7 @@ func_978355D3_Laa3:
 	exth	d0
 	bra	func_978355D3_Lb09
 func_978355D3_Labd:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -87417,7 +87430,7 @@ func_978355D3_Labd:
 	exth	d0
 	bra	func_978355D3_Lb09
 func_978355D3_Lad7:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0xb0, sp), d0
@@ -87427,7 +87440,7 @@ func_978355D3_Lad7:
 	exth	d0
 	bra	func_978355D3_Lb09
 func_978355D3_Laf1:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0xb8, sp), d0
@@ -87468,7 +87481,7 @@ KssXRegisterLineProc_L2c:
 KssXRegisterLineProc_L39:
 	jmp	KssXRegisterLineProc_L120f
 KssXRegisterLineProc_L3c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -87476,7 +87489,7 @@ KssXRegisterLineProc_L3c:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -87491,7 +87504,7 @@ KssXRegisterLineProc_L3c:
 	bne	KssXRegisterLineProc_L79
 	bra	KssXRegisterLineProc_Lc1
 KssXRegisterLineProc_L79:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a4, a0), a0
 	clr	d0
@@ -87499,7 +87512,7 @@ KssXRegisterLineProc_L79:
 	mov	(0x30, sp), d0
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a8, a0), a0
 	clr	d0
@@ -87507,7 +87520,7 @@ KssXRegisterLineProc_L79:
 	mov	(0x30, sp), d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x3a0, a0), a0
 	mov	1, d0
@@ -87516,7 +87529,7 @@ KssXRegisterLineProc_Lc1:
 	clr	d0
 	jmp	KssXRegisterLineProc_L1227
 KssXRegisterLineProc_Lc5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -87524,7 +87537,7 @@ KssXRegisterLineProc_Lc5:
 	mov	(0x30, sp), d0
 	mov	(0x34, sp), d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x2cc, a0), a0
 	mov	(0x30, sp), d0
@@ -87536,7 +87549,7 @@ KssXRegisterLineProc_Lc5:
 	clr	d0
 	jmp	KssXRegisterLineProc_L1227
 KssXRegisterLineProc_Lfa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -87551,7 +87564,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_10, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87573,7 +87586,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_9, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87584,7 +87597,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_9, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87595,7 +87608,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_9, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87606,7 +87619,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_9, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87617,7 +87630,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_9, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87628,7 +87641,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_9, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87639,7 +87652,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_9, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87650,7 +87663,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_9, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87661,7 +87674,7 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_9, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87672,11 +87685,11 @@ KssXRegisterLineProc_Lfa:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_9, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	-1, d0
@@ -87687,7 +87700,7 @@ KssXRegisterLineProc_Lfa:
 	clr	d0
 	jmp	KssXRegisterLineProc_L1227
 KssXRegisterLineProc_L2fa:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x108, a0), a0
 	mov	(0x38, sp), d0
@@ -87768,7 +87781,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_9, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87790,7 +87803,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_8, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87801,7 +87814,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_8, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87812,7 +87825,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_8, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87823,7 +87836,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_8, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87834,7 +87847,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_8, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87845,7 +87858,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_8, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87856,7 +87869,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_8, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87867,7 +87880,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_8, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87878,7 +87891,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_8, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87889,7 +87902,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_8, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87900,7 +87913,7 @@ KssXRegisterLineProc_L38b:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_8, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87913,7 +87926,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_7, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87935,7 +87948,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_7, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87946,7 +87959,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_7, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87957,7 +87970,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_7, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87968,7 +87981,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_7, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87979,7 +87992,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_7, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -87990,7 +88003,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_7, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88001,7 +88014,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_7, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88012,7 +88025,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_7, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88023,7 +88036,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_7, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88034,7 +88047,7 @@ KssXRegisterLineProc_L57c:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_7, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88048,7 +88061,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_6, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88070,7 +88083,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_6, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88081,7 +88094,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_6, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88092,7 +88105,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_6, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88103,7 +88116,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_6, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88114,7 +88127,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_6, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88125,7 +88138,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_6, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88136,7 +88149,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_6, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88147,7 +88160,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_6, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88158,7 +88171,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_6, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88169,7 +88182,7 @@ KssXRegisterLineProc_L748:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_6, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88183,7 +88196,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_5, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88205,7 +88218,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_5, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88216,7 +88229,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_5, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88227,7 +88240,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_5, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88238,7 +88251,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_5, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88249,7 +88262,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_5, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88260,7 +88273,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_5, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88271,7 +88284,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_5, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88282,7 +88295,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_5, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88293,7 +88306,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_5, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88304,7 +88317,7 @@ KssXRegisterLineProc_L914:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_5, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88318,7 +88331,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_4, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88340,7 +88353,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_4, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88351,7 +88364,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_4, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88362,7 +88375,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_4, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88373,7 +88386,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_4, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88384,7 +88397,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_4, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88395,7 +88408,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_4, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88406,7 +88419,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_4, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88417,7 +88430,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_4, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88428,7 +88441,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_4, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88439,7 +88452,7 @@ KssXRegisterLineProc_Lae0:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_4, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88453,7 +88466,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_3, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88475,7 +88488,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_3, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88486,7 +88499,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_3, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88497,7 +88510,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_3, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88508,7 +88521,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_3, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88519,7 +88532,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_3, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88530,7 +88543,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_3, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88541,7 +88554,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_3, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88552,7 +88565,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_3, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88563,7 +88576,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_3, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88574,7 +88587,7 @@ KssXRegisterLineProc_Lcac:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_3, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88588,7 +88601,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS_2, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88610,7 +88623,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY_2, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88621,7 +88634,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER_2, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88632,7 +88645,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS_2, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88643,7 +88656,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB_2, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88654,7 +88667,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST_2, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88665,7 +88678,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT_2, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88676,7 +88689,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER_2, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88687,7 +88700,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S_2, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88698,7 +88711,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP_2, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88709,7 +88722,7 @@ KssXRegisterLineProc_Le78:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS_2, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88723,7 +88736,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_BASICS, a0
-	mov	data_978AF558, a1
+	mov	func_97827B50_Var_278, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88745,7 +88758,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LOAD_BY, a0
-	mov	data_978AF568, a1
+	mov	func_97827B50_Var_285, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88756,7 +88769,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NUMBER, a0
-	mov	data_978AF570, a1
+	mov	func_97827B50_Var_289, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88767,7 +88780,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_NEWS, a0
-	mov	data_978AF578, a1
+	mov	func_97827B50_Var_293, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88778,7 +88791,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_ALPHAB, a0
-	mov	data_978AF580, a1
+	mov	func_97827B50_Var_297, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88789,7 +88802,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_LIST, a0
-	mov	data_978AF588, a1
+	mov	func_97827B50_Var_301, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88800,7 +88813,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_S_OUTPUT, a0
-	mov	data_978AF590, a1
+	mov	func_97827B50_Var_305, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88811,7 +88824,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_MIXER, a0
-	mov	data_978AF598, a1
+	mov	func_97827B50_Var_309, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88822,7 +88835,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_C_L_S, a0
-	mov	data_978AF5A0, a1
+	mov	func_97827B50_Var_313, a1
 	mov	5, d0
 	mov	0xf8, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88833,7 +88846,7 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_SETUP, a0
-	mov	data_978AF5A8, a1
+	mov	func_97827B50_Var_317, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
@@ -88844,14 +88857,14 @@ KssXRegisterLineProc_L1044:
 	mov	1, d0
 	mov	d0, (0x20, sp)
 	mov	Str_TOOLS, a0
-	mov	data_978AF5B0, a1
+	mov	func_97827B50_Var_321, a1
 	mov	5, d0
 	mov	0xf9, d1
 	call	func_97827B50_entry, [a2], 0x30
 	clr	d0
 	bra	KssXRegisterLineProc_L1227
 KssXRegisterLineProc_L120f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0xe4, a0), a0
 	mov	(0x38, sp), d0
@@ -88863,7 +88876,7 @@ KssXRegisterLineProc_L1227:
 	ret	0, 0x28
 
 func_9783730D:
-	mov	(data_9791264C), d0
+	mov	(func_9783730D_Var), d0
 	ret	0, 0
 
 func_97837316:
@@ -89116,7 +89129,7 @@ func_97837316:
 	movbu	(a0), d1
 	or	0x01, d1
 	movbu	d1, (a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x1c, a0), a0
 	mov	0xe, d0
@@ -89430,7 +89443,7 @@ func_97837743_L22:
 	and	0x80, d1
 	movbu	d1, (a0)
 	clr	d0
-	mov	d0, (data_9791264C)
+	mov	d0, (func_9783730D_Var)
 func_97837743_L38c:
 	mov	(0x9798fe18), a0
 	movbu	(a0), d1
@@ -89460,9 +89473,9 @@ func_97837743_L39b:
 	and	0xfffffff8, d3
 	or	d3, d1
 	movbu	d1, (a0)
-	mov	(data_9791257C), d0
+	mov	(func_97837743_L39b_Var), d0
 	inc	d0
-	mov	d0, (data_9791257C)
+	mov	d0, (func_97837743_L39b_Var)
 func_97837743_L3f1:
 	mov	(0x9798fdc8), a0
 	movbu	(a0), d1
@@ -89504,12 +89517,12 @@ func_97837743_L401:
 func_97837743_L461:
 	mov	(0x18, sp), d0
 	add	0x3e8, d0
-	mov	d0, (data_97912568)
+	mov	d0, (func_97837743_L461_Var)
 	jmp	func_97837743_L636
 func_97837743_L470:
-	mov	(data_97912568), d0
+	mov	(func_97837743_L461_Var), d0
 	inc	d0
-	mov	d0, (data_97912568)
+	mov	d0, (func_97837743_L461_Var)
 	jmp	func_97837743_L636
 func_97837743_L480:
 	mov	(0x9798fdc8), a0
@@ -89546,9 +89559,9 @@ func_97837743_L48f:
 	and	0xfffffff8, d3
 	or	d3, d1
 	movbu	d1, (a0)
-	mov	(data_97912564), d0
+	mov	(func_97837743_L48f_Var), d0
 	inc	d0
-	mov	d0, (data_97912564)
+	mov	d0, (func_97837743_L48f_Var)
 	jmp	func_97837743_L636
 func_97837743_L4fc:
 	mov	(0x9798fdc8), a0
@@ -89586,9 +89599,9 @@ func_97837743_L50b:
 	and	0xfffffff8, d3
 	or	d3, d0
 	movbu	d0, (a0)
-	mov	(data_97912570), d0
+	mov	(func_97837743_L50b_Var), d0
 	inc	d0
-	mov	d0, (data_97912570)
+	mov	d0, (func_97837743_L50b_Var)
 	jmp	func_97837743_L636
 func_97837743_L57f:
 	mov	(0x9798fdc8), a0
@@ -89623,9 +89636,9 @@ func_97837743_L58e:
 	and	0xfffffff8, d3
 	or	d3, d0
 	movbu	d0, (a0)
-	mov	(data_9791256C), d0
+	mov	(func_97837743_L58e_Var), d0
 	inc	d0
-	mov	d0, (data_9791256C)
+	mov	d0, (func_97837743_L58e_Var)
 	bra	func_97837743_L636
 func_97837743_L5f4:
 	mov	(0x9798fdd0), a0
@@ -89638,9 +89651,9 @@ func_97837743_L603:
 	movbu	(a0), d1
 	and	0xbf, d1
 	movbu	d1, (a0)
-	mov	(data_97912574), d0
+	mov	(func_97837743_L603_Table), d0
 	inc	d0
-	mov	d0, (data_97912574)
+	mov	d0, (func_97837743_L603_Table)
 func_97837743_L61d:
 	movhu	(0x9806802a), d0
 	movbu	d0, (0x979898f4)
@@ -89770,9 +89783,9 @@ func_97837D7C_entry_L113:
 	mov	-2, d0
 	jmp	func_97837D7C_entry_Lc81
 func_97837D7C_entry_L118:
-	mov	(data_97912580), d0
+	mov	(func_97837D7C_entry_L118_Table), d0
 	inc	d0
-	mov	d0, (data_97912580)
+	mov	d0, (func_97837D7C_entry_L118_Table)
 	mov	(0x9798fde4), a0
 	movbu	(a0), d0
 	mov	d0, (0, sp)
@@ -90868,7 +90881,7 @@ func_97838A05_entry_L25:
 	mov	(0x9798fde8), a0
 	movbu	d2, (a0)
 	mov	1, d0
-	mov	d0, (data_9791264C)
+	mov	d0, (func_9783730D_Var)
 func_97838A05_entry_L56:
 	clr	d0
 	movbu	d0, (0x97997e58)
@@ -91230,7 +91243,7 @@ func_97838D88:
 	mov	a1, (0x38, sp)
 	mov	a0, (0x2c, sp)
 	mov	d1, (0x24, sp)
-	mov	(data_9791265C), d0
+	mov	(func_97838D88_Var), d0
 	cmp	0, d0
 	bne	func_97838D88_L17
 	bra	func_97838D88_L1c
@@ -91314,7 +91327,7 @@ func_97838E82:
 	mov	d0, (0x28, sp)
 	mov	d1, (0x2c, sp)
 	mov	a0, (0x34, sp)
-	mov	(data_9791265C), d0
+	mov	(func_97838D88_Var), d0
 	cmp	0, d0
 	beq	func_97838E82_L15
 	bra	func_97838E82_L1a
@@ -91337,7 +91350,7 @@ func_97838E82_L28:
 	mov	d0, (0x979a4a48)
 	mov	(0x30, sp), d0
 	mov	d0, (0x979a4a4c)
-	mov	(data_97912650), d0
+	mov	(func_97838E82_L28_Var), d0
 	mov	d0, (0x979a4a50)
 	movbu	(0x28, sp), d0
 	extbu	d0
@@ -91383,10 +91396,10 @@ func_97838E82_L90:
 func_97838E82_Lae:
 	clr	d0
 	mov	d0, (0x979a4a48)
-	mov	(data_97912650), d0
+	mov	(func_97838E82_L28_Var), d0
 	mov	(0x30, sp), d1
 	add	d1, d0
-	mov	d0, (data_97912650)
+	mov	d0, (func_97838E82_L28_Var)
 	bra	func_97838E82_Lce
 func_97838E82_Lc6:
 	mov	-1, d0
@@ -91414,10 +91427,10 @@ func_97838E82_Lff:
 	beq	func_97838E82_L10b
 	bra	func_97838E82_L12b
 func_97838E82_L10b:
-	mov	(data_97912650), d0
+	mov	(func_97838E82_L28_Var), d0
 	mov	(0x30, sp), d1
 	add	d1, d0
-	mov	d0, (data_97912650)
+	mov	d0, (func_97838E82_L28_Var)
 	bra	func_97838E82_L12b
 func_97838E82_L11c:
 	mov	-3, d0
@@ -91439,7 +91452,7 @@ func_97838E82_L136:
 	bra	func_97838E82_L14e
 func_97838E82_L144:
 	mov	(8, sp), d0
-	mov	d0, (data_97912650)
+	mov	d0, (func_97838E82_L28_Var)
 	bra	func_97838E82_L152
 func_97838E82_L14e:
 	mov	-1, d0
@@ -91448,7 +91461,7 @@ func_97838E82_L152:
 	clr	d0
 func_97838E82_L153:
 	ret	0, 0
-	mov	(data_97912658), d0
+	mov	(func_97838E82_L153_Var), d0
 	ret	0, 0
 
 func_97838FE1:
@@ -91531,11 +91544,11 @@ func_97839056_L2b:
 	movbu	d1, (a0)
 func_97839056_L38:
 	clr	d0
-	mov	d0, (data_97912650)
-	mov	d0, (data_97912654)
-	mov	d0, (data_97912658)
+	mov	d0, (func_97838E82_L28_Var)
+	mov	d0, (func_97839056_L38_Var)
+	mov	d0, (func_97838E82_L153_Var)
 	clr	d0
-	mov	d0, (data_9791265C)
+	mov	d0, (func_97838D88_Var)
 	mov	1, d0
 	ret	0, 0
 
@@ -91798,14 +91811,14 @@ func_978391CC_entry_Lce:
 func_978392A2:
 	movhu	d1, (0xc, sp)
 	movhu	d0, (8, sp)
-	movhu	d0, (data_97911898)
+	movhu	d0, (func_978392A2_Var)
 	mov	d1, d0
-	movhu	d0, (data_9791189A)
+	movhu	d0, (func_978392A2_Var_2)
 	mov	(0x10, sp), d0
-	mov	d0, (data_9791189C)
+	mov	d0, (func_978392A2_Var_3)
 	ret	0, 0
 # func_978392A2 + 0x1e: no traced path reaches what follows (--decode-gaps)
-	movhu	(data_97911898), d0
+	movhu	(func_978392A2_Var), d0
 	ret	0, 0
 	add	-8, sp
 
@@ -91844,9 +91857,9 @@ func_978392F9:
 	mov	d0, (0xc, sp)
 	mov	a0, (8, sp)
 	clr	d0
-	mov	d0, (data_979118A8)
+	mov	d0, (func_978392F9_Var)
 	mov	1, d0
-	mov	d0, (data_979118AC)
+	mov	d0, (func_978392F9_Var_2)
 	mov	a0, d0
 	cmp	0, d0
 	beq	func_978392F9_L1e
@@ -91857,32 +91870,32 @@ func_978392F9_L1e:
 	clr	d0
 	mov	d0, (0x9798928c)
 	mov	0x979a4a5c, d0
-	mov	d0, (data_979118A0)
+	mov	d0, (func_978392F9_L1e_Var_2)
 	mov	0x30, d0
-	mov	d0, (data_979118A4)
+	mov	d0, (func_978392F9_L1e_Var_3)
 	clr	d0
-	movbu	d0, (data_979118B0)
+	movbu	d0, (func_978392F9_L1e_Table)
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	bra	func_978392F9_L6a
 func_978392F9_L51:
 	mov	(8, sp), d0
-	mov	d0, (data_979118A0)
+	mov	d0, (func_978392F9_L1e_Var_2)
 	mov	(0xc, sp), d0
-	mov	d0, (data_979118A4)
+	mov	d0, (func_978392F9_L1e_Var_3)
 	movbu	(0x10, sp), d0
-	movbu	d0, (data_979118B0)
+	movbu	d0, (func_978392F9_L1e_Table)
 func_978392F9_L6a:
 	ret	0, 0
 
 func_97839366:
 	movbu	d0, (8, sp)
-	movbu	d0, (data_979118B0)
+	movbu	d0, (func_978392F9_L1e_Table)
 	ret	0, 0
 
 func_97839372:
 	add	-0x18, sp
-	movbu	(data_979118B0), d0
+	movbu	(func_978392F9_L1e_Table), d0
 	cmp	0, d0
 	bne	func_97839372_Lf
 	bra	func_97839372_L19
@@ -91893,7 +91906,7 @@ func_97839372_Lf:
 func_97839372_L16:
 	jmp	func_97839372_L111
 func_97839372_L19:
-	mov	(data_979118A8), d0
+	mov	(func_978392F9_Var), d0
 	cmp	4, d0
 	bcs	func_97839372_L26
 	jmp	func_97839372_La7
@@ -91905,68 +91918,68 @@ func_97839372_L26:
 	beq	func_97839372_L38
 	bra	func_97839372_L9e
 func_97839372_L38:
-	mov	(data_979118AC), d0
+	mov	(func_978392F9_Var_2), d0
 	cmp	0, d0
 	bne	func_97839372_L44
 	bra	func_97839372_L6c
 func_97839372_L44:
 	movbu	(0x14, sp), d0
-	mov	(data_979118A0), a0
+	mov	(func_978392F9_L1e_Var_2), a0
 	movbu	d0, (a0)
-	mov	(data_979118A8), d0
+	mov	(func_978392F9_Var), d0
 	inc	d0
-	mov	d0, (data_979118A8)
-	mov	(data_979118A0), d0
+	mov	d0, (func_978392F9_Var)
+	mov	(func_978392F9_L1e_Var_2), d0
 	inc	d0
-	mov	d0, (data_979118A0)
+	mov	d0, (func_978392F9_L1e_Var_2)
 	jmp	func_97839372_L103
 func_97839372_L6c:
 	mov	1, d0
-	mov	d0, (data_979118AC)
-	mov	(data_979118A8), d0
+	mov	d0, (func_978392F9_Var_2)
+	mov	(func_978392F9_Var), d0
 	cmp	0, d0
 	bhi	func_97839372_L81
 	jmp	func_97839372_L103
 func_97839372_L81:
-	mov	(data_979118A0), d0
-	mov	(data_979118A8), d1
+	mov	(func_978392F9_L1e_Var_2), d0
+	mov	(func_978392F9_Var), d1
 	sub	d1, d0
-	mov	d0, (data_979118A0)
+	mov	d0, (func_978392F9_L1e_Var_2)
 	clr	d0
-	mov	d0, (data_979118A8)
+	mov	d0, (func_978392F9_Var)
 	bra	func_97839372_L103
 func_97839372_L9e:
 	clr	d0
-	mov	d0, (data_979118AC)
+	mov	d0, (func_978392F9_Var_2)
 	bra	func_97839372_L103
 func_97839372_La7:
-	mov	(data_979118A8), d0
-	mov	(data_979118A4), d1
+	mov	(func_978392F9_Var), d0
+	mov	(func_978392F9_L1e_Var_3), d1
 	cmp	d1, d0
 	bcs	func_97839372_Lb8
 	bra	func_97839372_Lc8
 func_97839372_Lb8:
 	movhu	(0x98064010), d1
-	mov	(data_979118A0), a0
+	mov	(func_978392F9_L1e_Var_2), a0
 	movbu	d1, (a0)
 	bra	func_97839372_Ld1
 func_97839372_Lc8:
 	movhu	(0x98064010), d0
 	movbu	d0, (0x14, sp)
 func_97839372_Ld1:
-	mov	(data_979118A8), d0
+	mov	(func_978392F9_Var), d0
 	inc	d0
-	mov	d0, (data_979118A8)
-	mov	(data_979118A0), d0
+	mov	d0, (func_978392F9_Var)
+	mov	(func_978392F9_L1e_Var_2), d0
 	inc	d0
-	mov	d0, (data_979118A0)
-	mov	(data_979118A8), d0
+	mov	d0, (func_978392F9_L1e_Var_2)
+	mov	(func_978392F9_Var), d0
 	cmp	8, d0
 	beq	func_97839372_Lf7
 	bra	func_97839372_L103
 func_97839372_Lf7:
 	mov	(0x979a4a60), d0
-	mov	d0, (data_979118A4)
+	mov	d0, (func_978392F9_L1e_Var_3)
 func_97839372_L103:
 	call	func_97839EB1_entry, 0, 4
 	cmp	0, d0
@@ -91978,8 +91991,8 @@ func_97839372_L111:
 	call	func_97839556_entry, 0, 0xc
 	bra	func_97839372_L151
 func_97839372_L118:
-	mov	(data_979118A8), d0
-	mov	(data_979118A4), d1
+	mov	(func_978392F9_Var), d0
+	mov	(func_978392F9_L1e_Var_3), d1
 	cmp	d1, d0
 	bcc	func_97839372_L129
 	bra	func_97839372_L151
@@ -91988,7 +92001,7 @@ func_97839372_L129:
 	clr	d0
 	clr	d1
 	call	func_978392F9, 0, 0
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -92092,7 +92105,7 @@ func_97839570:
 	add	-0xc, sp
 
 func_97839570_entry:
-	mov	(data_97911894), d0
+	mov	(func_97839570_Var), d0
 	cmp	0, d0
 	beq	func_97839570_entry_Lc
 	bra	func_97839570_entry_L21
@@ -92104,16 +92117,16 @@ func_97839570_entry_Lc:
 	bra	func_97839570_entry_L21
 func_97839570_entry_L19:
 	mov	1, d0
-	mov	d0, (data_97911894)
+	mov	d0, (func_97839570_Var)
 func_97839570_entry_L21:
-	mov	(data_97911894), d0
+	mov	(func_97839570_Var), d0
 	ret	0, 0xc
 
 func_9783959D:
 	add	-0xc, sp
 
 func_9783959D_entry:
-	mov	(data_97911890), d0
+	mov	(func_9783959D_Var), d0
 	cmp	0, d0
 	beq	func_9783959D_entry_Lc
 	bra	func_9783959D_entry_L21
@@ -92125,13 +92138,13 @@ func_9783959D_entry_Lc:
 	bra	func_9783959D_entry_L21
 func_9783959D_entry_L19:
 	mov	1, d0
-	mov	d0, (data_97911890)
+	mov	d0, (func_9783959D_Var)
 func_9783959D_entry_L21:
-	mov	(data_97911890), d0
+	mov	(func_9783959D_Var), d0
 	ret	0, 0xc
 
 func_978395CA:
-	mov	(data_9791188C), d0
+	mov	(func_978392F9_L1e_Var), d0
 	ret	0, 0
 
 func_978395D3:
@@ -92507,17 +92520,17 @@ func_978398C5_entry:
 	mov	d0, (0x10, sp)
 	mov	0x400, d1
 	call	func_978392A2, 0, 0
-	mov	(data_9791188C), d0
+	mov	(func_978392F9_L1e_Var), d0
 	cmp	1, d0
 	bne	func_978398C5_entry_L17
 	bra	func_978398C5_entry_L34
 func_978398C5_entry_L17:
-	mov	(data_9791188C), d0
+	mov	(func_978392F9_L1e_Var), d0
 	cmp	2, d0
 	bne	func_978398C5_entry_L24
 	jmp	func_978398C5_entry_L226
 func_978398C5_entry_L24:
-	mov	(data_9791188C), d0
+	mov	(func_978392F9_L1e_Var), d0
 	cmp	3, d0
 	bne	func_978398C5_entry_L31
 	jmp	func_978398C5_entry_L230
@@ -92584,7 +92597,7 @@ func_978398C5_entry_L9e:
 	beq	func_978398C5_entry_La6
 	bra	func_978398C5_entry_Lc6
 func_978398C5_entry_La6:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	3, d0
@@ -92658,7 +92671,7 @@ func_978398C5_entry_L148:
 func_978398C5_entry_L150:
 	call	func_9783AA10_entry, [d2], 0x5c
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 func_978398C5_entry_L15d:
 	mov	(0x28, sp), d0
 	cmp	8, d0
@@ -92667,7 +92680,7 @@ func_978398C5_entry_L15d:
 func_978398C5_entry_L165:
 	call	func_9783B2EF_entry, [d2,a2], 0x48
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 func_978398C5_entry_L172:
 	mov	(0x28, sp), d0
 	cmp	9, d0
@@ -92750,16 +92763,16 @@ func_978398C5_entry_L1e6:
 	bra	func_978398C5_entry_L247
 func_978398C5_entry_L226:
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	bra	func_978398C5_entry_L247
 func_978398C5_entry_L230:
 	call	func_97839B75, 0, 0
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	bra	func_978398C5_entry_L247
 func_978398C5_entry_L23f:
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 func_978398C5_entry_L247:
 	clr	d0
 func_978398C5_entry_L248:
@@ -92796,19 +92809,19 @@ func_97839B15_entry_L2c:
 func_97839B15_entry_L2e:
 	call	func_97839EF1_entry, 0, 0xc
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	bra	func_97839B15_entry_L59
 func_97839B15_entry_L3d:
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	bra	func_97839B15_entry_L59
 func_97839B15_entry_L47:
 	mov	2, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	bra	func_97839B15_entry_L59
 func_97839B15_entry_L51:
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 func_97839B15_entry_L59:
 	clr	d0
 	ret	0, 0xc
@@ -92852,7 +92865,7 @@ func_97839B9F_entry_Lc:
 	call	func_9783A0FA_entry, 0, 0x14
 	clr	d0
 	call	func_9783A129_entry, 0, 0x20
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x1c, a0), a0
 	mov	0xf, d0
@@ -92877,7 +92890,7 @@ func_97839B9F_entry_L77:
 	movhu	d0, (0x98064004)
 	mov	0x60, d0
 	call	func_97839F29_entry, 0, 4
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x18, a0), a0
 	mov	0xf, d0
@@ -93007,7 +93020,7 @@ func_97839C51_entry_Le3:
 func_97839D3B:
 	add	-0x18, sp
 	clr	d0
-	mov	d0, (data_97911888)
+	mov	d0, (func_97839D3B_Var)
 	call	func_9783A129_entry, 0, 0x20
 	mov	d0, (0xc, sp)
 	cmp	0, d0
@@ -93021,7 +93034,7 @@ func_97839D3B_L1b:
 	mov	d0, (0x10, sp)
 func_97839D3B_L1e:
 	call	func_97839E68_entry, 0, 4
-	movbu	(data_97911884), d0
+	movbu	(func_97839D3B_L1e_Var), d0
 	cmp	1, d0
 	bne	func_97839D3B_L2f
 	bra	func_97839D3B_L38
@@ -93036,13 +93049,13 @@ func_97839D3B_L38:
 	blt	func_97839D3B_L47
 	bra	func_97839D3B_L53
 func_97839D3B_L47:
-	movbu	(data_97911884), d0
+	movbu	(func_97839D3B_L1e_Var), d0
 	cmp	0, d0
 	bne	func_97839D3B_L53
 	bra	func_97839D3B_L1e
 func_97839D3B_L53:
 	call	func_97839E68_entry, 0, 4
-	movbu	(data_97911884), d0
+	movbu	(func_97839D3B_L1e_Var), d0
 	cmp	1, d0
 	bne	func_97839D3B_L64
 	bra	func_97839D3B_L68
@@ -93166,11 +93179,11 @@ func_97839E68_entry:
 	bra	func_97839E68_entry_L1f
 func_97839E68_entry_L15:
 	mov	1, d0
-	movbu	d0, (data_97911884)
+	movbu	d0, (func_97839D3B_L1e_Var)
 	bra	func_97839E68_entry_L26
 func_97839E68_entry_L1f:
 	clr	d0
-	movbu	d0, (data_97911884)
+	movbu	d0, (func_97839D3B_L1e_Var)
 func_97839E68_entry_L26:
 	movhu	(0, sp), d0
 	and	0x02, d0
@@ -93179,11 +93192,11 @@ func_97839E68_entry_L26:
 	bra	func_97839E68_entry_L3c
 func_97839E68_entry_L32:
 	mov	1, d0
-	movbu	d0, (data_97911885)
+	movbu	d0, (func_97839E68_entry_L32_Table)
 	bra	func_97839E68_entry_L43
 func_97839E68_entry_L3c:
 	clr	d0
-	movbu	d0, (data_97911885)
+	movbu	d0, (func_97839E68_entry_L32_Table)
 func_97839E68_entry_L43:
 	ret	0, 4
 
@@ -93480,10 +93493,10 @@ func_9783A0FA:
 
 func_9783A0FA_entry:
 	clr	d0
-	mov	d0, (data_97912660)
+	mov	d0, (KssCatch_USBPP_L286_Var)
 	call	func_9783A129_entry, 0, 0x20
 	mov	1, d0
-	mov	d0, (data_9791188C)
+	mov	d0, (func_978392F9_L1e_Var)
 	clr	d0
 	mov	d0, (0x10, sp)
 	mov	0x400, d1
@@ -93519,7 +93532,7 @@ func_9783A129_entry_L15:
 	mov	(0x14, sp), d0
 	inc	d0
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x20, a0), a0
 	mov	1, d0
@@ -93648,7 +93661,7 @@ func_9783A1E8_entry_L70:
 	mov	(0x14, sp), d0
 	inc	d0
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x20, a0), a0
 	mov	1, d0
@@ -93781,7 +93794,7 @@ func_9783A31B_L67:
 	mov	(0x14, sp), d0
 	inc	d0
 	mov	d0, (0x14, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x20, a0), a0
 	mov	5, d0
@@ -93812,11 +93825,11 @@ func_9783A31B_Lb0:
 
 func_9783A3CE:
 	movbu	d0, (8, sp)
-	movbu	d0, (data_979118DF)
+	movbu	d0, (func_9783A3CE_Var)
 	ret	0, 0
 
 func_9783A3DA:
-	movbu	(data_979118DF), d0
+	movbu	(func_9783A3CE_Var), d0
 	ret	0, 0
 
 func_9783A3E3:
@@ -93824,7 +93837,7 @@ func_9783A3E3:
 	ret	0, 0
 
 func_9783A3EC:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	ret	0, 0
 
 func_9783A3F5:
@@ -93832,26 +93845,26 @@ func_9783A3F5:
 
 func_9783A3F5_entry:
 	clr	d0
-	movbu	d0, (data_979118CE)
-	movbu	d0, (data_979118CF)
+	movbu	d0, (func_9783A3F5_Var_3)
+	movbu	d0, (func_9783A3F5_Var_4)
 	clr	d0
-	mov	d0, (data_979118B8)
-	mov	d0, (data_979118B4)
+	mov	d0, (func_9783A3F5_Var_2)
+	mov	d0, (func_9783A3F5_Var)
 	clr	d0
-	movbu	d0, (data_979118D0)
-	movbu	d0, (data_979118D2)
-	movbu	d0, (data_979118D3)
-	movbu	d0, (data_979118D4)
-	movbu	d0, (data_979118D5)
-	movbu	d0, (data_979118D6)
-	movbu	d0, (data_979118D7)
-	movbu	d0, (data_979118D8)
-	movbu	d0, (data_979118D9)
-	movbu	d0, (data_979118DA)
-	movbu	d0, (data_979118DB)
-	movbu	d0, (data_979118DC)
-	movbu	d0, (data_979118DD)
-	movbu	d0, (data_979118DE)
+	movbu	d0, (func_9783A3F5_Var_5)
+	movbu	d0, (func_9783A3F5_Var_6)
+	movbu	d0, (func_9783A3F5_Var_7)
+	movbu	d0, (func_9783A3F5_Var_8)
+	movbu	d0, (func_9783A3F5_Var_9)
+	movbu	d0, (func_9783A3F5_Var_10)
+	movbu	d0, (func_9783A3F5_Var_11)
+	movbu	d0, (func_9783A3F5_Var_12)
+	movbu	d0, (func_9783A3F5_Var_13)
+	movbu	d0, (func_9783A3F5_Var_14)
+	movbu	d0, (func_9783A3F5_Var_15)
+	movbu	d0, (func_9783A3F5_Var_16)
+	movbu	d0, (func_9783A3F5_Var_17)
+	movbu	d0, (func_9783A3F5_Var_18)
 	mov	0x001e8480, d0
 	call	func_9783BAEA, 0, 0
 	ret	0, 0xc
@@ -94078,11 +94091,11 @@ func_9783A475_entry_L207:
 func_9783A475_entry_L20c:
 	call	func_9783A3F5_entry, 0, 0xc
 	mov	(0x979a4a7c), d0
-	mov	d0, (data_979118C0)
+	mov	d0, (func_9783A475_entry_L20c_Var)
 	mov	(0x979a4a80), d0
-	mov	d0, (data_979118C4)
+	mov	d0, (func_9783A475_entry_L20c_Var_2)
 	mov	(0x979a4a6c), d0
-	mov	d0, (data_979118C8)
+	mov	d0, (func_9783A3EC_Var)
 	mov	(0x24, sp), a0
 	mov	d0, (a0)
 	mov	(0x979a4a74), d0
@@ -94095,7 +94108,7 @@ func_9783A475_entry_L245:
 	beq	func_9783A475_entry_L251
 	bra	func_9783A475_entry_L267
 func_9783A475_entry_L251:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	beq	func_9783A475_entry_L25d
 	bra	func_9783A475_entry_L262
@@ -94182,7 +94195,7 @@ func_9783A475_entry_L306:
 	bls	func_9783A475_entry_L312
 	bra	func_9783A475_entry_L328
 func_9783A475_entry_L312:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bhi	func_9783A475_entry_L31e
 	bra	func_9783A475_entry_L323
@@ -94212,11 +94225,11 @@ func_9783A475_entry_L34f:
 func_9783A475_entry_L354:
 	call	func_9783A3F5_entry, 0, 0xc
 	mov	(0x979a4a7c), d0
-	mov	d0, (data_979118C0)
+	mov	d0, (func_9783A475_entry_L20c_Var)
 	mov	(0x979a4a80), d0
-	mov	d0, (data_979118C4)
+	mov	d0, (func_9783A475_entry_L20c_Var_2)
 	mov	(0x979a4a6c), d0
-	mov	d0, (data_979118C8)
+	mov	d0, (func_9783A3EC_Var)
 	mov	(0x24, sp), a0
 	mov	d0, (a0)
 	mov	(0x979a4a74), d0
@@ -94239,7 +94252,7 @@ func_9783A475_entry_L3a6:
 	bhi	func_9783A475_entry_L3b2
 	bra	func_9783A475_entry_L3c8
 func_9783A475_entry_L3b2:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bhi	func_9783A475_entry_L3be
 	bra	func_9783A475_entry_L3c3
@@ -94272,11 +94285,11 @@ func_9783A475_entry_L3f4:
 func_9783A475_entry_L3f9:
 	call	func_9783A3F5_entry, 0, 0xc
 	mov	(0x979a4a7c), d0
-	mov	d0, (data_979118C0)
+	mov	d0, (func_9783A475_entry_L20c_Var)
 	mov	(0x979a4a80), d0
-	mov	d0, (data_979118C4)
+	mov	d0, (func_9783A475_entry_L20c_Var_2)
 	mov	(0x979a4a6c), d0
-	mov	d0, (data_979118C8)
+	mov	d0, (func_9783A3EC_Var)
 	mov	(0x24, sp), a0
 	mov	d0, (a0)
 	mov	(0x979a4a74), d0
@@ -94289,7 +94302,7 @@ func_9783A475_entry_L432:
 	beq	func_9783A475_entry_L43e
 	bra	func_9783A475_entry_L454
 func_9783A475_entry_L43e:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	beq	func_9783A475_entry_L44a
 	bra	func_9783A475_entry_L44f
@@ -94418,12 +94431,12 @@ func_9783A475_entry_L541:
 	bra	func_9783A475_entry_L58b
 func_9783A475_entry_L564:
 	mov	(0x18, sp), d0
-	mov	(data_979118C8), d1
+	mov	(func_9783A3EC_Var), d1
 	and	d1, d0
-	mov	d0, (data_979118C8)
+	mov	d0, (func_9783A3EC_Var)
 	mov	(0x24, sp), a0
 	mov	d0, (a0)
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bhi	func_9783A475_entry_L583
 	bra	func_9783A475_entry_L587
@@ -94470,7 +94483,7 @@ func_9783AA10_entry_L25:
 func_9783AA10_entry_L32:
 	clr	d0
 	mov	d0, (0x97941e18)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x88, a0), a0
 	calls	(a0)
@@ -94483,7 +94496,7 @@ func_9783AA10_entry_L58:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x14, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXU_2, a0
 	call	func_9783CD3C_entry, 0, 0xc
 	exth	d0
@@ -94506,7 +94519,7 @@ func_9783AA10_entry_L94:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x15, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXD_2, a0
 	call	func_9783CD49_entry, 0, 0xc
 	exth	d0
@@ -94529,7 +94542,7 @@ func_9783AA10_entry_Ld1:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x16, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXF_2, a0
 	call	func_9783CD56_entry, 0, 0xc
 	exth	d0
@@ -94552,7 +94565,7 @@ func_9783AA10_entry_L10e:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x17, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXC_2, a0
 	call	func_9783CD63_entry, 0, 0xc
 	exth	d0
@@ -94575,7 +94588,7 @@ func_9783AA10_entry_L14b:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x18, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXY_2, a0
 	call	func_9783CD70_entry, 0, 0xc
 	exth	d0
@@ -94598,7 +94611,7 @@ func_9783AA10_entry_L188:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x19, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXZ_2, a0
 	call	func_9783CD7D_entry, 0, 0xc
 	exth	d0
@@ -94621,7 +94634,7 @@ func_9783AA10_entry_L1c5:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x1a, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXL_2, a0
 	call	func_9783CD8A_entry, 0, 0xc
 	exth	d0
@@ -94644,7 +94657,7 @@ func_9783AA10_entry_L204:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x20, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_X, a0
 	call	func_9783CD97_entry, 0, 0xc
 	exth	d0
@@ -94667,7 +94680,7 @@ func_9783AA10_entry_L244:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x21, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXB, a0
 	call	func_9783CDA4_entry, 0, 0xc
 	exth	d0
@@ -94690,7 +94703,7 @@ func_9783AA10_entry_L284:
 	clr	d0
 	call	func_9780635B, 0, 0
 	mov	0x22, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	Str_12345678_SXI, a0
 	call	func_9783CDB1_entry, 0, 0xc
 	exth	d0
@@ -94704,7 +94717,7 @@ func_9783AA10_entry_L2aa:
 	mov	d0, (0x24, sp)
 	jmp	func_9783AA10_entry_L8ac
 func_9783AA10_entry_L2b2:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -94720,7 +94733,7 @@ func_9783AA10_entry_L2b2:
 	call	func_9783B816_entry, 0, 0x88
 	jmp	func_9783AA10_entry_L8d7
 func_9783AA10_entry_L2da:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bhi	func_9783AA10_entry_L2e7
 	jmp	func_9783AA10_entry_L45a
@@ -94739,7 +94752,7 @@ func_9783AA10_entry_L2ff:
 	mov	d0, (0x97941e18)
 	mov	(0x979a4a74), d0
 	mov	(0x979a4a78), d1
-	mov	(data_979118C8), d2
+	mov	(func_9783A3EC_Var), d2
 	mov	d2, (0x10, sp)
 	mov	2, d2
 	mov	d2, (0x14, sp)
@@ -94759,19 +94772,19 @@ func_9783AA10_entry_L337:
 	mov	d0, (0x24, sp)
 	jmp	func_9783AA10_entry_L8ac
 func_9783AA10_entry_L33f:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	mov	(0x28, sp), d1
 	cmp	d0, d1
 	ble	func_9783AA10_entry_L34d
 	jmp	func_9783AA10_entry_L407
 func_9783AA10_entry_L34d:
 	mov	(0x28, sp), d0
-	mov	(data_979118C8), d1
+	mov	(func_9783A3EC_Var), d1
 	sub	d0, d1
-	mov	d1, (data_979118C8)
+	mov	d1, (func_9783A3EC_Var)
 	jmp	func_9783AA10_entry_L407
 func_9783AA10_entry_L360:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x88, a0), a0
 	calls	(a0)
@@ -94780,7 +94793,7 @@ func_9783AA10_entry_L360:
 func_9783AA10_entry_L377:
 	clr	d0
 	call	func_9780635B, 0, 0
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	mov	Str_12345678_5, a0
 	call	func_9783BEFC, 0, 0x10
 	mov	d0, (0x2c, sp)
@@ -94789,9 +94802,9 @@ func_9783AA10_entry_L377:
 	bra	func_9783AA10_entry_L3aa
 func_9783AA10_entry_L398:
 	mov	(0x2c, sp), d0
-	mov	(data_979118C8), d1
+	mov	(func_9783A3EC_Var), d1
 	sub	d0, d1
-	mov	d1, (data_979118C8)
+	mov	d1, (func_9783A3EC_Var)
 	bra	func_9783AA10_entry_L3fa
 func_9783AA10_entry_L3aa:
 	mov	sp, a0
@@ -94808,7 +94821,7 @@ func_9783AA10_entry_L3aa:
 	call	func_9780AEBC_entry, 0, 0x14
 	mov	1, d0
 	mov	d0, (0x97941e18)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -94820,12 +94833,12 @@ func_9783AA10_entry_L3aa:
 	mov	-0x3e8, d0
 	jmp	func_9783AA10_entry_L8d7
 func_9783AA10_entry_L3fa:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bls	func_9783AA10_entry_L407
 	jmp	func_9783AA10_entry_L377
 func_9783AA10_entry_L407:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -94833,7 +94846,7 @@ func_9783AA10_entry_L407:
 	clr	d0
 	clr	d1
 	call	func_978392F9, 0, 0
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	beq	func_9783AA10_entry_L42c
 	bra	func_9783AA10_entry_L442
@@ -94883,7 +94896,7 @@ func_9783AA10_entry_L482:
 func_9783AA10_entry_L48f:
 	clr	d0
 	mov	d0, (0x97941e18)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x88, a0), a0
 	calls	(a0)
@@ -94894,7 +94907,7 @@ func_9783AA10_entry_L48f:
 	bra	func_9783AA10_entry_L4e4
 func_9783AA10_entry_L4b5:
 	mov	0x14, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	0x204, d0
 	mov	d0, (0x97941e24)
 	mov	Str_12345678_SXU, a0
@@ -94917,7 +94930,7 @@ func_9783AA10_entry_L4e4:
 	bra	func_9783AA10_entry_L522
 func_9783AA10_entry_L4f3:
 	mov	0x15, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	0xf04, d0
 	mov	d0, (0x97941e24)
 	mov	Str_12345678_SXD, a0
@@ -94940,7 +94953,7 @@ func_9783AA10_entry_L522:
 	bra	func_9783AA10_entry_L563
 func_9783AA10_entry_L531:
 	mov	0x16, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	0x0002d004, d0
 	mov	d0, (0x97941e24)
 	mov	Str_12345678_SXF, a0
@@ -94963,7 +94976,7 @@ func_9783AA10_entry_L563:
 	bra	func_9783AA10_entry_L5a1
 func_9783AA10_entry_L572:
 	mov	0x17, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	0x7f84, d0
 	mov	d0, (0x97941e24)
 	mov	Str_12345678_SXC, a0
@@ -94986,7 +94999,7 @@ func_9783AA10_entry_L5a1:
 	bra	func_9783AA10_entry_L5df
 func_9783AA10_entry_L5b0:
 	mov	0x18, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	0x4004, d0
 	mov	d0, (0x97941e24)
 	mov	Str_12345678_SXY, a0
@@ -95009,7 +95022,7 @@ func_9783AA10_entry_L5df:
 	bra	func_9783AA10_entry_L61d
 func_9783AA10_entry_L5ee:
 	mov	0x19, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	0x1004, d0
 	mov	d0, (0x97941e24)
 	mov	Str_12345678_SXZ, a0
@@ -95032,7 +95045,7 @@ func_9783AA10_entry_L61d:
 	bra	func_9783AA10_entry_L661
 func_9783AA10_entry_L62c:
 	mov	0x1a, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	call	func_97805198_entry, 0, 0xc
 	add	4, d0
 	mov	d0, (0x97941e24)
@@ -95049,7 +95062,7 @@ func_9783AA10_entry_L659:
 	mov	d0, (0x24, sp)
 	jmp	func_9783AA10_entry_L8ac
 func_9783AA10_entry_L661:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -95072,21 +95085,21 @@ func_9783AA10_entry_L661:
 	clr	d0
 	jmp	func_9783AA10_entry_L8d7
 func_9783AA10_entry_L69c:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bhi	func_9783AA10_entry_L6a9
 	jmp	func_9783AA10_entry_L8a2
 func_9783AA10_entry_L6a9:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	mov	d0, (0x30, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x88, a0), a0
 	calls	(a0)
 	clr	d0
 	mov	d0, (0x97941e18)
 func_9783AA10_entry_L6c8:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	call	func_9783B4D1, 0, 0
 	call	func_9783B6D9, 0, 0
 	mov	d0, (0x97941e24)
@@ -95094,7 +95107,7 @@ func_9783AA10_entry_L6c8:
 	call	func_9781D9DB_entry, 0, 0x14
 	mov	1, d0
 	mov	d0, (0x97989288)
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	mov	Str_12345678_4, a0
 	call	func_9783C3D4_entry, 0, 0x1c
 	mov	d0, (0x2c, sp)
@@ -95105,9 +95118,9 @@ func_9783AA10_entry_L707:
 	mov	(0x2c, sp), d0
 	mov	d0, (0x9798928c)
 	mov	(0x2c, sp), d0
-	mov	(data_979118C8), d1
+	mov	(func_9783A3EC_Var), d1
 	sub	d0, d1
-	mov	d1, (data_979118C8)
+	mov	d1, (func_9783A3EC_Var)
 	bra	func_9783AA10_entry_L771
 func_9783AA10_entry_L721:
 	mov	sp, a0
@@ -95124,7 +95137,7 @@ func_9783AA10_entry_L721:
 	call	func_9780AEBC_entry, 0, 0x14
 	mov	1, d0
 	mov	d0, (0x97941e18)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -95136,12 +95149,12 @@ func_9783AA10_entry_L721:
 	mov	-0x514, d0
 	jmp	func_9783AA10_entry_L8d7
 func_9783AA10_entry_L771:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bls	func_9783AA10_entry_L77e
 	jmp	func_9783AA10_entry_L6c8
 func_9783AA10_entry_L77e:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	beq	func_9783AA10_entry_L78b
 	jmp	func_9783AA10_entry_L86a
@@ -95271,7 +95284,7 @@ func_9783AA10_entry_L8a7:
 func_9783AA10_entry_L8ac:
 	mov	1, d0
 	mov	d0, (0x97941e18)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x8c, a0), a0
 	calls	(a0)
@@ -95297,7 +95310,7 @@ func_9783B2EF_entry:
 	mov	d0, (0x1c, sp)
 	mov	(0x979a4a74), d0
 	mov	(0x979a4a78), d1
-	mov	(data_979118C8), d2
+	mov	(func_9783A3EC_Var), d2
 	mov	d2, (0x10, sp)
 	mov	1, d2
 	sub	d2, d0
@@ -95719,9 +95732,9 @@ func_9783B6EB_entry:
 	mov	2, d0
 	movbu	d0, (0x97941e1c)
 	mov	(0x979a4a7c), d0
-	mov	d0, (data_979118C0)
+	mov	d0, (func_9783A475_entry_L20c_Var)
 	mov	(0x979a4a80), d0
-	mov	d0, (data_979118C4)
+	mov	d0, (func_9783A475_entry_L20c_Var_2)
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -95756,13 +95769,13 @@ func_9783B74D_entry:
 	mov	2, d0
 	movbu	d0, (0x97941e1c)
 	mov	3, d0
-	mov	d0, (data_979118C0)
+	mov	d0, (func_9783A475_entry_L20c_Var)
 	mov	(0x18, sp), d0
-	mov	d0, (data_979118C4)
+	mov	d0, (func_9783A475_entry_L20c_Var_2)
 	mov	0x400, d0
 	mov	Str_12345678_2, a0
 	call	func_9783BEFC, 0, 0x10
-	mov	(data_979118E0), d0
+	mov	(func_9783B74D_Var), d0
 	ret	0, 0x10
 
 func_9783B78C:
@@ -95778,9 +95791,9 @@ func_9783B78C_entry:
 	call	func_9780748B, 0, 0
 	mov	d0, (0x97941e24)
 	mov	(0x979a4a7c), d0
-	mov	d0, (data_979118C0)
+	mov	d0, (func_9783A475_entry_L20c_Var)
 	mov	(0x979a4a80), d0
-	mov	d0, (data_979118C4)
+	mov	d0, (func_9783A475_entry_L20c_Var_2)
 	mov	1, d0
 	mov	d0, (0x10, sp)
 	clr	d0
@@ -95812,7 +95825,7 @@ func_9783B7FC_entry:
 	mov	1, d0
 	mov	d0, (0x97941e18)
 	clr	d0
-	mov	d0, (data_979118C8)
+	mov	d0, (func_9783A3EC_Var)
 	call	func_9783A0FA_entry, 0, 0x14
 	ret	0, 8
 
@@ -95823,49 +95836,49 @@ func_9783B816_entry:
 	mov	d0, (0x94, sp)
 	mov	a0, (0x90, sp)
 	mov	d1, (0x98, sp)
-	mov	(data_979118C0), d0
+	mov	(func_9783A475_entry_L20c_Var), d0
 	cmp	3, d0
 	bne	func_9783B816_entry_L12
 	bra	func_9783B816_entry_L3c
 func_9783B816_entry_L12:
-	mov	(data_979118C0), d0
+	mov	(func_9783A475_entry_L20c_Var), d0
 	cmp	2, d0
 	bne	func_9783B816_entry_L1f
 	jmp	func_9783B816_entry_L15f
 func_9783B816_entry_L1f:
-	mov	(data_979118C0), d0
+	mov	(func_9783A475_entry_L20c_Var), d0
 	cmp	1, d0
 	bne	func_9783B816_entry_L2c
 	jmp	func_9783B816_entry_L233
 func_9783B816_entry_L2c:
-	mov	(data_979118C0), d0
+	mov	(func_9783A475_entry_L20c_Var), d0
 	cmp	4, d0
 	bne	func_9783B816_entry_L39
 	jmp	func_9783B816_entry_L258
 func_9783B816_entry_L39:
 	jmp	func_9783B816_entry_L2cc
 func_9783B816_entry_L3c:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	2, d0
 	bne	func_9783B816_entry_L48
 	bra	func_9783B816_entry_L7c
 func_9783B816_entry_L48:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	1, d0
 	bne	func_9783B816_entry_L54
 	bra	func_9783B816_entry_Laf
 func_9783B816_entry_L54:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	4, d0
 	bne	func_9783B816_entry_L60
 	bra	func_9783B816_entry_Lb3
 func_9783B816_entry_L60:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	8, d0
 	bne	func_9783B816_entry_L6c
 	bra	func_9783B816_entry_Le1
 func_9783B816_entry_L6c:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	0xa, d0
 	bne	func_9783B816_entry_L79
 	jmp	func_9783B816_entry_L122
@@ -95890,7 +95903,7 @@ func_9783B816_entry_L8d:
 	mov	d0, (0x20, sp)
 	mov	(0x90, sp), a0
 	mov	(0x94, sp), d0
-	movbu	(data_979118D1), d1
+	movbu	(func_9783AA10_entry_L58_Var), d1
 	call	func_97839772_entry, 0, 0x50
 	jmp	func_9783B816_entry_L2cd
 func_9783B816_entry_Laf:
@@ -95924,7 +95937,7 @@ func_9783B816_entry_Le1:
 	bra	func_9783B816_entry_Lf0
 func_9783B816_entry_Le9:
 	clr	d0
-	mov	d0, (data_979118E0)
+	mov	d0, (func_9783B74D_Var)
 func_9783B816_entry_Lf0:
 	mov	(0x94, sp), d0
 	cmp	7, d0
@@ -95945,7 +95958,7 @@ func_9783B816_entry_L10d:
 	clr	d0
 	mov	d0, d1
 	call	func_978069C7_entry, [d2,a2], 0x2c
-	mov	d0, (data_979118E0)
+	mov	d0, (func_9783B74D_Var)
 func_9783B816_entry_L11e:
 	clr	d0
 	jmp	func_9783B816_entry_L2cd
@@ -95956,7 +95969,7 @@ func_9783B816_entry_L122:
 	mov	d0, (8, sp)
 	mov	Str_Save_Att_File_Nr_lu_Action_lu_Size_lu_Of, d0
 	mov	d0, (0xc, sp)
-	movbu	(data_979118D1), d0
+	movbu	(func_9783AA10_entry_L58_Var), d0
 	mov	d0, (0x10, sp)
 	mov	(0x94, sp), d0
 	mov	d0, (0x14, sp)
@@ -95984,12 +95997,12 @@ func_9783B816_entry_L173:
 	mov	-1, d0
 	jmp	func_9783B816_entry_L2cd
 func_9783B816_entry_L178:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	3, d0
 	bne	func_9783B816_entry_L184
 	bra	func_9783B816_entry_L194
 func_9783B816_entry_L184:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	4, d0
 	bne	func_9783B816_entry_L191
 	jmp	func_9783B816_entry_L22a
@@ -96011,7 +96024,7 @@ func_9783B816_entry_L19c:
 	mov	d0, (0x1c, sp)
 	mov	(0x90, sp), a0
 	mov	0xb, d0
-	movbu	(data_979118D1), d1
+	movbu	(func_9783AA10_entry_L58_Var), d1
 	call	func_97839823_entry, 0, 0x80
 	jmp	func_9783B816_entry_L2cd
 func_9783B816_entry_L1c2:
@@ -96032,7 +96045,7 @@ func_9783B816_entry_L1ca:
 	mov	d0, (0x20, sp)
 	mov	(0x90, sp), a0
 	mov	0xc, d0
-	movbu	(data_979118D1), d1
+	movbu	(func_9783AA10_entry_L58_Var), d1
 	call	func_97839772_entry, 0, 0x50
 	jmp	func_9783B816_entry_L2cd
 func_9783B816_entry_L1f4:
@@ -96053,7 +96066,7 @@ func_9783B816_entry_L1fc:
 	mov	d0, (0x20, sp)
 	mov	(0x90, sp), a0
 	mov	0xd, d0
-	movbu	(data_979118D1), d1
+	movbu	(func_9783AA10_entry_L58_Var), d1
 	call	func_97839772_entry, 0, 0x50
 	jmp	func_9783B816_entry_L2cd
 func_9783B816_entry_L226:
@@ -96066,12 +96079,12 @@ func_9783B816_entry_L22e:
 	mov	-1, d0
 	jmp	func_9783B816_entry_L2cd
 func_9783B816_entry_L233:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	3, d0
 	bne	func_9783B816_entry_L23f
 	bra	func_9783B816_entry_L24d
 func_9783B816_entry_L23f:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	4, d0
 	bne	func_9783B816_entry_L24b
 	bra	func_9783B816_entry_L251
@@ -96087,17 +96100,17 @@ func_9783B816_entry_L254:
 	mov	-1, d0
 	bra	func_9783B816_entry_L2cd
 func_9783B816_entry_L258:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	3, d0
 	bne	func_9783B816_entry_L264
 	bra	func_9783B816_entry_L27e
 func_9783B816_entry_L264:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	2, d0
 	bne	func_9783B816_entry_L270
 	bra	func_9783B816_entry_L2a4
 func_9783B816_entry_L270:
-	mov	(data_979118C4), d0
+	mov	(func_9783A475_entry_L20c_Var_2), d0
 	cmp	1, d0
 	bne	func_9783B816_entry_L27c
 	bra	func_9783B816_entry_L2c5
@@ -96130,7 +96143,7 @@ func_9783B816_entry_L2a4:
 	mov	d0, (0x20, sp)
 	mov	(0x90, sp), a0
 	mov	(0x94, sp), d0
-	movbu	(data_979118D1), d1
+	movbu	(func_9783AA10_entry_L58_Var), d1
 	call	func_97839772_entry, 0, 0x50
 	bra	func_9783B816_entry_L2cd
 func_9783B816_entry_L2c5:
@@ -96146,23 +96159,23 @@ func_9783B816_entry_L2cd:
 
 func_9783BAEA:
 	mov	d0, (8, sp)
-	mov	d0, (data_979118BC)
+	mov	d0, (func_9783BAEA_Var)
 	ret	0, 0
 
 func_9783BAF5:
 	movbu	d0, (8, sp)
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	ret	0, 0
 # func_9783BAF5 + 0xc: no traced path reaches what follows (--decode-gaps)
 	movhu	d0, (8, sp)
-	movhu	d0, (data_979118CC)
+	movhu	d0, (func_9783BAF5_Var)
 	ret	0, 0
 
 func_9783BB0D:
-	movbu	(data_979118DA), d0
+	movbu	(func_9783A3F5_Var_14), d0
 	inc	d0
-	movbu	d0, (data_979118DA)
-	mov	(data_979118BC), d0
+	movbu	d0, (func_9783A3F5_Var_14)
+	mov	(func_9783BAEA_Var), d0
 	ret	0, 0
 
 func_9783BB23:
@@ -96181,7 +96194,7 @@ func_9783BB3E:
 	add	-4, sp
 
 func_9783BB3E_entry:
-	movhu	(data_979118CC), d0
+	movhu	(func_9783BAF5_Var), d0
 	movhu	d0, (0, sp)
 	movhu	(0, sp), d0
 	exth	d0
@@ -96190,13 +96203,13 @@ func_9783BB3E_entry:
 	bra	func_9783BB3E_entry_L1a
 func_9783BB3E_entry_L13:
 	clr	d0
-	movhu	d0, (data_979118CC)
+	movhu	d0, (func_9783BAF5_Var)
 func_9783BB3E_entry_L1a:
 	movhu	(0, sp), d0
 	ret	0, 4
 # func_9783BB3E_entry + 0x20: no traced path reaches what follows (--decode-gaps)
 	movhu	d0, (8, sp)
-	movhu	d0, (data_979118CC)
+	movhu	d0, (func_9783BAF5_Var)
 	ret	0, 0
 
 func_9783BB6D:
@@ -96207,12 +96220,12 @@ func_9783BB6D_entry:
 	mov	0x97941e0c, a0
 	call	strcpy_entry, [a2], 4
 	clr	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	mov	d0, (0x97941e20)
-	movbu	(data_979118D2), d0
+	movbu	(func_9783A3F5_Var_6), d0
 	inc	d0
-	movbu	d0, (data_979118D2)
-	movbu	(data_979118D1), d0
+	movbu	d0, (func_9783A3F5_Var_6)
+	movbu	(func_9783AA10_entry_L58_Var), d0
 	call	func_978061FA_entry, 0, 0xc
 	mov	d0, (0x20, sp)
 	clr	d0
@@ -96253,7 +96266,7 @@ func_9783BBD3_entry:
 	call	func_9783B816_entry, 0, 0x88
 	mov	d0, (0x20, sp)
 	clr	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	mov	(0x20, sp), d0
 	cmp	0, d0
 	blt	func_9783BBD3_entry_L23
@@ -96269,18 +96282,18 @@ func_9783BBD3_entry_L30:
 	ret	0, 0x24
 
 func_9783BC09:
-	movbu	(data_979118DC), d0
+	movbu	(func_9783A3F5_Var_16), d0
 	inc	d0
-	movbu	d0, (data_979118DC)
+	movbu	d0, (func_9783A3F5_Var_16)
 	clr	d0
 	ret	0, 0
 
 func_9783BC1A:
 	add	-0x28, sp
-	movbu	(data_979118DE), d0
+	movbu	(func_9783A3F5_Var_18), d0
 	inc	d0
-	movbu	d0, (data_979118DE)
-	mov	(data_979118B8), d0
+	movbu	d0, (func_9783A3F5_Var_18)
+	mov	(func_9783A3F5_Var_2), d0
 	inc	d0
 	mov	(0x97941e24), d1
 	cmp	d1, d0
@@ -96290,7 +96303,7 @@ func_9783BC1A_L22:
 	clr	d0
 	bra	func_9783BC1A_L62
 func_9783BC1A_L25:
-	mov	(data_979118B8), d0
+	mov	(func_9783A3F5_Var_2), d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -96311,9 +96324,9 @@ func_9783BC1A_L47:
 	clr	d0
 	bra	func_9783BC1A_L62
 func_9783BC1A_L52:
-	mov	(data_979118B8), d0
+	mov	(func_9783A3F5_Var_2), d0
 	inc	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	movhu	(0x24, sp), d0
 func_9783BC1A_L62:
 	ret	0, 0x28
@@ -96326,11 +96339,11 @@ func_9783BC7F_entry:
 	mov	d0, (0x34, sp)
 	clr	d0
 	mov	d0, (0x20, sp)
-	movbu	(data_979118DD), d0
+	movbu	(func_9783A3F5_Var_17), d0
 	inc	d0
-	movbu	d0, (data_979118DD)
+	movbu	d0, (func_9783A3F5_Var_17)
 	mov	(0x34, sp), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	add	d1, d0
 	mov	(0x97941e24), d1
 	cmp	d1, d0
@@ -96338,7 +96351,7 @@ func_9783BC7F_entry:
 	bra	func_9783BC7F_entry_L4e
 func_9783BC7F_entry_L28:
 	mov	(0x97941e24), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	cmp	d1, d0
 	bcs	func_9783BC7F_entry_L39
 	bra	func_9783BC7F_entry_L3c
@@ -96347,7 +96360,7 @@ func_9783BC7F_entry_L39:
 	bra	func_9783BC7F_entry_L8f
 func_9783BC7F_entry_L3c:
 	mov	(0x97941e24), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	sub	d1, d0
 	mov	d0, (0x20, sp)
 	bra	func_9783BC7F_entry_L52
@@ -96355,7 +96368,7 @@ func_9783BC7F_entry_L4e:
 	mov	(0x34, sp), d0
 	mov	d0, (0x20, sp)
 func_9783BC7F_entry_L52:
-	mov	(data_979118B8), d0
+	mov	(func_9783A3F5_Var_2), d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -96376,9 +96389,9 @@ func_9783BC7F_entry_L73:
 	bra	func_9783BC7F_entry_L8f
 func_9783BC7F_entry_L7e:
 	mov	(0x20, sp), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	add	d1, d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	mov	(0x20, sp), d0
 func_9783BC7F_entry_L8f:
 	ret	0, 0x28
@@ -96409,25 +96422,25 @@ func_9783BD14_L20:
 func_9783BD14_L26:
 	jmp	func_9783BD14_Lc8
 func_9783BD14_L29:
-	movbu	(data_979118D4), d0
+	movbu	(func_9783A3F5_Var_8), d0
 	inc	d0
-	movbu	d0, (data_979118D4)
+	movbu	d0, (func_9783A3F5_Var_8)
 	mov	(8, sp), d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	jmp	func_9783BD14_Lcc
 func_9783BD14_L41:
-	movbu	(data_979118D5), d0
+	movbu	(func_9783A3F5_Var_9), d0
 	inc	d0
-	movbu	d0, (data_979118D5)
+	movbu	d0, (func_9783A3F5_Var_9)
 	mov	(8, sp), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	add	d1, d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	bra	func_9783BD14_Lcc
 func_9783BD14_L5f:
-	movbu	(data_979118D6), d0
+	movbu	(func_9783A3F5_Var_10), d0
 	inc	d0
-	movbu	d0, (data_979118D6)
+	movbu	d0, (func_9783A3F5_Var_10)
 	movbu	(0x97941e1c), d0
 	cmp	1, d0
 	beq	func_9783BD14_L78
@@ -96440,13 +96453,13 @@ func_9783BD14_L78:
 	bra	func_9783BD14_L8e
 func_9783BD14_L85:
 	clr	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	bra	func_9783BD14_Lcc
 func_9783BD14_L8e:
 	mov	(8, sp), d0
 	mov	(0x97941e24), d1
 	sub	d0, d1
-	mov	d1, (data_979118B8)
+	mov	d1, (func_9783A3F5_Var_2)
 	bra	func_9783BD14_Lcc
 func_9783BD14_La0:
 	mov	(8, sp), d0
@@ -96456,45 +96469,45 @@ func_9783BD14_La0:
 	bra	func_9783BD14_Lb6
 func_9783BD14_Lad:
 	clr	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	bra	func_9783BD14_Lcc
 func_9783BD14_Lb6:
 	mov	(8, sp), d0
 	mov	(0x97941e20), d1
 	sub	d0, d1
-	mov	d1, (data_979118B8)
+	mov	d1, (func_9783A3F5_Var_2)
 	bra	func_9783BD14_Lcc
 func_9783BD14_Lc8:
 	mov	-2, d0
 	bra	func_9783BD14_Ld2
 func_9783BD14_Lcc:
-	movhu	(data_979118B8), d0
+	movhu	(func_9783A3F5_Var_2), d0
 func_9783BD14_Ld2:
 	ret	0, 0
 
 func_9783BDE9:
-	movbu	(data_979118D7), d0
+	movbu	(func_9783A3F5_Var_11), d0
 	inc	d0
-	movbu	d0, (data_979118D7)
-	mov	(data_979118B8), d0
+	movbu	d0, (func_9783A3F5_Var_11)
+	mov	(func_9783A3F5_Var_2), d0
 	ret	0, 0
 
 func_9783BDFF:
-	movbu	(data_979118DB), d0
+	movbu	(func_9783A3F5_Var_15), d0
 	inc	d0
-	movbu	d0, (data_979118DB)
+	movbu	d0, (func_9783A3F5_Var_15)
 	clr	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	clr	d0
 	ret	0, 0
 
 func_9783BE17:
 	add	-0x24, sp
 	mov	d0, (0x2c, sp)
-	movbu	(data_979118D9), d0
+	movbu	(func_9783A3F5_Var_13), d0
 	inc	d0
-	movbu	d0, (data_979118D9)
-	mov	(data_979118B8), d0
+	movbu	d0, (func_9783A3F5_Var_13)
+	mov	(func_9783A3F5_Var_2), d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -96515,16 +96528,16 @@ func_9783BE17_L34:
 	clr	d0
 	bra	func_9783BE17_L6b
 func_9783BE17_L3f:
-	mov	(data_979118B8), d0
+	mov	(func_9783A3F5_Var_2), d0
 	inc	d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	mov	(0x97941e20), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	cmp	d1, d0
 	bcs	func_9783BE17_L5d
 	bra	func_9783BE17_L69
 func_9783BE17_L5d:
-	mov	(data_979118B8), d0
+	mov	(func_9783A3F5_Var_2), d0
 	mov	d0, (0x97941e20)
 func_9783BE17_L69:
 	mov	-1, d0
@@ -96537,10 +96550,10 @@ func_9783BE85:
 func_9783BE85_entry:
 	mov	a0, (0x2c, sp)
 	mov	d0, (0x30, sp)
-	movbu	(data_979118D8), d0
+	movbu	(func_9783A3F5_Var_12), d0
 	inc	d0
-	movbu	d0, (data_979118D8)
-	mov	(data_979118B8), d0
+	movbu	d0, (func_9783A3F5_Var_12)
+	mov	(func_9783A3F5_Var_2), d0
 	mov	d0, (0x14, sp)
 	clr	d0
 	mov	d0, (0x18, sp)
@@ -96560,16 +96573,16 @@ func_9783BE85_entry_L30:
 	bra	func_9783BE85_entry_L69
 func_9783BE85_entry_L3b:
 	mov	(0x30, sp), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	add	d1, d0
-	mov	d0, (data_979118B8)
+	mov	d0, (func_9783A3F5_Var_2)
 	mov	(0x97941e20), d0
-	mov	(data_979118B8), d1
+	mov	(func_9783A3F5_Var_2), d1
 	cmp	d1, d0
 	bcs	func_9783BE85_entry_L5b
 	bra	func_9783BE85_entry_L67
 func_9783BE85_entry_L5b:
-	mov	(data_979118B8), d0
+	mov	(func_9783A3F5_Var_2), d0
 	mov	d0, (0x97941e20)
 func_9783BE85_entry_L67:
 	mov	(0x30, sp), d0
@@ -96592,8 +96605,8 @@ func_9783BEFC:
 	bra	func_9783BEFC_L43
 func_9783BEFC_L12:
 	mov	4, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xec, a0), a1
 	mov	(0x1c, sp), a0
@@ -96619,8 +96632,8 @@ func_9783BEFC_L43:
 	bra	func_9783BEFC_L80
 func_9783BEFC_L4e:
 	clr	d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xc8, a0), a1
 	mov	(0x1c, sp), a0
@@ -96646,8 +96659,8 @@ func_9783BEFC_L80:
 	bra	func_9783BEFC_Lbe
 func_9783BEFC_L8b:
 	mov	1, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xcc, a0), a1
 	mov	(0x1c, sp), a0
@@ -96673,8 +96686,8 @@ func_9783BEFC_Lbe:
 	bra	func_9783BEFC_Lfc
 func_9783BEFC_Lc9:
 	mov	5, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xe8, a0), a1
 	mov	(0x1c, sp), a0
@@ -96700,8 +96713,8 @@ func_9783BEFC_Lfc:
 	bra	func_9783BEFC_L13a
 func_9783BEFC_L107:
 	mov	3, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xe4, a0), a1
 	mov	(0x1c, sp), a0
@@ -96727,8 +96740,8 @@ func_9783BEFC_L13a:
 	bra	func_9783BEFC_L178
 func_9783BEFC_L145:
 	mov	2, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xe0, a0), a1
 	mov	(0x1c, sp), a0
@@ -96754,8 +96767,8 @@ func_9783BEFC_L178:
 	bra	func_9783BEFC_L1b6
 func_9783BEFC_L183:
 	mov	6, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xdc, a0), a1
 	mov	(0x1c, sp), a0
@@ -96781,8 +96794,8 @@ func_9783BEFC_L1b6:
 	bra	func_9783BEFC_L1f7
 func_9783BEFC_L1c3:
 	mov	7, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xd0, a0), a1
 	mov	(0x1c, sp), a0
@@ -96808,8 +96821,8 @@ func_9783BEFC_L1f7:
 	bra	func_9783BEFC_L239
 func_9783BEFC_L205:
 	mov	8, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xd4, a0), a1
 	mov	(0x1c, sp), a0
@@ -96835,8 +96848,8 @@ func_9783BEFC_L239:
 	bra	func_9783BEFC_L27b
 func_9783BEFC_L247:
 	mov	9, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xd8, a0), a1
 	mov	(0x1c, sp), a0
@@ -96862,8 +96875,8 @@ func_9783BEFC_L27b:
 	bra	func_9783BEFC_L2bd
 func_9783BEFC_L289:
 	mov	0xa, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xf0, a0), a1
 	mov	(0x1c, sp), a0
@@ -96889,7 +96902,7 @@ func_9783BEFC_L2bd:
 	bra	func_9783BEFC_L2f4
 func_9783BEFC_L2cb:
 	mov	0xb, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x1c, sp), a0
 	call	func_9783CDBE, 0, 0
 	exth	d0
@@ -96913,7 +96926,7 @@ func_9783BEFC_L2f4:
 	bra	func_9783BEFC_L32b
 func_9783BEFC_L302:
 	mov	0xc, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x1c, sp), a0
 	call	func_9783CD2F_entry, 0, 0xc
 	exth	d0
@@ -96937,7 +96950,7 @@ func_9783BEFC_L32b:
 	bra	func_9783BEFC_L362
 func_9783BEFC_L339:
 	mov	0xd, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x1c, sp), a0
 	call	func_9783CD22_entry, 0, 0xc
 	exth	d0
@@ -96961,7 +96974,7 @@ func_9783BEFC_L362:
 	bra	func_9783BEFC_L38f
 func_9783BEFC_L370:
 	mov	0xe, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L380
@@ -96981,7 +96994,7 @@ func_9783BEFC_L38f:
 	bra	func_9783BEFC_L3c1
 func_9783BEFC_L39f:
 	mov	0xf, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L3af
@@ -97001,7 +97014,7 @@ func_9783BEFC_L3c1:
 	bra	func_9783BEFC_L3f5
 func_9783BEFC_L3d3:
 	mov	0x10, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L3e3
@@ -97021,7 +97034,7 @@ func_9783BEFC_L3f5:
 	bra	func_9783BEFC_L429
 func_9783BEFC_L407:
 	mov	0x11, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L417
@@ -97041,7 +97054,7 @@ func_9783BEFC_L429:
 	bra	func_9783BEFC_L45c
 func_9783BEFC_L43b:
 	mov	0x12, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L44b
@@ -97061,7 +97074,7 @@ func_9783BEFC_L45c:
 	bra	func_9783BEFC_L48e
 func_9783BEFC_L46e:
 	mov	0x13, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L47e
@@ -97087,7 +97100,7 @@ func_9783BEFC_L4a0:
 	bra	func_9783BEFC_L4d2
 func_9783BEFC_L4b2:
 	mov	0x1b, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0xc, sp), d0
 	cmp	0, d0
 	bge	func_9783BEFC_L4c2
@@ -97119,8 +97132,8 @@ func_9783C3D4_entry:
 	bra	func_9783C3D4_entry_L43
 func_9783C3D4_entry_L12:
 	mov	4, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xb0, a0), a1
 	mov	(0x28, sp), a0
@@ -97146,8 +97159,8 @@ func_9783C3D4_entry_L43:
 	bra	func_9783C3D4_entry_L80
 func_9783C3D4_entry_L4e:
 	clr	d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x94, a0), a1
 	mov	(0x28, sp), a0
@@ -97173,8 +97186,8 @@ func_9783C3D4_entry_L80:
 	bra	func_9783C3D4_entry_Lbe
 func_9783C3D4_entry_L8b:
 	mov	1, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x98, a0), a1
 	mov	(0x28, sp), a0
@@ -97200,8 +97213,8 @@ func_9783C3D4_entry_Lbe:
 	bra	func_9783C3D4_entry_Lfc
 func_9783C3D4_entry_Lc9:
 	mov	5, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xac, a0), a1
 	mov	(0x28, sp), a0
@@ -97227,8 +97240,8 @@ func_9783C3D4_entry_Lfc:
 	bra	func_9783C3D4_entry_L13a
 func_9783C3D4_entry_L107:
 	mov	3, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xa8, a0), a1
 	mov	(0x28, sp), a0
@@ -97254,8 +97267,8 @@ func_9783C3D4_entry_L13a:
 	bra	func_9783C3D4_entry_L178
 func_9783C3D4_entry_L145:
 	mov	2, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xa0, a0), a1
 	mov	(0x28, sp), a0
@@ -97281,8 +97294,8 @@ func_9783C3D4_entry_L178:
 	bra	func_9783C3D4_entry_L1b6
 func_9783C3D4_entry_L183:
 	mov	6, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xb4, a0), a1
 	mov	(0x28, sp), a0
@@ -97308,8 +97321,8 @@ func_9783C3D4_entry_L1b6:
 	bra	func_9783C3D4_entry_L1f7
 func_9783C3D4_entry_L1c3:
 	mov	7, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x9c, a0), a1
 	mov	(0x28, sp), a0
@@ -97335,8 +97348,8 @@ func_9783C3D4_entry_L1f7:
 	bra	func_9783C3D4_entry_L239
 func_9783C3D4_entry_L205:
 	mov	8, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xb8, a0), a1
 	mov	(0x28, sp), a0
@@ -97362,8 +97375,8 @@ func_9783C3D4_entry_L239:
 	bra	func_9783C3D4_entry_L27b
 func_9783C3D4_entry_L247:
 	mov	9, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xbc, a0), a1
 	mov	(0x28, sp), a0
@@ -97389,8 +97402,8 @@ func_9783C3D4_entry_L27b:
 	bra	func_9783C3D4_entry_L2bd
 func_9783C3D4_entry_L289:
 	mov	0xa, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xc0, a0), a1
 	mov	(0x28, sp), a0
@@ -97416,7 +97429,7 @@ func_9783C3D4_entry_L2bd:
 	bra	func_9783C3D4_entry_L300
 func_9783C3D4_entry_L2cb:
 	mov	0xb, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	call	func_9783A3DA, 0, 0
 	movbu	d0, (0x18, sp)
 	mov	(0x28, sp), a0
@@ -97444,7 +97457,7 @@ func_9783C3D4_entry_L300:
 	bra	func_9783C3D4_entry_L337
 func_9783C3D4_entry_L30e:
 	mov	0xc, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x28, sp), a0
 	call	func_9783CDCF_entry, 0, 0xc
 	exth	d0
@@ -97468,7 +97481,7 @@ func_9783C3D4_entry_L337:
 	bra	func_9783C3D4_entry_L36e
 func_9783C3D4_entry_L345:
 	mov	0xd, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x28, sp), a0
 	call	func_9783CDC2_entry, 0, 0xc
 	exth	d0
@@ -97492,7 +97505,7 @@ func_9783C3D4_entry_L36e:
 	bra	func_9783C3D4_entry_L39b
 func_9783C3D4_entry_L37c:
 	mov	0xe, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x14, sp), d0
 	cmp	0, d0
 	bge	func_9783C3D4_entry_L38c
@@ -97512,7 +97525,7 @@ func_9783C3D4_entry_L39b:
 	bra	func_9783C3D4_entry_L3cd
 func_9783C3D4_entry_L3ab:
 	mov	0xf, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x14, sp), d0
 	cmp	0, d0
 	bge	func_9783C3D4_entry_L3bb
@@ -97532,7 +97545,7 @@ func_9783C3D4_entry_L3cd:
 	bra	func_9783C3D4_entry_L401
 func_9783C3D4_entry_L3df:
 	mov	0x10, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x14, sp), d0
 	cmp	0, d0
 	bge	func_9783C3D4_entry_L3ef
@@ -97552,7 +97565,7 @@ func_9783C3D4_entry_L401:
 	bra	func_9783C3D4_entry_L435
 func_9783C3D4_entry_L413:
 	mov	0x11, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x14, sp), d0
 	cmp	0, d0
 	bge	func_9783C3D4_entry_L423
@@ -97572,7 +97585,7 @@ func_9783C3D4_entry_L435:
 	bra	func_9783C3D4_entry_L468
 func_9783C3D4_entry_L447:
 	mov	0x12, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x14, sp), d0
 	cmp	0, d0
 	bge	func_9783C3D4_entry_L457
@@ -97592,7 +97605,7 @@ func_9783C3D4_entry_L468:
 	bra	func_9783C3D4_entry_L49a
 func_9783C3D4_entry_L47a:
 	mov	0x13, d0
-	movbu	d0, (data_979118D1)
+	movbu	d0, (func_9783AA10_entry_L58_Var)
 	mov	(0x14, sp), d0
 	cmp	0, d0
 	bge	func_9783C3D4_entry_L48a
@@ -97612,8 +97625,8 @@ func_9783C3D4_entry_L49a:
 	bra	func_9783C3D4_entry_L4e1
 func_9783C3D4_entry_L4ac:
 	mov	0x1b, d0
-	movbu	d0, (data_979118D1)
-	mov	(data_979126B4), a0
+	movbu	d0, (func_9783AA10_entry_L58_Var)
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xa4, a0), a1
 	mov	(0x28, sp), a0
@@ -97646,7 +97659,7 @@ func_9783C8C3:
 func_9783C8C3_entry:
 	mov	a1, (0x20, sp)
 	mov	a0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -97660,7 +97673,7 @@ func_9783C8C3_entry_L1b:
 	call	func_9783BB6D_entry, 0, 0x28
 	bra	func_9783C8C3_entry_L3a
 func_9783C8C3_entry_L26:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x148, a0), a2
 	mov	(0x1c, sp), a0
@@ -97676,7 +97689,7 @@ func_9783C90A:
 func_9783C90A_entry:
 	mov	d0, (0x1c, sp)
 	mov	a0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -97690,7 +97703,7 @@ func_9783C90A_entry_L1b:
 	call	func_9783BE85_entry, 0, 0x24
 	bra	func_9783C90A_entry_L3a
 func_9783C90A_entry_L26:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x14c, a0), a1
 	mov	(0x18, sp), a0
@@ -97706,7 +97719,7 @@ func_9783C94F:
 func_9783C94F_entry:
 	mov	d0, (0x1c, sp)
 	mov	a0, (0x18, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -97720,7 +97733,7 @@ func_9783C94F_entry_L1b:
 	call	func_9783BC7F_entry, 0, 0x28
 	bra	func_9783C94F_entry_L3a
 func_9783C94F_entry_L26:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x150, a0), a1
 	mov	(0x18, sp), a0
@@ -97734,7 +97747,7 @@ func_9783C994:
 	add	-8, sp
 
 func_9783C994_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -97746,7 +97759,7 @@ func_9783C994_entry_L17:
 	call	func_9783BBD3_entry, 0, 0x24
 	bra	func_9783C994_entry_L2e
 func_9783C994_entry_L1e:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x154, a0), a0
 	calls	(a0)
@@ -97759,7 +97772,7 @@ func_9783C9CD:
 	add	-0x1c, sp
 
 func_9783C9CD_entry:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x90, a0), a0
 	calls	(a0)
@@ -97772,11 +97785,11 @@ func_9783C9CD_entry_L17:
 	mov	d0, (0x10, sp)
 	bra	func_9783C9CD_entry_L4a
 func_9783C9CD_entry_L20:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x130, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x134, a0), a2
 	mov	sp, a0
@@ -98679,12 +98692,12 @@ func_9783D20D_entry_L49:
 	mov	-3, d0
 	jmp	func_9783D20D_entry_L101
 func_9783D20D_entry_L4e:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0, d0
 	bne	func_9783D20D_entry_L5a
 	bra	func_9783D20D_entry_L68
 func_9783D20D_entry_L5a:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	cmp	0xf0, d0
 	bhi	func_9783D20D_entry_L68
 	bra	func_9783D20D_entry_L6d
@@ -98711,7 +98724,7 @@ func_9783D20D_entry_L85:
 	mov	d0, (0x97941e54)
 	asl	16, d0
 	mov	d0, (0x97941e54)
-	mov	(data_979118C8), d1
+	mov	(func_9783A3EC_Var), d1
 	add	d1, d0
 	mov	d0, (0x97941e54)
 	mov	0x97941e54, a0
@@ -98723,7 +98736,7 @@ func_9783D20D_entry_L85:
 	mov	d0, (0x20, sp)
 	bra	func_9783D20D_entry_Lf1
 func_9783D20D_entry_Lcc:
-	mov	(data_979118C8), d0
+	mov	(func_9783A3EC_Var), d0
 	mov	1, d1
 	sub	d1, d0
 	exthu	d0
@@ -99295,7 +99308,7 @@ func_9783D86D_entry_L46:
 	mov	-2, d0
 	bra	func_9783D86D_entry_L6c
 func_9783D86D_entry_L4a:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0xf8, a0), a0
 	movhu	(0x20, sp), d0
@@ -99325,7 +99338,7 @@ func_9783D8E3_entry:
 	bne	func_9783D8E3_entry_L13
 	bra	func_9783D8E3_entry_L23
 func_9783D8E3_entry_L13:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x20c, a0), a0
 	calls	(a0)
@@ -99549,7 +99562,7 @@ func_9783D8E3_entry_L1d3:
 	bne	func_9783D8E3_entry_L1dc
 	bra	func_9783D8E3_entry_L1ec
 func_9783D8E3_entry_L1dc:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x208, a0), a0
 	calls	(a0)
@@ -99703,7 +99716,7 @@ func_9783DBC9:
 	mov	a0, (0x28, sp)
 	call	func_97800082, 0, 0
 	mov	(0x28, sp), d0
-	mov	d0, (data_979126B4)
+	mov	d0, (func_978003E3_entry_L595_Var)
 	call	func_9780A414_entry, 0, 0x2c
 	clr	d0
 	mov	d0, (0x979a4ec0)
@@ -99721,11 +99734,11 @@ func_9783DBC9:
 	call	func_9780433B_entry, 0, 0x28
 	mov	d0, (0x979a4ecc)
 	call	func_97803B1A_entry, 0, 0x2c
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x208, a0), a0
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x5c4, a0), a0
 	mov	-1, d0
@@ -99752,15 +99765,15 @@ func_9783DBC9:
 func_9783DC78:
 	movm	[d2,a2], (sp)
 	add	-0x20, sp
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	cmp	-1, d0
 	bne	func_9783DC78_L12
 	jmp	func_9783DC78_Lb5
 func_9783DC78_L12:
-	mov	(data_979118E4), d0
+	mov	(func_9783DC78_L12_Var), d0
 	mov	d0, d1
 	inc	d1
-	mov	d1, (data_979118E4)
+	mov	d1, (func_9783DC78_L12_Var)
 	mov	0xa, d1
 	ext	d0
 	div	d1, d0
@@ -99769,7 +99782,7 @@ func_9783DC78_L12:
 	beq	func_9783DC78_L2f
 	jmp	func_9783DC78_Lb5
 func_9783DC78_L2f:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x168, a0), a2
 	mov	sp, a0
@@ -99805,16 +99818,16 @@ func_9783DC78_L7e:
 	movhu	d0, (0x97941e76)
 	movhu	(0x1c, sp), d0
 	movhu	d0, (0x97941e74)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	0x97941e74, d0
 	mov	d0, (0x10, sp)
-	mov	(data_979125B0), d0
+	mov	(KssXLyricsBoxProc_Lff_Var), d0
 	mov	EV_INITLYRICPARAM, d1
 	calls	(a0)
 func_9783DC78_Lb5:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x174, a0), a0
 	calls	(a0)
@@ -99832,12 +99845,12 @@ func_9783DC78_Ldd:
 	beq	func_9783DC78_Lf6
 	jmp	func_9783DC78_L18c
 func_9783DC78_Lf6:
-	mov	(data_9791259C), d0
+	mov	(KssTitleFunc_Ld5_Var), d0
 	cmp	0, d0
 	beq	func_9783DC78_L103
 	jmp	func_9783DC78_L18c
 func_9783DC78_L103:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x280, a0), a0
 	calls	(a0)
@@ -99847,12 +99860,12 @@ func_9783DC78_L103:
 	bra	func_9783DC78_L131
 func_9783DC78_L11f:
 	clr	d0
-	movbu	d0, (data_979125A4)
+	movbu	d0, (KssTitleFunc_Le1_Var)
 	mov	0x77, d0
 	call	func_97829B61_entry, 0, 0x14
 	bra	func_9783DC78_L18c
 func_9783DC78_L131:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	mov	3, d0
@@ -99860,13 +99873,13 @@ func_9783DC78_L131:
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	EV_SHOW, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x4cc, a0), a0
 	mov	CLS_FILE_LOAD_SCREEN_id, d0
 	mov	0x01880000, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x12c, a0), a0
 	clr	d0
@@ -99882,7 +99895,7 @@ func_9783DE07:
 
 func_9783DE07_entry:
 	movbu	d0, (0x1c, sp)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	1, d0
@@ -99890,7 +99903,7 @@ func_9783DE07_entry:
 	mov	FN_FmmSaveFilterFunc, d0
 	mov	EV_INDEXSW_UP, d1
 	calls	(a0)
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	1, d0
@@ -99903,7 +99916,7 @@ func_9783DE07_entry:
 	beq	func_9783DE07_entry_L4c
 	bra	func_9783DE07_entry_L6c
 func_9783DE07_entry_L4c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x100c, a0), a0
 	mov	(0x25c, a0), a0
 	mov	1, d0
@@ -99912,7 +99925,7 @@ func_9783DE07_entry_L4c:
 	mov	EV_INDEXSW_DOWN, d1
 	calls	(a0)
 func_9783DE07_entry_L6c:
-	mov	(data_979126B4), a0
+	mov	(func_978003E3_entry_L595_Var), a0
 	mov	(0x107c, a0), a0
 	mov	(0x20, a0), a0
 	mov	0x64, d0
