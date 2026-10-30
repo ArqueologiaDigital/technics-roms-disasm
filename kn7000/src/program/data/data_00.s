@@ -19101,7 +19101,7 @@ func_4844D7A4_Records:	# 174 x REC_func_4844D7A4_Records (8 bytes each); read by
 	REC_func_4844D7A4_Records	f0=0x17161514, x4="\x18\x19\x1A\x1B"
 	REC_func_4844D7A4_Records	f0=0xFF1E1D1C, x4="\xFF\"\xFF\x1F"
 
-func_4844F3B5_Table_2:	# 36 x u8, 0..255; read by func_4844F3B5_entry 0x4844E9F1: `movbu  (d1, a0), d2`
+func_4844F3B5_Table:	# 36 x u8, 0..255; read by func_4844F3B5_entry 0x4844E9F1: `movbu  (d1, a0), d2`
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# [0]
 	tab_u8	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 35	# [16]
 	tab_u8	255, 255, 33, 34	# [32]
