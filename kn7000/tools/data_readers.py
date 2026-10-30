@@ -770,7 +770,9 @@ class Reader:
                 if v is None and self.callee and WIDTH[op] == 4 and self._func:
                     # a word of the caller's frame, above this function's own: a stack parameter
                     c = int(ms.group(1), 0) - (self._frame or 0)
-                    if 4 <= c < 0x100:
+                    # (the words below 16 are the return address and the homes the callee itself
+                    # spills a0 / a1 to, at +8 / +12: DrawString_entry; not the caller's arguments)
+                    if 16 <= c < 0x100:
                         st[dst] = (P if dst[0] == "a" else D)(("param", self._func, f"sp{c}"), 0)
                 st.pop("#b" + dst, None)
                 last_load.pop(dst, None)
@@ -914,7 +916,7 @@ class Reader:
                     if not k.startswith("sp:") or sv[1] != 4 or sv[0] is None or sv[0][0] not in "AIPD":
                         continue
                     c = _num(k[3:])
-                    if c is None or not 4 <= c < 0x100:
+                    if c is None or not 16 <= c < 0x100:
                         continue
                     mk = self.mem("(0, a0)", {"a0": sv[0]})
                     if mk:
