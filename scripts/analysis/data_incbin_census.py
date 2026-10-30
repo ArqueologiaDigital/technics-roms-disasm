@@ -30,7 +30,9 @@ CLASSES (first match wins)
               they are made; the "from media" column counts these entries (`from_media` in the json), so the
               table shows how much of `generated` a user can open in an ordinary viewer or sound program.
               Example: every PCM recording of the KN5000 and KN7000 wave ROMs, from its WAV file
-              (scripts/build/pcm_wav.py).
+              (scripts/build/pcm_wav.py).  Not counted there: the 39 pictures per KN5000 maincpu revision that
+              the compiled C holds as initializers, which scripts/build/c_bitmaps.py writes from PNGs before
+              clang runs; their includes are compiled C (notes/media-files-probes/media_inventory.py lists them).
   media       the file has a self-describing format a viewer reads directly: jpg jpeg bmp png gif tif wav aif mid
               (the file IS the semantic representation; its container is documented by its own standard).
   opaque      the line, or the comment line right above, carries `census: opaque -- <kind>: <why>`: the bytes have
