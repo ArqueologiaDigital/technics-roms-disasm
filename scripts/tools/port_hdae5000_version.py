@@ -934,6 +934,13 @@ class Anchors:
         return dict(reversed(out))
 
 
+def code_end_of(bld):
+    """Where the build's code ends: HDAE5000_UI_Config, the first data after it (the class
+    parameter-name pool; 0x297ef6 in v1.15i, 0x29b8de in v2.01i), or CODE_END.  The UI
+    object records after it are macro lines, which a walk must not take for instructions."""
+    return min(bld.symaddr.get("HDAE5000_UI_Config", CODE_END), CODE_END)
+
+
 def long_block_seeds(full, bld, n=64):
     """Seeds from the block aligner's long identical blocks in the code (>= n bytes: long
     enough not to be one look-alike against its neighbour), for code no name or pointer
@@ -941,9 +948,9 @@ def long_block_seeds(full, bld, n=64):
     is the first instruction line that starts inside it: a walk from the middle of an
     instruction pairs garbage, and spans cut there overlap once widened to whole lines."""
     starts = {s for f, n_, s, e in bld.lines if e > s and is_insn(bld.text(f, n_))}
-    out = []
+    out, end = [], code_end_of(bld)
     for s, e, sb in full:
-        if e - s < n or s + BASE >= CODE_END:
+        if e - s < n or s + BASE >= end:
             continue
         for k in range(s, e - 8):
             if k + BASE in starts:
@@ -981,8 +988,9 @@ def cmd_afix(ver, rounds=5):
         votes = collections.defaultdict(lambda: collections.defaultdict(list))
         same = set()
         n_fix = n_eq = 0
+        end = code_end_of(bld)
         for k, (f, n, s, e) in enumerate(bld.lines):
-            if e <= s or s not in an.insn:
+            if e <= s or s not in an.insn or s >= end:
                 continue
             b = an.insn[s]
             wb, bb = bld.img[s - BASE:e - BASE], ref[b - BASE:b - BASE + (e - s)]
@@ -1397,8 +1405,9 @@ def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False
         # differ: each changed stretch of code between two points the walk pinned down
         an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full, bld))
         line_starts = set(bld.starts)
+        end = code_end_of(bld)
         pts = [(w, b) for w, b in sorted(an.rom_map().items())
-               if w < CODE_END and b < CODE_END and w in line_starts]
+               if w < end and b < CODE_END and w in line_starts]
         ctx.anchor_pts = pts
         for w, b in pts:                        # anchors name their target address too
             n = [x for a, x in bld.syms if a == w and not x.startswith("__PM_")]
