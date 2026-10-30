@@ -348,9 +348,8 @@
 ; ============================================================================
 
 HDAE5000_ROM_HEADER:
-	.ascii "XAPR\212"	; Magic identifier ("XAPR" checked by main CPU)
-	.byte 0x95	; Version byte
-	.byte 0x2f, 0x00	; Unknown (possibly size/flags)
+	.ascii "XAPR"		; magic identifier ("XAPR" checked by the main CPU)
+	.long HDAE5000_Init_Data_End	; the end of the .data image (every version: its own image's end)
 
 ; Entry point 1 - Jump to boot initialization
 HDAE5000_ENTRY_1:
@@ -472,7 +471,7 @@ HDAE5000_Handler_Registration:
 	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA  ; handler function ptr
 	ld wa, (HDAE5000_RECORD_COUNT:24)
 	ld (xsp + 8), wa	; ld (XSP+0x08), WA   ; record count (= 13)
-	lda xwa, (HDAE5000_ParamStr_AcLanguageText1_End:24)
+	lda xwa, (HDAE5000_RECORD_TABLE:24)
 	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA  ; data pointer
 	lda xwa, (xsp)	; lda XWA, XSP  ; XWA = param block ptr
 	ld xbc, xwa	; XBC = param block ptr

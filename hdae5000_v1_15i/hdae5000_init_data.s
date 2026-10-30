@@ -39,9 +39,9 @@ HDAE5000_DataSegmentImage:
 	.set HDAE5000_ParamStr_IvHddNaming_End,       HDAE5000_UI_Config + 0x62
 	.set HDAE5000_ParamStr_HDTitleMenu_End,       HDAE5000_UI_Config + 0x6a
 	.set HDAE5000_ParamStr_TtlScreenR2_End,       HDAE5000_UI_Config + 0x6c
-	.set HDAE5000_ParamStr_AcWindowPage1_End,     HDAE5000_UI_Config + 0x70
-	.set HDAE5000_ParamStr_IvScreenR2_End,        HDAE5000_UI_Config + 0x72
-	.set HDAE5000_ParamStr_AcLanguageText1_End,   HDAE5000_UI_Config + 0x74
+	.set HDAE5000_ParamStr_AcWindowPage1_End,     HDAE5000_UI_Config + 0x6e
+	.set HDAE5000_ParamStr_IvScreenR2_End,        HDAE5000_UI_Config + 0x70
+	.set HDAE5000_ParamStr_AcLanguageText1_End,   HDAE5000_UI_Config + 0x72
 	; HDAE5000_RECORD_COUNT + offset  (0x29d97e-0x29dc13; note that the last
 	; two bytes of that range, 0x29dc12-0x29dc13, are already the first half
 	; of the UI object descriptor pool's record #0 - the block boundary here

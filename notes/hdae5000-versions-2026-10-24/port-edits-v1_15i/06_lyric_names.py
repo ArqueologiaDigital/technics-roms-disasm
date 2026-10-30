@@ -9,6 +9,8 @@ From the v1.15i image (tables found through the registration, registered_table):
     EV_SeqStop, then its count 3; the message-name table 0x1EA (0x2e1228) 13 (no
     MT_FdSaveLyric / MT_FdLoadLyric / MT_FdInfo / MT_FdFreshUp / MT_SelectAll), count 13;
   * the class procedure / name tables 0x10A / 0x40A have 10 entries;
+  * the parameter-name pool's empty names of AcWindowPage1 / IvScreenR2 / AcLanguageText1 are
+    at 0x297f5c / 5e / 60 (their propname lists' terminators), TtlScreenR3's is gone;
   * the parameter-name pool ends with IvHddNaming's "func" and 11 zero bytes before
     the record table (0x297f57-0x297f61): no LyricBox / FDFileSelect parameter names, and
     no propname lists for TtlScreenR3, LyricBox, FDFileSelect.
@@ -42,6 +44,11 @@ for g in gone:
     assert n == 1, g
 s, n = re.subn(rb"\t\.set HDAE5000_ParamStr_(TtlScreenR3|LyricBox)_End,[^\n]*\n", b"", s)
 assert n == 2
+# the empty names after TtlScreenR3's sit 2 bytes lower (v1.15i: 0x297f5c / 5e / 60)
+for name, old, new in ((b"AcWindowPage1", 0x70, 0x6e), (b"IvScreenR2", 0x72, 0x70), (b"AcLanguageText1", 0x74, 0x72)):
+    s, n = re.subn(rb"(\t\.set HDAE5000_ParamStr_" + name + rb"_End,\s+HDAE5000_UI_Config \+ )0x%x\b" % old,
+                   rb"\g<1>0x%x" % new, s)
+    assert n == 1, name
 s = s.replace(b"HDAE5000_EventName_Count:\n\t.short 13\n", b"HDAE5000_EventName_Count:\n\t.short 3\n")
 s = s.replace(b"HDAE5000_MessageName_Count:\n\t.short 18\n", b"HDAE5000_MessageName_Count:\n\t.short 13\n")
 write(I, s)

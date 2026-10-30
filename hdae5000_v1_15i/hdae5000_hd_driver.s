@@ -3305,9 +3305,9 @@ HDAE5000_SaveOptSwEventCatch_OnSwIn:
 	ld	xbc, EVT_MAKE_EDIT_SW_ID
 	call	(xix)
 	cp	xhl, 0x0000000b
-	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip7
-	cp	xhl, 0x0000000a
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip4
+	cp	xhl, 0x0000000a
+	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip7
 	cp	xhl, 0x00000009
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip2
 	cp	xhl, 0x00000008
@@ -3359,18 +3359,18 @@ HDAE5000_SaveOptSwEventCatch_Skip3:
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
 	jr	t, HDAE5000_SaveOptSwEventCatch_Done
-HDAE5000_SaveOptSwEventCatch_Skip4:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
-	ldw	bc, 0x00ff
-	calr	HDAE5000_TypeSel_Init
-	calr	HDAE5000_TypeSel_ShowSaveFlags
-	jr	t, HDAE5000_SaveOptSwEventCatch_Done
 HDAE5000_SaveOptSwEventCatch_Skip7:
 	lda	xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw	0x2
 	lda	xde, (HDAE5000_TypeSel_TemplateAllNo:24)
+	ldw	bc, 0x00ff
+	calr	HDAE5000_TypeSel_Init
+	calr	HDAE5000_TypeSel_ShowSaveFlags
+	jr	t, HDAE5000_SaveOptSwEventCatch_Done
+HDAE5000_SaveOptSwEventCatch_Skip4:
+	lda xwa, (HDAE5000_RAM_SaveOptions:24)
+	pushw 0x0002
+	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ld	bc, 0:i3
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags

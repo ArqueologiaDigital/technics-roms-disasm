@@ -519,8 +519,8 @@ HDAE5000_Bitmap_HddIcon:
 ; ============================================================================
 HDAE5000_TypeSel_TemplateAllNo:
 	; read by FILE_LOAD_Screen, HDDNamingCheck, SaveOptSwEventCatch at 0x283E0A (lda operand)
-	; a part-selection record template (HDAE5000_TypeSel_Init copies 12 bytes: u16 mask, nine part flags, pad): mask 0, every flag 1 ("NO ")
-	.byte 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00
+	; a part-selection record template (HDAE5000_TypeSel_Init copies 12 bytes: u16 mask, eight part flags, 2 pad bytes): mask 0, every flag 1 ("NO ")
+	.byte 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00
 HDAE5000_TypeSel_TemplateBlank:
 	; read by FILE_LOAD_Screen, FlsFileSelScreen, LBNLoadSwCatch, Lbn_StepDigit, Lbn_TypeDigit, UiState_Reset at 0x2803E5 (ld #, lda operand)
 	; a part-selection record template: mask 0, every flag 0 ("---")
@@ -666,8 +666,8 @@ HDAE5000_TextPtrs_A_to_SPC:	; 38 x .long -> string
 	.long	HDAE5000_Str_8
 	.long	HDAE5000_Str_9
 	.long	HDAE5000_Str_SPC
-	.byte 0xa2, 0x17
-	.asciz "."
+	.long	HDAE5000_Str_Empty_AtoSPC	; the table's end: a pointer to the empty string after it
+HDAE5000_Str_Empty_AtoSPC:
 	.zero 2
 HDAE5000_Str_SPC:
 	; pointed at by entry 37 of HDAE5000_TextPtrs_A_to_SPC
@@ -823,8 +823,8 @@ HDAE5000_TextPtrs_A_to_SPC_2:	; 38 x .long -> string
 	.long	HDAE5000_Str_8_2
 	.long	HDAE5000_Str_9_2
 	.long	HDAE5000_Str_SPC_2
-	.byte 0x8e
-	.asciz "\030."
+	.long	HDAE5000_Str_Empty_AtoSPC_2	; the table's end: a pointer to the empty string after it
+HDAE5000_Str_Empty_AtoSPC_2:
 	.zero 2
 HDAE5000_Str_SPC_2:
 	; pointed at by entry 37 of HDAE5000_TextPtrs_A_to_SPC_2

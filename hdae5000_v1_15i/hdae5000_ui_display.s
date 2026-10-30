@@ -3248,7 +3248,8 @@ HDAE5000_Get_Init_Flag:
 ; labels themselves.  (The .equs that used to stand here, HDAE5000_RAM_DATA_A_SIZE ...
 ; HDAE5000_PARALLEL_DATA_2, were unused and misnamed: 0x239822 is the ResEvent count,
 ; 0x239872 the Function table, 0x239FD2 the MainFunction table.)
-.equ HDAE5000_DATA_COPY_DEST, 0x2394ce	; Init data copy destination (v2.01i: 0x2394ce, see hdae5000_init_data.s)
+.equ HDAE5000_RAM_FrameCount, 0x22b3da	; byte: HDAE5000_Frame_Handler adds 1 each frame (v1.x)
+.equ HDAE5000_DATA_COPY_DEST, 0x23c914	; Init data copy destination: the boot copy loop's `ld xde` (v1.15i 0x28c1e2)
 .equ HDAE5000_XAP_DESC_LIMIT, 0x2f0000	; the descriptor's fourth word, after HDAE5000_ROM_HEADER (0x280000); 0x2F0000 is inside image data here, so it is a value, not a pointer.  Its meaning is not established
 	; (EQU→inline label) HDAE5000_UiObject_PtrTable = 0x2A5D2C
 	; (EQU→inline label) HDAE5000_UiObjectName_PtrTable = 0x2A6984
@@ -3393,7 +3394,6 @@ HDAE5000_Boot_Init__skip_hd_init:
 
 	pop xiz
 	ret
-	inc	1, (0x22b3da:24)
 
 ; ============================================================================
 ; CODE SECTION 2 PART A (0x28F662 - 0x2953E1)
@@ -3418,6 +3418,7 @@ HDAE5000_Frame_Handler:
 	;    HDAE5000_Get_Status_Byte is 1: on the HD title (GetTitleNow ==
 	;    0x01A0007F) post the file-load events, else HDAE5000_RequestTitle15(0x7F).
 	;
+	inc	1, (HDAE5000_RAM_FrameCount:24)	; v1.x only: counts frames; read nowhere in this ROM
 HDAE5000_Frame_Handler_Status:
 	; Frame handler status check section
 	; Watches bit 2 of the main CPU's sqsrtc byte; acts when it falls to 0
