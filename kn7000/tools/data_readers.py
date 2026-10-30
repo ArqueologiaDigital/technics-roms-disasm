@@ -36,6 +36,35 @@ label keeps what falls through into it.  [INFERENCE] the walk is linear, so a
 value that differs on another path into a label is not seen; the generator
 only uses a stride the bytes agree with.
 
+CALLEE (Reader(callee=True), lane callee-walk 2026-10-30; profile key `readers_callee`)
+  The arguments: the compiler passes pointers in a0 / a1 and numbers in d0 / d1 (a function spills
+  them to (frame + 8, sp) / (frame + 12, sp) when it needs them later: DrawString_entry's
+  `mov a1, (0x3c, sp)` / `mov a0, (0x38, sp)` with a 0x30 frame), and the rest on the stack: the
+  caller stores word N at (N, sp) of its own frame (N = 16, 20, ...; DrawString's string at
+  (0x10, sp), SetApTimer's message argument at (0x18, sp)), and the callee reads it at
+  (N + its frame, sp), its frame being what its prologue (`movm [regs], (sp)`: 4 bytes a register;
+  `add -K, sp`) or the call's own frame field (`call F_entry, [regs], K`) sets up.  So:
+    * a call records each word of the caller's frame that holds a data address or a parameter as
+      an argument `spN` (beside a0, a1, d0, d1), and a function reading (N + frame, sp) before it
+      wrote there reads its parameter spN; the frame's slots are followed (ext's stack-slot rule;
+      without ext, the siblings', a slot gives back only a data address or a parameter);
+    * without ext, a label two paths reach with different data addresses holds one of them (ext's
+      T join), and a function's return value one of a set (ext's return rule), so a switch that
+      selects a record and returns it is followed into its callers;
+    * a label nothing branches to after a computed jump (`jmp (a0)`, a jump table's case) takes the
+      addresses and parameters the dispatch held [INFERENCE];
+    * a branch to a named label that is no function (`bne DrawString_DrawNow`) is a branch inside
+      the function (ext would start a new function there, losing the parameters);
+    * a pointer parameter stepped (`inc a0`, `add 2, a0`) between a label and a branch back to it
+      (or a setlb .. Lcc loop) is stepped by a loop: param_steps;
+    * resolve_params carries each callee's accesses through a parameter into the parameters its
+      callers pass on (4 rounds: the depth limit), and collect_arg_layouts() keeps, per (function,
+      parameter), arg_layout -- every access relative to the parameter, the routine's own and its
+      callees', keyed ("ptr", ("arg", F, slot)) -- and arg_calls -- the calls passing a fixed data
+      address in it.  tools/gen_data_s.py arg_kinds() types each such block as a record of that
+      layout (ptr_records(only_arg=True)), unless the routine is a library one, reads nothing at a
+      fixed offset, reads it byte by byte in a loop, or reads only its first field.
+
 Keys:
   ("abs", x)              the fixed address x (offset folded in)
   ("rec", b, s)           field o of the s-byte records at b (s None: unscaled)
@@ -144,7 +173,7 @@ def _num(t):
 class Reader:
     """The accesses of one program build's converted code."""
 
-    def __init__(self, src_glob, labels, in_data, distinct=False, ext=False):
+    def __init__(self, src_glob, labels, in_data, distinct=False, ext=False, callee=False):
         self.in_data = in_data          # CPU address -> bool
         self.distinct = distinct
         self.labels = labels            # name -> CPU address (data and code)
@@ -157,9 +186,30 @@ class Reader:
         # bring to a label into a T value (one of them), and give a call's a0 what the callee
         # returns there (a first walk collects each function's returned addresses)
         self.ext, self.returns, self.tgt_origin, self.returns_p = ext, {}, {}, {}
+        # callee (lane callee-walk): the arguments a call passes on the stack (`mov aN, (0x18, sp)`
+        # ... `call F`) are F's parameters sp24 ..., read in F as (0x18 + F's frame, sp); the frame's
+        # slots are followed (the stack-slot rule of ext, also without the rest of ext); and each
+        # (function, parameter) keeps the accesses through it: arg_layout / arg_calls below
+        self.callee = callee
+        self.slots = ext or callee
+        self._frame, self._spd, self._func = 0, 0, None
+        # (callee) the steps a loop adds to a parameter pointer: {(function, slot): {step}}
+        self.param_steps = collections.defaultdict(set)
+        self._lab_line, self._psteps, self._line = {}, [], 0
         files = [open(f, encoding="latin-1").read().split("\n") for f in sorted(glob.glob(src_glob))]
+        # (callee) the functions: what a `call` names, or a `# Name  (CPU ...)` header; a branch to any
+        # other named label (`bne DrawString_DrawNow`) is a branch inside the function, whose state the
+        # label takes (ext would otherwise start a new function there, losing the parameters)
+        self.funcs = set()
+        if callee:
+            cx = re.compile(r"^\s+calls?\s+([A-Za-z_]\w*)|^# (\S+)\s+\((?:lib )?CPU 0x", re.M)
+            for lines in files:
+                for mo in cx.finditer("\n".join(lines)):
+                    self.funcs.add(re.sub(r"_entry$", "", mo.group(1) or mo.group(2)))
         # (two collecting walks: a wrapper returns what the function it calls returns)
-        for _round in range(2 if ext else 0):
+        # (callee without ext: the siblings) the return-value rule too, for one of a set of addresses
+        self.rets_t = ext or callee
+        for _round in range(2 if self.rets_t else 0):
             self._ret, self._retbad = collections.defaultdict(set), set()
             self._retv = collections.defaultdict(set)
             for lines in files:
@@ -193,8 +243,53 @@ class Reader:
             self.resolve_params_distinct()
         else:
             self.resolve_params()
+        if callee:
+            self.collect_arg_layouts()
         # what is left relative to a parameter nobody passes a data address in is not data evidence
         self.accesses = [a for a in self.accesses if not self.rooted(a.key)]
+
+    def collect_arg_layouts(self):
+        """(callee) For each (function, parameter): arg_layout, the accesses through the parameter
+        (the function's own and, resolve_params having carried them in, those of the routines it
+        passes the parameter on to, up to its rounds), keyed relative to ("arg", function, slot);
+        and arg_calls, the calls that pass a data address (a fixed one, or one of a T set) in it."""
+        self.arg_layout = collections.defaultdict(list)
+        self.arg_calls = collections.defaultdict(list)
+        seen = set()
+        for a in self.accesses:
+            rt = self.root_of(a.key)
+            if rt is not None:
+                if not (a.width or a.rw.startswith("arg")):
+                    continue
+                b = a._replace(key=self.reroot(a.key, rt))
+                sg = (b.key, b.off, b.width, b.signed, b.rw, b.func, b.cpu, b.insn, b.inner)
+                if sg not in seen:
+                    seen.add(sg)
+                    self.arg_layout[(rt[1], rt[2])].append(b)
+            elif a.rw.startswith("arg") and a.extra and a.extra[0] != "via" and not LIBC.match(str(a.extra[0])):
+                if a.key[0] == "abs" or (a.key[0] == "ptr" and a.key[1][0] == "tgt" and a.inner is None):
+                    self.arg_calls[(re.sub(r"_entry$", "", a.extra[0]), a.rw.split()[1])].append(a)
+        # a parameter handed on (at +0) to a routine that steps its own through a loop is stepped too
+        for _r in range(4):
+            grew = False
+            for k, lay in self.arg_layout.items():
+                for b in lay:
+                    if b.rw.startswith("arg") and b.key == ("ptr", ("arg",) + k) and b.off == 0 and b.extra \
+                            and b.extra[0] != "via":
+                        inner = self.param_steps.get((re.sub(r"_entry$", "", str(b.extra[0])), b.rw.split()[1]))
+                        if inner and not inner <= self.param_steps[k]:
+                            self.param_steps[k] |= inner
+                            grew = True
+            if not grew:
+                break
+
+    @classmethod
+    def reroot(cls, key, root):
+        """key with its parameter root ("param", f, r) written ("arg", f, r)."""
+        if key == ("ptr", root):
+            return ("ptr", ("arg",) + root[1:])
+        p = key[1]
+        return ("ptr", ("fld", cls.reroot(p[1], root), p[2]))
 
     @staticmethod
     def rooted(key):
@@ -418,7 +513,9 @@ class Reader:
         site = None              # (siblings) the label an access is cited under: the function or its _L<hex>
         dead = False             # the previous instruction never falls through
         last_load = {}           # register -> index into self.accesses of the load that set it
+        ijmp = None              # (callee) the state at the function's computed jump
         for ln in lines:
+            self._line += 1
             code = ln.split("#", 1)[0].rstrip()
             mh = re.match(r"# (\S+)\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
             if mh:
@@ -444,6 +541,11 @@ class Reader:
                 if fstart:
                     func, last_load = n, {}
                     site = n
+                    ijmp = None
+                    self._func = n            # (step's `func` is the site: a sibling's _L<hex> label)
+                    # (callee) the frame the prologue (`movm [..], (sp)`, `add -N, sp`) sets up
+                    self._spd, self._frame = 0, None
+                    self._lab_line, self._psteps = {}, []
                     # the arguments: a pointer in a0 / a1 / d0 / d1 is followed into the
                     # callers (resolve_params)
                     # (a data register may as well hold an index: "D", a pointer only when used as one)
@@ -456,7 +558,13 @@ class Reader:
                     # jumps takes their common state, one also reached by falling in keeps only
                     # what agrees with it
                     came = pending.pop(n, None)
-                    if dead and came is None and self.ext:
+                    if dead and came is None and self.callee and ijmp is not None:
+                        # (callee) reached by no branch the walk sees, after the function's computed jump
+                        # (`mov (d0, a0), a0` / `jmp (a0)`): a case of its jump table, entered with the
+                        # addresses and parameters the dispatch held [INFERENCE: a label a loop reaches
+                        # backwards takes them too]
+                        st, last_load = dict(ijmp), {}
+                    elif dead and came is None and self.ext:
                         # reached only by a backward branch (a loop body the compiler puts before its
                         # test): the frame's slots keep what the code before the loop stored there
                         # [INFERENCE: a slot the loop rewrites, a stepped pointer, keeps its start]
@@ -468,20 +576,52 @@ class Reader:
                             st = self.merge(st, came)
                         else:
                             a0 = (st.get("a0"), came.get("a0"))
+                            st0 = st
                             st = {k: v for k, v in st.items() if came.get(k) == v}
+                            if self.callee:
+                                st.update(self.join_addrs(st0, came, st))
                             if self.distinct and a0[0] != a0[1] and all(v is not None and v[0] in "AI" for v in a0):
                                 # (siblings) a0 is one of two record addresses here: kept for the return value
                                 st["a0"] = ("U", a0)
                 dead = False
+                self._lab_line[n] = self._line
                 code = code[ml.end():].strip()
                 if not code:
                     continue
             parts = code.split(None, 1)
             op = parts[0]
             args = [x.strip() for x in self.split_args(parts[1])] if len(parts) > 1 else []
+            if self.callee and self._frame is None:
+                if op == "movm" and len(args) == 2 and args[1] == "(sp)":
+                    rl = [r for r in args[0].strip("[]").split(",") if r.strip()]
+                    self._spd -= sum(28 if r.strip() == "other" else 4 for r in rl)
+                elif op == "add" and len(args) == 2 and args[1] == "sp" and _num(args[0]) is not None:
+                    self._spd += _num(args[0])
+                else:
+                    self._frame = -self._spd
             dead = op in ("bra", "jmp", "ret", "retf", "rets", "rti") or (self.ext and op == "lra")
-            if (op.startswith("b") or op == "jmp") and args and LOCAL.search(args[0]) and op not in (
-                    "btst", "bset", "bclr"):
+            if self.callee and op == "jmp" and args and args[0].startswith("("):
+                ijmp = {k: v for k, v in st.items() if not k.startswith("#") and (
+                    (k.startswith("sp:") and v and addrs_of(v[0]) is not None) or
+                    (not k.startswith("sp:") and v is not None and (
+                        addrs_of(v) is not None or (v[0] in "PD" and v[1][0] == "param"))))}
+            if self.callee:
+                # (callee) a branch back to a label above, or a hardware loop's Lcc back to its setlb:
+                # a parameter pointer stepped since then is stepped by a loop
+                if op == "setlb":
+                    self._lab_line["#setlb"] = self._line
+                back = None
+                if (op.startswith("b") or op == "jmp") and args and args[0] in self._lab_line:
+                    back = self._lab_line[args[0]]
+                elif re.fullmatch(r"l(eq|ne|lt|gt|ge|le|cs|cc|hi|ls|ra)", op) and "#setlb" in self._lab_line:
+                    back = self._lab_line["#setlb"]
+                if back is not None:
+                    for ln_, key_, c_ in self._psteps:
+                        if ln_ > back:
+                            self.param_steps[key_].add(c_)
+            if (op.startswith("b") or op == "jmp") and args and (LOCAL.search(args[0]) or (
+                    self.callee and re.fullmatch(r"[A-Za-z_]\w*", args[0]) and args[0] not in self.funcs
+                    and not args[0].endswith("_entry"))) and op not in ("btst", "bset", "bclr"):
                 t = args[0]
                 snap = {k: v for k, v in st.items() if not k.startswith("#cmp")}
                 if op in self.LESS and "#cmp" in st:
@@ -493,10 +633,33 @@ class Reader:
                 self.rets[func] += list(v[1]) if v is not None and v[0] == "U" else [v]
             self.step(op, args, st, last_load, site or func, cpu, code.strip())
 
+    def join_addrs(self, a, b, done):
+        """(callee without ext: the siblings) what a label two paths reach with states a and b holds
+        besides what they agree on: one of the data addresses each brings (a T value, the rule of
+        ext's joins), in a register or a frame slot; only addresses, not ext's other values."""
+        out = {}
+        for k, v in a.items():
+            if k in done or k not in b or k.startswith("#"):
+                continue
+            w = b[k]
+            if k.startswith("sp:"):
+                if v is not None and w is not None and v[1] == w[1]:
+                    j = join(v[0], w[0])
+                    if j is not None and addrs_of(j) is not None:
+                        out[k] = (j, v[1])
+            else:
+                j = join(v, w)
+                if j is not None and addrs_of(j) is not None:
+                    out[k] = j
+        return out
+
     def merge(self, a, b):
         """The state at a label two paths reach with states a and b."""
         if not self.ext:
-            return {k: v for k, v in a.items() if b.get(k) == v}
+            out = {k: v for k, v in a.items() if b.get(k) == v}
+            if self.callee:
+                out.update(self.join_addrs(a, b, out))
+            return out
         out = {}
         for k, v in a.items():
             if k in b:
@@ -586,7 +749,7 @@ class Reader:
                     s2[ur] = alt
                     self.step(op, args, s2, {}, func, cpu, insn)
                 st[ur] = st[ur][1][0]
-        if op in WIDTH and len(args) == 2 and self.ext:
+        if op in WIDTH and len(args) == 2 and self.slots:
             src, dst = args
             ms = re.fullmatch(r"\((-?(?:0x[0-9a-fA-F]+|\d+))\s*,\s*sp\)", dst)
             if ms and R(src):
@@ -596,6 +759,17 @@ class Reader:
             if ms and R(dst):
                 v = st.get("sp:" + ms.group(1))
                 st[dst] = v[0] if v and v[1] == WIDTH[op] else None
+                if not self.ext and st[dst] is not None and not (
+                        addrs_of(st[dst]) is not None or (st[dst][0] in "PD" and st[dst][1][0] == "param")):
+                    # (callee without ext: the siblings) a slot gives back only what the callee walk
+                    # needs, a data address or a parameter; a pointer loaded from a field, an index,
+                    # is not carried (the full rule of ext changes what the siblings' other passes see)
+                    st[dst] = None
+                if v is None and self.callee and WIDTH[op] == 4 and self._func:
+                    # a word of the caller's frame, above this function's own: a stack parameter
+                    c = int(ms.group(1), 0) - (self._frame or 0)
+                    if 4 <= c < 0x100:
+                        st[dst] = (P if dst[0] == "a" else D)(("param", self._func, f"sp{c}"), 0)
                 st.pop("#b" + dst, None)
                 last_load.pop(dst, None)
                 return
@@ -662,6 +836,9 @@ class Reader:
                 vb = self.imm(src)
                 if vb is not None and vb[0] == "A":
                     self.record(("base", vb[1]), 0, 0, "base", func, cpu, insn)
+            if self.callee and op == "add" and c is not None and 1 <= c <= 4096 and v0 and v0[0] == "P" \
+                    and v0[1][0] == "param" and not v0[3]:
+                self._psteps.append((self._line, v0[1][1:], c))
             if op == "add" and dst[0] == "a" and c is not None and 2 <= c <= 4096 and v0 and v0[0] == "A":
                 # a pointer stepped through an array from its base: the record size
                 self.record(("step", v0[1]), c, 0, "step", func, cpu, insn)
@@ -687,6 +864,9 @@ class Reader:
         if op == "inc4" and args and args[0][0] == "a" and st.get(args[0]) and st[args[0]][0] == "A":
             self.record(("step", st[args[0]][1]), 4, 0, "step", func, cpu, insn)
         if op in ("inc", "inc4") and args:
+            v0 = st.get(args[0])
+            if self.callee and v0 and v0[0] == "P" and v0[1][0] == "param" and not v0[3]:
+                self._psteps.append((self._line, v0[1][1:], 1 if op == "inc" else 4))
             st[args[0]] = self.add(st.get(args[0]), C(1 if op == "inc" else 4))
             return
         if op in ("mul", "mulu") and len(args) == 2:
@@ -726,17 +906,29 @@ class Reader:
                 mk = self.mem(f"({r})" if r[0] == "a" else "(0, a0)", {"a0": v} if r[0] == "d" else st)
                 if mk:
                     self.record(mk[0], mk[1], 0, f"arg {r}", func, cpu, insn, (tgt, consts), mk[2], mk[3])
+            if self.callee and not tgt.startswith("("):
+                # (callee) the words the caller stored in its outgoing frame: stack arguments
+                for k, sv in list(st.items()):
+                    if not k.startswith("sp:") or sv[1] != 4 or sv[0] is None or sv[0][0] not in "AIPD":
+                        continue
+                    c = _num(k[3:])
+                    if c is None or not 4 <= c < 0x100:
+                        continue
+                    mk = self.mem("(0, a0)", {"a0": sv[0]})
+                    if mk:
+                        self.record(mk[0], mk[1], 0, f"arg sp{c}", func, cpu, insn, (tgt, consts), mk[2], mk[3])
             for r in SCRATCH:
                 st[r] = None
                 last_load.pop(r, None)
-            if self.ext and tgt in self.returns:
+            if self.rets_t and tgt in self.returns:
                 st["a0"] = T(self.returns[tgt])
             elif self.ext and tgt in self.returns_p:
                 st["a0"] = self.returns_p[tgt]
             elif tgt in self.ret_val:
                 st["a0"] = self.ret_val[tgt]
             return
-        if op in ("ret", "retf", "rets") and self.ext and func:
+        if op in ("ret", "retf", "rets") and self.rets_t and func:
+            func = self._func if not self.ext else func     # (siblings: the function, not the site)
             v = st.get("a0")
             a = addrs_of(v)
             if a is None:
@@ -758,7 +950,7 @@ class Reader:
             return
         if op in ("movm", "ret", "retf", "rets", "rti"):
             return
-        if self.ext and op in ("add", "sub") and args and args[-1] == "sp":
+        if self.slots and op in ("add", "sub") and args and args[-1] == "sp":
             for k in [k for k in st if k.startswith("sp:")]:
                 del st[k]
         # anything else that writes its last register operand: unknown

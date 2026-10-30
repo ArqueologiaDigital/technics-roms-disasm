@@ -84,8 +84,10 @@ def readers(g, labels_path, src_glob):
     labels.update(g.prev_data_label)
     # (the siblings, a profile with a `root`) parameter accesses kept once each: DR.resolve_params_distinct
     # (the KN7000 program builds, `readers_ext`) stack slots, joins and return values: DR.Reader(ext=)
+    # (lane callee-walk, `readers_callee`) stack arguments and the layout each callee reads through
+    # a parameter: DR.Reader(callee=)
     return DR.Reader(src_glob, labels, g.in_data, distinct=bool(getattr(g, "distinct_readers", False)),
-                     ext=getattr(g, "readers_ext", False))
+                     ext=getattr(g, "readers_ext", False), callee=getattr(g, "readers_callee", False))
 
 
 def groups(dr):
@@ -288,6 +290,8 @@ def vararg(g, f):
 
 def macro_lines(g):
     out = [f"# {g.macro}: {g.stride}-byte records ({g.label}, {g.count} records); fields, and what reads them:"]
+    for ev in getattr(g, "evidence", None) or ():
+        out.append(f"#   ({ev})")
     for f in g.fields:
         rd = cite(f.accs) if f.accs else ("no reader seen" if f.kind in ("bytes", "ptr") else "")
         out.append(f"#   +{f.off:<4d}{f.name:12s} {field_type(f):14s} {rd}".rstrip())
