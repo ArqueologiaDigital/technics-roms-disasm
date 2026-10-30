@@ -27,7 +27,9 @@ INPUTS
     marker build, with --save-temp-labels so that .L labels are compared too).
 
 RUN
-    python3 scripts/analysis/hdae5000_version_label_check.py v2_01i [--all]
+    python3 scripts/analysis/hdae5000_version_label_check.py v2_01i [--all] [--base v2_06i]
+    (--base: the tree compared with, default v2.06i; v1.15i was ported from v2_01i and
+    v1.10i from v1_15i.  The GUI's macro-made labels are left out.)
     Prints a summary, then the moved / pile / orphan rows (--all: also the
     unreferenced new labels).  Exit status 0 always: this is a review list.
 """
@@ -125,19 +127,27 @@ def references(tree_dirs):
 
 def main():
     ver = sys.argv[1] if len(sys.argv) > 1 else "v2_01i"
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
+    import port_hdae5000_version as P0
+    base = P0.base_of(sys.argv)
+    btree, bmain = P0.base_tree(base)
     tree = os.path.join(ROOT, "hdae5000_" + ver)
     # both trees assembled with --save-temp-labels (the porting tool's marker build),
     # so the .L local labels are checked too
     sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
     import port_hdae5000_version as P
-    ba = P.Build(os.path.join(ROOT, "hdae5000"), "hd-ae5000_v2_06i.s", [],
+    ba = P.Build(btree, bmain, P.incs_of(base),
                  os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_a"))
-    bb = P.Build(tree, "hd-ae5000_%s.s" % ver, [os.path.join(ROOT, "hdae5000")],
+    bb = P.Build(tree, "hd-ae5000_%s.s" % ver, P.incs_of(ver),
                  os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_b"))
     assert ba.ok and bb.ok, (ba.stderr[-500:], bb.stderr[-500:])
     ia, ib = ba.img, bb.img
-    sa = {n: a for a, n in ba.syms if not n.startswith("__PM_")}
-    sb = {n: a for a, n in bb.syms if not n.startswith("__PM_")}
+    # the GUI's labels (HdaeUi*, _ui_*) are made by the class macros from the tree that
+    # scripts/converters/hdae5000_ui_tree.py generates and checks against the ROM: not
+    # reviewed here
+    gui = ("__PM_", "_ui_", "HdaeUi", ".L_ui")
+    sa = {n: a for a, n in ba.syms if not n.startswith(gui)}
+    sb = {n: a for a, n in bb.syms if not n.startswith(gui)}
     da, db = decode(ia, routine_names(sa)), decode(ib, routine_names(sb))
     # the code ends where the registered-object name pool begins, in each version
     ea, eb = sa.get("HDAE5000_Str_End_ObjNames", CODE_END), sb.get("HDAE5000_Str_End_ObjNames", CODE_END)

@@ -161,7 +161,7 @@ everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3 floppy
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-v5-reference verify-hdae5000-v201-reference verify-subprogram-update-images
+	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-v5-reference verify-hdae5000-v201-reference verify-hdae5000-v115i-reference verify-hdae5000-v110i-reference verify-subprogram-update-images
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 	python3 scripts/generators/create_v140_subcpu_source.py --check
 	python3 scripts/analysis/hdae5000_obj_constants_check.py
@@ -215,7 +215,7 @@ gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hd
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
 
 # LLVM build targets (primary)
-llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom original_ROMs/kn5000_v6_program.rom rebuilt_ROMs/kn5000_v6_program.llvm.rom original_ROMs/kn5000_v5_program.rom rebuilt_ROMs/kn5000_v5_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom original_ROMs/hd-ae5000_v2_01i.ic4 rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
+llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom original_ROMs/kn5000_v6_program.rom rebuilt_ROMs/kn5000_v6_program.llvm.rom original_ROMs/kn5000_v5_program.rom rebuilt_ROMs/kn5000_v5_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom original_ROMs/hd-ae5000_v2_01i.ic4 rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom original_ROMs/hd-ae5000_v1_15i.ic4 rebuilt_ROMs/hd-ae5000_v1_15i.llvm.rom original_ROMs/hd-ae5000_v1_10i.ic4 rebuilt_ROMs/hd-ae5000_v1_10i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
 
 # ============================================================================
 # C-compiled ScreenData paramblocks
@@ -1330,6 +1330,73 @@ rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf: rebuilt_ROMs/hd-ae5000_v2_01i.llvm.o hda
 rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom: rebuilt_ROMs/hd-ae5000_v2_01i.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
+# --- HDAE5000 v1.15i and v1.10i ---
+# Their reference images, copied git-ignored from the private romset and refused unless
+# the SHA-1 matches (the v2.01i convention, above).  hd-ae5000.ic4 in the romset is the
+# same bytes as v1.15i.  notes/hdae5000-versions-2026-10-24/README.md describes the trees.
+#   make HDAE5000_V115_REF=/path/hd-ae5000_v1_15i.ic4 HDAE5000_V110_REF=/path/hd-ae5000_v1_10i.ic4
+HDAE5000_V115_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/hd-ae5000_v1_15i.ic4
+HDAE5000_V115_SHA1 := 581fa58e2cd6fe381cfc312c73771d25ff2e662c
+HDAE5000_V110_REF  ?= $(PROJECTS_ROOT)/technics_roms/roms/kn5000/hd-ae5000_v1_10i.ic4
+HDAE5000_V110_SHA1 := 6019f3c28b6277730418974dde4dc6893fced00e
+
+# $(1) = v1_15i / v1_10i, $(2) = the REF variable, $(3) = the SHA-1 variable
+define HDAE_V1_REFERENCE
+original_ROMs/hd-ae5000_$(1).ic4:
+	@if [ ! -f "$$($(2))" ]; then \
+	  echo "ERROR: the HD-AE5000 $(1) reference image is missing: $$($(2))"; \
+	  echo "       It is not in git (new dumps come from the private romset). Point $(2) at a copy"; \
+	  echo "       whose SHA-1 is $$($(3)), e.g. make $(2)=/path/hd-ae5000_$(1).ic4"; \
+	  exit 1; fi
+	@got=$$$$(sha1sum < "$$($(2))" | cut -d' ' -f1); \
+	 if [ "$$$$got" != "$$($(3))" ]; then \
+	  echo "ERROR: $$($(2)) has SHA-1 $$$$got, expected $$($(3))"; exit 1; fi
+	cp "$$($(2))" $$@.tmp
+	mv $$@.tmp $$@
+
+verify-hdae5000-$(subst _,,$(1))-reference: original_ROMs/hd-ae5000_$(1).ic4
+	@got=$$$$(sha1sum < $$< | cut -d' ' -f1); \
+	 if [ "$$$$got" = "$$($(3))" ]; then echo "OK    $$< has SHA-1 $$($(3))"; \
+	 else echo "FAIL  $$< has SHA-1 $$$$got, expected $$($(3))"; exit 1; fi
+endef
+$(eval $(call HDAE_V1_REFERENCE,v1_15i,HDAE5000_V115_REF,HDAE5000_V115_SHA1))
+$(eval $(call HDAE_V1_REFERENCE,v1_10i,HDAE5000_V110_REF,HDAE5000_V110_SHA1))
+.PHONY: verify-hdae5000-v115i-reference verify-hdae5000-v110i-reference
+
+# The v1.15i tree, hdae5000_v1_15i/, ported from hdae5000_v2_01i/ by
+# notes/hdae5000-versions-2026-10-24/port-edits-v1_15i/replay.sh.  Its own shared/event_codes.s
+# (v1.x numbers the HD-AE5000's messages differently) shadows hdae5000/'s; the rest of shared/
+# and the unchanged pictures come from hdae5000/ through the second -I.  Its boot splash is
+# built from hdae5000_v1_15i/images/ by the hdae5000-images step.
+HDAE_V115_SRC       = $(wildcard hdae5000_v1_15i/*.s hdae5000_v1_15i/shared/*.s)
+HDAE_V115_IMAGE_SRC := $(shell find hdae5000_v1_15i/images -name '*.png' -o -name '*.txt' 2>/dev/null)
+
+rebuilt_ROMs/hd-ae5000_v1_15i.llvm.o: $(HDAE_V115_SRC) $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000_v1_15i -I hdae5000 -o $@ hdae5000_v1_15i/hd-ae5000_v1_15i.s
+
+rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf: rebuilt_ROMs/hd-ae5000_v1_15i.llvm.o hdae5000_v1_15i/hdae5000.ld
+	$(LLVM_LLD) -T hdae5000_v1_15i/hdae5000.ld -o $@ $<
+
+rebuilt_ROMs/hd-ae5000_v1_15i.llvm.rom: rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
+# The v1.10i tree, hdae5000_v1_10i/, ported from hdae5000_v1_15i/ by
+# notes/hdae5000-versions-2026-10-24/port-edits-v1_10i/replay.sh.  It takes v1.x's
+# shared/event_codes.s and the boot splash from hdae5000_v1_15i/ (second -I), the rest from
+# hdae5000/ (third -I).
+HDAE_V110_SRC = $(wildcard hdae5000_v1_10i/*.s)
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.o: $(HDAE_V110_SRC) $(HDAE_V115_SRC) $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000_v1_10i -I hdae5000_v1_15i -I hdae5000 -o $@ hdae5000_v1_10i/hd-ae5000_v1_10i.s
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.elf: rebuilt_ROMs/hd-ae5000_v1_10i.llvm.o hdae5000_v1_10i/hdae5000.ld
+	$(LLVM_LLD) -T hdae5000_v1_10i/hdae5000.ld -o $@ $<
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.rom: rebuilt_ROMs/hd-ae5000_v1_10i.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
 # The six Feature Demo BMPs (FTBMP01..06.BMP) are built from their committed PNGs
 # plus the header fields in ftbmp_headers.json; scripts/build/ftbmp_images.py
 # `verify` asserts the round trip against the committed .BMP and the ROM.  The
@@ -1800,6 +1867,7 @@ clean:
 	rm -f rebuilt_ROMs/kn5000_subcpu_boot.llvm.*
 	rm -f rebuilt_ROMs/hd-ae5000_v2_06i.llvm.*
 	rm -f rebuilt_ROMs/hd-ae5000_v2_01i.llvm.*
+	rm -f rebuilt_ROMs/hd-ae5000_v1_15i.llvm.* rebuilt_ROMs/hd-ae5000_v1_10i.llvm.*
 	rm -f rebuilt_ROMs/kn5000_table_data.llvm.*
 	rm -f rebuilt_ROMs/kn5000_custom_data.llvm.*
 	rm -rf v10/maincpu/includes/generated/

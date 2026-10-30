@@ -71,9 +71,13 @@ def body(bld, a, e, names):
 
 def main():
     ver = sys.argv[1] if len(sys.argv) > 1 else "v2_01i"
-    ba = P.Build(os.path.join(ROOT, "hdae5000"), "hd-ae5000_v2_06i.s", [],
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
+    import port_hdae5000_version as P0
+    base = P0.base_of(sys.argv)
+    btree, bmain = P0.base_tree(base)
+    ba = P.Build(btree, bmain, P.incs_of(base),
                  os.path.join(P.SCRATCH, "port_hdae5000_routinediff_a"))
-    bb = P.Build(P.tree_of(ver), P.main_of(ver), [os.path.join(ROOT, "hdae5000")],
+    bb = P.Build(P.tree_of(ver), P.main_of(ver), P.incs_of(ver),
                  os.path.join(P.SCRATCH, "port_hdae5000_routinediff_b"))
     assert ba.ok and bb.ok
     ea, eb = ba.symaddr["HDAE5000_Str_End_ObjNames"], bb.symaddr["HDAE5000_Str_End_ObjNames"]
@@ -84,7 +88,7 @@ def main():
     rows = []
     for n in sorted(set(ra) | set(rb), key=lambda n: ra.get(n, rb.get(n))[0]):
         if n not in rb:
-            rows.append("  only in v2.06i  %-56s %5d B" % (n, ra[n][1] - ra[n][0]))
+            rows.append("  only in %-7s %-56s %5d B" % (base, n, ra[n][1] - ra[n][0]))
             continue
         if n not in ra:
             rows.append("  only in %-7s %-56s %5d B" % (ver, n, rb[n][1] - rb[n][0]))
@@ -100,9 +104,9 @@ def main():
         d = sum(max(i2 - i1, j2 - j1) for op, i1, i2, j1, j2 in sm.get_opcodes() if op != "equal")
         rows.append("  changed         %-56s %5d -> %5d B, %4d -> %4d insns, %4d differ"
                     % (n, ra[n][1] - ra[n][0], rb[n][1] - rb[n][0], len(x), len(y), d))
-    print("v2.06i -> %s: %d routines in v2.06i, %d in %s; %d same, %d changed, %d only in v2.06i, "
-          "%d only in %s" % (ver, len(ra), len(rb), ver, same, changed, len(set(ra) - set(rb)),
-                             len(set(rb) - set(ra)), ver))
+    print("%s -> %s: %d routines in %s, %d in %s; %d same, %d changed, %d only in %s, "
+          "%d only in %s" % (base, ver, len(ra), base, len(rb), ver, same, changed, len(set(ra) - set(rb)),
+                             base, len(set(rb) - set(ra)), ver))
     print("\n".join(rows))
 
 

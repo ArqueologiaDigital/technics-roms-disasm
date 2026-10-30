@@ -1,0 +1,6 @@
+v1_15i -> v1_10i: 538 routines in v1_15i, 538 in v1_10i; 533 same, 5 changed, 0 only in v1_15i, 0 only in v1_10i
+  changed         HDAE5000_AcLanguageText1Proc                              5717 ->  5644 B, 1931 -> 1906 insns,   25 differ
+  changed         HDAE5000_LoadSong_Pmt                                      335 ->   212 B,  102 ->   65 insns,   37 differ
+  changed         HDAE5000_SaveSong_Rcm                                      134 ->   140 B,   40 ->   43 insns,    7 differ
+  changed         HDAE5000_HD_WriteStream                                    275 ->   214 B,   86 ->   67 insns,   46 differ
+  changed         HDAE5000_PPORT_Svc27                                        19 ->    18 B,    7 ->    6 insns,    1 differ

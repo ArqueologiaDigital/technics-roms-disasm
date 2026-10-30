@@ -84,6 +84,14 @@ VERSION_ASSETS = {
         ('HDAE5000_Palette_FilePanel_v2_01i', 0x2CDD9C, 1024, None),
         ('HDAE5000_FilePanel_v2_01i',         0x2CE19C, 76800, (320, 240, 320)),
     ], {'HDAE5000_FilePanel_v2_01i': 'HDAE5000_Palette_FilePanel_v2_01i'}),
+    # v1.15i: no file-selection backdrop at all; its boot splash is its own (no "Version 2"
+    # line, and "Startup !" for v2.x's "Start-up !"), palette and picture where
+    # HDAE5000_Boot_Init reads them.  v1.10i has the same bytes
+    # (0x2CD76E) and takes them from this tree through its build's -I hdae5000_v1_15i.
+    'hdae5000_v1_15i': ('hd-ae5000_v1_15i.ic4', [
+        ('HDAE5000_Palette_Splash_v1_15i', 0x2CD8FE, 1024, None),
+        ('HDAE5000_SplashScreen_v1_15i',   0x2CDCFE, 76800, (320, 240, 320)),
+    ], {'HDAE5000_SplashScreen_v1_15i': 'HDAE5000_Palette_Splash_v1_15i'}),
 }
 
 

@@ -32,6 +32,8 @@ for entry in [
 	("hdae5000",		"hd-ae5000_v2_06i.ic4",		"hd-ae5000_v2_06i.llvm.rom",		0x280000),
 	# v2.01i: reference copied (uncommitted) from the private romset, HDAE5000_V201_REF.
 	("hdae5000 v2.01i",	"hd-ae5000_v2_01i.ic4",		"hd-ae5000_v2_01i.llvm.rom",		0x280000),
+	("hdae5000 v1.15i",	"hd-ae5000_v1_15i.ic4",		"hd-ae5000_v1_15i.llvm.rom",		0x280000),
+	("hdae5000 v1.10i",	"hd-ae5000_v1_10i.ic4",		"hd-ae5000_v1_10i.llvm.rom",		0x280000),
 	("table data",		"kn5000_table_data.rom",	"kn5000_table_data.llvm.rom",		0x800000),
 	("custom data",		"kn5000_custom_data.ic19",	"kn5000_custom_data.llvm.rom",		0x300000),
 	# Waveform ROM IC307 (waveform/): no CPU address, linked at 0; reference copied (uncommitted), KN5000_IC307_REF.

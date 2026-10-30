@@ -29,6 +29,8 @@
 ; is 0x012A0000 + k, of its MainFunction table 0x14A (HDAE5000_ScreenProc_Table, names
 ; HDAE5000_ScreenName_Table) 0x014A0000 + k.  The procedure is HDAE5000_<name>.
 	.equ	NAKA_APFUNC_HardTestPage, 0x012a0000
+	.equ	NAKA_APFUNC_HDDNamingCheck, 0x012a0001
+	.equ	NAKA_APFUNC_HDD_DIRNAMECheck, 0x012a0002
 	.equ	NAKA_APFUNC_HDD_UTIL_PAGE, 0x012a0003
 	.equ	NAKA_APFUNC_PC_DATA_LINK_PAGE, 0x012a0004
 	.equ	NAKA_APFUNC_SeparateOutputModeCheck, 0x012a0005
@@ -49,7 +51,9 @@
 	.equ	NAKA_APFUNC_LoadByNumberModeEditCheck, 0x012a0014
 	.equ	NAKA_APFUNC_JumpAfterLoadModeEditCheck, 0x012a0015
 	.equ	NAKA_APFUNC_HdTitleEventCatch, 0x012a0016
+	.equ	NAKA_APFUNC_FlsNamingCheck, 0x012a0017
 	.equ	NAKA_APFUNC_FlsNamingCheck2, 0x012a0018
+	.equ	NAKA_APFUNC_CP_FD_DIRNAMECheck, 0x012a0019
 	.equ	NAKA_APFUNC_WrConfirmEventCatch, 0x012a001a
 	.equ	NAKA_APFUNC_SaveOptSwEventCatch, 0x012a001b
 	.equ	NAKA_APFUNC_DelOptSwEventCatch, 0x012a001c

@@ -19,7 +19,10 @@ QUESTION ANSWERED / JOB IT DOES
       fix       same-size hunks whose differing bytes are a number the line
                 spells as a literal, or as a constant whose name is in
                 RETARGET_PREFIXES: the number is rewritten (a constant at its
-                `.equ`, once, for the whole tree).  Once `uitables` has run,
+                `.equ`, once, for the whole tree).  A constant whose uses want
+                different values -- some already right in an aligned block,
+                others not -- is two things in the target: those uses get a
+                symbol of their own (resolve_votes), so the pass converges;  Once `uitables` has run,
                 the HDAE5000_OBJ_* values come from the target's name table
                 and are frozen: a line whose object id differs is respelled
                 with the constant that has the target's value, or left alone
@@ -57,9 +60,13 @@ QUESTION ANSWERED / JOB IT DOES
 
 RUN (from the repo root)
     python3 scripts/tools/port_hdae5000_version.py init     v2_01i  # copy hdae5000/ -> hdae5000_v2_01i/
+    python3 scripts/tools/port_hdae5000_version.py init     v1_15i --from v2_01i  # from another port
     python3 scripts/tools/port_hdae5000_version.py status   v2_01i  # the hunks left
     python3 scripts/tools/port_hdae5000_version.py fix      v2_01i [--rounds N]
-    python3 scripts/tools/port_hdae5000_version.py code     v2_01i [N ...] [--dry]
+    python3 scripts/tools/port_hdae5000_version.py code     v2_01i [N ...] [--dry] [--same-only | --widen | --anchored]
+    python3 scripts/tools/port_hdae5000_version.py anchors  v1_15i   # the lockstep walk's anchor map
+    python3 scripts/tools/port_hdae5000_version.py afix     v1_15i   # `fix` on the walk's instruction pairs
+    python3 scripts/tools/port_hdae5000_version.py routine  v1_15i LABEL..END [...] [--dry]  # `code` on a span
     python3 scripts/tools/port_hdae5000_version.py strings  v2_01i [N ...] [--dry]
     python3 scripts/tools/port_hdae5000_version.py uitables v2_01i
     python3 scripts/tools/port_hdae5000_version.py show     v2_01i N [--code]
@@ -97,6 +104,28 @@ NUM_RE = re.compile(rb'(?<![\w.])(-?)(0x[0-9a-fA-F]+|[0-9]+)(?![\w])')
 SYM_RE = re.compile(rb'(?<![\w.@])(\.L[A-Za-z_]\w*|[A-Za-z_][A-Za-z0-9_]*)(?:\s*([+-])\s*(0x[0-9a-fA-F]+|[0-9]+))?')
 DIRECTIVE_W = {b".byte": 1, b".short": 2, b".word": 2, b".hword": 2, b".2byte": 2,
                b".long": 4, b".int": 4, b".4byte": 4}
+
+
+def base_of(argv, default="v2_06i"):
+    """The version a review tool compares with: `--base <ver>` (the tree a port was made
+    from: v2_01i for v1.15i, v1_15i for v1.10i), default v2.06i = hdae5000/."""
+    return argv[argv.index("--base") + 1] if "--base" in argv else default
+
+
+# a tree's further include directories, after its own and before hdae5000/ (v1.10i takes
+# v1.15i's boot splash, which it shares)
+EXTRA_INC = {"v1_10i": ["hdae5000_v1_15i"]}
+
+
+def incs_of(ver):
+    return [os.path.join(ROOT, d) for d in EXTRA_INC.get(ver, [])] + [os.path.join(ROOT, SRC_TREE)]
+
+
+def base_tree(ver):
+    """(tree directory, main file) of a version; v2_06i is hdae5000/."""
+    if ver == "v2_06i":
+        return os.path.join(ROOT, SRC_TREE), SRC_MAIN
+    return tree_of(ver), main_of(ver)
 
 
 def tree_of(ver):
@@ -153,9 +182,17 @@ class Build:
         collect(main)
         self.files, self.texts = files, texts
         for i, rel in enumerate(files):
-            out = []
+            out, in_macro = [], False
             for n, ln in enumerate(texts[rel], 1):
-                out.append(b"__PM_%d_%d:" % (i, n))
+                # no marker inside a .macro body: each expansion would define it again
+                # (hdae5000/shared/naka_ui_macros.s is part of the v2.06i tree)
+                head = ln.split(b";", 1)[0].strip()
+                if head.startswith(b".macro"):
+                    in_macro = True
+                if not in_macro:
+                    out.append(b"__PM_%d_%d:" % (i, n))
+                if head.startswith(b".endm"):
+                    in_macro = False
                 out.append(ln)
             os.makedirs(os.path.dirname(os.path.join(work, rel)) or work, exist_ok=True)
             open(os.path.join(work, rel), "wb").write(b"\n".join(out))
@@ -180,11 +217,13 @@ class Build:
         self.img = open(rom, "rb").read()
         nm = subprocess.run([BIN + "/llvm-nm", "--defined-only", elf], capture_output=True,
                             text=True, check=True).stdout
-        mark, self.syms = {}, []
+        mark, self.syms, self.abs = {}, [], {}
         for l in nm.split("\n"):
             p = l.split()
             if len(p) != 3:
                 continue
+            if p[1] in "aA":
+                self.abs[p[2]] = int(p[0], 16)
             if p[2].startswith("__PM_"):
                 fi, n = p[2][5:].split("_")
                 mark[(int(fi), int(n))] = int(p[0], 16)
@@ -202,9 +241,20 @@ class Build:
                     walk(files.index(m.group(1).decode()))
         walk(0)
         self.lines = []                     # (file, lineno, start, end)
+        # a line without a marker (a .macro body line) emits nothing where it stands: it
+        # takes the address of the next marked line
+        nxt, addr_of = None, {}
+        for key in reversed(flat):
+            if key in mark:
+                nxt = mark[key]
+            addr_of[key] = nxt
         for j, (fi, n) in enumerate(flat):
-            s = mark[(fi, n)]
-            e = mark[flat[j + 1]] if j + 1 < len(flat) else s
+            s = addr_of[(fi, n)]
+            e = addr_of[flat[j + 1]] if j + 1 < len(flat) else s
+            if s is None:
+                s = e = 0
+            if e is None or (fi, n) not in mark:
+                e = s
             if INC_RE.match(texts[files[fi]][n - 1]):
                 e = s
             self.lines.append((files[fi], n, s, e))
@@ -351,7 +401,11 @@ def retarget(line, wb, bb, equs, symaddr):
     new_code, eq = code, {}
     for c0, c1 in clusters(diff):
         done = False
-        for width in (4, 3, 2, 1):
+        # the narrowest window that covers the cluster first: `ld (mem:24), 1` (f2 <mem> 00 01)
+        # differs from `..., 0` in its last byte only, and a 2-byte window there also holds the
+        # sub-opcode 00, which once produced `ld (mem:24), 256`.  The untouched high bytes of
+        # a wider operand are kept.
+        for width in (1, 2, 3, 4):
             for s in range(max(0, c1 - width + 1), c0 + 1):
                 if s + width > len(wb) or s > c0 or s + width - 1 < c1:
                     continue
@@ -374,9 +428,13 @@ def retarget(line, wb, bb, equs, symaddr):
                 h = hits[0]
                 if h[0] == "num":
                     tk = h[1]
-                    new_code = new_code[:tk[0]] + render_num(tk, vb, width) + new_code[tk[1]:]
+                    full = (tk[2] & ~mask) | vb if tk[2] >= 0 else vb
+                    new_code = new_code[:tk[0]] + render_num(tk, full if full >> (8 * width) else vb,
+                                                             width if not full >> (8 * width) else 4) \
+                        + new_code[tk[1]:]
                 else:
-                    eq[h[2]] = vb - h[3]
+                    cur = equs[h[2]][0] + h[3]
+                    eq[h[2]] = ((cur & ~mask) | vb) - h[3]
                 done = True
                 break
             if done:
@@ -395,7 +453,8 @@ def num_tokens(code):
     signed and its replacement may flip the operator."""
     out = []
     for m in NUMTOK_RE.finditer(code):
-        v = int(m.group(1), 0)
+        t = m.group(1)
+        v = int(t, 16) if t[:2].lower() == b"0x" else int(t, 10)     # "01" is decimal, not an error
         j = m.start() - 1
         while j >= 0 and code[j] in b" \t":
             j -= 1
@@ -536,14 +595,24 @@ class Ctx:
             pw, pb = max(pw, e_), max(pb, sb_ + (e_ - s_))
         self.ram_names = {v: n for n, (v, f, l) in self.equs.items() if n.startswith("HDAE5000_RAM_")}
         self.obj_names = {v: n for n, (v, f, l) in self.equs.items() if n.startswith("HDAE5000_OBJ_")}
+        # since the GUI is a macro tree its object ids are absolute symbols of the build
+        self.obj_names.update({v: n for n, v in bld.abs.items() if n.startswith("HDAE5000_OBJ_")})
         self.new_labels = {}                    # B address -> name (created this round)
         self.used = set(bld.symaddr) | set(self.equs)
 
     def w_of_b(self, b):
-        """W address of B address b when b lies in an identical block."""
+        """W address of B address b when b lies in an identical block (of the block aligner,
+        or between two anchors of the lockstep walk whose stretches are identical)."""
         for s, e, sb in self.blocks:            # blocks are few hundred: linear is fine
             if sb <= b - BASE < sb + (e - s):
                 return s + (b - BASE - sb) + BASE
+        pts = getattr(self, "anchor_pts", None)
+        if pts:
+            k = bisect.bisect_right([y for _, y in pts], b) - 1
+            if 0 <= k < len(pts) - 1:
+                (w0, b0), (w1, b1) = pts[k], pts[k + 1]
+                if w1 - w0 == b1 - b0 and self.bld.img[w0 - BASE:w1 - BASE] == self.ref[b0 - BASE:b1 - BASE]:
+                    return w0 + (b - b0)
         return None
 
     def label_at(self, b):
@@ -743,11 +812,247 @@ def roundtrip_many(cands):
     return enc
 
 
+
+# --------------------------------------------------------------------------- anchors
+
+def registry_pairs(wimg, ref):
+    """(W address, B address) of every procedure both images register under the same name:
+    the ApFunction (0x12A / names 0x42A), MainFunction (0x14A / 0x44A) and class procedure
+    (0x10A / 0x40A) tables.  Ground truth: the firmware's own names."""
+    out = []
+    for procs, names in ((0x12A, 0x42A), (0x14A, 0x44A), (0x10A, 0x40A)):
+        sides = []
+        for img in (wimg, ref):
+            pa, na = registered_table(img, procs), registered_table(img, names)
+            d = {}
+            if pa is None or na is None:
+                sides.append(d)
+                continue
+            k = 0
+            while True:
+                p = int.from_bytes(img[pa - BASE + 4 * k:pa - BASE + 4 * k + 4], "little")
+                n = int.from_bytes(img[na - BASE + 4 * k:na - BASE + 4 * k + 4], "little")
+                if not (BASE <= p < CODE_END) or not (BASE <= n < BASE + 0x80000):
+                    break
+                d.setdefault(img[n - BASE:].split(b"\0", 1)[0], p)
+                k += 1
+            sides.append(d)
+        for name, wa in sides[0].items():
+            if name in sides[1]:
+                out.append((wa, sides[1][name]))
+    return out
+
+
+HEX_RE = re.compile(r'0x([0-9a-f]+)')
+
+
+class Anchors:
+    """A W -> B address map grown from the registry by walking both instruction streams in
+    lockstep: while two instructions have the same shape (numbers masked) their operands
+    pair up -- ROM addresses (branch and call targets, data) become new anchors, RAM
+    addresses pairs of the RAM map.  The walk stops where the shapes part.  Unlike the
+    block aligner this cannot put routine i of a family of look-alikes against routine
+    i+1: every walk starts from an address the firmware's names or a call pin down."""
+
+    def __init__(self, wimg, ref, seeds):
+        self.w, self.b = wimg, ref
+        self.votes = collections.defaultdict(collections.Counter)    # W rom -> B rom
+        self.ram = collections.defaultdict(collections.Counter)      # W ram -> B ram
+        self.walked = set()
+        self.insn = {}                                               # W addr -> B addr (paired insns)
+        self.cache = ({}, {})
+        todo = list(seeds)
+        for wa, ba in seeds:
+            self.votes[wa][ba] += 1
+        tables_seen = set()
+        while True:
+            while todo:
+                wa, ba = todo.pop()
+                if (wa, ba) in self.walked or not (wa < CODE_END and ba < CODE_END):
+                    continue
+                self.walked.add((wa, ba))
+                todo += self.walk(wa, ba)
+            # pointer tables: a data anchor whose W bytes are a run of code pointers pairs
+            # its entries with the target's, in order (the PC-link command and service
+            # tables reach routines no walk does)
+            for wa, c in list(self.votes.items()):
+                if wa < CODE_END or wa in tables_seen or len(c) != 1:
+                    continue
+                tables_seen.add(wa)
+                ba = next(iter(c))
+                k = 0
+                while k < 256:
+                    x = int.from_bytes(wimg[wa - BASE + 4 * k:wa - BASE + 4 * k + 4], "little")
+                    y = int.from_bytes(ref[ba - BASE + 4 * k:ba - BASE + 4 * k + 4], "little")
+                    if not (BASE <= x < CODE_END and BASE <= y < CODE_END):
+                        break
+                    if not self.votes[x][y]:
+                        todo.append((x, y))
+                    self.votes[x][y] += 1
+                    k += 1
+            if not todo:
+                break
+
+    def decoded(self, side, a):
+        """(length, text) of the instruction at a in image `side` (0 = W, 1 = B), decoding a
+        window there when the cache does not hold it (a window decode stays aligned on
+        instruction starts after its first)."""
+        cache = self.cache[side]
+        if a not in cache:
+            img = (self.w, self.b)[side]
+            for x, bs, t in unidasm(img[a - BASE:a - BASE + 0x1000], a)[:-4]:
+                cache.setdefault(x, (len(bs), t))
+        return cache.get(a)
+
+    def walk(self, wa, ba):
+        new = []
+        while wa < CODE_END and ba < CODE_END:
+            d1, d2 = self.decoded(0, wa), self.decoded(1, ba)
+            if not d1 or not d2:
+                return new
+            (l1, t1), (l2, t2) = d1, d2
+            if shape(t1) != shape(t2) or t1.startswith("db "):
+                return new
+            self.insn[wa] = ba
+            h1, h2 = HEX_RE.findall(t1.lower()), HEX_RE.findall(t2.lower())
+            for x, y in zip(h1, h2):
+                x, y = int(x, 16), int(y, 16)
+                if BASE <= x < BASE + 0x80000 and BASE <= y < BASE + 0x80000:
+                    if not self.votes[x][y]:
+                        new.append((x, y))
+                    self.votes[x][y] += 1
+                elif 0x200000 <= x < 0x240000 and 0x200000 <= y < 0x240000:
+                    self.ram[x][y] += 1
+            wa, ba = wa + l1, ba + l2
+            if (wa, ba) in self.walked:
+                return new
+            self.walked.add((wa, ba))
+        return new
+
+    def rom_map(self):
+        """W -> B for the anchors whose votes agree, monotonic (a longest increasing chain)."""
+        best = {w: c.most_common(1)[0][0] for w, c in self.votes.items()
+                if len(c) == 1 or c.most_common(2)[1][1] * 4 < c.most_common(1)[0][1]}
+        pts = sorted(best.items())
+        # longest chain increasing in B (patience sorting)
+        import bisect as _b
+        tails, idx, prev = [], [], [None] * len(pts)
+        for i, (w, b) in enumerate(pts):
+            k = _b.bisect_left(tails, b)
+            if k == len(tails):
+                tails.append(b)
+                idx.append(i)
+            else:
+                tails[k] = b
+                idx[k] = i
+            prev[i] = idx[k - 1] if k else None
+        out, i = [], idx[-1] if idx else None
+        while i is not None:
+            out.append(pts[i])
+            i = prev[i]
+        return dict(reversed(out))
+
+
+def code_end_of(bld):
+    """Where the build's code ends: HDAE5000_UI_Config, the first data after it (the class
+    parameter-name pool; 0x297ef6 in v1.15i, 0x29b8de in v2.01i), or CODE_END.  The UI
+    object records after it are macro lines, which a walk must not take for instructions."""
+    return min(bld.symaddr.get("HDAE5000_UI_Config", CODE_END), CODE_END)
+
+
+def long_block_seeds(full, bld, n=64):
+    """Seeds from the block aligner's long identical blocks in the code (>= n bytes: long
+    enough not to be one look-alike against its neighbour), for code no name or pointer
+    table reaches (the PC-link command handlers).  A block starts at any byte, so the seed
+    is the first instruction line that starts inside it: a walk from the middle of an
+    instruction pairs garbage, and spans cut there overlap once widened to whole lines."""
+    starts = {s for f, n_, s, e in bld.lines if e > s and is_insn(bld.text(f, n_))}
+    out, end = [], code_end_of(bld)
+    for s, e, sb in full:
+        if e - s < n or s + BASE >= end:
+            continue
+        for k in range(s, e - 8):
+            if k + BASE in starts:
+                out.append((k + BASE, sb + (k - s) + BASE))
+                break
+    return out
+
+
+def cmd_anchors(ver, write=True):
+    bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
+    seeds = registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full, bld)
+    an = Anchors(bld.img, ref, seeds)
+    rm = an.rom_map()
+    print("%d registry seeds; %d ROM anchors (%d monotonic); %d instructions paired; %d RAM addresses"
+          % (len(seeds), len(an.votes), len(rm), len(an.insn), len(an.ram)))
+    if write:
+        import json
+        out = os.path.join(SCRATCH, "port_hdae5000_%s_anchors.json" % ver)
+        json.dump({"rom": {"%x" % w: b for w, b in rm.items()},
+                   "ram": {"%x" % w: dict(c) for w, c in an.ram.items()},
+                   "insn": {"%x" % w: b for w, b in an.insn.items()}}, open(out, "w"))
+        print("->", out)
+    return bld, ref, an, rm
+
+
+def cmd_afix(ver, rounds=5):
+    """`fix` on instruction pairs the anchor walk established instead of on hunks: a line
+    whose instruction is paired with a target instruction of the same length is retargeted
+    against exactly that instruction, and a constant's settled uses are the paired lines
+    that already emit the target's bytes."""
+    for r in range(rounds):
+        bld, ref, an, rm = cmd_anchors(ver, write=False)
+        equs = read_equs(bld)
+        ed = Edits(bld.tree)
+        votes = collections.defaultdict(lambda: collections.defaultdict(list))
+        same = set()
+        n_fix = n_eq = 0
+        end = code_end_of(bld)
+        for k, (f, n, s, e) in enumerate(bld.lines):
+            if e <= s or s not in an.insn or s >= end:
+                continue
+            b = an.insn[s]
+            wb, bb = bld.img[s - BASE:e - BASE], ref[b - BASE:b - BASE + (e - s)]
+            if wb == bb:
+                same.add(k)
+                continue
+            res = retarget(bld.text(f, n), wb, bb, equs, bld.symaddr)
+            if res is None:
+                continue
+            txt, eq = res
+            if txt != bld.text(f, n):
+                ed.set(f, n, txt)
+                n_fix += 1
+            for name, v in eq.items():
+                votes[name][v].append((f, n))
+        set_to, respell, new_equ = resolve_votes(bld, [], equs, votes, settled_fn=lambda k: k in same)
+        for name, v in set_to.items():
+            ed.set_equ(equs[name][1], equs[name][2], v)
+            n_eq += 1
+        for f, n, name, alt in respell:
+            ed.set(f, n, apply_respell(ed.lines(f)[n - 1], name, alt))
+            n_fix += 1
+        for alt, (name, v) in sorted(new_equ.items()):
+            f, n = equs[name][1], equs[name][2]
+            ln = ed.lines(f)[n - 1]
+            m = re.match(rb'^(\s*\.(?:equ|set)\s+)', ln)
+            ed.set(f, n, ln + b"\n" + m.group(1) + alt.encode() + b", 0x%06x" % v
+                   + b"\t; split from %s by `port_hdae5000_version.py afix`: these uses want a different address in %s"
+                   % (name.encode(), tag_of(ver).encode()))
+            n_eq += 1
+            print("split: %s -> %s = %#x" % (name, alt, v))
+        ed.write()
+        print("afix round %d: %d lines rewritten, %d constants changed or added" % (r, n_fix, n_eq))
+        if n_fix == 0 and n_eq == 0:
+            break
+    cmd_status(ver, verbose=False)
+
+
 # --------------------------------------------------------------------------- commands
 
 def do_build(ver):
     work = os.path.join(SCRATCH, "port_hdae5000_" + ver)
-    return Build(tree_of(ver), main_of(ver), [os.path.join(ROOT, SRC_TREE)], work)
+    return Build(tree_of(ver), main_of(ver), incs_of(ver), work)
 
 
 def expand(build, h):
@@ -823,6 +1128,114 @@ def respell_frozen_obj(txt, eq, equs):
     return txt, rest
 
 
+def symbol_uses(bld, names):
+    """name -> [line index] of the byte-emitting lines whose code part names it."""
+    pat = re.compile(rb'(?<![\w.])(' + b"|".join(re.escape(n.encode()) for n in names) + rb')(?![\w])')
+    out = collections.defaultdict(list)
+    for k, (f, n, s, e) in enumerate(bld.lines):
+        if e <= s:
+            continue
+        code, _ = split_code(bld.text(f, n))
+        for m in pat.finditer(code):
+            out[m.group(1).decode()].append(k)
+    return out
+
+
+def split_name(name, v):
+    """The constant a split-off use of `name` gets: <name>_Alt_<hex>, a placeholder that a
+    port-edit script renames once the use is understood."""
+    return "%s_Alt_%x" % (name, v)
+
+
+def use_offset(line, name):
+    """N of the first `name + N` / `name+N` in the line's code (0 when spelled bare), or None."""
+    code, _ = split_code(line)
+    m = re.search(rb'(?<![\w.])' + re.escape(name.encode()) + rb'(?![\w])(\s*\+\s*(0x[0-9a-fA-F]+|\d+))?', code)
+    if not m:
+        return None
+    return int(m.group(2), 0) if m.group(2) else 0
+
+
+def apply_respell(ln, name, alt):
+    """alt: a new constant name, or (old offset, new offset) for `name + offset`."""
+    code, comment = split_code(ln)
+    if isinstance(alt, tuple):
+        o, n = alt
+        code = re.sub(rb'(?<![\w.])(' + re.escape(name.encode()) + rb')\s*\+\s*(?:0x[0-9a-fA-F]+|\d+)',
+                      lambda m: m.group(1) + b"+%d" % n, code, count=1)
+    else:
+        code = re.sub(rb'(?<![\w.])' + re.escape(name.encode()) + rb'(?![\w])', alt.encode(), code)
+    return code + comment
+
+
+def resolve_votes(bld, hs, equs, votes, settled_fn=None):
+    """Decide each constant's value from the uses that want one ({name: {value: [(f, n)]}}).
+
+    A constant used by lines that are right as they stand (inside an aligned block) and by
+    lines that want another value is two things in the target, not one: moving its `.equ`
+    would only break the first lines, and the next round would move it back (the `fix`
+    oscillation of the 2026-10-24 v1.15i trial).  So the value of the settled uses stays,
+    and every other value is given its own symbol: the one RETARGET constant that already
+    has that value, or a new `.equ` next to the original's.  With no settled use the most
+    wanted value wins and the others split off the same way.
+
+    Returns ({name: value} to set, [(f, n, name, alt)] line respellings, {alt: (name, value)}
+    new constants)."""
+    covered = []
+    for h in hs:
+        (w0, w1, _, _), _ = expand(bld, h)
+        covered.append((w0, w1))
+    covered.sort()
+    starts = [a for a, _ in covered]
+
+    def settled(k):
+        _, _, s, e = bld.lines[k]
+        i = bisect.bisect_right(starts, e - 1) - 1
+        while i >= 0 and covered[i][1] > s:
+            if covered[i][0] < e:
+                return False
+            i -= 1
+        return True
+
+    if settled_fn is not None:
+        settled = settled_fn
+    uses = symbol_uses(bld, list(votes))
+    set_to, respell, new_equ = {}, [], {}
+    for name, byval in votes.items():
+        cur = equs[name][0]
+        want = {v: ls for v, ls in byval.items() if v != cur}
+        if not want:
+            continue
+        keep_cur = any(settled(k) for k in uses.get(name, []))
+        if keep_cur:
+            keep = cur
+        else:
+            keep = max(want, key=lambda v: (len(want[v]), -v))
+            set_to[name] = keep
+        for v, ls in want.items():
+            if v == keep:
+                continue
+            rest = []
+            for f, n in ls:
+                # a use spelled name+N that wants another address is the same record read at
+                # another field (v1.15i's save options have one part fewer, so v2.x's
+                # SaveOptions+11 is SaveOptions+10 there): its offset moves, no new symbol
+                off = use_offset(bld.text(f, n), name)
+                if off is not None and off > 0 and off + v - keep >= 0:
+                    respell.append((f, n, name, (off, off + v - keep)))
+                else:
+                    rest.append((f, n))
+            if not rest:
+                continue
+            same = [n for n, e in equs.items() if n.startswith(RETARGET_PREFIXES) and e[0] == v]
+            alt = same[0] if len(same) == 1 else split_name(name, v)
+            if alt not in equs:
+                new_equ[alt] = (name, v)
+            for f, n in rest:
+                respell.append((f, n, name, alt))
+    return set_to, respell, new_equ
+
+
 def cmd_fix(ver, rounds):
     frozen = obj_ids_frozen(tree_of(ver))
     for r in range(rounds):
@@ -830,7 +1243,7 @@ def cmd_fix(ver, rounds):
         equs = read_equs(bld)
         ed = Edits(bld.tree)
         n_fix = n_eq = 0
-        new_eq = {}
+        votes = collections.defaultdict(lambda: collections.defaultdict(list))
         for h in hs:
             (w0, w1, b0, b1), li = expand(bld, h)
             if w1 - w0 != b1 - b0:
@@ -851,16 +1264,26 @@ def cmd_fix(ver, rounds):
                     ed.set(f, n, txt)
                     n_fix += 1
                 for name, v in eq.items():
-                    if name in new_eq and new_eq[name] != v:
-                        print("conflicting values for %s: %#x / %#x" % (name, new_eq[name], v))
-                        continue
-                    new_eq[name] = v
-        for name, v in new_eq.items():
-            if equs[name][0] != v:
-                ed.set_equ(equs[name][1], equs[name][2], v)
-                n_eq += 1
+                    votes[name][v].append((f, n))
+        set_to, respell, new_equ = resolve_votes(bld, hs, equs, votes)
+        for name, v in set_to.items():
+            ed.set_equ(equs[name][1], equs[name][2], v)
+            n_eq += 1
+        for f, n, name, alt in respell:
+            ed.set(f, n, apply_respell(ed.lines(f)[n - 1], name, alt))
+            n_fix += 1
+        for alt, (name, v) in sorted(new_equ.items()):
+            f, n = equs[name][1], equs[name][2]
+            ln = ed.lines(f)[n - 1]
+            m = re.match(rb'^(\s*\.(?:equ|set)\s+)', ln)
+            ed.set(f, n, ln + b"\n" + m.group(1) + alt.encode() + b", 0x%06x" % v
+                   + b"\t; split from %s by `port_hdae5000_version.py fix`: these uses want a different address in %s"
+                   % (name.encode(), tag_of(ver).encode()))
+            n_eq += 1
+            print("split: %s -> %s = %#x" % (name, alt, v))
         ed.write()
-        print("round %d: %d hunks, %d lines rewritten, %d constants changed" % (r, len(hs), n_fix, n_eq))
+        print("round %d: %d hunks, %d lines rewritten, %d constants changed or added" % (
+            r, len(hs), n_fix, n_eq))
         if n_fix == 0 and n_eq == 0:
             break
     cmd_status(ver)
@@ -956,9 +1379,93 @@ def farptr_pass(out, ctx):
     return [(a, lower_hex(t) if a is not None else t) for a, t in res]
 
 
-def cmd_code(ver, only=None, dry=False):
+def moved_rom_label(line, wb, bb, bld):
+    """True when the line differs from the target only in one 24-bit ROM address that the
+    line spells as a label: the label has not reached its target address yet (the data it
+    names is not aligned), so the line is kept as it is."""
+    if len(wb) != len(bb):
+        return False
+    diff = [i for i in range(len(wb)) if wb[i] != bb[i]]
+    if not diff or diff[-1] - diff[0] > 2:
+        return False
+    for s in range(max(0, diff[-1] - 2), diff[0] + 1):
+        if s + 3 > len(wb):
+            continue
+        va = int.from_bytes(wb[s:s + 3], "little")
+        vb = int.from_bytes(bb[s:s + 3], "little")
+        if BASE <= va < BASE + 0x80000 and BASE <= vb < BASE + 0x80000:
+            names = [n for a, n in bld.syms if a == va and not n.startswith("__PM_")]
+            code, _ = split_code(line)
+            if any(re.search(rb'(?<![\w.])' + re.escape(n.encode()) + rb'(?![\w])', code) for n in names):
+                return True
+    return False
+
+
+def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False, anchored=False):
+    """same_only: leave the hunks whose two sides differ in size alone.  The shape alignment
+    of a resized hunk in repetitive code (nine "post the flag to object N" blocks where the
+    target has eight) can drop the wrong blocks; the v1.15i port did those by hand."""
     bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
     ctx = Ctx(bld, ref, full)
+    if spans is not None:
+        # explicit spans "A..B" of labels: W from A to B, B side where the alignment
+        # places the two labels -- a whole routine aligned at once
+        inv = {n: b for b, n in ctx.bmap.items()}
+        hs = []
+        for sp in spans:
+            a, _, e = sp.partition("..")
+            for x in (a, e):
+                if x not in bld.symaddr or x not in inv:
+                    sys.exit("%s: not a label the alignment places in the target" % x)
+            hs.append((bld.symaddr[a], bld.symaddr[e], inv[a], inv[e]))
+        only = None
+    elif anchored:
+        # the spans between consecutive anchors of the lockstep walk (Anchors) whose bytes
+        # differ: each changed stretch of code between two points the walk pinned down
+        an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full, bld))
+        line_starts = set(bld.starts)
+        end = code_end_of(bld)
+        pts = [(w, b) for w, b in sorted(an.rom_map().items())
+               if w < end and b < CODE_END and w in line_starts]
+        ctx.anchor_pts = pts
+        for w, b in pts:                        # anchors name their target address too
+            n = [x for a, x in bld.syms if a == w and not x.startswith("__PM_")]
+            if n:
+                ctx.bmap.setdefault(b, n[0])
+        hs = []
+        for (w0, b0), (w1, b1) in zip(pts, pts[1:]):
+            if bld.img[w0 - BASE:w1 - BASE] != ref[b0 - BASE:b1 - BASE] and w1 - w0 < 0x1000:
+                hs.append((w0, w1, b0, b1))
+        only = None
+        print("%d anchored spans differ" % len(hs))
+    elif widen:
+        # each resized code hunk becomes the span between the nearest labels around it that
+        # the alignment places on both sides: the shape alignment then sees whole blocks
+        # instead of a cut through repetitive code
+        placed = sorted((bld.symaddr[n], b, n) for b, n in ctx.bmap.items()
+                        if n in bld.symaddr and bld.symaddr[n] < CODE_END)
+        was = [w for w, _, _ in placed]
+        new_hs, seen = [], set()
+        for idx, h in enumerate(hs):
+            if only is not None and idx not in only:
+                continue
+            (w0, w1, b0, b1), li = expand(bld, h)
+            if w1 - w0 == b1 - b0 or w0 >= CODE_END:
+                continue
+            k = bisect.bisect_right(was, w0) - 1
+            while k >= 0 and placed[k][1] > b0:
+                k -= 1
+            j = bisect.bisect_left(was, w1)
+            while j < len(placed) and placed[j][1] < b1:
+                j += 1
+            if k < 0 or j >= len(placed) or placed[j][0] - placed[k][0] > 0x1000:
+                continue
+            sp = (placed[k][0], placed[j][0], placed[k][1], placed[j][1])
+            if sp not in seen and not any(a < sp[1] and sp[0] < e for a, e, _, _ in new_hs):
+                seen.add(sp)
+                new_hs.append(sp)
+        hs, only = new_hs, None
+        print("%d resized hunks widened to label spans" % len(hs))
     wdec = {a: (bs, t) for a, bs, t in unidasm(bld.img, BASE)}
     templates = collections.defaultdict(list)
     for k, (f, n, s, e) in enumerate(bld.lines):
@@ -973,6 +1480,8 @@ def cmd_code(ver, only=None, dry=False):
             continue
         (w0, w1, b0, b1), li = expand(bld, h)
         if not li:
+            continue
+        if same_only and w1 - w0 != b1 - b0:
             continue
         files = {bld.lines[k][0] for k in li}
         if len(files) != 1 or not all(is_insn(bld.text(bld.lines[k][0], bld.lines[k][1])) for k in li):
@@ -1035,6 +1544,8 @@ def cmd_code(ver, only=None, dry=False):
                 t = transplant(line, wb, bb, bt, ba, ctx, keep_comment=True)
                 if t is not None:
                     return t
+                if moved_rom_label(line, wb, bb, bld):
+                    return line
             for k in templates.get(shape(bt) + "/%d" % len(bb), []):
                 tf, tn, ts, te = bld.lines[k]
                 t = transplant(bld.text(tf, tn), bld.img[ts - BASE:te - BASE], bb, bt, ba, ctx)
@@ -1068,8 +1579,18 @@ def cmd_code(ver, only=None, dry=False):
             skipped.append((idx, "an instruction could not be spelled: %s @%06x" % (bins[j][2], bins[j][0])))
             continue
         plans.append((f, n_first, n_last, out, idx, b0, b1))
-        for name, v in heq.items():
-            eqs[name] = v
+        # a constant the line wants moved is left to `fix`, which can tell one constant
+        # with two meanings from one that moved (resolve_votes)
+    # spans of one round can overlap once expand() widens them to whole lines; applying two
+    # plans to the same lines would emit the target's instructions twice
+    kept, taken = [], collections.defaultdict(list)
+    for p in sorted(plans, key=lambda p: (p[0], p[1], -(p[2] - p[1]))):
+        f, n0, n1 = p[0], p[1], p[2]
+        if any(a <= n1 and n0 <= b for a, b in taken[f]):
+            continue
+        taken[f].append((n0, n1))
+        kept.append(p)
+    plans = kept
     for p in plans:
         p[3][:] = farptr_pass(p[3], ctx)
     # place the labels created this round
@@ -1237,6 +1758,14 @@ def cmd_strings(ver, only=None, dry=False, tag="v2.01i"):
             if op == "equal":
                 for i in range(i1, i2):
                     out += items[i][2] + [items[i][3]]
+                continue
+            if op == "replace" and i2 - i1 == j2 - j1 and \
+                    all(items[i][0] == "s" == bi[j][0] for i, j in zip(range(i1, i2), range(j1, j2))):
+                # the same strings in the same places with other text (v1.15i's part-name list
+                # has eight names, v2.x's nine): each keeps its label and its readers
+                for i, j in zip(range(i1, i2), range(j1, j2)):
+                    m = re.match(rb'^(.*?\.asciz\s+)"', items[i][3])
+                    out += items[i][2] + [m.group(1) + b'"' + esc(bi[j][1][:-1]) + b'"']
                 continue
             orphan = []
             for i in range(i1, i2):
@@ -1504,9 +2033,76 @@ def find_classtab(R):
 
 
 def cmd_uitables(ver, tag="v2.01i"):
-    """The GUI of the target tree, from its ROM: scripts/converters/hdae5000_ui_tree.py."""
+    """The GUI of the target tree, from its ROM: scripts/converters/hdae5000_ui_tree.py.
+
+    The converter reads table and string addresses from the tree's labels.  While the tree
+    is not yet byte-identical those labels are not where the target has them, so this pass
+    hands it every label's TARGET address as the alignment places it (Ctx.bmap: a label in
+    an identical block, or at the first byte of a hunk), plus the build's absolute symbols."""
+    import json
+    bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
+    ctx = Ctx(bld, ref, full)
+    sym = {n: b for b, n in ctx.bmap.items()}
+    # what the alignment cannot place yet, read from the ROM itself
+    pt, nt, _ = ui_tables_of(ref)
+    sym.setdefault("HDAE5000_UiObject_PtrTable", pt)
+    sym.setdefault("HDAE5000_UiObjectName_PtrTable", nt)
+    for name, tid in (("HDAE5000_ObjName_Table", 0x42A), ("HDAE5000_ScreenProc_Table", 0x14A),
+                      ("HDAE5000_ScreenName_Table", 0x44A)):
+        if name not in sym:
+            a = registered_table(ref, tid)
+            if a is not None:
+                sym[name] = a
+    sym.setdefault("HDAE5000_RECORD_TABLE", registered_table(ref, 0x16A))
+    sym.setdefault("HDAE5000_RECORD_COUNT", registered_count(ref, 0x16A))
+    nm = subprocess.run([BIN + "/llvm-nm", "--defined-only", os.path.join(bld_work(ver), "out.elf")],
+                        capture_output=True, text=True, check=True).stdout
+    # the function and object ids the old hdae5000_ui_tree.s defines are about to be
+    # regenerated from the target: only shared/event_codes.s's are kept
+    shared = set(m.decode() for m in re.findall(
+        rb"^\s*\.equ\s+(\w+)\s*,", open(os.path.join(ROOT, SRC_TREE, "shared", "event_codes.s"),
+                                       "rb").read(), re.M))
+    absy = {}
+    for l in nm.split("\n"):
+        p = l.split()
+        if len(p) == 3 and p[1] in "aA":
+            if p[2].startswith(("NAKA_APFUNC_", "NAKA_MAINFUNC_", "HDAE5000_OBJ_")) and p[2] not in shared:
+                continue
+            absy[p[2]] = int(p[0], 16)
+    out = os.path.join(SCRATCH, "port_hdae5000_%s_syms.json" % ver)
+    json.dump({"sym": sym, "abs": absy}, open(out, "w"))
+    print("%d labels placed in the %s image -> %s" % (len(sym), ver, out))
     conv = os.path.join(ROOT, "scripts", "converters", "hdae5000_ui_tree.py")
-    sys.exit(subprocess.call([sys.executable, conv, ver, "--write"], cwd=ROOT))
+    sys.exit(subprocess.call([sys.executable, conv, ver, "--write", "--syms", out], cwd=ROOT))
+
+
+def registered_table(ref, tid):
+    """ROM address (in the .data image) of the table HDAE5000_Handler_Registration registers
+    as `tid`: the last `lda xwa, (ram:24)` (f2 <ram> 30) before its `ldw wa, tid` (30 <tid>),
+    the RAM address mapped back through the boot copy loop (`ld xde, dest` / `ld xhl, image`
+    / `ld xbc, count`: 42 <dest> 00 43 <image> 00 41)."""
+    m = re.search(rb"\x42(...)\x00\x43(...)\x00\x41", ref, re.S)
+    if not m:
+        return None
+    dest, img = (int.from_bytes(x, "little") for x in m.groups())
+    k = ref.find(b"\x30" + tid.to_bytes(2, "little"), 0x20, 0x1000)
+    if k < 0:
+        return None
+    j = max(i for i in range(0x20, k) if ref[i] == 0xF2 and ref[i + 4] == 0x30)
+    ram = int.from_bytes(ref[j + 1:j + 4], "little")
+    return ram if ram >= BASE else ram - dest + img       # the class table is read in ROM
+
+
+def registered_count(ref, tid):
+    """The ROM word HDAE5000_Handler_Registration loads as table `tid`'s entry count: the last
+    `ld wa, (addr:24)` (d2 <addr> 20) before its `ldw wa, tid`."""
+    k = ref.find(b"\x30" + tid.to_bytes(2, "little"), 0x20, 0x1000)
+    j = max(i for i in range(0x20, k) if ref[i] == 0xD2 and ref[i + 4] == 0x20)
+    return int.from_bytes(ref[j + 1:j + 4], "little")
+
+
+def bld_work(ver):
+    return os.path.join(SCRATCH, "port_hdae5000_" + ver)
 
 
 def cmd_uitables_typed_records(ver, tag="v2.01i"):
@@ -1720,15 +2316,22 @@ def cmd_show(ver, idx, ctx=2):
                 chr(c) if 0x20 <= c < 0x7f else "." for c in bs)))
 
 
-def cmd_init(ver):
+def tag_of(ver):
+    """'v1_15i' -> 'v1.15i'"""
+    return ver.replace("_", ".")
+
+
+def cmd_init(ver, frm=None):
+    """Copy the source tree (hdae5000/, or hdae5000_<frm>/ with --from <frm>) to the target's."""
     dst = tree_of(ver)
     if os.path.exists(dst):
         sys.exit("%s exists" % dst)
-    src = os.path.join(ROOT, SRC_TREE)
+    src = os.path.join(ROOT, SRC_TREE) if frm is None else tree_of(frm)
+    src_main = SRC_MAIN if frm is None else main_of(frm)
     os.makedirs(dst)
     for f in sorted(os.listdir(src)):
         if f.endswith(".s") or f.endswith(".ld"):
-            shutil.copy(os.path.join(src, f), os.path.join(dst, main_of(ver) if f == SRC_MAIN else f))
+            shutil.copy(os.path.join(src, f), os.path.join(dst, main_of(ver) if f == src_main else f))
     print("copied %s -> %s" % (src, dst))
 
 
@@ -1738,7 +2341,7 @@ def main():
         sys.exit(__doc__)
     cmd, ver = a[0], a[1]
     if cmd == "init":
-        cmd_init(ver)
+        cmd_init(ver, a[a.index("--from") + 1] if "--from" in a else None)
     elif cmd == "status":
         cmd_status(ver)
     elif cmd == "fix":
@@ -1746,10 +2349,17 @@ def main():
         cmd_fix(ver, rounds)
     elif cmd == "code":
         only = [int(x) for x in a[2:] if x.isdigit()] or None
-        cmd_code(ver, only, dry="--dry" in a)
+        cmd_code(ver, only, dry="--dry" in a, same_only="--same-only" in a, widen="--widen" in a,
+                 anchored="--anchored" in a)
+    elif cmd == "anchors":
+        cmd_anchors(ver)
+    elif cmd == "afix":
+        cmd_afix(ver)
+    elif cmd == "routine":
+        cmd_code(ver, dry="--dry" in a, spans=[x for x in a[2:] if ".." in x])
     elif cmd == "strings":
         only = [int(x) for x in a[2:] if x.isdigit()] or None
-        cmd_strings(ver, only, dry="--dry" in a)
+        cmd_strings(ver, only, dry="--dry" in a, tag=tag_of(ver))
     elif cmd == "uitables":
         cmd_uitables(ver)
     elif cmd == "tables":

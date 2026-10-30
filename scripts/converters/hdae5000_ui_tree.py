@@ -39,6 +39,9 @@ It REFUSES (exit 1) unless its byte model of everything it writes equals the ROM
 `make gate` (the assembler) is the final word.
 
 RUN (from the repo root, on a built tree: it reads the current ELF's labels)
+    Every version whose reference image and ELF exist is read (class union for the macros);
+    a tree being ported is given its labels' target addresses with --syms (written by
+    `port_hdae5000_version.py uitables <ver>`).
     python3 scripts/converters/hdae5000_ui_tree.py v2_06i            # check only
     python3 scripts/converters/hdae5000_ui_tree.py v2_06i --write
     python3 scripts/converters/hdae5000_ui_tree.py v2_01i --write
@@ -62,8 +65,11 @@ SIG_SIZE = nakamap.SIG_SIZE
 VERSIONS = {
     "v2_06i": dict(tree="hdae5000", elf="hd-ae5000_v2_06i", tag="v2.06i"),
     "v2_01i": dict(tree="hdae5000_v2_01i", elf="hd-ae5000_v2_01i", tag="v2.01i"),
+    "v1_15i": dict(tree="hdae5000_v1_15i", elf="hd-ae5000_v1_15i", tag="v1.15i"),
+    "v1_10i": dict(tree="hdae5000_v1_10i", elf="hd-ae5000_v1_10i", tag="v1.10i"),
 }
 MACROS = os.path.join(ROOT, "hdae5000", "shared", "naka_ui_macros.s")
+DEFAULTS_FROM = ("v2_06i", "v2_01i")    # whose records set the class macros' parameter defaults
 NONE = 0xFFFF
 NO_OBJECT = 0xFFFFFFFF
 # field type letters (propdata) and how a value of that type is spelled
@@ -169,15 +175,31 @@ class HostClasses:
         return out
 
 
+def available(ver):
+    """A version is converted when its reference image and its tree's ELF are both there."""
+    cfg = VERSIONS[ver]
+    return (os.path.exists(os.path.join(ROOT, "original_ROMs", "hd-ae5000_%s.ic4" % ver)) and
+            os.path.exists(os.path.join(ROOT, "rebuilt_ROMs", "%s.llvm.elf" % cfg["elf"])))
+
+
 class Version:
-    def __init__(self, ver, host):
+    def __init__(self, ver, host, syms=None):
+        """syms: a JSON file {"sym": {label: address}, "abs": {name: value}} to use instead
+        of the ELF's labels -- a tree being ported (port_hdae5000_version.py uitables) whose
+        labels are not yet where the target has them writes each label's address in the
+        TARGET image, as its alignment with the ROM places it."""
         self.ver = ver
         cfg = VERSIONS[ver]
         self.tree = os.path.join(ROOT, cfg["tree"])
         self.tag = cfg["tag"]
         self.rom = open(os.path.join(ROOT, "original_ROMs", "hd-ae5000_%s.ic4" % ver), "rb").read()
-        elf = os.path.join(ROOT, "rebuilt_ROMs", "%s.llvm.elf" % cfg["elf"])
-        self.sym, self.abs = nm_syms(elf)
+        if syms:
+            import json
+            j = json.load(open(syms))
+            self.sym, self.abs = j["sym"], j["abs"]
+        else:
+            elf = os.path.join(ROOT, "rebuilt_ROMs", "%s.llvm.elf" % cfg["elf"])
+            self.sym, self.abs = nm_syms(elf)
         self.addr2sym = collections.defaultdict(list)
         for k, v in self.sym.items():
             self.addr2sym[v].append(k)
@@ -190,7 +212,6 @@ class Version:
         self.ptrtab = S["HDAE5000_UiObject_PtrTable"]
         self.nametab = S["HDAE5000_UiObjectName_PtrTable"]
         self.state = S["HDAE5000_WindowState_Init"]
-        self.geom = S["HDAE5000_WindowGeometry_Init"]
         self.geom_end = S["HDAE5000_ScreenProc_Table"]
         n = 0
         while self.u32(self.ptrtab + 4 * n):
@@ -199,9 +220,15 @@ class Version:
         self.ptr = [self.u32(self.ptrtab + 4 * i) for i in range(n)]
         self.nptr = [self.u32(self.nametab + 4 * i) for i in range(n + 1)]
         self.rname = [self.cstr(a).decode("latin-1") for a in self.nptr]
-        ram = [p for p in self.ptr if p < BASE]
-        # first RAM record is 8 bytes after the WindowGeometry_Init label (four 0xffff words)
-        self.ramb = min(ram) - (self.geom + 8 - self.img)
+        # where the .data image is copied: the boot copy loop's `ld xde, <dest>` right before
+        # its `ld xhl, HDAE5000_DataSegmentImage` (0x2394ce v2.01i, 0x23952a v2.06i,
+        # 0x23c914 v1.15i)
+        pat = b"\x43" + self.img.to_bytes(3, "little") + b"\x00"
+        hits = [k for k in range(len(self.rom)) if self.rom.startswith(pat, k)
+                and self.rom[k - 5] == 0x42 and self.rom[k - 1] == 0]
+        if len(hits) != 1:
+            fail("the .data copy loop (ld xde, dest / ld xhl, image) is not unique: %d hits" % len(hits))
+        self.ramb = int.from_bytes(self.rom[hits[0] - 4:hits[0] - 1], "little")
         # the language texts AcLanguageText1 objects draw: message n (the view's `index`) is
         # HDAE5000_LangMsg_<n>_EN / _DE / _FR, chosen by HDAE5000_AcLanguageText1Proc's message
         # switch (HDAE5000_LangText_CaseTable) from the language its function names
@@ -277,7 +304,7 @@ class Version:
         self.pool, self.pool_end = pool[0], pool_end
         objs = []
         for i, p in enumerate(self.ptr):
-            o = dict(i=i, p=p, ram=p < BASE, rname=self.rname[i])
+            o = dict(i=i, p=p, ram=p < BASE, rname=self.rname[i], ver=self.ver)
             a = self.ram2rom(p) if o["ram"] else p
             o["a"] = a
             o["cid"] = self.u32(a)
@@ -590,7 +617,12 @@ def class_table(versions):
                                                 fields=[f for f in o["fields"] if f[0] >= 22],
                                                 orders=collections.Counter(), recs=[]))
             if c["cid"] != o["cid"]:
-                fail("class name %s has two ids" % o["cname"])
+                # the HD-AE5000's own classes (table 0x16A) are numbered per version: v1.x has
+                # no TtlScreenR3, LyricBox or FDFileSelect, so AcWindowPage1 is entry 7 there
+                # and 8 in v2.x.  The macro file keeps the first version's id; a tree whose
+                # numbering differs defines its own ids ahead of it (tree_text).
+                if not (c["cid"] >> 16 == o["cid"] >> 16 == 0x016A):
+                    fail("class name %s has two ids" % o["cname"])
             c["recs"].append(o)
             if o["inline_order"]:
                 c["orders"][tuple(o["inline_order"])] += 1
@@ -606,10 +638,13 @@ def class_table(versions):
         # a default for every plain parameter that most records share
         dflt = {}
         plain = ["flag"] + [fn for _, fn, ch in c["fields"] if ch != T_STR and ch not in T_RAMVAR]
+        # from the v2.x records only, so that adding a version's tree does not move the
+        # shared macro file's defaults (and with them every other tree's text)
+        recs = [o for o in c["recs"] if o["ver"] in DEFAULTS_FROM] or c["recs"]
         for p in plain:
-            cnt = collections.Counter(dict(o["args"])[p] for o in c["recs"])
+            cnt = collections.Counter(dict(o["args"])[p] for o in recs)
             val, k = cnt.most_common(1)[0]
-            if len(c["recs"]) >= 3 and k * 10 >= 6 * len(c["recs"]):
+            if len(recs) >= 3 and k * 10 >= 6 * len(recs):
                 dflt[p] = val
         c["defaults"] = dflt
     return out
@@ -1028,6 +1063,15 @@ def tree_text(v, classes):
     w(";    y1 <= y2 <= 239 at +14 and at no other offset (same probe); record 0 is 0,0-319,239.")
     w(rule)
     w("")
+    own = [(c["name"], cid) for cid, c in sorted(v.hd.items())
+           if c["name"] in classes and classes[c["name"]]["cid"] != cid]
+    if own:
+        w("; This version numbers the HD-AE5000's own classes (table 0x16A, HDAE5000_RECORD_TABLE)")
+        w("; differently from the macro file's defaults, so it defines their ids first:")
+        for name, cid in own:
+            w("\t.equ\tNAKA_CLASS_%s, 0x%08x\t; HD-AE5000 class table 0x16A, entry %d" % (
+                name, cid, cid & 0xFFFF))
+        w("")
     w("\t.include\t\"shared/naka_ui_macros.s\"")
     w("")
     if v.need_funcs:
@@ -1317,7 +1361,15 @@ def main():
     args = sys.argv[1:]
     write = "--write" in args
     host = HostClasses()
-    vs = {ver: Version(ver, host) for ver in VERSIONS}
+    syms = {}
+    if "--syms" in args:
+        k = args.index("--syms")
+        named = [a for a in args if a in VERSIONS]
+        if len(named) != 1:
+            fail("--syms goes with exactly one version")
+        syms[named[0]] = args[k + 1]
+    vs = {ver: Version(ver, host, syms.get(ver)) for ver in VERSIONS
+          if ver in syms or available(ver)}
     for v in vs.values():
         absn = collections.defaultdict(list)
         for k, val in v.abs.items():

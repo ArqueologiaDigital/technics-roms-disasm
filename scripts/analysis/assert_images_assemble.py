@@ -66,6 +66,8 @@ IMAGES = [
     # v2.01i takes what it does not hold itself from hdae5000/, through a second -I
     # that must come AFTER its own (both trees have files of the same names).
     ("hdae5000_v2_01i", "hdae5000_v2_01i/hd-ae5000_v2_01i.s", (), ("-I", "hdae5000")),
+    ("hdae5000_v1_15i", "hdae5000_v1_15i/hd-ae5000_v1_15i.s", (), ("-I", "hdae5000")),
+    ("hdae5000_v1_10i", "hdae5000_v1_10i/hd-ae5000_v1_10i.s", (), ("-I", "hdae5000_v1_15i", "-I", "hdae5000")),
     ("table_data",   "table_data/kn5000_table_data.s"),
     ("custom_data",  "custom_data/kn5000_custom_data.s"),
     # the waveform ROM's PCM items are .incbin'd from waveform/build/pcm/, which

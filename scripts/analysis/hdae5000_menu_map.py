@@ -29,7 +29,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-TREES = {"v2_06i": ("hdae5000", "v2.06i"), "v2_01i": ("hdae5000_v2_01i", "v2.01i")}
+TREES = {"v2_06i": ("hdae5000", "v2.06i"), "v2_01i": ("hdae5000_v2_01i", "v2.01i"),
+         "v1_15i": ("hdae5000_v1_15i", "v1.15i"), "v1_10i": ("hdae5000_v1_10i", "v1.10i")}
 MACROS = os.path.join(ROOT, "hdae5000", "shared", "naka_ui_macros.s")
 OUT = os.path.join(ROOT, "notes", "data-gui-hdae5000-2026-10-29")
 CODE = ("hd-ae5000_*.s", "hdae5000_hd_driver.s", "hdae5000_filesystem.s",
