@@ -420,7 +420,7 @@ func_4C000350_L5b:
 	mov	0x10, d1
 	lsr	d1, d0
 	movhu	d0, (a0)
-	jmp	func_4C3F7793
+	jmp	KernelStart
 # func_4C000350 + 0xe6: no traced path reaches what follows (--decode-gaps)
 	jmp	KernelIntDispatch
 	mov	0x20000070, a0
@@ -650642,7 +650642,7 @@ func_4C3F47EC_L38:
 	mov	a2, a0
 	call	func_4C3F4DF5_entry, [d2,d3], 8
 	exth	d0
-	call	func_4C3F7632_entry, [d2,a2,a3], 0x1c
+	call	KernelWaitRelease_entry, [d2,a2,a3], 0x1c
 	mov	0xe, a3
 	add	a2, a3
 	movhu	(a3), d0
@@ -650672,7 +650672,7 @@ func_4C3F47EC_L7b:
 	call	func_4C3F4C10, 0, 0
 	mov	a2, a0
 	mov	-0x55, d0
-	call	func_4C3F7790, 0, 0
+	call	KernelWaitAbortHook, 0, 0
 func_4C3F47EC_L97:
 	movhu	(a3), d0
 	and	0x02, d0
@@ -650838,7 +650838,7 @@ func_4C3F49F9_entry:
 	beq	func_4C3F49F9_entry_L17
 	mov	-0x26, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F49F9_entry_L6a
 func_4C3F49F9_entry_L17:
@@ -650850,7 +650850,7 @@ func_4C3F49F9_entry_L17:
 	call	func_4C3F4C10, 0, 0
 	mov	-0x26, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F49F9_entry_L6a
 func_4C3F49F9_entry_L3c:
@@ -652159,7 +652159,7 @@ func_4C3F5440_entry:
 	beq	func_4C3F5440_entry_L1f
 	mov	-0x1b, d0
 	mov	-0x23, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x23, d0
 	ret	[d2,a2], 0x18
 func_4C3F5440_entry_L1f:
@@ -652192,7 +652192,7 @@ func_4C3F5440_entry_L43:
 func_4C3F5440_entry_L68:
 	mov	-0x1b, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F5440_entry_L93
 func_4C3F5440_entry_L75:
@@ -652307,7 +652307,7 @@ func_4C3F5567_entry_L2a:
 func_4C3F5567_entry_L41:
 	mov	-0x8f, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	ret	[d2,d3,a2,a3], 0x34
 func_4C3F5567_entry_L50:
@@ -652320,7 +652320,7 @@ func_4C3F5567_entry_L50:
 func_4C3F5567_entry_L67:
 	mov	-0x8f, d0
 	mov	-0x21, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x21, d0
 	ret	[d2,d3,a2,a3], 0x34
 func_4C3F5567_entry_L76:
@@ -652374,7 +652374,7 @@ func_4C3F5567_entry_La5:
 func_4C3F5567_entry_Ld2:
 	mov	-0x8f, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	ret	[d2,d3,a2,a3], 0x34
 func_4C3F5567_entry_Le1:
@@ -652397,7 +652397,7 @@ func_4C3F5567_entry_Le8:
 func_4C3F5567_entry_L10d:
 	mov	-0x8f, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	bra	func_4C3F5567_entry_L165
 func_4C3F5567_entry_L11b:
@@ -652613,7 +652613,7 @@ func_4C3F5810_entry_L18:
 func_4C3F5810_entry_L1e:
 	mov	a2, a0
 	mov	-0x51, d0
-	call	func_4C3F7790, 0, 0
+	call	KernelWaitAbortHook, 0, 0
 	mov	0xe, a0
 	add	a2, a0
 	movhu	(a0), d0
@@ -652724,7 +652724,7 @@ func_4C3F58F6_entry:
 func_4C3F58F6_entry_L39:
 	mov	-0x8d, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	ret	[d2,a2,a3], 0x24
 func_4C3F58F6_entry_L48:
@@ -652739,7 +652739,7 @@ func_4C3F58F6_entry_L48:
 func_4C3F58F6_entry_L63:
 	mov	-0x8d, d0
 	mov	-0x55, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x55, d0
 	bra	func_4C3F58F6_entry_La5
 func_4C3F58F6_entry_L71:
@@ -652759,7 +652759,7 @@ func_4C3F58F6_entry_L71:
 func_4C3F58F6_entry_L96:
 	mov	-0x8d, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x3f, d0
 	bra	func_4C3F58F6_entry_La5
 func_4C3F58F6_entry_La4:
@@ -652928,7 +652928,7 @@ func_4C3F5AF6_entry:
 	beq	func_4C3F5AF6_entry_L1c
 	mov	-0x2e, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	ret	[d2,d3,a2,a3], 0x24
 func_4C3F5AF6_entry_L1c:
@@ -652940,7 +652940,7 @@ func_4C3F5AF6_entry_L1c:
 	call	func_4C3F4C10, 0, 0
 	mov	-0x2e, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	ret	[d2,d3,a2,a3], 0x24
 func_4C3F5AF6_entry_L42:
@@ -653466,7 +653466,7 @@ func_4C3F5F5B_entry:
 func_4C3F5F5B_entry_L21:
 	mov	-0x35, d0
 	mov	d2, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 func_4C3F5F5B_entry_L29:
 	mov	d2, d0
 	ret	[d2], 0x14
@@ -653586,7 +653586,7 @@ func_4C3F6058_entry:
 func_4C3F6058_entry_L21:
 	mov	-0x3d, d0
 	mov	d2, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 func_4C3F6058_entry_L29:
 	mov	d2, d0
 	ret	[d2], 0x14
@@ -653713,7 +653713,7 @@ func_4C3F614F_entry:
 	beq	func_4C3F614F_entry_L29
 	mov	-0x89, d0
 	mov	-0xa, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0xa, d0
 	bra	func_4C3F614F_entry_L64
 func_4C3F614F_entry_L29:
@@ -654144,7 +654144,7 @@ func_4C3F64AA_entry:
 	beq	func_4C3F64AA_entry_L18
 	mov	-0x35, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F64AA_entry_L74
 func_4C3F64AA_entry_L18:
@@ -654156,7 +654156,7 @@ func_4C3F64AA_entry_L18:
 	call	func_4C3F4C10, 0, 0
 	mov	-0x35, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F64AA_entry_L74
 func_4C3F64AA_entry_L3d:
@@ -654486,7 +654486,7 @@ func_4C3F674B_entry:
 func_4C3F674B_entry_L3f:
 	mov	-0x11, d0
 	mov	d2, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	d2, d0
 func_4C3F674B_entry_L48:
 	ret	[d2,d3,a2], 0x2c
@@ -654785,7 +654785,7 @@ func_4C3F69EE_entry:
 	beq	func_4C3F69EE_entry_L19
 	mov	-0x3d, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F69EE_entry_L79
 func_4C3F69EE_entry_L19:
@@ -654797,7 +654797,7 @@ func_4C3F69EE_entry_L19:
 	call	func_4C3F4C10, 0, 0
 	mov	-0x3d, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F69EE_entry_L79
 func_4C3F69EE_entry_L3e:
@@ -654923,7 +654923,7 @@ func_4C3F6AFB_entry_L2a:
 func_4C3F6AFB_entry_L4e:
 	mov	-0x27, d0
 	mov	-0x49, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x49, d0
 	bra	func_4C3F6AFB_entry_L8d
 func_4C3F6AFB_entry_L5b:
@@ -655024,7 +655024,7 @@ func_4C3F6C1C_entry:
 	beq	func_4C3F6C1C_entry_L16
 	mov	-0x16, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	bra	func_4C3F6C1C_entry_L4a
 func_4C3F6C1C_entry_L16:
 	mov	(0x5018002c), a2
@@ -655116,7 +655116,7 @@ func_4C3F6CFA_entry:
 func_4C3F6CFA_entry_Lc:
 	mov	-7, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F6CFA_entry_L44
 func_4C3F6CFA_entry_L19:
@@ -655143,7 +655143,7 @@ func_4C3F6D44_entry:
 	beq	func_4C3F6D44_entry_L17
 	mov	-0x1d, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F6D44_entry_L46
 func_4C3F6D44_entry_L17:
@@ -655229,7 +655229,7 @@ func_4C3F6E1C_entry:
 	beq	func_4C3F6E1C_entry_L16
 	mov	-0x15, d0
 	mov	-0x3f, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	bra	func_4C3F6E1C_entry_L2c
 func_4C3F6E1C_entry_L16:
 	mov	(0x5018002c), a0
@@ -655410,7 +655410,7 @@ func_4C3F6F97_entry_Lf:
 func_4C3F6F97_entry_L3a:
 	mov	-0x1c, d0
 	mov	-0x45, d1
-	call	func_4C3F778A, 0, 0
+	call	KernelErrorHook, 0, 0
 	mov	-0x45, d0
 	bra	func_4C3F6F97_entry_L9e
 func_4C3F6F97_entry_L47:
@@ -655654,7 +655654,7 @@ ter_tsk:
 	call	func_4C3F4F63, 0, 0
 	mov	-0x19, d0
 	mov	-0x3f, d1
-	call	func_4C3F778D, 0, 0
+	call	KernelErrorHook2, 0, 0
 	mov	-0x3f, d0
 	bra	ter_tsk_L68
 ter_tsk_L36:
@@ -655668,7 +655668,7 @@ ter_tsk_L36:
 	cmp	4, d1
 	bne	ter_tsk_L50
 	mov	d2, d0
-	call	func_4C3F7632_entry, [d2,a2,a3], 0x1c
+	call	KernelWaitRelease_entry, [d2,a2,a3], 0x1c
 	bra	ter_tsk_L5d
 ter_tsk_L50:
 	and	0x01, d0
@@ -655829,7 +655829,7 @@ loc_cpu_entry:
 	beq	loc_cpu_entry_L17
 	mov	-8, d0
 	mov	-0x45, d1
-	call	func_4C3F778D, 0, 0
+	call	KernelErrorHook2, 0, 0
 	mov	-0x45, d0
 	bra	loc_cpu_entry_L24
 loc_cpu_entry_L17:
@@ -655881,7 +655881,7 @@ dis_int_entry_Lc:
 dis_int_entry_L2d:
 	ret	[d2], 4
 
-func_4C3F7383:
+KernelInit:
 	movm	[d2,d3,a2], (sp)
 	add	-0x20, sp
 	and	0xf7ff, psw
@@ -656146,15 +656146,15 @@ func_4C3F7383:
 	mov	d0, (0x50180c78)
 	clr	d0
 	call	func_4C3F4B64_entry, [d2,a2], 8
-	call	func_4C3F779E, 0, 0
+	call	KernelInitHook, 0, 0
 	call	func_4C3F72AA, 0, 0
 	ret	[d2,d3,a2], 0x2c
 
-func_4C3F7632:
+KernelWaitRelease:
 	movm	[d2,a2,a3], (sp)
 	add	-0x10, sp
 
-func_4C3F7632_entry:
+KernelWaitRelease_entry:
 	exth	d0
 	asl2	d0
 	mov	0x50180000, a0
@@ -656165,13 +656165,13 @@ func_4C3F7632_entry:
 	movhu	(0xc, a3), d2
 	and	0xff00, d1
 	cmp	0x100, d1
-	bge	func_4C3F7632_entry_L20
+	bge	KernelWaitRelease_entry_L20
 	jmp	func_4C3F7756
-func_4C3F7632_entry_L20:
+KernelWaitRelease_entry_L20:
 	cmp	0x7800, d1
-	ble	func_4C3F7632_entry_L29
+	ble	KernelWaitRelease_entry_L29
 	jmp	func_4C3F7756
-func_4C3F7632_entry_L29:
+KernelWaitRelease_entry_L29:
 	mov	KernelServiceHash, a1
 	add	-0xff, d1
 	mov	a1, a0
@@ -656181,21 +656181,21 @@ func_4C3F7632_entry_L29:
 	add	d0, a0
 	mov	(a0), d0
 	cmp	d1, d0
-	beq	func_4C3F7632_entry_L57
+	beq	KernelWaitRelease_entry_L57
 	setlb
 	cmp	0, d0
-	bne	func_4C3F7632_entry_L49
+	bne	KernelWaitRelease_entry_L49
 	jmp	func_4C3F7756
-func_4C3F7632_entry_L49:
+KernelWaitRelease_entry_L49:
 	add	8, a0
 	cmp	KernelRamLayout, a0
-	bcs	func_4C3F7632_entry_L54
+	bcs	KernelWaitRelease_entry_L54
 	mov	a1, a0
-func_4C3F7632_entry_L54:
+KernelWaitRelease_entry_L54:
 	mov	(a0), d0
 	cmp	d1, d0
 	lne
-func_4C3F7632_entry_L57:
+KernelWaitRelease_entry_L57:
 	mov	(4, a0), a0
 	jmp	(a0)
 
@@ -656330,23 +656330,23 @@ func_4C3F7756_L2b:
 func_4C3F7756_L31:
 	ret	[d2,a2,a3], 0x1c
 
-func_4C3F778A:
+KernelErrorHook:
 	retf	0, 0
 
-func_4C3F778D:
+KernelErrorHook2:
 	retf	0, 0
 
-func_4C3F7790:
+KernelWaitAbortHook:
 	retf	0, 0
 
-func_4C3F7793:
+KernelStart:
 	mov	(KernelRamLayout+20), a3
 	mov	a3, sp
-	jmp	func_4C3F7383
+	jmp	KernelInit
 
-func_4C3F779E:
+KernelInitHook:
 	ret	0, 0
-# func_4C3F779E + 0x3: no traced path reaches what follows (--decode-gaps)
+# KernelInitHook + 0x3: no traced path reaches what follows (--decode-gaps)
 	movhu	(0x34000118), d0
 	and	0xff0f, d0
 	movhu	d0, (0x34000118)
@@ -656423,7 +656423,7 @@ KernelParams:
 	.word	10, 20, 20, 20, 10, 10, 10, 10, 10, 10, 16, 10, 30, 0
 
 KernelStartStub:
-	jmp	func_4C3F7793
+	jmp	KernelStart
 # KernelStartStub + 0x3: no traced path reaches what follows (--decode-gaps)
 	.space	5, 0xff
 
