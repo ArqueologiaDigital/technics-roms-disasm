@@ -101,6 +101,16 @@ These are the walk's limits ([INFERENCE] on what they are): an address computed 
 does not carry across a loop iteration (a record walked with a stepped pointer), a RAM pointer set at
 start-up, or a table read only in a branch the linear walk enters with no state.
 
+Correction (lane code-island, 2026-10-30, `../code-island/README.md`): not every `unknown-dump` piece was
+data.  The eight pieces at the end of each build's data region (941: 0x3B8AC2..0x3B8B20 and
+0x3B8E34..0x3B8FD1, 507 bytes, behind the labels `func_487B8E34`, `data_487B8F61`, `data_487B8F63`,
+`func_487B8F9B`, `func_487B8F9E`, `func_487B8FA1`, `loc_487B8FA4`) were the MILK kernel's flash tail and
+its dispatch table: calls and jumps land on them, nothing loads from them, which is what the reader
+search measures.  The code (KernelInit .. func_487B8FB2, 1,113 bytes) is MN10300 source now
+(`src/<build>/program/tail_code.s`, gen_program_s.py TAIL_CODE), the data region ends where it starts,
+and the table is `KernelServiceHash` (16 records of {key, case label}).  The "353 x s16"
+`func_4C03B799_Table` of generic-zero is one read halfword and two unread ones (`KernelParams` + 0x16).
+
 ## Part 2: the SP7001 plug-in's GUI (table flash 83)
 
 The plug-in is the Key Soft Service XAPR application at table 83 0x3E8000..0x3FB5A0 (CPU

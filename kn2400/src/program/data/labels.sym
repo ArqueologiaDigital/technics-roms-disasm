@@ -40584,13 +40584,13 @@
 0x485DC494  PanelMemory_Hip_Hop_Pulse  1872
 0x485DCBE4  PanelMemory_Chillout_Breeze  1872
 0x485E41AC  Str_MILK_MN10300_Ver1_0R1  22
-0x485E41C4  func_4872841C_entry_L29_Records  128
-0x485E4244  data_485E4244  0
+0x485E41C4  KernelServiceHash  128
+0x485E4244  KernelRamLayout  0
 0x485E4248  func_5018CCF1_Var  4
 0x485E424C  func_5018CCF1_Var_2  4
 0x485E4250  func_5018CD2D_entry_L51_Table  8
 0x485E4258  func_48728591_Var  4
-0x485E425C  get_tid_Table  16
+0x485E425C  KernelParams  16
 0x485E426C  func_5018B6B9_Ld9_Var  2
 0x485E426E  func_5018B6B9_Ld9_Table  4
 0x485E4272  func_5018B93E_Table  10

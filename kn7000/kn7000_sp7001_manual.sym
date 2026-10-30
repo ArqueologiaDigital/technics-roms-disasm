@@ -269,6 +269,22 @@
 0x4873CF0C  StyleRecordTable           ; >=400 24-byte built-in style records used by the style list-box (indexed by CUR_STYLE_IDX 0x50001270). Layout: +0x00 patternDataPtr (->0x487674xx, 160B pattern), +0x04 namePtr -> REAL style name (program ROM 0x485D0000+, e.g. "Disco Hustling"/"Orchestral Jazz"), +0x08 u16, +0x0C u32 index, +0x10/12/14 u16 params. Proves all built-in style names exist as data
 0x50001278  CUR_STYLE_IDX              ; RAM: current style index into StyleRecordTable 0x4873BEE8 (used by the list-box msg handlers)
 
+; ---- The MILK kernel's flash tail (between the data region and the library image) ----
+; Linked at their flash addresses, not copied: the kernel's tables and the routines the
+; reset code, the library and the kernel call there (notes/code-island/README.md; the
+; KN6000 holds the same block at the top of its image, ../kn6000/kn6000_manual.sym).
+; gen_program_s.py TAIL_CODE finds the code; gen_data_s.py ends the data region there.
+0x487BA278  KernelServiceHash      ; 16 x {u32 key, code pointer}: KernelWaitRelease takes the task's wait state (TCB +0xE) & 0xFF00, minus 0xFF, indexes the table by (key & 0xF) * 8, probes the records in turn (`cmp KernelRamLayout, a0` is the table's end) and jumps through +4 of the one whose +0 is the key; the cases dequeue the task from the wait queue of its object kind; the KN6000's table of the same name
+0x487BA2F8  KernelRamLayout        ; 6 RAM addresses (0x50380000, 0x50387FFF, 0x50388000, 0x503BBFFF, 0x50380D20, 0x50381408): func_4C03CC4B reads +4, +8 and +0x14, func_4C03CC87 +8 and +0xC, KernelStart +0x14 (its stack pointer) [INFERENCE: the kernel's memory pools' bounds, as on the KN6000]
+0x487BA310  KernelParams           ; 14 u16 (10, 20, 20, 20, 10 ...): get_tid reads +0, func_4C03B514 +0x10 and +0x12, func_4C03B799 +0x16 (`movhu`; the +0x16 word is all func_4C03B799 reads, so the "353 x s16 func_4C03B799_Table" of 2026-10-30 was this word and the KernelInit code after it)
+0x487BA32C  KernelInit             ; the routine KernelStart jumps to: fills the kernel's object tables in RAM 0x50380000.. (-1 / 0), sets the TCB pointer 0x5038002C, creates the task func_4C03B514 through func_4C03BB8A (a packet holding that entry and 500), calls func_48447F33 (the application's start-up in code region 1), KernelInitHook and func_4C03DCBF (enables interrupts, enters the dispatcher) [INFERENCE: name from what it does; the KN6000's func_4C3F7383]
+0x487BA5E3  KernelWaitRelease      ; d0 = task id: the TCB from 0x50380000[id]; dispatches on its wait state through KernelServiceHash to dequeue it (func_4C03B900 with the wait queue of 0x503803A8 / 0x50380218 / 0x50380538 / 0x50380600 / 0x503809E8 / 0x50380964 / 0x50380088, record index TCB +0xC), then takes it off the timer list (func_4C03C412) when TCB +0x34 or +0x38 is set; called by func_4C03B514 when a wait's time runs out [INFERENCE: name; the KN6000's func_4C3F7632, which its ter_tsk also calls]
+0x487BA74F  KernelErrorHook        ; `retf 0, 0`: 26 calls in the kernel's services, each just before it returns an error, d0 = the service's function code, d1 = the uITRON error code (-0x45 E_CTX, -0x3F E_OBJ, -0x23 E_ID, -0x49 E_QOVR ...) [INFERENCE: an error-trace hook left empty in this build]
+0x487BA752  KernelErrorHook2       ; `retf 0, 0`: as KernelErrorHook, from three other services (d1 = -0x3F E_OBJ, -0x49 E_QOVR, -0x45 E_CTX) [INFERENCE]
+0x487BA755  KernelWaitAbortHook    ; `retf 0, 0`: func_4C03B514 calls it with a0 = the TCB and d0 = -0x55 (uITRON E_TMOUT) for a wait whose time ran out; the KN6000 / KN6500 copies are also called with -0x51 (E_DLT, the object deleted) [INFERENCE: a hook on a wait that ends in an error]
+0x487BA758  KernelStart            ; the kernel's start: sp := (KernelRamLayout + 0x14), jmp KernelInit; the reset code's start-up (0x48410151) and func_4C03DD98 jump here; the KN6000's func_4C3F7793
+0x487BA763  KernelInitHook         ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
+;
 ; ---- Self-loaded library / kernel ROM image (stored in program ROM) ----------
 ; The boot self-loader (0x484D7BBD) copies this region to 0x8C000000; the firmware
 ; then EXECUTES it via the 0x4C000000 alias. So these are code-at-runtime / data-at-rest

@@ -627,6 +627,47 @@ LIB_SECTION_DOC = {
 # Sources: kn5000-docs /kn7000-technichord/, the KN7000 users manual (p.48),
 # and the disassembly itself (matrix bases/strides, the 0x485EC940 param map).
 FUNC_DOC = {
+    # the MILK kernel's flash tail (TAIL_CODE; notes/code-island/README.md)
+    "KernelStart": (
+        "The kernel's start, run from the flash: sp := the word at KernelRamLayout + 0x14",
+        "(0x50381408 in PROGRAM 941), then jmp KernelInit. The reset code's start-up",
+        "0x48410151 and 0x4C03DD98 jump here. The KN6000's func_4C3F7793.",
+    ),
+    "KernelInit": (
+        "[INFERENCE: name] The kernel's start-up: fills its object tables in RAM",
+        "0x50380000.. (-1 / 0), sets the running TCB pointer 0x5038002C, creates the task",
+        "0x4C03B514 through 0x4C03BB8F, calls 0x48447F36 (code region 1),",
+        "KernelInitHook and 0x4C03DCBF (enables interrupts, enters the dispatcher).",
+        "Until 2026-10-30 (PROGRAM 941) it and the 5-byte prologue after it, 700 bytes,",
+        "were typed as entries [3..352] of func_4C03B799_Table; the routine 0x4C03B799",
+        "reads only the halfword before it (KernelParams + 0x16).",
+    ),
+    "KernelWaitRelease": (
+        "[INFERENCE: name] d0 = a task id. Takes the task off the wait queue its wait",
+        "state (TCB +0xE, high byte) names: (state & 0xFF00) - 0xFF is looked up in",
+        "KernelServiceHash (16 x {key, case}, probed from (key & 0xF) * 8 up to",
+        "KernelRamLayout), and the case removes it from that object kind's queue with",
+        "0x4C03B902; then from the timer list (0x4C03C412) when TCB +0x34 or",
+        "+0x38 is set. 0x4C03B514 calls it for a wait whose time ran out. The",
+        "KN6000's func_4C3F7632.",
+    ),
+    "KernelErrorHook": (
+        "[INFERENCE] An empty hook (`retf 0, 0`): kernel services call it right before",
+        "they return an error, with d0 = the service's function code and d1 = the uITRON",
+        "error code (-0x45 E_CTX, -0x3F E_OBJ, -0x23 E_ID ...).",
+    ),
+    "KernelErrorHook2": (
+        "[INFERENCE] As KernelErrorHook, from three other call sites.",
+    ),
+    "KernelWaitAbortHook": (
+        "[INFERENCE] An empty hook (`retf 0, 0`): 0x4C03B514 calls it with a0 = the",
+        "TCB and d0 = -0x55 (uITRON E_TMOUT) for a wait whose time ran out; the KN6000's",
+        "copy is also called with -0x51 (E_DLT).",
+    ),
+    "KernelInitHook": (
+        "[INFERENCE] An empty hook (`ret 0, 0`) KernelInit calls before it starts the",
+        "dispatcher.",
+    ),
     "IndexSwEventHandler": (
         "The balance (index-switch) UP/DOWN handler. It rebuilds the",
         "both-buttons-held accumulator 0x50021FE0 = (0x50021FDC & 0x50021FD8)",
@@ -2938,9 +2979,10 @@ def discover_functions(d):
     return entries
 
 
-def disasm_function(d, off, end, delta=BASE):
+def disasm_function(d, off, end, delta=BASE, partial=False):
     """Returns list of (file_off, bytes, mnem, ops) using unidasm; None on a
-    misaligned decode. `delta` maps file offset -> CPU address (BASE for code
+    misaligned decode (with `partial`, the instructions decoded before the first
+    misaligned one or the first byte unidasm prints as `?`). `delta` maps file offset -> CPU address (BASE for code
     region 1, LIB_DELTA for the 0x4C library window). unidasm's mn10300 has a
     LENGTH BUG on the F4 page (movbu register-indexed, always 2 bytes): it
     prints the instruction correctly but consumes only the 0xF4 byte, then
@@ -2967,7 +3009,9 @@ def disasm_function(d, off, end, delta=BASE):
             addr = int(m.group(1), 16) - delta
             b = bytes.fromhex(m.group(2).replace(" ", ""))
             if addr != cur:      # misaligned decode -> bail, keep as .incbin
-                return None
+                return insns if partial else None
+            if partial and m.group(3) == "?":
+                return insns
             if b == b"\xf4":     # F4 length bug: real op = F4 + postbyte
                 insns.append((addr, d[cur:cur + 2], m.group(3), m.group(4).strip()))
                 cur += 2
@@ -2992,7 +3036,7 @@ def disasm_function(d, off, end, delta=BASE):
                 break
         if not restart:
             break
-    return insns if cur == end else None
+    return insns if cur == end or partial else None
 
 
 # control-transfer mnemonics whose first operand is an absolute CPU target we
@@ -3095,6 +3139,123 @@ def find_prologues(dec):
             continue
         out[t] = (seq[k][0], seq[k:i])
     return out
+
+
+# ---------------------------------------------------------------------------
+# Code at the end of the data region (TAIL_CODE).  The MILK kernel keeps a few
+# routines in the flash, linked at their flash address, between the data region
+# and the library image the boot copies to 0x4C000000 (the same order as the
+# KN6000's kernel tail, ../kn6000 KernelStartStub): the kernel start the reset
+# code jumps to, the start-up routine it jumps to, the wait-release dispatcher
+# the kernel calls, three one-instruction hooks and an interrupt helper
+# (notes/code-island/README.md).  Nothing in the image's layout marks where they
+# begin, so they are found from the converted code: every call and jump target
+# that lands in the data region, walked by control flow.  Until 2026-10-30 the
+# data region ran up to the library image and these 1,113 bytes were opaque
+# `.incbin_range`s of it, with the start of the start-up routine typed as part of
+# a halfword table (func_4C03B799_Table).
+# ---------------------------------------------------------------------------
+TAIL_CODE = True
+TAIL_MAX = 0x10000         # the longest stretch decoded from one target
+TAIL_FILE = "tail_code.txt"   # beside DATA_SRC: the range tools/gen_data_s.py leaves out
+
+
+def find_tail_code(d, dec, data_refs):
+    """The code at the end of the data region that the converted code reaches:
+    (lo, entries, gaps) -- file offset lo, where it starts (it ends at
+    LIB_FILE_BASE); entries {file offset: why} of the functions it holds; gaps
+    the [a, b) ranges no traced path reaches -- or None when no call or jump of
+    the converted code (`dec`) lands in the data region.
+
+    The walk: from each target, instructions in order; a branch's target is
+    walked too, a `call`'s target is another function; a return, `bra`, `jmp`
+    or `jmp (aN)` ends the path.  A `call` target right behind a register-save
+    prologue (movm and/or `add -N, sp`) makes the prologue the function's start.
+    The bytes no path reaches between the reached code and the library image must
+    decode, run by run, into instructions that end in a return or jump or run into
+    reached code (the switch cases a `jmp (a0)` selects through a table, a routine
+    only an interrupt vector enters); a run after an unconditional instruction
+    starts a function of its own unless the typed data names its address (a
+    switch table's case, `data_refs`).  Anything else stops the generator: code
+    the walk finds anywhere but the end of the data region is a layout this
+    generator does not emit (notes/code-island-probes/code_in_data.py lists it)."""
+    lo_lim, hi_lim = R1_END, LIB_FILE_BASE
+    seeds = {}
+    for (_o, _e, _delta), insns in dec.items():
+        for _a, _b, mn, ops in insns or ():
+            if mn in BRANCH_MNEMS:
+                t = first_target(ops)
+                if t is not None and lo_lim <= t - BASE < hi_lim:
+                    k = "call" if mn in ("call", "calls") else "jump"
+                    if seeds.get(t - BASE) != "call":
+                        seeds[t - BASE] = k
+    if not seeds:
+        return None
+    reached = {}                      # file offset -> (bytes, mnem, ops)
+    entries = dict(seeds)
+    work = sorted(seeds)
+    while work:
+        o = work.pop()
+        if o in reached:
+            continue
+        ins = disasm_function(d, o, min(hi_lim, o + TAIL_MAX), BASE, partial=True)
+        ended = False
+        for a, b, mn, ops in ins:
+            if a in reached:
+                ended = True
+                break
+            reached[a] = (b, mn, ops)
+            if mn in BRANCH_MNEMS:
+                t = first_target(ops)
+                if t is not None and lo_lim <= t - BASE < hi_lim:
+                    if mn in ("call", "calls"):
+                        entries[t - BASE] = "call"
+                    work.append(t - BASE)
+            if mn in UNCOND:
+                ended = True
+                break
+        if not ended and (not ins or ins[-1][0] + len(ins[-1][1]) != hi_lim):
+            sys.exit(f"gen_program_s: the code the converted code reaches at {BASE + o:#x} in the "
+                     "data region does not decode to a return or jump")
+    # register-save prologues in front of call targets
+    for t, k in list(entries.items()):
+        if k != "call":
+            continue
+        for back in (5, 6, 2, 3, 4):
+            p = t - back
+            ins = disasm_function(d, p, t, BASE)
+            if ins and all((mn == "movm" and PRO_MOVM.match(ops)) or (mn == "add" and PRO_ADD.match(ops))
+                           for _a, _b, mn, ops in ins) and (len(ins) == 1 or ins[0][2] == "movm"):
+                del entries[t]
+                entries[p] = "prologue"
+                for a, b, mn, ops in ins:
+                    reached[a] = (b, mn, ops)
+                break
+    starts = sorted(reached)
+    for a, n in zip(starts, starts[1:]):
+        if a + len(reached[a][0]) > n:
+            sys.exit(f"gen_program_s: the code the walk reaches in the data region overlaps "
+                     f"itself at {BASE + a:#x}")
+    lo = starts[0]
+    # the bytes no path reaches, up to the library image
+    gaps, cur = [], lo
+    for a in starts + [hi_lim]:
+        if cur < a:
+            gaps.append((cur, a))
+        if a < hi_lim:
+            cur = max(cur, a + len(reached[a][0]))
+    for g0, g1 in gaps:
+        ins = disasm_function(d, g0, g1, BASE)
+        if not ins or any(mn == "?" for _a, _b, mn, _o in ins) or \
+                not (ins[-1][2] in UNCOND or g1 in reached):
+            sys.exit(f"gen_program_s: the bytes {BASE + g0:#x}..{BASE + g1:#x} between the code the "
+                     "walk reaches at the end of the data region are not code (a data island there?)")
+        prev = max((a for a in starts if a < g0), default=None)
+        if prev is not None and reached[prev][1] in UNCOND and BASE + g0 not in data_refs \
+                and g0 not in entries:
+            entries[g0] = "unreached"
+    entries.setdefault(lo, "start")
+    return lo, entries, gaps
 
 
 def reencode(mnem, ops, b, cpu):
@@ -4055,6 +4216,26 @@ def main():
         + [(a, b, LIB_DELTA) for sl in lib_segs.values() for kind, a, b in sl if kind == "code"]
     dec = decode_blocks(d, jobs)
 
+    # the code at the end of the data region (TAIL_CODE): split into functions at
+    # the walk's entries and at the symbol-file names inside it
+    tail = find_tail_code(d, dec, read_data_code_refs()) if TAIL_CODE and DATA_SRC else None
+    tail_blocks, tail_why = [], {}    # (file off, file end, name or None); off -> why it starts there
+    if tail:
+        tlo, tail_why, _gaps = tail
+        bnd = set(tail_why)
+        for a, nm in list(sym_by_addr.items()) + list(manual):
+            if tlo <= a - BASE < LIB_FILE_BASE and not nm.endswith("_entry"):
+                bnd.add(a - BASE)
+        bnd = sorted(bnd)
+        sym_nm = {**sym_by_addr, **{a: nm for a, nm in manual if not nm.endswith("_entry")}}
+        for i, o in enumerate(bnd):
+            tail_blocks.append((o, bnd[i + 1] if i + 1 < len(bnd) else LIB_FILE_BASE, sym_nm.get(BASE + o)))
+        dec.update(decode_blocks(d, [(o, e, BASE) for o, e, _n in tail_blocks]))
+        for o, e, nm in tail_blocks:
+            if dec[(o, e, BASE)] is None:
+                sys.exit(f"gen_program_s: tail code {nm or hex(BASE + o)} ({BASE + o:#x}..{BASE + e:#x}) "
+                         "does not disassemble")
+
     # annotation files: which converted blocks they label, checked up front
     A = load_annotations(ANN_FILES)
     blocks = [(BASE + off, BASE + ec, name) for off, _e, ec, name in r1_blocks if ec is not None]
@@ -4137,6 +4318,8 @@ def main():
                   for off, _e, ec, name in r1_blocks if ec is not None}
     block_name.update({LIB_DELTA + so: name or names.get(LIB_DELTA + so, f"func_{LIB_DELTA + so:08X}")
                        for so, _eo, name, cv in lib_blocks if cv})
+    block_name.update({BASE + o: name or names.get(BASE + o, f"func_{BASE + o:08X}")
+                       for o, _e, name in tail_blocks})
     label_of = {}
     for cpu in code_starts:
         if cpu in block_name:
@@ -4434,6 +4617,31 @@ def main():
         L += ['',
               '# ---- data / resources region: typed source, tools/gen_data_s.py ----',
               f'.include "{DATA_SRC}"']
+    tail_path = os.path.join(os.path.dirname(DATA_SRC), TAIL_FILE) if DATA_SRC else None
+    if tail_blocks:
+        why = {"call": "a `call` target of the converted code",
+               "prologue": "a `call` target's register-save prologue",
+               "jump": "a `jmp` / branch target of the converted code",
+               "start": "the first instruction the walk reaches",
+               "unreached": "no traced path enters it: it follows an unconditional instruction and "
+                            "decodes, to the next function, into code that ends in a return or jump"}
+        if SPLIT_FILES:
+            L.append(f"{SPLIT}tail_code")
+        L += ['# ---- code at the end of the data region (TAIL_CODE): MILK kernel routines',
+              '#      linked at their flash address, between the data and the library image;',
+              '#      found from the converted code\'s calls and jumps into the data region',
+              f'#      (CPU 0x{BASE + tail_blocks[0][0]:08X}..0x{BASE + LIB_FILE_BASE:08X}; '
+              'notes/code-island/README.md) ----',
+              '.mnbase 0x48400000']
+        for o, e, nm in tail_blocks:
+            L.append(block_header(nm, BASE + o, "CPU"))
+            if o in tail_why:
+                L.append(f"#   in the data region's tail: {why[tail_why[o]]}")
+            for doc in FUNC_DOC.get(nm, ()):
+                L.append(f"#   {DOC_XLATE(doc) if DOC_XLATE else doc}")
+            L.extend(emit_block(dec[(o, e, BASE)], block_name[BASE + o], BASE + o, BASE, ctx, False))
+        if SPLIT_FILES:
+            L.append(f"{SPLIT}")
     else:
         # data / resources region, with the display palette as typed .long
         L += ['',
@@ -4450,9 +4658,22 @@ def main():
     L.extend(lib_body)
 
     write_split(L)
+    if tail_path:
+        if tail_blocks:
+            with open(tail_path, "w") as f:
+                f.write("; tools/gen_program_s.py (TAIL_CODE): the code at the end of the data region,\n"
+                        "; file offsets [lo, hi); tools/gen_data_s.py ends the data region at lo\n"
+                        f"; (CPU 0x{BASE + tail_blocks[0][0]:08X}..0x{BASE + LIB_FILE_BASE:08X}, "
+                        f"{len(tail_blocks)} functions)\n"
+                        f"0x{tail_blocks[0][0]:06X} 0x{LIB_FILE_BASE:06X}\n")
+        elif os.path.exists(tail_path):
+            os.remove(tail_path)
     print(f"wrote {OUT}: {converted} named + {unnamed} unnamed region-1 functions and "
           f"{lib_converted}/{sum(1 for b in lib_blocks if b[3])} library functions converted to asm"
           + (f" (+{inherited} newly-named pieces of converted functions)" if inherited else ""))
+    if tail_blocks:
+        print(f"  tail code: {len(tail_blocks)} functions at 0x{BASE + tail_blocks[0][0]:08X}.."
+              f"0x{BASE + LIB_FILE_BASE:08X} ({LIB_FILE_BASE - tail_blocks[0][0]} bytes)")
     for f in failed:
         print(f"  does not disassemble, left raw: {f}")
     print(f"  {len(label_of)} labels ({sum(1 for n in label_of.values() if n.startswith('loc_'))} loc_), "

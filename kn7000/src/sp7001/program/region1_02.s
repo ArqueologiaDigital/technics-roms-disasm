@@ -12837,6 +12837,7 @@ loc_48447F1E:
 # func_48447F22  (CPU 0x48447f22): no symbol file names this function
 func_48447F22:
     add     -0x24, sp
+func_48447F22_entry:
     mov     0xc, d0
     mov     func_4C03CAD0_Var_20, a0
     call    func_4C03CA44, 0, 0

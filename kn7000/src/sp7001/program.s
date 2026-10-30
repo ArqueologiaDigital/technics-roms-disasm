@@ -84,6 +84,14 @@ _rom_marker:
 .include "src/sp7001/program/region1_0A.s"
 .include "src/sp7001/program/region1_0B.s"
 .include "src/sp7001/program/region1_0C.s"
+.include "src/sp7001/program/tail_code.s"
+
+# ---- code region 2 (MILK MN10300 kernel + zlib 1.0.4). The library
+#      image the boot self-loads to 0x4C000000 starts at file offset
+#      0x3BA785 (notes/library-rom-loading.md); converted lib functions
+#      are assembled under the shifted .mnbase so their labels and
+#      PC-relative encodings are the 0x4C link addresses. ----
+.mnbase 0x4BC4587B   # lib window: CPU 0x4C000000 = file 0x3BA785
 .include "src/sp7001/program/library_00.s"
 .include "src/sp7001/program/library_01.s"
 .mnbase 0x48400000

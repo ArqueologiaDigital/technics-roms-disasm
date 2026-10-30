@@ -25276,20 +25276,27 @@ func_4858173C_Var:	# u16, initial value of a RAM variable; read / written by fun
 
 
 Str_MILK_MN10300_Ver1_0R1:	.asciz "MILK MN10300 Ver1.0R1"
-# census: opaque -- unknown-dump: 94 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8A5E, 0x3B8ABC
+	.align	4, 0xFF	# pad after Str_MILK_MN10300_Ver1_0R1
 
-ptrs_487B8ABC:	# 9 pointers, typed by value (every word 0 or an address of this region); reader not traced
-	.long	data_487B8EFD
-	.long	0
-	.long	data_487B8EFF
-	.long	0
-	.long	data_487B8EFF
-	.long	0
-	.long	data_487B8EFF
-	.long	0
-	.long	data_487B8EFF
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+KernelServiceHash:	# 16 x REC_KernelServiceHash (8 bytes each); read by KernelWaitRelease 0x487B8DCB `mov (a0), d0`
+	REC_KernelServiceHash	p4=loc_487B8EFF	# [0]
+	REC_KernelServiceHash	f0=24321, p4=loc_487B8E2C
+	REC_KernelServiceHash	f0=7937, p4=loc_487B8E2F
+	REC_KernelServiceHash	f0=16129, p4=loc_487B8E49
+	REC_KernelServiceHash	f0=3841, p4=loc_487B8E63
+	REC_KernelServiceHash	f0=12033, p4=loc_487B8E7D
+	REC_KernelServiceHash	f0=513, p4=loc_487B8E99
+	REC_KernelServiceHash	f0=1, p4=loc_487B8EB2
+	REC_KernelServiceHash	f0=1025, p4=loc_487B8ECB	# [8]
+	REC_KernelServiceHash	f0=1793, p4=loc_487B8ECD
+	REC_KernelServiceHash	f0=5889, p4=loc_487B8EE6
+	REC_KernelServiceHash	f0=30465, p4=loc_487B8EFD
+	REC_KernelServiceHash	p4=loc_487B8EFF
+	REC_KernelServiceHash	p4=loc_487B8EFF
+	REC_KernelServiceHash	p4=loc_487B8EFF
+	REC_KernelServiceHash	p4=loc_487B8EFF
+KernelRamLayout:
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn7000_program_b935.rom", 0x3B8AE0, 0x3B8AE4
 
 func_4C03CC4B_Var:	# u32, a constant; read / written by func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var), d0`
@@ -25300,10 +25307,10 @@ func_4C03CC4B_Var_2:	# u32, a constant; read / written by func_4C03CC4B 0x4C03CC
 func_4C03CC87_Table:	# 2 x u32, 1345850656..1346093055; read by func_4C03CC87 0x4C03CC87: `mov (func_4C03CC87_Table), d0`
 	tab_u32	1346093055, 1345850656
 
-func_4C03CC4B_Var_3:	# u32, a constant; read / written by func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var_3), a0`; func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var_3), a1`
+func_4C03CC4B_Var_3:	# u32, a constant; read / written by KernelStart 0x487B8F40: `mov (func_4C03CC4B_Var_3), a3`; func_4C03CC4B 0x4C03CC4B: `mov (func_4C03CC4B_Var_3), a0` ...
 	.long	0x50381408
 
-ter_tsk_Table:	# 8 x s16, 10..20; read by get_tid 0x4C03DC33: `movhu (ter_tsk_Table), d0`
+KernelParams:	# 8 x s16, 10..20; read by get_tid 0x4C03DC33: `movhu (KernelParams), d0`
 	tab_s16	10, 20, 20, 20, 10, 10, 10, 10
 
 func_4C03B514_Var:	# s16, a constant; read / written by func_4C03B514 0x4C03B514: `movhu (func_4C03B514_Var), d0`
@@ -25311,55 +25318,5 @@ func_4C03B514_Var:	# s16, a constant; read / written by func_4C03B514 0x4C03B514
 
 func_4C03B514_Table:	# 2 x s16, 10..20; read by func_4C03B514 0x4C03B514: `movhu (func_4C03B514_Table), d0`
 	tab_s16	10, 20
-func_4C03B799_Table:	# 353 x s16, -32762..32767; read by func_4C03B799 0x4C03B799: `movhu (func_4C03B799_Table), d0`; func_4C03B799 0x4C03B799: `movhu (func_4C03B799_Table), d1` ...
-	tab_s16	10, 30, 0, -7985, -264, -1312, -4, 247, -31748, 3340, 20536, -13060	# [0]
-	tab_s16	5128, 20536, -32260, 3256, 20536, -13060, 4628, 20536, -32260, 3260, 20536, -13060	# [12]
-	tab_s16	3744, 20536, -32260, 3264, 20536, -9472, -118, -8964, 0, 20536, 21889, 25843	# [24]
-	tab_s16	6208, 2976, 1232, -1012, 12508, 14336, -9392, -1916, 960, 20721, -7695, 7672	# [36]
-	tab_s16	-31740, -16136, -3325, 17520, -23271, -12277, -1024, 10381, 14343, -944, 9357, 14343	# [48]
-	tab_s16	-944, 11407, 14343, -944, 12417, 14343, -944, 7297, 14343, -944, 6273, 14343	# [60]
-	tab_s16	-944, 8321, 14343, -9392, -8964, 136, 20536, 5253, -13365, 16882, 25843, 6208	# [72]
-	tab_s16	5280, 1232, -805, -22308, 14339, -32688, -13548, -3381, -3260, 17504, -23271, -12268	# [84]
-	tab_s16	-9468, -8964, 536, 20536, 5248, -13365, 17650, 24819, 6468, 5285, 208, -31269	# [96]
-	tab_s16	-13548, -3381, -3775, -796, 14544, 14341, -1968, 4120, 6208, 2720, 208, -805	# [108]
-	tab_s16	220, 14342, -31408, -13540, -3381, -3263, 16484, -24552, -12278, 394, -29700, 3356	# [120]
-	tab_s16	20536, -1020, 13532, 14343, -9392, 6272, -13365, 17650, 28915, 6272, -13365, 17650	# [132]
-	tab_s16	20721, -7695, 7672, 17412, -23271, -12278, -1020, 9436, 14344, -9392, -1916, 1472	# [144]
-	tab_s16	28915, -1916, 1472, 20721, -7695, 7672, 17412, -23271, -12278, -9472, -113, 3205	# [156]
-	tab_s16	-13365, 16882, -15876, 2536, 20536, -6927, 7416, 16392, -24552, -12277, -9472, 3205	# [168]
-	tab_s16	-13365, 16882, -15876, 2404, 20536, -6927, 7416, 16392, -24552, -12277, -9472, -8708	# [180]
-	tab_s16	2668, 20536, -7951, 28913, -3836, -2861, 16605, -24552, -12164, -8964, 3000, 20536	# [192]
-	tab_s16	-9460, -8452, 2916, 20536, 21636, -8708, -8471, 19459, -11533, 3200, -13365, 17650	# [204]
-	tab_s16	149, -12045, 3200, -13365, 17650, 20721, -7695, 32248, -32762, -13556, -3381, -3772	# [216]
-	tab_s16	-3760, -1823, 1149, 6468, 5541, -816, 1167, 14349, 80, -32260, 3336, 20536	# [228]
-	tab_s16	24797, -30657, 3, -1012, -16220, 14348, -944, -15138, 14348, -31408, -3772, -1020	# [240]
-	tab_s16	-15231, 14348, -944, -13176, 14348, -944, -14200, 14348, 11344, 32767, -31748, 3296	# [252]
-	tab_s16	20536, -29700, 3282, 20536, -1024, -12157, 14348, -944, -11133, 14348, -944, 9164	# [264]
-	tab_s16	989, -948, -7039, 14348, -944, -16224, 14348, -944, -27444, 14352, -944, -6016	# [276]
-	tab_s16	14348, -944, 11400, 14336, -944, -19327, 14348, 15440, 4128, -2048, 4243, 1152	# [288]
-	tab_s16	-27656, 18, -27656, -1004, 5324, 949, 16972, 11288, 500, 7234, 5597, -30674	# [300]
-	tab_s16	-4093, -980, -18268, 14348, -31408, -3816, -1020, -18303, 14348, -944, 3211, 14349	# [312]
-	tab_s16	-8880, -3747, -56, 9216, -1024, 3203, 14349, -944, -18268, 14348, -26544, 6184	# [324]
-	tab_s16	-32260, 3256, 20536, -8960, 10977, 904, 2208, -28723, 1, -8960, 20222, 904	# [336]
-	tab_s16	0, -7969, -12500, -1872, -3842	# [348]
-func_487B8DD0:
-# census: opaque -- unknown-dump: 301 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8DD0, 0x3B8EFD
-data_487B8EFD:
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8EFD, 0x3B8EFF
-data_487B8EFF:
-# census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8EFF, 0x3B8F37
-func_487B8F37:
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8F37, 0x3B8F3A
-func_487B8F3A:
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8F3A, 0x3B8F3D
-func_487B8F3D:
-# census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8F3D, 0x3B8F40
-loc_487B8F40:
-# census: opaque -- unknown-dump: 45 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_b935.rom", 0x3B8F40, 0x3B8F6D
+func_4C03B799_Table:	# 3 x s16, 0..30; read by func_4C03B799 0x4C03B799: `movhu (func_4C03B799_Table), d0`; func_4C03B799 0x4C03B799: `movhu (func_4C03B799_Table), d1` ...
+	tab_s16	10, 30, 0

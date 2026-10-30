@@ -6,8 +6,10 @@ r"""gen_data_s.py -- the program image's data region as typed source.
 QUESTION ANSWERED
 -----------------
 "What is every byte of the data region of program build 941 (file offsets
-0x186000..0x3B8FD1, CPU 0x48586000..0x487B8FD1, the initialised-RAM image
-included), written so that a reader can see it?"
+0x186000..0x3B8B78, CPU 0x48586000..0x487B8B78, the initialised-RAM image
+included), written so that a reader can see it?"  (The region ends where the
+code gen_program_s.py finds at its end starts, <data dir>/tail_code.txt: the
+MILK kernel's flash tail, up to the library image at 0x3B8FD1.)
 
 Generates src/program/data/: data.s (included by src/program.s in place of
 the old `.incbin_range` of the whole region), its parts data_NN.s,
@@ -168,8 +170,9 @@ for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3
 for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
     PROFILES[_m]["readers_callee"] = True
 PROFILE = "941"
-KN7_DIR = KN7
-from data_readers import LIBC as DR_LIBC  # noqa: E402                 # this tree; KN7 is rebound to the profile's root by configure()
+KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
+TAIL = None                   # (CPU lo, hi) of gen_program_s.py's tail code, see configure()
+from data_readers import LIBC as DR_LIBC  # noqa: E402
 
 
 def configure(name):
@@ -194,6 +197,17 @@ def configure(name):
     PALETTE = P["pal"]           # display palette, 512 x u32
     DATA_END = P["end"]          # the library image starts here (gen_program_s LIB_FILE_BASE)
     OUTDIR = P["src"] + "/data"
+    # the code gen_program_s.py found at the end of the data region (its TAIL_CODE, written to
+    # <data dir>/tail_code.txt): the data region ends where that code starts, and the
+    # addresses in it are code (in_code), so a table that points at it names its labels
+    global TAIL
+    TAIL = None
+    tail = os.path.join(KN7, OUTDIR, "tail_code.txt")
+    if os.path.exists(tail):
+        lo, hi = (int(x, 16) for x in next(ln for ln in open(tail) if not ln.startswith(";")).split())
+        if hi != DATA_END:
+            sys.exit(f"gen_data_s: {tail}: the tail code ends at {hi:#x}, not at the data region's end {DATA_END:#x}")
+        DATA_END, TAIL = lo, (BASE + lo, BASE + hi)
     RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN = P.get("raminit") or MM.find_raminit(code_glob())
     MM.RAMINIT_ROM, MM.RAMINIT_RAM, MM.RAMINIT_LEN = RAMINIT_ROM, RAMINIT_RAM, RAMINIT_LEN
     RAMINIT_OFF = RAMINIT_ROM - BASE
@@ -345,6 +359,8 @@ class Gen:
             if self.in_data(a):
                 self.prev_data_label[n] = a
                 continue          # this generator's own labels: made again below
+            if TAIL and TAIL[0] <= a < TAIL[1] and self.GUESSED.match(n):
+                continue          # a data name the tail code had before it was code (its labels are loc_)
             self.extern.setdefault(a, n)
             self.names.add(n)
         for a, n in m.sym_by_addr.items():
@@ -521,6 +537,8 @@ class Gen:
         is not before its data (the KN2400) states its code's CPU ranges (`code_cpu`)."""
         if "code_cpu" in P:
             return any(lo <= v < hi for lo, hi in P["code_cpu"])
+        if TAIL and TAIL[0] <= v < TAIL[1]:
+            return True
         return BASE + 0x80 <= v < BASE + R1_END
 
     def ref(self, v, note=True):

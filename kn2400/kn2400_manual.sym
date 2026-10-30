@@ -21,3 +21,16 @@
 0x48577738  StyleRecordTableAlt        ; the other list of Music Stylist setups, 680 x 24 bytes, over the same one-touch settings: func_48641CCD returns &StyleRecordTableAlt[i] when func_487055C4 answers 1 [INFERENCE: the other model's list, KN2400 / KN2600]
 0x48532260  TechnicsPadsResource       ; the built-in "Technics Pads" PERFORMANCE PAD bank (the table flash's segment 4 format): TechnicsPadsResourceInit stores it when the table flash's resource does not check; typed by ../kn7000/tools/gen_data_s.py pads()
 0x4854B24C  NoteConvRules              ; 128 x 8-byte note-conversion rules {is_melody, alt_chord, no_third_adj, no_transpose, table}: func_50173F49 (RAM-linked code; the KN7000's func_48436229), +1 / +2 / +3 answered by func_50173EF8 / func_50173F13 / func_50173F2E
+; ---- the MILK kernel's tail routines (lane code-island, 2026-10-30; the KN7000's names,
+;      ../kn7000/notes/code-island/README.md: the same block, linked at the flash address) ----
+0x485E41C4  KernelServiceHash            ; 16 x {u32 key, code pointer}: KernelWaitRelease takes the task's wait state (TCB +0xE) & 0xFF00, minus 0xFF, indexes the table by (key & 0xF) * 8, probes the records in turn up to KernelRamLayout and jumps through +4 of the one whose +0 is the key (the KN6000's table of the same name)
+0x485E4244  KernelRamLayout              ; 6 RAM addresses (0x50380000, 0x50387FFF, 0x50388000, 0x503BBFFF, ...); KernelStart loads its stack pointer from +0x14 [INFERENCE: the kernel's memory pools' bounds]
+0x485E425C  KernelParams                 ; 14 u16 (10, 20, 20, 20, 10 ...): the kernel's parameter words, as on the KN6000 / KN7000
+0x48728165  KernelInit                   ; the routine KernelStart jumps to: fills the kernel's RAM tables, creates the kernel task, calls the application's start-up, KernelInitHook and the dispatcher start [INFERENCE: name, from what it does]
+0x4872841C  KernelWaitRelease            ; d0 = task id: dequeues the task from the wait queue its wait state names (through KernelServiceHash), then from the timer list [INFERENCE: name]
+0x48728588  KernelErrorHook              ; `retf 0, 0`: kernel services call it before they return an error, d0 = the function code, d1 = the uITRON error code [INFERENCE]
+0x4872858B  KernelErrorHook2             ; `retf 0, 0`: as KernelErrorHook, from a few other call sites [INFERENCE]
+0x4872858E  KernelWaitAbortHook          ; `retf 0, 0`: called with a0 = the TCB and d0 = -0x55 (E_TMOUT) or -0x51 (E_DLT) for a wait that ends in an error [INFERENCE]
+0x48728591  KernelStart                  ; sp := (KernelRamLayout + 0x14), jmp KernelInit: the kernel's start
+0x4872859C  KernelInitHook               ; `ret 0, 0`: KernelInit calls it before it starts the dispatcher [INFERENCE: an empty start-up hook]
+;

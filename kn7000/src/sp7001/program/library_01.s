@@ -42315,7 +42315,7 @@ loc_4C03B5A6:
     mov     a2, a0
     call    func_4C03BB7F_entry, [d2,d3], 8
     exth    d0
-    call    func_487BA5E8, [d2,a2,a3], 0x1c
+    call    KernelWaitRelease_entry, [d2,a2,a3], 0x1c
     mov     0xe, a3
     add     a2, a3
     movhu   (a3), d0
@@ -42345,7 +42345,7 @@ loc_4C03B5EB:
     call    func_4C03B99A, 0, 0
     mov     a2, a0
     mov     -0x55, d0
-    call    func_487BA755, 0, 0
+    call    KernelWaitAbortHook, 0, 0
 loc_4C03B609:
     movhu   (a3), d0
     and     0x02, d0
@@ -42510,7 +42510,7 @@ func_4C03B77F_entry:
     beq     loc_4C03B79B
     mov     -0x26, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03B7F0
 loc_4C03B79B:
@@ -42522,7 +42522,7 @@ loc_4C03B79B:
     call    func_4C03B99A, 0, 0
     mov     -0x26, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03B7F0
 loc_4C03B7C2:
@@ -43024,6 +43024,7 @@ func_4C03BBA3:
 func_4C03BBE4:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x1c, sp
+func_4C03BBE4_entry:
     mov     a0, (0x34, sp)
     call    func_4C03BCE8, 0, 0
     mov     d0, d3
@@ -43814,7 +43815,7 @@ func_4C03C1CA_entry:
     beq     loc_4C03C1F0
     mov     -0x1b, d0
     mov     -0x23, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x23, d0
     ret     [d2,a2], 0x18
 loc_4C03C1F0:
@@ -43847,7 +43848,7 @@ loc_4C03C214:
 loc_4C03C239:
     mov     -0x1b, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03C266
 loc_4C03C248:
@@ -43962,7 +43963,7 @@ loc_4C03C324:
 loc_4C03C33B:
     mov     -0x8f, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x3f, d0
     ret     [d2,d3,a2,a3], 0x34
 loc_4C03C34C:
@@ -43975,7 +43976,7 @@ loc_4C03C34C:
 loc_4C03C363:
     mov     -0x8f, d0
     mov     -0x21, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x21, d0
     ret     [d2,d3,a2,a3], 0x34
 loc_4C03C374:
@@ -44029,7 +44030,7 @@ loc_4C03C3A3:
 loc_4C03C3D0:
     mov     -0x8f, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x3f, d0
     ret     [d2,d3,a2,a3], 0x34
 loc_4C03C3E1:
@@ -44052,7 +44053,7 @@ loc_4C03C3E8:
 loc_4C03C40D:
     mov     -0x8f, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x3f, d0
     bra     loc_4C03C467
 loc_4C03C41D:
@@ -44266,7 +44267,7 @@ loc_4C03C5C3:
 loc_4C03C5C9:
     mov     a2, a0
     mov     -0x51, d0
-    call    func_487BA755, 0, 0
+    call    KernelWaitAbortHook, 0, 0
     mov     0xe, a0
     add     a2, a0
     movhu   (a0), d0
@@ -44377,7 +44378,7 @@ func_4C03C68E_entry:
 loc_4C03C6CC:
     mov     -0x8d, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x3f, d0
     ret     [d2,a2,a3], 0x24
 loc_4C03C6DD:
@@ -44392,7 +44393,7 @@ loc_4C03C6DD:
 loc_4C03C6F8:
     mov     -0x8d, d0
     mov     -0x55, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x55, d0
     bra     loc_4C03C73E
 loc_4C03C708:
@@ -44412,7 +44413,7 @@ loc_4C03C708:
 loc_4C03C72D:
     mov     -0x8d, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x3f, d0
     bra     loc_4C03C73E
 loc_4C03C73D:
@@ -44581,7 +44582,7 @@ func_4C03C894_entry:
     beq     loc_4C03C8B7
     mov     -0x2e, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     ret     [d2,d3,a2,a3], 0x24
 loc_4C03C8B7:
@@ -44593,7 +44594,7 @@ loc_4C03C8B7:
     call    func_4C03B99A, 0, 0
     mov     -0x2e, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     ret     [d2,d3,a2,a3], 0x24
 loc_4C03C8DF:
@@ -45115,7 +45116,7 @@ func_4C03CCFD_entry:
 loc_4C03CD23:
     mov     -0x35, d0
     mov     d2, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
 loc_4C03CD2D:
     mov     d2, d0
     ret     [d2], 0x14
@@ -45234,7 +45235,7 @@ func_4C03CDFC_entry:
 loc_4C03CE22:
     mov     -0x3d, d0
     mov     d2, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
 loc_4C03CE2C:
     mov     d2, d0
     ret     [d2], 0x14
@@ -45360,7 +45361,7 @@ func_4C03CEF5_entry:
     beq     loc_4C03CF25
     mov     -0x89, d0
     mov     -0xa, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0xa, d0
     bra     loc_4C03CF60
 loc_4C03CF25:
@@ -45399,6 +45400,7 @@ loc_4C03CF60:
 
 func_4C03CF63:
     add     -0xc, sp
+func_4C03CF63_entry:
     mov     (func_4C03CF63_Var_3), a0
     mov     0x53595350, d0
     mov     a0, (0x5038096c)
@@ -45787,7 +45789,7 @@ func_4C03D252_entry:
     beq     loc_4C03D271
     mov     -0x35, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03D2CF
 loc_4C03D271:
@@ -45799,7 +45801,7 @@ loc_4C03D271:
     call    func_4C03B99A, 0, 0
     mov     -0x35, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03D2CF
 loc_4C03D298:
@@ -46127,7 +46129,7 @@ func_4C03D4F7_entry:
 loc_4C03D53B:
     mov     -0x11, d0
     mov     d2, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     d2, d0
 loc_4C03D546:
     ret     [d2,d3,a2], 0x2c
@@ -46425,7 +46427,7 @@ func_4C03D79C_entry:
     beq     loc_4C03D7BC
     mov     -0x3d, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03D81E
 loc_4C03D7BC:
@@ -46437,7 +46439,7 @@ loc_4C03D7BC:
     call    func_4C03B99A, 0, 0
     mov     -0x3d, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03D81E
 loc_4C03D7E3:
@@ -46563,7 +46565,7 @@ loc_4C03D8DC:
 loc_4C03D900:
     mov     -0x27, d0
     mov     -0x49, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x49, d0
     bra     loc_4C03D941
 loc_4C03D90F:
@@ -46664,7 +46666,7 @@ func_4C03D9D0_entry:
     beq     loc_4C03D9ED
     mov     -0x16, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     bra     loc_4C03DA21
 loc_4C03D9ED:
     mov     (0x5038002c), a2
@@ -46756,7 +46758,7 @@ func_4C03DAB0_entry:
 loc_4C03DABF:
     mov     -7, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03DAF9
 loc_4C03DACE:
@@ -46782,7 +46784,7 @@ func_4C03DAFC_entry:
     beq     loc_4C03DB18
     mov     -0x1d, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03DB47
 loc_4C03DB18:
@@ -46960,7 +46962,7 @@ func_4C03DC9F_entry:
     beq     loc_4C03DCBA
     mov     -0x15, d0
     mov     -0x3f, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     bra     loc_4C03DCD0
 loc_4C03DCBA:
     mov     (0x5038002c), a0
@@ -47141,7 +47143,7 @@ loc_4C03DE30:
 loc_4C03DE5B:
     mov     -0x1c, d0
     mov     -0x45, d1
-    call    func_487BA74F, 0, 0
+    call    KernelErrorHook, 0, 0
     mov     -0x45, d0
     bra     loc_4C03DEC1
 loc_4C03DE6A:
@@ -47260,7 +47262,7 @@ func_4C03DF28_entry:
     call    func_4C03BCED, 0, 0
     mov     -0x21, d0
     mov     -0x3f, d1
-    call    func_487BA752, 0, 0
+    call    KernelErrorHook2, 0, 0
     mov     -0x3f, d0
     bra     loc_4C03DFAA
 loc_4C03DF5E:
@@ -47274,7 +47276,7 @@ loc_4C03DF5E:
     call    func_4C03BCED, 0, 0
     mov     -0x21, d0
     mov     -0x49, d1
-    call    func_487BA752, 0, 0
+    call    KernelErrorHook2, 0, 0
     mov     -0x49, d0
     bra     loc_4C03DFAA
 loc_4C03DF80:
@@ -47442,7 +47444,7 @@ ter_tsk:
     call    func_4C03BCED, 0, 0
     mov     -0x19, d0
     mov     -0x3f, d1
-    call    func_487BA752, 0, 0
+    call    KernelErrorHook2, 0, 0
     mov     -0x3f, d0
     bra     loc_4C03E12B
 loc_4C03E0F7:
@@ -47456,7 +47458,7 @@ loc_4C03E0F7:
     cmp     4, d1
     bne     loc_4C03E113
     mov     d2, d0
-    call    func_487BA5E8, [d2,a2,a3], 0x1c
+    call    KernelWaitRelease_entry, [d2,a2,a3], 0x1c
     bra     loc_4C03E120
 loc_4C03E113:
     and     0x01, d0
@@ -47481,7 +47483,7 @@ get_tid_entry:
     call    func_4C03BCE8, 0, 0
     mov     d0, (0xc, sp)
     and     0xf7ff, psw
-    movhu   (get_tid_Table), d0
+    movhu   (KernelParams), d0
     clr     d2
     exth    d0
     inc     d0
@@ -47519,6 +47521,7 @@ loc_4C03E17F:
 
 func_4C03E182:
     add     -0xc, sp
+func_4C03E182_entry:
     mov     (0x50380000), a0
     movhu   (0xe, a0), d0
     cmp     8, d0
@@ -47546,6 +47549,8 @@ loc_4C03E1B6:
     clr     d0
 loc_4C03E1B7:
     ret     0, 0xc
+
+func_4C03E1BA:
     and     0xf7ff, psw
     jmp     loc_4C03E411
 # ena_int  (lib CPU 0x4c03e1c1)
@@ -47611,7 +47616,7 @@ loc_cpu_entry:
     beq     loc_4C03E239
     mov     -8, d0
     mov     -0x45, d1
-    call    func_487BA752, 0, 0
+    call    KernelErrorHook2, 0, 0
     mov     -0x45, d0
     bra     loc_4C03E246
 loc_4C03E239:
@@ -47684,7 +47689,7 @@ loc_4C03E2BA:
     ret     [d2,a2], 0x18
 # func_4C03E2BE  (lib CPU 0x4c03e2be): no symbol file names this function
 func_4C03E2BE:
-    jmp     loc_487BA758
+    jmp     KernelStart
     .space  3, 0xFF                   # padding to the next routine
 # LibIrqQuickDispatch  (lib CPU 0x4c03e2c6)
 LibIrqQuickDispatch:

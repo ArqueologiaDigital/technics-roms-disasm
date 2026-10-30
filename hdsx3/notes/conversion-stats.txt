@@ -2,7 +2,7 @@ image bytes                 786432
 code-range bytes            253526
 entries                     991 (155 named, 40 derived <name>_entry, 796 func_)
 bytes emitted as code       252331 (32.09% of image, 99.53% of code ranges)
-instructions                88617 (+12 .byte escapes)
+instructions                88629 (+0 .byte escapes)
 nop padding bytes           33
 unreached code decoded       1162 (--decode-gaps; +0 bytes of 0xFF fill)
 code-range bytes left binary 0 (in 0 .incbin_range pieces)
