@@ -31095,8 +31095,20 @@ V_SeqIntTest_ResNames:
 data_4C377274:
 .incbin_range "baserom/kn6000_program.rom", 0x377274, 0x377278
 data_4C377278:
-# census: opaque -- unknown-dump: 208 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x377278, 0x377348
+	# 208 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; no instruction reads them (tools/data_readers.py)
+	.ascii	"<ACT NO=1><SHOW "
+	.ascii	"OBJ=\"fdemo_a1\"><"
+	.ascii	"/ACT><ACT NO=2><"
+	.ascii	"SHOW OBJ=\"fdemo_"
+	.ascii	"a2\"></ACT><ACT N"
+	.ascii	"O=3><SHOW OBJ=\"f"
+	.ascii	"demo_a3\"></ACT><"
+	.ascii	"ACT NO=4><SHOW O"
+	.ascii	"BJ=\"fdemo_a4\"></"
+	.ascii	"ACT><ACT NO=5><S"
+	.ascii	"HOW OBJ=\"fdemo_a"
+	.ascii	"5\"></ACT><ACT NO"
+	.ascii	"=6><SHOW OBJ=\"fd"
 
 doubles_4C377348:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x5F6F6D65, 0x3E223661	# 1850964.26

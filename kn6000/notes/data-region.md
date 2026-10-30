@@ -135,6 +135,11 @@ code-range bytes binary in each image (was 19,825 in 300 pieces / 16,115 in 303)
 
 ## What is still generic, and what it is
 
+(Superseded 2026-10-30 by lane siblings-final, `siblings-data-final/README.md`. The 144 KB of
+part-like bytes are the Music Stylist one-touch settings. The 89 KB past the tone directory are three
+sound hash tables. The ~50 KB of chord tables are the NoteConvRules' tables. All three are now typed.
+The table below is the state this lane left.)
+
 The generic count rose because a few blobs became thousands of labelled pieces between typed
 items; the bytes are what fell.  The largest remaining regions of the KN6000 (file offsets):
 
@@ -153,8 +158,9 @@ items; the bytes are what fell.  The largest remaining regions of the KN6000 (fi
 merge of main (lane gui-kn7000's third pass) its reader-typed tables (`tab_u8` .. `tab_u32`, sparse
 maps, `src/include/data_tables.inc`) apply to these images too.
 
-The KN6500's are the same structures at other addresses, without the tone records and panel
-banks (its program flash has neither).
+The KN6500's are the same structures at other addresses, without the tone records.
+(Corrected 2026-10-30, lane siblings-final: the KN6500's program flash does hold the factory panel
+banks, at 0x4C2B7668, copied by func_4C03D5A1 as the KN6000's func_4C03D431 copies its own.)
 
 ## Open questions
 

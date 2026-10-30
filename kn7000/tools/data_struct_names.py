@@ -111,7 +111,12 @@ MODEL_NAMES = {"kn6000": _KN6000_STYLES, "kn6500": _KN6000_STYLES}
 # func_4863F880 (data_readers, through func_48641CCD's return value)
 _KN2400_SETUP = ("MusicStylistSetup", {0: "panel", 4: "name", 8: "genre", 10: "style", 12: "setup", 14: "era",
                                        16: "era_pos", 18: "letter", 20: "letter_pos"})
-MODEL_NAMES["kn2400"] = {"StyleRecordTable": _KN2400_SETUP, "StyleRecordTableAlt": _KN2400_SETUP}
+MODEL_NAMES["kn2400"] = {"StyleRecordTable": _KN2400_SETUP, "StyleRecordTableAlt": _KN2400_SETUP,
+                         # func_50173F49 (code linked for RAM 0x50120000), the KN7000's func_48436229: +4 loaded at
+                         # func_50173F49_entry_L13 0x50173F61, read `movbu (d0, a0)` at L170 / L1b5; +1 / +2 / +3
+                         # answered by func_50173EF8 / func_50173F13 / func_50173F2E
+                         "NoteConvRules": _KN6000_STYLES["NoteConvRules"],
+                         "NoteConvRules_p4": _KN6000_STYLES["NoteConvRules_p4"]}
 
 # Pointer fields whose targets are records although the reader walk does not follow the pointer
 # (it is kept in a register across labels): (array label, field offset) -> the instruction that

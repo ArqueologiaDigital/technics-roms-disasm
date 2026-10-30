@@ -8442,8 +8442,10 @@ names_978A31BC:
 	.long	Str_SQT_4, names_978A31BC_p0_2
 	.long	Str_DEL_7, names_978A31BC_p0_3
 	.long	Str_ALL_4, names_978A31BC_p0_0
-# census: opaque -- unknown-dump: 12 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A31DC, 0x0A31E8
+	# 3 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
+	.long	names_978A31BC_p0_0+208
+	.long	names_978A31BC_p0_0+416
+	.long	names_978A31BC_p0_0+624
 
 KssSetSfx_DISPProc_L822_Table:
 	.long	KssSetSfx_DISPProc_L822_Table_p0_0
@@ -14356,8 +14358,9 @@ names_979113BC:
 	.long	Str_yacute, 253
 	.long	Str_thorn, 254
 	.long	Str_yuml, 255
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B5648, 0x0B5650
+	# 2 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
+	.long	Str_text_2
+	.long	0
 
 func_978341C0_Var:	# u32, initial value of a RAM variable; read / written by func_978341C0 0x978341C0: `mov (func_978341C0_Var), d0`; func_978341C0_entry_L71 0x97834234: `mov d0, (func_978341C0_Var)`
 	.long	0

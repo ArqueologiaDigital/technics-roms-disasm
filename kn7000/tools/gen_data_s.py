@@ -124,7 +124,10 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
                           inflate="func_486D4A2A",
                           # lane siblings-final: the built-in Music Stylist setups' one-touch settings (KN7000 layout)
-                          style_panels=("StyleRecordTable", 0, 0xA0))
+                          style_panels=("StyleRecordTable", 0, 0xA0),
+                          # the application's code is after the data (Makefile CODE: file 0x1E427C..0x3285BE),
+                          # and the part linked for RAM 0x50120000 (file 0x3285BE..0x3965B8)
+                          code_cpu=[(0x485E427C, 0x487285BE), (0x50120000, 0x5018DFFA)])
 # The KN6000 / KN6500 expansion board's XAPR plug-in (sx6-113, the HD-SX6's; folder
 # hdsx3): code first, then its data, then erased flash.  It runs on the SX-KN6000:
 # its records use the KN6000's classes (`host`) and its own (registry slot 0x168), it
@@ -480,7 +483,10 @@ class Gen:
     # -- references ----------------------------------------------------------
     @staticmethod
     def in_code(v):
-        """An address in code region 1 (a jump-table target, a callback)."""
+        """An address in code region 1 (a jump-table target, a callback); a profile whose code
+        is not before its data (the KN2400) states its code's CPU ranges (`code_cpu`)."""
+        if "code_cpu" in P:
+            return any(lo <= v < hi for lo, hi in P["code_cpu"])
         return BASE + 0x80 <= v < BASE + R1_END
 
     def ref(self, v, note=True):
@@ -2865,6 +2871,41 @@ class Gen:
                 + ("; a typed pointer or a code immediate holds their address, but nothing is read through it"
                    if held else "; no address the code or a typed item holds points into them"))
 
+    def typed_gap(self, a, b):
+        """(the siblings) A gap no pass typed that is plainly one of two things, written as such:
+        text with no NUL (every byte printable: `.ascii` rows), or words that are each 0 or the
+        address of something with a name (`.long` rows, spelled symbolically).  The comment says
+        whether an instruction reads the bytes (gap_note's reader search).  None otherwise."""
+        bs = self.rom[a:b]
+        n = b - a
+        if n < 8:
+            return None
+        read = self.gap_note(a, b) is None
+        why = ("read by an instruction no pass could turn into a type" if read
+               else "no instruction reads them (tools/data_readers.py)")
+        if all(0x20 <= c < 0x7F for c in bs):
+            w = next((k for k in (16, 32, 12, 10, 8) if n % k == 0 and n // k >= 2), 16)
+            return [f"\t# {n} bytes of text with no NUL, {w} characters a row [INFERENCE: fixed-width names]; {why}"] + [
+                f'\t.ascii\t"{c_escape(bs[i:i + w])}"' for i in range(0, n, w)]
+        if (self.addr_of(a) & 3) == 0 and n % 4 == 0:
+            words = [int.from_bytes(bs[k:k + 4], "little") for k in range(0, n, 4)]
+            refs = []
+            for v in words:
+                if v == 0:
+                    refs.append("0")
+                    continue
+                if not self.is_addr(v) or (self.in_code(v) and v not in self.extern):
+                    return None
+                r = self.ref(v)
+                if r.startswith("0x"):
+                    return None
+                refs.append(r)
+            if sum(1 for v in words if v) * 2 < len(words):
+                return None
+            return [f"\t# {len(words)} addresses [INFERENCE: a pointer table: every word is 0 or a named"
+                    f" address]; {why}"] + [f"\t.long\t{r}" for r in refs]
+        return None
+
     def gap_lines(self, a, b):
         """The bytes a..b (file offsets) no typed item holds: a uniform run is
         .space (or .align, when it is the padding up to a 4-byte boundary after
@@ -2874,6 +2915,11 @@ class Gen:
             res = []
             for ln in out:
                 mo = re.match(r'\.incbin_range "[^"]+", 0x([0-9A-F]+), 0x([0-9A-F]+)', ln)
+                if mo and "root" in P:
+                    typed = self.typed_gap(int(mo.group(1), 16), int(mo.group(2), 16))
+                    if typed:
+                        res += typed
+                        continue
                 if mo:
                     note = self.gap_note(int(mo.group(1), 16), int(mo.group(2), 16))
                     if note:
