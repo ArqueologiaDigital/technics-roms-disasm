@@ -13261,10 +13261,9 @@ RoundCornerPixels:	# 8 x REC_RoundCornerPixels (4 bytes each); read by DrawJpegF
 	REC_RoundCornerPixels	f0=1, f2=1
 	REC_RoundCornerPixels	f2=2
 	REC_RoundCornerPixels	f2=3
-SjisMissingGlyph:
-	# 32 bytes the code takes the address of: DrawString_Impl_CheckLeadByte 0x48425656 `mov SjisMissingGlyph, a2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 127, 96, 80, 72, 68, 66, 65, 66, 68, 72, 80, 96, 127, 0, 0	# +0
-	tab_u8	0, 252, 12, 20, 36, 68, 132, 4, 132, 68, 36, 20, 12, 252, 0, 0	# +16
+
+SjisMissingGlyph:	# 16 x 16, 1 bpp, column-major (two 8-pixel columns of 16 bytes): the glyph DrawString_Impl 0x48425467 draws for a Shift-JIS code its font lacks (annotations/gfx_draw.ann); a box with an X in it (src/b935/program/data/media/SjisMissingGlyph.png)
+	.incbin	"build/bitmaps/b935/SjisMissingGlyph.bin"	# census: generated -- tools/table_png.py (font 2 16 1) from src/b935/program/data/media/SjisMissingGlyph.png
 
 Bitmap_IsPointOnScreen_Palette:	# 16 colours, 0x00BBGGRR (IsPointOnScreen: MT_GetBitmapPalette)
 	.long	0x00000000, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF
@@ -40002,3 +40001,7 @@ Str_CATEGORY_3:	.asciz "CATEGORY"
 
 Str_ITEM_3:	.asciz "ITEM"
 	.align	4, 0xFF	# pad after Str_ITEM_3
+
+		VwLabel	TtCtFavoritePR_Label_ITEM, super=TtCtFavoritePR, next=TtCtFavoritePR_Box1, prev=TtCtFavoritePR_Label_CATEGORY, flag=VF_Const, X=314, Y=50, W=48, H=19, str=Str_ITEM_3, font=4, fontcolor=CL_Text	# str "ITEM"
+		VwBox	TtCtFavoritePR_Box1, super=TtCtFavoritePR, next=TtCtFavoritePR_IndexPushSw1, prev=TtCtFavoritePR_Label_ITEM, flag=VF_Const, X=236, Y=57, W=72, H=2, color=CL_Text, index=0xFFFF
+		AcIndexPushSw	TtCtFavoritePR_IndexPushSw1, super=TtCtFavoritePR, prev=TtCtFavoritePR_Box1, flag=VF_Const, X=604, Y=216, W=32, H=23, color=CL_Silver, border=BD_EditSwitch, index=6, font=4, fontcolor=CL_Black, editsw=ES_Bottom16, sw=TtCtFavoritePR_IndexPushSw1_sw

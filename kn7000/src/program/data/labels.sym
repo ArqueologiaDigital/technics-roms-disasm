@@ -2785,7 +2785,7 @@
 0x485A26B8  func_48427ED4_Table  512
 0x485A28B8  BmpSignature  3
 0x485A28BC  RoundCornerPixels  32
-0x485A28DC  SjisMissingGlyph  0
+0x485A28DC  SjisMissingGlyph  32
 0x485A28FC  Bitmap_IsPointOnScreen_Palette  64
 0x485A293C  Bitmap_IsPointOnScreen_Pixels  512
 0x485A2B3C  Bitmap_IsPointOnScreen_Palette_2  64

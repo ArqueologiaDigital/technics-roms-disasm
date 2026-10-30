@@ -2799,7 +2799,7 @@
 0x485A13BC  func_48427E92_Table  512
 0x485A15BC  BmpSignature  3
 0x485A15C0  RoundCornerPixels  32
-0x485A15E0  SjisMissingGlyph  0
+0x485A15E0  SjisMissingGlyph  32
 0x485A1600  Bitmap_IsPointOnScreen_Palette  64
 0x485A1640  Bitmap_IsPointOnScreen_Pixels  512
 0x485A1840  Bitmap_IsPointOnScreen_Palette_2  64
