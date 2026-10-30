@@ -149,8 +149,10 @@ data-src-893: tools/gen_data_s.py tools/milk_model.py build/kn7000_program_b893.
 .PHONY: gui-map verify-gui-map
 gui-map:
 	$(PYTHON) tools/gui_menu_map.py
+	$(PYTHON) tools/gui_menu_map.py --profile sp7001plugin
 verify-gui-map:
 	@$(PYTHON) tools/gui_menu_map.py --check
+	@$(PYTHON) tools/gui_menu_map.py --profile sp7001plugin --check
 
 # The table image's pictures live in src/table/: the 57 JPEG segments, and in
 # subdirectories the JPEG/BMP items of the picture-group segments. The same files
