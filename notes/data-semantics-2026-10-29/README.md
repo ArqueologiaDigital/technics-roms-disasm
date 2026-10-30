@@ -171,7 +171,9 @@ Open items:
 - `KssBgScreen`'s `image_id` and `icon` in the SP7001 plug-in, probably the main program's resource ids;
 - the KN7000 demo-song streams are u8 rows, really 4-byte events;
 - recursive structures other than the resource-id trie are typed one level deep;
-- HD-AE5000 v1.15i and v1.10i still have no tree.
+- HD-AE5000 v1.15i and v1.10i still have no tree. Resolved 2026-10-30 (lane hdae-v1, merge b84f732aa):
+  `hdae5000_v1_15i/` and `hdae5000_v1_10i/` are byte-identical and in `make gate`, generic 0
+  (`docs/coverage/data-incbin-2026-10-30-04`); `notes/hdae5000-versions-2026-10-24/README.md`.
 
 ## Generic 0 (2026-10-30, `docs/coverage/data-incbin-2026-10-30-02`)
 
@@ -216,3 +218,14 @@ land in the data region and emits it as instructions in all four program builds;
 data region where it starts.  `func_4C03B799_Table` was one halfword (`KernelParams + 0x16`, func_4C03B799
 reads no other) and two unread ones; its entries [3] on were KernelInit's code.  The siblings' 278
 `.byte`-escaped instructions are instructions too (`gen_image_s.py`).
+
+## Standalone media (2026-10-30, `docs/coverage/data-incbin-2026-10-30-03`)
+
+At the owner's request ("Media: pictures and PCM ... standalone files that could be opened by the user on
+normal media viewers / sound apps"), lane media-files (`notes/media-files-2026-10-30/README.md`) made every
+picture and PCM recording a standalone PNG / JPEG / BMP / WAV file that a committed lossless converter turns
+back into the ROM bytes. The census counts such includes as `generated`, with the media file named in the
+marker, in its "from media" column. Opaque pcm fell from 5,095 items / 70,490,064 B to 0. The WAVs are not
+committed (public repo): `make waveform-wav` and `make -C kn7000 wave-wav` write them, git-ignored, from the
+reference images, and the build reads the WAVs. Snapshot `-04` adds the two HD-AE5000 v1 trees: 38 trees,
+generic 0 in each.
