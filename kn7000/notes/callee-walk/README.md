@@ -27,7 +27,7 @@ d0 / d1 into its callers (`resolve_params`, four rounds).  Three things kept the
 
 | what                   | where                                                                                            | evidence                                                                                                                                                                                                              |
 |------------------------|--------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| pointer arguments 1, 2 | a0, a1                                                                                           | DrawString_entry 0x48425393: `mov a1, (0x3c, sp)` "&pen", `mov a0, (0x38, sp)` "&clip rect" (frame 0x30: their homes at +8, +12)                                                                                      |
+| pointer arguments 1, 2 | a0, a1                                                                                           | DrawString_entry 0x48425398: `mov a1, (0x3c, sp)` "&pen", `mov a0, (0x38, sp)` "&clip rect" (frame 0x30: their homes at +8, +12)                                                                                      |
 | number arguments 1, 2  | d0, d1                                                                                           | DrawString: `mov d0, d3` font index, `mov d1, d2` fg colour                                                                                                                                                           |
 | the rest               | the caller's (N, sp), N = 16, 20, 24 ...                                                         | DrawString reads its string at (0x40, sp) = caller's (0x10, sp); SetApTimer 0x48429C95 its 5th argument at (0x4c, sp), frame 0x34 = caller's (0x18, sp), stored there by TestDiskFunc 0x484A0A32 `mov d0, (0x18, sp)` |
 | the callee's frame     | `movm [regs], (sp)` (4 bytes a register) + `add -K, sp`, or the call's `call F_entry, [regs], K` | SetApTimer: `movm [d2,d3,a2,a3]` + `add -0x24, sp` = 0x34 = `call SetApTimer_entry, [d2,d3,a2,a3], 0x34`; DrawString_Impl's `add -0x188, sp` after its _entry label                                                   |
@@ -175,7 +175,7 @@ main 2a7b45be5 -> this branch): kn7000-program 3,451 / 63,410 -> 3,449 / 63,392;
 pointer ... holds their address, but nothing is read through it").  They were rows before only by being after
 an address the code loads.
 
-Evidence of the conventions above: DrawString_entry 0x48425393 (homes at +8 / +12, string at (0x40, sp) with a
+Evidence of the conventions above: DrawString_entry 0x48425398 (homes at +8 / +12, string at (0x40, sp) with a
 0x30 frame), SetApTimer 0x48429C95 (fifth argument at (0x4c, sp), frame 0x34, stored by TestDiskFunc 0x484A0A32 at
 (0x18, sp)).  Examples of callee records: `T_CTSK` (cre_tsk 0x4C03D0C8 / func_4C03D154), `REC_func_4C03C7EF_ArgA0`
 (12 bytes, 10 blocks and one 8-byte variant), `REC_func_48401F32_ArgA0` (28 bytes, with one record between two passed ones inferred),
