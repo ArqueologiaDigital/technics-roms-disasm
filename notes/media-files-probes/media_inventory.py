@@ -64,7 +64,7 @@ MIDI_EXT = {"mid"}
 VOC = re.compile(r'(Bitmap|Glyph|Font|Icon|Picture|Pixels|Logo|Wallpaper|Image|Sprite|Cursor)')
 # compiled C (KN5000 `includes/generated/`) holds the GUI's records, whose labels name picture classes
 # (`NakaWidget_..._Icon`, `..._CursorBox`); there only a name that says "pixels" counts
-PIXELS = re.compile(r'(Bitmap\d+x\d+|Pixels|Glyphs\b|IconBitmap|GroupIconBitmap)')
+PIXELS = re.compile(r'(Bitmap\d+x\d+|_Pixels\b|Glyphs\b)')
 SOUND = re.compile(r'(\bpcm\b|\bsample data\b|\.wav\b)', re.I)
 FROM = re.compile(r'\bfrom\s+(?:the\s+\.(\w+)\s+beside it|(\S+?\.(\w+)))(?=[\s:;,)]|$)', re.I)
 LAB = re.compile(rb'^([A-Za-z_][\w.]*):(.*)$')
@@ -75,7 +75,7 @@ ADDR_HINT = re.compile(rb';\s*(?:0x)?([0-9A-F]{6})\b')
 # Verdicts for typed-row candidates and media-looking includes that are not media.  (regex on the label,
 # verdict).  "picture" verdicts would be pictures without a file; none is left.
 REVIEWED = [
-    (r'(_Palette(_\d+)?|^Palette_\w*|ShadeRamp|^WallpaperRamp_\w+)$',
+    (r'((^|_)Palette(_\w+)?|ShadeRamp|^WallpaperRamp_\w+)$',
      "a palette (colour table), not a picture; the pictures' PNGs carry their palettes"),
     (r'^(AccWave_BankTable|BrassSound_SamplePtr_Table|PercInst_\d+_Wave\d+|ToneRec_\w+_WaveSel\d|'
      r'Eff2[67]_WaveReverb\d_Param\w+|DspFxRecs_26_WaveReverb1|SineWaveWindowProc\w*|TestSampleFunc\w*)$',
@@ -94,6 +94,20 @@ REVIEWED = [
     (r'^NakaWidget_\w+_Bitmap$', "a NAKA GUI widget record (compiled C) of class Bitmap, not its pixels"),
     (r'^(UIState_RenderBitmapData)$', "code"),
     (r'^VersionScreen_Glyphs$', "WSA1R: the 208 bytes are Bitmap_F82BB0 + Bitmap_F82C00 of wsa1_bitmaps.py (PNG-backed)"),
+    (r'^AcMixerVol_GroupIconBitmap$', "a table of icon numbers (sound group -> BitmapDescriptorTable index), not pixels"),
+    (r'_Draw\w*Cursor_DL\d*$', "WSA1R: a display list (drawing commands for a cursor), not pixels"),
+    (r'(_DataImage|ResetImage(_B)?|StageBImage(_B)?|NotePool8Image(_B)?|RamStateImage|BootRamImage_Head|'
+     r'^DiskImage_HardDisk_\w+)$', "WSA1R: an image of memory or of a disk sector (initial values), not a picture"),
+    (r'^(OldBuild2?_)?ValueGlyph_(Table|Quantiser|QuantiserTail)$',
+     "WSA1R: the value glyphs' pointer table or quantiser, not pixels (the glyphs are PNG-backed)"),
+    (r'^DLText_GlyphPairs_\w+$', "WSA1R: character codes of a display-list text, not pixels"),
+    (r'^(ParamCursorRects|ParamCursorRect_Single|OctaveIcon_BlackKeyX|CurveBitmapSelector)$',
+     "WSA1R: rectangles, key offsets or a pointer table about a picture, not pixels"),
+    (r'^Bitmap_Drawbar[AB]$', "WSA1R: REFUSED by wsa1_bitmaps.py, its picture geometry is not established (listed below)"),
+    (r'_(paintok|onoff|sel_num|aicok|cursor|list|selected)$', "a GUI object's state field, not pixels"),
+    (r'^(FnName_|Str_|IconBitmapName_)', "a name or text string, not pixels"),
+    (r'^SqStep_CellFlagGlyphs$', "three character codes (' ', '*', 0x91), not pixels"),
+    (r'^ValueGlyph_Bitmaps$', "WSA1R: the 29 value glyphs, ValueGlyph_00..28 of wsa1_bitmaps.py (PNG-backed)"),
 ]
 
 
@@ -130,7 +144,7 @@ def label_of(src, ln):
     m = LAB.match(lines[ln - 1])
     if m:
         return m.group(1).decode("latin-1")
-    for k in range(ln - 2, max(ln - 6, -1), -1):
+    for k in range(ln - 2, max(ln - 14, -1), -1):
         m = LAB.match(lines[k])
         if m and not m.group(2).strip().startswith((b".incbin", b"\t.incbin")):
             return m.group(1).decode("latin-1")
@@ -143,7 +157,7 @@ def resolve(name, src, tree):
     for d in CEN.TREES.get(tree, []):
         base = ROOT / d
         base = base.parent if base.suffix == ".s" else base
-        cands += [base / name, base.parent / name, base.parent.parent / name]
+        cands += [base / name, base / "includes" / name, base.parent / name, base.parent.parent / name]
     for c in cands:
         if c.is_file():
             return c
@@ -180,7 +194,9 @@ def incbin_items(res):
                 lab = label_of(r["file"], r["line"])
                 probe = f"{lab} {path} {why}"
                 compiled = cls == "generated" and why == "compiled C"
-                if (PIXELS.search(lab) if compiled else (VOC.search(probe) or SOUND.search(why))) and not verdict(lab):
+                stem = Path(path).stem
+                if (PIXELS.search(lab) if compiled else (VOC.search(probe) or SOUND.search(why))) \
+                        and not verdict(lab) and not verdict(stem):
                     if re.search(r'midi|\.mid\b|smf', why, re.I):
                         kind = "midi"
                     elif SOUND.search(why):
@@ -191,6 +207,22 @@ def incbin_items(res):
             if kind:
                 items.append(dict(tree=tree, src=f'{r["file"]}:{r["line"]}', label=lab or label_of(r["file"], r["line"]),
                                   kind=kind, backed=backed, file=file, on_disk=on, size=r["size"] or 0, how="incbin"))
+    return items
+
+
+def c_bitmap_items():
+    """the KN5000 maincpu pictures held as C initializers that scripts/build/c_bitmaps.py writes from PNGs"""
+    cb = load("c_bitmaps", ROOT / "scripts/build/c_bitmaps.py")
+    items = []
+    for t, name in cb.items():
+        p = cb.png_path(t, name)
+        path, lines, i, j, d = cb.find(t, name)
+        n = 1
+        for x in d:
+            n *= x
+        items.append(dict(tree=f"kn5000-{t}", src=str(path.relative_to(ROOT)), label=name, kind="picture",
+                          backed=True, file=str(p.relative_to(ROOT)), on_disk=p.is_file(), size=n,
+                          how="C initializer written from PNG"))
     return items
 
 
@@ -266,7 +298,9 @@ def main():
     ap.add_argument("--list", action="store_true")
     a = ap.parse_args()
     res = CEN.census()
-    items = incbin_items(res)
+    c_items = c_bitmap_items()
+    c_names = {it["label"] for it in c_items}
+    items = [it for it in incbin_items(res) if it["label"] not in c_names] + c_items
     w_items, w_ranges, refused = wsa1_items()
     items += w_items
     cands = row_candidates(tracked(), w_ranges)
