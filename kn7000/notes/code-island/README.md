@@ -126,18 +126,64 @@ Regenerating, in this order (in a worktree, pass the absolute Makefile overrides
 `python3 kn7000/notes/code-island-probes/code_in_data.py` (README there), distinct addresses per kind.
 "Before" is the lane's base e611d4eaf.
 
-PROBE-TABLE
+| tree          | T before | T after | F before | F after | L before | L after | P before | P after | what the cases were                                                        |
+|---------------|----------|---------|----------|---------|----------|---------|----------|---------|----------------------------------------------------------------------------|
+| kn7000-941    | 5        | 0       | 0        | 0       | 5        | 0       | 3        | 3       | the kernel tail's 5 entry labels (calls and jumps into opaque pieces)      |
+| kn7000-sp7001 | 5        | 0       | 0        | 0       | 5        | 0       | 3        | 3       | the same                                                                   |
+| kn7000-b935   | 5        | 0       | 0        | 0       | 5        | 0       | 1        | 1       | the same                                                                   |
+| kn7000-b893   | 5        | 0       | 0        | 0       | 5        | 0       | 2        | 2       | the same                                                                   |
+| kn6000        | 7        | 0       | 72       | 0       | 6        | 0       | 0        | 0       | `.byte`-escaped instructions (80): branch targets on them, code running on |
+| kn6500        | 5        | 0       | 84       | 0       | 4        | 0       | 0        | 0       | the same (93 escapes)                                                      |
+| kn2400        | 11       | 0       | 83       | 0       | 11       | 0       | 1        | 1       | the same (93 escapes)                                                      |
+| hdsx3         | 0        | 0       | 12       | 0       | 0        | 0       | 0        | 0       | the same (12 escapes)                                                      |
+
+T-mid is 0 everywhere, before and after.  The P left are the text-typed-as-pointer fields under "Left open"
+(not code).  "Before" for the KN7000 builds: 941 from a scratch checkout of e611d4eaf, 942 / 935 / 893 from
+this worktree before the first regeneration; the siblings likewise.  Run times 4-5 minutes per KN7000 build.
 
 ## Census figures
 
-CENSUS-TABLE
+`scripts/analysis/data_incbin_census.py --compare docs/coverage/data-incbin-2026-10-30-02.json` (read-only;
+exit 0, generic 0 everywhere, nothing rose).  Opaque, count / bytes:
+
+| tree           | before         | after          | change                                                      |
+|----------------|----------------|----------------|-------------------------------------------------------------|
+| kn7000-program | 3,459 / 63,917 | 3,451 / 63,410 | -8 / -507: the tail's 7 pieces and the 94 bytes before them |
+| kn7000-sp7001  | 3,482 / 62,187 | 3,474 / 61,680 | -8 / -507                                                   |
+| kn7000-b935    | 3,470 / 64,710 | 3,462 / 64,203 | -8 / -507                                                   |
+| kn7000-b893    | 3,464 / 63,600 | 3,456 / 63,093 | -8 / -507                                                   |
+| siblings       | unchanged      | unchanged      |                                                             |
+
+(The kn7000 rows' `generated` 87 -> 88 is lane media-files', merged from main.)
+
+`scripts/analysis/doc_quality_census.py --compare` (vs doc-quality-2026-10-30-02, read-only) exits 1; the
+rises and why:
+
+| image      | debt                          | before -> after           | why                                                                                                                                    |
+|------------|-------------------------------|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| program    | (a) routines without a header | 20,280 -> 20,298          | the tail code is source now: its routines and the 11 switch cases KernelServiceHash points at (a pointed-to label counts as a routine) |
+| program    | (a) call targets w/o header   | 7,454 -> 7,460            | the same; and `_entry` labels the tail's calls made visible in the library (func_4C03BB8A_entry, func_4C03CC4B_entry ...)              |
+| program    | (b) number operands           | 20,523 -> 20,558          | the tail code's RAM addresses (`mov 0x50380088, a0` ...: the kernel's tables in RAM, unnamed)                                          |
+| program    | (c) loc_ locals               | 61,449 -> 61,468          | the tail code's branch targets and switch cases                                                                                        |
+| program    | (e) placeholder names         | 6,496 -> 6,498            | func_487B8FB2 (unreached) and func_4C03DCBF (a call target of KernelInit)                                                              |
+| program942 | the same five                 | +18 / +6 / +35 / +19 / +2 | the same code in build 942                                                                                                             |
+| kn2400     | (a) call targets w/o header   | 7,423 -> 7,424            | a call that was a `.byte` escape now names its target                                                                                  |
+| kn6000     | (a) routines without a header | 19,013 -> 19,014          | the same                                                                                                                               |
+| kn6500     | (a) routines without a header | 19,058 -> 19,059          | the same                                                                                                                               |
+
+What fell: every sibling's (d) `.byte` runs in code to 0 (KN6000 72 + 6 runs / 389 bytes, KN6500 84 + 3 /
+480, KN2400 83 + 7 / 498, HD-SX3 12 / 73), their numeric pointers (KN6000 immediate pointers 572 -> 499,
+KN6500 521 -> 451, KN2400 450 -> 442; the one KN6000 / KN6500 number operand -> 0) and placeholder names
+(KN6000 / KN6500 / KN2400 -7 each: the kernel routines' names).  `make dispatch-census` measures the KN5000
+and WSA1 images only (no MN10300 tree), so this lane cannot move it.
 
 ## Left open
 
 - **Text typed as pointers** (`P`, mid-instruction): three struct fields hold printable text that
   happens to read as a code address, e.g. `REC_StartFeatureDemo_Table_p0`'s `p28=loc_48533C3E`, which is
   the four characters `"><SH"` of the feature demo's XML script (90 records); `loc_48474952` ("RIGH"),
-  `loc_48535550`; the KN2400's `loc_48717F40`.  Not code in data: data_structs.py takes a field for a
+  `loc_48535550`; and the KN2400's `ptrs_48501B38`, two words typed as pointers by value, the second
+  `loc_48717F40`.  Not code in data: data_structs.py takes a field for a
   pointer when every record's word there is an address, and the generators then invent an `.equ
   loc_<ADDR>` for a target inside an instruction.  A fix belongs in the struct typer (a field inside a run
   of text is text).
