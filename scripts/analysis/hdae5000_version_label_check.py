@@ -125,14 +125,18 @@ def references(tree_dirs):
 
 def main():
     ver = sys.argv[1] if len(sys.argv) > 1 else "v2_01i"
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
+    import port_hdae5000_version as P0
+    base = P0.base_of(sys.argv)
+    btree, bmain = P0.base_tree(base)
     tree = os.path.join(ROOT, "hdae5000_" + ver)
     # both trees assembled with --save-temp-labels (the porting tool's marker build),
     # so the .L local labels are checked too
     sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
     import port_hdae5000_version as P
-    ba = P.Build(os.path.join(ROOT, "hdae5000"), "hd-ae5000_v2_06i.s", [],
+    ba = P.Build(btree, bmain, P.incs_of(base),
                  os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_a"))
-    bb = P.Build(tree, "hd-ae5000_%s.s" % ver, [os.path.join(ROOT, "hdae5000")],
+    bb = P.Build(tree, "hd-ae5000_%s.s" % ver, P.incs_of(ver),
                  os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_b"))
     assert ba.ok and bb.ok, (ba.stderr[-500:], bb.stderr[-500:])
     ia, ib = ba.img, bb.img

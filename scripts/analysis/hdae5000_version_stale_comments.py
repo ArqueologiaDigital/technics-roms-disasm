@@ -101,13 +101,17 @@ def render(tok, v):
 
 def main():
     ver = sys.argv[1] if len(sys.argv) > 1 else "v2_01i"
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
+    import port_hdae5000_version as P0
+    base = P0.base_of(sys.argv)
+    btree, bmain = P0.base_tree(base)
     fix = "--fix" in sys.argv
     tree = os.path.join(ROOT, "hdae5000_" + ver)
     total = fixed = 0
     for fn in sorted(os.listdir(tree)):
         if not fn.endswith(".s"):
             continue
-        wf = os.path.join(ROOT, "hdae5000", "hd-ae5000_v2_06i.s" if fn.startswith("hd-ae5000_") else fn)
+        wf = os.path.join(btree, bmain if fn.startswith("hd-ae5000_") else fn)
         a = open(wf, "rb").read().split(b"\n")
         b = open(os.path.join(tree, fn), "rb").read().split(b"\n")
         sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
@@ -162,9 +166,11 @@ def render_hex(tok, v):
 def byte_checks(ver, tree, fix):
     sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
     import port_hdae5000_version as P
-    ba = P.Build(os.path.join(ROOT, "hdae5000"), "hd-ae5000_v2_06i.s", [],
+    base = P.base_of(sys.argv)
+    btree, bmain = P.base_tree(base)
+    ba = P.Build(btree, bmain, P.incs_of(base),
                  os.path.join(P.SCRATCH, "port_hdae5000_stalecomments_a"))
-    bb = P.Build(tree, P.main_of(ver), [os.path.join(ROOT, "hdae5000")],
+    bb = P.Build(tree, P.main_of(ver), P.incs_of(ver),
                  os.path.join(P.SCRATCH, "port_hdae5000_stalecomments_b"))
     assert ba.ok and bb.ok, (ba.stderr[-500:], bb.stderr[-500:])
 
@@ -184,7 +190,7 @@ def byte_checks(ver, tree, fix):
             if len(q) == 3 and q[1] in "tTaA" and not q[2].startswith("__PM_"):
                 d[q[2]] = int(q[0], 16)
         return d
-    va = values(os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_v2_06i.llvm.elf"))
+    va = values(os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_%s.llvm.elf" % base))
     vb = values(os.path.join(ROOT, "rebuilt_ROMs", "hd-ae5000_%s.llvm.elf" % ver))
     vb_set = set(vb.values())
     moved = {}
@@ -214,7 +220,7 @@ def byte_checks(ver, tree, fix):
 
     n_bytes = n_oper = n_sym = n_img = n_left = 0
     for fn in sorted(bb.texts):
-        twin = "hd-ae5000_v2_06i.s" if fn.startswith("hd-ae5000_") else fn
+        twin = bmain if fn.startswith("hd-ae5000_") else fn
         if twin not in ba.texts:
             continue
         a, b = ba.texts[twin], bb.texts[fn]

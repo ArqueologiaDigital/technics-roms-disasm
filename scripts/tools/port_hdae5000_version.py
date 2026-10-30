@@ -63,7 +63,8 @@ RUN (from the repo root)
     python3 scripts/tools/port_hdae5000_version.py init     v1_15i --from v2_01i  # from another port
     python3 scripts/tools/port_hdae5000_version.py status   v2_01i  # the hunks left
     python3 scripts/tools/port_hdae5000_version.py fix      v2_01i [--rounds N]
-    python3 scripts/tools/port_hdae5000_version.py code     v2_01i [N ...] [--dry]
+    python3 scripts/tools/port_hdae5000_version.py code     v2_01i [N ...] [--dry] [--same-only | --widen]
+    python3 scripts/tools/port_hdae5000_version.py routine  v1_15i LABEL..END [...] [--dry]  # `code` on a span
     python3 scripts/tools/port_hdae5000_version.py strings  v2_01i [N ...] [--dry]
     python3 scripts/tools/port_hdae5000_version.py uitables v2_01i
     python3 scripts/tools/port_hdae5000_version.py show     v2_01i N [--code]
@@ -101,6 +102,28 @@ NUM_RE = re.compile(rb'(?<![\w.])(-?)(0x[0-9a-fA-F]+|[0-9]+)(?![\w])')
 SYM_RE = re.compile(rb'(?<![\w.@])(\.L[A-Za-z_]\w*|[A-Za-z_][A-Za-z0-9_]*)(?:\s*([+-])\s*(0x[0-9a-fA-F]+|[0-9]+))?')
 DIRECTIVE_W = {b".byte": 1, b".short": 2, b".word": 2, b".hword": 2, b".2byte": 2,
                b".long": 4, b".int": 4, b".4byte": 4}
+
+
+def base_of(argv, default="v2_06i"):
+    """The version a review tool compares with: `--base <ver>` (the tree a port was made
+    from: v2_01i for v1.15i, v1_15i for v1.10i), default v2.06i = hdae5000/."""
+    return argv[argv.index("--base") + 1] if "--base" in argv else default
+
+
+# a tree's further include directories, after its own and before hdae5000/ (v1.10i takes
+# v1.15i's boot splash, which it shares)
+EXTRA_INC = {"v1_10i": ["hdae5000_v1_15i"]}
+
+
+def incs_of(ver):
+    return [os.path.join(ROOT, d) for d in EXTRA_INC.get(ver, [])] + [os.path.join(ROOT, SRC_TREE)]
+
+
+def base_tree(ver):
+    """(tree directory, main file) of a version; v2_06i is hdae5000/."""
+    if ver == "v2_06i":
+        return os.path.join(ROOT, SRC_TREE), SRC_MAIN
+    return tree_of(ver), main_of(ver)
 
 
 def tree_of(ver):
@@ -184,11 +207,13 @@ class Build:
         self.img = open(rom, "rb").read()
         nm = subprocess.run([BIN + "/llvm-nm", "--defined-only", elf], capture_output=True,
                             text=True, check=True).stdout
-        mark, self.syms = {}, []
+        mark, self.syms, self.abs = {}, [], {}
         for l in nm.split("\n"):
             p = l.split()
             if len(p) != 3:
                 continue
+            if p[1] in "aA":
+                self.abs[p[2]] = int(p[0], 16)
             if p[2].startswith("__PM_"):
                 fi, n = p[2][5:].split("_")
                 mark[(int(fi), int(n))] = int(p[0], 16)
@@ -355,7 +380,11 @@ def retarget(line, wb, bb, equs, symaddr):
     new_code, eq = code, {}
     for c0, c1 in clusters(diff):
         done = False
-        for width in (4, 3, 2, 1):
+        # the narrowest window that covers the cluster first: `ld (mem:24), 1` (f2 <mem> 00 01)
+        # differs from `..., 0` in its last byte only, and a 2-byte window there also holds the
+        # sub-opcode 00, which once produced `ld (mem:24), 256`.  The untouched high bytes of
+        # a wider operand are kept.
+        for width in (1, 2, 3, 4):
             for s in range(max(0, c1 - width + 1), c0 + 1):
                 if s + width > len(wb) or s > c0 or s + width - 1 < c1:
                     continue
@@ -378,9 +407,13 @@ def retarget(line, wb, bb, equs, symaddr):
                 h = hits[0]
                 if h[0] == "num":
                     tk = h[1]
-                    new_code = new_code[:tk[0]] + render_num(tk, vb, width) + new_code[tk[1]:]
+                    full = (tk[2] & ~mask) | vb if tk[2] >= 0 else vb
+                    new_code = new_code[:tk[0]] + render_num(tk, full if full >> (8 * width) else vb,
+                                                             width if not full >> (8 * width) else 4) \
+                        + new_code[tk[1]:]
                 else:
-                    eq[h[2]] = vb - h[3]
+                    cur = equs[h[2]][0] + h[3]
+                    eq[h[2]] = ((cur & ~mask) | vb) - h[3]
                 done = True
                 break
             if done:
@@ -541,6 +574,8 @@ class Ctx:
             pw, pb = max(pw, e_), max(pb, sb_ + (e_ - s_))
         self.ram_names = {v: n for n, (v, f, l) in self.equs.items() if n.startswith("HDAE5000_RAM_")}
         self.obj_names = {v: n for n, (v, f, l) in self.equs.items() if n.startswith("HDAE5000_OBJ_")}
+        # since the GUI is a macro tree its object ids are absolute symbols of the build
+        self.obj_names.update({v: n for n, v in bld.abs.items() if n.startswith("HDAE5000_OBJ_")})
         self.new_labels = {}                    # B address -> name (created this round)
         self.used = set(bld.symaddr) | set(self.equs)
 
@@ -752,7 +787,7 @@ def roundtrip_many(cands):
 
 def do_build(ver):
     work = os.path.join(SCRATCH, "port_hdae5000_" + ver)
-    return Build(tree_of(ver), main_of(ver), [os.path.join(ROOT, SRC_TREE)], work)
+    return Build(tree_of(ver), main_of(ver), incs_of(ver), work)
 
 
 def expand(build, h):
@@ -1047,9 +1082,74 @@ def farptr_pass(out, ctx):
     return [(a, lower_hex(t) if a is not None else t) for a, t in res]
 
 
-def cmd_code(ver, only=None, dry=False):
+def moved_rom_label(line, wb, bb, bld):
+    """True when the line differs from the target only in one 24-bit ROM address that the
+    line spells as a label: the label has not reached its target address yet (the data it
+    names is not aligned), so the line is kept as it is."""
+    if len(wb) != len(bb):
+        return False
+    diff = [i for i in range(len(wb)) if wb[i] != bb[i]]
+    if not diff or diff[-1] - diff[0] > 2:
+        return False
+    for s in range(max(0, diff[-1] - 2), diff[0] + 1):
+        if s + 3 > len(wb):
+            continue
+        va = int.from_bytes(wb[s:s + 3], "little")
+        vb = int.from_bytes(bb[s:s + 3], "little")
+        if BASE <= va < BASE + 0x80000 and BASE <= vb < BASE + 0x80000:
+            names = [n for a, n in bld.syms if a == va and not n.startswith("__PM_")]
+            code, _ = split_code(line)
+            if any(re.search(rb'(?<![\w.])' + re.escape(n.encode()) + rb'(?![\w])', code) for n in names):
+                return True
+    return False
+
+
+def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False):
+    """same_only: leave the hunks whose two sides differ in size alone.  The shape alignment
+    of a resized hunk in repetitive code (nine "post the flag to object N" blocks where the
+    target has eight) can drop the wrong blocks; the v1.15i port did those by hand."""
     bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
     ctx = Ctx(bld, ref, full)
+    if spans is not None:
+        # explicit spans "A..B" of labels: W from A to B, B side where the alignment
+        # places the two labels -- a whole routine aligned at once
+        inv = {n: b for b, n in ctx.bmap.items()}
+        hs = []
+        for sp in spans:
+            a, _, e = sp.partition("..")
+            for x in (a, e):
+                if x not in bld.symaddr or x not in inv:
+                    sys.exit("%s: not a label the alignment places in the target" % x)
+            hs.append((bld.symaddr[a], bld.symaddr[e], inv[a], inv[e]))
+        only = None
+    elif widen:
+        # each resized code hunk becomes the span between the nearest labels around it that
+        # the alignment places on both sides: the shape alignment then sees whole blocks
+        # instead of a cut through repetitive code
+        placed = sorted((bld.symaddr[n], b, n) for b, n in ctx.bmap.items()
+                        if n in bld.symaddr and bld.symaddr[n] < CODE_END)
+        was = [w for w, _, _ in placed]
+        new_hs, seen = [], set()
+        for idx, h in enumerate(hs):
+            if only is not None and idx not in only:
+                continue
+            (w0, w1, b0, b1), li = expand(bld, h)
+            if w1 - w0 == b1 - b0 or w0 >= CODE_END:
+                continue
+            k = bisect.bisect_right(was, w0) - 1
+            while k >= 0 and placed[k][1] > b0:
+                k -= 1
+            j = bisect.bisect_left(was, w1)
+            while j < len(placed) and placed[j][1] < b1:
+                j += 1
+            if k < 0 or j >= len(placed) or placed[j][0] - placed[k][0] > 0x1000:
+                continue
+            sp = (placed[k][0], placed[j][0], placed[k][1], placed[j][1])
+            if sp not in seen and not any(a < sp[1] and sp[0] < e for a, e, _, _ in new_hs):
+                seen.add(sp)
+                new_hs.append(sp)
+        hs, only = new_hs, None
+        print("%d resized hunks widened to label spans" % len(hs))
     wdec = {a: (bs, t) for a, bs, t in unidasm(bld.img, BASE)}
     templates = collections.defaultdict(list)
     for k, (f, n, s, e) in enumerate(bld.lines):
@@ -1064,6 +1164,8 @@ def cmd_code(ver, only=None, dry=False):
             continue
         (w0, w1, b0, b1), li = expand(bld, h)
         if not li:
+            continue
+        if same_only and w1 - w0 != b1 - b0:
             continue
         files = {bld.lines[k][0] for k in li}
         if len(files) != 1 or not all(is_insn(bld.text(bld.lines[k][0], bld.lines[k][1])) for k in li):
@@ -1126,6 +1228,8 @@ def cmd_code(ver, only=None, dry=False):
                 t = transplant(line, wb, bb, bt, ba, ctx, keep_comment=True)
                 if t is not None:
                     return t
+                if moved_rom_label(line, wb, bb, bld):
+                    return line
             for k in templates.get(shape(bt) + "/%d" % len(bb), []):
                 tf, tn, ts, te = bld.lines[k]
                 t = transplant(bld.text(tf, tn), bld.img[ts - BASE:te - BASE], bb, bt, ba, ctx)
@@ -1159,8 +1263,8 @@ def cmd_code(ver, only=None, dry=False):
             skipped.append((idx, "an instruction could not be spelled: %s @%06x" % (bins[j][2], bins[j][0])))
             continue
         plans.append((f, n_first, n_last, out, idx, b0, b1))
-        for name, v in heq.items():
-            eqs[name] = v
+        # a constant the line wants moved is left to `fix`, which can tell one constant
+        # with two meanings from one that moved (resolve_votes)
     for p in plans:
         p[3][:] = farptr_pass(p[3], ctx)
     # place the labels created this round
@@ -1609,13 +1713,14 @@ def cmd_uitables(ver, tag="v2.01i"):
     pt, nt, _ = ui_tables_of(ref)
     sym.setdefault("HDAE5000_UiObject_PtrTable", pt)
     sym.setdefault("HDAE5000_UiObjectName_PtrTable", nt)
-    if "HDAE5000_ObjName_Table" not in sym and "HDAE5000_DataSegmentImage" in sym:
-        # the image opens with the ApFunction table (procedures in ROM, then NULL), and its
-        # parallel name table follows it
-        a = sym["HDAE5000_DataSegmentImage"]
-        while int.from_bytes(ref[a - BASE:a - BASE + 4], "little"):
-            a += 4
-        sym["HDAE5000_ObjName_Table"] = a + 4
+    for name, tid in (("HDAE5000_ObjName_Table", 0x42A), ("HDAE5000_ScreenProc_Table", 0x14A),
+                      ("HDAE5000_ScreenName_Table", 0x44A)):
+        if name not in sym:
+            a = registered_table(ref, tid)
+            if a is not None:
+                sym[name] = a
+    sym.setdefault("HDAE5000_RECORD_TABLE", registered_table(ref, 0x16A))
+    sym.setdefault("HDAE5000_RECORD_COUNT", registered_count(ref, 0x16A))
     nm = subprocess.run([BIN + "/llvm-nm", "--defined-only", os.path.join(bld_work(ver), "out.elf")],
                         capture_output=True, text=True, check=True).stdout
     # the function and object ids the old hdae5000_ui_tree.s defines are about to be
@@ -1635,6 +1740,31 @@ def cmd_uitables(ver, tag="v2.01i"):
     print("%d labels placed in the %s image -> %s" % (len(sym), ver, out))
     conv = os.path.join(ROOT, "scripts", "converters", "hdae5000_ui_tree.py")
     sys.exit(subprocess.call([sys.executable, conv, ver, "--write", "--syms", out], cwd=ROOT))
+
+
+def registered_table(ref, tid):
+    """ROM address (in the .data image) of the table HDAE5000_Handler_Registration registers
+    as `tid`: the last `lda xwa, (ram:24)` (f2 <ram> 30) before its `ldw wa, tid` (30 <tid>),
+    the RAM address mapped back through the boot copy loop (`ld xde, dest` / `ld xhl, image`
+    / `ld xbc, count`: 42 <dest> 00 43 <image> 00 41)."""
+    m = re.search(rb"\x42(...)\x00\x43(...)\x00\x41", ref, re.S)
+    if not m:
+        return None
+    dest, img = (int.from_bytes(x, "little") for x in m.groups())
+    k = ref.find(b"\x30" + tid.to_bytes(2, "little"), 0x20, 0x1000)
+    if k < 0:
+        return None
+    j = max(i for i in range(0x20, k) if ref[i] == 0xF2 and ref[i + 4] == 0x30)
+    ram = int.from_bytes(ref[j + 1:j + 4], "little")
+    return ram if ram >= BASE else ram - dest + img       # the class table is read in ROM
+
+
+def registered_count(ref, tid):
+    """The ROM word HDAE5000_Handler_Registration loads as table `tid`'s entry count: the last
+    `ld wa, (addr:24)` (d2 <addr> 20) before its `ldw wa, tid`."""
+    k = ref.find(b"\x30" + tid.to_bytes(2, "little"), 0x20, 0x1000)
+    j = max(i for i in range(0x20, k) if ref[i] == 0xD2 and ref[i + 4] == 0x20)
+    return int.from_bytes(ref[j + 1:j + 4], "little")
 
 
 def bld_work(ver):
@@ -1885,7 +2015,9 @@ def main():
         cmd_fix(ver, rounds)
     elif cmd == "code":
         only = [int(x) for x in a[2:] if x.isdigit()] or None
-        cmd_code(ver, only, dry="--dry" in a)
+        cmd_code(ver, only, dry="--dry" in a, same_only="--same-only" in a, widen="--widen" in a)
+    elif cmd == "routine":
+        cmd_code(ver, dry="--dry" in a, spans=[x for x in a[2:] if ".." in x])
     elif cmd == "strings":
         only = [int(x) for x in a[2:] if x.isdigit()] or None
         cmd_strings(ver, only, dry="--dry" in a, tag=tag_of(ver))

@@ -71,9 +71,13 @@ def body(bld, a, e, names):
 
 def main():
     ver = sys.argv[1] if len(sys.argv) > 1 else "v2_01i"
-    ba = P.Build(os.path.join(ROOT, "hdae5000"), "hd-ae5000_v2_06i.s", [],
+    sys.path.insert(0, os.path.join(ROOT, "scripts", "tools"))
+    import port_hdae5000_version as P0
+    base = P0.base_of(sys.argv)
+    btree, bmain = P0.base_tree(base)
+    ba = P.Build(btree, bmain, P.incs_of(base),
                  os.path.join(P.SCRATCH, "port_hdae5000_routinediff_a"))
-    bb = P.Build(P.tree_of(ver), P.main_of(ver), [os.path.join(ROOT, "hdae5000")],
+    bb = P.Build(P.tree_of(ver), P.main_of(ver), P.incs_of(ver),
                  os.path.join(P.SCRATCH, "port_hdae5000_routinediff_b"))
     assert ba.ok and bb.ok
     ea, eb = ba.symaddr["HDAE5000_Str_End_ObjNames"], bb.symaddr["HDAE5000_Str_End_ObjNames"]
