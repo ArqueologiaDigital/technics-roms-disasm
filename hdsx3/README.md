@@ -128,7 +128,7 @@ the title TT_HDDEXT, whose screen is HDD_MAIN_MENU. The generator reads the KN60
   `calls (aN)` (`grep -c 'calls	(a' src/program.s`). Those that load the host's block-0 Function
   table are traced (above: entry OFF / 4); the others, through pointers the plug-in builds at run time,
   are not.
-- 40 small data pieces (266 bytes) are still generic `.incbin`s, and 101 (3,133 bytes) are declared opaque after the
-  reader search (`docs/coverage/data-incbin-2026-10-30-01.txt`, `../kn6000/notes/siblings-data-final/README.md`).
+- No data piece is a generic `.incbin` any more; 101 (3,133 bytes) are declared opaque after the reader
+  search (`docs/coverage/data-incbin-2026-10-30-02.txt`, `../kn6000/notes/siblings-data-final/README.md`).
 - The 2,625 indirect calls could print the host routine's name for OFF (`plugin_registry.py` lists
   the 41 offsets); they are still numbers.
