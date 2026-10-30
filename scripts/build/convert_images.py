@@ -196,6 +196,35 @@ IMAGE_METADATA = {
 # Images stored as self-describing Windows BMP files (header + own palette).
 BMP_FILE_IMAGES = {name for name in IMAGE_METADATA if name.endswith(".BMP")}
 
+# Pictures whose committed source is already a standalone PNG (the build turns the PNG into the ROM bytes, so the
+# PNG is the picture itself): copied to the gallery as they are.  A .bin beside one of them is not decoded again.
+# Lane media-files, 2026-10-30 (notes/media-files-2026-10-30/README.md).
+STANDALONE_PNGS = {
+    # Sound-edit screens: 1 bpp, stored column by column, drawn by static op 03 (scripts/build/se_bitmaps.py)
+    "SeBitmap_EnvCurve1.png": "Sound edit: envelope curve 1 (40x40, 1-bit)",
+    "SeBitmap_EnvCurve2.png": "Sound edit: envelope curve 2 (40x40, 1-bit)",
+    "SeBitmap_EnvCurve3.png": "Sound edit: envelope curve 3 (40x40, 1-bit)",
+    "SeBitmap_EnvCurve4.png": "Sound edit: envelope curve 4 (40x40, 1-bit)",
+    "SeBitmap_EnvCurve5.png": "Sound edit: envelope curve 5 (40x40, 1-bit)",
+    "SeBitmap_EnvCurve6.png": "Sound edit: envelope curve 6 (40x40, 1-bit)",
+    "SeBitmap_Pattern24x10_1.png": "Sound edit: 24x10 pattern 1 (1-bit)",
+    "SeBitmap_Pattern24x10_2.png": "Sound edit: 24x10 pattern 2 (1-bit)",
+    "SeBitmap_Pattern24x10_3.png": "Sound edit: 24x10 pattern 3 (1-bit)",
+    "SeBitmap_Pattern24x10_4.png": "Sound edit: 24x10 pattern 4 (1-bit)",
+    "SeBitmap_Picture40x40.png": "Sound edit: 40x40 picture after the part-selector records (1-bit)",
+    "SeBitmap_RadioOff.png": "Sound edit: radio button, off (16x12, 1-bit)",
+    "SeBitmap_RadioOn.png": "Sound edit: radio button, on (16x12, 1-bit)",
+    # Pictures held as initializers in the GUI's compiled C (scripts/build/c_bitmaps.py)
+    "WelcomeGlyph_C.png": "Welcome screen: letter C (16x17, 1-bit, rows stored bottom-up)",
+    "Bitmap_Digit1.png": "Technichord: digit 1 (16x17, 1-bit)",
+    "Bitmap_DigitD.png": "Technichord: letter D (16x17, 1-bit)",
+    "Bitmap_DigitL.png": "Technichord: letter L, three frames (48x17, 1-bit)",
+    "Bitmap_DigitR.png": "Technichord: letter R (16x17, 1-bit)",
+    "UserBitmapCheck_Bitmap24x24.png": "User-bitmap check mark (24x24, 8-bit), drawn by VwUserBitmap_HandlePaint",
+    # HD-AE5000 (scripts/build/hdae5000_images.py)
+    "HDAE5000_Bitmap_Button01.png": "HD-AE5000: the STORE button (42x15, 8-bit, its own greyscale palette)",
+}
+
 
 def convert_1bit_image(data: bytes, width: int, height: int) -> Image.Image:
     """Convert 1-bit packed bitmap to PIL Image.
@@ -388,6 +417,13 @@ def main():
         bin_files = sorted(images_dir.glob("*.bin")) + sorted(images_dir.glob("*.BMP"))
         converted = 0
         skipped = 0
+
+        for png_path in sorted(images_dir.glob("*.png")):
+            if png_path.name in STANDALONE_PNGS:
+                Image.open(png_path).save(output_dir / png_path.name)
+                print(f"  {png_path.name}: copied (standalone PNG)")
+                converted += 1
+        bin_files = [b for b in bin_files if b.stem + ".png" not in STANDALONE_PNGS]
 
         for bin_path in bin_files:
             # Select appropriate palette based on image source

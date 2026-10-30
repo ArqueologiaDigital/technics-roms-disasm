@@ -326,9 +326,8 @@ in v1.10i, `.Lrfsb_exit`.
   are wave 1's `maincpu v8` and `subcpu v141`. Until it is, the Code-Coverage Evidence Ledger's
   full-coverage criterion cannot cover it. Adding it means a new snapshot (`make dispatch-census`),
   which the coordinator runs after merging.
-- **Documentation website.** `../technics-docs` (`hdae5000.md`, `rom-reconstruction.md`) does not yet
-  say that v2.01i is a byte-exact target, or what differs between the versions. The section
-  "What v2.01i lacks, or has, against v2.06i" above is the text to start from.
+- **Documentation website.** Done: technics-docs 944d566 (2026-10-30) gives `hdae5000.md` the section
+  "Four byte-exact source trees" (v2.06i, v2.01i, v1.15i, v1.10i and what differs between them).
 - **v1.x review.** The label check's 7 rename suggestions (above) and its "moved" rows.
 - **v2.x header and terminator.** The v2.x trees could spell the ROM header's image-end pointer and
   the naming tables' empty-string pointer as the v1 trees now do (byte-neutral).
