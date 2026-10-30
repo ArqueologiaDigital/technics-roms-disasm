@@ -114339,7 +114339,7 @@ func_4C03D431_entry:
 	inc	d1
 	lne
 	mov	0x840007d2, a0
-	mov	0x4c32be24, a1
+	mov	FactoryPanelMemory, a1
 	mov	0x0002d8d0, d0
 	call	memcpy_entry, [a2,a3], 8
 	call	func_4C03EC70_entry, [d2,d3,a2], 0x1c
@@ -155154,7 +155154,7 @@ func_4C0557E9_entry:
 	exth	d0
 	cmp	0, d0
 	bge	func_4C0557E9_entry_L28
-	mov	0x4c359ac0, a0
+	mov	TechnicsRhythmsResource, a0
 	mov	a0, (func_4C0557E9_Var)
 	call	func_4C0552B3_entry, [d2,a2], 0x1c
 func_4C0557E9_entry_L28:
@@ -156340,7 +156340,7 @@ TechnicsPadsResourceInit_entry:
 	exth	d0
 	cmp	0, d0
 	bge	TechnicsPadsResourceInit_entry_L28
-	mov	0x4c35ff84, a0
+	mov	TechnicsPadsResource, a0
 	mov	a0, (TechnicsPadsResourceInit_Var)
 	call	TechnicsPadsResourceParse_entry, [d2], 0x18
 TechnicsPadsResourceInit_entry_L28:
@@ -160048,7 +160048,7 @@ func_4C05800B:
 func_4C05800B_L9:
 	extbu	d0
 	asl	3, d0
-	add	0x4c3850bc, d0
+	add	NoteConvRules, d0
 	mov	d0, a0
 	movbu	(1, a0), d0
 	retf	0, 0
@@ -160062,7 +160062,7 @@ func_4C058026:
 func_4C058026_L9:
 	extbu	d0
 	asl	3, d0
-	add	0x4c3850bc, d0
+	add	NoteConvRules, d0
 	mov	d0, a0
 	movbu	(2, a0), d0
 	retf	0, 0
@@ -160076,7 +160076,7 @@ func_4C058041:
 func_4C058041_L9:
 	extbu	d0
 	asl	3, d0
-	add	0x4c3850bc, d0
+	add	NoteConvRules, d0
 	mov	d0, a0
 	movbu	(3, a0), d0
 	retf	0, 0
@@ -160097,7 +160097,7 @@ func_4C05805C_entry_L13:
 	movbu	(a0), d0
 	asl	3, d0
 	mov	d0, a0
-	add	0x4c3850bc, a0
+	add	NoteConvRules, a0
 	mov	(4, a0), d2
 	cmp	0, d2
 	bne	func_4C05805C_entry_L2d
@@ -160130,7 +160130,7 @@ func_4C05805C_entry_L4d:
 	asl	3, d0
 	mov	d0, a0
 	movbu	(0x28, sp), d0
-	add	0x4c3850bc, a0
+	add	NoteConvRules, a0
 	mov	d0, a3
 	movbu	(2, a0), d0
 	cmp	0, d0
@@ -160155,7 +160155,7 @@ func_4C05805C_entry_L96:
 	movbu	(a0), d0
 	asl	3, d0
 	mov	d0, a0
-	add	0x4c3850bc, a0
+	add	NoteConvRules, a0
 	movbu	(3, a0), d0
 	cmp	d3, d0
 	beq	func_4C05805C_entry_Laf
@@ -160236,7 +160236,7 @@ func_4C05805C_entry_L127:
 	jmp	func_4C05805C_entry_L1ae
 func_4C05805C_entry_L12e:
 	movbu	(a0), d0
-	mov	0x4c3850bc, a0
+	mov	NoteConvRules, a0
 	asl	3, d0
 	movbu	(d0, a0), d0
 	cmp	0, d0
@@ -222822,7 +222822,7 @@ func_4C07C26A_entry_L2c:
 	bra	func_4C07C26A_entry_L99
 func_4C07C26A_entry_L52:
 	movhu	(0x24, sp), d0
-	mov	0x4c3e5fd4, a0
+	mov	ToneRecordDirectory, a0
 	asl2	d0
 	mov	(d0, a0), a0
 	bra	func_4C07C26A_entry_L99
@@ -222927,7 +222927,7 @@ func_4C07C353_entry_Le:
 func_4C07C353_entry_L36:
 	exthu	d3
 	asl2	d3
-	mov	0x4c3e5fd4, a0
+	mov	ToneRecordDirectory, a0
 	mov	(d3, a0), a0
 	bra	func_4C07C353_entry_L79
 func_4C07C353_entry_L42:
@@ -223000,7 +223000,7 @@ func_4C07C3D4_entry_L29:
 	bra	func_4C07C3D4_entry_L96
 func_4C07C3D4_entry_L4f:
 	movhu	(0x24, sp), d0
-	mov	0x4c3e7104, a0
+	mov	ToneRecordDirectory+4400, a0
 	asl2	d0
 	mov	(d0, a0), a0
 	bra	func_4C07C3D4_entry_L96
@@ -618376,7 +618376,7 @@ MssNameFunc_L121:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	mov	0x10, d0
@@ -618450,7 +618450,7 @@ func_4C163899_entry:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	mov	a2, a0
@@ -618580,7 +618580,7 @@ AcCategoryListBoxProc_L54:
 	nop
 	mulu	d1, d0
 	mov	d0, a1
-	add	0x4c3df8ec, a1
+	add	StyleRecordTable, a1
 	movhu	(8, a1), d0
 	mov	d2, d1
 	movhu	d0, (a0)
@@ -618839,7 +618839,7 @@ func_4C163CC7_entry:
 func_4C163CC7_entry_L7:
 	extbu	d0
 	asl	3, d0
-	mov	0x4c3de8bc, a0
+	mov	StyleGenreTable, a0
 	mov	(d0, a0), a1
 	mov	d2, d0
 	extbu	d0
@@ -618890,7 +618890,7 @@ func_4C163D15_entry_Lf:
 	exth	d0
 	asl	3, d0
 	mov	d0, a0
-	add	0x4c3de8bc, a0
+	add	StyleGenreTable, a0
 	mov	(4, a0), a0
 	mov	0x01850000, d1
 	mov	(4, a0), a0
@@ -619225,7 +619225,7 @@ func_4C1640C8:
 func_4C1640C8_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d1
 	mov	a0, (0x88, sp)
-	mov	0x4c3df8ec, a0
+	mov	StyleRecordTable, a0
 	mov	0x18, d2
 	nop
 	nop
@@ -619252,7 +619252,7 @@ func_4C1640C8_entry:
 func_4C1640C8_entry_L3c:
 	exthu	d0
 	asl	3, d0
-	add	0x4c3de8bc, d0
+	add	StyleGenreTable, d0
 	mov	d0, a0
 	mov	(4, a0), a3
 	movhu	(0x18, sp), d0
@@ -619330,7 +619330,7 @@ func_4C1640C8_entry_L11a:
 	exthu	d0
 	asl	3, d0
 	mov	d0, a0
-	add	0x4c3de8bc, a0
+	add	StyleGenreTable, a0
 	mov	(4, a0), d0
 	mov	sp, a0
 	mov	d0, (0x14, sp)
@@ -619394,7 +619394,7 @@ func_4C16428D:
 func_4C16428D_entry:
 	exthu	d0
 	asl	3, d0
-	add	0x4c3de8bc, d0
+	add	StyleGenreTable, d0
 	mov	d0, a0
 	mov	(4, a0), d3
 	clr	d1
@@ -619423,7 +619423,7 @@ func_4C1642BF:
 
 func_4C1642BF_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d1
-	mov	0x4c3df8ec, a1
+	mov	StyleRecordTable, a1
 	mov	a1, a0
 	mov	d0, d3
 	mov	0x18, d0
@@ -619466,7 +619466,7 @@ func_4C1642BF_entry_L4f:
 	movhu	(0x14, sp), d0
 	exthu	d2
 	asl	3, d0
-	add	0x4c3de8bc, d0
+	add	StyleGenreTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	asl	3, d2
@@ -619893,10 +619893,10 @@ func_4C164794_entry:
 	nop
 	nop
 	mulu	d2, d1
-	add	0x4c3df8ec, d1
+	add	StyleRecordTable, d1
 	mov	d1, a0
 	movhu	(0xa, a0), d2
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	movhu	(8, a0), d0
 	movhu	d2, (0x1c, sp)
@@ -619912,7 +619912,7 @@ func_4C164794_entry:
 func_4C164794_entry_L47:
 	exthu	d0
 	asl	3, d0
-	add	0x4c3de8bc, d0
+	add	StyleGenreTable, d0
 	mov	d0, a0
 	mov	(4, a0), d1
 	movhu	(0x1c, sp), d0
@@ -619936,7 +619936,7 @@ func_4C164794_entry_L70:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	mov	d2, d1
@@ -620024,7 +620024,7 @@ func_4C164794_entry_L106:
 	nop
 	mulu	d1, d0
 	mov	d0, a0
-	add	0x4c3df8ec, a0
+	add	StyleRecordTable, a0
 	mov	(4, a0), a1
 	mov	d2, d0
 	exthu	d0
@@ -620058,7 +620058,7 @@ func_4C164794_entry_L156:
 	exthu	d0
 	asl	3, d0
 	mov	d0, a0
-	add	0x4c3de8bc, a0
+	add	StyleGenreTable, a0
 	mov	(4, a0), d0
 	mov	sp, a2
 	mov	d0, (0x18, sp)
@@ -620082,7 +620082,7 @@ func_4C164794_entry_L181:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	mov	d2, d0
@@ -620129,7 +620129,7 @@ func_4C164794_entry_L1d0:
 	nop
 	mulu	d1, d0
 	mov	d0, a0
-	add	0x4c3df8ec, a0
+	add	StyleRecordTable, a0
 	mov	(4, a0), a1
 	mov	d2, d0
 	exthu	d0
@@ -620167,7 +620167,7 @@ func_4C1649B6:
 
 func_4C1649B6_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d2
-	mov	0x4c3df8ec, a1
+	mov	StyleRecordTable, a1
 	mov	0x18, d0
 	nop
 	nop
@@ -620231,13 +620231,13 @@ func_4C164A2D:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	movhu	(8, a0), d0
 	exthu	d0
 	asl	3, d0
 	mov	d0, a0
-	add	0x4c3de8bc, a0
+	add	StyleGenreTable, a0
 	mov	(4, a0), a0
 	mov	(4, a0), a0
 	movhu	(a0), d0
@@ -620252,14 +620252,14 @@ func_4C164A5A_entry:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	movhu	(8, a0), d1
 	clr	d0
 	exthu	d1
 	asl	3, d1
 	mov	d1, a0
-	add	0x4c3de8bc, a0
+	add	StyleGenreTable, a0
 	mov	(4, a0), a1
 	clr	d2
 	setlb
@@ -620289,7 +620289,7 @@ func_4C164AAC:
 func_4C164AAC_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d1
 	movbu	d0, (0x2c, sp)
-	mov	0x4c3df8ec, a0
+	mov	StyleRecordTable, a0
 	mov	0x18, d0
 	nop
 	nop
@@ -620313,7 +620313,7 @@ func_4C164AAC_entry:
 	add	d1, a0
 	movhu	(0xc, a0), d0
 	mov	d2, a0
-	add	0x4c3de8bc, a0
+	add	StyleGenreTable, a0
 	mov	(4, a0), a3
 	mov	d0, a2
 	mov	d3, d0
@@ -620744,7 +620744,7 @@ func_4C164F3F:
 func_4C164F3F_entry:
 	mov	a0, (0x94, sp)
 	movhu	(AcStyleNameProc_L3f_Var), d0
-	mov	0x4c3df8ec, a1
+	mov	StyleRecordTable, a1
 	mov	0x18, d1
 	nop
 	nop
@@ -620765,7 +620765,7 @@ func_4C164F3F_entry:
 	mov	sp, a3
 	add	0x1c, a3
 	asl	3, d2
-	mov	0x4c3df128, a2
+	mov	StyleAlphabetTable, a2
 	add	a2, d0
 	mov	d0, a0
 	mov	(4, a0), a0
@@ -620823,7 +620823,7 @@ func_4C165012:
 	clr	d1
 	clr	d0
 	setlb
-	mov	0x4c3df128, a0
+	mov	StyleAlphabetTable, a0
 	exthu	d1
 	asl	3, d1
 	mov	(d1, a0), d1
@@ -620884,13 +620884,13 @@ func_4C16506A_entry:
 	nop
 	mulu	d0, d2
 	mov	d2, a0
-	add	0x4c3df8ec, a0
+	add	StyleRecordTable, a0
 	movhu	(0x12, a0), d0
 	exthu	d0
 	call	func_4C165035_entry, [d2], 0xc
 	exthu	d0
 	asl	3, d0
-	add	0x4c3df128, d0
+	add	StyleAlphabetTable, d0
 	mov	d0, a0
 	mov	(4, a0), a0
 	mov	0x01850000, d1
@@ -621290,7 +621290,7 @@ func_4C1654CD_entry:
 	nop
 	nop
 	mulu	d2, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	movhu	(0x12, a0), d1
 	mov	0x18, d0
@@ -621298,12 +621298,12 @@ func_4C1654CD_entry:
 	nop
 	mulu	d2, d0
 	mov	d0, a0
-	add	0x4c3df8ec, a0
+	add	StyleRecordTable, a0
 	movhu	(0x14, a0), d0
 	exthu	d1
 	asl	3, d1
 	mov	d1, a0
-	add	0x4c3df128, a0
+	add	StyleAlphabetTable, a0
 	mov	(4, a0), a3
 	exthu	d0
 	mov	9, d1
@@ -621364,7 +621364,7 @@ func_4C1654CD_entry_La1:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	mov	(0x14, sp), a0
@@ -621411,7 +621411,7 @@ func_4C1655C7_entry:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	movhu	(0x14, a0), d1
 	mov	9, d0
@@ -621430,7 +621430,7 @@ func_4C1655EE:
 func_4C1655EE_entry:
 	mov	d0, d1
 	movhu	(AcStyleNameProc_L3f_Var), d0
-	mov	0x4c3df8ec, a2
+	mov	StyleRecordTable, a2
 	mov	0x18, d2
 	nop
 	nop
@@ -621444,7 +621444,7 @@ func_4C1655EE_entry:
 	mulu	d0, d2
 	add	d2, a2
 	movhu	(0x14, a2), d2
-	mov	0x4c3df128, a3
+	mov	StyleAlphabetTable, a3
 	mov	d3, d0
 	exthu	d0
 	asl	3, d0
@@ -621823,7 +621823,7 @@ AcEraListBoxProc_L369:
 	ret	[d2,d3,a2,a3], 0x2c
 
 func_4C165A0E:
-	mov	(0x4c3e56b0), a0
+	mov	(StyleEraTable+4), a0
 	movhu	(a0), d0
 	retf	0, 0
 
@@ -621834,7 +621834,7 @@ func_4C165A19:
 func_4C165A19_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d0
 	mov	a0, (0x94, sp)
-	mov	0x4c3df8ec, d2
+	mov	StyleRecordTable, d2
 	mov	0x18, d1
 	nop
 	nop
@@ -621868,7 +621868,7 @@ func_4C165A19_entry_L42:
 	movhu	d0, (0x18, sp)
 	mov	0, a2
 	clr	d1
-	mov	0x4c3e56ac, a1
+	mov	StyleEraTable, a1
 	setlb
 	mov	a2, d2
 	exthu	d2
@@ -621910,7 +621910,7 @@ func_4C165A19_entry_L83:
 	nop
 	nop
 	mulu	d1, d0
-	mov	0x4c3e56ac, a0
+	mov	StyleEraTable, a0
 	mov	(d0, a0), a1
 	mov	a3, a0
 	mov	0x10, d0
@@ -621985,7 +621985,7 @@ func_4C165B62:
 func_4C165B62_entry:
 	movbu	d0, (0x2c, sp)
 	movhu	(AcStyleNameProc_L3f_Var), d0
-	mov	0x4c3df8ec, a2
+	mov	StyleRecordTable, a2
 	mov	a2, a0
 	mov	0x18, d1
 	nop
@@ -622019,7 +622019,7 @@ func_4C165B62_entry_L41:
 	nop
 	mulu	d0, d3
 	mov	d3, a0
-	add	0x4c3e56ac, a0
+	add	StyleEraTable, a0
 	movhu	(8, a0), d0
 	mov	(0x14, sp), d3
 	cmp	d2, d0
@@ -622051,7 +622051,7 @@ func_4C165B62_entry_L7c:
 	nop
 	mulu	d0, d3
 	mov	d3, a0
-	add	0x4c3e56ac, a0
+	add	StyleEraTable, a0
 	mov	(4, a0), a0
 	mov	0x01850000, d1
 	movhu	(a0), d0
@@ -622070,7 +622070,7 @@ func_4C165C18:
 func_4C165C18_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d2
 	movbu	d0, (0x2c, sp)
-	mov	0x4c3df8ec, a2
+	mov	StyleRecordTable, a2
 	mov	a2, a0
 	mov	0x18, d0
 	nop
@@ -622103,7 +622103,7 @@ func_4C165C18_entry_L43:
 	mov	d0, a2
 	clr	d0
 	clr	d2
-	mov	0x4c3e56ac, a1
+	mov	StyleEraTable, a1
 	setlb
 	mov	d0, d1
 	exthu	d1
@@ -622624,7 +622624,7 @@ func_4C16619A_entry:
 	nop
 	mulu	d1, d0
 	mov	d0, a1
-	add	0x4c3df8ec, a1
+	add	StyleRecordTable, a1
 	movhu	(0xe, a1), d0
 	mov	d0, a2
 	exthu	d0
@@ -622638,7 +622638,7 @@ func_4C16619A_entry:
 	nop
 	mulu	d1, d0
 	mov	d0, a1
-	add	0x4c3df8ec, a1
+	add	StyleRecordTable, a1
 	movhu	(0xe, a1), d0
 	mov	d0, a2
 func_4C16619A_entry_L4e:
@@ -622647,7 +622647,7 @@ func_4C16619A_entry_L4e:
 	nop
 	mulu	d1, d0
 	mov	d0, a0
-	add	0x4c3df8ec, a0
+	add	StyleRecordTable, a0
 	movhu	(0x10, a0), d0
 	mov	9, d1
 	exthu	d0
@@ -622658,7 +622658,7 @@ func_4C16619A_entry_L4e:
 	mov	d0, a2
 	clr	d2
 	clr	d3
-	mov	0x4c3e56ac, a0
+	mov	StyleEraTable, a0
 	setlb
 	exthu	d2
 	mov	0xc, d0
@@ -622740,7 +622740,7 @@ func_4C16619A_entry_Lf5:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), a1
 	mov	(0x14, sp), a0
@@ -622784,7 +622784,7 @@ func_4C1662E8:
 
 func_4C1662E8_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d1
-	mov	0x4c3df8ec, a2
+	mov	StyleRecordTable, a2
 	mov	0x18, d0
 	nop
 	nop
@@ -622821,7 +622821,7 @@ func_4C166339:
 func_4C166339_entry:
 	movhu	(AcStyleNameProc_L3f_Var), d1
 	movbu	d0, (0x2c, sp)
-	mov	0x4c3df8ec, a2
+	mov	StyleRecordTable, a2
 	mov	a2, a1
 	mov	0x18, d0
 	nop
@@ -622854,7 +622854,7 @@ func_4C166339_entry_L43:
 	mov	d0, a2
 	clr	d1
 	clr	d2
-	mov	0x4c3e56ac, a1
+	mov	StyleEraTable, a1
 	setlb
 	exthu	d1
 	mov	0xc, d0
@@ -624241,7 +624241,7 @@ func_4C1670BB:
 	nop
 	mulu	d1, d0
 	mov	d0, a0
-	add	0x4c3df8ec, a0
+	add	StyleRecordTable, a0
 	movhu	(0xe, a0), d0
 	cmp	0xffff, d0
 	bne	func_4C1670BB_L23
@@ -632185,7 +632185,7 @@ func_4C16B39F_entry_L32:
 	nop
 	nop
 	mulu	d0, d2
-	mov	0x4c3df8ec, a0
+	mov	StyleRecordTable, a0
 	mov	(d2, a0), a0
 	bra	func_4C16B39F_entry_L60
 func_4C16B39F_entry_L43:
@@ -632199,7 +632199,7 @@ func_4C16B39F_entry_L43:
 	nop
 	nop
 	mulu	d0, d1
-	mov	0x4c3df8ec, a0
+	mov	StyleRecordTable, a0
 	mov	(d1, a0), a0
 func_4C16B39F_entry_L60:
 	ret	[d2], 0xc
@@ -632336,7 +632336,7 @@ func_4C16B4DC_entry_Lcb:
 	nop
 	nop
 	mulu	d1, d0
-	add	0x4c3df8ec, d0
+	add	StyleRecordTable, d0
 	mov	d0, a0
 	mov	(4, a0), d1
 	mov	0x10006040, d0
@@ -632429,7 +632429,7 @@ MiddleFuncCall_L17:
 	nop
 	nop
 	mulu	d0, d1
-	mov	0x4c3df8ec, a0
+	mov	StyleRecordTable, a0
 	mov	(d1, a0), a0
 	call	func_4C04C476_entry, [a2], 0x14
 	mov	a2, d0
@@ -632497,7 +632497,7 @@ func_4C16B6B5_entry_L43:
 	nop
 	nop
 	mulu	d1, d0
-	mov	0x4c3df8ec, a0
+	mov	StyleRecordTable, a0
 	mov	(d0, a0), a0
 	call	func_4C04C476_entry, [a2], 0x14
 	exthu	d2

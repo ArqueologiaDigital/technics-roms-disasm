@@ -65977,6 +65977,7 @@
 .equ data_4C32BD38, 0x4c32bd38
 .equ V_TtDebug_ResNames, 0x4c32bd3c
 .equ ptrs_4C32BDE4, 0x4c32bde4
+.equ FactoryPanelMemory, 0x4c32be24
 .equ data_4C35974C, 0x4c35974c
 .equ func_4C05197F_entry_Lf4_Table, 0x4c359758
 .equ func_4C051651_Table, 0x4c359898
@@ -65994,6 +65995,8 @@
 .equ Str_user_bank_0, 0x4c359a30
 .equ Str_clear_2, 0x4c359a60
 .equ data_4C359A74, 0x4c359a74
+.equ TechnicsRhythmsResource, 0x4c359ac0
+.equ TechnicsPadsResource, 0x4c35ff84
 .equ Str_TCMP, 0x4c361420
 .equ data_4C361430, 0x4c361430
 .equ data_4C361436, 0x4c361436
@@ -66607,6 +66610,7 @@
 .equ data_4C385094, 0x4c385094
 .equ Str_Technics, 0x4c385097
 .equ data_4C3850B7, 0x4c3850b7
+.equ NoteConvRules, 0x4c3850bc
 .equ func_4C05C2C0_entry_L1a5_Table, 0x4c3854bc
 .equ EasyCompGrid_La6_Table, 0x4c3855bc
 .equ func_4C05D626_entry_L2c_Var, 0x4c3855c0
@@ -66763,6 +66767,10 @@
 .equ V_demo1_1_Viewables, 0x4c3dc588
 .equ V_demo1_1_ResNames, 0x4c3dca48
 .equ func_4C16B39F_entry_L43_Table, 0x4c3dcf08
+.equ StyleGenreTable, 0x4c3de8bc
+.equ StyleAlphabetTable, 0x4c3df128
+.equ StyleRecordTable, 0x4c3df8ec
+.equ StyleEraTable, 0x4c3e56ac
 .equ User07_ApFunctions, 0x4c3e5724
 .equ User07_ApFunctionNames, 0x4c3e5734
 .equ User07_Classes, 0x4c3e574c
@@ -66781,6 +66789,7 @@
 .equ V_HDDTEST_ResNames, 0x4c3e5e4c
 .equ func_4C172BCC_entry_L27_Table, 0x4c3e5e70
 .equ Str_his_is_Test_Data_for_PPORT, 0x4c3e5e71
+.equ ToneRecordDirectory, 0x4c3e5fd4
 .equ ToneKeyHashDesc, 0x4c3e8680
 .equ ToneKeyHashBuckets, 0x4c3e8684
 .equ ShortKeyHashDesc, 0x4c3e9850

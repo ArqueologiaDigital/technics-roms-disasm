@@ -5213,6 +5213,8 @@
 .equ Str_user_bank_0, 0x4852bd0c
 .equ Str_clear_2, 0x4852bd3c
 .equ data_4852BD50, 0x4852bd50
+.equ TechnicsRhythmsResource, 0x4852bd9c
+.equ TechnicsPadsResource, 0x48532260
 .equ Str_TCMP, 0x485336fc
 .equ data_4853370C, 0x4853370c
 .equ data_48533712, 0x48533712
@@ -5326,6 +5328,7 @@
 .equ data_4854B224, 0x4854b224
 .equ Str_Technics, 0x4854b227
 .equ data_4854B247, 0x4854b247
+.equ NoteConvRules, 0x4854b24c
 .equ func_50178059_Table, 0x4854b64c
 .equ EasyCompGrid_La6_Table, 0x4854b74c
 .equ EasyCompGrid_L149_Var, 0x4854b750
@@ -5375,10 +5378,12 @@
 .equ func_48641D02_Table, 0x4856f5e4
 .equ func_4863ED40_entry_L6_Records, 0x4857087c
 .equ func_4863F880_Records, 0x48570eb8
+.equ StyleRecordTable, 0x48571564
 .equ func_4864000C_Records, 0x485758e4
 .equ func_48641D02_Table_2, 0x4857595c
 .equ func_4863ED40_entry_L6_Records_2, 0x48576af0
 .equ func_4863F880_Records_2, 0x485770dc
+.equ StyleRecordTableAlt, 0x48577738
 .equ func_4864000C_Records_2, 0x4857b6f8
 .equ DEBUG_Classes, 0x4857b770
 .equ DEBUG_Events, 0x4857b8a8
@@ -5783,10 +5788,13 @@
 .equ APSDPLY_Viewables, 0x485d1dc4
 .equ APSDPLY_ResNames, 0x485d209c
 .equ PanelBank_KN_Rock_Pop_Tour, 0x485d2384
+.equ KernelServiceHash, 0x485e41c4
+.equ KernelRamLayout, 0x485e4244
 .equ func_5018CCF1_Var, 0x485e4248
 .equ func_5018CCF1_Var_2, 0x485e424c
 .equ func_5018CD2D_entry_L51_Table, 0x485e4250
 .equ func_48728591_Var, 0x485e4258
+.equ KernelParams, 0x485e425c
 .equ func_5018B6B9_Ld9_Var, 0x485e426c
 .equ func_5018B6B9_Ld9_Table, 0x485e426e
 .equ func_5018B93E_Table, 0x485e4272

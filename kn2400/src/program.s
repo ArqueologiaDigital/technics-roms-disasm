@@ -174192,7 +174192,7 @@ func_48641CCD_entry:
 	nop
 	mulu	d2, d0
 	mov	d0, a0
-	add	0x48577738, a0
+	add	StyleRecordTableAlt, a0
 	bra	func_48641CCD_entry_L2d
 func_48641CCD_entry_L1e:
 	exthu	d2
@@ -174201,7 +174201,7 @@ func_48641CCD_entry_L1e:
 	nop
 	mulu	d2, d0
 	mov	d0, a0
-	add	0x48571564, a0
+	add	StyleRecordTable, a0
 func_48641CCD_entry_L2d:
 	ret	[d2], 0xc
 
@@ -551577,7 +551577,7 @@ KernelWaitRelease_entry_L20:
 	ble	KernelWaitRelease_entry_L29
 	jmp	KernelWaitRelease_entry_L12f
 KernelWaitRelease_entry_L29:
-	mov	0x485e41c4, a1
+	mov	KernelServiceHash, a1
 	add	-0xff, d1
 	mov	a1, a0
 	mov	0xf, d0
@@ -551593,7 +551593,7 @@ KernelWaitRelease_entry_L29:
 	jmp	KernelWaitRelease_entry_L12f
 KernelWaitRelease_entry_L49:
 	add	8, a0
-	cmp	0x485e4244, a0
+	cmp	KernelRamLayout, a0
 	bcs	KernelWaitRelease_entry_L54
 	mov	a1, a0
 KernelWaitRelease_entry_L54:
@@ -706128,7 +706128,7 @@ StyleNameModuleBoot_entry:
 	exth	d0
 	cmp	0, d0
 	bge	StyleNameModuleBoot_entry_L28
-	mov	0x4852bd9c, a0
+	mov	TechnicsRhythmsResource, a0
 	mov	a0, (StyleNameModuleBoot_Var)
 	call	StyleBuiltinNameTableInit_entry, [d2,a2,a3], 0x20
 StyleNameModuleBoot_entry_L28:
@@ -707022,7 +707022,7 @@ TechnicsPadsResourceInit_entry:
 	exth	d0
 	cmp	0, d0
 	bge	TechnicsPadsResourceInit_entry_L28
-	mov	0x48532260, a0
+	mov	TechnicsPadsResource, a0
 	mov	a0, (TechnicsPadsResourceInit_Var)
 	call	TechnicsPadsResourceParse_entry, [d2], 0x18
 TechnicsPadsResourceInit_entry_L28:
@@ -710867,7 +710867,7 @@ func_50173EF8:
 func_50173EF8_L9:
 	extbu	d0
 	asl	3, d0
-	add	0x4854b24c, d0
+	add	NoteConvRules, d0
 	mov	d0, a0
 	movbu	(1, a0), d0
 	retf	0, 0
@@ -710881,7 +710881,7 @@ func_50173F13:
 func_50173F13_L9:
 	extbu	d0
 	asl	3, d0
-	add	0x4854b24c, d0
+	add	NoteConvRules, d0
 	mov	d0, a0
 	movbu	(2, a0), d0
 	retf	0, 0
@@ -710895,7 +710895,7 @@ func_50173F2E:
 func_50173F2E_L9:
 	extbu	d0
 	asl	3, d0
-	add	0x4854b24c, d0
+	add	NoteConvRules, d0
 	mov	d0, a0
 	movbu	(3, a0), d0
 	retf	0, 0
@@ -710914,7 +710914,7 @@ func_50173F49_entry:
 	ret	[d2,d3,a2,a3], 0x24
 func_50173F49_entry_L13:
 	movbu	(a0), d0
-	mov	0x4854b24c, d3
+	mov	NoteConvRules, d3
 	asl	3, d0
 	mov	d0, a0
 	add	d3, a0
@@ -757295,7 +757295,7 @@ get_tid_entry:
 	call	func_5018BE33, 0, 0
 	mov	d0, (0xc, sp)
 	and	0xf7ff, psw
-	movhu	(0x485e425c), d0
+	movhu	(KernelParams), d0
 	clr	d2
 	exth	d0
 	inc	d0
