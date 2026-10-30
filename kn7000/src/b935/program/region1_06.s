@@ -968,7 +968,7 @@ loc_484C4EB1:
     mov     0x84000034, d3
     mov     0x5006c388, a3
     mov     func_484C4E77_Table, a2
-    mov     data_48618838, d2
+    mov     func_484C4E77_Table_5, d2
 loc_484C4ECF:
     movbu   (a2), d0
     mov     a3, a0
@@ -1000,7 +1000,7 @@ loc_484C4ECF:
     mov     0x84000220, d3
     mov     0x5006c3ac, a3
     mov     func_484C4E77_Table_2, a2
-    mov     data_4861883B, d2
+    mov     func_484C4E77_Table_6, d2
 loc_484C4F22:
     movbu   (a2), d0
     mov     a3, a0
@@ -1032,7 +1032,7 @@ loc_484C4F22:
     mov     0x84000112, d3
     mov     0x5006c448, a3
     mov     func_484C4E77_Table_3, a2
-    mov     data_48618848, d2
+    mov     func_484C4E77_Table_7, d2
 loc_484C4F75:
     movbu   (a2), d0
     mov     a3, a0
@@ -1064,7 +1064,7 @@ loc_484C4F75:
     mov     0x84000142, d3
     mov     0x5006c484, a3
     mov     func_484C4E77_Table_4, a2
-    mov     data_4861884D, d2
+    mov     func_484C4E77_Table_8, d2
 loc_484C4FC8:
     movbu   (a2), d0
     mov     a3, a0
@@ -13287,7 +13287,7 @@ loc_484CC43C:
     ble     loc_484CC445
     jmp     loc_484CD02E
 loc_484CC445:
-    mov     data_4861893C, a1
+    mov     func_484CC416_Records, a1
     inc     d1
     mov     a1, a0
     mov     0x3f, d0
@@ -13313,6 +13313,7 @@ loc_484CC46D:
 loc_484CC470:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484CC475:
     movbu   (0x22, a3), d0
     cmp     0, d0
     bge     loc_484CC47F
@@ -13323,7 +13324,7 @@ loc_484CC47F:
     jmp     loc_484CD02E
 loc_484CC486:
     asl2    d0
-    mov     ptrs_4861890C, a0
+    mov     func_484CC416_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484CC491:
@@ -13703,6 +13704,7 @@ loc_484CC7B8:
     mov     a0, (0x10, a3)
 loc_484CC7D9:
     jmp     loc_484CD02E
+loc_484CC7DC:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CC7E6
@@ -13716,6 +13718,7 @@ loc_484CC7E6:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CC801:
     movbu   (0x22, a3), d0
     cmp     3, d0
     beq     loc_484CC824
@@ -13981,6 +13984,7 @@ loc_484CCA2A:
     mov     d0, (d1, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCA32:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CCA63
@@ -14250,6 +14254,7 @@ loc_484CCC55:
     add     d0, d1
     mov     d1, (0x10, a3)
     jmp     loc_484CD02E
+loc_484CCC69:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CCC73
@@ -14272,6 +14277,7 @@ loc_484CCC91:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCC98:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CCCA6
@@ -14326,6 +14332,7 @@ loc_484CCCF9:
     add     0x3b, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CD02E
+loc_484CCD0A:
     movbu   (0x22, a3), d0
     cmp     3, d0
     beq     loc_484CCD14
@@ -14344,6 +14351,7 @@ loc_484CCD20:
     and     d1, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CD02E
+loc_484CCD33:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CCD48
@@ -14451,6 +14459,7 @@ loc_484CCE1B:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCE22:
     movbu   (0x22, a3), d0
     cmp     2, d0
     beq     loc_484CCE3E
@@ -14570,6 +14579,7 @@ loc_484CCF10:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCF17:
     mov     0x00b00079, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -14579,6 +14589,7 @@ loc_484CCF10:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCF31:
     mov     0x00b00078, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -14588,6 +14599,7 @@ loc_484CCF10:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCF4B:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CCF55
@@ -14606,6 +14618,7 @@ loc_484CCF61:
     and     d1, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CD02E
+loc_484CCF74:
     mov     0x00e00000, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -14620,6 +14633,7 @@ loc_484CCF61:
     mov     d1, (0x10, a3)
     clr     d3
     jmp     loc_484CD02E
+loc_484CCF99:
     mov     SndArgrScreen_StrBox_PATTERN_id, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -14632,6 +14646,7 @@ loc_484CCF61:
     mov     d0, (0x10, a3)
     clr     d3
     bra     loc_484CD02E
+loc_484CCFB9:
     mov     0x00b0000b, d0
     mov     d0, (a3)
     clr     d0
@@ -14667,6 +14682,7 @@ loc_484CCFEB:
 loc_484CD00C:
     clr     d3
     bra     loc_484CD02E
+loc_484CD00F:
     mov     0x00d00000, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -14721,7 +14737,7 @@ loc_484CD06B:
     ble     loc_484CD074
     jmp     loc_484CDBD2
 loc_484CD074:
-    mov     data_48618B8C, a1
+    mov     func_484CD045_Records, a1
     inc     d1
     mov     0x3f, d0
     and     d1, d0
@@ -14747,6 +14763,7 @@ loc_484CD09D:
 loc_484CD0A0:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484CD0A5:
     movbu   (0x22, a3), d0
     cmp     0, d0
     bge     loc_484CD0AF
@@ -14757,7 +14774,7 @@ loc_484CD0AF:
     jmp     loc_484CDBD2
 loc_484CD0B6:
     asl2    d0
-    mov     ptrs_48618B5C, a0
+    mov     func_484CD045_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484CD0C1:
@@ -15057,6 +15074,7 @@ loc_484CD33E:
     mov     a0, (0x10, a3)
 loc_484CD35F:
     jmp     loc_484CDBD2
+loc_484CD362:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CD36C
@@ -15070,6 +15088,7 @@ loc_484CD36C:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CD387:
     movbu   (0x22, a3), d0
     cmp     3, d0
     beq     loc_484CD3AA
@@ -15337,6 +15356,7 @@ loc_484CD5B1:
     mov     d0, (d1, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CD5B9:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CD5EA
@@ -15606,6 +15626,7 @@ loc_484CD7DC:
     add     d0, d1
     mov     d1, (0x10, a3)
     jmp     loc_484CDBD2
+loc_484CD7F0:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CD7FA
@@ -15628,6 +15649,7 @@ loc_484CD818:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CD81F:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CD82D
@@ -15682,6 +15704,7 @@ loc_484CD880:
     add     0x3b, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CDBD2
+loc_484CD891:
     movbu   (0x22, a3), d0
     cmp     3, d0
     beq     loc_484CD89B
@@ -15700,6 +15723,7 @@ loc_484CD8A7:
     and     d1, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CDBD2
+loc_484CD8BA:
     movbu   (0x22, a3), d0
     cmp     0, d0
     beq     loc_484CD8CF
@@ -15807,6 +15831,7 @@ loc_484CD9A4:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CD9AB:
     movbu   (0x22, a3), d0
     cmp     2, d0
     beq     loc_484CD9C7
@@ -15942,6 +15967,7 @@ loc_484CDAB4:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CDABB:
     mov     0x00b00079, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -15951,6 +15977,7 @@ loc_484CDAB4:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CDAD5:
     mov     0x00b00078, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -15960,6 +15987,7 @@ loc_484CDAB4:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CDAEF:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CDAF9
@@ -15978,6 +16006,7 @@ loc_484CDB05:
     and     d1, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CDBD2
+loc_484CDB18:
     mov     0x00e00000, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -15992,6 +16021,7 @@ loc_484CDB05:
     mov     d1, (0x10, a3)
     clr     d3
     jmp     loc_484CDBD2
+loc_484CDB3D:
     mov     SndArgrScreen_StrBox_PATTERN_id, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -16005,6 +16035,7 @@ loc_484CDB05:
     mov     d1, (0x10, a3)
     clr     d3
     bra     loc_484CDBD2
+loc_484CDB5E:
     mov     0x00b0000b, d0
     mov     d0, (a3)
     clr     d0
@@ -16040,6 +16071,7 @@ loc_484CDB90:
 loc_484CDBB1:
     clr     d3
     bra     loc_484CDBD2
+loc_484CDBB4:
     mov     0x00d00000, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -16093,7 +16125,7 @@ loc_484CDC0D:
     ble     loc_484CDC16
     jmp     loc_484CE6A4
 loc_484CDC16:
-    mov     data_48618DDC, a1
+    mov     func_484CDBE9_Records, a1
     inc     d1
     mov     0x3f, d0
     and     d1, d0
@@ -16119,6 +16151,7 @@ loc_484CDC3E:
 loc_484CDC41:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484CDC46:
     movbu   (0x22, a3), d0
     cmp     d2, d0
     bge     loc_484CDC4F
@@ -16129,7 +16162,7 @@ loc_484CDC4F:
     jmp     loc_484CE6A4
 loc_484CDC56:
     asl2    d0
-    mov     ptrs_48618DAC, a0
+    mov     func_484CDBE9_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484CDC61:
@@ -16414,6 +16447,7 @@ loc_484CDEB4:
     mov     a0, (0x10, a3)
 loc_484CDED5:
     jmp     loc_484CE6A4
+loc_484CDED8:
     movbu   (0x22, a3), d0
     cmp     d2, d0
     beq     loc_484CDEE1
@@ -16427,6 +16461,7 @@ loc_484CDEE1:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CDEFC:
     movbu   (0x22, a3), d0
     cmp     3, d0
     beq     loc_484CDF1F
@@ -16700,6 +16735,7 @@ loc_484CE130:
     mov     d0, (d2, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE138:
     movbu   (0x22, a3), d0
     cmp     d2, d0
     beq     loc_484CE168
@@ -16966,6 +17002,7 @@ loc_484CE34F:
     add     d0, d1
     mov     d1, (0x10, a3)
     jmp     loc_484CE6A4
+loc_484CE363:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CE36D
@@ -16988,6 +17025,7 @@ loc_484CE38B:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE392:
     movbu   (0x22, a3), d0
     cmp     d2, d0
     beq     loc_484CE39F
@@ -17041,6 +17079,7 @@ loc_484CE3F0:
     add     0x3b, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CE6A4
+loc_484CE401:
     movbu   (0x22, a3), d0
     cmp     3, d0
     beq     loc_484CE40B
@@ -17059,6 +17098,7 @@ loc_484CE417:
     and     d1, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CE6A4
+loc_484CE42A:
     movbu   (0x22, a3), d0
     cmp     d2, d0
     beq     loc_484CE43E
@@ -17166,6 +17206,7 @@ loc_484CE513:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE51A:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CE52C
@@ -17222,6 +17263,7 @@ loc_484CE587:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE58E:
     mov     0x00b00079, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -17231,6 +17273,7 @@ loc_484CE587:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE5A8:
     mov     0x00b00078, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -17240,6 +17283,7 @@ loc_484CE587:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE5C2:
     movbu   (0x22, a3), d0
     cmp     1, d0
     beq     loc_484CE5CC
@@ -17258,6 +17302,7 @@ loc_484CE5D8:
     and     d1, d0
     mov     d0, (0x10, a3)
     jmp     loc_484CE6A4
+loc_484CE5EB:
     mov     0x00e00000, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -17272,6 +17317,7 @@ loc_484CE5D8:
     mov     d0, (0x10, a3)
     clr     d3
     jmp     loc_484CE6A4
+loc_484CE610:
     mov     SndArgrScreen_StrBox_PATTERN_id, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -17284,6 +17330,7 @@ loc_484CE5D8:
     mov     d0, (0x10, a3)
     clr     d3
     bra     loc_484CE6A4
+loc_484CE630:
     mov     0x00b0000b, d0
     mov     d0, (a3)
     clr     d0
@@ -17318,6 +17365,7 @@ loc_484CE661:
 loc_484CE682:
     clr     d3
     bra     loc_484CE6A4
+loc_484CE685:
     mov     0x00d00000, d0
     mov     d0, (a3)
     movbu   (0x22, a3), d0
@@ -17373,7 +17421,7 @@ loc_484CE6DF:
     jmp     loc_484CED36
 loc_484CE6E6:
     asl2    d0
-    mov     ptrs_48618FFC, a0
+    mov     func_484CE6BB_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484CE6F1:
@@ -18145,7 +18193,7 @@ func_484CED4D:
     beq     loc_484CED80
     bra     loc_484CED84
 loc_484CED6F:
-    mov     data_486190FC, d0
+    mov     Bitmap_484CED4D_Pixels, d0
     bra     loc_484CED85
 loc_484CED77:
     mov     0x128, d0
@@ -18172,7 +18220,7 @@ func_484CED88:
     beq     loc_484CEDBB
     bra     loc_484CEDBF
 loc_484CEDAA:
-    mov     data_4861A104, d0
+    mov     Bitmap_484CED88_Pixels, d0
     bra     loc_484CEDC0
 loc_484CEDB2:
     mov     0x128, d0
@@ -18199,7 +18247,7 @@ func_484CEDC3:
     beq     loc_484CEDF6
     bra     loc_484CEDFA
 loc_484CEDE5:
-    mov     data_4861B10C, d0
+    mov     Bitmap_484CEDC3_Pixels, d0
     bra     loc_484CEDFB
 loc_484CEDED:
     mov     0x128, d0
@@ -18226,7 +18274,7 @@ func_484CEDFE:
     beq     loc_484CEE31
     bra     loc_484CEE35
 loc_484CEE20:
-    mov     data_4861C114, d0
+    mov     Bitmap_484CEDFE_Pixels, d0
     bra     loc_484CEE36
 loc_484CEE28:
     mov     0x128, d0
@@ -18253,7 +18301,7 @@ func_484CEE39:
     beq     loc_484CEE6C
     bra     loc_484CEE70
 loc_484CEE5B:
-    mov     data_4861D11C, d0
+    mov     Bitmap_484CEE39_Pixels, d0
     bra     loc_484CEE71
 loc_484CEE63:
     mov     0x128, d0
@@ -18282,7 +18330,7 @@ BitmapKn7000:
     beq     loc_484CEEB8
     bra     loc_484CEEBC
 loc_484CEE9E:
-    mov     data_4861E164, d0
+    mov     BitmapKn7000_Pixels, d0
     bra     loc_484CEEBD
 loc_484CEEA6:
     mov     0x118, d0
@@ -18312,7 +18360,7 @@ BitmapNx:
     beq     loc_484CEEF3
     bra     loc_484CEEF7
 loc_484CEEE2:
-    mov     data_4862287C, d0
+    mov     BitmapNx_Pixels, d0
     bra     loc_484CEEF8
 loc_484CEEEA:
     mov     0xc8, d0
@@ -18339,7 +18387,7 @@ BitmapGm2:
     beq     loc_484CEF2E
     bra     loc_484CEF32
 loc_484CEF1D:
-    mov     data_486232A4, d0
+    mov     BitmapGm2_Pixels, d0
     bra     loc_484CEF33
 loc_484CEF25:
     mov     0xc8, d0
@@ -18705,7 +18753,7 @@ loc_484CF3E2:
     jmp     loc_484CFC08
 loc_484CF3EF:
     mov     (0x4c, sp), d1
-    mov     data_48628064, a1
+    mov     AcMidiPartGridBoxProc_Records, a1
     add     0xfffb0000, d1
     mov     0xf, d0
     and     d1, d0
@@ -18721,7 +18769,7 @@ loc_484CF3EF:
     jmp     loc_484CFC08
 loc_484CF414:
     add     8, a0
-    cmp     data_486280E4, a0
+    cmp     AcMidiControlGridBoxProc_Records, a0
     bcs     loc_484CF41F
     mov     a1, a0
 loc_484CF41F:
@@ -18731,6 +18779,7 @@ loc_484CF41F:
 loc_484CF422:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484CF427:
     mov     (0x50, sp), a0
     mov     0x0000ffff, d2
     mov     a0, (0x10, sp)
@@ -18773,8 +18822,9 @@ loc_484CF422:
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484CF4A7:
     mov     (0x50, sp), a0
-    mov     data_48626B5C, d2
+    mov     DrawDesignBox_Table, d2
     mov     a0, (0x10, sp)
     mov     (0x48, sp), d0
     mov     (0x4c, sp), d1
@@ -18792,7 +18842,7 @@ loc_484CF422:
     add     0x20, a2
     exth    d0
     asl2    d0
-    mov     ptrs_48626BB4, a0
+    mov     AcMidiPartGridBoxProc_Table_5, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -18806,6 +18856,7 @@ loc_484CF422:
     call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484CF50A:
     mov     (0x50, sp), a2
     mov     a2, (0x10, sp)
     mov     (0x48, sp), d0
@@ -18842,7 +18893,7 @@ loc_484CF54E:
     mov     (a0), a0
     mov     EV_PAINT, d1
     movhu   (a0), d0
-    mov     data_48626BD4, a2
+    mov     Malloc_Records, a2
     movbu   d0, (0x5006cc6c)
     clr     d0
     mov     d0, (0x10, sp)
@@ -18896,7 +18947,7 @@ loc_484CF5E7:
     mov     (a0), a0
     mov     EV_PAINT, d1
     movhu   (a0), d0
-    mov     data_48626BD4, a2
+    mov     Malloc_Records, a2
     movbu   d0, (0x5006cc6c)
     clr     d0
     mov     d0, (0x10, sp)
@@ -18933,6 +18984,7 @@ loc_484CF5E7:
 loc_484CF664:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484CF668:
     mov     (0x50, sp), d0
     mov     d0, (0x10, sp)
     mov     (0x48, sp), d0
@@ -18994,7 +19046,7 @@ loc_484CF6C7:
     mov     (0x48, sp), d0
     call    SendEvent_entry, [d2,d3], 0x24
     mov     (a3), a0
-    mov     data_48626BD4, a2
+    mov     Malloc_Records, a2
     movhu   (a0), d0
     mov     d2, a0
     exth    d0
@@ -19060,7 +19112,7 @@ loc_484CF785:
     movbu   (0x5006cc6c), d0
     exth    d2
     extb    d0
-    mov     data_48626BD4, d3
+    mov     Malloc_Records, d3
     mov     0xa, d1
     nop
     nop
@@ -19100,7 +19152,7 @@ loc_484CF80B:
     mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movbu   (0x5006cc6c), d1
-    mov     data_48626BD4, a2
+    mov     Malloc_Records, a2
     extb    d1
     mov     0xa, d0
     nop
@@ -19168,6 +19220,7 @@ loc_484CF886:
 loc_484CF8EF:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484CF8F3:
     mov     (0x50, sp), d0
     mov     d0, (0x10, sp)
     mov     (0x48, sp), d0
@@ -19227,7 +19280,7 @@ loc_484CF95D:
     mov     MT_SetSelectedCel, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movbu   (0x5006cc6c), d0
-    mov     data_48626BD4, a2
+    mov     Malloc_Records, a2
     extb    d0
     mov     0xa, d1
     nop
@@ -19284,7 +19337,7 @@ loc_484CF9FD:
     exth    d2
     extb    d0
     add     a3, d2
-    mov     data_48626BD4, d3
+    mov     Malloc_Records, d3
     mov     0xa, d1
     nop
     nop
@@ -19322,7 +19375,7 @@ loc_484CFA7F:
     mov     MT_SeleDraw, d1
     call    SendEvent_entry, [d2,d3], 0x24
     movbu   (0x5006cc6c), d0
-    mov     data_48626BD4, a2
+    mov     Malloc_Records, a2
     mov     0xa, d1
     extb    d0
     nop
@@ -19390,6 +19443,7 @@ loc_484CFAF7:
 loc_484CFB60:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484CFB64:
     mov     (0x48, sp), d0
     call    GetViewInstance, 0, 0
     mov     (0x44, a0), a1
@@ -19397,6 +19451,7 @@ loc_484CFB60:
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484CFB7D:
     mov     (0x48, sp), d0
     call    GetViewInstance, 0, 0
     mov     (0x50, a0), a0
@@ -19438,8 +19493,10 @@ loc_484CFBD4:
 loc_484CFBE6:
     clr     d0
     bra     loc_484CFC17
+loc_484CFBE9:
     clr     d0
     bra     loc_484CFC17
+loc_484CFBEC:
     mov     (0x48, sp), d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -19587,7 +19644,7 @@ loc_484CFD5C:
     nop
     mul     d1, d3
     mov     d3, a1
-    add     data_48626BD4, a1
+    add     Malloc_Records, a1
     movbu   (d0, a1), d1
     movhu   (0x20, sp), d0
     exth    d0
@@ -19788,7 +19845,7 @@ loc_484CFF5D:
     nop
     mul     d2, d0
     mov     d0, a2
-    add     data_48626BD4, a2
+    add     Malloc_Records, a2
     setlb
     movhu   (0x22, sp), d1
     mov     (a1), d0
@@ -19860,7 +19917,7 @@ loc_484D0009:
     nop
     mul     d2, d0
     mov     d0, a2
-    add     data_48626BD4, a2
+    add     Malloc_Records, a2
     setlb
     movhu   (0x22, sp), d1
     mov     (a1), d0
@@ -19879,7 +19936,7 @@ loc_484D0009:
     beq     loc_484D0074
 loc_484D0048:
     mov     (a1), d0
-    mov     Str_0mbH6mbH_mbHBmbHHmbHNmbHTmbH, a0
+    mov     MidiPartGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -19921,7 +19978,7 @@ loc_484D0095:
     nop
     mul     d2, d0
     mov     d0, a2
-    add     data_48626BD4, a2
+    add     Malloc_Records, a2
     setlb
     movhu   (0x22, sp), d1
     mov     (a1), d0
@@ -20008,7 +20065,7 @@ loc_484D015D:
     nop
     nop
     mul     d1, d0
-    add     data_48626BD4, d0
+    add     Malloc_Records, d0
     mov     d0, a0
     movbu   (d2, a0), d2
     mov     0xff, d3
@@ -20026,7 +20083,7 @@ loc_484D0183:
     bne     loc_484D01DF
     mov     0x0000f101, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -20054,7 +20111,7 @@ loc_484D01DF:
     extbu   d2
     asl     24, d2
     mov     d2, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     exth    d1
     cmp     d3, d1
@@ -20088,7 +20145,7 @@ loc_484D0235:
     nop
     nop
     mul     d3, d0
-    add     data_48626BD4, d0
+    add     Malloc_Records, d0
     mov     d0, a0
     movbu   (d2, a0), d1
     mov     d1, d0
@@ -20113,9 +20170,9 @@ loc_484D028A:
     mov     0x00204004, d0
     extbu   d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_0mbH6mbH_mbHBmbHHmbHNmbHTmbH, a0
+    mov     MidiPartGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -20135,7 +20192,7 @@ loc_484D02C6:
     nop
     nop
     mul     d3, d0
-    add     data_48626BD4, d0
+    add     Malloc_Records, d0
     mov     d0, a0
     movbu   (d2, a0), d1
     mov     d1, d0
@@ -20162,7 +20219,7 @@ loc_484D031E:
     mov     0x00204000, d0
     extbu   d1
     asl     24, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     exth    d0
     cmp     0, d0
     bne     loc_484D0344
@@ -20221,7 +20278,7 @@ loc_484D0394:
     movhu   d0, (a0)
 loc_484D03C1:
     mov     0, a3
-    mov     Str_empty_1245, a2
+    mov     TMidiControl_Table, a2
 loc_484D03C9:
     mov     (a2), d0
     call    SetMmmFilter_entry, [d2], 0x18
@@ -20272,7 +20329,7 @@ loc_484D0415:
     and     d1, d0
     asl     3, d0
     mov     d0, a0
-    mov     data_486280E4, a1
+    mov     AcMidiControlGridBoxProc_Records, a1
     add     a1, a0
     mov     (a0), d0
     cmp     d1, d0
@@ -20283,7 +20340,7 @@ loc_484D0415:
     jmp     loc_484D08D6
 loc_484D0439:
     add     8, a0
-    cmp     Str_empty_1102, a0
+    cmp     MidiCommonGrid_Records, a0
     bcs     loc_484D0444
     mov     a1, a0
 loc_484D0444:
@@ -20293,6 +20350,7 @@ loc_484D0444:
 loc_484D0447:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D044C:
     mov     (0x50, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -20336,6 +20394,7 @@ loc_484D0447:
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484D04C9:
     mov     (0x50, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -20344,7 +20403,7 @@ loc_484D0447:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a3
-    mov     data_48626B5C, d2
+    mov     DrawDesignBox_Table, d2
     mov     d2, a0
     mov     0xc1, d0
     mov     0x1b, d1
@@ -20355,7 +20414,7 @@ loc_484D0447:
     add     0x20, a2
     exth    d0
     asl2    d0
-    mov     ptrs_48626B84, a0
+    mov     AcMidiControlGridBoxProc_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -20369,6 +20428,7 @@ loc_484D0447:
     call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484D0529:
     mov     (0x50, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -20448,6 +20508,7 @@ loc_484D05B4:
 loc_484D05E9:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484D05ED:
     mov     (0x50, sp), a3
     mov     d3, d0
     mov     a3, (0x10, sp)
@@ -20556,6 +20617,7 @@ loc_484D06C1:
 loc_484D071A:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484D071E:
     mov     (0x50, sp), a3
     mov     d3, d0
     mov     a3, (0x10, sp)
@@ -20664,6 +20726,7 @@ loc_484D07EE:
 loc_484D0847:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484D084B:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -20672,6 +20735,7 @@ loc_484D0847:
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
+loc_484D0864:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x50, a0), a0
@@ -20705,8 +20769,10 @@ loc_484D08A4:
 loc_484D08B6:
     clr     d0
     bra     loc_484D08E3
+loc_484D08B9:
     clr     d0
     bra     loc_484D08E3
+loc_484D08BC:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -20800,7 +20866,7 @@ loc_484D0967:
     nop
     nop
     mulu    d2, d1
-    add     data_48626FE4, d1
+    add     MainAddM3Em_Records, d1
     mov     d1, a0
     mov     (d0, a0), d0
     mov     1, d1
@@ -20835,7 +20901,7 @@ loc_484D09C3:
     nop
     nop
     mulu    d2, d1
-    add     data_48626FE4, d1
+    add     MainAddM3Em_Records, d1
     mov     d1, a0
     mov     (d0, a0), d0
     mov     -1, d1
@@ -20861,7 +20927,7 @@ loc_484D0A1F:
     nop
     mulu    d1, d0
     mov     d0, a1
-    add     data_48626FE4, a1
+    add     MainAddM3Em_Records, a1
     setlb
     movhu   (0x22, sp), d0
     mov     (a2), d1
@@ -20930,7 +20996,7 @@ loc_484D0AAD:
     nop
     mulu    d2, d0
     mov     d0, a1
-    add     data_48626FE4, a1
+    add     MainAddM3Em_Records, a1
     mov     (d1, a1), d1
     cmp     -1, d1
     beq     loc_484D0B37
@@ -20939,7 +21005,7 @@ loc_484D0AAD:
     asl2    d1
     mov     (d1, a1), d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D0B10
     mov     Str_ON_97, a1
@@ -20994,7 +21060,7 @@ loc_484D0B60:
     mov     d0, (a0)
 loc_484D0B8B:
     mov     0, a3
-    mov     Str_A_22, a2
+    mov     TMidiRealtime_Table, a2
 loc_484D0B93:
     mov     (a2), d0
     call    SetMmmFilter_entry, [d2], 0x18
@@ -21171,7 +21237,7 @@ loc_484D0D0B:
     movhu   d0, (a0)
 loc_484D0D2B:
     mov     0, a3
-    mov     Str_empty_1244, a2
+    mov     TMidiCommon_Table, a2
 loc_484D0D33:
     mov     (a2), d0
     call    SetMmmFilter_entry, [d2], 0x18
@@ -21260,7 +21326,7 @@ loc_484D0DCF:
     cmp     1, d0
     bne     loc_484D0E19
     movhu   (0x26, sp), d0
-    mov     Str_empty_1106, a0
+    mov     MidiCommonGrid_Table_3, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), d0
@@ -21289,7 +21355,7 @@ loc_484D0E1D:
     cmp     1, d0
     bne     loc_484D0E67
     movhu   (0x26, sp), d0
-    mov     Str_empty_1106, a0
+    mov     MidiCommonGrid_Table_3, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), d0
@@ -21316,7 +21382,7 @@ loc_484D0E6B:
     mov     (a2), d1
     exth    d0
     asl2    d0
-    mov     Str_empty_1106, a0
+    mov     MidiCommonGrid_Table_3, a0
     mov     (d0, a0), d0
     and     d2, d1
     cmp     d0, d1
@@ -21338,7 +21404,7 @@ loc_484D0EAB:
     and     0x0f, d0
     asl     3, d0
     mov     d0, a0
-    mov     Str_empty_1101, a1
+    mov     MidiCommonGrid_Records_2, a1
     add     a1, a0
     mov     (a0), d0
     cmp     d2, d0
@@ -21349,7 +21415,7 @@ loc_484D0EAB:
     jmp     loc_484D104C
 loc_484D0ECC:
     add     8, a0
-    cmp     data_48628264, a0
+    cmp     AcMidiInputGridBoxProc_Records, a0
     bcs     loc_484D0ED7
     mov     a1, a0
 loc_484D0ED7:
@@ -21359,6 +21425,7 @@ loc_484D0ED7:
 loc_484D0EDA:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D0EDF:
     mov     sp, a0
     add     0x14, a0
     mov     a0, (0x28, sp)
@@ -21413,6 +21480,7 @@ loc_484D0F73:
 loc_484D0F9A:
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D0F9E:
     mov     sp, a0
     add     0x14, a0
     mov     a0, (0x28, sp)
@@ -21445,6 +21513,7 @@ loc_484D0FDB:
 loc_484D1002:
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1006:
     mov     sp, a0
     add     0x14, a0
     mov     a0, (0x28, sp)
@@ -21502,7 +21571,7 @@ loc_484D1064:
     jmp     loc_484D1270
 loc_484D108A:
     movhu   (0x26, sp), d0
-    mov     Str_empty_1106, a3
+    mov     MidiCommonGrid_Table_3, a3
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
@@ -21526,7 +21595,7 @@ loc_484D10B7:
     mov     d2, d0
     and     0x0f, d0
     asl     3, d0
-    mov     Str_empty_1102, a1
+    mov     MidiCommonGrid_Records, a1
     mov     a1, a0
     add     d0, a0
     mov     (a0), d0
@@ -21538,7 +21607,7 @@ loc_484D10B7:
     jmp     loc_484D126D
 loc_484D10D7:
     add     8, a0
-    cmp     Str_empty_1101, a0
+    cmp     MidiCommonGrid_Records_2, a0
     bcs     loc_484D10E2
     mov     a1, a0
 loc_484D10E2:
@@ -21548,13 +21617,14 @@ loc_484D10E2:
 loc_484D10E5:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D10EA:
     mov     a2, (0x28, sp)
     movhu   (0x26, sp), d0
     clr     d1
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1110
     cmp     1, d0
@@ -21609,13 +21679,14 @@ loc_484D1188:
 loc_484D11B0:
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D11B4:
     mov     a2, (0x28, sp)
     movhu   (0x26, sp), d0
     clr     d1
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D11CF
     cmp     1, d0
@@ -21644,13 +21715,14 @@ loc_484D11F7:
 loc_484D121E:
     clr     d0
     bra     loc_484D1277
+loc_484D1221:
     mov     a2, (0x28, sp)
     movhu   (0x26, sp), d0
     clr     d1
     exth    d0
     asl2    d0
     mov     (d0, a3), d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1246
     mov     Str_ON_123, a1
@@ -21740,7 +21812,7 @@ loc_484D12EF:
     ble     loc_484D12FA
     jmp     loc_484D1637
 loc_484D12FA:
-    mov     data_48628264, a1
+    mov     AcMidiInputGridBoxProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     a3, d1
@@ -21757,7 +21829,7 @@ loc_484D12FA:
     jmp     loc_484D1637
 loc_484D131F:
     add     8, a0
-    cmp     ptrs_486282E4, a0
+    cmp     MidiInputGrid_Table_6, a0
     bcs     loc_484D132A
     mov     a1, a0
 loc_484D132A:
@@ -21767,6 +21839,7 @@ loc_484D132A:
 loc_484D132D:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D1332:
     mov     (0x34, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -21805,6 +21878,7 @@ loc_484D132D:
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D139C:
     mov     (0x34, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -21826,7 +21900,7 @@ loc_484D13C1:
     mov     d0, d2
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D1410
     exth    d2
@@ -21894,6 +21968,7 @@ loc_484D1443:
 loc_484D14A2:
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D14A6:
     mov     (0x34, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -21915,7 +21990,7 @@ loc_484D14CB:
     mov     d0, d2
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D1515
     exth    d2
@@ -21993,9 +22068,10 @@ func_484D15AE:
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D15C7:
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D15E3
     cmp     1, d0
@@ -22024,6 +22100,7 @@ loc_484D1607:
 loc_484D1619:
     clr     d0
     bra     loc_484D1645
+loc_484D161C:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -22122,7 +22199,7 @@ loc_484D1704:
     jmp     loc_484D17F9
 loc_484D170B:
     asl2    d0
-    mov     ptrs_486283B4, a0
+    mov     MidiInputGrid_Table_8, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484D1716:
@@ -22152,7 +22229,7 @@ loc_484D173C:
 loc_484D1752:
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     beq     loc_484D176A
     cmp     2, d0
@@ -22248,7 +22325,7 @@ loc_484D1838:
     jmp     loc_484D192D
 loc_484D183F:
     asl2    d0
-    mov     ptrs_4862838C, a0
+    mov     MidiInputGrid_Table_7, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484D184A:
@@ -22278,7 +22355,7 @@ loc_484D1870:
 loc_484D1886:
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     beq     loc_484D189E
     cmp     2, d0
@@ -22372,7 +22449,7 @@ loc_484D1960:
     mov     d2, d0
     and     0x0f, d0
     asl     3, d0
-    mov     data_4862830C, a1
+    mov     MidiInputGrid_Records, a1
     mov     a1, a0
     add     d0, a0
     mov     (a0), d0
@@ -22384,7 +22461,7 @@ loc_484D1960:
     jmp     loc_484D1CDF
 loc_484D1980:
     add     8, a0
-    cmp     ptrs_4862838C, a0
+    cmp     MidiInputGrid_Table_7, a0
     bcs     loc_484D198B
     mov     a1, a0
 loc_484D198B:
@@ -22394,10 +22471,11 @@ loc_484D198B:
 loc_484D198E:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D1993:
     clr     d0
     movhu   d0, (0x26, sp)
     mov     (4, a2), d0
-    mov     ptrs_48627578, a0
+    mov     MidiInputGrid_Table_4, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22411,9 +22489,10 @@ loc_484D198E:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D19CB:
     movhu   d3, (0x26, sp)
     mov     (4, a2), d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22427,6 +22506,7 @@ loc_484D198E:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1A02:
     inc4    a2
     mov     (a2), d0
     and     0xff, d0
@@ -22444,7 +22524,7 @@ loc_484D1A1A:
     mov     2, d0
     movhu   d0, (0x26, sp)
     mov     (a2), d0
-    mov     ptrs_4862759C, a0
+    mov     MidiInputGrid_Table_5, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22467,7 +22547,7 @@ loc_484D1A68:
     mov     2, d0
     movhu   d0, (0x26, sp)
     mov     (a2), d0
-    mov     ptrs_4862759C, a0
+    mov     MidiInputGrid_Table_5, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22490,7 +22570,7 @@ loc_484D1AB6:
     mov     2, d0
     movhu   d0, (0x26, sp)
     mov     (a2), d0
-    mov     ptrs_4862759C, a0
+    mov     MidiInputGrid_Table_5, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22512,11 +22592,12 @@ loc_484D1AB6:
 loc_484D1B04:
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1B08:
     mov     3, d0
     movhu   d0, (0x26, sp)
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     bne     loc_484D1B3B
     mov     a3, (8, sp)
@@ -22540,11 +22621,12 @@ loc_484D1B49:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1B65:
     mov     3, d0
     movhu   d0, (0x26, sp)
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     2, d0
     bne     loc_484D1B98
     mov     a3, (8, sp)
@@ -22568,10 +22650,11 @@ loc_484D1BA6:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1BC2:
     mov     5, d0
     movhu   d0, (0x26, sp)
     mov     (4, a2), d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22585,10 +22668,11 @@ loc_484D1BA6:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1BFB:
     mov     6, d0
     movhu   d0, (0x26, sp)
     mov     (4, a2), d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22602,10 +22686,11 @@ loc_484D1BA6:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1C34:
     mov     7, d0
     movhu   d0, (0x26, sp)
     mov     (4, a2), d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22619,10 +22704,11 @@ loc_484D1BA6:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1C6D:
     mov     8, d0
     movhu   d0, (0x26, sp)
     mov     (4, a2), d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22636,10 +22722,11 @@ loc_484D1BA6:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x3c
+loc_484D1CA6:
     mov     9, d0
     movhu   d0, (0x26, sp)
     mov     (4, a2), d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -22689,15 +22776,15 @@ loc_484D1D18:
     jmp     loc_484D2066
 loc_484D1D1F:
     asl2    d0
-    mov     ptrs_486282E4, a0
+    mov     MidiInputGrid_Table_6, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484D1D2A:
     mov     0x2000, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     ptrs_48627578, a0
+    mov     MidiInputGrid_Table_4, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22710,9 +22797,9 @@ loc_484D1D2A:
 loc_484D1D60:
     mov     0x2001, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22725,9 +22812,9 @@ loc_484D1D60:
 loc_484D1D96:
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     ptrs_4862759C, a0
+    mov     MidiInputGrid_Table_5, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22737,7 +22824,7 @@ loc_484D1D96:
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1DE8
     cmp     1, d0
@@ -22762,7 +22849,7 @@ loc_484D1E15:
     movhu   d0, (0x26, sp)
     mov     0x00008091, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     extb    d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
@@ -22780,7 +22867,7 @@ loc_484D1E56:
     movhu   d0, (0x26, sp)
     mov     0x00008092, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     Str_3d_159, d0
@@ -22798,7 +22885,7 @@ loc_484D1E96:
 loc_484D1E9A:
     mov     0x00008090, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D1EB7
     cmp     1, d0
@@ -22819,7 +22906,7 @@ loc_484D1EB7:
 loc_484D1EDF:
     mov     0x00008091, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     extb    d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
@@ -22835,7 +22922,7 @@ loc_484D1EDF:
 loc_484D1F1B:
     mov     0x00008092, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
     mov     Str_3d_213, d0
@@ -22853,9 +22940,9 @@ loc_484D1F56:
 loc_484D1F5A:
     mov     0x2010, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22868,9 +22955,9 @@ loc_484D1F5A:
 loc_484D1F90:
     mov     0x2013, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22883,9 +22970,9 @@ loc_484D1F90:
 loc_484D1FC6:
     mov     0x2011, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22898,9 +22985,9 @@ loc_484D1FC6:
 loc_484D1FFC:
     mov     0x2012, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -22913,9 +23000,9 @@ loc_484D1FFC:
 loc_484D2031:
     mov     0x2014, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     Str_PubHVubHCONDUCTOR, a0
+    mov     MidiInputGrid_Table_3, a0
     mov     (d0, a0), a1
     mov     a2, a0
     call    strcpy_entry, [a2], 4
@@ -23112,7 +23199,7 @@ loc_484D221C:
     mov     a1, d0
     and     0x1f, d0
     asl     3, d0
-    mov     data_486284DC, a2
+    mov     MidiPresetSw_Records_2, a2
     mov     a2, a0
     add     d0, a0
     mov     (a0), d0
@@ -23124,7 +23211,7 @@ loc_484D221C:
     jmp     loc_484D24FB
 loc_484D223A:
     add     8, a0
-    cmp     data_486285DC, a0
+    cmp     AcMidiPcgOutGridBoxProc_Records, a0
     bcs     loc_484D2245
     mov     a2, a0
 loc_484D2245:
@@ -23134,6 +23221,7 @@ loc_484D2245:
 loc_484D2249:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D224E:
     movbu   (0x5006cc6e), d0
     cmp     0, d0
     bne     loc_484D2273
@@ -23160,6 +23248,7 @@ loc_484D228C:
     mov     0x01860000, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_484D24FB
+loc_484D22A5:
     movbu   (0x5006cc6e), d0
     cmp     0, d0
     bne     loc_484D22B2
@@ -23181,6 +23270,7 @@ loc_484D22B2:
     mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484D24FB
+loc_484D22F0:
     movbu   (0x5006cc6e), d0
     cmp     1, d0
     bne     loc_484D22FD
@@ -23201,6 +23291,7 @@ loc_484D22FD:
     mov     d1, (0x10, sp)
     mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
+loc_484D2339:
     jmp     loc_484D24FB
 loc_484D233C:
     mov     (0x28, sp), a1
@@ -23216,7 +23307,7 @@ loc_484D234C:
     and     0x1f, d0
     asl     3, d0
     mov     d0, a0
-    mov     data_486283DC, a2
+    mov     MidiPresetSw_Records, a2
     add     a2, a0
     mov     (a0), d0
     cmp     a1, d0
@@ -23227,7 +23318,7 @@ loc_484D234C:
     jmp     loc_484D24FB
 loc_484D236B:
     add     8, a0
-    cmp     data_486284DC, a0
+    cmp     MidiPresetSw_Records_2, a0
     bcs     loc_484D2376
     mov     a2, a0
 loc_484D2376:
@@ -23237,6 +23328,7 @@ loc_484D2376:
 loc_484D237A:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D237F:
     movbu   (0x5006cc6e), d0
     cmp     0, d0
     bne     loc_484D23A4
@@ -23263,6 +23355,7 @@ loc_484D23BD:
     mov     0x01860000, d1
     call    MainFuncCall_entry, [d2,d3,a2], 0x24
     jmp     loc_484D24FB
+loc_484D23D6:
     movbu   (0x5006cc6e), d0
     cmp     0, d0
     bne     loc_484D23E3
@@ -23284,6 +23377,7 @@ loc_484D23E3:
     mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
     jmp     loc_484D24FB
+loc_484D2421:
     movbu   (0x5006cc6e), d0
     cmp     1, d0
     bne     loc_484D242E
@@ -23304,6 +23398,7 @@ loc_484D242E:
     mov     d1, (0x10, sp)
     mov     EV_SHOW, d1
     call    SendEvent_entry, [d2,d3], 0x24
+loc_484D246A:
     jmp     loc_484D24FB
 loc_484D246D:
     mov     (0x28, sp), a0
@@ -23492,7 +23587,7 @@ loc_484D261A:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     8, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D266C
     cmp     6, d0
@@ -23605,17 +23700,17 @@ loc_484D2739:
 loc_484D2752:
     mov     0x00204001, d0
     mov     0x10000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D27B2
     mov     0x00204001, d0
     mov     0x11000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     bne     loc_484D27B2
     mov     0x00204001, d0
     mov     0x12000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     2, d0
     bne     loc_484D27B2
     mov     sp, a0
@@ -23648,17 +23743,17 @@ loc_484D27CF:
     bne     loc_484D285E
     mov     0x00204001, d0
     mov     0x10000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     bne     loc_484D282A
     mov     0x00204001, d0
     mov     0x11000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     1, d0
     bne     loc_484D282A
     mov     0x00204001, d0
     mov     0x12000000, d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     2, d0
     beq     loc_484D2844
 loc_484D282A:
@@ -23722,7 +23817,7 @@ loc_484D28BF:
     mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     asl2    d0
-    mov     ptrs_48627634, a0
+    mov     AcTGModeSelProc_Table_7, a0
     mov     (d0, a0), a0
     mov     Str_s_61, d0
     mov     a0, (0x10, sp)
@@ -24256,7 +24351,7 @@ loc_484D2E29:
     ble     loc_484D2E34
     jmp     loc_484D30B4
 loc_484D2E34:
-    mov     data_486285DC, a1
+    mov     AcMidiPcgOutGridBoxProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -24273,7 +24368,7 @@ loc_484D2E34:
     jmp     loc_484D30B4
 loc_484D2E57:
     add     8, a0
-    cmp     data_4862865C, a0
+    cmp     AcMidiPmemOutLGridBoxProc_Records, a0
     bcs     loc_484D2E62
     mov     a1, a0
 loc_484D2E62:
@@ -24283,6 +24378,7 @@ loc_484D2E62:
 loc_484D2E65:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D2E6A:
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -24321,6 +24417,7 @@ loc_484D2E65:
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D2ED3:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -24380,6 +24477,7 @@ loc_484D2F2C:
 loc_484D2F89:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D2F8D:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -24443,6 +24541,7 @@ loc_484D2FEC:
 loc_484D3049:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D304D:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -24451,6 +24550,7 @@ loc_484D3049:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D30C1
+loc_484D3065:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -24459,6 +24559,7 @@ loc_484D3049:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D30C1
+loc_484D307D:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -24468,8 +24569,10 @@ loc_484D3049:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484D30C1
+loc_484D3097:
     clr     d0
     bra     loc_484D30C1
+loc_484D309A:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -25323,7 +25426,7 @@ loc_484D39C8:
     ble     loc_484D39D3
     jmp     loc_484D3D66
 loc_484D39D3:
-    mov     data_4862865C, a1
+    mov     AcMidiPmemOutLGridBoxProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -25340,7 +25443,7 @@ loc_484D39D3:
     jmp     loc_484D3D66
 loc_484D39F7:
     add     8, a0
-    cmp     data_486286DC, a0
+    cmp     AcMidiPmemOutRGridBoxProc_Records, a0
     bcs     loc_484D3A02
     mov     a1, a0
 loc_484D3A02:
@@ -25350,6 +25453,7 @@ loc_484D3A02:
 loc_484D3A05:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D3A0A:
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -25424,6 +25528,7 @@ loc_484D3A7A:
 loc_484D3ABC:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D3AC0:
     mov     (0x30, sp), a2
     mov     a2, d0
     exthu   d0
@@ -25607,6 +25712,7 @@ loc_484D3CE9:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D3CF8:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x44, a0), a1
@@ -25614,6 +25720,7 @@ loc_484D3CE9:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D3D73
+loc_484D3D0F:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -25622,6 +25729,7 @@ loc_484D3CE9:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D3D73
+loc_484D3D27:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -25635,6 +25743,7 @@ loc_484D3CE9:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484D3D73
+loc_484D3D4C:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -25666,7 +25775,7 @@ loc_484D3D88:
     ble     loc_484D3D93
     jmp     loc_484D419C
 loc_484D3D93:
-    mov     data_486286DC, a1
+    mov     AcMidiPmemOutRGridBoxProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -25693,6 +25802,7 @@ loc_484D3DC1:
 loc_484D3DC4:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D3DC9:
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -25740,6 +25850,7 @@ loc_484D3DF9:
 loc_484D3E38:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D3E3C:
     mov     (0x30, sp), a2
     mov     a2, d0
     exthu   d0
@@ -25982,6 +26093,7 @@ loc_484D411E:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D412D:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -25990,6 +26102,7 @@ loc_484D411E:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D41A9
+loc_484D4145:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -25998,6 +26111,7 @@ loc_484D411E:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D41A9
+loc_484D415D:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -26011,6 +26125,7 @@ loc_484D411E:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484D41A9
+loc_484D4182:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -26311,7 +26426,7 @@ loc_484D441B:
     mov     d2, d1
     call    LibDiv32, 0, 0
     asl2    d0
-    mov     ptrs_48627DB8, a0
+    mov     MidiPmemOutLGrid_Table_4, a0
     mov     (d0, a0), d0
     mov     d0, (0x10, sp)
     mov     (a2), d0
@@ -26521,7 +26636,7 @@ loc_484D46F4:
     mov     3, d0
     movhu   d0, (0x2a, sp)
     mov     (0x10, a2), d0
-    mov     Str_bH_bH_bH, a0
+    mov     MidiPmemOutLGrid_Table_5, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     d3, a0
@@ -26697,7 +26812,7 @@ loc_484D492C:
     mov     Str_s_d, d0
     mov     d0, (0xc, sp)
     mov     (0x5006cc74), d0
-    mov     ptrs_48627DB8, a0
+    mov     MidiPmemOutLGrid_Table_4, a0
     mov     d0, d1
     lsr     3, d1
     asl2    d1
@@ -26740,7 +26855,7 @@ loc_484D49AB:
     bra     loc_484D49FB
 loc_484D49C4:
     mov     (0x5006cc78), d0
-    mov     Str_bH_bH_bH, a0
+    mov     MidiPmemOutLGrid_Table_5, a0
     asl2    d0
     mov     (d0, a0), a1
     mov     a2, a0
@@ -27486,7 +27601,7 @@ TMidiComputer:
     bra     loc_484D5173
 loc_484D5154:
     mov     0, a3
-    mov     Str_empty_1240, a2
+    mov     TMidiComputer_Table, a2
 loc_484D515C:
     mov     (a2), d0
     call    SetMmmFilter_entry, [d2], 0x18
@@ -27921,8 +28036,8 @@ InitializeBlock25_entry:
     mov     Str_TT_PMBKNAME, a0
     call    RegisterTitle_entry, [d2,a2], 8
     ret     [d2,d3,a2,a3], 0x3c
-
-func_484D564C:
+# AcPmemBankSelProc  (CPU 0x484d564c)
+AcPmemBankSelProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     d0, (0x44, sp)
@@ -28094,7 +28209,7 @@ loc_484D580E:
     mov     MT_GetIndex, d1
     call    SendEvent_entry, [d2,d3], 0x24
     asl2    d0
-    mov     ptrs_4862920C, a0
+    mov     func_484D564C_Table, a0
     mov     (d0, a0), a0
     mov     Str_s_s_2, d0
     mov     a0, (0x10, sp)
@@ -28149,7 +28264,7 @@ loc_484D58B5:
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     movhu   (a3), d0
-    mov     ptrs_4862920C, a0
+    mov     func_484D564C_Table, a0
     exth    d0
     asl2    d0
     mov     (d0, a0), a0
@@ -28226,7 +28341,7 @@ loc_484D595B:
 loc_484D598E:
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d2
     extbu   d0
     cmp     0, d0
@@ -28406,7 +28521,7 @@ PmemNaming:
 loc_484D5B58:
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d1
     extbu   d1
     cmp     0, d1
@@ -28517,7 +28632,7 @@ loc_484D5C6D:
     bne     loc_484D5CAE
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D5CA3
     mov     0xd2, d0
@@ -28580,7 +28695,7 @@ loc_484D5D1E:
     call    SendEvent_entry, [d2,d3], 0x24
     mov     0x80, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     extbu   d0
     mov     a2, a0
     call    func_4C021B9E_entry, [d2,a2], 0x1c
@@ -28607,8 +28722,8 @@ loc_484D5D72:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_484D5D7D:
     ret     [d2,d3,a2], 0x20
-
-func_484D5D80:
+# PmBkSelTitleFunc  (CPU 0x484d5d80)
+PmBkSelTitleFunc:
     movm    [d2], (sp)
     add     -0x20, sp
     clr     d2
@@ -28915,7 +29030,7 @@ loc_484D6131:
     ble     loc_484D613C
     jmp     loc_484D63CD
 loc_484D613C:
-    mov     data_48629DCC, a1
+    mov     func_484D611F_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -28932,7 +29047,7 @@ loc_484D613C:
     jmp     loc_484D63CD
 loc_484D615F:
     add     8, a0
-    cmp     ptrs_48629E4C, a0
+    cmp     VocalistGrid_Table_7, a0
     bcs     loc_484D616A
     mov     a1, a0
 loc_484D616A:
@@ -28942,6 +29057,7 @@ loc_484D616A:
 loc_484D616D:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D6172:
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -28980,6 +29096,7 @@ loc_484D616D:
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D61DD:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -29044,6 +29161,7 @@ loc_484D6241:
 loc_484D629E:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484D62A2:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -29109,6 +29227,7 @@ loc_484D6309:
 loc_484D6366:
     clr     d0
     bra     loc_484D63DA
+loc_484D6369:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -29117,6 +29236,7 @@ loc_484D6366:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D63DA
+loc_484D6381:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a1
@@ -29125,6 +29245,7 @@ loc_484D6366:
     call    strcpy_entry, [a2], 4
     clr     d0
     bra     loc_484D63DA
+loc_484D6399:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -29134,6 +29255,7 @@ loc_484D6366:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484D63DA
+loc_484D63B3:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x4c, a0), d0
@@ -29364,7 +29486,7 @@ loc_484D65AF:
 loc_484D65B8:
     sub     d1, d0
     asl2    d0
-    mov     ptrs_48629EEC, a0
+    mov     VocalistGrid_Table_8, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484D65C5:
@@ -29441,7 +29563,7 @@ loc_484D6692:
     mov     Str_s_14, d0
     mov     d0, (0xc, sp)
     mov     (4, a1), d0
-    mov     ptrs_48629B24, a0
+    mov     VocalistGrid_Table_5, a0
     and     0xff, d0
     extbu   d0
     asl2    d0
@@ -29532,7 +29654,7 @@ loc_484D6788:
 loc_484D67A2:
     inc4    a1
     mov     (a1), d0
-    mov     ptrs_48629AEC, a0
+    mov     VocalistGrid_Table_4, a0
     and     0xff, d0
     extbu   d0
     and     0x80, d0
@@ -29542,7 +29664,7 @@ loc_484D67A2:
     mov     0xc, d1
     mov     a0, (0x10, sp)
     mov     (a1), d0
-    mov     ptrs_48629B24, a0
+    mov     VocalistGrid_Table_5, a0
     and     0xff, d0
     extbu   d0
     and     0x7f, d0
@@ -29558,7 +29680,7 @@ loc_484D67A2:
     and     0x7f, d0
     call    LibDiv32, 0, 0
     asl2    d0
-    mov     ptrs_48629B78, a0
+    mov     VocalistGrid_Table_6, a0
     mov     (d0, a0), a0
     mov     Str_s_s_s_3, d0
     mov     a0, (0x18, sp)
@@ -29630,13 +29752,13 @@ loc_484D689D:
 loc_484D68A6:
     sub     d1, d0
     asl2    d0
-    mov     ptrs_48629E4C, a0
+    mov     VocalistGrid_Table_7, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484D68B3:
     mov     d1, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0x11, d0
     beq     loc_484D68C6
     cmp     0x10, d0
@@ -29669,7 +29791,7 @@ loc_484D68FA:
 loc_484D6914:
     mov     0x7001, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
@@ -29685,7 +29807,7 @@ loc_484D6914:
 loc_484D694D:
     mov     0x7002, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     inc     d0
     mov     d0, (0x10, sp)
     mov     a2, (8, sp)
@@ -29701,9 +29823,9 @@ loc_484D694D:
 loc_484D6986:
     clr     d1
     mov     0x7003, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     asl2    d0
-    mov     ptrs_48629B24, a0
+    mov     VocalistGrid_Table_5, a0
     mov     (d0, a0), a0
     mov     Str_s_13, d0
     mov     a0, (0x10, sp)
@@ -29719,7 +29841,7 @@ loc_484D6986:
 loc_484D69C7:
     mov     0x7004, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D69E4
     cmp     1, d0
@@ -29758,7 +29880,7 @@ loc_484D6A22:
 loc_484D6A3C:
     mov     0x7005, d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0x79, d0
     beq     loc_484D6A51
     cmp     0x78, d0
@@ -29790,14 +29912,14 @@ loc_484D6A84:
 loc_484D6A9E:
     clr     d1
     mov     0x7006, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     mov     d0, d3
     and     0xff, d3
     mov     d3, d0
     extbu   d0
     asr     7, d0
     asl2    d0
-    mov     ptrs_48629AEC, a0
+    mov     VocalistGrid_Table_4, a0
     mov     (d0, a0), d0
     mov     0xc, d1
     mov     d0, (0x10, sp)
@@ -29808,7 +29930,7 @@ loc_484D6A9E:
     div     d1, d0
     mov     mdr, d0
     asl2    d0
-    mov     ptrs_48629B24, a0
+    mov     VocalistGrid_Table_5, a0
     mov     (d0, a0), d0
     extbu   d3
     mov     d0, (0x14, sp)
@@ -29816,7 +29938,7 @@ loc_484D6A9E:
     mov     d3, d0
     call    LibDiv32, 0, 0
     asl2    d0
-    mov     ptrs_48629B78, a0
+    mov     VocalistGrid_Table_6, a0
     mov     (d0, a0), a0
     mov     Str_s_s_s_2, d0
     mov     a0, (0x18, sp)
@@ -29832,18 +29954,18 @@ loc_484D6A9E:
 loc_484D6B17:
     clr     d1
     mov     0x7009, d0
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     and     0xff, d0
     movbu   d0, (0x1c, sp)
     movbu   (0x1c, sp), d0
-    mov     ptrs_48629AEC, a0
+    mov     VocalistGrid_Table_4, a0
     asr     7, d0
     asl2    d0
     mov     (d0, a0), a0
     mov     0xc, d2
     mov     a0, (0x10, sp)
     movbu   (0x1c, sp), d1
-    mov     ptrs_48629B24, a0
+    mov     VocalistGrid_Table_5, a0
     and     0x7f, d1
     ext     d1
     div     d2, d1
@@ -29856,7 +29978,7 @@ loc_484D6B17:
     and     0x7f, d0
     call    LibDiv32, 0, 0
     asl2    d0
-    mov     ptrs_48629B78, a0
+    mov     VocalistGrid_Table_6, a0
     mov     (d0, a0), a0
     mov     Str_s_s_s, d0
     mov     a0, (0x18, sp)
@@ -29881,7 +30003,7 @@ loc_484D6B95:
     asl2    d0
     mov     (d0, a0), d0
     clr     d1
-    call    LibParamGet, 0, 0x10
+    call    GetM3EmVal_entry, 0, 0x10
     cmp     0, d0
     beq     loc_484D6BC4
     mov     Str_ON_119, a1
@@ -29906,8 +30028,8 @@ loc_484D6BEE:
     clr     d0
 loc_484D6BEF:
     ret     [d2,d3,a2,a3], 0x58
-
-func_484D6BF2:
+# AcVocalistListBoxProc  (CPU 0x484d6bf2)
+AcVocalistListBoxProc:
     movm    [d2], (sp)
     add     -0x14, sp
     mov     d0, d2
@@ -29956,8 +30078,8 @@ loc_484D6C68:
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
 loc_484D6C73:
     ret     [d2], 0x18
-
-func_484D6C76:
+# PsHarmOnOffBoxProc  (CPU 0x484d6c76)
+PsHarmOnOffBoxProc:
     movm    [d2,d3,a2,a3], (sp)
     add     -0x2c, sp
     mov     func_484D6C76_Table, a1
@@ -30068,7 +30190,7 @@ loc_484D6D72:
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     5, d0
     bne     loc_484D6DAE
-    mov     (data_48629DB4), a0
+    mov     (func_484D6C76_Var), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
     mov     d2, a0
@@ -30117,7 +30239,7 @@ loc_484D6DFA:
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     5, d0
     bne     loc_484D6E35
-    mov     (data_48629DB4), a0
+    mov     (func_484D6C76_Var), a0
     mov     d3, a1
     mov     a0, (0x10, sp)
     mov     d2, a0
@@ -30203,8 +30325,8 @@ loc_484D6EE9:
     clr     d0
 loc_484D6EEA:
     ret     0, 0x14
-
-func_484D6EED:
+# MainVocalistOK  (CPU 0x484d6eed)
+MainVocalistOK:
     movm    [d2,d3], (sp)
     add     -0x10, sp
     cmp     0x1a60000, d1
@@ -30257,12 +30379,12 @@ loc_484D6F31:
     beq     loc_484D6F79
     mov     0x90204000, d0
     mov     0x1b000001, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484D6F8C
 loc_484D6F79:
     mov     0x90204000, d0
     mov     0x1b000000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_484D6F8C:
     mov     3, d0
     mov     0x23, d1
@@ -30285,12 +30407,12 @@ loc_484D6F9A:
     beq     loc_484D6FD7
     mov     0x90204000, d0
     mov     0x10000001, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484D6FEA
 loc_484D6FD7:
     mov     0x90204000, d0
     mov     0x10000000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_484D6FEA:
     mov     3, d0
     mov     0x23, d1
@@ -30307,7 +30429,7 @@ loc_484D6FF8:
     call    func_484C3B6D_entry, 0, 0x14
     mov     0x90008082, d0
     mov     3, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     lsr     16, d3
     mov     0x0000ffff, d0
     and     d3, d0
@@ -30316,12 +30438,12 @@ loc_484D6FF8:
     beq     loc_484D7047
     mov     0x90204000, d0
     mov     0x03000001, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
     bra     loc_484D705A
 loc_484D7047:
     mov     0x90204000, d0
     mov     0x03000000, d1
-    call    LibParamSet, [d2,d3,a2], 0x24
+    call    PutM3Em_entry, [d2,d3,a2], 0x24
 loc_484D705A:
     mov     3, d0
     mov     0x23, d1
@@ -30567,8 +30689,8 @@ loc_484D7396:
     mov     0x80, d0
     movbu   d0, (0x5006cc81)
     ret     0, 0xc
-
-func_484D7490:
+# IrqGroupsDisableAll  (CPU 0x484d7490)
+IrqGroupsDisableAll:
     movhu   (0x34000108), d0
     mov     0x0000feff, d1
     and     d1, d0
@@ -30707,7 +30829,7 @@ loc_484D768A:
     cmp     6, d2
     bne     loc_484D76CE
 loc_484D7692:
-    call    func_484D7490, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
     mov     0x90000010, a1
     setlb
     clr     d0
@@ -30826,7 +30948,7 @@ func_484D777B:
 func_484D778D:
     movm    [d2,d3], (sp)
     add     -8, sp
-    call    func_484D7490, 0, 0
+    call    IrqGroupsDisableAll, 0, 0
     mov     0x0000ffff, d0
     movhu   d0, (0x34001092)
     mov     0x82, d0
@@ -30835,7 +30957,7 @@ func_484D778D:
     clr     d0
     movhu   d0, (0x9000000e)
     bclr    0x04, (0x36008004)
-    call    func_48407C39, 0, 0
+    call    DCacheFlushDisable, 0, 0
     bclr    0x20, (0x36008004)
     bset    0x20, (0x36008004)
     bclr    0x20, (0x36008004)
@@ -30961,10 +31083,10 @@ TimeBase2msTick_entry:
     bne     loc_484D7914
     call    func_484B3134_entry, 0, 0xc
 loc_484D7914:
-    movbu   (data_500031F0), d1
+    movbu   (TimeBase2msTick_Var), d1
     mov     d1, d0
     inc     d0
-    movbu   d0, (data_500031F0)
+    movbu   d0, (TimeBase2msTick_Var)
     cmp     0, d1
     beq     loc_484D793D
     cmp     1, d1
@@ -31002,13 +31124,13 @@ loc_484D7985:
     bset    0x04, (0x50151c00)
     bra     loc_484D79F5
 loc_484D798E:
-    movbu   (data_500031F1), d1
+    movbu   (TimeBase2msTick_Table), d1
     bset    0x02, (0x50151c00)
     mov     d1, d0
     inc     d0
-    movbu   d0, (data_500031F1)
+    movbu   d0, (TimeBase2msTick_Table)
     clr     d0
-    movbu   d0, (data_500031F0)
+    movbu   d0, (TimeBase2msTick_Var)
     cmp     0, d1
     beq     loc_484D79F5
     cmp     1, d1
@@ -31038,7 +31160,7 @@ loc_484D79DE:
 loc_484D79E7:
     bset    0x10, (0x50151c00)
     clr     d0
-    movbu   d0, (data_500031F1)
+    movbu   d0, (TimeBase2msTick_Table)
 loc_484D79F5:
     clr     d0
     ret     [d2], 0xc
@@ -31621,11 +31743,11 @@ loc_484D8124:
     jmp     loc_484D8310
 loc_484D81AD:
     clr     d0
-    movbu   d0, (data_50007DDA)
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_2)
+    movbu   d0, (func_484D807B_Var_3)
     movbu   d0, (Str_empty_266+1)
     mov     1, d0
-    movbu   d0, (data_50007DE4)
+    movbu   d0, (func_484D807B_Var_4)
     call    GetPartSelect_entry, 0, 0x14
     exthu   d0
     asl     24, d0
@@ -31655,14 +31777,14 @@ loc_484D81AD:
     cmp     0x28, d1
     bge     loc_484D8219
     extbu   d2
-    movhu   d2, (data_50007DD8)
+    movhu   d2, (func_484D807B_Var)
 loc_484D8219:
     extbu   d2
     mov     d2, (0x10, sp)
     extbu   d3
     mov     d3, d1
     call    func_484491C5_entry, 0, 0x14
-    movbu   d0, (data_50007DE7)
+    movbu   d0, (func_484D807B_Var_5)
     extbu   d0
     cmp     0, d0
     beq     loc_484D8247
@@ -31727,7 +31849,7 @@ loc_484D82E4:
     mov     Str_MD_SOUNDEDIT, a0
     call    RegisterMode_entry, [a2], 4
     clr     d0
-    movbu   d0, (data_50007DE7)
+    movbu   d0, (func_484D807B_Var_5)
 loc_484D8310:
     clr     d0
     ret     [d2,d3], 0x28
@@ -31781,7 +31903,7 @@ AcLfoPageSeProc:
     cmp     3, a2
     bne     loc_484D8398
 loc_484D8383:
-    movbu   (data_50007DE8), d1
+    movbu   (AcLfoPageSeProc_Table), d1
     mov     d1, (0x10, sp)
     mov     MT_SetPage, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -31813,7 +31935,7 @@ loc_484D83CC:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
     clr     d0
     bra     loc_484D8417
 loc_484D83E2:
@@ -31827,7 +31949,7 @@ loc_484D83E2:
     cmp     0, d0
     beq     loc_484D8409
     mov     1, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
 loc_484D8409:
     clr     d0
     bra     loc_484D8417
@@ -31852,7 +31974,7 @@ loc_484D8432:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
     clr     d0
     bra     loc_484D847D
 loc_484D8448:
@@ -31866,7 +31988,7 @@ loc_484D8448:
     cmp     0, d0
     beq     loc_484D846F
     mov     2, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
 loc_484D846F:
     clr     d0
     bra     loc_484D847D
@@ -31891,7 +32013,7 @@ loc_484D8498:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
     clr     d0
     bra     loc_484D84E3
 loc_484D84AE:
@@ -31905,7 +32027,7 @@ loc_484D84AE:
     cmp     0, d0
     beq     loc_484D84D5
     mov     3, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
 loc_484D84D5:
     clr     d0
     bra     loc_484D84E3
@@ -31930,7 +32052,7 @@ loc_484D84FE:
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
     mov     1, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
     clr     d0
     bra     loc_484D8549
 loc_484D8514:
@@ -31944,7 +32066,7 @@ loc_484D8514:
     cmp     0, d0
     beq     loc_484D853B
     mov     4, d0
-    movbu   d0, (data_50007DE8)
+    movbu   d0, (AcLfoPageSeProc_Table)
 loc_484D853B:
     clr     d0
     bra     loc_484D8549
@@ -31974,7 +32096,7 @@ loc_484D8578:
     mov     (0x2c, sp), a0
     mov     a0, (0x10, sp)
     call    InheritedProc_entry, [d2,d3,a2,a3], 0x28
-    movbu   (data_50007DDA), d0
+    movbu   (func_484D807B_Var_2), d0
     mov     MT_SetParam, d1
     mov     d0, (0x10, sp)
     mov     d2, d0
@@ -32004,7 +32126,7 @@ loc_484D85B4:
     mov     MT_ToggleParam, d1
     mov     d2, d0
     call    SendEvent_entry, [d2,d3], 0x24
-    movbu   (data_50007DDA), d0
+    movbu   (func_484D807B_Var_2), d0
     cmp     0, d0
     beq     loc_484D85F4
     cmp     1, d0
@@ -32012,19 +32134,19 @@ loc_484D85B4:
     bra     loc_484D8605
 loc_484D85F4:
     mov     1, d0
-    movbu   d0, (data_50007DDA)
+    movbu   d0, (func_484D807B_Var_2)
     bra     loc_484D8605
 loc_484D85FE:
     clr     d0
-    movbu   d0, (data_50007DDA)
+    movbu   d0, (func_484D807B_Var_2)
 loc_484D8605:
-    movbu   (data_50007DDA), d0
+    movbu   (func_484D807B_Var_2), d0
     call    func_484F90C3_entry, [d2], 0x18
 loc_484D8612:
     clr     d0
     bra     loc_484D8630
 loc_484D8615:
-    movbu   (data_50007DDA), d0
+    movbu   (func_484D807B_Var_2), d0
     call    func_484F90C3_entry, [d2], 0x18
     clr     d0
     bra     loc_484D8630
@@ -32249,7 +32371,7 @@ loc_484D8835:
     clr     d0
     bra     loc_484D888D
 loc_484D8854:
-    movhu   (data_50007DD8), d0
+    movhu   (func_484D807B_Var), d0
     mov     Str_Sound_Naming_Edt_6, a3
     extbu   d0
     mov     d0, (0x10, sp)
@@ -32294,7 +32416,7 @@ loc_484D88BD:
     call    SendEvent_entry, [d2,d3], 0x24
     cmp     0, d0
     beq     loc_484D891D
-    movbu   (data_50007DE7), d0
+    movbu   (func_484D807B_Var_5), d0
     cmp     0, d0
     beq     loc_484D88EE
     cmp     1, d0
@@ -32351,7 +32473,7 @@ loc_484D894A:
     ble     loc_484D8955
     jmp     loc_484D8ACB
 loc_484D8955:
-    mov     data_4863AD84, a1
+    mov     AcEditBoxSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d3, d1
@@ -32368,7 +32490,7 @@ loc_484D8955:
     jmp     loc_484D8ACB
 loc_484D8978:
     add     8, a0
-    cmp     ptrs_4863AE04, a0
+    cmp     EzDeffSe_Table, a0
     bcs     loc_484D8983
     mov     a1, a0
 loc_484D8983:
@@ -32378,6 +32500,7 @@ loc_484D8983:
 loc_484D8986:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484D898B:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -32391,6 +32514,7 @@ loc_484D8986:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D89B1:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -32404,6 +32528,7 @@ loc_484D8986:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D89D7:
     mov     (0x34, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
@@ -32416,6 +32541,7 @@ loc_484D8986:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D89F9:
     mov     (0x34, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
@@ -32428,6 +32554,7 @@ loc_484D8986:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D8A1B:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0x38, a0), d0
@@ -32437,6 +32564,7 @@ loc_484D8986:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484D8A36:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -32469,6 +32597,7 @@ loc_484D8986:
 loc_484D8A92:
     clr     d0
     bra     loc_484D8AD8
+loc_484D8A95:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -33073,7 +33202,7 @@ loc_484D906D:
     mov     0x00b0005e, d0
     call    SetMmmFilter_entry, [d2], 0x18
     call    func_484F900D_entry, 0, 0x18
-    movbu   d0, (data_50007DE0)
+    movbu   d0, (EzDeffSe_Var)
     mov     0x44, d0
     mov     0x5006cc84, a0
     mov     0x80, d1
@@ -33101,12 +33230,12 @@ loc_484D90AD:
     movbu   d0, (0x5006cc84)
     bra     loc_484D90F8
 loc_484D90DA:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0xc, d0
     bge     loc_484D90F8
     inc     d0
-    movbu   d0, (data_50007DE0)
-    movbu   (data_50007DE0), d0
+    movbu   d0, (EzDeffSe_Var)
+    movbu   (EzDeffSe_Var), d0
     call    func_484F9069_entry, 0, 0x14
 loc_484D90F8:
     clr     d0
@@ -33117,12 +33246,12 @@ loc_484D90FC:
     beq     loc_484D914F
     cmp     1, d0
     bne     loc_484D914F
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     ble     loc_484D912B
     add     -1, d0
-    movbu   d0, (data_50007DE0)
-    movbu   (data_50007DE0), d0
+    movbu   d0, (EzDeffSe_Var)
+    movbu   (EzDeffSe_Var), d0
     call    func_484F9069_entry, 0, 0x14
     bra     loc_484D914F
 loc_484D912B:
@@ -33171,7 +33300,7 @@ loc_484D918D:
     call    sprintf_entry, [a2], 0x20
     jmp     loc_484D92D7
 loc_484D91A3:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484D91B0
     jmp     loc_484D92D7
@@ -33181,7 +33310,7 @@ loc_484D91B0:
     jmp     loc_484D92D7
 loc_484D91B7:
     asl2    d0
-    mov     ptrs_4863AE04, a0
+    mov     EzDeffSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484D91C2:
@@ -34086,17 +34215,17 @@ loc_484D9AA2:
     mov     0x00b0007e, d0
     call    SetMmmFilter_entry, [d2], 0x18
     mov     0x4f, d0
-    mov     data_50007DDF, a0
+    mov     MonoPolySe_Var, a0
     mov     0x80, d1
     call    func_484F79A1_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     0, 0x14
 loc_484D9AC5:
-    movbu   (data_50007DDF), d0
+    movbu   (MonoPolySe_Var), d0
     cmp     1, d0
     bge     loc_484D9AF0
     inc     d0
-    movbu   d0, (data_50007DDF)
+    movbu   d0, (MonoPolySe_Var)
     call    GetPartSelect_entry, 0, 0x14
     mov     d0, d1
     mov     0x00b0007e, d0
@@ -34108,11 +34237,11 @@ loc_484D9AF0:
     clr     d0
     ret     0, 0x14
 loc_484D9AF4:
-    movbu   (data_50007DDF), d0
+    movbu   (MonoPolySe_Var), d0
     cmp     0, d0
     ble     loc_484D9B1F
     add     -1, d0
-    movbu   d0, (data_50007DDF)
+    movbu   d0, (MonoPolySe_Var)
     call    GetPartSelect_entry, 0, 0x14
     mov     d0, d1
     mov     0x00b0007e, d0
@@ -34137,16 +34266,16 @@ loc_484D9B23:
     bra     loc_484D9B50
 loc_484D9B3F:
     mov     1, d0
-    movbu   d0, (data_50007DDF)
+    movbu   d0, (MonoPolySe_Var)
     bra     loc_484D9B50
 loc_484D9B49:
     clr     d0
-    movbu   d0, (data_50007DDF)
+    movbu   d0, (MonoPolySe_Var)
 loc_484D9B50:
     clr     d0
     ret     0, 0x14
 loc_484D9B54:
-    movbu   (data_50007DDF), d0
+    movbu   (MonoPolySe_Var), d0
     cmp     0, d0
     beq     loc_484D9B64
     cmp     1, d0
@@ -34244,7 +34373,7 @@ loc_484D9C76:
     clr     d0
     ret     0, 0x14
 loc_484D9C7A:
-    movbu   (data_50007DDF), d0
+    movbu   (MonoPolySe_Var), d0
     cmp     0, d0
     beq     loc_484D9C8A
     cmp     1, d0
@@ -34349,7 +34478,7 @@ loc_484D9DA1:
     clr     d0
     bra     loc_484D9DEA
 loc_484D9DA4:
-    movbu   (data_50007DDF), d0
+    movbu   (MonoPolySe_Var), d0
     cmp     0, d0
     beq     loc_484D9DB4
     cmp     1, d0
@@ -34656,7 +34785,7 @@ loc_484DA0D3:
     movbu   d0, (Str_empty_267)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -34686,7 +34815,7 @@ loc_484DA11B:
     add     d0, d2
     asl     8, d1
     add     d1, d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     mov     0x00b0000c, d0
     asl     16, d1
     add     d1, d2
@@ -34750,7 +34879,7 @@ loc_484DA1E7:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -34780,7 +34909,7 @@ loc_484DA22F:
     add     d0, d2
     asl     8, d1
     add     d1, d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     mov     0x00b0000c, d0
     asl     16, d1
     add     d1, d2
@@ -34841,7 +34970,7 @@ loc_484DA2E9:
     mov     0x3f, d1
     call    func_484F79A1_entry, [d2,d3,a2], 0x24
     mov     0x52, d0
-    mov     data_50007DDD, a0
+    mov     DspTenSe_Var, a0
     mov     0x40, d1
     call    func_484F79A1_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -34851,7 +34980,7 @@ loc_484DA320:
     movbu   (Str_empty_267+1), d0
     asl     8, d0
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -34868,7 +34997,7 @@ loc_484DA34F:
     mov     0xff, a2
     asl     8, d1
     add     d1, d0
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     asl     16, d1
     add     d0, d1
     mov     a2, d0
@@ -34901,7 +35030,7 @@ loc_484DA34F:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -34920,7 +35049,7 @@ loc_484DA3E7:
     movbu   (Str_empty_267+1), d1
     asl     8, d1
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -34950,7 +35079,7 @@ loc_484DA3E7:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -34971,7 +35100,7 @@ loc_484DA47C:
     movbu   (Str_empty_267+1), d1
     asl     8, d1
     add     d1, d0
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     asl     16, d1
     add     d0, d1
     mov     2, d0
@@ -35030,7 +35159,7 @@ loc_484DA51F:
     mov     0x3f, d1
     call    func_484F79DF_entry, [d2,d3,a2], 0x24
     mov     0x25, d0
-    mov     data_50007DDD, a0
+    mov     DspTenSe_Var, a0
     mov     0x40, d1
     call    func_484F79DF_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -35040,7 +35169,7 @@ loc_484DA556:
     movbu   (Str_empty_267+1), d0
     asl     8, d0
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -35057,7 +35186,7 @@ loc_484DA585:
     mov     0xff, a2
     asl     8, d1
     add     d1, d0
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     asl     16, d1
     add     d0, d1
     mov     a2, d0
@@ -35090,7 +35219,7 @@ loc_484DA585:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -35109,7 +35238,7 @@ loc_484DA61D:
     movbu   (Str_empty_267+1), d1
     asl     8, d1
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -35139,7 +35268,7 @@ loc_484DA61D:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -35160,7 +35289,7 @@ loc_484DA6B2:
     movbu   (Str_empty_267+1), d1
     asl     8, d1
     add     d1, d0
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     asl     16, d1
     add     d0, d1
     mov     2, d0
@@ -35219,7 +35348,7 @@ loc_484DA755:
     mov     0x3f, d1
     call    func_484F79A1_entry, [d2,d3,a2], 0x24
     mov     0x52, d0
-    mov     data_50007DDD, a0
+    mov     DspTenSe_Var, a0
     mov     0x40, d1
     call    func_484F79A1_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -35229,7 +35358,7 @@ loc_484DA78C:
     movbu   (Str_empty_267+1), d0
     asl     8, d0
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -35245,7 +35374,7 @@ loc_484DA7BA:
     mov     0xff00, a2
     asl     8, d2
     add     d1, d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     asl     16, d1
     add     d1, d2
     mov     0xff, d1
@@ -35292,7 +35421,7 @@ loc_484DA7BA:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -35311,7 +35440,7 @@ loc_484DA86C:
     movbu   (Str_empty_267+1), d1
     asl     8, d1
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -35348,7 +35477,7 @@ loc_484DA86C:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -35371,7 +35500,7 @@ loc_484DA90F:
     movbu   (Str_empty_267+1), d0
     asl     8, d0
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, d0
@@ -35423,7 +35552,7 @@ loc_484DA99B:
     mov     0x3f, d1
     call    func_484F79DF_entry, [d2,d3,a2], 0x24
     mov     0x25, d0
-    mov     data_50007DDD, a0
+    mov     DspTenSe_Var, a0
     mov     0x40, d1
     call    func_484F79DF_entry, [d2,d3,a2], 0x24
     clr     d0
@@ -35433,7 +35562,7 @@ loc_484DA9D2:
     movbu   (Str_empty_267+1), d0
     asl     8, d0
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -35449,7 +35578,7 @@ loc_484DAA00:
     mov     0xff00, a2
     asl     8, d2
     add     d1, d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     asl     16, d1
     add     d1, d2
     mov     0xff, d1
@@ -35496,7 +35625,7 @@ loc_484DAA00:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -35515,7 +35644,7 @@ loc_484DAAB2:
     movbu   (Str_empty_267+1), d1
     asl     8, d1
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, (0x10, sp)
@@ -35552,7 +35681,7 @@ loc_484DAAB2:
     movbu   d0, (Str_empty_267+1)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     exthu   d0
     asl     24, d0
     add     d0, d2
@@ -35575,7 +35704,7 @@ loc_484DAB55:
     movbu   (Str_empty_267+1), d0
     asl     8, d0
     add     d0, d1
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     asl     16, d0
     add     d0, d1
     mov     d1, d0
@@ -35631,20 +35760,20 @@ loc_484DABEF:
     mov     0x0000b034, d0
     call    SetMmmFilter_entry, [d2], 0x18
     mov     0x52, d0
-    mov     data_50007DDD, a0
+    mov     DspTenSe_Var, a0
     mov     0x40, d1
     call    func_484F79A1_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3], 0x1c
 loc_484DAC2B:
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     cmp     1, d0
     bge     loc_484DAC71
     inc     d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267+1), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     mov     d0, d3
     movbu   (Str_empty_267), d0
     exthu   d3
@@ -35661,14 +35790,14 @@ loc_484DAC71:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_484DAC75:
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     cmp     0, d0
     ble     loc_484DACBD
     add     -1, d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267+1), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     mov     d0, d3
     movbu   (Str_empty_267), d0
     exthu   d3
@@ -35708,16 +35837,16 @@ loc_484DACDE:
     bra     loc_484DAD06
 loc_484DACF5:
     mov     1, d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
     bra     loc_484DAD06
 loc_484DACFF:
     clr     d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
 loc_484DAD06:
     clr     d0
     bra     loc_484DAD47
 loc_484DAD09:
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     cmp     0, d0
     beq     loc_484DAD19
     cmp     1, d0
@@ -35785,20 +35914,20 @@ loc_484DADA4:
     mov     0x0000b034, d0
     call    SetMmmFilter_entry, [d2], 0x18
     mov     0x25, d0
-    mov     data_50007DDD, a0
+    mov     DspTenSe_Var, a0
     mov     0x40, d1
     call    func_484F79DF_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3], 0x1c
 loc_484DADE0:
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     cmp     1, d0
     bge     loc_484DAE26
     inc     d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267+1), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     mov     d0, d3
     movbu   (Str_empty_267), d0
     exthu   d3
@@ -35815,14 +35944,14 @@ loc_484DAE26:
     clr     d0
     ret     [d2,d3], 0x1c
 loc_484DAE2A:
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     cmp     0, d0
     ble     loc_484DAE72
     add     -1, d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
     call    GetPartSelect_entry, 0, 0x14
     movbu   (Str_empty_267+1), d2
-    movbu   (data_50007DDD), d1
+    movbu   (DspTenSe_Var), d1
     mov     d0, d3
     movbu   (Str_empty_267), d0
     exthu   d3
@@ -35862,16 +35991,16 @@ loc_484DAE93:
     bra     loc_484DAEBB
 loc_484DAEAA:
     mov     1, d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
     bra     loc_484DAEBB
 loc_484DAEB4:
     clr     d0
-    movbu   d0, (data_50007DDD)
+    movbu   d0, (DspTenSe_Var)
 loc_484DAEBB:
     clr     d0
     bra     loc_484DAEFC
 loc_484DAEBE:
-    movbu   (data_50007DDD), d0
+    movbu   (DspTenSe_Var), d0
     cmp     0, d0
     beq     loc_484DAECE
     cmp     1, d0
@@ -36521,16 +36650,16 @@ loc_484DB5C6:
     jmp     loc_484DB77C
 loc_484DB5C9:
     call    func_484F900D_entry, 0, 0x18
-    movbu   d0, (data_50007DE0)
+    movbu   d0, (EzDeffSe_Var)
     clr     d0
     ret     0, 0x14
 loc_484DB5DA:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0xc, d0
     bge     loc_484DB5F8
     inc     d0
-    movbu   d0, (data_50007DE0)
-    movbu   (data_50007DE0), d0
+    movbu   d0, (EzDeffSe_Var)
+    movbu   (EzDeffSe_Var), d0
     call    func_484F9069_entry, 0, 0x14
 loc_484DB5F8:
     clr     d0
@@ -36541,12 +36670,12 @@ loc_484DB5F8:
     clr     d0
     ret     0, 0x14
 loc_484DB60E:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     ble     loc_484DB62D
     add     -1, d0
-    movbu   d0, (data_50007DE0)
-    movbu   (data_50007DE0), d0
+    movbu   d0, (EzDeffSe_Var)
+    movbu   (EzDeffSe_Var), d0
     call    func_484F9069_entry, 0, 0x14
 loc_484DB62D:
     clr     d0
@@ -36557,7 +36686,7 @@ loc_484DB62D:
     clr     d0
     ret     0, 0x14
 loc_484DB643:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DB650
     jmp     loc_484DB777
@@ -36567,7 +36696,7 @@ loc_484DB650:
     jmp     loc_484DB777
 loc_484DB657:
     asl2    d0
-    mov     ptrs_4863AE38, a0
+    mov     DeffTypeSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DB662:
@@ -36685,20 +36814,20 @@ MemoryBankSe:
     beq     loc_484DB816
     bra     loc_484DB815
 loc_484DB7B5:
-    movhu   (data_50007DD8), d0
+    movhu   (func_484D807B_Var), d0
     cmp     0x27, d0
     bge     loc_484DB7C6
     inc     d0
-    movhu   d0, (data_50007DD8)
+    movhu   d0, (func_484D807B_Var)
 loc_484DB7C6:
     clr     d0
     bra     loc_484DB816
 loc_484DB7C9:
-    movhu   (data_50007DD8), d0
+    movhu   (func_484D807B_Var), d0
     cmp     0, d0
     ble     loc_484DB7DB
     add     -1, d0
-    movhu   d0, (data_50007DD8)
+    movhu   d0, (func_484D807B_Var)
 loc_484DB7DB:
     clr     d0
     bra     loc_484DB816
@@ -36707,7 +36836,7 @@ loc_484DB7DE:
     mov     Str_2d_60, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
-    movhu   (data_50007DD8), d0
+    movhu   (func_484D807B_Var), d0
     inc     d0
     mov     d0, (0x10, sp)
     call    sprintf_entry, [a2], 0x20
@@ -37186,7 +37315,7 @@ loc_484DBCB7:
     movbu   (Str_empty_266+1), d0
     cmp     3, d0
     bge     loc_484DBCD5
-    movbu   (data_50007DE4), d2
+    movbu   (func_484D807B_Var_4), d2
     mov     d0, d1
     inc     d1
     cmp     d2, d1
@@ -37195,7 +37324,7 @@ loc_484DBCB7:
     movbu   d0, (Str_empty_266+1)
     bra     loc_484DBCEC
 loc_484DBCD5:
-    movbu   (data_50007DE4), d2
+    movbu   (func_484D807B_Var_4), d2
     mov     d0, d1
     inc     d1
     cmp     d2, d1
@@ -37211,7 +37340,7 @@ loc_484DBCF0:
     movbu   (Str_empty_266+1), d0
     cmp     0, d0
     ble     loc_484DBD10
-    movbu   (data_50007DE4), d2
+    movbu   (func_484D807B_Var_4), d2
     mov     -1, d1
     add     d0, d1
     cmp     d2, d1
@@ -37220,7 +37349,7 @@ loc_484DBCF0:
     movbu   d0, (Str_empty_266+1)
     bra     loc_484DBD28
 loc_484DBD10:
-    movbu   (data_50007DE4), d2
+    movbu   (func_484D807B_Var_4), d2
     mov     -1, d1
     add     d0, d1
     cmp     d2, d1
@@ -37300,7 +37429,7 @@ loc_484DBDCF:
 loc_484DBDDA:
     jmp     loc_484DBEC1
 loc_484DBDDD:
-    movbu   (data_50007DE4), d0
+    movbu   (func_484D807B_Var_4), d0
     cmp     3, d0
     bge     loc_484DBDFB
     movbu   (Str_empty_266+1), d2
@@ -37309,7 +37438,7 @@ loc_484DBDDD:
     cmp     d2, d1
     beq     loc_484DBDFB
     inc     d0
-    movbu   d0, (data_50007DE4)
+    movbu   d0, (func_484D807B_Var_4)
     bra     loc_484DBE12
 loc_484DBDFB:
     movbu   (Str_empty_266+1), d2
@@ -37320,12 +37449,12 @@ loc_484DBDFB:
     cmp     3, d2
     bge     loc_484DBE12
     add     2, d0
-    movbu   d0, (data_50007DE4)
+    movbu   d0, (func_484D807B_Var_4)
 loc_484DBE12:
     clr     d0
     ret     [d2], 0x14
 loc_484DBE16:
-    movbu   (data_50007DE4), d0
+    movbu   (func_484D807B_Var_4), d0
     cmp     0, d0
     ble     loc_484DBE36
     movbu   (Str_empty_266+1), d2
@@ -37334,7 +37463,7 @@ loc_484DBE16:
     cmp     d2, d1
     beq     loc_484DBE36
     add     -1, d0
-    movbu   d0, (data_50007DE4)
+    movbu   d0, (func_484D807B_Var_4)
     bra     loc_484DBE4E
 loc_484DBE36:
     movbu   (Str_empty_266+1), d2
@@ -37345,12 +37474,12 @@ loc_484DBE36:
     cmp     0, d2
     ble     loc_484DBE4E
     add     -2, d0
-    movbu   d0, (data_50007DE4)
+    movbu   d0, (func_484D807B_Var_4)
 loc_484DBE4E:
     clr     d0
     ret     [d2], 0x14
 loc_484DBE52:
-    movbu   (data_50007DE4), d0
+    movbu   (func_484D807B_Var_4), d0
     cmp     0, d0
     beq     loc_484DBE6A
     cmp     1, d0
@@ -37414,25 +37543,25 @@ CopyOptSe:
 loc_484DBEFB:
     jmp     loc_484DBFB1
 loc_484DBEFE:
-    movbu   (data_50007DE5), d0
+    movbu   (CopyOptSe_Var), d0
     cmp     4, d0
     bge     loc_484DBF0F
     inc     d0
-    movbu   d0, (data_50007DE5)
+    movbu   d0, (CopyOptSe_Var)
 loc_484DBF0F:
     clr     d0
     ret     0, 0x10
 loc_484DBF13:
-    movbu   (data_50007DE5), d0
+    movbu   (CopyOptSe_Var), d0
     cmp     0, d0
     ble     loc_484DBF25
     add     -1, d0
-    movbu   d0, (data_50007DE5)
+    movbu   d0, (CopyOptSe_Var)
 loc_484DBF25:
     clr     d0
     ret     0, 0x10
 loc_484DBF29:
-    movbu   (data_50007DE5), d0
+    movbu   (CopyOptSe_Var), d0
     cmp     0, d0
     beq     loc_484DBF45
     cmp     1, d0
@@ -37523,7 +37652,7 @@ loc_484DC00E:
     jmp     loc_484DC158
 loc_484DC011:
     call    GetViewInstance, 0, 0
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     cmp     0, d0
     bne     loc_484DC02A
     mov     (0x34, a0), a0
@@ -37549,7 +37678,7 @@ loc_484DC040:
     cmp     0, a2
     beq     loc_484DC079
     clr     d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01b50001, d1
@@ -37681,7 +37810,7 @@ loc_484DC1BF:
     jmp     loc_484DC30D
 loc_484DC1C2:
     call    GetViewInstance, 0, 0
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     cmp     1, d0
     bne     loc_484DC1DB
     mov     (0x34, a0), a0
@@ -37707,7 +37836,7 @@ loc_484DC1F1:
     cmp     0, a2
     beq     loc_484DC22C
     mov     1, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -37840,7 +37969,7 @@ loc_484DC374:
     jmp     loc_484DC4C3
 loc_484DC377:
     call    GetViewInstance, 0, 0
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     cmp     2, d0
     bne     loc_484DC390
     mov     (0x34, a0), a0
@@ -37866,7 +37995,7 @@ loc_484DC3A6:
     cmp     0, a2
     beq     loc_484DC3E1
     mov     2, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -37999,7 +38128,7 @@ loc_484DC52A:
     jmp     loc_484DC679
 loc_484DC52D:
     call    GetViewInstance, 0, 0
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     cmp     3, d0
     bne     loc_484DC546
     mov     (0x34, a0), a0
@@ -38025,7 +38154,7 @@ loc_484DC55C:
     cmp     0, a2
     beq     loc_484DC597
     mov     3, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -38158,7 +38287,7 @@ loc_484DC6E0:
     jmp     loc_484DC82A
 loc_484DC6E3:
     call    GetViewInstance, 0, 0
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     cmp     0, d0
     bne     loc_484DC6FC
     mov     (0x34, a0), a0
@@ -38184,7 +38313,7 @@ loc_484DC712:
     cmp     0, a2
     beq     loc_484DC74B
     clr     d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01b50001, d1
@@ -38316,7 +38445,7 @@ loc_484DC891:
     jmp     loc_484DC9DF
 loc_484DC894:
     call    GetViewInstance, 0, 0
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     cmp     1, d0
     bne     loc_484DC8AD
     mov     (0x34, a0), a0
@@ -38342,7 +38471,7 @@ loc_484DC8C3:
     cmp     0, a2
     beq     loc_484DC8FE
     mov     1, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -38452,7 +38581,7 @@ loc_484DC9FF:
     ble     loc_484DCA0A
     jmp     loc_484DCB3F
 loc_484DCA0A:
-    mov     data_4863AE6C, a1
+    mov     AcChEditBoxSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d3, d1
@@ -38469,7 +38598,7 @@ loc_484DCA0A:
     jmp     loc_484DCB3F
 loc_484DCA2E:
     add     8, a0
-    cmp     ptrs_4863AEEC, a0
+    cmp     DeffVal0Se_Table, a0
     bcs     loc_484DCA39
     mov     a1, a0
 loc_484DCA39:
@@ -38479,6 +38608,7 @@ loc_484DCA39:
 loc_484DCA3C:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484DCA41:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -38492,6 +38622,7 @@ loc_484DCA3C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484DCA67:
     mov     (0x34, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
@@ -38504,6 +38635,7 @@ loc_484DCA3C:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484DCA89:
     mov     (0x34, sp), a0
     mov     d2, d0
     mov     a0, (0x10, sp)
@@ -38516,6 +38648,7 @@ loc_484DCA3C:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484DCAAB:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0x38, a0), d0
@@ -38525,6 +38658,7 @@ loc_484DCA3C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x24
+loc_484DCAC6:
     mov     d2, d0
     call    GetViewInstance, 0, 0
     mov     (0x38, a0), d0
@@ -38534,6 +38668,7 @@ loc_484DCA3C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484DCB4C
+loc_484DCAE0:
     mov     (0x34, sp), a2
     mov     d2, d0
     mov     a2, (0x10, sp)
@@ -38603,13 +38738,13 @@ loc_484DCB8E:
 loc_484DCB99:
     jmp     loc_484DCE74
 loc_484DCB9C:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DCBFE
     cmp     0xc, d0
     bgt     loc_484DCBFE
     asl2    d0
-    mov     ptrs_4863AF88, a0
+    mov     DeffVal0Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCBB5:
@@ -38648,13 +38783,13 @@ loc_484DCBFE:
     clr     d0
     ret     0, 0x20
 loc_484DCC02:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DCC30
     cmp     0xc, d0
     bgt     loc_484DCC30
     asl2    d0
-    mov     ptrs_4863AF54, a0
+    mov     DeffVal0Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCC1B:
@@ -38670,7 +38805,7 @@ loc_484DCC30:
     clr     d0
     ret     0, 0x20
 loc_484DCC34:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DCC41
     jmp     loc_484DCCD7
@@ -38680,7 +38815,7 @@ loc_484DCC41:
     jmp     loc_484DCCD7
 loc_484DCC48:
     asl2    d0
-    mov     ptrs_4863AF20, a0
+    mov     DeffVal0Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCC53:
@@ -38740,7 +38875,7 @@ loc_484DCCEA:
     clr     d0
     ret     0, 0x20
 loc_484DCCEE:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DCCFB
     jmp     loc_484DCE46
@@ -38750,7 +38885,7 @@ loc_484DCCFB:
     jmp     loc_484DCE46
 loc_484DCD02:
     asl2    d0
-    mov     ptrs_4863AEEC, a0
+    mov     DeffVal0Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCD0D:
@@ -38767,7 +38902,7 @@ loc_484DCD0D:
     jmp     loc_484DCE6F
 loc_484DCD3A:
     mov     (0x30, sp), a1
-    mov     Str_DEPTH1_4, d0
+    mov     Str_DEPTH_26+16, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38779,7 +38914,7 @@ loc_484DCD3A:
     jmp     loc_484DCE6F
 loc_484DCD67:
     mov     (0x30, sp), a0
-    mov     Str_DEPTH_25, d0
+    mov     Str_DEPTH_26+32, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38791,7 +38926,7 @@ loc_484DCD67:
     jmp     loc_484DCE6F
 loc_484DCD94:
     mov     (0x30, sp), a0
-    mov     Str_DEPTH1_3, d0
+    mov     Str_DEPTH_26+48, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38803,7 +38938,7 @@ loc_484DCD94:
     jmp     loc_484DCE6F
 loc_484DCDC1:
     mov     (0x30, sp), a1
-    mov     Str_DELAY_16, d0
+    mov     Str_DEPTH_26+64, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38815,7 +38950,7 @@ loc_484DCDC1:
     jmp     loc_484DCE6F
 loc_484DCDEE:
     mov     (0x30, sp), a0
-    mov     Str_SPEED_13, d0
+    mov     Str_DEPTH_26+80, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38827,7 +38962,7 @@ loc_484DCDEE:
     bra     loc_484DCE6F
 loc_484DCE1A:
     mov     (0x30, sp), a0
-    mov     Str_DISTORTION, d0
+    mov     Str_DEPTH_26+96, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38839,7 +38974,7 @@ loc_484DCE1A:
     bra     loc_484DCE6F
 loc_484DCE46:
     mov     (0x30, sp), a0
-    mov     Str_empty_1238, d0
+    mov     Str_DEPTH_26+112, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -38885,13 +39020,13 @@ loc_484DCEB7:
 loc_484DCEC2:
     jmp     loc_484DD1E0
 loc_484DCEC5:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DCF41
     cmp     0xc, d0
     bgt     loc_484DCF41
     asl2    d0
-    mov     ptrs_4863B058, a0
+    mov     DeffVal1Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCEDE:
@@ -38941,13 +39076,13 @@ loc_484DCF41:
     clr     d0
     ret     0, 0x20
 loc_484DCF45:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DCFA4
     cmp     0xc, d0
     bgt     loc_484DCFA4
     asl2    d0
-    mov     ptrs_4863B024, a0
+    mov     DeffVal1Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCF5E:
@@ -38984,7 +39119,7 @@ loc_484DCFA4:
     clr     d0
     ret     0, 0x20
 loc_484DCFA8:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DCFB5
     jmp     loc_484DD043
@@ -38994,7 +39129,7 @@ loc_484DCFB5:
     jmp     loc_484DD043
 loc_484DCFBC:
     asl2    d0
-    mov     ptrs_4863AFF0, a0
+    mov     DeffVal1Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DCFC7:
@@ -39050,7 +39185,7 @@ loc_484DD056:
     clr     d0
     ret     0, 0x20
 loc_484DD05A:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DD067
     jmp     loc_484DD1B2
@@ -39060,7 +39195,7 @@ loc_484DD067:
     jmp     loc_484DD1B2
 loc_484DD06E:
     asl2    d0
-    mov     ptrs_4863AFBC, a0
+    mov     DeffVal1Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD079:
@@ -39077,7 +39212,7 @@ loc_484DD079:
     jmp     loc_484DD1DB
 loc_484DD0A6:
     mov     (0x30, sp), a0
-    mov     Str_SPEED1_4, d0
+    mov     Str_SPEED_12+16, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39089,7 +39224,7 @@ loc_484DD0A6:
     jmp     loc_484DD1DB
 loc_484DD0D3:
     mov     (0x30, sp), a1
-    mov     Str_SPEED_11, d0
+    mov     Str_SPEED_12+32, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39101,7 +39236,7 @@ loc_484DD0D3:
     jmp     loc_484DD1DB
 loc_484DD100:
     mov     (0x30, sp), a1
-    mov     Str_SPEED1_3, d0
+    mov     Str_SPEED_12+48, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39113,7 +39248,7 @@ loc_484DD100:
     jmp     loc_484DD1DB
 loc_484DD12D:
     mov     (0x30, sp), a0
-    mov     Str_DETUNE_10, d0
+    mov     Str_SPEED_12+64, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39125,7 +39260,7 @@ loc_484DD12D:
     jmp     loc_484DD1DB
 loc_484DD15A:
     mov     (0x30, sp), a0
-    mov     Str_DECAY_3, d0
+    mov     Str_SPEED_12+80, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39137,7 +39272,7 @@ loc_484DD15A:
     bra     loc_484DD1DB
 loc_484DD186:
     mov     (0x30, sp), a1
-    mov     Str_TOUCH_DEPTH, d0
+    mov     Str_SPEED_12+96, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39149,7 +39284,7 @@ loc_484DD186:
     bra     loc_484DD1DB
 loc_484DD1B2:
     mov     (0x30, sp), a0
-    mov     Str_empty_1237, d0
+    mov     Str_SPEED_12+112, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39195,7 +39330,7 @@ loc_484DD223:
 loc_484DD22E:
     jmp     loc_484DD6A0
 loc_484DD231:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DD23E
     jmp     loc_484DD300
@@ -39205,7 +39340,7 @@ loc_484DD23E:
     jmp     loc_484DD300
 loc_484DD245:
     asl2    d0
-    mov     ptrs_4863B128, a0
+    mov     DeffVal2Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD250:
@@ -39288,13 +39423,13 @@ loc_484DD300:
     clr     d0
     ret     0, 0x20
 loc_484DD304:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DD37D
     cmp     0xc, d0
     bgt     loc_484DD37D
     asl2    d0
-    mov     ptrs_4863B0F4, a0
+    mov     DeffVal2Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD31D:
@@ -39342,7 +39477,7 @@ loc_484DD37D:
     clr     d0
     ret     0, 0x20
 loc_484DD381:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DD38E
     jmp     loc_484DD503
@@ -39352,7 +39487,7 @@ loc_484DD38E:
     jmp     loc_484DD503
 loc_484DD395:
     asl2    d0
-    mov     ptrs_4863B0C0, a0
+    mov     DeffVal2Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD3A0:
@@ -39488,7 +39623,7 @@ loc_484DD516:
     clr     d0
     ret     0, 0x20
 loc_484DD51A:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DD527
     jmp     loc_484DD672
@@ -39498,7 +39633,7 @@ loc_484DD527:
     jmp     loc_484DD672
 loc_484DD52E:
     asl2    d0
-    mov     ptrs_4863B08C, a0
+    mov     DeffVal2Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD539:
@@ -39515,7 +39650,7 @@ loc_484DD539:
     jmp     loc_484DD69B
 loc_484DD566:
     mov     (0x30, sp), a1
-    mov     Str_DEPTH2_4, d0
+    mov     Str_DETUNE_9+16, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39527,7 +39662,7 @@ loc_484DD566:
     jmp     loc_484DD69B
 loc_484DD593:
     mov     (0x30, sp), a1
-    mov     Str_WAVE_6, d0
+    mov     Str_DETUNE_9+32, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39539,7 +39674,7 @@ loc_484DD593:
     jmp     loc_484DD69B
 loc_484DD5C0:
     mov     (0x30, sp), a1
-    mov     Str_DEPTH2_3, d0
+    mov     Str_DETUNE_9+48, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39551,7 +39686,7 @@ loc_484DD5C0:
     jmp     loc_484DD69B
 loc_484DD5ED:
     mov     (0x30, sp), a1
-    mov     Str_KEY_SHIFT_4, d0
+    mov     Str_DETUNE_9+64, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39563,7 +39698,7 @@ loc_484DD5ED:
     jmp     loc_484DD69B
 loc_484DD61A:
     mov     (0x30, sp), a1
-    mov     Str_SUSTAIN_8, d0
+    mov     Str_DETUNE_9+80, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39575,7 +39710,7 @@ loc_484DD61A:
     bra     loc_484DD69B
 loc_484DD646:
     mov     (0x30, sp), a1
-    mov     Str_DEPTH_48, d0
+    mov     Str_DETUNE_9+96, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39587,7 +39722,7 @@ loc_484DD646:
     bra     loc_484DD69B
 loc_484DD672:
     mov     (0x30, sp), a1
-    mov     Str_empty_1236, d0
+    mov     Str_DETUNE_9+112, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39633,7 +39768,7 @@ loc_484DD6E3:
 loc_484DD6EE:
     jmp     loc_484DD9B4
 loc_484DD6F1:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DD6FE
     jmp     loc_484DD78B
@@ -39643,7 +39778,7 @@ loc_484DD6FE:
     jmp     loc_484DD78B
 loc_484DD705:
     asl2    d0
-    mov     ptrs_4863B1F8, a0
+    mov     DeffVal3Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD710:
@@ -39704,13 +39839,13 @@ loc_484DD78B:
     clr     d0
     ret     0, 0x20
 loc_484DD78F:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DD7BD
     cmp     0xc, d0
     bgt     loc_484DD7BD
     asl2    d0
-    mov     ptrs_4863B1C4, a0
+    mov     DeffVal3Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD7A8:
@@ -39726,13 +39861,13 @@ loc_484DD7BD:
     clr     d0
     ret     0, 0x20
 loc_484DD7C1:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DD818
     cmp     0xc, d0
     bgt     loc_484DD818
     asl2    d0
-    mov     ptrs_4863B190, a0
+    mov     DeffVal3Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD7DA:
@@ -39766,7 +39901,7 @@ loc_484DD82B:
     clr     d0
     ret     0, 0x20
 loc_484DD82F:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DD83C
     jmp     loc_484DD986
@@ -39776,7 +39911,7 @@ loc_484DD83C:
     jmp     loc_484DD986
 loc_484DD843:
     asl2    d0
-    mov     ptrs_4863B15C, a0
+    mov     DeffVal3Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DD84E:
@@ -39793,7 +39928,7 @@ loc_484DD84E:
     jmp     loc_484DD9AF
 loc_484DD87B:
     mov     (0x30, sp), a0
-    mov     Str_SPEED2_4, d0
+    mov     Str_DELAY_15+16, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39805,7 +39940,7 @@ loc_484DD87B:
     jmp     loc_484DD9AF
 loc_484DD8A8:
     mov     (0x30, sp), a0
-    mov     Str_BALANCE_3, d0
+    mov     Str_DELAY_15+32, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39817,7 +39952,7 @@ loc_484DD8A8:
     jmp     loc_484DD9AF
 loc_484DD8D5:
     mov     (0x30, sp), a0
-    mov     Str_SPEED2_3, d0
+    mov     Str_DELAY_15+48, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39829,7 +39964,7 @@ loc_484DD8D5:
     jmp     loc_484DD9AF
 loc_484DD902:
     mov     (0x30, sp), a1
-    mov     Str_BALANCE_2, d0
+    mov     Str_DELAY_15+64, d0
     mov     a1, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39841,7 +39976,7 @@ loc_484DD902:
     jmp     loc_484DD9AF
 loc_484DD92F:
     mov     (0x30, sp), a0
-    mov     Str_RELEASE_3, d0
+    mov     Str_DELAY_15+80, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39853,7 +39988,7 @@ loc_484DD92F:
     bra     loc_484DD9AF
 loc_484DD95B:
     mov     (0x30, sp), a0
-    mov     Str_empty_1235, d0
+    mov     Str_DELAY_15+96, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39865,7 +40000,7 @@ loc_484DD95B:
     bra     loc_484DD9AF
 loc_484DD986:
     mov     (0x30, sp), a0
-    mov     Str_empty_1234, d0
+    mov     Str_DELAY_15+112, d0
     mov     a0, (8, sp)
     mov     d0, (0xc, sp)
     call    sprintf_entry, [a2], 0x20
@@ -39909,13 +40044,13 @@ loc_484DD9F4:
 loc_484DD9FF:
     jmp     loc_484DDC05
 loc_484DDA02:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDA4C
     cmp     0xc, d0
     bgt     loc_484DDA4C
     asl2    d0
-    mov     ptrs_4863B2C8, a0
+    mov     DeffVal4Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDA1B:
@@ -39943,13 +40078,13 @@ loc_484DDA4C:
     clr     d0
     ret     0, 0x20
 loc_484DDA50:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDA98
     cmp     0xc, d0
     bgt     loc_484DDA98
     asl2    d0
-    mov     ptrs_4863B294, a0
+    mov     DeffVal4Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDA69:
@@ -39976,13 +40111,13 @@ loc_484DDA98:
     clr     d0
     ret     0, 0x20
 loc_484DDA9C:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDB1D
     cmp     0xc, d0
     bgt     loc_484DDB1D
     asl2    d0
-    mov     ptrs_4863B260, a0
+    mov     DeffVal4Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDAB5:
@@ -40031,7 +40166,7 @@ loc_484DDB30:
     clr     d0
     ret     0, 0x20
 loc_484DDB34:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DDB41
     jmp     loc_484DDBD7
@@ -40041,7 +40176,7 @@ loc_484DDB41:
     jmp     loc_484DDBD7
 loc_484DDB48:
     asl2    d0
-    mov     ptrs_4863B22C, a0
+    mov     DeffVal4Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDB53:
@@ -40124,13 +40259,13 @@ loc_484DDC42:
 loc_484DDC4D:
     jmp     loc_484DDE0D
 loc_484DDC50:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDC82
     cmp     0xc, d0
     bgt     loc_484DDC82
     asl2    d0
-    mov     ptrs_4863B398, a0
+    mov     DeffVal5Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDC69:
@@ -40149,13 +40284,13 @@ loc_484DDC82:
     clr     d0
     ret     0, 0x20
 loc_484DDC86:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDCB6
     cmp     0xc, d0
     bgt     loc_484DDCB6
     asl2    d0
-    mov     ptrs_4863B364, a0
+    mov     DeffVal5Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDC9F:
@@ -40173,13 +40308,13 @@ loc_484DDCB6:
     clr     d0
     ret     0, 0x20
 loc_484DDCBA:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDD26
     cmp     0xc, d0
     bgt     loc_484DDD26
     asl2    d0
-    mov     ptrs_4863B330, a0
+    mov     DeffVal5Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDCD3:
@@ -40220,7 +40355,7 @@ loc_484DDD39:
     clr     d0
     ret     0, 0x20
 loc_484DDD3D:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DDD4A
     jmp     loc_484DDDDF
@@ -40230,7 +40365,7 @@ loc_484DDD4A:
     jmp     loc_484DDDDF
 loc_484DDD51:
     asl2    d0
-    mov     ptrs_4863B2FC, a0
+    mov     DeffVal5Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDD5C:
@@ -40315,13 +40450,13 @@ loc_484DDE4D:
 loc_484DDE58:
     jmp     loc_484DE066
 loc_484DDE5B:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDEA6
     cmp     0xc, d0
     bgt     loc_484DDEA6
     asl2    d0
-    mov     ptrs_4863B468, a0
+    mov     DeffVal6Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDE74:
@@ -40350,13 +40485,13 @@ loc_484DDEA6:
     clr     d0
     ret     0, 0x20
 loc_484DDEAA:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DDEF5
     cmp     0xc, d0
     bgt     loc_484DDEF5
     asl2    d0
-    mov     ptrs_4863B434, a0
+    mov     DeffVal6Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDEC3:
@@ -40385,7 +40520,7 @@ loc_484DDEF5:
     clr     d0
     ret     0, 0x20
 loc_484DDEF9:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DDF06
     jmp     loc_484DDF7E
@@ -40393,7 +40528,7 @@ loc_484DDF06:
     cmp     0xc, d0
     bgt     loc_484DDF7E
     asl2    d0
-    mov     ptrs_4863B400, a0
+    mov     DeffVal6Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDF15:
@@ -40443,7 +40578,7 @@ loc_484DDF91:
     clr     d0
     ret     0, 0x20
 loc_484DDF95:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DDFA2
     jmp     loc_484DE038
@@ -40453,7 +40588,7 @@ loc_484DDFA2:
     jmp     loc_484DE038
 loc_484DDFA9:
     asl2    d0
-    mov     ptrs_4863B3CC, a0
+    mov     DeffVal6Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DDFB4:
@@ -40536,13 +40671,13 @@ loc_484DE0A3:
 loc_484DE0AE:
     jmp     loc_484DE1E8
 loc_484DE0B1:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE0E2
     cmp     0xc, d0
     bgt     loc_484DE0E2
     asl2    d0
-    mov     ptrs_4863B538, a0
+    mov     DeffVal7Se_Table_4, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE0CA:
@@ -40559,13 +40694,13 @@ loc_484DE0E2:
     clr     d0
     ret     0, 0x20
 loc_484DE0E6:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE117
     cmp     0xc, d0
     bgt     loc_484DE117
     asl2    d0
-    mov     ptrs_4863B504, a0
+    mov     DeffVal7Se_Table_3, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE0FF:
@@ -40582,13 +40717,13 @@ loc_484DE117:
     clr     d0
     ret     0, 0x20
 loc_484DE11B:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE15E
     cmp     0xc, d0
     bgt     loc_484DE15E
     asl2    d0
-    mov     ptrs_4863B4D0, a0
+    mov     DeffVal7Se_Table_2, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE134:
@@ -40616,13 +40751,13 @@ loc_484DE171:
     clr     d0
     ret     0, 0x20
 loc_484DE175:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE1BA
     cmp     0xc, d0
     bgt     loc_484DE1BA
     asl2    d0
-    mov     ptrs_4863B49C, a0
+    mov     DeffVal7Se_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE18E:
@@ -40814,7 +40949,7 @@ DeffVal0SwSe:
 loc_484DE386:
     jmp     loc_484DE454
 loc_484DE389:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DE396
     jmp     loc_484DE43C
@@ -40824,7 +40959,7 @@ loc_484DE396:
     jmp     loc_484DE43C
 loc_484DE39D:
     asl2    d0
-    mov     ptrs_4863B56C, a0
+    mov     DeffVal0SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE3A8:
@@ -40901,7 +41036,7 @@ DeffVal1SwSe:
 loc_484DE46E:
     jmp     loc_484DE53C
 loc_484DE471:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DE47E
     jmp     loc_484DE524
@@ -40911,7 +41046,7 @@ loc_484DE47E:
     jmp     loc_484DE524
 loc_484DE485:
     asl2    d0
-    mov     ptrs_4863B5A0, a0
+    mov     DeffVal1SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE490:
@@ -40988,7 +41123,7 @@ DeffVal2SwSe:
 loc_484DE556:
     jmp     loc_484DE624
 loc_484DE559:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DE566
     jmp     loc_484DE60C
@@ -40998,7 +41133,7 @@ loc_484DE566:
     jmp     loc_484DE60C
 loc_484DE56D:
     asl2    d0
-    mov     ptrs_4863B5D4, a0
+    mov     DeffVal2SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE578:
@@ -41075,7 +41210,7 @@ DeffVal3SwSe:
 loc_484DE63E:
     jmp     loc_484DE70C
 loc_484DE641:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     bge     loc_484DE64E
     jmp     loc_484DE6F4
@@ -41085,7 +41220,7 @@ loc_484DE64E:
     jmp     loc_484DE6F4
 loc_484DE655:
     asl2    d0
-    mov     ptrs_4863B608, a0
+    mov     DeffVal3SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE660:
@@ -41161,13 +41296,13 @@ DeffVal4SwSe:
     ret     0, 0x10
     bra     loc_484DE798
 loc_484DE728:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE780
     cmp     0xc, d0
     bgt     loc_484DE780
     asl2    d0
-    mov     ptrs_4863B63C, a0
+    mov     DeffVal4SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE741:
@@ -41215,13 +41350,13 @@ DeffVal5SwSe:
     ret     0, 0x10
     bra     loc_484DE824
 loc_484DE7B4:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE80C
     cmp     0xc, d0
     bgt     loc_484DE80C
     asl2    d0
-    mov     ptrs_4863B670, a0
+    mov     DeffVal5SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE7CD:
@@ -41269,13 +41404,13 @@ DeffVal6SwSe:
     ret     0, 0x10
     bra     loc_484DE8B0
 loc_484DE840:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE898
     cmp     0xc, d0
     bgt     loc_484DE898
     asl2    d0
-    mov     ptrs_4863B6A4, a0
+    mov     DeffVal6SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE859:
@@ -41322,13 +41457,13 @@ DeffVal7SwSe:
     beq     loc_484DE910
     bra     loc_484DE90F
 loc_484DE8C9:
-    movbu   (data_50007DE0), d0
+    movbu   (EzDeffSe_Var), d0
     cmp     0, d0
     blt     loc_484DE8F7
     cmp     0xc, d0
     bgt     loc_484DE8F7
     asl2    d0
-    mov     ptrs_4863B6D8, a0
+    mov     DeffVal7SwSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DE8E2:
@@ -41362,7 +41497,7 @@ EnvKfGraphTitleSe:
     ret     0, 0x10
     bra     loc_484DE996
 loc_484DE92B:
-    movbu   (data_50007DE1), d0
+    movbu   (EnvKfGraphTitleSe_Var), d0
     cmp     0, d0
     beq     loc_484DE93F
     cmp     1, d0
@@ -41416,7 +41551,7 @@ FltGraphTitleSe:
 loc_484DE9B0:
     jmp     loc_484DEAAF
 loc_484DE9B3:
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     call    func_484F7B62_entry, [d2,a2], 0x20
     extbu   d0
     cmp     0, d0
@@ -41521,7 +41656,7 @@ EqGraphTitleSe:
     beq     loc_484DEB14
     bra     loc_484DEB13
 loc_484DEAC8:
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     call    func_484F7B62_entry, [d2,a2], 0x20
     extbu   d0
     cmp     2, d0
@@ -41562,7 +41697,7 @@ EqGraphXSe:
     beq     loc_484DEB78
     bra     loc_484DEB77
 loc_484DEB2C:
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     call    func_484F7B62_entry, [d2,a2], 0x20
     extbu   d0
     cmp     2, d0
@@ -41605,7 +41740,7 @@ DrumFltGraphTitleSe:
 loc_484DEB91:
     jmp     loc_484DEC90
 loc_484DEB94:
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     call    func_484F7C08_entry, [d2,d3,a2,a3], 0x28
     extbu   d0
     cmp     0, d0
@@ -41710,7 +41845,7 @@ DrumEqGraphTitleSe:
     beq     loc_484DECF5
     bra     loc_484DECF4
 loc_484DECA9:
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     call    func_484F7C08_entry, [d2,d3,a2,a3], 0x28
     extbu   d0
     cmp     2, d0
@@ -41751,7 +41886,7 @@ DrumEqGraphXSe:
     beq     loc_484DED59
     bra     loc_484DED58
 loc_484DED0D:
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     call    func_484F7C08_entry, [d2,d3,a2,a3], 0x28
     extbu   d0
     cmp     2, d0
@@ -41911,10 +42046,10 @@ loc_484DEEAA:
     call    GetPartSelect_entry, 0, 0x14
     mov     d0, d2
     extbu   d0
-    movhu   (data_50007DD8), d1
+    movhu   (func_484D807B_Var), d1
     call    func_4C00F397_entry, [d2,d3,a2,a3], 0x2c
     extbu   d2
-    movhu   (data_50007DD8), d1
+    movhu   (func_484D807B_Var), d1
     mov     d2, d0
     call    SoundEditRefInvalidatePost_entry, [d2,d3], 0x18
     mov     1, d0
@@ -41994,10 +42129,10 @@ CopyExeSe:
     bra     loc_484DEFE6
 loc_484DEFB1:
     call    GetPartSelect_entry, 0, 0x14
-    movbu   (data_50007DE4), d1
+    movbu   (func_484D807B_Var_4), d1
     extbu   d0
     mov     d1, (0x10, sp)
-    movbu   (data_50007DE5), d1
+    movbu   (CopyOptSe_Var), d1
     mov     d1, (0x14, sp)
     movbu   (Str_empty_266+1), d1
     call    func_4C00F12A_entry, [d2,d3,a2,a3], 0x34
@@ -42200,7 +42335,7 @@ loc_484DF1AB:
     ble     loc_484DF1B6
     jmp     loc_484DF6E3
 loc_484DF1B6:
-    mov     data_4863B70C, a1
+    mov     AcGridBoxSeProc_Records, a1
     mov     0xf, d0
     mov     0xfffb0000, d1
     add     d2, d1
@@ -42217,7 +42352,7 @@ loc_484DF1B6:
     jmp     loc_484DF6E3
 loc_484DF1DA:
     add     8, a0
-    cmp     ptrs_4863B78C, a0
+    cmp     ToneSelGridSe_Table, a0
     bcs     loc_484DF1E5
     mov     a1, a0
 loc_484DF1E5:
@@ -42227,11 +42362,12 @@ loc_484DF1E5:
 loc_484DF1E8:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484DF1ED:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     a0, a2
     mov     (0x30, a2), a1
-    movbu   (data_50007DDE), d0
+    movbu   (func_484D807B_Var_3), d0
     mov     d2, d1
     add     2, d0
     movhu   d0, (a1)
@@ -42239,7 +42375,7 @@ loc_484DF1E8:
     mov     2, d0
     movhu   d0, (a0)
     clr     d0
-    movbu   d0, (data_50007DE1)
+    movbu   d0, (EnvKfGraphTitleSe_Var)
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -42279,6 +42415,7 @@ loc_484DF1E8:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484DF288:
     mov     (0x30, sp), a0
     mov     d2, d1
     mov     a0, (0x10, sp)
@@ -42294,6 +42431,7 @@ loc_484DF1E8:
     call    DrawEditSw_entry, [d2,d3,a2,a3], 0x48
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484DF2C1:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -42340,7 +42478,7 @@ loc_484DF2D5:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     clr     d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     mov     d0, (0x10, sp)
     mov     -1, d0
     mov     0x01b50001, d1
@@ -42393,7 +42531,7 @@ loc_484DF377:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     mov     1, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -42447,7 +42585,7 @@ loc_484DF41B:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     mov     2, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -42501,7 +42639,7 @@ loc_484DF4BF:
     mov     1, d0
     call    SetDialEnable_entry, [d2], 0x18
     mov     3, d0
-    movbu   d0, (data_50007DDE)
+    movbu   d0, (func_484D807B_Var_3)
     clr     d0
     mov     d0, (0x10, sp)
     mov     -1, d0
@@ -42515,6 +42653,7 @@ loc_484DF4BF:
 loc_484DF559:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484DF55D:
     mov     (0x30, sp), a0
     mov     d3, d0
     mov     a0, (0x10, sp)
@@ -42531,6 +42670,7 @@ loc_484DF559:
 loc_484DF586:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484DF58A:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -42565,6 +42705,7 @@ loc_484DF586:
 loc_484DF5F9:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484DF5FD:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -42599,6 +42740,7 @@ loc_484DF5F9:
 loc_484DF66C:
     clr     d0
     ret     [d2,d3,a2], 0x20
+loc_484DF670:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x44, a0), d0
@@ -42608,6 +42750,7 @@ loc_484DF66C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484DF6F0
+loc_484DF68A:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x44, a0), d0
@@ -42617,6 +42760,7 @@ loc_484DF66C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484DF6F0
+loc_484DF6A4:
     mov     (0x30, sp), a2
     mov     d3, d0
     mov     a2, (0x10, sp)
@@ -42630,6 +42774,7 @@ loc_484DF66C:
     call    ApFuncCall_entry, [d2,d3,a2], 0x24
     clr     d0
     bra     loc_484DF6F0
+loc_484DF6C9:
     mov     d3, d0
     call    GetViewInstance, 0, 0
     mov     (0x44, a0), d0
@@ -42662,7 +42807,7 @@ loc_484DF705:
     jmp     loc_484E02B9
 loc_484DF710:
     add     0xfffb0001, d2
-    mov     data_4863B810, a1
+    mov     ToneSelGridSe_Records, a1
     mov     0xf, d0
     and     d2, d0
     asl     3, d0
@@ -42677,7 +42822,7 @@ loc_484DF710:
     jmp     loc_484E02B9
 loc_484DF733:
     add     8, a0
-    cmp     ptrs_4863B890, a0
+    cmp     ToneGridSe1_Table, a0
     bcs     loc_484DF73E
     mov     a1, a0
 loc_484DF73E:
@@ -42687,6 +42832,7 @@ loc_484DF73E:
 loc_484DF741:
     mov     (4, a0), a0
     jmp     (a0)
+loc_484DF746:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -42714,7 +42860,7 @@ loc_484DF77F:
     jmp     loc_484DFB0E
 loc_484DF788:
     mov     (0x28, sp), d0
-    mov     ptrs_4863B7E4, a0
+    mov     ToneSelGridSe_Table_3, a0
     add     -1, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -43101,6 +43247,7 @@ loc_484DFB0E:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_484DFB2A:
     call    GetFocusObject_entry, 0, 0x10
     clr     d1
     mov     d1, (0x10, sp)
@@ -43127,7 +43274,7 @@ loc_484DFB62:
     jmp     loc_484DFEEC
 loc_484DFB6B:
     mov     (0x2c, sp), d0
-    mov     ptrs_4863B7B8, a0
+    mov     ToneSelGridSe_Table_2, a0
     add     -1, d0
     asl2    d0
     mov     (d0, a0), a0
@@ -43510,18 +43657,22 @@ loc_484DFEEC:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_484DFF08:
     mov     Str_empty_1074, a1
     mov     (0x88, sp), a0
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_484DFF1B:
     mov     (0x88, sp), a0
     mov     Str_1st_2nd_3rd_4th_20, a1
     call    strcpy_entry, [a2], 4
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_484DFF2E:
     clr     d0
     ret     [d2,d3,a2,a3], 0x78
+loc_484DFF32:
     mov     (0x88, sp), a1
     mov     sp, a0
     mov     a1, d0
@@ -43552,7 +43703,7 @@ loc_484DFF63:
 loc_484DFF6A:
     add     -1, d0
     asl2    d0
-    mov     ptrs_4863B78C, a0
+    mov     ToneSelGridSe_Table, a0
     mov     (d0, a0), a0
     jmp     (a0)
 loc_484DFF77:
@@ -43908,6 +44059,7 @@ loc_484E029B:
     call    SendEvent_entry, [d2,d3], 0x24
     clr     d0
     bra     loc_484E02BA
+loc_484E02B6:
     mov     d3, d0
     bra     loc_484E02BA
 loc_484E02B9:

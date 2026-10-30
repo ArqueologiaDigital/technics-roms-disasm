@@ -201,7 +201,8 @@ of which 627,482 B "other" (binary tables no reader of the `mov LABEL, aN` / loa
 pointer arithmetic, struct arrays read field by field, the style-record tables near 0x4873BEF0),
 75,819 B text-like but not NUL-terminated runs (fixed-width name tables), 62,275 B pointer-like
 (tables whose words point at unlabelled data), 25,800 B of 7-bit values, 2,060 B in 484 short
-tails after typed items.  By size: 148,108 B in pieces of 4 KB or more.
+tails after typed items.  By size: 148,108 B in pieces of 4 KB or more.  (Lane kn7000-data-rest typed most of it since, from the code that reads it:
+`../data-rest/README.md`; 941 now keeps 17,416 bytes generic.)
 
 ## Readability census (`tools/gui_readability.py`)
 

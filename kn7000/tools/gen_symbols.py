@@ -169,6 +169,18 @@ def _is_strptr(data, ident_offsets, v):
     return (v - PROGRAM_BASE) in ident_offsets
 
 
+def _is_empty_str_after_ident(data, ident_offsets, v):
+    """v points at the empty string that ends a list of names: a NUL right after an
+    identifier string's NUL (the "" that closes a propname / name list)."""
+    o = v - PROGRAM_BASE
+    if not (1 <= o < len(data)) or data[o] != 0 or data[o - 1] != 0:
+        return False
+    k = o - 2
+    while k >= 0 and 0x20 < data[k] < 0x7F:
+        k -= 1
+    return (k + 1) in ident_offsets
+
+
 def _prologue(data, cpu):
     o = cpu - PROGRAM_BASE
     if not (0 <= o < len(data) - 1):
@@ -187,7 +199,7 @@ def _ident_offsets(data):
         rb"[A-Za-z_][A-Za-z0-9_]{2,31}\x00", data)}
 
 
-START_ALIGNED = False
+START_ALIGNED = True
 
 
 def find_tables(data, ident_offsets):
@@ -229,10 +241,15 @@ def find_tables(data, ident_offsets):
         # entries further on.  (KN2400 SDFM MainFunctions, names 0x485CFC18: 111
         # entries, an identifier run of 90; registered by InitializeBlock33 with
         # count 111 and the code array 0x485CFA58.)
-        # (--start-aligned; opt-in, as it renames procedures in trees not checked against
-        # their registrations, e.g. kn7000_sp7001_table.sym)
+        # (the default; --end-aligned restores the old pairing)
+        # The walk stops at a word that points at an identifier string: where the code
+        # range also covers the image's data (the SP7001 table-flash plug-in), the
+        # NUL-ended pointer list of the previous table (class names) would otherwise
+        # read as more code and shift every name (0x483F90C4 ff., 2026-10-29).
         k = name_off - 8
-        while START_ALIGNED and k >= 0 and _is_code(read_u32(data, k)):
+        while START_ALIGNED and k >= 0 and _is_code(read_u32(data, k)) \
+                and not _is_strptr(data, ident_offsets, read_u32(data, k)) \
+                and not _is_empty_str_after_ident(data, ident_offsets, read_u32(data, k)):
             k -= 4
         if START_ALIGNED and (name_off - 8 - k) // 4 > n_names:
             code_off = k + 4
@@ -282,8 +299,14 @@ def main():
                              "0x48400000 (default); the self-loaded library/kernel image and the "
                              "KN6000/KN6500 program images are linked at 0x4C000000.")
     parser.add_argument("--start-aligned", action="store_true",
-                        help="pair a reflection table from the start of its code array when a "
+                        help="(the default since 2026-10-29; kept so old command lines still work) "
+                             "pair a reflection table from the start of its code array when a "
                              "non-identifier name cuts the name run short (find_tables)")
+    parser.add_argument("--end-aligned", action="store_true",
+                        help="the old pairing: the code array is the n_names entries before the NUL. "
+                             "Start alignment reproduces every committed symbol file (KN7000 941, "
+                             "935, 893, the SP7001 plug-in, KN6000, KN6500, KN2400, HD-SX3); "
+                             "end alignment does not reproduce the KN6000 / KN6500 / KN2400 ones")
     parser.add_argument("--code-range", action="append", metavar="LO:HI",
                         help="file-offset range holding code (repeatable). Default: the build-941 "
                              "program image's two code regions. Needed for other builds (e.g. "
@@ -296,7 +319,7 @@ def main():
     parser.add_argument("--inc-title", default="KN7000 symbols",
                         help="what the first line of the include's header calls the file")
     args = parser.parse_args()
-    START_ALIGNED = args.start_aligned
+    START_ALIGNED = not args.end_aligned
     PROGRAM_BASE = args.program_base
     if args.code_range:
         rngs = [tuple(int(x, 0) for x in r.split(":")) for r in args.code_range]

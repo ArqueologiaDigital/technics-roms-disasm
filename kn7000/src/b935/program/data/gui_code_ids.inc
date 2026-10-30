@@ -3783,7 +3783,7 @@
 .equ FactoryInitial_Label_FACTORY_INITIAL_COMP_id, 0x00400004
 .equ MPVersion_id, 0x00400005
 .equ MPVersion_MPVer1_id, 0x00400006
-.equ TtMessage_Message1_id, 0x00500001
+.equ MESSAGE_TtMessage_Message1_id, 0x00500001
 .equ NoMessage_id, 0x00500002
 .equ NoMessage_LanguageText1_id, 0x00500003
 .equ Completed_id, 0x00500004

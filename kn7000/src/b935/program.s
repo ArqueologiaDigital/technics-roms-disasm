@@ -38,6 +38,9 @@
 .equ TableRomDirectory, 0x48000000
 .equ LibRomImageBase, 0x487B8F6D
 
+# 1 branch targets outside the converted code
+.equ loc_48535550, 0x48535550
+
 # 11 data addresses named by annotations/*.ann
 .equ DrawIcons_PixelPairTable, 0x485A2278   # 256 x u16: icon byte -> {left, right} palette index (nibble n -> n, or 0xF0+n if n >= 8)
 .equ Pixel4bppPairTable, 0x485A2478   # u16[256]: byte -> two pixels {lo: 0x20 + high nibble, hi: 0x20 + low nibble}
