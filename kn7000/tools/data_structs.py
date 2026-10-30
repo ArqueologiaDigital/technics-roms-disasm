@@ -72,11 +72,15 @@ class Group:
 
 
 def readers(g, labels_path, src_glob):
-    """data_readers.Reader over the build's converted code, with every label gen_data_s knows."""
-    labels = {}
-    for line in open(labels_path):
-        n, v = line.split()
-        labels[n] = int(v, 16)
+    """data_readers.Reader over the build's converted code, with every label gen_data_s knows
+    (labels_path: a build's `name hex` labels file, or a {name: address} dict)."""
+    if isinstance(labels_path, dict):
+        labels = dict(labels_path)
+    else:
+        labels = {}
+        for line in open(labels_path):
+            n, v = line.split()
+            labels[n] = int(v, 16)
     labels.update(g.prev_data_label)
     return DR.Reader(src_glob, labels, g.in_data)
 

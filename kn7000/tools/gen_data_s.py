@@ -91,7 +91,9 @@ for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E
                         prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
                         labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
                         base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
-                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True)
+                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True,
+                        # lane siblings-final: the reader-typed passes of the KN7000 profiles
+                        structs=True, string_arrays=True, string_arrays_min=4)
 # The SX-KN2400 / SX-KN2600 (program v1.1): the KN7000's registry layout (16 slots
 # per block) and alphabet; data first in the image (file 0x0F, after the boot
 # vectors, to the MILK kernel's code at 0x1E427C).
@@ -100,7 +102,7 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
                           labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
                           model="KN2400", functions_sym=True, bitmaps=True, code_ids=True, text_strict=True,
-                          string_arrays=True,
+                          string_arrays=True, structs=True,
                           # crt0_start copies .data 0x485DD334 -> 0x50000010, 0x6E78 bytes (kn2400_manual.sym);
                           # stated, since the typed code spells the copy's source as a data label
                           raminit=(0x485DD334, 0x50000010, 0x6E78),
@@ -119,7 +121,7 @@ PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="s
                          labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
                          base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
                          functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
-                         bitmaps=True, code_ids=True, text_strict=True, string_arrays=True,
+                         bitmaps=True, code_ids=True, text_strict=True, string_arrays=True, structs=True,
                          raminit=(0x978B3E84, 0x97910000, 0x26D8))
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
@@ -303,10 +305,8 @@ class Gen:
         # (a name the previous build put at another address -- the header gives the entry, the
         # label sits on the prologue -- is not taken)
         import glob as _glob
-        built = {}
-        for line in open(lab):
-            nm_, v_ = line.split()
-            built[nm_] = int(v_, 16)
+        built = {nm_: int(v_, 16) for nm_, v_ in pairs}
+        self.code_labels = dict(built)  # every name the label files give (tools/data_structs.readers)
         hx = re.compile(r"^# (\w+)\s+\((?:lib )?CPU 0x([0-9a-fA-F]+)\)", re.M)
         for f in _glob.glob(code_glob()):
             for mo in hx.finditer(open(f, encoding="latin-1").read()):
@@ -1174,7 +1174,7 @@ class Gen:
         whose record is a single number is a table (tab_uN, as reader_tables)."""
         import data_structs as DS
         import data_struct_names as DN
-        self.dr = DS.readers(self, os.path.join(KN7, P["labels"]), code_glob())
+        self.dr = DS.readers(self, self.code_labels, code_glob())
         gs = DS.groups(self.dr)
         hard = set(self.fixed) - self.fixed_by_code | {g.base for g in gs}
         # an address the code loads as a base (`mov Addr, rN`) on a record boundary of an array is
@@ -1540,8 +1540,8 @@ class Gen:
                      lambda g, it, fn=fn, fmt=fmt, blit=blit, caller=caller, cpu=cpu, w=w, h=h, depth=depth, more=more: [
                          f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel: {caller} 0x{cpu:08X} draws it with"
                          f" {blit}{more} ({OUTDIR}/media/{fn})",
-                         f'\t.incbin\t"build/bitmaps/{PROFILE}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
-                         f"tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
+                         f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f"{SHARED}tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
     def variables(self):
         """(`structs` profiles) What is left that an instruction reads or writes at a
@@ -1641,9 +1641,14 @@ class Gen:
         if not recs:
             return
         # build 941's names and the listings' instruction text
-        ref = open(os.path.join(KN7, PROFILES["941"]["rom"]), "rb").read()
+        # (kn7000/'s files, whichever profile runs: a sibling's record takes the name of the 941 record
+        # with the same bytes)
+        ref941 = os.path.join(KN7_DIR, PROFILES["941"]["rom"])
+        if not os.path.exists(ref941):
+            sys.exit(f"gen_data_s: {ref941} missing (the DSP records' names): `make -C kn7000 baserom` first")
+        ref = open(ref941, "rb").read()
         names = {}
-        tsv = os.path.join(KN7, "dsp", "records.tsv")
+        tsv = os.path.join(KN7_DIR, "dsp", "records.tsv")
         meta = {}
         if os.path.exists(tsv):
             for line in open(tsv, encoding="utf-8"):
@@ -1654,7 +1659,7 @@ class Gen:
             if st in meta:
                 names[hashlib.sha1(ref[st:z]).hexdigest()] = meta[st]
         insn = {}
-        for f in _glob.glob(os.path.join(KN7, "disasm", "dsp", "rec*.asm")):
+        for f in _glob.glob(os.path.join(KN7_DIR, "disasm", "dsp", "rec*.asm")):
             for line in open(f, encoding="utf-8"):
                 mo = re.match(r"^[0-9a-f]{4}: ([0-9a-f]{16}) (.*)$", line)
                 if mo:
@@ -2139,7 +2144,10 @@ class Gen:
                     if func and len(body) < 400:
                         txt = "\n".join(body)
                         r = {}
-                        pairs = re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt)
+                        # (both compilers' forms, as above: a `ret` in the plug-in's procedure
+                        # must not lose its `cmp / bne / bra` answers)
+                        pairs = re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt) + re.findall(
+                            r"cmp\s+(\S+), d[01]\n\s+bne\s+\w+\n\s+bra\s+(\w+)", txt)
                         for c, lab in pairs:
                             k = meth.get(val(c))
                             m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
@@ -2473,7 +2481,7 @@ class Gen:
               if self.tone_macros else []),
             f'.include "{SHARED}src/include/kn_panel_extra.inc"',
             f'.include "{SHARED}src/include/data_tables.inc"',
-            *([f'.include "{outdir}/data_structs.inc"', '.include "src/include/dsp_records.inc"'] if P.get("structs") else []),
+            *([f'.include "{outdir}/data_structs.inc"', f'.include "{SHARED}src/include/dsp_records.inc"'] if P.get("structs") else []),
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
