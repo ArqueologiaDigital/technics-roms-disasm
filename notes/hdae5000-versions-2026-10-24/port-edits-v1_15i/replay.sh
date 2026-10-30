@@ -34,5 +34,10 @@ $P afix v1_15i | tail -1
 for s in $(ls $E | grep -E '^[1-9][0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
   python3 $E/$s
 done
+for r in 1 2; do
+  $P afix v1_15i | tail -1
+  $P code v1_15i --anchored | grep -v skipped | tail -1
+  $P strings v1_15i | tail -1
+done
 $P afix v1_15i | tail -1
 $P status v1_15i | head -1

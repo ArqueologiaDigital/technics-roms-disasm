@@ -1479,7 +1479,7 @@ HDAE5000_FILE_LOAD_Screen_Ev01C00001:
 HDAE5000_FILE_LOAD_Screen_Ev01EA0008:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
-	lda xde, (HDAE5000_Str_V115i:24)
+	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x003f
 	calr	HDAE5000_TypeSel_Init
 	ld	(HDAE5000_RAM_CurSong), iz
@@ -1897,7 +1897,7 @@ HDAE5000_HDDNamingCheck_Skip:
 	jr	nz, HDAE5000_HDDNamingCheck_Skip2
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
-	lda xde, (HDAE5000_Str_V115i:24)
+	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x003f
 	calr	HDAE5000_TypeSel_Init
 	jr	t, HDAE5000_HDDNamingCheck_Join
@@ -1905,7 +1905,7 @@ HDAE5000_HDDNamingCheck_Skip2:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
 	ld	bc, hl
-	lda xde, (HDAE5000_Str_V115i:24)
+	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	calr	HDAE5000_TypeSel_Init
 HDAE5000_HDDNamingCheck_Join:
 	lda	xwa, (0x23d286:24)
@@ -2890,8 +2890,8 @@ HDAE5000_SeparateDrumPartCheck:
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
-	pushw HDAE5000_Fmt_s_SeparateDrumPartCheck@hi16		; push 0x002E -- high half of HDAE5000_Fmt_s_SeparateDrumPartCheck
-	pushw	0xaf00
+	pushw	HDAE5000_Fmt_s_SeparateDrumPartCheck@hi16
+	pushw	HDAE5000_Fmt_s_SeparateDrumPartCheck@lo16		; low half of HDAE5000_Fmt_s_SeparateDrumPartCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -2959,8 +2959,8 @@ HDAE5000_SeparateBassPartCheck:
 	add xbc, xwa
 	ld xwa, (xbc)
 	push xwa
-	pushw HDAE5000_Fmt_s_SeparateBassPartCheck@hi16		; push 0x002E -- high half of HDAE5000_Fmt_s_SeparateBassPartCheck
-	pushw	0xafc2
+	pushw	HDAE5000_Fmt_s_SeparateBassPartCheck@hi16
+	pushw	HDAE5000_Fmt_s_SeparateBassPartCheck@lo16		; low half of HDAE5000_Fmt_s_SeparateBassPartCheck
 	ld xwa, (xde + 0x12)
 	push xwa
 	call HDAE5000_SPrintf
@@ -3307,7 +3307,7 @@ HDAE5000_SaveOptSwEventCatch_OnSwIn:
 	cp	xhl, 0x0000000b
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip4
 	cp	xhl, 0x0000000a
-	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip4
+	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip7
 	cp	xhl, 0x00000009
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip2
 	cp	xhl, 0x00000008
@@ -3354,14 +3354,15 @@ HDAE5000_SaveOptSwEventCatch_Skip2:
 HDAE5000_SaveOptSwEventCatch_Skip3:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
-	lda xde, (HDAE5000_Str_V115i:24)
+	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x003f
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
 	jr	t, HDAE5000_SaveOptSwEventCatch_Done
+HDAE5000_SaveOptSwEventCatch_Skip7:
 	lda	xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw	0x2
-	lda	xde, (HDAE5000_Str_V115i:24)
+	lda	xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ldw	bc, 0x00ff
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
@@ -3369,7 +3370,7 @@ HDAE5000_SaveOptSwEventCatch_Skip3:
 HDAE5000_SaveOptSwEventCatch_Skip4:
 	lda xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw 0x0002
-	lda xde, (HDAE5000_Str_V115i:24)
+	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
 	ld	bc, 0:i3
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
