@@ -934,9 +934,16 @@ class Anchors:
         return dict(reversed(out))
 
 
+def long_block_seeds(full, n=64):
+    """Seeds from the block aligner's long identical blocks in the code (>= n bytes: long
+    enough not to be one look-alike against its neighbour), for code no name or pointer
+    table reaches (the PC-link command handlers)."""
+    return [(s + BASE, sb + BASE) for s, e, sb in full if e - s >= n and s + BASE < CODE_END]
+
+
 def cmd_anchors(ver, write=True):
-    bld, ref, hs = cmd_status(ver, verbose=False)
-    seeds = registry_pairs(bld.img, ref) + [(BASE, BASE)]
+    bld, ref, hs, full = cmd_status(ver, verbose=False, want_blocks=True)
+    seeds = registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full)
     an = Anchors(bld.img, ref, seeds)
     rm = an.rom_map()
     print("%d registry seeds; %d ROM anchors (%d monotonic); %d instructions paired; %d RAM addresses"
@@ -1377,7 +1384,7 @@ def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False
     elif anchored:
         # the spans between consecutive anchors of the lockstep walk (Anchors) whose bytes
         # differ: each changed stretch of code between two points the walk pinned down
-        an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)])
+        an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)] + long_block_seeds(full))
         pts = [(w, b) for w, b in sorted(an.rom_map().items()) if w < CODE_END and b < CODE_END]
         ctx.anchor_pts = pts
         for w, b in pts:                        # anchors name their target address too
