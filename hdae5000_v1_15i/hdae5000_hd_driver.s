@@ -5384,10 +5384,10 @@ HDAE5000_LBNLoadSwCatch:
 	cp xhl, 0x00000009
 	jr z, .LHD_SR__b_check_state
 	cp xhl, 0x00000008
-	jr	nz, .LHD_SR__b_exit
+	jr nz, .LHD_SR__b_exit
 .LHD_SR__b_check_state:
 	cpw (HDAE5000_RAM_LbnDigitPos:24), 0x0005; state == 5?
-	jr	nz, .LHD_SR__b_exit
+	jr nz, .LHD_SR__b_exit
 	; State 5: display manager call + sector read
 	pushw 0x0001
 	ld xwa, HDAE5000_OBJ_LOAD_BY_NUM
@@ -5401,7 +5401,6 @@ HDAE5000_LBNLoadSwCatch:
 	ld bc, 0:i3
 	ld de, 6:i3
 	calr HDAE5000_Lbn_ShowEntry
-	; Flag set: register display handler
 .LHD_SR__b_exit:			; common exit
 	ld xwa, (xsp + 0x08)
 	ld xbc, xiz
@@ -5438,7 +5437,7 @@ HDAE5000_Lbn_TypeDigit:
 	cp wa, 1:i3				; d8 d9
 	jr z, .Lsw_case1			; 66 xx
 	cp wa, 0:i3				; d8 d8
-	jrl	nz, .Lsw_exit
+	jrl nz, .Lsw_exit			; 7e xx xx
 
 	; === Case 0: initialize cylinder from BC*100, set state=1 ===
 	ld wa, bc				; d9 88
@@ -5452,7 +5451,7 @@ HDAE5000_Lbn_TypeDigit:
 	ld de, (HDAE5000_RAM_LbnDigitPos:24); d2 5c aa 22 22
 	calr HDAE5000_Lbn_ShowEntry			; 1e xx xx
 	ld	qiz, hl
-	jrl	t, .Lsw_exit
+	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 1: add BC*10 to cylinder, set state=2 ===
 .Lsw_case1:
@@ -5466,7 +5465,7 @@ HDAE5000_Lbn_TypeDigit:
 	ld de, (HDAE5000_RAM_LbnDigitPos:24); d2 5c aa 22 22
 	calr HDAE5000_Lbn_ShowEntry			; 1e xx xx
 	ld	qiz, hl
-	jrl	t, .Lsw_exit
+	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 2: add BC to cylinder, set state=3 ===
 .Lsw_case2:
@@ -5478,7 +5477,7 @@ HDAE5000_Lbn_TypeDigit:
 	ld de, (HDAE5000_RAM_LbnDigitPos:24); d2 5c aa 22 22
 	calr HDAE5000_Lbn_ShowEntry			; 1e xx xx
 	ld	qiz, hl
-	jrl	t, .Lsw_exit
+	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 3: set head from BC*10, set state=4 ===
 .Lsw_case3:
@@ -5492,7 +5491,7 @@ HDAE5000_Lbn_TypeDigit:
 	ld de, (HDAE5000_RAM_LbnDigitPos:24); d2 5c aa 22 22
 	calr HDAE5000_Lbn_ShowEntry			; 1e xx xx
 	ld	qiz, hl
-	jrl	t, .Lsw_exit
+	jrl t, .Lsw_exit			; 78 xx xx
 
 	; === Case 4: add BC to head, set state=5, then process ===
 .Lsw_case4:
@@ -5508,7 +5507,7 @@ HDAE5000_Lbn_TypeDigit:
 	; --- After all cases: check result ---
 	ld	wa, qiz
 	cp wa, 0:i3				; d8 d8
-	jrl	nz, .Lsw_exit
+	jrl nz, .Lsw_exit			; 7e xx xx — error → exit
 
 	; --- Compute sector address and look up in table ---
 	ld wa, (HDAE5000_RAM_LbnDir:24); d2 5e aa 22 20 — directory number
@@ -5556,7 +5555,7 @@ HDAE5000_Lbn_TypeDigit:
 	; --- After table lookup: check sectors per track ---
 .Lsw_after_lookup:
 	cp (HDAE5000_RAM_LoadByNumberMode:24), 0x02; c2 aa 9d 22 3f 02
-	jr	nz, .Lsw_exit
+	jr nz, .Lsw_exit			; 6e xx
 	; Sectors per track == 2: do display and FS operations
 	pushw 0x0001
 	ld xwa, HDAE5000_OBJ_LOAD_BY_NUM			; 40 91 00 7f 00
@@ -5571,8 +5570,6 @@ HDAE5000_Lbn_TypeDigit:
 	ld de, 6:i3				; da ae
 	calr HDAE5000_Lbn_ShowEntry			; 1e xx xx
 	; Check second disk flag
-	; Check bit 8 of aa4c entry
-	; Register event: format complete
 
 	; === Exit: check QIZ result ===
 .Lsw_exit:

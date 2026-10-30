@@ -974,38 +974,6 @@ HDAE5000_TextPtrs_Chr21_to_Chr7D:	; 32 x .long -> string
 	.long	HDAE5000_Str_Chr5D
 	.long	HDAE5000_Str_Chr7B
 	.long	HDAE5000_Str_Chr7D
-HDAE5000_Str_ChrE4A82C:
-	; only in v1.15i
-	.asciz "\344\250,"
-HDAE5000_Str_ChrE0A82C:
-	; only in v1.15i
-	.asciz "\340\250,"
-HDAE5000_Str_ChrDEA82C:
-	; only in v1.15i
-	.asciz "\336\250,"
-HDAE5000_Str_ChrDCA82C:
-	; only in v1.15i
-	.asciz "\334\250,"
-HDAE5000_Str_ChrDAA82C:
-	; only in v1.15i
-	.asciz "\332\250,"
-HDAE5000_Str_ChrD8A82C:
-	; only in v1.15i
-	.asciz "\330\250,"
-HDAE5000_Str_ChrD6A82C:
-	; only in v1.15i
-	.asciz "\326\250,"
-HDAE5000_Str_ChrD4A82C:
-	; only in v1.15i
-	.asciz "\324\250,"
-HDAE5000_Str_ChrD2A82C:
-	; only in v1.15i
-	.asciz "\322\250,"
-HDAE5000_Str_ChrD0A82C:
-	; only in v1.15i
-	.asciz "\320\250,"
-HDAE5000_Str_ChrCEA82C:
-	; only in v1.15i
 	.asciz "\316\250,"
 	.zero 2
 HDAE5000_Str_Chr7D:

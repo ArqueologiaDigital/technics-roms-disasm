@@ -15216,13 +15216,13 @@ HDAE5000_HD_Init_SramClearLoop:
 	call HDAE5000_PPORT_InitPort
 	lda xwa, (HDAE5000_HD_CheckVersionKey:24)
 	ld	(0x229d6c), xwa
-	ld	(HDAE5000_RAM_HdInitResult_Alt_229d90:24), 0
+	ld	(0x229D90:24), 0
 	ld	(HDAE5000_RAM_HdInitResult:24), 0
 	ld	(HDAE5000_RAM_WriteProtect:24), 1
 	ld	(HDAE5000_RAM_WriteConfirm:24), 1
 	ld	(HDAE5000_RAM_QuickLoadMode:24), 1
 	ld	(HDAE5000_RAM_LoadByNumberMode:24), 1
-	ld	(HDAE5000_RAM_LyricJump:24), 1
+	ld	(HDAE5000_RAM_JumpAfterLoad:24), 1
 	ld	(0x229dc5:24), 0
 	ld	(0x229dd6:24), 1
 	ld	xwa, 0x000017a8
@@ -17292,7 +17292,7 @@ HDAE5000_HD_Format_CompareLoop_Skip2:
 	ld	(HDAE5000_RAM_LoadByNumberMode:24), a
 	inc 1, xix
 	ld	a, (xix)
-	ld	(HDAE5000_RAM_LyricJump:24), a
+	ld	(HDAE5000_RAM_JumpAfterLoad:24), a
 	call HDAE5000_HD_CountFreeClusters
 	cp	(HDAE5000_RAM_AtaError:24), 0
 	cp	(HDAE5000_RAM_AtaError:24), 0
@@ -17369,7 +17369,7 @@ HDAE5000_HD_BuildSettingsSector_CopyVersion:
 	ld	(HDAE5000_RAM_LoadByNumberMode:24), 1
 	inc 1, xix
 	ld	(xix), 0x01
-	ld	(HDAE5000_RAM_LyricJump:24), 1
+	ld	(HDAE5000_RAM_JumpAfterLoad:24), 1
 	inc 1, xix
 	ld	xwa, 0xffffffff
 	ld (xix), xwa
@@ -19143,10 +19143,8 @@ HDAE5000_HD_LoadSettings:
 	ld	(HDAE5000_RAM_QuickLoadMode:24), a
 	ld a, (xix+)
 	ld	(HDAE5000_RAM_LoadByNumberMode:24), a
-	ld a, (xix+)
-	ld	(HDAE5000_RAM_JumpAfterLoad:24), a
 	ld	a, (xix)
-	ld	(HDAE5000_RAM_LyricJump:24), a
+	ld	(HDAE5000_RAM_JumpAfterLoad:24), a
 	pop xiz
 	ret
 
@@ -19184,7 +19182,7 @@ HDAE5000_HD_SaveSettings_CopyLoop:
 	ld (xix+), a
 	ld	a, (HDAE5000_RAM_LoadByNumberMode:24)
 	ld (xix+), a
-	ld	a, (HDAE5000_RAM_LyricJump:24)
+	ld	a, (HDAE5000_RAM_JumpAfterLoad:24)
 	ld (xix+), a
 	ld	xwa, 0xffffffff
 	ld (xix), xwa

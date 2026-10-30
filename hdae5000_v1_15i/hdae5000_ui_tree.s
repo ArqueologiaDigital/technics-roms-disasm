@@ -208,7 +208,7 @@
 		AcIndexEditSw	SELECT_DIR_AcIndexEditSw, x=265, y=36, w=47, h=26, border=BD_3D_UP1, index=3, editsw=ES_Right1, style=SS_OK
 		ui_ram_object	SELECT_DIR_SW_EDIT, AcIndexEditSw
 		ui_sub
-			Label	SELECT_DIR_SW_EDIT_EDIT, x=271, y=202, w=36, h=19, font=idCHARA1, fontcolor=CL_Black, str="EDIT"
+			Label	SELECT_DIR_SW_EDIT_EDIT, x=271, y=118, w=36, h=19, font=idCHARA1, fontcolor=CL_Black, str="EDIT"
 		ui_endsub
 		IvExitScreen	SELECT_DIR_Exit_HDDMENU, x=32, y=0, w=32, h=32, screen=HDAE5000_OBJ_HDDMENU
 		EditSw	SELECT_DIR_80, x=310, y=77, w=10, h=19, index=6, str="~80"
@@ -289,7 +289,7 @@
 		IvHddNaming	HDD_FILE_NAMING_IvHddNaming, x=0, y=0, w=32, h=32, flag=VF_Const|VF_InvisibleBox, func=NAKA_APFUNC_HDDNamingCheck
 		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw_3, x=8, y=118, w=31, h=18, color=CL_Silver, editsw=ES_Left3, style=SS_Special, func=NAKA_APFUNC_HDDNamingCheck
 		ui_sub
-			Label	HDD_FILE_NAMING_AcFuncEditSw_3_LST, x=9, y=119, w=20, h=19, font=idCHARA1, fontcolor=CL_Red, str="LST"
+			Label	HDD_FILE_NAMING_AcFuncEditSw_3_LST, x=9, y=119, w=28, h=19, font=idCHARA1, fontcolor=CL_Red, str="LST"
 		ui_endsub
 	ui_endsub
 

@@ -42,7 +42,6 @@
 	.equ HDAE5000_RAM_FreeClusters, 0x229c80	; free-cluster count (HDAE5000_HD_CountFreeClusters, WriteFile, FreeChain)
 	.equ HDAE5000_RAM_DataSectorCount, 0x229c94	; sectors from DataStartSector to the end (HD_ParseIdentify)
 	.equ HDAE5000_RAM_HdInitResult, 0x229d92	; HDAE5000_HD_Init's step code, returned by HDAE5000_Check_HD_Present
-	.equ HDAE5000_RAM_HdInitResult_Alt_229d90, 0x229d90	; split from HDAE5000_RAM_HdInitResult by `port_hdae5000_version.py afix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_HdSignatureOk, 0x229d98	; 1 when sector 1 carries AA55AA55 F4F1F2F3 (HDAE5000_HD_CheckSignature)
 	.equ HDAE5000_RAM_WriteProtect, 0x229d99	; "WRITE PROTECTION" of HDAE5000_TitleInfo_Template, 0/1 = OFF/ON
 	.equ HDAE5000_RAM_WriteConfirm, 0x229d9a	; "WRITE CONFIRM" of HDAE5000_TitleInfo_Template, 0/1 = OFF/ON
@@ -73,7 +72,6 @@
 	.equ HDAE5000_RAM_SeparateDrumPartSent, 0x23d2da	; drum part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_SeparateBassPartSent, 0x23d2dc	; bass part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_MainWorkspacePtr, 0x23d2de	; the main CPU's workspace; every call into it is (this)->0x0E88 or ->0x0E0A table + offset (init image: 4 bytes after HDAE5000_LyricBoxObj_Init; the object table at 0x027ED2)
-	.equ HDAE5000_RAM_LyricJump, 0x229dab	; sector-1 setting byte; handler "LyricJumpEditCheck" returns its address
 	.equ HDAE5000_RAM_LyricBuffer, 0x22b430	; the lyric file, 0x5000 bytes: TLhd/TLtr chunks, events from +22 (HDAE5000_Lyrics_ClearBuffer, _ParseEvent)
 	.equ HDAE5000_RAM_LyricLines, 0x23a032	; six 40-byte text lines of the lyric window (HDAE5000_Lyrics_FillLines)
 	.equ HDAE5000_RAM_LyricLoaded, 0x23a106	; 1 once a lyric file passed its checks (HDAE5000_Lyrics_CheckFile)
