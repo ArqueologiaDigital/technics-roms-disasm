@@ -264,11 +264,17 @@ def mn_bytes(key):
         text = mn_text(p, tree)
         # A plain .incbin is allowed only for a tracked asset under src/ (the table's JPEG/BMP segments,
         # extracted by tools/gen_table_s.py, like src/picture/): typed data, counted as source exactly as
-        # coverage_score.py counts it. Passthrough of the git-ignored reference image must be .incbin_range.
-        for inc in re.findall(r'^\s*\.incbin\s+"([^"]+)"', text, re.M):
-            if not inc.startswith("src/") or not os.path.isfile(os.path.join(ROOT, tree, inc)):
-                sys.exit("%s: .incbin \"%s\" is not a tracked src/ asset; passthrough must be .incbin_range"
-                         % (p, inc))
+        # coverage_score.py counts it.  So is a build/ file whose line says `census: generated -- <tool> ...
+        # from <tracked file>` (the program builds' pictures, rebuilt from src/.../media/*.png by
+        # tools/table_png.py).  Passthrough of the git-ignored reference image must be .incbin_range.
+        for inc, rest in re.findall(r'^\s*\.incbin\s+"([^"]+)"(.*)$', text, re.M):
+            if inc.startswith("src/") and os.path.isfile(os.path.join(ROOT, tree, inc)):
+                continue
+            g = re.search(r'census:\s*generated\s*--.*?\sfrom\s+(\S+)', rest)
+            if inc.startswith("build/") and g and os.path.isfile(os.path.join(ROOT, tree, g.group(1))):
+                continue
+            sys.exit("%s: .incbin \"%s\" is not a tracked src/ asset or a build/ file generated from one; "
+                     "passthrough must be .incbin_range" % (p, inc))
         hits = re.findall(r'^\s*\.incbin_range\s+"[^"]+",\s*([^,]+?),\s*([^\n#;]+?)\s*(?:[#;]|$)', text, re.M)
         if len(hits) != len(re.findall(r'^\s*\.incbin_range\b', text, re.M)):
             sys.exit("%s: an .incbin_range this parser cannot read would count as source" % p)
