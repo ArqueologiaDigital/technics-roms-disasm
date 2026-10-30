@@ -12,7 +12,8 @@ QUESTION IT ANSWERS
 
 WHAT IT READS
   The generated sources <tree>/src/.../data/data_*.s, as bytes (they hold non-UTF-8 `.ascii`), at two git
-  revisions: --base (default e611d4eaf, the lane's base) and --head (default: the working tree).  The signals:
+  revisions: --base (default 2a7b45be5: main with lanes media-files and code-island merged, which this
+  lane is measured against) and --head (default: the working tree).  The signals:
     reader rows       "\t# N bytes read by ...; the read fields at their widths"           -> read
                       "\t# N bytes the code takes the address of: ..."                       -> address
                       "\t# a string, N bytes with its pad, read by ..."                      -> string
@@ -130,7 +131,7 @@ def table(head, body):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--base", default="e611d4eaf")
+    ap.add_argument("--base", default="2a7b45be5")
     ap.add_argument("--head", default=None, help="a git revision (default: the working tree)")
     ap.add_argument("--reasons", action="store_true", help="also list why address-only pieces stay rows")
     a = ap.parse_args()

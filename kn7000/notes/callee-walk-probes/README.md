@@ -16,5 +16,5 @@ The signal is the header comment gen_data_s.py writes above each piece: `# N byt
 following `# then K x uW up to the next label` adds its tail).  The reasons are the text after the row
 kinds in an address-only header, which `gen_data_s.arg_why()` writes from the walk's `arg_skip` /
 `arg_kinds()` (a library routine, a byte loop, no fixed read, one field at +0, a stored argument) or
-"not seen reaching a call".  The script reads the files with `git show` at `--base` (default `e611d4eaf`)
+"not seen reaching a call".  The script reads the files with `git show` at `--base` (default `2a7b45be5`, main with lanes media-files and code-island merged)
 and from the working tree (or `--head`), as bytes.
