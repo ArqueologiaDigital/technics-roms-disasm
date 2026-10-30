@@ -17,17 +17,22 @@ python3 scripts/build/hdae5000_images.py build >/dev/null
 python3 $E/00_no_filepanel_picture.py
 python3 $E/01_string_aliases_as_labels.py        # on the near-pristine v2.01i copy, where the offsets hold
 python3 $E/02_boot_splash_picture.py
-$P fix v1_15i | tail -1
 $P strings v1_15i | tail -1
 $P uitables v1_15i | tail -1
 python3 $E/03_absent_object_ids.py
-# the hand edits 04.. (removals first, so that `code` never aligns code the target lacks)
-for s in $(ls $E | grep -E '^(0[4-9]|[1-9][0-9])[a-z]?_.*\.py$' | LC_ALL=C sort); do
+# the hand edits 04..09 (removals first, so that no pass aligns code the target lacks)
+for s in $(ls $E | grep -E '^0[4-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
   python3 $E/$s
 done
-$P code v1_15i --same-only | grep -v skipped | tail -1
-$P strings v1_15i | tail -1
-$P fix v1_15i | tail -1
-$P code v1_15i --widen | grep -v skipped | tail -1
-$P fix v1_15i | tail -1
+for r in 1 2 3; do
+  $P afix v1_15i | tail -1
+  $P code v1_15i --anchored | grep -v skipped | tail -1
+  $P strings v1_15i | tail -1
+done
+$P afix v1_15i | tail -1
+# the hand edits 10.., made on the tree the passes above leave, then the passes again
+for s in $(ls $E | grep -E '^[1-9][0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
+  python3 $E/$s
+done
+$P afix v1_15i | tail -1
 $P status v1_15i | head -1

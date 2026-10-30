@@ -1003,9 +1003,9 @@
 ; -----------------------------------------------------------------------------
 	TtlScreenR2	ATTEN_DEL_DIR, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_DIR_window, icon=idICON_None, title=""
 	ui_sub
-		VwWideESBox	ATTEN_DEL_DIR_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_DIR_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_DIR_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_DIR_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
 		VwWideESBox	ATTEN_DEL_DIR_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
@@ -1043,7 +1043,7 @@
 			AcLanguageText1	ATTEN_DEL_FILE_ATTENTION_Press_YES_for_confirmati, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
 			AcLanguageText1	ATTEN_DEL_FILE_ATTENTION_Would_you_really_delete_, x=44, y=108, w=232, h=48, index=2, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "Would you really delete the selected title?"
 		ui_endsub
-		AcLanguageText1	ATTEN_DEL_FILE_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+		AcLanguageText1	ATTEN_DEL_FILE_YES, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		AcLanguageText1	ATTEN_DEL_FILE_NO, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 	ui_endsub
 
@@ -1054,9 +1054,9 @@
 	TtlScreenR	ATTEN_OVER_FLS, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_OVER_FLS_window, icon=idICON_None, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_OVER_FLS_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsOverWrSwCatch
-		VwWideESBox	ATTEN_OVER_FLS_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_OVER_FLS_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_OVER_FLS_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_OVER_FLS_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
 		VwWideESBox	ATTEN_OVER_FLS_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
@@ -1076,9 +1076,9 @@
 	TtlScreenR	ATTEN_DEL_FLS2, x=0, y=0, w=320, h=240, window=HdaeUiVar_ATTEN_DEL_FLS2_window, icon=idICON_None, title=""
 	ui_sub
 		IvCatchEvent	ATTEN_DEL_FLS2_IvCatchEvent, x=0, y=0, w=32, h=32, func=NAKA_APFUNC_FlsDel2SwCatch
-		VwWideESBox	ATTEN_DEL_FLS2_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_FLS2_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS2_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS2_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
 		VwWideESBox	ATTEN_DEL_FLS2_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
@@ -1169,13 +1169,13 @@
 			AcLanguageText1	ATTEN_DEL_FLS1_ATTENTION_You_are_going_to_delete_, x=44, y=76, w=232, h=48, index=27, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "You are going to delete a FLS entry. Are you sure?"
 			AcLanguageText1	ATTEN_DEL_FLS1_ATTENTION_The_FLS_entry_remains_fr, x=44, y=124, w=232, h=36, index=60, font=idCHARA1W, fontcolor=CL_Yellow, lines=2	; EN "The FLS entry remains free."
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_YES, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS1_YES_Text, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
-		VwWideESBox	ATTEN_DEL_FLS1_VwWideESBox_2, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
+		VwWideESBox	ATTEN_DEL_FLS1_YES_2, x=4, y=216, w=72, h=23, editsw=ES_Bottom1, editsw2=ES_Bottom2, str=""
 		ui_sub
-			AcLanguageText1	ATTEN_DEL_FLS1_VwWideESBox_2_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+			AcLanguageText1	ATTEN_DEL_FLS1_YES_2_YES, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		ui_endsub
 		VwWideESBox	ATTEN_DEL_FLS1_NO, x=244, y=216, w=72, h=23, editsw=ES_Bottom7, editsw2=ES_Bottom8, str=""
 		ui_sub
@@ -1197,7 +1197,7 @@
 			AcLanguageText1	ATTEN_OVER_FILE_ATTENTION_Press_YES_for_confirmati, x=44, y=155, w=232, h=50, index=211, font=idCHARA1W, fontcolor=CL_Black, lines=3	; EN "Press YES for confirmation, NO to abort."
 			AcLanguageText1	ATTEN_OVER_FILE_ATTENTION_You_are_going_to_overwri, x=44, y=108, w=232, h=48, index=28, font=idCHARA1W, fontcolor=CL_FireRed, lines=3	; EN "You are going to overwrite an existing entry. Are you sure?"
 		ui_endsub
-		AcLanguageText1	ATTEN_OVER_FILE_Text200, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1
+		AcLanguageText1	ATTEN_OVER_FILE_YES, x=4, y=220, w=72, h=20, index=200, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "YES"
 		AcLanguageText1	ATTEN_OVER_FILE_NO, x=248, y=220, w=68, h=20, index=201, font=idCHARA1, fontcolor=CL_Black, lines=1	; EN "NO"
 	ui_endsub
 
@@ -1623,7 +1623,7 @@
 				Label	Tech_lyrics_TextBox_3_Gesungener_Text_gruen_Rest_blau, x=202, y=90, w=76, h=19, font=idCHARA1, fontcolor=CL_Blue, str="Rest=blau"
 			ui_endsub
 			Label	Tech_lyrics_TextBox_3_Weiterer_Text_der_kontin, x=26, y=110, w=260, h=19, font=idCHARA1, fontcolor=CL_Blue, str="Weiterer Text der kontinuierlich"
-			Label	Tech_lyrics_TextBox_3_nach_oben_verschoben_wir, x=26, y=28, w=220, h=19, font=idCHARA1, fontcolor=CL_Blue, str="nach oben verschoben wird. "
+			Label	Tech_lyrics_TextBox_3_nach_oben_verschoben_wir, x=26, y=126, w=220, h=19, font=idCHARA1, fontcolor=CL_Blue, str="nach oben verschoben wird. "
 			Label	Tech_lyrics_TextBox_3_Zusaetzlich_soll_der_akt, x=26, y=142, w=268, h=19, font=idCHARA1, fontcolor=CL_Blue, str="Zusaetzlich soll der aktuelle APC"
 			Label	Tech_lyrics_TextBox_3_Chord_das_Tempo_und_die_, x=26, y=158, w=244, h=19, font=idCHARA1, fontcolor=CL_Blue, str="Chord, das Tempo und die SEQ.-"
 			Label	Tech_lyrics_TextBox_3_position_unter_dem_LYRIC, x=26, y=174, w=260, h=19, font=idCHARA1, fontcolor=CL_Blue, str="position unter dem LYRIC Fenster"
@@ -1851,7 +1851,7 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	HDD_FLS_NAMING2_IvNaming
 	ui_name	HDD_FLS_NAMING2
 	ui_noname	ATTEN_OVER_FILE_NO
-	ui_noname	ATTEN_OVER_FILE_Text200
+	ui_noname	ATTEN_OVER_FILE_YES
 	ui_noname	ATTEN_OVER_FILE_ATTENTION_You_are_going_to_overwri
 	ui_noname	ATTEN_OVER_FILE_ATTENTION_Press_YES_for_confirmati
 	ui_noname	ATTEN_OVER_FILE_ATTENTION
@@ -1861,10 +1861,10 @@ HDAE5000_UiObjectName_Pool:
 	ui_name	ATTEN_OVER_FILE
 	ui_noname	ATTEN_DEL_FLS1_NO_Text
 	ui_noname	ATTEN_DEL_FLS1_NO
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_2_Text200
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_2
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox_Text200
-	ui_noname	ATTEN_DEL_FLS1_VwWideESBox
+	ui_noname	ATTEN_DEL_FLS1_YES_2_YES
+	ui_noname	ATTEN_DEL_FLS1_YES_2
+	ui_noname	ATTEN_DEL_FLS1_YES_Text
+	ui_noname	ATTEN_DEL_FLS1_YES
 	ui_noname	ATTEN_DEL_FLS1_ATTENTION_The_FLS_entry_remains_fr
 	ui_noname	ATTEN_DEL_FLS1_ATTENTION_You_are_going_to_delete_
 	ui_noname	ATTEN_DEL_FLS1_ATTENTION_Press_YES_for_confirmati
@@ -1901,8 +1901,8 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	ATTEN_DEL_FLS2_ATTENTION
 	ui_noname	ATTEN_DEL_FLS2_NO_Text
 	ui_noname	ATTEN_DEL_FLS2_NO
-	ui_noname	ATTEN_DEL_FLS2_VwWideESBox_Text200
-	ui_noname	ATTEN_DEL_FLS2_VwWideESBox
+	ui_noname	ATTEN_DEL_FLS2_YES_Text
+	ui_noname	ATTEN_DEL_FLS2_YES
 	ui_noname	ATTEN_DEL_FLS2_IvCatchEvent
 	ui_name	ATTEN_DEL_FLS2
 	ui_noname	ATTEN_OVER_FLS_ATTENTION_Do_you_really_want_to_ov
@@ -1910,12 +1910,12 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	ATTEN_OVER_FLS_ATTENTION
 	ui_noname	ATTEN_OVER_FLS_NO_Text
 	ui_noname	ATTEN_OVER_FLS_NO
-	ui_noname	ATTEN_OVER_FLS_VwWideESBox_Text200
-	ui_noname	ATTEN_OVER_FLS_VwWideESBox
+	ui_noname	ATTEN_OVER_FLS_YES_Text
+	ui_noname	ATTEN_OVER_FLS_YES
 	ui_noname	ATTEN_OVER_FLS_IvCatchEvent
 	ui_name	ATTEN_OVER_FLS
 	ui_noname	ATTEN_DEL_FILE_NO
-	ui_noname	ATTEN_DEL_FILE_Text200
+	ui_noname	ATTEN_DEL_FILE_YES
 	ui_noname	ATTEN_DEL_FILE_ATTENTION_Would_you_really_delete_
 	ui_noname	ATTEN_DEL_FILE_ATTENTION_Press_YES_for_confirmati
 	ui_noname	ATTEN_DEL_FILE_ATTENTION
@@ -1932,8 +1932,8 @@ HDAE5000_UiObjectName_Pool:
 	ui_noname	ATTEN_DEL_DIR_IvCatchEvent
 	ui_noname	ATTEN_DEL_DIR_NO_Text
 	ui_noname	ATTEN_DEL_DIR_NO
-	ui_noname	ATTEN_DEL_DIR_VwWideESBox_Text200
-	ui_noname	ATTEN_DEL_DIR_VwWideESBox
+	ui_noname	ATTEN_DEL_DIR_YES_Text
+	ui_noname	ATTEN_DEL_DIR_YES
 	ui_name	ATTEN_DEL_DIR
 	ui_name	IV_HDDMENU
 	ui_name	HD_MENU_BMP

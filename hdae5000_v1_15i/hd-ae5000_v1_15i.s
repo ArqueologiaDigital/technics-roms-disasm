@@ -42,6 +42,7 @@
 	.equ HDAE5000_RAM_FreeClusters, 0x229c80	; free-cluster count (HDAE5000_HD_CountFreeClusters, WriteFile, FreeChain)
 	.equ HDAE5000_RAM_DataSectorCount, 0x229c94	; sectors from DataStartSector to the end (HD_ParseIdentify)
 	.equ HDAE5000_RAM_HdInitResult, 0x229d92	; HDAE5000_HD_Init's step code, returned by HDAE5000_Check_HD_Present
+	.equ HDAE5000_RAM_HdInitResult_Alt_229d90, 0x229d90	; split from HDAE5000_RAM_HdInitResult by `port_hdae5000_version.py afix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_HdSignatureOk, 0x229d98	; 1 when sector 1 carries AA55AA55 F4F1F2F3 (HDAE5000_HD_CheckSignature)
 	.equ HDAE5000_RAM_WriteProtect, 0x229d99	; "WRITE PROTECTION" of HDAE5000_TitleInfo_Template, 0/1 = OFF/ON
 	.equ HDAE5000_RAM_WriteConfirm, 0x229d9a	; "WRITE CONFIRM" of HDAE5000_TitleInfo_Template, 0/1 = OFF/ON
@@ -49,14 +50,10 @@
 	.equ HDAE5000_RAM_LoadByNumberMode, 0x229daa	; "LOAD BY NUMBER MODE" (TitleInfo); sector-1 setting byte
 	.equ HDAE5000_RAM_JumpAfterLoad, 0x229dab	; "JUMP AFTER LOAD" (TitleInfo); sector-1 setting byte
 	.equ HDAE5000_RAM_SaveOptions, 0x22aa04	; 12-byte part-selection record of the save options: u16 mask, then flags 0x22AA4E+k (HDAE5000_TypeSel_*)
-	.equ HDAE5000_RAM_SaveOptions_Alt_22aa05, 0x22aa05	; split from HDAE5000_RAM_SaveOptions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
-	.equ HDAE5000_RAM_SaveOptions_Alt_22aa03, 0x22aa03	; split from HDAE5000_RAM_SaveOptions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
-	.equ HDAE5000_RAM_SaveOptions_Alt_22aa07, 0x22aa04	; split from HDAE5000_RAM_SaveOptions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_LbnDigitPos, 0x22aa14	; load-by-number digit position 0..5 (HDAE5000_Lbn_TypeDigit)
 	.equ HDAE5000_RAM_LbnDir, 0x22aa16	; load-by-number directory number being typed (HDAE5000_Lbn_TypeDigit)
 	.equ HDAE5000_RAM_LbnSong, 0x22aa18	; load-by-number song number being typed (HDAE5000_Lbn_TypeDigit)
 	.equ HDAE5000_RAM_DeleteOptions, 0x22ab9e	; 12-byte part-selection record of the delete options (HDAE5000_DelOpt_*)
-	.equ HDAE5000_RAM_DeleteOptions_Alt_22ab9d, 0x22ab9d	; split from HDAE5000_RAM_DeleteOptions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_SeparateOutputMode, 0x22b29e	; 0..3 = OFF / DRUMS L/R / BASS+DRUMS MIX / BASS/DRUMS MONO (HDAE5000_SeparateOutput_Apply)
 	.equ HDAE5000_RAM_HdStreamBuffer, 0x22b3ee	; 0x8000-byte buffer of the streamed file writes/reads (HDAE5000_HD_WriteStream, the part loaders/savers)
 	.equ HDAE5000_RAM_HdStreamBufferEnd, 0x23b3ee	; end of HdStreamBuffer (HDAE5000_HD_WriteStream)
@@ -76,7 +73,7 @@
 	.equ HDAE5000_RAM_SeparateDrumPartSent, 0x23d2da	; drum part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_SeparateBassPartSent, 0x23d2dc	; bass part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_MainWorkspacePtr, 0x23d2de	; the main CPU's workspace; every call into it is (this)->0x0E88 or ->0x0E0A table + offset (init image: 4 bytes after HDAE5000_LyricBoxObj_Init; the object table at 0x027ED2)
-	.equ HDAE5000_RAM_LyricJump, 0x229dac	; sector-1 setting byte; handler "LyricJumpEditCheck" returns its address
+	.equ HDAE5000_RAM_LyricJump, 0x229dab	; sector-1 setting byte; handler "LyricJumpEditCheck" returns its address
 	.equ HDAE5000_RAM_LyricBuffer, 0x22b430	; the lyric file, 0x5000 bytes: TLhd/TLtr chunks, events from +22 (HDAE5000_Lyrics_ClearBuffer, _ParseEvent)
 	.equ HDAE5000_RAM_LyricLines, 0x23a032	; six 40-byte text lines of the lyric window (HDAE5000_Lyrics_FillLines)
 	.equ HDAE5000_RAM_LyricLoaded, 0x23a106	; 1 once a lyric file passed its checks (HDAE5000_Lyrics_CheckFile)
@@ -122,7 +119,6 @@
 	.equ HDAE5000_IO_PpiControl, 0x160006	; 8255 control word: 0x90 = mode 0, port A input (HDAE5000_PPI_Init); 0x89 = port A output, port C low nibble input (HDAE5000_PPORT_InitPort / _CommandLoop)
 	.equ HDAE5000_RAM_DirListText, 0x22a088	; 24 rows x 21 bytes + NUL: "NNN:" and the 16-byte directory name at +4 (HDAE5000_DirList_BuildPage)
 	.equ HDAE5000_RAM_PartListText, 0x22b22c	; nine 14-byte tab-ended part names + NUL (0x7F bytes), HDAE5000_PartList_Build
-	.equ HDAE5000_RAM_PartListText_Alt_22b21e, 0x22b21e	; split from HDAE5000_RAM_PartListText by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_HdFreeScanBuffer, 0x200898	; 512-byte FAT sector buffer of HD_FindFreeCluster
 	.equ HDAE5000_RAM_HdFatCache, 0x200a98	; 512-byte cache of one FAT sector (HD_FatSetEntry / _FatNextCluster / _FreeChain)
 	.equ HDAE5000_RAM_HdXferClusters, 0x229c98	; clusters a write needs: ceil(HdXferBytes / ClusterBytes)
@@ -184,22 +180,20 @@
 	.equ HDAE5000_RAM_HdUsageDrive, 0x229d18	; the drive in units of 10,000 bytes (HD_ComputeDiskUsage)
 	.equ HDAE5000_RAM_HdUsageSystem, 0x229d1c	; the system area (sectors before the data area) in units of 10,000 bytes
 	.equ HDAE5000_RAM_HdRetries, 0x229d93	; retries left: 7 for HD_WriteTables / _ReadTables, 5 for HD_CountFreeClusters
-	.equ HDAE5000_RAM_HdStatusBytes, 0x229dad	; ten bytes HD_ClearStatusBytes zeroes; no reader found
+	.equ HDAE5000_RAM_HdStatusBytes, 0x229dac	; ten bytes HD_ClearStatusBytes zeroes; no reader found
 	.equ HDAE5000_RAM_PportInfoBlock, 0x23b400	; the PC-link info block, 0xD2 bytes: +0 part mask, +2 song name (26), +0x1C directory name (16), +0x2C/+0x34/+0x3C the FGB/FEB/FLS block descriptors (HDAE5000_HD_GetBlockInfo), +0x46 nine-byte part records (service 13), +0x97 drive model (30), +0xB5.. geometry (service 3), +0xCA work buffer address (service 19), +0xCE the slot of the open read
-	.equ HDAE5000_RAM_PportInfoBlock_Alt_23b3f6, 0x23b3f6	; split from HDAE5000_RAM_PportInfoBlock by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
-	.equ HDAE5000_RAM_PportInfoBlock_Alt_23c3f2, 0x23c3f2	; split from HDAE5000_RAM_PportInfoBlock by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_PportReadState, 0x23d2e2	; 0 no read open, 1 opened by service 24 (ReadOpenHD), 2 reading (service 25 continues with HD_ReadFileNext)
 	.equ HDAE5000_RAM_PportArg1, 0x23c4dc	; byte 1 of the command packet, latched by HDAE5000_PPORT_LatchPacketArgs (stored in a word slot, as are Arg2..4)
 	.equ HDAE5000_RAM_PportArg2, 0x23c4de	; byte 2 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
-	.equ HDAE5000_RAM_PportArg3, 0x23c4e0	; byte 3 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
-	.equ HDAE5000_RAM_PportArg4, 0x23c4e0	; byte 4 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
+	.equ HDAE5000_RAM_PportArg3, 0x23907e	; byte 3 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
+	.equ HDAE5000_RAM_PportArg4, 0x239080	; byte 4 of the command packet (HDAE5000_PPORT_LatchPacketArgs)
 	.equ HDAE5000_RAM_PportInfoPtr, 0x23c4f6	; XIX of service 1 (the address of PportInfoBlock), kept by HDAE5000_PPORT_GetInfoBlock / _CopyInfoToPacket
 	.equ HDAE5000_RAM_PportBlockPtr, 0x23c542	; start of the block HDAE5000_PPORT_SendBlock / _RecvBlock moves; a retry restarts from it
 	.equ HDAE5000_RAM_PportBlockLen, 0x23c546	; byte count of that block
 	.equ HDAE5000_RAM_PportSectorBuffer, 0x23c652	; 512 bytes: a sector received by HDAE5000_PPORT_RecvSector, or read for HDAE5000_PPORT_InitRegionDescriptors_Lookup
 	.equ HDAE5000_RAM_PcLinkStatusText, 0x22ab7c	; the text of the PC-link page's PP_STATUS object; the status string goes in at +7, at most 25 characters (HDAE5000_PcLink_ShowStatus, service 26)
 	.equ HDAE5000_RAM_PportPartMask, 0x23c4e4	; the parts (bits 0-7) a link command works on; InitRegionDescriptors sizes one region per set bit
-	.equ HDAE5000_RAM_PportPartMaskHi, 0x23c4e4	; bit 0: the ninth part (TLX), with PportPartMask
+	.equ HDAE5000_RAM_PportPartMaskHi, 0x239088	; bit 0: the ninth part (TLX), with PportPartMask
 	.equ HDAE5000_RAM_PportStepError, 0x23c4e6	; 1 when a service call of InitRegionDescriptors_Lookup / SendRegionToPc (or a command handler) failed
 	.equ HDAE5000_RAM_PportSizeFieldOffset, 0x23c4ea	; byte offset of the size field in a part file's first sector (InitRegionDescriptors -> _Lookup)
 	.equ HDAE5000_RAM_PportSizeFieldWidth, 0x23c4ec	; 0x20: that field is a long; 0x10: a word counting 16-byte units
@@ -207,9 +201,6 @@
 	.equ HDAE5000_RAM_PportSendMaskHi, 0x239096	; its high byte
 	.equ HDAE5000_RAM_PportSectorOffset, 0x23c4f0	; word: byte offset into PportSectorBuffer while SendRegionToPc sends it; 512 = read the next sector
 	.equ HDAE5000_RAM_PportRegions, 0x23c4fa	; (address, size) long pairs: SendTwoRegions sends pairs 0 and 1; InitRegionDescriptors stores part sizes in the slots
-	.equ HDAE5000_RAM_PportRegions_Alt_23c4ee, 0x23c4ee	; split from HDAE5000_RAM_PportRegions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
-	.equ HDAE5000_RAM_PportRegions_Alt_23c502, 0x23c502	; split from HDAE5000_RAM_PportRegions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
-	.equ HDAE5000_RAM_PportRegions_Alt_23c4f2, 0x23c4f2	; split from HDAE5000_RAM_PportRegions by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_PportBytesLeft, 0x23c54e	; bytes SendRegionToPc still has to send
 	.equ HDAE5000_RAM_Errno, 0x22b3dc	; word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow
 	.equ HDAE5000_RAM_MathErrorHook, 0x23d2e4	; routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting Errno, when it is non-zero
@@ -220,12 +211,9 @@
 	.equ HDAE5000_RAM_RcmStreamResult, 0x23b3f4	; word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult returns it)
 	.equ HDAE5000_RAM_DirBrowserPage, 0x229d9f	; page of the directory browser (unreachable library; HD_Init sets it)
 	.equ HDAE5000_RAM_FlsBrowserPage, 0x229da0	; page of the FLS browser (unreachable library; HD_Init sets it)
-	.equ HDAE5000_RAM_FlsBrowserPage_Alt_229e54, 0x229da0	; split from HDAE5000_RAM_FlsBrowserPage by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_DirBrowserCursors, 0x229dd7	; 5 cursor bytes, one per directory-browser page (unreachable library)
-	.equ HDAE5000_RAM_DirBrowserCursors_Alt_229dd7, 0x229dd7	; split from HDAE5000_RAM_DirBrowserCursors by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_DirBrowserRowBytes, 0x229ddc	; 120 bytes, one per directory row (unreachable library)
 	.equ HDAE5000_RAM_FlsBrowserCursors, 0x229e54	; 5 cursor bytes, one per FLS-browser page (unreachable library)
-	.equ HDAE5000_RAM_FlsBrowserCursors_Alt_229e54, 0x229e54	; split from HDAE5000_RAM_FlsBrowserCursors by `port_hdae5000_version.py fix`: these uses want a different address in v1.15i
 	.equ HDAE5000_RAM_FlsBrowserRowBytes, 0x229e59	; 120 bytes, one per FLS row (unreachable library)
 	.equ HDAE5000_RAM_DirNameHistory, 0x22abaa	; 5-entry history of directory names: {u8 count, u8 recall index, u8 next slot, pad, 5 x 27 bytes} (HDAE5000_NameHistory_Push / _Recall)
 	.equ HDAE5000_RAM_FlsNameHistory, 0x22acc2	; 5-entry history of FLS names, same layout as DirNameHistory
@@ -364,7 +352,7 @@
 	.equ HamaFn_ChangeWall, 0x013c	; -> 0xFAF20B (index 79)
 
 ; HD-AE5000 Hard Disk Expansion ROM, v2.01i
-;   Version string "V2.01i" (HDAE5000_Str_V201i).  The credits block
+;   Version string "V1.15i" (HDAE5000_Str_V115i).  The credits block
 ;   HDAE5000_Version_Info ("Technics Software section M. Kitajima 2.33J 2.21
 ;   TECHNICS KN5000 Juli-Oktober 1996") is the same in all four dumped versions.
 ;   Entry vectors at 0x280008 / 0x280010: jp HDAE5000_Boot_Init, jp
@@ -382,8 +370,8 @@
 
 HDAE5000_ROM_HEADER:
 	.ascii "XAPR\212"	; Magic identifier ("XAPR" checked by main CPU)
-	.byte 0x19	; Version byte
-	.byte 0x2e, 0x00	; Unknown (possibly size/flags)
+	.byte 0x95	; Version byte
+	.byte 0x2f, 0x00	; Unknown (possibly size/flags)
 
 ; Entry point 1 - Jump to boot initialization
 HDAE5000_ENTRY_1:
@@ -512,7 +500,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable function
-	ldw wa, 0x16A	; Handler ID
+	ldw wa, 0x16a	; Handler ID
 	call (xhl)	; Register handler
 
 	; === table 0x1CA: ResEventProc (class id 0x0160000C) ===
@@ -531,7 +519,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x1CA	; Handler ID
+	ldw wa, 0x1ca	; Handler ID
 	call (xhl)
 
 	; === table 0x1EA: ResMethodProc (class id 0x0160000D) ===
@@ -550,7 +538,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x1EA	; Handler ID
+	ldw wa, 0x1ea	; Handler ID
 	call (xhl)
 
 	; === table 0x12A: ApFunctionProc, the module's ApFunction table (class id 0x01600002) ===
@@ -568,7 +556,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x12A	; Handler ID
+	ldw wa, 0x12a	; Handler ID
 	call (xhl)
 
 	; === table 0x42A: the names of table 0x12A ===
@@ -586,7 +574,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x42A	; Handler ID
+	ldw wa, 0x42a	; Handler ID
 	call (xhl)
 
 	; === table 0x10A: FunctionProc, the module's Function table (class id 0x01600001) ===
@@ -604,7 +592,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x10A	; Handler ID
+	ldw wa, 0x10a	; Handler ID
 	call (xhl)
 
 	; === table 0x40A: the names of table 0x10A ===
@@ -622,7 +610,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x40A	; Handler ID
+	ldw wa, 0x40a	; Handler ID
 	call (xhl)
 
 	; === table 0x14A: MainFunctionProc, the module's MainFunction table (class id 0x01600003) ===
@@ -632,7 +620,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_MainFunctionProc)             ; Handler function via table offset 0x024C
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0xE	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
+	ldw (xsp + 8), 0xe	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
 	lda	xwa, (0x23d20e:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -640,7 +628,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x14A	; Handler ID
+	ldw wa, 0x14a	; Handler ID
 	call (xhl)
 
 	; === table 0x44A: the names of table 0x14A ===
@@ -650,7 +638,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_MainFunctionProc)             ; Handler function via table offset 0x024C
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0xE	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
+	ldw (xsp + 8), 0xe	; ld (XSP+0x08), 000Eh  ; size = 14 bytes
 	lda	xwa, (0x23d24a:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -658,7 +646,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x44A	; Handler ID
+	ldw wa, 0x44a	; Handler ID
 	call (xhl)
 
 	; === table 0x7F: ViewableProc, the UI object descriptor table (class id 0x01600010) ===
@@ -676,7 +664,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x7F	; Handler ID
+	ldw wa, 0x7f	; Handler ID
 	call (xhl)
 
 	; === table 0x37F: ResNameProc, the UI object names (class id 0x0160000F) ===
@@ -694,17 +682,17 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld_sril XHL, (xwa + RootFn_RegisterObjectTable)             ; RegisterObjectTable
-	ldw wa, 0x37F	; Handler ID
+	ldw wa, 0x37f	; Handler ID
 	call (xhl)
 
 	; === RootFn_RegisterTitle: title 0x7F = "TT_HDDEXT" ===
-	pushw 0xA	; module number 0x0A (InitializeHama pushes 9)
+	pushw 0xa	; module number 0x0A (InitializeHama pushes 9)
 	lda xwa, (HDAE5000_GFX_INIT_PARAMS:24)
 	push xwa	; the title's name, "TT_HDDEXT"
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XHL, (xwa + RootFn_RegisterTitle)
-	ld xwa, 0x7F	; title number
+	ld xwa, 0x7f	; title number
 	ld xbc, NAKA_MAINFUNC_HDAETitleFunc	; entry 0 of MainFunction table 0x14A
 	ld xde, HDAE5000_OBJ_IV_HDDMENU	; the title's view object
 	call (xhl)
@@ -1886,11 +1874,10 @@ HDAE5000_SelectListProc_Skip16:
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_SelectListProc_Epilogue
 HDAE5000_SelectListProc_Skip17:
-HDAE5000_SelectListProc_Skip18:
 	ld	xwa, xiz
 	inc	6, xwa
 	cp	xwa, (xsp+96)
-	jr	nz, HDAE5000_SelectListProc_Skip19
+	jr	nz, HDAE5000_SelectListProc_Skip18
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1900,15 +1887,15 @@ HDAE5000_SelectListProc_Skip18:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld	xhl, (xbc + RootFn_MainFuncCall)
-	ld	xbc, 0x01ea0007
+	ld	xbc, EVT_HDAE_SELECT_OK2
 	call	(xhl)
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_SelectListProc_Epilogue
-HDAE5000_SelectListProc_Skip19:
+HDAE5000_SelectListProc_Skip18:
 	ld	xwa, xiz
 	inc	7, xwa
 	cp	xwa, (xsp+96)
-	jr	nz, HDAE5000_SelectListProc_Skip20
+	jr	nz, HDAE5000_SelectListProc_Skip19
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1922,9 +1909,10 @@ HDAE5000_SelectListProc_Skip19:
 	call	(xhl)
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_SelectListProc_Epilogue
-HDAE5000_SelectListProc_Skip20:
+HDAE5000_SelectListProc_Skip19:
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_SelectListProc_Epilogue
+HDAE5000_SelectListProc_Skip20:
 HDAE5000_SelectListProc_Skip21:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -2201,14 +2189,14 @@ HDAE5000_AcHddNamingWindowProc_Join3:
 	ld	xde, 0:i3
 	call	(xix)
 	ld	(0x22a032), hl
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TextPtrs_Blank1_Chr5F
 	add	xbc, xwa
 	ld xwa, (xbc)
 	ld	(HDAE5000_RAM_NamingFillCharPtr), xwa
-	cpw	(0x22A032:24), 0
+	cpw	(0x22a032:24), 0
 	jr	z, HDAE5000_AcHddNamingWindowProc_Skip
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -2350,7 +2338,7 @@ HDAE5000_AcHddNamingWindowProc_OnSeleDraw:
 	ld	xde, (xde + WS_RootFnTable)
 	ld	xhl, (xde + RootFn_GetClientBox)
 	call	(xhl)
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -2466,8 +2454,8 @@ HDAE5000_AcHddNamingWindowProc_Join8:
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_AcHddNamingWindowProc_Epilogue
 HDAE5000_AcHddNamingWindowProc_OnParaDraw:
-	ld	wa, (0x22A02C:24)
-	cp	wa, (0x22A02A:24)
+	ld	wa, (0x22a02c:24)
+	cp	wa, (0x22a02a:24)
 	jrl	z, HDAE5000_AcHddNamingWindowProc_Join9
 	ldw	(HDAE5000_RAM_NamingSelCharDrawn:24), 65535
 	lda	xwa, (xsp+32)
@@ -2483,7 +2471,7 @@ HDAE5000_AcHddNamingWindowProc_OnParaDraw:
 	ld_sril	xhl, (xbc + RootFn_DrawBox)
 	ldw	bc, 0x00f5
 	call	(xhl)
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -2533,16 +2521,16 @@ HDAE5000_AcHddNamingWindowProc_Loop2:
 	call	(xhl)
 	inc	1, iz
 HDAE5000_AcHddNamingWindowProc_Next:
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
-	add	wa, (0x22A02A:24)
+	add	wa, (0x22a02a:24)
 	extz xwa
 	add	xwa, xwa
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
 	add	xbc, xwa
 	cp	iz, (xbc)
 	jrl	ule, HDAE5000_AcHddNamingWindowProc_Loop2
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	ld	(0x22a02c), wa
 HDAE5000_AcHddNamingWindowProc_Join9:
 	ld	xhl, 0:i3
@@ -2617,7 +2605,7 @@ HDAE5000_AcHddNamingWindowProc_OnPositionRight:
 HDAE5000_AcHddNamingWindowProc_OnPrevCharacter:
 	cpw	(HDAE5000_RAM_NamingSelChar:24), 0
 	jrl	z, HDAE5000_AcHddNamingWindowProc_Join10
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -2683,7 +2671,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join:
 	cpw	(HDAE5000_RAM_NamingSelChar:24), 13
 	jrl	c, HDAE5000_AcHddNamingWindowProc_Join10
 	subw	(HDAE5000_RAM_NamingSelChar:24), 13
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -2733,7 +2721,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join:
 	call	(xhl)
 	jrl	t, HDAE5000_AcHddNamingWindowProc_Join10
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip:
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -2752,9 +2740,9 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip:
 	ld	xde, (xde + WS_RootFnTable)
 	ld	xhl, (xde + RootFn_ConvertStrings)
 	call	(xhl)
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
-	add	wa, (0x22A02A:24)
+	add	wa, (0x22a02a:24)
 	extz xwa
 	add	xwa, xwa
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
@@ -2770,9 +2758,9 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Skip:
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join2:
 	decw	1, (HDAE5000_RAM_NamingSelChar:24)
 HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3:
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
-	add	wa, (0x22A02A:24)
+	add	wa, (0x22a02a:24)
 	extz xwa
 	add	xwa, xwa
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
@@ -2782,7 +2770,7 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join3:
 	cp	wa, (xbc)
 	jrl	ugt, HDAE5000_AcHddNamingWindowProc_Join10
 	addw	(HDAE5000_RAM_NamingSelChar:24), 13
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -2848,16 +2836,16 @@ HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join4:
 ; HDAE5000_AcHddNamingWindowProc_OnNextCharacter: index switch 5 (also the dial-up binding): select the next character
 ;   of the page and write it at the cursor
 HDAE5000_AcHddNamingWindowProc_OnNextCharacter:
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
 	add	xbc, xwa
 	ld xwa, (xbc)
 	ld (xsp + 0x06), xwa
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
-	add	wa, (0x22A02A:24)
+	add	wa, (0x22a02a:24)
 	extz xwa
 	add	xwa, xwa
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
@@ -3240,7 +3228,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetPage:
 	ld	xbc, EVT_YOU_ARE_SELECTED
 	call	(xhl)
 HDAE5000_AcHddNamingWindowProc_OnClear_Join2:
-	ld	de, (0x22A02A:24)
+	ld	de, (0x22a02a:24)
 	extz xde
 	ld xwa, (xsp + 0x30)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -3248,7 +3236,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Join2:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_PARA_DRAW
 	call	(xhl)
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TextPtrs_ABC123_Abc123_Chr202123242526
@@ -3290,7 +3278,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetCursor:
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	0, (xbc+wa)
 	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip
-	ldw	(0x22A02A:24), 0
+	ldw	(0x22a02a:24), 0
 	ld	wa, (HDAE5000_RAM_NamingCursor:24)
 	extz xwa
 	ld	xbc, HDAE5000_RAM_NamingText
@@ -3310,7 +3298,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip:
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	1, (xbc+wa)
 	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip2
-	ldw	(0x22A02A:24), 1
+	ldw	(0x22a02a:24), 1
 	ld	wa, (HDAE5000_RAM_NamingCursor:24)
 	extz xwa
 	ld	xbc, HDAE5000_RAM_NamingText
@@ -3330,9 +3318,9 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip2:
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	2, (xbc+wa)
 	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip3
-	cpw	(0x22A02A:24), 2
+	cpw	(0x22a02a:24), 2
 	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join3
-	ldw	(0x22A02A:24), 0
+	ldw	(0x22a02a:24), 0
 HDAE5000_AcHddNamingWindowProc_OnClear_Join3:
 	ld	wa, (HDAE5000_RAM_NamingCursor:24)
 	extz xwa
@@ -3401,7 +3389,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Loop2:
 HDAE5000_AcHddNamingWindowProc_OnClear_Join6:
 	inc	1, iz
 HDAE5000_AcHddNamingWindowProc_OnClear_Next:
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
 	inc	2, wa
 	extz xwa
@@ -3469,9 +3457,9 @@ HDAE5000_AcHddNamingWindowProc_OnIAmSelected:
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
 	ld	xbc, EVT_SET_PAGE
 	call	(xhl)
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
-	add	wa, (0x22A02A:24)
+	add	wa, (0x22a02a:24)
 	extz xwa
 	add	xwa, xwa
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
@@ -3479,9 +3467,9 @@ HDAE5000_AcHddNamingWindowProc_OnIAmSelected:
 	ld	wa, (HDAE5000_RAM_NamingSelChar:24)
 	cp	wa, (xbc)
 	jr	ule, HDAE5000_AcHddNamingWindowProc_OnClear_Join8
-	ld	wa, (0x22A032:24)
+	ld	wa, (0x22a032:24)
 	mul	wa, 0x0003
-	add	wa, (0x22A02A:24)
+	add	wa, (0x22a02a:24)
 	extz xwa
 	add	xwa, xwa
 	ld	xbc, HDAE5000_Str_Chr25_AcHddNamingWindowProc
@@ -3489,7 +3477,7 @@ HDAE5000_AcHddNamingWindowProc_OnIAmSelected:
 	ld	wa, (xbc)
 	ld	(HDAE5000_RAM_NamingSelChar), wa
 HDAE5000_AcHddNamingWindowProc_OnClear_Join8:
-	ld	wa, (0x22A02A:24)
+	ld	wa, (0x22a02a:24)
 	extz xwa
 	sll	xwa, 0x02
 	ld	xbc, HDAE5000_TablePtrs_AcHddNamingWindowProc
@@ -4088,7 +4076,7 @@ HDAE5000_HardTest_HddIdRead:
 	push xwa			; dest address
 	call HDAE5000_StrCpy
 	; MemCopy: copy 10 bytes between buffers
-	pushw 0x000A			; count = 10
+	pushw 0x000a			; count = 10
 	lda xwa, (xsp + 100)
 	push xwa			; source
 	lda xwa, (xsp + 56)
@@ -4124,8 +4112,8 @@ HDAE5000_HardTest_HddIdRead:
 	push xix
 	ld xix, (xiy + 0)
 	push xix
-	pushw HDAE5000_Fmt_Fre_Capa_3_1f_MB@hi16			; count = 46 -- high half of HDAE5000_Fmt_Fre_Capa_3_1f_MB
-	pushw	0xa9ea
+	pushw	HDAE5000_Fmt_Fre_Capa_3_1f_MB@hi16
+	pushw	HDAE5000_Fmt_Fre_Capa_3_1f_MB@lo16		; low half of HDAE5000_Fmt_Fre_Capa_3_1f_MB
 	lda xwa, (xsp + 44)
 	push xwa
 	call HDAE5000_SPrintf
@@ -4152,7 +4140,7 @@ HDAE5000_HardTest_HddIdRead:
 ; the present / selected flag arrays (FdList+0x100, +0x114) cleared.
 ; ---------------------------------------------------------------------------
 HDAE5000_FdList_Clear:
-	pushw 0x000E
+	pushw 0x000e
 	lda xwa, (HDAE5000_Str_Blank12Tab:24)
 	push xwa
 	lda xwa, (HDAE5000_RAM_FdList:24)
@@ -4174,10 +4162,10 @@ HDAE5000_FdList_Clear:
 	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL
 	ld xbc, EVT_PARA_DRAW
-	ld xde, 0xFFFFFFFF
+	ld xde, 0xffffffff
 	call (xhl)
 	; Copy 241 bytes: second table → PPI buffer
-	pushw 0x00F1
+	pushw 0x00f1
 	lda xwa, (HDAE5000_FdList_RowsTemplate:24)
 	push xwa
 	lda xwa, (HDAE5000_RAM_FdList+14:24)
@@ -4199,7 +4187,7 @@ HDAE5000_FdList_Clear:
 	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_CP_FD_LIST
 	ld xbc, EVT_PARA_DRAW
-	ld xde, 0xFFFFFFFF
+	ld xde, 0xffffffff
 	call (xhl)
 	; Register third handler (0xD9)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -4247,8 +4235,8 @@ HDAE5000_FdName_SongNumber:
 	jr gt, .Lptb_not_found
 .Lptb_loop:
 	pushw iz
-	pushw HDAE5000_Fmt_2_2d@hi16
-	pushw	0xaa28
+	pushw	HDAE5000_Fmt_2_2d@hi16
+	pushw	HDAE5000_Fmt_2_2d@lo16		; low half of HDAE5000_Fmt_2_2d
 	lda xwa, (xsp + 8)
 	push xwa
 	call HDAE5000_SPrintf

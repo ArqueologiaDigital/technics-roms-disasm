@@ -2,8 +2,9 @@
 
 Evidence (the ROM images, scripts/tools/port_hdae5000_version.py registered_table):
   * v1.15i's ApFunction name table (registered as 0x42A) lacks SfxTlxBitCheck,
-    DelTlxEditCheck, BitmapButt01 (HDAE5000_Alloc_Memory_3, the FilePanel bitmap) and
+    DelTlxEditCheck, BitmapButt01 (the 42 x 15 button picture's descriptor) and
     LyricJumpEditCheck, and the EV_* messages of the lyric box and the floppy selector;
+    HDAE5000_Alloc_Memory_3 described the file-selection backdrop, which v1.x lacks;
   * its class table (0x16A) has 10 classes: no TtlScreenR3, LyricBox or FDFileSelect;
   * "TLhd", "TLtr", ".TLX", ".TTX", "XLT.", "LyricBox", "FDFileSelect" and "TtlScreenR3" occur
     0 times in v1.15i (and v1.10i), 1-7 times each in v2.01i.
@@ -20,6 +21,7 @@ delete_routines("hd-ae5000_v1_15i.s", ["HDAE5000_Alloc_Memory_3", "HDAE5000_TtlS
 delete_routines("hdae5000_hd_driver.s", ["HDAE5000_SfxTlxBitCheck", "HDAE5000_LyricJumpEditCheck"])
 delete_routines("hdae5000_filesystem.s", ["HDAE5000_LBNTlxBitCheck_Unregistered", "HDAE5000_DelTlxEditCheck"])
 delete_routines("hdae5000_ui_display.s", [
+    "HDAE5000_BitmapButt01",
     "HDAE5000_LyricBoxProc", "HDAE5000_Lyrics_ClearBuffer", "HDAE5000_Lyrics_CheckFile",
     "HDAE5000_Lyrics_LoadTestFile", "HDAE5000_Lyrics_PlayToPosition", "HDAE5000_Lyrics_ResetState",
     "HDAE5000_Lyrics_ReadSongInfo", "HDAE5000_Lyrics_FillLines", "HDAE5000_Lyrics_FindEvent",

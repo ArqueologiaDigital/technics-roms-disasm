@@ -15,7 +15,7 @@ HDAE5000_StrPrefixCmp:
 	push xwa
 	push xiz
 	call HDAE5000_MemCmp
-	lda xsp, (xsp + 0x0E)
+	lda xsp, (xsp + 0x0e)
 	pop xiz
 	ret
 
@@ -28,18 +28,18 @@ HDAE5000_StrPrefixCmp:
 ; ---------------------------------------------------------------------------
 HDAE5000_StrCpy:
 	push xiz
-	pushw 0xFFFE			; max length
+	pushw 0xfffe			; max length
 	pushw 0x0000			; flags
 	ld xwa, (xsp + 0x10)		; source pointer
 	push xwa
 	ld xiz, (xsp + 0x10)		; dest pointer
 	push xiz
 	call HDAE5000_MemCCpy
-	add xsp, 0x0000000C		; clean up 12 bytes
+	add xsp, 0x0000000c		; clean up 12 bytes
 	or xhl, xhl			; test result
 	jr nz, .Lmcb_done
 	ld xwa, xiz			; get dest pointer
-	add xwa, 0x0000FFFF		; point to last byte
+	add xwa, 0x0000ffff		; point to last byte
 	ld (xwa), 0x00		; null-terminate
 .Lmcb_done:
 	ld xhl, xiz			; return dest pointer
@@ -55,15 +55,15 @@ HDAE5000_StrCpy:
 ; ---------------------------------------------------------------------------
 HDAE5000_StrLen:
 	push xiz
-	pushw 0xFFFF			; sentinel
+	pushw 0xffff			; sentinel
 	pushw 0x0000			; flags
-	ld xiz, (xsp + 0x0C)		; buffer pointer
+	ld xiz, (xsp + 0x0c)		; buffer pointer
 	push xiz
 	call HDAE5000_MemChr
 	inc 8, xsp			; clean up 8 bytes
 	or xhl, xhl			; test result
 	jr nz, .Ldbv_ok
-	ldw hl, 0xFFFF			; return -1
+	ldw hl, 0xffff			; return -1
 	jr t, .Ldbv_done
 .Ldbv_ok:
 	sub xhl, xiz			; HL = length (offset from base)
@@ -204,10 +204,10 @@ HDAE5000_FltDec_Convert:
 	ld	iz, 0:i3
 	ldw (xsp + 0x06), 15
 	ldw (xsp + 0x08), 8
-	pushw 0x0020
-	pushw 0x0000
-	pushw 0x0023
-	pushw 0xc874
+	pushw	HDAE5000_RAM_AtaIdentifyBuffer@hi16
+	pushw	HDAE5000_RAM_AtaIdentifyBuffer@lo16		; low half of HDAE5000_RAM_AtaIdentifyBuffer
+	pushw	HDAE5000_RAM_FltDecDigits@hi16
+	pushw	HDAE5000_RAM_FltDecDigits@lo16		; low half of HDAE5000_RAM_FltDecDigits
 	call HDAE5000_MemFill
 	inc 8, xsp
 	ld	qiz, 0
@@ -1614,7 +1614,6 @@ HDAE5000_Str_LyricJumpEditCheck:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_BitmapButt01:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_LanguageTextReturn:
 	.asciz "LanguageTextReturn"
-	.balign 2, 0x00                       ; word-align pad
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_ErrMsgTimerCatchLBN:
 	.asciz "ErrMsgTimerCatchLBN"

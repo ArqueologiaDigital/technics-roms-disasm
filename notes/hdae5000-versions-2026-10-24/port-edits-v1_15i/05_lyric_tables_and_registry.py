@@ -4,6 +4,8 @@ registry entries (hdae5000_data_tables.s, hdae5000_init_data.s).
   * the compiled switch tables of SfxTlxBitCheck, LyricJumpEditCheck,
     LBNTlxBitCheck_Unregistered, DelTlxEditCheck, LyricBoxProc (two) and FDFileSelectProc,
     with the "%s" / "%1d" format strings only those routines push;
+  * BitmapButt01's 42 x 15 picture and its palette (HDAE5000_Palette_Button01 /
+    _Bitmap_Button01): status showed its 1,654 bytes against none in v1.15i;
   * HDAE5000_RECORD_TABLE's records for TtlScreenR3, LyricBox and FDFileSelect: v1.15i's
     table (registered as 0x16A, 0x297f62) has 10 records, SelectList .. AcLanguageText1;
   * the three class procedures in HDAE5000_ClassProc_Table, and SfxTlxBitCheck /
@@ -18,7 +20,8 @@ for lab in ["HDAE5000_Fmt_s_SfxTlxBitCheck", "HDAE5000_SfxTlxBitCheck_CaseTable"
             "HDAE5000_LBNTlxBitCheck_Unregistered_CaseTable", "HDAE5000_Fmt_s_DelTlxEditCheck",
             "HDAE5000_DelTlxEditCheck_CaseTable", "HDAE5000_LyricBoxProc_CaseTable2",
             "HDAE5000_LyricBoxProc_CaseTable1", "HDAE5000_Fmt_s_s_FDFileSelectProc",
-            "HDAE5000_FDFileSelectProc_KeyCaseTable"]:
+            "HDAE5000_FDFileSelectProc_KeyCaseTable", "HDAE5000_Palette_Button01",
+            "HDAE5000_Bitmap_Button01"]:
     print("deleted", lab, len(delete_block("hdae5000_data_tables.s", lab)), "lines")
 for lab in ["HDAE5000_Record_TtlScreenR3", "HDAE5000_Record_LyricBox", "HDAE5000_Record_FDFileSelect"]:
     delete_record("hdae5000_data_tables.s", lab)
