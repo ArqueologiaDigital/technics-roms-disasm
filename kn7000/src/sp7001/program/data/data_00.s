@@ -57,7 +57,7 @@ func_48408735_Records:	# 49 x REC_func_48408735_Records (8 bytes each); read by 
 	REC_func_48408735_Records	f0=0x6091E61C, f4=0x400E1126
 	REC_func_48408735_Records	f0=0x1FEBD8AC, f4=0x400FD93C	# [48]
 data_4858668C:
-	# 40 bytes the code takes the address of: LibF64Log 0x4C000311 `mov data_4858668C, a3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: LibF64Log 0x4C000311 `mov data_4858668C, a3` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	56, 67, 12, 152, 25, 246, 213, 63, 183, 225, 135, 71, 76, 149, 107, 63	# +0
 	tab_u8	18, 14, 146, 27, 6, 46, 15, 63, 175, 55, 64, 204, 182, 250, 180, 62	# +16
 	tab_u8	217, 103, 126, 19, 65, 190, 94, 62	# +32
@@ -65,7 +65,7 @@ data_4858668C:
 LibF64Log_Table:	# 2 x u32, 1040686442..2777304812; read by LibF64Log_entry 0x4C000311: `mov   (a2), d0`
 	tab_u32	2777304812, 1040686442
 data_485866BC:
-	# 56 bytes the code takes the address of: func_4C0012BB 0x4C0012BB `mov data_485866BC, a3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 56 bytes the code takes the address of: func_4C0012BB 0x4C0012BB `mov data_485866BC, a3` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	24, 45, 68, 84, 251, 33, 249, 63, 82, 190, 37, 230, 188, 171, 228, 191	# +0
 	tab_u8	125, 170, 117, 103, 188, 102, 180, 63, 134, 124, 98, 206, 44, 45, 115, 191	# +16
 	tab_u8	84, 24, 85, 72, 131, 7, 37, 63, 157, 135, 175, 223, 116, 48, 206, 190	# +32
@@ -125,39 +125,17 @@ PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal 0x4C002B70: 
 	tab_u32	1, 0, 0, 0, 0
 LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero 0x4C002FB8: `mov   (a0), d1`
 	tab_u32	0, 0
-func_4C03D4F7_Table:	# 2 x u32, 0..1; read by func_4C03D4F7 0x4C03D4F7: `mov (a2), d1`
-	tab_u32	0, 1
 
-func_4C03D4F7_Var:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (8, a2), a1`
-	.long	0x4c003fef
+func_4C03D4F7_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C003FEF, itskpri=3, x14="\x00\x00", stksz=3072
+func_4C03CAD0_Var:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	x6="\x00\x00", f8=1
+func_4C03CAD0_Var_3:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	x6="\x00\x00"
+func_4C03CAD0_Var_5:	# REC_func_4C03CA44_ArgA0_s8 (8 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0_s8	x6="\x00\x00"
 
-func_4C03D4F7_Table_2:	# 2 x u16, 0..3; read by func_4C03D4F7 0x4C03D4F7: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_4C03D4F7_Var_2:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (0x10, a2), d0`
-	.long	3072
-func_4C03CAD0_Var:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table:	# 2 x u16, 0..0; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	0, 0
-
-func_4C03CAD0_Var_2:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	1
-func_4C03CAD0_Var_3:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_2:	# 2 x u16, 0..0; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	0, 0
-
-func_4C03CAD0_Var_4:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	0
-func_4C03CAD0_Var_5:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_3:	# 2 x u16, 0..0; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	0, 0
-func_4C03CAD0_Table_4:	# 10 x u32, 1..4294901760; read by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
+func_4C03CAD0_Table:	# 10 x u32, 1..4294901760; read by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
 	tab_u32	1, 16843009, 16843009, 16843009, 16843009, 16843009, 16843009, 65793	# [0]
 	tab_u32	65792, 4294901760	# [8]
 TgVoiceSideSelect_Table:	# 32 x u16, 1024..2048; read by TgVoiceSideSelect 0x4C02BF25: `movhu  (d0, a0), d0`
@@ -659,7 +637,7 @@ TgPartToneModSetupMelodic_Table_2:	# 9 x u32, 1275307180..1275307180; read by Tg
 	tab_u32	1275307180, 1275307180, 1275307180, 1275307180, 1275307180, 1275307180, 1275307180, 1275307180	# [0]
 	tab_u32	1275307180	# [8]
 
-TgSlotAllocate_Records:	# 16 x REC_TgSlotAllocate_Records (8 bytes each); read by TgSlotAllocate 0x4C03AE5C `mov (a0), a1`; TgSlotAllocate 0x4C03AE5C `movbu (4, a0), d0`; TgSlotAllocate 0x4C03AE5C `movbu (5, a0), d0`
+TgSlotAllocate_Records:	# 16 x REC_TgSlotAllocate_Records (8 bytes each); read by TgSlotAllocate 0x4C03AE5C `call TgNodeSlotInsert_entry, [a2,a3], 8`; TgSlotAllocate 0x4C03AE5C `call TgNodeSlotUnlink_entry, [a2,a3], 8`; TgSlotAllocate 0x4C03AE5C `call TgVoiceMigrateFind_entry, [d2,d3,a2,a3], 0x10` (+6)
 	REC_TgSlotAllocate_Records	p0=TgSlotAllocate_Records_p0_0, f5=3, x6="\x00\x00"	# [0]
 	REC_TgSlotAllocate_Records	p0=TgSlotAllocate_Records_p0_s14_0, f4=1, f5=4, x6="\x00\x00"
 	REC_TgSlotAllocate_Records	p0=TgSlotAllocate_Records_p0_s11_0, f4=2, f5=4, x6="\x00\x00"
@@ -3706,14 +3684,8 @@ func_4C01C0D6_Table:	# 11 x u16, 0..40; read by func_4C01C0D6 0x4C01C0D6: `movhu
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_4C01C0D6_Table
 
-func_4C03CAD0_Var_6:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_5:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_7:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	1
+func_4C03CAD0_Var_6:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00", f8=1
 
 M3SendProcessTgc_Table:	# 12 x u32, 1275154600..1275154602; read by M3SendProcessTgc 0x4C01507A: `mov   (d0, a0), a0`
 	tab_u32	1275154600, 1275154600, 1275154600, 1275154600, 1275154600, 1275154600, 1275154600, 1275154600	# [0]
@@ -11351,98 +11323,24 @@ func_4841202C_Table_2_p0_p4_90:	# REC_func_4841202C_Table_2_p0_p4 (32 bytes), th
 	tab_s8	0, 0, 0, 0	# [0]
 func_4841202C_Table_2_p0_90:	# REC_func_4841202C_Table_2_p0 (16 bytes)
 	REC_func_4841202C_Table_2_p0	x0="\x01", f1=1, x2="\x00\x00", p4=func_4841202C_Table_2_p0_p4_90, f9=-1, f10=-1, f11=-1, f12=-1, x13="\x00\x00\x00"
-
-func_4C03D4F7_Table_3:	# 2 x u32, 0..1; read by func_4C03D4F7 0x4C03D4F7: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_4C03D4F7_Var_3:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (8, a2), a1`
-	.long	0x484143eb
-
-func_4C03D4F7_Table_4:	# 2 x u16, 0..3; read by func_4C03D4F7 0x4C03D4F7: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_4C03D4F7_Var_4:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (0x10, a2), d0`
-	.long	0x10000
-
-func_4C03D4F7_Table_5:	# 2 x u32, 0..1; read by func_4C03D4F7 0x4C03D4F7: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_4C03D4F7_Var_5:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (8, a2), a1`
-	.long	0x4842187b
-
-func_4C03D4F7_Table_6:	# 2 x u16, 0..3; read by func_4C03D4F7 0x4C03D4F7: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_4C03D4F7_Var_6:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (0x10, a2), d0`
-	.long	6144
-func_4C03CAD0_Var_8:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_6:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_9:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	0
-func_4C03CAD0_Var_10:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_7:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_11:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	0
-func_4C03CAD0_Var_12:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_8:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_13:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	1
-func_4C03CAD0_Var_14:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_9:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_15:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	1
-func_4C03CAD0_Var_16:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_10:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_17:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	1
-
-func_4C03CB25_Table:	# 2 x u32, 0..1; read by func_4C03CB25 0x4C03CB25: `mov (a3), d0`
-	tab_u32	0, 1
-
-func_4C03CB25_Var:	# u32, a constant; read / written by func_4C03CB25 0x4C03CB25: `mov (8, a3), a0`
-	.long	0x484141cc
-func_4C03CB25_Var_2:	# u32, a constant; read / written by func_4C03CB25 0x4C03CB25: `mov (0xc, a3), d1`
-	.long	1
-
-func_4C03CB25_Table_2:	# 2 x u16, 0..0; read by func_4C03CB25 0x4C03CB25: `movhu (a3), d1`
-	tab_u16	0, 0
-
-func_4C03CB25_Var_3:	# u32, a constant; read / written by func_4C03CB25 0x4C03CB25: `mov (4, a3), d0`
-	.long	1
-
-func_4C03CB25_Table_3:	# 2 x u32, 0..1; read by func_4C03CB25 0x4C03CB25: `mov (a3), d0`
-	tab_u32	0, 1
-
-func_4C03CB25_Var_4:	# u32, a constant; read / written by func_4C03CB25 0x4C03CB25: `mov (8, a3), a0`
-	.long	0x484144f8
-func_4C03CB25_Var_5:	# u32, a constant; read / written by func_4C03CB25 0x4C03CB25: `mov (0xc, a3), d1`
-	.long	1
-
-func_4C03CB25_Table_4:	# 2 x u16, 0..0; read by func_4C03CB25 0x4C03CB25: `movhu (a3), d1`
-	tab_u16	0, 0
-
-func_4C03CB25_Var_6:	# u32, a constant; read / written by func_4C03CB25 0x4C03CB25: `mov (4, a3), d0`
-	.long	24
+func_4C03D4F7_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_484143EB, itskpri=3, x14="\x00\x00", stksz=0x10000
+func_4C03D4F7_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4842187B, itskpri=3, x14="\x00\x00", stksz=6144
+func_4C03CAD0_Var_8:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00"
+func_4C03CAD0_Var_10:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00"
+func_4C03CAD0_Var_12:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00", f8=1
+func_4C03CAD0_Var_14:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00", f8=1
+func_4C03CAD0_Var_16:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00", f8=1
+func_4C03CB25_Table:	# REC_func_4C03CB25_ArgA0 (24 bytes): the layout func_4C03CB25 0x4C03CB25 reads through its argument a0 (passed by func_4841428E 0x4841428E `call func_4C03CB25_entry, [d2,d3,a2,a3], 0x1c`)
+	REC_func_4C03CB25_ArgA0	x4="\x01\x00\x00\x00", p8=func_484141CC, f12=1, x18="\x00\x00", f20=1
+func_4C03CB25_Table_3:	# REC_func_4C03CB25_ArgA0 (24 bytes): the layout func_4C03CB25 0x4C03CB25 reads through its argument a0 (passed by func_4841428E 0x4841428E `call func_4C03CB25_entry, [d2,d3,a2,a3], 0x1c`)
+	REC_func_4C03CB25_ArgA0	x4="\x01\x00\x00\x00", p8=func_484144F8, f12=1, x18="\x00\x00", f20=24
 
 IndexSwEventHandler_Table:	# 32 x u32, 1..2147483648; read by IndexSwEventHandler 0x48414735: `mov   (d0, a3), d0`; IndexSwEventHandler 0x48414735: `mov   (d0, a3), d1` ...
 	tab_u32	1, 2, 4, 8, 16, 32, 64, 128	# [0]
@@ -11492,14 +11390,8 @@ func_484161BE_Table:	# 5 x u32, 45072..4294967295; read by func_484161BE 0x48416
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry 0x48416590: `movbu  (d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
-func_4C03CAD0_Var_18:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_11:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_19:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	1
+func_4C03CAD0_Var_18:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00", f8=1
 
 Str_604:	.asciz "604"
 
@@ -11569,10 +11461,10 @@ GetEditSwPointInit_Table_2:	# 32 x REC_GetEditSwPointInit_Table_2 (4 bytes each)
 	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
 	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
 	REC_GetEditSwPointInit_Table_2	f0=320, f2=120
-data_4859E978:
-	# 64 bytes the code takes the address of: VwUserBitmapProc 0x48418625 `mov data_4859E978, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x80, 0x8000, 0x8080, 0x800000, 0x800080, 0x808000, 0xC0C0C0	# +0
-	tab_u32	0x808080, 0xFF, 0xFF00, 0xFFFF, 0xFF0000, 0xFF00FF, 0xFFFF00, 0xFFFFFF	# +32
+
+DrawBitmapSPFast16_Impl_Table:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl 0x48424644: `mov (-0x80, a0), a2`
+	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
+	tab_u32	8421504, 255, 65280, 65535, 16711680, 16711935, 16776960, 16777215	# [8]
 
 Bitmap_UserBitmapCheck_Pixels:	# 24 x 24, 8 bit(s) a pixel, rows padded to even bytes: the bitmap UserBitmapCheck answers MT_GetBitmapData with (src/sp7001/program/data/media/Bitmap_UserBitmapCheck_Pixels.png)
 	.incbin	"build/bitmaps/sp7001/Bitmap_UserBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 24 24) from src/sp7001/program/data/media/Bitmap_UserBitmapCheck_Pixels.png
@@ -12003,9 +11895,12 @@ Str_REC_9:	.asciz "REC"
 Str_PLAY_7:	.asciz "PLAY"
 Str_MUTE_5:	.asciz "MUTE"
 Str_CLR_7:	.asciz "CLR"
-data_485A10A7:
-# census: opaque -- unknown-dump: 9 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1A10A7, 0x1A10B0
+
+PsTrackSwitchProc_Table_4_p0_0:	# REC_PsTrackSwitchProc_Table_4_p0 (3 bytes)
+	REC_PsTrackSwitchProc_Table_4_p0	f0=80, f1=85, f2=78
+
+Str_CH:	.asciz "CH"
+	.align	4, 0xFF	# pad after Str_CH
 
 PsTrackSwitchProc_Table_4:
 	.long	data_485A1094
@@ -12013,7 +11908,7 @@ PsTrackSwitchProc_Table_4:
 	.long	Str_PLAY_7
 	.long	Str_MUTE_5
 	.long	Str_CLR_7
-	.long	data_485A10A7
+	.long	PsTrackSwitchProc_Table_4_p0_0
 
 PsTrackSwitchProc_Table:	# 6 x s16, 10..255; read by PsTrackSwitchProc 0x4842012F: `movhu  (d0, a0), d0`
 	tab_s16	245, 10, 12, 255, 255, 10
@@ -13017,7 +12912,7 @@ PsVariSelectProc_Records:	# 16 x REC_PsVariSelectProc_Records (8 bytes each); re
 	REC_PsVariSelectProc_Records	p4=loc_484210A7
 	REC_PsVariSelectProc_Records	p4=loc_484210A7
 
-DrawIcons_PixelPairTable:	# 255 x u16, 0..65534; read by DrawIcons_Impl_OnScreen 0x48423E4C: `movhu  (d0, a3), d0`
+DrawIcons_PixelPairTable:	# 255 x u16, 0..65534; read by DrawIcons_Impl 0x48423E31: `movhu  (d0, a3), d0`
 	tab_u16	0, 256, 512, 768, 1024, 1280, 1536, 1792, 63488, 63744, 64000, 64256	# [0]
 	tab_u16	64512, 64768, 65024, 65280, 1, 257, 513, 769, 1025, 1281, 1537, 1793	# [12]
 	tab_u16	63489, 63745, 64001, 64257, 64513, 64769, 65025, 65281, 2, 258, 514, 770	# [24]
@@ -13041,7 +12936,7 @@ DrawIcons_PixelPairTable:	# 255 x u16, 0..65534; read by DrawIcons_Impl_OnScreen
 	tab_u16	255, 511, 767, 1023, 1279, 1535, 1791, 2047, 63743, 63999, 64255, 64511	# [240]
 	tab_u16	64767, 65023, 65279	# [252]
 	.align	4, 0xFF	# pad after DrawIcons_PixelPairTable
-Pixel4bppPairTable:	# 256 x u16, 8224..12079; read by DrawBitmapSPFast16_Impl_DrawRow 0x484246A1: `movhu  (d0, a0), d0`; DrawBitmapSPFast16_Impl_DrawRow 0x484246A1: `movhu  (d0, a1), d1` ...
+Pixel4bppPairTable:	# 256 x u16, 8224..12079; read by DrawBitmapSPFast16_Impl 0x48424644: `movhu  (d0, a0), d0`; DrawBitmapSPFast16_Impl 0x48424644: `movhu  (d0, a1), d1` ...
 	tab_u16	8224, 8480, 8736, 8992, 9248, 9504, 9760, 10016, 10272, 10528, 10784, 11040	# [0]
 	tab_u16	11296, 11552, 11808, 12064, 8225, 8481, 8737, 8993, 9249, 9505, 9761, 10017	# [12]
 	tab_u16	10273, 10529, 10785, 11041, 11297, 11553, 11809, 12065, 8226, 8482, 8738, 8994	# [24]
@@ -13195,7 +13090,7 @@ Bitmap_IsPointOnScreen_Palette_8:	# 16 colours, 0x00BBGGRR (IsPointOnScreen: MT_
 Bitmap_IsPointOnScreen_Pixels_13:	# 160 x 60, 4 bit(s) a pixel, rows padded to even bytes: the bitmap IsPointOnScreen answers MT_GetBitmapData with (src/sp7001/program/data/media/Bitmap_IsPointOnScreen_Pixels_13.png)
 	.incbin	"build/bitmaps/sp7001/Bitmap_IsPointOnScreen_Pixels_13.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 160 60) from src/sp7001/program/data/media/Bitmap_IsPointOnScreen_Pixels_13.png
 
-func_48427E0D_Records:	# 13 x REC_func_48427E0D_Records (16 bytes each); read by func_48427E0D 0x48427E0D `call GetPaletteRGB, 0, 0`; func_48427E0D 0x48427E0D `mov (a0), d1`; func_48427E0D 0x48427E0D `mov (a2), a1` (+12)
+func_48427E0D_Records:	# 13 x REC_func_48427E0D_Records (16 bytes each); read by func_48427E0D 0x48427E0D `call GetPaletteRGB, 0, 0`; func_48427E0D 0x48427E0D `call SetPaletteRGB_entry, [d2,d3,a2,a3], 0x20`; func_48427E0D 0x48427E0D `call func_48427ED4_entry, [d2,d3,a2,a3], 0x3c` (+14)
 	REC_func_48427E0D_Records	p0=Bitmap_IsPointOnScreen_Pixels, f4=32, f6=32, p8=Bitmap_IsPointOnScreen_Palette, f12=23, x14="\x00\x00"	# [0]
 	REC_func_48427E0D_Records	p0=Bitmap_IsPointOnScreen_Pixels_2, f4=32, f6=32, p8=Bitmap_IsPointOnScreen_Palette_2, f12=23, x14="\x00\x00"
 	REC_func_48427E0D_Records	p0=Bitmap_IsPointOnScreen_Pixels_7, f4=32, f6=32, p8=Str_empty_1228, f12=23, x14="\x00\x00"
@@ -14449,7 +14344,7 @@ data_485B088C:
 	.asciz	""
 	.align	4, 0xFF
 data_485B0890:
-	# 8 bytes the code takes the address of: UnregisteredTitle 0x48431864 `mov data_485B0890, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: UnregisteredTitle 0x48431864 `mov data_485B0890, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 255, 255, 255, 0, 255, 255, 255	# +0
 data_485B0898:
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
@@ -18056,7 +17951,7 @@ Str_Technics_Pads_2:	.asciz "Technics Pads   "
 Str_nnddd:	# 5 x u8, 100..110; read by func_484347DE_entry 0x484346D8: `movbu  (d3, a0), d2`
 	tab_u8	110, 110, 100, 100, 100
 
-func_484350BD_Records:	# 3 x REC_func_484350BD_Records (10 bytes each); read by func_48434918 0x48434918 `movbu (d3, a0), d0`; func_48434918 0x48434918 `movbu (d3, a0), d3`; func_48434FB7 0x48434FB7 `movbu (d2, a0), d0` (+1)
+func_484350BD_Records:	# 3 x REC_func_484350BD_Records (10 bytes each); read by func_48434918 0x48434918 `call MemStyleRecPtr, 0, 0`; func_48434918 0x48434918 `call MemStyleVarRecPtr, 0, 0`; func_48434918 0x48434918 `call func_48434766_entry, [d2,d3,a2], 0x20` (+9)
 	REC_func_484350BD_Records	x1="\x01\x02\x03\x0C\x0D\x0E\x0F\x10\x11"
 	REC_func_484350BD_Records	f0=4, x1="\x05\x06\x07\x12\x13\x14\x15\x16\x17"
 	REC_func_484350BD_Records	f0=8, x1="\x09\n\x0B\x18\x19\x1A\x1B\x1C\x1D"
@@ -18429,17 +18324,9 @@ func_48440AC6_Table:	# 16 x REC_func_48440AC6_Table (8 bytes each); read by func
 	REC_func_48440AC6_Table	p4=loc_48440C50
 	REC_func_48440AC6_Table	p4=loc_48440C50
 	REC_func_48440AC6_Table	p4=loc_48440C50
-data_485B7EF8:
-	# 3 bytes the code takes the address of: func_484444F6 0x484444F6 `call func_48444159, 0, 0` (+0, arg a0); func_484444F6 0x484444F6 `mov data_485B7EF8, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	240, 4, 2	# +0
 
-func_48444159_Var:	# u8, a constant; read / written by func_48444159 0x48444159: `movbu (1, a0), d0`
-	.byte	0
-func_48444159_Var_2:	# u8, a constant; read / written by func_48444159 0x48444159: `movbu (2, a0), d0`
-	.byte	0
-
-func_48444159_Table:	# 3 x u8, 0..255; read by func_48444159 0x48444159: `movbu (3, a0), d0`
-	tab_u8	0, 255, 255
+func_48444159_ArgA0_0:	# REC_func_48444159_ArgA0 (8 bytes): the layout func_48444159 0x48444159 reads through its argument a0 (passed by func_484444F6 0x484444F6 `call func_48444159, 0, 0`)
+	REC_func_48444159_ArgA0	x0="\xF0\x04\x02", x6="\xFF\xFF"
 
 TempoSyncSetDispatch_Records:	# 16 x REC_TempoSyncSetDispatch_Records (8 bytes each); read by TempoSyncSetDispatch 0x48447D76 `mov (a0), d0`
 	REC_TempoSyncSetDispatch_Records	f0=4064, p4=loc_48447E3F	# [0]
@@ -18459,25 +18346,10 @@ TempoSyncSetDispatch_Records:	# 16 x REC_TempoSyncSetDispatch_Records (8 bytes e
 	REC_TempoSyncSetDispatch_Records	p4=loc_48447E4F
 	REC_TempoSyncSetDispatch_Records	f0=4063, p4=loc_48447E3F
 
-func_4C03D4F7_Table_7:	# 2 x u32, 0..1; read by func_4C03D4F7 0x4C03D4F7: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_4C03D4F7_Var_7:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (8, a2), a1`
-	.long	0x4c02bc27
-
-func_4C03D4F7_Table_8:	# 2 x u16, 0..3; read by func_4C03D4F7 0x4C03D4F7: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_4C03D4F7_Var_8:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (0x10, a2), d0`
-	.long	24576
-func_4C03CAD0_Var_20:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (a3), d2`
-	.long	0
-
-func_4C03CAD0_Table_12:	# 2 x u16, 0..8; read by func_4C03CAD0 0x4C03CAD0: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_4C03CAD0_Var_21:	# u32, a constant; read / written by func_4C03CAD0 0x4C03CAD0: `mov (8, a3), d2`
-	.long	0
+func_4C03D4F7_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4C02BC27, itskpri=3, x14="\x00\x00", stksz=24576
+func_4C03CAD0_Var_20:	# REC_func_4C03CA44_ArgA0 (12 bytes): the layout func_4C03CA44 0x4C03CA44 reads through its argument a0 (passed by func_484141DB 0x484141DB `call func_4C03CA44, 0, 0`, +4 more calls); the layout func_4C03CAD0 0x4C03CAD0 reads through its argument a0 (passed by func_4C03CA44 0x4C03CA44 `call func_4C03CAD0_entry, [d2,a2,a3], 0xc`)
+	REC_func_4C03CA44_ArgA0	f4=8, x6="\x00\x00"
 
 func_4844825D_Table:
 	.long	loc_4844829F
@@ -19875,68 +19747,20 @@ Str_empty_1210:	.asciz ".          "
 Str_r_4:	.asciz "r"
 	.align	4, 0xFF	# pad after Str_r_4
 data_485BA888:
-	# 32 bytes the code takes the address of: func_4846FEBF 0x4846FEBF `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4846FEBF 0x4846FEBF `mov data_485BA888, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_4846FEBF 0x4846FEBF `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4846FEBF 0x4846FEBF `mov data_485BA888, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0	# +0
 	tab_u8	2, 112, 0, 160, 5, 249, 3, 0, 9, 0, 2, 0, 0, 0, 255, 255	# +16
 
-func_48401F32_Var:	# u32, a constant; read / written by func_48401F32 0x48401F32: `mov (a0), d1`; func_48401F32 0x48401F32: `mov (a1), d0` ...
-	.long	5
-func_48404547_Var:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (4, a0), d1`
-	.long	0
-func_48404547_Var_2:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (8, a0), d1`
-	.long	0
-func_48404547_Var_3:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0xc, a0), d1`
-	.long	0
-func_48404547_Var_4:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x10, a0), d1`
-	.long	0
-func_48404547_Var_5:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x14, a0), d1`
-	.long	0
-func_48404547_Var_6:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x18, a0), a0`
-	.long	0
-func_48401F32_Var_2:	# u32, a constant; read / written by func_48401F32 0x48401F32: `mov (a0), d1`; func_48401F32 0x48401F32: `mov (a1), d0` ...
-	.long	0
-func_48404547_Var_7:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (4, a0), d1`
-	.long	0
-func_48404547_Var_8:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (8, a0), d1`
-	.long	0
-func_48404547_Var_9:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0xc, a0), d1`
-	.long	224
-func_48404547_Var_10:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x10, a0), d1`
-	.long	0
-func_48404547_Var_11:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x14, a0), d1`
-	.long	0xffffffff
-
-func_48404547_Table:	# 8 x u32, 0..4294967295; read by func_48404547 0x48404547: `mov (0x18, a0), a0`
-	tab_u32	0, 0, 0, 0, 210, 0, 4294967295, 0
-
-func_48401F32_Var_3:	# u32, a constant; read / written by func_48401F32 0x48401F32: `mov (a0), d1`; func_48401F32 0x48401F32: `mov (a1), d0` ...
-	.long	0
-func_48404547_Var_12:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (4, a0), d1`
-	.long	0
-func_48404547_Var_13:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (8, a0), d1`
-	.long	0
-func_48404547_Var_14:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0xc, a0), d1`
-	.long	211
-func_48404547_Var_15:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x10, a0), d1`
-	.long	0
-func_48404547_Var_16:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x14, a0), d1`
-	.long	0xffffffff
-func_48404547_Var_17:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x18, a0), a0`
-	.long	0
-func_48401F32_Var_4:	# u32, a constant; read / written by func_48401F32 0x48401F32: `mov (a0), d1`; func_48401F32 0x48401F32: `mov (a1), d0` ...
-	.long	0
-func_48404547_Var_18:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (4, a0), d1`
-	.long	0
-func_48404547_Var_19:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (8, a0), d1`
-	.long	0
-func_48404547_Var_20:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0xc, a0), d1`
-	.long	211
-func_48404547_Var_21:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x10, a0), d1`
-	.long	0
-func_48404547_Var_22:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x14, a0), d1`
-	.long	0
-func_48404547_Var_23:	# u32, a constant; read / written by func_48404547 0x48404547: `mov (0x18, a0), a0`
-	.long	0
+func_48401F32_Var:	# REC_func_48401F32_ArgA0 (28 bytes): the layout func_48401F32 0x48401F32 reads through its argument a0 (passed by func_4847079B 0x4847079B `call func_48401F32_entry, 0, 0xc`, +2 more calls); the layout func_48404547 0x48404547 reads through its argument a0 (passed by func_48401F32 0x48401F32 `call func_48404547_entry, 0, 0xc`)
+	REC_func_48401F32_ArgA0	f0=5
+func_48401F32_Var_2:	# REC_func_48401F32_ArgA0 (28 bytes): the layout func_48401F32 0x48401F32 reads through its argument a0 (passed by func_4847079B 0x4847079B `call func_48401F32_entry, 0, 0xc`, +2 more calls); the layout func_48404547 0x48404547 reads through its argument a0 (passed by func_48401F32 0x48401F32 `call func_48404547_entry, 0, 0xc`)
+	REC_func_48401F32_ArgA0	f12=224, f20=0xFFFFFFFF
+func_48401F32_ArgA0_2:	# REC_func_48401F32_ArgA0 (28 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_48401F32_ArgA0	f12=210, f20=0xFFFFFFFF
+func_48401F32_Var_3:	# REC_func_48401F32_ArgA0 (28 bytes): the layout func_48401F32 0x48401F32 reads through its argument a0 (passed by func_4847079B 0x4847079B `call func_48401F32_entry, 0, 0xc`, +2 more calls); the layout func_48404547 0x48404547 reads through its argument a0 (passed by func_48401F32 0x48401F32 `call func_48404547_entry, 0, 0xc`)
+	REC_func_48401F32_ArgA0	f12=211, f20=0xFFFFFFFF
+func_48401F32_Var_4:	# REC_func_48401F32_ArgA0 (28 bytes): the layout func_48401F32 0x48401F32 reads through its argument a0 (passed by func_4847079B 0x4847079B `call func_48401F32_entry, 0, 0xc`, +2 more calls); the layout func_48404547 0x48404547 reads through its argument a0 (passed by func_48401F32 0x48401F32 `call func_48404547_entry, 0, 0xc`)
+	REC_func_48401F32_ArgA0	f12=211
 
 Str_A_35:	.asciz "A:\\"
 Str_d_20:	.asciz "d"
@@ -26745,7 +26569,7 @@ FlashChipIdTable_p8_1:	# REC_FlashChipIdTable_p8 (280 bytes)
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program_sp7001.rom", 0x1CFEAC, 0x1CFED4
 
-FlashChipIdTable:	# 3 x REC_FlashChipIdTable (32 bytes each); read by func_4847F6D3 0x4847F6D3 `mov (8, a0), a0`; FlashSectorErase 0x4847F749 `mov (8, a0), a0`; func_4847F7A7 0x4847F7A7 `mov (8, a0), a0` (+13)
+FlashChipIdTable:	# 3 x REC_FlashChipIdTable (32 bytes each); read by func_4847F6D3 0x4847F6D3 `mov (8, a0), a0`; FlashSectorErase 0x4847F749 `mov (8, a0), a0`; func_4847F7A7 0x4847F7A7 `mov (8, a0), a0` (+14)
 	REC_FlashChipIdTable	f0=4, f2=8777, f4=35, x6="\x00\x00", p8=FlashSectorMap, x12=" MBM29LV160B    \x00\x00\x00\x00"
 	REC_FlashChipIdTable	f0=194, f2=8777, f4=35, x6="\x00\x00", p8=FlashSectorMap, x12=" MX29LV160B     \x00\x00\x00\x00"
 	REC_FlashChipIdTable	f0=31, f2=192, f4=40, x6="\x00\x00", p8=FlashChipIdTable_p8_1, x12=" AT49BV16X4     \x00\x00\x00\x00"
@@ -26821,17 +26645,8 @@ func_484808B0_Table_2:
 	.long	loc_484809E5
 	.long	loc_484809FC
 
-func_4C03D4F7_Table_9:	# 2 x u32, 0..1; read by func_4C03D4F7 0x4C03D4F7: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_4C03D4F7_Var_9:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (8, a2), a1`
-	.long	0x48482606
-
-func_4C03D4F7_Table_10:	# 2 x u16, 0..3; read by func_4C03D4F7 0x4C03D4F7: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_4C03D4F7_Var_10:	# u32, a constant; read / written by func_4C03D4F7 0x4C03D4F7: `mov (0x10, a2), d0`
-	.long	3072
+func_4C03D4F7_Table_9:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D46B reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D4F7 0x4C03D4F7 reads through its argument a0 (passed by cre_tsk 0x4C03D46B `call func_4C03D4F7_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_48482606, itskpri=3, x14="\x00\x00", stksz=3072
 
 func_4C03C022_Table:	# 2 x u32, 0..0; read by func_4C03C022 0x4C03C022: `mov (a3), d2`
 	tab_u32	0, 0
@@ -28660,13 +28475,25 @@ Str_04X_04X:	.asciz "%04X%04X  "
 Str_02X:	.asciz "%02X"
 	.align	4, 0xFF	# pad after Str_02X
 Str_empty_1200:	.asciz "-"
-	.align	4, 0xFF	# pad after Str_empty_1200
+
+ConvertStrings_Table_2:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_empty_1199:	.asciz " "
-	.align	4, 0xFF	# pad after Str_empty_1199
+
+ConvertStrings_Table_3:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_empty_1198:	.asciz " "
-	.align	4, 0xFF	# pad after Str_empty_1198
+
+ConvertStrings_Table_4:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_empty_1197:	.asciz "-"
-	.align	4, 0xFF	# pad after Str_empty_1197
+
+ConvertStrings_Table_5:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_Aqua:	.asciz "Aqua"
 Str_Yellow:	.asciz "Yellow"
 Str_Lime:	.asciz "Lime"
@@ -28695,8 +28522,10 @@ DbModeEditBoxProc_Table:
 	.long	Str_ON_137
 
 Str_02d_s_3:	.asciz "%02d:%s"
-data_485D6CBC:
-	.space	4, 0x00
+
+Draw2BpFile_ArgA0_0:	# REC_Draw2BpFile_ArgA0 (4 bytes): the layout Draw2BpFile 0x4842829F reads through its argument a0 (passed by DbBitmapLoadProc 0x484886C9 `call Draw2BpFile_entry, [a2,a3], 0x18`); the layout Draw2BpFile_Impl 0x48428305 reads through its argument a0 (passed by Draw2BpFile 0x4842829F `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`)
+	REC_Draw2BpFile_ArgA0	
+
 Str_rb_47:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_47
 Str_02d_s_2:	.asciz "%02d:%s"
@@ -29194,11 +29023,20 @@ AcNamingWindowProc_Table_2:
 
 Str_7f_3:	.asciz "~7f"
 Str_empty_1167:	.asciz " "
-	.align	4, 0xFF	# pad after Str_empty_1167
+
+ConvertStrings_Table_6:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_empty_1166:	.asciz " "
-	.align	4, 0xFF	# pad after Str_empty_1166
+
+ConvertStrings_Table_7:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_empty_1165:	.asciz " "
-	.align	4, 0xFF	# pad after Str_empty_1165
+
+ConvertStrings_Table_8:	# 2 x u8, 255..255; read by ConvertStrings 0x4842DFAA: `movbu (a2), d0`
+	tab_u8	255, 255
+
 Str_80_2:	.asciz "~80"
 Str_a_4:	.asciz "a"
 Str_b:	.asciz "b"
@@ -34358,14 +34196,29 @@ Str_TRACK_7_2:	.asciz "TRACK 7"
 Str_TRACK_8_2:	.asciz "TRACK 8"
 Str_TRACK_9_2:	.asciz "TRACK 9"
 Str_TRACK10:	.asciz "TRACK10"
-Str_TRACK11:	.asciz "TRACK11"
+
+names_500019A8_p0_0:	# REC_names_500019A8_p0 (4 bytes)
+	REC_names_500019A8_p0	f0=84, f1=82, f2=65, x3="C"
+
+Str_K11:	.asciz "K11"
 Str_TRACK12:	.asciz "TRACK12"
-Str_TRACK13:	.asciz "TRACK13"
+
+names_500019A8_p0_1:	# REC_names_500019A8_p0 (4 bytes)
+	REC_names_500019A8_p0	f0=84, f1=82, f2=65, x3="C"
+
+Str_K13:	.asciz "K13"
 Str_TRACK14:	.asciz "TRACK14"
-Str_TRACK15:	.asciz "TRACK15"
+
+names_500019A8_p0_2:	# REC_names_500019A8_p0 (4 bytes)
+	REC_names_500019A8_p0	f0=84, f1=82, f2=65, x3="C"
+
+Str_K15:	.asciz "K15"
 Str_TRACK16:	.asciz "TRACK16"
-# census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_sp7001.rom", 0x1EDBB9, 0x1EDBBE
+
+names_500019A8_p0_3:	# REC_names_500019A8_p0 (4 bytes)
+	REC_names_500019A8_p0	f0=84, f1=82, f2=32, x3="1"
+	.space	1, 0x00
+
 Str_TR_2:	.asciz "TR 2"
 Str_TR_3:	.asciz "TR 3"
 Str_TR_4:	.asciz "TR 4"
@@ -34611,10 +34464,10 @@ BitmapMonon_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the 
 	.incbin	"build/bitmaps/sp7001/BitmapMonon_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/sp7001/program/data/media/BitmapMonon_Pixels.png
 BitmapMonoff_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonoff answers MT_GetBitmapData with (src/sp7001/program/data/media/BitmapMonoff_Pixels.png)
 	.incbin	"build/bitmaps/sp7001/BitmapMonoff_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/sp7001/program/data/media/BitmapMonoff_Pixels.png
-data_485F03F8:
-	# 64 bytes the code takes the address of: AcMonImageProc 0x484918B6 `mov data_485F03F8, d1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x80, 0x8000, 0x8080, 0x800000, 0x800080, 0x808000, 0xC0C0C0	# +0
-	tab_u32	0x808080, 0xFF, 0xFF00, 0xFFFF, 0xFF0000, 0xFF00FF, 0xFFFF00, 0xFFFFFF	# +32
+
+DrawBitmapSPFast16_Impl_Table_2:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl 0x48424644: `mov (-0x80, a0), a2`
+	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
+	tab_u32	8421504, 255, 65280, 65535, 16711680, 16711935, 16776960, 16777215	# [8]
 
 Str_CcEv_12:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_12
@@ -37660,10 +37513,8 @@ TtNormal_Records:	# 5 x REC_TtNormal_Records (8 bytes each); read by TtNormal 0x
 Bitmap_AcHpScreenProc:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc 0x48493C1F draws it with DrawBitmapSP2 (src/sp7001/program/data/media/Bitmap_AcHpScreenProc.png)
 	.incbin	"build/bitmaps/sp7001/Bitmap_AcHpScreenProc.bin"	# census: generated -- tools/table_png.py (pk 1 24 24) from src/sp7001/program/data/media/Bitmap_AcHpScreenProc.png
 
-IsPointOnScreen_Var:	# s16, a constant; read / written by IsPointOnScreen 0x48427980: `movhu (a0), d0`
-	.word	2
-IsPointOnScreen_Var_2:	# s16, a constant; read / written by IsPointOnScreen 0x48427980: `movhu (a0), d0`
-	.word	2
+IsPointOnScreen_Var:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x484248DE reads through its argument a0 (passed by AcHpScreenProc 0x48493C1F `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x48424981 reads through its argument a0 (passed by DrawBitmapSP2 0x484248DE `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
+	REC_DrawBitmapSP2_ArgA0	f0=2, f2=2
 
 Str_C_22:	.asciz "C"
 Str_D_a0_5:	.asciz "D~a0"
@@ -38011,9 +37862,8 @@ AcHpPartsSetProc_Table:
 AcUserHpMenuProc_Table:	# 1 x u16, 49..49; read by AcUserHpMenuProc 0x4849680D: `movhu  (a1), d0`
 	tab_u16	49
 	.space	6, 0xFF
-data_485FA718:
-	# 16 bytes the code takes the address of: func_48496B17 0x48496B17 `mov data_485FA718, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xC0C0C0, 0x808080, 0x404040, 0x0	# +0
+DrawBitmapSPFast4_Impl_Table:	# 4 x u32, 0..12632256; read by DrawBitmapSPFast4_Impl 0x4842446C: `mov (d1, a0), a2`
+	tab_u32	12632256, 8421504, 4210752, 0
 
 Str_empty_1103:	.asciz "```"
 # census: opaque -- unknown-dump: 12 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -40062,3 +39912,138 @@ Str_iapfav:	.asciz "iapfav"
 Str_TT_FAVORITE:	.asciz "TT_FAVORITE"
 Str_TT_CTFAVORITE:	.asciz "TT_CTFAVORITE"
 	.align	4, 0xFF	# pad after Str_TT_CTFAVORITE
+
+AcFavoriteProc_Table:
+	.long	func_4849D4C3
+	.long	func_4849D4C3
+	.long	func_4849D564
+	.long	func_4849D697
+	.long	func_4849DA9E
+	.long	func_4849DCE8
+	.long	func_4849DE51
+	.long	func_4849E0CF
+	.long	func_4849E182
+	.long	func_4849E2F2
+	.long	func_4849D4C3
+	.long	func_4849D4C3
+	.long	func_4849D4C3
+	.long	func_4849D4C3
+	.long	func_4849D4C3
+	.long	func_4849D4C3
+
+Str_SOUND_MENU_2:	.asciz "SOUND MENU"
+Str_SOUND_PART_SETTING:	.asciz "SOUND PART SETTING"
+Str_MIXER_17:	.asciz "MIXER"
+Str_TECHNI_CHORD_3:	.asciz "TECHNI-CHORD"
+Str_MASTER_TUNING_4:	.asciz "MASTER TUNING"
+Str_KEY_SCALING_3:	.asciz "KEY SCALING"
+Str_SOUND_LOAD_OPTION_6:	.asciz "SOUND LOAD OPTION"
+Str_REVERB_EFFECT_MENU:	.asciz "REVERB & EFFECT MENU"
+Str_SOUND_DSP_13:	.asciz "SOUND DSP"
+Str_MULTI_DSP:	.asciz "MULTI DSP"
+Str_CHORUS_9:	.asciz "CHORUS"
+Str_REVERB_8:	.asciz "REVERB"
+Str_EQUALIZER_7:	.asciz "EQUALIZER"
+Str_MIC_REVERB_EFFECT_5:	.asciz "MIC REVERB & EFFECT"
+Str_ALLOCATION_3:	.asciz "ALLOCATION"
+Str_SOUND_EDIT_MENU_2:	.asciz "SOUND EDIT MENU"
+Str_CONTROL_MENU_2:	.asciz "CONTROL MENU"
+Str_INITIAL_6:	.asciz "INITIAL"
+Str_OVERALL_TOUCH_SENSITIVITY_3:	.asciz "OVERALL TOUCH SENSITIVITY"
+Str_FOOT_CONTROLLERS_3:	.asciz "FOOT CONTROLLERS"
+Str_MUSIC_STYLE_ARRANGER_MODE_3:	.asciz "MUSIC STYLE ARRANGER MODE"
+Str_PANEL_MEMORY_MODE_3:	.asciz "PANEL MEMORY MODE"
+Str_FADE_IN_OUT_SETTING_3:	.asciz "FADE IN/OUT SETTING"
+Str_MIDI_MENU_2:	.asciz "MIDI MENU"
+Str_MIDI_PART_SETTING:	.asciz "MIDI PART SETTING"
+Str_CONTROL_MESSAGES_3:	.asciz "CONTROL MESSAGES"
+Str_REALTIME_MESSAGES_3:	.asciz "REALTIME MESSAGES"
+Str_COMMON_SETTING_3:	.asciz "COMMON SETTING"
+Str_INPUT_OUTPUT_SETTING_3:	.asciz "INPUT/OUTPUT SETTING"
+Str_MIDI_PRESETS_3:	.asciz "MIDI PRESETS"
+Str_MODE_SETTING_4:	.asciz "MODE SETTING"
+Str_PROGRAM_CHANGE_MIDI_OUT_3:	.asciz "PROGRAM CHANGE MIDI OUT"
+Str_PANEL_MEMORY_OUTPUT_3:	.asciz "PANEL MEMORY OUTPUT"
+Str_COMPUTER_CONNECTION_3:	.asciz "COMPUTER CONNECTION"
+Str_CUSTOMIZE_MENU_2:	.asciz "CUSTOMIZE MENU"
+Str_HOME_PAGE_SETTING_4:	.asciz "HOME PAGE SETTING"
+Str_DISPLAY_TIME_OUT_4:	.asciz "DISPLAY TIME OUT"
+Str_WALLPAPER_SETTING_4:	.asciz "WALLPAPER SETTING"
+Str_CUSTOM_PANEL_MODE_4:	.asciz "CUSTOM PANEL MODE"
+Str_MIDI_SETTING_LOAD_OPTION_4:	.asciz "MIDI SETTING LOAD OPTION"
+Str_DATA_PROTECTION_4:	.asciz "DATA PROTECTION"
+Str_LANGUAGE_SETTING_4:	.asciz "LANGUAGE SETTING"
+Str_DISK_PREFERENCE_2:	.asciz "DISK PREFERENCE"
+Str_DISK_MENU_3:	.asciz "DISK MENU"
+Str_LOAD_23:	.asciz "LOAD"
+Str_SAVE_TECHNICS_FORMAT:	.asciz "SAVE TECHNICS FORMAT"
+Str_SAVE_SMF_FORMAT_0:	.asciz "SAVE SMF FORMAT 0"
+Str_DIRECT_PLAY_3:	.asciz "DIRECT PLAY"
+Str_SONG_MEDLEY_8:	.asciz "SONG MEDLEY"
+Str_DISK_TOOLS_3:	.asciz "DISK TOOLS"
+Str_CUSTOM_STYLE_LOAD_SAVE_4:	.asciz "CUSTOM STYLE LOAD/SAVE"
+Str_MUSIC_STYLIST_2:	.asciz "MUSIC STYLIST"
+Str_MUSICAL_CATEGORY_3:	.asciz "MUSICAL CATEGORY"
+Str_MUSICAL_ERA_3:	.asciz "MUSICAL ERA"
+Str_ALPHABETICAL_LIST_3:	.asciz "ALPHABETICAL LIST"
+Str_CUSTOM_STYLIST_3:	.asciz "CUSTOM STYLIST"
+Str_VOCALIST_WORKSTATION_2:	.asciz "VOCALIST WORKSTATION"
+Str_CHORD_FINDER_4:	.asciz "CHORD FINDER"
+Str_PADS_MENU_2:	.asciz "PADS MENU"
+Str_COMPILE_SET_2:	.asciz "COMPILE SET"
+Str_PHRASE_COPY_3:	.asciz "PHRASE COPY"
+Str_SEQ_TO_PAD_COPY_3:	.asciz "SEQ TO PAD COPY"
+Str_COMPOSER_MENU_2:	.asciz "COMPOSER MENU"
+Str_EASY_COMPOSER_3:	.asciz "EASY COMPOSER"
+Str_PATTERN_COPY_3:	.asciz "PATTERN COPY"
+Str_CUSTOM_STYLE_COPY_4:	.asciz "CUSTOM STYLE COPY"
+Str_SEQ_TO_COMPOSER_COPY_3:	.asciz "SEQ TO COMPOSER COPY"
+Str_LOAD_SINGLE_COMPOSER_3:	.asciz "LOAD SINGLE COMPOSER"
+Str_SEQUENCER_MENU:	.asciz "SEQUENCER MENU"
+Str_RECORD_EDIT_3:	.asciz "RECORD & EDIT"
+Str_COPY_PASTE_3:	.asciz "COPY & PASTE"
+Str_RANGE_EDIT_3:	.asciz "RANGE EDIT"
+Str_PANEL_WRITE_3:	.asciz "PANEL WRITE"
+Str_TRACK_MIXER_3:	.asciz "TRACK MIXER"
+Str_REALTIME_RECORD_3:	.asciz "REALTIME RECORD"
+Str_PUNCH_RECORD_3:	.asciz "PUNCH RECORD"
+Str_STEP_RECORD_6:	.asciz "STEP RECORD"
+Str_TRACK_ASSIGN_4:	.asciz "TRACK ASSIGN"
+Str_QUANTIZE_8:	.asciz "QUANTIZE"
+Str_SONG_SELECT_10:	.asciz "SONG SELECT"
+Str_SONG_CLEAR_4:	.asciz "SONG CLEAR"
+Str_TRACK_CLEAR_4:	.asciz "TRACK CLEAR"
+Str_NOTE_EDIT_4:	.asciz "NOTE EDIT"
+Str_DRUM_EDIT_4:	.asciz "DRUM EDIT"
+Str_AFTER_TOUCH_SETTING_3:	.asciz "AFTER TOUCH SETTING"
+Str_TRACK_COPY_3:	.asciz "TRACK COPY"
+Str_SONG_COPY_3:	.asciz "SONG COPY"
+Str_TRACK_MERGE_3:	.asciz "TRACK MERGE"
+Str_MEASURE_COPY_5:	.asciz "MEASURE COPY"
+Str_MEASURE_ERASE_5:	.asciz "MEASURE ERASE"
+Str_MEASURE_DELETE_5:	.asciz "MEASURE DELETE"
+Str_MEASURE_INSERT_5:	.asciz "MEASURE INSERT"
+Str_APC_TO_SMF_CONVERT_5:	.asciz "APC TO SMF CONVERT"
+Str_NOTE_CHANGE_3:	.asciz "NOTE CHANGE"
+Str_VELOCITY_CHANGE_3:	.asciz "VELOCITY CHANGE"
+Str_TRANSPOSE_6:	.asciz "TRANSPOSE"
+Str_ADVANCE_DELAY_3:	.asciz "ADVANCE/DELAY"
+Str_SEPARATE_OUT_SETTING_3:	.asciz "SEPARATE OUT SETTING"
+Str_MONITOR_SETTING_3:	.asciz "MONITOR SETTING"
+Str_APC_REVERB_SETTING_3:	.asciz "APC REVERB SETTING"
+Str_SD_MENU_3:	.asciz "SD MENU"
+Str_SD_LOAD_2:	.asciz "SD LOAD"
+Str_SD_SAVE_TECHNICS_FORMAT:	.asciz "SD SAVE TECHNICS FORMAT"
+Str_SD_SAVE_SMF_FORMAT_0:	.asciz "SD SAVE SMF FORMAT 0"
+Str_SD_SONG_MEDLEY_3:	.asciz "SD SONG MEDLEY"
+Str_SD_AUDIO_PLAY_4:	.asciz "SD-AUDIO PLAY"
+Str_SD_SOUND_PLAY_5:	.asciz "SD-SOUND PLAY"
+Str_SD_TOOLS_3:	.asciz "SD TOOLS"
+Str_SD_PREFERENCES_3:	.asciz "SD PREFERENCES"
+Str_SD_FAVORITE_SONGS:	.asciz "SD FAVORITE SONGS"
+Str_SD_CUSTOM_STYLE_LOAD_SAVE_2:	.asciz "SD CUSTOM STYLE LOAD/SAVE"
+Str_VIDEO_OUT_SETTNG:	.asciz "VIDEO OUT SETTNG"
+Str_ORGAN_STYLIST_3:	.asciz "ORGAN STYLIST"
+data_48603C4A:
+# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn7000_program_sp7001.rom", 0x203C4A, 0x203C4C

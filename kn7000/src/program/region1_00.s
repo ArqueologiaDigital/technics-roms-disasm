@@ -40757,7 +40757,7 @@ loc_48418717:
     call    DrawBitmapSPFast16_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48418753
 loc_4841872F:
-    mov     data_4859E484, d0
+    mov     DrawBitmapSPFast16_Impl_Table, d0
     mov     d0, (0x18, sp)
     movhu   (0x24, sp), d0
     mov     (0x20, sp), a0

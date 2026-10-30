@@ -5145,13 +5145,13 @@ Str_user_bank_0:	.asciz "  user bank 0   "
 .incbin_range "baserom/kn7000_program_b935.rom", 0x3298A5, 0x3298C4
 Str_clear_2:	.asciz "     clear      "
 	.align	4, 0x00	# pad after Str_clear_2
-
-func_48437F18_Table_2:	# 76 x u8, 0..127; read by func_48437F18 0x48437F18: `movbu (a0), d0`
-	tab_u8	17, 17, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
-	tab_u8	0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0, 64, 2, 28, 64	# [16]
-	tab_u8	108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0	# [32]
-	tab_u8	32, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0	# [48]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+func_48437F18_Table_2:
+	# 76 bytes the code takes the address of: func_48437F18 0x48437F18 `add func_48437F18_Table_2, d3` (+0, as a base); func_48437F18 0x48437F18 `call func_48432ACB_entry, 0, 0xc` (+0, arg sp32); func_48437F18 0x48437F18 `call func_484623C7_entry, 0, 8` (+0, arg sp32) (+1 more); byte rows (u8); the callee walk: func_48432ACB (sp32) reads nothing through it the walk sees; func_484623C7 (sp32) reads nothing through it the walk sees; func_484623D4 (sp32) reads nothing through it the walk sees
+	tab_u8	17, 17, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
+	tab_u8	0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0, 64, 2, 28, 64	# +16
+	tab_u8	108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0	# +32
+	tab_u8	32, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0	# +48
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +64
 
 # ---- the program's own "Technics Rhythms" resource (IC18's format: notes/ic18-rhythm-rom.md;
 #      the macros are src/ic18/rhythm.s's, in rhythm_macros.inc).  One style, the fallback the
@@ -11327,21 +11327,14 @@ TechnicsRhythmsResource_Style_8Beat1_Ending2B:	# 6 bars of 4 beats
 Str_Technics_Pads:	.asciz "Technics Pads   "
 	.space	7, 0x00
 
+LoadU24BE_ArgA0_0:	# REC_LoadU24BE_ArgA0 (3 bytes): the layout LoadU24BE 0x48440321 reads through its argument a0 (passed by StyleBuiltinNameTableInit 0x484332B7 `call LoadU24BE, 0, 0`, +3 more calls)
+	REC_LoadU24BE_ArgA0	f2=33
+LoadU24BE_ArgA0_1:	# REC_LoadU24BE_ArgA0 (3 bytes): the layout LoadU24BE 0x48440321 reads through its argument a0 (passed by StyleBuiltinNameTableInit 0x484332B7 `call LoadU24BE, 0, 0`, +3 more calls)
+	REC_LoadU24BE_ArgA0	f2=43
+
 LoadU24BE_Var:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d1`
 	.byte	0
 LoadU24BE_Var_2:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d0`
-	.byte	0
-LoadU24BE_Var_3:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d0`
-	.byte	33
-LoadU24BE_Var_4:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d1`
-	.byte	0
-LoadU24BE_Var_5:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d0`
-	.byte	0
-LoadU24BE_Var_6:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d0`
-	.byte	43
-LoadU24BE_Var_7:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d1`
-	.byte	0
-LoadU24BE_Var_8:	# u8, a constant; read / written by LoadU24BE 0x48440321: `movbu (a0), d0`
 	.byte	8
 
 LoadU24BE_Table:	# 2966 x u8, 0..255; read by LoadU24BE 0x48440321: `movbu (a0), d0`
@@ -14857,17 +14850,8 @@ func_4848382E_Table:
 	.long	func_484835D6
 	.long	func_484835D6
 
-TgGlobalRegsA0LoadA_Var_5:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (a2), d0`
-	.long	32768
-TgGlobalRegsA0LoadA_Var_6:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (4, a2), d0`
-	.long	512
-TgGlobalRegsA0LoadA_Var_7:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (8, a2), d0`
-	.long	512
-TgGlobalRegsA0LoadA_Var_8:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (0xc, a2), d0`
-	.long	512
-
-TgGlobalRegsA0LoadA_Table_2:	# 2 x u16, 0..32; read by TgGlobalRegsA0LoadA 0x4C037F55: `movhu (0x10, a2), d0`
-	tab_u16	32, 0
+TgGlobalRegsA0LoadA_Var_5:	# REC_TgGlobalRegsA0LoadA_ArgA0 (20 bytes): the layout TgGlobalRegsA0LoadA 0x4C037F55 reads through its argument a0 (passed by func_4848382E 0x4848382E `call TgGlobalRegsA0LoadA_entry, [a2], 0x18`, +2 more calls)
+	REC_TgGlobalRegsA0LoadA_ArgA0	f0=32768, f4=512, f8=512, f12=512, f16=32, x18="\x00\x00"
 
 func_48485B10_Block:	# 160 bytes, copied whole by func_48485B10 0x48485B10: memcpy(.., 160)
 	tab_u8	0, 1, 32, 127, 21, 2, 50, 80, 60, 40, 0, 108, 64, 28, 64, 64	# [0]
@@ -21422,7 +21406,7 @@ APSTCNV_Methods:
 APSTCNV_Functions:
 	.space	4, 0x00
 data_4874AA94:
-	# 4 bytes the code takes the address of: InitializeBlock22 0x4849EE5E `mov data_4874AA94, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeBlock22 0x4849EE5E `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeBlock22 0x4849EE5E `mov data_4874AA94, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_48606684	# +0
 
 # 7 ApFunction procedures; a function id is (0x162 << 16) | its index (the names are the parallel table at slot 0x16a)
@@ -27473,9 +27457,11 @@ CMPMSPCMN_ResNames:
 
 func_484FFF32_Table_p4_0:	# REC_func_484FFF32_Table_p4 (12 bytes)
 	REC_func_484FFF32_Table_p4	f0=16, x1="\x00\x00\x00", p4=Str_Basic, x8="\x11\x00\x00\x00"
-# census: opaque -- unknown-dump: 160 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn7000_program_b935.rom", 0x350EE4, 0x350F84
 
+func_484FFF32_Table_p4_0_Tail:	# 1 pointers after func_484FFF32_Table_p4_0: the array its kind's computed-offset read indexes (AcChdModTypDrawBoxProc 0x484FF56C `call SendEvent_entry, [d2,d3], 0x24`; AcChdModTypDrawBoxProc 0x484FF56C `mov (4, a1), d0` (+21)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
+	.long	Str_In_7th_G_8dB_a0
+# census: opaque -- unknown-dump: 156 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn7000_program_b935.rom", 0x350EE8, 0x350F84
 ptrs_48750F84:	# 3 pointers, typed by value (every word 0 or an address of this region); reader not traced
 	.long	Str_Keep_near_C
 	.long	0

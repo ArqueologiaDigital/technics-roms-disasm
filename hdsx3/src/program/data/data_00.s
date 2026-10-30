@@ -55,7 +55,7 @@ Str_Total_Faults_li:	.asciz "Total Faults : %li"
 	.align	4, 0xFF	# pad after Str_Total_Faults_li
 Str_Read_FatCluster_bad:	.asciz "Read FatCluster bad"
 data_9783E130:
-	# a string, 4 bytes with its pad, read by func_978055BD_entry_L8a 0x9780564C `call func_978027D8_entry, [d2], 0x4c` (+0, arg a0); func_978055BD_entry_L8a 0x9780564C `mov data_9783E130, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_978027D8_entry_L18 0x978027F5 `call func_97802175_entry, 0, 0x18` (+0, arg sp92); func_978027D8_entry_L18 0x978027F5 `call memcpy_entry, [a2,a3], 8` (+0, arg sp92); func_978027D8_entry_L18 0x978027F5 `call strcpy_entry, [a2], 4` (+0, arg a1) (+3 more); handed to strcpy
 	.asciz	""
 	.align	4, 0xFF
 Str_Bad_MLFinishSave:	.asciz "Bad MLFinishSave"
@@ -75,7 +75,7 @@ Str_StartAdress_lu_2:	.asciz "StartAdress : %lu"
 	.align	4, 0xFF	# pad after Str_StartAdress_lu_2
 Str_EndAdress_lu_2:	.asciz "EndAdress : %lu"
 data_9783E1FC:
-	# a string, 4 bytes with its pad, read by func_97805A74_entry_L232 0x97805CAB `call func_978027D8_entry, [d2], 0x4c` (+0, arg a0); func_97805A74_entry_L232 0x97805CAB `mov data_9783E1FC, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	# a string, 4 bytes with its pad, read by func_978027D8_entry_L18 0x978027F5 `call func_97802175_entry, 0, 0x18` (+0, arg sp92); func_978027D8_entry_L18 0x978027F5 `call memcpy_entry, [a2,a3], 8` (+0, arg sp92); func_978027D8_entry_L18 0x978027F5 `call strcpy_entry, [a2], 4` (+0, arg a1) (+3 more); handed to strcpy
 	.asciz	""
 	.align	4, 0xFF
 Str_Fault_3_2:	.asciz "Fault -3"
@@ -6190,12 +6190,17 @@ ptrs_978A0140:
 
 Str_ok_F:	.asciz "ok(F)"
 Str_failed_F:	.asciz "failed(F)"
-# census: opaque -- unknown-dump: 14 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0158, 0x0A0166
-Str_failed_S:	.asciz "failed(S)"
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A0170, 0x0A0178
 
+ptrs_978A0158:
+	.long	Str_ok_F
+	.long	Str_failed_F
+
+Str_ok_S:	.asciz "ok(S)"
+Str_failed_S:	.asciz "failed(S)"
+
+ptrs_978A0170:
+	.long	Str_ok_S
+	.long	Str_failed_S
 KssTimerShowProc_L68_Table:
 	.long	ptrs_9789F1D8
 	.long	ptrs_9789F210
@@ -6209,8 +6214,8 @@ KssTimerShowProc_L259_Table:
 KssTimerShowProc_L310_Table:
 	.long	ptrs_978A012C
 	.long	ptrs_978A0140
-# census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A01A0, 0x0A01A8
+	.long	ptrs_978A0158
+	.long	ptrs_978A0170
 
 Str_My_HardDisk:	.asciz "My HardDisk"
 Str_Partition_1:	.asciz "Partition 1"
@@ -6269,287 +6274,86 @@ KssInitialWaitProc_L31_Table:
 	.long	ptrs_978A0378
 	.long	ptrs_978A03B4
 
-func_97827B50_Var:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	496
-func_97827B50_Var_2:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_3:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	514
-func_97827B50_Var_4:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_5:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	536
-func_97827B50_Var_6:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_7:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	554
-func_97827B50_Var_8:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_9:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	576
-func_97827B50_Var_10:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_11:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	594
-func_97827B50_Var_12:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_13:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	602
-func_97827B50_Var_14:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_15:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	634
-func_97827B50_Var_16:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_17:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	494
-func_97827B50_Var_18:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	192
-func_97827B50_Var_19:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	630
-func_97827B50_Var_20:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	206
-func_978279FE_Var:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	486
-
-func_978279FE_Table:	# 2 x u16, 214..514; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 514
-
-func_978279FE_Var_2:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	235
-func_978279FE_Var_3:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	526
-
-func_978279FE_Table_2:	# 2 x u16, 214..554; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 554
-
-func_978279FE_Var_4:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	235
-func_978279FE_Var_5:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	566
-
-func_978279FE_Table_3:	# 2 x u16, 214..594; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 594
-
-func_978279FE_Var_6:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	235
-func_978279FE_Var_7:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	480
-
-func_978279FE_Table_4:	# 2 x u16, 186..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	186, 630
-func_978279FE_Table_5:	# 5 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	tab_u16	238, 570, 123, 630, 145
-
-func_97827B50_Var_21:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	20
-func_97827B50_Var_22:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	128
-func_97827B50_Var_23:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	70
-func_97827B50_Var_24:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	160
-func_97827B50_Var_25:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	580
-func_97827B50_Var_26:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	128
-func_97827B50_Var_27:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	625
-func_97827B50_Var_28:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	160
-func_978279FE_Var_8:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	5
-
-func_978279FE_Table_6:	# 2 x u16, 75..123; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	123, 75
-
-func_978279FE_Var_9:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	145
-func_978279FE_Var_10:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	575
-
-func_978279FE_Table_7:	# 2 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	123, 630
-
-func_978279FE_Var_11:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	145
-func_97827B50_Var_29:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	214
-func_97827B50_Var_30:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	191
-func_97827B50_Var_31:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	229
-func_97827B50_Var_32:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	210
-func_97827B50_Var_33:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	254
-func_97827B50_Var_34:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	191
-func_97827B50_Var_35:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	269
-func_97827B50_Var_36:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	210
-func_97827B50_Var_37:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	294
-func_97827B50_Var_38:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	191
-func_97827B50_Var_39:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	309
-func_97827B50_Var_40:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	210
-func_97827B50_Var_41:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	334
-func_97827B50_Var_42:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	191
-func_97827B50_Var_43:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	349
-func_97827B50_Var_44:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	210
-func_97827B50_Var_45:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	374
-func_97827B50_Var_46:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	191
-func_97827B50_Var_47:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	389
-func_97827B50_Var_48:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	210
-func_97827B50_Var_49:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	214
-func_97827B50_Var_50:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_51:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	229
-func_97827B50_Var_52:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_53:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	254
-func_97827B50_Var_54:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_55:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	269
-func_97827B50_Var_56:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_57:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	294
-func_97827B50_Var_58:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_59:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	309
-func_97827B50_Var_60:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_61:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	334
-func_97827B50_Var_62:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_63:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	349
-func_97827B50_Var_64:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
-func_97827B50_Var_65:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	374
-func_97827B50_Var_66:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	220
-func_97827B50_Var_67:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	389
-func_97827B50_Var_68:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	235
+func_97827B50_Var:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=496, f2=220, f4=514, f6=235
+func_97827B50_Var_5:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=536, f2=220, f4=554, f6=235
+func_97827B50_Var_9:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=576, f2=220, f4=594, f6=235
+func_97827B50_Var_13:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=602, f2=220, f4=634, f6=235
+func_97827B50_Var_17:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=494, f2=192, f4=630, f6=206
+func_978279FE_Var:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=486, f2=214, f4=514, f6=235
+func_978279FE_Var_3:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=526, f2=214, f4=554, f6=235
+func_978279FE_Var_5:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=566, f2=214, f4=594, f6=235
+func_978279FE_Var_7:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=480, f2=186, f4=630, f6=238
+func_97827B50_ArgA1_9:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=570, f2=123, f4=630, f6=145
+func_97827B50_Var_21:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=20, f2=128, f4=70, f6=160
+func_97827B50_Var_25:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=580, f2=128, f4=625, f6=160
+func_978279FE_Var_8:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=5, f2=123, f4=75, f6=145
+func_978279FE_Var_10:	# REC_func_97827B50_ArgA1 (8 bytes) [INFERENCE: between two records of the kind, a whole number of records apart; no call the walk sees passes it]
+	REC_func_97827B50_ArgA1	f0=575, f2=123, f4=630, f6=145
+func_97827B50_Var_29:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=214, f2=191, f4=229, f6=210
+func_97827B50_Var_33:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=254, f2=191, f4=269, f6=210
+func_97827B50_Var_37:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=294, f2=191, f4=309, f6=210
+func_97827B50_Var_41:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=334, f2=191, f4=349, f6=210
+func_97827B50_Var_45:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=374, f2=191, f4=389, f6=210
+func_97827B50_Var_49:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=214, f2=220, f4=229, f6=235
+func_97827B50_Var_53:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=254, f2=220, f4=269, f6=235
+func_97827B50_Var_57:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=294, f2=220, f4=309, f6=235
+func_97827B50_Var_61:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=334, f2=220, f4=349, f6=235
+func_97827B50_Var_65:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=374, f2=220, f4=389, f6=235
 
 Str_P_3:	.asciz "P"
 
-func_97827B50_Var_69:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_2:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	220
-func_97827B50_Var_70:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_3:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	200
-func_97827B50_Var_71:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_4:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	235
-func_978279FE_Var_12:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	204
 
-func_978279FE_Table_8:	# 2 x u16, 186..236; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	186, 236
-
-func_978279FE_Var_13:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	209
-func_978279FE_Var_14:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	244
-
-func_978279FE_Table_9:	# 2 x u16, 186..276; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	186, 276
-
-func_978279FE_Var_15:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	209
-func_978279FE_Var_16:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	284
-
-func_978279FE_Table_10:	# 2 x u16, 186..316; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	186, 316
-
-func_978279FE_Var_17:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	209
-func_978279FE_Var_18:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	324
-
-func_978279FE_Table_11:	# 2 x u16, 186..356; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	186, 356
-
-func_978279FE_Var_19:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	209
-func_978279FE_Var_20:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	364
-
-func_978279FE_Table_12:	# 2 x u16, 186..396; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	186, 396
-
-func_978279FE_Var_21:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	209
-func_978279FE_Var_22:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	204
-
-func_978279FE_Table_13:	# 2 x u16, 214..236; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 236
-
-func_978279FE_Var_23:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	237
-func_978279FE_Var_24:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	244
-
-func_978279FE_Table_14:	# 2 x u16, 214..276; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 276
-
-func_978279FE_Var_25:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	237
-func_978279FE_Var_26:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	284
-
-func_978279FE_Table_15:	# 2 x u16, 214..316; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 316
-
-func_978279FE_Var_27:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	237
-func_978279FE_Var_28:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	324
-
-func_978279FE_Table_16:	# 2 x u16, 214..356; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 356
-
-func_978279FE_Var_29:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	237
-func_978279FE_Var_30:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	364
-
-func_978279FE_Table_17:	# 2 x u16, 214..396; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 396
-
-func_978279FE_Var_31:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	237
-func_978279FE_Var_32:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	4
-
-func_978279FE_Table_18:	# 2 x u16, 196..214; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	214, 196
-
-func_978279FE_Var_33:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	237
+func_978279FE_Var_12:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=204, f2=186, f4=236, f6=209
+func_978279FE_Var_14:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=244, f2=186, f4=276, f6=209
+func_978279FE_Var_16:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=284, f2=186, f4=316, f6=209
+func_978279FE_Var_18:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=324, f2=186, f4=356, f6=209
+func_978279FE_Var_20:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=364, f2=186, f4=396, f6=209
+func_978279FE_Var_22:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=204, f2=214, f4=236, f6=237
+func_978279FE_Var_24:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=244, f2=214, f4=276, f6=237
+func_978279FE_Var_26:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=284, f2=214, f4=316, f6=237
+func_978279FE_Var_28:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=324, f2=214, f4=356, f6=237
+func_978279FE_Var_30:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=364, f2=214, f4=396, f6=237
+func_978279FE_Var_32:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=4, f2=214, f4=196, f6=237
 
 Str_1_12:	.asciz "1"
 	.align	4, 0xFF	# pad after Str_1_12
@@ -6654,54 +6458,18 @@ Str_empty_482:	.asciz "--------------"
 Str_0_ii:	.asciz "%%0%ii"
 	.align	4, 0xFF	# pad after Str_0_ii
 
-func_97827B50_Var_72:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	336
-func_97827B50_Var_73:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	217
-func_97827B50_Var_74:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	354
-func_97827B50_Var_75:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	232
-func_97827B50_Var_76:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	376
-func_97827B50_Var_77:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	217
-func_97827B50_Var_78:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	394
-func_97827B50_Var_79:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	232
-func_97827B50_Var_80:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	416
-func_97827B50_Var_81:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	217
-func_97827B50_Var_82:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	434
-func_97827B50_Var_83:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	232
-func_978279FE_Var_34:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	321
-
-func_978279FE_Table_19:	# 2 x u16, 212..359; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	212, 359
-
-func_978279FE_Var_35:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	234
-func_978279FE_Var_36:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	361
-
-func_978279FE_Table_20:	# 2 x u16, 212..399; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	212, 399
-
-func_978279FE_Var_37:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	234
-func_978279FE_Var_38:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	401
-
-func_978279FE_Table_21:	# 2 x u16, 212..439; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	212, 439
-
-func_978279FE_Var_39:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	234
+func_97827B50_Var_72:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=336, f2=217, f4=354, f6=232
+func_97827B50_Var_76:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=376, f2=217, f4=394, f6=232
+func_97827B50_Var_80:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=416, f2=217, f4=434, f6=232
+func_978279FE_Var_34:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=321, f2=212, f4=359, f6=234
+func_978279FE_Var_36:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=361, f2=212, f4=399, f6=234
+func_978279FE_Var_38:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=401, f2=212, f4=439, f6=234
 
 Str_1_4:	.asciz "1"
 	.align	4, 0xFF	# pad after Str_1_4
@@ -8275,16 +8043,16 @@ KssCOMM_DISPProc_L345_Table:
 	.long	ptrs_978A2AD0
 	.long	ptrs_978A2BAC
 data_978A2BFC:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2BFC, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2BFC, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a0): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x500014, 0x6E0140	# +0
 data_978A2C04:
-	# 4 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C04, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C04, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a1): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x500014	# +0
 data_978A2C08:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C08, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C08, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a0): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x50017C, 0x6E0208	# +0
 data_978A2C10:
-	# 4 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C10, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C10, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a1): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x50017C	# +0
 
 Str_empty_444:	.asciz "("
@@ -8294,40 +8062,40 @@ Str_empty_443:	.asciz "("
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C1E, 0x0A2C20
 data_978A2C20:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C20, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C20, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a0): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x5000C8, 0x6E015E	# +0
 data_978A2C28:
-	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C28, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C28, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a1): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x5000C8	# +0
 data_978A2C2C:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C2C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C2C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a1) (a0): (a1) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x4A00B4, 0x60015E	# +0
 data_978A2C34:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C34, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C34, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a0): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x500212, 0x6E0276	# +0
 data_978A2C3C:
-	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C3C, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C3C, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a1): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x500212	# +0
 data_978A2C40:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C40, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C40, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a1) (a0): (a1) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x4A0208, 0x600276	# +0
 data_978A2C48:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C48, a0` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a2)` (+0, arg a0) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C48, a0` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a2)` (+0, arg a0) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a0): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0xA000C8, 0xB40276	# +0
 data_978A2C50:
-	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C50, a1` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a2)` (+0, arg a1) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C50, a1` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a2)` (+0, arg a1) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a1): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0xA000C8	# +0
 data_978A2C54:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C54, a0` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a1)` (+0, arg a0) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C54, a0` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a1)` (+0, arg a0) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a1) (a0): (a1) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x9C00BE, 0xAA0258	# +0
 data_978A2C5C:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C5C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C5C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a0): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0xBE0190, 0xD20276	# +0
 data_978A2C64:
-	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C64, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C64, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a2) (a1): (a2) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0xBE0190	# +0
 data_978A2C68:
-	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C68, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C68, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a1) (a0): (a1) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0xBA0186, 0xC80276	# +0
 Str_USPP:	.asciz "USPP"
 	.align	4, 0xFF	# pad after Str_USPP
@@ -8998,243 +8766,83 @@ KssAudioOutputProc_Table_2:
 	.long	Str_1_2_DRUMS_BASS_STEREO_3_4_ALL_ACC_STEREO
 	.long	Str_MONO_TEST
 
-func_97827B50_Var_84:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	23
-func_97827B50_Var_85:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	82
-func_97827B50_Var_86:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	260
-func_97827B50_Var_87:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	117
+func_97827B50_Var_84:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=23, f2=82, f4=260, f6=117
 
 Str_F_3:	.asciz "F"
 
-func_97827B50_Var_88:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_6:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	110
-func_97827B50_Var_89:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_7:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	320
-func_97827B50_Var_90:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_8:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	135
-func_97827B50_Var_91:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	390
-func_97827B50_Var_92:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	110
-func_97827B50_Var_93:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_94:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	135
-func_97827B50_Var_95:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	23
-func_97827B50_Var_96:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	134
-func_97827B50_Var_97:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	320
-func_97827B50_Var_98:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	159
-func_97827B50_Var_99:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	335
-func_97827B50_Var_100:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	134
-func_97827B50_Var_101:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_102:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	159
-func_97827B50_Var_103:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	23
-func_97827B50_Var_104:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	168
-func_97827B50_Var_105:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	320
-func_97827B50_Var_106:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	193
-func_97827B50_Var_107:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	335
-func_97827B50_Var_108:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	168
-func_97827B50_Var_109:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_110:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	193
-func_97827B50_Var_111:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	23
-func_97827B50_Var_112:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	196
-func_97827B50_Var_113:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	160
-func_97827B50_Var_114:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	221
-func_97827B50_Var_115:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	170
-func_97827B50_Var_116:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	196
-func_97827B50_Var_117:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	320
-func_97827B50_Var_118:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	221
-func_97827B50_Var_119:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	335
-func_97827B50_Var_120:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	196
-func_97827B50_Var_121:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	480
-func_97827B50_Var_122:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	221
-func_97827B50_Var_123:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	485
-func_97827B50_Var_124:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	196
-func_97827B50_Var_125:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_126:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	221
-func_97827B50_Var_127:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	23
-func_97827B50_Var_128:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	211
-func_97827B50_Var_129:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	160
-func_97827B50_Var_130:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_131:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	170
-func_97827B50_Var_132:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	211
-func_97827B50_Var_133:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	320
-func_97827B50_Var_134:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_135:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	335
-func_97827B50_Var_136:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	211
-func_97827B50_Var_137:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	480
-func_97827B50_Var_138:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_139:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	485
-func_97827B50_Var_140:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	211
-func_97827B50_Var_141:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_142:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
+
+func_97827B50_Var_91:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=390, f2=110, f4=640, f6=135
+func_97827B50_Var_95:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=23, f2=134, f4=320, f6=159
+func_97827B50_Var_99:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=335, f2=134, f4=640, f6=159
+func_97827B50_Var_103:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=23, f2=168, f4=320, f6=193
+func_97827B50_Var_107:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=335, f2=168, f4=640, f6=193
+func_97827B50_Var_111:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=23, f2=196, f4=160, f6=221
+func_97827B50_Var_115:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=170, f2=196, f4=320, f6=221
+func_97827B50_Var_119:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=335, f2=196, f4=480, f6=221
+func_97827B50_Var_123:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=485, f2=196, f4=640, f6=221
+func_97827B50_Var_127:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=23, f2=211, f4=160, f6=236
+func_97827B50_Var_131:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=170, f2=211, f4=320, f6=236
+func_97827B50_Var_135:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=335, f2=211, f4=480, f6=236
+func_97827B50_Var_139:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=485, f2=211, f4=640, f6=236
 data_978A40C8:
-	# 8 bytes the code takes the address of: KssAudioOutputProc_L460 0x97825B7B `calls (a1)` (+0, arg a0); KssAudioOutputProc_L460 0x97825B7B `mov data_978A40C8, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssAudioOutputProc_L460 0x97825B7B `calls (a1)` (+0, arg a0); KssAudioOutputProc_L460 0x97825B7B `mov data_978A40C8, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a1) (a0): (a1) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x350106, 0x44021A	# +0
-func_97827C18_Var:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	262
-func_97827C18_Var_2:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	55
-func_97827C18_Var_3:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	400
-func_97827C18_Var_4:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	62
-func_97827C18_Var_5:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	400
-func_97827C18_Var_6:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	55
-func_97827C18_Var_7:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	538
-func_97827C18_Var_8:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	62
-func_97827C18_Var_9:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	260
-func_97827C18_Var_10:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	79
-func_97827C18_Var_11:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	626
-func_97827C18_Var_12:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	99
-func_97827C18_Var_13:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	273
-func_97827C18_Var_14:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	130
-func_97827C18_Var_15:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	308
-func_97827C18_Var_16:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	150
-func_97827C18_Var_17:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	587
-func_97827C18_Var_18:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	130
-func_97827C18_Var_19:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	622
-func_97827C18_Var_20:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	150
-func_97827C18_Var_21:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	273
-func_97827C18_Var_22:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	164
-func_97827C18_Var_23:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	308
-func_97827C18_Var_24:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	184
-func_97827C18_Var_25:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	587
-func_97827C18_Var_26:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	164
-func_97827C18_Var_27:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	622
-func_97827C18_Var_28:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	184
+func_97827C18_Var:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=262, f2=55, f4=400, f6=62
+func_97827C18_Var_5:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=400, f2=55, f4=538, f6=62
+func_97827C18_Var_9:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=260, f2=79, f4=626, f6=99
+func_97827C18_Var_13:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=273, f2=130, f4=308, f6=150
+func_97827C18_Var_17:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=587, f2=130, f4=622, f6=150
+func_97827C18_Var_21:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=273, f2=164, f4=308, f6=184
+func_97827C18_Var_25:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=587, f2=164, f4=622, f6=184
 
 Str_t_2:	.asciz "t"
 
-func_97827C18_Var_29:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
+func_97827C18_Var_2:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
 	.word	195
-func_97827C18_Var_30:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
+func_97827C18_Var_3:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
 	.word	157
-func_97827C18_Var_31:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
+func_97827C18_Var_4:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
 	.word	225
-func_97827C18_Var_32:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	267
-func_97827C18_Var_33:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	195
-func_97827C18_Var_34:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	308
-func_97827C18_Var_35:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	225
-func_97827C18_Var_36:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	432
-func_97827C18_Var_37:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	195
-func_97827C18_Var_38:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	473
-func_97827C18_Var_39:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	225
-func_97827C18_Var_40:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
-	.word	581
-func_97827C18_Var_41:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
-	.word	195
-func_97827C18_Var_42:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (4, a0), d1`
-	.word	622
-func_97827C18_Var_43:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (6, a0), d1`
-	.word	225
-func_978279FE_Var_40:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	12
 
-func_978279FE_Table_22:	# 2 x u16, 105..317; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	105, 317
-
-func_978279FE_Var_41:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	232
-func_978279FE_Var_42:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	323
-
-func_978279FE_Table_23:	# 2 x u16, 105..629; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	105, 629
-
-func_978279FE_Var_43:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	232
-func_978279FE_Var_44:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	260
-
-func_978279FE_Table_24:	# 2 x u16, 50..540; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	50, 540
-
-func_978279FE_Var_45:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	70
+func_97827C18_Var_32:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=267, f2=195, f4=308, f6=225
+func_97827C18_Var_36:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=432, f2=195, f4=473, f6=225
+func_97827C18_Var_40:	# REC_func_97827C18_ArgA1 (8 bytes): the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls)
+	REC_func_97827C18_ArgA1	f0=581, f2=195, f4=622, f6=225
+func_978279FE_Var_40:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=12, f2=105, f4=317, f6=232
+func_978279FE_Var_42:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=323, f2=105, f4=629, f6=232
+func_978279FE_Var_44:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=260, f2=50, f4=540, f6=70
 data_978A4140:
 # census: opaque -- unknown-dump: 8 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A4140, 0x0A4148
@@ -9429,234 +9037,74 @@ KssxJukeBoxProc_L13c_Var_2:	# u32, a constant; read / written by KssxJukeBoxProc
 	.long	0x978a44fd
 KssxJukeBoxProc_L13c_Var_3:	# u32, a constant; read / written by KssxJukeBoxProc_L13c 0x9782B6A9: `mov (KssxJukeBoxProc_L13c_Var_3), a0`; KssxJukeBoxProc_L422 0x9782B98F: `mov (KssxJukeBoxProc_L13c_Var_3), a0` ...
 	.long	0x978a44fe
-func_97827B50_Var_143:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	15
-func_97827B50_Var_144:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	82
-func_97827B50_Var_145:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	260
-func_97827B50_Var_146:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	104
-func_97827B50_Var_147:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	15
-func_97827B50_Var_148:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	126
-func_97827B50_Var_149:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	260
-func_97827B50_Var_150:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	148
-func_97827B50_Var_151:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	15
-func_97827B50_Var_152:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	168
-func_97827B50_Var_153:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	260
-func_97827B50_Var_154:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	190
-func_97827B50_Var_155:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	15
-func_97827B50_Var_156:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	211
-func_97827B50_Var_157:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	260
-func_97827B50_Var_158:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	233
-func_97827B50_Var_159:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	385
-func_97827B50_Var_160:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	82
-func_97827B50_Var_161:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	630
-func_97827B50_Var_162:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	104
-func_97827B50_Var_163:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	385
-func_97827B50_Var_164:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	126
-func_97827B50_Var_165:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	630
-func_97827B50_Var_166:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	148
-func_97827B50_Var_167:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	385
-func_97827B50_Var_168:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	168
-func_97827B50_Var_169:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	630
-func_97827B50_Var_170:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	190
-func_97827B50_Var_171:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	385
-func_97827B50_Var_172:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	211
-func_97827B50_Var_173:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	630
-func_97827B50_Var_174:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	233
-func_97827B50_Var_175:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	4
-func_97827B50_Var_176:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	2
-func_97827B50_Var_177:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	260
-func_97827B50_Var_178:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	36
+
+func_97827B50_Var_143:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=15, f2=82, f4=260, f6=104
+func_97827B50_Var_147:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=15, f2=126, f4=260, f6=148
+func_97827B50_Var_151:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=15, f2=168, f4=260, f6=190
+func_97827B50_Var_155:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=15, f2=211, f4=260, f6=233
+func_97827B50_Var_159:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=385, f2=82, f4=630, f6=104
+func_97827B50_Var_163:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=385, f2=126, f4=630, f6=148
+func_97827B50_Var_167:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=385, f2=168, f4=630, f6=190
+func_97827B50_Var_171:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=385, f2=211, f4=630, f6=233
+func_97827B50_Var_175:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=4, f2=2, f4=260, f6=36
 
 Str_F_2:	.asciz "F"
 
-func_97827B50_Var_179:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_10:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	110
-func_97827B50_Var_180:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_11:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	320
-func_97827B50_Var_181:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_12:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	135
-func_97827B50_Var_182:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	302
-func_97827B50_Var_183:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	210
-func_97827B50_Var_184:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	340
-func_97827B50_Var_185:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	238
+
+func_97827B50_Var_182:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=302, f2=210, f4=340, f6=238
 data_978A4568:
-	# 8 bytes the code takes the address of: KssxJukeBoxProc_L13c 0x9782B6A9 `calls (a1)` (+0, arg a0); KssxJukeBoxProc_L13c 0x9782B6A9 `mov data_978A4568, a0` (+0, as a base); KssxJukeBoxProc_L535 0x9782BAA2 `calls (a1)` (+0, arg a0) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: KssxJukeBoxProc_L13c 0x9782B6A9 `calls (a1)` (+0, arg a0); KssxJukeBoxProc_L13c 0x9782B6A9 `mov data_978A4568, a0` (+0, as a base); KssxJukeBoxProc_L535 0x9782BAA2 `calls (a1)` (+0, arg a0) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: (a1) (a0): (a1) reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0xCC011A, 0xE60167	# +0
-func_978279FE_Var_46:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	281
-
-func_978279FE_Table_25:	# 2 x u16, 203..360; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	203, 360
-
-func_978279FE_Var_47:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	231
-func_978279FE_Var_48:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_26:	# 2 x u16, 79..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	79, 259
-
-func_978279FE_Var_49:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	99
-func_978279FE_Var_50:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_27:	# 2 x u16, 123..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	123, 259
-
-func_978279FE_Var_51:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	143
-func_978279FE_Var_52:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_28:	# 2 x u16, 165..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	165, 259
-
-func_978279FE_Var_53:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	185
-func_978279FE_Var_54:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_29:	# 2 x u16, 208..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 259
-
-func_978279FE_Var_55:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	228
-func_978279FE_Var_56:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_30:	# 2 x u16, 79..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	79, 630
-
-func_978279FE_Var_57:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	99
-func_978279FE_Var_58:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_31:	# 2 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	123, 630
-
-func_978279FE_Var_59:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	143
-func_978279FE_Var_60:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_32:	# 2 x u16, 165..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	165, 630
-
-func_978279FE_Var_61:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	185
-func_978279FE_Var_62:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_33:	# 2 x u16, 208..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 630
-
-func_978279FE_Var_63:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	228
-func_978279FE_Var_64:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_34:	# 2 x u16, 79..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	79, 259
-
-func_978279FE_Var_65:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	99
-func_978279FE_Var_66:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_35:	# 2 x u16, 123..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	123, 259
-
-func_978279FE_Var_67:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	143
-func_978279FE_Var_68:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_36:	# 2 x u16, 165..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	165, 259
-
-func_978279FE_Var_69:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	185
-func_978279FE_Var_70:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	9
-
-func_978279FE_Table_37:	# 2 x u16, 208..259; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 259
-
-func_978279FE_Var_71:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	228
-func_978279FE_Var_72:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_38:	# 2 x u16, 79..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	79, 630
-
-func_978279FE_Var_73:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	99
-func_978279FE_Var_74:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_39:	# 2 x u16, 123..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	123, 630
-
-func_978279FE_Var_75:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	143
-func_978279FE_Var_76:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_40:	# 2 x u16, 165..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	165, 630
-
-func_978279FE_Var_77:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	185
-func_978279FE_Var_78:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	380
-
-func_978279FE_Table_41:	# 2 x u16, 208..630; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 630
-
-func_978279FE_Var_79:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	228
+func_978279FE_Var_46:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=281, f2=203, f4=360, f6=231
+func_978279FE_Var_48:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=79, f4=259, f6=99
+func_978279FE_Var_50:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=123, f4=259, f6=143
+func_978279FE_Var_52:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=165, f4=259, f6=185
+func_978279FE_Var_54:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=208, f4=259, f6=228
+func_978279FE_Var_56:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=79, f4=630, f6=99
+func_978279FE_Var_58:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=123, f4=630, f6=143
+func_978279FE_Var_60:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=165, f4=630, f6=185
+func_978279FE_Var_62:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=208, f4=630, f6=228
+func_978279FE_Var_64:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=79, f4=259, f6=99
+func_978279FE_Var_66:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=123, f4=259, f6=143
+func_978279FE_Var_68:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=165, f4=259, f6=185
+func_978279FE_Var_70:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=9, f2=208, f4=259, f6=228
+func_978279FE_Var_72:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=79, f4=630, f6=99
+func_978279FE_Var_74:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=123, f4=630, f6=143
+func_978279FE_Var_76:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=165, f4=630, f6=185
+func_978279FE_Var_78:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=380, f2=208, f4=630, f6=228
 
 KssxJukeBoxProc_L75b_Table:
 	.long	func_978279FE_Var_48
@@ -9722,322 +9170,137 @@ KssxAlphabetBoxProc_Led_Var_23:	# u32, a constant; read / written by KssxAlphabe
 	.long	0x978a464f
 KssxAlphabetBoxProc_Led_Var_24:	# u32, a constant; read / written by KssxAlphabetBoxProc_Led 0x9782C7D2: `mov (KssxAlphabetBoxProc_Led_Var_24), a0`
 	.long	0x978a4653
-func_97827B50_Var_186:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	8
-func_97827B50_Var_187:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_188:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	40
-func_97827B50_Var_189:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
+
+func_97827B50_Var_186:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=8, f2=209, f4=40, f6=236
 
 Str_8_3:	.asciz "8"
 
-func_97827B50_Var_190:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_14:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	209
-func_97827B50_Var_191:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_15:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	100
-func_97827B50_Var_192:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_16:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	236
 
 Str_empty_427:	.asciz "`"
 
-func_97827B50_Var_193:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_18:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	209
-func_97827B50_Var_194:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_19:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	120
-func_97827B50_Var_195:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_20:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	236
-func_97827B50_Var_196:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	136
-func_97827B50_Var_197:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_198:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	180
-func_97827B50_Var_199:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_200:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	176
-func_97827B50_Var_201:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_202:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	200
-func_97827B50_Var_203:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_204:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	216
-func_97827B50_Var_205:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_206:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	240
-func_97827B50_Var_207:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_208:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	414
-func_97827B50_Var_209:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_210:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	440
-func_97827B50_Var_211:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_212:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	454
-func_97827B50_Var_213:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_214:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	480
-func_97827B50_Var_215:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_216:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	494
-func_97827B50_Var_217:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_218:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	540
-func_97827B50_Var_219:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_220:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	526
-func_97827B50_Var_221:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_222:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	570
-func_97827B50_Var_223:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_224:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	574
-func_97827B50_Var_225:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_226:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	599
-func_97827B50_Var_227:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_228:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	614
-func_97827B50_Var_229:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_230:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_231:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_232:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	16
-func_97827B50_Var_233:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_234:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	60
-func_97827B50_Var_235:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
+
+func_97827B50_Var_196:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=136, f2=209, f4=180, f6=236
+func_97827B50_Var_200:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=176, f2=209, f4=200, f6=236
+func_97827B50_Var_204:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=216, f2=209, f4=240, f6=236
+func_97827B50_Var_208:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=414, f2=209, f4=440, f6=236
+func_97827B50_Var_212:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=454, f2=209, f4=480, f6=236
+func_97827B50_Var_216:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=494, f2=209, f4=540, f6=236
+func_97827B50_Var_220:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=526, f2=209, f4=570, f6=236
+func_97827B50_Var_224:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=574, f2=209, f4=599, f6=236
+func_97827B50_Var_228:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=614, f2=209, f4=640, f6=236
+func_97827B50_Var_232:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=16, f2=225, f4=60, f6=236
 
 Str_8_2:	.asciz "8"
 
-func_97827B50_Var_236:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_22:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	225
-func_97827B50_Var_237:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_23:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	100
-func_97827B50_Var_238:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_24:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	236
 
 Str_empty_426:	.asciz "`"
 
-func_97827B50_Var_239:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_26:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	225
-func_97827B50_Var_240:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_27:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	120
-func_97827B50_Var_241:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_28:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	236
-func_97827B50_Var_242:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	128
-func_97827B50_Var_243:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_244:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	160
-func_97827B50_Var_245:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_246:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	176
-func_97827B50_Var_247:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_248:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	190
-func_97827B50_Var_249:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_250:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	216
-func_97827B50_Var_251:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_252:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	240
-func_97827B50_Var_253:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_254:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	414
-func_97827B50_Var_255:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_256:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	440
-func_97827B50_Var_257:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_258:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	454
-func_97827B50_Var_259:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_260:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	480
-func_97827B50_Var_261:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_262:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	494
-func_97827B50_Var_263:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_264:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	520
-func_97827B50_Var_265:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_266:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	534
-func_97827B50_Var_267:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_268:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	570
-func_97827B50_Var_269:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_270:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	566
-func_97827B50_Var_271:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_272:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	600
-func_97827B50_Var_273:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_274:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	614
-func_97827B50_Var_275:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	225
-func_97827B50_Var_276:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	640
-func_97827B50_Var_277:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_978279FE_Var_80:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	2
 
-func_978279FE_Table_42:	# 2 x u16, 224..240; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	224, 240
-
-func_978279FE_Var_81:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	240
-func_978279FE_Var_82:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	400
-
-func_978279FE_Table_43:	# 2 x u16, 224..638; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	224, 638
-
-func_978279FE_Var_83:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	240
-func_978279FE_Var_84:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	0
-
-func_978279FE_Table_44:	# 2 x u16, 41..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 41
-
-func_978279FE_Var_85:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
+func_97827B50_Var_242:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=128, f2=225, f4=160, f6=236
+func_97827B50_Var_246:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=176, f2=225, f4=190, f6=236
+func_97827B50_Var_250:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=216, f2=225, f4=240, f6=236
+func_97827B50_Var_254:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=414, f2=225, f4=440, f6=236
+func_97827B50_Var_258:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=454, f2=225, f4=480, f6=236
+func_97827B50_Var_262:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=494, f2=225, f4=520, f6=236
+func_97827B50_Var_266:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=534, f2=225, f4=570, f6=236
+func_97827B50_Var_270:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=566, f2=225, f4=600, f6=236
+func_97827B50_Var_274:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=614, f2=225, f4=640, f6=236
+func_978279FE_Var_80:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=2, f2=224, f4=240, f6=240
+func_978279FE_Var_82:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=400, f2=224, f4=638, f6=240
+func_978279FE_Var_84:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f2=208, f4=41, f6=239
 
 Str_empty_425:	.asciz "("
 
-func_978279FE_Table_45:	# 2 x u16, 81..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 81
-
-func_978279FE_Var_86:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+func_978279FE_Var_2:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (2, a0), d1`; func_978279FE_entry_L26 0x97827A29: `movhu (2, a0), d1` ...
+	.word	208
+func_978279FE_entry_L26_Var:	# u16, a constant; read / written by func_978279FE_entry_L26 0x97827A29: `movhu (4, a0), d1`; func_978279FE_entry_Lbd 0x97827AC0: `movhu (4, a0), d1`
+	.word	81
+func_978279FE_Var_4:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`; func_978279FE_entry_L26 0x97827A29: `movhu (6, a0), d1` ...
 	.word	239
 
 Str_P_2:	.asciz "P"
 
-func_978279FE_Table_46:	# 2 x u16, 121..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 121
-
-func_978279FE_Var_87:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+func_978279FE_Var_6:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (2, a0), d1`; func_978279FE_entry_L26 0x97827A29: `movhu (2, a0), d1` ...
+	.word	208
+func_978279FE_entry_L26_Var_2:	# u16, a constant; read / written by func_978279FE_entry_L26 0x97827A29: `movhu (4, a0), d1`; func_978279FE_entry_Lbd 0x97827AC0: `movhu (4, a0), d1`
+	.word	121
+func_978279FE_Var_9:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`; func_978279FE_entry_L26 0x97827A29: `movhu (6, a0), d1` ...
 	.word	239
 
 Str_x_2:	.asciz "x"
 
-func_978279FE_Table_47:	# 2 x u16, 161..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 161
-
-func_978279FE_Var_88:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
+func_978279FE_Var_11:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (2, a0), d1`; func_978279FE_entry_L26 0x97827A29: `movhu (2, a0), d1` ...
+	.word	208
+func_978279FE_entry_L26_Var_3:	# u16, a constant; read / written by func_978279FE_entry_L26 0x97827A29: `movhu (4, a0), d1`; func_978279FE_entry_Lbd 0x97827AC0: `movhu (4, a0), d1`
+	.word	161
+func_978279FE_Var_13:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`; func_978279FE_entry_L26 0x97827A29: `movhu (6, a0), d1` ...
 	.word	239
-func_978279FE_Var_89:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	160
 
-func_978279FE_Table_48:	# 2 x u16, 201..208; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 201
-
-func_978279FE_Var_90:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_91:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	200
-
-func_978279FE_Table_49:	# 2 x u16, 208..241; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 241
-
-func_978279FE_Var_92:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_93:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	240
-
-func_978279FE_Table_50:	# 2 x u16, 208..401; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 401
-
-func_978279FE_Var_94:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_95:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	400
-
-func_978279FE_Table_51:	# 2 x u16, 208..441; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 441
-
-func_978279FE_Var_96:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_97:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	440
-
-func_978279FE_Table_52:	# 2 x u16, 208..481; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 481
-
-func_978279FE_Var_98:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_99:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	480
-
-func_978279FE_Table_53:	# 2 x u16, 208..521; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 521
-
-func_978279FE_Var_100:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_101:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	520
-
-func_978279FE_Table_54:	# 2 x u16, 208..561; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 561
-
-func_978279FE_Var_102:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_103:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	560
-
-func_978279FE_Table_55:	# 2 x u16, 208..601; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 601
-
-func_978279FE_Var_104:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
-func_978279FE_Var_105:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
-	.word	600
-
-func_978279FE_Table_56:	# 2 x u16, 208..639; read by func_978279FE 0x978279FE: `movhu (2, a0), d1`
-	tab_u16	208, 639
-
-func_978279FE_Var_106:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (6, a0), d1`
-	.word	239
+func_978279FE_Var_89:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=160, f2=208, f4=201, f6=239
+func_978279FE_Var_91:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=200, f2=208, f4=241, f6=239
+func_978279FE_Var_93:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=240, f2=208, f4=401, f6=239
+func_978279FE_Var_95:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=400, f2=208, f4=441, f6=239
+func_978279FE_Var_97:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=440, f2=208, f4=481, f6=239
+func_978279FE_Var_99:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=480, f2=208, f4=521, f6=239
+func_978279FE_Var_101:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=520, f2=208, f4=561, f6=239
+func_978279FE_Var_103:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=560, f2=208, f4=601, f6=239
+func_978279FE_Var_105:	# REC_func_978279FE_ArgA0 (8 bytes): the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls)
+	REC_func_978279FE_ArgA0	f0=600, f2=208, f4=639, f6=239
 
 HamaAlphabeticFileListProc_Table:	# 60 x s16, -256..29545; read by HamaAlphabeticFileListProc : `movhu	(0x32, a0), d2`
 	tab_s16	260, 33, 259, 204, 12592, 16698, 28780, 24936, 25954, 26996, 21347, 29295	# [0]
@@ -10553,7 +9816,7 @@ Str_Belonging_tag_not_found_stack_empty:	.asciz "Belonging tag not found (stack 
 	.align	4, 0xFF	# pad after Str_Belonging_tag_not_found_stack_empty
 Str_Belonging_tag_not_found:	.asciz "Belonging tag not found"
 data_978AF210:
-	# 8 bytes the code takes the address of: func_97834997_entry_L1f 0x978349B9 `call strchr_entry, [d2], 4` (+0, arg a0); func_97834997_entry_L1f 0x978349B9 `mov data_978AF210, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: func_97834997_entry_L1f 0x978349B9 `call strchr_entry, [d2], 4` (+0, arg a0); func_97834997_entry_L1f 0x978349B9 `mov data_978AF210, a0` (+0, as a base); byte rows (u8); the callee walk: strchr (a0): a library routine: what it reads is a string or a block, not fields
 	tab_u8	32, 10, 11, 9, 13, 12, 0, 255	# +0
 
 func_9780A35F_Var:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
@@ -10561,50 +9824,58 @@ func_9780A35F_Var:	# s8, a constant; read / written by func_9780A35F 0x9780A35F:
 
 func_9780A35F_Table:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
-data_978AF220:
-	.space	1, 0x00
-data_978AF221:
-	# 11 bytes the code takes the address of: func_97834997_entry_L52 0x978349EC `mov data_978AF221, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	32, 10, 11, 9, 13, 12, 38, 60, 0, 255, 255	# +0
+
+func_9780A35F_Var_6:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	0
+
+func_9780A35F_Table_2:	# 11 x s8, -1..60; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	32, 10, 11, 9, 13, 12, 38, 60, 0, -1, -1
 
 Str_x:	.asciz "#x"
 Str_X:	.asciz "#X"
 	.align	4, 0xFF	# pad after Str_X
 data_978AF234:
-	# 12 bytes the code takes the address of: func_97834997_entry_Lba 0x97834A54 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834997_entry_Lba 0x97834A54 `mov data_978AF234, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: func_97834997_entry_Lba 0x97834A54 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834997_entry_Lba 0x97834A54 `mov data_978AF234, a1` (+0, as a base); byte rows (u8); the callee walk: strcspn (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	32, 10, 11, 9, 13, 12, 59, 60, 0, 255, 255, 255	# +0
 Str_Invalid_dec_character_reference:	.asciz "Invalid dec character reference"
 data_978AF260:
-	# 12 bytes the code takes the address of: func_97834997_entry_L126 0x97834AC0 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834997_entry_L126 0x97834AC0 `mov data_978AF260, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: func_97834997_entry_L126 0x97834AC0 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834997_entry_L126 0x97834AC0 `mov data_978AF260, a1` (+0, as a base); byte rows (u8); the callee walk: strcspn (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	32, 10, 11, 9, 13, 12, 59, 60, 0, 255, 255, 255	# +0
 Str_Invalid_hex_character_reference:	.asciz "Invalid hex character reference"
-data_978AF28C:
-	.space	1, 0x00
-data_978AF28D:
-	# 11 bytes the code takes the address of: func_97834997_entry_L183 0x97834B1D `mov data_978AF28D, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	32, 10, 11, 9, 13, 12, 59, 60, 0, 255, 255	# +0
+
+func_9780A35F_Var_7:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	0
+
+func_9780A35F_Table_3:	# 11 x s8, -1..60; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	32, 10, 11, 9, 13, 12, 59, 60, 0, -1, -1
+
 Str_Invalid_entity_character_reference:	.asciz "Invalid entity character reference"
 	.align	4, 0xFF	# pad after Str_Invalid_entity_character_reference
 Str_supposed:	.asciz " '<' supposed "
 	.align	4, 0xFF	# pad after Str_supposed
-data_978AF2CC:
-	.space	1, 0x00
-data_978AF2CD:
-	# 11 bytes the code takes the address of: func_97834BA2_entry_Lcd 0x97834C72 `mov data_978AF2CD, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	32, 10, 11, 9, 13, 12, 62, 0, 255, 255, 255	# +0
+
+func_9780A35F_Var_8:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	0
+
+func_9780A35F_Table_4:	# 11 x s8, -1..62; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	32, 10, 11, 9, 13, 12, 62, 0, -1, -1, -1
+
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_4:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_3:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-_"
 
 func_9780A35F_Var_2:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	.byte	32
 
-func_9780A35F_Table_2:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+func_9780A35F_Table_5:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
-data_978AF358:
-	# 7 bytes the code takes the address of: func_97834BA2_entry_L12a 0x97834CCF `call func_97833C07_entry, [d2], 0x20` (+0, arg d1); func_97834BA2_entry_L12a 0x97834CCF `mov data_978AF358, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	32, 10, 11, 9, 13, 12, 0	# +0
+
+func_9780A35F_Var_9:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	32
+
+func_9780A35F_Table_6:	# 6 x s8, 0..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	10, 11, 9, 13, 12, 0
 data_978AF35F:
-	# 9 bytes the code takes the address of: func_97834BA2_entry_L12a 0x97834CCF `mov data_978AF35F, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 9 bytes the code takes the address of: func_97833C07 0x97833C07 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834BA2_entry_L12a 0x97834CCF `call func_97833C07_entry, [d2], 0x20` (+0, arg sp24); func_97834BA2_entry_L12a 0x97834CCF `call func_97833C93_entry, [d2], 0x14` (+0, arg sp24) (+3 more); byte rows (u8); the callee walk: func_97833C07 (sp24): func_97833C07 reads nothing through it at a fixed offset (it hands it on, or stores it); func_97833C93 (sp24): func_97833C93 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_97833CF3 (sp24): func_97833CF3 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	32, 10, 11, 9, 13, 12, 61, 62, 0	# +0
 
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_2:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -10613,7 +9884,7 @@ Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZ
 func_9780A35F_Var_3:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	.byte	32
 
-func_9780A35F_Table_3:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+func_9780A35F_Table_7:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
 func_97834BA2_Table:	# 4 x u8, 0..255; read by func_97834BA2_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 255, 255
@@ -10621,28 +9892,31 @@ func_97834BA2_Table:	# 4 x u8, 0..255; read by func_97834BA2_entry : `movbu	(a1)
 func_9780A35F_Var_4:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	.byte	32
 
-func_9780A35F_Table_4:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+func_9780A35F_Table_8:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
-data_978AF3F4:
-	# a string, 4 bytes with its pad, read by func_97834BA2_entry_L1cc 0x97834D71 `call func_97833C07_entry, [d2], 0x20` (+0, arg d1); func_97834BA2_entry_L1cc 0x97834D71 `mov data_978AF3F4, d1` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	""
-	.align	4, 0xFF
-data_978AF3F8:
-	.space	1, 0x00
-data_978AF3F9:
-	# 11 bytes the code takes the address of: func_97834BA2_entry_L213 0x97834DB8 `mov data_978AF3F9, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	32, 10, 11, 9, 13, 12, 62, 0, 255, 255, 255	# +0
+
+func_9780A35F_Var_10:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	0
+
+func_9780A35F_Table_9:	# 3 x s8, -1..-1; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	-1, -1, -1
+
+func_9780A35F_Var_11:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	.byte	0
+
+func_9780A35F_Table_10:	# 11 x s8, -1..62; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+	tab_s8	32, 10, 11, 9, 13, 12, 62, 0, -1, -1, -1
 
 func_9780A35F_Var_5:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	.byte	32
 
-func_9780A35F_Table_5:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
+func_9780A35F_Table_11:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF40C:
-	# 4 bytes the code takes the address of: func_97834F63_entry_L48 0x97834FB0 `mov data_978AF40C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_97834F63_entry_L48 0x97834FB0 `mov data_978AF40C, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 255, 255	# +0
 data_978AF410:
-	# 8 bytes the code takes the address of: func_97835087_entry_L179 0x97835205 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97835087_entry_L179 0x97835205 `mov data_978AF410, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: func_97835087_entry_L179 0x97835205 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97835087_entry_L179 0x97835205 `mov data_978AF410, a1` (+0, as a base); byte rows (u8); the callee walk: strcspn (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	32, 10, 11, 9, 13, 12, 0, 255	# +0
 
 func_97834719_Table_p136_0:	# REC_func_97834719_Table_p136 (4 bytes)
@@ -10651,7 +9925,7 @@ func_97834719_Table_p136_0:	# REC_func_97834719_Table_p136 (4 bytes)
 Str_o_FONT_face_Arial_size_3_color_807060_Se:	.asciz "o <FONT face=\"Arial\" size=3 color=\"#807060\"> Senorflo </FONT> Bye Bye "
 	.align	4, 0xFF	# pad after Str_o_FONT_face_Arial_size_3_color_807060_Se
 data_978AF464:
-	# 4 bytes the code takes the address of: func_978352F0_entry_L13a 0x9783542C `mov data_978AF464, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_978352F0_entry_L13a 0x9783542C `mov data_978AF464, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 255, 255	# +0
 Str_Parsed_Tag_s_i:	.asciz "Parsed Tag:\"%s\" ,%i"
 Str_Attribute_i_is_s_with_value_s_i_i:	.asciz "Attribute %i is \"%s\" with value \"%s\",%i,%i"
@@ -10679,103 +9953,38 @@ Str_TOOLS_10:	.asciz "TOOLS"
 # census: opaque -- unknown-dump: 51 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0AF525, 0x0AF558
 
-func_97827B50_Var_278:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	15
-func_97827B50_Var_279:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	216
-func_97827B50_Var_280:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	68
-func_97827B50_Var_281:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
+func_97827B50_Var_278:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=15, f2=216, f4=68, f6=236
 
 Str_T:	.asciz "T"
 
-func_97827B50_Var_282:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
+func_97827B50_Var_30:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
 	.word	216
-func_97827B50_Var_283:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
+func_97827B50_Var_31:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
 	.word	156
-func_97827B50_Var_284:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
+func_97827B50_Var_32:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	236
-func_97827B50_Var_285:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	168
-func_97827B50_Var_286:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_287:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	230
-func_97827B50_Var_288:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_289:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	170
-func_97827B50_Var_290:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	223
-func_97827B50_Var_291:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	220
-func_97827B50_Var_292:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_293:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	260
-func_97827B50_Var_294:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	216
-func_97827B50_Var_295:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	320
-func_97827B50_Var_296:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_297:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	328
-func_97827B50_Var_298:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_299:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	380
-func_97827B50_Var_300:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_301:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	338
-func_97827B50_Var_302:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	223
-func_97827B50_Var_303:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	375
-func_97827B50_Var_304:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_305:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	404
-func_97827B50_Var_306:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_307:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	480
-func_97827B50_Var_308:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_309:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	416
-func_97827B50_Var_310:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	223
-func_97827B50_Var_311:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	480
-func_97827B50_Var_312:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_313:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	500
-func_97827B50_Var_314:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	216
-func_97827B50_Var_315:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	564
-func_97827B50_Var_316:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_317:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	574
-func_97827B50_Var_318:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	209
-func_97827B50_Var_319:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	648
-func_97827B50_Var_320:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
-func_97827B50_Var_321:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (a0), d1`
-	.word	584
-func_97827B50_Var_322:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (2, a0), d1`
-	.word	223
-func_97827B50_Var_323:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (4, a0), d1`
-	.word	648
-func_97827B50_Var_324:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
-	.word	236
+
+func_97827B50_Var_285:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=168, f2=209, f4=230, f6=236
+func_97827B50_Var_289:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=170, f2=223, f4=220, f6=236
+func_97827B50_Var_293:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=260, f2=216, f4=320, f6=236
+func_97827B50_Var_297:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=328, f2=209, f4=380, f6=236
+func_97827B50_Var_301:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=338, f2=223, f4=375, f6=236
+func_97827B50_Var_305:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=404, f2=209, f4=480, f6=236
+func_97827B50_Var_309:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=416, f2=223, f4=480, f6=236
+func_97827B50_Var_313:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=500, f2=216, f4=564, f6=236
+func_97827B50_Var_317:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=574, f2=209, f4=648, f6=236
+func_97827B50_Var_321:	# REC_func_97827B50_ArgA1 (8 bytes): the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls)
+	REC_func_97827B50_ArgA1	f0=584, f2=223, f4=648, f6=236
 
 Str_BASICS_10:	.asciz "BASICS"
 	.align	4, 0xFF	# pad after Str_BASICS_10
@@ -11147,12 +10356,87 @@ doubles_978AFDA0:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x00000000, 0x41CDCD65	# 1e+10
 	.long	0x20000000, 0x4202A05F	# 1e+11
 	.long	0xE8000000, 0x42374876	# 1e+12
-# census: opaque -- unknown-dump: 843 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AFDF8, 0x0B0143
+	# 843 bytes read by func_97834719_entry_L148 0x97834863 `mov d0, (a0)` (+48, u32); func_97834719_entry_L148 0x97834863 `mov d0, (a0)` (+68, u32); func_97834719_entry_L1bc 0x978348D7 `mov (d0, a0), a1` (+48, u32) (+5 more); the read fields at their widths (u32, u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	tab_u32	0xA2000000, 0x426D1A94, 0xE5400000, 0x42A2309C, 0x1E900000, 0x42D6BCC4, 0x26340000, 0x430C6BF5	# +0
+	tab_u32	0x37E08000, 0x4341C379, 0x85D8A000, 0x43763457, 0x674EC800, 0x43ABC16D, 0x60913D00, 0x43E158E4	# +32
+	tab_u32	0x78B58C40, 0x4415AF1D, 0xD6E2EF50, 0x444B1AE4, 0x64DD596, 0x4480F0CF, 0xC7E14AFA, 0x44B52D02	# +64
+	tab_u32	0x79D99DB4, 0x44EA7843, 0x2C280290, 0x45208B2A, 0xB7320334, 0x4554ADF4, 0xE4FE8400, 0x4589D971	# +96
+	tab_u32	0x2F1F1280, 0x45C027E7, 0xFAE6D720, 0x45F431E0, 0x39A08CE8, 0x46293E59, 0x8808B024, 0x465F8DEF	# +128
+	tab_u32	0xB5056E1A, 0x4693B8B5, 0x2246C99C, 0x46C8A6E3, 0xEAD87C06, 0x46FED09B, 0x72C74D86, 0x47334261	# +160
+	tab_u32	0xCF7920E6, 0x476812F9, 0x4357691E, 0x479E17B8, 0x2A16A1B0, 0x47D2CED3, 0xF49C4A1C, 0x48078287	# +192
+	tab_u32	0xF1C35CA4, 0x483D6329, 0x371A19EA, 0x48725DFA, 0xC4E0A060, 0x48A6F578, 0xF618C878, 0x48DCB2D6	# +224
+	tab_u32	0x59CF7D4E, 0x4911EFC6, 0xF0435CA2, 0x49466BB7, 0xEC5433CA, 0x497C06A5, 0xB3B4A05E, 0x49B18427	# +256
+	tab_u32	0xA0A1C876, 0x49E5E531, 0x8CA3A92, 0x4A1B5E7E, 0xC57E6498, 0x4A511B0E, 0x76DDFDC0, 0x4A8561D2	# +288
+	tab_u32	0x14957D30, 0x4ABABA47, 0x6CDD6E42, 0x4AF0B46C, 0x8814C9CC, 0x4B24E187, 0x6A19FC40, 0x4B5A19E9	# +320
+	tab_u32	0xE2503DA8, 0x4B905031, 0x5AE44D16, 0x4BC4643E, 0xF19D605A, 0x4BF97D4D, 0x6E04B86C, 0x4C2FDCA1	# +352
+	tab_u32	0xE4C2F344, 0x4C63E9E4, 0x1DF3B014, 0x4C98E45E, 0xA5709C1E, 0x4CCF1D75, 0x87666190, 0x4D037269	# +384
+	tab_u32	0xE93FF9F4, 0x4D384F03, 0xE38FF876, 0x4D6E62C4, 0xE39FB4A, 0x4DA2FDBB, 0xD1C87A18, 0x4DD7BD29	# +416
+	tab_u32	0x463A98A2, 0x4E0DAC74, 0xABE49F66, 0x4E428BC8, 0xD6DDC73C, 0x4E772EBA, 0x8C95390E, 0x4EACFA69	# +448
+	tab_u32	0xF7DD43AA, 0x4EE21C81, 0x75D49490, 0x4F16A3A2, 0x1349B9B4, 0x4F4C4C8B, 0xEC0E1410, 0x4F81AFD6	# +480
+	tab_u32	0xA7119914, 0x4FB61BCC, 0xD0D5FF5E, 0x4FEBA2BF, 0xE285BF98, 0x502145B7, 0xDB272F82, 0x50559725	# +512
+	tab_u32	0x51F0FB62, 0x508AFCEF, 0x93369D1E, 0x50C0DE15, 0xF8044466, 0x50F5159A, 0xB605557E, 0x512A5B01	# +544
+	tab_u32	0x11C3556C, 0x516078E1, 0x56342ACA, 0x51949719, 0xABC13578, 0x51C9BCDF, 0xCB58C16C, 0x5200160B	# +576
+	tab_u32	0xBE2EF1CA, 0x52341B8E, 0x6DBAAE38, 0x52692272, 0x92959CA, 0x529F6B0F, 0x65B9D81C, 0x52D3A2E9	# +608
+	tab_u32	0xBF284E26, 0x53088BA3, 0xAEF261AC, 0x533EAE8C, 0xED577D0E, 0x53732D17, 0xE8AD5C52, 0x53A7F85D	# +640
+	tab_u32	0x62D8B366, 0x53DDF675, 0x5DC7701C, 0x5412BA09, 0xB5394C24, 0x5447688B, 0xA2879F32, 0x547D42AE	# +672
+	tab_u32	0x2594C37C, 0x54B249AD, 0x6EF9F45C, 0x54E6DC18, 0x8AB87176, 0x551C931E, 0x16B346EA, 0x5551DBF3	# +704
+	tab_u32	0xDC6018A0, 0x558652EF, 0xD3781ECE, 0x55BBE7AB, 0x642B1342, 0x55F170CB, 0x3D35D812, 0x5625CCFE	# +736
+	tab_u32	0xCC834E10, 0x565B403D, 0x9FD210CE, 0x56910826, 0x47C694FC, 0x56C54A30, 0x59B83A3C, 0x56FA9CBC	# +768
+	tab_u32	0xB813246A, 0x5730A1F5, 0x2617ED82, 0x5764CA73, 0xEF9DE8E2, 0x5799FD0F, 0xF5C2B18E, 0x57D03E29	# +800
+	tab_u32	0x73335DF2, 0x58044DB4	# +832
+	tab_u8	110, 53, 0	# +840
 
 Str_a9X_B:	.asciz "\x90!a9X\xC4B"
-# census: opaque -- unknown-dump: 1525 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0B014B, 0x0B0740
+	# 1525 bytes read by func_97834719_entry_L11f 0x9783483A `mov (0xe70, a0), d0` (+397, u32); func_97834719_entry_L11f 0x9783483A `mov (0xe70, a0), d0` (+417, u32); func_97834719_entry_L11f 0x9783483A `mov (0xe70, a0), d1` (+397, u32) (+17 more); the read fields at their widths (u32, u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	tab_u8	244	# +0
+	tab_u32	0x586FB969, 0x388029BE, 0x58A3D3E2, 0xC6A0342E, 0x58D8C8DA, 0x78484134, 0x590EFB11, 0xEB2D28C0	# +1
+	tab_u32	0x59435CEA, 0xA5F872F0, 0x59783425, 0xF768FAC, 0x59AE412F, 0x69AA19CC, 0x59E2E8BD, 0xC414A042	# +33
+	tab_u32	0x5A17A2EC, 0xF519C852, 0x5A4D8BA7, 0xF9301D30, 0x5A827748, 0x377C2482, 0x5AB7151B, 0x55B2D9C	# +65
+	tab_u32	0x5AECDA62, 0x4358FC86, 0x5B22087D, 0x942F3BA6, 0x5B568A9C, 0xB93B0A8E, 0x5B8C2D43, 0x53C4E69A	# +97
+	tab_u32	0x5BC19C4A, 0xE8B6203C, 0x5BF6035C, 0x22E3A84C, 0x5C2B8434, 0x95CE4932, 0x5C6132A0, 0xBB41DB7E	# +129
+	tab_u32	0x5C957F48, 0xEA12525E, 0x5CCADF1A, 0xD24B7378, 0x5D00CB70, 0x6DE505A, 0x5D34FE4D, 0x4895E46C	# +161
+	tab_u32	0x5D6A3DE0, 0x2D5DAEC6, 0x5DA066AC, 0x38B51A74, 0x5DD48057, 0x6E26116, 0x5E09A06D, 0x244D7CAE	# +193
+	tab_u32	0x5E400444, 0x2D60DBDA, 0x5E740555, 0x78B912CE, 0x5EA906AA, 0x16E75782, 0x5EDF4855, 0x2E5096B2	# +225
+	tab_u32	0x5F138D35, 0x79E4BC5E, 0x5F487082, 0x185DEB70, 0x5F7E8CA3, 0xEF3AB32A, 0x5FB317E5, 0x6B095FF0	# +257
+	tab_u32	0x5FE7DDDF, 0x45CBB7EC, 0x601DD557, 0x8B9F52F4, 0x6052A556, 0x2E8727B0, 0x60874EAC, 0x3A28F19C	# +289
+	tab_u32	0x60BD2257, 0x84599706, 0x60F23576, 0x256FFCC6, 0x6126C2D4, 0x2ECBFBF6, 0x615C7389, 0xBD3F7D78	# +321
+	tab_u32	0x6191C835, 0x2C8F5CDA, 0x61C63A43, 0xF7B3340E, 0x61FBC8D3, 0x7AD0008A, 0x62315D84, 0x998400A8	# +353
+	tab_u32	0x6265B4E5, 0xFFE500D6, 0x629B221E, 0x5FEF2084, 0x62D0F553, 0x37EAE8A4, 0x630532A8, 0x45E5A2D2	# +385
+	tab_u32	0x633A7F52, 0x6BAF85C0, 0x63708F93, 0x469B6730, 0x63A4B378, 0x584240FC, 0x63D9E056, 0xF72968A2	# +417
+	tab_u32	0x64102C35, 0x74F3C2CA, 0x64443743, 0x5230B37A, 0x64794514, 0x66BCE054, 0x64AF9659, 0xE0360C34	# +449
+	tab_u32	0x64E3BDF7, 0xD8438F46, 0x6518AD75, 0x4E547316, 0x654ED8D3, 0x10F4C7EC, 0x65834784, 0x1531F9EA	# +481
+	tab_u32	0x65B81965, 0x5A7E7860, 0x65EE1FBE, 0xF88F0B3C, 0x6622D3D6, 0xB6B2CE0C, 0x665788CC, 0xE45F8192	# +513
+	tab_u32	0x668D6AFF, 0xEEBBB0F8, 0x66C262DF, 0xEA6A9D3A, 0x66F6FB97, 0xE5054484, 0x672CBA7D, 0xAF234AD6	# +545
+	tab_u32	0x6761F48E, 0x5AEC1D88, 0x679671B2, 0xF1A724EE, 0x67CC0E1E, 0x57087716, 0x680188D3, 0x2CCA94DA	# +577
+	tab_u32	0x6835EB08, 0x37FD3A0C, 0x686B65CA, 0x62FE4448, 0x68A11F9E, 0xFBBDD55E, 0x68D56785, 0x7AAD4AB0	# +609
+	tab_u32	0x690AC167, 0xACAC4EB2, 0x6940B8E0, 0xD7D7625E, 0x6974E718, 0xDCD3AF0, 0x69AA20DF, 0x68A044DA	# +641
+	tab_u32	0x69E0548B, 0x42C8560C, 0x6A1469AE, 0xD37A6B92, 0x6A498419, 0x48590676, 0x6A7FE520, 0x2D37A40A	# +673
+	tab_u32	0x6AB3EF34, 0x38858D08, 0x6AE8EB01, 0x86A6F04C, 0x6B1F25C1, 0xF4285632, 0x6B537798, 0x31326BBE	# +705
+	tab_u32	0x6B88557F, 0xFD7F06AE, 0x6BBE6ADE, 0x5E6F642E, 0x6BF302CB, 0x360B3D34, 0x6C27C37E, 0xC38E0C86	# +737
+	tab_u32	0x6C5DB45D, 0x9A38C7D0, 0x6C9290BA, 0x40C6F9C4, 0x6CC734E9, 0x90F8B83A, 0x6CFD0223, 0x3A9B7326	# +769
+	tab_u32	0x6D322156, 0xC9424FEE, 0x6D66A9AB, 0xBB92E3EA, 0x6D9C5416, 0x353BCE72, 0x6DD1B48E, 0xC28AC20E	# +801
+	tab_u32	0x6E0621B1, 0x332D7292, 0x6E3BAA1E, 0xDFFC6798, 0x6E714A52, 0x97FB8182, 0x6EA59CE7, 0x7DFA61E2	# +833
+	tab_u32	0x6EDB0421, 0xEEBC7D2E, 0x6F10E294, 0x2A6B9C7A, 0x6F451B3A, 0xB5068394, 0x6F7A6208, 0x7124123C	# +865
+	tab_u32	0x6FB07D45, 0xCD6D16CE, 0x6FE49C96, 0x80C85C82, 0x7019C3BC, 0xD07D39D2, 0x70501A55, 0x449C8846	# +897
+	tab_u32	0x708420EB, 0x15C3AA56, 0x70B92926, 0x9B3494E8, 0x70EF736F, 0xC100DD10, 0x7123A825, 0x31411454	# +929
+	tab_u32	0x7158922F, 0xFD91596E, 0x718EB6BA, 0xDE7AD7E6, 0x71C33234, 0x16198DDE, 0x71F7FEC2, 0x9B9FF156	# +961
+	tab_u32	0x722DFE72, 0xA143F6D6, 0x7262BF07, 0x8994F488, 0x72976EC9, 0xEBFA31AE, 0x72CD4A7B, 0x737C5F0E	# +993
+	tab_u32	0x73024E8D, 0xD05B76CC, 0x7336E230, 0x4725480, 0x736C9ABD, 0x22C774D0, 0x73A1E0B6, 0xAB795204	# +1025
+	tab_u32	0x73D658E3, 0x9657A684, 0x740BEF1C, 0xDDF6C816, 0x74417571, 0x55747A18, 0x7475D2CE, 0xEAD198A2	# +1057
+	tab_u32	0x74AB4781, 0x32C2FF66, 0x74E10CB1, 0x7F73BF3E, 0x75154FDD, 0xDF50AF0E, 0x754AA3D4, 0xB926D6A	# +1089
+	tab_u32	0x7580A665, 0x4E7708C0, 0x75B4CFFE, 0xE214CAF0, 0x75EA03FD, 0xAD4CFEDA, 0x7620427E, 0x58A03E8E	# +1121
+	tab_u32	0x7654531E, 0xEEC84E32, 0x768967E5, 0x6A7A61BE, 0x76BFC1DF, 0xA28C7D14, 0x76F3D92B, 0x8B2F9C58	# +1153
+	tab_u32	0x7728CF76, 0x2DFB8370, 0x775F0354, 0x9CBD322A, 0x77936214, 0xC3EC7EB2, 0x77C83A99, 0x34E79E5E	# +1185
+	tab_u32	0x77FE4940, 0x2110C2F8, 0x7832EDC8, 0x2954F3BA, 0x7867A93A, 0xB3AA30A4, 0x789D9388, 0x704A5E6A	# +1217
+	tab_u32	0x78D27C35, 0xCC5CF600, 0x79071B42, 0x7F743380, 0x793CE213, 0x2FA8A030, 0x79720D4C, 0x3B92C83C	# +1249
+	tab_u32	0x79A6909F, 0xA777A4C, 0x79DC34C7, 0x668AAC72, 0x7A11A0FC, 0x802D578E, 0x7A46093B, 0x6038AD72	# +1281
+	tab_u32	0x7A7B8B8A, 0x7C236C64, 0x7AB13736, 0x1B2C4782, 0x7AE58504, 0x21F75962, 0x7B1AE645, 0x353A97DE	# +1313
+	tab_u32	0x7B50CFEB, 0x2893DD0, 0x7B8503E6, 0x832B8D44, 0x7BBA44DF, 0xB1FB384E, 0x7BF06B0B, 0x9E7A0662	# +1345
+	tab_u32	0x7C2485CE, 0x461887FA, 0x7C59A742, 0x6BCF54F8, 0x7C900889, 0xC6C32A38, 0x7CC40AAB, 0xB873F4CA	# +1377
+	tab_u32	0x7CF90D56, 0x6690F1F8, 0x7D2F50AC, 0xC01A973E, 0x7D63926B, 0xB0213D08, 0x7D987706, 0x5C298C4C	# +1409
+	tab_u32	0x7DCE94C8, 0x3999F7B2, 0x7E031CFD, 0x8800759E, 0x7E37E43C, 0xAA009306, 0x7E6DDD4B, 0x4A405BE0	# +1441
+	tab_u32	0x7EA2AA4F, 0x1CD072D8, 0x7ED754E3, 0xE4048F90, 0x7F0D2A1B, 0x6E82D9BE, 0x7F423A51, 0xCA239028	# +1473
+	tab_u32	0x7F76C8E5, 0x3CAC7436, 0x7FAC7B1F, 0x85EBC8A2, 0x7FE1CCF3	# +1505
 
 # 55 classes; a class id is (0x168 << 16) | its index here (ClassProc 0x4842A802 reads entry id & 0xFFFF, 0x18 bytes each)
 .equ Module08_Classes_SLOT, 0x168
@@ -14183,7 +13467,7 @@ KssTimerShowProc_L107_Var:	# u32, initial value of a RAM variable; read / writte
 KssInitialWaitProc_L17f_Table:	# 4 x u8, 0..255; read by KssInitialWaitProc_L17f 0x9781285E: `movbu (KssInitialWaitProc_L17f_Table), d0`; KssTitleFunc_L152 0x978217E5: `movbu (KssInitialWaitProc_L17f_Table), d0` ...
 	tab_u8	0, 255, 255, 255
 
-func_97821B96_Var:	# u32, initial value of a RAM variable; read / written by func_97821B96 0x97821B96: `mov (func_97821B96_Var), d0`; func_97821B96_entry_L21 0x97821BBA: `mov (func_97821B96_Var), d0` ...
+func_97821B96_Var:	# u32, initial value of a RAM variable; read / written by func_97802884_entry_Lcc 0x97802953: `mov d0, (a0)`; func_97802884_entry_Ld9 0x97802960: `mov d1, (a0)` ...
 	.long	0
 KssCatch_LBNEntryBox_L683_Var:	# u32, initial value of a RAM variable; read / written by KssCatch_LBNEntryBox_L683 0x97813D8A: `mov d0, (KssCatch_LBNEntryBox_L683_Var)`; KssCatch_LBNEntryBox_L6db 0x97813DE2: `mov (KssCatch_LBNEntryBox_L683_Var), d0` ...
 	.long	0

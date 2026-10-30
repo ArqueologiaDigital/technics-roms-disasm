@@ -22707,16 +22707,10 @@ SndRecTriFieldGet2_entry_L16_Table_2:
 	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_13
 	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_14
 	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_15
-data_4C3A2830:
-	# 2 bytes the code takes the address of: func_4C15F367 0x4C15F367 `mov data_4C3A2830, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	16, 0	# +0
 
-Str_Reverb:	.asciz "     Reverb     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A2843, 0x3A284A
-Str_Effect_Memory:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A285B, 0x3A2878
+func_4C15F367_Result_0:	# REC_func_4C15F367_Result (20 bytes), then 13 x u32 the code indexes from +0 (read by func_4C15F02A_entry_L24 0x4C15F053 `movhu (d1, a2), d0`; func_4C15F0D9_entry_L3b 0x4C15F119 `movhu (a1), d0`)
+	REC_func_4C15F367_Result	x0="\x10\x00     Reverb     \x00\x00"
+	tab_u32	1278879728, 1159725066, 1667589734, 1699553396, 2037542765, 8224, 0, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4C15F079_Var:	# u16, a constant; read / written by func_4C15F079 0x4C15F079: `movhu (func_4C15F079_Var), d0`; func_4C1606FA_entry_Lfc 0x4C1607FB: `movhu (func_4C15F079_Var), d0`
 	.word	2
@@ -22734,638 +22728,61 @@ func_4C15F0D9_entry_Lc4_Records:	# 8 x REC_func_4C15F0D9_entry_Lc4_Records (128 
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3A607A, 0x3A608E
 	.space	2030, 0xFF
-	# 516 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_16
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_17
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_18
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_19
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_20
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_21
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_22
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_23
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_24
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_25
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_26
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_43
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_44
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_45
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_46
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_47
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_27
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_28
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_29
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_30
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_31
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_32
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_33
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_34
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_48
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_49
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_50
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_51
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_52
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_35
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_36
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_37
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_38
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_39
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_40
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_41
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_42
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_53
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_54
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_55
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_56
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_57
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_58
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_59
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_60
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_61
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_62
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_63
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_64
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_65
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_66
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_67
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_68
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_69
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_70
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_71
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_72
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_73
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_74
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_75
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_76
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_77
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_78
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_79
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_80
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_81
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_82
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_83
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_84
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_85
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_86
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_87
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_88
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_89
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_106
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_107
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_108
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_109
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_110
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_90
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_91
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_92
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_93
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_94
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_95
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_96
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_97
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_111
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_112
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_113
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_114
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_115
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_98
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_99
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_100
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_101
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_102
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_103
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_104
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_105
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_116
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_117
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_118
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_119
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_120
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_134
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_135
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_136
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_137
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_138
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_139
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_140
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_141
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_158
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_159
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_160
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_161
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_162
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_142
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_143
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_144
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_145
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_146
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_147
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_148
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_149
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_163
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_164
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_165
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_166
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_167
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_150
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_151
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_152
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_153
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_154
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_155
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_156
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_157
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_168
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_169
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_170
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_171
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_172
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_196
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_197
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_198
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_199
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_200
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_201
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_202
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_203
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_204
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_205
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_206
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_207
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_208
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_209
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_210
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_211
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_212
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_213
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_214
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_215
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_216
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_217
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_218
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_219
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_220
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_221
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_222
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_223
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_224
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_225
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_226
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_227
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_228
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_243
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_244
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_245
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_246
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_247
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_248
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_229
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_230
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_231
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_232
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_233
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_234
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_235
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_249
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_250
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_251
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_252
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_253
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_254
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_236
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_237
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_238
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_239
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_240
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_241
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_242
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_255
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_256
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_257
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_258
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_259
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_260
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_274
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_275
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_276
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_277
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_278
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_279
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_280
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_295
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_296
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_297
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_298
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_299
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_300
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_281
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_282
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_283
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_284
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_285
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_286
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_287
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_301
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_302
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_303
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_304
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_305
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_306
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_288
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_289
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_290
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_291
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_292
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_293
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_294
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_307
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_308
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_309
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_310
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_311
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_312
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_261
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_262
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_263
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_264
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_265
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_266
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_267
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_268
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_269
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_270
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_271
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_272
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_273
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_313
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_314
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_315
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_316
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_317
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_318
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_319
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_320
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_321
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_322
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_323
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_324
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_325
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_326
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_327
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_328
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_329
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_330
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_331
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_332
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_333
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_334
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_335
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_336
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_337
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_338
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_339
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_340
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_341
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_342
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_343
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_370
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_371
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_372
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_373
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_374
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_375
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_376
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_377
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_385
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_386
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_387
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_388
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_389
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_390
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_391
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_392
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_393
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_394
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_395
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_396
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_397
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_398
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_399
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_400
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_401
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_402
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_403
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_404
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_405
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_406
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_407
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_408
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_409
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_410
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_411
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_412
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_413
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_414
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_415
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_379
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_380
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_381
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_382
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_383
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_384
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_416
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_417
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_418
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_419
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_420
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_421
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_422
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_423
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_424
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_425
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_426
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_427
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_428
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_429
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_430
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_431
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_432
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_433
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_434
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_435
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_436
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_437
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_438
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_439
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_440
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_441
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_442
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_443
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_444
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_445
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_446
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_447
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_448
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_449
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_450
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_451
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_452
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_453
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_454
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_455
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_456
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_457
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_458
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_459
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_460
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_461
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_478
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_479
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_480
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_481
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_482
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_483
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_484
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_485
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_502
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_503
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_504
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_505
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_462
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_463
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_464
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_465
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_466
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_467
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_468
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_469
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_486
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_487
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_488
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_489
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_490
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_491
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_492
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_493
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_506
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_507
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_508
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_509
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_470
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_471
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_472
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_473
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_474
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_475
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_476
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_477
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_494
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_495
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_496
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_497
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_498
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_499
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_500
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_501
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_510
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_511
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_512
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_513
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_514
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_515
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_516
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_517
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_518
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_519
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_520
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_521
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_538
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_539
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_540
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_541
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_542
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_543
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_544
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_545
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_562
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_563
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_564
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_565
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_522
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_523
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_524
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_525
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_526
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_527
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_528
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_529
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_546
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_547
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_548
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_549
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_550
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_551
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_552
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_553
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_566
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_567
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_568
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_569
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_530
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_531
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_532
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_533
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_534
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_535
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_536
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_537
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_554
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_555
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_556
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_557
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_558
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_559
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_560
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_561
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_570
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_571
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_572
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_573
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_574
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_575
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_576
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_577
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_578
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_579
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_580
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_581
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_582
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_583
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_584
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_585
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_586
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_587
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_588
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_589
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_590
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_591
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_592
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_593
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_594
-data_4C3A708C:
-	# 2 bytes the code takes the address of: func_4C15F367 0x4C15F367 `mov data_4C3A708C, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	3, 0	# +0
 
-Str_Reverb_2:	.asciz "     Reverb     "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A709F, 0x3A70A6
-Str_Chorus:	.asciz "     Chorus     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A70B7, 0x3A70BE
-Str_Trio_Chorus:	.asciz "  Trio Chorus   "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A70CF, 0x3A70D6
-Str_Ensemble:	.asciz "    Ensemble    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A70E7, 0x3A70EE
-Str_Modulated_Chorus:	.asciz "Modulated Chorus"
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A70FF, 0x3A7106
-Str_Celeste:	.asciz "    Celeste     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7117, 0x3A711E
-Str_Mod_Celeste:	.asciz "  Mod. Celeste  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A712F, 0x3A7136
-Str_Phaser:	.asciz "     Phaser     "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7147, 0x3A714E
-Str_Flanger:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A715F, 0x3A7166
-Str_Rotary_Speaker:	.asciz " Rotary Speaker "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7177, 0x3A717E
-Str_Rock_Rotary:	.asciz "  Rock Rotary   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A718F, 0x3A7196
-Str_Tremolo:	.asciz "    Tremolo     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A71A7, 0x3A71AE
-Str_Auto_Pan:	.asciz "    Auto Pan    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A71BF, 0x3A71C6
-Str_Vibrato:	.asciz "    Vibrato     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A71D7, 0x3A71DE
-Str_Ring_Modulator:	.asciz " Ring Modulator "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A71EF, 0x3A71F6
-Str_Mixup:	.asciz "     Mixup      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7207, 0x3A720E
-Str_Parametric_EQ:	.asciz " Parametric EQ  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A721F, 0x3A7226
-Str_Enhancer:	.asciz "    Enhancer    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7237, 0x3A723E
-Str_Exciter:	.asciz "    Exciter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A724F, 0x3A7256
-Str_Auto_Wah:	.asciz "    Auto Wah    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7267, 0x3A726E
-Str_Pedal_Wah:	.asciz "   Pedal Wah    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A727F, 0x3A7286
-Str_LFO_Wah:	.asciz "    LFO Wah     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7297, 0x3A729E
-Str_Reverse_Wah:	.asciz "  Reverse Wah   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A72AF, 0x3A72B6
-Str_LFO_Filter:	.asciz "   LFO Filter   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A72C7, 0x3A72CE
-Str_Distortion:	.asciz "   Distortion   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A72DF, 0x3A72E6
-Str_Overdrive:	.asciz "   Overdrive    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A72F7, 0x3A72FE
-Str_Fuzz:	.asciz "      Fuzz      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A730F, 0x3A7316
-Str_Distorted_Amp:	.asciz " Distorted Amp  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7327, 0x3A732E
-Str_Limiter:	.asciz "    Limiter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A733F, 0x3A7346
-Str_Compressor:	.asciz "   Compressor   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7357, 0x3A735E
-Str_Slow_Attacker:	.asciz " Slow Attacker  "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A736F, 0x3A7376
-Str_Dual_Delay:	.asciz "   Dual Delay   "
-# census: opaque -- unknown-dump: 7 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A7387, 0x3A738E
-Str_Cross_Delay:	.asciz "  Cross Delay   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A739F, 0x3A73A6
-Str_Multi_Tap_Delay:	.asciz "Multi Tap Delay "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A73B7, 0x3A73BE
-Str_Delay_Complex:	.asciz " Delay Complex  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A73CF, 0x3A73D6
-Str_Vocal_Effect:	.asciz "  Vocal Effect  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A73E7, 0x3A73EE
-Str_Effect_Memory_2:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3A73FF, 0x3A741C
+func_4C15F367_Result_p20_0:	# REC_func_4C15F367_Result_p20 (1 bytes), then 515 x u32 the code indexes from +0 (read by func_4C15F0D9_entry_L6b 0x4C15F149 `mov (d0, a0), a0`)
+	REC_func_4C15F367_Result_p20	x0="\xAC"
+	tab_u32	3628869213, 72099421, 810296926, 1548494430, 2286691934, 3024889438, 3763086942, 206317150, 944514655, 1682712159, 1347167839, 2085365346, 2823562850, 3561760354, 4990562, 2420909667	# [0]
+	tab_u32	3159107167, 3897304671, 340534879, 1078732384, 1816929888, 2555127392, 3293324896, 743188064, 1481385571, 2219583075, 2957780579, 3695978083, 4031522403, 474752608, 1212950113, 1951147617	# [16]
+	tab_u32	2689345121, 3427542625, 4165740129, 608970337, 139208290, 877405796, 1615603300, 2353800804, 3091998308, 3830195812, 273426020, 1011623525, 1749821029, 2488018533, 3226216037, 3964413541	# [32]
+	tab_u32	407643749, 1145841254, 1884038758, 2622236262, 3360433766, 4098631270, 541861478, 1280058983, 2018256487, 2756453991, 3494651495, 4232848999, 676079207, 1414276712, 2152474216, 2890671720	# [48]
+	tab_u32	3628869224, 139208296, 944514665, 1749821033, 2555127401, 3360433769, 4165740137, 676079209, 1481385578, 2286691946, 3091998317, 3897304685, 407643757, 1212950126, 2286691950, 3091998314	# [64]
+	tab_u32	3897304682, 407643754, 1212950123, 2018256491, 2823562859, 3628869227, 2018256491, 2823562862, 3628869230, 139208302, 944514671, 139208303, 944514668, 1749821036, 2555127404, 3360433772	# [80]
+	tab_u32	4165740140, 676079212, 1481385581, 1749821037, 2555127407, 3360433775, 4165740143, 676079215, 3360433776, 4165740146, 676079218, 1481385587, 2286691955, 3091998323, 3897304691, 407643763	# [96]
+	tab_u32	1212950132, 2018256503, 2823562871, 3628869239, 139208311, 1212950136, 2018256500, 2823562868, 3628869236, 139208308, 944514677, 1749821045, 2555127413, 944514677, 1749821048, 2555127416	# [112]
+	tab_u32	3360433784, 4165740152, 3360433784, 4165740149, 676079221, 1481385590, 2286691958, 3091998326, 3897304694, 407643766, 676079223, 1481385593, 2286691961, 3091998329, 3897304697, 1816929913	# [128]
+	tab_u32	2555127422, 3293324926, 4031522430, 474752638, 1212950143, 1951147647, 2689345151, 3427542655, 4165740159, 608970367, 1347167872, 2085365376, 2890671744, 3695978112, 206317184, 1011623553	# [144]
+	tab_u32	1816929921, 2622236289, 3427542657, 4232849025, 743188097, 1548494466, 2353800834, 3159107202, 3964413570, 541861506, 1414276739, 2286691971, 3159107203, 4031522435, 608970371, 1481385604	# [160]
+	tab_u32	1682712196, 2555127431, 3427542663, 4990599, 877405832, 1749821064, 2353800840, 3226216068, 4098631300, 676079236, 1548494469, 2420909701, 3293324933, 2622236293, 3494651528, 72099464	# [176]
+	tab_u32	944514697, 1816929929, 2689345161, 4165740169, 743188101, 1615603334, 2488018566, 3360433798, 4232849030, 810296966, 3561760391, 139208329, 1011623562, 1884038794, 2756454026, 3628869258	# [192]
+	tab_u32	407643786, 1280059022, 2152474254, 3024889486, 3897304718, 474752654, 1347167887, 1548494479, 2420909714, 3293324946, 4165740178, 743188114, 1615603347, 2219583123, 3091998351, 3964413583	# [208]
+	tab_u32	541861519, 1414276752, 2286691984, 3159107216, 2488018576, 3360433811, 4232849043, 810296979, 1682712212, 2555127444, 4031522452, 608970384, 1481385617, 2353800849, 3226216081, 4098631313	# [224]
+	tab_u32	676079249, 3427542674, 4990612, 877405845, 1749821077, 2622236309, 3494651541, 340534933, 1347167883, 2353800843, 3360433803, 72099467, 1078732428, 2085365388, 3091998348, 4098631308	# [240]
+	tab_u32	810296972, 1816929933, 2823562893, 3830195853, 4232849037, 676079253, 1414276758, 2152474262, 2890671766, 3628869270, 72099478, 810296983, 1615603351, 2420909719, 3226216087, 4031522455	# [256]
+	tab_u32	541861527, 1347167896, 2152474264, 2957780632, 3763087000, 273426072, 1078732441, 1884038809, 2689345177, 3494651545, 4990617, 743188122, 1481385626, 2219583130, 2957780634, 3830195866	# [272]
+	tab_u32	407643802, 1280059035, 2152474267, 273426075, 1481385633, 2689345185, 3897304737, 810296993, 2018256546, 3226216098, 139208354, 3293324963, 4098631332, 608970404, 1414276773, 2219583141	# [288]
+	tab_u32	3024889509, 3830195877, 340534949, 1145841318, 1884038822, 2622236326, 3360433830, 4098631334, 541861542, 1347167911, 2152474279, 2957780647, 3897304743, 541861543, 1481385640, 2420909736	# [304]
+	tab_u32	3360433832, 4990632, 810297001, 1615603369, 2420909737, 3226216105, 4031522473, 541861545, 1347167914, 2152474282, 2085365418, 3024889507, 3964413603, 608970403, 1548494500, 2488018596	# [320]
+	tab_u32	3024889508, 3897304746, 474752682, 1347167915, 2219583147, 3091998379, 3964413611, 541861547, 1414276780, 2286692012, 3159107244, 4031522476, 608970412, 1481385645, 2219583149, 2957780653	# [336]
+	tab_u32	3695978157, 139208365, 877405870, 1615603374, 2353800878, 3091998382, 3830195886, 273426094, 1011623599, 1749821103, 2555127471, 3360433839, 4165740207, 676079279, 1481385648, 2286692016	# [352]
+	tab_u32	3091998384, 3897304752, 340534960, 1078732465, 1816929969, 2555127473, 3494651569, 139208369, 1078732466, 2018256562, 2957780658, 3897304754, 541861554, 1481385651, 273426099, 1212950199	# [368]
+	tab_u32	2152474295, 3091998391, 4031522487, 676079287, 1615603384, 2555127480, 1347167928, 2286692028, 3226216124, 4165740220, 2420909756, 3360433843, 4990643, 944514740, 1884038836, 2823562932	# [384]
+	tab_u32	3763087028, 407643828, 3494651573, 139208376, 1078732473, 2018256569, 2957780665, 3897304761, 541861561, 1481385658, 810297018, 1749821117, 2689345213, 3628869309, 1347167933, 2286692021	# [400]
+	tab_u32	3226216117, 4165740213, 810297013, 1749821110, 2689345206, 3628869302, 2420909750, 3360433850, 4990650, 944514747, 1884038843, 2823562939, 3763087035, 407643835, 273426108, 1212950206	# [416]
+	tab_u32	2152474302, 3091998398, 4031522494, 676079294, 1615603391, 2555127487, 3494651583, 139208383, 1078732480, 2018256576, 810297024, 1749821124, 2689345220, 3628869316, 273426116, 1212950213	# [432]
+	tab_u32	2152474309, 3091998405, 1884038853, 2823562953, 3763087049, 407643849, 2957780682, 3897304768, 541861568, 1481385665, 2420909761, 3360433857, 4990657, 944514754, 4031522498, 676079301	# [448]
+	tab_u32	1615603398, 2555127494, 3494651590, 139208390, 1078732487, 2018256583, 1347167943, 2286692042, 3226216138, 4165740234, 1884038858, 2823562946, 3763087042, 407643842, 1347167939, 2286692035	# [464]
+	tab_u32	3226216131, 4165740227, 2957780675, 3897304775, 541861575, 1481385672, 2420909768, 3360433864, 4990664, 944514761, 810297033, 1749821131, 2689345227, 3628869323, 340534987, 1347167948	# [480]
+	tab_u32	2353800908, 3360433868, 72099532, 1078732493, 2085365453, 3091998413, 4098631373, 877405901, 1884038862, 2957780686, 3897304782, 676079310, 1749821135, 2689345231, 3360433871, 4031522511	# [496]
+	tab_u32	340534991, 1011623632, 1682712272	# [512]
+# census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x3A7089, 0x3A708C
+func_4C15F367_Result_1:	# REC_func_4C15F367_Result (20 bytes), then 223 x u32 the code indexes from +0 (read by func_4C15F02A_entry_L24 0x4C15F053 `movhu (d1, a2), d0`; func_4C15F0D9_entry_L3b 0x4C15F119 `movhu (a1), d0`)
+	REC_func_4C15F367_Result	x0="\x03\x00     Reverb     \x00\x00"
+	tab_u32	1278896252, 538968103, 1126178848, 1970433896, 538976371, 8224, 1278896264, 538968088, 1869181524, 1869103904, 544437618, 8224, 1278896420, 538968103, 1850023968, 1651336563	# [0]
+	tab_u32	538994028, 8224, 1278896516, 1867317287, 1634497892, 543450484, 1919903811, 29557, 1278896672, 538968077, 1698897952, 1953719660, 538976357, 8224, 1278896828, 538968077	# [16]
+	tab_u32	778334029, 1818575648, 1702130533, 8224, 1278896880, 538968103, 1344282656, 1702060392, 538976370, 8224, 1278896932, 538968103, 1816535072, 1701277281, 538976370, 8224	# [32]
+	tab_u32	1278897088, 1377828871, 1918989423, 1884495993, 1701536101, 8306, 1278897244, 538968070, 1801678674, 1953452576, 544830049, 8224, 1278897272, 538968072, 1918115872, 1819241829	# [48]
+	tab_u32	538976367, 8224, 1278897296, 538968071, 1967202336, 1344302964, 538996321, 8224, 1278897328, 538968072, 1767252000, 1952543330, 538976367, 8224, 1278897356, 1377828868	# [64]
+	tab_u32	543649385, 1969516365, 1869898092, 8306, 1278897388, 538968068, 1293951008, 1886746729, 538976288, 8224, 1278897404, 1344274440, 1835102817, 1769108581, 1363484771, 8224	# [80]
+	tab_u32	1278897420, 538968070, 1850023968, 1668178280, 538997349, 8224, 1278897452, 538968067, 2017796128, 1702127971, 538976370, 8224, 1278897476, 538968069, 1967202336, 1461743476	# [96]
+	tab_u32	538994785, 8224, 1278897488, 538968067, 1684361248, 1461742689, 538994785, 8224, 1278897508, 538968070, 1179394080, 1633099855, 538976360, 8224, 1278897520, 538968072	# [112]
+	tab_u32	1702258002, 543519602, 543711575, 8224, 1278897544, 538968070, 1330007072, 1818838560, 544367988, 8224, 1278897576, 538968070, 1936278560, 1953656692, 544108393, 8224	# [128]
+	tab_u32	1278897600, 538968070, 1702252320, 1769104498, 538994038, 8224, 1278897624, 538968066, 538976288, 2054845766, 538976288, 8224, 1278897648, 1142947852, 1869902697, 1684370546	# [144]
+	tab_u32	1886208288, 8224, 1278897656, 538968068, 1766596640, 1702127981, 538976370, 8224, 1278897704, 538968068, 1836008224, 1936028272, 544370547, 8224, 1278897720, 1394606084	# [160]
+	tab_u32	544698220, 1635021889, 1919249251, 8224, 1278897736, 538968124, 1635075104, 1698963564, 544825708, 8224, 1278897752, 538968124, 1936683587, 1698963571, 544825708, 8224	# [176]
+	tab_u32	1278897992, 1967980552, 543781996, 544235860, 1634493764, 8313, 1278898232, 1142947847, 2036427877, 1836008224, 2019912816, 8224, 1278898264, 538968070, 1633906518, 1715806316	# [192]
+	tab_u32	1952671078, 8224, 1278898292, 1159725066, 1667589734, 1699553396, 2037542765, 8224, 0, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [208]
+
 Str_empty_280:	.asciz "%"
 
 func_4C15F0D9_entry_Lc4_Records_2:	# 1 x REC_func_4C15F0D9_entry_Lc4_Records_2 (128 bytes each); read by func_4C15F0D9_entry_Lc4 0x4C15F1A2 `movbu (1, a0), d0`; func_4C15F0D9_entry_Lc4 0x4C15F1A2 `movbu (a0), d1`
@@ -23452,697 +22869,66 @@ func_4C15F0D9_entry_Lc4_Records_2:	# 1 x REC_func_4C15F0D9_entry_Lc4_Records_2 (
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3AAD9E, 0x3AADB2
 	.space	1646, 0xFF
-	# 563 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_16
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_17
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_18
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_19
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_20
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_21
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_22
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_23
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_24
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_25
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_26
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_43
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_44
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_45
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_46
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_47
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_27
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_28
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_29
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_30
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_31
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_32
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_33
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_34
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_48
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_49
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_50
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_51
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_52
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_35
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_36
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_37
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_38
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_39
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_40
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_41
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_42
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_53
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_54
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_55
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_56
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_57
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_58
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_59
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_60
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_61
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_62
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_63
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_64
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_65
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_66
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_67
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_68
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_69
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_70
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_71
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_72
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_73
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_74
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_75
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_76
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_77
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_78
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_79
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_80
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_81
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_82
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_83
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_84
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_85
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_86
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_87
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_88
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_89
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_106
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_107
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_108
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_109
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_110
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_90
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_91
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_92
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_93
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_94
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_95
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_96
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_97
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_111
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_112
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_113
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_114
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_115
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_98
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_99
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_100
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_101
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_102
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_103
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_104
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_105
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_116
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_117
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_118
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_119
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_120
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_121
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_122
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_123
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_124
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_125
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_126
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_127
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_128
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_129
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_130
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_131
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_132
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_133
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_134
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_135
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_136
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_137
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_138
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_139
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_140
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_141
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_158
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_159
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_160
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_161
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_162
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_142
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_143
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_144
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_145
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_146
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_147
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_148
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_149
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_163
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_164
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_165
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_166
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_167
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_150
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_151
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_152
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_153
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_154
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_155
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_156
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_157
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_168
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_169
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_170
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_171
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_172
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_173
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_174
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_175
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_176
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_177
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_178
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_179
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_180
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_181
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_182
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_183
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_184
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_185
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_196
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_197
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_198
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_199
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_200
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_201
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_202
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_203
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_204
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_205
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_206
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_207
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_208
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_209
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_210
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_211
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_212
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_213
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_214
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_215
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_216
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_217
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_218
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_219
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_220
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_221
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_222
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_223
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_224
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_225
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_226
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_227
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_228
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_243
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_244
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_245
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_246
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_247
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_248
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_229
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_230
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_231
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_232
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_233
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_234
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_235
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_249
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_250
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_251
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_252
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_253
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_254
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_236
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_237
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_238
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_239
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_240
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_241
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_242
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_255
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_256
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_257
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_258
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_259
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_260
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_344
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_345
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_346
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_347
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_348
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_349
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_350
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_351
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_352
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_353
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_354
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_355
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_356
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_274
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_275
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_276
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_277
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_278
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_279
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_280
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_295
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_296
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_297
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_298
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_299
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_300
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_281
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_282
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_283
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_284
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_285
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_286
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_287
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_301
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_302
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_303
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_304
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_305
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_306
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_288
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_289
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_290
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_291
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_292
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_293
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_294
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_307
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_308
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_309
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_310
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_311
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_312
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_357
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_358
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_359
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_360
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_361
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_362
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_363
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_364
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_365
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_366
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_367
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_368
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_369
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_261
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_262
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_263
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_264
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_265
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_266
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_267
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_268
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_269
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_270
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_271
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_272
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_273
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_313
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_314
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_315
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_316
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_317
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_318
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_319
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_320
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_321
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_322
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_323
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_324
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_325
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_326
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_327
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_328
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_329
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_330
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_331
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_332
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_333
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_334
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_335
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_336
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_337
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_338
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_339
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_340
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_341
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_342
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_343
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_370
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_371
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_372
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_373
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_374
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_375
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_376
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_377
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_385
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_386
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_387
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_388
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_389
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_390
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_391
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_392
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_393
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_394
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_395
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_396
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_397
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_398
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_399
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_400
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_401
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_402
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_403
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_404
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_405
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_406
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_407
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_408
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_409
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_410
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_411
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_412
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_413
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_414
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_415
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_379
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_380
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_381
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_382
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_383
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_384
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_416
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_417
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_418
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_419
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_420
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_421
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_422
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_423
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_424
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_425
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_426
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_427
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_428
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_429
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_430
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_431
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_432
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_433
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_434
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_435
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_436
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_437
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_438
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_439
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_440
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_441
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_442
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_443
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_444
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_445
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_446
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_447
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_448
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_449
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_450
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_451
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_452
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_453
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_454
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_455
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_456
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_457
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_458
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_459
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_460
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_461
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_478
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_479
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_480
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_481
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_482
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_483
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_484
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_485
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_502
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_503
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_504
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_505
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_462
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_463
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_464
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_465
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_466
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_467
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_468
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_469
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_486
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_487
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_488
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_489
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_490
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_491
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_492
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_493
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_506
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_507
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_508
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_509
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_470
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_471
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_472
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_473
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_474
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_475
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_476
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_477
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_494
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_495
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_496
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_497
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_498
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_499
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_500
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_501
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_510
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_511
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_512
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_513
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_514
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_515
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_516
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_517
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_518
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_519
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_520
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_521
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_538
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_539
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_540
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_541
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_542
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_543
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_544
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_545
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_562
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_563
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_564
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_565
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_522
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_523
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_524
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_525
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_526
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_527
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_528
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_529
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_546
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_547
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_548
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_549
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_550
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_551
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_552
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_553
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_566
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_567
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_568
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_569
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_530
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_531
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_532
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_533
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_534
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_535
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_536
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_537
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_554
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_555
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_556
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_557
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_558
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_559
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_560
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_561
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_570
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_571
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_572
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_573
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_574
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_575
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_576
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_577
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_578
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_579
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_580
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_581
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_582
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_583
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_584
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_585
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_586
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_587
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_588
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_599
-data_4C3ABCEC:
-	# 2 bytes the code takes the address of: func_4C15F367 0x4C15F367 `mov data_4C3ABCEC, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	3, 0	# +0
 
-Str_Reverb_3:	.asciz "     Reverb     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABCFF, 0x3ABD06
-Str_Chorus_2:	.asciz "     Chorus     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABD17, 0x3ABD1E
-Str_Trio_Chorus_2:	.asciz "  Trio Chorus   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABD2F, 0x3ABD36
-Str_Ensemble_2:	.asciz "    Ensemble    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABD47, 0x3ABD4E
-Str_Ensemble_D_W:	.asciz "  Ensemble D/W  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABD5F, 0x3ABD66
-Str_Modulated_Chorus_2:	.asciz "Modulated Chorus"
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABD77, 0x3ABD7E
-Str_Mod_Chorus_D_W:	.asciz " Mod.Chorus D/W "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABD8F, 0x3ABD96
-Str_Celeste_2:	.asciz "    Celeste     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABDA7, 0x3ABDAE
-Str_Mod_Celeste_2:	.asciz "  Mod. Celeste  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABDBF, 0x3ABDC6
-Str_Phaser_2:	.asciz "     Phaser     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABDD7, 0x3ABDDE
-Str_Phaser_D_W:	.asciz "   Phaser D/W   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABDEF, 0x3ABDF6
-Str_Flanger_2:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE07, 0x3ABE0E
-Str_Flanger_D_W:	.asciz "  Flanger D/W   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE1F, 0x3ABE26
-Str_Rotary_Speaker_2:	.asciz " Rotary Speaker "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE37, 0x3ABE3E
-Str_Rock_Rotary_2:	.asciz "  Rock Rotary   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE4F, 0x3ABE56
-Str_Tremolo_2:	.asciz "    Tremolo     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE67, 0x3ABE6E
-Str_Auto_Pan_2:	.asciz "    Auto Pan    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE7F, 0x3ABE86
-Str_Vibrato_2:	.asciz "    Vibrato     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABE97, 0x3ABE9E
-Str_Ring_Modulator_2:	.asciz " Ring Modulator "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABEAF, 0x3ABEB6
-Str_Mixup_2:	.asciz "     Mixup      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABEC7, 0x3ABECE
-Str_Parametric_EQ_2:	.asciz " Parametric EQ  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABEDF, 0x3ABEE6
-Str_Enhancer_2:	.asciz "    Enhancer    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABEF7, 0x3ABEFE
-Str_Exciter_2:	.asciz "    Exciter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF0F, 0x3ABF16
-Str_Auto_Wah_2:	.asciz "    Auto Wah    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF27, 0x3ABF2E
-Str_Pedal_Wah_2:	.asciz "   Pedal Wah    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF3F, 0x3ABF46
-Str_LFO_Wah_2:	.asciz "    LFO Wah     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF57, 0x3ABF5E
-Str_Reverse_Wah_2:	.asciz "  Reverse Wah   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF6F, 0x3ABF76
-Str_LFO_Filter_2:	.asciz "   LFO Filter   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF87, 0x3ABF8E
-Str_Distortion_2:	.asciz "   Distortion   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABF9F, 0x3ABFA6
-Str_Overdrive_2:	.asciz "   Overdrive    "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABFB7, 0x3ABFBE
-Str_Fuzz_2:	.asciz "      Fuzz      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABFCF, 0x3ABFD6
-Str_Distorted_Amp_2:	.asciz " Distorted Amp  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABFE7, 0x3ABFEE
-Str_Limiter_2:	.asciz "    Limiter     "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3ABFFF, 0x3AC006
-Str_Compressor_2:	.asciz "   Compressor   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC017, 0x3AC01E
-Str_Slow_Attacker_2:	.asciz " Slow Attacker  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC02F, 0x3AC036
-Str_Dual_Delay_2:	.asciz "   Dual Delay   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC047, 0x3AC04E
-Str_Cross_Delay_2:	.asciz "  Cross Delay   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC05F, 0x3AC066
-Str_Multi_Tap_Delay_2:	.asciz "Multi Tap Delay "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC077, 0x3AC07E
-Str_Delay_Complex_2:	.asciz " Delay Complex  "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC08F, 0x3AC096
-Str_Space:	.asciz "     Space      "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC0A7, 0x3AC0AE
-Str_Effect_Memory_3:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3AC0BF, 0x3AC0DC
+func_4C15F367_Result_p20_1:	# REC_func_4C15F367_Result_p20 (1 bytes), then 562 x u32 the code indexes from +0 (read by func_4C15F0D9_entry_L6b 0x4C15F149 `mov (d0, a0), a0`)
+	REC_func_4C15F367_Result_p20	x0="\xAC"
+	tab_u32	3628869213, 72099421, 810296926, 1548494430, 2286691934, 3024889438, 3763086942, 206317150, 944514655, 1682712159, 1347167839, 2085365346, 2823562850, 3561760354, 4990562, 2420909667	# [0]
+	tab_u32	3159107167, 3897304671, 340534879, 1078732384, 1816929888, 2555127392, 3293324896, 743188064, 1481385571, 2219583075, 2957780579, 3695978083, 4031522403, 474752608, 1212950113, 1951147617	# [16]
+	tab_u32	2689345121, 3427542625, 4165740129, 608970337, 139208290, 877405796, 1615603300, 2353800804, 3091998308, 3830195812, 273426020, 1011623525, 1749821029, 2488018533, 3226216037, 3964413541	# [32]
+	tab_u32	407643749, 1145841254, 1884038758, 2622236262, 3360433766, 4098631270, 541861478, 1280058983, 2018256487, 2756453991, 3494651495, 4232848999, 676079207, 1414276712, 2152474216, 2890671720	# [48]
+	tab_u32	3628869224, 139208296, 944514665, 1749821033, 2555127401, 3360433769, 4165740137, 676079209, 1481385578, 2286691946, 3091998317, 3897304685, 407643757, 1212950126, 2286691950, 3091998314	# [64]
+	tab_u32	3897304682, 407643754, 1212950123, 2018256491, 2823562859, 3628869227, 2018256491, 2823562862, 3628869230, 139208302, 944514671, 139208303, 944514668, 1749821036, 2555127404, 3360433772	# [80]
+	tab_u32	4165740140, 676079212, 1481385581, 1749821037, 2555127407, 3360433775, 4165740143, 676079215, 1481385584, 2286691952, 3091998320, 3897304688, 407643760, 1212950129, 2018256497, 2823562865	# [96]
+	tab_u32	3628869233, 139208305, 944514674, 1749821042, 2555127410, 3360433778, 4165740146, 676079218, 1481385587, 2286691955, 3091998323, 3897304691, 407643763, 1212950132, 2018256503, 2823562871	# [112]
+	tab_u32	3628869239, 139208311, 1212950136, 2018256500, 2823562868, 3628869236, 139208308, 944514677, 1749821045, 2555127413, 944514677, 1749821048, 2555127416, 3360433784, 4165740152, 3360433784	# [128]
+	tab_u32	4165740149, 676079221, 1481385590, 2286691958, 3091998326, 3897304694, 407643766, 676079223, 1481385593, 2286691961, 3091998329, 3897304697, 407643769, 1212950138, 2018256506, 2823562874	# [144]
+	tab_u32	3628869242, 139208314, 944514683, 1749821051, 2555127419, 3360433787, 4165740155, 676079227, 1481385596, 1816929916, 2555127422, 3293324926, 4031522430, 474752638, 1212950143, 1951147647	# [160]
+	tab_u32	2689345151, 3427542655, 4165740159, 608970367, 1347167872, 2085365376, 2890671744, 3695978112, 206317184, 1011623553, 1816929921, 2622236289, 3427542657, 4232849025, 743188097, 1548494466	# [176]
+	tab_u32	2353800834, 3159107202, 3964413570, 541861506, 1414276739, 2286691971, 3159107203, 4031522435, 608970371, 1481385604, 1682712196, 2555127431, 3427542663, 4990599, 877405832, 1749821064	# [192]
+	tab_u32	2353800840, 3226216068, 4098631300, 676079236, 1548494469, 2420909701, 3293324933, 2622236293, 3494651528, 72099464, 944514697, 1816929929, 2689345161, 4165740169, 743188101, 1615603334	# [208]
+	tab_u32	2488018566, 3360433798, 4232849030, 810296966, 3561760391, 139208329, 1011623562, 1884038794, 2756454026, 3628869258, 3024889482, 3897304731, 474752667, 1347167900, 2219583132, 3091998364	# [224]
+	tab_u32	3964413596, 541861532, 1414276765, 2286691997, 3159107229, 4031522461, 608970397, 407643806, 1280059022, 2152474254, 3024889486, 3897304718, 474752654, 1347167887, 1548494479, 2420909714	# [240]
+	tab_u32	3293324946, 4165740178, 743188114, 1615603347, 2219583123, 3091998351, 3964413583, 541861519, 1414276752, 2286691984, 3159107216, 2488018576, 3360433811, 4232849043, 810296979, 1682712212	# [256]
+	tab_u32	2555127444, 4031522452, 608970384, 1481385617, 2353800849, 3226216081, 4098631313, 676079249, 3427542674, 4990612, 877405845, 1749821077, 2622236309, 3494651541, 1481385621, 2353800862	# [272]
+	tab_u32	3226216094, 4098631326, 676079262, 1548494495, 2420909727, 3293324959, 4165740191, 743188127, 1615603360, 2488018592, 3360433824, 340534944, 1347167883, 2353800843, 3360433803, 72099467	# [288]
+	tab_u32	1078732428, 2085365388, 3091998348, 4098631308, 810296972, 1816929933, 2823562893, 3830195853, 4232849037, 676079253, 1414276758, 2152474262, 2890671766, 3628869270, 72099478, 810296983	# [304]
+	tab_u32	1615603351, 2420909719, 3226216087, 4031522455, 541861527, 1347167896, 2152474264, 2957780632, 3763087000, 273426072, 1078732441, 1884038809, 2689345177, 3494651545, 4990617, 743188122	# [320]
+	tab_u32	1481385626, 2219583130, 2957780634, 3830195866, 407643802, 1280059035, 2152474267, 273426075, 1481385633, 2689345185, 3897304737, 810296993, 2018256546, 3226216098, 139208354, 3293324963	# [336]
+	tab_u32	4098631332, 608970404, 1414276773, 2219583141, 3024889509, 3830195877, 340534949, 1145841318, 1884038822, 2622236326, 3360433830, 4098631334, 541861542, 1347167911, 2152474279, 2957780647	# [352]
+	tab_u32	3897304743, 541861543, 1481385640, 2420909736, 3360433832, 4990632, 810297001, 1615603369, 2420909737, 3226216105, 4031522473, 541861545, 1347167914, 2152474282, 2085365418, 3024889507	# [368]
+	tab_u32	3964413603, 608970403, 1548494500, 2488018596, 3024889508, 3897304746, 474752682, 1347167915, 2219583147, 3091998379, 3964413611, 541861547, 1414276780, 2286692012, 3159107244, 4031522476	# [384]
+	tab_u32	608970412, 1481385645, 2219583149, 2957780653, 3695978157, 139208365, 877405870, 1615603374, 2353800878, 3091998382, 3830195886, 273426094, 1011623599, 1749821103, 2555127471, 3360433839	# [400]
+	tab_u32	4165740207, 676079279, 1481385648, 2286692016, 3091998384, 3897304752, 340534960, 1078732465, 1816929969, 2555127473, 3494651569, 139208369, 1078732466, 2018256562, 2957780658, 3897304754	# [416]
+	tab_u32	541861554, 1481385651, 273426099, 1212950199, 2152474295, 3091998391, 4031522487, 676079287, 1615603384, 2555127480, 1347167928, 2286692028, 3226216124, 4165740220, 2420909756, 3360433843	# [432]
+	tab_u32	4990643, 944514740, 1884038836, 2823562932, 3763087028, 407643828, 3494651573, 139208376, 1078732473, 2018256569, 2957780665, 3897304761, 541861561, 1481385658, 810297018, 1749821117	# [448]
+	tab_u32	2689345213, 3628869309, 1347167933, 2286692021, 3226216117, 4165740213, 810297013, 1749821110, 2689345206, 3628869302, 2420909750, 3360433850, 4990650, 944514747, 1884038843, 2823562939	# [464]
+	tab_u32	3763087035, 407643835, 273426108, 1212950206, 2152474302, 3091998398, 4031522494, 676079294, 1615603391, 2555127487, 3494651583, 139208383, 1078732480, 2018256576, 810297024, 1749821124	# [480]
+	tab_u32	2689345220, 3628869316, 273426116, 1212950213, 2152474309, 3091998405, 1884038853, 2823562953, 3763087049, 407643849, 2957780682, 3897304768, 541861568, 1481385665, 2420909761, 3360433857	# [496]
+	tab_u32	4990657, 944514754, 4031522498, 676079301, 1615603398, 2555127494, 3494651590, 139208390, 1078732487, 2018256583, 1347167943, 2286692042, 3226216138, 4165740234, 1884038858, 2823562946	# [512]
+	tab_u32	3763087042, 407643842, 1347167939, 2286692035, 3226216131, 4165740227, 2957780675, 3897304775, 541861575, 1481385672, 2420909768, 3360433864, 4990664, 944514761, 810297033, 1749821131	# [528]
+	tab_u32	2689345227, 3628869323, 340534987, 1347167948, 2353800908, 3360433868, 72099532, 1078732493, 2085365453, 3091998413, 4098631373, 877405901, 1884038862, 2957780686, 3897304782, 676079310	# [544]
+	tab_u32	1749821135, 407643855	# [560]
+# census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x3ABCE9, 0x3ABCEC
+func_4C15F367_Result_2:	# REC_func_4C15F367_Result (20 bytes), then 247 x u32 the code indexes from +0 (read by func_4C15F02A_entry_L24 0x4C15F053 `movhu (d1, a2), d0`; func_4C15F0D9_entry_L3b 0x4C15F119 `movhu (a1), d0`)
+	REC_func_4C15F367_Result	x0="\x03\x00     Reverb     \x00\x00"
+	tab_u32	1278915616, 538968103, 1126178848, 1970433896, 538976371, 8224, 1278915628, 538968088, 1869181524, 1869103904, 544437618, 8224, 1278915784, 538968103, 1850023968, 1651336563	# [0]
+	tab_u32	538994028, 8224, 1278915880, 538968077, 1702063685, 1701601901, 1462715424, 8224, 1278916036, 1867317287, 1634497892, 543450484, 1919903811, 29557, 1278916088, 1293942797	# [16]
+	tab_u32	1127113839, 1970433896, 792993907, 8279, 1278916244, 538968077, 1698897952, 1953719660, 538976357, 8224, 1278916296, 538968077, 778334029, 1818575648, 1702130533, 8224	# [32]
+	tab_u32	1278916348, 538968103, 1344282656, 1702060392, 538976370, 8224, 1278916400, 538968077, 1634226208, 544367987, 542584644, 8224, 1278916556, 538968103, 1816535072, 1701277281	# [48]
+	tab_u32	538976370, 8224, 1278916608, 538968077, 1851878470, 544367975, 542584644, 8224, 1278916764, 1377828871, 1918989423, 1884495993, 1701536101, 8306, 1278916816, 538968070	# [64]
+	tab_u32	1801678674, 1953452576, 544830049, 8224, 1278916844, 538968072, 1918115872, 1819241829, 538976367, 8224, 1278916868, 538968071, 1967202336, 1344302964, 538996321, 8224	# [80]
+	tab_u32	1278916900, 538968072, 1767252000, 1952543330, 538976367, 8224, 1278916928, 1377828868, 543649385, 1969516365, 1869898092, 8306, 1278916960, 538968068, 1293951008, 1886746729	# [96]
+	tab_u32	538976288, 8224, 1278916976, 1344274440, 1835102817, 1769108581, 1363484771, 8224, 1278916992, 538968070, 1850023968, 1668178280, 538997349, 8224, 1278917024, 538968067	# [112]
+	tab_u32	2017796128, 1702127971, 538976370, 8224, 1278917048, 538968069, 1967202336, 1461743476, 538994785, 8224, 1278917060, 538968067, 1684361248, 1461742689, 538994785, 8224	# [128]
+	tab_u32	1278917080, 538968070, 1179394080, 1633099855, 538976360, 8224, 1278917092, 538968072, 1702258002, 543519602, 543711575, 8224, 1278917116, 538968070, 1330007072, 1818838560	# [144]
+	tab_u32	544367988, 8224, 1278917148, 538968070, 1936278560, 1953656692, 544108393, 8224, 1278917172, 538968070, 1702252320, 1769104498, 538994038, 8224, 1278917196, 538968066	# [160]
+	tab_u32	538976288, 2054845766, 538976288, 8224, 1278917220, 1142947852, 1869902697, 1684370546, 1886208288, 8224, 1278917228, 538968068, 1766596640, 1702127981, 538976370, 8224	# [176]
+	tab_u32	1278917276, 538968068, 1836008224, 1936028272, 544370547, 8224, 1278917292, 1394606084, 544698220, 1635021889, 1919249251, 8224, 1278917308, 538968124, 1635075104, 1698963564	# [192]
+	tab_u32	544825708, 8224, 1278917324, 538968124, 1936683587, 1698963571, 544825708, 8224, 1278917564, 1967980552, 543781996, 544235860, 1634493764, 8313, 1278917804, 1142947847	# [208]
+	tab_u32	2036427877, 1836008224, 2019912816, 8224, 1278917836, 538968065, 1394614304, 1701011824, 538976288, 8224, 1278917864, 1159725076, 1667589734, 1699553396, 2037542765, 8224	# [224]
+	tab_u32	0, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [240]
+
 Str_empty_279:	.asciz ")"
 
 func_4C15F0D9_entry_Lc4_Records_3:	# 1 x REC_func_4C15F0D9_entry_Lc4_Records_3 (128 bytes each); read by func_4C15F0D9_entry_Lc4 0x4C15F1A2 `movbu (1, a0), d0`; func_4C15F0D9_entry_Lc4 0x4C15F1A2 `movbu (a0), d1`
@@ -24226,27 +23012,15 @@ func_4C15F0D9_entry_Lc4_Records_3:	# 1 x REC_func_4C15F0D9_entry_Lc4_Records_3 (
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3AF9DE, 0x3AFA06
 	.space	1754, 0xFF
-	# 10 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_186
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_187
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_188
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_189
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_190
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_191
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_192
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_193
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_194
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_195
-data_4C3B0108:
-	# a string, 2 bytes with its pad, read by func_4C15F367 0x4C15F367 `mov data_4C3B0108, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
-	.asciz	"\n"
 
-Str_Band_Chorus:	.asciz "  Band Chorus   "
-# census: opaque -- unknown-dump: 7 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3B011B, 0x3B0122
-Str_Effect_Memory_4:	.asciz " Effect Memory  "
-# census: opaque -- unknown-dump: 29 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3B0133, 0x3B0150
+func_4C15F367_Result_p20_2:	# REC_func_4C15F367_Result_p20 (1 bytes), then 9 x u32 the code indexes from +0 (read by func_4C15F0D9_entry_L6b 0x4C15F149 `mov (d0, a0), a0`)
+	REC_func_4C15F367_Result_p20	x0="\x88"
+	tab_u32	3091998332, 3897304700, 407643772, 1145841277, 1951147645, 2689345149, 3494651517, 206317181, 1078732414	# [0]
+# census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x3B0105, 0x3B0108
+func_4C15F367_Result_3:	# REC_func_4C15F367_Result (20 bytes), then 13 x u32 the code indexes from +0 (read by func_4C15F02A_entry_L24 0x4C15F053 `movhu (d1, a2), d0`; func_4C15F0D9_entry_L3b 0x4C15F119 `movhu (a1), d0`)
+	REC_func_4C15F367_Result	x0="\n\x00  Band Chorus   \x00\x00"
+	tab_u32	1278935264, 1159725066, 1667589734, 1699553396, 2037542765, 8224, 0, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4C15F079_Var_2:	# u16, a constant; read / written by func_4C15F079 0x4C15F079: `movhu (func_4C15F079_Var_2), d0`; func_4C1606FA_entry_Lfc 0x4C1607FB: `movhu (func_4C15F079_Var_2), d0`
 	.word	2
@@ -24260,18 +23034,15 @@ func_4C15F0D9_entry_Lc4_Records_4:	# 1 x REC_func_4C15F0D9_entry_Lc4_Records_4 (
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3B3B52, 0x3B3B66
 	.space	1518, 0xFF
-	# 4 addresses [INFERENCE: a pointer table: every word is 0 or a named address]; no instruction reads them (tools/data_readers.py)
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_595
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_596
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_597
-	.long	SndRecTriFieldGet2_entry_L16_Table_2_p0_598
-data_4C3B4164:
-	# 2 bytes the code takes the address of: func_4C15F367 0x4C15F367 `mov data_4C3B4164, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	4, 0	# +0
 
-Str_Vocal_Reverb:	.asciz "  Vocal Reverb  "
-# census: opaque -- unknown-dump: 29 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3B4177, 0x3B4194
+func_4C15F367_Result_p20_3:	# REC_func_4C15F367_Result_p20 (1 bytes), then 3 x u32 the code indexes from +0 (read by func_4C15F0D9_entry_L6b 0x4C15F149 `mov (d0, a0), a0`)
+	REC_func_4C15F367_Result_p20	x0="\x88"
+	tab_u32	2890671824, 3494651600, 4098631376	# [0]
+# census: opaque -- unknown-dump: 3 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x3B4161, 0x3B4164
+func_4C15F367_Result_4:	# REC_func_4C15F367_Result (20 bytes), then 7 x u32 the code indexes from +0 (read by func_4C15F02A_entry_L24 0x4C15F053 `movhu (d1, a2), d0`; func_4C15F0D9_entry_L3b 0x4C15F119 `movhu (a1), d0`)
+	REC_func_4C15F367_Result	x0="\x04\x00  Vocal Reverb  \x00\x00"
+	tab_u32	1278951764, 538968064, 538976288, 538976288, 538976288, 8224, 0	# [0]
 
 func_4C15F079_Var_3:	# u16, a constant; read / written by func_4C15F079 0x4C15F079: `movhu (func_4C15F079_Var_3), d0`; func_4C1606FA_entry_Lfc 0x4C1607FB: `movhu (func_4C15F079_Var_3), d0`
 	.word	1
@@ -27001,12 +25772,8 @@ func_4C004FBF_entry_L30_Table_2:	# 63 x u8, 0..255; read by func_4C004FBF_entry_
 	tab_u8	0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 17, 17, 0	# [32]
 	tab_u8	0, 17, 17, 0, 0, 17, 17, 0, 0, 17, 17, 0, 255, 255, 255	# [48]
 
-func_4C16DD5B_Var:	# u32, a constant; read / written by func_4C16DD5B 0x4C16DD5B: `mov (a0), a0`; func_4C16DF59 0x4C16DF59: `mov (a0), a0`
-	.long	0x500deb5c
-func_4C16DD5B_Var_2:	# u32, a constant; read / written by func_4C16DD5B 0x4C16DD5B: `mov (4, a0), a1`; func_4C16DF59 0x4C16DF59: `mov (4, a0), a1`
-	.long	0x500dec5c
-func_4C16DD5B_Var_3:	# u32, a constant; read / written by func_4C16DD5B 0x4C16DD5B: `mov (8, a0), a2`; func_4C16DF59 0x4C16DF59: `mov (8, a0), a2`
-	.long	0x500dec9c
+func_4C16DD5B_Var:	# REC_func_4C16DD5B_ArgA0 (12 bytes): the layout func_4C16DD5B 0x4C16DD5B reads through its argument a0 (passed by func_4C16DC9F_Lb 0x4C16DCAA `call func_4C16DD5B_entry, [d2,d3,a2,a3], 0x28`); the layout func_4C16DF59 0x4C16DF59 reads through its argument a0 (passed by func_4C16DCDC_L43 0x4C16DD1F `call func_4C16DF59_entry, [d2,d3,a2,a3], 0x30`)
+	REC_func_4C16DD5B_ArgA0	f0=0x500DEB5C, f4=0x500DEC5C, f8=0x500DEC9C
 
 func_4C16DC42_L3a_Records:	# 3 x REC_func_4C16DC42_L3a_Records (16 bytes each); read by func_4C16DC42_L3a 0x4C16DC7C `mov (d0, a0), d1`
 	REC_func_4C16DC42_L3a_Records	1343089500, 1343089564, 1343089628, 1343089692

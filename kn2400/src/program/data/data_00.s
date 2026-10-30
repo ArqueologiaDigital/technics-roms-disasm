@@ -130,45 +130,26 @@ PfDoubleToDecimal_Table:	# 5 x u32, 0..1; read by PfDoubleToDecimal 0x50122BB0: 
 	tab_u32	1, 0, 0, 0, 0
 LibF64Zero_Table:	# 2 x u32, 0..0; read by LibF64Zero : `mov	(a0), d1`
 	tab_u32	0, 0
-func_5018D239_Table:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
 
-func_5018D239_Var:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x50123f57
+func_5018D239_Table:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_50123F57, itskpri=3, x14="\x00\x00", stksz=3072
+func_5018CA20_Var:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	x6="\x00\x00", f8=1
+func_5018CA20_Var_3:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	x6="\x00\x00"
 
-func_5018D239_Table_2:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_2:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	3072
-func_5018CA20_Var:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table:	# 2 x u16, 0..0; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	0, 0
-
-func_5018CA20_Var_2:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	1
-func_5018CA20_Var_3:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
+func_5018CA20_Var_5:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
 	.long	0
 
 func_5018CA20_Table_2:	# 2 x u16, 0..0; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
 	tab_u16	0, 0
-
-func_5018CA20_Var_4:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	0
-func_5018CA20_Var_5:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_3:	# 2 x u16, 0..0; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	0, 0
-func_5018CA20_Table_4:	# 10 x u32, 1..4294901760; read by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
+func_5018CA20_Table:	# 10 x u32, 1..4294901760; read by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
 	tab_u32	1, 16843009, 16843009, 16843009, 16843009, 16843009, 16843009, 65793	# [0]
 	tab_u32	65792, 4294901760	# [8]
 TgModCurveSquareScale_Table:	# 8 x s16, -20..255; read by TgModCurveSquareScale 0x501243DD: `movhu	(d1, a0), d0`
 	tab_s16	-16, -8, 0, 8, 16, -20, 0, 255
 data_4840040C:
-	# 42 bytes the code takes the address of: func_501254A8_entry_Lcc 0x5012557A `mov data_4840040C, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 42 bytes the code takes the address of: func_501254A8_entry_Lcc 0x5012557A `mov data_4840040C, d1` (+0, as a base); func_501254A8_entry_L11c 0x501255CA `call TgVoiceModDepthWrite_entry, [d2,d3], 0x1c` (+0, arg sp36); func_501254A8_entry_L11c 0x501255CA `call TgVoiceModLfoStep_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp36) (+2 more); byte rows (u8); the callee walk: TgVoiceModDepthWrite (sp36) reads nothing through it the walk sees; TgVoiceModLfoStep (sp36) reads nothing through it the walk sees
 	tab_u8	1, 4, 16, 64, 0, 0, 128, 0, 127, 127, 0, 0, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 2, 0, 0, 128, 128	# +32
@@ -857,7 +838,7 @@ func_5014320B_Table:	# 36 x u8, 0..255; read by func_5014320B_entry : `movbu	(d2
 	tab_u8	1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 	tab_u8	0, 0, 0, 255	# [32]
 
-func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 bytes each); read by func_5014320B_entry_L83 0x50143293 `mov (a0), a1`; func_5014320B_entry_L83 0x50143293 `call func_501430C5_entry, [d2,a2], 8`
+func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 bytes each); read by func_5014320B_entry_L83 0x50143293 `mov (a0), a1`; func_5014320B_entry_L83 0x50143293 `call func_501430C5_entry, [d2,a2], 8`; func_5014320B_entry_La6 0x501432B6 `call func_5013CF04_entry, [d2,d3], 0x1c` (+8)
 	REC_func_5014320B_entry_L83_Records	p0=func_5014320B_entry_L83_Records_p0_0, x4="\x00\x03\x00\x00"	# [0]
 	REC_func_5014320B_entry_L83_Records	p0=func_5014320B_entry_L83_Records_p0_0, x4="\x00\x03\x00\x00"
 	REC_func_5014320B_entry_L83_Records	p0=data_4852BA5D, x4="\x02\x04\x00\x00"
@@ -877,197 +858,190 @@ func_5014320B_entry_L83_Records:	# 16 x REC_func_5014320B_entry_L83_Records (8 b
 # census: opaque -- unknown-dump: 192 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0018E4, 0x0019A4
 
-func_5014A95C_Records_p0_0:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=4, x4="\x00\x00\n\x00(\x00,\x01B\x08\xFF\x00"
+func_5014A95C_Records_p0_0:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=4, x4="\x00\x00\n\x00(\x00,\x01", f12=66, f13=8, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0019B4, 0x0019F4
-func_5014A95C_Records_p0_1:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=44, x4="\x00\x00\x00\x00\x00\x00\x01\x00Q\x06\x80\x07"
+func_50144C7D_Selected_1:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=44, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=81, f13=6, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001A04, 0x001A14
-func_5014A95C_Records_p0_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=64, x4="\x00\x00\x00\x00\x00\x00c\x00R\x0C\x7F\x00"
+func_50144C7D_Selected_2:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=64, x4="\x00\x00\x00\x00\x00\x00c\x00", f12=82, f13=12, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001A24, 0x001A34
-func_5014A95C_Records_p0_3:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=128, x4="\x00\x00\x09\x00\x00\x00\x18\x00R\x01\x7F\x00"
+func_50144C7D_Selected_3:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=128, x4="\x00\x00\x09\x00\x00\x00\x18\x00", f12=82, f13=1, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001A44, 0x001A58
-func_5014A95C_Records_p0_4:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=130, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x00@\x06"
-data_48401A68:
-	# 12 bytes the code takes the address of: func_5014474E 0x5014474E `call func_5014AA6A, 0, 0` (+0, arg a0); func_5014938C_entry_L17 0x501493A8 `call func_5014474E_entry, [d2,d3,a2,a3], 0x28` (+0, arg a0); func_5014938C_entry_L17 0x501493A8 `mov data_48401A68, a0` (+0, as a base) (+2 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xA0, 0x120000, 0x10000	# +0
-
-func_5014474E_Var:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`
-	.byte	82
-func_5014474E_entry_L1e_Var:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`
-	.byte	3
-func_5014474E_entry_L1e_Var_2:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1`
-	.byte	1
-func_5014474E_entry_L40_Var:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`
-	.byte	0
-
-func_5014A95C_Records_p0_5:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=161, x4="\x00\x00\x00\x00\x01\x00\x03\x00R\x03p\x04"
+func_50144C7D_Selected_4:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=130, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f14=64, x15="\x06"
+func_5014474E_ArgA0_0:	# REC_func_5014474E_ArgA0 (16 bytes): the layout func_5014474E 0x5014474E reads through its argument a0 (passed by func_5014542B_entry_L7f 0x501454AF `call func_5014474E_entry, [d2,d3,a2,a3], 0x28`, +7 more calls)
+	REC_func_5014474E_ArgA0	x0="\xA0\x00\x00\x00\x00\x00\x12\x00", f10=1, f12=82, f13=3, f14=1
+func_50144C7D_Selected_5:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=161, x4="\x00\x00\x00\x00\x01\x00\x03\x00", f12=82, f13=3, f14=112, x15="\x04"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001A88, 0x001A94
-func_5014A95C_Records_p0_6:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8192, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x03\x01\x00"
+func_50144C7D_Selected_6:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8192, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=3, f14=1, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001AA4, 0x001AC4
-func_5014A95C_Records_p0_7:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8209, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x00@\x06"
-func_5014A95C_Records_p0_8:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8210, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x03@\x06"
+func_50144C7D_Selected_7:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8209, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f14=64, x15="\x06"
+func_50144C7D_Selected_8:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8210, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=3, f14=64, x15="\x06"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001AE4, 0x001B04
-func_5014A95C_Records_p0_9:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8224, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x00\x04\x02"
+func_50144C7D_Selected_9:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8224, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f14=4, x15="\x02"
 # census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B14, 0x001B34
-func_5014A95C_Records_p0_10:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8227, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x00\x10\x04"
-func_5014A95C_Records_p0_11:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8229, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x02\x18\x03"
-func_5014A95C_Records_p0_12:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8256, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x01\x08\x03"
-func_5014A95C_Records_p0_13:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8259, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x02\x01\x00"
+func_50144C7D_Selected_10:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8227, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f14=16, x15="\x04"
+func_50144C7D_Selected_11:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8229, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=2, f14=24, x15="\x03"
+func_50144C7D_Selected_12:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8256, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=1, f14=8, x15="\x03"
+func_50144C7D_Selected_13:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8259, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=2, f14=1, x15="\x00"
 # census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001B74, 0x001BA4
-func_5014A95C_Records_p0_14:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8321, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x07 \x05"
+func_50144C7D_Selected_14:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8321, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=7, f14=32, x15="\x05"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001BB4, 0x001BD4
-func_5014A95C_Records_p0_15:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8324, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x08\x04\x02"
+func_50144C7D_Selected_15:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8324, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=8, f14=4, x15="\x02"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001BE4, 0x001BF4
-func_5014A95C_Records_p0_16:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8326, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x08\x10\x04"
-func_5014A95C_Records_p0_17:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8327, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x08\x01\x00"
+func_50144C7D_Selected_16:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8326, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=8, f14=16, x15="\x04"
+func_50144C7D_Selected_17:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8327, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=8, f14=1, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001C14, 0x001C34
-func_5014A95C_Records_p0_18:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8332, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x07\x02\x01"
+func_50144C7D_Selected_18:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8332, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=7, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001C44, 0x001C84
-func_5014A95C_Records_p0_19:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8337, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x09\x10\x04"
-func_5014A95C_Records_p0_20:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8338, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x07\x08\x03"
-func_5014A95C_Records_p0_21:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8339, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x08@\x06"
-func_5014A95C_Records_p0_22:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8340, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x07\x80\x07"
+func_50144C7D_Selected_19:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8337, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=9, f14=16, x15="\x04"
+func_50144C7D_Selected_20:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8338, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=7, f14=8, x15="\x03"
+func_50144C7D_Selected_21:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8339, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=8, f14=64, x15="\x06"
+func_50144C7D_Selected_22:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8340, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=7, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001CC4, 0x001CD4
-func_5014A95C_Records_p0_23:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=8345, x4="\x00\x00\x00\x00\x00\x00\x01\x00G\x09@\x06"
-func_5014A95C_Records_p0_24:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=16384, x4="\x00\x00\x17\x00\x00\x00\xC8\x00H\x02\xFF\x00"
-func_5014A95C_Records_p0_25:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=16386, x4="\x00\x00\x17\x00\x00\x00\xC8\x00H\x04\xFF\x00"
-func_5014A95C_Records_p0_26:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=16387, x4="\x00\x00\x17\x00\x00\x00\xC8\x00H\x05\xFF\x00"
+func_50144C7D_Selected_23:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=8345, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=71, f13=9, f14=64, x15="\x06"
+func_50144C7D_Selected_24:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=16384, x4="\x00\x00\x17\x00\x00\x00\xC8\x00", f12=72, f13=2, f14=255, x15="\x00"
+func_50144C7D_Selected_25:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=16386, x4="\x00\x00\x17\x00\x00\x00\xC8\x00", f12=72, f13=4, f14=255, x15="\x00"
+func_50144C7D_Selected_26:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=16387, x4="\x00\x00\x17\x00\x00\x00\xC8\x00", f12=72, f13=5, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001D14, 0x001D24
-func_5014A95C_Records_p0_27:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20481, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07\x02\x01"
+func_50144C7D_Selected_27:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20481, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=7, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001D34, 0x001D44
-func_5014A95C_Records_p0_28:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20483, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07\x08\x03"
+func_50144C7D_Selected_28:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20483, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=7, f14=8, x15="\x03"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001D54, 0x001D64
-func_5014A95C_Records_p0_29_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20485, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07 \x05"
+func_50144C7D_Selected_29:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20485, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=7, f14=32, x15="\x05"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001D74, 0x001D84
-func_5014A95C_Records_p0_30:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20487, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x07\x80\x07"
-func_5014A95C_Records_p0_31:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20488, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x08\x01\x00"
+func_50144C7D_Selected_30:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20487, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=7, f14=128, x15="\x07"
+func_50144C7D_Selected_31:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20488, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=8, f14=1, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001DA4, 0x001DB4
-func_5014A95C_Records_p0_32:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20490, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x08\x04\x02"
+func_50144C7D_Selected_32:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20490, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=8, f14=4, x15="\x02"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001DC4, 0x001DD4
-func_5014A95C_Records_p0_33:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20492, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x08\x10\x04"
+func_50144C7D_Selected_33:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20492, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=8, f14=16, x15="\x04"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001DE4, 0x001DF4
-func_5014A95C_Records_p0_34:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20494, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x08@\x06"
+func_50144C7D_Selected_34:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20494, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=8, f14=64, x15="\x06"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E04, 0x001E24
-func_5014A95C_Records_p0_35:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20497, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x09\x02\x01"
+func_50144C7D_Selected_35:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20497, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=9, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E34, 0x001E54
-func_5014A95C_Records_p0_36:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20501, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x09\x10\x04"
+func_50144C7D_Selected_36:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20501, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=9, f14=16, x15="\x04"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E64, 0x001E74
-func_5014A95C_Records_p0_37:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20513, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\n\x02\x01"
+func_50144C7D_Selected_37:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20513, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=10, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001E84, 0x001E94
-func_5014A95C_Records_p0_38:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20515, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\n\x08\x03"
+func_50144C7D_Selected_38:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20515, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=10, f14=8, x15="\x03"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001EA4, 0x001EB4
-func_5014A95C_Records_p0_39:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=20545, x4="\x00\x00\x00\x00\x00\x00\x01\x00E\x00\x02\x01"
+func_50144C7D_Selected_39:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=20545, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=69, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001EC4, 0x001EF4
-func_5014A95C_Records_p0_40:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=24581, x4="\x00\x00\x00\x00\x00\x00\x01\x00D\x07\x02\x01"
+func_50144C7D_Selected_40:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=24581, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=68, f13=7, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001F04, 0x001F24
-func_5014A95C_Records_p0_41:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=24640, x4="\x00\x00\x08\x00\x00\x00\xFF\x00@\x00\xFF\x00"
+func_50144C7D_Selected_41:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=24640, x4="\x00\x00\x08\x00\x00\x00\xFF\x00", f12=64, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 360 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x001F34, 0x00209C
 data_4840209C:
-	# 10 bytes the code takes the address of: func_5014AF95_entry_L109 0x5014B0A3 `call func_50147586_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_5014AF95_entry_L109 0x5014B0A3 `mov data_4840209C, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	2, 128, 0, 0, 1, 0, 0, 0, 0, 0	# +0
+	# 8 bytes the code takes the address of: func_5014509B 0x5014509B `call func_5014AA6A, 0, 0` (+0, arg a0); func_5014509B_entry_L58 0x501450F8 `call func_5014AA6A, 0, 0` (+0, arg a0); func_50147586_entry_L32 0x501475BD `call func_5014AA6A, 0, 0` (+0, arg a0) (+14 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: M3SendProcess (sp52): M3SendProcess reads nothing through it at a fixed offset (it stores it, or keeps it for later); M3SendProcessMidi (sp52): M3SendProcessMidi reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014509B (a0) reads fields of it, but the record would run into bytes another item holds (+4 more)
+	tab_u32	32770, 1	# +0
 
-func_50147586_entry_L10_Var:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+func_50147586_entry_L26_Var_5:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
+func_50147586_entry_L10_Var_5:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
 	.word	127
-func_50147586_entry_L10_Var_2:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+func_5014509B_Var_11:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
 	.long	0x5000afd2
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0020AC, 0x0020AE
+func_5014509B_entry_L3b_Var_10:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_12:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
 
-func_50147586_Table:	# 78 x u8, 0..213; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0, 4, 128, 0, 0, 1, 0, 0, 0, 0, 0, 127, 0, 211, 175	# [0]
-	tab_u8	0, 80, 127, 0, 1, 0, 6, 128, 0, 0, 1, 0, 0, 0, 0, 0	# [16]
-	tab_u8	127, 0, 212, 175, 0, 80, 127, 0, 1, 0, 7, 128, 0, 0, 1, 0	# [32]
-	tab_u8	0, 0, 0, 0, 1, 0, 213, 175, 0, 80, 127, 0, 1, 0, 8, 128	# [48]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 127, 0, 68, 8, 127, 0	# [64]
+func_5014509B_entry_L3b_Table:	# 77 x u8, 0..213; read by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	tab_u8	0, 4, 128, 0, 0, 1, 0, 0, 0, 0, 0, 127, 0, 211, 175, 0	# [0]
+	tab_u8	80, 127, 0, 1, 0, 6, 128, 0, 0, 1, 0, 0, 0, 0, 0, 127	# [16]
+	tab_u8	0, 212, 175, 0, 80, 127, 0, 1, 0, 7, 128, 0, 0, 1, 0, 0	# [32]
+	tab_u8	0, 0, 0, 1, 0, 213, 175, 0, 80, 127, 0, 1, 0, 8, 128, 0	# [48]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 127, 0, 68, 8, 127, 0	# [64]
 
-func_5014A95C_Records_p0_42:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32777, x4="\x00\x00\x00\x00\x00\x00\x01\x00D\x08\x80\x07"
-func_5014A95C_Records_p0_43:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32780, x4="\x00\x00\x00\x00\x00\x00\x7F\x00R\x04\x7F\x00"
+func_50144C7D_Selected_42:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32777, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=68, f13=8, f14=128, x15="\x07"
+func_50144C7D_Selected_43:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32780, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f12=82, f13=4, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00211C, 0x002154
-func_5014A95C_Records_p0_44:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32784, x4="\x00\x00\x00\x00\x00\x00\x7F\x00L\x01\x7F\x00"
-func_5014A95C_Records_p0_45:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32800, x4="\x00\x00\x01\x00\x00\x00\x7F\x00L\x00\x80\x07"
+func_50144C7D_Selected_44:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32784, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f12=76, f13=1, f14=127, x15="\x00"
+func_50144C7D_Selected_45:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32800, x4="\x00\x00\x01\x00\x00\x00\x7F\x00", f12=76, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002174, 0x002194
-func_5014A95C_Records_p0_46:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32808, x4="\x00\x00\x01\x00\x00\x00\x7F\x00J\x00\x80\x07"
+func_50144C7D_Selected_46:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32808, x4="\x00\x00\x01\x00\x00\x00\x7F\x00", f12=74, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 60 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0021A4, 0x0021E0
-func_5014A95C_Records_p0_47:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32813, x4="\x00\x00\x00\x00\x00\x00\x01\x00J\x02\x80\x07"
+func_50144C7D_Selected_47:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32813, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=74, f13=2, f14=128, x15="\x07"
 
 Str_0_29:	.asciz "0\x80"
 # census: opaque -- unknown-dump: 5 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -1077,172 +1051,171 @@ func_50146A9C_entry_L15_Var:	# s16, a constant; read / written by func_50146A9C_
 	.word	0
 func_50146A9C_Var:	# s16, a constant; read / written by func_50146A9C 0x50146A9C: `movhu (a0), d0`; func_50146A9C 0x50146A9C: `movhu (a0), d1`
 	.word	1
-func_5014474E_Var_2:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`
+func_5014474E_Var:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`
 	.byte	68
-func_5014474E_entry_L1e_Var_3:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`
+func_5014474E_entry_L1e_Var:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`
 	.byte	0
-func_5014474E_entry_L1e_Var_4:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+func_5014474E_entry_L1e_Var_2:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
 	.byte	4
-func_5014474E_entry_L40_Var_2:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_50146A9C_entry_L21 0x50146AC2: `movbu (0xf, a2), d2`
+func_5014474E_entry_L40_Var:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_50146A9C_entry_L21 0x50146AC2: `movbu (0xf, a2), d2`
 	.byte	2
 
 data_48402E94_p0_0:	# REC_data_48402E94_p0 (20 bytes)
 	REC_data_48402E94_p0	f0=32817, x4="\x01\x00\x00\x00\x00\x00\x01\x00", f12=0x5000B4AE, f16=1, x18="\x01"
 
 Str_2_40:	.asciz "2\x80"
-# census: opaque -- unknown-dump: 7 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002217, 0x00221E
+# census: opaque -- unknown-dump: 5 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002217, 0x00221C
 
-func_50147586_entry_L10_Var_3:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+func_50147586_entry_L26_Var:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
+func_50147586_entry_L10_Var:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
 	.word	1
-func_50147586_entry_L10_Var_4:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+func_5014509B_Var:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
 	.long	0x5000b4ad
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002224, 0x002226
+func_5014509B_entry_L3b_Var:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	1
+func_5014509B_Var_2:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
 
-func_50147586_Table_2:	# 34 x u8, 0..255; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0, 51, 128, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 82, 13	# [0]
-	tab_u8	192, 6, 56, 128, 0, 0, 0, 0, 0, 0, 40, 0, 88, 0, 65, 4	# [16]
-	tab_u8	255, 0	# [32]
+func_5014509B_entry_L3b_Table_2:	# 33 x u8, 0..255; read by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	tab_u8	0, 51, 128, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 82, 13, 192	# [0]
+	tab_u8	6, 56, 128, 0, 0, 0, 0, 0, 0, 40, 0, 88, 0, 65, 4, 255	# [16]
+	tab_u8	0	# [32]
 
-func_5014A95C_Records_p0_48:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32832, x4="\x00\x00\x05\x00\x00\x00\x05\x00A\x00\x07\x00"
+func_5014A95C_Records_p0_48:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32832, x4="\x00\x00\x05\x00\x00\x00\x05\x00", f12=65, f14=7, x15="\x00"
 # census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002258, 0x002280
-func_5014A95C_Records_p0_49_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32864, x4="\x00\x00\x00\x00\x00\x00\x03\x00D\x00\x03\x00"
+func_50144C7D_Selected_49:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32864, x4="\x00\x00\x00\x00\x00\x00\x03\x00", f12=68, f14=3, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002290, 0x0022A0
-func_5014A95C_Records_p0_50_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32896, x4="\x00\x00\x00\x00\x00\x00\x01\x00B\x04@\x06"
+func_50144C7D_Selected_50:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32896, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=66, f13=4, f14=64, x15="\x06"
 # census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0022B0, 0x002304
-func_5014A95C_Records_p0_51_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32912, x4="\x00\x00\x00\x00\x00\x00\x02\x00G\x0B\x03\x00"
+func_50144C7D_Selected_51:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32912, x4="\x00\x00\x00\x00\x00\x00\x02\x00", f12=71, f13=11, f14=3, x15="\x00"
 # census: opaque -- unknown-dump: 104 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002314, 0x00237C
-func_5014A95C_Records_p0_52:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32913, x4="\x00\x00\x02\x00\x00\x00\xFF\x00G\x0C\xFF\x00"
+func_50144C7D_Selected_52:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32913, x4="\x00\x00\x02\x00\x00\x00\xFF\x00", f12=71, f13=12, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00238C, 0x002394
-func_5014A95C_Records_p0_53:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=32914, x4="\x00\x00\x00\x00\x01\x00\x7F\x00G\x0D\xFF\x00"
-func_5014A95C_Records_p0_54:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=40960, x4="\x00\x00\x0F\x00\x00\x00\xFF\xFFL\x02\x7F\x00"
+func_50144C7D_Selected_53:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=32914, x4="\x00\x00\x00\x00\x01\x00\x7F\x00", f12=71, f13=13, f14=255, x15="\x00"
+func_50144C7D_Selected_54:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=40960, x4="\x00\x00\x0F\x00\x00\x00\xFF\xFF", f12=76, f13=2, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0023B4, 0x0023C4
-func_5014A95C_Records_p0_55:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=41216, x4="\x00\x00\x0F\x00\x00\x00\xFF\xFFL\x04\x7F\x00"
+func_50144C7D_Selected_55:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=41216, x4="\x00\x00\x0F\x00\x00\x00\xFF\xFF", f12=76, f13=4, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0023D4, 0x0023E4
-func_5014A95C_Records_p0_56:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=41472, x4="\x00\x00\x1C\x00\x00\x00\xFF\xFFL\x06\x7F\x00"
-func_5014A95C_Records_p0_57_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=41728, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFFL\x08\xFF\x00"
+func_50144C7D_Selected_56:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=41472, x4="\x00\x00\x1C\x00\x00\x00\xFF\xFF", f12=76, f13=6, f14=127, x15="\x00"
+func_50144C7D_Selected_57:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=41728, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFF", f12=76, f13=8, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002404, 0x00242C
-func_5014A95C_Records_p0_58_2:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=41984, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFFL\n\xFF\x00"
+func_50144C7D_Selected_58:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=41984, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFF", f12=76, f13=10, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00243C, 0x00244C
-func_5014A95C_Records_p0_59:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=41986, x4="\x00\x00\x00\x00\x00\x00\x7F\x00J\x03\x7F\x00"
-func_5014A95C_Records_p0_60:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=42240, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFFL\x0C\xFF\x00"
+func_50144C7D_Selected_59:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=41986, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f12=74, f13=3, f14=127, x15="\x00"
+func_50144C7D_Selected_60:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=42240, x4="\x00\x00\x1B\x00\x00\x00\xFF\xFF", f12=76, f13=12, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00246C, 0x0024BC
-func_5014A95C_Records_p0_61:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=45072, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00R\x10\xFF\x00"
-func_5014A95C_Records_p0_29:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=45076, x4="\x00\x00\x10\x00\x00\x00\xFF\xFFL\x0E\x7F\x00"
-data_484024DC:
-	# 20 bytes the code takes the address of: func_501451AE_entry_L2f 0x501451E2 `mov data_484024DC, a0` (+0, as a base); func_5014798F_entry_L34 0x501479C8 `mov data_484024DC, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xB015, 0x80001, 0x7F0000, 0x5000B05E, 0x1007F	# +0
-func_5014A95C_Records_p0_63:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=45088, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00R\x11\xFF\x00"
-func_5014A95C_Records_p0_64:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=45092, x4="\x00\x00\x10\x00\x00\x00\xFF\xFFL\x10\x7F\x00"
-
-Str_empty_1260:	.asciz "%\xB0"
-# census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002513, 0x002524
-
-func_5014A95C_Records_p0_65:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=45104, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00R\x12\xFF\x00"
-func_5014A95C_Records_p0_66:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=45108, x4="\x00\x00\x10\x00\x00\x00\xFF\xFFL\x12\x7F\x00"
-
-Str_5_27:	.asciz "5\xB0"
-# census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002547, 0x002568
-
-func_5014A95C_Records_p0_67:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=49156, x4="\x00\x00\x13\x00\x00\x00\x03\x00B\x070\x04"
+func_50144C7D_Selected_61:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=45072, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00", f12=82, f13=16, f14=255, x15="\x00"
+func_5014A95C_Records_p0_29:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=45076, x4="\x00\x00\x10\x00\x00\x00\xFF\xFF", f12=76, f13=14, f14=127, x15="\x00"
+func_50145183_Selected_0:	# REC_func_50145183_Selected (20 bytes)
+	REC_func_50145183_Selected	f0=45077, x4="\x01\x00\x08\x00", f10=127, f12=0x5000B05E, f16=127, x18="\x01"
+func_50144C7D_Selected_63:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=45088, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00", f12=82, f13=17, f14=255, x15="\x00"
+func_5014A95C_Records_p0_64:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=45092, x4="\x00\x00\x10\x00\x00\x00\xFF\xFF", f12=76, f13=16, f14=127, x15="\x00"
+func_50145183_Selected_1:	# REC_func_50145183_Selected (20 bytes)
+	REC_func_50145183_Selected	f0=45093, x4="\x01\x00\x08\x00", f10=127, f12=0x5000B05E, f16=127, x18="\x01"
+func_50144C7D_Selected_65:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=45104, x4="\x00\x00\x0D\x00\x00\x00\xFF\x00", f12=82, f13=18, f14=255, x15="\x00"
+func_5014A95C_Records_p0_66:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=45108, x4="\x00\x00\x10\x00\x00\x00\xFF\xFF", f12=76, f13=18, f14=127, x15="\x00"
+func_50145183_Selected_2:	# REC_func_50145183_Selected (20 bytes)
+	REC_func_50145183_Selected	f0=45109, x4="\x01\x00\x08\x00", f10=127, f12=0x5000B05E, f16=127, x18="\x01"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x002558, 0x002568
+func_50144C7D_Selected_67:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=49156, x4="\x00\x00\x13\x00\x00\x00\x03\x00", f12=66, f13=7, f14=48, x15="\x04"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002578, 0x002598
-func_5014A95C_Records_p0_68:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=49282, x4="\x00\x00\x00\x00\x00\x00\x01\x00B\x03\x10\x04"
+func_50144C7D_Selected_68:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=49282, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=66, f13=3, f14=16, x15="\x04"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0025A8, 0x0025C8
-func_5014A95C_Records_p0_69:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=49284, x4="\x00\x00\x16\x00\x00\x00\x01\x00A\x03\x01\x00"
-func_5014A95C_Records_p0_70:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=53248, x4="\x00\x00\x00\x00\x00\x00\x01\x00B\x05\x02\x01"
-func_5014A95C_Records_p0_71:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=53249, x4="\x00\x00\x00\x00\x00\x00\x03\x00B\x06\x0F\x00"
+func_50144C7D_Selected_69:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=49284, x4="\x00\x00\x16\x00\x00\x00\x01\x00", f12=65, f13=3, f14=1, x15="\x00"
+func_50144C7D_Selected_70:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=53248, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=66, f13=5, f14=2, x15="\x01"
+func_50144C7D_Selected_71:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=53249, x4="\x00\x00\x00\x00\x00\x00\x03\x00", f12=66, f13=6, f14=15, x15="\x00"
 # census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0025F8, 0x002628
-func_5014A95C_Records_p0_72:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=53258, x4="\x00\x00\x00\x00\x00\x00\x01\x00R\x0D\x02\x01"
+func_50144C7D_Selected_72:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=53258, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f12=82, f13=13, f14=2, x15="\x01"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002638, 0x002640
-func_5014A95C_Records_p0_73:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57345, x4="\x00\x00\x00\x00\x00\x00\x7F\x00F\x00\x7F\x00"
+func_50144C7D_Selected_73:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57345, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f12=70, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 184 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002650, 0x002708
-func_5014A95C_Records_p0_74:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57393, x4="\x00\x00#\x00\x00\x00\x7F\x00D\x0D\x7F\x00"
+func_50144C7D_Selected_74:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57393, x4="\x00\x00#\x00\x00\x00\x7F\x00", f12=68, f13=13, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002718, 0x002728
-func_5014A95C_Records_p0_75:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57395, x4="\x00\x00#\x00\x00\x00\x7F\x00D\x0F\x7F\x00"
+func_50144C7D_Selected_75:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57395, x4="\x00\x00#\x00\x00\x00\x7F\x00", f12=68, f13=15, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002738, 0x002748
-func_5014A95C_Records_p0_76:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57397, x4="\x00\x00#\x00\x00\x00\x7F\x00D\x11\x7F\x00"
+func_50144C7D_Selected_76:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57397, x4="\x00\x00#\x00\x00\x00\x7F\x00", f12=68, f13=17, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002758, 0x002768
-func_5014A95C_Records_p0_77:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57399, x4="\x00\x00#\x00\x00\x00\x7F\x00D\x13\x7F\x00"
-func_5014A95C_Records_p0_78:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57400, x4="\x00\x00$\x00\x00\x00\x01\x00D\x0C\x80\x07"
+func_50144C7D_Selected_77:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57399, x4="\x00\x00#\x00\x00\x00\x7F\x00", f12=68, f13=19, f14=127, x15="\x00"
+func_50144C7D_Selected_78:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57400, x4="\x00\x00$\x00\x00\x00\x01\x00", f12=68, f13=12, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002788, 0x002798
-func_5014A95C_Records_p0_79:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57402, x4="\x00\x00$\x00\x00\x00\x01\x00D\x0E\x80\x07"
+func_50144C7D_Selected_79:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57402, x4="\x00\x00$\x00\x00\x00\x01\x00", f12=68, f13=14, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0027A8, 0x0027B8
-func_5014A95C_Records_p0_80:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57404, x4="\x00\x00$\x00\x00\x00\x01\x00D\x10\x80\x07"
+func_50144C7D_Selected_80:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57404, x4="\x00\x00$\x00\x00\x00\x01\x00", f12=68, f13=16, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0027C8, 0x0027D8
-func_5014A95C_Records_p0_81:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=57406, x4="\x00\x00$\x00\x00\x00\x01\x00D\x12\x80\x07"
+func_50144C7D_Selected_81:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=57406, x4="\x00\x00$\x00\x00\x00\x01\x00", f12=68, f13=18, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 52 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0027E8, 0x00281C
-func_5014A95C_Records_p0_82:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=61697, x4="\x00\x00\x02\x00\x00\x00\xFF\x00C\x00\xFF\x00"
+func_50144C7D_Selected_82:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=61697, x4="\x00\x00\x02\x00\x00\x00\xFF\x00", f12=67, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00282C, 0x002844
-func_5014A95C_Records_p0_83:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200010, x4="\x00\x00\x00\x00\x00\x00\x03\x00\x00\x06\x03\x00"
+func_50144C7D_Selected_83:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200010, x4="\x00\x00\x00\x00\x00\x00\x03\x00", f13=6, f14=3, x15="\x00"
 # census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002854, 0x002864
 data_48402864:
-	# 16 bytes the code takes the address of: M3SendProcess 0x5014405A `call func_5014C2AD, 0, 0` (+0, arg a0); func_50144DDA 0x50144DDA `call func_4863C236, 0, 0` (+0, arg a0); func_501464C6_entry_L178 0x50146643 `call func_50144DDA_entry, [d2,d3,a2,a3], 0x28` (+0, arg a0) (+10 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 16 bytes the code takes the address of: M3SendProcess 0x5014405A `call func_5014C2AD, 0, 0` (+0, arg a0); func_50144DDA 0x50144DDA `call func_4863C236, 0, 0` (+0, arg a0); func_501464C6_entry_L178 0x50146643 `call func_50144DDA_entry, [d2,d3,a2,a3], 0x28` (+0, arg a0) (+10 more); byte rows (u8); the callee walk: M3SendProcess (a0): M3SendProcess reads nothing through it at a fixed offset (it hands it on, or stores it); func_4863C236 (a0): func_4863C236 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_50144DDA (a0): func_50144DDA reads nothing through it at a fixed offset (it hands it on, or stores it) (+2 more)
 	tab_u8	18, 0, 32, 0, 0, 0, 31, 0, 0, 0, 1, 0, 0, 4, 64, 6	# +0
-func_5014A95C_Records_p0_84:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x20005C, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00\x0C\x80\x07"
+func_50144C7D_Selected_84:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x20005C, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f13=12, f14=128, x15="\x07"
 # census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002884, 0x002894
 
@@ -1254,47 +1227,47 @@ func_5014542B_entry_L19_Var:	# s16, a constant; read / written by func_5014542B_
 	.word	0
 func_5014542B_Var:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
 	.word	1
-func_5014474E_Var_3:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+func_5014474E_Var_2:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
 	.byte	0
-func_5014474E_entry_L1e_Var_5:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+func_5014474E_entry_L1e_Var_3:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
 	.byte	11
-func_5014474E_entry_L1e_Var_6:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+func_5014474E_entry_L1e_Var_4:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
 	.byte	128
-func_5014474E_entry_L40_Var_3:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
+func_5014474E_entry_L40_Var_2:	# u8, a constant; read / written by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
 	.byte	7
 
-func_5014A95C_Records_p0_85:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200080, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00\"\x0F\x00"
+func_50144C7D_Selected_85:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200080, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f13=34, f14=15, x15="\x00"
 # census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0028B4, 0x0028D8
-func_5014A95C_Records_p0_86:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200089, x4="\x00\x00\x1A\x00\x00\x00\x0F\x00\x10$\xF0\x04"
+func_50144C7D_Selected_86:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200089, x4="\x00\x00\x1A\x00\x00\x00\x0F\x00", f12=16, f13=36, f14=240, x15="\x04"
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0028E8, 0x0028F0
-func_5014A95C_Records_p0_87:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x20008A, x4="\x00\x00\x1A\x00\x00\x00\x0F\x00\x10%\x0F\x00"
+func_50144C7D_Selected_87:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x20008A, x4="\x00\x00\x1A\x00\x00\x00\x0F\x00", f12=16, f13=37, f14=15, x15="\x00"
 # census: opaque -- unknown-dump: 48 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002900, 0x002930
-func_5014A95C_Records_p0_88:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200091, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00&\xF0\x04"
-func_5014A95C_Records_p0_89:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200092, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00'\x0F\x00"
+func_50144C7D_Selected_88:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200091, x4="\x00\x00\x00\x00\x00\x00\x08\x00", f13=38, f14=240, x15="\x04"
+func_50144C7D_Selected_89:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200092, x4="\x00\x00\x00\x00\x00\x00\x08\x00", f13=39, f14=15, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002950, 0x002970
-func_5014A95C_Records_p0_90:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200095, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00(\xF0\x04"
-func_5014A95C_Records_p0_91:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200096, x4="\x00\x00\x00\x00\x00\x00\x08\x00\x00)\x0F\x00"
+func_50144C7D_Selected_90:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200095, x4="\x00\x00\x00\x00\x00\x00\x08\x00", f13=40, f14=240, x15="\x04"
+func_50144C7D_Selected_91:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200096, x4="\x00\x00\x00\x00\x00\x00\x08\x00", f13=41, f14=15, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002990, 0x0029B0
-func_5014A95C_Records_p0_92:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x200099, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00*\x10\x04"
+func_50144C7D_Selected_92:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x200099, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f13=42, f14=16, x15="\x04"
 # census: opaque -- unknown-dump: 288 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0029C0, 0x002AE0
-func_5014A95C_Records_p0_93:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x204000, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00: \x05"
-func_5014A95C_Records_p0_94:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x204001, x4="\x00\x00\x02\x00\x00\x00\xFF\x00\x00;\xFF\x00"
+func_50144C7D_Selected_93:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x204000, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f13=58, f14=32, x15="\x05"
+func_50144C7D_Selected_94:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x204001, x4="\x00\x00\x02\x00\x00\x00\xFF\x00", f13=59, f14=255, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x002B00, 0x002B20
 
@@ -1366,136 +1339,136 @@ data_48402FAC:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x002FAC, 0x002FB4
 
-func_5014A95C_Records_p0_49:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x900000, x4="\x05\x00\x00\x00\x01\x00\xB0\x00\x01\x00\x00\x00"
-	.space	2, 0x00
+func_5014A95C_Records_p0_49:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x900000, x4="\x05\x00\x00\x00\x01\x00\xB0\x00", f12=1, x15="\x00"
 
-func_50147586_entry_L10_Var_5:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+func_50147586_entry_L26_Var_2:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
+func_50147586_entry_L10_Var_2:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
 	.word	127
-func_50147586_entry_L10_Var_6:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+func_5014509B_Var_3:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
 	.long	0x5000afd6
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x002FCC, 0x002FCE
+func_5014509B_entry_L3b_Var_2:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_4:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
 
-func_50147586_Table_3:	# 58 x u8, 0..248; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0, 2, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127, 0, 248, 175	# [0]
-	tab_u8	0, 80, 127, 0, 1, 0, 4, 0, 176, 0, 1, 0, 0, 0, 0, 0	# [16]
-	tab_u8	127, 0, 26, 176, 0, 80, 127, 0, 1, 0, 5, 0, 176, 0, 0, 0	# [32]
-	tab_u8	0, 0, 0, 0, 127, 0, 0, 15, 127, 0	# [48]
+func_5014509B_entry_L3b_Table_3:	# 57 x u8, 0..248; read by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	tab_u8	0, 2, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127, 0, 248, 175, 0	# [0]
+	tab_u8	80, 127, 0, 1, 0, 4, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127	# [16]
+	tab_u8	0, 26, 176, 0, 80, 127, 0, 1, 0, 5, 0, 176, 0, 0, 0, 0	# [32]
+	tab_u8	0, 0, 0, 127, 0, 0, 15, 127, 0	# [48]
 
-func_5014A95C_Records_p0_50:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00007, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x03\x7F\x00"
-func_5014A95C_Records_p0_51:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0000A, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x1C\x7F\x00"
-data_48403028:
-	# 10 bytes the code takes the address of: func_5014AF95_entry_L14f 0x5014B0E9 `call func_50147586_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_5014AF95_entry_L14f 0x5014B0E9 `mov data_48403028, a0` (+0, as a base); func_5014B7C1_entry_Ld3 0x5014B899 `call func_50147586_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0) (+5 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	11, 0, 176, 0, 1, 0, 0, 0, 0, 0	# +0
+func_5014A95C_Records_p0_50:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00007, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=3, f14=127, x15="\x00"
+func_5014A95C_Records_p0_51:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0000A, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=28, f14=127, x15="\x00"
+func_5014509B_ArgA0_0:	# REC_func_5014509B_ArgA0 (56 bytes): the layout func_5014509B 0x5014509B reads through its argument a0 (passed by func_50147586_entry_L155 0x501476E0 `call func_5014509B_entry, [d2,d3,a2,a3], 0x1c`, +2 more calls); the layout func_50147586 0x50147586 reads through its argument a0 (passed by func_5014AF95_entry_L85 0x5014B01F `call func_50147586_entry, [d2,d3,a2,a3], 0x2c`, +13 more calls)
+	REC_func_5014509B_ArgA0	f0=0xB0000B, x4="\x01\x00\x00\x00", f10=127, f12=0x5000B03C, f16=127, f18=1, x20="\x0C\x00\xB0\x00\x00\x00\x11\x00\x00\x00\xFF\xFFL\x0E\xFF\x00\x0D\x00\xB0\x00\x01\x00\x09\x00\x00\x00\x7F\x00^\xB0\x00P\x7F\x00\x01\x00"
+data_48403060:
+	# 8 bytes the code takes the address of: func_5014509B 0x5014509B `call func_5014AA6A, 0, 0` (+0, arg a0); func_5014509B_entry_L58 0x501450F8 `call func_5014AA6A, 0, 0` (+0, arg a0); func_50147586_entry_L32 0x501475BD `call func_5014AA6A, 0, 0` (+0, arg a0) (+14 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: M3SendProcess (sp52): M3SendProcess reads nothing through it at a fixed offset (it stores it, or keeps it for later); M3SendProcessMidi (sp52): M3SendProcessMidi reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014509B (a0) reads fields of it, but the record would run into bytes another item holds (+4 more)
+	tab_u32	0xB00010, 0x1	# +0
 
+func_50147586_entry_L26_Var_6:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
+func_50147586_entry_L10_Var_6:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+	.word	127
+func_5014509B_Var_13:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
+	.long	0x5000b064
+func_5014509B_entry_L3b_Var_11:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_14:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
+func_5014509B_entry_L3b_Var_12:	# u8, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	.byte	0
+data_48403074:
+	# 8 bytes the code takes the address of: func_5014509B 0x5014509B `call func_5014AA6A, 0, 0` (+0, arg a0); func_5014509B_entry_L58 0x501450F8 `call func_5014AA6A, 0, 0` (+0, arg a0); func_50147586_entry_L32 0x501475BD `call func_5014AA6A, 0, 0` (+0, arg a0) (+14 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: M3SendProcess (sp52): M3SendProcess reads nothing through it at a fixed offset (it stores it, or keeps it for later); M3SendProcessMidi (sp52): M3SendProcessMidi reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014509B (a0) reads fields of it, but the record would run into bytes another item holds (+4 more)
+	tab_u32	0xB00011, 0x1	# +0
+func_50147586_entry_L26_Var_7:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
 func_50147586_entry_L10_Var_7:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
 	.word	127
-func_50147586_entry_L10_Var_8:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
-	.long	0x5000b03c
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x003038, 0x00303A
-
-func_50147586_Table_4:	# 18 x u8, 0..255; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0, 12, 0, 176, 0, 0, 0, 17, 0, 0, 0, 255, 255, 76, 14	# [0]
-	tab_u8	255, 0	# [16]
-data_4840304C:
-	# 20 bytes the code takes the address of: func_5014AF95_entry_L3eb 0x5014B385 `call func_5014798F_entry, [d2,d3], 0x20` (+0, arg a0); func_5014AF95_entry_L3eb 0x5014B385 `mov data_4840304C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xB0000D, 0x90001, 0x7F0000, 0x5000B05E, 0x1007F	# +0
-data_48403060:
-	# 10 bytes the code takes the address of: func_5014AF95_entry_L267 0x5014B201 `call func_50147586_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_5014AF95_entry_L267 0x5014B201 `mov data_48403060, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	16, 0, 176, 0, 1, 0, 0, 0, 0, 0	# +0
-
-func_50147586_entry_L10_Var_9:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
-	.word	127
-func_50147586_entry_L10_Var_10:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
-	.long	0x5000b064
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x003070, 0x003072
-
-func_50147586_Table_5:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0
-data_48403074:
-	# 10 bytes the code takes the address of: func_5014AF95_entry_L2ea 0x5014B284 `call func_50147586_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_5014AF95_entry_L2ea 0x5014B284 `mov data_48403074, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	17, 0, 176, 0, 1, 0, 0, 0, 0, 0	# +0
-
-func_50147586_entry_L10_Var_11:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
-	.word	127
-func_50147586_entry_L10_Var_12:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+func_5014509B_Var_15:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
 	.long	0x5000b086
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x003084, 0x003086
+func_5014509B_entry_L3b_Var_13:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_16:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
 
-func_50147586_Table_6:	# 42 x u8, 0..202; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0, 18, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127, 0, 168, 176	# [0]
-	tab_u8	0, 80, 127, 0, 1, 0, 19, 0, 176, 0, 1, 0, 0, 0, 0, 0	# [16]
-	tab_u8	127, 0, 202, 176, 0, 80, 127, 0, 1, 0	# [32]
+func_5014509B_entry_L3b_Table_4:	# 41 x u8, 0..202; read by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	tab_u8	0, 18, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127, 0, 168, 176, 0	# [0]
+	tab_u8	80, 127, 0, 1, 0, 19, 0, 176, 0, 1, 0, 0, 0, 0, 0, 127	# [16]
+	tab_u8	0, 202, 176, 0, 80, 127, 0, 1, 0	# [32]
 
-func_5014A95C_Records_p0_98:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00040, x4="\x00\x00\x01\x00\x00\x00\x7F\x00\x00\x04\x08\x03"
-func_5014A95C_Records_p0_99:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00041, x4="\x00\x00\x01\x00\x00\x00\x7F\x00\x00\x0F\x80\x07"
+func_5014A95C_Records_p0_98:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00040, x4="\x00\x00\x01\x00\x00\x00\x7F\x00", f13=4, f14=8, x15="\x03"
+func_5014A95C_Records_p0_99:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00041, x4="\x00\x00\x01\x00\x00\x00\x7F\x00", f13=15, f14=128, x15="\x07"
 
 Str_B_23:	.asciz "B"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030D2, 0x0030DA
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030D2, 0x0030D8
 
-func_50147586_entry_L10_Var_13:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+func_50147586_entry_L26_Var_3:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
+func_50147586_entry_L10_Var_3:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
 	.word	127
-func_50147586_entry_L10_Var_14:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+func_5014509B_Var_5:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
 	.long	0x5000b10e
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030E0, 0x0030E2
-
-func_50147586_Table_7:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0
+func_5014509B_entry_L3b_Var_3:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_6:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
+func_5014509B_entry_L3b_Var_4:	# u8, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	.byte	0
 
 Str_C_42:	.asciz "C"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030E6, 0x0030EE
+# census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0030E6, 0x0030EC
 
-func_50147586_entry_L10_Var_15:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
+func_50147586_entry_L26_Var_4:	# s16, a constant; read / written by func_50147586_entry_L26 0x501475B1: `movhu (a0), d0`; func_50147586_entry_L26 0x501475B1: `movhu (a0), d1` ...
+	.word	0
+func_50147586_entry_L10_Var_4:	# s16, a constant; read / written by func_50147586_entry_L10 0x5014759B: `movhu (a0), d0`; func_50147586_entry_L10 0x5014759B: `movhu (a0), d1` ...
 	.word	127
-func_50147586_entry_L10_Var_16:	# u32, a constant; read / written by func_50147586_entry_L10 0x5014759B: `mov (0xc, a0), a3`; func_50147586_entry_Laf 0x5014763A: `mov (0xc, a0), a3`
+func_5014509B_Var_7:	# u32, a constant; read / written by func_5014509B 0x5014509B: `mov (0xc, a3), a2`; func_5014509B_entry_L58 0x501450F8: `mov (0xc, a3), a2` ...
 	.long	0x5000b130
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0030F4, 0x0030F6
+func_5014509B_entry_L3b_Var_5:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_8:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
+func_5014509B_entry_L3b_Var_6:	# u8, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	.byte	0
 
-func_50147586_Table_8:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0
-
-func_5014A95C_Records_p0_100:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00047, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x10\x7F\x00"
-func_5014A95C_Records_p0_101:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00048, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x11\x7F\x00"
-func_5014A95C_Records_p0_102:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00049, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x12\x7F\x00"
-func_5014A95C_Records_p0_103:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0004A, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x13\x7F\x00"
-func_5014A95C_Records_p0_104:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0004B, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x14\x7F\x00"
-func_5014A95C_Records_p0_105:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0004C, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x15\x7F\x00"
-func_5014A95C_Records_p0_106:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0004D, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x16\x7F\x00"
-func_5014A95C_Records_p0_107:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0004E, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x17\x7F\x00"
+func_5014A95C_Records_p0_100:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00047, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=16, f14=127, x15="\x00"
+func_5014A95C_Records_p0_101:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00048, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=17, f14=127, x15="\x00"
+func_5014A95C_Records_p0_102:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00049, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=18, f14=127, x15="\x00"
+func_5014A95C_Records_p0_103:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0004A, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=19, f14=127, x15="\x00"
+func_50144C7D_Selected_104:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0004B, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=20, f14=127, x15="\x00"
+func_50144C7D_Selected_105:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0004C, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=21, f14=127, x15="\x00"
+func_50144C7D_Selected_106:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0004D, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=22, f14=127, x15="\x00"
+func_50144C7D_Selected_107:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0004E, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=23, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x003178, 0x003198
-func_5014A95C_Records_p0_108:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00050, x4="\x00\x00\x02\x00\x00\x00x\x00\x00\x18\x7F\x00"
+func_50144C7D_Selected_108:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00050, x4="\x00\x00\x02\x00\x00\x00x\x00", f13=24, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 8 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0031A8, 0x0031B0
-func_5014A95C_Records_p0_109:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00051, x4="\x00\x00\x00\x00(\x00X\x00\x00\x19\x7F\x00"
-func_5014A95C_Records_p0_110:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00052, x4="\x00\x00\x02\x00\x00\x00x\x00\x00\x1A\x7F\x00"
+func_50144C7D_Selected_109:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00051, x4="\x00\x00\x00\x00(\x00X\x00", f13=25, f14=127, x15="\x00"
+func_50144C7D_Selected_110:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00052, x4="\x00\x00\x02\x00\x00\x00x\x00", f13=26, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 8 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0031D0, 0x0031D8
-func_5014A95C_Records_p0_111:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB00053, x4="\x00\x00\x00\x00(\x00X\x00\x00\x1B\x7F\x00"
+func_50144C7D_Selected_111:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB00053, x4="\x00\x00\x00\x00(\x00X\x00", f13=27, f14=127, x15="\x00"
 
 Str_empty_1258:	.asciz "["
 # census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -1505,19 +1478,19 @@ func_5014542B_entry_L19_Var_2:	# s16, a constant; read / written by func_5014542
 	.word	0
 func_5014542B_Var_2:	# s16, a constant; read / written by func_5014542B 0x5014542B: `movhu (a0), d0`; func_5014542B 0x5014542B: `movhu (a0), d2`
 	.word	127
-func_5014474E_Var_4:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
+func_5014474E_Var_3:	# u8, a constant; read / written by func_5014474E 0x5014474E: `movbu (0xc, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xc, a3), d1`
 	.byte	0
-func_5014474E_entry_L1e_Var_7:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
+func_5014474E_entry_L1e_Var_5:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (0xd, a3), d2`; func_5014542B_entry_L51 0x50145481: `movbu (0xd, a3), d2`
 	.byte	14
-func_5014474E_entry_L1e_Var_8:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
+func_5014474E_entry_L1e_Var_6:	# u8, a constant; read / written by func_5014474E_entry_L1e 0x50144771: `movbu (a2), d0`; func_5014474E_entry_L40 0x50144793: `movbu (a2), d1` ...
 	.byte	127
 
 func_5014474E_entry_L40_Table:	# 17 x u8, 0..176; read by func_5014474E_entry_L40 0x50144793: `movbu (0xf, a3), d1`; func_5014542B_entry_L25 0x50145455: `movbu (0xf, a3), d1`
 	tab_u8	0, 92, 0, 176, 0, 0, 0, 0, 0, 0, 0, 127, 0, 0, 12, 127	# [0]
 	tab_u8	0	# [16]
 
-func_5014A95C_Records_p0_112:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0005D, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x0D\x7F\x00"
+func_5014A95C_Records_p0_112:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0005D, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=13, f14=127, x15="\x00"
 
 Str_empty_1251:	.asciz "^"
 # census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -1536,76 +1509,81 @@ func_501447AF_entry_L1e_Var_2:	# u8, a constant; read / written by func_501447AF
 func_501447AF_entry_L40_Var_3:	# u8, a constant; read / written by func_501447AF_entry_L40 0x501447F4: `movbu (0xf, a3), d1`; func_5014552F_entry_L12 0x50145546: `movbu (0xf, a2), d0`
 	.byte	6
 
-func_5014A95C_Records_p0_113:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0005F, x4="\x00\x00\x00\x00\x00\x00\x7F\x00\x00\x0B\x7F\x00"
+func_5014A95C_Records_p0_113:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0005F, x4="\x00\x00\x00\x00\x00\x00\x7F\x00", f13=11, f14=127, x15="\x00"
 # census: opaque -- unknown-dump: 32 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x003238, 0x003258
-func_5014A95C_Records_p0_114:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB0007E, x4="\x00\x00\x00\x00\x00\x00\x01\x00\x00\x04\x80\x07"
-func_5014A95C_Records_p0_115:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB08000, x4="\x00\x00\x00\x00\x00\x00\x0C\x00\x00\x1F\x7F\x00"
-func_5014A95C_Records_p0_116:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB08001, x4="\x00\x00\x18\x00\x00\x00\xFF\x00\x00\x1E\xFF\x00"
-func_5014A95C_Records_p0_117:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB08002, x4="\x00\x00\x00\x00(\x00X\x00\x00\x1D\x7F\x00"
-func_5014A95C_Records_p0_118:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xB08005, x4="\x00\x00\x14\x00\x00\x00\x7F\x0C\x00 \x7F\x00"
-func_5014A95C_Records_p0_119:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xC00000, x4="\x00\x00\x06\x00\x00\x00\xFF\x00\x00\x00\x7F\x00"
-func_5014A95C_Records_p0_57:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xD00000, x4="\x01\x00\x00\x00\x00\x00\x7F\x00R\xB1\x00P"
-# census: opaque -- unknown-dump: 2 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0032C8, 0x0032CA
+func_50144C7D_Selected_114:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB0007E, x4="\x00\x00\x00\x00\x00\x00\x01\x00", f13=4, f14=128, x15="\x07"
+func_50144C7D_Selected_115:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB08000, x4="\x00\x00\x00\x00\x00\x00\x0C\x00", f13=31, f14=127, x15="\x00"
+func_50144C7D_Selected_116:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB08001, x4="\x00\x00\x18\x00\x00\x00\xFF\x00", f13=30, f14=255, x15="\x00"
+func_50144C7D_Selected_117:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB08002, x4="\x00\x00\x00\x00(\x00X\x00", f13=29, f14=127, x15="\x00"
+func_50144C7D_Selected_118:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xB08005, x4="\x00\x00\x14\x00\x00\x00\x7F\x0C", f13=32, f14=127, x15="\x00"
+func_50144C7D_Selected_119:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xC00000, x4="\x00\x00\x06\x00\x00\x00\xFF\x00", f14=127, x15="\x00"
+func_5014A95C_Records_p0_57:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xD00000, x4="\x01\x00\x00\x00\x00\x00\x7F\x00", f12=82, f13=177, x15="P"
 
-func_50147586_Table_9:	# 2 x u8, 0..1; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	1, 0
+func_5014509B_entry_L3b_Var_7:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	127
+func_5014509B_Var_9:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	1
+func_5014509B_entry_L3b_Var_8:	# u8, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	.byte	0
 
-func_5014A95C_Records_p0_58:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0xE00000, x4="\x01\x00\x00\x00\x00\x00\x7F\x7Ft\xB1\x00P"
-# census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0032DC, 0x0032DE
+func_5014A95C_Records_p0_58:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0xE00000, x4="\x01\x00\x00\x00\x00\x00\x7F\x7F", f12=116, f13=177, x15="P"
 
-func_50147586_Table_10:	# 3890 x u8, 0..252; read by func_50147586 0x50147586: `movbu (0x12, a0), d0`
-	tab_u8	2, 0, 104, 25, 64, 72, 0, 0, 0, 0, 128, 25, 64, 72, 0, 0	# [0]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 148, 25, 64, 72, 0, 0	# [16]
-	tab_u8	0, 0, 164, 25, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
+func_5014509B_entry_L3b_Var_9:	# u16, a constant; read / written by func_5014509B_entry_L3b 0x501450DB: `movhu (0x10, a3), d1`; func_5014509B_entry_L87 0x50145127: `movhu (0x10, a3), d1` ...
+	.word	32767
+func_5014509B_Var_10:	# u8, a constant; read / written by func_5014509B 0x5014509B: `movbu (0x12, a3), d1`; func_50147586 0x50147586: `movbu (0x12, a0), d0`
+	.byte	2
+
+func_5014509B_entry_L3b_Table_5:	# 3889 x u8, 0..252; read by func_5014509B_entry_L3b 0x501450DB: `movbu (0x13, a3), d1`; func_5014509B_entry_L87 0x50145127: `movbu (0x13, a3), d1` ...
+	tab_u8	0, 104, 25, 64, 72, 0, 0, 0, 0, 128, 25, 64, 72, 0, 0, 0	# [0]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 148, 25, 64, 72, 0, 0, 0	# [16]
+	tab_u8	0, 164, 25, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [32]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [48]
-	tab_u8	0, 0, 180, 25, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
-	tab_u8	0, 0, 196, 25, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
+	tab_u8	0, 180, 25, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [64]
+	tab_u8	0, 196, 25, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [80]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [96]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [112]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [128]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [144]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [160]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [176]
-	tab_u8	0, 0, 20, 26, 64, 72, 0, 0, 0, 0, 36, 26, 64, 72, 0, 0	# [192]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 26, 64, 72, 0, 0	# [208]
-	tab_u8	0, 0, 68, 26, 64, 72, 0, 0, 0, 0, 88, 26, 64, 72, 0, 0	# [224]
-	tab_u8	0, 0, 104, 26, 64, 72, 0, 0, 0, 0, 120, 26, 64, 72, 0, 0	# [240]
-	tab_u8	0, 0, 136, 26, 64, 72, 0, 0, 0, 0, 148, 26, 64, 72, 0, 0	# [256]
-	tab_u8	0, 0, 164, 26, 64, 72, 0, 0, 0, 0, 180, 26, 64, 72, 0, 0	# [272]
-	tab_u8	0, 0, 196, 26, 64, 72, 0, 0, 0, 0, 212, 26, 64, 72, 0, 0	# [288]
-	tab_u8	0, 0, 228, 26, 64, 72, 0, 0, 0, 0, 244, 26, 64, 72, 0, 0	# [304]
-	tab_u8	0, 0, 4, 27, 64, 72, 0, 0, 0, 0, 20, 27, 64, 72, 0, 0	# [320]
-	tab_u8	0, 0, 36, 27, 64, 72, 0, 0, 0, 0, 52, 27, 64, 72, 0, 0	# [336]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 27, 64, 72, 0, 0	# [352]
-	tab_u8	0, 0, 84, 27, 64, 72, 0, 0, 0, 0, 116, 27, 64, 72, 0, 0	# [368]
-	tab_u8	0, 0, 132, 27, 64, 72, 0, 0, 0, 0, 100, 27, 64, 72, 0, 0	# [384]
-	tab_u8	0, 0, 148, 27, 64, 72, 0, 0, 0, 0, 164, 27, 64, 72, 0, 0	# [400]
-	tab_u8	0, 0, 180, 27, 64, 72, 0, 0, 0, 0, 196, 27, 64, 72, 0, 0	# [416]
-	tab_u8	0, 0, 212, 27, 64, 72, 0, 0, 0, 0, 228, 27, 64, 72, 0, 0	# [432]
-	tab_u8	0, 0, 244, 27, 64, 72, 0, 0, 0, 0, 4, 28, 64, 72, 0, 0	# [448]
+	tab_u8	0, 20, 26, 64, 72, 0, 0, 0, 0, 36, 26, 64, 72, 0, 0, 0	# [192]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 26, 64, 72, 0, 0, 0	# [208]
+	tab_u8	0, 68, 26, 64, 72, 0, 0, 0, 0, 88, 26, 64, 72, 0, 0, 0	# [224]
+	tab_u8	0, 104, 26, 64, 72, 0, 0, 0, 0, 120, 26, 64, 72, 0, 0, 0	# [240]
+	tab_u8	0, 136, 26, 64, 72, 0, 0, 0, 0, 148, 26, 64, 72, 0, 0, 0	# [256]
+	tab_u8	0, 164, 26, 64, 72, 0, 0, 0, 0, 180, 26, 64, 72, 0, 0, 0	# [272]
+	tab_u8	0, 196, 26, 64, 72, 0, 0, 0, 0, 212, 26, 64, 72, 0, 0, 0	# [288]
+	tab_u8	0, 228, 26, 64, 72, 0, 0, 0, 0, 244, 26, 64, 72, 0, 0, 0	# [304]
+	tab_u8	0, 4, 27, 64, 72, 0, 0, 0, 0, 20, 27, 64, 72, 0, 0, 0	# [320]
+	tab_u8	0, 36, 27, 64, 72, 0, 0, 0, 0, 52, 27, 64, 72, 0, 0, 0	# [336]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 27, 64, 72, 0, 0, 0	# [352]
+	tab_u8	0, 84, 27, 64, 72, 0, 0, 0, 0, 116, 27, 64, 72, 0, 0, 0	# [368]
+	tab_u8	0, 132, 27, 64, 72, 0, 0, 0, 0, 100, 27, 64, 72, 0, 0, 0	# [384]
+	tab_u8	0, 148, 27, 64, 72, 0, 0, 0, 0, 164, 27, 64, 72, 0, 0, 0	# [400]
+	tab_u8	0, 180, 27, 64, 72, 0, 0, 0, 0, 196, 27, 64, 72, 0, 0, 0	# [416]
+	tab_u8	0, 212, 27, 64, 72, 0, 0, 0, 0, 228, 27, 64, 72, 0, 0, 0	# [432]
+	tab_u8	0, 244, 27, 64, 72, 0, 0, 0, 0, 4, 28, 64, 72, 0, 0, 0	# [448]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [464]
-	tab_u8	0, 0, 20, 28, 64, 72, 0, 0, 0, 0, 36, 28, 64, 72, 0, 0	# [480]
-	tab_u8	0, 0, 52, 28, 64, 72, 0, 0, 0, 0, 68, 28, 64, 72, 0, 0	# [496]
-	tab_u8	0, 0, 84, 28, 64, 72, 0, 0, 0, 0, 100, 28, 64, 72, 0, 0	# [512]
-	tab_u8	0, 0, 116, 28, 64, 72, 0, 0, 0, 0, 132, 28, 64, 72, 0, 0	# [528]
-	tab_u8	0, 0, 148, 28, 64, 72, 0, 0, 0, 0, 164, 28, 64, 72, 0, 0	# [544]
-	tab_u8	0, 0, 180, 28, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [560]
+	tab_u8	0, 20, 28, 64, 72, 0, 0, 0, 0, 36, 28, 64, 72, 0, 0, 0	# [480]
+	tab_u8	0, 52, 28, 64, 72, 0, 0, 0, 0, 68, 28, 64, 72, 0, 0, 0	# [496]
+	tab_u8	0, 84, 28, 64, 72, 0, 0, 0, 0, 100, 28, 64, 72, 0, 0, 0	# [512]
+	tab_u8	0, 116, 28, 64, 72, 0, 0, 0, 0, 132, 28, 64, 72, 0, 0, 0	# [528]
+	tab_u8	0, 148, 28, 64, 72, 0, 0, 0, 0, 164, 28, 64, 72, 0, 0, 0	# [544]
+	tab_u8	0, 180, 28, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [560]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [576]
-	tab_u8	0, 0, 196, 28, 64, 72, 0, 0, 0, 0, 212, 28, 64, 72, 0, 0	# [592]
-	tab_u8	0, 0, 228, 28, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [608]
-	tab_u8	0, 0, 244, 28, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [624]
+	tab_u8	0, 196, 28, 64, 72, 0, 0, 0, 0, 212, 28, 64, 72, 0, 0, 0	# [592]
+	tab_u8	0, 228, 28, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [608]
+	tab_u8	0, 244, 28, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [624]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [640]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [656]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [672]
@@ -1624,26 +1602,26 @@ func_50147586_Table_10:	# 3890 x u8, 0..252; read by func_50147586 0x50147586: `
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [880]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [896]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [912]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 29, 64, 72, 0, 0	# [928]
-	tab_u8	0, 0, 36, 29, 64, 72, 0, 0, 0, 0, 52, 29, 64, 72, 0, 0	# [944]
-	tab_u8	0, 0, 68, 29, 64, 72, 0, 0, 0, 0, 84, 29, 64, 72, 0, 0	# [960]
-	tab_u8	0, 0, 100, 29, 64, 72, 0, 0, 0, 0, 116, 29, 64, 72, 0, 0	# [976]
-	tab_u8	0, 0, 132, 29, 64, 72, 0, 0, 0, 0, 148, 29, 64, 72, 0, 0	# [992]
-	tab_u8	0, 0, 164, 29, 64, 72, 0, 0, 0, 0, 180, 29, 64, 72, 0, 0	# [1008]
-	tab_u8	0, 0, 196, 29, 64, 72, 0, 0, 0, 0, 212, 29, 64, 72, 0, 0	# [1024]
-	tab_u8	0, 0, 228, 29, 64, 72, 0, 0, 0, 0, 244, 29, 64, 72, 0, 0	# [1040]
-	tab_u8	0, 0, 4, 30, 64, 72, 0, 0, 0, 0, 20, 30, 64, 72, 0, 0	# [1056]
-	tab_u8	0, 0, 36, 30, 64, 72, 0, 0, 0, 0, 52, 30, 64, 72, 0, 0	# [1072]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 30, 64, 72, 0, 0	# [1088]
-	tab_u8	0, 0, 84, 30, 64, 72, 0, 0, 0, 0, 100, 30, 64, 72, 0, 0	# [1104]
-	tab_u8	0, 0, 116, 30, 64, 72, 0, 0, 0, 0, 132, 30, 64, 72, 0, 0	# [1120]
-	tab_u8	0, 0, 148, 30, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1136]
-	tab_u8	0, 0, 164, 30, 64, 72, 0, 0, 0, 0, 180, 30, 64, 72, 0, 0	# [1152]
-	tab_u8	0, 0, 196, 30, 64, 72, 0, 0, 0, 0, 212, 30, 64, 72, 0, 0	# [1168]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 29, 64, 72, 0, 0, 0	# [928]
+	tab_u8	0, 36, 29, 64, 72, 0, 0, 0, 0, 52, 29, 64, 72, 0, 0, 0	# [944]
+	tab_u8	0, 68, 29, 64, 72, 0, 0, 0, 0, 84, 29, 64, 72, 0, 0, 0	# [960]
+	tab_u8	0, 100, 29, 64, 72, 0, 0, 0, 0, 116, 29, 64, 72, 0, 0, 0	# [976]
+	tab_u8	0, 132, 29, 64, 72, 0, 0, 0, 0, 148, 29, 64, 72, 0, 0, 0	# [992]
+	tab_u8	0, 164, 29, 64, 72, 0, 0, 0, 0, 180, 29, 64, 72, 0, 0, 0	# [1008]
+	tab_u8	0, 196, 29, 64, 72, 0, 0, 0, 0, 212, 29, 64, 72, 0, 0, 0	# [1024]
+	tab_u8	0, 228, 29, 64, 72, 0, 0, 0, 0, 244, 29, 64, 72, 0, 0, 0	# [1040]
+	tab_u8	0, 4, 30, 64, 72, 0, 0, 0, 0, 20, 30, 64, 72, 0, 0, 0	# [1056]
+	tab_u8	0, 36, 30, 64, 72, 0, 0, 0, 0, 52, 30, 64, 72, 0, 0, 0	# [1072]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 68, 30, 64, 72, 0, 0, 0	# [1088]
+	tab_u8	0, 84, 30, 64, 72, 0, 0, 0, 0, 100, 30, 64, 72, 0, 0, 0	# [1104]
+	tab_u8	0, 116, 30, 64, 72, 0, 0, 0, 0, 132, 30, 64, 72, 0, 0, 0	# [1120]
+	tab_u8	0, 148, 30, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1136]
+	tab_u8	0, 164, 30, 64, 72, 0, 0, 0, 0, 180, 30, 64, 72, 0, 0, 0	# [1152]
+	tab_u8	0, 196, 30, 64, 72, 0, 0, 0, 0, 212, 30, 64, 72, 0, 0, 0	# [1168]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1184]
-	tab_u8	0, 0, 228, 30, 64, 72, 0, 0, 0, 0, 244, 30, 64, 72, 0, 0	# [1200]
-	tab_u8	0, 0, 4, 31, 64, 72, 0, 0, 0, 0, 20, 31, 64, 72, 0, 0	# [1216]
-	tab_u8	0, 0, 36, 31, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1232]
+	tab_u8	0, 228, 30, 64, 72, 0, 0, 0, 0, 244, 30, 64, 72, 0, 0, 0	# [1200]
+	tab_u8	0, 4, 31, 64, 72, 0, 0, 0, 0, 20, 31, 64, 72, 0, 0, 0	# [1216]
+	tab_u8	0, 36, 31, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1232]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1248]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1264]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1280]
@@ -1656,55 +1634,55 @@ func_50147586_Table_10:	# 3890 x u8, 0..252; read by func_50147586 0x50147586: `
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1392]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1408]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1424]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 116, 32, 64, 72, 0, 0	# [1440]
-	tab_u8	0, 0, 136, 32, 64, 72, 0, 0, 0, 0, 156, 32, 64, 72, 0, 0	# [1456]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 32, 64, 72, 0, 0	# [1472]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 196, 32, 64, 72, 0, 0	# [1488]
-	tab_u8	0, 0, 216, 32, 64, 72, 0, 0, 0, 0, 236, 32, 64, 72, 0, 0	# [1504]
-	tab_u8	0, 0, 252, 32, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1520]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 33, 64, 72, 0, 0	# [1536]
-	tab_u8	0, 0, 28, 33, 64, 72, 0, 0, 0, 0, 44, 33, 64, 72, 0, 0	# [1552]
-	tab_u8	0, 0, 64, 33, 64, 72, 0, 0, 0, 0, 84, 33, 64, 72, 0, 0	# [1568]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 116, 32, 64, 72, 0, 0, 0	# [1440]
+	tab_u8	0, 136, 32, 64, 72, 0, 0, 0, 0, 156, 32, 64, 72, 0, 0, 0	# [1456]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 32, 64, 72, 0, 0, 0	# [1472]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 196, 32, 64, 72, 0, 0, 0	# [1488]
+	tab_u8	0, 216, 32, 64, 72, 0, 0, 0, 0, 236, 32, 64, 72, 0, 0, 0	# [1504]
+	tab_u8	0, 252, 32, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1520]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 33, 64, 72, 0, 0, 0	# [1536]
+	tab_u8	0, 28, 33, 64, 72, 0, 0, 0, 0, 44, 33, 64, 72, 0, 0, 0	# [1552]
+	tab_u8	0, 64, 33, 64, 72, 0, 0, 0, 0, 84, 33, 64, 72, 0, 0, 0	# [1568]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1584]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 33, 64, 72, 0, 0	# [1600]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 33, 64, 72, 0, 0, 0	# [1600]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1616]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1632]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1648]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 148, 33, 64, 72, 0, 0	# [1664]
-	tab_u8	0, 0, 164, 33, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1680]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 33, 64, 72, 0, 0	# [1696]
-	tab_u8	0, 0, 224, 33, 64, 72, 0, 0, 0, 0, 240, 33, 64, 72, 0, 0	# [1712]
-	tab_u8	0, 0, 0, 34, 64, 72, 0, 0, 0, 0, 20, 34, 64, 72, 0, 0	# [1728]
-	tab_u8	0, 0, 40, 34, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1744]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 148, 33, 64, 72, 0, 0, 0	# [1664]
+	tab_u8	0, 164, 33, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1680]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 33, 64, 72, 0, 0, 0	# [1696]
+	tab_u8	0, 224, 33, 64, 72, 0, 0, 0, 0, 240, 33, 64, 72, 0, 0, 0	# [1712]
+	tab_u8	0, 0, 34, 64, 72, 0, 0, 0, 0, 20, 34, 64, 72, 0, 0, 0	# [1728]
+	tab_u8	0, 40, 34, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1744]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1760]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56, 34, 64, 72, 0, 0	# [1776]
-	tab_u8	0, 0, 72, 34, 64, 72, 0, 0, 0, 0, 88, 34, 64, 72, 0, 0	# [1792]
-	tab_u8	0, 0, 108, 34, 64, 72, 0, 0, 0, 0, 128, 34, 64, 72, 0, 0	# [1808]
-	tab_u8	0, 0, 144, 34, 64, 72, 0, 0, 0, 0, 160, 34, 64, 72, 0, 0	# [1824]
-	tab_u8	0, 0, 192, 34, 64, 72, 0, 0, 0, 0, 236, 34, 64, 72, 0, 0	# [1840]
-	tab_u8	0, 0, 4, 35, 64, 72, 0, 0, 0, 0, 124, 35, 64, 72, 0, 0	# [1856]
-	tab_u8	0, 0, 148, 35, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1872]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 164, 35, 64, 72, 0, 0	# [1888]
-	tab_u8	0, 0, 180, 35, 64, 72, 0, 0, 0, 0, 188, 35, 64, 72, 0, 0	# [1904]
-	tab_u8	0, 0, 196, 35, 64, 72, 0, 0, 0, 0, 212, 35, 64, 72, 0, 0	# [1920]
-	tab_u8	0, 0, 220, 35, 64, 72, 0, 0, 0, 0, 228, 35, 64, 72, 0, 0	# [1936]
-	tab_u8	0, 0, 244, 35, 64, 72, 0, 0, 0, 0, 4, 36, 64, 72, 0, 0	# [1952]
-	tab_u8	0, 0, 12, 36, 64, 72, 0, 0, 0, 0, 28, 36, 64, 72, 0, 0	# [1968]
-	tab_u8	0, 0, 44, 36, 64, 72, 0, 0, 0, 0, 60, 36, 64, 72, 0, 0	# [1984]
-	tab_u8	0, 0, 76, 36, 64, 72, 0, 0, 0, 0, 92, 36, 64, 72, 0, 0	# [2000]
-	tab_u8	0, 0, 108, 36, 64, 72, 0, 0, 0, 0, 124, 36, 64, 72, 0, 0	# [2016]
-	tab_u8	0, 0, 140, 36, 64, 72, 0, 0, 0, 0, 156, 36, 64, 72, 0, 0	# [2032]
-	tab_u8	0, 0, 172, 36, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2048]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 188, 36, 64, 72, 0, 0	# [2064]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 56, 34, 64, 72, 0, 0, 0	# [1776]
+	tab_u8	0, 72, 34, 64, 72, 0, 0, 0, 0, 88, 34, 64, 72, 0, 0, 0	# [1792]
+	tab_u8	0, 108, 34, 64, 72, 0, 0, 0, 0, 128, 34, 64, 72, 0, 0, 0	# [1808]
+	tab_u8	0, 144, 34, 64, 72, 0, 0, 0, 0, 160, 34, 64, 72, 0, 0, 0	# [1824]
+	tab_u8	0, 192, 34, 64, 72, 0, 0, 0, 0, 236, 34, 64, 72, 0, 0, 0	# [1840]
+	tab_u8	0, 4, 35, 64, 72, 0, 0, 0, 0, 124, 35, 64, 72, 0, 0, 0	# [1856]
+	tab_u8	0, 148, 35, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [1872]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 164, 35, 64, 72, 0, 0, 0	# [1888]
+	tab_u8	0, 180, 35, 64, 72, 0, 0, 0, 0, 188, 35, 64, 72, 0, 0, 0	# [1904]
+	tab_u8	0, 196, 35, 64, 72, 0, 0, 0, 0, 212, 35, 64, 72, 0, 0, 0	# [1920]
+	tab_u8	0, 220, 35, 64, 72, 0, 0, 0, 0, 228, 35, 64, 72, 0, 0, 0	# [1936]
+	tab_u8	0, 244, 35, 64, 72, 0, 0, 0, 0, 4, 36, 64, 72, 0, 0, 0	# [1952]
+	tab_u8	0, 12, 36, 64, 72, 0, 0, 0, 0, 28, 36, 64, 72, 0, 0, 0	# [1968]
+	tab_u8	0, 44, 36, 64, 72, 0, 0, 0, 0, 60, 36, 64, 72, 0, 0, 0	# [1984]
+	tab_u8	0, 76, 36, 64, 72, 0, 0, 0, 0, 92, 36, 64, 72, 0, 0, 0	# [2000]
+	tab_u8	0, 108, 36, 64, 72, 0, 0, 0, 0, 124, 36, 64, 72, 0, 0, 0	# [2016]
+	tab_u8	0, 140, 36, 64, 72, 0, 0, 0, 0, 156, 36, 64, 72, 0, 0, 0	# [2032]
+	tab_u8	0, 172, 36, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2048]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 188, 36, 64, 72, 0, 0, 0	# [2064]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2080]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 204, 36, 64, 72, 0, 0	# [2096]
-	tab_u8	0, 0, 220, 36, 64, 72, 0, 0, 0, 0, 240, 36, 64, 72, 0, 0	# [2112]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 204, 36, 64, 72, 0, 0, 0	# [2096]
+	tab_u8	0, 220, 36, 64, 72, 0, 0, 0, 0, 240, 36, 64, 72, 0, 0, 0	# [2112]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2128]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 64, 72, 0, 0	# [2144]
-	tab_u8	0, 0, 16, 37, 64, 72, 0, 0, 0, 0, 36, 37, 64, 72, 0, 0	# [2160]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 37, 64, 72, 0, 0, 0	# [2144]
+	tab_u8	0, 16, 37, 64, 72, 0, 0, 0, 0, 36, 37, 64, 72, 0, 0, 0	# [2160]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2176]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 37, 64, 72, 0, 0	# [2192]
-	tab_u8	0, 0, 68, 37, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2208]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 37, 64, 72, 0, 0, 0	# [2192]
+	tab_u8	0, 68, 37, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2208]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2224]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2240]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2256]
@@ -1712,107 +1690,107 @@ func_50147586_Table_10:	# 3890 x u8, 0..252; read by func_50147586 0x50147586: `
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2288]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2304]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2320]
-	tab_u8	0, 0, 88, 37, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2336]
+	tab_u8	0, 88, 37, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2336]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2352]
-	tab_u8	0, 0, 104, 37, 64, 72, 0, 0, 0, 0, 120, 37, 64, 72, 0, 0	# [2368]
-	tab_u8	0, 0, 136, 37, 64, 72, 0, 0, 0, 0, 152, 37, 64, 72, 0, 0	# [2384]
-	tab_u8	0, 0, 184, 37, 64, 72, 0, 0, 0, 0, 200, 37, 64, 72, 0, 0	# [2400]
-	tab_u8	0, 0, 168, 37, 64, 72, 0, 0, 0, 0, 216, 37, 64, 72, 0, 0	# [2416]
-	tab_u8	0, 0, 232, 37, 64, 72, 0, 0, 0, 0, 248, 37, 64, 72, 0, 0	# [2432]
-	tab_u8	0, 0, 12, 38, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2448]
+	tab_u8	0, 104, 37, 64, 72, 0, 0, 0, 0, 120, 37, 64, 72, 0, 0, 0	# [2368]
+	tab_u8	0, 136, 37, 64, 72, 0, 0, 0, 0, 152, 37, 64, 72, 0, 0, 0	# [2384]
+	tab_u8	0, 184, 37, 64, 72, 0, 0, 0, 0, 200, 37, 64, 72, 0, 0, 0	# [2400]
+	tab_u8	0, 168, 37, 64, 72, 0, 0, 0, 0, 216, 37, 64, 72, 0, 0, 0	# [2416]
+	tab_u8	0, 232, 37, 64, 72, 0, 0, 0, 0, 248, 37, 64, 72, 0, 0, 0	# [2432]
+	tab_u8	0, 12, 38, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2448]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2464]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 38, 64, 72, 0, 0	# [2480]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 38, 64, 72, 0, 0	# [2496]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56, 38, 64, 72, 0, 0	# [2512]
-	tab_u8	0, 0, 64, 38, 64, 72, 0, 0, 0, 0, 80, 38, 64, 72, 0, 0	# [2528]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 96, 38, 64, 72, 0, 0	# [2544]
-	tab_u8	0, 0, 112, 38, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2560]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 32, 38, 64, 72, 0, 0, 0	# [2480]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 38, 64, 72, 0, 0, 0	# [2496]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 56, 38, 64, 72, 0, 0, 0	# [2512]
+	tab_u8	0, 64, 38, 64, 72, 0, 0, 0, 0, 80, 38, 64, 72, 0, 0, 0	# [2528]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 96, 38, 64, 72, 0, 0, 0	# [2544]
+	tab_u8	0, 112, 38, 64, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2560]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2576]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2592]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 38, 64, 72, 0, 0	# [2608]
-	tab_u8	0, 0, 148, 38, 64, 72, 0, 0, 0, 0, 168, 38, 64, 72, 0, 0	# [2624]
-	tab_u8	0, 0, 188, 38, 64, 72, 0, 0, 0, 0, 208, 38, 64, 72, 0, 0	# [2640]
-	tab_u8	0, 0, 228, 38, 64, 72, 0, 0, 0, 0, 248, 38, 64, 72, 0, 0	# [2656]
-	tab_u8	0, 0, 8, 39, 64, 72, 0, 0, 0, 0, 24, 39, 64, 72, 0, 0	# [2672]
-	tab_u8	0, 0, 40, 39, 64, 72, 0, 0, 0, 0, 56, 39, 64, 72, 0, 0	# [2688]
-	tab_u8	0, 0, 72, 39, 64, 72, 0, 0, 0, 0, 88, 39, 64, 72, 0, 0	# [2704]
-	tab_u8	0, 0, 104, 39, 64, 72, 0, 0, 0, 0, 120, 39, 64, 72, 0, 0	# [2720]
-	tab_u8	0, 0, 136, 39, 64, 72, 0, 0, 0, 0, 152, 39, 64, 72, 0, 0	# [2736]
-	tab_u8	0, 0, 168, 39, 64, 72, 0, 0, 0, 0, 184, 39, 64, 72, 0, 0	# [2752]
-	tab_u8	0, 0, 200, 39, 64, 72, 0, 0, 0, 0, 216, 39, 64, 72, 0, 0	# [2768]
-	tab_u8	0, 0, 232, 39, 64, 72, 0, 0, 0, 0, 248, 39, 64, 72, 0, 0	# [2784]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 38, 64, 72, 0, 0, 0	# [2608]
+	tab_u8	0, 148, 38, 64, 72, 0, 0, 0, 0, 168, 38, 64, 72, 0, 0, 0	# [2624]
+	tab_u8	0, 188, 38, 64, 72, 0, 0, 0, 0, 208, 38, 64, 72, 0, 0, 0	# [2640]
+	tab_u8	0, 228, 38, 64, 72, 0, 0, 0, 0, 248, 38, 64, 72, 0, 0, 0	# [2656]
+	tab_u8	0, 8, 39, 64, 72, 0, 0, 0, 0, 24, 39, 64, 72, 0, 0, 0	# [2672]
+	tab_u8	0, 40, 39, 64, 72, 0, 0, 0, 0, 56, 39, 64, 72, 0, 0, 0	# [2688]
+	tab_u8	0, 72, 39, 64, 72, 0, 0, 0, 0, 88, 39, 64, 72, 0, 0, 0	# [2704]
+	tab_u8	0, 104, 39, 64, 72, 0, 0, 0, 0, 120, 39, 64, 72, 0, 0, 0	# [2720]
+	tab_u8	0, 136, 39, 64, 72, 0, 0, 0, 0, 152, 39, 64, 72, 0, 0, 0	# [2736]
+	tab_u8	0, 168, 39, 64, 72, 0, 0, 0, 0, 184, 39, 64, 72, 0, 0, 0	# [2752]
+	tab_u8	0, 200, 39, 64, 72, 0, 0, 0, 0, 216, 39, 64, 72, 0, 0, 0	# [2768]
+	tab_u8	0, 232, 39, 64, 72, 0, 0, 0, 0, 248, 39, 64, 72, 0, 0, 0	# [2784]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2800]
-	tab_u8	0, 0, 28, 40, 64, 72, 0, 0, 0, 0, 224, 50, 64, 72, 1, 9	# [2816]
-	tab_u8	0, 0, 40, 51, 64, 72, 1, 1, 0, 0, 48, 51, 64, 72, 1, 13	# [2832]
-	tab_u8	0, 0, 152, 51, 64, 72, 1, 1, 0, 0, 160, 51, 64, 72, 1, 2	# [2848]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 51, 64, 72, 1, 1	# [2864]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 184, 51, 64, 72, 1, 3	# [2880]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 208, 51, 64, 72, 1, 2	# [2896]
-	tab_u8	0, 0, 224, 51, 64, 72, 1, 1, 0, 0, 232, 51, 64, 72, 1, 2	# [2912]
-	tab_u8	0, 0, 248, 51, 64, 72, 1, 5, 0, 0, 32, 52, 64, 72, 1, 6	# [2928]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 52, 64, 72, 1, 4	# [2944]
+	tab_u8	0, 28, 40, 64, 72, 0, 0, 0, 0, 224, 50, 64, 72, 1, 9, 0	# [2816]
+	tab_u8	0, 40, 51, 64, 72, 1, 1, 0, 0, 48, 51, 64, 72, 1, 13, 0	# [2832]
+	tab_u8	0, 152, 51, 64, 72, 1, 1, 0, 0, 160, 51, 64, 72, 1, 2, 0	# [2848]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 51, 64, 72, 1, 1, 0	# [2864]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 184, 51, 64, 72, 1, 3, 0	# [2880]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 208, 51, 64, 72, 1, 2, 0	# [2896]
+	tab_u8	0, 224, 51, 64, 72, 1, 1, 0, 0, 232, 51, 64, 72, 1, 2, 0	# [2912]
+	tab_u8	0, 248, 51, 64, 72, 1, 5, 0, 0, 32, 52, 64, 72, 1, 6, 0	# [2928]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 52, 64, 72, 1, 4, 0	# [2944]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [2960]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 112, 52, 64, 72, 1, 16	# [2976]
-	tab_u8	0, 0, 240, 52, 64, 72, 1, 10, 0, 0, 64, 53, 64, 72, 1, 16	# [2992]
-	tab_u8	0, 0, 192, 53, 64, 72, 1, 9, 0, 0, 8, 54, 64, 72, 1, 14	# [3008]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 120, 54, 64, 72, 1, 2	# [3024]
-	tab_u8	0, 0, 136, 54, 64, 72, 1, 16, 0, 0, 8, 55, 64, 72, 1, 6	# [3040]
-	tab_u8	0, 0, 56, 55, 64, 72, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0	# [3056]
-	tab_u8	0, 0, 96, 55, 64, 72, 1, 2, 0, 0, 112, 55, 64, 72, 1, 7	# [3072]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 168, 55, 64, 72, 1, 1	# [3088]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 55, 64, 72, 1, 1	# [3104]
-	tab_u8	0, 0, 184, 55, 64, 72, 1, 12, 0, 0, 0, 0, 0, 0, 0, 0	# [3120]
-	tab_u8	0, 0, 24, 56, 64, 72, 1, 8, 0, 0, 0, 0, 0, 0, 0, 0	# [3136]
-	tab_u8	0, 0, 88, 56, 64, 72, 1, 6, 0, 0, 136, 56, 64, 72, 1, 16	# [3152]
-	tab_u8	0, 0, 8, 57, 64, 72, 1, 4, 0, 0, 40, 57, 64, 72, 1, 14	# [3168]
-	tab_u8	0, 0, 152, 57, 64, 72, 1, 9, 0, 0, 224, 57, 64, 72, 1, 3	# [3184]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 248, 57, 64, 72, 1, 2	# [3200]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 58, 64, 72, 1, 3	# [3216]
-	tab_u8	0, 0, 32, 58, 64, 72, 1, 3, 0, 0, 56, 58, 64, 72, 1, 1	# [3232]
-	tab_u8	0, 0, 64, 58, 64, 72, 1, 1, 0, 0, 72, 58, 64, 72, 1, 1	# [3248]
-	tab_u8	0, 0, 80, 58, 64, 72, 1, 2, 0, 0, 96, 58, 64, 72, 1, 1	# [3264]
-	tab_u8	0, 0, 104, 58, 64, 72, 1, 2, 0, 0, 120, 58, 64, 72, 1, 1	# [3280]
-	tab_u8	0, 0, 128, 58, 64, 72, 1, 2, 0, 0, 144, 58, 64, 72, 1, 2	# [3296]
-	tab_u8	0, 0, 160, 58, 64, 72, 1, 3, 0, 0, 184, 58, 64, 72, 1, 1	# [3312]
-	tab_u8	0, 0, 192, 58, 64, 72, 1, 5, 0, 0, 232, 58, 64, 72, 1, 2	# [3328]
-	tab_u8	0, 0, 248, 58, 64, 72, 1, 6, 0, 0, 40, 59, 64, 72, 1, 6	# [3344]
-	tab_u8	0, 0, 88, 59, 64, 72, 1, 6, 0, 0, 136, 59, 64, 72, 1, 9	# [3360]
-	tab_u8	0, 0, 208, 59, 64, 72, 1, 6, 0, 0, 0, 60, 64, 72, 1, 5	# [3376]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 112, 52, 64, 72, 1, 16, 0	# [2976]
+	tab_u8	0, 240, 52, 64, 72, 1, 10, 0, 0, 64, 53, 64, 72, 1, 16, 0	# [2992]
+	tab_u8	0, 192, 53, 64, 72, 1, 9, 0, 0, 8, 54, 64, 72, 1, 14, 0	# [3008]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 120, 54, 64, 72, 1, 2, 0	# [3024]
+	tab_u8	0, 136, 54, 64, 72, 1, 16, 0, 0, 8, 55, 64, 72, 1, 6, 0	# [3040]
+	tab_u8	0, 56, 55, 64, 72, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3056]
+	tab_u8	0, 96, 55, 64, 72, 1, 2, 0, 0, 112, 55, 64, 72, 1, 7, 0	# [3072]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 168, 55, 64, 72, 1, 1, 0	# [3088]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 176, 55, 64, 72, 1, 1, 0	# [3104]
+	tab_u8	0, 184, 55, 64, 72, 1, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3120]
+	tab_u8	0, 24, 56, 64, 72, 1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3136]
+	tab_u8	0, 88, 56, 64, 72, 1, 6, 0, 0, 136, 56, 64, 72, 1, 16, 0	# [3152]
+	tab_u8	0, 8, 57, 64, 72, 1, 4, 0, 0, 40, 57, 64, 72, 1, 14, 0	# [3168]
+	tab_u8	0, 152, 57, 64, 72, 1, 9, 0, 0, 224, 57, 64, 72, 1, 3, 0	# [3184]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 248, 57, 64, 72, 1, 2, 0	# [3200]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 58, 64, 72, 1, 3, 0	# [3216]
+	tab_u8	0, 32, 58, 64, 72, 1, 3, 0, 0, 56, 58, 64, 72, 1, 1, 0	# [3232]
+	tab_u8	0, 64, 58, 64, 72, 1, 1, 0, 0, 72, 58, 64, 72, 1, 1, 0	# [3248]
+	tab_u8	0, 80, 58, 64, 72, 1, 2, 0, 0, 96, 58, 64, 72, 1, 1, 0	# [3264]
+	tab_u8	0, 104, 58, 64, 72, 1, 2, 0, 0, 120, 58, 64, 72, 1, 1, 0	# [3280]
+	tab_u8	0, 128, 58, 64, 72, 1, 2, 0, 0, 144, 58, 64, 72, 1, 2, 0	# [3296]
+	tab_u8	0, 160, 58, 64, 72, 1, 3, 0, 0, 184, 58, 64, 72, 1, 1, 0	# [3312]
+	tab_u8	0, 192, 58, 64, 72, 1, 5, 0, 0, 232, 58, 64, 72, 1, 2, 0	# [3328]
+	tab_u8	0, 248, 58, 64, 72, 1, 6, 0, 0, 40, 59, 64, 72, 1, 6, 0	# [3344]
+	tab_u8	0, 88, 59, 64, 72, 1, 6, 0, 0, 136, 59, 64, 72, 1, 9, 0	# [3360]
+	tab_u8	0, 208, 59, 64, 72, 1, 6, 0, 0, 0, 60, 64, 72, 1, 5, 0	# [3376]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3392]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3408]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3424]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 60, 64, 72, 1, 6	# [3440]
-	tab_u8	0, 0, 88, 60, 64, 72, 1, 11, 0, 0, 176, 60, 64, 72, 1, 1	# [3456]
-	tab_u8	0, 0, 184, 60, 64, 72, 1, 6, 0, 0, 232, 60, 64, 72, 1, 6	# [3472]
-	tab_u8	0, 0, 24, 61, 64, 72, 1, 6, 0, 0, 72, 61, 64, 72, 1, 16	# [3488]
-	tab_u8	0, 0, 200, 61, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0	# [3504]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 60, 64, 72, 1, 6, 0	# [3440]
+	tab_u8	0, 88, 60, 64, 72, 1, 11, 0, 0, 176, 60, 64, 72, 1, 1, 0	# [3456]
+	tab_u8	0, 184, 60, 64, 72, 1, 6, 0, 0, 232, 60, 64, 72, 1, 6, 0	# [3472]
+	tab_u8	0, 24, 61, 64, 72, 1, 6, 0, 0, 72, 61, 64, 72, 1, 16, 0	# [3488]
+	tab_u8	0, 200, 61, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3504]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3520]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3536]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3552]
-	tab_u8	0, 0, 208, 61, 64, 72, 1, 1, 0, 0, 216, 61, 64, 72, 1, 2	# [3568]
-	tab_u8	0, 0, 232, 61, 64, 72, 1, 12, 0, 0, 72, 62, 64, 72, 1, 10	# [3584]
-	tab_u8	0, 0, 152, 62, 64, 72, 1, 5, 0, 0, 192, 62, 64, 72, 1, 5	# [3600]
-	tab_u8	0, 0, 232, 62, 64, 72, 1, 5, 0, 0, 16, 63, 64, 72, 1, 5	# [3616]
-	tab_u8	0, 0, 56, 63, 64, 72, 1, 10, 0, 0, 136, 63, 64, 72, 1, 2	# [3632]
-	tab_u8	0, 0, 152, 63, 64, 72, 1, 2, 0, 0, 168, 63, 64, 72, 1, 2	# [3648]
-	tab_u8	0, 0, 184, 63, 64, 72, 1, 1, 0, 0, 192, 63, 64, 72, 1, 2	# [3664]
-	tab_u8	0, 0, 208, 63, 64, 72, 1, 1, 0, 0, 216, 63, 64, 72, 1, 2	# [3680]
-	tab_u8	0, 0, 232, 63, 64, 72, 1, 6, 0, 0, 24, 64, 64, 72, 1, 9	# [3696]
-	tab_u8	0, 0, 96, 64, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0	# [3712]
-	tab_u8	0, 0, 104, 64, 64, 72, 1, 1, 0, 0, 112, 64, 64, 72, 1, 4	# [3728]
-	tab_u8	0, 0, 144, 64, 64, 72, 1, 9, 0, 0, 216, 64, 64, 72, 1, 1	# [3744]
-	tab_u8	0, 0, 224, 64, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0	# [3760]
-	tab_u8	0, 0, 232, 64, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0	# [3776]
-	tab_u8	0, 0, 240, 64, 64, 72, 1, 1, 0, 0, 248, 64, 64, 72, 1, 1	# [3792]
-	tab_u8	0, 0, 0, 65, 64, 72, 1, 1, 0, 0, 8, 65, 64, 72, 1, 1	# [3808]
-	tab_u8	0, 0, 16, 65, 64, 72, 1, 1, 0, 0, 24, 65, 64, 72, 1, 1	# [3824]
-	tab_u8	0, 0, 32, 65, 64, 72, 1, 6, 0, 0, 80, 65, 64, 72, 1, 1	# [3840]
-	tab_u8	0, 0, 88, 65, 64, 72, 1, 1, 0, 0, 96, 65, 64, 72, 1, 3	# [3856]
-	tab_u8	0, 0, 120, 65, 64, 72, 1, 1, 0, 0, 128, 65, 64, 72, 1, 2	# [3872]
-	tab_u8	0, 0	# [3888]
+	tab_u8	0, 208, 61, 64, 72, 1, 1, 0, 0, 216, 61, 64, 72, 1, 2, 0	# [3568]
+	tab_u8	0, 232, 61, 64, 72, 1, 12, 0, 0, 72, 62, 64, 72, 1, 10, 0	# [3584]
+	tab_u8	0, 152, 62, 64, 72, 1, 5, 0, 0, 192, 62, 64, 72, 1, 5, 0	# [3600]
+	tab_u8	0, 232, 62, 64, 72, 1, 5, 0, 0, 16, 63, 64, 72, 1, 5, 0	# [3616]
+	tab_u8	0, 56, 63, 64, 72, 1, 10, 0, 0, 136, 63, 64, 72, 1, 2, 0	# [3632]
+	tab_u8	0, 152, 63, 64, 72, 1, 2, 0, 0, 168, 63, 64, 72, 1, 2, 0	# [3648]
+	tab_u8	0, 184, 63, 64, 72, 1, 1, 0, 0, 192, 63, 64, 72, 1, 2, 0	# [3664]
+	tab_u8	0, 208, 63, 64, 72, 1, 1, 0, 0, 216, 63, 64, 72, 1, 2, 0	# [3680]
+	tab_u8	0, 232, 63, 64, 72, 1, 6, 0, 0, 24, 64, 64, 72, 1, 9, 0	# [3696]
+	tab_u8	0, 96, 64, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3712]
+	tab_u8	0, 104, 64, 64, 72, 1, 1, 0, 0, 112, 64, 64, 72, 1, 4, 0	# [3728]
+	tab_u8	0, 144, 64, 64, 72, 1, 9, 0, 0, 216, 64, 64, 72, 1, 1, 0	# [3744]
+	tab_u8	0, 224, 64, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3760]
+	tab_u8	0, 232, 64, 64, 72, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [3776]
+	tab_u8	0, 240, 64, 64, 72, 1, 1, 0, 0, 248, 64, 64, 72, 1, 1, 0	# [3792]
+	tab_u8	0, 0, 65, 64, 72, 1, 1, 0, 0, 8, 65, 64, 72, 1, 1, 0	# [3808]
+	tab_u8	0, 16, 65, 64, 72, 1, 1, 0, 0, 24, 65, 64, 72, 1, 1, 0	# [3824]
+	tab_u8	0, 32, 65, 64, 72, 1, 6, 0, 0, 80, 65, 64, 72, 1, 1, 0	# [3840]
+	tab_u8	0, 88, 65, 64, 72, 1, 1, 0, 0, 96, 65, 64, 72, 1, 3, 0	# [3856]
+	tab_u8	0, 120, 65, 64, 72, 1, 1, 0, 0, 128, 65, 64, 72, 1, 2, 0	# [3872]
+	tab_u8	0	# [3888]
 
-func_5014A95C_Records_p0_122:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x48404190, x4="\x01\x10\x00\x004(@H\x00\x00\x00\x00"
+func_50144C7D_Selected_122:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x48404190, x4="\x01\x10\x00\x004(@H", x15="\x00"
 # census: opaque -- unknown-dump: 20 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x004220, 0x004234
 	.space	108, 0x00
@@ -1821,16 +1799,16 @@ func_5014A95C_Records_p0_122:	# REC_func_5014A95C_Records_p0 (16 bytes)
 	.space	92, 0x00
 # census: opaque -- unknown-dump: 448 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0044F8, 0x0046B8
-func_5014A95C_Records_p0_123:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x48404690, x4="\x01\x05\x00\x00\x00,@H\x00\x00\x00\x00"
+func_50144C7D_Selected_123:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x48404690, x4="\x01\x05\x00\x00\x00,@H", x15="\x00"
 # census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0046C8, 0x004790
-func_5014A95C_Records_p0_124:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x48404780, x4="\x01\x02\x00\x00\xAC,@H\x00\x00\x00\x00"
+func_50144C7D_Selected_124:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x48404780, x4="\x01\x02\x00\x00\xAC,@H", x15="\x00"
 # census: opaque -- unknown-dump: 1008 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0047A0, 0x004B90
-func_5014A95C_Records_p0_125:	# REC_func_5014A95C_Records_p0 (16 bytes)
-	REC_func_5014A95C_Records_p0	f0=0x48404B48, x4="\x01\x09\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+func_50144C7D_Selected_125:	# REC_func_50144C7D_Selected (16 bytes)
+	REC_func_50144C7D_Selected	f0=0x48404B48, x4="\x01\x09\x00\x00\x00\x00\x00\x00", x15="\x00"
 # census: opaque -- unknown-dump: 380 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x004BA0, 0x004D1C
 	.space	68, 0x00
@@ -1841,36 +1819,36 @@ data_48404E68:
 .incbin_range "baserom/kn2400_program.rom", 0x004E68, 0x004E70
 
 func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by func_5014A95C 0x5014A95C `mov (a1), d1`; func_5014A95C_entry_L20 0x5014A97E `mov (a1), a0`; func_5014A95C_entry_L20 0x5014A97E `movbu (4, a1), d1` (+2)
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_122, f4=1, f5=1, x6="\x00\x00"	# [0]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_122, f4=1, f5=1, x6="\x00\x00"	# [0]
 	REC_func_5014A95C_Records	x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_123, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_123, f4=1, f5=1, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_124, f4=1, f5=1, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_125, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_124, f4=1, f5=1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_125, f4=1, f5=1, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=data_48402FAC, x6="\x00\x00"	# [8]
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_49, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=data_48404E68, f4=1, f5=1, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_119, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_119, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_57, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_58, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_119, x6="\x00\x00"	# [16]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_119, x6="\x00\x00"	# [16]
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_50, f4=52, f5=40, x6="@H"
 	REC_func_5014A95C_Records	f4=128, f5=43, x6="@H"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_98, f4=144, f5=43, x6="@H"
 	REC_func_5014A95C_Records	p0=Str_empty_698, f4=24, f5=50, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_114, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_114, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=Str_empty_697, f4=84, f5=40, x6="@H"
 	REC_func_5014A95C_Records	p0=Str_empty_700, f4=224, f5=43, x6="@H"
 	REC_func_5014A95C_Records	p0=Str_empty_699, x6="\x00\x00"	# [24]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_83, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_83, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_113, f4=148, f5=40, x6="@H"
 	REC_func_5014A95C_Records	f4=248, f5=49, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_84, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_84, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_112, f4=132, f5=40, x6="@H"
 	REC_func_5014A95C_Records	f4=232, f5=49, x6="@H"
 	REC_func_5014A95C_Records	f4=248, f5=47, x6="@H"	# [32]
@@ -1879,31 +1857,31 @@ func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_101, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_102, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_103, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_104, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_105, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_106, x6="\x00\x00"	# [40]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_107, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_108, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_109, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_110, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_111, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_104, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_105, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_106, x6="\x00\x00"	# [40]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_107, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_108, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_109, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_110, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_111, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_51, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_117, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_116, x6="\x00\x00"	# [48]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_115, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_118, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_85, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_117, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_116, x6="\x00\x00"	# [48]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_115, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_118, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_85, x6="\x00\x00"
 	REC_func_5014A95C_Records	f4=192, f5=40, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_86, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_87, f4=8, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_86, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_87, f4=8, f5=41, x6="@H"
 	REC_func_5014A95C_Records	f4=32, f5=41, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_88, x6="\x00\x00"	# [56]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_89, f4=80, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_88, x6="\x00\x00"	# [56]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_89, f4=80, f5=41, x6="@H"
 	REC_func_5014A95C_Records	f4=96, f5=41, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_90, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_91, f4=144, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_90, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_91, f4=144, f5=41, x6="@H"
 	REC_func_5014A95C_Records	f4=160, f5=41, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_92, f4=192, f5=41, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_92, f4=192, f5=41, x6="@H"
 	REC_func_5014A95C_Records	f4=208, f5=41, x6="@H"
 	REC_func_5014A95C_Records	f4=224, f5=41, x6="@H"	# [64]
 	REC_func_5014A95C_Records	f4=240, f5=41, x6="@H"
@@ -1918,29 +1896,29 @@ func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by
 	REC_func_5014A95C_Records	f4=128, f5=42, x6="@H"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	f4=8, f5=43, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_93, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_94, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_93, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_94, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=Str_empty_703, f4=48, f5=43, x6="@H"
 	REC_func_5014A95C_Records	f4=80, f5=43, x6="@H"	# [80]
 	REC_func_5014A95C_Records	p0=Str_empty_702, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	f4=64, f5=43, x6="@H"
 	REC_func_5014A95C_Records	p0=Str_empty_701, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_41, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_41, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_48, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_69, f4=184, f5=37, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_69, f4=184, f5=37, x6="@H"
 	REC_func_5014A95C_Records	f4=56, f5=34, x6="@H"	# [88]
 	REC_func_5014A95C_Records	f4=88, f5=37, x6="@H"
 	REC_func_5014A95C_Records	f4=120, f5=37, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_68, f4=168, f5=37, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_68, f4=168, f5=37, x6="@H"
 	REC_func_5014A95C_Records	f4=136, f5=37, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_50_2, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_70, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_71, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_67, x6="\x00\x00"	# [96]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_50, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_70, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_71, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_67, x6="\x00\x00"	# [96]
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_0, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_82, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_49_2, f4=240, f5=33, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_82, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_49, f4=240, f5=33, x6="@H"
 	REC_func_5014A95C_Records	f4=144, f5=34, x6="@H"
 	REC_func_5014A95C_Records	f4=148, f5=25, x6="@H"
 	REC_func_5014A95C_Records	f4=236, f5=34, x6="@H"
@@ -1948,77 +1926,77 @@ func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by
 	REC_func_5014A95C_Records	f4=196, f5=30, x6="@H"	# [104]
 	REC_func_5014A95C_Records	f4=212, f5=30, x6="@H"
 	REC_func_5014A95C_Records	f4=228, f5=30, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_40, f4=4, f5=31, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_40, f4=4, f5=31, x6="@H"
 	REC_func_5014A95C_Records	f4=236, f5=32, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_42, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_42, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	f4=248, f5=38, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_78, x6="\x00\x00"	# [112]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_74, f4=136, f5=39, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_78, x6="\x00\x00"	# [112]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_74, f4=136, f5=39, x6="@H"
 	REC_func_5014A95C_Records	f4=24, f5=39, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_79, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_75, f4=168, f5=39, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_79, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_75, f4=168, f5=39, x6="@H"
 	REC_func_5014A95C_Records	f4=56, f5=39, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_80, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_76, f4=200, f5=39, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_80, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_76, f4=200, f5=39, x6="@H"
 	REC_func_5014A95C_Records	f4=88, f5=39, x6="@H"	# [120]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_81, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_77, f4=232, f5=39, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_81, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_77, f4=232, f5=39, x6="@H"
 	REC_func_5014A95C_Records	f4=164, f5=30, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_39, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_73, f4=80, f5=38, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_39, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_73, f4=80, f5=38, x6="@H"
 	REC_func_5014A95C_Records	f4=112, f5=38, x6="@H"
 	REC_func_5014A95C_Records	f4=20, f5=27, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_9, f4=36, f5=27, x6="@H"	# [128]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_10, f4=228, f5=26, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_7, f4=244, f5=26, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_9, f4=36, f5=27, x6="@H"	# [128]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_10, f4=228, f5=26, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_7, f4=244, f5=26, x6="@H"
 	REC_func_5014A95C_Records	f4=100, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_12, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_13, f4=116, f5=27, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_11, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_6, f4=164, f5=26, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_8, f4=180, f5=26, x6="@H"	# [136]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_12, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_13, f4=116, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_11, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_6, f4=164, f5=26, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_8, f4=180, f5=26, x6="@H"	# [136]
 	REC_func_5014A95C_Records	f4=132, f5=27, x6="@H"
 	REC_func_5014A95C_Records	f4=68, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_18, f4=116, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_20, f4=148, f5=27, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_14, f4=180, f5=27, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_22, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_17, f4=36, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_15, f4=228, f5=27, x6="@H"	# [144]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_16, f4=20, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_21, f4=196, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_18, f4=116, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_20, f4=148, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_14, f4=180, f5=27, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_22, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_17, f4=36, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_15, f4=228, f5=27, x6="@H"	# [144]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_16, f4=20, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_21, f4=196, f5=27, x6="@H"
 	REC_func_5014A95C_Records	f4=84, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_19, f4=196, f5=28, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_23, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_51_2, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_52, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_53, x6="\x00\x00"	# [152]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_19, f4=196, f5=28, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_23, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_51, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_52, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_53, x6="\x00\x00"	# [152]
 	REC_func_5014A95C_Records	x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_24, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_25, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_26, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_24, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_25, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_26, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"	# [160]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_46, f4=164, f5=33, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_46, f4=164, f5=33, x6="@H"
 	REC_func_5014A95C_Records	f4=60, f5=36, x6="@H"
 	REC_func_5014A95C_Records	f4=200, f5=33, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_47, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_59, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_47, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_59, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"	# [168]
 	REC_func_5014A95C_Records	x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_45, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_44, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_54, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_55, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_56, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_57_2, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_58_2, x6="\x00\x00"	# [176]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_60, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_45, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_44, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_54, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_55, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_56, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_57, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_58, x6="\x00\x00"	# [176]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_60, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_29, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_64, x6="\x00\x00"
 	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_66, x6="\x00\x00"
@@ -2036,35 +2014,35 @@ func_5014A95C_Records:	# 229 x REC_func_5014A95C_Records (8 bytes each); read by
 	REC_func_5014A95C_Records	x6="\x00\x00"	# [192]
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	f4=228, f5=25, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_1, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_4, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_3, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_1, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_4, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_3, x6="\x00\x00"
 	REC_func_5014A95C_Records	f4=104, f5=26, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_5, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_43, f4=28, f5=33, x6="@H"	# [200]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_5, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_43, f4=28, f5=33, x6="@H"	# [200]
 	REC_func_5014A95C_Records	f4=20, f5=29, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_27, f4=52, f5=29, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_28, f4=84, f5=29, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_29_2, f4=116, f5=29, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_30, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_31, f4=164, f5=29, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_32, f4=196, f5=29, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_33, f4=228, f5=29, x6="@H"	# [208]
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_34, f4=4, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_27, f4=52, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_28, f4=84, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_29, f4=116, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_30, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_31, f4=164, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_32, f4=196, f5=29, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_33, f4=228, f5=29, x6="@H"	# [208]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_34, f4=4, f5=30, x6="@H"
 	REC_func_5014A95C_Records	f4=20, f5=30, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_35, f4=68, f5=30, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_36, f4=52, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_35, f4=68, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_36, f4=52, f5=30, x6="@H"
 	REC_func_5014A95C_Records	f4=100, f5=30, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_37, f4=132, f5=30, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_38, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_2, f4=36, f5=26, x6="@H"	# [216]
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_37, f4=132, f5=30, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_38, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_2, f4=36, f5=26, x6="@H"	# [216]
 	REC_func_5014A95C_Records	f4=40, f5=34, x6="@H"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_72, f4=96, f5=38, x6="@H"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_72, f4=96, f5=38, x6="@H"
 	REC_func_5014A95C_Records	f4=20, f5=31, x6="@H"
 	REC_func_5014A95C_Records	x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_61, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_63, x6="\x00\x00"
-	REC_func_5014A95C_Records	p0=func_5014A95C_Records_p0_65, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_61, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_63, x6="\x00\x00"
+	REC_func_5014A95C_Records	p0=func_50144C7D_Selected_65, x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"	# [224]
 	REC_func_5014A95C_Records	x6="\x00\x00"
 	REC_func_5014A95C_Records	x6="\x00\x00"
@@ -2377,14 +2355,8 @@ func_5014AD97_Table:	# 11 x u16, 0..40; read by func_5014AD97_L36 0x5014ADCD: `m
 	tab_u16	0, 6, 8, 10, 13, 16, 19, 22, 25, 30, 40
 	.align	4, 0xFF	# pad after func_5014AD97_Table
 
-func_5018CA20_Var_6:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_5:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_7:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	1
+func_5018CA20_Var_6:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00", f8=1
 
 func_501440A5_Table:
 	.long	loc_501440D3
@@ -3959,7 +3931,7 @@ func_5015A790_Table:	# 128 x u8, a sparse map by index: 25 entries set, the rest
 	map8	118, 24
 	map_none8	9	# [119..127]
 
-Str_p_42:	.asciz "@ p"
+Str_p_15:	.asciz "@ p"
 # census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008944, 0x008994
 data_48408994:
@@ -3971,16 +3943,16 @@ data_48408A00:
 data_48408A6C:
 # census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008A6C, 0x008AD8
-Str_p_41:	.asciz "\x85 p"
+Str_p_14:	.asciz "\x85 p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008ADC, 0x008B38
-Str_p_40:	.asciz "\xA3 p"
+Str_p_13:	.asciz "\xA3 p"
 # census: opaque -- unknown-dump: 68 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008B3C, 0x008B80
-Str_0_p_7:	.asciz "0 p"
+Str_0_p:	.asciz "0 p"
 # census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008B84, 0x008BD4
-Str_h_p_2:	.asciz "h p"
+Str_h_p:	.asciz "h p"
 # census: opaque -- unknown-dump: 68 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008BD8, 0x008C1C
 data_48408C1C:
@@ -3992,7 +3964,7 @@ data_48408C88:
 data_48408CF4:
 # census: opaque -- unknown-dump: 96 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008CF4, 0x008D54
-Str_p_39:	.asciz "\x09 p"
+Str_p_12:	.asciz "\x09 p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008D58, 0x008DB4
 data_48408DB4:
@@ -4001,13 +3973,13 @@ data_48408DB4:
 data_48408E20:
 # census: opaque -- unknown-dump: 108 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x008E20, 0x008E8C
-Str_p_38:	.asciz "\" p"
+Str_p_11:	.asciz "\" p"
 # census: opaque -- unknown-dump: 92 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008E90, 0x008EEC
-Str_p_37:	.asciz "\x10 p"
+Str_p_10:	.asciz "\x10 p"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008EF0, 0x008F28
-Str_p_36:	.asciz "\x10 p"
+Str_p_9:	.asciz "\x10 p"
 # census: opaque -- unknown-dump: 56 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x008F2C, 0x008F64
 Str_p_8:	.asciz "\x11 p"
@@ -4048,23 +4020,23 @@ Str_p_5:	.asciz "\xBB p"
 .incbin_range "baserom/kn2400_program.rom", 0x0090AC, 0x0090C0
 
 func_5015A8CC_entry_L21_Table:
-	.long	Str_p_42
+	.long	Str_p_15
 	.long	data_48408994
 	.long	data_48408A00
 	.long	data_48408A6C
-	.long	Str_p_41
-	.long	Str_p_40
-	.long	Str_0_p_7
-	.long	Str_h_p_2
+	.long	Str_p_14
+	.long	Str_p_13
+	.long	Str_0_p
+	.long	Str_h_p
 	.long	data_48408C1C
 	.long	data_48408C88
 	.long	data_48408CF4
-	.long	Str_p_39
+	.long	Str_p_12
 	.long	data_48408DB4
 	.long	data_48408E20
-	.long	Str_p_38
-	.long	Str_p_37
-	.long	Str_p_36
+	.long	Str_p_11
+	.long	Str_p_10
+	.long	Str_p_9
 	.long	Str_p_8
 	.long	Str_p_7
 	.long	data_4840900C
@@ -4076,23 +4048,23 @@ func_5015A8CC_entry_L21_Table:
 	.long	data_4840909C
 	.long	Str_p_5
 func_5015A8CC_entry_L3f_Table:
-	.long	Str_p_42
+	.long	Str_p_15
 	.long	data_48408994
 	.long	data_48408A00
 	.long	data_48408A6C
-	.long	Str_p_41
-	.long	Str_p_40
-	.long	Str_0_p_7
-	.long	Str_h_p_2
+	.long	Str_p_14
+	.long	Str_p_13
+	.long	Str_0_p
+	.long	Str_h_p
 	.long	data_48408C1C
 	.long	data_48408C88
 	.long	data_48408CF4
-	.long	Str_p_39
+	.long	Str_p_12
 	.long	data_48408DB4
 	.long	data_48408E20
-	.long	Str_p_38
-	.long	Str_p_37
-	.long	Str_p_36
+	.long	Str_p_11
+	.long	Str_p_10
+	.long	Str_p_9
 	.long	Str_p_8
 	.long	Str_p_6
 	.long	data_4840900C
@@ -4104,134 +4076,92 @@ func_5015A8CC_entry_L3f_Table:
 	.long	data_4840909C
 	.long	Str_p_5
 
-Str_h_p:	.asciz "h p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00919C, 0x0091A0
-Str_p_35:	.asciz "  p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091A4, 0x0091A8
-Str_p_34:	.asciz "\x14 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091AC, 0x0091B0
-Str_p_33:	.asciz "\x14 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091B4, 0x0091B8
-Str_p_32:	.asciz "# p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091BC, 0x0091C0
-Str_p_31:	.asciz "# p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091C4, 0x0091C8
-Str_p_30:	.asciz "\" p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091CC, 0x0091D0
-Str_p_29:	.asciz "\" p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091D4, 0x0091D8
-Str_m_p:	.asciz "m p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091DC, 0x0091E0
-Str_i_p:	.asciz "i p"
-Str_0_27:	.asciz "0"
-	.align	4, 0x00	# pad after Str_0_27
-Str_a_p:	.asciz "a p"
-Str_2_37:	.asciz "2"
-	.align	4, 0x00	# pad after Str_2_37
-Str_p_28:	.asciz "\xA2 p"
-Str_text:	.asciz "!"
-	.align	4, 0x00	# pad after Str_text
-Str_p_27:	.asciz "! p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0091FC, 0x009200
-Str_l_p:	.asciz "l p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009204, 0x009208
-Str_p_26:	.asciz "\x15 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00920C, 0x009210
-Str_p_25:	.asciz "\x15 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009214, 0x009218
-Str_p_24:	.asciz "\x14 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00921C, 0x009220
-Str_p_23:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009224, 0x009228
-Str_p_22:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00922C, 0x009230
-Str_p_21:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009234, 0x009238
-Str_p_20:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00923C, 0x009240
-Str_p_19:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009244, 0x009248
-Str_p_18:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00924C, 0x009250
-Str_p_17:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009254, 0x009258
-Str_p_16:	.asciz "\x10 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00925C, 0x009260
-Str_p_15:	.asciz "\xB0 p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009264, 0x009268
-Str_p_14:	.asciz "\xAF p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00926C, 0x009270
-Str_p_13:	.asciz "\x84 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009274, 0x009278
-Str_p_12:	.asciz "\x84 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00927C, 0x009280
-Str_k_p:	.asciz "k p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009284, 0x009288
-Str_j_p:	.asciz "j p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00928C, 0x009290
-Str_d_p:	.asciz "d p"
-Str_5_22:	.asciz "5"
-	.align	4, 0x00	# pad after Str_5_22
-Str_c_p:	.asciz "c p"
-Str_5_23:	.asciz "5"
-	.align	4, 0x00	# pad after Str_5_23
-Str_p_11:	.asciz "\xAA p"
-Str_1_37:	.asciz "1"
-	.align	4, 0x00	# pad after Str_1_37
-Str_p_10:	.asciz "\xAB p"
-# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092AC, 0x0092B0
-Str_p_9:	.asciz "\xA1 p"
-Str_text_2:	.asciz " "
-	.align	4, 0x00	# pad after Str_text_2
-Str_0_p_6:	.asciz "0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092BC, 0x0092C0
-Str_0_p_5:	.asciz "0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092C4, 0x0092C8
-Str_0_p_4:	.asciz "0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092CC, 0x0092D0
-Str_0_p_3:	.asciz "0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092D4, 0x0092D8
-Str_0_p_2:	.asciz "0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092DC, 0x0092E0
-Str_0_p:	.asciz "0 p"
-# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0092E4, 0x0092E8
+func_5015ADAF_Result_0:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702068, f4=17, x7="\x00"
+func_5015ADAF_Result_1:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702020, f4=4, f6=1, x7="\x00"
+func_5015ADAF_Result_2:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702014, f4=3, x7="\x00"
+func_5015ADAF_Result_3:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702014, f4=3, f5=1, x7="\x00"
+func_5015ADAF_Result_4:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702023, f4=5, x7="\x00"
+func_5015ADAF_Result_5:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702023, f4=5, f5=1, x7="\x00"
+func_5015ADAF_Result_6:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702022, f4=5, x7="\x00"
+func_5015ADAF_Result_7:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702022, f4=5, f5=1, x7="\x00"
+func_5015ADAF_Result_8:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x70206D, f4=193, x7="\x00"
+func_5015ADAF_Result_9:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702069, f4=48, x7="\x00"
+func_5015ADAF_Result_10:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702061, f4=50, x7="\x00"
+func_5015ADAF_Result_11:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x7020A2, f4=33, x7="\x00"
+func_5015ADAF_Result_12:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702021, f4=192, x7="\x00"
+func_5015ADAF_Result_13:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x70206C, f4=194, x7="\x00"
+func_5015ADAF_Result_14:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702015, f4=3, x7="\x00"
+func_5015ADAF_Result_15:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702015, f4=3, f5=1, x7="\x00"
+func_5015ADAF_Result_16:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702014, f4=3, f5=2, x7="\x00"
+func_5015ADAF_Result_17:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, x7="\x00"
+func_5015ADAF_Result_18:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=1, x7="\x00"
+func_5015ADAF_Result_19:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=2, x7="\x00"
+func_5015ADAF_Result_20:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=3, x7="\x00"
+func_5015ADAF_Result_21:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=4, x7="\x00"
+func_5015ADAF_Result_22:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=5, x7="\x00"
+func_5015ADAF_Result_23:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=6, x7="\x00"
+func_5015ADAF_Result_24:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702010, f4=3, f5=7, x7="\x00"
+func_5015ADAF_Result_25:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x7020B0, f4=195, f5=8, x7="\x00"
+func_5015ADAF_Result_26:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x7020AF, f4=196, x7="\x00"
+func_5015ADAF_Result_27:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702084, f4=21, x7="\x00"
+func_5015ADAF_Result_28:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702084, f4=21, f5=1, x7="\x00"
+func_5015ADAF_Result_29:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x70206B, f4=197, f6=5, x7="\x00"
+func_5015ADAF_Result_30:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x70206A, f4=198, f6=5, x7="\x00"
+func_5015ADAF_Result_31:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702064, f4=53, x7="\x00"
+func_5015ADAF_Result_32:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702063, f4=53, x7="\x00"
+func_5015ADAF_Result_33:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x7020AA, f4=49, x7="\x00"
+func_5015ADAF_Result_34:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x7020AB, f4=199, x7="\x00"
+func_5015ADAF_Result_35:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x7020A1, f4=32, x7="\x00"
+func_5015ADAF_Result_36:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702030, f4=6, x7="\x00"
+func_5015ADAF_Result_37:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702030, f4=6, f5=1, x7="\x00"
+func_5015ADAF_Result_38:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702030, f4=6, f5=2, x7="\x00"
+func_5015ADAF_Result_39:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702030, f4=6, f5=3, x7="\x00"
+func_5015ADAF_Result_40:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702030, f4=6, f5=4, x7="\x00"
+func_5015ADAF_Result_41:	# REC_func_5015ADAF_Result (8 bytes)
+	REC_func_5015ADAF_Result	f0=0x702030, f4=6, f5=5, x7="\x00"
 
-MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table
+MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L1c 0x5015B755 `call func_5015B863_entry, [d2], 0x10`
 	.long	1, func_5015B895
 	.long	2, loc_5015BAC0
 	.long	4, loc_5015B993
@@ -4245,7 +4175,7 @@ MsgTable_484092E8:	# 12 x {u32 key, code address}: a dispatch table
 	.long	1024, loc_5015BBE1
 	.long	2048, loc_5015BCF3
 	.space	8, 0x00
-MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table
+MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L51 0x5015B78A `call func_5015B863_entry, [d2], 0x10`
 	.long	1, func_5015BCF6
 	.long	2, loc_5015BE15
 	.long	8, func_5015BEA5
@@ -4255,7 +4185,7 @@ MsgTable_48409350:	# 8 x {u32 key, code address}: a dispatch table
 	.long	128, func_5015C011
 	.long	256, func_5015C07C
 	.space	8, 0x00
-MsgTable_48409398:	# 9 x {u32 key, code address}: a dispatch table
+MsgTable_48409398:	# 9 x {u32 key, code address}: a dispatch table; read by func_5015B736_entry_L86 0x5015B7BF `call func_5015B863_entry, [d2], 0x10`
 	.long	1, func_5015C0C6
 	.long	8, func_5015C194
 	.long	16, func_5015C1DD
@@ -4267,16 +4197,16 @@ MsgTable_48409398:	# 9 x {u32 key, code address}: a dispatch table
 	.long	32768, loc_5015C301
 	.space	8, 0x00
 data_484093E8:
-	# 24 bytes the code takes the address of: func_5015B736_entry_Lbb 0x5015B7F4 `mov data_484093E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 24 bytes the code takes the address of: func_5015B736_entry_Lbb 0x5015B7F4 `call func_5015B863_entry, [d2], 0x10` (+0, arg a0); func_5015B736_entry_Lbb 0x5015B7F4 `call func_5015B863_entry, [d2], 0x10` (+0, arg sp16); func_5015B736_entry_Lbb 0x5015B7F4 `mov data_484093E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: func_5015B863 (a0): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5015B863 (sp16): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	0x4, 0x5015C353, 0x8	# +0
 	.long	func_5015C307	# +12
 	tab_u32	0x0, 0x0	# +16
 data_48409400:
-	# 16 bytes the code takes the address of: func_5015B810_entry_L12 0x5015B825 `mov data_48409400, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 16 bytes the code takes the address of: func_5015B810_entry_L12 0x5015B825 `call func_5015B863_entry, [d2], 0x10` (+0, arg a0); func_5015B810_entry_L12 0x5015B825 `call func_5015B863_entry, [d2], 0x10` (+0, arg sp16); func_5015B810_entry_L12 0x5015B825 `mov data_48409400, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: func_5015B863 (a0): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5015B863 (sp16): func_5015B863 reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u32	4	# +0
 	.long	func_5015C5A9	# +4
 	tab_u32	0, 0	# +8
-MsgTable_48409410:	# 3 x {u32 key, code address}: a dispatch table
+MsgTable_48409410:	# 3 x {u32 key, code address}: a dispatch table; read by func_5015B810_entry_L36 0x5015B849 `call func_5015B863_entry, [d2], 0x10`
 	.long	4, func_5015C62A
 	.long	8192, func_5015C669
 	.long	16384, func_5015C6A8
@@ -4313,16 +4243,16 @@ func_5015EA64_Table:	# 32 x u8, 0..255; read by func_5015EA64_entry : `movbu	(a1
 	tab_u8	255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [16]
 data_484095D8:
-	# 15 bytes the code takes the address of: func_5015EAF2_L4a 0x5015EB3C `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EAF2_L4a 0x5015EB3C `mov data_484095D8, a1` (+0, as a base); func_5015EAF2_L8d 0x5015EB7F `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+9 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 15 bytes the code takes the address of: func_5015EAF2_L4a 0x5015EB3C `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EAF2_L4a 0x5015EB3C `mov data_484095D8, a1` (+0, as a base); func_5015EAF2_L8d 0x5015EB7F `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+9 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 0, 0, 16, 0, 53, 96, 15, 0, 0, 0, 0, 0, 247, 255	# +0
 data_484095E7:
-	# 4 bytes the code takes the address of: func_5015EAF2_L144 0x5015EC36 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EAF2_L144 0x5015EC36 `mov data_484095E7, a1` (+0, as a base); func_5015EAF2_L19e 0x5015EC90 `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_5015EAF2_L144 0x5015EC36 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EAF2_L144 0x5015EC36 `mov data_484095E7, a1` (+0, as a base); func_5015EAF2_L19e 0x5015EC90 `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+1 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	176, 16, 0, 255	# +0
 data_484095EB:
-	# 5 bytes the code takes the address of: func_5015EAF2_Lea 0x5015EBDC `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EAF2_Lea 0x5015EBDC `mov data_484095EB, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 5 bytes the code takes the address of: func_5015EAF2_Lea 0x5015EBDC `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EAF2_Lea 0x5015EBDC `mov data_484095EB, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	192, 0, 255, 255, 255	# +0
 data_484095F0:
-	# 16 bytes the code takes the address of: func_5015EE55_L8 0x5015EE5D `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EE55_L8 0x5015EE5D `mov data_484095F0, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 16 bytes the code takes the address of: func_5015EE55_L8 0x5015EE5D `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5015EE55_L8 0x5015EE5D `mov data_484095F0, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 0, 0, 16, 0, 53, 96, 15, 0, 0, 0, 0, 0, 247, 255, 255	# +0
 
 Str_empty_1219:	.asciz "\xB0{"
@@ -4369,77 +4299,79 @@ func_5016405C_Table_2:	# 12 x u8, 0..3; read by func_5016405C_entry : `movbu	(d0
 func_5016415A_Table:	# 4 x u8, 0..255; read by func_5016415A_entry : `movbu	(d0, a0), d1`
 	tab_u8	0, 1, 2, 255
 data_48409718:
-	# 8 bytes the code takes the address of: func_5016A4AE_entry_L85 0x5016A536 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016A4AE_entry_L85 0x5016A536 `mov data_48409718, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: func_5016A4AE_entry_L85 0x5016A536 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016A4AE_entry_L85 0x5016A536 `mov data_48409718, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 126, 127, 9, 0, 247, 255, 255	# +0
 data_48409720:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L141d 0x5016CB46 `mov data_48409720, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	8, 0, 0, 0, 1, 0, 2, 0	# +0
+	# 20 bytes the code takes the address of: func_5016B726_entry_L141d 0x5016CB46 `mov data_48409720, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u32	0x8, 0x20001	# +0
 	.long	data_48409718	# +8
-	tab_u8	3, 0, 0, 0, 2, 0, 0, 0, 240, 127, 127, 4, 1, 0, 0, 247	# +12
-	tab_u8	255, 255, 255, 255	# +28
-data_48409740:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L18a 0x5016B523 `mov data_48409740, d0` (+0, as a base); func_5016B726_entry_L1499 0x5016CBC2 `mov data_48409740, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	1, 128, 0, 0, 1, 0, 3, 0	# +0
-	.long	data_48409720+20	# +8
-	tab_u8	3, 0, 0, 0, 127, 0, 0, 0, 240, 127, 127, 4, 3, 0, 0, 247	# +12
-	tab_u8	255, 255, 255, 255	# +28
-data_48409760:
-	# 32 bytes the code takes the address of: func_5016B396_entry_Ldd 0x5016B476 `mov data_48409760, d0` (+0, as a base); func_5016B726_entry_L14a4 0x5016CBCD `mov data_48409760, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 0, 0, 1, 0, 4, 0	# +0
-	.long	data_48409740+20	# +8
-	tab_u8	3, 0, 0, 0, 255, 0, 0, 0, 240, 127, 127, 4, 4, 0, 0, 247	# +12
-	tab_u8	255, 255, 255, 255	# +28
-data_48409780:
-	# 36 bytes the code takes the address of: func_5016B396_entry_Le8 0x5016B481 `mov data_48409780, d0` (+0, as a base); func_5016B726_entry_L14af 0x5016CBD8 `mov data_48409780, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	3, 0, 0, 0, 1, 0, 5, 0	# +0
-	.long	data_48409760+20	# +8
-	tab_u8	3, 0, 52, 0, 76, 0, 0, 0, 240, 127, 127, 4, 5, 1, 1, 1	# +12
-	tab_u8	1, 1, 0, 0, 247, 255, 255, 255	# +28
+	tab_u32	0x3, 0x2	# +12
+data_48409734:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009734, 0x009740
+
+func_5016B396_Result_0:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x01\x80\x00\x00", f4=1, f6=3, p8=data_48409734, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009750, 0x009754
+data_48409754:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009754, 0x009760
+func_5016B396_Result_1:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\x00\x00\x00", f4=1, f6=4, p8=data_48409754, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009770, 0x009774
+data_48409774:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009774, 0x009780
+func_5016B396_Result_2:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x03\x00\x00\x00", f4=1, f6=5, p8=data_48409774, f12=3, x14="4\x00"
+# census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009790, 0x0097A4
 data_484097A4:
-	# 36 bytes the code takes the address of: func_5016B726_entry_L1507 0x5016CC30 `mov data_484097A4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	255, 255, 255, 0, 1, 0, 7, 0	# +0
-	.long	data_48409780+20	# +8
-	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 127, 127, 4, 5, 1, 1, 1	# +12
-	tab_u8	1, 2, 0, 0, 247, 255, 255, 255	# +28
+	# 36 bytes the code takes the address of: func_5016B726_entry_L1507 0x5016CC30 `mov data_484097A4, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u8	255, 255, 255, 0, 1, 0, 7, 0, 148, 151, 64, 72, 2, 0, 0, 0	# +0
+	tab_u8	127, 0, 0, 0, 240, 127, 127, 4, 5, 1, 1, 1, 1, 2, 0, 0	# +16
+	tab_u8	247, 255, 255, 255	# +32
 data_484097C8:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L1511 0x5016CC3A `mov data_484097C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L1511 0x5016CC3A `mov data_484097C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0xFFFFFF, 0x80001	# +0
 	.long	data_484097A4+20	# +8
 	tab_u32	0x2, 0x7F	# +12
 data_484097DC:
-	# 24 bytes the code takes the address of: func_501680F4_L174 0x50168268 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_501680F4_L174 0x50168268 `mov data_484097DC, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 24 bytes the code takes the address of: func_501680F4_L174 0x50168268 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_501680F4_L174 0x50168268 `mov data_484097DC, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 126, 127, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 247, 255, 255, 255	# +16
 data_484097F4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1436 0x5016CB5F `mov data_484097F4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1436 0x5016CB5F `mov data_484097F4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	192, 0, 32, 0, 1, 0, 6, 0	# +0
 	.long	data_484097DC	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 127, 127, 9, 1, 0, 0, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_48409814:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1532 0x5016CC5B `mov data_48409814, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1532 0x5016CC5B `mov data_48409814, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 1, 0, 9, 0	# +0
 	.long	data_484097F4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 127, 127, 9, 3, 0, 0, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_48409834:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L153c 0x5016CC65 `mov data_48409834, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L153c 0x5016CC65 `mov data_48409834, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 1, 0, 10, 0	# +0
 	.long	data_48409814+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 127, 127, 10, 1, 0, 0, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_48409854:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1553 0x5016CC7C `mov data_48409854, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	255, 255, 255, 0, 1, 0, 11, 0	# +0
+	# 20 bytes the code takes the address of: func_5016B726_entry_L1553 0x5016CC7C `mov data_48409854, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u32	0xFFFFFF, 0xB0001	# +0
 	.long	data_48409834+20	# +8
-	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 80, 44, 32, 50, 31, 0, 0	# +12
-	tab_u8	16, 0, 247, 255	# +28
-data_48409874:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L195 0x5016B52E `mov data_48409874, d0` (+0, as a base); func_5016B726_entry_L1c2 0x5016B8EB `mov data_48409874, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	2, 128, 0, 0, 0, 0, 0, 0	# +0
-	.long	data_48409854+20	# +8
-	tab_u8	3, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 0	# +12
-	tab_u8	32, 0, 247, 255	# +28
+	tab_u32	0x2, 0x7F	# +12
+data_48409868:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009868, 0x009874
+func_5016B396_Result_3:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x02\x80\x00\x00", p8=data_48409868, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009884, 0x009894
 
 Str_P_27:	.asciz " P"
 # census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -4456,172 +4388,174 @@ Str_P_24:	.asciz "\"P"
 Str_P_2_2:	.asciz "\xF0P, 2\x1F"
 # census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00990F, 0x009914
-data_48409914:
-	# 32 bytes the code takes the address of: func_5016B396_entry_Lfe 0x5016B497 `mov data_48409914, d0` (+0, as a base); func_5016B726_entry_L1f9 0x5016B922 `mov data_48409914, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	8, 0, 0, 0, 0, 0, 2, 0	# +0
-	.long	Str_P_2_2	# +8
-	tab_u8	3, 0, 0, 0, 0, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1	# +12
-	tab_u8	0, 0, 247, 255	# +28
-Str_empty_1218:	.asciz " \x80"
-# census: opaque -- unknown-dump: 29 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009937, 0x009954
-data_48409954:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L211 0x5016B5AA `mov data_48409954, d0` (+0, as a base); func_5016B726_entry_L257 0x5016B980 `mov data_48409954, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 160, 0, 0, 0, 0, 4, 0, 72, 153, 64, 72, 7, 0, 0, 0	# +0
-	tab_u8	127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1, 2, 0, 247, 255	# +16
+
+func_5016B396_Result_4:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x08\x00\x00\x00", f6=2, p8=Str_P_2_2, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009924, 0x009928
+data_48409928:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009928, 0x009934
+func_5016B396_Result_5:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0=" \x80\x00\x00", f6=3, p8=data_48409928, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009944, 0x009948
+data_48409948:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009948, 0x009954
+func_5016B396_Result_6:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\xA0\x00\x00", f6=4, p8=data_48409948, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009964, 0x009974
 data_48409974:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L262 0x5016B98B `mov data_48409974, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 160, 0, 0, 0, 0, 5, 0	# +0
-	.long	data_48409954+20	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1	# +12
-	tab_u8	4, 0, 247, 255	# +28
-data_48409994:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L1a0 0x5016B539 `mov data_48409994, d0` (+0, as a base); func_5016B726_entry_L26d 0x5016B996 `mov data_48409994, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	16, 128, 0, 0, 0, 0, 0, 0	# +0
-	.long	data_48409974+20	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1	# +12
-	tab_u8	17, 0, 247, 255	# +28
-data_484099B4:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L21c 0x5016B5B5 `mov data_484099B4, d0` (+0, as a base); func_5016B726_entry_L278 0x5016B9A1 `mov data_484099B4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 161, 0, 0, 0, 0, 4, 0	# +0
-	.long	data_48409994+20	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1	# +12
-	tab_u8	18, 0, 247, 255	# +28
+	# 20 bytes the code takes the address of: func_5016B726_entry_L262 0x5016B98B `mov data_48409974, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u32	0xA000, 0x50000, 0x48409968, 0x7, 0x1007F	# +0
+data_48409988:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009988, 0x009994
+func_5016B396_Result_7:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x10\x80\x00\x00", p8=data_48409988, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0099A4, 0x0099A8
+data_484099A8:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x0099A8, 0x0099B4
+func_5016B396_Result_8:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\xA1\x00\x00", f6=4, p8=data_484099A8, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0099C4, 0x0099D4
 data_484099D4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L283 0x5016B9AC `mov data_484099D4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 161, 0, 0, 0, 0, 5, 0	# +0
-	.long	data_484099B4+20	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1	# +12
-	tab_u8	33, 0, 247, 255	# +28
-data_484099F4:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L227 0x5016B5C0 `mov data_484099F4, d0` (+0, as a base); func_5016B726_entry_L28e 0x5016B9B7 `mov data_484099F4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 162, 0, 0, 0, 0, 4, 0	# +0
-	.long	data_484099D4+20	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 1	# +12
-	tab_u8	34, 0, 247, 255	# +28
+	# 20 bytes the code takes the address of: func_5016B726_entry_L283 0x5016B9AC `mov data_484099D4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u32	0xA100, 0x50000, 0x484099C8, 0x7, 0x1007F	# +0
+data_484099E8:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x0099E8, 0x0099F4
+func_5016B396_Result_9:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\xA2\x00\x00", f6=4, p8=data_484099E8, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009A04, 0x009A14
 data_48409A14:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L299 0x5016B9C2 `mov data_48409A14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 162, 0, 0, 0, 0, 5, 0	# +0
-	.long	data_484099F4+20	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 2	# +12
-	tab_u8	0, 0, 247, 255	# +28
+	# 32 bytes the code takes the address of: func_5016B726_entry_L299 0x5016B9C2 `mov data_48409A14, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u8	0, 162, 0, 0, 0, 0, 5, 0, 8, 154, 64, 72, 7, 0, 0, 0	# +0
+	tab_u8	127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 2, 0, 0, 247, 255	# +16
+
 Str_empty_1217:	.asciz "_"
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x009A36, 0x009A54
 data_48409A54:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L2d7 0x5016BA00 `mov data_48409A54, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L2d7 0x5016BA00 `mov data_48409A54, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	20, 176, 0, 0, 0, 0, 4, 0, 72, 154, 64, 72, 6, 0, 0, 0	# +0
 	tab_u8	127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 2, 2, 0, 247, 255	# +16
 data_48409A74:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L2e2 0x5016BA0B `mov data_48409A74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L2e2 0x5016BA0B `mov data_48409A74, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	20, 176, 0, 0, 0, 0, 5, 0	# +0
 	.long	data_48409A54+20	# +8
 	tab_u8	6, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 2	# +12
 	tab_u8	3, 0, 247, 255	# +28
 data_48409A94:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L2ed 0x5016BA16 `mov data_48409A94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L2ed 0x5016BA16 `mov data_48409A94, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	21, 176, 0, 0, 0, 0, 0, 0	# +0
 	.long	data_48409A74+20	# +8
 	tab_u8	6, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_48409AB4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3aa 0x5016BAD3 `mov data_48409AB4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3aa 0x5016BAD3 `mov data_48409AB4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	1, 64, 32, 0, 0, 0, 8, 0	# +0
 	.long	data_48409A94+20	# +8
 	tab_u8	6, 0, 0, 0, 16, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	16, 0, 247, 255	# +28
 data_48409AD4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3b5 0x5016BADE `mov data_48409AD4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3b5 0x5016BADE `mov data_48409AD4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	144, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409AB4+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	17, 0, 247, 255	# +28
 data_48409AF4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3c0 0x5016BAE9 `mov data_48409AF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3c0 0x5016BAE9 `mov data_48409AF4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	145, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409AD4+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	18, 0, 247, 255	# +28
 data_48409B14:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3cb 0x5016BAF4 `mov data_48409B14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3cb 0x5016BAF4 `mov data_48409B14, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	146, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409AF4+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	19, 0, 247, 255	# +28
 data_48409B34:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3d6 0x5016BAFF `mov data_48409B34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3d6 0x5016BAFF `mov data_48409B34, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	147, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409B14+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	20, 0, 247, 255	# +28
 data_48409B54:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3e1 0x5016BB0A `mov data_48409B54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3e1 0x5016BB0A `mov data_48409B54, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	148, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409B34+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	21, 0, 247, 255	# +28
 data_48409B74:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3ec 0x5016BB15 `mov data_48409B74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3ec 0x5016BB15 `mov data_48409B74, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	149, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409B54+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	22, 0, 247, 255	# +28
 data_48409B94:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L3f7 0x5016BB20 `mov data_48409B94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L3f7 0x5016BB20 `mov data_48409B94, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	150, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409B74+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	23, 0, 247, 255	# +28
 data_48409BB4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L402 0x5016BB2B `mov data_48409BB4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L402 0x5016BB2B `mov data_48409BB4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	151, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409B94+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	24, 0, 247, 255	# +28
 data_48409BD4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L40d 0x5016BB36 `mov data_48409BD4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L40d 0x5016BB36 `mov data_48409BD4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	152, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409BB4+20	# +8
 	tab_u8	6, 0, 0, 0, 8, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	25, 0, 247, 255	# +28
 data_48409BF4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L418 0x5016BB41 `mov data_48409BF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L418 0x5016BB41 `mov data_48409BF4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	153, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409BD4+20	# +8
 	tab_u8	6, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	26, 0, 247, 255	# +28
 data_48409C14:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L423 0x5016BB4C `mov data_48409C14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L423 0x5016BB4C `mov data_48409C14, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	154, 0, 32, 0, 0, 0, 7, 0	# +0
 	.long	data_48409BF4+20	# +8
 	tab_u8	6, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	27, 0, 247, 255	# +28
 data_48409C34:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L42e 0x5016BB57 `mov data_48409C34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L42e 0x5016BB57 `mov data_48409C34, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	138, 0, 32, 0, 0, 0, 9, 0	# +0
 	.long	data_48409C14+20	# +8
 	tab_u8	6, 0, 0, 0, 10, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	28, 0, 247, 255	# +28
 data_48409C54:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L439 0x5016BB62 `mov data_48409C54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L439 0x5016BB62 `mov data_48409C54, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	139, 0, 32, 0, 0, 0, 9, 0	# +0
 	.long	data_48409C34+20	# +8
 	tab_u8	6, 0, 0, 0, 10, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	29, 0, 247, 255	# +28
 data_48409C74:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L444 0x5016BB6D `mov data_48409C74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L444 0x5016BB6D `mov data_48409C74, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	136, 0, 32, 0, 0, 0, 9, 0	# +0
 	.long	data_48409C54+20	# +8
 	tab_u8	6, 0, 0, 0, 10, 0, 1, 0, 240, 80, 44, 32, 50, 31, 0, 16	# +12
 	tab_u8	30, 0, 247, 255	# +28
 data_48409C94:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L44f 0x5016BB78 `mov data_48409C94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L44f 0x5016BB78 `mov data_48409C94, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	137, 0, 32, 0, 0, 0, 9, 0	# +0
 	.long	data_48409C74+20	# +8
 	tab_u8	6, 0, 0, 0, 10, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_48409CB4:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L55a 0x5016BC83 `mov data_48409CB4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L55a 0x5016BC83 `mov data_48409CB4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0xFFFFFF, 0xA0000	# +0
 	.long	data_48409C94+20	# +8
 	tab_u32	0x4, 0x10000	# +12
@@ -4629,573 +4563,587 @@ data_48409CB4:
 func_5016A6F4_Table:	# 3 x u32, 73522..4294377488; read by func_5016A6F4_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377488
 data_48409CD4:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L565 0x5016BC8E `mov data_48409CD4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L565 0x5016BC8E `mov data_48409CD4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0xC000, 0xB0000	# +0
 	.long	func_5016A6F4_Table	# +8
 	tab_u32	0x7, 0x1007F	# +12
 func_5016A6F4_Table_2:	# 3 x u32, 73522..4294377489; read by func_5016A6F4_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377489
 data_48409CF4:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L570 0x5016BC99 `mov data_48409CF4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L570 0x5016BC99 `mov data_48409CF4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0xC000, 0xB0000	# +0
 	.long	func_5016A6F4_Table_2	# +8
 	tab_u32	0x7, 0x1007F	# +12
 func_5016A6F4_Table_3:	# 3 x u32, 73522..4294377490; read by func_5016A6F4_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377490
-data_48409D14:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L286 0x5016B61F `mov data_48409D14, d0` (+0, as a base); func_5016B726_entry_L57b 0x5016BCA4 `mov data_48409D14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 192, 0, 0, 0, 0, 11, 0	# +0
-	.long	func_5016A6F4_Table_3	# +8
-	tab_u8	7, 0, 0, 0, 127, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	19, 0, 247, 255	# +28
-data_48409D34:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L291 0x5016B62A `mov data_48409D34, d0` (+0, as a base); func_5016B726_entry_L586 0x5016BCAF `mov data_48409D34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	4, 192, 0, 0, 0, 0, 12, 0	# +0
-	.long	data_48409D14+20	# +8
-	tab_u8	7, 0, 0, 0, 3, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	20, 0, 247, 255	# +28
-data_48409D54:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L29c 0x5016B635 `mov data_48409D54, d0` (+0, as a base); func_5016B726_entry_L591 0x5016BCBA `mov data_48409D54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	128, 192, 0, 0, 0, 0, 13, 0	# +0
-	.long	data_48409D34+20	# +8
-	tab_u8	7, 0, 0, 0, 3, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	21, 0, 247, 255	# +28
-data_48409D74:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L2a7 0x5016B640 `mov data_48409D74, d0` (+0, as a base); func_5016B726_entry_L59c 0x5016BCC5 `mov data_48409D74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	130, 192, 0, 0, 0, 0, 13, 0	# +0
-	.long	data_48409D54+20	# +8
-	tab_u8	7, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	22, 0, 247, 255	# +28
-data_48409D94:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L2b2 0x5016B64B `mov data_48409D94, d0` (+0, as a base); func_5016B726_entry_L5a7 0x5016BCD0 `mov data_48409D94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	131, 192, 0, 0, 0, 0, 13, 0	# +0
-	.long	data_48409D74+20	# +8
-	tab_u8	7, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	23, 0, 247, 255	# +28
-data_48409DB4:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L32c 0x5016B6C5 `mov data_48409DB4, d0` (+0, as a base); func_5016B726_entry_L5b2 0x5016BCDB `mov data_48409DB4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	10, 208, 0, 0, 0, 0, 0, 0	# +0
-	.long	data_48409D94+20	# +8
-	tab_u8	7, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	24, 0, 247, 255	# +28
-data_48409DD4:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L304 0x5016B69D `mov data_48409DD4, d0` (+0, as a base); func_5016B726_entry_L5bd 0x5016BCE6 `mov data_48409DD4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 208, 0, 0, 0, 0, 0, 0	# +0
-	.long	data_48409DB4+20	# +8
-	tab_u8	7, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	25, 0, 247, 255	# +28
-data_48409DF4:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L30e 0x5016B6A7 `mov data_48409DF4, d0` (+0, as a base); func_5016B726_entry_L5c8 0x5016BCF1 `mov data_48409DF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	1, 208, 0, 0, 0, 0, 14, 0	# +0
-	.long	data_48409DD4+20	# +8
-	tab_u8	3, 0, 0, 0, 3, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	26, 0, 247, 255	# +28
-data_48409E14:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L318 0x5016B6B1 `mov data_48409E14, d0` (+0, as a base); func_5016B396_entry_L380 0x5016B719 `mov data_48409E14, d0` (+0, as a base); func_5016B726_entry_L5d3 0x5016BCFC `mov data_48409E14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	2, 208, 0, 0, 0, 0, 14, 0	# +0
-	.long	data_48409DF4+20	# +8
-	tab_u8	3, 0, 0, 0, 2, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	27, 0, 247, 255	# +28
-data_48409E34:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L322 0x5016B6BB `mov data_48409E34, d0` (+0, as a base); func_5016B726_entry_L5de 0x5016BD07 `mov data_48409E34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	3, 208, 0, 0, 0, 0, 14, 0	# +0
-	.long	data_48409E14+20	# +8
-	tab_u8	3, 0, 0, 0, 2, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	32, 0, 247, 255	# +28
 
-Str_3_32:	.asciz "3\x80"
-# census: opaque -- unknown-dump: 17 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x009E57, 0x009E68
+func_5016B396_Result_10:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\xC0\x00\x00", f6=11, p8=func_5016A6F4_Table_3, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009D24, 0x009D28
+data_48409D28:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009D28, 0x009D34
+func_5016B396_Result_11:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x04\xC0\x00\x00", f6=12, p8=data_48409D28, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009D44, 0x009D48
+data_48409D48:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009D48, 0x009D54
+func_5016B396_Result_12:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x80\xC0\x00\x00", f6=13, p8=data_48409D48, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009D64, 0x009D68
+data_48409D68:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009D68, 0x009D74
+func_5016B396_Result_13:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x82\xC0\x00\x00", f6=13, p8=data_48409D68, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009D84, 0x009D88
+data_48409D88:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009D88, 0x009D94
+func_5016B396_Result_14:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x83\xC0\x00\x00", f6=13, p8=data_48409D88, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009DA4, 0x009DA8
+data_48409DA8:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009DA8, 0x009DB4
+func_5016B396_Result_15:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\n\xD0\x00\x00", p8=data_48409DA8, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009DC4, 0x009DC8
+data_48409DC8:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009DC8, 0x009DD4
+func_5016B396_Result_16:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\xD0\x00\x00", p8=data_48409DC8, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009DE4, 0x009DE8
+data_48409DE8:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009DE8, 0x009DF4
+func_5016B396_Result_17:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x01\xD0\x00\x00", f6=14, p8=data_48409DE8, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009E04, 0x009E08
+data_48409E08:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009E08, 0x009E14
+func_5016B396_Result_18:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x02\xD0\x00\x00", f6=14, p8=data_48409E08, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009E24, 0x009E28
+data_48409E28:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009E28, 0x009E34
+func_5016B396_Result_19:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x03\xD0\x00\x00", f6=14, p8=data_48409E28, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009E44, 0x009E48
+data_48409E48:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009E48, 0x009E54
+func_5016B396_Result_20:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="3\x80\x00\x00", f6=15, p8=data_48409E48, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009E64, 0x009E68
 
 func_5016A7FE_Table:	# 3 x u32, 73522..4294377512; read by func_5016A7FE_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377512
-data_48409E74:
-	# 20 bytes the code takes the address of: func_5016B396_entry_L114 0x5016B4AD `mov data_48409E74, d0` (+0, as a base); func_5016B726_entry_L5f4 0x5016BD1D `mov data_48409E74, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xA0, 0x100000	# +0
-	.long	func_5016A7FE_Table	# +8
-	tab_u32	0x7, 0x10005	# +12
+
+func_5016B396_Result_21:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\xA0\x00\x00\x00", f6=16, p8=func_5016A7FE_Table, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009E84, 0x009E88
+
 func_5016ABFA_Table:	# 3 x u32, 73522..4294377520; read by func_5016ABFA_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377520
 data_48409E94:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L5ff 0x5016BD28 `mov data_48409E94, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L5ff 0x5016BD28 `mov data_48409E94, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0xE000, 0x110000	# +0
 	.long	func_5016ABFA_Table	# +8
 	tab_u32	0x3, 0x1007F	# +12
 func_5016ABFA_Table_2:	# 3 x u32, 73522..4294377521; read by func_5016ABFA_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377521
 data_48409EB4:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L60a 0x5016BD33 `mov data_48409EB4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L60a 0x5016BD33 `mov data_48409EB4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0xE000, 0x110000	# +0
 	.long	func_5016ABFA_Table_2	# +8
 	tab_u32	0x3, 0x1007F	# +12
 func_5016ABFA_Table_3:	# 3 x u32, 73522..4294377522; read by func_5016ABFA_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377522
-data_48409ED4:
-	# 20 bytes the code takes the address of: func_5016B396_entry_L348 0x5016B6E1 `mov data_48409ED4, d0` (+0, as a base); func_5016B726_entry_L615 0x5016BD3E `mov data_48409ED4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xE000, 0x110000	# +0
-	.long	func_5016ABFA_Table_3	# +8
-	tab_u32	0x3, 0x1007F	# +12
+
+func_5016B396_Result_22:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x00\xE0\x00\x00", f6=17, p8=func_5016ABFA_Table_3, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009EE4, 0x009EE8
+
 func_5016AD04_Table:	# 3 x u32, 73522..4294377528; read by func_5016AD04_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377528
 data_48409EF4:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L620 0x5016BD49 `mov data_48409EF4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L620 0x5016BD49 `mov data_48409EF4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x80, 0x120000	# +0
 	.long	func_5016AD04_Table	# +8
 	tab_u32	0x7, 0x1007F	# +12
 func_5016AD04_Table_2:	# 3 x u32, 73522..4294377529; read by func_5016AD04_entry : `mov	(4, a1), d0`
 	tab_u32	539775216, 73522, 4294377529
 data_48409F14:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L62b 0x5016BD54 `mov data_48409F14, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L62b 0x5016BD54 `mov data_48409F14, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x80, 0x120000	# +0
 	.long	func_5016AD04_Table_2	# +8
 	tab_u32	0x7, 0x1007F	# +12
 func_5016AD04_Table_3:	# 3 x u32, 73522..4294377530; read by func_5016AD04_entry : `mov	(4, a1), d1`
 	tab_u32	539775216, 73522, 4294377530
-data_48409F34:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L109 0x5016B4A2 `mov data_48409F34, d0` (+0, as a base); func_5016B726_entry_L636 0x5016BD5F `mov data_48409F34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	128, 0, 0, 0, 0, 0, 18, 0	# +0
-	.long	func_5016AD04_Table_3	# +8
-	tab_u8	7, 0, 0, 0, 23, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	64, 0, 247, 255	# +28
-data_48409F54:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L1c1 0x5016B55A `mov data_48409F54, d0` (+0, as a base); func_5016B726_entry_L641 0x5016BD6A `mov data_48409F54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	128, 128, 0, 0, 0, 0, 0, 0	# +0
-	.long	data_48409F34+20	# +8
-	tab_u8	7, 0, 0, 0, 1, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	65, 0, 247, 255	# +28
-data_48409F74:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L1cc 0x5016B565 `mov data_48409F74, d0` (+0, as a base); func_5016B726_entry_L64c 0x5016BD75 `mov data_48409F74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	129, 128, 0, 0, 0, 0, 0, 0	# +0
-	.long	data_48409F54+20	# +8
-	tab_u8	7, 0, 0, 0, 13, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	66, 0, 247, 255	# +28
-data_48409F94:
-	# 36 bytes the code takes the address of: func_5016B396_entry_L1d7 0x5016B570 `mov data_48409F94, d0` (+0, as a base); func_5016B726_entry_L657 0x5016BD80 `mov data_48409F94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	130, 128, 0, 0, 0, 0, 19, 0	# +0
-	.long	data_48409F74+20	# +8
-	tab_u8	7, 0, 0, 0, 19, 0, 1, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	126, 0, 0, 0, 247, 255, 255, 255	# +28
-data_48409FB8:
-	# 32 bytes the code takes the address of: func_5016B396_entry_L364 0x5016B6FD `mov data_48409FB8, d0` (+0, as a base); func_5016B726_entry_L662 0x5016BD8B `mov data_48409FB8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	20, 0, 96, 0, 0, 0, 21, 0	# +0
-	.long	data_48409F94+20	# +8
-	tab_u8	3, 0, 0, 0, 127, 0, 3, 0, 240, 80, 44, 32, 50, 31, 1, 0	# +12
-	tab_u8	127, 0, 247, 255	# +28
+
+func_5016B396_Result_23:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x80\x00\x00\x00", f6=18, p8=func_5016AD04_Table_3, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009F44, 0x009F48
+data_48409F48:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009F48, 0x009F54
+func_5016B396_Result_24:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x80\x80\x00\x00", p8=data_48409F48, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009F64, 0x009F68
+data_48409F68:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009F68, 0x009F74
+func_5016B396_Result_25:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x81\x80\x00\x00", p8=data_48409F68, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009F84, 0x009F88
+data_48409F88:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009F88, 0x009F94
+func_5016B396_Result_26:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x82\x80\x00\x00", f6=19, p8=data_48409F88, f12=7, x14="\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009FA4, 0x009FA8
+data_48409FA8:
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009FA8, 0x009FB8
+func_5016B396_Result_27:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x14\x00`\x00", f6=21, p8=data_48409FA8, f12=3, x14="\x00\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x009FC8, 0x009FD8
 data_48409FD8:
-	# 28 bytes the code takes the address of: func_5016B726_entry_L66d 0x5016BD96 `mov data_48409FD8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	255, 255, 255, 0, 0, 0, 20, 0	# +0
-	.long	data_48409FB8+20	# +8
-	tab_u8	2, 0, 0, 0, 127, 0, 1, 0, 240, 80, 37, 0, 0, 247, 255, 255	# +12
-data_48409FF4:
-	# 32 bytes the code takes the address of: func_5016B396_entry_Lf3 0x5016B48C `mov data_48409FF4, d0` (+0, as a base); func_5016B726_entry_Leb 0x5016B814 `mov data_48409FF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	4, 0, 0, 0, 0, 0, 1, 0	# +0
-	.long	data_48409FD8+20	# +8
-	tab_u8	3, 0, 40, 0, 44, 1, 1, 0, 240, 80, 33, 126, 50, 31, 0, 247	# +12
-	tab_u8	255, 255, 255, 255	# +28
+	# 20 bytes the code takes the address of: func_5016B726_entry_L66d 0x5016BD96 `mov data_48409FD8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u32	0xFFFFFF, 0x140000, 0x48409FCC, 0x2, 0x1007F	# +0
+data_48409FEC:
+# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x009FEC, 0x009FF4
+func_5016B396_Result_28:	# REC_func_5016B396_Result (16 bytes)
+	REC_func_5016B396_Result	s0="\x04\x00\x00\x00", f6=1, p8=data_48409FEC, f12=3, x14="(\x00"
+# census: opaque -- unknown-dump: 16 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00A004, 0x00A014
 data_4840A014:
-	# 28 bytes the code takes the address of: func_5016B726_entry_L9f0 0x5016C119 `mov data_4840A014, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	255, 255, 255, 0, 4, 0, 0, 0	# +0
-	.long	data_48409FF4+20	# +8
-	tab_u8	0, 0, 0, 0, 240, 80, 34, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +12
+	# 28 bytes the code takes the address of: func_5016B726_entry_L9f0 0x5016C119 `mov data_4840A014, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
+	tab_u8	255, 255, 255, 0, 4, 0, 0, 0, 8, 160, 64, 72, 0, 0, 0, 0	# +0
+	tab_u8	240, 80, 34, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +16
 data_4840A030:
-	# 28 bytes the code takes the address of: func_5016B726_entry_L9fb 0x5016C124 `mov data_4840A030, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_L9fb 0x5016C124 `mov data_4840A030, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 1, 0	# +0
 	.long	data_4840A014+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 35, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +12
 data_4840A04C:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La06 0x5016C12F `mov data_4840A04C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La06 0x5016C12F `mov data_4840A04C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 2, 0	# +0
 	.long	data_4840A030+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 39, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +12
 data_4840A068:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La11 0x5016C13A `mov data_4840A068, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La11 0x5016C13A `mov data_4840A068, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 3, 0	# +0
 	.long	data_4840A04C+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 40, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +12
 data_4840A084:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La1c 0x5016C145 `mov data_4840A084, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La1c 0x5016C145 `mov data_4840A084, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 4, 0	# +0
 	.long	data_4840A068+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 41, 126, 50, 31, 0, 0, 247, 255, 255, 255	# +12
 data_4840A0A0:
-	# 32 bytes the code takes the address of: func_5016B726_entry_La27 0x5016C150 `mov data_4840A0A0, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_La27 0x5016C150 `mov data_4840A0A0, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 5, 0	# +0
 	.long	data_4840A084+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 45, 126, 50, 31, 0, 0, 0, 0, 0, 0	# +12
 	tab_u8	1, 0, 247, 255	# +28
 data_4840A0C0:
-	# 32 bytes the code takes the address of: func_5016B726_entry_La32 0x5016C15B `mov data_4840A0C0, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_La32 0x5016C15B `mov data_4840A0C0, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 6, 0	# +0
 	.long	data_4840A0A0+16, data_4840A0A0+28	# +8
 	tab_u8	240, 80, 46, 126, 50, 31, 0, 0, 0, 0, 0, 0, 1, 0, 247, 255	# +16
 data_4840A0E0:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La3d 0x5016C166 `mov data_4840A0E0, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La3d 0x5016C166 `mov data_4840A0E0, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 7, 0	# +0
 	.long	data_4840A0C0+16, data_4840A0C0+28	# +8
 	tab_u8	240, 80, 47, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +16
 data_4840A0FC:
-	# 36 bytes the code takes the address of: func_5016B726_entry_La48 0x5016C171 `mov data_4840A0FC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 36 bytes the code takes the address of: func_5016B726_entry_La48 0x5016C171 `mov data_4840A0FC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 8, 0	# +0
 	.long	data_4840A0E0+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 48, 126, 50, 31, 0, 0, 0, 0, 0, 0	# +12
 	tab_u8	0, 0, 0, 247, 255, 255, 255, 255	# +28
 data_4840A120:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La53 0x5016C17C `mov data_4840A120, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La53 0x5016C17C `mov data_4840A120, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 9, 0	# +0
 	.long	data_4840A0FC+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 49, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +12
 data_4840A13C:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La5e 0x5016C187 `mov data_4840A13C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La5e 0x5016C187 `mov data_4840A13C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 10, 0	# +0
 	.long	data_4840A120+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 50, 126, 50, 31, 0, 247, 255, 255, 255, 255	# +12
 data_4840A158:
-	# 28 bytes the code takes the address of: func_5016B726_entry_La69 0x5016C192 `mov data_4840A158, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_La69 0x5016C192 `mov data_4840A158, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 11, 0	# +0
 	.long	data_4840A13C+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 51, 126, 50, 31, 0, 0, 247, 255, 255, 255	# +12
 data_4840A174:
-	# 24 bytes the code takes the address of: func_5016B726_entry_La74 0x5016C19D `mov data_4840A174, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 24 bytes the code takes the address of: func_5016B726_entry_La74 0x5016C19D `mov data_4840A174, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 12, 0	# +0
 	.long	data_4840A158+16	# +8
 	tab_u8	0, 0, 0, 0, 240, 80, 126, 1, 0, 247, 255, 255	# +12
 data_4840A18C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_La7f 0x5016C1A8 `mov data_4840A18C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_La7f 0x5016C1A8 `mov data_4840A18C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 13, 0	# +0
 	.long	data_4840A174+16, data_4840A174+19	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A1B4:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L71f 0x5016BE48 `mov data_4840A1B4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L71f 0x5016BE48 `mov data_4840A1B4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A18C+16, data_4840A18C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 0, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A1DC:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L72a 0x5016BE53 `mov data_4840A1DC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L72a 0x5016BE53 `mov data_4840A1DC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A1B4+16, data_4840A1B4+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 1, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A204:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L74d 0x5016BE76 `mov data_4840A204, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L74d 0x5016BE76 `mov data_4840A204, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A1DC+16, data_4840A1DC+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 1, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A22C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L758 0x5016BE81 `mov data_4840A22C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L758 0x5016BE81 `mov data_4840A22C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A204+16, data_4840A204+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 2, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A254:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L77b 0x5016BEA4 `mov data_4840A254, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L77b 0x5016BEA4 `mov data_4840A254, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A22C+16, data_4840A22C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 2, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A27C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L786 0x5016BEAF `mov data_4840A27C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L786 0x5016BEAF `mov data_4840A27C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A254+16, data_4840A254+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 3, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A2A4:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L7a9 0x5016BED2 `mov data_4840A2A4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L7a9 0x5016BED2 `mov data_4840A2A4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A27C+16, data_4840A27C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 3, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A2CC:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L7b4 0x5016BEDD `mov data_4840A2CC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L7b4 0x5016BEDD `mov data_4840A2CC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A2A4+16, data_4840A2A4+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 4, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A2F4:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L7d7 0x5016BF00 `mov data_4840A2F4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L7d7 0x5016BF00 `mov data_4840A2F4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A2CC+16, data_4840A2CC+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 4, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A31C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L7e2 0x5016BF0B `mov data_4840A31C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L7e2 0x5016BF0B `mov data_4840A31C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A2F4+16, data_4840A2F4+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 5, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A344:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L805 0x5016BF2E `mov data_4840A344, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L805 0x5016BF2E `mov data_4840A344, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A31C+16, data_4840A31C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 5, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A36C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L810 0x5016BF39 `mov data_4840A36C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L810 0x5016BF39 `mov data_4840A36C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A344+16, data_4840A344+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 6, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A394:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L83b 0x5016BF64 `mov data_4840A394, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L83b 0x5016BF64 `mov data_4840A394, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A36C+16, data_4840A36C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 6, 1, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A3BC:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L846 0x5016BF6F `mov data_4840A3BC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L846 0x5016BF6F `mov data_4840A3BC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A394+16, data_4840A394+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 6, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A3E4:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L851 0x5016BF7A `mov data_4840A3E4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L851 0x5016BF7A `mov data_4840A3E4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A3BC+16, data_4840A3BC+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 7, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A40C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L874 0x5016BF9D `mov data_4840A40C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L874 0x5016BF9D `mov data_4840A40C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A3E4+16, data_4840A3E4+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 7, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A434:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L87f 0x5016BFA8 `mov data_4840A434, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L87f 0x5016BFA8 `mov data_4840A434, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A40C+16, data_4840A40C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 8, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A45C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L8a2 0x5016BFCB `mov data_4840A45C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L8a2 0x5016BFCB `mov data_4840A45C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A434+16, data_4840A434+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 8, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A484:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L8ad 0x5016BFD6 `mov data_4840A484, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L8ad 0x5016BFD6 `mov data_4840A484, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A45C+16, data_4840A45C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 9, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A4AC:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L8d0 0x5016BFF9 `mov data_4840A4AC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L8d0 0x5016BFF9 `mov data_4840A4AC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A484+16, data_4840A484+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 9, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A4D4:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L8db 0x5016C004 `mov data_4840A4D4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L8db 0x5016C004 `mov data_4840A4D4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A4AC+16, data_4840A4AC+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 10, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A4FC:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L8fe 0x5016C027 `mov data_4840A4FC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L8fe 0x5016C027 `mov data_4840A4FC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A4D4+16, data_4840A4D4+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 10, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A524:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L909 0x5016C032 `mov data_4840A524, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L909 0x5016C032 `mov data_4840A524, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A4FC+16, data_4840A4FC+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 11, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A54C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L92c 0x5016C055 `mov data_4840A54C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L92c 0x5016C055 `mov data_4840A54C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 16, 0	# +0
 	.long	data_4840A524+16, data_4840A524+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 11, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A574:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L937 0x5016C060 `mov data_4840A574, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L937 0x5016C060 `mov data_4840A574, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 17, 0	# +0
 	.long	data_4840A54C+16, data_4840A54C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 16, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A59C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L95a 0x5016C083 `mov data_4840A59C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L95a 0x5016C083 `mov data_4840A59C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 14, 0	# +0
 	.long	data_4840A574+16, data_4840A574+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 16, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A5C4:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L965 0x5016C08E `mov data_4840A5C4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L965 0x5016C08E `mov data_4840A5C4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 15, 0	# +0
 	.long	data_4840A59C+16, data_4840A59C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 32, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A5EC:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L9a0 0x5016C0C9 `mov data_4840A5EC, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L9a0 0x5016C0C9 `mov data_4840A5EC, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 18, 0	# +0
 	.long	data_4840A5C4+16, data_4840A5C4+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 32, 1, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A614:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L9ab 0x5016C0D4 `mov data_4840A614, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L9ab 0x5016C0D4 `mov data_4840A614, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 19, 0	# +0
 	.long	data_4840A5EC+16, data_4840A5EC+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 32, 2, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A63C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L9b6 0x5016C0DF `mov data_4840A63C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L9b6 0x5016C0DF `mov data_4840A63C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 20, 0	# +0
 	.long	data_4840A614+16, data_4840A614+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 32, 4, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A664:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L9c1 0x5016C0EA `mov data_4840A664, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L9c1 0x5016C0EA `mov data_4840A664, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 21, 0	# +0
 	.long	data_4840A63C+16, data_4840A63C+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 32, 5, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A68C:
-	# 40 bytes the code takes the address of: func_5016B726_entry_L9cc 0x5016C0F5 `mov data_4840A68C, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 40 bytes the code takes the address of: func_5016B726_entry_L9cc 0x5016C0F5 `mov data_4840A68C, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 22, 0	# +0
 	.long	data_4840A664+16, data_4840A664+36	# +8
 	tab_u8	240, 80, 44, 32, 50, 31, 127, 48, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	0, 0, 0, 0, 0, 247, 255, 255	# +32
 data_4840A6B4:
-	# 28 bytes the code takes the address of: func_5016B726_entry_L9e5 0x5016C10E `mov data_4840A6B4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 28 bytes the code takes the address of: func_5016B726_entry_L9e5 0x5016C10E `mov data_4840A6B4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 4, 0, 23, 0	# +0
 	.long	data_4840A68C+16, data_4840A68C+36	# +8
 	tab_u8	240, 65, 255, 66, 18, 0, 0, 127, 0, 0, 247, 255	# +16
 data_4840A6D0:
-	# 36 bytes the code takes the address of: func_5016B726_entry_Lada 0x5016C203 `mov data_4840A6D0, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 36 bytes the code takes the address of: func_5016B726_entry_Lada 0x5016C203 `mov data_4840A6D0, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	8, 0, 0, 0, 2, 0, 16, 0	# +0
 	.long	data_4840A6B4+16	# +8
 	tab_u8	2, 0, 0, 0, 6, 0, 0, 0, 240, 65, 255, 66, 18, 64, 0, 0	# +12
 	tab_u8	0, 0, 0, 0, 255, 247, 255, 255	# +28
 data_4840A6F4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lc47 0x5016C370 `mov data_4840A6F4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lc47 0x5016C370 `mov data_4840A6F4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 0, 0, 2, 0, 4, 0	# +0
 	.long	data_4840A6D0+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 0, 4	# +12
 	tab_u8	0, 255, 247, 255	# +28
 data_4840A714:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lc52 0x5016C37B `mov data_4840A714, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lc52 0x5016C37B `mov data_4840A714, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	1, 128, 0, 0, 2, 0, 3, 0	# +0
 	.long	data_4840A6F4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 0, 5	# +12
 	tab_u8	0, 255, 247, 255	# +28
 data_4840A734:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lc5d 0x5016C386 `mov data_4840A734, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lc5d 0x5016C386 `mov data_4840A734, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	3, 0, 0, 0, 2, 0, 5, 0	# +0
 	.long	data_4840A714+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 0, 127	# +12
 	tab_u8	0, 65, 247, 255	# +28
 data_4840A754:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lc68 0x5016C391 `mov data_4840A754, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lc68 0x5016C391 `mov data_4840A754, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	8, 0, 0, 0, 2, 0, 2, 0	# +0
 	.long	data_4840A734+20	# +8
 	tab_u8	2, 0, 0, 0, 6, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 48	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A774:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld0b 0x5016C434 `mov data_4840A774, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld0b 0x5016C434 `mov data_4840A774, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 160, 0, 0, 2, 0, 6, 0	# +0
 	.long	data_4840A754+20	# +8
 	tab_u8	2, 0, 0, 0, 7, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 49	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A794:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld16 0x5016C43F `mov data_4840A794, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld16 0x5016C43F `mov data_4840A794, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 160, 0, 0, 2, 0, 6, 0	# +0
 	.long	data_4840A774+20	# +8
 	tab_u8	2, 0, 0, 0, 7, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 50	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A7B4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld21 0x5016C44A `mov data_4840A7B4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld21 0x5016C44A `mov data_4840A7B4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 160, 0, 0, 2, 0, 8, 0	# +0
 	.long	data_4840A794+20	# +8
 	tab_u8	2, 0, 0, 0, 7, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 51	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A7D4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld2c 0x5016C455 `mov data_4840A7D4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld2c 0x5016C455 `mov data_4840A7D4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 160, 0, 0, 2, 0, 8, 0	# +0
 	.long	data_4840A7B4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 52	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A7F4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld37 0x5016C460 `mov data_4840A7F4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld37 0x5016C460 `mov data_4840A7F4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 160, 0, 0, 2, 0, 8, 0	# +0
 	.long	data_4840A7D4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 53	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A814:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld42 0x5016C46B `mov data_4840A814, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld42 0x5016C46B `mov data_4840A814, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 160, 0, 0, 2, 0, 8, 0	# +0
 	.long	data_4840A7F4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 55	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A834:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld4d 0x5016C476 `mov data_4840A834, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld4d 0x5016C476 `mov data_4840A834, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 160, 0, 0, 2, 0, 8, 0	# +0
 	.long	data_4840A814+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 56	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A854:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld58 0x5016C481 `mov data_4840A854, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld58 0x5016C481 `mov data_4840A854, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 161, 0, 0, 2, 0, 7, 0	# +0
 	.long	data_4840A834+20	# +8
 	tab_u8	2, 0, 0, 0, 7, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 57	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A874:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld63 0x5016C48C `mov data_4840A874, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld63 0x5016C48C `mov data_4840A874, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A854+20	# +8
 	tab_u8	2, 0, 0, 0, 7, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 58	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A894:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld6e 0x5016C497 `mov data_4840A894, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld6e 0x5016C497 `mov data_4840A894, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A874+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 59	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A8B4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld79 0x5016C4A2 `mov data_4840A8B4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld79 0x5016C4A2 `mov data_4840A8B4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A894+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 60	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A8D4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld84 0x5016C4AD `mov data_4840A8D4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld84 0x5016C4AD `mov data_4840A8D4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A8B4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 61	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A8F4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld8f 0x5016C4B8 `mov data_4840A8F4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld8f 0x5016C4B8 `mov data_4840A8F4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A8D4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 62	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A914:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ld9a 0x5016C4C3 `mov data_4840A914, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ld9a 0x5016C4C3 `mov data_4840A914, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A8F4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 63	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A934:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lda5 0x5016C4CE `mov data_4840A934, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lda5 0x5016C4CE `mov data_4840A934, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A914+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 1, 64	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A954:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Ldb0 0x5016C4D9 `mov data_4840A954, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Ldb0 0x5016C4D9 `mov data_4840A954, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 2, 0, 9, 0	# +0
 	.long	data_4840A934+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 21	# +12
 	tab_u8	0, 255, 247, 255	# +28
 data_4840A974:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Le89 0x5016C5B2 `mov data_4840A974, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Le89 0x5016C5B2 `mov data_4840A974, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 192, 0, 2, 0, 15, 0	# +0
 	.long	data_4840A954+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 31	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840A994:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Le94 0x5016C5BD `mov data_4840A994, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Le94 0x5016C5BD `mov data_4840A994, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 2, 0, 14, 0	# +0
 	.long	data_4840A974+20	# +8
 	tab_u8	2, 0, 1, 0, 95, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 48	# +12
@@ -5229,185 +5177,185 @@ Str_N_7:	.asciz "N"
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00AA96, 0x00AAB4
 data_4840AAB4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lef7 0x5016C620 `mov data_4840AAB4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lef7 0x5016C620 `mov data_4840AAB4, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	192, 0, 32, 0, 2, 0, 11, 0, 168, 170, 64, 72, 2, 0, 0, 0	# +0
 	tab_u8	127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 65, 0, 0, 247, 255	# +16
 data_4840AAD4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf02 0x5016C62B `mov data_4840AAD4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf02 0x5016C62B `mov data_4840AAD4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	193, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AAB4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 66	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AAF4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf0d 0x5016C636 `mov data_4840AAF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf0d 0x5016C636 `mov data_4840AAF4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	194, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AAD4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 67	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AB14:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf18 0x5016C641 `mov data_4840AB14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf18 0x5016C641 `mov data_4840AB14, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	195, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AAF4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 68	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AB34:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf23 0x5016C64C `mov data_4840AB34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf23 0x5016C64C `mov data_4840AB34, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	196, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AB14+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 69	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AB54:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf2e 0x5016C657 `mov data_4840AB54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf2e 0x5016C657 `mov data_4840AB54, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	197, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AB34+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 70	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AB74:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf39 0x5016C662 `mov data_4840AB74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf39 0x5016C662 `mov data_4840AB74, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	198, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AB54+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 71	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AB94:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf44 0x5016C66D `mov data_4840AB94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf44 0x5016C66D `mov data_4840AB94, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	199, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AB74+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 72	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840ABB4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf4f 0x5016C678 `mov data_4840ABB4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf4f 0x5016C678 `mov data_4840ABB4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	200, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840AB94+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 73	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840ABD4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf5a 0x5016C683 `mov data_4840ABD4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf5a 0x5016C683 `mov data_4840ABD4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	201, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840ABB4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 74	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840ABF4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf65 0x5016C68E `mov data_4840ABF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf65 0x5016C68E `mov data_4840ABF4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	202, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840ABD4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 16, 75	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AC14:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lf70 0x5016C699 `mov data_4840AC14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lf70 0x5016C699 `mov data_4840AC14, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	203, 0, 32, 0, 2, 0, 11, 0	# +0
 	.long	data_4840ABF4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 32	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AC34:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lfe3 0x5016C70C `mov data_4840AC34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lfe3 0x5016C70C `mov data_4840AC34, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	96, 2, 32, 0, 2, 0, 12, 0	# +0
 	.long	data_4840AC14+20	# +8
 	tab_u8	2, 0, 40, 0, 88, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 33	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AC54:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lfee 0x5016C717 `mov data_4840AC54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lfee 0x5016C717 `mov data_4840AC54, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	97, 2, 32, 0, 2, 0, 12, 0	# +0
 	.long	data_4840AC34+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 34	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AC74:
-	# 32 bytes the code takes the address of: func_5016B726_entry_Lff9 0x5016C722 `mov data_4840AC74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_Lff9 0x5016C722 `mov data_4840AC74, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	98, 2, 32, 0, 2, 0, 12, 0	# +0
 	.long	data_4840AC54+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 36	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AC94:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1004 0x5016C72D `mov data_4840AC94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1004 0x5016C72D `mov data_4840AC94, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	99, 2, 32, 0, 2, 0, 12, 0	# +0
 	.long	data_4840AC74+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 37	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840ACB4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L100f 0x5016C738 `mov data_4840ACB4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L100f 0x5016C738 `mov data_4840ACB4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	100, 2, 32, 0, 2, 0, 12, 0	# +0
 	.long	data_4840AC94+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 38	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840ACD4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L101a 0x5016C743 `mov data_4840ACD4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L101a 0x5016C743 `mov data_4840ACD4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	101, 2, 32, 0, 2, 0, 12, 0	# +0
 	.long	data_4840ACB4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 64	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840ACF4:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1025 0x5016C74E `mov data_4840ACF4, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1025 0x5016C74E `mov data_4840ACF4, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	96, 2, 32, 0, 2, 0, 13, 0	# +0
 	.long	data_4840ACD4+20	# +8
 	tab_u8	2, 0, 40, 0, 88, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 65	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AD14:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1030 0x5016C759 `mov data_4840AD14, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1030 0x5016C759 `mov data_4840AD14, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	97, 2, 32, 0, 2, 0, 13, 0	# +0
 	.long	data_4840ACF4+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 66	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AD34:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L103b 0x5016C764 `mov data_4840AD34, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L103b 0x5016C764 `mov data_4840AD34, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	98, 2, 32, 0, 2, 0, 13, 0	# +0
 	.long	data_4840AD14+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 68	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AD54:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1046 0x5016C76F `mov data_4840AD54, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1046 0x5016C76F `mov data_4840AD54, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	99, 2, 32, 0, 2, 0, 13, 0	# +0
 	.long	data_4840AD34+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 69	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AD74:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1051 0x5016C77A `mov data_4840AD74, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1051 0x5016C77A `mov data_4840AD74, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	100, 2, 32, 0, 2, 0, 13, 0	# +0
 	.long	data_4840AD54+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 65, 255, 66, 18, 64, 32, 70	# +12
 	tab_u8	0, 0, 247, 255	# +28
 data_4840AD94:
-	# 36 bytes the code takes the address of: func_5016B726_entry_L105c 0x5016C785 `mov data_4840AD94, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 36 bytes the code takes the address of: func_5016B726_entry_L105c 0x5016C785 `mov data_4840AD94, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	101, 2, 32, 0, 2, 0, 13, 0	# +0
 	.long	data_4840AD74+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 0, 0, 0, 0	# +12
 	tab_u8	0, 0, 0, 247, 255, 255, 255, 255	# +28
 data_4840ADB8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L10db 0x5016C804 `mov data_4840ADB8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L10db 0x5016C804 `mov data_4840ADB8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 0, 0, 3, 0, 4, 0	# +0
 	.long	data_4840AD94+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 0, 0, 4, 0	# +12
 	tab_u8	0, 247, 255, 255	# +28
 data_4840ADD8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L10e6 0x5016C80F `mov data_4840ADD8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L10e6 0x5016C80F `mov data_4840ADD8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	1, 128, 0, 0, 3, 0, 3, 0	# +0
 	.long	data_4840ADB8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 0, 0, 6, 0	# +12
 	tab_u8	0, 247, 255, 255	# +28
 data_4840ADF8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L10f1 0x5016C81A `mov data_4840ADF8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L10f1 0x5016C81A `mov data_4840ADF8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	3, 0, 0, 0, 3, 0, 5, 0	# +0
 	.long	data_4840ADD8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 0, 0, 126, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840AE18:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L10fc 0x5016C825 `mov data_4840AE18, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L10fc 0x5016C825 `mov data_4840AE18, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	8, 0, 0, 0, 3, 0, 2, 0	# +0
 	.long	data_4840ADF8+20	# +8
 	tab_u8	2, 0, 0, 0, 0, 0, 0, 0, 240, 67, 16, 76, 2, 1, 0, 0	# +12
 	tab_u8	0, 247, 255, 255	# +28
 data_4840AE38:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1135 0x5016C85E `mov data_4840AE38, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1135 0x5016C85E `mov data_4840AE38, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 160, 0, 0, 3, 0, 6, 0	# +0
 	.long	data_4840AE18+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 2, 1, 32, 0	# +12
 	tab_u8	0, 247, 255, 255	# +28
 data_4840AE58:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1140 0x5016C869 `mov data_4840AE58, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1140 0x5016C869 `mov data_4840AE58, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 161, 0, 0, 3, 0, 7, 0	# +0
 	.long	data_4840AE38+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 2, 1, 46, 0	# +12
 	tab_u8	0, 247, 255, 255	# +28
 data_4840AE78:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L114b 0x5016C874 `mov data_4840AE78, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L114b 0x5016C874 `mov data_4840AE78, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	17, 161, 0, 0, 3, 0, 9, 0	# +0
 	.long	data_4840AE58+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 21, 0	# +12
@@ -5440,149 +5388,149 @@ Str_H_10:	.asciz "H"
 # census: opaque -- unknown-dump: 30 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00AF7A, 0x00AF98
 data_4840AF98:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L12e4 0x5016CA0D `mov data_4840AF98, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L12e4 0x5016CA0D `mov data_4840AF98, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	192, 0, 32, 0, 3, 0, 11, 0, 140, 175, 64, 72, 2, 0, 0, 0	# +0
 	tab_u8	127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 66, 0, 247, 255, 255, 255	# +16
 data_4840AFB8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L12ef 0x5016CA18 `mov data_4840AFB8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L12ef 0x5016CA18 `mov data_4840AFB8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	193, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840AF98+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 67, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840AFD8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L12fa 0x5016CA23 `mov data_4840AFD8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L12fa 0x5016CA23 `mov data_4840AFD8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	194, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840AFB8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 68, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840AFF8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1305 0x5016CA2E `mov data_4840AFF8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1305 0x5016CA2E `mov data_4840AFF8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	195, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840AFD8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 69, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B018:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1310 0x5016CA39 `mov data_4840B018, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1310 0x5016CA39 `mov data_4840B018, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	196, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840AFF8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 70, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B038:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L131b 0x5016CA44 `mov data_4840B038, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L131b 0x5016CA44 `mov data_4840B038, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	197, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B018+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 71, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B058:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1326 0x5016CA4F `mov data_4840B058, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1326 0x5016CA4F `mov data_4840B058, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	198, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B038+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 72, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B078:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1331 0x5016CA5A `mov data_4840B078, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1331 0x5016CA5A `mov data_4840B078, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	199, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B058+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 73, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B098:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L133c 0x5016CA65 `mov data_4840B098, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L133c 0x5016CA65 `mov data_4840B098, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	200, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B078+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 74, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B0B8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1347 0x5016CA70 `mov data_4840B0B8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1347 0x5016CA70 `mov data_4840B0B8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	201, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B098+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 75, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B0D8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1352 0x5016CA7B `mov data_4840B0D8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1352 0x5016CA7B `mov data_4840B0D8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	202, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B0B8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 76, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B0F8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L135d 0x5016CA86 `mov data_4840B0F8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L135d 0x5016CA86 `mov data_4840B0F8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	203, 0, 32, 0, 3, 0, 11, 0	# +0
 	.long	data_4840B0D8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 77, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B118:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1368 0x5016CA91 `mov data_4840B118, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1368 0x5016CA91 `mov data_4840B118, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	96, 2, 32, 0, 3, 0, 12, 0	# +0
 	.long	data_4840B0F8+20	# +8
 	tab_u8	2, 0, 40, 0, 88, 0, 0, 0, 240, 67, 16, 76, 8, 0, 78, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B138:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1373 0x5016CA9C `mov data_4840B138, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1373 0x5016CA9C `mov data_4840B138, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	97, 2, 32, 0, 3, 0, 12, 0	# +0
 	.long	data_4840B118+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 79, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B158:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L137e 0x5016CAA7 `mov data_4840B158, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L137e 0x5016CAA7 `mov data_4840B158, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	98, 2, 32, 0, 3, 0, 12, 0	# +0
 	.long	data_4840B138+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 80, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B178:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1389 0x5016CAB2 `mov data_4840B178, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1389 0x5016CAB2 `mov data_4840B178, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	99, 2, 32, 0, 3, 0, 12, 0	# +0
 	.long	data_4840B158+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 81, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B198:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L1394 0x5016CABD `mov data_4840B198, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L1394 0x5016CABD `mov data_4840B198, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	100, 2, 32, 0, 3, 0, 12, 0	# +0
 	.long	data_4840B178+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 82, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B1B8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L139f 0x5016CAC8 `mov data_4840B1B8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L139f 0x5016CAC8 `mov data_4840B1B8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	101, 2, 32, 0, 3, 0, 12, 0	# +0
 	.long	data_4840B198+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 89, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B1D8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L13aa 0x5016CAD3 `mov data_4840B1D8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L13aa 0x5016CAD3 `mov data_4840B1D8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	255, 255, 255, 0, 3, 0, 14, 0	# +0
 	.long	data_4840B1B8+20	# +8
 	tab_u8	2, 0, 1, 0, 95, 0, 0, 0, 240, 67, 16, 76, 8, 0, 90, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B1F8:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L13b5 0x5016CADE `mov data_4840B1F8, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L13b5 0x5016CADE `mov data_4840B1F8, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	96, 2, 32, 0, 3, 0, 13, 0	# +0
 	.long	data_4840B1D8+20	# +8
 	tab_u8	2, 0, 40, 0, 88, 0, 0, 0, 240, 67, 16, 76, 8, 0, 91, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B218:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L13c0 0x5016CAE9 `mov data_4840B218, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L13c0 0x5016CAE9 `mov data_4840B218, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	97, 2, 32, 0, 3, 0, 13, 0	# +0
 	.long	data_4840B1F8+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 92, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B238:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L13cb 0x5016CAF4 `mov data_4840B238, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L13cb 0x5016CAF4 `mov data_4840B238, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	98, 2, 32, 0, 3, 0, 13, 0	# +0
 	.long	data_4840B218+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 93, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B258:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L13d6 0x5016CAFF `mov data_4840B258, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L13d6 0x5016CAFF `mov data_4840B258, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	99, 2, 32, 0, 3, 0, 13, 0	# +0
 	.long	data_4840B238+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 94, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B278:
-	# 32 bytes the code takes the address of: func_5016B726_entry_L13e1 0x5016CB0A `mov data_4840B278, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_5016B726_entry_L13e1 0x5016CB0A `mov data_4840B278, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	100, 2, 32, 0, 3, 0, 13, 0	# +0
 	.long	data_4840B258+20	# +8
 	tab_u8	2, 0, 0, 0, 127, 0, 0, 0, 240, 67, 16, 76, 8, 0, 95, 0	# +12
 	tab_u8	247, 255, 255, 255	# +28
 data_4840B298:
-	# 20 bytes the code takes the address of: func_5016B726_entry_L13ec 0x5016CB15 `mov data_4840B298, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_5016B726_entry_L13ec 0x5016CB15 `mov data_4840B298, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x200265, 0xD0003	# +0
 	.long	data_4840B278+20	# +8
 	tab_u32	0x2, 0x7F	# +12
@@ -5611,30 +5559,30 @@ Str_P_3_4:	.asciz "\xF0P) 3\x1F"
 # census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00B387, 0x00B38C
 data_4840B38C:
-	# 8 bytes the code takes the address of: func_5016E83A 0x5016E83A `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016E83A 0x5016E83A `mov data_4840B38C, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: func_5016E83A 0x5016E83A `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016E83A 0x5016E83A `mov data_4840B38C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 80, 48, 32, 51, 31, 255, 255	# +0
 data_4840B394:
 	.space	8, 0x00
 data_4840B39C:
-	# 4 bytes the code takes the address of: func_5016E8FE 0x5016E8FE `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016E8FE 0x5016E8FE `mov data_4840B39C, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_5016E8FE 0x5016E8FE `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016E8FE 0x5016E8FE `mov data_4840B39C, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 247, 255, 255	# +0
 Str_P1_3:	.asciz "\xF0P1 3\x1F"
 	.align	4, 0xF7	# pad after Str_P1_3
 Str_P_3_3:	.asciz "\xF0P. 3\x1F"
 	.space	13, 0x00
 data_4840B3BC:
-	# 4 bytes the code takes the address of: func_5016EA60 0x5016EA60 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016EA60 0x5016EA60 `mov data_4840B3BC, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_5016EA60 0x5016EA60 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016EA60 0x5016EA60 `mov data_4840B3BC, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 0, 247, 255	# +0
 Str_P_3_2:	.asciz "\xF0P- 3\x1F"
 	.space	5, 0x00
 data_4840B3CC:
-	# 4 bytes the code takes the address of: func_5016EB32 0x5016EB32 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016EB32 0x5016EB32 `mov data_4840B3CC, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_5016EB32 0x5016EB32 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5016EB32 0x5016EB32 `mov data_4840B3CC, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 0, 247, 255	# +0
 Str_LKG_4:	.asciz "LKG"
 # census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00B3D4, 0x00B3E0
 data_4840B3E0:
-	# 192 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a0); func_5016EE20_entry_L77 0x5016EE9A `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a0); func_5016EE20_entry_L77 0x5016EE9A `mov data_4840B3E0, a0` (+0, as a base) (+85 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 192 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a0); func_5016EE20_entry_L77 0x5016EE9A `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a0); func_5016EE20_entry_L77 0x5016EE9A `mov data_4840B3E0, a0` (+0, as a base) (+86 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: PutM3Em (a0): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp40): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a0): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+3 more)
 	tab_u32	0x204000, 0x204001, 0x204004, 0xF101, 0x2000, 0x2001, 0x2010, 0x2011	# +0
 	tab_u32	0x2012, 0x2013, 0x2014, 0x2020, 0x2021, 0x2022, 0x2023, 0x2025	# +32
 	tab_u32	0x2040, 0x2041, 0x2042, 0x2043, 0x2080, 0x2081, 0x2082, 0x2083	# +64
@@ -5642,7 +5590,7 @@ data_4840B3E0:
 	tab_u32	0x2091, 0x2092, 0x2093, 0x2094, 0x208F, 0x2098, 0x2099, 0x8090	# +128
 	tab_u32	0x8091, 0x8092, 0x8060, 0x8061, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF, 0xFFFFFF	# +160
 data_4840B4A0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L77 0x5016EE9A `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L77 0x5016EE9A `mov data_4840B4A0, a1` (+0, as a base) (+5 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L77 0x5016EE9A `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L77 0x5016EE9A `mov data_4840B4A0, a1` (+0, as a base) (+6 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+3 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5653,7 +5601,7 @@ data_4840B4A0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B530:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L8e 0x5016EEB1 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L8e 0x5016EEB1 `mov data_4840B530, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L8e 0x5016EEB1 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L8e 0x5016EEB1 `mov data_4840B530, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5664,7 +5612,7 @@ data_4840B530:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B5C0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_La5 0x5016EEC8 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_La5 0x5016EEC8 `mov data_4840B5C0, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_La5 0x5016EEC8 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_La5 0x5016EEC8 `mov data_4840B5C0, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5675,7 +5623,7 @@ data_4840B5C0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B650:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Lbc 0x5016EEDF `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Lbc 0x5016EEDF `mov data_4840B650, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Lbc 0x5016EEDF `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Lbc 0x5016EEDF `mov data_4840B650, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5686,7 +5634,7 @@ data_4840B650:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B6E0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Ld3 0x5016EEF6 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Ld3 0x5016EEF6 `mov data_4840B6E0, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Ld3 0x5016EEF6 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Ld3 0x5016EEF6 `mov data_4840B6E0, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5697,7 +5645,7 @@ data_4840B6E0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B770:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Lea 0x5016EF0D `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Lea 0x5016EF0D `mov data_4840B770, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_Lea 0x5016EF0D `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_Lea 0x5016EF0D `mov data_4840B770, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5708,7 +5656,7 @@ data_4840B770:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B800:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L101 0x5016EF24 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L101 0x5016EF24 `mov data_4840B800, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L101 0x5016EF24 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L101 0x5016EF24 `mov data_4840B800, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+2 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5719,7 +5667,7 @@ data_4840B800:
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 0, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B890:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L45a 0x5016F27D `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L45a 0x5016F27D `mov data_4840B890, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L45a 0x5016F27D `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L45a 0x5016F27D `mov data_4840B890, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5730,7 +5678,7 @@ data_4840B890:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 2, 60, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B920:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L38b 0x5016F1AE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L38b 0x5016F1AE `mov data_4840B920, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L38b 0x5016F1AE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L38b 0x5016F1AE `mov data_4840B920, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 255, 255, 255, 255, 255, 255, 255, 255	# +32
@@ -5741,7 +5689,7 @@ data_4840B920:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840B9B0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3a2 0x5016F1C5 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3a2 0x5016F1C5 `mov data_4840B9B0, a1` (+0, as a base) (+5 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3a2 0x5016F1C5 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3a2 0x5016F1C5 `mov data_4840B9B0, a1` (+0, as a base) (+6 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5752,7 +5700,7 @@ data_4840B9B0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BA40:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3b9 0x5016F1DC `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3b9 0x5016F1DC `mov data_4840BA40, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3b9 0x5016F1DC `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3b9 0x5016F1DC `mov data_4840BA40, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 255, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5763,7 +5711,7 @@ data_4840BA40:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BAD0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3d0 0x5016F1F3 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3d0 0x5016F1F3 `mov data_4840BAD0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L3d0 0x5016F1F3 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L3d0 0x5016F1F3 `mov data_4840BAD0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 255, 255, 255, 255, 255, 255, 255, 255	# +32
@@ -5774,7 +5722,7 @@ data_4840BAD0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BB60:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L218 0x5016F03B `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L218 0x5016F03B `mov data_4840BB60, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L218 0x5016F03B `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L218 0x5016F03B `mov data_4840BB60, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
@@ -5785,7 +5733,7 @@ data_4840BB60:
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BBF0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L22f 0x5016F052 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L22f 0x5016F052 `mov data_4840BBF0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L22f 0x5016F052 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L22f 0x5016F052 `mov data_4840BBF0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
@@ -5796,7 +5744,7 @@ data_4840BBF0:
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BC80:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L246 0x5016F069 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L246 0x5016F069 `mov data_4840BC80, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L246 0x5016F069 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L246 0x5016F069 `mov data_4840BC80, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
@@ -5807,7 +5755,7 @@ data_4840BC80:
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BD10:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L25d 0x5016F080 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L25d 0x5016F080 `mov data_4840BD10, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L25d 0x5016F080 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L25d 0x5016F080 `mov data_4840BD10, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5818,7 +5766,7 @@ data_4840BD10:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BDA0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L274 0x5016F097 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L274 0x5016F097 `mov data_4840BDA0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L274 0x5016F097 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L274 0x5016F097 `mov data_4840BDA0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5829,7 +5777,7 @@ data_4840BDA0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BE30:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L28b 0x5016F0AE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L28b 0x5016F0AE `mov data_4840BE30, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L28b 0x5016F0AE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L28b 0x5016F0AE `mov data_4840BE30, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5840,7 +5788,7 @@ data_4840BE30:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BEC0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2a2 0x5016F0C5 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2a2 0x5016F0C5 `mov data_4840BEC0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2a2 0x5016F0C5 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2a2 0x5016F0C5 `mov data_4840BEC0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5851,7 +5799,7 @@ data_4840BEC0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BF50:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2b9 0x5016F0DC `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2b9 0x5016F0DC `mov data_4840BF50, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2b9 0x5016F0DC `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2b9 0x5016F0DC `mov data_4840BF50, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 255	# +32
@@ -5862,7 +5810,7 @@ data_4840BF50:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840BFE0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2d0 0x5016F0F3 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2d0 0x5016F0F3 `mov data_4840BFE0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L2d0 0x5016F0F3 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L2d0 0x5016F0F3 `mov data_4840BFE0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 255, 10, 11, 12, 13, 255, 15	# +32
@@ -5873,7 +5821,7 @@ data_4840BFE0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 1, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C070:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L30b 0x5016F12E `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L30b 0x5016F12E `mov data_4840C070, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L30b 0x5016F12E `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L30b 0x5016F12E `mov data_4840C070, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5884,7 +5832,7 @@ data_4840C070:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C100:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L322 0x5016F145 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L322 0x5016F145 `mov data_4840C100, a1` (+0, as a base) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L322 0x5016F145 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L322 0x5016F145 `mov data_4840C100, a1` (+0, as a base) (+4 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5895,7 +5843,7 @@ data_4840C100:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C190:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L339 0x5016F15C `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L339 0x5016F15C `mov data_4840C190, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L339 0x5016F15C `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L339 0x5016F15C `mov data_4840C190, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5906,7 +5854,7 @@ data_4840C190:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C220:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L350 0x5016F173 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L350 0x5016F173 `mov data_4840C220, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L350 0x5016F173 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L350 0x5016F173 `mov data_4840C220, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5917,7 +5865,7 @@ data_4840C220:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C2B0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L148 0x5016EF6B `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L148 0x5016EF6B `mov data_4840C2B0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L148 0x5016EF6B `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L148 0x5016EF6B `mov data_4840C2B0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 14	# +32
@@ -5928,7 +5876,7 @@ data_4840C2B0:
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C340:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L15f 0x5016EF82 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L15f 0x5016EF82 `mov data_4840C340, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L15f 0x5016EF82 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L15f 0x5016EF82 `mov data_4840C340, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 255, 14	# +32
@@ -5939,7 +5887,7 @@ data_4840C340:
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C3D0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L176 0x5016EF99 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L176 0x5016EF99 `mov data_4840C3D0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L176 0x5016EF99 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L176 0x5016EF99 `mov data_4840C3D0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5950,7 +5898,7 @@ data_4840C3D0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C460:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L18d 0x5016EFB0 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L18d 0x5016EFB0 `mov data_4840C460, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L18d 0x5016EFB0 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L18d 0x5016EFB0 `mov data_4840C460, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5961,7 +5909,7 @@ data_4840C460:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 2, 0, 80, 0, 36, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C4F0:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L1a4 0x5016EFC7 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L1a4 0x5016EFC7 `mov data_4840C4F0, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L1a4 0x5016EFC7 `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L1a4 0x5016EFC7 `mov data_4840C4F0, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +0
 	tab_u8	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5972,7 +5920,7 @@ data_4840C4F0:
 	tab_u8	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1	# +112
 	tab_u8	1, 0, 0, 1, 0, 0, 80, 255, 255, 255, 255, 255, 255, 255, 255, 255	# +128
 data_4840C580:
-	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L1bb 0x5016EFDE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L1bb 0x5016EFDE `mov data_4840C580, a1` (+0, as a base) (+1 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 144 bytes the code takes the address of: PutM3Em 0x50143AD6 `call func_5014AA43, 0, 0` (+0, arg a1); func_5016EE20_entry_L1bb 0x5016EFDE `call func_5016F3D4_entry, [d2], 0x20` (+0, arg a1); func_5016EE20_entry_L1bb 0x5016EFDE `mov data_4840C580, a1` (+0, as a base) (+2 more); byte rows (u8); the callee walk: PutM3Em (a1): PutM3Em reads nothing through it at a fixed offset (it hands it on, or stores it); PutM3Em (sp44): PutM3Em reads nothing through it at a fixed offset (it stores it, or keeps it for later); func_5014AA43 (a1): func_5014AA43 reads nothing through it at a fixed offset (it stores it, or keeps it for later) (+1 more)
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1	# +16
 	tab_u8	255, 255, 255, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15	# +32
@@ -5992,7 +5940,7 @@ Str_Technics_Pads_2:	.asciz "Technics Pads   "
 func_5017250F_Table:	# 5 x u8, 100..110; read by func_5017250F_entry : `movbu	(d3, a0), d2`
 	tab_u8	110, 110, 100, 100, 100
 
-func_50172DEE_entry_L15_Records:	# 3 x REC_func_50172DEE_entry_L15_Records (10 bytes each); read by func_50172DEE_entry_L15 0x50172E05 `movbu (d1, a2), d3`
+func_50172DEE_entry_L15_Records:	# 3 x REC_func_50172DEE_entry_L15_Records (10 bytes each); read by func_50172DEE_entry_L15 0x50172E05 `movbu (d1, a2), d3`; func_50172649_entry_L55 0x501726A3 `call MemStyleRecPtr, 0, 0`; func_50172649_entry_L7a 0x501726C8 `call memcpy_entry, [a2,a3], 8` (+15)
 	REC_func_50172DEE_entry_L15_Records	x1="\x01\x02\x03\x0C\x0D\x0E\x0F\x10\x11"
 	REC_func_50172DEE_entry_L15_Records	f0=4, x1="\x05\x06\x07\x12\x13\x14\x15\x16\x17"
 	REC_func_50172DEE_entry_L15_Records	f0=8, x1="\x09\n\x0B\x18\x19\x1A\x1B\x1C\x1D"
@@ -6009,15 +5957,15 @@ Str_F_22:	.asciz "F"
 Str_G_20:	.asciz "G"
 	.space	1, 0x4B
 data_4840C69A:
-	# 3 bytes the code takes the address of: StyleBlockKindClassify_entry_L5f 0x501723C9 `call memcmp_entry, [d2,a2], 8` (+0, arg a1); StyleBlockKindClassify_entry_L5f 0x501723C9 `mov data_4840C69A, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 3 bytes the code takes the address of: StyleBlockKindClassify_entry_L5f 0x501723C9 `call memcmp_entry, [d2,a2], 8` (+0, arg a1); StyleBlockKindClassify_entry_L5f 0x501723C9 `mov data_4840C69A, a1` (+0, as a base); byte rows (u8); the callee walk: memcmp (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	82, 32, 69	# +0
 Str_H_9:	.asciz "H"
 	.align	4, 0x4B	# pad after Str_H_9
 data_4840C6A0:
-	# 3 bytes the code takes the address of: StyleBlockKindClassify_entry_L30 0x5017239A `call memcmp_entry, [d2,a2], 8` (+0, arg a1); StyleBlockKindClassify_entry_L30 0x5017239A `mov data_4840C6A0, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 3 bytes the code takes the address of: StyleBlockKindClassify_entry_L30 0x5017239A `call memcmp_entry, [d2,a2], 8` (+0, arg a1); StyleBlockKindClassify_entry_L30 0x5017239A `mov data_4840C6A0, a1` (+0, as a base); byte rows (u8); the callee walk: memcmp (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	82, 32, 70	# +0
 data_4840C6A3:
-	# 5 bytes the code takes the address of: StyleBlockKindClassify 0x50172365 `call memcmp_entry, [d2,a2], 8` (+0, arg a1); StyleBlockKindClassify 0x50172365 `mov data_4840C6A3, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 5 bytes the code takes the address of: StyleBlockKindClassify 0x50172365 `call memcmp_entry, [d2,a2], 8` (+0, arg a1); StyleBlockKindClassify 0x50172365 `mov data_4840C6A3, a1` (+0, as a base); byte rows (u8); the callee walk: memcmp (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	76, 75, 70, 255, 255	# +0
 
 func_50172649_Table_3:	# 30 x u8, 0..1; read by func_50172649_entry : `movbu	(d1, a0), d0`
@@ -6208,7 +6156,7 @@ Str_ZZZJ:	.asciz "ZZZJ"
 # census: opaque -- unknown-dump: 9 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00CE3B, 0x00CE44
 data_4840CE44:
-	# 24 bytes the code takes the address of: func_5017CFB1_entry_L9a 0x5017D050 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017CFB1_entry_L9a 0x5017D050 `mov data_4840CE44, a1` (+0, as a base); func_5017CFB1_entry_Lc8 0x5017D07E `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+3 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 24 bytes the code takes the address of: func_5017CFB1_entry_L9a 0x5017D050 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_5017CFB1_entry_L9a 0x5017D050 `mov data_4840CE44, a1` (+0, as a base); func_5017CFB1_entry_Lc8 0x5017D07E `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+3 more); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 0, 38, 0, 0, 38, 33, 0, 32, 0, 0, 32, 48, 0, 32, 73	# +0
 	tab_u8	0, 32, 88, 0, 32, 25, 0, 32	# +16
 
@@ -6274,22 +6222,10 @@ func_5017DCBF_Table:	# 26 x REC_func_5017DCBF_Table (2 bytes each); read by func
 	REC_func_5017DCBF_Table	f0=176, f1=71	# [24]
 	REC_func_5017DCBF_Table	f0=176, f1=74
 
-func_5017DCBF_entry_L48_Table:	# 2 x u8, 255..255; read by func_5017DCBF_entry_L48 0x5017DD0C: `movbu (d3, a1), d3`; func_5017DCBF_entry_L5d 0x5017DD21: `movbu (d3, a1), d2`
-	tab_u8	255, 255
+func_5017DCBF_entry_L48_Table:	# REC_func_5017DABB_Result (24 bytes)
+	REC_func_5017DABB_Result	s0="\xFF\xFF", f2=255, f3=255, f4=255, x5="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x00\x00\x7F\x00", f20=64, x21="@@@"
+	.space	2, 0x40
 
-func_5017DCBF_entry_L2b_Var:	# u8, a constant; read / written by func_5017DCBF_entry_L2b 0x5017DCEF: `movbu (2, a1), d2`
-	.byte	255
-func_5017DCBF_entry_L2b_Var_2:	# u8, a constant; read / written by func_5017DCBF_entry_L2b 0x5017DCEF: `movbu (3, a1), d0`
-	.byte	255
-
-func_5017DCBF_entry_L2b_Table:	# 15 x u8, 0..255; read by func_5017DCBF_entry_L2b 0x5017DCEF: `movbu (4, a1), d0`
-	tab_u8	255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 127, 0
-
-func_5017DCBF_entry_L71_Var:	# u8, a constant; read / written by func_5017DCBF_entry_L71 0x5017DD35: `movbu (0x13, a1), d2`
-	.byte	0
-
-func_5017DCBF_entry_L71_Table:	# 6 x u8, 64..64; read by func_5017DCBF_entry_L71 0x5017DD35: `movbu (0x14, a1), d0`
-	tab_u8	64, 64, 64, 64, 64, 64
 func_5017DAA3_Table:	# 128 x u8, a sparse map by index: 20 entries set, the rest 0xFF (none); read by func_5017DAA3 : `movbu	(d0, a0), d0`
 	map_none8	1	# [0..0]
 	map8	1, 16
@@ -6375,17 +6311,9 @@ func_5017DF39_Table:	# 16 x REC_func_5017DF39_Table (8 bytes each); read by func
 	REC_func_5017DF39_Table	p4=func_5017DF39_entry_L183
 	REC_func_5017DF39_Table	p4=func_5017DF39_entry_L183
 	REC_func_5017DF39_Table	p4=func_5017DF39_entry_L183
-data_4840D3D4:
-	# 3 bytes the code takes the address of: func_501812D5_entry_L3f 0x50181319 `call func_50180F38, 0, 0` (+0, arg a0); func_501812D5_entry_L3f 0x50181319 `mov data_4840D3D4, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	240, 4, 2	# +0
 
-func_50180F38_Var:	# u8, a constant; read / written by func_50180F38 0x50180F38: `movbu (1, a0), d0`
-	.byte	0
-func_50180F38_Var_2:	# u8, a constant; read / written by func_50180F38 0x50180F38: `movbu (2, a0), d0`
-	.byte	0
-
-func_50180F38_Table:	# 3 x u8, 0..255; read by func_50180F38 0x50180F38: `movbu (3, a0), d0`
-	tab_u8	0, 255, 255
+func_50180F38_ArgA0_0:	# REC_func_50180F38_ArgA0 (8 bytes): the layout func_50180F38 0x50180F38 reads through its argument a0 (passed by func_501812D5_entry_L3f 0x50181319 `call func_50180F38, 0, 0`)
+	REC_func_50180F38_ArgA0	x0="\xF0\x04\x02", x6="\xFF\xFF"
 
 TempoSyncSetDispatch_L5c_Records:	# 16 x REC_TempoSyncSetDispatch_L5c_Records (8 bytes each); read by TempoSyncSetDispatch_L5c 0x50184BAB `mov (a0), d0`; TempoSyncSetDispatch_L8a 0x50184BD9 `mov (a0), d0`; TempoSyncSetDispatch_L8d 0x50184BDC `mov (4, a0), a0`
 	REC_TempoSyncSetDispatch_L5c_Records	f0=4064, p4=loc_50184C18	# [0]
@@ -6406,81 +6334,130 @@ TempoSyncSetDispatch_L5c_Records:	# 16 x REC_TempoSyncSetDispatch_L5c_Records (8
 	REC_TempoSyncSetDispatch_L5c_Records	f0=4063, p4=loc_50184C18
 
 Str_empty_1216:	.asciz "{\xDA"
-# census: opaque -- unknown-dump: 41 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00D45F, 0x00D488
-data_4840D488:
-	# 44 bytes the code takes the address of: func_501869DE_entry_L2e 0x50186A0F `mov data_4840D488, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x15F99D, 0x1B756D, 0x232BAD, 0x2D0C68, 0x39B357, 0x49E7F2, 0x5EA9B6, 0x793FDF	# +0
-	tab_u32	0x9B4D94, 0xC6EBB3, 0xFEC9E1	# +32
-data_4840D4B4:
-	# 44 bytes the code takes the address of: func_50186A2F_entry_L19 0x50186A4B `mov data_4840D4B4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x1A4, 0x531, 0x106C, 0x33EF, 0xA43A, 0x20756, 0x66A4A	# +0
-	tab_u32	0x144960, 0x4026E7, 0xCADDC8	# +32
-data_4840D4E0:
-	# 44 bytes the code takes the address of: func_50186A2F_entry_L2e 0x50186A60 `mov data_4840D4E0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x1, 0xC, 0x60, 0x2FD, 0x17BD, 0xBC8F, 0x5D9C9	# +0
-	tab_u32	0x144960, 0x4026E7, 0xCADDC8	# +32
-data_4840D50C:
-	# 44 bytes the code takes the address of: func_50186A80_entry_L25 0x50186AA8 `mov data_4840D50C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x10449, 0x20756, 0x40C37, 0x81385, 0x101D3F, 0x1CA7D7, 0x2D6A86	# +0
-	tab_u32	0x47FACD, 0x65AC8C, 0x800000	# +32
-data_4840D538:
-	# 44 bytes the code takes the address of: func_50186A80_entry_L3a 0x50186ABD `mov data_4840D538, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0xB6873, 0x101D3F, 0x16C310, 0x2026F3, 0x2D6A86, 0x3C9038, 0x4C3EA8	# +0
-	tab_u32	0x5FFC88, 0x721482, 0x800000	# +32
-data_4840D564:
-	# 68 bytes the code takes the address of: func_50186A80_entry_L4f 0x50186AD2 `mov data_4840D564, d0` (+0, as a base); func_501880A8_entry_L43 0x501880EE `mov data_4840D564, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x1E0191, 0x210D8C, 0x2468BB, 0x281B26, 0x2C2DAB, 0x30AA0B, 0x359B07	# +0
-	tab_u32	0x3B0C74, 0x410B5E, 0x47A623, 0x4EEC96, 0x56F025, 0x5FC404, 0x697D5B, 0x743376	# +32
-	tab_u32	0x800000	# +64
-data_4840D5A8:
-	# 44 bytes the code takes the address of: func_50186A80_entry_L64 0x50186AE7 `mov data_4840D5A8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x0, 0x0, 0x0, 0x0, 0x7FFFFF, 0x7FFFFF, 0x7FFFFF	# +0
-	tab_u32	0x7FFFFF, 0x7FFFFF, 0x7FFFFF	# +32
-data_4840D5D4:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50186B07_entry_L198 0x50186CA2 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50186B07_entry_L198 0x50186CA2 `mov data_4840D5D4, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x433A8, 0x8DED4, 0x11BDA9, 0x1B1402, 0x246A5B, 0x3C7580, 0x5622F5	# +0
-	tab_u32	0x6FD068, 0x897DDA, 0xA32B4B	# +32
-data_4840D600:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50186B07_entry_L1aa 0x50186CB4 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50186B07_entry_L1aa 0x50186CB4 `mov data_4840D600, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0, 1075, 2270, 3466, 4661, 5856, 8127, 10517	# +0
-	tab_u32	15776, 26532, 48045	# +32
-data_4840D62C:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50186B07_entry_L1bc 0x50186CC6 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50186B07_entry_L1bc 0x50186CC6 `mov data_4840D62C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x2A04, 0x1D2DC, 0x5787C, 0x91DD4, 0xCC2B3, 0x1066E7, 0x364B92	# +0
-	tab_u32	0x7A6EDA, 0xBEBB80, 0xFCB7F2	# +32
-data_4840D658:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50186B07_entry_L1ce 0x50186CD8 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50186B07_entry_L1ce 0x50186CD8 `mov data_4840D658, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0, 1075, 2270, 4541, 6932, 9322, 15477, 22050	# +0
-	tab_u32	28624, 35197, 41771	# +32
-data_4840D684:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50186F24 0x50186F24 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50186F24 0x50186F24 `mov data_4840D684, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x7FF3A4, 0x7FFD50, 0x7FFE90, 0x7FFF05, 0x7FFF41, 0x7FFF66, 0x7FFF7F, 0x7FFF91	# +0
-	tab_u32	0x7FFFAB, 0x7FFFC0, 0x7FFFCD	# +32
+	.align	4, 0x00	# pad after Str_empty_1216
+
+func_50186924_Table:	# 10 x u32, 137593..16697825; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	137593, 374086, 1017061, 2765173, 3959678, 5280316, 7041414, 9389877	# [0]
+	tab_u32	12521602, 16697825	# [8]
+
+func_50186924_Var:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0x15f99d
+
+func_50186924_Table_2:	# 10 x u32, 1799533..16697825; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1799533, 2304941, 2952296, 3781463, 4843506, 6203830, 7946207, 10177940	# [0]
+	tab_u32	13036467, 16697825	# [8]
+
+func_50186924_Var_2:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_3:	# 10 x u32, 420..13295048; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	420, 1329, 4204, 13295, 42042, 132950, 420426, 1329504	# [0]
+	tab_u32	4204263, 13295048	# [8]
+
+func_50186924_Var_3:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_4:	# 10 x u32, 1..13295048; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1, 12, 96, 765, 6077, 48271, 383433, 1329504	# [0]
+	tab_u32	4204263, 13295048	# [8]
+
+func_50186924_Var_4:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_5:	# 10 x u32, 66633..8388608; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	66633, 132950, 265271, 529285, 1056063, 1877975, 2976390, 4717261	# [0]
+	tab_u32	6663308, 8388608	# [8]
+
+func_50186924_Var_5:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_6:	# 10 x u32, 747635..8388608; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	747635, 1056063, 1491728, 2107123, 2976390, 3969080, 4996776, 6290568	# [0]
+	tab_u32	7476354, 8388608	# [8]
+
+func_50186981_Var:	# u32, a constant; read / written by func_50186981 0x50186981: `mov (d1, a0), d3`
+	.long	0
+
+func_50186981_Table:	# 16 x u32, 1966481..8388608; read by func_50186981 0x50186981: `mov (4, a0), d2`
+	tab_u32	1966481, 2166156, 2386107, 2628390, 2895275, 3189259, 3513095, 3869812	# [0]
+	tab_u32	4262750, 4695587, 5172374, 5697573, 6276100, 6913371, 7615350, 8388608	# [8]
+
+func_50186924_Var_6:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_7:	# 10 x u32, 0..8388607; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	0, 0, 0, 0, 8388607, 8388607, 8388607, 8388607	# [0]
+	tab_u32	8388607, 8388607	# [8]
+
+func_50186924_Var_7:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_8:	# 10 x u32, 275368..10693451; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	275368, 581332, 1162665, 1774594, 2386523, 3962240, 5645045, 7327848	# [0]
+	tab_u32	9010650, 10693451	# [8]
+
+func_50186924_Var_8:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_9:	# 10 x u32, 1075..48045; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1075, 2270, 3466, 4661, 5856, 8127, 10517, 15776	# [0]
+	tab_u32	26532, 48045	# [8]
+
+func_50186924_Var_9:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_10:	# 10 x u32, 10756..16562162; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	10756, 119516, 358524, 597460, 836275, 1074919, 3558290, 8023770	# [0]
+	tab_u32	12499840, 16562162	# [8]
+
+func_50186924_Var_10:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_11:	# 10 x u32, 1075..41771; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	1075, 2270, 4541, 6932, 9322, 15477, 22050, 28624	# [0]
+	tab_u32	35197, 41771	# [8]
+
+func_50186924_Var_11:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0x7ff3a4
+
+func_50186924_Table_12:	# 10 x u32, 8387920..8388557; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	8387920, 8388240, 8388357, 8388417, 8388454, 8388479, 8388497, 8388523	# [0]
+	tab_u32	8388544, 8388557	# [8]
+
 Str_y_5:	.asciz "\xFD|y"
-# census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x00D6B4, 0x00D6DC
-data_4840D6DC:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_501872AD 0x501872AD `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_501872AD 0x501872AD `mov data_4840D6DC, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xA3A88, 0x10C0C, 0x8633, 0x5981, 0x4324, 0x35B8, 0x2CC5, 0x2660	# +0
-	tab_u32	0x2195, 0x1DDA, 0x1ADE	# +32
+
+func_50186924_Table_13:	# 10 x u32, 8344923..8384229; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	8344923, 8366737, 8374021, 8377665, 8379852, 8381311, 8382353, 8383135	# [0]
+	tab_u32	8383743, 8384229	# [8]
+
+func_50186924_Var_12:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0xa3a88
+
+func_50186924_Table_14:	# 10 x u32, 6878..68620; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	68620, 34355, 22913, 17188, 13752, 11461, 9824, 8597	# [0]
+	tab_u32	7642, 6878	# [8]
 data_4840D708:
-	# 44 bytes the code takes the address of: func_50187300_entry_L1c 0x5018731F `mov data_4840D708, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 44 bytes the code takes the address of: func_50187300_entry_L1c 0x5018731F `mov data_4840D708, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x7FF772, 0x7FFCF2, 0x7FFE38, 0x7FFEBE, 0x7FFF07, 0x7FFF35, 0x7FFF55, 0x7FFF6C	# +0
 	tab_u32	0x7FFF7D, 0x7FFF8B, 0x7FFF96	# +32
+
 Str_U_8:	.asciz "[U\x7F"
 # census: opaque -- unknown-dump: 40 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x00D738, 0x00D760
-data_4840D760:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50187458_entry_L8 0x50187463 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50187458_entry_L8 0x50187463 `mov data_4840D760, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 0, 0, 147, 255, 255, 255, 252, 250, 255, 255, 11, 215, 255, 255	# +0
-	tab_u8	66, 65, 255, 255, 88, 73, 253, 255, 134, 9, 247, 255, 105, 50, 227, 255	# +16
-	tab_u8	58, 53, 164, 255, 246, 58, 220, 254, 76, 87, 97, 252	# +32
-data_4840D78C:
-	# 44 bytes the code takes the address of: func_50186924 0x50186924 `call LibDiv32, 0, 0` (+0, arg a0); func_50187458_entry_L19 0x50187474 `call func_50186924_entry, [d2,d3], 0x24` (+0, arg a0); func_50187458_entry_L19 0x50187474 `mov data_4840D78C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0, 108, 1144, 5242, 8632, 9901, 10301, 10427	# +0
-	tab_u32	10467, 10480, 10483	# +32
 
+func_50186924_Var_13:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_15:	# 10 x u32, 4234237772..4294967187; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	4294967187, 4294966012, 4294956811, 4294918466, 4294789464, 4294379910, 4293079657, 4288951610	# [0]
+	tab_u32	4275845878, 4234237772	# [8]
+
+func_50186924_Var_14:	# u32, a constant; read / written by func_50186924 0x50186924: `mov (d1, a0), d3`
+	.long	0
+
+func_50186924_Table_16:	# 10 x u32, 108..10483; read by func_50186924 0x50186924: `mov (4, a0), d2`
+	tab_u32	108, 1144, 5242, 8632, 9901, 10301, 10427, 10467	# [0]
+	tab_u32	10480, 10483	# [8]
 func_50189206_entry_L4f_Table:	# 49 x u32, 1048615884..1082051041; read by func_50189206_entry_L4f 0x5018925A: `mov	(d0, a0), d1`; func_50189206_entry_L353 0x5018955E: `mov	(d0, a0), d1` ...
 	tab_u32	1048615884, 1049115304, 1049644316, 1050204674, 1050798235, 1051426967, 1052092954, 1052798403	# [0]
 	tab_u32	1053545652, 1054337179, 1055175606, 1056063714, 1056984526, 1057482763, 1058010522, 1058569552	# [8]
@@ -6506,92 +6483,23 @@ func_501880A8_Table:	# 8 x u16, 0..127; read by func_501880A8_entry_L1e 0x501880
 	tab_u16	0, 60, 70, 80, 90, 100, 114, 127
 func_501880A8_entry_L34_Table:	# 8 x u16, 90..127; read by func_501880A8_entry_L34 0x501880DF: `movhu	(d0, a0), d1`
 	tab_u16	90, 90, 90, 90, 100, 108, 114, 127
-data_4840D9C4:
-	# 44 bytes the code takes the address of: func_50187B66_entry_L6a 0x50187BD3 `mov data_4840D9C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x4CCCCC, 0x4CCCCC, 0x4CCCCC, 0x599999, 0x666666, 0x6E147A, 0x733333, 0x799999	# +0
-	tab_u32	0x7C28F5, 0x7C28F5, 0x7C28F5	# +32
-data_4840D9F0:
-	# 44 bytes the code takes the address of: func_50187B66_entry_L74 0x50187BDD `mov data_4840D9F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x599999, 0x599999, 0x599999, 0x5C28F5, 0x666666, 0x6E147A, 0x733333, 0x799999	# +0
-	tab_u32	0x7D70A3, 0x7EB851, 0x7EB851	# +32
-data_4840DA1C:
-	# 44 bytes the code takes the address of: func_50187B66_entry_L7e 0x50187BE7 `mov data_4840DA1C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x599999, 0x599999, 0x599999, 0x5C28F5, 0x666666, 0x6E147A, 0x733333, 0x799999	# +0
-	tab_u32	0x7C28F5, 0x7C28F5, 0x7C28F5	# +32
-data_4840DA48:
-	# 44 bytes the code takes the address of: func_50187B66_entry_L88 0x50187BF1 `mov data_4840DA48, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255	# +0
-	tab_u8	0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255, 102, 102, 166, 255	# +16
-	tab_u8	204, 204, 140, 255, 70, 3, 128, 255, 8, 0, 128, 255	# +32
-data_4840DA74:
-	# 44 bytes the code takes the address of: func_50187B66_entry_L92 0x50187BFB `mov data_4840DA74, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255	# +0
-	tab_u8	0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255, 51, 51, 179, 255	# +16
-	tab_u8	153, 153, 153, 255, 70, 3, 128, 255, 8, 0, 128, 255	# +32
-data_4840DAA0:
-	# 44 bytes the code takes the address of: func_50187B66_entry_L9c 0x50187C05 `mov data_4840DAA0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255	# +0
-	tab_u8	0, 0, 192, 255, 0, 0, 192, 255, 0, 0, 192, 255, 102, 102, 166, 255	# +16
-	tab_u8	204, 204, 140, 255, 70, 3, 128, 255, 8, 0, 128, 255	# +32
-data_4840DACC:
-	# 900 bytes the code takes the address of: func_50187B66_entry_La6 0x50187C0F `mov data_4840DACC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	153, 153, 89, 0, 153, 153, 89, 0, 153, 153, 89, 0, 153, 153, 89, 0	# +0
-	tab_u8	153, 153, 89, 0, 204, 204, 108, 0, 51, 51, 115, 0, 153, 153, 121, 0	# +16
-	tab_u8	245, 40, 124, 0, 163, 112, 125, 0, 163, 112, 125, 0, 123, 218, 0, 0	# +32
-	tab_u8	121, 25, 2, 0, 70, 181, 5, 0, 229, 132, 15, 0, 117, 49, 42, 0	# +48
-	tab_u8	126, 107, 60, 0, 60, 146, 80, 0, 134, 113, 107, 0, 53, 71, 143, 0	# +64
-	tab_u8	130, 16, 191, 0, 225, 201, 254, 0, 157, 249, 21, 0, 109, 117, 27, 0	# +80
-	tab_u8	173, 43, 35, 0, 104, 12, 45, 0, 87, 179, 57, 0, 242, 231, 73, 0	# +96
-	tab_u8	182, 169, 94, 0, 223, 63, 121, 0, 148, 77, 155, 0, 179, 235, 198, 0	# +112
-	tab_u8	225, 201, 254, 0, 0, 0, 0, 0, 164, 1, 0, 0, 49, 5, 0, 0	# +128
-	tab_u8	108, 16, 0, 0, 239, 51, 0, 0, 58, 164, 0, 0, 86, 7, 2, 0	# +144
-	tab_u8	74, 106, 6, 0, 96, 73, 20, 0, 231, 38, 64, 0, 200, 221, 202, 0	# +160
-	tab_u8	0, 0, 0, 0, 1, 0, 0, 0, 12, 0, 0, 0, 96, 0, 0, 0	# +176
-	tab_u8	253, 2, 0, 0, 189, 23, 0, 0, 143, 188, 0, 0, 201, 217, 5, 0	# +192
-	tab_u8	96, 73, 20, 0, 231, 38, 64, 0, 200, 221, 202, 0, 0, 0, 0, 0	# +208
-	tab_u8	73, 4, 1, 0, 86, 7, 2, 0, 55, 12, 4, 0, 133, 19, 8, 0	# +224
-	tab_u8	63, 29, 16, 0, 215, 167, 28, 0, 134, 106, 45, 0, 205, 250, 71, 0	# +240
-	tab_u8	140, 172, 101, 0, 0, 0, 128, 0, 0, 0, 0, 0, 115, 104, 11, 0	# +256
-	tab_u8	63, 29, 16, 0, 16, 195, 22, 0, 243, 38, 32, 0, 134, 106, 45, 0	# +272
-	tab_u8	56, 144, 60, 0, 168, 62, 76, 0, 136, 252, 95, 0, 130, 20, 114, 0	# +288
-	tab_u8	0, 0, 128, 0, 0, 0, 0, 0, 145, 1, 30, 0, 140, 13, 33, 0	# +304
-	tab_u8	187, 104, 36, 0, 38, 27, 40, 0, 171, 45, 44, 0, 11, 170, 48, 0	# +320
-	tab_u8	7, 155, 53, 0, 116, 12, 59, 0, 94, 11, 65, 0, 35, 166, 71, 0	# +336
-	tab_u8	150, 236, 78, 0, 37, 240, 86, 0, 4, 196, 95, 0, 91, 125, 105, 0	# +352
-	tab_u8	118, 51, 116, 0, 0, 0, 128, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +368
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 127, 0	# +384
-	tab_u8	255, 255, 127, 0, 255, 255, 127, 0, 255, 255, 127, 0, 255, 255, 127, 0	# +400
-	tab_u8	255, 255, 127, 0, 0, 0, 0, 0, 168, 51, 4, 0, 212, 222, 8, 0	# +416
-	tab_u8	169, 189, 17, 0, 2, 20, 27, 0, 91, 106, 36, 0, 128, 117, 60, 0	# +432
-	tab_u8	245, 34, 86, 0, 104, 208, 111, 0, 218, 125, 137, 0, 75, 43, 163, 0	# +448
-	tab_u8	0, 0, 0, 0, 51, 4, 0, 0, 222, 8, 0, 0, 138, 13, 0, 0	# +464
-	tab_u8	53, 18, 0, 0, 224, 22, 0, 0, 191, 31, 0, 0, 21, 41, 0, 0	# +480
-	tab_u8	160, 61, 0, 0, 164, 103, 0, 0, 173, 187, 0, 0, 0, 0, 0, 0	# +496
-	tab_u8	4, 42, 0, 0, 220, 210, 1, 0, 124, 120, 5, 0, 212, 29, 9, 0	# +512
-	tab_u8	179, 194, 12, 0, 231, 102, 16, 0, 146, 75, 54, 0, 218, 110, 122, 0	# +528
-	tab_u8	128, 187, 190, 0, 242, 183, 252, 0, 0, 0, 0, 0, 51, 4, 0, 0	# +544
-	tab_u8	222, 8, 0, 0, 189, 17, 0, 0, 20, 27, 0, 0, 106, 36, 0, 0	# +560
-	tab_u8	117, 60, 0, 0, 34, 86, 0, 0, 208, 111, 0, 0, 125, 137, 0, 0	# +576
-	tab_u8	43, 163, 0, 0, 164, 243, 127, 0, 80, 253, 127, 0, 144, 254, 127, 0	# +592
-	tab_u8	5, 255, 127, 0, 65, 255, 127, 0, 102, 255, 127, 0, 127, 255, 127, 0	# +608
-	tab_u8	145, 255, 127, 0, 171, 255, 127, 0, 192, 255, 127, 0, 205, 255, 127, 0	# +624
-	tab_u8	253, 124, 121, 0, 91, 85, 127, 0, 145, 170, 127, 0, 5, 199, 127, 0	# +640
-	tab_u8	65, 213, 127, 0, 204, 221, 127, 0, 127, 227, 127, 0, 145, 231, 127, 0	# +656
-	tab_u8	159, 234, 127, 0, 255, 236, 127, 0, 229, 238, 127, 0, 136, 58, 10, 0	# +672
-	tab_u8	12, 12, 1, 0, 51, 134, 0, 0, 129, 89, 0, 0, 36, 67, 0, 0	# +688
-	tab_u8	184, 53, 0, 0, 197, 44, 0, 0, 96, 38, 0, 0, 149, 33, 0, 0	# +704
-	tab_u8	218, 29, 0, 0, 222, 26, 0, 0, 114, 247, 127, 0, 242, 252, 127, 0	# +720
-	tab_u8	56, 254, 127, 0, 190, 254, 127, 0, 7, 255, 127, 0, 53, 255, 127, 0	# +736
-	tab_u8	85, 255, 127, 0, 108, 255, 127, 0, 125, 255, 127, 0, 139, 255, 127, 0	# +752
-	tab_u8	150, 255, 127, 0, 91, 85, 127, 0, 143, 121, 127, 0, 52, 147, 127, 0	# +768
-	tab_u8	162, 164, 127, 0, 64, 177, 127, 0, 206, 186, 127, 0, 75, 194, 127, 0	# +784
-	tab_u8	81, 200, 127, 0, 69, 205, 127, 0, 106, 209, 127, 0, 238, 212, 127, 0	# +800
-	tab_u8	0, 0, 0, 0, 147, 255, 255, 255, 252, 250, 255, 255, 11, 215, 255, 255	# +816
-	tab_u8	66, 65, 255, 255, 88, 73, 253, 255, 134, 9, 247, 255, 105, 50, 227, 255	# +832
-	tab_u8	58, 53, 164, 255, 246, 58, 220, 254, 76, 87, 97, 252, 0, 0, 0, 0	# +848
-	tab_u8	108, 0, 0, 0, 120, 4, 0, 0, 122, 20, 0, 0, 184, 33, 0, 0	# +864
-	tab_u8	173, 38, 0, 0, 61, 40, 0, 0, 187, 40, 0, 0, 227, 40, 0, 0	# +880
-	tab_u8	240, 40, 0, 0	# +896
+
+func_50186924_Selected_0:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\xCC\xCCL\x00\xCC\xCCL\x00\xCC\xCCL\x00\x99\x99Y\x00fff\x00z\x14n\x0033s\x00\x99\x99y\x00\xF5(|\x00\xF5(|\x00\xF5(|\x00"
+func_50186924_Selected_1:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\xF5(\\\x00fff\x00z\x14n\x0033s\x00\x99\x99y\x00\xA3p}\x00Q\xB8~\x00Q\xB8~\x00"
+func_50186924_Selected_2:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\xF5(\\\x00fff\x00z\x14n\x0033s\x00\x99\x99y\x00\xF5(|\x00\xF5(|\x00\xF5(|\x00"
+func_50186924_Selected_3:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFFff\xA6\xFF\xCC\xCC\x8C\xFFF\x03\x80\xFF\x08\x00\x80\xFF"
+func_50186924_Selected_4:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF33\xB3\xFF\x99\x99\x99\xFFF\x03\x80\xFF\x08\x00\x80\xFF"
+func_50186924_Selected_5:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFF\x00\x00\xC0\xFFff\xA6\xFF\xCC\xCC\x8C\xFFF\x03\x80\xFF\x08\x00\x80\xFF"
+func_50186924_Selected_6:	# REC_func_50186924_Selected (44 bytes)
+	REC_func_50186924_Selected	x0="\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\x99\x99Y\x00\xCC\xCCl\x0033s\x00\x99\x99y\x00\xF5(|\x00\xA3p}\x00\xA3p}\x00"
+# census: opaque -- unknown-dump: 856 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x00DAF8, 0x00DE50
 
 doubles_4840DE50:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x000028F3, 0x3E809BCC	# 2.42906991e-07
@@ -6657,99 +6565,33 @@ doubles_4840DE50:	# IEEE-754 doubles (lo word, hi word)
 	.long	0x3FEA4432, 0x3FF11B6A	# 1.96209836
 	.long	0x3FF825C5, 0x3FFF64C1	# 3.32535749e-316
 
-func_485E8EDD_entry_L15_Table:	# 4 x u8, 1..4; read by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a1), d0`
-	tab_u8	1, 2, 3, 4
-func_5018D239_Table_3:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
+func_485E8EDD_entry_L15_Table:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a1), d0`
+	.byte	1
+func_485E8EDD_entry_L15_Var:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a0), d0`
+	.byte	2
+func_485E8EDD_entry_L15_Var_2:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a0), d0`
+	.byte	3
+func_485E8EDD_entry_L15_Var_3:	# u8, a constant; read / written by func_485E8EDD_entry_L15 0x485E8EF7: `movbu (a0), d0`
+	.byte	4
 
-func_5018D239_Var_3:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x485ebdae
-
-func_5018D239_Table_4:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_4:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	0x10000
-
-func_5018D239_Table_5:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_5018D239_Var_5:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x485f93b0
-
-func_5018D239_Table_6:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_6:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	6144
-func_5018CA20_Var_8:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_6:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_9:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	0
-func_5018CA20_Var_10:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_7:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_11:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	0
-func_5018CA20_Var_12:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_8:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_13:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	1
-func_5018CA20_Var_14:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_9:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_15:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	1
-func_5018CA20_Var_16:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_10:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_17:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	1
-
-func_5018CA75_entry_L52_Table:	# 2 x u32, 0..1; read by func_5018CA75_entry_L52 0x5018CACC: `mov (a3), d0`
-	tab_u32	0, 1
-
-func_5018CA75_entry_L52_Var:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (8, a3), a0`
-	.long	0x485ebbbe
-func_5018CA75_entry_L52_Var_2:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (0xc, a3), d1`
-	.long	1
-
-func_5018CA75_entry_L52_Table_2:	# 2 x u16, 0..0; read by func_5018CA75_entry_L52 0x5018CACC: `movhu (a3), d1`
-	tab_u16	0, 0
-
-func_5018CA75_entry_L52_Var_3:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (4, a3), d0`
-	.long	1
-
-func_5018CA75_entry_L52_Table_3:	# 2 x u32, 0..1; read by func_5018CA75_entry_L52 0x5018CACC: `mov (a3), d0`
-	tab_u32	0, 1
-
-func_5018CA75_entry_L52_Var_4:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (8, a3), a0`
-	.long	0x485ebebb
-func_5018CA75_entry_L52_Var_5:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (0xc, a3), d1`
-	.long	1
-
-func_5018CA75_entry_L52_Table_4:	# 2 x u16, 0..0; read by func_5018CA75_entry_L52 0x5018CACC: `movhu (a3), d1`
-	tab_u16	0, 0
-
-func_5018CA75_entry_L52_Var_6:	# u32, a constant; read / written by func_5018CA75_entry_L52 0x5018CACC: `mov (4, a3), d0`
-	.long	24
+func_5018D239_Table_3:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_485EBDAE, itskpri=3, x14="\x00\x00", stksz=0x10000
+func_5018D239_Table_5:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_485F93B0, itskpri=3, x14="\x00\x00", stksz=6144
+func_5018CA20_Var_8:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00"
+func_5018CA20_Var_10:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00"
+func_5018CA20_Var_12:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00", f8=1
+func_5018CA20_Var_14:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00", f8=1
+func_5018CA20_Var_16:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00", f8=1
+func_5018CA75_entry_L52_Table:	# REC_func_5018CA75_ArgA0 (24 bytes): the layout func_5018CA75 0x5018CA75 reads through its argument a0 (passed by func_485EBC80 0x485EBC80 `call func_5018CA75_entry, [d2,d3,a2,a3], 0x1c`)
+	REC_func_5018CA75_ArgA0	x4="\x01\x00\x00\x00", p8=loc_485EBBBE, f12=1, x18="\x00\x00", f20=1
+func_5018CA75_entry_L52_Table_3:	# REC_func_5018CA75_ArgA0 (24 bytes): the layout func_5018CA75 0x5018CA75 reads through its argument a0 (passed by func_485EBC80 0x485EBC80 `call func_5018CA75_entry, [d2,d3,a2,a3], 0x1c`)
+	REC_func_5018CA75_ArgA0	x4="\x01\x00\x00\x00", p8=loc_485EBEBB, f12=1, x18="\x00\x00", f20=24
 
 IndexSwEventHandler_Table:	# 32 x u32, 1..2147483648; read by IndexSwEventHandler 0x485EC0F8: `mov	(d0, a3), d1`; IndexSwEventHandler_entry_L50 0x485EC14D: `mov	(d0, a3), d0` ...
 	tab_u32	1, 2, 4, 8, 16, 32, 64, 128	# [0]
@@ -6795,14 +6637,8 @@ Str_BM_2:	.asciz "BM"
 SetModeLed_Table:	# 16 x u8, 2..255; read by SetModeLed_entry : `movbu	(d3, a0), d0`
 	tab_u8	255, 7, 6, 8, 255, 3, 2, 255, 17, 18, 14, 19, 255, 255, 255, 255
 
-func_5018CA20_Var_18:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_11:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_19:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	1
+func_5018CA20_Var_18:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00", f8=1
 
 Str_604:	.asciz "604"
 
@@ -6872,10 +6708,10 @@ GetEditSwPointInit_Table_2:	# 32 x REC_GetEditSwPointInit_Table_2 (4 bytes each)
 	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
 	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
 	REC_GetEditSwPointInit_Table_2	f0=160, f2=120
-data_4840E3A4:
-	# 64 bytes the code takes the address of: VwUserBitmapProc_L10a 0x485F023E `mov data_4840E3A4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x80, 0x8000, 0x8080, 0x800000, 0x800080, 0x808000, 0xC0C0C0	# +0
-	tab_u32	0x808080, 0xFF, 0xFF00, 0xFFFF, 0xFF0000, 0xFF00FF, 0xFFFF00, 0xFFFFFF	# +32
+
+DrawBitmapSPFast16_Impl_entry_Le0_Table:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl_entry_Le0 0x485FC25E: `mov (-0x80, a0), a2`
+	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
+	tab_u32	8421504, 255, 65280, 65535, 16711680, 16711935, 16776960, 16777215	# [8]
 
 Bitmap_UserBitmapCheck_Pixels:	# 24 x 24, 8 bit(s) a pixel, rows padded to even bytes: the bitmap UserBitmapCheck answers MT_GetBitmapData with (src/program/data/media/Bitmap_UserBitmapCheck_Pixels.png)
 	.incbin	"build/bitmaps/Bitmap_UserBitmapCheck_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 24 24) from src/program/data/media/Bitmap_UserBitmapCheck_Pixels.png
@@ -7322,9 +7158,12 @@ Str_REC_9:	.asciz "REC"
 Str_PLAY_7:	.asciz "PLAY"
 Str_MUTE_7:	.asciz "MUTE"
 Str_CLR_7:	.asciz "CLR"
-data_48410AE7:
-# census: opaque -- unknown-dump: 9 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn2400_program.rom", 0x010AE7, 0x010AF0
+
+PsTrackSwitchProc_L3d7_Table_p0_0:	# REC_PsTrackSwitchProc_L3d7_Table_p0 (3 bytes)
+	REC_PsTrackSwitchProc_L3d7_Table_p0	f0=80, f1=85, f2=78
+
+Str_CH:	.asciz "CH"
+	.align	4, 0xFF	# pad after Str_CH
 
 PsTrackSwitchProc_L3d7_Table:
 	.long	data_48410AD4
@@ -7332,7 +7171,7 @@ PsTrackSwitchProc_L3d7_Table:
 	.long	Str_PLAY_7
 	.long	Str_MUTE_7
 	.long	Str_CLR_7
-	.long	data_48410AE7
+	.long	PsTrackSwitchProc_L3d7_Table_p0_0
 
 PsTrackSwitchProc_Table:	# 6 x s16, 10..255; read by PsTrackSwitchProc_L3d7 0x485F803A: `movhu	(d0, a0), d0`
 	tab_s16	245, 10, 12, 255, 255, 10
@@ -8409,29 +8248,31 @@ DrawJpegFileR_Impl_Table:	# 15 x s16, 0..3; read by DrawJpegFileR_Impl 0x485FCB1
 	tab_s16	0, 1, 0, 2, 0, 3, 0, 0, 1, 1, 1, 0	# [0]
 	tab_s16	2, 0, 3	# [12]
 data_48412740:
-	# 32 bytes the code takes the address of: DrawString_Impl_entry_L251 0x485FD1EF `mov data_48412740, a2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: DrawString_Impl_entry_L251 0x485FD1EF `mov data_48412740, a2` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 127, 96, 80, 72, 68, 66, 65, 66, 68, 72, 80, 96, 127, 0, 0	# +0
 	tab_u8	0, 252, 12, 20, 36, 68, 132, 4, 132, 68, 36, 20, 12, 252, 0, 0	# +16
 data_48412760:
 # census: opaque -- unknown-dump: 64 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn2400_program.rom", 0x012760, 0x0127A0
-data_484127A0:
-	.space	512, 0x00
 
-func_485FF57A_entry_L57_Records:	# 13 x REC_func_485FF57A_entry_L57_Records (16 bytes each); read by func_485FF57A_entry_L57 0x485FF5D6 `mov (a2), a1`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (0xc, a0), d0`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (a3), d1` (+8)
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"	# [0]
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"	# [8]
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
-	REC_func_485FF57A_entry_L57_Records	p0=data_484127A0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+func_485FF57A_entry_L57_Records_p0_0:	# REC_func_485FF57A_entry_L57_Records_p0 (4 bytes)
+	REC_func_485FF57A_entry_L57_Records_p0	x1="\x00\x00\x00"
+	.space	508, 0x00
+
+func_485FF57A_entry_L57_Records:	# 13 x REC_func_485FF57A_entry_L57_Records (16 bytes each); read by func_485FF57A_entry_L57 0x485FF5D6 `mov (a2), a1`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (0xc, a0), d0`; func_485FF57A_entry_L57 0x485FF5D6 `movhu (a3), d1` (+10)
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"	# [0]
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"	# [8]
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
+	REC_func_485FF57A_entry_L57_Records	p0=func_485FF57A_entry_L57_Records_p0_0, f4=32, f6=32, p8=data_48412760, f12=23, x14="\x00\x00"
 func_485FDD4C_entry_L554_Records:	# 32 x REC_func_485FDD4C_entry_L554_Records (8 bytes each); read by func_485FDD4C_entry_L554 0x485FE2A5 `mov (a0), d0`; func_485FDD4C_entry_L5aa 0x485FE2FB `mov (a0), d0`; func_485FDD4C_entry_L5ad 0x485FE2FE `mov (4, a0), a0`
 	REC_func_485FDD4C_entry_L554_Records	f0=157, p4=loc_485FE38C	# [0]
 	REC_func_485FDD4C_entry_L554_Records	f0=1, p4=func_485FDD4C_entry_L5b2
@@ -9676,7 +9517,7 @@ data_484151DC:
 	.asciz	""
 	.align	4, 0xFF
 data_484151E0:
-	# 76 bytes the code takes the address of: UnregisteredTitle 0x48608FCD `mov data_484151E0, d0` (+0, as a base); byte rows (u8, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 76 bytes the code takes the address of: UnregisteredTitle 0x48608FCD `mov data_484151E0, d0` (+0, as a base); byte rows (u8, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 255, 255, 255, 0, 255, 255, 255	# +0
 	.long	data_484151E0+4	# +8
 	tab_u8	0, 0, 0, 0, 0, 255, 255, 255	# +12
@@ -13268,25 +13109,10 @@ Text_i108_bmp:	# 130 strings of 8 characters, NUL-terminated
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x01BB42, 0x01BB44
 
-func_5018D239_Table_7:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_5018D239_Var_7:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x4871ef31
-
-func_5018D239_Table_8:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_8:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	24576
-func_5018CA20_Var_20:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (a3), d2`
-	.long	0
-
-func_5018CA20_Table_12:	# 2 x u16, 0..8; read by func_5018CA20 0x5018CA20: `movhu (4, a3), d2`
-	tab_u16	8, 0
-
-func_5018CA20_Var_21:	# u32, a constant; read / written by func_5018CA20 0x5018CA20: `mov (8, a3), d2`
-	.long	0
+func_5018D239_Table_7:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4871EF31, itskpri=3, x14="\x00\x00", stksz=24576
+func_5018CA20_Var_20:	# REC_func_5018C994_ArgA0 (12 bytes): the layout func_5018C994 0x5018C994 reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call func_5018C994, 0, 0`, +4 more calls); the layout func_5018CA20 0x5018CA20 reads through its argument a0 (passed by func_5018C994_L3d 0x5018C9D1 `call func_5018CA20_entry, [d2,a2,a3], 0xc`)
+	REC_func_5018C994_ArgA0	f4=8, x6="\x00\x00"
 
 func_4860982E_Table:
 	.long	loc_48609870
@@ -14111,72 +13937,25 @@ func_4861CCB8_Table:	# 256 x s8, a sparse map by index: 34 entries set, the rest
 	map8	243, 8
 	map8	244, 9
 	map_none8	11	# [245..255]
-data_4841D448:
-	# 332 bytes the code takes the address of: func_4861CCC5 0x4861CCC5 `mov data_4841D448, a0` (+0, as a base); func_4861CCC5_entry_L29 0x4861CCF3 `mov data_4841D448, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 144, 0, 0, 0, 192, 0, 7, 0, 176, 0, 0, 0, 32, 0	# +0
-	tab_u8	11, 0, 176, 0, 92, 0, 176, 0, 92, 0, 32, 0, 91, 0, 176, 0	# +16
-	tab_u8	126, 0, 176, 0, 20, 176, 0, 0, 36, 176, 0, 0, 52, 176, 0, 0	# +32
-	tab_u8	68, 176, 0, 0, 84, 176, 0, 0, 95, 0, 176, 0, 95, 0, 32, 0	# +48
-	tab_u8	93, 0, 176, 0, 93, 0, 32, 0, 5, 0, 176, 0, 65, 0, 176, 0	# +64
-	tab_u8	80, 0, 176, 0, 81, 0, 176, 0, 82, 0, 176, 0, 83, 0, 176, 0	# +80
-	tab_u8	129, 0, 32, 0, 136, 0, 32, 0, 137, 0, 32, 0, 138, 0, 32, 0	# +96
-	tab_u8	139, 0, 32, 0, 144, 0, 32, 0, 145, 0, 32, 0, 146, 0, 32, 0	# +112
-	tab_u8	147, 0, 32, 0, 148, 0, 32, 0, 149, 0, 32, 0, 150, 0, 32, 0	# +128
-	tab_u8	151, 0, 32, 0, 152, 0, 32, 0, 153, 0, 32, 0, 154, 0, 32, 0	# +144
-	tab_u8	121, 0, 176, 0, 120, 0, 176, 0, 94, 0, 176, 0, 64, 0, 176, 0	# +160
-	tab_u8	128, 64, 32, 0, 129, 64, 32, 0, 10, 0, 176, 0, 0, 128, 176, 0	# +176
-	tab_u8	1, 128, 176, 0, 2, 128, 176, 0, 5, 128, 176, 0, 0, 0, 208, 0	# +192
-	tab_u8	0, 0, 224, 0, 1, 0, 176, 0, 66, 0, 176, 0, 67, 0, 176, 0	# +208
-	tab_u8	71, 0, 176, 0, 72, 0, 176, 0, 73, 0, 176, 0, 74, 0, 176, 0	# +224
-	tab_u8	75, 0, 176, 0, 76, 0, 176, 0, 77, 0, 176, 0, 78, 0, 176, 0	# +240
-	tab_u8	20, 0, 96, 0, 162, 0, 32, 0, 176, 0, 32, 0, 177, 0, 32, 0	# +256
-	tab_u8	178, 0, 32, 0, 179, 0, 32, 0, 180, 0, 32, 0, 181, 0, 32, 0	# +272
-	tab_u8	182, 0, 32, 0, 183, 0, 32, 0, 184, 0, 32, 0, 185, 0, 32, 0	# +288
-	tab_u8	186, 0, 32, 0, 187, 0, 32, 0, 188, 0, 32, 0, 189, 0, 32, 0	# +304
-	tab_u8	190, 0, 32, 0, 191, 0, 32, 0, 255, 255, 255, 255	# +320
-data_4841D594:
-	# 252 bytes the code takes the address of: func_4861CCC5 0x4861CCC5 `mov data_4841D594, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 144, 0, 0, 0, 192, 0, 7, 0, 176, 0, 0, 0, 32, 0	# +0
-	tab_u8	11, 0, 176, 0, 92, 0, 176, 0, 92, 0, 32, 0, 91, 0, 176, 0	# +16
-	tab_u8	126, 0, 176, 0, 20, 176, 0, 0, 36, 176, 0, 0, 52, 176, 0, 0	# +32
-	tab_u8	68, 176, 0, 0, 84, 176, 0, 0, 95, 0, 176, 0, 95, 0, 32, 0	# +48
-	tab_u8	93, 0, 176, 0, 93, 0, 32, 0, 5, 0, 176, 0, 65, 0, 176, 0	# +64
-	tab_u8	80, 0, 176, 0, 81, 0, 176, 0, 82, 0, 176, 0, 83, 0, 176, 0	# +80
-	tab_u8	129, 0, 32, 0, 136, 0, 32, 0, 137, 0, 32, 0, 138, 0, 32, 0	# +96
-	tab_u8	139, 0, 32, 0, 144, 0, 32, 0, 145, 0, 32, 0, 146, 0, 32, 0	# +112
-	tab_u8	147, 0, 32, 0, 148, 0, 32, 0, 149, 0, 32, 0, 150, 0, 32, 0	# +128
-	tab_u8	151, 0, 32, 0, 152, 0, 32, 0, 153, 0, 32, 0, 154, 0, 32, 0	# +144
-	tab_u8	121, 0, 176, 0, 120, 0, 176, 0, 10, 0, 176, 0, 2, 128, 176, 0	# +160
-	tab_u8	20, 0, 96, 0, 162, 0, 32, 0, 176, 0, 32, 0, 177, 0, 32, 0	# +176
-	tab_u8	178, 0, 32, 0, 179, 0, 32, 0, 180, 0, 32, 0, 181, 0, 32, 0	# +192
-	tab_u8	182, 0, 32, 0, 183, 0, 32, 0, 184, 0, 32, 0, 185, 0, 32, 0	# +208
-	tab_u8	186, 0, 32, 0, 187, 0, 32, 0, 188, 0, 32, 0, 189, 0, 32, 0	# +224
-	tab_u8	190, 0, 32, 0, 191, 0, 32, 0, 255, 255, 255, 255	# +240
-data_4841D690:
-	# 52 bytes the code takes the address of: func_4861CCC5_entry_L29 0x4861CCF3 `mov data_4841D690, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 144, 0, 128, 192, 0, 0, 129, 192, 0, 0, 130, 192, 0, 0	# +0
-	tab_u8	131, 192, 0, 0, 7, 0, 176, 0, 0, 0, 32, 0, 2, 208, 0, 0	# +16
-	tab_u8	35, 32, 112, 0, 1, 208, 0, 0, 3, 208, 0, 0, 1, 0, 0, 0	# +32
-	tab_u8	255, 255, 255, 255	# +48
-data_4841D6C4:
-	# 132 bytes the code takes the address of: func_4861CCC5_entry_L29 0x4861CCF3 `mov data_4841D6C4, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	128, 192, 0, 0, 129, 192, 0, 0, 130, 192, 0, 0, 131, 192, 0, 0	# +0
-	tab_u8	50, 128, 0, 0, 7, 0, 176, 0, 0, 0, 32, 0, 2, 208, 0, 0	# +16
-	tab_u8	35, 32, 112, 0, 1, 208, 0, 0, 3, 208, 0, 0, 1, 0, 0, 0	# +32
-	tab_u8	0, 192, 0, 0, 4, 192, 0, 0, 4, 0, 0, 0, 128, 128, 0, 0	# +48
-	tab_u8	64, 128, 0, 0, 32, 128, 0, 0, 96, 128, 0, 0, 3, 0, 0, 0	# +64
-	tab_u8	51, 128, 0, 0, 128, 0, 0, 0, 49, 128, 0, 0, 160, 0, 0, 0	# +80
-	tab_u8	2, 128, 0, 0, 1, 224, 0, 0, 2, 224, 0, 0, 0, 224, 0, 0	# +96
-	tab_u8	0, 0, 0, 0, 6, 128, 0, 0, 8, 128, 0, 0, 20, 0, 96, 0	# +112
-	tab_u8	255, 255, 255, 255	# +128
-data_4841D748:
-	# 36 bytes the code takes the address of: func_4861CCC5_entry_L29 0x4861CCF3 `mov data_4841D748, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	2, 208, 0, 0, 35, 32, 112, 0, 1, 208, 0, 0, 3, 208, 0, 0	# +0
-	tab_u8	1, 0, 0, 0, 0, 192, 0, 0, 4, 192, 0, 0, 4, 0, 0, 0	# +16
-	tab_u8	255, 255, 255, 255	# +32
-func_4861CCC5_Table:	# 20 x u8, 0..255; read by func_4861CCC5_entry : `movbu	(d0, a0), d1`
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
-	tab_u8	0, 0, 0, 255	# [16]
+
+func_4861CCC5_entry_L55_Selected_0:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
+	REC_func_4861CCC5_entry_L55_Selected	f0=0x900000, f4=0xC00000, x8="\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
+# census: opaque -- unknown-dump: 280 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x01D47C, 0x01D594
+func_4861CCC5_entry_L55_Selected_1:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
+	REC_func_4861CCC5_entry_L55_Selected	f0=0x900000, f4=0xC00000, x8="\x07\x00\xB0\x00\x00\x00 \x00\x0B\x00\xB0\x00\\\x00\xB0\x00\\\x00 \x00[\x00\xB0\x00~\x00\xB0\x00\x14\xB0\x00\x00$\xB0\x00\x004\xB0\x00\x00D\xB0\x00\x00"
+# census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x01D5C8, 0x01D690
+func_4861CCC5_entry_L55_Selected_2:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
+	REC_func_4861CCC5_entry_L55_Selected	f0=0x900000, f4=49280, x8="\x81\xC0\x00\x00\x82\xC0\x00\x00\x83\xC0\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\xFF\xFF\xFF\xFF"
+func_4861CCC5_entry_L55_Selected_3:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
+	REC_func_4861CCC5_entry_L55_Selected	f0=49280, f4=49281, x8="\x82\xC0\x00\x00\x83\xC0\x00\x002\x80\x00\x00\x07\x00\xB0\x00\x00\x00 \x00\x02\xD0\x00\x00# p\x00\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00"
+# census: opaque -- unknown-dump: 80 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x01D6F8, 0x01D748
+func_4861CCC5_entry_L55_Selected_4:	# REC_func_4861CCC5_entry_L55_Selected (52 bytes)
+	REC_func_4861CCC5_entry_L55_Selected	f0=53250, f4=0x702023, x8="\x01\xD0\x00\x00\x03\xD0\x00\x00\x01\x00\x00\x00\x00\xC0\x00\x00\x04\xC0\x00\x00\x04\x00\x00\x00\xFF\xFF\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x01D77C, 0x01D780
 
 func_4861ED5D_Table:
 	.long	loc_4861ED7D
@@ -14557,25 +14336,20 @@ Str_empty_1187:	.asciz ".          "
 Str_r_6:	.asciz "r"
 	.align	4, 0xFF	# pad after Str_r_6
 data_4841E3E4:
-	# 32 bytes the code takes the address of: func_48630F4F_entry_L67 0x48630FBB `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_48630F4F_entry_L67 0x48630FBB `mov data_4841E3E4, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 32 bytes the code takes the address of: func_48630F4F_entry_L67 0x48630FBB `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_48630F4F_entry_L67 0x48630FBB `mov data_4841E3E4, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0	# +0
 	tab_u8	2, 112, 0, 160, 5, 249, 3, 0, 9, 0, 2, 0, 0, 0, 255, 255	# +16
-data_4841E404:
-	# 28 bytes the code takes the address of: func_485E6123 0x485E6123 `call func_487055C4, 0, 0` (+0, arg a0); func_4863182B_entry_L21 0x48631851 `call func_485E6123_entry, 0, 0xc` (+0, arg a0); func_4863182B_entry_L21 0x48631851 `mov data_4841E404, a0` (+0, as a base) (+2 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	5, 0, 0, 0, 0, 0, 0	# +0
-data_4841E420:
-	# 56 bytes the code takes the address of: func_485E6123 0x485E6123 `call func_487055C4, 0, 0` (+0, arg a0); func_4863182B 0x4863182B `call func_485E6123_entry, 0, 0xc` (+0, arg a0); func_4863182B 0x4863182B `mov data_4841E420, a0` (+0, as a base) (+2 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 0, 0, 0	# +0
-	tab_u8	0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0	# +16
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 210, 0, 0, 0, 0, 0, 0, 0	# +32
-	tab_u8	255, 255, 255, 255, 0, 0, 0, 0	# +48
-data_4841E458:
-	# 28 bytes the code takes the address of: func_485E6123 0x485E6123 `call func_487055C4, 0, 0` (+0, arg a0); func_48631AF5 0x48631AF5 `call func_485E6123_entry, 0, 0xc` (+0, arg a0); func_48631AF5 0x48631AF5 `mov data_4841E458, a0` (+0, as a base) (+2 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 211, 0, 0, 0	# +0
-	tab_u8	0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0	# +16
-data_4841E474:
-	# 28 bytes the code takes the address of: func_485E6123 0x485E6123 `call func_487055C4, 0, 0` (+0, arg a0); GetMediaType_entry_L51 0x48631DB3 `call func_485E6123_entry, 0, 0xc` (+0, arg a0); GetMediaType_entry_L51 0x48631DB3 `mov data_4841E474, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0, 0, 0, 211, 0, 0, 0	# +0
+
+func_485E6123_entry_L14_Table:	# 7 x u32, 0..5; read by func_485E6123_entry_L14 0x485E613A: `mov (a0), d1`; func_485E6123_entry_L66 0x485E618C: `mov (a1), d0` ...
+	tab_u32	5, 0, 0, 0, 0, 0, 0
+func_485E6123_entry_L14_Table_2:	# 14 x u32, 0..4294967295; read by func_485E6123_entry_L14 0x485E613A: `mov (a0), d1`; func_485E6123_entry_L66 0x485E618C: `mov (a1), d0` ...
+	tab_u32	0, 0, 0, 224, 0, 4294967295, 0, 0	# [0]
+	tab_u32	0, 0, 210, 0, 4294967295, 0	# [8]
+func_485E6123_entry_L14_Table_3:	# 7 x u32, 0..4294967295; read by func_485E6123_entry_L14 0x485E613A: `mov (a0), d1`; func_485E6123_entry_L66 0x485E618C: `mov (a1), d0` ...
+	tab_u32	0, 0, 0, 211, 0, 4294967295, 0
+func_485E6123_entry_L14_Table_4:	# 7 x u32, 0..211; read by func_485E6123_entry_L14 0x485E613A: `mov (a0), d1`; func_485E6123_entry_L66 0x485E618C: `mov (a1), d0` ...
+	tab_u32	0, 0, 0, 211, 0, 0, 0
+
 Str_A_40:	.asciz "A:\\"
 Str_d_24:	.asciz "d"
 	.align	4, 0xFF	# pad after Str_d_24
@@ -14615,7 +14389,7 @@ func_48632F74_entry_Lbc_Records:	# 2 x REC_func_48632F74_entry_Lbc_Records (4 by
 	REC_func_48632F74_entry_Lbc_Records	s0="\xF8\xFF\xFF\x00"
 	REC_func_48632F74_entry_Lbc_Records	s0="\xF8\xFF\xFF\xFF"
 data_4841E508:
-	# 3 bytes the code takes the address of: func_486328D1_entry_L2a 0x48632900 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_486328D1_entry_L2a 0x48632900 `mov data_4841E508, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 3 bytes the code takes the address of: func_486328D1_entry_L2a 0x48632900 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_486328D1_entry_L2a 0x48632900 `mov data_4841E508, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	235, 0, 144	# +0
 data_4841E50B:
 	# 8 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; read by an instruction no pass could turn into a type
@@ -14632,7 +14406,7 @@ data_4841E52A:
 	# 8 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; read by an instruction no pass could turn into a type
 	.ascii	"FAT16   "
 data_4841E532:
-	# 2 bytes the code takes the address of: func_486328D1_entry_L1b9 0x48632A8F `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_486328D1_entry_L1b9 0x48632A8F `mov data_4841E532, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 2 bytes the code takes the address of: func_486328D1_entry_L1b9 0x48632A8F `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_486328D1_entry_L1b9 0x48632A8F `mov data_4841E532, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	85, 170	# +0
 
 Str_C_IMMUNITY_TST:	.asciz "C:IMMUNITY.TST"
@@ -20485,12 +20259,47 @@ NoteConvRules_p4_20:	# NoteConvTable (4 bytes), then 5904 x s8 the code indexes 
 	tab_s8	-1, 0, 0, -1, -2, 1, 0, -1, -2, 2, 1, 0	# [5892]
 data_4854B750_p0_p36_0:	# REC_data_4854B750_p0_p36 (4 bytes)
 	REC_data_4854B750_p0_p36	x0="\x04\x00\x00\x04"
-# census: opaque -- unknown-dump: 2440 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x030270, 0x030BF8
+# census: opaque -- unknown-dump: 77 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x030270, 0x0302BD
+data_484302BD:
+# census: opaque -- unknown-dump: 60 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x0302BD, 0x0302F9
+data_484302F9:
+# census: opaque -- unknown-dump: 21 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x0302F9, 0x03030E
+data_4843030E:
+# census: opaque -- unknown-dump: 81 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x03030E, 0x03035F
+data_4843035F:
+# census: opaque -- unknown-dump: 87 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x03035F, 0x0303B6
+data_484303B6:
+# census: opaque -- unknown-dump: 96 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x0303B6, 0x030416
+data_48430416:
+# census: opaque -- unknown-dump: 75 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x030416, 0x030461
+data_48430461:
+# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x030461, 0x030485
+data_48430485:
+# census: opaque -- unknown-dump: 1907 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn2400_program.rom", 0x030485, 0x030BF8
 data_4854B750_p0_0:	# REC_data_4854B750_p0 (36 bytes)
 	REC_data_4854B750_p0	x0="     8 Beat     \x00\x00\x1B\x00\x14\x00\x07\x00\x1B\x00\x1D\x00 \x00\x19\x00\x0C\x00\x0B\x00"
-# census: opaque -- unknown-dump: 324 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x030C1C, 0x030D60
+
+data_4854B750_p0_0_Tail:	# 9 pointers after data_4854B750_p0_0: the array its kind's computed-offset read indexes (EasyCompGrid_L149 0x486B0C77 `movhu (d0, a0), d0`; func_501793B9_entry_L2c 0x501793EA `movhu (0x12, a0), d0` (+3)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
+	.long	data_4854B750_p0_p36_0
+	.long	data_484302BD
+	.long	data_484302F9
+	.long	data_4843030E
+	.long	data_4843035F
+	.long	data_484303B6
+	.long	data_48430416
+	.long	data_48430461
+	.long	data_48430485
+# census: opaque -- unknown-dump: 288 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x030C40, 0x030D60
 
 Str_1_0_4_7:	.asciz "1.0.4"
 	.align	4, 0xFF	# pad after Str_1_0_4_7
@@ -20584,17 +20393,8 @@ Str_incompatible_version:	.asciz "incompatible version"
 Str_1_0_4_8:	.asciz "1.0.4"
 	.align	4, 0xFF	# pad after Str_1_0_4_8
 
-func_5018D239_Table_9:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_5018D239_Var_9:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x4863a2c6
-
-func_5018D239_Table_10:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_10:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	10240
+func_5018D239_Table_9:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_4863A2C6, itskpri=3, x14="\x00\x00", stksz=10240
 
 func_5018C16D_Table:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0
@@ -27936,17 +27736,8 @@ func_48642B9F_Table_2:
 	.long	loc_48642CD4
 	.long	func_48642B9F_entry_L147
 
-func_5018D239_Table_11:	# 2 x u32, 0..1; read by func_5018D239 0x5018D239: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_5018D239_Var_11:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (8, a2), a1`
-	.long	0x48644927
-
-func_5018D239_Table_12:	# 2 x u16, 0..3; read by func_5018D239 0x5018D239: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_5018D239_Var_12:	# u32, a constant; read / written by func_5018D239 0x5018D239: `mov (0x10, a2), d0`
-	.long	3072
+func_5018D239_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x5018D1AD reads through its argument a0 (passed by func_485EBBCD 0x485EBBCD `call cre_tsk, 0, 0`, +8 more calls); the layout func_5018D239 0x5018D239 reads through its argument a0 (passed by cre_tsk_L3d 0x5018D1EA `call func_5018D239_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=func_48644927, itskpri=3, x14="\x00\x00", stksz=3072
 
 func_5018C16D_Table_2:	# 2 x u32, 0..0; read by func_5018C16D 0x5018C16D: `mov (a3), d2`
 	tab_u32	0, 0
@@ -30301,10 +30092,8 @@ DbModeEditBoxProc_L79_Table:
 
 Str_02d_s_3:	.asciz "%02d:%s"
 
-Draw2BpFile_entry_L1e_Var:	# u16, a constant; read / written by Draw2BpFile_entry_L1e 0x485FFA2F: `movhu (a2), d0`
-	.word	0
-Draw2BpFile_entry_L1e_Var_2:	# u16, a constant; read / written by Draw2BpFile_entry_L1e 0x485FFA2F: `movhu (2, a2), d0`
-	.word	0
+Draw2BpFile_entry_L1e_Var:	# REC_Draw2BpFile_ArgA0 (4 bytes): the layout Draw2BpFile 0x485FFA0C reads through its argument a0 (passed by DbBitmapLoadProc_Lb4 0x4864A083 `call Draw2BpFile_entry, [a2,a3], 0x18`); the layout Draw2BpFile_Impl 0x485FFA72 reads through its argument a0 (passed by Draw2BpFile 0x485FFA0C `call Draw2BpFile_Impl_entry, [d2,d3,a2,a3], 0x10`)
+	REC_Draw2BpFile_ArgA0	
 
 Str_rb_47:	.asciz "rb"
 	.align	4, 0xFF	# pad after Str_rb_47
@@ -30628,7 +30417,7 @@ ptrs_4844F9FC:
 	.long	Str_SPC
 	.long	data_4844F9FA
 
-Str_text_3:	.asciz "!"
+Str_text:	.asciz "!"
 Str_empty_693:	.asciz "#"
 Str_empty_692:	.asciz "$"
 Str_empty_691:	.asciz "%"
@@ -30665,7 +30454,7 @@ data_4844FAE4:
 .incbin_range "baserom/kn2400_program.rom", 0x04FAE4, 0x04FAE8
 
 ptrs_4844FAE8:
-	.long	Str_text_3
+	.long	Str_text
 	.long	Str_empty_693
 	.long	Str_empty_692
 	.long	Str_empty_691
@@ -35786,14 +35575,30 @@ Str_TRACK_7_2:	.asciz "TRACK 7"
 Str_TRACK_8_2:	.asciz "TRACK 8"
 Str_TRACK_9_2:	.asciz "TRACK 9"
 Str_TRACK10:	.asciz "TRACK10"
-Str_TRACK11:	.asciz "TRACK11"
+
+names_50001910_p0_0:	# REC_names_50001910_p0 (4 bytes)
+	REC_names_50001910_p0	f0=84, f1=82, f2=65, x3="C"
+
+Str_K11:	.asciz "K11"
 Str_TRACK12:	.asciz "TRACK12"
-Str_TRACK13:	.asciz "TRACK13"
+
+names_50001910_p0_1:	# REC_names_50001910_p0 (4 bytes)
+	REC_names_50001910_p0	f0=84, f1=82, f2=65, x3="C"
+
+Str_K13:	.asciz "K13"
 Str_TRACK14:	.asciz "TRACK14"
-Str_TRACK15:	.asciz "TRACK15"
+
+names_50001910_p0_2:	# REC_names_50001910_p0 (4 bytes)
+	REC_names_50001910_p0	f0=84, f1=82, f2=65, x3="C"
+
+Str_K15:	.asciz "K15"
 Str_TRACK16:	.asciz "TRACK16"
-# census: opaque -- unknown-dump: 45 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0657E8, 0x065815
+
+names_50001910_p0_3:	# REC_names_50001910_p0 (4 bytes)
+	REC_names_50001910_p0	f0=84, f1=82, f2=32, x3="1"
+# census: opaque -- unknown-dump: 41 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0657EC, 0x065815
+
 Str_TR10:	.asciz "TR10"
 # census: opaque -- unknown-dump: 5 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x06581A, 0x06581F
@@ -35864,11 +35669,11 @@ AcSpsKsclPartProc_L19a_Table:	# 27 x s16, 0..28; read by AcSpsKsclPartProc_L19a 
 AcSpsKsclEditProc_Table:	# 14 x s16, 0..51; read by AcSpsKsclEditProc_L18 0x48652B14: `movhu	(d0, a0), d0`
 	tab_s16	15, 0, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49	# [0]
 	tab_s16	50, 51	# [12]
-TtSdkeyscl_Table:	# 21 x s16, 0..255; read by TtSdkeyscl_L82 0x48652AAB: `movhu	(d0, a0), d1`; AcKsclCopyEditProc_L20f 0x4865363B: `movhu	(d0, a2), d1` ...
+TtSdkeyscl_Table:	# 20 x s16, 0..255; read by TtSdkeyscl_L82 0x48652AAB: `movhu	(d0, a0), d1`; AcKsclCopyEditProc_L20f 0x4865363B: `movhu	(d0, a2), d1` ...
 	tab_s16	255, 16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7	# [0]
-	tab_s16	8, 9, 10, 11, 12, 13, 14, 15, 27	# [12]
-# census: opaque -- unknown-dump: 14 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn2400_program.rom", 0x0659B2, 0x0659C0
+	tab_s16	8, 9, 10, 11, 12, 13, 14, 15	# [12]
+# census: opaque -- unknown-dump: 16 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x0659B0, 0x0659C0
 
 Text_ALL:	# 28 strings of 9 characters, NUL-terminated
 	.asciz	"   ALL   "
@@ -35930,7 +35735,7 @@ AcKsclCopyEditProc_L141_Table:
 	.long	Text_ALL+260
 	.long	Text_ALL+270
 data_48465B48:
-	# 12 bytes the code takes the address of: TtSdkeyscl_L38 0x48652A61 `add data_48465B48, d3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TtSdkeyscl_L38 0x48652A61 `add data_48465B48, d3` (+0, as a base); TtSdkeyscl_L62 0x48652A8B `call func_4860B312_entry, [d2,d3], 8` (+0, arg sp36); TtSdkeyscl_L82 0x48652AAB `call MainPutM3Em_entry, [d2,d3,a2], 0x20` (+0, arg sp36) (+2 more); byte rows (u8); the callee walk: InterruptTitle (sp36) reads nothing through it the walk sees; MainPutM3Em (sp36) reads nothing through it the walk sees; func_4860B312 (sp36) reads nothing through it the walk sees (+1 more)
 	tab_u8	0, 4, 5, 16, 17, 18, 19, 20, 21, 22, 255, 255	# +0
 
 Str_ALL_37:	.asciz "   ALL   "
@@ -36059,10 +35864,10 @@ BitmapMonon_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the 
 	.incbin	"build/bitmaps/BitmapMonon_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/program/data/media/BitmapMonon_Pixels.png
 BitmapMonoff_Pixels:	# 62 x 37, 4 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapMonoff answers MT_GetBitmapData with (src/program/data/media/BitmapMonoff_Pixels.png)
 	.incbin	"build/bitmaps/BitmapMonoff_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 4 62 37) from src/program/data/media/BitmapMonoff_Pixels.png
-data_484680A4:
-	# 64 bytes the code takes the address of: AcMonImageProc_L22a 0x48653F2F `mov data_484680A4, d1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0x0, 0x80, 0x8000, 0x8080, 0x800000, 0x800080, 0x808000, 0xC0C0C0	# +0
-	tab_u32	0x808080, 0xFF, 0xFF00, 0xFFFF, 0xFF0000, 0xFF00FF, 0xFFFF00, 0xFFFFFF	# +32
+
+DrawBitmapSPFast16_Impl_entry_Le0_Table_2:	# 16 x u32, 0..16777215; read by DrawBitmapSPFast16_Impl_entry_Le0 0x485FC25E: `mov (-0x80, a0), a2`
+	tab_u32	0, 128, 32768, 32896, 8388608, 8388736, 8421376, 12632256	# [0]
+	tab_u32	8421504, 255, 65280, 65535, 16711680, 16711935, 16776960, 16777215	# [8]
 
 Str_CcEv_14:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_14
@@ -37177,10 +36982,8 @@ Str_PgKP:	.asciz "PgKP"
 Bitmap_AcHpScreenProc_L9f:	# 24 x 24, 1 bit(s) a pixel: AcHpScreenProc_L9f 0x48655FF2 draws it with DrawBitmapSP2 (src/program/data/media/Bitmap_AcHpScreenProc_L9f.png)
 	.incbin	"build/bitmaps/Bitmap_AcHpScreenProc_L9f.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 1 24 24) from src/program/data/media/Bitmap_AcHpScreenProc_L9f.png
 
-IsPointOnScreen_Table:	# s16, a constant; read / written by DrawIcons_entry_L1e 0x485FB925: `movhu (a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981: `movhu (a0), d2` ...
-	.word	2
-DrawIcons_entry_L1e_Var:	# s16, a constant; read / written by DrawIcons_entry_L1e 0x485FB925: `movhu (2, a2), d0`; DrawIcons_Impl_entry_L16 0x485FB981: `movhu (a0), d0` ...
-	.word	2
+IsPointOnScreen_Table:	# REC_DrawBitmapSP2_ArgA0 (4 bytes): the layout DrawBitmapSP2 0x485FC413 reads through its argument a0 (passed by AcHpScreenProc_L9f 0x48655FF2 `call DrawBitmapSP2_entry, [d2,d3,a2,a3], 0x30`); the layout DrawBitmapSP2_Impl 0x485FC4B6 reads through its argument a0 (passed by DrawBitmapSP2 0x485FC413 `call DrawBitmapSP2_Impl_entry, [d2,d3,a2,a3], 0x44`); +3 more routines
+	REC_DrawBitmapSP2_ArgA0	f0=2, f2=2
 
 Text_PT1:	# 19 strings of 5 characters, NUL-terminated
 	.asciz	"PT1  "
@@ -40012,3 +39815,256 @@ ptrs_48477620:
 	.long	0
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn2400_program.rom", 0x0776AC, 0x0776B0
+
+Str_CURRENT_SOUND:	.asciz "CURRENT SOUND "
+
+Text_CURRENT_RHYTHM_2:	# 16 strings of 14 characters, NUL-terminated
+	.asciz	"CURRENT RHYTHM"
+	.asciz	"CURRENT STYLE "
+	.asciz	"SOUND MENU    "
+	.asciz	"EFFECT MENU   "
+	.asciz	"SND EDIT MENU "
+	.asciz	"SEQUENCER MENU"
+	.asciz	"COMPOSER MENU "
+	.asciz	"PADS MENU     "
+	.asciz	"SD MENU       "
+	.asciz	"CONTROL MENU  "
+	.asciz	"MIDI MENU     "
+	.asciz	"CUSTOMIZE MENU"
+	.asciz	"STYLIST MENU  "
+	.asciz	"OTHER MENU    "
+	.asciz	"SETTINGS      "
+	.asciz	"OTHERS        "
+	.align	4, 0x00	# pad after Text_CURRENT_RHYTHM_2
+
+ptrs_484777B0:
+	.long	data_48476318
+	.long	Str_CURRENT_SOUND
+	.long	data_48476390
+	.long	Text_CURRENT_RHYTHM_2
+	.long	data_48476408
+	.long	Text_CURRENT_RHYTHM_2+15
+	.long	data_48476514
+	.long	Text_CURRENT_RHYTHM_2+30
+	.long	data_48476618
+	.long	Text_CURRENT_RHYTHM_2+45
+	.long	data_48476694
+	.long	Text_CURRENT_RHYTHM_2+60
+	.long	data_48476948
+	.long	Text_CURRENT_RHYTHM_2+75
+	.long	data_48476B64
+	.long	Text_CURRENT_RHYTHM_2+90
+	.long	data_48476C10
+	.long	Text_CURRENT_RHYTHM_2+105
+	.long	data_48476E5C
+	.long	Text_CURRENT_RHYTHM_2+120
+	.long	data_48476F74
+	.long	Text_CURRENT_RHYTHM_2+135
+	.long	data_48477094
+	.long	Text_CURRENT_RHYTHM_2+150
+	.long	data_48477260
+	.long	Text_CURRENT_RHYTHM_2+165
+	.long	data_4847730C
+	.long	Text_CURRENT_RHYTHM_2+180
+	.long	data_48477380
+	.long	Text_CURRENT_RHYTHM_2+195
+	.long	data_4847741C
+	.long	Text_CURRENT_RHYTHM_2+210
+	.long	data_484774C0
+	.long	Text_CURRENT_RHYTHM_2+225
+	.long	0
+# census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn2400_program.rom", 0x07783C, 0x077840
+
+AcFavScreenProc_Table_p4_0:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_1:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_2:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_3:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_4:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_5:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_6:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_7:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_8:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_9:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_10:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_11:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_12:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_13:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_14:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_15:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_16:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+AcFavScreenProc_Table_p4_17:	# REC_AcFavScreenProc_Table_p4 (1 bytes)
+	REC_AcFavScreenProc_Table_p4	
+	.align	4, 0xFF	# pad after AcFavScreenProc_Table_p4_17
+
+func_4865F42F_Table:	# 27 x u32, 0..4294967283; read by func_4865F42F 0x4865F42F: `mov	(a1), d0`; func_4865F491 0x4865F491: `mov	(a1), d0`
+	tab_u32	4672332, 4294967283, 538976288, 1835104325, 543517808, 538976288, 0, 4	# [0]
+	tab_u32	2648, 4, 1381, 5, 543, 6, 1, 6	# [8]
+	tab_u32	27, 3, 2103096, 3, 2490432, 9, 0, 6	# [16]
+	tab_u32	18, 2, 0	# [24]
+
+Str_1_s_2_s_3_s_4_s:	.asciz "1:%s|2:%s|3:%s|4:%s"
+Str_FAVORITES_SETTING_5:	.asciz "FAVORITES SETTING"
+	.align	4, 0xFF	# pad after Str_FAVORITES_SETTING_5
+
+func_4865DCBC_Table:	# 4 x s16, 19..255; read by func_4865DCBC_entry_L220 0x4865DEE1: `movhu	(d0, a0), d0`
+	tab_s16	255, 19, 20, 255
+
+Str_s_68:	.asciz "%s"
+	.align	4, 0xFF	# pad after Str_s_68
+Str_s_67:	.asciz "  %s  "
+	.align	4, 0xFF	# pad after Str_s_67
+Str_s_66:	.asciz "%s"
+	.align	4, 0xFF	# pad after Str_s_66
+Str_s_65:	.asciz "    %s    "
+	.align	4, 0xFF	# pad after Str_s_65
+Str_s_64:	.asciz "%s"
+	.align	4, 0xFF	# pad after Str_s_64
+Str_s_63:	.asciz "  %s  "
+	.align	4, 0xFF	# pad after Str_s_63
+Str_PANIC:	.asciz " PANIC    "
+	.align	4, 0xFF	# pad after Str_PANIC
+Str_MUTE_KEYS_ON:	.asciz "MUTE KEYS : ON  "
+	.align	4, 0xFF	# pad after Str_MUTE_KEYS_ON
+Str_MUTE_KEYS_OFF:	.asciz "MUTE KEYS : OFF "
+	.align	4, 0xFF	# pad after Str_MUTE_KEYS_OFF
+Str_NX_SOUND_ON:	.asciz "NX SOUND ON   "
+Str_empty_564:	.asciz "     --       "
+Str_GM_LEVEL2_ON:	.asciz "GM LEVEL2 ON  "
+Str_empty_563:	.asciz "     --       "
+Str_empty_562:	.asciz "     --       "
+Str_empty_561:	.asciz "     --       "
+	.align	4, 0xFF	# pad after Str_empty_561
+
+func_4865E8F4_La1_Table:
+	.long	Str_NX_SOUND_ON
+	.long	Str_empty_564
+	.long	Str_GM_LEVEL2_ON
+	.long	Str_empty_563
+	.long	Str_empty_562
+	.long	Str_empty_561
+data_484779C0:
+	# a string, 4 bytes with its pad, read by AcFavCategoryProc_L275 0x4865EFC0 `call strcpy_entry, [a2], 4` (+0, arg a1); AcFavCategoryProc_L275 0x4865EFC0 `mov data_484779C0, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
+
+Str_empty_1045:	.asciz "|"
+	.align	4, 0xFF	# pad after Str_empty_1045
+data_484779C8:
+	# a string, 4 bytes with its pad, read by AcFavItemProc_L272 0x4865F2BC `call strcpy_entry, [a2], 4` (+0, arg a1); AcFavItemProc_L272 0x4865F2BC `mov data_484779C8, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
+Str_empty_1044:	.asciz "|"
+	.align	4, 0xFF	# pad after Str_empty_1044
+Str_Press_and_hold_SET_4:	.asciz "Press and hold SET."
+Str_Halten_Sie_SET_gedr_ckt:	.asciz "Halten Sie SET gedr\xFCckt."
+Str_Maintenez_SET_enfonc_e:	.asciz "Maintenez SET enfonc\xE9e."
+Str_Mantenga_presionado_SET:	.asciz "Mantenga presionado SET."
+Str_Press_and_hold_SET_3:	.asciz "Press and hold SET"
+Str_Press_and_hold_SET_2:	.asciz "Press and hold SET"
+Str_Press_and_hold_SET:	.asciz "Press and hold SET"
+	.align	4, 0xFF	# pad after Str_Press_and_hold_SET
+
+ptrs_48477A68:
+	.long	Str_Press_and_hold_SET_4
+	.long	Str_Halten_Sie_SET_gedr_ckt
+	.long	Str_Maintenez_SET_enfonc_e
+	.long	Str_Mantenga_presionado_SET
+	.long	Str_Press_and_hold_SET_3
+	.long	Str_Press_and_hold_SET_2
+	.long	Str_Press_and_hold_SET
+
+Str_Press_one_of_the_button_to_the_left_or_r_4:	.asciz "Press one of the button to the left or right of the screen"
+Str_Dr_cken_Sie_eine_der_Tasten_links_oder_r:	.asciz "Dr\xFCcken Sie eine der Tasten links oder rechts vom Bildschirm."
+Str_Appuyez_sur_l_un_des_boutons_gauche_ou_d:	.asciz "Appuyez sur l'un des boutons       \xE0 gauche ou \xE0 droite de l'\xE9cran."
+Str_Presione_uno_de_los_botones_a_la_izquier:	.asciz "Presione uno de los botones a la izquierda o derecha de la pantalla."
+Str_Press_one_of_the_button_to_the_left_or_r_3:	.asciz "Press one of the button to the left or right of the screen"
+Str_Press_one_of_the_button_to_the_left_or_r_2:	.asciz "Press one of the button to the left or right of the screen"
+Str_Press_one_of_the_button_to_the_left_or_r:	.asciz "Press one of the button to the left or right of the screen"
+	.align	4, 0xFF	# pad after Str_Press_one_of_the_button_to_the_left_or_r
+
+ptrs_48477C38:
+	.long	Str_Press_one_of_the_button_to_the_left_or_r_4
+	.long	Str_Dr_cken_Sie_eine_der_Tasten_links_oder_r
+	.long	Str_Appuyez_sur_l_un_des_boutons_gauche_ou_d
+	.long	Str_Presione_uno_de_los_botones_a_la_izquier
+	.long	Str_Press_one_of_the_button_to_the_left_or_r_3
+	.long	Str_Press_one_of_the_button_to_the_left_or_r_2
+	.long	Str_Press_one_of_the_button_to_the_left_or_r
+TtFavorite_Table:
+	.long	loc_4865D592
+	.long	loc_4865D5B5
+	.long	loc_4865D5B5
+	.long	loc_4865D5EA
+	.long	loc_4865D5B5
+	.long	loc_4865D56F
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	loc_4865D60D
+	.long	loc_4865D639
+	.long	loc_4865D665
+	.long	loc_4865D691
+	.long	TtFavorite_L34e
+	.long	TtFavorite_L34e
+	.long	loc_4865D6BC
+	.long	TtFavorite_L34e
+	.long	loc_4865D6E7

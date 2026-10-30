@@ -197,35 +197,35 @@ Str_2d_16s:	.asciz "%2d:%16s"
 	.align	4, 0xFF	# pad after Str_2d_16s
 Str_ALL_SONGS:	.asciz "     ALL SONGS     "
 data_4867B6C0:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6C0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6C0, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_4867B6C4:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6C4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6C4, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 data_4867B6C8:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6C8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6C8, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_4867B6CC:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6CC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6CC, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 Str_END_2:	.asciz "END     "
 	.align	4, 0xFF	# pad after Str_END_2
 Str_REPEAT_3:	.asciz "REPEAT  "
 	.align	4, 0xFF	# pad after Str_REPEAT_3
 data_4867B6E8:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6E8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6E8, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 data_4867B6EC:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6EC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6EC, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_4867B6F0:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6F0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6F0, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 data_4867B6F4:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6F4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6F4, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	179, 0, 255, 255	# +0
 data_4867B6F8:
-	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6F8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw 0x48542F72 `mov data_4867B6F8, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	178, 0, 255, 255	# +0
 Str_OFF_35:	.asciz "OFF"
 Str_2d_3:	.asciz " %2d"
@@ -369,17 +369,8 @@ func_4854AC9E_Table:
 	.long	ptrs_48762288
 	.long	0
 
-func_4C03D154_Table_11:	# 2 x u32, 0..1; read by func_4C03D154 0x4C03D154: `mov (a2), d1`
-	tab_u32	0, 1
-
-func_4C03D154_Var_11:	# u32, a constant; read / written by func_4C03D154 0x4C03D154: `mov (8, a2), a1`
-	.long	0x4854ad90
-
-func_4C03D154_Table_12:	# 2 x u16, 0..3; read by func_4C03D154 0x4C03D154: `movhu (0xc, a2), d0`
-	tab_u16	3, 0
-
-func_4C03D154_Var_12:	# u32, a constant; read / written by func_4C03D154 0x4C03D154: `mov (0x10, a2), d0`
-	.long	3072
+func_4C03D154_Table_11:	# T_CTSK (20 bytes): the layout cre_tsk 0x4C03D0C8 reads through its argument a0 (passed by func_484141DB 0x484141DB `call cre_tsk, 0, 0`, +7 more calls); the layout func_4C03D154 0x4C03D154 reads through its argument a0 (passed by cre_tsk 0x4C03D0C8 `call func_4C03D154_entry, [d2,d3,a2], 0x2c`)
+	T_CTSK	tskatr="\x01\x00\x00\x00", task=DiskWorkerTask, itskpri=3, x14="\x00\x00", stksz=3072
 
 func_4C03BFC8_Table_3:	# 2 x u32, 0..0; read by func_4C03BFC8 0x4C03BFC8: `mov (a3), d2`
 	tab_u32	0, 0
@@ -772,7 +763,7 @@ StartFeatureDemo_Table:
 	.long	Str_SSW_ACT_V01_ACTION_ACTION
 	.long	Str_SSW_ACT_V01_ACTION_ACTION
 data_4867F798:
-	# 4 bytes the code takes the address of: func_4854E2DB 0x4854E2DB `mov data_4867F798, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: func_4854E2DB 0x4854E2DB `mov data_4867F798, d0` (+0, as a base); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	0, 0, 255, 255	# +0
 
 Field_AcContrastEdit_end:	.asciz ""
@@ -16248,7 +16239,10 @@ func_4857F8B5_Table:	# 13 x u32, 0..11; read by func_4857F8B5 0x4857F8B5: `mov  
 	tab_u32	2, 6, 1, 10, 11	# [8]
 
 Str_SRC:	.asciz "SRC"
-Str_ALT:	.asciz "ALT"
+
+ptrs_486AF354_p4_0:	# REC_ptrs_486AF354_p4 (4 bytes)
+	REC_ptrs_486AF354_p4	f0=65, x1="LT\x00"
+
 Str_ALIGN:	.asciz "ALIGN"
 Str_VSPACE:	.asciz "VSPACE"
 Str_HSPACE:	.asciz "HSPACE"
@@ -16259,7 +16253,7 @@ Str_BORDER:	.asciz "BORDER"
 	.align	4, 0x00	# pad after Str_BORDER
 
 ptrs_486AF354:
-	.long	Str_SRC, Str_ALT
+	.long	Str_SRC, ptrs_486AF354_p4_0
 	.long	Str_ALIGN, Str_VSPACE
 	.long	Str_HSPACE, Str_WIDTH
 	.long	Str_HEIGHT, Str_LOWSRC
@@ -33178,54 +33172,15 @@ func_4C00AF99_Table:	# 1 x u16, 65535..65535; read by func_4C00AF99 0x4C00AF99: 
 # census: opaque -- unknown-dump: 200 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn7000_program.rom", 0x2D110C, 0x2D11D4
 
-TgGlobalRegsB0LoadA_Var:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (a2), d0`
-	.word	4
-TgGlobalRegsB0LoadA_Var_2:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (2, a2), d0`
-	.word	2
-TgGlobalRegsB0LoadA_Var_3:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (4, a2), d0`
-	.word	128
-TgGlobalRegsB0LoadA_Var_4:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (6, a2), d0`
-	.word	12
-TgGlobalRegsB0LoadA_Var_5:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (8, a2), d0`
-	.word	32
-TgGlobalRegsB0LoadA_Var_6:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (0xa, a2), d0`
-	.word	37
-TgGlobalRegsB0LoadA_Var_7:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (0xc, a2), d0`
-	.word	943
-TgGlobalRegsB0LoadA_Var_8:	# u16, a constant; read / written by TgGlobalRegsB0LoadA 0x4C038064: `movhu (0xe, a2), d0`
-	.word	1
-TgGlobalRegsB0LoadB_Var:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (a2), d0`
-	.word	4
-TgGlobalRegsB0LoadB_Var_2:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (2, a2), d0`
-	.word	2
-TgGlobalRegsB0LoadB_Var_3:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (4, a2), d0`
-	.word	128
-TgGlobalRegsB0LoadB_Var_4:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (6, a2), d0`
-	.word	12
-TgGlobalRegsB0LoadB_Var_5:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (8, a2), d0`
-	.word	32
-TgGlobalRegsB0LoadB_Var_6:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (0xa, a2), d0`
-	.word	37
-TgGlobalRegsB0LoadB_Var_7:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (0xc, a2), d0`
-	.word	815
-TgGlobalRegsB0LoadB_Var_8:	# u16, a constant; read / written by TgGlobalRegsB0LoadB 0x4C038101: `movhu (0xe, a2), d0`
-	.word	1
-TgGlobalRegsA0LoadA_Var:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (a2), d0`
-	.long	51602
-TgGlobalRegsA0LoadA_Var_2:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (4, a2), d0`
-	.long	806
-TgGlobalRegsA0LoadA_Var_3:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (8, a2), d0`
-	.long	0
-TgGlobalRegsA0LoadA_Var_4:	# u32, a constant; read / written by TgGlobalRegsA0LoadA 0x4C037F55: `mov (0xc, a2), d0`
-	.long	0
+TgGlobalRegsB0LoadA_Var:	# REC_TgGlobalRegsB0LoadA_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadA 0x4C038064 reads through its argument a0 (passed by func_48483870 0x48483870 `call TgGlobalRegsB0LoadA_entry, [a2], 0x18`, +2 more calls)
+	REC_TgGlobalRegsB0LoadA_ArgA0	f0=4, f2=2, f4=128, f6=12, f8=32, f10=37, f12=943, f14=1
+TgGlobalRegsB0LoadB_Var:	# REC_TgGlobalRegsB0LoadB_ArgA0 (16 bytes): the layout TgGlobalRegsB0LoadB 0x4C038101 reads through its argument a0 (passed by TgChipResetSideB 0x4C03833A `call TgGlobalRegsB0LoadB_entry, [a2], 0x18`)
+	REC_TgGlobalRegsB0LoadB_ArgA0	f0=4, f2=2, f4=128, f6=12, f8=32, f10=37, f12=815, f14=1
+TgGlobalRegsA0LoadA_Var:	# REC_TgGlobalRegsA0LoadA_ArgA0 (20 bytes): the layout TgGlobalRegsA0LoadA 0x4C037F55 reads through its argument a0 (passed by func_48483870 0x48483870 `call TgGlobalRegsA0LoadA_entry, [a2], 0x18`, +2 more calls)
+	REC_TgGlobalRegsA0LoadA_ArgA0	f0=51602, f4=806, f16=32, x18="\x00\x00"
+TgGlobalRegsA0LoadB_ArgA0_0:	# REC_TgGlobalRegsA0LoadB_ArgA0 (20 bytes): the layout TgGlobalRegsA0LoadB 0x4C037FBB reads through its argument a0 (passed by TgChipResetSideB 0x4C03833A `call TgGlobalRegsA0LoadB_entry, [a2], 0x18`)
+	REC_TgGlobalRegsA0LoadB_ArgA0	x0="\x00\x80\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00\x00\x80\x00\x00", f16=32, x18="\x00\x00"
 
-TgGlobalRegsA0LoadA_Table:	# 2 x u16, 0..32; read by TgGlobalRegsA0LoadA 0x4C037F55: `movhu (0x10, a2), d0`
-	tab_u16	32, 0
-data_486D1208:
-	# 16 bytes the code takes the address of: TgGlobalRegsA0LoadB 0x4C037FBB `call TgVoiceRegWriteB_entry, [d2], 4` (+0, arg a0); TgChipResetSideB 0x4C03833A `call TgGlobalRegsA0LoadB_entry, [a2], 0x18` (+0, arg a0); TgChipResetSideB 0x4C03833A `mov data_486D1208, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	32768, 32768, 32768, 32768	# +0
-TgGlobalRegsA0LoadB_Table:	# 2 x u16, 0..32; read by TgGlobalRegsA0LoadB 0x4C037FBB: `movhu (0x10, a2), d0`
-	tab_u16	32, 0
 TgPartModRetrigger_Table:	# 4 x u8, 1..64; read by TgPartModRetrigger_entry 0x4C02CA74: `movbu  (d3, a0), d0`
 	tab_u8	1, 4, 16, 64
 TgElemRequestFlags_Table_2:	# 1 x u8, 2..2; read by TgElemRequestFlags_entry 0x4C034E58: `movbu  (d0, a0), d0`; TgMelodicVoiceAlloc_entry 0x4C034FF0: `movbu  (d2, a0), d0` ...
@@ -33565,7 +33520,7 @@ TgElemStageFresh_Table_3:	# 35 x u16, 0..65532; read by TgElemStageFresh 0x4C034
 	tab_u16	65512, 65516, 65520, 65524, 65528, 65532, 0, 32512, 0, 0, 0	# [24]
 	.align	4, 0xFF	# pad after TgElemStageFresh_Table_3
 
-TgPartGlidePlan_Records:	# 128 x REC_TgPartGlidePlan_Records (12 bytes each); read by TgPartGlidePlan 0x4C02D795 `call LibF64Div_entry, [d2,d3,a2,a3], 0x18`; TgPartGlidePlan 0x4C02D795 `mov (4, a0), d1`; TgPartGlidePlan 0x4C02D795 `mov (a0), d0` (+1)
+TgPartGlidePlan_Records:	# 128 x REC_TgPartGlidePlan_Records (12 bytes each); read by TgPartGlidePlan 0x4C02D795 `call LibDiv32, 0, 0`; TgPartGlidePlan 0x4C02D795 `call LibF64CmpZero_entry, [d2,d3], 0x10`; TgPartGlidePlan 0x4C02D795 `call LibF64Cmp_entry, [d2,d3], 0x10` (+8)
 	REC_TgPartGlidePlan_Records	f0=0xC8E33341, f4=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
 	REC_TgPartGlidePlan_Records	f0=0x48A30701, f4=0x4078964D, f8=183, x10="\x00\x00"
 	REC_TgPartGlidePlan_Records	f0=0x56F8345A, f4=0x406526FF, f8=79, x10="\x00\x00"

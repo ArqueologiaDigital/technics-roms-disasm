@@ -36108,12 +36108,12 @@ InitializeUser09_Table_3:	# 2 x u16, 0..65535; read by InitializeUser09 0x4C16E1
 User09_Functions:
 	.space	4, 0x00
 data_4C3DC57C:
-	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E19F `mov data_4C3DC57C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E19F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser09 0x4C16E19F `mov data_4C3DC57C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2774F4	# +0
 User09_MainFunctions:
 	.space	4, 0x00
 data_4C3DC584:
-	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E19F `mov data_4C3DC584, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E19F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser09 0x4C16E19F `mov data_4C3DC584, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2774F8	# +0
 
 # 303 objects of block V_demo1_1; object <name> is index <name>_ix, id <name>_id = (0xd6 << 16) | <name>_ix
@@ -39491,7 +39491,7 @@ User07_FunctionNames:
 User07_MainFunctions:
 	.space	4, 0x00
 data_4C3E5D8C:
-	# 4 bytes the code takes the address of: InitializeUser07 0x4C171CF2 `mov data_4C3E5D8C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser07 0x4C171CF2 `call RegisterObjectTable, 0, 0` (+0, arg sp44); InitializeUser07 0x4C171CF2 `mov data_4C3E5D8C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp44): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2ABFA8	# +0
 
 # 18 objects of block V_HD_MENU; object <name> is index <name>_ix, id <name>_id = (0x77 << 16) | <name>_ix

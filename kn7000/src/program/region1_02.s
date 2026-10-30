@@ -1124,7 +1124,7 @@ loc_48440BB1:
     jmp     loc_48440C61
 loc_48440BCE:
     add     8, a0
-    cmp     data_485B7A04, a0
+    cmp     func_4844416A_ArgA0_0, a0
     bcs     loc_48440BDE
     mov     func_48440AD7_Table, a0
 loc_48440BDE:
@@ -7494,7 +7494,7 @@ loc_48444543:
     call    func_484441DB_entry, [d2,d3], 0x18
 loc_4844454B:
     call    func_4844401E_entry, 0, 0x14
-    mov     data_485B7A04, a0
+    mov     func_4844416A_ArgA0_0, a0
     call    func_4844416A, 0, 0
     call    func_484442AA_entry, [d2], 0x10
     call    func_484373AE, 0, 0

@@ -9,7 +9,7 @@ func_4C001885_Var:	# u32, a constant; read / written by func_4C001885 0x4C001885
 localeconv_Records:	# 1 x REC_localeconv_Records (40 bytes each); read by localeconv 0x4C00246C `mov (0x10, a1), a0`; localeconv 0x4C00246C `mov (0x14, a1), a0`; localeconv 0x4C00246C `mov (0x18, a1), a0` (+12)
 	REC_localeconv_Records	p0=Str_C_21, p4=data_4C17627E, p8=data_4C17627F, p12=data_4C176280, p16=data_4C176281, p20=data_4C176282, p24=data_4C176283, p28=data_4C176284, f32=127, f33=127, f34=127, f35=127, f36=127, f37=127, f38=127, f39=127
 localeconv_Records_2:	# 2 x REC_localeconv_Records_2 (16 bytes each); read by localeconv 0x4C00246C `mov (0xc, a1), a0`; localeconv 0x4C00246C `mov (4, a1), a0`; localeconv 0x4C00246C `mov (8, a1), a0`
-	REC_localeconv_Records_2	p0=Str_C_20, p4=Str_empty_1004, p8=data_4C17628C, p12=data_4C17628D
+	REC_localeconv_Records_2	p0=Str_C_20, p4=Str_empty_989, p8=data_4C17628C, p12=data_4C17628D
 	REC_localeconv_Records_2	
 
 localeconv_Table:	# 4 x u32, 0..2576980378; read by localeconv 0x4C00246C: `mov (localeconv_Table), d0`
@@ -1901,7 +1901,7 @@ User00_MainFunctionNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x329FD8, 0x329FDC
 data_4C329FDC:
-	# 672 bytes the code takes the address of: InitSptClassTable 0x4C020C05 `mov data_4C329FDC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 672 bytes the code takes the address of: InitSptClassTable 0x4C020C05 `call RegisterObjectTable, 0, 0` (+0, arg sp28); InitSptClassTable 0x4C020C05 `mov data_4C329FDC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the callee walk: RegisterObjectTable (sp28): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	swordProc	# +0
 	tab_u32	0x20000	# +4
 	.long	data_4C18BD4C, uwordProc	# +8
@@ -2398,7 +2398,7 @@ V_TtSoftver_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x32BD34, 0x32BD38
 data_4C32BD38:
-	# 4 bytes the code takes the address of: InitializeUser00 0x4C023E1D `mov data_4C32BD38, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser00 0x4C023E1D `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser00 0x4C023E1D `mov data_4C32BD38, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C18F938	# +0
 V_TtDebug_ResNames:
 	.long	RN_TtDebug	# TtDebug
@@ -7305,7 +7305,7 @@ ptrs_4C359724:
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x359744, 0x35974C
 data_4C35974C:
-	# 12 bytes the code takes the address of: TEST7FUNC_L56 0x4C0520F2 `mov data_4C35974C, d0` (+0, as a base); TEST7FUNC_L7f 0x4C05211B `mov data_4C35974C, d0` (+0, as a base); TEST7FUNC_La3 0x4C05213F `mov data_4C35974C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TEST7FUNC_L56 0x4C0520F2 `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); TEST7FUNC_L56 0x4C0520F2 `mov data_4C35974C, d0` (+0, as a base); TEST7FUNC_L7f 0x4C05211B `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+3 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	9, 0, 76, 1, 0, 0, 140, 1, 0, 0, 0, 0	# +0
 
 func_4C05197F_entry_Lf4_Table:	# 160 x REC_func_4C05197F_entry_Lf4_Table (2 bytes each); read by func_4C05197F_entry_Lf4 0x4C051A78 `movbu (d1, a1), d3`
@@ -7496,7 +7496,7 @@ ptrs_4C35992C:
 	.long	loc_4C05A50D
 	.long	func_4C05A525
 
-func_4C05B884_Table:	# 2 x u16, 0..18; read by func_4C05B884 0x4C05B884: `movhu (a0), d0`; func_4C05BA2A 0x4C05BA2A: `movhu (a0), d0` ...
+func_4C05B884_Table:	# 2 x u16, 0..18; read by func_4C05B884 0x4C05B884: `movhu (a0), d0`; func_4C05B884_entry_L2f 0x4C05B8B8: `movhu (a0), d0` ...
 	tab_u16	18, 0
 
 Str_Technics_Rhythms_2:	.asciz "Technics Rhythms"
@@ -7519,16 +7519,16 @@ ptrs_4C359978:
 	.long	loc_4C057602
 	.long	MemStyleVarRecDataSet
 
-func_4C05B884_Table_2:	# 2 x u16, 0..60; read by func_4C05B884 0x4C05B884: `movhu (a0), d0`; func_4C05BA2A 0x4C05BA2A: `movhu (a0), d0` ...
+func_4C05B884_Table_2:	# 2 x u16, 0..60; read by func_4C05B884 0x4C05B884: `movhu (a0), d0`; func_4C05B884_entry_L2f 0x4C05B8B8: `movhu (a0), d0` ...
 	tab_u16	60, 0
 
 Str_TPAD:	.asciz "TPAD"
 	.space	11, 0x00
 data_4C3599A0:
-	# 6 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A0, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 6 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A0, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 160, 0, 0, 8, 32	# +0
 data_4C3599A6:
-	# 26 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A6, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 26 bytes the code takes the address of: func_4C05A1F2 0x4C05A1F2 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05A1F2 0x4C05A1F2 `mov data_4C3599A6, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 3, 0, 96, 16, 6, 16, 2, 0, 2, 0, 15, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
@@ -7541,7 +7541,7 @@ Str_user_bank_0:	.asciz "  user bank 0   "
 Str_clear_2:	.asciz "     clear      "
 	.align	4, 0x00	# pad after Str_clear_2
 data_4C359A74:
-	# 76 bytes the code takes the address of: func_4C059CA9_entry_L45 0x4C059CF3 `add data_4C359A74, d3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 76 bytes the code takes the address of: func_4C059CA9_entry_L45 0x4C059CF3 `add data_4C359A74, d3` (+0, as a base); func_4C059CA9_entry_L79 0x4C059D27 `call func_4C125048_entry, [d2,d3,a2,a3], 0x38` (+0, arg sp32); func_4C059CA9_entry_L22c 0x4C059EDA `call func_4C054AC7_entry, 0, 0xc` (+0, arg sp32) (+1 more); byte rows (u8); the callee walk: func_4C054AC7 (sp32) reads nothing through it the walk sees; func_4C12503B (sp32) reads nothing through it the walk sees; func_4C125048 (sp32) reads nothing through it the walk sees
 	tab_u8	17, 17, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 6, 127, 0, 0, 32, 64, 40, 0, 64, 2, 28, 64	# +16
 	tab_u8	108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0	# +32
@@ -15679,10 +15679,10 @@ Pad_PopSynth_2_Events:		# 4 bars of 4 beats, 354 bytes
 Str_TCMP:	.asciz "TCMP"
 	.space	11, 0x00
 data_4C361430:
-	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361430, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 6 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361430, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	2, 88, 0, 0, 54, 112	# +0
 data_4C361436:
-	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361436, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 26 bytes the code takes the address of: MemStyleAreaHeaderRestamp 0x4C057310 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); MemStyleAreaHeaderRestamp 0x4C057310 `mov data_4C361436, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	0, 3, 0, 96, 13, 8, 4, 2, 2, 1, 2, 15, 0, 0, 0, 0	# +0
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	.space	64, 0x20
@@ -15690,17 +15690,17 @@ Str_clear:	.asciz "    clear    "
 # census: opaque -- unknown-dump: 98 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x36149E, 0x361500
 data_4C361500:
-	# 16 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361500, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	# 16 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361500, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u32	0x230010, 0x0, 0x0, 0x0	# +0
 
 MemStyleVarRecInit_Table_2:	# 4 x u8, 0..0; read by MemStyleVarRecInit_entry : `movbu	(a1), d0`
 	tab_u8	0, 0, 0, 0
 data_4C361514:
-	# 20 bytes the code takes the address of: func_4C060E4A_entry_L37 0x4C060E86 `add data_4C361514, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_4C060E4A_entry_L37 0x4C060E86 `add data_4C361514, d0` (+0, as a base); func_4C060E4A_entry_L6c 0x4C060EBB `call func_4C125048_entry, [d2,d3,a2,a3], 0x38` (+0, arg sp36); func_4C060E4A_entry_L103 0x4C060F52 `call func_4C06104C_entry, [d2], 4` (+0, arg sp36) (+6 more); byte rows (u8); the callee walk: func_4C05E81A (sp36) reads nothing through it the walk sees; func_4C05E82B (sp36) reads nothing through it the walk sees; func_4C06104C (sp36) reads nothing through it the walk sees (+2 more)
 	tab_u8	0, 16, 17, 17, 17, 17, 17, 0, 0, 0, 0, 0, 0, 3, 0, 0	# +0
 	tab_u8	0, 0, 0, 0	# +16
 data_4C361528:
-	# 200 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361528, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 200 bytes the code takes the address of: func_4C05E846 0x4C05E846 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C05E846 0x4C05E846 `mov data_4C361528, a1` (+0, as a base); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	255, 255, 0, 0, 0, 0, 0, 0, 6, 127, 0, 0, 38, 64, 40, 0	# +0
 	tab_u8	64, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +16
 	tab_u8	6, 127, 33, 0, 32, 64, 0, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +32
@@ -15714,19 +15714,12 @@ data_4C361528:
 	tab_u8	90, 2, 28, 64, 108, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +160
 	tab_u8	6, 127, 0, 0, 38, 64, 40, 0, 64, 2, 28, 64, 108, 64, 0, 0	# +176
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0	# +192
-data_4C3615F0:
-	.space	1, 0x00
 
-LoadU24BE_Var:	# u8, a constant; read / written by LoadU24BE 0x4C061F71: `movbu (a0), d1`
-	.byte	0
-LoadU24BE_Var_2:	# u8, a constant; read / written by LoadU24BE 0x4C061F71: `movbu (a0), d0`
-	.byte	0
-
-LoadU24BE_Table:	# 10 x u8, 0..245; read by LoadU24BE 0x4C061F71: `movbu (a0), d0`
-	tab_u8	5, 244, 244, 244, 244, 245, 0, 0, 0, 0
-data_4C3615FD:
-	# 15 bytes the code takes the address of: MemStyleAreaVarStreamsInit_entry_Ld 0x4C0574CA `mov data_4C3615FD, a2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	0, 0, 0, 9, 244, 244, 244, 244, 244, 244, 244, 244, 245, 255, 255	# +0
+MemStyleAreaVarStreamsInit_entry_L3a_Selected_0:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=5, x4="\xF4\xF4\xF4\xF4\xF5\x00\x00\x00\x00"
+MemStyleAreaVarStreamsInit_entry_L3a_Selected_1:	# REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected (13 bytes)
+	REC_MemStyleAreaVarStreamsInit_entry_L3a_Selected	s0="\x00", f3=9, x4="\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF4\xF5"
+	.align	4, 0xFF	# pad after MemStyleAreaVarStreamsInit_entry_L3a_Selected_1
 
 ptrs_4C36160C:
 	.long	MmmMtune
@@ -19238,7 +19231,7 @@ func_4C09248D_entry_L7d_Table_3:	# 35 x u16, 0..65532; read by func_4C09248D_ent
 	tab_u16	65512, 65516, 65520, 65524, 65528, 65532, 0, 32512, 0, 0, 0	# [24]
 	.align	4, 0xFF	# pad after func_4C09248D_entry_L7d_Table_3
 
-func_4C081D83_entry_L37_Records:	# 128 x REC_func_4C081D83_entry_L37_Records (12 bytes each); read by func_4C081D83_entry_L37 0x4C081DBF `mov (4, a0), d1`; func_4C081D83_entry_L37 0x4C081DBF `mov (a0), d0`; func_4C081D83_entry_L320 0x4C0820A8 `movhu (8, a0), d0` (+1)
+func_4C081D83_entry_L37_Records:	# 128 x REC_func_4C081D83_entry_L37_Records (12 bytes each); read by func_4C081D83_entry_L37 0x4C081DBF `mov (4, a0), d1`; func_4C081D83_entry_L37 0x4C081DBF `mov (a0), d0`; func_4C081D83_entry_L320 0x4C0820A8 `movhu (8, a0), d0` (+18)
 	REC_func_4C081D83_entry_L37_Records	f0=0xC8E33341, f4=0x4088A05E, f8=366, x10="\x00\x00"	# [0]
 	REC_func_4C081D83_entry_L37_Records	f0=0x48A30701, f4=0x4078964D, f8=183, x10="\x00\x00"
 	REC_func_4C081D83_entry_L37_Records	f0=0x56F8345A, f4=0x406526FF, f8=79, x10="\x00\x00"
@@ -19385,125 +19378,60 @@ func_4C09A63A_entry_L65_Records_p0_0:	# REC_func_4C09A63A_entry_L65_Records_p0 (
 data_4C36C089:
 # census: opaque -- unknown-dump: 11 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x36C089, 0x36C094
-func_4C09A63A_entry_L65_Records_p0_1:	# REC_func_4C09A63A_entry_L65_Records_p0 (29 bytes)
-	REC_func_4C09A63A_entry_L65_Records_p0	f0=134, f1=133, x2="\x06\x05\x84\x83\x82\x04\xFF\xFF\xFF\xFF\x00\xFF\x00\x00\x00\xD0\x00\x00\"\x98\x06L\x00\x00\x00\x00\x00"
-	.space	7, 0x00
-data_4C36C0B8:
+data_4C36C094:
+# census: opaque -- unknown-dump: 12 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x36C094, 0x36C0A0
+func_4C03CC6E_entry_L8c_Selected_0:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	f0=65280, f4=53248, p8=TempoSyncSetDispatch
 	.space	12, 0x00
-data_4C36C0C4:
+func_4C03CC6E_entry_L8c_Selected_1:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_2:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_3:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	f0=0xFF0000, f4=0x700000, p8=func_4C173C25
+# census: opaque -- unknown-dump: 72 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C0DC, 0x36C124
+func_4C03CC6E_entry_L8c_Selected_4:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	f0=255, f4=121, p8=func_4C02DD38
 	.space	12, 0x00
-data_4C36C0D0:
-	# 84 bytes the code takes the address of: func_4C03CC6E_entry_L1d 0x4C03CC90 `mov data_4C36C0D0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFF0000, 0x700000	# +0
-	.long	func_4C173C25	# +8
-	tab_u32	0xFF0000, 0x700000	# +12
-	.long	func_4C05234B	# +20
-	tab_u32	0xFF0000, 0x700000	# +24
-	.long	func_4C051307	# +32
-	tab_u32	0xFF00, 0x2000	# +36
-	.long	func_4C12D76A	# +44
-	tab_u32	0xFF00, 0x2000	# +48
-	.long	TempoSyncSetDispatch	# +56
-	tab_u32	0xFFFFFF, 0x702040	# +60
-	.long	func_4C114400	# +68
-	tab_u32	0x0, 0x0, 0x0	# +72
-data_4C36C124:
-	# 24 bytes the code takes the address of: func_4C03CC6E_entry_L1d 0x4C03CC90 `mov data_4C36C124, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	255, 121	# +0
-	.long	func_4C02DD38	# +8
-	tab_u32	0, 0, 0	# +12
-data_4C36C13C:
+func_4C03CC6E_entry_L8c_Selected_5:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_6:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CC6E_entry_L8c_Selected_7:	# REC_func_4C03CC6E_entry_L8c_Selected (12 bytes)
+	REC_func_4C03CC6E_entry_L8c_Selected	
+func_4C03CD2C_entry_L9d_Selected_0:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFF00, f4=8192, p8=loc_4C066D29
+# census: opaque -- unknown-dump: 132 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C16C, 0x36C1F0
+func_4C03CD2C_entry_L9d_Selected_1:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFF00, f4=0x204000, p8=func_4C02F4E9
+# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C1FC, 0x36C220
+func_4C03CD2C_entry_L9d_Selected_2:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFF0000, f4=0x600000, p8=func_4C02F4E9
+# census: opaque -- unknown-dump: 84 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C22C, 0x36C280
+func_4C03CD2C_entry_L9d_Selected_3:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0x701011, p8=loc_4C0515B2
+# census: opaque -- unknown-dump: 276 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C28C, 0x36C3A0
+func_4C03CD2C_entry_L9d_Selected_4:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0x900000, p8=func_4C05222C
+# census: opaque -- unknown-dump: 36 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C3AC, 0x36C3D0
+func_4C03CD2C_entry_L9d_Selected_5:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0xB0007E, p8=func_4C0D9876
 	.space	12, 0x00
-data_4C36C148:
-	.space	12, 0x00
-data_4C36C154:
-	.space	12, 0x00
-data_4C36C160:
-	# 144 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C160, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFF00, 0x2000, 0x4C066D29, 0xFF0000, 0x0	# +0
-	.long	func_4C02F4E9	# +20
-	tab_u32	0xFFFF00, 0xC000	# +24
-	.long	func_4C031F48	# +32
-	tab_u32	0xFF0000, 0x0	# +36
-	.long	func_4C046F7C	# +44
-	tab_u32	0xFF0000, 0x0	# +48
-	.long	func_4C09DD93	# +56
-	tab_u32	0xFF0000, 0x0, 0x4C134069, 0xFF0000, 0x0	# +60
-	.long	func_4C0D9876	# +80
-	tab_u32	0xFF0000, 0x0, 0x4C0327DA, 0xFF0000, 0x0	# +84
-	.long	SndSetupPowerOnInit	# +104
-	tab_u32	0xFFFF00, 0x0, 0x4C03EC45, 0xFF0000, 0x0	# +108
-	.long	func_4C02DC11	# +128
-	tab_u32	0x0, 0x0, 0x0	# +132
-data_4C36C1F0:
-	# 48 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C1F0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFF00, 0x204000	# +0
-	.long	func_4C02F4E9	# +8
-	tab_u32	0xFF0000, 0x200000	# +12
-	.long	func_4C0D9876	# +20
-	tab_u32	0xFF0000, 0x200000	# +24
-	.long	func_4C031F48	# +32
-	tab_u32	0x0, 0x0, 0x0	# +36
-data_4C36C220:
-	# 96 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C220, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFF0000, 0x600000	# +0
-	.long	func_4C02F4E9	# +8
-	tab_u32	0xFFFFFF, 0x600000, 0x4C134069, 0xFFFFFF, 0x600010, 0x4C1142E1, 0xFFFFFF, 0x600012	# +12
-	.long	func_4C11C7E2	# +44
-	tab_u32	0xFFFFFF, 0x600011, 0x4C11C898, 0xFF0000, 0x600000	# +48
-	.long	func_4C09DD93	# +68
-	tab_u32	0xFF0000, 0x600000	# +72
-	.long	SndSetupPowerOnInit	# +80
-	tab_u32	0x0, 0x0, 0x0	# +84
-data_4C36C280:
-	# 288 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C280, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0x701011, 0x4C0515B2, 0xFFFFFF, 0x701009, 0x4C051DE9, 0xFFFFFF, 0x701004	# +0
-	tab_u32	0x4C051E21, 0xFFFFFF, 0x701005, 0x4C051E59, 0xFFFFFF, 0x701012, 0x4C051E91, 0xFFFFFF	# +32
-	tab_u32	0x701010, 0x4C051EEC, 0xFFFFFF, 0x701020, 0x4C051F24, 0xFFFFFF, 0x701000, 0x4C051F5B	# +64
-	tab_u32	0xFFFFFF, 0x7020A6	# +96
-	.long	func_4C02F4E9	# +104
-	tab_u32	0xFFFFFF, 0x7020A1	# +108
-	.long	func_4C046ACF	# +116
-	tab_u32	0xFFFFFF, 0x702032, 0x4C0AD289, 0xFFFFFF, 0x708000, 0x4C13A69F, 0xFFFFFF, 0x702004	# +120
-	.long	func_4C06FA02	# +152
-	tab_u32	0xFFFFFF, 0x708000	# +156
-	.long	func_4C16132D	# +164
-	tab_u32	0xFFFFFF, 0x7020A8, 0x4C0FDF3F, 0xFFFFFF, 0x702083, 0x4C0FDFA4, 0xFFFFFF, 0x700000	# +168
-	.long	func_4C0FDFCA	# +200
-	tab_u32	0xFFFFFF, 0x7020A4	# +204
-	.long	func_4C16AEB9	# +212
-	tab_u32	0xFFFFFF, 0x702020	# +216
-	.long	func_4C124B73	# +224
-	tab_u32	0xFFFFFF, 0x702040	# +228
-	.long	func_4C124ADC	# +236
-	tab_u32	0xFFFFFF, 0x700000	# +240
-	.long	func_4C12D80E	# +248
-	tab_u32	0xFFFFFF, 0x7020B0	# +252
-	.long	func_4C11B8AB	# +260
-	tab_u32	0xFFFFFF, 0x700000	# +264
-	.long	func_4C046F7C	# +272
-	tab_u32	0x0, 0x0, 0x0	# +276
-data_4C36C3A0:
-	# 48 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C3A0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0x900000	# +0
-	.long	func_4C05222C	# +8
-	tab_u32	0xFF0000, 0x900000	# +12
-	.long	func_4C046F7C	# +20
-	tab_u32	0xFFFFFF, 0x900000, 0x4C09D32B, 0x0, 0x0, 0x0	# +24
-data_4C36C3D0:
-	# 24 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C3D0, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0xB0007E	# +0
-	.long	func_4C0D9876	# +8
-	tab_u32	0x0, 0x0, 0x0	# +12
-data_4C36C3E8:
-	# 36 bytes the code takes the address of: func_4C03CD2C_entry_L45 0x4C03CD76 `mov data_4C36C3E8, d2` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0xFFFFFF, 0xC00000, 0x4C09D32B, 0xFFFFFF, 0xC00000	# +0
-	.long	func_4C0D9876	# +20
-	tab_u32	0x0, 0x0, 0x0	# +24
-data_4C36C40C:
-	.space	12, 0x00
-data_4C36C418:
-	.space	12, 0x00
+func_4C03CD2C_entry_L9d_Selected_6:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	f0=0xFFFFFF, f4=0xC00000, p8=loc_4C09D32B
+# census: opaque -- unknown-dump: 24 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x36C3F4, 0x36C40C
+func_4C03CD2C_entry_L9d_Selected_7:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	
+func_4C03CD2C_entry_L9d_Selected_8:	# REC_func_4C03CD2C_entry_L9d_Selected (12 bytes)
+	REC_func_4C03CD2C_entry_L9d_Selected	
 
 func_4C09CA51_entry_L2f_Var:	# u16, a constant; read / written by func_4C09CA51_entry_L2f 0x4C09CA85: `movhu (func_4C09CA51_entry_L2f_Var), d1`
 	.word	1
@@ -28550,7 +28478,7 @@ V_SeqMenuScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37497C, 0x374980
 data_4C374980:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C374980, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C374980, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FE6C0	# +0
 V_SeqCycPlyScreen_ResNames:
 	.long	RN_SeqCycPlyScreen	# SeqCycPlyScreen
@@ -28570,10 +28498,10 @@ V_SeqCycPlyScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3749BC, 0x3749C0
 data_4C3749C0:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3749C0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3749C0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FE70C	# +0
 data_4C3749C4:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3749C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3749C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FE710	# +0
 V_SeqRealRecScreen_ResNames:
 	.long	RN_SeqRealRecScreen	# SeqRealRecScreen
@@ -29046,7 +28974,7 @@ V_SeqCycRecScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37510C, 0x375110
 data_4C375110:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375110, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375110, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FED30	# +0
 V_SeqAtPunchRecScreen_ResNames:
 	.long	RN_SeqAtPunchRecScreen	# SeqAtPunchRecScreen
@@ -29071,7 +28999,7 @@ V_SeqAtPunchRecScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375160, 0x375164
 data_4C375164:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375164, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375164, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FED94	# +0
 V_SeqStepRecScreen_ResNames:
 	.long	RN_SeqStepRecScreen	# SeqStepRecScreen
@@ -29312,7 +29240,7 @@ V_SeqPanelWriteScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3754FC, 0x375500
 data_4C375500:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375500, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375500, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF014	# +0
 V_SeqSongNamingScreen_ResNames:
 	.long	RN_SeqSongNamingScreen	# SeqSongNamingScreen
@@ -29425,7 +29353,7 @@ V_SeqNoteSelScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375688, 0x37568C
 data_4C37568C:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C37568C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C37568C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF1B0	# +0
 V_SeqNoteCycPScreen_ResNames:
 	.long	RN_SeqNoteCycPScreen	# SeqNoteCycPScreen
@@ -29444,7 +29372,7 @@ V_SeqNoteCycPScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3756C4, 0x3756C8
 data_4C3756C8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3756C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3756C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF204	# +0
 V_SeqDrmEdtScreen_ResNames:
 	.long	RN_SeqDrmEdtScreen	# SeqDrmEdtScreen
@@ -29476,7 +29404,7 @@ V_SeqDrmEdtScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375734, 0x375738
 data_4C375738:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375738, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375738, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF258	# +0
 V_SeqTrkClrScreen_ResNames:
 	.long	RN_SeqTrkClrScreen	# SeqTrkClrScreen
@@ -29881,7 +29809,7 @@ V_SeqGlblEdtMnuScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375D18, 0x375D1C
 data_4C375D1C:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375D1C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375D1C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF7EC	# +0
 V_SeqApcRemixScreen_ResNames:
 	.long	RN_SeqApcRemixScreen	# SeqApcRemixScreen
@@ -29926,7 +29854,7 @@ V_SeqStepBalScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375DB4, 0x375DB8
 data_4C375DB8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375DB8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375DB8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF85C	# +0
 V_SeqMetroBalScreen_ResNames:
 	.long	RN_SeqMetroBalScreen	# SeqMetroBalScreen
@@ -29975,16 +29903,16 @@ V_SeqMetroBalScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x375E68, 0x375E6C
 data_4C375E6C:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E6C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375E6C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF8B0	# +0
 data_4C375E70:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E70, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375E70, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF8B4	# +0
 data_4C375E74:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E74, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375E74, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF8B8	# +0
 data_4C375E78:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C375E78, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C375E78, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FF8BC	# +0
 V_SndArgrScreen_ResNames:
 	.long	RN_SndArgrScreen	# SndArgrScreen
@@ -30187,7 +30115,7 @@ V_SndArgrScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x376190, 0x376194
 data_4C376194:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C376194, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C376194, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FFB10	# +0
 V_CmpMeasEditScreen_ResNames:
 	.long	RN_CmpMeasEditScreen	# CmpMeasEditScreen
@@ -30330,7 +30258,7 @@ V_CmNameScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3763B4, 0x3763B8
 data_4C3763B8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3763B8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3763B8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FFCFC	# +0
 V_CmpRealScreen_ResNames:
 	.long	RN_CmpRealScreen	# CmpRealScreen
@@ -30538,13 +30466,13 @@ V_CmpRealScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3766E4, 0x3766E8
 data_4C3766E8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3766E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3766E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FFFB4	# +0
 data_4C3766EC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3766EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3766EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FFFB8	# +0
 data_4C3766F0:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3766F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3766F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C1FFFBC	# +0
 V_CmpSeqCpScreen_ResNames:
 	.long	RN_CmpSeqCpScreen	# CmpSeqCpScreen
@@ -30673,49 +30601,49 @@ V_CmpCstmCpyScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3768B0, 0x3768B4
 data_4C3768B4:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768B4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768B4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C20019C	# +0
 data_4C3768B8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768B8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768B8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001A0	# +0
 data_4C3768BC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768BC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768BC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001A4	# +0
 data_4C3768C0:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768C0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768C0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001A8	# +0
 data_4C3768C4:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768C4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001AC	# +0
 data_4C3768C8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768C8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001B0	# +0
 data_4C3768CC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768CC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768CC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001B4	# +0
 data_4C3768D0:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768D0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768D0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001B8	# +0
 data_4C3768D4:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768D4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768D4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001BC	# +0
 data_4C3768D8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768D8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768D8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001C0	# +0
 data_4C3768DC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768DC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768DC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001C4	# +0
 data_4C3768E0:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768E0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768E0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001C8	# +0
 data_4C3768E4:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768E4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768E4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001CC	# +0
 data_4C3768E8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001D0	# +0
 data_4C3768EC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3768EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3768EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2001D4	# +0
 V_Demofeature_ResNames:
 	.long	RN_Demofeature	# Demofeature
@@ -30749,7 +30677,7 @@ V_Demofeature_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x376960, 0x376964
 data_4C376964:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C376964, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C376964, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C20024C	# +0
 V_MspBkslScreen_ResNames:
 	.long	RN_MspBkslScreen	# MspBkslScreen
@@ -31227,7 +31155,7 @@ V_MspBkslScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3770C8, 0x3770CC
 data_4C3770CC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3770CC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3770CC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C200730	# +0
 V_MspCompileSetScreen_ResNames:
 	.long	RN_MspCompileSetScreen	# MspCompileSetScreen
@@ -31250,10 +31178,10 @@ V_MspNameScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x37710C, 0x377110
 data_4C377110:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377110, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C377110, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C20078C	# +0
 data_4C377114:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377114, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C377114, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C200790	# +0
 V_MspSeqCpScreen_ResNames:
 	.long	RN_MspSeqCpScreen	# MspSeqCpScreen
@@ -31312,16 +31240,16 @@ V_MspPadNameScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3771E4, 0x3771E8
 data_4C3771E8:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3771E8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C200864	# +0
 data_4C3771EC:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3771EC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C200868	# +0
 data_4C3771F0:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3771F0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C20086C	# +0
 data_4C3771F4:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C3771F4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C3771F4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C200870	# +0
 V_MspPnCpScreen_ResNames:
 	.long	RN_MspPnCpScreen	# MspPnCpScreen
@@ -31351,13 +31279,13 @@ V_MspPnCpScreen_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x377258, 0x37725C
 data_4C37725C:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C37725C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C37725C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2008B0	# +0
 data_4C377260:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377260, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C377260, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2008B4	# +0
 data_4C377264:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377264, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `mov data_4C377264, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2008B8	# +0
 V_SeqIntTest_ResNames:
 	.long	RN_SeqIntTest	# SeqIntTest
@@ -31365,7 +31293,7 @@ V_SeqIntTest_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x377270, 0x377274
 data_4C377274:
-	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `mov data_4C377274, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser15 0x4C0A842F `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser15 0x4C0A842F `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser15 0x4C0A842F `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2008CC	# +0
 data_4C377278:
 	# 208 bytes of text with no NUL, 16 characters a row [INFERENCE: fixed-width names]; no instruction reads them (tools/data_readers.py)
@@ -31900,8 +31828,11 @@ User15_MainFunctionNames:
 
 GetFocusObject_Records_p4_0:	# REC_GetFocusObject_Records_p4 (12 bytes)
 	REC_GetFocusObject_Records_p4	f0=16, x1="\x00\x00\x00", p4=Str_Basic, f8=17, x9="\x00\x00\x00"
-# census: opaque -- unknown-dump: 196 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x37B824, 0x37B8E8
+
+GetFocusObject_Records_p4_0_Tail:	# 1 pointers after GetFocusObject_Records_p4_0: the array its kind's computed-offset read indexes (func_4C0BB2CF_entry_L1d 0x4C0BB2F1 `movbu (d0, a0), d0`; FE_CmpRecChdModTyp_entry_L185 0x4C0BB733 `mov (4, a0), d0` (+16)) runs on past the fields the code reads at fixed offsets [INFERENCE: every word 0 or an address of this region]
+	.long	Str_In_7th_G_8dB_a0
+# census: opaque -- unknown-dump: 192 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x37B828, 0x37B8E8
 
 GetFocusObject_Records:
 	.long	Str_Melody
@@ -37369,7 +37300,7 @@ V_ChoSel_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of words that look like addresses in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x382C48, 0x382C4C
 data_4C382C4C:
-	# 4 bytes the code takes the address of: InitializeUser18 0x4C0FD6DA `mov data_4C382C4C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser18 0x4C0FD6DA `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser18 0x4C0FD6DA `mov data_4C382C4C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2290B8	# +0
 V_DSPSel_ResNames:
 	.long	RN_DSPSel	# DSPSel
@@ -37446,7 +37377,7 @@ V_EqSel_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x382D64, 0x382D68
 data_4C382D68:
-	# 4 bytes the code takes the address of: InitializeUser18 0x4C0FD6DA `mov data_4C382D68, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser18 0x4C0FD6DA `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser18 0x4C0FD6DA `mov data_4C382D68, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C229130	# +0
 V_SplitSel_ResNames:
 	.long	RN_SplitSel	# SplitSel
@@ -39680,7 +39611,7 @@ VFC_ResNames:
 # census: opaque -- unknown-dump: 4 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x384FD4, 0x384FD8
 data_4C384FD8:
-	# 4 bytes the code takes the address of: InitializeUser12 0x4C106BC2 `mov data_4C384FD8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser12 0x4C106BC2 `call RegisterMode_entry, [a2], 4` (+0, arg sp40); InitializeUser12 0x4C106BC2 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser12 0x4C106BC2 `call RegisterTitle_entry, [d2,a2], 8` (+0, arg sp40) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterMode (sp40): RegisterMode reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later); RegisterTitle (sp40): RegisterTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C241050	# +0
 
 PmemModeBoxProc_Lef_Table:	# 2 x u8, 144..146; read by PmemModeBoxProc : `movbu	(d0, a2), d0`
@@ -39694,21 +39625,21 @@ FSWAssGridCheck_L77_Table:	# 44 x u8, 0..255; read by FSWAssGridCheck : `movbu	(
 	tab_u8	136, 146, 147, 148, 149, 64, 150, 153, 151, 191, 190, 173, 188, 176, 177, 184	# [16]
 	tab_u8	185, 160, 161, 162, 163, 164, 165, 189, 182, 183, 255, 255	# [32]
 data_4C385014:
-	# 12 bytes the code takes the address of: TestRgbwbRunFunc 0x4C10E5A4 `mov data_4C385014, d1` (+0, as a base); TestRgbwbFunc_L54 0x4C10E628 `mov data_4C385014, d0` (+0, as a base); TestRgbwbFunc_L95 0x4C10E669 `mov data_4C385014, d0` (+0, as a base) (+5 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestRgbwbRunFunc 0x4C10E5A4 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestRgbwbRunFunc 0x4C10E5A4 `mov data_4C385014, d1` (+0, as a base); TestRgbwbFunc_L54 0x4C10E628 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+13 more); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	20, 0, 76, 1, 20, 0, 172, 1, 0, 0, 0, 0	# +0
 data_4C385020:
-	# 12 bytes the code takes the address of: TestCrosstarlRunFunc 0x4C10E7EE `mov data_4C385020, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestCrosstarlRunFunc 0x4C10E7EE `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestCrosstarlRunFunc 0x4C10E7EE `mov data_4C385020, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	21, 0, 76, 1, 21, 0, 172, 1, 0, 0, 0, 0	# +0
 data_4C38502C:
-	# 12 bytes the code takes the address of: TestSampleRunFunc 0x4C10E84E `mov data_4C38502C, d1` (+0, as a base); TestSampleFunc_L83 0x4C10E901 `mov data_4C38502C, d0` (+0, as a base); TestSampleFunc_La1 0x4C10E91F `mov data_4C38502C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestSampleRunFunc 0x4C10E84E `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestSampleRunFunc 0x4C10E84E `mov data_4C38502C, d1` (+0, as a base); TestSampleFunc_L83 0x4C10E901 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24) (+3 more); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	22, 0, 76, 1, 22, 0, 172, 1, 0, 0, 0, 0	# +0
 TestSampleFunc_L20_Table:	# 8 x u8, 1..223; read by TestSampleFunc : `movbu	(d0, a0), d0`
 	tab_u8	1, 9, 48, 64, 85, 65, 223, 131
 data_4C385040:
-	# 12 bytes the code takes the address of: TestContrastRunFunc 0x4C10E93F `mov data_4C385040, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestContrastRunFunc 0x4C10E93F `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestContrastRunFunc 0x4C10E93F `mov data_4C385040, d1` (+0, as a base); byte rows (u8); the callee walk: SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	23, 0, 76, 1, 23, 0, 172, 1, 0, 0, 0, 0	# +0
 data_4C38504C:
-	# 12 bytes the code takes the address of: TestMICFunc_L141 0x4C10F848 `mov data_4C38504C, d0` (+0, as a base); TestMICFunc_L168 0x4C10F86F `mov data_4C38504C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 12 bytes the code takes the address of: TestMICFunc_L141 0x4C10F848 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); TestMICFunc_L141 0x4C10F848 `mov data_4C38504C, d0` (+0, as a base); TestMICFunc_L168 0x4C10F86F `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24) (+1 more); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	25, 0, 76, 1, 12, 0, 172, 1, 0, 0, 0, 0	# +0
 
 Str_empty_281:	.asciz " "
@@ -39725,13 +39656,13 @@ Str_Technics_2:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x385080, 0x385094
 data_4C385094:
-	# 3 bytes the code takes the address of: func_4C132BF7_entry_L9e 0x4C132C9A `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132BF7_entry_L9e 0x4C132C9A `mov data_4C385094, d2` (+0, as a base); func_4C132BF7_entry_L149 0x4C132D45 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 3 bytes the code takes the address of: func_4C132BF7_entry_L9e 0x4C132C9A `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132BF7_entry_L9e 0x4C132C9A `mov data_4C385094, d2` (+0, as a base); func_4C132BF7_entry_L149 0x4C132D45 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	249, 255, 255	# +0
 Str_Technics:	.asciz "\xEB\x1C\x90Technics"
 # census: opaque -- unknown-dump: 20 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3850A3, 0x3850B7
 data_4C3850B7:
-	# 5 bytes the code takes the address of: func_4C132EC1_entry_L9e 0x4C132F64 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132EC1_entry_L9e 0x4C132F64 `mov data_4C3850B7, d2` (+0, as a base); func_4C132EC1_entry_L11b 0x4C132FE1 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 5 bytes the code takes the address of: func_4C132EC1_entry_L9e 0x4C132F64 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C132EC1_entry_L9e 0x4C132F64 `mov data_4C3850B7, d2` (+0, as a base); func_4C132EC1_entry_L11b 0x4C132FE1 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); byte rows (u8); the callee walk: memcpy (a1): a library routine: what it reads is a string or a block, not fields
 	tab_u8	240, 255, 255, 255, 255	# +0
 
 NoteConvRules:	# 128 x NoteConvRule (8 bytes each); read by func_4C05800B_L9 0x4C058014 `movbu (1, a0), d0`; func_4C058026_L9 0x4C05802F `movbu (2, a0), d0`; func_4C058041_L9 0x4C05804A `movbu (3, a0), d0` (+12)

@@ -24198,7 +24198,7 @@ loc_484D2CA2:
     mov     a2, (0x10, sp)
     mov     0xf7, d0
     mov     d0, (0x1c, sp)
-    mov     data_48628158, a0
+    mov     DrawString_ArgA0_1, a0
     mov     DrawStringCentered_Var_5, a1
     clr     d0
     mov     0xd, d1
@@ -24208,7 +24208,7 @@ loc_484D2D01:
     mov     a2, (0x10, sp)
     mov     0xf7, d0
     mov     d0, (0x1c, sp)
-    mov     data_48628158, a0
+    mov     DrawString_ArgA0_1, a0
     mov     DrawStringCentered_Var_3, a1
     clr     d0
     mov     0xd, d1

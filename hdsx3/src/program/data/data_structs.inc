@@ -162,3 +162,42 @@
 	.byte	\f1
 	.ascii	\x2
 .endm
+
+# REC_func_97827B50_ArgA1: 8-byte records (func_97827B50_ArgA1, 82 records); fields, and what reads them:
+#   (the layout func_97827B50 0x97827B50 reads through its argument a1 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_97827B50_entry, [a2], 0x30`, +25 more calls))
+#   +0   f0           s16            func_97827B50 0x97827B50 `movhu (a0), d1`
+#   +2   f2           s16            func_97827B50 0x97827B50 `movhu (2, a0), d1`
+#   +4   f4           s16            func_97827B50 0x97827B50 `movhu (4, a0), d1`
+#   +6   f6           s16            func_97827B50 0x97827B50 `movhu (6, a0), d1`
+.macro REC_func_97827B50_ArgA1 f0=0, f2=0, f4=0, f6=0
+	.word	\f0
+	.word	\f2
+	.word	\f4
+	.word	\f6
+.endm
+
+# REC_func_978279FE_ArgA0: 8-byte records (func_978279FE_ArgA0, 46 records); fields, and what reads them:
+#   (the layout func_978279FE 0x978279FE reads through its argument a0 (passed by KssCatch_FormatBox_L11c 0x97812B66 `call func_978279FE_entry, [a2], 0x20`, +9 more calls))
+#   +0   f0           u16            func_978279FE 0x978279FE `movhu (a0), d1`; func_978279FE_entry_L26 0x97827A29 `movhu (a0), d1` (+1)
+#   +2   f2           u16            func_978279FE 0x978279FE `movhu (2, a0), d1`; func_978279FE_entry_L26 0x97827A29 `movhu (2, a0), d1` (+1)
+#   +4   f4           u16            func_978279FE_entry_L26 0x97827A29 `movhu (4, a0), d1`; func_978279FE_entry_Lbd 0x97827AC0 `movhu (4, a0), d1`
+#   +6   f6           u16            func_978279FE 0x978279FE `movhu (6, a0), d1`; func_978279FE_entry_L26 0x97827A29 `movhu (6, a0), d1` (+1)
+.macro REC_func_978279FE_ArgA0 f0=0, f2=0, f4=0, f6=0
+	.word	\f0
+	.word	\f2
+	.word	\f4
+	.word	\f6
+.endm
+
+# REC_func_97827C18_ArgA1: 8-byte records (func_97827C18_ArgA1, 10 records); fields, and what reads them:
+#   (the layout func_97827C18 0x97827C18 reads through its argument a1 (passed by KssAudioOutputProc_L485 0x97825BA0 `call func_97827C18_entry, [a2], 0x30`, +24 more calls))
+#   +0   f0           s16            func_97827C18 0x97827C18 `movhu (a0), d1`
+#   +2   f2           s16            func_97827C18 0x97827C18 `movhu (2, a0), d1`
+#   +4   f4           s16            func_97827C18 0x97827C18 `movhu (4, a0), d1`
+#   +6   f6           s16            func_97827C18 0x97827C18 `movhu (6, a0), d1`
+.macro REC_func_97827C18_ArgA1 f0=0, f2=0, f4=0, f6=0
+	.word	\f0
+	.word	\f2
+	.word	\f4
+	.word	\f6
+.endm

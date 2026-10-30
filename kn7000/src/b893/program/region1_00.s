@@ -13232,6 +13232,7 @@ loc_484082B8:
 loc_484082BF:
     ret     0, 8
 
+func_484082C2:
     movm    [d2], (sp)
     add     -0x1c, sp
 loc_484082C7:
@@ -40745,7 +40746,7 @@ loc_484186D5:
     call    DrawBitmapSPFast16_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48418711
 loc_484186ED:
-    mov     data_4859D188, d0
+    mov     DrawBitmapSPFast16_Impl_Table, d0
     mov     d0, (0x18, sp)
     movhu   (0x24, sp), d0
     mov     (0x20, sp), a0

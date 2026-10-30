@@ -24144,12 +24144,12 @@ InitializeUser09_Table_3:	# 2 x u16, 0..65535; read by InitializeUser09 0x4C16E8
 User09_Functions:
 	.space	4, 0x00
 data_4C36BEEC:
-	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E843 `mov data_4C36BEEC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E843 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser09 0x4C16E843 `mov data_4C36BEEC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C278604	# +0
 User09_MainFunctions:
 	.space	4, 0x00
 data_4C36BEF4:
-	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E843 `mov data_4C36BEF4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E843 `call RegisterObjectTable, 0, 0` (+0, arg sp40); InitializeUser09 0x4C16E843 `mov data_4C36BEF4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp40): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C278608	# +0
 
 # 350 objects of block V_demo1_1; object <name> is index <name>_ix, id <name>_id = (0xd6 << 16) | <name>_ix
@@ -27953,7 +27953,7 @@ User07_FunctionNames:
 User07_MainFunctions:
 	.space	4, 0x00
 data_4C377424:
-	# 4 bytes the code takes the address of: InitializeUser07 0x4C1724F4 `mov data_4C377424, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 4 bytes the code takes the address of: InitializeUser07 0x4C1724F4 `call RegisterObjectTable, 0, 0` (+0, arg sp44); InitializeUser07 0x4C1724F4 `mov data_4C377424, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers); the callee walk: RegisterObjectTable (sp44): RegisterObjectTable reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	.long	data_4C2B13F0	# +0
 
 # 18 objects of block V_HD_MENU; object <name> is index <name>_ix, id <name>_id = (0x77 << 16) | <name>_ix
@@ -28245,18 +28245,18 @@ TitleProc_L75_Table:	# 4 x u32, 32505856..32505856; read by ModeProc_L2d5 0x4C01
 ApTitleControl_Lfd_Table:	# 12 x u16, 0..55448; read by ApTitleControl_Lfd 0x4C01E13B: `movhu	(d0, a1), d0`; ApTitleControl_Lfd 0x4C01E13B: `movhu	(d0, a1), d2` ...
 	tab_u16	0, 0, 0, 0, 0, 288, 0, 288, 55448, 19457, 55448, 19457
 data_5000071C:
-	# 8 bytes the code takes the address of: MainTitleControl_L2d5 0x4C01E43C `mov data_5000071C, d2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: MainTitleControl_L2d5 0x4C01E43C `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); MainTitleControl_L2d5 0x4C01E43C `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); MainTitleControl_L2d5 0x4C01E43C `mov data_5000071C, d2` (+0, as a base); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	1, 0, 64, 1, 223, 0, 160, 1	# +0
 
 MainTitleControl_L2d5_Var:	# u32, initial value of a RAM variable; read / written by MainTitleControl_L2d5 0x4C01E43C: `mov a0, (MainTitleControl_L2d5_Var)`
 	.long	0
 data_50000728:
-	# 8 bytes the code takes the address of: MainTitleControl_L2d5 0x4C01E43C `mov data_50000728, d2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: MainTitleControl_L2d5 0x4C01E43C `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); MainTitleControl_L2d5 0x4C01E43C `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); MainTitleControl_L2d5 0x4C01E43C `mov data_50000728, d2` (+0, as a base); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	1, 0, 64, 1, 224, 0, 160, 1	# +0
 MainTitleControl_L2d5_Var_2:	# u32, initial value of a RAM variable; read / written by MainTitleControl_L2d5 0x4C01E43C: `mov a0, (MainTitleControl_L2d5_Var_2)`
 	.long	0
 data_50000734:
-	# 8 bytes the code takes the address of: MainTitleControl_L22a 0x4C01E391 `mov data_50000734, d3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 8 bytes the code takes the address of: MainTitleControl_L22a 0x4C01E391 `call KillApTimer_entry, [d2,d3,a2,a3], 0x30` (+0, arg sp24); MainTitleControl_L22a 0x4C01E391 `call SetApTimer_entry, [d2,d3,a2,a3], 0x34` (+0, arg sp24); MainTitleControl_L22a 0x4C01E391 `mov data_50000734, d3` (+0, as a base); byte rows (u8); the callee walk: KillApTimer (sp24): KillApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later); SetApTimer (sp24): SetApTimer reads nothing through it at a fixed offset (it stores it, or keeps it for later)
 	tab_u8	1, 0, 64, 1, 236, 0, 160, 1	# +0
 MainTitleControl_L22a_Var:	# u32, initial value of a RAM variable; read / written by MainTitleControl_L22a 0x4C01E391: `mov d2, (MainTitleControl_L22a_Var)`
 	.long	0
@@ -28381,30 +28381,30 @@ ColorList_window:
 		AcIndexToggle	NamingABC, super=NamingWindow, next=NamingSymbol, prev=NamingWindow_Label_POSITION, X=8, Y=122, W=39, H=22, font=4, stron=Str_ABC, stroff=Str_ABC_2, onoff=NamingABC_onoff, editsw=ES_Left3, index=108	# stron "ABC"; stroff "ABC"
 		AcIndexToggle	NamingSymbol, super=NamingWindow, next=NamingWindow_Label_SHIFT, prev=NamingABC, X=8, Y=165, W=39, H=22, font=4, stron=Str_123, stroff=Str_123_2, onoff=NamingSymbol_onoff, editsw=ES_Left4, index=108, tag=1	# stron "123"; stroff "123"
 
-func_4C04E7D6_entry_L55_Var:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L55 0x4C04E82D: `movbu (func_4C04E7D6_entry_L55_Var), d0`; func_4C04E7D6_entry_L55 0x4C04E82D: `movbu d1, (func_4C04E7D6_entry_L55_Var)` ...
-	.byte	0
-func_4C04E7D6_entry_L55_Var_2:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L55 0x4C04E82D: `movbu (func_4C04E7D6_entry_L55_Var_2), d0`; func_4C04E7D6_entry_L55 0x4C04E82D: `movbu d1, (func_4C04E7D6_entry_L55_Var_2)` ...
-	.byte	0
-func_4C04E7D6_entry_L55_Var_3:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L55 0x4C04E82D: `movbu (func_4C04E7D6_entry_L55_Var_3), d0`; func_4C04E7D6_entry_L55 0x4C04E82D: `movbu d1, (func_4C04E7D6_entry_L55_Var_3)` ...
-	.byte	0
-func_4C04E7D6_entry_L55_Var_4:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L55 0x4C04E82D: `movbu (func_4C04E7D6_entry_L55_Var_4), d0`; func_4C04E7D6_entry_L55 0x4C04E82D: `movbu d1, (func_4C04E7D6_entry_L55_Var_4)` ...
-	.byte	0
-func_4C04E7D6_entry_L55_Var_5:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L55 0x4C04E82D: `movbu (func_4C04E7D6_entry_L55_Var_5), d0`; func_4C04E7D6_entry_L55 0x4C04E82D: `movbu d1, (func_4C04E7D6_entry_L55_Var_5)` ...
-	.byte	0
-func_4C04E7D6_entry_L55_Var_6:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L55 0x4C04E82D: `movbu d0, (func_4C04E7D6_entry_L55_Var_6)`; func_4C04E7D6_entry_Le1 0x4C04E8B9: `movbu (func_4C04E7D6_entry_L55_Var_6), d1` ...
-	.byte	0
-func_4C04E7D6_entry_Le1_Var:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_Le1 0x4C04E8B9: `movbu d0, (func_4C04E7D6_entry_Le1_Var)`; func_4C04E7D6_entry_L107 0x4C04E8DF: `movbu (func_4C04E7D6_entry_Le1_Var), d1` ...
-	.byte	0
-func_4C04E7D6_entry_L107_Var:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L107 0x4C04E8DF: `movbu d0, (func_4C04E7D6_entry_L107_Var)`; func_4C04E7D6_entry_L12c 0x4C04E904: `movbu (func_4C04E7D6_entry_L107_Var), d0` ...
-	.byte	0
-func_4C04E7D6_entry_L12c_Var:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L12c 0x4C04E904: `movbu (func_4C04E7D6_entry_L12c_Var), d0`; func_4C04E7D6_entry_L12c 0x4C04E904: `movbu d0, (func_4C04E7D6_entry_L12c_Var)` ...
-	.byte	0
-func_4C04E7D6_entry_L12c_Var_2:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L12c 0x4C04E904: `movbu (func_4C04E7D6_entry_L12c_Var_2), d0`; func_4C04E7D6_entry_L12c 0x4C04E904: `movbu d0, (func_4C04E7D6_entry_L12c_Var_2)` ...
-	.byte	0
-func_4C04E7D6_entry_L12c_Var_3:	# u8, initial value of a RAM variable; read / written by func_4C04E7D6_entry_L12c 0x4C04E904: `movbu d0, (func_4C04E7D6_entry_L12c_Var_3)`; func_4C04E7D6_entry_L313 0x4C04EAEB: `movbu d0, (func_4C04E7D6_entry_L12c_Var_3)`
-	.byte	0
-data_50000887:
-	.align	4, 0x00	# pad after func_4C04E7D6_entry_L12c_Var_3
+func_4C04E7D6_entry_L55_Var:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L55_Var_2:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L55_Var_3:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L55_Var_4:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L55_Var_5:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L55_Var_6:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_Le1_Var:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L107_Var:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L12c_Var:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L12c_Var_2:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04E7D6_entry_L12c_Var_3:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
+func_4C04D55E_Result_11:	# REC_func_4C04D55E_Result (1 bytes)
+	REC_func_4C04D55E_Result	
 
 func_4C04D4E1_entry_L17_Table:	# 4 x u8, 0..255; read by func_4C04D4E1_entry_L17 0x4C04D4FD: `movbu (func_4C04D4E1_entry_L17_Table), d0`; func_4C04E7CD 0x4C04E7CD: `movbu d0, (func_4C04D4E1_entry_L17_Table)`
 	tab_u8	0, 255, 255, 255
@@ -31899,10 +31899,10 @@ func_4C076971_Table:
 	.long	Str_TRACK_9_2
 
 names_50001B30:
-	.long	Str_TRACK10, Str_TRACK11
-	.long	Str_TRACK12, Str_TRACK13
-	.long	Str_TRACK14, Str_TRACK15
-	.long	Str_TRACK16, 0x4C1B9930
+	.long	Str_TRACK10, names_50001B30_p0_0
+	.long	Str_TRACK12, names_50001B30_p0_1
+	.long	Str_TRACK14, names_50001B30_p0_2
+	.long	Str_TRACK16, names_50001B30_p0_3
 # census: opaque -- unknown-dump: 32 bytes of words that look like addresses in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x379064, 0x379084
 names_50001B70:
@@ -31975,20 +31975,20 @@ func_4C09DE93_Records_2:	# 3 x REC_func_4C09DE93_Records_2 (2 bytes each); read 
 	REC_func_4C09DE93_Records_2	
 	.align	4, 0xFF	# pad after func_4C09DE93_Records_2
 
-func_4C09E1A8_entry_L21a_Table:	# 7 x u16, 0..0; read by func_4C09D26B_entry_L30 0x4C09D2A0: `movhu	(a2), d0`; func_4C09E1A8_entry_L21a 0x4C09E3C7: `movhu	(a1), d0`
+func_4C09E1A8_entry_L21a_Table:	# 7 x u16, 0..0; read by func_4C09D26B_entry_L30 0x4C09D2A0: `movhu	(a2), d0`; func_4C09E1A8_entry_L21a 0x4C09E3C7: `movhu	(a1), d0` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0
 func_4C09E1A8_entry_L21a_Table_2:	# 8 x u16, 0..65280; read by func_4C09E1A8_entry_L21a 0x4C09E3C7: `movhu	d0, (a0)`
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 65280
 	.align	4, 0xFF	# pad after func_4C09E1A8_entry_L21a_Table_2
 func_4C09E3E3_entry_Lca_Table_2:	# 2 x u16, 1..65535; read by func_4C09E3E3_entry_Lca 0x4C09E4AF: `movhu (func_4C09E3E3_entry_Lca_Table_2), d0`; func_4C09E3E3_entry_Lca 0x4C09E4AF: `movhu d0, (func_4C09E3E3_entry_Lca_Table_2)`
 	tab_u16	1, 65535
-func_4C09E60A_entry_L3e3_Table:	# 20 x u16, 0..0; read by func_4C09E60A_entry_L3e3 0x4C09E9F2: `movhu	(a1), d0`; func_4C09E60A_entry_L3e3 0x4C09E9F2: `movhu	d0, (func_4C09E60A_entry_L3e3_Table)`
+func_4C09E60A_entry_L3e3_Table:	# 20 x u16, 0..0; read by func_4C09E60A_entry_L3e3 0x4C09E9F2: `movhu	(a1), d0`; func_4C09E60A_entry_L3e3 0x4C09E9F2: `movhu	d0, (func_4C09E60A_entry_L3e3_Table)` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
-func_4C09E60A_entry_L3e3_Table_2:	# 20 x u16, 0..0; read by func_4C09E60A_entry_L3e3 0x4C09E9F2: `movhu	d0, (a0)`; func_4C09E60A_entry_L449 0x4C09EA58: `movhu	d0, (a0)`
+func_4C09E60A_entry_L3e3_Table_2:	# 20 x u16, 0..0; read by func_4C09E60A_entry_L3e3 0x4C09E9F2: `movhu	d0, (a0)`; func_4C09E60A_entry_L449 0x4C09EA58: `movhu	d0, (a0)` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
-func_4C09EA8B_entry_Ld7_Table:	# 24 x u16, 0..0; read by func_4C09EA8B_entry_Ld7 0x4C09EB67: `movhu	d0, (a0)`
+func_4C09EA8B_entry_Ld7_Table:	# 24 x u16, 0..0; read by func_4C09EA8B_entry_Ld7 0x4C09EB67: `movhu	d0, (a0)`; func_4C09EF3E_entry_L24 0x4C09EF64: `movhu	(a0), d1` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [12]
 MdMenu_window:
@@ -32438,7 +32438,7 @@ SctlBox_prow:
 SctlBox_crow:
 	.space	4, 0x00
 data_500022BC:
-	# 20 bytes the code takes the address of: func_4C03D237 0x4C03D237 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03D2AB 0x4C03D2AB `call LibDiv32, 0, 0` (+0, arg a0); func_4C03D2AB 0x4C03D2AB `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+4 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: func_4C01B11F_entry_L22 0x4C01B146 `call ProcCall_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C01B11F_entry_L22 0x4C01B146 `call ProcCall_entry, [d2,d3,a2,a3], 0x2c` (+0, arg sp16); SendEvent 0x4C01BF57 `call func_4C01B11F_entry, [d2,d3,a2,a3], 0x28` (+0, arg a0) (+16 more); byte rows (u8); the callee walk: GetM3EmVal (sp16): GetM3EmVal reads nothing through it at a fixed offset (it stores it, or keeps it for later); InterruptTitle (sp16): InterruptTitle reads nothing through it at a fixed offset (it stores it, or keeps it for later); LibDiv32 (a0): a library routine: what it reads is a string or a block, not fields (+11 more)
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
 	tab_u8	0, 255, 255, 255	# +16
 SeqMenuScreen_window:
@@ -34774,11 +34774,13 @@ AcStepRecBoxProc_Table:	# 3 x u8, 32..183; read by AcStepRecBoxProc : `movbu	(d0
 	tab_u8	32, 183, 42
 AcStepRecBoxProc_L349_Table:	# 4 x u32, 0..4294967040; read by AcStepRecBoxProc_L9d 0x4C0CE667: `mov	(a2), d0`
 	tab_u32	0, 0, 0, 4294967040
-data_50003654:
-	.space	34, 0xFF
-data_50003676:
-	.space	34, 0xFF
-func_4C0DB061_entry_L33_Table_2:	# 4 x u16, 0..0; read by func_4C0DB061_entry_L33 0x4C0DB099: `movhu	(a1), d0`; func_4C0DB061_entry_L7c 0x4C0DB0E2: `movhu	(a1), d0`
+
+func_4C0D90F5_Result_0:	# REC_func_4C0D90F5_Result (34 bytes)
+	REC_func_4C0D90F5_Result	f0=255, x1="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"
+func_4C0D90F5_Result_1:	# REC_func_4C0D90F5_Result (34 bytes)
+	REC_func_4C0D90F5_Result	f0=255, x1="\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF"
+
+func_4C0DB061_entry_L33_Table_2:	# 4 x u16, 0..0; read by func_4C0DB061_entry_L33 0x4C0DB099: `movhu	(a1), d0`; func_4C0DB061_entry_L7c 0x4C0DB0E2: `movhu	(a1), d0` ...
 	tab_u16	0, 0, 0, 0
 func_4C0DB061_entry_L33_Table:	# 6 x u16, 0..0; read by func_4C0DB061_entry_L33 0x4C0DB099: `movhu	d0, (a0)`; func_4C0DB061_entry_L7c 0x4C0DB0E2: `movhu	d0, (a0)` ...
 	tab_u16	0, 0, 0, 0, 0, 0
@@ -37365,11 +37367,9 @@ func_4C13442E_entry_L25_Var_2:	# s8, initial value of a RAM variable; read / wri
 func_4C13442E_entry_L64_Table:	# 20 x u16, 0..0; read by func_4C13442E_entry_L64 0x4C134497: `movhu	d0, (a0)`; func_4C13442E_entry_Lf5 0x4C134528: `movhu	d0, (a0)` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
-func_4C13442E_entry_L25_Table_2:	# 19 x u16, 0..0; read by func_4C13442E_entry_L25 0x4C134458: `movhu (func_4C13442E_entry_L25_Table_2), d0`; func_4C13442E_entry_Lb6 0x4C1344E9: `movhu (func_4C13442E_entry_L25_Table_2), d0` ...
-	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
-	tab_u16	0, 0, 0, 0, 0, 0, 0	# [12]
-func_4C13442E_entry_L25_Table:	# 2 x u8, 0..0; read by func_4C13442E_entry : `movbu	(a0), d0`; func_4C13442E_entry : `movbu	(a1), d0`
-	tab_u8	0, 0
+
+func_4C13442E_entry_L25_Table_2:	# REC_func_4C134640_ArgA0 (40 bytes): the layout func_4C134640 0x4C134640 reads through its argument a0 (passed by func_4C13442E_entry_L12 0x4C134445 `call func_4C134640_entry, [d2,d3,a2,a3], 0x10`, +3 more calls)
+	REC_func_4C134640_ArgA0	x2="\x00\x00", x6="\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
 func_4C13530B_Var:	# u32, initial value of a RAM variable; read / written by func_4C13530B 0x4C13530B: `mov (func_4C13530B_Var), d0`; func_4C13530B 0x4C13530B: `mov d0, (func_4C13530B_Var)` ...
 	.long	0
@@ -37405,17 +37405,17 @@ send_all_trees_entry_L14b_Table:	# 18 x u8, 0..18; read by send_all_trees_entry_
 build_bl_tree_Table:	# 2 x u8, 15..255; read by build_bl_tree_entry : `movbu	(a1), d0`
 	tab_u8	15, 255
 data_50004D2C:
-	# 20 bytes the code takes the address of: _tr_init 0x4C1367E5 `mov data_50004D2C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: _tr_init 0x4C1367E5 `mov data_50004D2C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x5005EA50	# +0
 	.long	compress_block_entry_L155_Table	# +4
 	tab_u32	0x101, 0x11E, 0xF	# +8
 data_50004D40:
-	# 20 bytes the code takes the address of: _tr_init 0x4C1367E5 `mov data_50004D40, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: _tr_init 0x4C1367E5 `mov data_50004D40, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0x5005EED0	# +0
 	.long	_tr_tally_entry_L77_Table	# +4
 	tab_u32	0x0, 0x1E, 0xF	# +8
 data_50004D54:
-	# 20 bytes the code takes the address of: _tr_init 0x4C1367E5 `mov data_50004D54, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	# 20 bytes the code takes the address of: _tr_init 0x4C1367E5 `mov data_50004D54, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u32	0	# +0
 	.long	_tr_tally_entry_L77_Table+120	# +4
 	tab_u32	0, 19, 7	# +8
@@ -37427,30 +37427,26 @@ inflate_blocks_entry_L61f_Table:	# 19 x u32, 0..18; read by inflate_blocks_entry
 	tab_u32	16, 17, 18, 0, 8, 7, 9, 6	# [0]
 	tab_u32	10, 5, 11, 4, 12, 3, 13, 2	# [8]
 	tab_u32	14, 1, 15	# [16]
-data_50004DB8:
-	# 124 bytes the code takes the address of: inflate_trees_dynamic 0x4C1396A6 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); inflate_trees_dynamic 0x4C1396A6 `mov data_50004DB8, a1` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139814 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	3, 4, 5, 6, 7, 8, 9, 10	# +0
-	tab_u32	11, 13, 15, 17, 19, 23, 27, 31	# +32
-	tab_u32	35, 43, 51, 59, 67, 83, 99, 115	# +64
-	tab_u32	131, 163, 195, 227, 258, 0, 0	# +96
-data_50004E34:
-	# 124 bytes the code takes the address of: inflate_trees_dynamic 0x4C1396A6 `mov data_50004E34, d0` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139814 `mov data_50004E34, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# +0
-	tab_u32	1, 1, 1, 1, 2, 2, 2, 2	# +32
-	tab_u32	3, 3, 3, 3, 4, 4, 4, 4	# +64
-	tab_u32	5, 5, 5, 5, 0, 192, 192	# +96
-data_50004EB0:
-	# 120 bytes the code takes the address of: inflate_trees_dynamic_entry_L57 0x4C139702 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); inflate_trees_dynamic_entry_L57 0x4C139702 `mov data_50004EB0, a1` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139814 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	1, 2, 3, 4, 5, 7, 9, 13	# +0
-	tab_u32	17, 25, 33, 49, 65, 97, 129, 193	# +32
-	tab_u32	257, 385, 513, 769, 1025, 1537, 2049, 3073	# +64
-	tab_u32	4097, 6145, 8193, 12289, 16385, 24577	# +96
-data_50004F28:
-	# 120 bytes the code takes the address of: inflate_trees_dynamic_entry_L57 0x4C139702 `mov data_50004F28, d0` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139814 `mov data_50004F28, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u32	0, 0, 0, 0, 1, 1, 2, 2	# +0
-	tab_u32	3, 3, 4, 4, 5, 5, 6, 6	# +32
-	tab_u32	7, 7, 8, 8, 9, 9, 10, 10	# +64
-	tab_u32	11, 11, 12, 12, 13, 13	# +96
+huft_build_entry_L2e4_Table:	# 31 x u32, 0..258; read by huft_build_entry_L2e4 0x4C139570: `mov (d0, a0), d0`
+	tab_u32	3, 4, 5, 6, 7, 8, 9, 10	# [0]
+	tab_u32	11, 13, 15, 17, 19, 23, 27, 31	# [8]
+	tab_u32	35, 43, 51, 59, 67, 83, 99, 115	# [16]
+	tab_u32	131, 163, 195, 227, 258, 0, 0	# [24]
+huft_build_entry_L2e4_Table_2:	# 31 x u32, 0..192; read by huft_build_entry_L2e4 0x4C139570: `mov (d0, a0), d0`
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# [0]
+	tab_u32	1, 1, 1, 1, 2, 2, 2, 2	# [8]
+	tab_u32	3, 3, 3, 3, 4, 4, 4, 4	# [16]
+	tab_u32	5, 5, 5, 5, 0, 192, 192	# [24]
+huft_build_entry_L2e4_Table_3:	# 30 x u32, 1..24577; read by huft_build_entry_L2e4 0x4C139570: `mov (d0, a0), d0`
+	tab_u32	1, 2, 3, 4, 5, 7, 9, 13	# [0]
+	tab_u32	17, 25, 33, 49, 65, 97, 129, 193	# [8]
+	tab_u32	257, 385, 513, 769, 1025, 1537, 2049, 3073	# [16]
+	tab_u32	4097, 6145, 8193, 12289, 16385, 24577	# [24]
+huft_build_entry_L2e4_Table_4:	# 30 x u32, 0..13; read by huft_build_entry_L2e4 0x4C139570: `mov (d0, a0), d0`
+	tab_u32	0, 0, 0, 0, 1, 1, 2, 2	# [0]
+	tab_u32	3, 3, 4, 4, 5, 5, 6, 6	# [8]
+	tab_u32	7, 7, 8, 8, 9, 9, 10, 10	# [16]
+	tab_u32	11, 11, 12, 12, 13, 13	# [24]
 
 inflate_trees_fixed_Var:	# u32, initial value of a RAM variable; read / written by inflate_trees_fixed 0x4C13977D: `mov (inflate_trees_fixed_Var), d0`; inflate_trees_fixed_entry_L95 0x4C139814: `mov d0, (inflate_trees_fixed_Var)`
 	.long	0
@@ -38348,7 +38344,7 @@ func_4C0064C6_entry_L7d_Table:	# 2 x s16, -1..9999; read by func_4C0064C6_entry_
 func_4C0064C6_entry_L7d_Table_2:	# 2 x s16, -1..255; read by func_4C0064C6_entry_L7d 0x4C006548: `movhu d0, (func_4C0064C6_entry_L7d_Table_2)`; AcMpVerBoxProc_L33 0x4C0145AA: `movhu (func_4C0064C6_entry_L7d_Table_2), d0`
 	tab_s16	255, -1
 
-func_4C01B47B_Table:	# 4 x REC_func_4C01B47B_Table (56 bytes each); read by func_4C0065B1_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0`; func_4C01465E_L26 0x4C014684 `movhu (6, a0), d0` (+889)
+func_4C01B47B_Table:	# 4 x REC_func_4C01B47B_Table (56 bytes each); read by func_4C0065B1_L56 0x4C006607 `movhu (6, a0), d0`; func_4C0066C1 0x4C0066C1 `movhu (6, a0), d0`; func_4C01465E_L26 0x4C014684 `movhu (6, a0), d0` (+893)
 	REC_func_4C01B47B_Table	f4=1, x10="\x00\x00", f12=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012358, f48=-1, f50=1, f52=0x50015F70
 	REC_func_4C01B47B_Table	f4=256, x10="\x00\x00", f12=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012364, f48=-1, f50=128, f52=0x50015F88
 	REC_func_4C01B47B_Table	f4=1024, x10="\x00\x00", f12=0xFFFFFFFF, f16=0xFFFFFFFF, f20=0xFFFFFFFF, f24=0x1800000, f32=0xFFFFFFFF, f36=0x1800000, f44=0x50012F64, f48=-1, f50=128, f52=0x50016B88
@@ -38395,7 +38391,7 @@ func_4C07C326_entry_L35_Records:	# 7 x REC_func_4C07C326_entry_L35_Records (8 by
 	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_10, p4=func_4C07C326_entry_L35_Records_p0_0
 	REC_func_4C07C326_entry_L35_Records	p0=func_4C07C326_entry_L35_Records_p0_11, p4=func_4C07C326_entry_L35_Records_p0_1
 data_500058E8:
-	# 208 bytes the code takes the address of: func_4C09E60A_entry_L75 0x4C09E684 `mov data_500058E8, d2` (+0, as a base); func_4C09E60A_entry_L156 0x4C09E765 `mov data_500058E8, d2` (+0, as a base); func_4C09E60A_entry_L33c 0x4C09E94B `mov data_500058E8, d2` (+0, as a base) (+7 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	# 208 bytes the code takes the address of: func_4C09E60A_entry_L75 0x4C09E684 `mov data_500058E8, d2` (+0, as a base); func_4C09E60A_entry_L156 0x4C09E765 `mov data_500058E8, d2` (+0, as a base); func_4C09E60A_entry_L33c 0x4C09E94B `mov data_500058E8, d2` (+0, as a base) (+7 more); byte rows (u8); the address is not seen reaching a call: it is kept in memory, met at a label from several paths, or returned [INFERENCE]
 	tab_u8	3, 0, 4, 7, 0, 4, 0, 4, 7, 10, 4, 0, 4, 7, 11, 3	# +0
 	tab_u8	0, 4, 8, 0, 3, 0, 3, 7, 0, 4, 0, 3, 7, 10, 4, 0	# +16
 	tab_u8	3, 6, 9, 4, 0, 3, 6, 10, 4, 0, 3, 7, 11, 4, 0, 5	# +32
@@ -38410,7 +38406,7 @@ data_500058E8:
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +176
 	tab_u8	0, 0, 0, 4, 0, 4, 7, 2, 4, 0, 3, 7, 2, 255, 255, 255	# +192
 
-func_4C09EB98_entry_Lcb_Table_2:	# 20 x u16, 0..0; read by func_4C09EB98_entry_Lcb 0x4C09EC68: `movhu	d0, (a0)`
+func_4C09EB98_entry_Lcb_Table_2:	# 20 x u16, 0..0; read by func_4C09EB98_entry_Lcb 0x4C09EC68: `movhu	d0, (a0)`; func_4C09EF3E_entry_L24 0x4C09EF64: `movhu	(a0), d1` ...
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0	# [12]
 func_4C09EB98_entry_Lcb_Table:	# 2 x u16, 0..0; read by func_4C09EB98_entry_L2d 0x4C09EBCA: `movhu	d0, (func_4C09EB98_entry_Lcb_Table)`; func_4C09EB98_entry_L92 0x4C09EC2F: `movhu	d0, (a0)` ...
@@ -38419,7 +38415,7 @@ func_4C09EB98_entry_Lcb_Table:	# 2 x u16, 0..0; read by func_4C09EB98_entry_L2d 
 func_4C09EB98_Var:	# u8, initial value of a RAM variable; read / written by func_4C09EB98 0x4C09EB98: `movbu d0, (func_4C09EB98_Var)`; func_4C09EB98_entry_L1d 0x4C09EBBA: `movbu d0, (func_4C09EB98_Var)` ...
 	.byte	0
 
-func_4C09EB98_entry_L2d_Records:	# 38 x REC_func_4C09EB98_entry_L2d_Records (2 bytes each); read by func_4C09EB98_entry_L2d 0x4C09EBCA `movbu d0, (1, a0)`; func_4C09EB98_entry_L2d 0x4C09EBCA `movbu d2, (a0)`; func_4C09EB98_entry_L92 0x4C09EC2F `movbu d0, (a0)`
+func_4C09EB98_entry_L2d_Records:	# 38 x REC_func_4C09EB98_entry_L2d_Records (2 bytes each); read by func_4C09EB98_entry_L2d 0x4C09EBCA `movbu d0, (1, a0)`; func_4C09EB98_entry_L2d 0x4C09EBCA `movbu d2, (a0)`; func_4C09EB98_entry_L92 0x4C09EC2F `movbu d0, (a0)` (+6)
 	REC_func_4C09EB98_entry_L2d_Records		# [0]
 	REC_func_4C09EB98_entry_L2d_Records	
 	REC_func_4C09EB98_entry_L2d_Records	
@@ -38439,13 +38435,13 @@ func_4C09EB98_entry_L2d_Records:	# 38 x REC_func_4C09EB98_entry_L2d_Records (2 b
 	REC_func_4C09EB98_entry_L2d_Records		# [16]
 	REC_func_4C09EB98_entry_L2d_Records	
 	REC_func_4C09EB98_entry_L2d_Records	
-	REC_func_4C09EB98_entry_L2d_Records	f1=255
-	REC_func_4C09EB98_entry_L2d_Records	f0=255
+	REC_func_4C09EB98_entry_L2d_Records	f1=-1
+	REC_func_4C09EB98_entry_L2d_Records	f0=-1
 	REC_func_4C09EB98_entry_L2d_Records	
 	REC_func_4C09EB98_entry_L2d_Records	f0=4
 	REC_func_4C09EB98_entry_L2d_Records	
 	REC_func_4C09EB98_entry_L2d_Records		# [24]
-	REC_func_4C09EB98_entry_L2d_Records	f1=255
+	REC_func_4C09EB98_entry_L2d_Records	f1=-1
 	REC_func_4C09EB98_entry_L2d_Records	f1=1
 	REC_func_4C09EB98_entry_L2d_Records	f0=2
 	REC_func_4C09EB98_entry_L2d_Records	f0=1, f1=5
@@ -38454,7 +38450,7 @@ func_4C09EB98_entry_L2d_Records:	# 38 x REC_func_4C09EB98_entry_L2d_Records (2 b
 	REC_func_4C09EB98_entry_L2d_Records	f0=1
 	REC_func_4C09EB98_entry_L2d_Records		# [32]
 	REC_func_4C09EB98_entry_L2d_Records	
-	REC_func_4C09EB98_entry_L2d_Records	f1=255
+	REC_func_4C09EB98_entry_L2d_Records	f1=-1
 	REC_func_4C09EB98_entry_L2d_Records	f0=2, f1=5
 	REC_func_4C09EB98_entry_L2d_Records	
 	REC_func_4C09EB98_entry_L2d_Records	
@@ -38591,13 +38587,13 @@ func_4C130418_entry_Ld1_Records:	# 2 x REC_func_4C130418_entry_Ld1_Records (40 b
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6500_program.rom", 0x37D168, 0x37D16C
 
-func_4C3803AB_Var_13:	# u32, initial value of a RAM variable; read / written by func_4C3803AB 0x4C3803AB: `mov (8, a2), a1`
+func_4C3803AB_Var:	# u32, initial value of a RAM variable; read / written by func_4C3803AB 0x4C3803AB: `mov (8, a2), a1`
 	.long	0x4c133d18
 
-func_4C3803AB_Table_13:	# 2 x u16, 0..3; read by func_4C3803AB 0x4C3803AB: `movhu (0xc, a2), d0`
+func_4C3803AB_Table_2:	# 2 x u16, 0..3; read by func_4C3803AB 0x4C3803AB: `movhu (0xc, a2), d0`
 	tab_u16	3, 0
 
-func_4C3803AB_Var_14:	# u32, initial value of a RAM variable; read / written by func_4C3803AB 0x4C3803AB: `mov (0x10, a2), d0`
+func_4C3803AB_Var_2:	# u32, initial value of a RAM variable; read / written by func_4C3803AB 0x4C3803AB: `mov (0x10, a2), d0`
 	.long	20480
 
 Str_deflate_1_0_4_Copyright_1995_1996_Jean_l:	.asciz " deflate 1.0.4 Copyright 1995-1996 Jean-loup Gailly "
@@ -39249,18 +39245,19 @@ func_4C16A73D_Var_2:	# u32, initial value of a RAM variable; read / written by f
 	.long	0x500ca314
 func_4C1727CA_entry_L61_Var:	# u32, initial value of a RAM variable; read / written by func_4C1727CA_entry_L61 0x4C172830: `mov d0, (func_4C1727CA_entry_L61_Var)`; func_4C1727CA_entry_Ld1 0x4C1728A0: `mov d0, (func_4C1727CA_entry_L61_Var)` ...
 	.long	0x97800000
-data_50006E38:
-	# 50 bytes the code takes the address of: func_4C172748 0x4C172748 `call dly_tsk_entry, [d2,a2], 0x18` (+0, arg a1); func_4C17277E 0x4C17277E `call func_4C172748_entry, [d2], 0x10` (+0, arg a1); func_4C1727CA 0x4C1727CA `call func_4C17277E_entry, [d2,d3,a2,a3], 0x58` (+0, arg a1) (+6 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	188, 3, 37, 17, 188, 0, 190, 3, 192, 3, 198, 3, 214, 3, 238, 3	# +0
-	tab_u8	34, 4, 150, 4, 34, 6, 62, 5, 8, 192, 72, 252, 53, 61, 38, 232	# +16
-	tab_u8	188, 3, 193, 218, 242, 242, 222, 250, 10, 217, 41, 40, 8, 2, 148, 0	# +32
-	tab_u8	24, 3	# +48
-data_50006E6A:
-	# 50 bytes the code takes the address of: func_4C172748 0x4C172748 `call dly_tsk_entry, [d2,a2], 0x18` (+0, arg a1); func_4C17277E 0x4C17277E `call func_4C172748_entry, [d2], 0x10` (+0, arg a1); func_4C1727CA 0x4C1727CA `call func_4C17277E_entry, [d2,d3,a2,a3], 0x58` (+0, arg a1) (+7 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
-	tab_u8	224, 0, 37, 17, 37, 0, 226, 0, 230, 0, 238, 0, 254, 0, 34, 1	# +0
-	tab_u8	104, 1, 225, 64, 93, 254, 147, 149, 81, 186, 227, 200, 211, 19, 111, 13	# +16
-	tab_u8	224, 0, 251, 233, 206, 2, 82, 254, 229, 227, 22, 219, 24, 1, 56, 3	# +32
-	tab_u8	44, 2	# +48
+func_4C17277E_entry_Le_Var:	# u16, initial value of a RAM variable; read / written by func_4C17277E_entry_Le 0x4C172791: `movhu (a0), d1`
+	.word	956
+
+func_4C17277E_entry_Le_Table:	# 24 x u16, 148..64584; read by func_4C17277E_entry_Le 0x4C172791: `movhu (2, a0), d1`
+	tab_u16	4389, 188, 958, 960, 966, 982, 1006, 1058, 1174, 1570, 1342, 49160	# [0]
+	tab_u16	64584, 15669, 59430, 956, 56001, 62194, 64222, 55562, 10281, 520, 148, 792	# [12]
+
+func_4C17277E_entry_Le_Var_2:	# u16, initial value of a RAM variable; read / written by func_4C17277E_entry_Le 0x4C172791: `movhu (a0), d1`
+	.word	224
+
+func_4C17277E_entry_Le_Table_2:	# 24 x u16, 37..65117; read by func_4C17277E_entry_Le 0x4C172791: `movhu (2, a0), d1`
+	tab_u16	4389, 37, 226, 230, 238, 254, 290, 360, 16609, 65117, 38291, 47697	# [0]
+	tab_u16	51427, 5075, 3439, 224, 59899, 718, 65106, 58341, 56086, 280, 824, 556	# [12]
 
 Str_empty_254:	.asciz "\x10'"
 	.align	4, 0x00	# pad after Str_empty_254
