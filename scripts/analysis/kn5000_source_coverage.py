@@ -131,13 +131,15 @@ ROMS = {
     "hdae5000": ("HD-AE5000", 524288),
     "hdae5000_v2_01i": ("HD-AE5000 v2.01i", 524288),
     "hdae5000_v1_15i": ("HD-AE5000 v1.15i", 524288),
+    "hdae5000_v1_10i": ("HD-AE5000 v1.10i", 524288),
 }
 # Extra include directories, as the Makefile passes them with -I: hdae5000_v2_01i/ is
 # assembled with `-I hdae5000_v2_01i -I hdae5000`, so the pictures it shares with
 # v2.06i (includes/generated/HDAE5000_Logo.bin and the like) resolve from hdae5000/.
-EXTRA_INC = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"]}
+EXTRA_INC = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"],
+             "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"]}
 # Number of '; Was: .incbin' fossil comments each root carries (selftest step 2).
-FOSSIL_WAS = {"hdae5000": 10, "hdae5000_v2_01i": 8, "hdae5000_v1_15i": 6}
+FOSSIL_WAS = {"hdae5000": 10, "hdae5000_v2_01i": 8, "hdae5000_v1_15i": 6, "hdae5000_v1_10i": 6}
 # ⚠ NOTE ON THE 9TH KN5000 IMAGE: `kn5000_subprogram_v142_compressed` (the 9th
 # name in assert_byte_identical.py's PAIRS) is the SAME v142/subcpu source,
 # LZSS-compressed at build time -- there is no separate .s tree for it, so it

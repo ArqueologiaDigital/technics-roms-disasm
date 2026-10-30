@@ -161,7 +161,7 @@ everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3 floppy
 gate: all
 	python3 scripts/analysis/assert_images_assemble.py
 	python3 scripts/analysis/assert_byte_identical.py
-	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-v5-reference verify-hdae5000-v201-reference verify-hdae5000-v115i-reference verify-subprogram-update-images
+	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-v5-reference verify-hdae5000-v201-reference verify-hdae5000-v115i-reference verify-hdae5000-v110i-reference verify-subprogram-update-images
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 	python3 scripts/generators/create_v140_subcpu_source.py --check
 	python3 scripts/analysis/hdae5000_obj_constants_check.py
@@ -215,7 +215,7 @@ gate-all: gate gate-wsa1 gate-kn7000 gate-kn2400 gate-kn6000 gate-kn6500 gate-hd
 	python3 scripts/analysis/assert_toolchain_is_a_prerequisite.py
 
 # LLVM build targets (primary)
-llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom original_ROMs/kn5000_v6_program.rom rebuilt_ROMs/kn5000_v6_program.llvm.rom original_ROMs/kn5000_v5_program.rom rebuilt_ROMs/kn5000_v5_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom original_ROMs/hd-ae5000_v2_01i.ic4 rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom original_ROMs/hd-ae5000_v1_15i.ic4 rebuilt_ROMs/hd-ae5000_v1_15i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
+llvm-all: rebuilt_ROMs/kn5000_v10_program.llvm.rom rebuilt_ROMs/kn5000_v9_program.llvm.rom original_ROMs/kn5000_v8_program.rom rebuilt_ROMs/kn5000_v8_program.llvm.rom rebuilt_ROMs/kn5000_v7_program.llvm.rom original_ROMs/kn5000_v6_program.rom rebuilt_ROMs/kn5000_v6_program.llvm.rom original_ROMs/kn5000_v5_program.rom rebuilt_ROMs/kn5000_v5_program.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom rebuilt_ROMs/kn5000_subprogram_v141.llvm.rom rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom rebuilt_ROMs/kn5000_subprogram_v140.llvm.rom rebuilt_ROMs/kn5000_subprogram_v140_compressed.rom rebuilt_ROMs/kn5000_subcpu_boot.llvm.rom rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom original_ROMs/hd-ae5000_v2_01i.ic4 rebuilt_ROMs/hd-ae5000_v2_01i.llvm.rom original_ROMs/hd-ae5000_v1_15i.ic4 rebuilt_ROMs/hd-ae5000_v1_15i.llvm.rom original_ROMs/hd-ae5000_v1_10i.ic4 rebuilt_ROMs/hd-ae5000_v1_10i.llvm.rom rebuilt_ROMs/kn5000_table_data.llvm.rom rebuilt_ROMs/kn5000_custom_data.llvm.rom
 
 # ============================================================================
 # C-compiled ScreenData paramblocks
@@ -1379,6 +1379,22 @@ rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf: rebuilt_ROMs/hd-ae5000_v1_15i.llvm.o hda
 	$(LLVM_LLD) -T hdae5000_v1_15i/hdae5000.ld -o $@ $<
 
 rebuilt_ROMs/hd-ae5000_v1_15i.llvm.rom: rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf
+	$(LLVM_OBJCOPY) -O binary $< $@
+
+# The v1.10i tree, hdae5000_v1_10i/, ported from hdae5000_v1_15i/ by
+# notes/hdae5000-versions-2026-10-24/port-edits-v1_10i/replay.sh.  It takes v1.x's
+# shared/event_codes.s and the boot splash from hdae5000_v1_15i/ (second -I), the rest from
+# hdae5000/ (third -I).
+HDAE_V110_SRC = $(wildcard hdae5000_v1_10i/*.s)
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.o: $(HDAE_V110_SRC) $(HDAE_V115_SRC) $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
+	mkdir -p rebuilt_ROMs
+	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000_v1_10i -I hdae5000_v1_15i -I hdae5000 -o $@ hdae5000_v1_10i/hd-ae5000_v1_10i.s
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.elf: rebuilt_ROMs/hd-ae5000_v1_10i.llvm.o hdae5000_v1_10i/hdae5000.ld
+	$(LLVM_LLD) -T hdae5000_v1_10i/hdae5000.ld -o $@ $<
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.rom: rebuilt_ROMs/hd-ae5000_v1_10i.llvm.elf
 	$(LLVM_OBJCOPY) -O binary $< $@
 
 # The six Feature Demo BMPs (FTBMP01..06.BMP) are built from their committed PNGs

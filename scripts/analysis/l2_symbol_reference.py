@@ -69,6 +69,7 @@ PAIRS = {
     "table_data":  "kn5000_table_data.llvm.elf",
     "hdae5000":    "hd-ae5000_v2_06i.llvm.elf",
     "hdae5000_v2_01i": "hd-ae5000_v2_01i.llvm.elf",
+    "hdae5000_v1_10i": "hd-ae5000_v1_10i.llvm.elf",
     "hdae5000_v1_15i": "hd-ae5000_v1_15i.llvm.elf",
 }
 

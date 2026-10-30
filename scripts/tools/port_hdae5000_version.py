@@ -182,9 +182,17 @@ class Build:
         collect(main)
         self.files, self.texts = files, texts
         for i, rel in enumerate(files):
-            out = []
+            out, in_macro = [], False
             for n, ln in enumerate(texts[rel], 1):
-                out.append(b"__PM_%d_%d:" % (i, n))
+                # no marker inside a .macro body: each expansion would define it again
+                # (hdae5000/shared/naka_ui_macros.s is part of the v2.06i tree)
+                head = ln.split(b";", 1)[0].strip()
+                if head.startswith(b".macro"):
+                    in_macro = True
+                if not in_macro:
+                    out.append(b"__PM_%d_%d:" % (i, n))
+                if head.startswith(b".endm"):
+                    in_macro = False
                 out.append(ln)
             os.makedirs(os.path.dirname(os.path.join(work, rel)) or work, exist_ok=True)
             open(os.path.join(work, rel), "wb").write(b"\n".join(out))
@@ -233,9 +241,20 @@ class Build:
                     walk(files.index(m.group(1).decode()))
         walk(0)
         self.lines = []                     # (file, lineno, start, end)
+        # a line without a marker (a .macro body line) emits nothing where it stands: it
+        # takes the address of the next marked line
+        nxt, addr_of = None, {}
+        for key in reversed(flat):
+            if key in mark:
+                nxt = mark[key]
+            addr_of[key] = nxt
         for j, (fi, n) in enumerate(flat):
-            s = mark[(fi, n)]
-            e = mark[flat[j + 1]] if j + 1 < len(flat) else s
+            s = addr_of[(fi, n)]
+            e = addr_of[flat[j + 1]] if j + 1 < len(flat) else s
+            if s is None:
+                s = e = 0
+            if e is None or (fi, n) not in mark:
+                e = s
             if INC_RE.match(texts[files[fi]][n - 1]):
                 e = s
             self.lines.append((files[fi], n, s, e))

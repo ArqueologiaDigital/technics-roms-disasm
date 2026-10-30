@@ -74,6 +74,7 @@ PAIRS = [
     # uncommitted copy whose SHA-1 the Makefile checks.
     ("hd-ae5000_v2_01i", "hd-ae5000_v2_01i.ic4", "hd-ae5000_v2_01i.llvm.rom"),
     ("hd-ae5000_v1_15i", "hd-ae5000_v1_15i.ic4", "hd-ae5000_v1_15i.llvm.rom"),
+    ("hd-ae5000_v1_10i", "hd-ae5000_v1_10i.ic4", "hd-ae5000_v1_10i.llvm.rom"),
     # Waveform ROM IC307 (waveform/); its original is an uncommitted copy whose SHA-1
     # the Makefile checks (KN5000_IC307_REF).
     ("kn5000_waveform_ic307", "kn5000_waveform_rom.ic307", "kn5000_waveform_ic307.llvm.rom"),

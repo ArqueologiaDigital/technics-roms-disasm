@@ -77,6 +77,7 @@ TREES = {
     "kn5000-hdae5000":   ["hdae5000"],
     "kn5000-hdae201":    ["hdae5000_v2_01i"],
     "kn5000-hdae115":    ["hdae5000_v1_15i"],
+    "kn5000-hdae110":    ["hdae5000_v1_10i"],
     "kn5000-waveform":   ["waveform"],
     "kn5000-rhythm":     ["rhythm_data"],
     "kn5000-floppy":     ["floppy/kn5000"],
@@ -108,6 +109,7 @@ TREES = {
 EXTRA_INCLUDE = {
     "kn5000-hdae201":    ["hdae5000"],
     "kn5000-hdae115":    ["hdae5000"],
+    "kn5000-hdae110":    ["hdae5000_v1_15i", "hdae5000"],
 }
 
 MEDIA = {"jpg", "jpeg", "bmp", "png", "gif", "tif", "tiff", "wav", "aif", "aiff", "mid"}

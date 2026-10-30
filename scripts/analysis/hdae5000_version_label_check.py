@@ -27,7 +27,9 @@ INPUTS
     marker build, with --save-temp-labels so that .L labels are compared too).
 
 RUN
-    python3 scripts/analysis/hdae5000_version_label_check.py v2_01i [--all]
+    python3 scripts/analysis/hdae5000_version_label_check.py v2_01i [--all] [--base v2_06i]
+    (--base: the tree compared with, default v2.06i; v1.15i was ported from v2_01i and
+    v1.10i from v1_15i.  The GUI's macro-made labels are left out.)
     Prints a summary, then the moved / pile / orphan rows (--all: also the
     unreferenced new labels).  Exit status 0 always: this is a review list.
 """
@@ -140,8 +142,12 @@ def main():
                  os.path.join(P.SCRATCH, "port_hdae5000_labelcheck_b"))
     assert ba.ok and bb.ok, (ba.stderr[-500:], bb.stderr[-500:])
     ia, ib = ba.img, bb.img
-    sa = {n: a for a, n in ba.syms if not n.startswith("__PM_")}
-    sb = {n: a for a, n in bb.syms if not n.startswith("__PM_")}
+    # the GUI's labels (HdaeUi*, _ui_*) are made by the class macros from the tree that
+    # scripts/converters/hdae5000_ui_tree.py generates and checks against the ROM: not
+    # reviewed here
+    gui = ("__PM_", "_ui_", "HdaeUi", ".L_ui")
+    sa = {n: a for a, n in ba.syms if not n.startswith(gui)}
+    sb = {n: a for a, n in bb.syms if not n.startswith(gui)}
     da, db = decode(ia, routine_names(sa)), decode(ib, routine_names(sb))
     # the code ends where the registered-object name pool begins, in each version
     ea, eb = sa.get("HDAE5000_Str_End_ObjNames", CODE_END), sb.get("HDAE5000_Str_End_ObjNames", CODE_END)
