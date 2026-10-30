@@ -1249,6 +1249,17 @@ indexed-images:
 	python3 scripts/build/mono_images.py build
 	python3 scripts/build/se_bitmaps.py build
 
+# The pictures the NAKA GUI C holds as initializers come from <tree>/maincpu/images/*.png:
+# scripts/build/c_bitmaps.py writes the initializers' values from the PNGs before clang compiles
+# the C (an unchanged PNG leaves the C untouched).  Lane media-files, 2026-10-30.
+C_BITMAP_PNGS := $(wildcard $(foreach t,v10 v9 v7 v6 v5,$(t)/maincpu/images/*.png))
+rebuilt_ROMs/c_bitmaps.stamp: $(C_BITMAP_PNGS) scripts/build/c_bitmaps.py
+	mkdir -p rebuilt_ROMs
+	python3 scripts/build/c_bitmaps.py build
+	@touch $@
+$(foreach t,v10 v9 v7 v6 v5,$(addprefix $(t)/maincpu/includes/generated/,naka_technichord_strings.bin \
+	naka_style_bitmaps.bin naka_widget_tables_2.bin naka_widget_descriptors.bin naka_disk_warning.bin)): rebuilt_ROMs/c_bitmaps.stamp
+
 hdae5000-images:
 	python3 scripts/build/hdae5000_images.py build
 # HDAE5000_Bitmap_Button01 comes from its PNG through indexed_images.py (lane media-files)
