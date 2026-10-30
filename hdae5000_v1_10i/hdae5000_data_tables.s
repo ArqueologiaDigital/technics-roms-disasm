@@ -187,7 +187,7 @@ ClassSig_AcLanguageText1:
 	.byte 0x00			; 0x29D16E (SigPtr target of AcLanguageText1, empty signature)
 	.zero 1			; 0x29D8CF (unreferenced pad)
 ClassName_AcLanguageText1:
-	.asciz "AcLanguageText1"			; 0x29D170
+	.asciz "AcLanguageText1"			; 0x29D074
 ClassSig_IvScreenR2:
 	.byte 0x00			; 0x29D180 (SigPtr target of IvScreenR2, empty signature)
 	.zero 1			; 0x29D8E1 (unreferenced pad)
@@ -228,7 +228,7 @@ ClassSig_DbMemoCl:
 	.asciz "^^"			; 0x29D958
 	.zero 1			; 0x29D95B (unreferenced pad)
 ClassName_DbMemoCl:
-	.asciz "DbMemoCl"			; 0x29D1FC
+	.asciz "DbMemoCl"			; 0x29D100
 	.zero 1			; 0x29D965 (unreferenced pad)
 ClassSig_SelectList:
 	.asciz "c^ksAAnGGmA"			; 0x29D206

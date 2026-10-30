@@ -1,5 +1,5 @@
 ; ============================================================================
-; HDAE5000 initialised .data image  (ROM 0x2f899e - 0x2f95e5, 0x0c48 bytes)
+; HDAE5000 initialised .data image  (HDAE5000_DataSegmentImage .. HDAE5000_Init_Data_End)
 ;
 ; HDAE5000_Clear_Work_Buffer copies this block verbatim to RAM 0x2394ce, then
 ; HDAE5000_Handler_Registration publishes six of the tables below to the main
@@ -685,7 +685,7 @@ HDAE5000_ScreenName_Table:
 	.long HDAE5000_Str_End_ScreenNames	; empty name terminates the list
 
 ; ----------------------------------------------------------------------------
-; File/name editing scalars and buffers  (RAM 0x239fd2 onwards)
+; File/name editing buffers (v1.x has no file-format version words in front of them)
 ; ----------------------------------------------------------------------------
 HDAE5000_Name_ColumnRuler:
 	.asciz "123456789012345678901234567890"
@@ -711,11 +711,11 @@ HDAE5000_Browser_PageRows:
 	.zero 10		; HDAE5000_RAM_MainWorkspacePtr's slot + 6 bytes; the copied image ends here
 
 ; ----------------------------------------------------------------------------
-; Tail of the ROM (0x2f95e6-0x2fffff)
-;   The .data image ends at 0x2f95e5 - HDAE5000_Clear_Work_Buffer copies
-;   exactly 0x0c48 bytes.  The 0x000e word at 0x2f95e6 is the first thing
-;   past the copied window and is never transferred to RAM; everything after
-;   it is 0x00 fill up to the 0x300000 ROM end.
+; Tail of the ROM
+;   The .data image ends here: the boot copy loop copies it from HDAE5000_DataSegmentImage
+;   up to HDAE5000_Init_Data_End, which the ROM header's second long also names.  The
+;   0x000e word after it is the first thing past the copied window and is never
+;   transferred to RAM; everything after it is 0x00 fill up to the 0x300000 ROM end.
 ; ----------------------------------------------------------------------------
 HDAE5000_Init_Data_End:
 	.short 14

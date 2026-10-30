@@ -527,7 +527,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x3f	; entry count = 67 (v2.06i: 0x45 = 69)
+	ldw (xsp + 8), 0x3f	; entry count = 63 (v2.06i: 0x45 = 69)
 	lda	xwa, (0x23c914:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -545,7 +545,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_ApFunctionProc)             ; Handler function via table offset 0x0248
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x3f	; entry count = 67 (v2.06i: 0x45 = 69)
+	ldw (xsp + 8), 0x3f	; entry count = 63 (v2.06i: 0x45 = 69)
 	lda	xwa, (0x23ca14:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -563,7 +563,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
+	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 10 bytes
 	lda	xwa, (0x23cbc0:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -581,7 +581,7 @@ HDAE5000_Handler_Registration:
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XWA, (xwa + RootFn_FunctionProc)             ; Handler function via table offset 0x0244
 	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 13 bytes
+	ldw (xsp + 8), 0xa	; ld (XSP+0x08), 000Dh  ; size = 10 bytes
 	lda	xwa, (0x23cbec:24)
 	ld (xsp + 10), xwa
 	lda xwa, (xsp)
@@ -3682,15 +3682,15 @@ HDAE5000_HardTestPage:
 	ld xwa, xiz					; ee 88 — restore context
 	ld xbc, (xsp + 0x08)				; af 08 21
 	ld xde, (xsp + 0x04)				; af 04 22
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 23
+	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 23
 	ld xhl, (xhl + WS_RootFnTable)             ; e3 ed 0a 0e 23 — xhl = (xhl+0x0e0a)
 	ld_sril xhl, (xhl + RootFn_InheritedProc)             ; e3 ed dc 00 23 — xhl = (xhl+0x00dc) indirect call
 	call (xhl)					; b3 e8
-	lda xwa, (HDAE5000_Str_Test:24); f2 ec 19 2e 30
+	lda xwa, (HDAE5000_Str_Test:24); f2 58 a9 2c 30
 	ld xbc, xwa					; e8 89
 	ld xwa, xiz					; ee 88
 	ld xde, xbc					; e9 8a
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 21
+	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 21
 	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21 — xbc = (xbc+0x0e0a)
 	ld_sril xhl, (xbc + RootFn_SendEvent)             ; e3 e5 00 01 23 — xhl = (xbc+0x0100) callback
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
@@ -3710,32 +3710,32 @@ HDAE5000_HardTestPage:
 	jrl	nz, .Leh_epilogue
 	; XDE == 0x09: register event 0x4B, call init, register vtable callback
 .Leh_xde_09:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23 — callback ptr
-	ld xwa, HDAE5000_OBJ_PPORT_SW				; 40 4c 00 7f 00
+	ld xwa, HDAE5000_OBJ_PPORT_SW				; 40 48 00 7f 00
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
 	ld xde, 1:i3					; ea a9
 	call (xhl)					; b3 e8 — register event
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_UpdateScreen)             ; e3 e1 84 00 23 — (xwa+0x0084) init fn
 	call (xhl)					; b3 e8 — call init
 	calr	HDAE5000_YieldUntilSem1Zero
-	lda xwa, (HDAE5000_Str_PPORTTEST:24); f2 f2 19 2e 30
+	lda xwa, (HDAE5000_Str_PPORTTEST:24); f2 5e a9 2c 30
 	calr HDAE5000_HardTest_Print			; 1e 17 ff — register handler
-	calr HDAE5000_HardTest_PortTest		; 1e 47 03
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	calr HDAE5000_HardTest_PortTest		; 1e 45 03
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_PPORT_SW				; 40 4c 00 7f 00
+	ld xwa, HDAE5000_OBJ_PPORT_SW				; 40 48 00 7f 00
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
 	ld xde, 0:i3					; ea a8
 	call (xhl)					; b3 e8 — unregister event
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xix, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 24 — xix = callback
-	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 4a 00 7f 00
+	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 46 00 7f 00
 	ld xbc, EVT_GET_PARAM				; 41 6b 00 e0 01
 	ld xde, 0:i3					; ea a8
 	call (xix)					; b4 e8
@@ -3747,7 +3747,7 @@ HDAE5000_HardTestPage:
 	ld xwa, 0x0000000a				; 40 0a 00 00 00
 	push xwa					; 38
 	ld xbc, xiz					; ee 89
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_SetApTimer)             ; e3 e1 10 04 23 — (xwa+0x0410) dispatch
 	ld xwa, 0x00000029				; 40 29 00 00 00
@@ -3756,32 +3756,32 @@ HDAE5000_HardTestPage:
 	jrl	t, .Leh_epilogue
 	; XDE == 0x0A: register event 0x4D, write sector
 .Leh_xde_0a:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_HDD_SW				; 40 4e 00 7f 00
+	ld xwa, HDAE5000_OBJ_HDD_SW				; 40 4a 00 7f 00
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
 	ld xde, 1:i3					; ea a9
 	call (xhl)					; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_UpdateScreen)             ; e3 e1 84 00 23 — init fn
 	call (xhl)					; b3 e8
 	calr	HDAE5000_YieldUntilSem1Zero
-	lda xwa, (HDAE5000_Str_HDDIDREAD:24); f2 fe 19 2e 30
-	calr HDAE5000_HardTest_Print			; 1e 6b fe
-	calr HDAE5000_HardTest_HddIdRead			; 1e e2 02
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	lda xwa, (HDAE5000_Str_HDDIDREAD:24); f2 6a a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e 6d fe
+	calr HDAE5000_HardTest_HddIdRead			; 1e e1 02
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_HDD_SW				; 40 4e 00 7f 00
+	ld xwa, HDAE5000_OBJ_HDD_SW				; 40 4a 00 7f 00
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
 	ld xde, 0:i3					; ea a8
 	call (xhl)					; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xix, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 24
-	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 4a 00 7f 00
+	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 46 00 7f 00
 	ld xbc, EVT_GET_PARAM				; 41 6b 00 e0 01
 	ld xde, 0:i3					; ea a8
 	call (xix)					; b4 e8
@@ -3792,7 +3792,7 @@ HDAE5000_HardTestPage:
 	ld xwa, 0x0000000b				; 40 0b 00 00 00
 	push xwa					; 38
 	ld xbc, xiz					; ee 89
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_SetApTimer)             ; e3 e1 10 04 23
 	ld xwa, 0x00000029				; 40 29 00 00 00
@@ -3801,22 +3801,22 @@ HDAE5000_HardTestPage:
 	jrl	t, .Leh_epilogue
 	; XDE == 0x0B: register event 0x4C, read/check disk status
 .Leh_xde_0b:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_FD_SW				; 40 4d 00 7f 00
+	ld xwa, HDAE5000_OBJ_FD_SW				; 40 49 00 7f 00
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
 	ld xde, 1:i3					; ea a9
 	call (xhl)					; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_UpdateScreen)             ; e3 e1 84 00 23
 	call (xhl)					; b3 e8
 	calr	HDAE5000_YieldUntilSem1Zero
-	lda xwa, (HDAE5000_Str_FDTEST:24); f2 0a 1a 2e 30
-	calr HDAE5000_HardTest_Print			; 1e bf fd
+	lda xwa, (HDAE5000_Str_FDTEST:24); f2 76 a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e c2 fd
 	; Check disk status via 0x0e88 table
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_HamaFnTable)             ; e3 e1 88 0e 20 — (xwa+0x0e88)
 	ld xix, (xwa + HamaFn_GetMediaType)				; a8 08 24
 	call (xix)					; b4 e8
@@ -3825,34 +3825,34 @@ HDAE5000_HardTestPage:
 	cp l, 2:i3					; cf da
 	jr nz, .Leh_status_other			; 6e 27
 .Leh_status_2or3:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_HamaFnTable)             ; e3 e1 88 0e 20
 	ld xix, (xwa + HamaFn_FDLoadSaveTest)				; a8 04 24
 	call (xix)					; b4 e8
 	cp hl, 0:i3					; db d8
 	jr nz, .Leh_status_nonzero			; 6e 0a
-	lda xwa, (HDAE5000_Str_OK:24); f2 12 1a 2e 30
-	calr HDAE5000_HardTest_Print			; 1e 8d fd
+	lda xwa, (HDAE5000_Str_OK:24); f2 7e a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e 90 fd
 	jr t, .Leh_after_status			; 68 12
 .Leh_status_nonzero:
-	lda xwa, (HDAE5000_Str_ERROR:24); f2 16 1a 2e 30
-	calr HDAE5000_HardTest_Print			; 1e 83 fd
+	lda xwa, (HDAE5000_Str_ERROR:24); f2 82 a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e 86 fd
 	jr t, .Leh_after_status			; 68 08
 .Leh_status_other:
-	lda xwa, (HDAE5000_Str_ERROR_HardTestPage:24); f2 1c 1a 2e 30
-	calr HDAE5000_HardTest_Print			; 1e 79 fd
+	lda xwa, (HDAE5000_Str_ERROR_HardTestPage:24); f2 88 a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e 7c fd
 .Leh_after_status:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_FD_SW				; 40 4d 00 7f 00
+	ld xwa, HDAE5000_OBJ_FD_SW				; 40 49 00 7f 00
 	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
 	ld xde, 0:i3					; ea a8
 	call (xhl)					; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xix, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 24
-	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 4a 00 7f 00
+	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 46 00 7f 00
 	ld xbc, EVT_GET_PARAM				; 41 6b 00 e0 01
 	ld xde, 0:i3					; ea a8
 	call (xix)					; b4 e8
@@ -3863,7 +3863,7 @@ HDAE5000_HardTestPage:
 	ld xwa, 0x00000009				; 40 09 00 00 00
 	push xwa					; 38
 	ld xbc, xiz					; ee 89
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_SetApTimer)             ; e3 e1 10 04 23
 	ld xwa, 0x00000029				; 40 29 00 00 00
@@ -3872,39 +3872,39 @@ HDAE5000_HardTestPage:
 	jrl t, .Leh_epilogue				; 78 91 00
 	; XDE == 0x0C: check device, show status messages
 .Leh_xde_0c:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xix, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 24
-	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 4a 00 7f 00
+	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 46 00 7f 00
 	ld xbc, EVT_GET_PARAM				; 41 6b 00 e0 01
 	ld xde, 0:i3					; ea a8
 	call (xix)					; b4 e8
 	cp xhl, 0x00000001				; eb cf 01 00 00 00
 	jr nz, .Leh_xde_0c_no_device			; 6e 27
 	; Device present: show "connected" message
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 4a 00 7f 00
+	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 46 00 7f 00
 	ld xbc, EVT_SET_PARAM				; 41 3b 00 e0 01
 	ld xde, 0:i3					; ea a8
 	call (xhl)					; b3 e8
-	lda xwa, (HDAE5000_Str_STOPTESTLOOP:24); f2 22 1a 2e 30
-	calr HDAE5000_HardTest_Print			; 1e c0 fc
+	lda xwa, (HDAE5000_Str_STOPTESTLOOP:24); f2 8e a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e c3 fc
 	jr t, .Leh_epilogue				; 68 45
 .Leh_xde_0c_no_device:
 	; Device not present: show "not connected" message
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23
-	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 4a 00 7f 00
+	ld xwa, HDAE5000_OBJ_RUN_STOP				; 40 46 00 7f 00
 	ld xbc, EVT_SET_PARAM				; 41 3b 00 e0 01
 	ld xde, 1:i3					; ea a9
 	call (xhl)					; b3 e8
-	lda xwa, (HDAE5000_Str_STARTTESTLOOP:24); f2 32 1a 2e 30
-	calr HDAE5000_HardTest_Print			; 1e 99 fc
+	lda xwa, (HDAE5000_Str_STARTTESTLOOP:24); f2 9e a9 2c 30
+	calr HDAE5000_HardTest_Print			; 1e 9c fc
 	; Final cleanup: call deregister via vtable
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_PostEvent)             ; e3 e1 04 01 23 — (xwa+0x0104) deregister
 	ld xwa, 0xffffffff				; 40 ff ff ff ff
@@ -3916,7 +3916,7 @@ HDAE5000_HardTestPage:
 	ld xwa, xiz					; ee 88
 	ld xbc, (xsp + 0x08)				; af 08 21
 	ld xde, (xsp + 0x04)				; af 04 22
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 23
+	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 23
 	ld xhl, (xhl + WS_RootFnTable)             ; e3 ed 0a 0e 23 — xhl = (xhl+0x0e0a)
 	ld_sril xix, (xhl + RootFn_InheritedProc)             ; e3 ed dc 00 24 — xix = (xhl+0x00dc)
 	call (xix)					; b4 e8
@@ -4078,7 +4078,7 @@ HDAE5000_HardTest_HddIdRead:
 	lda xwa, (xsp + 20)
 	call HDAE5000_ULongToFloat
 	lda xbc, (xsp + 20)
-	lda xde, (HDAE5000_Float_100_HddIdRead:24); 0x2E1AB8
+	lda xde, (HDAE5000_Float_100_HddIdRead:24); 0x2CAA24
 	lda xwa, (xsp + 20)
 	call HDAE5000_FloatDiv
 	lda xbc, (xsp + 20)
@@ -4099,13 +4099,13 @@ HDAE5000_HardTest_HddIdRead:
 	; Transfer results
 	lda xwa, (xsp + 24)
 	calr HDAE5000_HardTest_Print
-	lda xwa, (HDAE5000_Str_Empty:24); 0x2E1A94
+	lda xwa, (HDAE5000_Str_Empty:24); 0x2CAA00
 	calr HDAE5000_HardTest_Print
-	lda xwa, (HDAE5000_Str_HDDOK:24); 0x2E1A96
+	lda xwa, (HDAE5000_Str_HDDOK:24); 0x2CAA02
 	calr HDAE5000_HardTest_Print
 	jr t, .Lpws_done
 .Lpws_error:
-	lda xwa, (HDAE5000_Str_HDDNG:24); 0x2E1AA6
+	lda xwa, (HDAE5000_Str_HDDNG:24); 0x2CAA12
 	calr HDAE5000_HardTest_Print
 .Lpws_done:
 	lda xsp, (xsp + 124)		; deallocate stack frame

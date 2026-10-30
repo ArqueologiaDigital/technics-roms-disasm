@@ -3118,20 +3118,20 @@ HDAE5000_FlsOverWrSwCatch_Epilogue:
 ; selected flag (FdList+0x114) is set, a space otherwise.
 ; ---------------------------------------------------------------------------
 HDAE5000_FdList_Redisplay:
-	lda xwa, (HDAE5000_RAM_FdList:24); f2 9c aa 22 30
+	lda xwa, (HDAE5000_RAM_FdList:24); f2 54 aa 22 30
 	ld xde, xwa				; e8 8a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
-	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 e0 00 7f 00
-	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
+	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 db 00 7f 00
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 09 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Deregister event 0x01C0000F
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 e0 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 db 00 7f 00
 	ld xbc, EVT_PARA_DRAW			; 41 0f 00 c0 01
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
@@ -3147,7 +3147,7 @@ HDAE5000_FdList_Redisplay:
 	add wa, 0x000a				; d8 c8 0a 00
 	extz xwa				; e8 12
 	add xwa, 0x0000000e			; e8 c8 0e 00 00 00
-	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 54 aa 22 00
 	add xbc, xwa				; e8 81
 	ld	(xbc), 0x20
 
@@ -3155,7 +3155,7 @@ HDAE5000_FdList_Redisplay:
 	ld wa, de				; da 88
 	extz xwa				; e8 12
 	add xwa, 0x00000114			; e8 c8 14 01 00 00
-	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 54 aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_loop_next			; 6e xx
@@ -3166,7 +3166,7 @@ HDAE5000_FdList_Redisplay:
 	add wa, 0x000a				; d8 c8 0a 00
 	extz xwa				; e8 12
 	add xwa, 0x0000000e			; e8 c8 0e 00 00 00
-	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 54 aa 22 00
 	add xbc, xwa				; e8 81
 	ld	(xbc), 0x2a
 
@@ -3177,38 +3177,38 @@ HDAE5000_FdList_Redisplay:
 
 .Lfbs_after_loop:
 	; --- Register events for second buffer at 0x22AAAA ---
-	lda xwa, (HDAE5000_RAM_FdList+14:24); f2 aa aa 22 30
+	lda xwa, (HDAE5000_RAM_FdList+14:24); f2 62 aa 22 30
 	ld xde, xwa				; e8 8a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d9 00 7f 00
-	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
+	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d5 00 7f 00
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 09 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Deregister event 0x01C0000F
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d9 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d5 00 7f 00
 	ld xbc, EVT_PARA_DRAW			; 41 0f 00 c0 01
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
 
 	; Register event 0x01C0000D (handler 1)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LINE1			; 40 db 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LINE1			; 40 d6 00 7f 00
 	ld xbc, EVT_DRAW			; 41 0d 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
 
 	; Register event 0x01C0000D (handler 2) — tail call via jp
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_LINE2			; 40 da 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_LINE2			; 40 d7 00 7f 00
 	ld xbc, EVT_DRAW			; 41 0d 00 c0 01
 	ld xde, 0:i3				; ea a8
 	jp (xhl)				; b3 d8 — tail call
@@ -3225,16 +3225,16 @@ HDAE5000_CopyToHDScreen:
 
 	; Event 0x01EA0006: format params and check active files
 .Lfbs_evt_0006:
-	ld xwa, HDAE5000_OBJ_CP_FD_DIRBOX			; 40 e8 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_DIRBOX			; 40 e0 00 7f 00
 	calr HDAE5000_DirList_BuildPage		; 1e xx xx
 	calr HDAE5000_Count_Active_Files	; 1e xx xx
 	cp hl, 0:i3				; db d8
 	jr z, .Lfbs_evt_0006_empty		; 66 xx
 	; Has active files: register status 0x007f00e2
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_CP_FD_DIRSEL			; 40 e4 00 7f 00
+	ld xwa, HDAE5000_OBJ_CP_FD_DIRSEL			; 40 dc 00 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
@@ -3242,10 +3242,10 @@ HDAE5000_CopyToHDScreen:
 
 .Lfbs_evt_0006_empty:
 	; No active files: register status 0x007f027a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
-	ld xwa, HDAE5000_OBJ_ATTEN_CPFD_MARK			; 40 79 02 7f 00
+	ld xwa, HDAE5000_OBJ_ATTEN_CPFD_MARK			; 40 6e 02 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
@@ -3255,20 +3255,20 @@ HDAE5000_CopyToHDScreen:
 .Lfbs_evt_0008:
 	ld xwa, xde				; ea 88
 	add xwa, 0x00000100			; e8 c8 00 01 00 00
-	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 54 aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_evt_done			; 6e xx
 	; First flag is set: check second flag at +0x0114
 	ld xwa, xde				; ea 88
 	add xwa, 0x00000114			; e8 c8 14 01 00 00
-	ld xbc, HDAE5000_RAM_FdList			; 41 9c aa 22 00
+	ld xbc, HDAE5000_RAM_FdList			; 41 54 aa 22 00
 	add xbc, xwa				; e8 81
 	cp	(xbc), 0x01
 	jr nz, .Lfbs_evt_0008_set1		; 6e xx
 	; Second flag is set: clear it to 0
 	add xde, 0x00000114			; ea c8 14 01 00 00
-	ld xwa, HDAE5000_RAM_FdList			; 40 9c aa 22 00
+	ld xwa, HDAE5000_RAM_FdList			; 40 54 aa 22 00
 	add xwa, xde				; ea 80
 	ld	(xwa), 0x00
 	jr t, .Lfbs_evt_0008_done		; 68 xx
@@ -3276,7 +3276,7 @@ HDAE5000_CopyToHDScreen:
 .Lfbs_evt_0008_set1:
 	; Second flag not set: set it to 1
 	add xde, 0x00000114			; ea c8 14 01 00 00
-	ld xwa, HDAE5000_RAM_FdList			; 40 9c aa 22 00
+	ld xwa, HDAE5000_RAM_FdList			; 40 54 aa 22 00
 	add xwa, xde				; ea 80
 	ld	(xwa), 0x01
 

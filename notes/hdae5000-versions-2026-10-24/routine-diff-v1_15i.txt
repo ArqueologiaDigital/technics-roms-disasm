@@ -1,0 +1,100 @@
+v2_01i -> v1_15i: 582 routines in v2_01i, 538 in v1_15i; 484 same, 53 changed, 45 only in v2_01i, 1 only in v1_15i
+  only in v2_01i  HDAE5000_Alloc_Memory_3                                     45 B
+  only in v2_01i  HDAE5000_TtlScreenR3Proc                                   222 B
+  changed         HDAE5000_SelectListProc                                   2641 ->  2589 B,  806 ->  789 insns,   17 differ
+  changed         HDAE5000_HardTestPage                                      903 ->   900 B,  236 ->  236 insns,    3 differ
+  changed         HDAE5000_PartList_Build                                    412 ->   385 B,  133 ->  124 insns,    9 differ
+  changed         HDAE5000_FileLoadSwCatch                                   133 ->    81 B,   34 ->   21 insns,   13 differ
+  changed         HDAE5000_TypeSel_Init                                       92 ->    84 B,   36 ->   33 insns,    3 differ
+  changed         HDAE5000_TypeSel_BuildMask                                  95 ->    85 B,   29 ->   26 insns,    3 differ
+  changed         HDAE5000_TypeSel_ShowSaveFlags                             423 ->   376 B,   99 ->   88 insns,   11 differ
+  changed         HDAE5000_SaveOptSwEventCatch                               441 ->   384 B,  122 ->  106 insns,   16 differ
+  only in v2_01i  HDAE5000_SfxTlxBitCheck                                    229 B
+  only in v2_01i  HDAE5000_LyricJumpEditCheck                                111 B
+  changed         HDAE5000_LBNLoadSwCatch                                    355 ->   302 B,  100 ->   87 insns,   14 differ
+  changed         HDAE5000_Lbn_TypeDigit                                     646 ->   594 B,  173 ->  160 insns,   13 differ
+  only in v2_01i  HDAE5000_LBNTlxBitCheck_Unregistered                       266 B
+  changed         HDAE5000_FlsLoadScreen                                    1022 ->   919 B,  279 ->  251 insns,   33 differ
+  changed         HDAE5000_CopyToHDScreen                                    264 ->   188 B,   78 ->   53 insns,   25 differ
+  changed         HDAE5000_CopyToHd_Execute                                 1257 ->  1179 B,  354 ->  332 insns,   22 differ
+  changed         HDAE5000_DelOpt_ShowFlags                                  423 ->   376 B,   99 ->   88 insns,   11 differ
+  only in v2_01i  HDAE5000_DelTlxEditCheck                                   170 B
+  only in v2_01i  HDAE5000_BitmapButt01                                       45 B
+  changed         HDAE5000_AcLanguageText1Proc                              5790 ->  5717 B, 1956 -> 1931 insns,   25 differ
+  only in v2_01i  HDAE5000_LyricBoxProc                                     2325 B
+  only in v2_01i  HDAE5000_Lyrics_ClearBuffer                                 32 B
+  only in v2_01i  HDAE5000_Lyrics_CheckFile                                   35 B
+  only in v2_01i  HDAE5000_Lyrics_LoadTestFile                               137 B
+  only in v2_01i  HDAE5000_Lyrics_PlayToPosition                             938 B
+  only in v2_01i  HDAE5000_Lyrics_ResetState                                 222 B
+  only in v2_01i  HDAE5000_Lyrics_ReadSongInfo                               564 B
+  only in v2_01i  HDAE5000_Lyrics_FillLines                                  579 B
+  only in v2_01i  HDAE5000_Lyrics_FindEvent                                  280 B
+  only in v2_01i  HDAE5000_Lyrics_ParseEvent                                 656 B
+  only in v2_01i  HDAE5000_Read_Table_Word                                    52 B
+  only in v2_01i  HDAE5000_Read_Table_Multi                                   64 B
+  only in v2_01i  HDAE5000_Lyrics_ReadVarLen                                  87 B
+  only in v2_01i  HDAE5000_Lyrics_WriteVarLen                                 91 B
+  only in v2_01i  HDAE5000_Lyrics_CheckHeaderChunk                           113 B
+  only in v2_01i  HDAE5000_Lyrics_CheckTrackChunk                             59 B
+  only in v2_01i  HDAE5000_SwapBytes32                                        37 B
+  only in v2_01i  HDAE5000_SwapBytes16                                        13 B
+  only in v2_01i  HDAE5000_FDFileSelectProc                                 2461 B
+  only in v2_01i  HDAE5000_FdLyricList_Scan                                  556 B
+  only in v2_01i  HDAE5000_FdLyricList_AddTlx                                352 B
+  only in v2_01i  HDAE5000_PPORT_Svc28_FlashXapFile                           59 B
+  only in v2_01i  HDAE5000_PPORT_Svc29_MainHook0538                           20 B
+  only in v2_01i  HDAE5000_PPORT_Svc30_MainHook053C                           20 B
+  only in v2_01i  HDAE5000_VarInt_Encode                                      82 B
+  only in v2_01i  HDAE5000_VarInt_Decode                                      64 B
+  only in v2_01i  HDAE5000_Smf_SwapBytes32                                    59 B
+  only in v2_01i  HDAE5000_Smf_SwapBytes16                                    15 B
+  only in v2_01i  HDAE5000_Smf_ReadHeader                                    138 B
+  only in v2_01i  HDAE5000_Smf_CheckHeader                                   114 B
+  changed         HDAE5000_Frame_Handler                                     126 ->     5 B,   39 ->    1 insns,   39 differ
+  changed         HDAE5000_Song_IsUsed                                       553 ->   493 B,  170 ->  152 insns,   18 differ
+  changed         HDAE5000_Song_PartMask                                     566 ->   508 B,  169 ->  152 insns,   17 differ
+  changed         HDAE5000_LoadSong                                          362 ->   336 B,  116 ->  107 insns,    9 differ
+  only in v2_01i  HDAE5000_LoadSong_Tlx                                      259 B
+  changed         HDAE5000_SaveSong                                          764 ->   708 B,  246 ->  227 insns,   19 differ
+  only in v2_01i  HDAE5000_SaveSong_Tlx                                      171 B
+  only in v2_01i  HDAE5000_TlxPart_Describe                                   47 B
+  changed         HDAE5000_FdSong_CheckFiles                                1273 ->  1153 B,  362 ->  329 insns,   33 differ
+  changed         HDAE5000_CopyFdSongToHd                                    717 ->   669 B,  229 ->  213 insns,   16 differ
+  changed         HDAE5000_CopyFdSongToHd_Pmt                                425 ->   388 B,  125 ->  114 insns,   17 differ
+  changed         HDAE5000_CopyFdSongToHd_Sqt                                419 ->   412 B,  123 ->  122 insns,    4 differ
+  changed         HDAE5000_CopyFdSongToHd_Cmp                                419 ->   412 B,  123 ->  122 insns,    4 differ
+  changed         HDAE5000_CopyFdSongToHd_Tm                                 288 ->   287 B,   86 ->   86 insns,    4 differ
+  changed         HDAE5000_CopyFdSongToHd_Msp                                280 ->   279 B,   84 ->   84 insns,    4 differ
+  changed         HDAE5000_CopyFdSongToHd_Rcm                                419 ->   412 B,  123 ->  122 insns,    4 differ
+  changed         HDAE5000_CopyFdSongToHd_Md                                 281 ->   289 B,   84 ->   87 insns,    7 differ
+  only in v1_15i  HDAE5000_PPORT_Cmd20_Nothing                                 4 B
+  only in v2_01i  HDAE5000_CopyFdSongToHd_Tlx                                302 B
+  changed         HDAE5000_DeleteDirectory                                   350 ->   341 B,  106 ->  103 insns,    3 differ
+  changed         HDAE5000_DeleteSongParts                                   349 ->   335 B,  110 ->  105 insns,    5 differ
+  only in v2_01i  HDAE5000_DeleteSongPart_Tlx                                222 B
+  changed         HDAE5000_Song_CheckFreeSpace                               347 ->   333 B,  110 ->  106 insns,    4 differ
+  changed         HDAE5000_PPORT_Svc03_SendInfosAboutHd                      253 ->   233 B,   80 ->   76 insns,    4 differ
+  changed         HDAE5000_PPORT_Svc13_SendInfosAboutSong                    782 ->   743 B,  214 ->  203 insns,   18 differ
+  changed         HDAE5000_PPORT_Cmd01_SendInfosAboutHd                      138 ->    76 B,   47 ->   25 insns,   22 differ
+  changed         HDAE5000_PPORT_Cmd07_LoadHdToMemory                        226 ->   180 B,   74 ->   58 insns,   17 differ
+  changed         HDAE5000_PPORT_Cmd08_SendDataToPc                          838 ->   720 B,  283 ->  243 insns,   42 differ
+  changed         HDAE5000_PPORT_Cmd09_SendFilesToPc                         798 ->   648 B,  249 ->  207 insns,  136 differ
+  changed         HDAE5000_PPORT_Cmd10_RcvDataFromPc                         570 ->   492 B,  200 ->  171 insns,   31 differ
+  changed         HDAE5000_PPORT_Cmd11_SaveMemoryToHd                        150 ->   140 B,   51 ->   47 insns,    5 differ
+  changed         HDAE5000_PPORT_Cmd13_RcvDataFromPc                         362 ->   352 B,  115 ->  111 insns,    5 differ
+  changed         HDAE5000_PPORT_Cmd14_SendInfosToPc                         226 ->   196 B,   78 ->   66 insns,   12 differ
+  changed         HDAE5000_PPORT_Cmd16_DeleteFiles                           230 ->   180 B,   76 ->   58 insns,   19 differ
+  only in v2_01i  HDAE5000_PPORT_Cmd20_SendXapFileFlash                      164 B
+  changed         HDAE5000_PPORT_LatchPacketArgs                              48 ->    38 B,   20 ->   16 insns,    4 differ
+  changed         HDAE5000_PPORT_InitRegionDescriptors                       446 ->   410 B,  148 ->  135 insns,   13 differ
+  changed         HDAE5000_PPORT_SendRegionToPc                              335 ->   325 B,  113 ->  109 insns,    5 differ
+  changed         HDAE5000_HD_Init_SramClearLoop                             153 ->   147 B,   29 ->   28 insns,    1 differ
+  changed         HDAE5000_HD_Init_ClearLoop2                                243 ->   234 B,   62 ->   59 insns,    3 differ
+  changed         HDAE5000_HD_AppendFile_Worker                              279 ->   327 B,   73 ->   83 insns,   12 differ
+  changed         HDAE5000_HD_Format_CompareLoop                             329 ->   320 B,   80 ->   77 insns,    3 differ
+  changed         HDAE5000_HD_BuildSettingsSector_CopyVersion                 71 ->    60 B,   22 ->   19 insns,    3 differ
+  changed         HDAE5000_HD_LoadSettings                                    55 ->    47 B,   16 ->   14 insns,    2 differ
+  changed         HDAE5000_HD_SaveSettings_CopyLoop                           76 ->    68 B,   23 ->   21 insns,    2 differ
+  only in v2_01i  HDAE5000_StrRev                                             51 B
+  only in v2_01i  HDAE5000_StrUpr                                             44 B

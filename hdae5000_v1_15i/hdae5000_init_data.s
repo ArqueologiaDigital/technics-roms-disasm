@@ -1,7 +1,7 @@
 ; ============================================================================
-; HDAE5000 initialised .data image  (ROM 0x2f899e - 0x2f95e5, 0x0c48 bytes)
+; HDAE5000 initialised .data image  (HDAE5000_DataSegmentImage .. HDAE5000_Init_Data_End)
 ;
-; HDAE5000_Clear_Work_Buffer copies this block verbatim to RAM 0x2394ce, then
+; HDAE5000_Clear_Work_Buffer copies this block verbatim to RAM 0x23c914, then
 ; HDAE5000_Handler_Registration publishes six of the tables below to the main
 ; CPU through workspace[0x0e0a][0x00e4] ("RegisterObjectTable").  Each
 ; registration passes {class id, proc, entry count, data pointer}; the counts
@@ -9,15 +9,15 @@
 ; which is how each table boundary below was established.
 ;
 ;   ROM        RAM        entries  registered as        contents
-;   0x2f899e   0x2394ce   69       ID 0x012a            object handler entry points
-;   0x2f8aae   0x2395de   69       ID 0x042a            object names (parallel array)
-;   0x2f8bbe   0x2396ee   13 lists (via HDAE5000_RECORD_TABLE+0x14)  per-class parameter names
-;   0x2f8c4e   0x23977e   13       ID 0x01ca            EV_* event names
-;   0x2f8c88   0x2397b8   18       ID 0x01ea            MT_* message names
-;   0x2f8cd6   0x239806   13       ID 0x010a            UI class procedures
-;   0x2f8d0e   0x23983e   13       ID 0x040a            UI class names (parallel array)
-;   0x2f942a   0x239f5a   14       ID 0x014a            screen procedures
-;   0x2f9466   0x239f96   14       ID 0x044a            screen names (parallel array)
+;   0x2e0fb6   0x23c914   69       ID 0x012a            object handler entry points
+;   0x2e10b6   0x23ca14   69       ID 0x042a            object names (parallel array)
+;   0x2e11b6   0x23cb14   13 lists (via HDAE5000_RECORD_TABLE+0x14)  per-class parameter names
+;   0x2e1216   0x23cb74   13       ID 0x01ca            EV_* event names
+;   0x2e1228   0x23cb86   18       ID 0x01ea            MT_* message names
+;   0x2e1262   0x23cbc0   13       ID 0x010a            UI class procedures
+;   0x2e128e   0x23cbec   13       ID 0x040a            UI class names (parallel array)
+;   0x2e18b0   0x23d20e   14       ID 0x014a            screen procedures
+;   0x2e18ec   0x23d24a   14       ID 0x044a            screen names (parallel array)
 ;
 ; The 13 class procedures/names are the same 13 UI classes described by
 ; HDAE5000_RECORD_TABLE (0x29c0aa, 13 x 24 bytes): record+0x00 repeats the
@@ -25,7 +25,7 @@
 ; type-signature string and +0x14 at that class's parameter-name list in this
 ; image.  Signature length == parameter count for all 13 records (11, 2, 0, 0,
 ; 1, 0, 0, 0, 0, 0, 0, 6, 3 - 23 names plus 13 terminators = the 36 slots at
-; 0x2f8bbe).
+; 0x2e11b6).
 ; ============================================================================
 
 HDAE5000_DataSegmentImage:
@@ -236,7 +236,7 @@ HDAE5000_ParamNames_AcLanguageText1:
 ; ----------------------------------------------------------------------------
 ; EV_* event names (registration ID 0x01ca, class id 0x0160000c, ResEventProc)
 ;   Registered with a run-time count read from HDAE5000_EventName_Count, which
-;   is part of this same image (RAM 0x2397b6) rather than an immediate.
+;   is part of this same image (RAM 0x23cb84) rather than an immediate.
 ; ----------------------------------------------------------------------------
 HDAE5000_EventName_Table:
 	.long HDAE5000_Str_EV_SeqStop
@@ -249,7 +249,7 @@ HDAE5000_EventName_Count:
 ; ----------------------------------------------------------------------------
 ; MT_* message names (registration ID 0x01ea, class id 0x0160000d, ResMethodProc)
 ;   Lyrics/file-select message vocabulary shared with the main CPU; count in
-;   HDAE5000_MessageName_Count (RAM 0x239804).
+;   HDAE5000_MessageName_Count (RAM 0x23cbbe).
 ; ----------------------------------------------------------------------------
 HDAE5000_MessageName_Table:
 	.long HDAE5000_Str_MT_OverFlow
@@ -685,7 +685,7 @@ HDAE5000_ScreenName_Table:
 	.long HDAE5000_Str_End_ScreenNames	; empty name terminates the list
 
 ; ----------------------------------------------------------------------------
-; File/name editing scalars and buffers  (RAM 0x239fd2 onwards)
+; File/name editing buffers (v1.x has no file-format version words in front of them)
 ; ----------------------------------------------------------------------------
 HDAE5000_Name_ColumnRuler:
 	.asciz "123456789012345678901234567890"
@@ -694,28 +694,28 @@ HDAE5000_Name_EditBuffer:
 	.asciz "                              "	; 30 columns, blank-filled
 	.byte 0x00		; 16-bit alignment pad
 HDAE5000_Browser_State:
-	; RAM 0x23a016 is the row-base offset added to every browser row address;
-	; the next words are the browser cursors (0x23a01e is the display row base).
+	; RAM 0x23d2c6 is the row-base offset added to every browser row address;
+	; the next words are the browser cursors (0x23d2ce is the display row base).
 	.short 0, 0, 0, 0, 0, 0, 0
-	.short 127			; RAM 0x23a024, not read anywhere in this ROM
-	.short 0			; RAM 0x23a026, byte-tested flag
+	.short 127			; RAM 0x23d2d4, not read anywhere in this ROM
+	.short 0			; RAM 0x23d2d6, byte-tested flag
 				; ^ = HDAE5000_RAM_SeparateBassPart (0 = NONE): the value of
 				;   SeparateBassPartCheck, used by HDAE5000_SeparateOutput_Apply
 HDAE5000_Browser_PageRows:
-	; ^ name not supported by the code: 0x23a028 is HDAE5000_RAM_SeparateDrumPart
-	;   (SeparateDrumPartCheck's value, initially 16) and 0x23a02a the drum part
+	; ^ name not supported by the code: 0x23d2d8 is HDAE5000_RAM_SeparateDrumPart
+	;   (SeparateDrumPartCheck's value, initially 16) and 0x23d2da the drum part
 	;   last sent (HDAE5000_RAM_SeparateDrumPartSent); see HDAE5000_SeparateOutput_Apply.
-	.short 16, 16		; RAM 0x23a028/0x23a02a
-	.short 0			; RAM 0x23a02c, byte-tested flag
+	.short 16, 16		; RAM 0x23d2d8/0x23d2da
+	.short 0			; RAM 0x23d2dc, byte-tested flag
 				; ^ = HDAE5000_RAM_SeparateBassPartSent
 	.zero 10		; HDAE5000_RAM_MainWorkspacePtr's slot + 6 bytes; the copied image ends here
 
 ; ----------------------------------------------------------------------------
-; Tail of the ROM (0x2f95e6-0x2fffff)
-;   The .data image ends at 0x2f95e5 - HDAE5000_Clear_Work_Buffer copies
-;   exactly 0x0c48 bytes.  The 0x000e word at 0x2f95e6 is the first thing
-;   past the copied window and is never transferred to RAM; everything after
-;   it is 0x00 fill up to the 0x300000 ROM end.
+; Tail of the ROM
+;   The .data image ends here: the boot copy loop copies it from HDAE5000_DataSegmentImage
+;   up to HDAE5000_Init_Data_End, which the ROM header's second long also names.  The
+;   0x000e word after it is the first thing past the copied window and is never
+;   transferred to RAM; everything after it is 0x00 fill up to the 0x300000 ROM end.
 ; ----------------------------------------------------------------------------
 HDAE5000_Init_Data_End:
 	.short 14

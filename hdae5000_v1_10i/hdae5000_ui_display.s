@@ -312,10 +312,10 @@ HDAE5000_LoadSongWithUi:
 	jr nz, .Ldm_mode2			; 6e xx
 
 	; Mode 1: register event via +0x0100 vtable
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23 — ld xhl, (xwa+0x0100)
-	ld xwa, HDAE5000_OBJ_HD_PLEASE			; 40 c0 02 7f 00
+	ld xwa, HDAE5000_OBJ_HD_PLEASE			; 40 b2 02 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 5:i3				; ea ad
 	call (xhl)				; b3 e8
@@ -324,14 +324,14 @@ HDAE5000_LoadSongWithUi:
 
 .Ldm_mode2:
 	; Mode 2: register event via +0x0124 vtable, then call +0x0E88/+0x00E4
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
-	ld xwa, HDAE5000_OBJ_HD_PLEASE			; 40 c0 02 7f 00
+	ld xwa, HDAE5000_OBJ_HD_PLEASE			; 40 b2 02 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 5:i3				; ea ad
 	call (xhl)				; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_HamaFnTable)             ; e3 e1 88 0e 20 — ld xwa, (xwa+0x0e88)
 	ld_sril xhl, (xwa + HamaFn_pdly_tim_X)             ; e3 e1 e4 00 23 — ld xhl, (xwa+0x00e4)
 	ldw wa, 0x0064				; 30 64 00
@@ -345,7 +345,7 @@ HDAE5000_LoadSongWithUi:
 	ld wa, (xsp + 0x0c)			; 9f 0c 20
 	ld bc, (xsp + 0x0a)			; 9f 0a 21
 	ld de, (xsp + 0x08)			; 9f 08 22
-	call HDAE5000_LoadSong				; 1d 9c ff 28
+	call HDAE5000_LoadSong				; 1d 52 cf 28
 	ld (xsp + 0x02), hl			; bf 02 53 — save result
 	ld wa, (xsp + 0x02)			; 9f 02 20
 	cp wa, 0xffff				; d8 cf ff ff
@@ -364,13 +364,13 @@ HDAE5000_LoadSongWithUi:
 
 	; Mode 1 deregistration: via +0x0104 vtable
 	ld xwa, (xsp + 0x0e)			; af 0e 20
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 21
+	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 21
 	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21 — ld xbc, (xbc+0x0e0a)
 	ld xhl, (xbc + RootFn_PostEvent)             ; e3 e5 04 01 23 — ld xhl, (xbc+0x0104)
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_PostEvent)             ; e3 e1 04 01 23 — ld xhl, (xwa+0x0104)
 	ld xwa, 0xffffffff			; 40 ff ff ff ff
@@ -382,13 +382,13 @@ HDAE5000_LoadSongWithUi:
 .Ldm_mode2_dereg:
 	; Mode 2 deregistration: via +0x0124 vtable
 	ld xwa, (xsp + 0x0e)			; af 0e 20
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 21
+	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 21
 	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21 — ld xbc, (xbc+0x0e0a)
 	ld xhl, (xbc + RootFn_ApPostEvent)             ; e3 e5 24 01 23 — ld xhl, (xbc+0x0124)
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
 	ld xwa, 0xffffffff			; 40 ff ff ff ff
@@ -403,10 +403,10 @@ HDAE5000_LoadSongWithUi:
 	jr nz, .Ldm_fail_mode2			; 6e xx
 
 	; Fail mode 1: via +0x0100 vtable
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23 — ld xhl, (xwa+0x0100)
-	ld xwa, HDAE5000_OBJ_ERR_LOAD			; 40 9c 02 7f 00
+	ld xwa, HDAE5000_OBJ_ERR_LOAD			; 40 8e 02 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
@@ -414,10 +414,10 @@ HDAE5000_LoadSongWithUi:
 
 .Ldm_fail_mode2:
 	; Fail mode 2: via +0x0124 vtable
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
-	ld xwa, HDAE5000_OBJ_ERR_LOAD			; 40 9c 02 7f 00
+	ld xwa, HDAE5000_OBJ_ERR_LOAD			; 40 8e 02 7f 00
 	ld xbc, EVT_SHOW			; 41 01 00 c0 01
 	ld xde, 0:i3				; ea a8
 	call (xhl)				; b3 e8
@@ -425,18 +425,18 @@ HDAE5000_LoadSongWithUi:
 .Ldm_fail_common:
 	; Register error display handlers
 	ld xbc, (xsp + 0x0e)			; af 0e 21
-	ld xwa, HDAE5000_OBJ_ERR_LOAD_EXIT			; 40 9d 02 7f 00
+	ld xwa, HDAE5000_OBJ_ERR_LOAD_EXIT			; 40 8f 02 7f 00
 	calr HDAE5000_UiObj_SetCaption		; 1e xx xx
 	; Register via +0x0418 vtable (timer handler)
 	ld xwa, EVT_HDAE_TIMER_BACK			; 40 02 00 ca 01
 	push xwa				; 38
 	ld xwa, (xsp + 0x12)			; af 12 20
 	push xwa				; 38
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_KillApTimer)             ; e3 e1 18 04 23 — ld xhl, (xwa+0x0418)
 	ld xwa, 0x0000014d			; 40 4d 01 00 00
-	ld xbc, HDAE5000_OBJ_ERR_LOAD_CATCH			; 41 9e 02 7f 00
+	ld xbc, HDAE5000_OBJ_ERR_LOAD_CATCH			; 41 90 02 7f 00
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
 	; Register via +0x0410 vtable (second timer handler)
@@ -444,11 +444,11 @@ HDAE5000_LoadSongWithUi:
 	push xwa				; 38
 	ld xwa, (xsp + 0x12)			; af 12 20
 	push xwa				; 38
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
+	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 de d2 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_SetApTimer)             ; e3 e1 10 04 23 — ld xhl, (xwa+0x0410)
 	ld xwa, 0x0000014d			; 40 4d 01 00 00
-	ld xbc, HDAE5000_OBJ_ERR_LOAD_CATCH			; 41 9e 02 7f 00
+	ld xbc, HDAE5000_OBJ_ERR_LOAD_CATCH			; 41 90 02 7f 00
 	ld xde, 0xffffffff			; 42 ff ff ff ff
 	call (xhl)				; b3 e8
 
@@ -12683,7 +12683,7 @@ HDAE5000_PPORT_Cmd06_WriteFsbToHd:	; (62 bytes)
 	; Handler: Send HD info - display status, clear buffer, check result
 	ldw wa, 0x001a			; display row/column
 	nop
-	lda xbc, (HDAE5000_PPORT_Cmd06_WriteFsbToHd_Str_N06_Writing_FSB_to_HD:24); lda XBC, (0x294dc4) - status string
+	lda xbc, (HDAE5000_PPORT_Cmd06_WriteFsbToHd_Str_N06_Writing_FSB_to_HD:24); status string
 	nop
 	call HDAE5000_PPORT_CallService
 	call HDAE5000_PPORT_ClearPacket
@@ -13088,7 +13088,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc:	; (798 bytes)
 	nop
 	ld	(xix), xwa
 	inc	4, xix
-	ld	xwa, (0x23c50e:24)
+	ld	xwa, (HDAE5000_RAM_PportRegions+20:24)
 	nop
 	ld (xix), xwa
 	inc 4, xix
@@ -13149,11 +13149,11 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:
 	cp	a, 2:i3
 	jp	nz, (.Lsfsb_bit1:24)
 	nop
-	ld	xwa, (0x23c50e:24)
+	ld	xwa, (HDAE5000_RAM_PportRegions+20:24)
 	nop
-	ld	(0x23c54e), xwa
+	ld	(HDAE5000_RAM_PportBytesLeft), xwa
 	nop
-	ld	(0x23c4ee), 0x02
+	ld	(HDAE5000_RAM_PportSendMaskLo), 0x02
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01; error check
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)			; jp Z, abort
@@ -13171,7 +13171,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip:
 	ld (HDAE5000_RAM_PportBytesLeft:24), xwa
 	nop
 .Lsfsb_bit2:				; — Bit 2 (0x04)
-	ld	(0x23c4ee), 0x04
+	ld	(HDAE5000_RAM_PportSendMaskLo), 0x04
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
@@ -13203,11 +13203,11 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2:
 	nop
 	jp	nz, (.Lsfsb_bit4:24)
 	nop
-	ld	xwa, (0x23c526:24)
+	ld	xwa, (HDAE5000_RAM_PportRegions+44:24)
 	nop
-	ld	(0x23c54e), xwa
+	ld	(HDAE5000_RAM_PportBytesLeft), xwa
 	nop
-	ld	(0x23c4ee), 0x10
+	ld	(HDAE5000_RAM_PportSendMaskLo), 0x10
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
@@ -13225,7 +13225,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip2:
 	nop
 	ld (HDAE5000_RAM_PportBytesLeft:24), xwa
 	nop
-	ld	(0x23c4ee), 0x20
+	ld	(HDAE5000_RAM_PportSendMaskLo), 0x20
 	call	HDAE5000_PPORT_SendRegionToPc
 	cp	(HDAE5000_RAM_PportError:24), 0x01
 	jp	z, (HDAE5000_PPORT_CommandLoop_Poll:24)
@@ -13239,11 +13239,11 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3:
 	nop
 	jp	nz, (.Lsfsb_bit5:24)
 	nop
-	ld	xwa, (0x23c532:24)
+	ld	xwa, (HDAE5000_RAM_PportRegions+56:24)
 	nop
-	ld	(0x23c54e), xwa
+	ld	(HDAE5000_RAM_PportBytesLeft), xwa
 	nop
-	ld	(0x23c4ee), 0x40
+	ld	(HDAE5000_RAM_PportSendMaskLo), 0x40
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
 	jp z, (HDAE5000_PPORT_CommandLoop_Poll:24)
@@ -13261,7 +13261,7 @@ HDAE5000_PPORT_Cmd09_SendFilesToPc_Skip3:
 	nop
 	ld (HDAE5000_RAM_PportBytesLeft:24), xwa
 	nop
-	ld	(0x23c4ee), 0x80
+	ld	(HDAE5000_RAM_PportSendMaskLo), 0x80
 .Lsfsb_bit6:				; — Bit 6 (0x40)
 	call HDAE5000_PPORT_SendRegionToPc
 	cp (HDAE5000_RAM_PportError:24), 0x01
@@ -13739,7 +13739,7 @@ HDAE5000_PPORT_Cmd15_Nothing:
 	; Receive data from PC - display status and finish
 	ldw wa, 0x001a			; display row/column
 	nop
-	lda xbc, (HDAE5000_PPORT_Cmd15_Nothing_Str_N15_nothing:24); 0x294E9C - "Receive Data" string
+	lda xbc, (HDAE5000_PPORT_Cmd15_Nothing_Str_N15_nothing:24); 0x294DA0 - "Receive Data" string
 	nop
 	call HDAE5000_PPORT_CallService
 	jp HDAE5000_PPORT_CommandDone
@@ -13819,7 +13819,7 @@ HDAE5000_PPORT_Cmd17_FormatHd:	; (62 bytes)
 	; Reserved PPORT command - display status, clear buffer, check result
 	ldw wa, 0x001a			; display row/column
 	nop
-	lda xbc, (HDAE5000_PPORT_Cmd17_FormatHd_Str_N17_Formating_HD:24); lda XBC, (0x294ECC) - status string
+	lda xbc, (HDAE5000_PPORT_Cmd17_FormatHd_Str_N17_Formating_HD:24); status string
 	nop
 	call HDAE5000_PPORT_CallService
 	call HDAE5000_PPORT_ClearPacket
@@ -13846,7 +13846,7 @@ HDAE5000_PPORT_Cmd18_SwitchHdMotorOff:	; (60 bytes)
 	; PPORT utility - display status, clear buffer, check result
 	ldw wa, 0x001a			; display row/column
 	nop
-	lda xbc, (HDAE5000_PPORT_Cmd18_SwitchHdMotorOff_Str_N18_Switch_HD_motor_off:24); lda XBC, (0x294EE4) - status string
+	lda xbc, (HDAE5000_PPORT_Cmd18_SwitchHdMotorOff_Str_N18_Switch_HD_motor_off:24); status string
 	nop
 	call HDAE5000_PPORT_CallService
 	call HDAE5000_PPORT_ClearPacket
@@ -13872,7 +13872,7 @@ HDAE5000_PPORT_Cmd19_Nothing:
 	; PPORT utility routine 2 - display status and finish
 	ldw wa, 0x001a			; display row/column
 	nop
-	lda xbc, (HDAE5000_PPORT_Cmd19_Nothing_Str_N19_nothing:24); 0x294EFC - status string
+	lda xbc, (HDAE5000_PPORT_Cmd19_Nothing_Str_N19_nothing:24); status string
 	nop
 	call HDAE5000_PPORT_CallService
 	jp HDAE5000_PPORT_CommandDone
@@ -15144,7 +15144,7 @@ HDAE5000_HD_Init_SpaceFillLoop:
 	ld	(0x229dd9:24), 0x00
 	ld	(0x229dda:24), 0x00
 	ld	(0x229ddb:24), 0
-	ld	(0x229ddc:24), 0
+	ld	(HDAE5000_RAM_DirBrowserRowBytes:24), 0
 	ld	(0x229dd3:24), 0
 	ld	(HDAE5000_RAM_FlsBrowserPage:24), 0
 	ld	(HDAE5000_RAM_FlsBrowserCursors:24), 0
@@ -15152,7 +15152,7 @@ HDAE5000_HD_Init_SpaceFillLoop:
 	ld	(0x229e56:24), 0x00
 	ld	(0x229e57:24), 0x00
 	ld	(0x229e58:24), 0
-	ld	(0x229e59:24), 0
+	ld	(HDAE5000_RAM_FlsBrowserRowBytes:24), 0
 	xor	bc, bc
 	lda xix, (HDAE5000_RAM_FlsBrowserRowBytes:24)
 HDAE5000_HD_Init_ClearLoop1:

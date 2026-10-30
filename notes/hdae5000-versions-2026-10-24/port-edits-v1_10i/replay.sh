@@ -25,7 +25,7 @@ for s in $(ls $E | grep -E '^[1-8][0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
 done
 $P afix v1_10i | tail -1
 # the clean-ups 90..99 (../port-edits-v1_15i/ has the shared ones; this folder its own)
-for s in 96_piled_labels.py 97_unreferenced_orphans.py 98_unused_constants.py; do
+for s in 92_stale_comments.py 93_ram_numbers.py 96_piled_labels.py 97_unreferenced_orphans.py 98_unused_constants.py; do
   PORT_TREE=hdae5000_v1_10i python3 notes/hdae5000-versions-2026-10-24/port-edits-v1_15i/$s
 done
 for s in $(ls $E | grep -E '^9[0-9][a-z]?_.*\.py$' | LC_ALL=C sort); do
