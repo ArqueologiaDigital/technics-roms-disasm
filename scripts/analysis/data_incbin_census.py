@@ -92,6 +92,12 @@ TREES = {
     "hdsx3":             ["hdsx3/src"],
 }
 
+# a tree's further assembler include directories (its `-I` after its own), searched last when
+# sizing an .incbin: v2.01i takes the unchanged pictures from hdae5000/
+EXTRA_INCLUDE = {
+    "kn5000-hdae201":    ["hdae5000"],
+}
+
 MEDIA = {"jpg", "jpeg", "bmp", "png", "gif", "tif", "tiff", "wav", "aif", "aiff", "mid"}
 KINDS = {"pcm", "compressed", "code", "unknown-dump", "personal", "fill"}
 INC = re.compile(rb'^\s*(?:[A-Za-z_.$][\w.$]*:\s*)?\.(incbin_range|incbin)\s+"([^"]+)"\s*(?:,\s*([^,;#\s]+))?\s*(?:,\s*([^,;#\s]+))?')
@@ -112,7 +118,7 @@ def num(tok):
         return None
 
 
-def locate(path, src, tree_dirs):
+def locate(path, src, tree_dirs, extra=()):
     cands = []
     chain = []
     d = (ROOT / src).parent
@@ -133,6 +139,8 @@ def locate(path, src, tree_dirs):
         if base.is_file():
             base = base.parent
         cands.append(base / "build" / path)
+    for d in extra:
+        cands.append(ROOT / d / path)
     for c in cands:
         if c.is_file():
             return c
@@ -181,7 +189,7 @@ def census():
                     elif b is not None:
                         size = b
                     else:
-                        loc = locate(path, f, dirs)
+                        loc = locate(path, f, dirs, EXTRA_INCLUDE.get(tree, ()))
                         if loc is not None:
                             size = loc.stat().st_size - (a or 0)
                     cls, why = classify(line, prev, path)

@@ -128,3 +128,47 @@ Still generic on the census (entries / bytes):
 Typed but not yet named: fields that keep offset names because no reader was traced. They include the
 KN6000/KN7000 panel-memory and sound-record fields, the 'JK' archive's tone heads, units and elements, and the
 `.SQT` heads. Lane kn67-field-names is on those.
+
+## Final state (2026-10-30, `docs/coverage/data-incbin-2026-10-30-01`)
+
+The lanes merged after c6630b0d7, each followed on main by every gate (`make gate`, `gate-wsa1`,
+`gate-kn7000`, `gate-kn6000`, `gate-kn6500`, `gate-kn2400`, `gate-hdsx3`, `gate-floppy`,
+`make -C kn7000 symbols-check`), all exit 0, the last run with every `kn7000/build/*.labels` seed deleted:
+
+| lane             | outcome                                                                                                     |
+|------------------|-------------------------------------------------------------------------------------------------------------|
+| gui-kn7000       | KN7000 program data regions typed, GUI first: 8,509 widget records, menu map (`verify-gui-map`)             |
+| kn67-field-names | KN6000/KN7000 panel-memory, song-event and sound-record fields named from their readers                     |
+| sib-kn6000       | KN6000 / KN6500 data regions typed with the KN7000 tools (profiles); GUI and menu maps                      |
+| sib-kn2400       | KN2400/KN2600 and HD-SX3 data regions typed; 90 KN2400 function names fixed                                 |
+| kn7000-data-rest | KN7000 data typed from the code that reads it (`data_readers.py`); generic 793 KB -> 17 KB per build        |
+| siblings-final   | the reader passes on the four siblings: Music Stylist setups, chord tables, hash tables, KN6500 panel banks |
+| kn7000-final     | the reader walk follows stack slots, joins and returns; resource-id trie; SP7001 plug-in GUI by class       |
+
+Every tree outside the table below is generic 0. Generic n / bytes, with the opaque declarations beside them
+(opaque here is data that no instruction reads, found by the reader walk, not PCM or compressed payloads):
+
+| tree           | generic n | generic bytes | opaque n | opaque bytes | what is left                                                   |
+|----------------|-----------|---------------|----------|--------------|----------------------------------------------------------------|
+| kn7000-program | 177       | 2,948         | 4,298    | 82,196       | switch records pointing into their own tail; RAM-copied tables |
+| kn7000-sp7001  | 179       | 3,044         | 4,321    | 80,480       | as kn7000-program (program 942)                                |
+| kn7000-b935    | 179       | 3,044         | 4,309    | 83,003       | as kn7000-program                                              |
+| kn7000-b893    | 176       | 2,944         | 4,303    | 81,886       | as kn7000-program                                              |
+| kn6000         | 380       | 18,810        | 3,336    | 79,522       | blocks read but untyped, largest 5,207 B at 0x4C1A04AC         |
+| kn6500         | 386       | 18,930        | 3,346    | 83,667       | as kn6000                                                      |
+| kn2400         | 431       | 18,853        | 5,048    | 197,205      | effect-DSP-like streams (20 KB at 0x4853C5BE) nothing reads    |
+| hdsx3          | 40        | 266           | 101      | 3,133        | small pieces                                                   |
+
+Each remaining generic block has a reader that no pass turns into a type yet. Each opaque one is declared
+with the reader search that found nothing (`kn7000/notes/data-final/README.md`, its probe
+`opaque_holders.py`, and `kn6000/notes/siblings-data-final/README.md`). The large opaque totals elsewhere
+(4 MB of KN5000 PCM, 66 MB of KN7000 PCM) are wave samples, one labelled item per recording.
+
+Open items:
+
+- the KN2400's two Music Stylist setup lists: the KN2400's and the KN2600's, chosen by bits at 0x98070000?
+- the KN6000 sound hash tables' payload beyond their first field; the KN2400 effect blocks' format;
+- `KssBgScreen`'s `image_id` and `icon` in the SP7001 plug-in, probably the main program's resource ids;
+- the KN7000 demo-song streams are u8 rows, really 4-byte events;
+- recursive structures other than the resource-id trie are typed one level deep;
+- HD-AE5000 v1.15i and v1.10i still have no tree.
