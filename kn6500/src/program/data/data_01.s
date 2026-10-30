@@ -12995,7 +12995,7 @@ Str_NORMAL_2:	.asciz " NORMAL "
 Str_RANDOM:	.asciz " RANDOM "
 	.align	4, 0xFF	# pad after Str_RANDOM
 data_4C22256C:
-	# a string, 12 bytes with its pad, read by func_4C0FCABD_entry_L39 0x4C0FCAF9 `call sprintf_entry, [a2], 0x20` (+0, arg d0); func_4C0FCABD_entry_L39 0x4C0FCAF9 `call sprintf_entry, [a2], 0x20` (+0, arg sp12); func_4C0FCABD_entry_L39 0x4C0FCAF9 `mov data_4C22256C, d0` (+0, as a base); handed to sprintf
+	# a string, 12 bytes with its pad, read by func_4C0FCABD_entry_L39 0x4C0FCAF9 `call sprintf_entry, [a2], 0x20` (+0, arg d0); func_4C0FCABD_entry_L39 0x4C0FCAF9 `mov data_4C22256C, d0` (+0, as a base); handed to sprintf
 	.asciz	"STEREO-L"
 	.align	4, 0xFF
 Str_STEREO_R:	.asciz "STEREO-R"

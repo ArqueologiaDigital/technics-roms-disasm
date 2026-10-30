@@ -16785,7 +16785,7 @@ Str_empty_1141:	.asciz "------"
 Str_LOW_4:	.asciz "LOW "
 	.align	4, 0xFF	# pad after Str_LOW_4
 Str_HIGH_4:
-	# a string, 8 bytes with its pad, read by FilterGridSe1 0x484E354A `call sprintf_entry, [a2], 0x20` (+0, arg d0); FilterGridSe1 0x484E354A `call sprintf_entry, [a2], 0x20` (+0, arg sp12); FilterGridSe1 0x484E354A `mov Str_HIGH_4, d0` (+0, as a base); handed to sprintf
+	# a string, 8 bytes with its pad, read by FilterGridSe1 0x484E354A `call sprintf_entry, [a2], 0x20` (+0, arg d0); FilterGridSe1 0x484E354A `mov Str_HIGH_4, d0` (+0, as a base); handed to sprintf
 	.asciz	"HIGH"
 	.align	4, 0xFF
 Str_empty_1140:	.asciz "----"
@@ -17104,7 +17104,7 @@ Str_empty_1045:	.asciz "------"
 Str_LOW_3:	.asciz "LOW "
 	.align	4, 0xFF	# pad after Str_LOW_3
 Str_HIGH_3:
-	# a string, 8 bytes with its pad, read by DrumFilterGridSe 0x484F5509 `call sprintf_entry, [a2], 0x20` (+0, arg d0); DrumFilterGridSe 0x484F5509 `call sprintf_entry, [a2], 0x20` (+0, arg sp12); DrumFilterGridSe 0x484F5509 `mov Str_HIGH_3, d0` (+0, as a base); handed to sprintf
+	# a string, 8 bytes with its pad, read by DrumFilterGridSe 0x484F5509 `call sprintf_entry, [a2], 0x20` (+0, arg d0); DrumFilterGridSe 0x484F5509 `mov Str_HIGH_3, d0` (+0, as a base); handed to sprintf
 	.asciz	"HIGH"
 	.align	4, 0xFF
 Str_empty_1044:	.asciz "----"
@@ -25913,7 +25913,7 @@ Str_CENTER_4:	.asciz " CENTER "
 Str_LEFT_2d_2:	.asciz "LEFT  %2d"
 	.align	4, 0xFF	# pad after Str_LEFT_2d_2
 data_4864FFA0:
-	# a string, 12 bytes with its pad, read by CmpPartSetGrid1 0x4850CA35 `call sprintf_entry, [a2], 0x20` (+0, arg d1); CmpPartSetGrid1 0x4850CA35 `call sprintf_entry, [a2], 0x20` (+0, arg sp12); CmpPartSetGrid1 0x4850CA35 `mov data_4864FFA0, d1` (+0, as a base); handed to sprintf
+	# a string, 12 bytes with its pad, read by CmpPartSetGrid1 0x4850CA35 `call sprintf_entry, [a2], 0x20` (+0, arg d1); CmpPartSetGrid1 0x4850CA35 `mov data_4864FFA0, d1` (+0, as a base); handed to sprintf
 	.asciz	"RIGHT %2d"
 	.align	4, 0xFF
 Str_empty_816:	.asciz "--"
@@ -28274,7 +28274,7 @@ Str_CENTER_3:	.asciz " CENTER "
 Str_LEFT_2d:	.asciz "LEFT  %2d"
 	.align	4, 0xFF	# pad after Str_LEFT_2d
 data_48656C58:
-	# a string, 12 bytes with its pad, read by PadPartSetGrid1 0x48513C7E `call sprintf_entry, [a2], 0x20` (+0, arg d1); PadPartSetGrid1 0x48513C7E `call sprintf_entry, [a2], 0x20` (+0, arg sp12); PadPartSetGrid1 0x48513C7E `mov data_48656C58, d1` (+0, as a base); handed to sprintf
+	# a string, 12 bytes with its pad, read by PadPartSetGrid1 0x48513C7E `call sprintf_entry, [a2], 0x20` (+0, arg d1); PadPartSetGrid1 0x48513C7E `mov data_48656C58, d1` (+0, as a base); handed to sprintf
 	.asciz	"RIGHT %2d"
 	.align	4, 0xFF
 Str_empty_800:	.asciz "--"

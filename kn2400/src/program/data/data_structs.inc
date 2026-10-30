@@ -3991,20 +3991,22 @@
 	.ascii	\x7
 .endm
 
-# REC_func_5016B396_Result: 16-byte records (func_5016B396_Result, 29 records); fields, and what reads them:
-#   +0   s0           char[4]        func_5016A381_entry_L49 0x5016A3CD `call memcpy_entry, [a2,a3], 8`; func_5016A404_entry_L5e 0x5016A465 `call memcpy_entry, [a2,a3], 8` (+20)
-#   +4   f4           s16            func_50165498_entry_L1a 0x501654B5 `movhu (4, a0), d1`
-#   +6   f6           s16            func_50165498_entry_L30 0x501654CB `movhu (6, a0), d1`; func_50165498_entry_L199 0x50165634 `movhu (6, a0), d1`
-#   +8   p8           ptr            func_5016A381_entry_L49 0x5016A3CD `mov (8, a1), a1`; func_5016A404_entry_L5e 0x5016A465 `mov (8, a1), a1` (+14)
-#   +12  f12          u16            func_5016A381_entry_L28 0x5016A3AC `movhu (0xc, a0), d1`; func_5016A404_entry_L3d 0x5016A444 `movhu (0xc, a0), d1` (+16)
-#   +14  x14          u8[2]          no reader seen
-.macro REC_func_5016B396_Result s0, f4=0, f6=0, p8=0, f12=0, x14
-	.ascii	\s0
+# REC_func_5016B726_Result: 18-byte records (func_5016B726_Result, 166 records); fields, and what reads them:
+#   +0   f0           u32            func_5016594F_entry_L41 0x50165995 `mov (a0), d1`; func_5016594F_entry_Le5 0x50165A39 `mov (a0), d1` (+78)
+#   +4   f4           s16            func_50165414_L1a 0x5016542E `movhu (4, a0), d1`; func_50165498_entry_L1a 0x501654B5 `movhu (4, a0), d1`
+#   +6   f6           s16            func_50165498_entry_L30 0x501654CB `movhu (6, a0), d1`; func_50165498_entry_L199 0x50165634 `movhu (6, a0), d1` (+5)
+#   +8   p8           ptr            func_5016594F_entry_L63 0x501659B7 `mov (8, a1), a1`; func_50165BF7_entry_L63 0x50165C5F `mov (8, a1), a1` (+31)
+#   +12  f12          u16            func_5016594F_entry_L30 0x50165984 `movhu (0xc, a0), d1`; func_5016594F_entry_Lc4 0x50165A18 `movhu (0xc, a0), d1` (+98)
+#   +14  f14          s16            func_5016594F_entry_Le5 0x50165A39 `movhu (0xe, a0), d2`; func_50165BF7_entry_Le9 0x50165CE5 `movhu (0xe, a0), d2` (+31)
+#   +16  f16          s16            func_5016594F_entry_L104 0x50165A58 `movhu (0x10, a0), d2`; func_50165BF7_entry_L108 0x50165D04 `movhu (0x10, a0), d2` (+31)
+.macro REC_func_5016B726_Result f0=0, f4=0, f6=0, p8=0, f12=0, f14=0, f16=0
+	.long	\f0
 	.word	\f4
 	.word	\f6
 	.long	\p8
 	.word	\f12
-	.ascii	\x14
+	.word	\f14
+	.word	\f16
 .endm
 
 # REC_func_5017D6C1_entry_L9_Records_p8: 20-byte records (func_5017D6C1_entry_L9_Records_p8, 2 records); fields, and what reads them:
