@@ -60,6 +60,13 @@
 .macro PM_STYLE slot, tchord_on, variation, tempo_lo, tempo_hi
 	.byte	\slot, 0x00, 0x20, \tchord_on, (\variation) * 16, \tempo_lo, \tempo_hi
 .endm
+# The same seven bytes in a built-in Music Stylist setup's one-touch setting (KN6000 / KN6500 program,
+# StyleRecordTable.panel): the style's own 24-bit rhythm id, low byte first, in place of the CUSTOM
+# slot; tempo is the 9-bit TEMPO, stored low byte and bit 8 (source +8 / +9 mask 0x01).
+.macro PM_RHYTHM rhythm, tchord_on, variation, tempo
+	.byte	(\rhythm) & 0xff, ((\rhythm) >> 8) & 0xff, ((\rhythm) >> 16) & 0xff, \tchord_on, (\variation) * 16
+	.byte	(\tempo) & 0xff, (\tempo) >> 8
+.endm
 # +0x77..+0x79 (table 0x4858E202, source +0x6C6 / +0x67C = tag 0x41): m008040 mask 0x07 (parameter
 # 0x008040), m00c084 mask 0x01 (0x00C084, ApcSelFunc), r_octave (0x008038, AcRightOctProc).
 .macro PM_SET77 m008040, m00c084, r_octave

@@ -124,6 +124,11 @@ what fell. Generic is not 0.
 
 ## What is left (generic), and why
 
+(Superseded 2026-10-30 by lane siblings-final, `../../../kn6000/notes/siblings-data-final/README.md`.
+The tone / sound records at 0x190000..0x1AFFFF are the Music Stylist one-touch settings. The chord
+tables are the NoteConvRules' tables. Both are now typed; the census now reads 18,853 generic bytes.
+The list below is the state this lane left.)
+
 kn2400, by kind (64 KB banks of the file offset):
 
 - 0x190000..0x1AFFFF, about 125 KB: tone / sound parameter records (repeated

@@ -91,7 +91,23 @@ for _m, _r1, _end in (("kn6000", 0x176037, 0x3F47EC), ("kn6500", 0x176839, 0x37E
                         prog="src/program.s", syms=[f"{_m}.sym", f"{_m}_manual.sym", f"{_m}_ported.sym"],
                         labels=["src/symbols.inc", "src/labels.inc"], r1=_r1, pal=None, end=_end,
                         base=0x4C000000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model=_m.upper(),
-                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True)
+                        functions_sym=True, bitmaps=True, code_ids=True, text_strict=True, tones=True,
+                        # lane siblings-final: the reader-typed passes of the KN7000 profiles
+                        structs=True, string_arrays=True, string_arrays_min=4,
+                        style_panels=("StyleRecordTable", 0, 0x90))
+# (KN6000 v7.1) the built-in sound tables' three hash tables, read when no voice archive is loaded
+# (func_4C07B982 answers neither 1 nor 2): kn6000/notes/siblings-data-final/README.md
+# (KN6500 v1.3) its program flash holds the factory panel memories too (FactoryPanelMemory, kn6500_manual.sym);
+# it has no ToneRecordDirectory, so tones() finds nothing
+PROFILES["kn6500"]["tones"] = True
+PROFILES["kn6000"]["hash_tables"] = [
+    ("ToneKeyHash", 0x4C3E8680, 4, 12, "func_4C09B08C", 8,
+     "Key: bank MSB << 16 | LSB << 8 | program (func_4C09ACF3 builds it from the part's sound triple)."),
+    ("ShortKeyHash", 0x4C3E9850, 2, 6, "func_4C09B2AE", 6,
+     "Key: a u16 (func_4C09B200 builds it as byte << 8 | byte); the caller reads the payload's first byte."),
+    ("BankKeyHash", 0x4C3EC6A0, 4, 4, "func_4C09BDB2", 8,
+     "Key: MSB << 16 | LSB << 8 | program (func_4C09BCFA); the caller reads the payload's u16 (`movhu (a0), d0`)."),
+]
 # The SX-KN2400 / SX-KN2600 (program v1.1): the KN7000's registry layout (16 slots
 # per block) and alphabet; data first in the image (file 0x0F, after the boot
 # vectors, to the MILK kernel's code at 0x1E427C).
@@ -100,13 +116,18 @@ PROFILES["kn2400"] = dict(root="../kn2400", rom="baserom/kn2400_program.rom", sr
                           syms=["kn2400.sym", "kn2400_manual.sym", "kn2400_ported.sym"],
                           labels=["src/symbols.inc", "src/labels.inc"], r1=0x00000F, pal=None, end=0x1E427C,
                           model="KN2400", functions_sym=True, bitmaps=True, code_ids=True, text_strict=True,
-                          string_arrays=True,
+                          string_arrays=True, structs=True,
                           # crt0_start copies .data 0x485DD334 -> 0x50000010, 0x6E78 bytes (kn2400_manual.sym);
                           # stated, since the typed code spells the copy's source as a data label
                           raminit=(0x485DD334, 0x50000010, 0x6E78),
                           # func_486183E3 inflates demo song n's three streams (ptrs_50000C18 / C48 / C78)
                           # through func_486D4A2A, as the KN7000's func_48457350 through func_48533758
-                          inflate="func_486D4A2A")
+                          inflate="func_486D4A2A",
+                          # lane siblings-final: the built-in Music Stylist setups' one-touch settings (KN7000 layout)
+                          style_panels=("StyleRecordTable", 0, 0xA0),
+                          # the application's code is after the data (Makefile CODE: file 0x1E427C..0x3285BE),
+                          # and the part linked for RAM 0x50120000 (file 0x3285BE..0x3965B8)
+                          code_cpu=[(0x485E427C, 0x487285BE), (0x50120000, 0x5018DFFA)])
 # The KN6000 / KN6500 expansion board's XAPR plug-in (sx6-113, the HD-SX6's; folder
 # hdsx3): code first, then its data, then erased flash.  It runs on the SX-KN6000:
 # its records use the KN6000's classes (`host`) and its own (registry slot 0x168), it
@@ -119,7 +140,7 @@ PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="s
                          labels=["src/symbols.inc", "src/labels.inc"], r1=0x03DED6, pal=None, end=0x0B655C,
                          base=0x97800000, scheme="naka", sigmap=MM.SIGMAP_NAKA, model="HDSX3",
                          functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
-                         bitmaps=True, code_ids=True, text_strict=True, string_arrays=True,
+                         bitmaps=True, code_ids=True, text_strict=True, string_arrays=True, structs=True,
                          raminit=(0x978B3E84, 0x97910000, 0x26D8))
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
@@ -136,6 +157,10 @@ def configure(name):
     global SHARED
     SHARED = "" if KN7 == KN7_DIR else os.path.relpath(KN7_DIR, KN7) + "/"
     BASE = P.get("base", 0x48400000)
+    import data_struct_names as _DN
+    import data_structs as _DS
+    _DN.MODEL = name
+    _DS.PREFER_DIRECT = "root" in P
     MM.configure(base=BASE, sig_size=P.get("sig"), scheme=P.get("scheme", "kn7000"), sigmap=P.get("sigmap", {}),
                  host_calls={})
     ROMQ = f'"{P["rom"]}"'
@@ -303,10 +328,9 @@ class Gen:
         # (a name the previous build put at another address -- the header gives the entry, the
         # label sits on the prologue -- is not taken)
         import glob as _glob
-        built = {}
-        for line in open(lab):
-            nm_, v_ = line.split()
-            built[nm_] = int(v_, 16)
+        built = {nm_: int(v_, 16) for nm_, v_ in pairs}
+        self.code_labels = dict(built)  # every name the label files give (tools/data_structs.readers)
+        self.distinct_readers = "root" in P   # (siblings) data_readers.resolve_params_distinct
         hx = re.compile(r"^# (\w+)\s+\((?:lib )?CPU 0x([0-9a-fA-F]+)\)", re.M)
         for f in _glob.glob(code_glob()):
             for mo in hx.finditer(open(f, encoding="latin-1").read()):
@@ -459,7 +483,10 @@ class Gen:
     # -- references ----------------------------------------------------------
     @staticmethod
     def in_code(v):
-        """An address in code region 1 (a jump-table target, a callback)."""
+        """An address in code region 1 (a jump-table target, a callback); a profile whose code
+        is not before its data (the KN2400) states its code's CPU ranges (`code_cpu`)."""
+        if "code_cpu" in P:
+            return any(lo <= v < hi for lo, hi in P["code_cpu"])
         return BASE + 0x80 <= v < BASE + R1_END
 
     def ref(self, v, note=True):
@@ -1174,7 +1201,7 @@ class Gen:
         whose record is a single number is a table (tab_uN, as reader_tables)."""
         import data_structs as DS
         import data_struct_names as DN
-        self.dr = DS.readers(self, os.path.join(KN7, P["labels"]), code_glob())
+        self.dr = DS.readers(self, self.code_labels, code_glob())
         gs = DS.groups(self.dr)
         hard = set(self.fixed) - self.fixed_by_code | {g.base for g in gs}
         # an address the code loads as a base (`mov Addr, rN`) on a record boundary of an array is
@@ -1243,6 +1270,145 @@ class Gen:
             self.add(a, n * s, g.label, "struct array",
                      lambda gen, it, g=g: gen.render_structs(it, g))
 
+    # the bytes masks of a one-touch part record (src/include/panel_memory.inc PM_PART), as
+    # tools/gen_customdata_s.py checks them
+    PM_PART_MASKS = [None, None, None, 0xFF, 0xDF, 0x03, 0xFF, 0xFF, 0xFF, 0x7F, 0xFF, 0x7F, 0x7F, 0x7F,
+                     0x7F, 0x7F, 0x7F, 0xFF, 0x0F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x3F]
+
+    def style_panels(self):
+        """(profile `style_panels` = (table label, field offset, record size)) The one-touch
+        settings the built-in Music Stylist setups point at (StyleRecordTable.panel): the record
+        the CUSTOM one-touch settings also are (src/include/panel_memory.inc, kn6000 customdata
+        Slot*.inc), here with the built-in rhythm's own 24-bit id in place of the CUSTOM slot
+        (PM_RHYTHM).  KN6000: func_4C04C476 hands the pointer to func_4C04C58C, which merges the
+        record into the panel parameters through the triple tables at func_4C04B9F8_entry_L4f_Table
+        (the same tables the CUSTOM writer func_4C04B9F8 uses); func_4C04C552 answers 0x90 (KN6500:
+        func_4C04C6C2)."""
+        cfg = P.get("style_panels")
+        if not cfg:
+            return
+        tlab, foff, size = cfg
+        g = next((g for g in getattr(self, "struct_groups", []) if g.label == tlab), None)
+        if g is None:
+            print(f"gen_data_s: style_panels: no array {tlab}")
+            return
+        done = 0
+        for k in range(g.count):
+            ra = g.base + k * g.stride
+            t = self.m.u32(ra + foff)
+            if not (self.in_data(t) and self.free(t, size)):
+                continue
+            r = self.rom[self.off(t):self.off(t) + size]
+            st = r[0x70:0x77]
+            if st[2] or st[3] & ~0x40 or st[4] & 0xCF or st[6] & ~0x01:
+                continue
+            if size == 0x90 and r[0x8E:0x90] != b"\xff\xff":
+                continue
+            # (the KN7000 layout, 160 bytes) +0x8E, PM_PART_TAIL x 4 (tremulant masked 0x07), 5 x 0xFF
+            if size == 0xA0 and (r[0x9B:0xA0] != b"\xff" * 5 or any(r[0x8F + 3 * j] & ~0x07 for j in range(4))):
+                continue
+            nm_a = self.m.u32(ra + 4)
+            name = ""
+            if self.in_data(nm_a):
+                o = self.off(nm_a)
+                name = self.rom[o:o + 16].split(b"\0")[0].decode("latin-1").strip()
+            setup = self.m.u16(ra + 12)
+            lab0 = self.label_at.get(t) or self.fixed.get(t)
+            if lab0 is None or (t in self.fixed_by_code and self.GUESSED.match(lab0)) or lab0 in self.prev_data_label:
+                lab = self.rename_at(t, f"StylePanel_{sanitize(name, 32) or k}_{setup + 1}")
+            else:
+                lab = self.name_at(t, lab0)
+            self.add(t, size, lab, "style panel",
+                     lambda gen, it, r=r, k=k, name=name, setup=setup, tlab=tlab: gen.render_style_panel(it, r, k, name, setup, tlab))
+            done += 1
+        print(f"gen_data_s: style panels, {done} of {g.count} typed")
+
+    def hash_tables(self):
+        """(profile `hash_tables`: [(name, descriptor address, key bytes, payload bytes, reader,
+        payload offset, what)]) Multiplicative hash tables: a descriptor {u16 mult, u16 nbuckets}
+        right before nbuckets bucket pointers, each the head of a chain {u32 next, key, payload}.
+        The reader (KN6000: func_4C09B08C / func_4C09B2AE / func_4C09BDB2) takes key * mult mod
+        nbuckets (func_4C09B1EC: `mulu`, `divu`, mdr), walks the chain comparing +4 with the key
+        and answers entry + 8 (u32 key) or + 6 (u16 key).  The entries lie back to back, one
+        size per table; each is typed with its key, and the payload as rows."""
+        for name, da, kb, pb, reader, poff, what in P.get("hash_tables", ()):
+            m = self.m
+            mult, nb = m.u16(da), m.u16(da + 2)
+            ba = da + 4
+            ents, ok = [], True
+            for i in range(nb):
+                p = m.u32(ba + 4 * i)
+                while p:
+                    if not self.in_data(p) or len(ents) > 100000:
+                        ok = False
+                        break
+                    k = m.u32(p + 4) if kb == 4 else m.u16(p + 4)
+                    if (k * mult) % nb != i:
+                        ok = False
+                    ents.append(p)
+                    p = m.u32(p)
+            size = 4 + kb + pb
+            ents.sort()
+            if not ok or not ents or any(b - a != size for a, b in zip(ents, ents[1:])) \
+                    or not self.free(da, 4 + 4 * nb) or not self.free(ents[0], size * len(ents)):
+                print(f"gen_data_s: hash table {name} at {da:#x} does not check; not typed")
+                continue
+            lab = {p: f"{name}_Ent{k:04d}" for k, p in enumerate(ents)}
+            for p, l in lab.items():
+                self.rename_at(p, l)
+            # (the code names the descriptor and the buckets once a generation has: keep that name)
+            dl = self.name_at(da, f"{name}Desc") if self.fixed.get(da) == f"{name}Desc" else self.rename_at(da, f"{name}Desc")
+            bl = self.name_at(ba, f"{name}Buckets") if self.fixed.get(ba) == f"{name}Buckets" else \
+                self.rename_at(ba, f"{name}Buckets")
+            self.add(da, 4, dl, "hash table",
+                     lambda g, it, mult=mult, nb=nb, reader=reader, name=name: [
+                         f"{it.label}:\t# {name}: bucket = key * mult % nbuckets ({reader}"
+                         f" {sym_addr(reader, hex(g.code_labels.get(reader, 0)).upper().replace('0X', '0x'))})",
+                         f"\thash_desc\t{mult}, {nb}"])
+            self.add(ba, 4 * nb, bl, "hash table",
+                     lambda g, it, ba=ba, nb=nb: [f"{it.label}:"] + [
+                         f"\t.long\t{g.ref(g.m.u32(ba + 4 * i)) if g.m.u32(ba + 4 * i) else 0}\t# [{i}]"
+                         for i in range(nb)])
+
+            def render(g, it, kb=kb, pb=pb, head=None):
+                p = it.start
+                nx, k = g.m.u32(p), (g.m.u32(p + 4) if kb == 4 else g.m.u16(p + 4))
+                o = g.off(p) + 4 + kb
+                kc = (f"MSB 0x{k >> 16:02x}, LSB 0x{(k >> 8) & 0xFF:02x}, program {k & 0xFF}" if kb == 4
+                      else f"0x{k >> 8:02x}, {k & 0xFF}")
+                return ([head] if head else []) + [
+                    f"{it.label}:\thash_ent{8 * kb}\t{g.ref(nx) if nx else 0}, 0x{k:0{2 * kb}x}\t# key: {kc}",
+                    "\t.byte\t" + ", ".join(f"0x{x:02x}" for x in g.rom[o:o + pb])]
+            head = (f"# {name}: {len(ents)} chain entries {{next, {8 * kb}-bit key, {pb}-byte payload}};"
+                    f" {reader} answers the payload (entry + {poff}).  {what}")
+            for n_, p in enumerate(ents):
+                self.add(p, size, lab[p], "hash table",
+                         lambda g, it, kb=kb, pb=pb, h=(head if n_ == 0 else None): render(g, it, kb, pb, h))
+            print(f"gen_data_s: hash table {name}: {nb} buckets, {len(ents)} entries")
+
+    def render_style_panel(self, it, r, k, name, setup, tlab):
+        def hx(bs):
+            return ", ".join(f"{x:#04x}" for x in bs)
+        st = r[0x70:0x77]
+        rhythm = st[0] | st[1] << 8 | st[2] << 16
+        return [f"{it.label}:\t# one-touch setting {setup + 1} of the Music Stylist setup \"{name}\""
+                f" ({tlab}[{k}].panel; src/include/panel_memory.inc)",
+                f"\tPM_PART\t{hx(r[0:0x1A])}\t# part 0 (RIGHT1)",
+                f"\tPM_PART\t{hx(r[0x1A:0x34])}\t# part 1 (RIGHT2)",
+                f"\tPM_PART\t{hx(r[0x34:0x4E])}\t# part 2 (LEFT)",
+                f"\tPM_ENTRIES\t{hx(r[0x4E:0x56])}",
+                f"\tPM_PART\t{hx(r[0x56:0x70])}\t# part 3 (PART 4)",
+                f"\tPM_RHYTHM\t{rhythm:#08x}, {st[3]:#04x}, {st[4] >> 4}, {st[5] | st[6] << 8}"
+                f"\t# rhythm id, TECHNI-CHORD on, VARIATION {(st[4] >> 4) + 1}, tempo",
+                f"\tPM_SET77\t{hx(r[0x77:0x7A])}",
+                f"\tPM_FX\t{hx(r[0x7A:0x88])}",
+                f"\tPM_SET88\t{hx(r[0x88:0x8C])}",
+                f"\tPM_SET8C\t{hx(r[0x8C:0x8E])}"] + (
+                ["\t.space\t2, 0xff"] if len(r) == 0x90 else
+                [f"\t.byte\t{r[0x8E]:#04x}\t# +0x8E (no field of the KN7000 writer func_4C02A0C4)"]
+                + [f"\tPM_PART_TAIL\t{hx(r[0x8F + 3 * j:0x92 + 3 * j])}\t# part {j}" for j in range(4)]
+                + ["\t.space\t5, 0xff"])
+
     def ptr_records(self):
         """Records a pointer leads to: for every pointer the code loads from a
         typed field or table entry and then reads through (data_readers' ("ptr",
@@ -1259,6 +1425,15 @@ class Gen:
             k = acc.key
             if k[0] == "ptr" and k[1][0] == "fld" and acc.off >= 0:
                 by_fld[k[1]].append(acc)
+        # (data_struct_names.MODEL_POINTED) pointer fields the walk loses: a read of the target at
+        # an offset the code computes, from the instruction the entry cites
+        import data_readers as DR
+        for (lab, foff), (fn, cpu, insn, roff, rw, sg) in DN.pointed().items():
+            for g in getattr(self, "struct_groups", []):
+                if g.label == lab:
+                    fld = ("fld", ("rec", g.base, g.stride), foff)
+                    by_fld[fld].append(DR.Access(("ptr", fld), roff, rw, sg, "ld", fn, cpu, insn,
+                                                 None, -1, None))
         self.build_index()
         self._lmemo, self._tmemo = {}, {}
         targets = self.field_targets
@@ -1540,8 +1715,8 @@ class Gen:
                      lambda g, it, fn=fn, fmt=fmt, blit=blit, caller=caller, cpu=cpu, w=w, h=h, depth=depth, more=more: [
                          f"{it.label}:\t# {w} x {h}, {depth} bit(s) a pixel: {caller} 0x{cpu:08X} draws it with"
                          f" {blit}{more} ({OUTDIR}/media/{fn})",
-                         f'\t.incbin\t"build/bitmaps/{PROFILE}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
-                         f"tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
+                         f'\t.incbin\t"{P.get("bitmap_dir", "build/bitmaps")}/{os.path.splitext(fn)[0]}.bin"\t# census: generated -- '
+                         f"{SHARED}tools/table_png.py ({fmt}) from {OUTDIR}/media/{fn}"])
 
     def variables(self):
         """(`structs` profiles) What is left that an instruction reads or writes at a
@@ -1641,9 +1816,14 @@ class Gen:
         if not recs:
             return
         # build 941's names and the listings' instruction text
-        ref = open(os.path.join(KN7, PROFILES["941"]["rom"]), "rb").read()
+        # (kn7000/'s files, whichever profile runs: a sibling's record takes the name of the 941 record
+        # with the same bytes)
+        ref941 = os.path.join(KN7_DIR, PROFILES["941"]["rom"])
+        if not os.path.exists(ref941):
+            sys.exit(f"gen_data_s: {ref941} missing (the DSP records' names): `make -C kn7000 baserom` first")
+        ref = open(ref941, "rb").read()
         names = {}
-        tsv = os.path.join(KN7, "dsp", "records.tsv")
+        tsv = os.path.join(KN7_DIR, "dsp", "records.tsv")
         meta = {}
         if os.path.exists(tsv):
             for line in open(tsv, encoding="utf-8"):
@@ -1654,7 +1834,7 @@ class Gen:
             if st in meta:
                 names[hashlib.sha1(ref[st:z]).hexdigest()] = meta[st]
         insn = {}
-        for f in _glob.glob(os.path.join(KN7, "disasm", "dsp", "rec*.asm")):
+        for f in _glob.glob(os.path.join(KN7_DIR, "disasm", "dsp", "rec*.asm")):
             for line in open(f, encoding="utf-8"):
                 mo = re.match(r"^[0-9a-f]{4}: ([0-9a-f]{16}) (.*)$", line)
                 if mo:
@@ -1773,6 +1953,60 @@ class Gen:
         self.rhythm_macros = program_rhythm.macro_block()
         self.label_at[a] = "TechnicsRhythmsResource"
         self.add(a, n, "TechnicsRhythmsResource", "rhythm resource", lambda g, it, lines=lines: lines)
+
+    def pads(self):
+        """TechnicsPadsResource (a manual-symbol name): the program's own built-in "Technics
+        Pads" PERFORMANCE PAD bank, the table flash's segment 4 format (tools/gen_table_styles.py
+        technics_pads(), the same lines here).  KN6000: TechnicsPadsResourceInit stores it to
+        TechnicsPadsResourceInit_Var and calls TechnicsPadsResourceParse when the table flash's
+        resource does not check, as with the Technics Rhythms resource."""
+        import gen_table_styles as GTS
+        a = self.m.sym_by_name.get("TechnicsPadsResource")
+        if a is None or not self.in_data(a):
+            return
+        rom, s = self.rom, a - BASE
+        try:
+            o_tab, cnt = GTS.u24be(rom, s + 0x1E), GTS.u16be(rom, s + GTS.u24be(rom, s + 0x18) + 2)
+            last = s + GTS.u24be(rom, s + o_tab + 3 * (cnt - 1))
+            end = last + 0x37 + GTS.u24be(rom, last + 0x34)
+            lines = GTS.technics_pads(rom, s, end, "TechnicsPadsResource", None, None, inline=True)
+        except (SystemExit, ValueError, IndexError) as e:
+            print(f"gen_data_s: TechnicsPadsResource not typed: {e}")
+            return
+        # the table generator's comments name KN7000 program 941's addresses: say what they are here
+        fix = [(r"# strncmp with the firmware's 0x485B6B68", "# strncmp with Str_Technics_Pads_2 (TechnicsPadsResourceParse)"),
+               (r"\t# -> 0x50034C2[CF0]", ""), (r"# the pad count -> 0x50034C24; the index's limit", "# the pad count; the index's limit"),
+               (r"\(func_48434591\)", "(the KN7000's func_48434591; [INFERENCE] the same fold here)")]
+        for pat, rep in fix:
+            lines = [re.sub(pat, rep, ln) for ln in lines]
+        if not self.free(a, end - s):
+            print("gen_data_s: TechnicsPadsResource overlaps a typed item; not typed")
+            return
+        if not self.rhythm_macros:
+            import program_rhythm
+            self.rhythm_macros = program_rhythm.macro_block()
+        # the pad and event macros of src/table/style_macros.inc the pads use (its ev_* event
+        # macros, not IC18's: tools/gen_table_styles.py event_lines), each with the comment above it
+        have = {ln.split()[1] for ln in self.rhythm_macros if ln.startswith(".macro ")}
+        sm = open(os.path.join(KN7_DIR, "src", "table", "style_macros.inc")).read().split("\n")
+        want = {"pad_head", "pad_events", "ev_cc", "ev_pc", "ev_note", "ev_press", "ev_bend", "ev_sysex",
+                "ev_at", "ev_beat", "ev_end"}
+        extra, k = [], 0
+        while k < len(sm):
+            if sm[k].startswith(".macro ") and sm[k].split()[1] in want - have:
+                c = k
+                while c > 0 and sm[c - 1].startswith("#"):
+                    c -= 1
+                e = next(j for j in range(k, len(sm)) if sm[j].strip() == ".endm")
+                extra += sm[c:e + 1]
+                k = e
+            k += 1
+        self.rhythm_macros = self.rhythm_macros + ["", "# (from src/table/style_macros.inc: the built-in pads' macros)"] + extra
+        self.label_at[a] = "TechnicsPadsResource"
+        self.add(a, end - s, "TechnicsPadsResource", "pads resource",
+                 lambda g, it, lines=lines, cnt=cnt: [f"{it.label}:\t# the built-in \"Technics Pads\" bank, {cnt} pads"
+                                                      " (the table flash's segment 4 format)"] + lines)
+        print(f"gen_data_s: Technics Pads, {cnt} pads")
 
     # -- the built-in demo songs: zlib streams typed as songs -------------------------
     def zlib_kinds(self):
@@ -2139,7 +2373,10 @@ class Gen:
                     if func and len(body) < 400:
                         txt = "\n".join(body)
                         r = {}
-                        pairs = re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt)
+                        # (both compilers' forms, as above: a `ret` in the plug-in's procedure
+                        # must not lose its `cmp / bne / bra` answers)
+                        pairs = re.findall(r"cmp\s+(\S+), d1\n\s+beq\s+(\w+)", txt) + re.findall(
+                            r"cmp\s+(\S+), d[01]\n\s+bne\s+\w+\n\s+bra\s+(\w+)", txt)
                         for c, lab in pairs:
                             k = meth.get(val(c))
                             m2 = re.search(rf"^{lab}:\n\s+(?:mov\s+(\S+), d0|clr\s+d0)\n", txt, re.M)
@@ -2473,7 +2710,7 @@ class Gen:
               if self.tone_macros else []),
             f'.include "{SHARED}src/include/kn_panel_extra.inc"',
             f'.include "{SHARED}src/include/data_tables.inc"',
-            *([f'.include "{outdir}/data_structs.inc"', '.include "src/include/dsp_records.inc"'] if P.get("structs") else []),
+            *([f'.include "{outdir}/data_structs.inc"', f'.include "{SHARED}src/include/dsp_records.inc"'] if P.get("structs") else []),
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
@@ -2634,6 +2871,41 @@ class Gen:
                 + ("; a typed pointer or a code immediate holds their address, but nothing is read through it"
                    if held else "; no address the code or a typed item holds points into them"))
 
+    def typed_gap(self, a, b):
+        """(the siblings) A gap no pass typed that is plainly one of two things, written as such:
+        text with no NUL (every byte printable: `.ascii` rows), or words that are each 0 or the
+        address of something with a name (`.long` rows, spelled symbolically).  The comment says
+        whether an instruction reads the bytes (gap_note's reader search).  None otherwise."""
+        bs = self.rom[a:b]
+        n = b - a
+        if n < 8:
+            return None
+        read = self.gap_note(a, b) is None
+        why = ("read by an instruction no pass could turn into a type" if read
+               else "no instruction reads them (tools/data_readers.py)")
+        if all(0x20 <= c < 0x7F for c in bs):
+            w = next((k for k in (16, 32, 12, 10, 8) if n % k == 0 and n // k >= 2), 16)
+            return [f"\t# {n} bytes of text with no NUL, {w} characters a row [INFERENCE: fixed-width names]; {why}"] + [
+                f'\t.ascii\t"{c_escape(bs[i:i + w])}"' for i in range(0, n, w)]
+        if (self.addr_of(a) & 3) == 0 and n % 4 == 0:
+            words = [int.from_bytes(bs[k:k + 4], "little") for k in range(0, n, 4)]
+            refs = []
+            for v in words:
+                if v == 0:
+                    refs.append("0")
+                    continue
+                if not self.is_addr(v) or (self.in_code(v) and v not in self.extern):
+                    return None
+                r = self.ref(v)
+                if r.startswith("0x"):
+                    return None
+                refs.append(r)
+            if sum(1 for v in words if v) * 2 < len(words):
+                return None
+            return [f"\t# {len(words)} addresses [INFERENCE: a pointer table: every word is 0 or a named"
+                    f" address]; {why}"] + [f"\t.long\t{r}" for r in refs]
+        return None
+
     def gap_lines(self, a, b):
         """The bytes a..b (file offsets) no typed item holds: a uniform run is
         .space (or .align, when it is the padding up to a 4-byte boundary after
@@ -2643,6 +2915,11 @@ class Gen:
             res = []
             for ln in out:
                 mo = re.match(r'\.incbin_range "[^"]+", 0x([0-9A-F]+), 0x([0-9A-F]+)', ln)
+                if mo and "root" in P:
+                    typed = self.typed_gap(int(mo.group(1), 16), int(mo.group(2), 16))
+                    if typed:
+                        res += typed
+                        continue
                 if mo:
                     note = self.gap_note(int(mo.group(1), 16), int(mo.group(2), 16))
                     if note:
@@ -2773,6 +3050,8 @@ class Gen:
         if PALETTE is not None:
             self.palette()
         self.rhythm()
+        if "root" in P:
+            self.pads()
         self.tone_macros = False
         if P.get("tones"):
             self.tones()
@@ -2783,12 +3062,14 @@ class Gen:
         self.code_refs()
         if P.get("structs"):
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
+            self.hash_tables()
             self.name_value_tables()
             self.panel_memories()
             self.dsp_pool()
             if P.get("string_arrays"):
                 self.string_arrays()
             self.struct_arrays()
+            self.style_panels()
             self.typed_refs()
             self.message_tables()
             self.drawn_bitmaps()

@@ -13,6 +13,8 @@
 .include "src/program/data/tone_macros.inc"
 .include "../kn7000/src/include/kn_panel_extra.inc"
 .include "../kn7000/src/include/data_tables.inc"
+.include "src/program/data/data_structs.inc"
+.include "../kn7000/src/include/dsp_records.inc"
 .include "src/program/data/rhythm_macros.inc"
 .include "src/program/data/gui_ids.inc"
 .include "src/program/data/gui_classes.inc"
@@ -23,4 +25,6 @@
 .include "src/program/data/data_02.s"
 .include "src/program/data/data_03.s"
 .include "src/program/data/data_04.s"
+.include "src/program/data/data_05.s"
+.include "src/program/data/data_06.s"
 .org 0x3F47EC
