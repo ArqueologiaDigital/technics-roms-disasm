@@ -169,17 +169,8 @@ HDAE5000_StrNCpy_Next2:
 	cp	bc, 0:i3
 	jr	nz, HDAE5000_StrNCpy_Loop2
 	ret
-; ---------------------------------------------------------------------------
-; strupr(s): subtracts 0x20 from every byte whose HDAE5000_CType_Table entry
-; has bit 1 (lower case) set.
-; In:  (xsp+4) = s
-; Out: XHL = s.  Clobbers XIX, XDE, XBC, WA.
-; ---------------------------------------------------------------------------
-HDAE5000_StrUpr:
-HDAE5000_StrUpr_Loop:
-HDAE5000_StrUpr_Skip:
-HDAE5000_StrUpr_Join:
-HDAE5000_StrUpr_Next:
+
+
 
 ; ----------------------------------------------------------------------------
 ; Floating point -> decimal digits (used by HDAE5000_FormatFloat)
@@ -1610,8 +1601,6 @@ HDAE5000_Unpacked_Div_Skip2:
 ; ----------------------------------------------------------------------------
 HDAE5000_Str_End_ObjNames:
 	.zero 2
-HDAE5000_Str_LyricJumpEditCheck:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_BitmapButt01:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_LanguageTextReturn:
 	.asciz "LanguageTextReturn"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
@@ -1683,7 +1672,6 @@ HDAE5000_Str_LBNPage1SwCatch:
 HDAE5000_Str_BitmapHdd_icon:
 	.asciz "BitmapHdd_icon"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_DelTlxEditCheck:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_DelMdEditCheck:
 	.asciz "DelMdEditCheck"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
@@ -1733,7 +1721,6 @@ HDAE5000_Str_WriteConfirmEditCheck:
 	.asciz "WriteConfirmEditCheck"
 HDAE5000_Str_WriteProtectEditCheck:
 	.asciz "WriteProtectEditCheck"
-HDAE5000_Str_SfxTlxBitCheck:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_SfxMdBitCheck:
 	.asciz "SfxMdBitCheck"
 HDAE5000_Str_SfxRcmBitCheck:

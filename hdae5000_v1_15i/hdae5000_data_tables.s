@@ -31,31 +31,7 @@ HDAE5000_ParamStr_TtlScreenR_End:
 	.zero 6
 HDAE5000_ParamStr_IvHddNaming_func:
 	.asciz "func"
-	.zero 15
-HDAE5000_ParamStr_LyricBox_infocolor:
-	.asciz "infocolor"
-HDAE5000_ParamStr_LyricBox_infofont:
-	.asciz "infofont"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_ParamStr_LyricBox_reversecolor:
-	.asciz "reversecolor"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_ParamStr_LyricBox_fontcolor:
-	.asciz "fontcolor"
-HDAE5000_ParamStr_LyricBox_font:
-	.asciz "font"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_ParamStr_LyricBox_pEnable:
-	.asciz "pEnable"
-HDAE5000_ParamStr_FDFileSelect_End:
-	.zero 2
-HDAE5000_ParamStr_FDFileSelect_sel_pos:
-	.asciz "sel_pos"
-HDAE5000_ParamStr_FDFileSelect_sel_num:
-	.asciz "sel_num"
-HDAE5000_ParamStr_FDFileSelect_dial:
-	.asciz "dial"
-	.byte 0x00
+	.zero 11
 
 HDAE5000_RECORD_TABLE:
 	; Record/entry data table -- CONFIRMED DATA, not code.
@@ -202,22 +178,11 @@ HDAE5000_Record_AcLanguageText1:	; class 'AcLanguageText1'
 ; ---------------------------------------------------------------------------
 ; reserved gap: 5832 bytes, all 0x00 (verified above)
 ; ---------------------------------------------------------------------------
-.zero 5832
+.zero 5904
 
 ; ---------------------------------------------------------------------------
 ; string pool referenced by NamePtr/SigPtr above, in reverse record order
 ; ---------------------------------------------------------------------------
-ClassSig_FDFileSelect:
-	.asciz "Gnn"			; 0x29D14A
-ClassName_FDFileSelect:
-	.asciz "FDFileSelect"			; 0x29D14E
-	.zero 1			; 0x29D8BB (unreferenced pad)
-ClassSig_LyricBox:
-	.asciz "mc^^c^"			; 0x29D15C
-	.zero 1			; 0x29D8C3 (unreferenced pad)
-ClassName_LyricBox:
-	.asciz "LyricBox"			; 0x29D164
-	.zero 1			; 0x29D8CD (unreferenced pad)
 ClassSig_AcLanguageText1:
 	.byte 0x00			; 0x29D16E (SigPtr target of AcLanguageText1, empty signature)
 	.zero 1			; 0x29D8CF (unreferenced pad)
@@ -234,11 +199,6 @@ ClassSig_AcWindowPage1:
 	.zero 1			; 0x29D8EF (unreferenced pad)
 ClassName_AcWindowPage1:
 	.asciz "AcWindowPage1"			; 0x29D190
-ClassSig_TtlScreenR3:
-	.byte 0x00			; 0x29D19E (SigPtr target of TtlScreenR3, empty signature)
-	.zero 1			; 0x29D8FF (unreferenced pad)
-ClassName_TtlScreenR3:
-	.asciz "TtlScreenR3"			; 0x29D1A0
 ClassSig_TtlScreenR2:
 	.byte 0x00			; 0x29D1AC (SigPtr target of TtlScreenR2, empty signature)
 	.zero 1			; 0x29D90D (unreferenced pad)
@@ -277,36 +237,22 @@ ClassName_SelectList:
 	.zero 1			; 0x29D97D (unreferenced pad)
 HDAE5000_RECORD_COUNT:
 	; Record count data
-	.byte 0x0d, 0x00                       ; u16 count = 13 (LE); matches HDAE5000_RECORD_TABLE's 13
+	.byte 0x0a, 0x00                       ; u16 count = 10 (LE); matches HDAE5000_RECORD_TABLE's 10
 	                                       ; records and the 13 UI class procedures/names
 	                                       ; hdae5000_init_data.s documents at 0x2f97fa/0x2f9832.
 	                                       ; hd-ae5000_v2_06i.s:310 `ldw_da xwa, (0x29d97e)` reads
 	                                       ; this exact word -- NOT alignment padding, real data;
 	                                       ; it also happens to word-align the string pool below.
-HDAE5000_Str_EV_DrawFDText:
-	.asciz "EV_DrawFDText"
-HDAE5000_Str_EV_InitFDFileSelect:
-	.asciz "EV_InitFDFileSelect"
-HDAE5000_Str_EV_Scrollline:
-	.asciz "EV_Scrollline"
-HDAE5000_Str_EV_Drawsyllable:
-	.asciz "EV_Drawsyllable"
-HDAE5000_Str_EV_Alldraw:
-	.asciz "EV_Alldraw"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_EV_Initlyrics:
-	.asciz "EV_Initlyrics"
-HDAE5000_Str_EV_SETPOSITION:
-	.asciz "EV_SETPOSITION"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_EV_BEATMESSAGE:
-	.asciz "EV_BEATMESSAGE"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_EV_TICKS:
-	.asciz "EV_TICKS"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_EV_INITLYRICPARAM:
-	.asciz "EV_INITLYRICPARAM"
+HDAE5000_Str_EV_DrawFDText:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_InitFDFileSelect:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_Scrollline:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_Drawsyllable:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_Alldraw:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_Initlyrics:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_SETPOSITION:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_BEATMESSAGE:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_TICKS:	; PORT-ORPHAN: its v1.15i object is gone
+HDAE5000_Str_EV_INITLYRICPARAM:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_EV_TimerBack:
 	.asciz "EV_TimerBack"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
@@ -316,10 +262,6 @@ HDAE5000_Str_EV_AfterLoad:
 HDAE5000_Str_EV_SeqStop:
 	.asciz "EV_SeqStop"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_MT_FdSaveLyric:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_MT_FdLoadLyric:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_MT_FdInfo:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_MT_FdFreshUp:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_MT_SelectDelFile:
 	.asciz "MT_SelectDelFile"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
@@ -331,7 +273,6 @@ HDAE5000_Str_MT_LOOP:
 HDAE5000_Str_MT_SetStrAdr:
 	.asciz "MT_SetStrAdr"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_MT_SelectAll:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_MT_SelectSAVE:
 	.asciz "MT_SelectSAVE"
 HDAE5000_Str_MT_SelectOK2:
@@ -357,8 +298,6 @@ HDAE5000_Str_MT_OverFlow:
 	.asciz "MT_OverFlow"
 HDAE5000_Str_End_ClassNames:
 	.zero 2
-HDAE5000_Str_FDFileSelectProc:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_LyricBoxProc:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_AcLanguageText1Proc:
 	.asciz "AcLanguageText1Proc"
 HDAE5000_Str_IvScreenR2Proc:
@@ -366,7 +305,6 @@ HDAE5000_Str_IvScreenR2Proc:
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_Str_AcWindowPage1Proc:
 	.asciz "AcWindowPage1Proc"
-HDAE5000_Str_TtlScreenR3Proc:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_TtlScreenR2Proc:
 	.asciz "TtlScreenR2Proc"
 HDAE5000_Str_HDTitleMenuProc:
@@ -502,7 +440,7 @@ HDAE5000_Palette_TitleLogo:
 	; (0x2BB58E) -- the two title frames share one palette.
 	; Built from images/HDAE5000_Palette_Logo.txt by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 54881, 1024
-	.incbin "includes/generated/HDAE5000_Palette_Logo.bin"
+	.incbin "includes/generated/HDAE5000_Palette_Logo.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Palette_Logo.txt
 
 HDAE5000_Bitmap_TitleLogo:
 	; 320 x 240 @ 8bpp = 0x12C00 B.  The "HD-AE5000" wordmark embossed over
@@ -511,14 +449,14 @@ HDAE5000_Bitmap_TitleLogo:
 	; hdae5000/images/HDAE5000_Logo.bin (byte-identical to this slice).
 	; Built from images/HDAE5000_Logo.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 55905, 76800
-	.incbin "includes/generated/HDAE5000_Logo.bin"
+	.incbin "includes/generated/HDAE5000_Logo.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Logo.png
 
 HDAE5000_Palette_DriveMech:
 	; 0x400 B = 256 RGBX entries.  Copied to 0x069400 by 0x2805BF, and again
 	; on its own by 0x280753.  Byte-identical to HDAE5000_Palette_TitleLogo.
 	; Built from images/HDAE5000_Palette_Hands.txt by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 132705, 1024
-	.incbin "includes/generated/HDAE5000_Palette_Hands.bin"
+	.incbin "includes/generated/HDAE5000_Palette_Hands.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Palette_Hands.txt
 
 HDAE5000_Bitmap_DriveMech:
 	; 320 x 240 @ 8bpp.  The same drive-mechanism photograph WITHOUT the
@@ -528,7 +466,7 @@ HDAE5000_Bitmap_DriveMech:
 	; the picture (see the hdae-docs / gallery follow-up).
 	; Built from images/HDAE5000_Hands.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 133729, 76800
-	.incbin "includes/generated/HDAE5000_Hands.bin"
+	.incbin "includes/generated/HDAE5000_Hands.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Hands.png
 
 HDAE5000_Palette_FilePanel:
 	; v2.01i's own palette for its own backdrop below (v2.06i's differs in
@@ -554,7 +492,7 @@ HDAE5000_Palette_HddIcon:
 	; Extracted as images/HDAE5000_Palette.bin.
 	; Built from images/HDAE5000_Palette_Icon.txt by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 288353, 1024
-	.incbin "includes/generated/HDAE5000_Palette_Icon.bin"
+	.incbin "includes/generated/HDAE5000_Palette_Icon.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Palette_Icon.txt
 
 HDAE5000_Bitmap_HddIcon:
 	; 27 x 27 @ 8bpp with a 28-byte row stride (one 0x00 pad byte at the end
@@ -565,7 +503,7 @@ HDAE5000_Bitmap_HddIcon:
 	; assumed 28 x 28 and over-reads 28 bytes into HDAE5000_Config_Strings.
 	; Built from images/HDAE5000_Icon.png by scripts/build/hdae5000_images.py.
 	; Was: .incbin "includes/code_29af2d_2fffff.bin", 289377, 756
-	.incbin "includes/generated/HDAE5000_Icon.bin"
+	.incbin "includes/generated/HDAE5000_Icon.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000/images/HDAE5000_Icon.png
 
 ; ============================================================================
 ; HD-AE5000 PROGRAM .RODATA, 0x2E1C82-0x2E3703 (the C program's read-only data)
@@ -1311,14 +1249,12 @@ HDAE5000_Str_Chr2020203A2020:
 HDAE5000_Fmt_3_3d:
 	; read by DirList_BuildPage at 0x283758 (pushed operand)
 	.asciz "%3.3d"
-HDAE5000_PartNames_Text:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_CURRENTPANELPANELMEMORYSEQUE:
-	; only in v1.15i
+HDAE5000_PartNames_Text:
+	; read by PartList_Build at 0x2839FD (lda operand)
 	.asciz "CURRENT PANEL\011PANEL MEMORY \011  SEQUENCER  \011  COMPOSER   \011SOUND MEMORY \011     MSP     \011RHYTHM CUSTOM\011  USER MIDI  \011"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_PartNames_BlankText:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_Blank104Tab:
-	; only in v1.15i
+HDAE5000_PartNames_BlankText:
+	; read by PartList_Build at 0x2839E4 (lda operand)
 	.asciz "             \011             \011             \011             \011             \011             \011             \011             \011"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_PartName_Blank:
@@ -3065,20 +3001,14 @@ HDAE5000_LangMsg_027_FR:
 	; message 27, language 3 (French): read by HDAE5000_AcLanguageText1Proc
 	.asciz "Vous avez marquer un FLS connection pour effacer. Vous ait sure?"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
+HDAE5000_LangMsg_028_EN:
 	; message 28, language 1 (English): read by HDAE5000_AcLanguageText1Proc
-HDAE5000_LangMsg_028_EN:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_YouAreGoingToOverwriteAnExis:
-	; only in v1.15i
 	.asciz "You are going to overwrite an existing entry. Are you sure?"
+HDAE5000_LangMsg_028_DE:
 	; message 28, language 2 (German): read by HDAE5000_AcLanguageText1Proc
-HDAE5000_LangMsg_028_DE:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_SieUeberschreibenEineBestehe:
-	; only in v1.15i
 	.asciz "Sie ueberschreiben eine bestehenden Eintrag. Sind Sie sicher?"
+HDAE5000_LangMsg_028_FR:
 	; message 28, language 3 (French): read by HDAE5000_AcLanguageText1Proc
-HDAE5000_LangMsg_028_FR:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_VoulezVousVraimentTranscrire:
-	; only in v1.15i
 	.asciz "Voulez-vous vraiment transcrire ce enregistration?"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_LangMsg_029_EN:
@@ -3501,15 +3431,11 @@ HDAE5000_LangMsg_061_FR:
 	.byte 0xe9  ; "é"
 	.asciz "placer."
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
+HDAE5000_LangMsg_062_EN:
 	; message 62, language 1 (English): read by HDAE5000_AcLanguageText1Proc
-HDAE5000_LangMsg_062_EN:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_Evaluation070798:
-	; only in v1.15i
 	.asciz "Evaluation 07-07-98"
+HDAE5000_LangMsg_062_DE:
 	; message 62, language 2 (German): read by HDAE5000_AcLanguageText1Proc
-HDAE5000_LangMsg_062_DE:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_TestVersion070798:
-	; only in v1.15i
 	.asciz "Test-Version 07-07-98"
 HDAE5000_LangMsg_062_FR:
 	; message 62, language 3 (French): read by HDAE5000_AcLanguageText1Proc
@@ -3881,8 +3807,6 @@ HDAE5000_Str_LANDEU002:
 HDAE5000_Str_LANENG001:
 	; pointed at by entry 0 of HDAE5000_TextPtrs_LANENG001_to_LANENG006, a table read by LanguageTextReturn
 	.asciz "LANENG001"
-HDAE5000_Str_XAP:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_Str_Rb_Smf_ReadHeader:	; PORT-ORPHAN: its v1.15i object is gone
 
 ; HDAE5000_Palette_BootSplash: Boot-splash palette: 256 RGBX entries loaded by HDAE5000_Boot_Init right before it
 ;   blits HDAE5000_Bitmap_BootSplash. Basis: Boot_Init's lda + HDAE5000_Load_Palette, and the bitmap renders correctly
@@ -3901,7 +3825,7 @@ HDAE5000_Palette_BootSplash:
 	; v1.x's own palette (762 of the 1,024 bytes differ from v2.x's), built from
 	; hdae5000_v1_15i/images/HDAE5000_Palette_Splash_v1_15i.txt by
 	; scripts/build/hdae5000_images.py.
-	.incbin "includes/generated/HDAE5000_Palette_Splash_v1_15i.bin"
+	.incbin "includes/generated/HDAE5000_Palette_Splash_v1_15i.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000_v1_15i/images/HDAE5000_Palette_Splash_v1_15i.txt
 
 HDAE5000_Bitmap_BootSplash:
 	; 320 x 240 @ 8bpp = 0x12C00 B -- the HD-AE5000 start-up screen: a red
@@ -3919,7 +3843,7 @@ HDAE5000_Bitmap_BootSplash:
 	; and "Startup !" for v2.x's "Start-up !".  Built from
 	; hdae5000_v1_15i/images/HDAE5000_SplashScreen_v1_15i.png by
 	; scripts/build/hdae5000_images.py.
-	.incbin "includes/generated/HDAE5000_SplashScreen_v1_15i.bin"
+	.incbin "includes/generated/HDAE5000_SplashScreen_v1_15i.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000_v1_15i/images/HDAE5000_SplashScreen_v1_15i.png
 
 HDAE5000_Display_Params:
 	; Display configuration parameters
@@ -4019,8 +3943,6 @@ HDAE5000_FdSong_CheckFiles_Str_rb_7:	.asciz "rb"
 HDAE5000_FdSong_CheckFiles_Str_MD:	.asciz ".MD"
 HDAE5000_FdSong_CheckFiles_Str_rb_8:	.asciz "rb"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_FdSong_CheckFiles_Str_TLX:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_FdSong_CheckFiles_Str_rb_9:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_CopyFdSongToHd_Lsw_Str_LSW:	.asciz ".LSW"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_CopyFdSongToHd_Lsw_Str_rb:	.asciz "rb"
@@ -4051,8 +3973,6 @@ HDAE5000_CopyFdSongToHd_Rcm_Str_rb:	.asciz "rb"
 HDAE5000_CopyFdSongToHd_Md_Str_MD:	.asciz ".MD"
 HDAE5000_CopyFdSongToHd_Md_Str_rb:	.asciz "rb"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_CopyFdSongToHd_Tlx_Str_TLX:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_CopyFdSongToHd_Tlx_Str_rb:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_GetInfoBlockPointer:	.asciz "---[ GetInfoBlockPointer ]---"
 HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_ppib_adr_Fmtx:		.asciz "ppib adr = %lx"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)

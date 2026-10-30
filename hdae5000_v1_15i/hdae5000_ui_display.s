@@ -3159,108 +3159,15 @@ HDAE5000_LanguageTextReturn:
 .Ldec_no:
 	ld xhl, 0:i3
 	ret
-	; ============================================================
-	; Format + ROM region setup helper
-	; ============================================================
-HDAE5000_PPORT_Svc28_FlashXapFile:
-	; PC-link service 28 (HDAE5000_PPORT_ServiceTable[28]; no trace banner):
-	; builds a descriptor on the stack -- "XAP" (0x2E5DC6), XBC, 0x280000,
-	; 0x2F0000 (this ROM's own range) -- and calls RAM 0x23FEB0 with it;
-	; command 20 is "Send XapFile flash".  Nothing in this ROM puts code at
-	; 0x23FEB0, so what runs there is not established here.
-	; ============================================================
-	; Vtable helper: call method 0x0538 (flush), return HL=0
-	; ^ "flush" is not established: see the header below.
-	; ============================================================
-HDAE5000_PPORT_Svc29_MainHook0538:
-	; PC-link service 29: call the main-CPU hook 0x0E0A table +0x538 -- the
-	; one HDAE5000_LoadSong/SaveSong call before a long operation when their
-	; UI flag is 1 -- and return HL = 0.
-	; ============================================================
-	; Vtable helper: call method 0x053C (close), return HL=0
-	; ^ "close" is not established: see the header below.
-	; ============================================================
-HDAE5000_PPORT_Svc30_MainHook053C:
-	; PC-link service 30: the matching +0x53C hook (called after the
-	; operation); HL = 0.
-	; ============================================================
-	; Variable-length integer encoder (MIDI-style VarInt)
-	; Encodes a 32-bit value using 7-bit chunks, MSB-first.
-	; Format: bit 7 = 1 means "more bytes follow" (continuation)
-	;         bit 7 = 0 means "this is the last byte"
-	; Example: 389 (0x185) → [0x83, 0x05]
-	;   0x83 = 1_0000011 (cont=1, payload=3)
-	;   0x05 = 0_0000101 (cont=0, payload=5)
-	;   Decoded: (3 << 7) | 5 = 389
-	; Max 5 bytes for 32-bit values (5 × 7 = 35 bits)
-	; Algorithm: Extract 7-bit chunks LSB-first into temp buffer,
-	;   then reverse into output setting bit 7 on all but last
-	; Input: XWA = value to encode, XBC = output buffer pointer
-	; Output: XHL = number of bytes written (1-5)
-	; ============================================================
-HDAE5000_VarInt_Encode:
-	; --- Phase 1: Extract 7-bit chunks LSB-first into temp buffer ---
-.Lve_extract:
-	; --- Phase 2: Reverse chunks into output, set continuation bits ---
-	; temp[] has chunks in LSB-first order; output needs MSB-first
-.Lve_set_msb:
-	; --- Phase 3: Copy final byte WITHOUT continuation bit ---
-.Lve_copy_last:
-	; ============================================================
-	; Variable-length integer decoder (MIDI-style VarInt)
-	; Reads MSB-first 7-bit chunks; bit 7 = 1 means "more bytes"
-	; Max 5 bytes (35 bits). Returns -1 if encoding is invalid.
-	; Input: XWA = data pointer, XBC = output byte count pointer
-	; Output: XHL = decoded value, or 0xFFFFFFFF on error
-	; Side effect: stores bytes consumed to (XBC)
-	; ============================================================
-HDAE5000_VarInt_Decode:
-.Lvd_loop:
-	; Continuation=0 → this was the last byte, decoding complete
-.Lvd_continue:
-	; Continuation=1 → more bytes follow
-.Lvd_length_check:
-.Lvd_error:
-; ---------------------------------------------------------------------------
-; Reverse the four bytes of XWA (a big-endian SMF long -> native), unrolled.
-; In:  XWA
-; Out: XHL = XWA byte-reversed.  Clobbers XWA, XBC.
-; ---------------------------------------------------------------------------
-HDAE5000_Smf_SwapBytes32:
-; ---------------------------------------------------------------------------
-; Swap the two bytes of WA (a big-endian SMF word -> native).
-; In:  WA
-; Out: HL = WA byte-swapped.  Clobbers WA.
-; The code after its `ret` is HDAE5000_Smf_ReadHeader (no caller).
-; ---------------------------------------------------------------------------
-HDAE5000_Smf_SwapBytes16:
-; ---------------------------------------------------------------------------
-; Unreachable (no reference anywhere): with media type 2 or 3
-; (HamaFn_GetMediaType), open floppy file XWA "rb" (HamaFn_fopen_ext,
-; HDAE5000_Str_Rb_Smf_ReadHeader), read its first 14 bytes into
-; HDAE5000_RAM_SmfHeader and close it, the main task asleep meanwhile; then
-; HDAE5000_Smf_CheckHeader on the buffer either way.
-; In:  XWA = file name
-; Out: XHL = HDAE5000_Smf_CheckHeader's result.  XIZ preserved.
-; ---------------------------------------------------------------------------
-HDAE5000_Smf_ReadHeader:
-.Lec_process:
-.Lec_finish:
-; ---------------------------------------------------------------------------
-; Check a 14-byte Standard MIDI File header: "MThd" (0x4D546864 after
-; HDAE5000_Smf_SwapBytes32, else -1), length 6 (else -2), format <= 1 (kept in
-; HDAE5000_RAM_SmfFormat, else -3), the track count (HDAE5000_RAM_SmfTrackCount)
-; and the division (HDAE5000_RAM_SmfDivision), whose bit 15 (SMPTE) must be
-; clear (else -4).
-; In:  XWA = header
-; Out: XHL = 0 when it passes, else the negative code.  XIZ preserved.
-; ---------------------------------------------------------------------------
-HDAE5000_Smf_CheckHeader:
-.Lci_check1:
-.Lci_check2:
-.Lci_check3:
-.Lci_ok:
-.Lci_exit:
+
+
+
+
+
+
+
+
+
 
 ; ---------------------------------------------------------------------------
 ; Bitmap resource descriptor of the boot splash screen (it allocates nothing:
@@ -7576,7 +7483,7 @@ HDAE5000_FdSong_CheckFiles_Skip8:
 HDAE5000_FdSong_CheckFiles_Skip9:
 	ld	wa, (xsp+284)
 	bit	0x07, wa
-	jr	z, HDAE5000_FdSong_CheckFiles_Skip10
+	jr	z, HDAE5000_FdSong_CheckFiles_Done
 	pushw	HDAE5000_FdSong_CheckFiles_Str_MD@hi16
 	pushw	HDAE5000_FdSong_CheckFiles_Str_MD@lo16		; low half of HDAE5000_FdSong_CheckFiles_Str_MD
 	lda	xwa, (xsp+16)
@@ -7604,12 +7511,11 @@ HDAE5000_FdSong_CheckFiles_Skip9:
 	ld	wa, 7:i3
 	calr	HDAE5000_CheckFileSignature
 	cp	hl, 0xffff
-	jr	nz, HDAE5000_FdSong_CheckFiles_Skip10
+	jr	nz, HDAE5000_FdSong_CheckFiles_Done
 	ldw	hl, 0xffff
 	jr	t, HDAE5000_FdSong_CheckFiles_Epilogue
-HDAE5000_FdSong_CheckFiles_Skip10:
-	ld	hl, 0:i3
 HDAE5000_FdSong_CheckFiles_Done:
+	ld	hl, 0:i3
 HDAE5000_FdSong_CheckFiles_Epilogue:
 	pop xiz
 	lda xsp, (xsp+282)
@@ -10037,7 +9943,7 @@ HDAE5000_Song_CheckFreeSpace:
 	ld xwa, xiz			; total accumulated size
 	call HDAE5000_HD_ClusterCount			; validate total
 	ld xiz, xhl			; save result
-	call HDAE5000_HD_CountFreeClusters_Status			; get available space
+	call HDAE5000_HD_ReadTables_Skip2			; get available space
 	cp xhl, xiz			; available > needed?
 	jr ugt, .Lcv_done
 	ldw (xsp + 4), 0xffff		; set error flag
@@ -10721,7 +10627,7 @@ HDAE5000_DebugTrace:
 ; ---------------------------------------------------------------------------
 HDAE5000_PPORT_Svc01_GetInfoBlockPointer:
 	lda	xsp, (xsp-32)
-	lda xwa, (HDAE5000_CopyFdSongToHd_Tlx_Str_TLX:24)
+	lda xwa, (HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_GetInfoBlockPointer:24)
 	calr	HDAE5000_DebugTrace
 	lda xwa, (HDAE5000_RAM_PportInfoBlock:24)
 	push xwa
@@ -12113,7 +12019,9 @@ HDAE5000_PPORT_ServiceDispatch:
 	ret
 	nop
 HDAE5000_PPORT_ServiceTable:
-	; 31-entry jump table (entry 0 unused, entries 1-30 = commands)
+	; 28-entry jump table (entry 0 unused, entries 1-27 = commands).  Entry 12 is not a
+	; pointer: it holds .Lpps_handler_12's address AND 0xfff (v1.10i: the same), so service
+	; 12 cannot be dispatched in v1.x; [INFERENCE] a fault of the link.
 	.long .Lpps_handler_0	; entry 0 (unused)
 	.long .Lpps_handler_1	; entry 1
 	.long .Lpps_handler_2	; entry 2
@@ -12126,7 +12034,7 @@ HDAE5000_PPORT_ServiceTable:
 	.long .Lpps_handler_9	; entry 9
 	.long .Lpps_handler_10	; entry 10
 	.long .Lpps_handler_11	; entry 11
-	.long .Lpps_handler_12	; entry 12
+	.long 0x000005c0		; entry 12: .Lpps_handler_12's address AND 0xfff, not the address (see the header)
 	.long .Lpps_handler_13	; entry 13
 	.long .Lpps_handler_14	; entry 14
 	.long .Lpps_handler_15	; entry 15
@@ -12142,10 +12050,7 @@ HDAE5000_PPORT_ServiceTable:
 	.long .Lpps_handler_25	; entry 25
 	.long .Lpps_handler_26	; entry 26
 	.long .Lpps_handler_27	; entry 27
-	.long .Lpps_handler_28	; entry 28
-	.long .Lpps_handler_29	; entry 29
-	.long .Lpps_handler_30	; entry 30
-	; --- Handler stubs (commands 0-30) ---
+	; --- Handler stubs (commands 0-27) ---
 .Lpps_handler_0:
 	ret
 	nop
@@ -12292,27 +12197,6 @@ HDAE5000_PPORT_ServiceTable:
 	ld wa, bc
 	ld bc, de
 	call HDAE5000_PPORT_Svc27
-	ld wa, hl
-	ret
-	nop
-.Lpps_handler_28:
-	ld xwa, xbc
-	ld xbc, xde
-	call HDAE5000_PPORT_Svc28_FlashXapFile
-	ld wa, hl
-	ret
-	nop
-.Lpps_handler_29:
-	ld xwa, xbc
-	ld xbc, xde
-	call HDAE5000_PPORT_Svc29_MainHook0538
-	ld wa, hl
-	ret
-	nop
-.Lpps_handler_30:
-	ld xwa, xbc
-	ld xbc, xde
-	call HDAE5000_PPORT_Svc30_MainHook053C
 	ld wa, hl
 	ret
 	nop
@@ -16007,8 +15891,6 @@ HDAE5000_ATA_WriteSector_WaitReady:
 	ld	(HDAE5000_IO_AtaSectorCount:24), 1
 	ld	xwa, (HDAE5000_RAM_AtaWriteSectorNo)
 	dec	1, xwa
-	ld	xbc, (HDAE5000_RAM_HdSectorsPerHead)
-	calr	HDAE5000_HD_UDiv32
 	ld	e, a
 	or	a, 0xa0
 	ld	(HDAE5000_IO_AtaDriveHead:24), a
@@ -16462,6 +16344,11 @@ HDAE5000_HD_WriteTables_Next:	; (836 bytes)
 	; --- Verify phase: read back each sector, compare with RAM ---
 .Lhdd_verify1:
 	ld xwa, (HDAE5000_RAM_TablesStartSector:24)	; base sector
+	nop
+	nop
+	ld	(HDAE5000_RAM_HdTablesPtr), xwa
+	jp	.Lhciv_write_loop
+	ld	xwa, (HDAE5000_RAM_TablesStartSector:24)
 	ld (HDAE5000_RAM_HdTablesSector:24), xwa
 	ld xwa, HDAE5000_RAM_DirNames
 	ld (HDAE5000_RAM_HdTablesPtr:24), xwa
@@ -16639,6 +16526,12 @@ HDAE5000_HD_ReadTables:
 	; Returns XHL = the FREE-cluster count (0x229C80), or 0 on error.
 HDAE5000_HD_CountFreeClusters_Status:
 	call HDAE5000_HD_CountFreeClusters
+	jp	.Lhdd_success2
+HDAE5000_HD_ReadTables_Skip:
+	call	HDAE5000_HD_CountFreeClusters
+	jp	.Lhdd_success2
+HDAE5000_HD_ReadTables_Skip2:
+	call	HDAE5000_HD_CountFreeClusters
 	ld xhl, (HDAE5000_RAM_FreeClusters:24)
 	cp (HDAE5000_RAM_AtaError:24), 0x00
 	jr z, .Lhdd_wrapper3_ret
@@ -16938,7 +16831,6 @@ HDAE5000_HD_AppendFile_Worker:
 	jp	z, (HDAE5000_HD_AppendFile_Exit:24)
 	xor	xwa, xwa
 	ld	(HDAE5000_RAM_HdXferClustersDone), xwa
-	ld	(HDAE5000_RAM_HdXferLinkFromPrev:24), 0
 HDAE5000_HD_AppendFile_Loop:
 	call HDAE5000_HD_FindFreeCluster
 	ld	xwa, (HDAE5000_RAM_HdFreeCluster)
@@ -16948,14 +16840,28 @@ HDAE5000_HD_AppendFile_Loop:
 	jp HDAE5000_HD_AppendFile_Exit
 .LHD_AppendFile_Worker_Skip2:
 	ld	xwa, (HDAE5000_RAM_HdFreeCluster)
+	cp	(HDAE5000_RAM_HdXferLinkFromPrev:24), 0x00
+	jp	nz, (HDAE5000_HD_AppendFile_Skip:24)
+	ld	(HDAE5000_RAM_HdFatSetCluster), xwa
 	ld	(HDAE5000_RAM_HdFatSetValue), xwa
+	jp	HDAE5000_HD_AppendFile_Skip2
+HDAE5000_HD_AppendFile_Skip:
+	ld	(HDAE5000_RAM_HdFatSetValue), xwa
+HDAE5000_HD_AppendFile_Skip2:
 	call HDAE5000_HD_WriteCluster
 	cp	(HDAE5000_RAM_HdWriteClusterError:24), 0
-	jp	z, (.LHD_AppendFile_Worker_Skip3:24)
+	jp	z, (HDAE5000_HD_AppendFile_Skip3:24)
 	ld	xwa, 0xffffffff
 	ld	(HDAE5000_RAM_HdFatSetValue), xwa
 	call HDAE5000_HD_FatSetEntry
 	jp HDAE5000_HD_AppendFile_Loop
+HDAE5000_HD_AppendFile_Skip3:
+	cp	(HDAE5000_RAM_HdXferSlotSet:24), 0x00
+	jp	nz, (.LHD_AppendFile_Worker_Skip3:24)
+	ld	(HDAE5000_RAM_HdXferSlotSet:24), 0x01
+	ld	xwa, (HDAE5000_RAM_HdFreeCluster:24)
+	ld	xix, (HDAE5000_RAM_HdXferSlotPtr:24)
+	ld	(xix), xwa
 .LHD_AppendFile_Worker_Skip3:
 	ld	xwa, (HDAE5000_RAM_HdXferClustersDone)
 	inc 1, xwa
@@ -19902,6 +19808,7 @@ HDAE5000_DoPrintf_Case_String_Loop3:
 HDAE5000_DoPrintf_Case_String_Next3:
 	ld	wa, (xsp+8)
 	decm	1, (xsp+8)
+HDAE5000_DoPrintf_Case_String_Next3_Skip:
 	cp	wa, 0:i3
 	jr	nz, HDAE5000_DoPrintf_Case_String_Loop3
 	jrl	t, HDAE5000_DoPrintf_NextChar

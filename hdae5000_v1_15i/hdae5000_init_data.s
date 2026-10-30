@@ -39,11 +39,9 @@ HDAE5000_DataSegmentImage:
 	.set HDAE5000_ParamStr_IvHddNaming_End,       HDAE5000_UI_Config + 0x62
 	.set HDAE5000_ParamStr_HDTitleMenu_End,       HDAE5000_UI_Config + 0x6a
 	.set HDAE5000_ParamStr_TtlScreenR2_End,       HDAE5000_UI_Config + 0x6c
-	.set HDAE5000_ParamStr_TtlScreenR3_End,       HDAE5000_UI_Config + 0x6e
 	.set HDAE5000_ParamStr_AcWindowPage1_End,     HDAE5000_UI_Config + 0x70
 	.set HDAE5000_ParamStr_IvScreenR2_End,        HDAE5000_UI_Config + 0x72
 	.set HDAE5000_ParamStr_AcLanguageText1_End,   HDAE5000_UI_Config + 0x74
-	.set HDAE5000_ParamStr_LyricBox_End,          HDAE5000_UI_Config + 0x76
 	; HDAE5000_RECORD_COUNT + offset  (0x29d97e-0x29dc13; note that the last
 	; two bytes of that range, 0x29dc12-0x29dc13, are already the first half
 	; of the UI object descriptor pool's record #0 - the block boundary here
@@ -228,27 +226,12 @@ HDAE5000_ParamNames_HDTitleMenu:
 	.long HDAE5000_ParamStr_HDTitleMenu_End	; terminator
 HDAE5000_ParamNames_TtlScreenR2:
 	.long HDAE5000_ParamStr_TtlScreenR2_End	; terminator
-HDAE5000_ParamNames_TtlScreenR3:
-	.long HDAE5000_ParamStr_TtlScreenR3_End	; terminator
 HDAE5000_ParamNames_AcWindowPage1:
 	.long HDAE5000_ParamStr_AcWindowPage1_End	; terminator
 HDAE5000_ParamNames_IvScreenR2:
 	.long HDAE5000_ParamStr_IvScreenR2_End	; terminator
 HDAE5000_ParamNames_AcLanguageText1:
 	.long HDAE5000_ParamStr_AcLanguageText1_End	; terminator
-HDAE5000_ParamNames_LyricBox:
-	.long HDAE5000_ParamStr_LyricBox_pEnable
-	.long HDAE5000_ParamStr_LyricBox_font
-	.long HDAE5000_ParamStr_LyricBox_fontcolor
-	.long HDAE5000_ParamStr_LyricBox_reversecolor
-	.long HDAE5000_ParamStr_LyricBox_infofont
-	.long HDAE5000_ParamStr_LyricBox_infocolor
-	.long HDAE5000_ParamStr_LyricBox_End	; terminator
-HDAE5000_ParamNames_FDFileSelect:
-	.long HDAE5000_ParamStr_FDFileSelect_dial
-	.long HDAE5000_ParamStr_FDFileSelect_sel_num
-	.long HDAE5000_ParamStr_FDFileSelect_sel_pos
-	.long HDAE5000_ParamStr_FDFileSelect_End	; terminator
 
 ; ----------------------------------------------------------------------------
 ; EV_* event names (registration ID 0x01ca, class id 0x0160000c, ResEventProc)
@@ -259,19 +242,9 @@ HDAE5000_EventName_Table:
 	.long HDAE5000_Str_EV_SeqStop
 	.long HDAE5000_Str_EV_AfterLoad
 	.long HDAE5000_Str_EV_TimerBack
-	.long HDAE5000_Str_EV_INITLYRICPARAM
-	.long HDAE5000_Str_EV_TICKS
-	.long HDAE5000_Str_EV_BEATMESSAGE
-	.long HDAE5000_Str_EV_SETPOSITION
-	.long HDAE5000_Str_EV_Initlyrics
-	.long HDAE5000_Str_EV_Alldraw
-	.long HDAE5000_Str_EV_Drawsyllable
-	.long HDAE5000_Str_EV_Scrollline
-	.long HDAE5000_Str_EV_InitFDFileSelect
-	.long HDAE5000_Str_EV_DrawFDText
 	.long 0			; end of table
 HDAE5000_EventName_Count:
-	.short 13
+	.short 3
 
 ; ----------------------------------------------------------------------------
 ; MT_* message names (registration ID 0x01ea, class id 0x0160000d, ResMethodProc)
@@ -288,18 +261,13 @@ HDAE5000_MessageName_Table:
 	.long HDAE5000_Str_MT_SelectOK
 	.long HDAE5000_Str_MT_SelectOK2
 	.long HDAE5000_Str_MT_SelectSAVE
-	.long HDAE5000_Str_MT_SelectAll
 	.long HDAE5000_Str_MT_SetStrAdr
 	.long HDAE5000_Str_MT_LOOP
 	.long HDAE5000_Str_MT_SelectDEL
 	.long HDAE5000_Str_MT_SelectDelFile
-	.long HDAE5000_Str_MT_FdFreshUp
-	.long HDAE5000_Str_MT_FdInfo
-	.long HDAE5000_Str_MT_FdLoadLyric
-	.long HDAE5000_Str_MT_FdSaveLyric
 	.long 0			; end of table
 HDAE5000_MessageName_Count:
-	.short 18
+	.short 13
 
 ; ----------------------------------------------------------------------------
 ; UI class procedures and names (registration IDs 0x010a / 0x040a)
@@ -327,12 +295,9 @@ HDAE5000_ClassName_Table:
 	.long HDAE5000_Str_IvHddNamingProc
 	.long HDAE5000_Str_HDTitleMenuProc
 	.long HDAE5000_Str_TtlScreenR2Proc
-	.long HDAE5000_Str_TtlScreenR3Proc
 	.long HDAE5000_Str_AcWindowPage1Proc
 	.long HDAE5000_Str_IvScreenR2Proc
 	.long HDAE5000_Str_AcLanguageText1Proc
-	.long HDAE5000_Str_LyricBoxProc
-	.long HDAE5000_Str_FDFileSelectProc
 	.long HDAE5000_Str_End_ClassNames	; empty name terminates the list
 
 ; ----------------------------------------------------------------------------

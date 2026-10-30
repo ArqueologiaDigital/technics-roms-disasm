@@ -493,7 +493,7 @@ HDAE5000_Handler_Registration:
 	ld (xsp + 4), xwa	; ld (XSP+0x04), XWA  ; handler function ptr
 	ld wa, (HDAE5000_RECORD_COUNT:24)
 	ld (xsp + 8), wa	; ld (XSP+0x08), WA   ; record count (= 13)
-	lda xwa, (HDAE5000_RECORD_TABLE:24)
+	lda xwa, (HDAE5000_ParamStr_AcLanguageText1_End:24)
 	ld (xsp + 10), xwa	; ld (XSP+0x0A), XWA  ; data pointer
 	lda xwa, (xsp)	; lda XWA, XSP  ; XWA = param block ptr
 	ld xbc, xwa	; XBC = param block ptr

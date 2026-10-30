@@ -11,12 +11,12 @@ from _edit import replace
 replace("hdae5000_data_tables.s", [
     (b'''	; hdae5000_v2_01i/images/HDAE5000_Palette_FilePanel_v2_01i.txt by
 	; scripts/build/hdae5000_images.py.
-	.incbin "includes/generated/HDAE5000_Palette_FilePanel_v2_01i.bin"
+	.incbin "includes/generated/HDAE5000_Palette_FilePanel_v2_01i.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000_v2_01i/images/HDAE5000_Palette_FilePanel_v2_01i.txt
 ''', b'''	; hdae5000_v2_01i/images/HDAE5000_Palette_FilePanel_v2_01i.txt by
 	; scripts/build/hdae5000_images.py.
 '''),
     (b'''	; scripts/build/hdae5000_images.py.
-	.incbin "includes/generated/HDAE5000_FilePanel_v2_01i.bin"
+	.incbin "includes/generated/HDAE5000_FilePanel_v2_01i.bin"	; census: generated -- scripts/build/hdae5000_images.py, from hdae5000_v2_01i/images/HDAE5000_FilePanel_v2_01i.png
 ''', b'''	; scripts/build/hdae5000_images.py.
 '''),
 ])

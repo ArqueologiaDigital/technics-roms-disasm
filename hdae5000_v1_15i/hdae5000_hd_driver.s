@@ -3307,7 +3307,7 @@ HDAE5000_SaveOptSwEventCatch_OnSwIn:
 	cp	xhl, 0x0000000b
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip4
 	cp	xhl, 0x0000000a
-	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip7
+	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip4
 	cp	xhl, 0x00000009
 	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip2
 	cp	xhl, 0x00000008
@@ -3359,7 +3359,6 @@ HDAE5000_SaveOptSwEventCatch_Skip3:
 	calr	HDAE5000_TypeSel_Init
 	calr	HDAE5000_TypeSel_ShowSaveFlags
 	jr	t, HDAE5000_SaveOptSwEventCatch_Done
-HDAE5000_SaveOptSwEventCatch_Skip7:
 	lda	xwa, (HDAE5000_RAM_SaveOptions:24)
 	pushw	0x2
 	lda	xde, (HDAE5000_Str_V115i:24)

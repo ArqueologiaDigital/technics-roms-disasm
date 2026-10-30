@@ -39,7 +39,7 @@ def _is_comment(ln):
     return ln.lstrip().startswith(b";")
 
 
-def delete_routine(f, label, next_label, keep_header=True):
+def delete_routine(f, label, next_label, keep_header=True, with_header=True):
     """Delete the routine `label` of file f up to `next_label` (exclusive): from its own
     header comment (the comment lines right above it) to the header comment of next_label.
     Returns the deleted lines."""
@@ -50,7 +50,7 @@ def delete_routine(f, label, next_label, keep_header=True):
     if len(starts) != 1 or len(ends) != 1 or ends[0] <= starts[0]:
         sys.exit("%s: %s / %s not found once, in order" % (f, label, next_label))
     s, e = starts[0], ends[0]
-    while s > 0 and _is_comment(L[s - 1]):
+    while with_header and s > 0 and _is_comment(L[s - 1]):
         s -= 1
     while keep_header and e > s and (_is_comment(L[e - 1]) or not L[e - 1].strip()):
         e -= 1
@@ -79,7 +79,7 @@ def delete_routines(f, labels):
         print("%s: deleted %s (%d lines, up to %s)" % (f, lab, len(gone), nxt))
 
 
-def delete_block(f, label, keep_header=True):
+def delete_block(f, label, keep_header=True, with_header=True):
     """Delete the data block at `label` up to the next label of any kind (its own header
     comment lines included, the next one's kept).  Returns the deleted lines."""
     import re
@@ -89,7 +89,8 @@ def delete_block(f, label, keep_header=True):
         sys.exit("%s: label %s found %d times" % (f, label, len(k)))
     k = k[0]
     e = next((i for i in range(k + 1, len(L)) if re.match(rb"^[A-Za-z_.][A-Za-z0-9_]*:", L[i])), len(L))
-    return delete_routine(f, label, L[e].split(b":")[0].decode() if e < len(L) else None, keep_header)
+    return delete_routine(f, label, L[e].split(b":")[0].decode() if e < len(L) else None, keep_header,
+                          with_header)
 
 
 def delete_lines(f, lines):
