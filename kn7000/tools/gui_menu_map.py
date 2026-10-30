@@ -48,6 +48,8 @@ PROFILES = {
                "SX-KN2400 / SX-KN2600 GUI menu map (program v1.1)"),
     "hdsx3": ("../hdsx3/src/program/data", "../hdsx3/notes/gui-menu-map.md",
               "KN6000 / KN6500 expansion-board XAPR plug-in (sx6-113, HD-SX6) GUI menu map"),
+    "sp7001plugin": ("src/sp7001/plugin/data", "notes/sp7001-plugin-menu-map.md",
+                     "SP7001 table-flash XAPR plug-in (Key Soft Service, table 83) GUI menu map"),
 }
 HEADING = "KN7000 GUI menu map (program build 941)"
 BLOCKS = "OT blocks"           # what a Viewable table is called (the KN6000 has no OT blocks)

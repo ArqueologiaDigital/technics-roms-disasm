@@ -6309,7 +6309,7 @@ func_4850415E_entry:
     mov     d2, (0x14, sp)
     extbu   d0
     asl2    d0
-    add     ptrs_4864448C, d0
+    add     func_4850415E_Table_4, d0
     mov     d0, (0x1c, sp)
 loc_4850417D:
     exthu   d1
@@ -6449,13 +6449,13 @@ loc_48504279:
     asl2    d0
     mov     func_4850415E_Table, a0
     mov     (d0, a0), d0
-    mov     data_486444B8, a0
+    mov     func_48502C36_Var, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     mov     a2, d0
     asl2    d0
     mov     func_4850415E_Table_2, a0
     mov     (d0, a0), d0
-    mov     data_486444BC, a0
+    mov     func_48502C36_Var_2, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
 loc_485042A5:
     mov     (0x18, sp), d1
@@ -6572,11 +6572,11 @@ loc_48504370:
     asl2    d0
     mov     func_48504338_Table, a0
     mov     (d0, a0), d0
-    mov     data_48644514, a0
+    mov     func_48502C36_Var_3, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     asl2    d2
     mov     (d2, a3), d0
-    mov     data_48644518, a0
+    mov     func_48502C36_Var_4, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
 loc_48504393:
     inc     d3
@@ -6898,7 +6898,7 @@ loc_4850471E:
     mov     Str_CTL_ERR_2, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     mov     (func_48504867_Table), d0
-    mov     data_486445CC, a0
+    mov     func_48502C36_Var_5, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     ret     [d2,d3,a2,a3], 0x6c
 loc_48504740:
@@ -6972,7 +6972,7 @@ loc_4850481C:
     mov     Str_CTL_ERR, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     mov     (func_48504867_Table), d0
-    mov     data_486445F8, a0
+    mov     func_48502C36_Var_6, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504864
 loc_4850483D:
@@ -6980,7 +6980,7 @@ loc_4850483D:
     mov     Str_EVENT_ERR, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     mov     (func_48504867_Table), d0
-    mov     data_48644608, a0
+    mov     func_48502C36_Var_7, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504864
 loc_4850485E:
@@ -7106,7 +7106,7 @@ loc_48504998:
     bra     loc_48504A0C
 loc_485049A6:
     mov     (func_48504867_Table), d0
-    mov     data_48644634, a0
+    mov     func_48502C36_Var_8, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504A0C
 loc_485049B9:
@@ -7120,7 +7120,7 @@ loc_485049B9:
     bra     loc_48504A0C
 loc_485049D6:
     mov     (func_48504867_Table), d0
-    mov     data_48644638, a0
+    mov     func_48502C36_Var_9, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     bra     loc_48504A0C
 loc_485049E9:
@@ -7945,10 +7945,10 @@ loc_485051DD:
     jmp     loc_485052D4
 loc_485051FD:
     mov     0x484, d0
-    mov     data_486447BC, a0
+    mov     func_48502C36_Var_10, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     mov     0x489, d0
-    mov     data_486447C0, a0
+    mov     func_48502C36_Var_11, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     jmp     loc_485052D4
 loc_4850521C:
@@ -8015,10 +8015,10 @@ loc_48505282:
     bra     loc_485052D4
 loc_485052B8:
     mov     0x484, d0
-    mov     data_486447E4, a0
+    mov     func_48502C36_Var_12, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
     mov     0x489, d0
-    mov     data_486447E8, a0
+    mov     func_48502C36_Var_13, a0
     call    func_485036C8_entry, [d2,d3,a2,a3], 0x2c
 loc_485052D4:
     mov     1, d0
@@ -15761,7 +15761,7 @@ loc_4850A534:
     mov     0x50152378, d2
     mov     0x50152370, a3
     mov     0x50152368, a1
-    mov     data_4864D9F8, a0
+    mov     CmpPartCopyOk_Table, a0
     setlb
     movbu   (a2), d0
     cmp     0, d0

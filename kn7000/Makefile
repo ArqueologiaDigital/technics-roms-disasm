@@ -149,8 +149,10 @@ data-src-893: tools/gen_data_s.py tools/milk_model.py build/kn7000_program_b893.
 .PHONY: gui-map verify-gui-map
 gui-map:
 	$(PYTHON) tools/gui_menu_map.py
+	$(PYTHON) tools/gui_menu_map.py --profile sp7001plugin
 verify-gui-map:
 	@$(PYTHON) tools/gui_menu_map.py --check
+	@$(PYTHON) tools/gui_menu_map.py --profile sp7001plugin --check
 
 # The table image's pictures live in src/table/: the 57 JPEG segments, and in
 # subdirectories the JPEG/BMP items of the picture-group segments. The same files
@@ -317,9 +319,10 @@ build/kn7000_program_sp7001.rom: src/sp7001/program.s $(wildcard src/sp7001/prog
 	@mkdir -p build
 	$(ASM) src/sp7001/program.s -I . -o $@ --labels build/kn7000_program_sp7001.labels
 
-build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) src/sp7001/internal_voice_archive.s build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
+build/kn7000_table_sp7001.rom: src/sp7001/table.s $(TABLE_JPGS) $(TABLE_INCS) src/sp7001/internal_voice_archive.s \
+		$(wildcard src/sp7001/plugin/data/*) build/table_png/.stamp tools/kn7asm.py baserom/kn7000_table_sp7001.rom
 	@mkdir -p build
-	$(ASM) src/sp7001/table.s -I . -o $@
+	$(ASM) src/sp7001/table.s -I . -o $@ --labels build/kn7000_table_sp7001.labels
 
 build/sp7001_baseext.xap: src/sp7001/baseext.s tools/kn7asm.py baserom/sp7001_baseext.xap
 	@mkdir -p build
@@ -458,6 +461,21 @@ xap-src-sp7001: tools/gen_xap_s.py tools/gen_table_s.py tools/gen_program_s.py \
 	    --fw-rom baserom/kn7000_program_sp7001.rom --fw-r1-end 0x1864F4 --fw-lib-file $(SP7001_LIB_FILE) \
 	    --fw-sym kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_exports.sym kn7000_sp7001_new.sym
 
+# The plug-in's data (its MILK GUI, strings, reflection tables, initialised RAM) is typed by
+# tools/gen_data_s.py --profile sp7001plugin into src/sp7001/plugin/data/, which table.s
+# includes; it reads table.s's plug-in code and build/kn7000_table_sp7001.labels, and
+# table-src-sp7001 reads its labels.sym back (data operands, code the data points at), so
+# plugin-src runs the two until neither changes.
+.PHONY: data-src-sp7001plugin plugin-src
+data-src-sp7001plugin: tools/gen_data_s.py tools/milk_model.py build/kn7000_table_sp7001.rom
+	$(PYTHON) tools/gen_data_s.py --profile sp7001plugin
+plugin-src:
+	@test -f build/kn7000_table_sp7001.labels || $(MAKE) --no-print-directory build/kn7000_table_sp7001.rom
+	for i in 1 2; do \
+	    $(PYTHON) tools/gen_data_s.py --profile sp7001plugin | sed -n 1p && \
+	    $(MAKE) --no-print-directory table-src-sp7001 && \
+	    $(MAKE) --no-print-directory build/kn7000_table_sp7001.rom || exit 1; done
+
 .PHONY: table-src-sp7001
 table-src-sp7001: tools/gen_table_s.py tools/table_segments.py tools/gen_program_s.py tools/gen_symbols.py \
 		$(SP7001_TABLE_SYMS) baserom/kn7000_table.rom baserom/kn7000_table_sp7001.rom
@@ -466,7 +484,7 @@ table-src-sp7001: tools/gen_table_s.py tools/table_segments.py tools/gen_program
 	    --title 'KN7000 SP7001 "Table" flash image (build 83) - byte-exact.' \
 	    --compare baserom/kn7000_table.rom --compare-label "build 84" \
 	    --plugin $(SP7001_PLUGIN) --plugin-code $(SP7001_PLUGIN_CODE) \
-	    --sym $(SP7001_TABLE_SYMS)
+	    --plugin-data src/sp7001/plugin/data --sym $(SP7001_TABLE_SYMS)
 
 program-src-sp7001: tools/gen_program_s.py tools/mn10300_asm.py tools/port_symbols.py \
 		kn7000_sp7001.sym kn7000_sp7001_manual.sym kn7000_sp7001_new.sym \

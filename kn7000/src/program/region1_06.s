@@ -18850,7 +18850,7 @@ loc_484CF4E9:
     mov     0xf7, d0
     mov     d0, (0x1c, sp)
     mov     d2, a0
-    mov     data_48626BA4, a1
+    mov     DrawStringCentered_Var, a1
     clr     d0
     mov     d0, d1
     call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
@@ -20422,7 +20422,7 @@ loc_484D050B:
     mov     0xf7, d0
     mov     d0, (0x1c, sp)
     mov     d2, a0
-    mov     data_48626BA4, a1
+    mov     DrawStringCentered_Var, a1
     clr     d0
     mov     d0, d1
     call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
@@ -24199,7 +24199,7 @@ loc_484D2CB3:
     mov     0xf7, d0
     mov     d0, (0x1c, sp)
     mov     data_48627C64, a0
-    mov     data_48627C70, a1
+    mov     DrawStringCentered_Var_5, a1
     clr     d0
     mov     0xd, d1
     call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
@@ -24209,7 +24209,7 @@ loc_484D2D12:
     mov     0xf7, d0
     mov     d0, (0x1c, sp)
     mov     data_48627C64, a0
-    mov     data_48627C6C, a1
+    mov     DrawStringCentered_Var_3, a1
     clr     d0
     mov     0xd, d1
     call    DrawStringCentered_entry, [d2,d3,a2,a3], 0x10
@@ -28658,7 +28658,7 @@ loc_484D5CF8:
     bra     loc_484D5D50
 loc_484D5D04:
     call    GetNamingWindowID, 0, 0
-    mov     data_500031AC, a2
+    mov     func_4C021B2A_Block, a2
     mov     a2, (0x10, sp)
     mov     MT_GetString, d1
     call    SendEvent_entry, [d2,d3], 0x24
@@ -28689,7 +28689,7 @@ loc_484D5D54:
     bra     loc_484D5DAE
 loc_484D5D60:
     call    GetNamingWindowID, 0, 0
-    mov     data_500031AC, a2
+    mov     func_4C021B2A_Block, a2
     mov     a2, (0x10, sp)
     mov     MT_GetString, d1
     call    SendEvent_entry, [d2,d3], 0x24

@@ -6783,7 +6783,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48796440, d0
+    mov     ptrs_4879643C+4, d0
     mov     d0, (0x28, sp)
     mov     0x294, d0
     mov     a3, a0
@@ -6794,7 +6794,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_Events, d0
+    mov     ptrs_4879643C+28, d0
     mov     d0, (0x28, sp)
     mov     0x295, d0
     mov     a3, a0
@@ -6805,7 +6805,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_Methods, d0
+    mov     ptrs_4879643C+32, d0
     mov     d0, (0x28, sp)
     mov     0x296, d0
     mov     a3, a0
@@ -6816,7 +6816,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_Functions, d0
+    mov     ptrs_4879643C+36, d0
     mov     d0, (0x28, sp)
     mov     0x291, d0
     mov     a3, a0
@@ -6825,7 +6825,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48796464, d0
+    mov     ptrs_4879643C+40, d0
     mov     d0, (0x28, sp)
     mov     0x299, d0
     mov     a3, a0
@@ -6855,7 +6855,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_MainFunctions, d0
+    mov     ptrs_48796944+4, d0
     mov     d0, (0x28, sp)
     mov     0x293, d0
     mov     a3, a0
@@ -6864,7 +6864,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_4879694C, d0
+    mov     ptrs_48796944+8, d0
     mov     d0, (0x28, sp)
     mov     0x29b, d0
     mov     a3, a0
@@ -9296,7 +9296,7 @@ InitializeBlock46_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     PAPI_ApFunctions, d0
+    mov     ptrs_487B22F8+4, d0
     mov     d0, (0x28, sp)
     mov     0x2e2, d0
     mov     sp, a0
@@ -9308,7 +9308,7 @@ InitializeBlock46_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     Str_kH, d0
+    mov     ptrs_487B22F8+8, d0
     mov     d0, (0x28, sp)
     mov     0x2ea, d0
     mov     sp, a0
@@ -9320,7 +9320,7 @@ InitializeBlock46_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     PAPI_MainFunctions, d0
+    mov     ptrs_487B22F8+12, d0
     mov     d0, (0x28, sp)
     mov     0x2e3, d0
     mov     sp, a0
@@ -9332,7 +9332,7 @@ InitializeBlock46_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_487B2308, d0
+    mov     ptrs_487B22F8+16, d0
     mov     d0, (0x28, sp)
     mov     0x2eb, d0
     mov     sp, a0

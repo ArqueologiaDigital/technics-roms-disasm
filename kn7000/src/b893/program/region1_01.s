@@ -29139,7 +29139,7 @@ InitSptClassTable_entry:
     mov     d0, (0x14, sp)
     mov     0x36, d0
     movhu   d0, (0x18, sp)
-    mov     data_48724680, d0
+    mov     SupportClassTable, d0
     mov     d0, (0x1c, sp)
     mov     0xd, d0
     mov     sp, a0
@@ -35254,6 +35254,7 @@ func_48431CCC:
 
 func_48431CD4:
     ret     0, 0
+loc_48431CD7:
     mov     -1, d0
     ret     0, 0
 
@@ -40052,7 +40053,7 @@ StyleBlockKindClassify:
     add     -0x14, sp
 StyleBlockKindClassify_entry:
     mov     a0, a2
-    mov     data_485B58EF, a1
+    mov     StyleBlockKindClassify_Block_3, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -40070,7 +40071,7 @@ loc_48434620:
     ret     [a2], 0x18
 loc_48434638:
     mov     a2, a0
-    mov     data_485B58EC, a1
+    mov     StyleBlockKindClassify_Block_2, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -40088,7 +40089,7 @@ loc_4843464F:
     bra     loc_484346A4
 loc_48434667:
     mov     a2, a0
-    mov     data_485B58E6, a1
+    mov     StyleBlockKindClassify_Block, a1
     mov     3, d0
     call    memcmp_entry, [d2,a2], 8
     cmp     0, d0
@@ -41798,11 +41799,11 @@ MemStyleAreaHeaderRestamp_entry:
     call    memcpy_entry, [a2,a3], 8
     mov     0x10, a0
     add     a2, a0
-    mov     data_4872FA3C, a1
+    mov     MemStyleAreaHeaderRestamp_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     add     0x16, a2
-    mov     data_4872FA42, a1
+    mov     MemStyleAreaHeaderRestamp_Block_2, a1
     mov     0x1a, d0
     mov     a2, a0
     call    memcpy_entry, [a2,a3], 8
@@ -42024,10 +42025,10 @@ loc_484354AE:
     mov     d3, d0
     call    MemStyleVarRecInit_entry, [d2,d3,a2,a3], 0x30
     movbu   (a2), d0
-    mov     data_4872FBFC, a2
+    mov     MemStyleAreaVarStreamsInit_Selected_0, a2
     cmp     0, d0
     beq     loc_484354DB
-    mov     data_4872FC09, a2
+    mov     MemStyleAreaVarStreamsInit_Selected_1, a2
 loc_484354DB:
     mov     a2, a0
     inc     a0
@@ -46870,7 +46871,7 @@ loc_48437F62:
     extbu   d0
     mov     d0, (0x38, sp)
     extbu   d3
-    add     data_48728080, d3
+    add     func_48437F18_Table_2, d3
     mov     d3, (0x20, sp)
 loc_48437F96:
     mov     (0x24, sp), a0
@@ -47455,11 +47456,11 @@ func_48438461_entry:
     call    memcpy_entry, [a2,a3], 8
     mov     0x10, a0
     add     a2, a0
-    mov     data_48727FAC, a1
+    mov     func_48438461_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     add     0x16, a2
-    mov     data_48727FB2, a1
+    mov     func_48438461_Block_2, a1
     mov     0x1a, d0
     mov     a2, a0
     call    memcpy_entry, [a2,a3], 8
@@ -47704,7 +47705,7 @@ func_4843861F_entry:
 loc_4843862F:
     mov     d3, d0
     call    func_4843859B_entry, [d2,d3,a2,a3], 0x20
-    mov     LoadU24BE_Var_9, a0
+    mov     MemStyleAreaVarStreamsInit_Selected_0+1, a0
     call    LoadU24BE, 0, 0
     mov     d0, d2
     add     4, d2
@@ -47714,7 +47715,7 @@ loc_4843862F:
     call    func_484386AE_entry, [a2], 0x14
     mov     a2, a0
     mov     d2, d0
-    mov     data_4872FBFC, a1
+    mov     MemStyleAreaVarStreamsInit_Selected_0, a1
     call    memcpy_entry, [a2,a3], 8
     mov     d3, d0
     call    func_4843874F, 0, 0
@@ -56284,10 +56285,10 @@ func_4843CAB7_entry:
     mov     4, d0
     mov     0x70, a0
     add     d3, a0
-    mov     data_4872FB0C, a1
+    mov     func_4843CAB7_Block, a1
     call    memcpy_entry, [a2,a3], 8
     mov     a2, a0
-    mov     data_4872FB34, a1
+    mov     func_4843CAB7_Block_2, a1
     mov     2, d0
     call    memcpy_entry, [a2,a3], 8
     mov     1, d0
@@ -61373,7 +61374,7 @@ loc_4843F268:
     exth    d0
     mov     d0, (0x20, sp)
     movbu   (0x6c, sp), d0
-    add     data_4872FB20, d0
+    add     func_4843F22C_Table, d0
     mov     d0, (0x24, sp)
     mov     a0, d0
     add     0x40, d0
@@ -62433,7 +62434,7 @@ loc_4843FBB7:
     mulu    d0, d1
     mov     d1, a0
     add     0x84030ff8, a0
-    mov     data_485B6082, a1
+    mov     SramRecordsLoadFactory_Block, a1
     call    memcpy_entry, [a2,a3], 8
     inc     d2
     mov     d2, d1
@@ -62457,7 +62458,7 @@ loc_4843FBE6:
     mulu    d0, d1
     mov     d1, a0
     add     0x84030ff8, a0
-    mov     data_485B6082, a1
+    mov     SramRecordsLoadFactory_Block, a1
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
     inc     d2
@@ -63021,7 +63022,7 @@ loc_48440059:
     mulu    d2, d1
     mov     d1, a0
     add     0x84030ff8, a0
-    mov     data_485B6082, a1
+    mov     SramRecordsLoadFactory_Block, a1
     mov     0x18, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0, a2

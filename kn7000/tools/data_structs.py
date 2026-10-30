@@ -83,7 +83,9 @@ def readers(g, labels_path, src_glob):
             labels[n] = int(v, 16)
     labels.update(g.prev_data_label)
     # (the siblings, a profile with a `root`) parameter accesses kept once each: DR.resolve_params_distinct
-    return DR.Reader(src_glob, labels, g.in_data, distinct=bool(getattr(g, "distinct_readers", False)))
+    # (the KN7000 program builds, `readers_ext`) stack slots, joins and return values: DR.Reader(ext=)
+    return DR.Reader(src_glob, labels, g.in_data, distinct=bool(getattr(g, "distinct_readers", False)),
+                     ext=getattr(g, "readers_ext", False))
 
 
 def groups(dr):

@@ -29419,7 +29419,7 @@ loc_484B3403:
 loc_484B3414:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613ECC, a1
+    mov     SysEx_48613ECC, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29443,7 +29443,7 @@ loc_484B3446:
 loc_484B3457:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613ECC, a1
+    mov     SysEx_48613ECC, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     movbu   (0x5006bfd4), d0
@@ -29474,7 +29474,7 @@ loc_484B34A3:
 loc_484B34B4:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613EDF, a1
+    mov     func_484B33CA_Block_2, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29509,7 +29509,7 @@ loc_484B34FD:
 loc_484B350E:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613EDB, a1
+    mov     func_484B33CA_Block, a1
     mov     4, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29544,7 +29544,7 @@ loc_484B3557:
 loc_484B3568:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613EDB, a1
+    mov     func_484B33CA_Block, a1
     mov     4, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29580,7 +29580,7 @@ loc_484B35B3:
 loc_484B35C4:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613ECC, a1
+    mov     SysEx_48613ECC, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29606,7 +29606,7 @@ loc_484B35FF:
 loc_484B3610:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613ECC, a1
+    mov     SysEx_48613ECC, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29639,7 +29639,7 @@ loc_484B365C:
 loc_484B366D:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613ECC, a1
+    mov     SysEx_48613ECC, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29674,7 +29674,7 @@ loc_484B36C3:
 loc_484B36D4:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613ECC, a1
+    mov     SysEx_48613ECC, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x7000, d0
@@ -29711,7 +29711,7 @@ func_484B372D_entry:
 loc_484B3735:
     mov     sp, a0
     add     0x18, a0
-    mov     data_48613EE4, a1
+    mov     SysEx_48613EE4, a1
     mov     0xf, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -48018,7 +48018,7 @@ loc_484BCB26:
     mov     (0x4c, sp), a0
     mov     (0x14, sp), d0
     add     d0, a0
-    mov     data_486140CC, a1
+    mov     SysEx_486140CC, a1
     mov     0x16, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d1
@@ -52445,7 +52445,7 @@ loc_484BEDD2:
 loc_484BEDF4:
     mov     (0x28, sp), a0
     mov     (8, a0), a0
-    mov     data_48614008, a1
+    mov     SysEx_48614008, a1
     mov     7, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x28, sp), a0
@@ -52458,7 +52458,7 @@ loc_484BEDF4:
     calls   (a1)
     mov     (0x28, sp), a0
     mov     (8, a0), a0
-    mov     data_48614008, a1
+    mov     SysEx_48614008, a1
     mov     7, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x28, sp), a0
@@ -54299,27 +54299,27 @@ loc_484BFD27:
 loc_484BFD31:
     jmp     loc_484BFFDF
 loc_484BFD34:
-    mov     data_48614050, d0
+    mov     func_484BFFE4_Result_2, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFD3F:
-    mov     data_48614070, d0
+    mov     func_484BFFE4_Result_3, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFD4A:
-    mov     data_48614EC4, d0
+    mov     func_484BFFE4_Result_84, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFD55:
-    mov     data_48614204, d0
+    mov     func_484BFFE4_Result_11, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFD60:
-    mov     data_48614C44, d0
+    mov     func_484BFFE4_Result_74, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFD6B:
-    mov     data_48614B84, d0
+    mov     func_484BFFE4_Result_68, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFD76:
@@ -54367,15 +54367,15 @@ loc_484BFDD2:
 loc_484BFDDE:
     jmp     loc_484BFFDF
 loc_484BFDE1:
-    mov     data_48614030, d0
+    mov     func_484BFFE4_Result_1, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFDEC:
-    mov     data_48614164, d0
+    mov     func_484BFFE4_Result_10, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFDF7:
-    mov     data_48614284, d0
+    mov     func_484BFFE4_Result_14, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE02:
@@ -54387,15 +54387,15 @@ loc_484BFE0D:
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE18:
-    mov     data_48614C64, d0
+    mov     func_484BFFE4_Result_75, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE23:
-    mov     data_48614C84, d0
+    mov     func_484BFFE4_Result_76, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE2E:
-    mov     data_48614CA4, d0
+    mov     func_484BFFE4_Result_77, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE39:
@@ -54418,15 +54418,15 @@ loc_484BFE59:
 loc_484BFE65:
     jmp     loc_484BFFDF
 loc_484BFE68:
-    mov     data_48614244, d0
+    mov     func_484BFFE4_Result_12, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE73:
-    mov     data_486142A4, d0
+    mov     func_484BFFE4_Result_15, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE7E:
-    mov     data_486142E4, d0
+    mov     func_484BFFE4_Result_17, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE89:
@@ -54464,23 +54464,23 @@ loc_484BFECE:
 loc_484BFEDA:
     jmp     loc_484BFFDF
 loc_484BFEDD:
-    mov     data_48614A24, d0
+    mov     func_484BFFE4_Result_58, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFEE8:
-    mov     data_48614A44, d0
+    mov     func_484BFFE4_Result_59, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFEF3:
-    mov     data_48614A64, d0
+    mov     func_484BFFE4_Result_60, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFEFE:
-    mov     data_48614A84, d0
+    mov     func_484BFFE4_Result_61, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFF09:
-    mov     data_48614AA4, d0
+    mov     func_484BFFE4_Result_62, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFF14:
@@ -54513,23 +54513,23 @@ loc_484BFF4C:
 loc_484BFF58:
     jmp     loc_484BFFDF
 loc_484BFF5B:
-    mov     data_48614AE4, d0
+    mov     func_484BFFE4_Result_64, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFF65:
-    mov     data_48614B04, d0
+    mov     func_484BFFE4_Result_65, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFF6F:
-    mov     data_48614B24, d0
+    mov     func_484BFFE4_Result_66, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFF79:
-    mov     data_48614B44, d0
+    mov     func_484BFFE4_Result_67, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFF83:
-    mov     data_48614AC4, d0
+    mov     func_484BFFE4_Result_63, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFF8D:
@@ -54539,7 +54539,7 @@ loc_484BFF8D:
     beq     loc_484BFF9F
     bra     loc_484BFFDF
 loc_484BFF9F:
-    mov     data_48614BE4, d0
+    mov     func_484BFFE4_Result_71, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFFA9:
@@ -54549,7 +54549,7 @@ loc_484BFFA9:
     beq     loc_484BFFBB
     bra     loc_484BFFDF
 loc_484BFFBB:
-    mov     data_48614CC8, d0
+    mov     func_484BFFE4_Result_78, d0
     mov     d0, (0, sp)
     bra     loc_484BFFDF
 loc_484BFFC5:
@@ -54559,7 +54559,7 @@ loc_484BFFC5:
     beq     loc_484BFFD7
     bra     loc_484BFFDF
 loc_484BFFD7:
-    mov     data_48614B24, d0
+    mov     func_484BFFE4_Result_66, d0
     mov     d0, (0, sp)
 loc_484BFFDF:
     mov     (0, sp), a0
@@ -54698,7 +54698,7 @@ loc_484C00C6:
 loc_484C00CF:
     jmp     loc_484C1908
 loc_484C00D2:
-    mov     data_48614EC4, d0
+    mov     func_484BFFE4_Result_84, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C00DD:
@@ -54817,7 +54817,7 @@ loc_484C019E:
 loc_484C01A6:
     jmp     loc_484C1908
 loc_484C01A9:
-    mov     data_48614164, d0
+    mov     func_484BFFE4_Result_10, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01B4:
@@ -54837,7 +54837,7 @@ loc_484C01D5:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01E0:
-    mov     data_48614204, d0
+    mov     func_484BFFE4_Result_11, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01EB:
@@ -54889,31 +54889,31 @@ loc_484C0233:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C023E:
-    mov     data_48614244, d0
+    mov     func_484BFFE4_Result_12, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0249:
-    mov     data_48614264, d0
+    mov     func_484BFFE4_Result_13, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0254:
-    mov     data_48614284, d0
+    mov     func_484BFFE4_Result_14, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C025F:
-    mov     data_486142A4, d0
+    mov     func_484BFFE4_Result_15, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C026A:
-    mov     data_486142C4, d0
+    mov     func_484BFFE4_Result_16, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0275:
-    mov     data_486142E4, d0
+    mov     func_484BFFE4_Result_17, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0280:
-    mov     data_48614304, d0
+    mov     func_484BFFE4_Result_18, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C028B:
@@ -55025,15 +55025,15 @@ loc_484C0347:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0352:
-    mov     data_48614344, d0
+    mov     func_484BFFE4_Result_19, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C035D:
-    mov     data_48614364, d0
+    mov     func_484BFFE4_Result_20, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0368:
-    mov     data_48614384, d0
+    mov     func_484BFFE4_Result_21, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0373:
@@ -55283,135 +55283,135 @@ loc_484C0562:
 loc_484C056B:
     jmp     loc_484C1908
 loc_484C056E:
-    mov     data_486145A4, d0
+    mov     func_484BFFE4_Result_22, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0579:
-    mov     data_486145C4, d0
+    mov     func_484BFFE4_Result_23, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0584:
-    mov     data_486145E4, d0
+    mov     func_484BFFE4_Result_24, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C058F:
-    mov     data_48614604, d0
+    mov     func_484BFFE4_Result_25, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C059A:
-    mov     data_48614624, d0
+    mov     func_484BFFE4_Result_26, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05A5:
-    mov     data_48614644, d0
+    mov     func_484BFFE4_Result_27, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05B0:
-    mov     data_48614664, d0
+    mov     func_484BFFE4_Result_28, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05BB:
-    mov     data_48614684, d0
+    mov     func_484BFFE4_Result_29, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05C6:
-    mov     data_486146A4, d0
+    mov     func_484BFFE4_Result_30, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05D1:
-    mov     data_486146C4, d0
+    mov     func_484BFFE4_Result_31, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05DC:
-    mov     data_486146E4, d0
+    mov     func_484BFFE4_Result_32, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05E7:
-    mov     data_48614704, d0
+    mov     func_484BFFE4_Result_33, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05F2:
-    mov     data_48614724, d0
+    mov     func_484BFFE4_Result_34, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C05FD:
-    mov     data_48614744, d0
+    mov     func_484BFFE4_Result_35, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0608:
-    mov     data_48614764, d0
+    mov     func_484BFFE4_Result_36, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0613:
-    mov     data_48614784, d0
+    mov     func_484BFFE4_Result_37, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C061E:
-    mov     data_486147A4, d0
+    mov     func_484BFFE4_Result_38, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0629:
-    mov     data_486147C4, d0
+    mov     func_484BFFE4_Result_39, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0634:
-    mov     data_486147E4, d0
+    mov     func_484BFFE4_Result_40, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C063F:
-    mov     data_48614804, d0
+    mov     func_484BFFE4_Result_41, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C064A:
-    mov     data_48614824, d0
+    mov     func_484BFFE4_Result_42, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0655:
-    mov     data_48614844, d0
+    mov     func_484BFFE4_Result_43, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0660:
-    mov     data_48614864, d0
+    mov     func_484BFFE4_Result_44, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C066B:
-    mov     data_48614884, d0
+    mov     func_484BFFE4_Result_45, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0676:
-    mov     data_486148A4, d0
+    mov     func_484BFFE4_Result_46, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0681:
-    mov     data_486148C4, d0
+    mov     func_484BFFE4_Result_47, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C068C:
-    mov     data_486148E4, d0
+    mov     func_484BFFE4_Result_48, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0697:
-    mov     data_48614904, d0
+    mov     func_484BFFE4_Result_49, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C06A2:
-    mov     data_48614924, d0
+    mov     func_484BFFE4_Result_50, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C06AD:
-    mov     data_48614944, d0
+    mov     func_484BFFE4_Result_51, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C06B8:
-    mov     data_48614964, d0
+    mov     func_484BFFE4_Result_52, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C06C3:
-    mov     data_48614984, d0
+    mov     func_484BFFE4_Result_53, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C06CE:
-    mov     data_486149A4, d0
+    mov     func_484BFFE4_Result_54, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C06D9:
@@ -55568,55 +55568,55 @@ loc_484C07E1:
 loc_484C07EA:
     jmp     loc_484C1908
 loc_484C07ED:
-    mov     data_486149C4, d0
+    mov     func_484BFFE4_Result_55, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C07F8:
-    mov     data_486149E4, d0
+    mov     func_484BFFE4_Result_56, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0803:
-    mov     data_48614A04, d0
+    mov     func_484BFFE4_Result_57, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C080E:
-    mov     data_48614A24, d0
+    mov     func_484BFFE4_Result_58, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0819:
-    mov     data_48614A44, d0
+    mov     func_484BFFE4_Result_59, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0824:
-    mov     data_48614A64, d0
+    mov     func_484BFFE4_Result_60, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C082F:
-    mov     data_48614A84, d0
+    mov     func_484BFFE4_Result_61, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C083A:
-    mov     data_48614AA4, d0
+    mov     func_484BFFE4_Result_62, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0845:
-    mov     data_48614AC4, d0
+    mov     func_484BFFE4_Result_63, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0850:
-    mov     data_48614AE4, d0
+    mov     func_484BFFE4_Result_64, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C085B:
-    mov     data_48614B04, d0
+    mov     func_484BFFE4_Result_65, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0866:
-    mov     data_48614B24, d0
+    mov     func_484BFFE4_Result_66, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0871:
-    mov     data_48614B44, d0
+    mov     func_484BFFE4_Result_67, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C087C:
@@ -55624,51 +55624,51 @@ loc_484C087C:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0887:
-    mov     data_48614B84, d0
+    mov     func_484BFFE4_Result_68, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0892:
-    mov     data_48614BA4, d0
+    mov     func_484BFFE4_Result_69, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C089D:
-    mov     data_48614BC4, d0
+    mov     func_484BFFE4_Result_70, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08A8:
-    mov     data_48614BE4, d0
+    mov     func_484BFFE4_Result_71, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08B3:
-    mov     data_48614C04, d0
+    mov     func_484BFFE4_Result_72, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08BE:
-    mov     data_48614C24, d0
+    mov     func_484BFFE4_Result_73, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08C9:
-    mov     data_48614C44, d0
+    mov     func_484BFFE4_Result_74, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08D4:
-    mov     data_48614C64, d0
+    mov     func_484BFFE4_Result_75, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08DF:
-    mov     data_48614C84, d0
+    mov     func_484BFFE4_Result_76, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08EA:
-    mov     data_48614CA4, d0
+    mov     func_484BFFE4_Result_77, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C08F5:
-    mov     data_48614CC8, d0
+    mov     func_484BFFE4_Result_78, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0900:
-    mov     data_48614CE8, d0
+    mov     func_484BFFE4_Result_79, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C090B:
@@ -55706,7 +55706,7 @@ loc_484C0938:
 loc_484C0940:
     jmp     loc_484C1908
 loc_484C0943:
-    mov     data_48614D08, d0
+    mov     func_484BFFE4_Result_80, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C094E:
@@ -55718,7 +55718,7 @@ loc_484C0959:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0964:
-    mov     data_48614D68, d0
+    mov     func_484BFFE4_Result_81, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C096F:
@@ -55786,7 +55786,7 @@ loc_484C09E3:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C09EE:
-    mov     data_48614E28, d0
+    mov     func_484BFFE4_Result_82, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C09F9:
@@ -55802,7 +55802,7 @@ loc_484C0A0F:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0A1A:
-    mov     data_48614EA8, d0
+    mov     func_484BFFE4_Result_83, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0A25:
@@ -55899,11 +55899,11 @@ loc_484C0AC1:
 loc_484C0AC9:
     jmp     loc_484C1908
 loc_484C0ACC:
-    mov     data_48615084, d0
+    mov     func_484BFFE4_Result_s16_14, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0AD7:
-    mov     data_486150AC, d0
+    mov     func_484BFFE4_Result_s16_15, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0AE2:
@@ -55921,11 +55921,11 @@ loc_484C0AEF:
 loc_484C0AF7:
     jmp     loc_484C1908
 loc_484C0AFA:
-    mov     data_486150D4, d0
+    mov     func_484BFFE4_Result_s16_16, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B05:
-    mov     data_486150FC, d0
+    mov     func_484BFFE4_Result_s16_17, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B10:
@@ -55943,11 +55943,11 @@ loc_484C0B1D:
 loc_484C0B25:
     jmp     loc_484C1908
 loc_484C0B28:
-    mov     data_48615124, d0
+    mov     func_484BFFE4_Result_s16_18, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B33:
-    mov     data_4861514C, d0
+    mov     func_484BFFE4_Result_s16_19, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B3E:
@@ -55965,11 +55965,11 @@ loc_484C0B4B:
 loc_484C0B53:
     jmp     loc_484C1908
 loc_484C0B56:
-    mov     data_48615174, d0
+    mov     func_484BFFE4_Result_s16_20, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B61:
-    mov     data_4861519C, d0
+    mov     func_484BFFE4_Result_s16_21, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B6C:
@@ -55987,11 +55987,11 @@ loc_484C0B79:
 loc_484C0B81:
     jmp     loc_484C1908
 loc_484C0B84:
-    mov     data_486151C4, d0
+    mov     func_484BFFE4_Result_s16_22, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B8F:
-    mov     data_486151EC, d0
+    mov     func_484BFFE4_Result_s16_23, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0B9A:
@@ -56009,11 +56009,11 @@ loc_484C0BA7:
 loc_484C0BAF:
     jmp     loc_484C1908
 loc_484C0BB2:
-    mov     data_48615214, d0
+    mov     func_484BFFE4_Result_s16_24, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0BBD:
-    mov     data_4861523C, d0
+    mov     func_484BFFE4_Result_s16_25, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0BC8:
@@ -56036,15 +56036,15 @@ loc_484C0BDD:
 loc_484C0BE5:
     jmp     loc_484C1908
 loc_484C0BE8:
-    mov     data_48615264, d0
+    mov     func_484BFFE4_Result_s16_26, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0BF3:
-    mov     data_4861528C, d0
+    mov     func_484BFFE4_Result_s16_27, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0BFE:
-    mov     data_486152B4, d0
+    mov     func_484BFFE4_Result_s16_28, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C09:
@@ -56062,11 +56062,11 @@ loc_484C0C16:
 loc_484C0C1E:
     jmp     loc_484C1908
 loc_484C0C21:
-    mov     data_486152DC, d0
+    mov     func_484BFFE4_Result_s16_29, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C2C:
-    mov     data_48615304, d0
+    mov     func_484BFFE4_Result_s16_30, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C37:
@@ -56084,11 +56084,11 @@ loc_484C0C44:
 loc_484C0C4C:
     jmp     loc_484C1908
 loc_484C0C4F:
-    mov     data_4861532C, d0
+    mov     func_484BFFE4_Result_s16_31, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C5A:
-    mov     data_48615354, d0
+    mov     func_484BFFE4_Result_s16_32, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C65:
@@ -56106,11 +56106,11 @@ loc_484C0C72:
 loc_484C0C7A:
     jmp     loc_484C1908
 loc_484C0C7D:
-    mov     data_4861537C, d0
+    mov     func_484BFFE4_Result_s16_33, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C88:
-    mov     data_486153A4, d0
+    mov     func_484BFFE4_Result_s16_34, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0C93:
@@ -56128,11 +56128,11 @@ loc_484C0CA0:
 loc_484C0CA8:
     jmp     loc_484C1908
 loc_484C0CAB:
-    mov     data_486153CC, d0
+    mov     func_484BFFE4_Result_s16_35, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0CB6:
-    mov     data_486153F4, d0
+    mov     func_484BFFE4_Result_s16_36, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0CC1:
@@ -56150,11 +56150,11 @@ loc_484C0CCE:
 loc_484C0CD6:
     jmp     loc_484C1908
 loc_484C0CD9:
-    mov     data_4861541C, d0
+    mov     func_484BFFE4_Result_s16_37, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0CE4:
-    mov     data_48615444, d0
+    mov     func_484BFFE4_Result_s16_38, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0CEF:
@@ -56172,11 +56172,11 @@ loc_484C0CFC:
 loc_484C0D04:
     jmp     loc_484C1908
 loc_484C0D07:
-    mov     data_4861546C, d0
+    mov     func_484BFFE4_Result_s16_39, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D12:
-    mov     data_48615494, d0
+    mov     func_484BFFE4_Result_s16_40, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D1D:
@@ -56209,23 +56209,23 @@ loc_484C0D42:
 loc_484C0D4A:
     jmp     loc_484C1908
 loc_484C0D4D:
-    mov     data_486154BC, d0
+    mov     func_484BFFE4_Result_s16_41, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D58:
-    mov     data_486154E4, d0
+    mov     func_484BFFE4_Result_s16_42, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D63:
-    mov     data_4861550C, d0
+    mov     func_484BFFE4_Result_s16_43, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D6E:
-    mov     data_48615534, d0
+    mov     func_484BFFE4_Result_s16_44, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D79:
-    mov     data_4861555C, d0
+    mov     func_484BFFE4_Result_s16_45, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D84:
@@ -56236,63 +56236,63 @@ loc_484C0D84:
     beq     loc_484C0D92
     jmp     loc_484C1908
 loc_484C0D92:
-    mov     data_48615584, d0
+    mov     func_484BFFE4_Result_s16_46, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0D9D:
-    mov     data_48614EE4, d0
+    mov     func_484BFFE4_Result_s16_0, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DA8:
-    mov     data_48614F00, d0
+    mov     func_484BFFE4_Result_s16_1, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DB3:
-    mov     data_48614F1C, d0
+    mov     func_484BFFE4_Result_s16_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DBE:
-    mov     data_48614F38, d0
+    mov     func_484BFFE4_Result_s16_3, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DC9:
-    mov     data_48614F54, d0
+    mov     func_484BFFE4_Result_s16_4, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DD4:
-    mov     data_48614F70, d0
+    mov     func_484BFFE4_Result_s16_5, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DDF:
-    mov     data_48614F90, d0
+    mov     func_484BFFE4_Result_s16_6, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DEA:
-    mov     data_48614FB0, d0
+    mov     func_484BFFE4_Result_s16_7, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0DF5:
-    mov     data_48614FCC, d0
+    mov     func_484BFFE4_Result_s16_8, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E00:
-    mov     data_48614FF0, d0
+    mov     func_484BFFE4_Result_s16_9, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E0B:
-    mov     data_4861500C, d0
+    mov     func_484BFFE4_Result_s16_10, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E16:
-    mov     data_48615028, d0
+    mov     func_484BFFE4_Result_s16_11, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E21:
-    mov     data_48615044, d0
+    mov     func_484BFFE4_Result_s16_12, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E2C:
-    mov     data_4861505C, d0
+    mov     func_484BFFE4_Result_s16_13, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E37:
@@ -56338,7 +56338,7 @@ loc_484C0E79:
     beq     loc_484C0E87
     jmp     loc_484C1908
 loc_484C0E87:
-    mov     data_486155A0, d0
+    mov     func_484BFFE4_Result_85, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0E92:
@@ -56540,19 +56540,19 @@ loc_484C0FE9:
 loc_484C0FF1:
     jmp     loc_484C1908
 loc_484C0FF4:
-    mov     data_486155C4, d0
+    mov     func_484BFFE4_Result_86, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0FFF:
-    mov     data_486155E4, d0
+    mov     func_484BFFE4_Result_87, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C100A:
-    mov     data_48615604, d0
+    mov     func_484BFFE4_Result_88, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1015:
-    mov     data_48615624, d0
+    mov     func_484BFFE4_Result_89, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1020:
@@ -56640,67 +56640,67 @@ loc_484C10AC:
 loc_484C10B5:
     jmp     loc_484C1908
 loc_484C10B8:
-    mov     data_48615644, d0
+    mov     func_484BFFE4_Result_90, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C10C3:
-    mov     data_48615664, d0
+    mov     func_484BFFE4_Result_91, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C10CE:
-    mov     data_48615684, d0
+    mov     func_484BFFE4_Result_92, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C10D9:
-    mov     data_486156A4, d0
+    mov     func_484BFFE4_Result_93, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C10E4:
-    mov     data_486156C4, d0
+    mov     func_484BFFE4_Result_94, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C10EF:
-    mov     data_486156E4, d0
+    mov     func_484BFFE4_Result_95, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C10FA:
-    mov     data_48615704, d0
+    mov     func_484BFFE4_Result_96, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1105:
-    mov     data_48615724, d0
+    mov     func_484BFFE4_Result_97, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1110:
-    mov     data_48615744, d0
+    mov     func_484BFFE4_Result_98, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C111B:
-    mov     data_48615764, d0
+    mov     func_484BFFE4_Result_99, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1126:
-    mov     data_48615784, d0
+    mov     func_484BFFE4_Result_100, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1131:
-    mov     data_486157A4, d0
+    mov     func_484BFFE4_Result_101, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C113C:
-    mov     data_486157C4, d0
+    mov     func_484BFFE4_Result_102, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1147:
-    mov     data_486157E4, d0
+    mov     func_484BFFE4_Result_103, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1152:
-    mov     data_48615804, d0
+    mov     func_484BFFE4_Result_104, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C115D:
-    mov     data_48615824, d0
+    mov     func_484BFFE4_Result_105, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1168:
@@ -56818,11 +56818,11 @@ loc_484C122A:
 loc_484C1233:
     jmp     loc_484C1908
 loc_484C1236:
-    mov     data_48615844, d0
+    mov     func_484BFFE4_Result_106, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1241:
-    mov     data_48615864, d0
+    mov     func_484BFFE4_Result_107, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C124C:
@@ -56858,51 +56858,51 @@ loc_484C1299:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12A4:
-    mov     data_48615984, d0
+    mov     func_484BFFE4_Result_108, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12AF:
-    mov     data_486159A4, d0
+    mov     func_484BFFE4_Result_109, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12BA:
-    mov     data_486159C4, d0
+    mov     func_484BFFE4_Result_110, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12C5:
-    mov     data_486159E4, d0
+    mov     func_484BFFE4_Result_111, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12D0:
-    mov     data_48615A04, d0
+    mov     func_484BFFE4_Result_112, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12DB:
-    mov     data_48615A24, d0
+    mov     func_484BFFE4_Result_113, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12E6:
-    mov     data_48615A44, d0
+    mov     func_484BFFE4_Result_114, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12F1:
-    mov     data_48615A64, d0
+    mov     func_484BFFE4_Result_115, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12FC:
-    mov     data_48615A84, d0
+    mov     func_484BFFE4_Result_116, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1307:
-    mov     data_48615AA4, d0
+    mov     func_484BFFE4_Result_117, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1312:
-    mov     data_48615AC4, d0
+    mov     func_484BFFE4_Result_118, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C131D:
-    mov     data_48615AE4, d0
+    mov     func_484BFFE4_Result_119, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1328:
@@ -56970,51 +56970,51 @@ loc_484C1385:
 loc_484C138D:
     jmp     loc_484C1908
 loc_484C1390:
-    mov     data_48615B04, d0
+    mov     func_484BFFE4_Result_120, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C139B:
-    mov     data_48615B24, d0
+    mov     func_484BFFE4_Result_121, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13A6:
-    mov     data_48615B44, d0
+    mov     func_484BFFE4_Result_122, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13B1:
-    mov     data_48615B64, d0
+    mov     func_484BFFE4_Result_123, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13BC:
-    mov     data_48615B84, d0
+    mov     func_484BFFE4_Result_124, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13C7:
-    mov     data_48615BA4, d0
+    mov     func_484BFFE4_Result_125, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13D2:
-    mov     data_48615BC4, d0
+    mov     func_484BFFE4_Result_126, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13DD:
-    mov     data_48615BE4, d0
+    mov     func_484BFFE4_Result_127, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13E8:
-    mov     data_48615C04, d0
+    mov     func_484BFFE4_Result_128, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13F3:
-    mov     data_48615C24, d0
+    mov     func_484BFFE4_Result_129, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C13FE:
-    mov     data_48615C44, d0
+    mov     func_484BFFE4_Result_130, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1409:
-    mov     data_48615C64, d0
+    mov     func_484BFFE4_Result_131, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1414:
@@ -57082,19 +57082,19 @@ loc_484C147D:
 loc_484C1485:
     jmp     loc_484C1908
 loc_484C1488:
-    mov     data_48615C88, d0
+    mov     func_484BFFE4_Result_132, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1493:
-    mov     data_48615CA8, d0
+    mov     func_484BFFE4_Result_133, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C149E:
-    mov     data_48615CC8, d0
+    mov     func_484BFFE4_Result_134, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C14A9:
-    mov     data_48615CE8, d0
+    mov     func_484BFFE4_Result_135, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C14B4:
@@ -57124,15 +57124,15 @@ loc_484C14D7:
 loc_484C14DF:
     jmp     loc_484C1908
 loc_484C14E2:
-    mov     data_48615D08, d0
+    mov     func_484BFFE4_Result_136, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C14ED:
-    mov     data_48615D28, d0
+    mov     func_484BFFE4_Result_137, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C14F8:
-    mov     data_48615D48, d0
+    mov     func_484BFFE4_Result_138, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1503:
@@ -57339,103 +57339,103 @@ loc_484C1686:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1691:
-    mov     data_48615E68, d0
+    mov     func_484BFFE4_Result_139, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C169C:
-    mov     data_48615E88, d0
+    mov     func_484BFFE4_Result_140, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16A7:
-    mov     data_48615EA8, d0
+    mov     func_484BFFE4_Result_141, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16B2:
-    mov     data_48615EC8, d0
+    mov     func_484BFFE4_Result_142, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16BD:
-    mov     data_48615EE8, d0
+    mov     func_484BFFE4_Result_143, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16C8:
-    mov     data_48615F08, d0
+    mov     func_484BFFE4_Result_144, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16D3:
-    mov     data_48615F28, d0
+    mov     func_484BFFE4_Result_145, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16DE:
-    mov     data_48615F48, d0
+    mov     func_484BFFE4_Result_146, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16E9:
-    mov     data_48615F68, d0
+    mov     func_484BFFE4_Result_147, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16F4:
-    mov     data_48615F88, d0
+    mov     func_484BFFE4_Result_148, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C16FF:
-    mov     data_48615FA8, d0
+    mov     func_484BFFE4_Result_149, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C170A:
-    mov     data_48615FC8, d0
+    mov     func_484BFFE4_Result_150, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1715:
-    mov     data_48615FE8, d0
+    mov     func_484BFFE4_Result_151, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1720:
-    mov     data_48616008, d0
+    mov     func_484BFFE4_Result_152, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C172B:
-    mov     data_48616028, d0
+    mov     func_484BFFE4_Result_153, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1736:
-    mov     data_48616048, d0
+    mov     func_484BFFE4_Result_154, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1741:
-    mov     data_48616068, d0
+    mov     func_484BFFE4_Result_155, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C174C:
-    mov     data_48616088, d0
+    mov     func_484BFFE4_Result_156, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1757:
-    mov     data_486160A8, d0
+    mov     func_484BFFE4_Result_157, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1762:
-    mov     data_486160C8, d0
+    mov     func_484BFFE4_Result_158, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C176D:
-    mov     data_486160E8, d0
+    mov     func_484BFFE4_Result_159, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1778:
-    mov     data_48616108, d0
+    mov     func_484BFFE4_Result_160, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1783:
-    mov     data_48616128, d0
+    mov     func_484BFFE4_Result_161, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C178E:
-    mov     data_48616148, d0
+    mov     func_484BFFE4_Result_162, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1799:
-    mov     data_48616168, d0
+    mov     func_484BFFE4_Result_163, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C17A4:
@@ -57460,7 +57460,7 @@ loc_484C17BF:
 loc_484C17C7:
     jmp     loc_484C1908
 loc_484C17CA:
-    mov     data_48614010, d0
+    mov     func_484BFFE4_Result_0, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C17D5:
@@ -57471,7 +57471,7 @@ loc_484C17D5:
     beq     loc_484C17E3
     jmp     loc_484C1908
 loc_484C17E3:
-    mov     data_486140E4, d0
+    mov     func_484BFFE4_Result_6, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C17EE:
@@ -57525,15 +57525,15 @@ loc_484C183B:
 loc_484C1843:
     jmp     loc_484C1908
 loc_484C1846:
-    mov     data_48614030, d0
+    mov     func_484BFFE4_Result_1, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1851:
-    mov     data_48614050, d0
+    mov     func_484BFFE4_Result_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C185C:
-    mov     data_48614070, d0
+    mov     func_484BFFE4_Result_3, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1867:
@@ -57579,11 +57579,11 @@ loc_484C18AA:
 loc_484C18B2:
     bra     loc_484C1908
 loc_484C18B4:
-    mov     data_48614094, d0
+    mov     func_484BFFE4_Result_4, d0
     mov     d0, (0, sp)
     bra     loc_484C1908
 loc_484C18BE:
-    mov     data_486140B8, d0
+    mov     func_484BFFE4_Result_5, d0
     mov     d0, (0, sp)
     bra     loc_484C1908
 loc_484C18C8:
@@ -57601,11 +57601,11 @@ loc_484C18D5:
 loc_484C18DD:
     bra     loc_484C1908
 loc_484C18DF:
-    mov     data_48614104, d0
+    mov     func_484BFFE4_Result_7, d0
     mov     d0, (0, sp)
     bra     loc_484C1908
 loc_484C18E9:
-    mov     data_48614124, d0
+    mov     func_484BFFE4_Result_8, d0
     mov     d0, (0, sp)
     bra     loc_484C1908
 loc_484C18F3:
@@ -57616,7 +57616,7 @@ loc_484C18F3:
     beq     loc_484C1900
     bra     loc_484C1908
 loc_484C1900:
-    mov     data_48614144, d0
+    mov     func_484BFFE4_Result_9, d0
     mov     d0, (0, sp)
 loc_484C1908:
     mov     (0, sp), a0
@@ -60396,7 +60396,7 @@ func_484C346C_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    mov     data_4861625C, a1
+    mov     func_484C346C_Block, a1
     mov     6, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -60413,7 +60413,7 @@ func_484C348E_entry:
     clr     d0
     mov     d0, (0x14, sp)
     mov     d0, (0x18, sp)
-    mov     data_48616264, a1
+    mov     func_484C348E_Block, a1
     mov     8, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -60475,7 +60475,7 @@ func_484C3504_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    mov     data_4861626C, a1
+    mov     func_484C3504_Block, a1
     mov     2, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -60603,7 +60603,7 @@ func_484C360E_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    mov     data_4861628C, a1
+    mov     func_484C360E_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -60678,7 +60678,7 @@ func_484C36B4_entry:
     mov     a0, (0x20, sp)
     clr     d0
     mov     d0, (0x14, sp)
-    mov     data_4861629C, a1
+    mov     func_484C36B4_Block, a1
     mov     3, d0
     call    memcpy_entry, [a2,a3], 8
     mov     (0x14, sp), d0
@@ -61118,44 +61118,44 @@ loc_484C3A12:
 loc_484C3A19:
     jmp     loc_484C3E67
 loc_484C3A1C:
-    mov     data_486162B0, a0
-    mov     data_48616370, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C3FA9_Block_2, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3A33:
-    mov     data_486162B0, a0
-    mov     data_48616400, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C3FA9_Block_3, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3A4A:
-    mov     data_486162B0, a0
-    mov     data_48616490, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C3FA9_Block_4, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3A61:
-    mov     data_486162B0, a0
-    mov     data_48616520, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3A78:
-    mov     data_486162B0, a0
-    mov     data_486165B0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_2, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3A8F:
-    mov     data_486162B0, a0
-    mov     data_48616640, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_3, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3AA6:
-    mov     data_486162B0, a0
-    mov     data_486166D0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_4, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
@@ -61188,38 +61188,38 @@ loc_484C3AE4:
 loc_484C3AEA:
     jmp     loc_484C3E67
 loc_484C3AED:
-    mov     data_486162B0, a0
-    mov     data_48617180, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_23, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3B04:
-    mov     data_486162B0, a0
-    mov     data_48617210, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_24, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3B1B:
-    mov     data_486162B0, a0
-    mov     data_486172A0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_25, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3B32:
-    mov     data_486162B0, a0
-    mov     data_48617330, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_26, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3B49:
-    mov     data_486162B0, a0
-    mov     data_486173C0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_27, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3B60:
-    mov     data_486162B0, a0
-    mov     data_48617450, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_28, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
@@ -61264,56 +61264,56 @@ loc_484C3BB3:
 loc_484C3BBA:
     jmp     loc_484C3E67
 loc_484C3BBD:
-    mov     data_486162B0, a0
-    mov     data_48616A30, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_10, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3BD4:
-    mov     data_486162B0, a0
-    mov     data_48616AC0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_11, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3BEB:
-    mov     data_486162B0, a0
-    mov     data_48616B50, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_12, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3C02:
-    mov     data_486162B0, a0
-    mov     data_48616BE0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_13, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3C19:
-    mov     data_486162B0, a0
-    mov     data_48616C70, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_14, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3C30:
-    mov     data_486162B0, a0
-    mov     data_48616D00, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_15, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3C47:
-    mov     data_486162B0, a0
-    mov     data_48616D90, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_16, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3C5E:
-    mov     data_486162B0, a0
-    mov     data_48616E20, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_17, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3C75:
-    mov     data_486162B0, a0
-    mov     data_48616EB0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_18, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
@@ -61338,26 +61338,26 @@ loc_484C3CA7:
 loc_484C3CAD:
     jmp     loc_484C3E67
 loc_484C3CB0:
-    mov     data_486162B0, a0
-    mov     data_48616F40, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_19, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3CC7:
-    mov     data_486162B0, a0
-    mov     data_48616FD0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_20, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3CDE:
-    mov     data_486162B0, a0
-    mov     data_48617060, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_21, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3CF5:
-    mov     data_486162B0, a0
-    mov     data_486170F0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_22, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
@@ -61382,26 +61382,26 @@ loc_484C3D27:
 loc_484C3D2D:
     jmp     loc_484C3E67
 loc_484C3D30:
-    mov     data_486162B0, a0
-    mov     data_486167F0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_6, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3D47:
-    mov     data_486162B0, a0
-    mov     data_48616880, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_7, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3D5E:
-    mov     data_486162B0, a0
-    mov     data_48616910, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_8, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
 loc_484C3D75:
-    mov     data_486162B0, a0
-    mov     data_486169A0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_9, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     jmp     loc_484C3E67
@@ -61460,26 +61460,26 @@ loc_484C3E09:
 loc_484C3E0F:
     bra     loc_484C3E67
 loc_484C3E11:
-    mov     data_486162B0, a0
-    mov     data_48616880, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_7, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     bra     loc_484C3E67
 loc_484C3E27:
-    mov     data_486162B0, a0
-    mov     data_48616FD0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_20, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     bra     loc_484C3E67
 loc_484C3E3D:
-    mov     data_486162B0, a0
-    mov     data_48616760, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_5, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
     bra     loc_484C3E67
 loc_484C3E53:
-    mov     data_486162B0, a0
-    mov     data_48616880, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_7, a1
     movbu   (0x20, sp), d0
     call    func_484C401C_entry, [d2], 0x20
 loc_484C3E67:
@@ -61526,38 +61526,38 @@ loc_484C3EA8:
 loc_484C3EAE:
     jmp     loc_484C3F34
 loc_484C3EB1:
-    mov     data_486162B0, a0
-    mov     data_48616370, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C3FA9_Block_2, a1
     call    func_484C4132_entry, [d2], 0x20
     bra     loc_484C3F34
 loc_484C3EC4:
-    mov     data_486162B0, a0
-    mov     data_48616400, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C3FA9_Block_3, a1
     call    func_484C4132_entry, [d2], 0x20
     bra     loc_484C3F34
 loc_484C3ED7:
-    mov     data_486162B0, a0
-    mov     data_48616490, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C3FA9_Block_4, a1
     call    func_484C4132_entry, [d2], 0x20
     bra     loc_484C3F34
 loc_484C3EEA:
-    mov     data_486162B0, a0
-    mov     data_48616520, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table, a1
     call    func_484C4132_entry, [d2], 0x20
     bra     loc_484C3F34
 loc_484C3EFD:
-    mov     data_486162B0, a0
-    mov     data_486165B0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_2, a1
     call    func_484C4132_entry, [d2], 0x20
     bra     loc_484C3F34
 loc_484C3F10:
-    mov     data_486162B0, a0
-    mov     data_48616640, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_3, a1
     call    func_484C4132_entry, [d2], 0x20
     bra     loc_484C3F34
 loc_484C3F23:
-    mov     data_486162B0, a0
-    mov     data_486166D0, a1
+    mov     func_484C3FA9_Block, a0
+    mov     func_484C401C_Table_4, a1
     call    func_484C4132_entry, [d2], 0x20
 loc_484C3F34:
     ret     0, 0x10
@@ -61581,21 +61581,21 @@ loc_484C3F4C:
 loc_484C3F52:
     bra     loc_484C3FA6
 loc_484C3F54:
-    mov     data_486162B0, a0
+    mov     func_484C3FA9_Block, a0
     mov     0x500c4384, a1
     call    func_484C4207_entry, 0, 0x1c
     mov     2, d0
     call    func_4C023FEB_entry, 0, 0x14
     bra     loc_484C3FA6
 loc_484C3F70:
-    mov     data_486162B0, a0
+    mov     func_484C3FA9_Block, a0
     mov     0x500c4414, a1
     call    func_484C4207_entry, 0, 0x1c
     mov     3, d0
     call    func_4C023FEB_entry, 0, 0x14
     bra     loc_484C3FA6
 loc_484C3F8C:
-    mov     data_486162B0, a0
+    mov     func_484C3FA9_Block, a0
     mov     0x500c44a4, a1
     call    func_484C4207_entry, 0, 0x1c
     mov     4, d0
@@ -61611,19 +61611,19 @@ func_484C3FA9_entry:
     mov     0x10, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x500c42c4, a0
-    mov     data_486162B0, a1
+    mov     func_484C3FA9_Block, a1
     mov     0xc0, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x500c4384, a0
-    mov     data_48616370, a1
+    mov     func_484C3FA9_Block_2, a1
     mov     0x90, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x500c4414, a0
-    mov     data_48616400, a1
+    mov     func_484C3FA9_Block_3, a1
     mov     0x90, d0
     call    memcpy_entry, [a2,a3], 8
     mov     0x500c44a4, a0
-    mov     data_48616490, a1
+    mov     func_484C3FA9_Block_4, a1
     mov     0x90, d0
     call    memcpy_entry, [a2,a3], 8
     ret     0, 0x14

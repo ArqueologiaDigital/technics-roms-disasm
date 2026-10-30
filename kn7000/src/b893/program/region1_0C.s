@@ -5218,7 +5218,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48793B00, d0
+    mov     ptrs_48793AFC+4, d0
     mov     d0, (0x28, sp)
     mov     0x294, d0
     mov     a3, a0
@@ -5229,7 +5229,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_Events, d0
+    mov     ptrs_48793AFC+28, d0
     mov     d0, (0x28, sp)
     mov     0x295, d0
     mov     a3, a0
@@ -5240,7 +5240,7 @@ InitializeBlock41_entry:
     mov     d0, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_Methods, d0
+    mov     ptrs_48793AFC+32, d0
     mov     d0, (0x28, sp)
     mov     0x296, d0
     mov     a3, a0
@@ -5251,7 +5251,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_Functions, d0
+    mov     ptrs_48793AFC+36, d0
     mov     d0, (0x28, sp)
     mov     0x291, d0
     mov     a3, a0
@@ -5260,7 +5260,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_48793B24, d0
+    mov     ptrs_48793AFC+40, d0
     mov     d0, (0x28, sp)
     mov     0x299, d0
     mov     a3, a0
@@ -5290,7 +5290,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     DEMORUN_MainFunctions, d0
+    mov     ptrs_48794004+4, d0
     mov     d0, (0x28, sp)
     mov     0x293, d0
     mov     a3, a0
@@ -5299,7 +5299,7 @@ InitializeBlock41_entry:
     mov     a2, (0x20, sp)
     clr     d0
     movhu   d0, (0x24, sp)
-    mov     data_4879400C, d0
+    mov     ptrs_48794004+8, d0
     mov     d0, (0x28, sp)
     mov     0x29b, d0
     mov     a3, a0

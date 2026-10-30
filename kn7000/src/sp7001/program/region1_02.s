@@ -400,7 +400,7 @@ func_4844063C:
     retf    0, 0
 
 func_48440648:
-    mov     data_485B7CF8, a0
+    mov     func_48440648_Result_0, a0
     retf    0, 0
 
 func_48440651:
@@ -30937,10 +30937,10 @@ func_4845126B_entry:
     beq     loc_48451297
     bra     loc_4845129F
 loc_4845128F:
-    mov     data_50000BD0, a2
+    mov     func_4845126B_Result_0, a2
     bra     loc_484512A4
 loc_48451297:
-    mov     data_50000BF2, a2
+    mov     func_4845126B_Result_1, a2
     bra     loc_484512A4
 loc_4845129F:
     mov     0, a0
@@ -50649,24 +50649,24 @@ func_4845BC57_entry:
     cmp     0x12, a2
     bgt     loc_4845BC85
     extbu   d0
-    mov     func_4845BC57_Table, a0
+    mov     func_4845BC57_Selected_4+36, a0
     movbu   (d0, a0), d1
-    mov     data_485B991C, a0
+    mov     func_4845BC57_Selected_0, a0
     cmp     d3, d1
     beq     loc_4845BCB1
-    mov     data_485B9A68, a0
+    mov     func_4845BC57_Selected_1, a0
     bra     loc_4845BCB1
 loc_4845BC85:
-    mov     data_485B9B98, a0
+    mov     func_4845BC57_Selected_3, a0
     cmp     0x41, d0
     beq     loc_4845BCB1
-    mov     data_485B9B64, a0
+    mov     func_4845BC57_Selected_2, a0
     cmp     0x40, d0
     beq     loc_4845BCB1
-    mov     data_485B9C1C, a0
+    mov     func_4845BC57_Selected_4, a0
     cmp     0x42, d0
     beq     loc_4845BCB1
-    mov     data_485B991C, a0
+    mov     func_4845BC57_Selected_0, a0
     cmp     0x1f, d0
     beq     loc_4845BCB1
     clr     d0
@@ -87410,7 +87410,7 @@ func_4847079B:
 func_4847079B_entry:
     clr     d0
     call    func_4847074D, 0, 0
-    mov     data_485BA8C4, a0
+    mov     func_48401F32_Var_2, a0
     call    func_48401F32_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -87419,7 +87419,7 @@ func_4847079B_entry:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
 loc_484707C1:
-    mov     data_485BA8A8, a0
+    mov     func_48401F32_Var, a0
     call    func_48401F32_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -87470,7 +87470,7 @@ loc_4847083E:
     clr     d0
     mov     0x200, d1
     call    memset_entry, [a2], 4
-    mov     data_48737100, d2
+    mov     func_4847079B_Block, d2
     mov     a2, a0
     mov     d2, a1
     mov     3, d0
@@ -87697,7 +87697,7 @@ func_48470A65:
 func_48470A65_entry:
     clr     d0
     call    func_4847074D, 0, 0
-    mov     data_485BA8FC, a0
+    mov     func_48401F32_Var_3, a0
     call    func_48401F32_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -87706,7 +87706,7 @@ func_48470A65_entry:
     clr     d0
     ret     [d2,d3,a2,a3], 0x40
 loc_48470A8B:
-    mov     data_485BA8A8, a0
+    mov     func_48401F32_Var, a0
     call    func_48401F32_entry, 0, 0xc
     extbu   d0
     cmp     0, d0
@@ -87757,7 +87757,7 @@ loc_48470B08:
     clr     d0
     mov     0x200, d1
     call    memset_entry, [a2], 4
-    mov     data_48737123, d2
+    mov     func_48470A65_Block, d2
     mov     a2, a0
     mov     d2, a1
     mov     3, d0

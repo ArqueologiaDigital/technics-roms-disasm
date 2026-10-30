@@ -50,6 +50,8 @@ SIBLINGS = {
     "kn6500": ("../kn6500", "src/program.s", "kn6500"),
     "kn2400": ("../kn2400", "src/program.s", "kn2400"),
     "hdsx3": ("../hdsx3", "src/program.s", "hdsx3"),
+    # the SP7001's XAPR plug-in in table flash 83: its code is in table.s, which includes its data
+    "kn7000-sp7001plugin": (".", "src/sp7001/table.s", "sp7001plugin"),
 }
 ID_RE = re.compile(r"=\s*(0x[0-9A-Fa-f]+)\b")      # a record field given as hex ...
 ADDR_RE = re.compile(r"\b0x(?:48|4[Cc]|50|97)[0-9A-Fa-f]{6}\b")   # 0x97: the XAPR plug-in

@@ -61,22 +61,22 @@ PROFILES = {
     "941": dict(rom="baserom/kn7000_program.rom", src="src/program", prog="src/program.s",
                 syms=["kn7000.sym", "kn7000_manual.sym", "kn7000_exports_from_942.sym"],
                 labels="build/kn7000_program.labels", r1=0x186000, pal=0x32573C, end=0x3B8FD1, structs=True,
-                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/941", string_arrays=True, string_arrays_min=4, text_strict=True),
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/941", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "b935": dict(rom="baserom/kn7000_program_b935.rom", src="src/b935/program", prog="src/b935/program.s",
                  syms=["kn7000_b935.sym", "kn7000_b935_manual.sym", "kn7000_b935_exports.sym",
                        "kn7000_b935_bycode.sym"],
                  labels="build/kn7000_program_b935.labels", r1=0x18595C, pal=0x3256D8, end=0x3B8F6D, structs=True,
-                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b935", string_arrays=True, string_arrays_min=4, text_strict=True),
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b935", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "b893": dict(rom="baserom/kn7000_program_b893.rom", src="src/b893/program", prog="src/b893/program.s",
                  syms=["kn7000_b893.sym", "kn7000_b893_manual.sym", "kn7000_b893_exports.sym",
                        "kn7000_b893_bycode.sym"],
                  labels="build/kn7000_program_b893.labels", r1=0x1846A0, pal=0x323E80, end=0x3B76B1, structs=True,
-                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b893", string_arrays=True, string_arrays_min=4, text_strict=True),
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/b893", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
     "sp7001": dict(rom="baserom/kn7000_program_sp7001.rom", src="src/sp7001/program", prog="src/sp7001/program.s",
                    syms=["kn7000_sp7001.sym", "kn7000_sp7001_manual.sym", "kn7000_sp7001_new.sym",
                          "kn7000_sp7001_exports.sym"],
                    labels="build/kn7000_program_sp7001.labels", r1=0x1864F4, pal=0x326760, end=0x3BA785, structs=True,
-                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/sp7001", string_arrays=True, string_arrays_min=4, text_strict=True),
+                bitmaps=True, bitmap_bits=4, bitmap_dir="build/bitmaps/sp7001", string_arrays=True, string_arrays_min=4, text_strict=True, readers_ext=True),
 }
 # The SX-KN6000 (v7.1) and SX-KN6500 (v1.3) program flash images, the same MILK
 # framework linked at 0x4C000000 (../kn6000, ../kn6500).  Their extra keys: `root`,
@@ -142,6 +142,23 @@ PROFILES["hdsx3"] = dict(root="../hdsx3", rom="baserom/hdsx3_extapr.rom", src="s
                          functions_sym=True, host="kn6000", constants="../kn6000/src/constants.inc",
                          bitmaps=True, code_ids=True, text_strict=True, string_arrays=True, structs=True,
                          raminit=(0x978B3E84, 0x97910000, 0x26D8))
+# The SP7001's XAPR plug-in in table flash 83 (Key Soft Service, table 0x3E8000..0x3FB5A0, linked at
+# 0x48000000): code 0x3E803C..0x3EF6C5 (gen_table_s.py --plugin-code), then its data to the footer
+# 'XAPR' at 0x3FB59C.  It runs on program 942 (`host`): its records use 942's block-0 classes and its
+# own (registry block 0x2F0, func_483E8071's registrations), it calls 942's routines through 942's
+# Function table (registry slot 1: `mov (0x50299298), aN / mov (0x1c, aN), aN / mov (OFF, aN), aM /
+# calls (aM)`), and its initialised RAM is copied from 0x483FA104 to 0x50298000 (0x1498 bytes,
+# func_483E803E's second loop).  Its code is src/sp7001/table.s (gen_table_s.py), whose plug-in pass
+# includes the data this profile writes to src/sp7001/plugin/data/.
+PROFILES["sp7001plugin"] = dict(rom="baserom/kn7000_table_sp7001.rom", src="src/sp7001/plugin",
+                                code="src/sp7001/table.s", prog="src/sp7001/table.s",
+                                syms=["kn7000_sp7001_table.sym", "kn7000_sp7001_table_manual.sym"],
+                                labels="build/kn7000_table_sp7001.labels", r1=0x3EF6C5, pal=None,
+                                end=0x3FB59C, base=0x48000000, model="SP7001 plug-in", host="sp7001",
+                                text_strict=True, string_arrays=True, string_arrays_min=4, header_funcs=True, residue=True,
+                                raminit=(0x483FA104, 0x50298000, 0x1498),
+                                # func_483E803E's first loop clears 0xA48 bytes from 0x50299498
+                                bss=(0x50299498, 0xA48, "KssWorkRam"), raminit_label="KssRamImage")
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 
@@ -235,7 +252,8 @@ def host_model(name):
                   sym_paths=[os.path.join(KN7, f) for f in P["syms"]],
                   label_paths=[os.path.join(KN7, OUTDIR, "labels.sym"),
                                os.path.join(KN7, OUTDIR, "gui_code_ids.inc")])
-    r = hm.by_slot[0x100]
+    # the host's Function table: block 0's slot 1 (KN7000 scheme), the NAKA scheme's 0x100
+    r = hm.by_slot[1 if MM.SCHEME == "kn7000" else 0x100]
     calls = {}
     for i in range(r["count"]):
         a = hm.u32(r["table"] + 4 * i)
@@ -286,6 +304,7 @@ class Gen:
         self.refs = set()             # CPU addresses referred to (need a label)
         self.code_targets = set()     # code addresses the typed data names loc_<ADDR>
         self.host_ids, self.host_used = self.host_id_names(), set()
+        self.readers_ext = bool(P.get("readers_ext"))   # tools/data_readers.py Reader(ext=)
 
     def host_id_names(self):
         """(a plug-in) {id: name} of the host firmware's titles, modes and Function /
@@ -357,9 +376,14 @@ class Gen:
         import glob
         nx = re.compile(r"\b([A-Za-z_]\w*)\b")
         self.code_names = set()
+        strq = re.compile(r'"(?:[^"\\]|\\.)*"')
         for f in glob.glob(code_glob()):
             for line in open(f, encoding="latin-1"):
-                self.code_names.update(nx.findall(line.split("#", 1)[0]))
+                c = line.split("#", 1)[0]
+                if P.get("header_funcs"):
+                    # (the plug-in: its code shares table.s with the help texts) not the words of a string
+                    c = strq.sub('""', c)
+                self.code_names.update(nx.findall(c))
         self.fixed_by_code = set()
         for n, a in self.prev_data_label.items():
             if n in self.code_names and not n.startswith(("data_", "ram_")):
@@ -696,6 +720,103 @@ class Gen:
                 if nr:
                     self.add(nr["table"], 4 * nr["count"], self.name_at(nr["table"], f"{bn}_{r['kind']}Names"),
                              "function names", render_names, slot)
+
+    def resource_trie(self):
+        """(KN7000 program builds) the resource-id trie under ResourceIdTrie: func_4C01BB1A (lib
+        0x4C01BB1A) takes nibble n of a 24-bit id from the top (shift 20, 16, ... 0) and indexes a
+        table of 8-byte entries {u32 target, u8 inner, u8 count, u16 0}: target 0 = no such id;
+        inner 0 = target is the leaf record, whose +0 u32 must equal the id; else target is the
+        next table, of `count` entries, and a nibble >= count is no such id.  The root has 16
+        entries.  Every table is typed (RES_TRIE_ENTRY, src/include/data_tables.inc); every leaf's
+        +0 is a location of the field func_4C01BB1A returns (`mov (a1), a0`), so ptr_records types
+        all 469 leaves as one kind with the reads its callers make through that return value."""
+        root = next((a for a, n in self.fixed.items() if n == "ResourceIdTrie"), None)
+        if root is None:
+            return
+        m = self.m
+        tables, leaves, seen = [], {}, set()
+
+        def walk(t, n):
+            if t in seen or not self.in_data(t) or not self.free(t, 8 * n) or n > 16:
+                return
+            seen.add(t)
+            tables.append((t, n))
+            for i in range(n):
+                p = m.u32(t + 8 * i)
+                inner, cnt = m.rom[self.off(t + 8 * i) + 4], m.rom[self.off(t + 8 * i) + 5]
+                if p and inner:
+                    walk(p, cnt)
+                elif p:
+                    leaves[t + 8 * i] = p
+        walk(root, 16)
+        self.extra_locs = getattr(self, "extra_locs", collections.defaultdict(set))
+        self.extra_locs[(("rec", root, 8), 0)] |= set(leaves)
+        # tables may share entries (a table that is the tail of another): one item per run of entries
+        starts = collections.defaultdict(list)
+        ents = set()
+        for t, n in tables:
+            starts[t].append(n)
+            ents.update(t + 8 * i for i in range(n))
+        runs, cur = [], None
+        for e in sorted(ents):
+            if cur and e == cur[1]:
+                cur[1] = e + 8
+            else:
+                cur = [e, e + 8]
+                runs.append(cur)
+        for a, b in runs:
+            rows = []
+            for e in range(a, b, 8):
+                p = m.u32(e)
+                if p:
+                    self.refs.add(p)
+                rows.append((e, p, m.rom[self.off(e) + 4], m.rom[self.off(e) + 5]))
+
+            def render(g, it, rows=rows, a=a):
+                out = [f"{it.label}:\t# entries of the resource-id trie, one per id nibble (func_4C01BB1A)"]
+                k = 0
+                for e, p, inner, c in rows:
+                    if e != a and e in starts:
+                        out.append(f"\t# +{e - a}: a table of {max(starts[e])} entries (ResourceIdTrieNode_{e:08X})")
+                        k = 0
+                    elif e == a and len(starts.get(e, [])) and a != root:
+                        k = 0
+                    out.append(f"\tRES_TRIE_ENTRY\t{g.ref(p)}, {inner}, {c}\t# [{k:X}]")
+                    k += 1
+                return out
+            lab = self.name_at(a, "ResourceIdTrie" if a == root else f"ResourceIdTrieNode_{a:08X}")
+            self.add(a, b - a, lab, "trie table", render)
+        print(f"gen_data_s: resource-id trie: {len(tables)} tables in {len(runs)} runs, {len(leaves)} leaves")
+
+    def support_classes(self):
+        """(KN7000 program builds) the SupportClass table, registry slot 0xD (InitSptClassTable,
+        0x4842E5DC: class SupportClass, proc SupportClassProc, its count and table): 12-byte
+        entries {proc, u16, u16 property size, pointer}, then an all-zero entry; spelled with
+        SUPPORT_CLASS (src/include/data_tables.inc, whose header gives SupportClassProc's reads)."""
+        m = self.m
+        r = m.by_slot.get(0xD)
+        if not r or r.get("kind") != "SupportClass" or not self.in_data(r["table"] or 0):
+            return
+        n = r["count"] + 1 if not any(m.rom[self.off(r["table"]) + 12 * r["count"]:
+                                             self.off(r["table"]) + 12 * r["count"] + 12]) else r["count"]
+        if not self.free(r["table"], 12 * n):
+            return
+        ents = []
+        for i in range(n):
+            a = r["table"] + 12 * i
+            ents.append((m.u32(a), int.from_bytes(m.rom[self.off(a) + 4:self.off(a) + 6], "little"),
+                         int.from_bytes(m.rom[self.off(a) + 6:self.off(a) + 8], "little"), m.u32(a + 8)))
+            v = m.u32(a + 8)
+            if v and self.in_data(v):
+                self.refs.add(v)
+
+        def render(g, it, ents=ents, cnt=r["count"]):
+            out = [f"# {cnt} SupportClass entries (registry slot 0xD; a support-class id is (0xd << 16) | its"
+                   f" index), then an empty one", f"{it.label}:"]
+            for i, (p, x4, ps, d) in enumerate(ents):
+                out.append(f"\tSUPPORT_CLASS\t{g.ref(p)}, {x4}, {ps}, {g.ref(d)}\t# [{i}]")
+            return out
+        self.add(r["table"], 12 * n, self.name_at(r["table"], "SupportClassTable"), "support class table", render)
 
     # -- objects ---------------------------------------------------------------
     def obj_names(self, b):
@@ -1052,9 +1173,11 @@ class Gen:
             m = re.match(r"^([A-Za-z_]\w*):", ln)
             if m and not m.group(1).startswith("loc_") and not re.search(r"_L[0-9a-f]+_*$", m.group(1)):
                 func = m.group(1)
-            m = re.match(r"# \S+\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
+            m = re.match(r"# (\S+)\s+\((?:lib )?CPU (0x[0-9a-fA-F]+)", ln)
             if m:
-                cpu = int(m.group(1), 16)
+                cpu = int(m.group(2), 16)
+                if P.get("header_funcs"):
+                    func = m.group(1)       # code without labels (gen_table_s.py's plug-in pass)
             m = re.match(r"\s+mov\s+([A-Za-z_]\w*|0x[0-9a-fA-F]{8}),\s*(a\d)$", ln)
             if not m:
                 continue
@@ -1423,7 +1546,7 @@ class Gen:
         by_fld = collections.defaultdict(list)
         for acc in self.dr.accesses:
             k = acc.key
-            if k[0] == "ptr" and k[1][0] == "fld" and acc.off >= 0:
+            if k[0] == "ptr" and k[1][0] in ("fld", "tgt") and acc.off >= 0:
                 by_fld[k[1]].append(acc)
         # (data_struct_names.MODEL_POINTED) pointer fields the walk loses: a read of the target at
         # an offset the code computes, from the instruction the entry cites
@@ -1434,6 +1557,15 @@ class Gen:
                     fld = ("fld", ("rec", g.base, g.stride), foff)
                     by_fld[fld].append(DR.Access(("ptr", fld), roff, rw, sg, "ld", fn, cpu, insn,
                                                  None, -1, None))
+        # (data_readers ext) a T key: the records one of several addresses a path, a stack slot or a
+        # function's return value selects; named after the first function that reads them
+        self._tgt_names = {}
+        for f, accs in by_fld.items():
+            if f[0] == "tgt":
+                fn = next((x.func for x in sorted(accs, key=lambda x: (x.cpu or 0, x.insn)) if x.func), None)
+                org = self.dr.tgt_origin.get(f[1])
+                self._tgt_names[f] = (org + "_Result" if org else
+                                      re.sub(r"_entry$", "", fn) + "_Selected" if fn else None)
         self.build_index()
         self._lmemo, self._tmemo = {}, {}
         targets = self.field_targets
@@ -1489,7 +1621,11 @@ class Gen:
             tail = None
             if opt.get("tail") and all(room[t] > need for t in ts):
                 stride, tail = need, opt["tail"]
-            elif dyn and not gaps_ and len({room[t] for t in ts}) > 1 and all(room[t] > need for t in ts):
+            elif dyn and len({room[t] for t in ts}) > 1 and all(room[t] > need for t in ts) and (
+                    not gaps_ or (self.readers_ext and any(room[t] < collections.Counter(gaps_).most_common(1)[0][0]
+                                                           for t in ts))):
+                # (readers_ext: also when a common distance would leave the shorter records out: the
+                # demo-song streams func_485831BA's table points at, 4,948 / 4,864 / ... bytes)
                 # records of varying size: the fields, then the rest of each record's room as rows of
                 # the width its computed-offset reads use (the code indexes into it)
                 stride = need
@@ -1497,15 +1633,36 @@ class Gen:
                 tail = (w, any(a.signed for a in dyn if a.width == w), min(a.off for a in dyn))
             elif stride < need:
                 stride = need + (-need % 4 if all(room[t] >= need + (-need % 4) for t in ts) else 0)
-            ts = [t for t in ts if room[t] >= stride]
+            if root[0] == "tgt" and not tail and any(need <= room[t] < stride for t in ts):
+                # (data_readers ext) the records one function selects, of several sizes (the bytes
+                # their pointer fields point at sit between them): the fields every one of them holds
+                stride = min(room[t] for t in ts if room[t] >= need)
+            # (readers_ext) records too short for the kind's size (a union whose variants hold fewer
+            # fields: the resource-id trie's leaves) are a variant each, with the fields that fit
+            variants = [(stride, [t for t in ts if room[t] >= stride], "")]
+            if self.readers_ext and not tail:
+                short = collections.defaultdict(list)
+                for t in ts:
+                    if 4 <= room[t] < stride:
+                        short[room[t]].append(t)
+                variants += [(r, short[r], f"_s{r}") for r in sorted(short, reverse=True)
+                             if any(a.width and a.off + a.width <= r for a in fixed_accs)]
+            for stride, ts, vsuf in variants:
+                self._ptr_group(root, accs, stride, ts, tail, room, vsuf)
+
+    def _ptr_group(self, root, accs, stride, ts, tail, room, vsuf=""):
+        """One record kind of ptr_records: its macro, and an item per target."""
+        import data_structs as DS
+        import data_struct_names as DN
+        if True:
             if not ts or stride > 0x2000:
-                continue
+                return
             g = DS.Group(ts[0], stride)
             g.tail = tail
-            g.accs = [(a.off, a) for a in accs if a.off < stride]
+            g.accs = [(a.off, a) for a in accs if a.off < stride and (not vsuf or a.off + (a.width or 1) <= stride)]
             g.count = len(ts)
             g.fields = DS.layout(g, self, None, 0, offs=[self.off(t) for t in ts])
-            cont = self.kind_name(root)
+            cont = self.kind_name(root) + vsuf
             g.label = cont
             kind, names = DN.lookup(cont, stride)
             g.macro = self.uniq(kind or ("REC_" + cont))
@@ -1545,9 +1702,9 @@ class Gen:
             return self._lmemo[fld]
         self._lmemo[fld] = set()
         K, o = fld[1], fld[2]
-        out = set()
+        out = set(getattr(self, "extra_locs", {}).get((K, o), ()))
         if K[0] == "abs":
-            out = {K[1] + o}
+            out |= {K[1] + o}
         elif K[0] == "rec":
             b, st = K[1], K[2]
             it = self._item_of(b) if self.in_data(b) else None
@@ -1561,13 +1718,15 @@ class Gen:
                 out = {it.start + 4 * i + o for i in range(it.size // 4)}
             else:
                 out = {b + o}
-        elif K[0] == "ptr" and K[1][0] == "fld" and depth < 4:
+        elif K[0] == "ptr" and K[1][0] in ("fld", "tgt") and depth < 4:
             out = {t + o for t in self.field_targets(K[1], depth + 1)}
         self._lmemo[fld] = out
         return out
 
     def field_targets(self, fld, depth=0):
         """The data addresses the pointer field `fld` holds."""
+        if fld[0] == "tgt":
+            return {t for t in fld[1] if self.in_data(t)}
         if fld not in self._tmemo:
             ts = set()
             for L in self.field_locs(fld, depth):
@@ -1580,6 +1739,9 @@ class Gen:
 
     def kind_name(self, fld):
         """A name for what the field fld points at: its container's label and the field."""
+        if fld[0] == "tgt":
+            nm = getattr(self, "_tgt_names", {}).get(fld)
+            return nm or f"data_{min(fld[1]):08X}_Selected"
         K, o = fld[1], fld[2]
         if K[0] == "abs":
             it = self.item_containing(K[1] + o)
@@ -1679,7 +1841,7 @@ class Gen:
             k = acc.key
             if k[0] == "abs":
                 ts = {k[1]}
-            elif k[0] == "ptr" and k[1][0] == "fld" and acc.off == 0:
+            elif k[0] == "ptr" and k[1][0] in ("fld", "tgt") and acc.off == 0:
                 ts = self.field_targets(k[1])
             else:
                 continue
@@ -2438,6 +2600,8 @@ class Gen:
             a = self.addr_of(o)
             n = 0
             while o + 8 * (n + 1) <= DATA_END and self.free(self.addr_of(o + 8 * n), 8):
+                if P.get("header_funcs") and n and any(self.addr_of(o + 8 * n + k) in self.fixed for k in range(0, 8, 4)):
+                    break       # (the plug-in) a curated name inside: not one table across it
                 p = m.u32(self.addr_of(o + 8 * n))
                 s = m.cstr(p) if p and self.in_data(p) else None
                 if not s or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{1,40}", s):
@@ -2521,6 +2685,202 @@ class Gen:
                     a = self.addr_of(o)
                     self.str_item(a, "Str_" + (sanitize(bs[:z].decode()) or "text"), "text")
             o = e
+
+    def sysex_strings(self):
+        """(KN7000 program builds) MIDI system-exclusive messages a typed pointer points at:
+        0xF0, data bytes below 0x80, 0xF7 (the MIDI framing; 0x50 after 0xF0 is Matsushita's
+        manufacturer id), as one `.byte` row each.  They are the templates the switch records
+        of func_484C01F1 (and others) point at with their +8 / +12 fields [INFERENCE: what sends
+        them was not traced; the framing and the pointers are the evidence]."""
+        self.build_index()
+        n = 0
+        for a in sorted(self.refs):
+            if not self.in_data(a):
+                continue
+            o = self.off(a)
+            if self.rom[o] != 0xF0 or self.claimed[o]:
+                continue
+            e = o + 1
+            while e < DATA_END and e - o < 128 and self.rom[e] < 0x80 and not self.claimed[e]:
+                e += 1
+            if e >= DATA_END or self.rom[e] != 0xF7 or self.claimed[e] or e - o < 2:
+                continue
+            bs = self.rom[o:e + 1]
+            man = " (Matsushita)" if bs[1] == 0x50 else ""
+            self.add(a, len(bs), self.name_at(a, f"SysEx_{a:08X}"), "sysex",
+                     lambda g, it, bs=bs, man=man: [f"{it.label}:\t.byte\t" + ", ".join(f"0x{c:02X}" for c in bs)
+                                                    + f"\t# MIDI SysEx{man}"])
+            n += 1
+        print(f"gen_data_s: {n} SysEx messages")
+
+    def copied_blocks(self):
+        """(KN7000 program builds) a data address the code passes to memcpy / memcmp / strncmp /
+        strncpy with a constant length: a block of that many bytes, as u8 rows whose header names
+        the copy (tools/data_readers.py: the call's a0 / a1 and its d0)."""
+        self.build_index()
+        found = collections.defaultdict(set)
+        for acc in self.dr.accesses:
+            if not acc.rw.startswith("arg a") or not acc.extra:
+                continue
+            fn, c = acc.extra[0], acc.extra[1]
+            if fn not in ("memcpy", "memcmp", "strncmp", "strncpy", "memmove") or not c.get("d0"):
+                continue
+            k = acc.key
+            ts = {k[1]} if k[0] == "abs" else set(self.field_targets(k[1])) if k[0] == "ptr" and \
+                k[1][0] == "tgt" and acc.off == 0 else set()
+            for t in ts:
+                found[t].add((c["d0"], fn, re.sub(r"_entry$", "", acc.func or "?"), acc.cpu or 0))
+        n = 0
+        for a in sorted(found):
+            uses = sorted(found[a], key=lambda u: (u[3], u[2]))
+            size = min(u[0] for u in uses)
+            if not 0 < size <= 4096 or not self.in_data(a) or not self.free(a, size):
+                continue
+            o = self.off(a)
+            vals = list(self.rom[o:o + size])
+            cite = "; ".join(f"{u[2]} 0x{u[3]:08X}: {u[1]}(.., {u[0]})" for u in uses[:3])
+            self.add(a, size, self.name_at(a, f"{uses[0][2]}_Block"), "copied block",
+                     lambda g, it, vals=vals, cite=cite: [f"{it.label}:\t# {len(vals)} bytes, copied whole by {cite}"]
+                     + [f"\ttab_u8\t" + ", ".join(str(v) for v in vals[i:i + 16]) + f"\t# [{i}]"
+                        for i in range(0, len(vals), 16)])
+            n += 1
+        print(f"gen_data_s: {n} copied blocks")
+
+    def pointer_runs(self):
+        """(KN7000 program builds) aligned runs of >= 3 words no item holds, each 0 or an address of
+        this data region (at least two of them not 0): pointer arrays, written `.long Label`.  What
+        they point at is labelled (and typed by the passes after this one where it parses: text,
+        SysEx).  [INFERENCE: typed by value; the run's reader was not traced: an array the code
+        reaches from a pointer it computes, e.g. a record's tail past the fields it reads]."""
+        self.build_index()
+        m, n, o = self.m, 0, R1_END + (-R1_END % 4)
+        while o + 12 <= DATA_END:
+            e, nz = o, 0
+            while e + 4 <= DATA_END and not any(self.claimed[e:e + 4]):
+                v = int.from_bytes(self.rom[e:e + 4], "little")
+                if v and not self.in_data(v):
+                    break
+                nz += 1 if v else 0
+                e += 4
+            if e - o >= 12 and nz >= 2:
+                vals = [int.from_bytes(self.rom[k:k + 4], "little") for k in range(o, e, 4)]
+                while vals and vals[-1] == 0 and len(vals) > 3:
+                    vals.pop()           # trailing zeros: fill, or the next item's first word
+                e = o + 4 * len(vals)
+                for v in vals:
+                    if v:
+                        self.refs.add(v)
+                a = self.addr_of(o)
+                self.add(a, e - o, self.name_at(a, f"ptrs_{a:08X}"), "pointer run",
+                         lambda g, it, vals=vals: [f"{it.label}:\t# {len(vals)} pointers, typed by value"
+                                                   " (every word 0 or an address of this region); reader not traced"]
+                         + [f"\t.long\t{g.ref(v)}" for v in vals])
+                n += 1
+                o = e
+            else:
+                o = max(e, o + 4) if e > o else o + 4
+        print(f"gen_data_s: {n} pointer runs")
+        # what they point at: text first (the passes after this one take what is left)
+        for a in sorted(self.refs):
+            if self.in_data(a) and self.free(a, 1):
+                o = self.off(a)
+                z = self.rom.find(b"\0", o, min(DATA_END, o + 256))
+                if z > o + 1 and is_text(self.rom[o:z]) and self.free(a, z - o + 1) and not self.pointerish(o, z):
+                    self.str_item(a, "Str_" + (sanitize(self.rom[o:z].decode("latin-1"), 40) or "text"), "text")
+
+    def residue(self):
+        """(profiles with `residue`: the SP7001 plug-in) the bytes no other pass typed, piece by
+        piece: an aligned word that is an address (of this image, its code, its RAM image or a
+        name outside) as `.long` by name; a NUL-terminated text as `.asciz` (an empty one when
+        something points at its NUL); in the initialised-RAM image an aligned word as `.long`, the
+        initial value of the variable a widget field or the code names [INFERENCE: read as a
+        32-bit word, as the field that points at it is a 32-bit `str_adr` / `extension` / `page`
+        pointer]; fill as `.space` / `.align`; whatever is left as a `.byte` row."""
+        self.build_index()
+        refs = {self.off(r) for r in self.refs if self.in_data(r)} | {self.off(a) for a in self.label_at
+                                                                      if self.in_data(a)}
+        runs, o = [], R1_END
+        while o < DATA_END:
+            if self.claimed[o]:
+                o += 1
+                continue
+            e = o
+            while e < DATA_END and not self.claimed[e]:
+                e += 1
+            runs.append((o, e))
+            o = e
+        # what the runs' own pointer words point at is named first (a name table's last entry
+        # points at the empty string that ends it)
+        for o, e in runs:
+            for p in range(o + (-o % 4), e - 3, 4):
+                v = int.from_bytes(self.rom[p:p + 4], "little")
+                if self.in_data(v):
+                    refs.add(self.off(v))
+                    self.refs.add(v)
+        for o, e in runs:
+            self._residue_run(o, e, refs)
+
+    def _residue_run(self, o, e, refs):
+        rom, p = self.rom, o
+        ram = lambda q: RAMINIT_OFF <= q < RAMINIT_END      # noqa: E731
+
+        def put(q, n, kind, lines, base):
+            a = self.addr_of(q)
+            lab = self.name_at(a, base) if q in refs else None
+            self.add(a, n, lab, kind, lambda g, it, lines=lines: (
+                [f"{it.label}:"] if it.label else []) + [x(g) if callable(x) else x for x in lines])
+        while p < e:
+            if p % 4 == 0 and p + 4 <= e:
+                v = int.from_bytes(rom[p:p + 4], "little")
+                if self.is_addr(v) or (v in (0, 0xFFFFFFFF) and ram(p)):
+                    put(p, 4, "pointer", [lambda g, v=v: f"\t.long\t{g.ref(v)}" if v != 0xFFFFFFFF else
+                                          "\t.long\t0xFFFFFFFF"], f"ptr_{self.addr_of(p):08X}")
+                    p += 4
+                    continue
+            z = rom.find(b"\0", p, e)
+            if z >= 0 and (z - p >= 3 or (z > p and p in refs)) and all(0x20 <= c < 0x7F for c in rom[p:z]):
+                self.str_item(self.addr_of(p), "Str_" + (sanitize(rom[p:z].decode()) or "text"), "text")
+                p = z + 1
+                continue
+            if rom[p] == 0 and p in refs and not ram(p):
+                self.str_item(self.addr_of(p), "Str_empty", "text")
+                p += 1
+                continue
+            if rom[p] == 0 and p % 4 and set(rom[p + 1:min(e, p + 4 - p % 4)]) <= {0xFF} and p not in refs:
+                n = min(e, p + 4 - p % 4) - p
+                put(p, n, "pad", ["\t.byte\t0\t# a NUL nothing names (an empty string), then the pad"]
+                    + (["\t.align\t4, 0xFF"] if n > 1 else []), None)
+                p += n
+                continue
+            if rom[p] == 0xFF and p % 4 and ram(p) and set(rom[p:min(e, p + 4 - p % 4)]) == {0xFF}:
+                p = min(e, p + 4 - p % 4)       # the pad after a string: .align in the gap lines
+                continue
+            if rom[p] in (0x00, 0xFF) and not ram(p) and p not in refs:
+                q = p
+                while q < e and rom[q] == rom[p] and (q == p or q not in refs):
+                    q += 1
+                if q - p >= 4 or q % 4 == 0 or q == e:
+                    put(p, q - p, "fill", [f"\t.space\t{q - p}, 0x{rom[p]:02X}"], None)
+                    p = q
+                    continue
+            if p % 4 == 0 and p + 4 <= e:
+                v = int.from_bytes(rom[p:p + 4], "little")
+                bss = P.get("bss")
+                if bss and bss[0] <= v < bss[0] + bss[1]:
+                    put(p, 4, "pointer", [f"\t.long\t{bss[2]}+0x{v - bss[0]:X}\t# a pointer into the cleared work RAM"],
+                        f"ptr_{self.addr_of(p):08X}")
+                    p += 4
+                    continue
+                put(p, 4, "word", [f"\t.long\t0x{v:08X}" + ("\t# initial value" if ram(p) else "")],
+                    f"word_{self.addr_of(p):08X}")
+                p += 4
+                continue
+            q = p + 1
+            while q < e and q % 4 and q not in refs:
+                q += 1
+            put(p, q - p, "bytes", ["\t.byte\t" + ", ".join(f"0x{c:02X}" for c in rom[p:q])
+                                    + "\t# no reader traced"], f"bytes_{self.addr_of(p):08X}")
+            p = q
 
     def pointerish(self, o, e):
         """True when at least half the aligned words of file bytes o..e are
@@ -2667,6 +3027,10 @@ class Gen:
             if o == DATA_END:
                 break
             want = mnbase_for(o)
+            if want != cur_base and want != BASE and P.get("raminit_label"):
+                # the image's flash address, the copy loop's source (a label before the switch)
+                body += ["", f"{P['raminit_label']}:\t# the initialised-RAM image's flash copy: {RAMINIT_LEN}"
+                             f" bytes the start-up code copies to 0x{RAMINIT_RAM:08X}"]
             if want != cur_base:
                 body += ["", f".mnbase 0x{want:08X}" + ("   # the initialised-RAM image: labels are the RAM"
                                                         " addresses ResetEntry copies it to"
@@ -2714,6 +3078,8 @@ class Gen:
             f'.include "{outdir}/rhythm_macros.inc"',
             f'.include "{outdir}/gui_ids.inc"',
             f'.include "{outdir}/gui_classes.inc"',
+            *([f"# the work RAM no initialised-RAM image covers (its code clears it): its words are named"
+               f" from here", f".equ {P['bss'][2]}, 0x{P['bss'][0]:08X}"] if P.get("bss") else []),
             "",
             f".org 0x{R1_END:06X}"]
         for n in range(len(parts)):
@@ -2729,7 +3095,10 @@ class Gen:
         sym = ["; Data-region labels of program build " + PROFILE + ", GENERATED by tools/gen_data_s.py:",
                "; cpu_addr  name  size (bytes of the typed item it starts; 0 = a label in raw bytes)"]
         sizes = {it.start: it.size for it in self.items.values()}
-        for a, n in sorted(self.label_at.items()):
+        lab = dict(self.label_at)
+        if P.get("raminit_label"):
+            lab[RAMINIT_ROM] = P["raminit_label"]
+        for a, n in sorted(lab.items()):
             sym.append(f"0x{a:08X}  {n}  {sizes.get(a, 0)}")
         self.write(os.path.join(outdir, "labels.sym"), sym)
         if P.get("functions_sym"):
@@ -2852,6 +3221,8 @@ class Gen:
                     rd.add(self.off(k[1]))
                 elif k[0] == "rec" and self.in_data(k[1]):
                     rd.add(self.off(k[1] + x.off))
+                elif k[0] == "ptr" and k[1][0] == "tgt":
+                    rd.update(self.off(t + x.off) for t in k[1][1] if self.in_data(t + x.off))
             self._gap_reads = sorted(rd)
             self._gap_refs = sorted(self.off(r) for r in self.refs if self.in_data(r))
         i = bisect.bisect_left(self._gap_reads, a)
@@ -3061,6 +3432,9 @@ class Gen:
             self.bitmaps()
         self.code_refs()
         if P.get("structs"):
+            if P.get("readers_ext"):
+                self.support_classes()
+                self.resource_trie()
             # reader-typed struct arrays (tools/data_structs.py) before the pointer and string guesses
             self.hash_tables()
             self.name_value_tables()
@@ -3074,6 +3448,9 @@ class Gen:
             self.message_tables()
             self.drawn_bitmaps()
             self.ptr_records()
+            if P.get("readers_ext"):
+                self.sysex_strings()
+                self.copied_blocks()
             self.text_runs()
             self.doubles()
         else:
@@ -3087,8 +3464,12 @@ class Gen:
         self.reader_tables()
         if P.get("structs"):
             self.variables()
+            if P.get("readers_ext"):
+                self.pointer_runs()
         self.short_strings()
         self.zlib_kinds()
+        if P.get("residue"):
+            self.residue()
         self.build_index()
         self.gaps()
         n = self.emit(outdir)
