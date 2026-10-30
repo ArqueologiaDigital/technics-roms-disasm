@@ -63,7 +63,7 @@ HDAE5000_StrLen:
 	inc 8, xsp			; clean up 8 bytes
 	or xhl, xhl			; test result
 	jr nz, .Ldbv_ok
-	ldw hl, 0xffff			; return -1
+	ldw hl, 0xFFFF			; return -1
 	jr t, .Ldbv_done
 .Ldbv_ok:
 	sub xhl, xiz			; HL = length (offset from base)

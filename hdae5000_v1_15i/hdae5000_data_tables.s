@@ -974,7 +974,39 @@ HDAE5000_TextPtrs_Chr21_to_Chr7D:	; 32 x .long -> string
 	.long	HDAE5000_Str_Chr5D
 	.long	HDAE5000_Str_Chr7B
 	.long	HDAE5000_Str_Chr7D
-	.asciz "b\031."
+HDAE5000_Str_ChrE4A82C:
+	; only in v1.15i
+	.asciz "\344\250,"
+HDAE5000_Str_ChrE0A82C:
+	; only in v1.15i
+	.asciz "\340\250,"
+HDAE5000_Str_ChrDEA82C:
+	; only in v1.15i
+	.asciz "\336\250,"
+HDAE5000_Str_ChrDCA82C:
+	; only in v1.15i
+	.asciz "\334\250,"
+HDAE5000_Str_ChrDAA82C:
+	; only in v1.15i
+	.asciz "\332\250,"
+HDAE5000_Str_ChrD8A82C:
+	; only in v1.15i
+	.asciz "\330\250,"
+HDAE5000_Str_ChrD6A82C:
+	; only in v1.15i
+	.asciz "\326\250,"
+HDAE5000_Str_ChrD4A82C:
+	; only in v1.15i
+	.asciz "\324\250,"
+HDAE5000_Str_ChrD2A82C:
+	; only in v1.15i
+	.asciz "\322\250,"
+HDAE5000_Str_ChrD0A82C:
+	; only in v1.15i
+	.asciz "\320\250,"
+HDAE5000_Str_ChrCEA82C:
+	; only in v1.15i
+	.asciz "\316\250,"
 	.zero 2
 HDAE5000_Str_Chr7D:
 	; pointed at by entry 31 of HDAE5000_TextPtrs_Chr21_to_Chr7D, a table read by AcHddNamingWindowProc
@@ -3861,7 +3893,7 @@ HDAE5000_Fls_IsBlankName_Str_Blank16:	.asciz "                "
 HDAE5000_FlsItem_SongRecord_Str_Blank26:	.asciz "                          "
 	.byte 0x00
 ; HDAE5000_PartSignatureTable: Song-part file signature table, 9 x 8-byte records {u32 signature string; u16 offset in
-;   file; u16 compare length} indexed by part (LSW, PMT, SQT, CMP, TM, MSP, RCM, MD, TLX); this label is record 0 =
+;   file; u16 compare length} indexed by part (LSW, PMT, SQT, CMP, TM, MSP, RCM, MD; v2.x adds TLX); this label is record 0 =
 ;   the string-pointer column. Basis: HDAE5000_CheckFileSignature reads (base + part*8) and passes it to
 ;   HDAE5000_StrNCmp.
 HDAE5000_PartSignatureTable:		.long	HDAE5000_PartSig_LSW
@@ -3886,13 +3918,9 @@ HDAE5000_PartSignatureTable_Length:	.short	2
 	.short	0, 3
 	.long	HDAE5000_PartSig_MD
 	.short	0, 2
-	.long	HDAE5000_PartSig_TLX
-	.short	0, 4
 ; The signature strings the table points at (offset and compare length in the table): CMP, MSP and RCM files start
 ;   with 'H', 0, 'K' (3 bytes); PMT and MD files with "HK", LSW files have "HK" at offset 4; SQT files the bytes 01 08
 ;   at offset 5; TM files start with "KN5000 SOUND RAM" (16 bytes), TLX files with "TLhd".
-HDAE5000_PartSig_TLX:	.asciz "TLhd"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_PartSig_MD:	.asciz "HK"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_PartSig_RCM:	.asciz "H"

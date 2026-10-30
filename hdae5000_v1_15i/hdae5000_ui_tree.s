@@ -289,7 +289,7 @@
 		IvHddNaming	HDD_FILE_NAMING_IvHddNaming, x=0, y=0, w=32, h=32, flag=VF_Const|VF_InvisibleBox, func=NAKA_APFUNC_HDDNamingCheck
 		AcFuncEditSw	HDD_FILE_NAMING_AcFuncEditSw_3, x=8, y=118, w=31, h=18, color=CL_Silver, editsw=ES_Left3, style=SS_Special, func=NAKA_APFUNC_HDDNamingCheck
 		ui_sub
-			Label	HDD_FILE_NAMING_AcFuncEditSw_3_LST, x=9, y=119, w=28, h=19, font=idCHARA1, fontcolor=CL_Red, str="LST"
+			Label	HDD_FILE_NAMING_AcFuncEditSw_3_LST, x=9, y=119, w=20, h=19, font=idCHARA1, fontcolor=CL_Red, str="LST"
 		ui_endsub
 	ui_endsub
 

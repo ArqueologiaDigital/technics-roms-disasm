@@ -2530,7 +2530,7 @@ HDAE5000_PcLink_ShowStatus:
 	ld_sril xhl, (xwa + RootFn_SendEvent)
 	ld xwa, HDAE5000_OBJ_PP_STATUS
 	ld xbc, EVT_PARA_DRAW
-	ld xde, 0xffffffff
+	ld xde, 0xFFFFFFFF
 	call (xhl)
 	pop xiz
 	ret

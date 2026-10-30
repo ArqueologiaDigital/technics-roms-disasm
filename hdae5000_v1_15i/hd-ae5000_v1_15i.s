@@ -692,7 +692,7 @@ HDAE5000_Handler_Registration:
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld XWA, (xwa + WS_RootFnTable)
 	ld XHL, (xwa + RootFn_RegisterTitle)
-	ld xwa, 0x7f	; title number
+	ld xwa, 0x7F	; title number
 	ld xbc, NAKA_MAINFUNC_HDAETitleFunc	; entry 0 of MainFunction table 0x14A
 	ld xde, HDAE5000_OBJ_IV_HDDMENU	; the title's view object
 	call (xhl)
@@ -1895,7 +1895,7 @@ HDAE5000_SelectListProc_Skip18:
 	ld	xwa, xiz
 	inc	7, xwa
 	cp	xwa, (xsp+96)
-	jr	nz, HDAE5000_SelectListProc_Skip19
+	jr	nz, HDAE5000_SelectListProc_Skip20
 	ld xwa, (xsp + 0x04)
 	ld xwa, (xwa + 0x2e)
 	ld	de, (xwa)
@@ -1906,13 +1906,13 @@ HDAE5000_SelectListProc_Skip18:
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld	xhl, (xbc + RootFn_MainFuncCall)
 	ld	xbc, 0x01ea000b
+HDAE5000_SelectListProc_Skip19:
 	call	(xhl)
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_SelectListProc_Epilogue
-HDAE5000_SelectListProc_Skip19:
+HDAE5000_SelectListProc_Skip20:
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_SelectListProc_Epilogue
-HDAE5000_SelectListProc_Skip20:
 HDAE5000_SelectListProc_Skip21:
 	ld xwa, (xsp + 0x68)
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
@@ -2196,7 +2196,7 @@ HDAE5000_AcHddNamingWindowProc_Join3:
 	add	xbc, xwa
 	ld xwa, (xbc)
 	ld	(HDAE5000_RAM_NamingFillCharPtr), xwa
-	cpw	(0x22a032:24), 0
+	cpw	(0x22A032:24), 0
 	jr	z, HDAE5000_AcHddNamingWindowProc_Skip
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -2530,7 +2530,7 @@ HDAE5000_AcHddNamingWindowProc_Next:
 	add	xbc, xwa
 	cp	iz, (xbc)
 	jrl	ule, HDAE5000_AcHddNamingWindowProc_Loop2
-	ld	wa, (0x22a02a:24)
+	ld	wa, (0x22A02A:24)
 	ld	(0x22a02c), wa
 HDAE5000_AcHddNamingWindowProc_Join9:
 	ld	xhl, 0:i3
@@ -3278,7 +3278,7 @@ HDAE5000_AcHddNamingWindowProc_OnSetCursor:
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	0, (xbc+wa)
 	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip
-	ldw	(0x22a02a:24), 0
+	ldw	(0x22A02A:24), 0
 	ld	wa, (HDAE5000_RAM_NamingCursor:24)
 	extz xwa
 	ld	xbc, HDAE5000_RAM_NamingText
@@ -3298,7 +3298,7 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip:
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	1, (xbc+wa)
 	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip2
-	ldw	(0x22a02a:24), 1
+	ldw	(0x22A02A:24), 1
 	ld	wa, (HDAE5000_RAM_NamingCursor:24)
 	extz xwa
 	ld	xbc, HDAE5000_RAM_NamingText
@@ -3318,9 +3318,9 @@ HDAE5000_AcHddNamingWindowProc_OnClear_Skip2:
 	lda xbc, (HDAE5000_CType_Table:24)
 	bit	2, (xbc+wa)
 	jr	z, HDAE5000_AcHddNamingWindowProc_OnClear_Skip3
-	cpw	(0x22a02a:24), 2
+	cpw	(0x22A02A:24), 2
 	jr	nz, HDAE5000_AcHddNamingWindowProc_OnClear_Join3
-	ldw	(0x22a02a:24), 0
+	ldw	(0x22A02A:24), 0
 HDAE5000_AcHddNamingWindowProc_OnClear_Join3:
 	ld	wa, (HDAE5000_RAM_NamingCursor:24)
 	extz xwa
