@@ -286,6 +286,19 @@ are a code range now (`--code 0x3f78b4:0x3f7a31` / `0x381514:0x381691`), decoded
 encoder does not spell that group), and the twelve `udf` instructions (the MN103002A's extension unit) are
 instructions.  [INFERENCE] on what the hash keys, the RAM words and the u16 parameters mean.
 
+Readability counters (`scripts/analysis/doc_quality_census.py --compare docs/coverage/doc-quality-2026-10-30-01.json`)
+rise on the KN6000 and KN6500 for one reason, the kernel tail made code and the hash table typed:
+
+- routines without a header +12 / +12 and placeholder names +13 / +13: `--long-table` makes each code
+  pointer of `KernelServiceHash` an entry, so the twelve service handlers func_4C3F7632 jumps to (KN6000
+  func_4C3F7693 .. func_4C3F7756; they were `func_4C3F7632_entry_L11f` ... before) are routines now, and
+  the return path the tasks `jmp` to is func_4C3F7A07;
+- `.byte` runs +3 / +1 (8 bytes): the `movm` with the `other3` group in the two dispatchers;
+- numeric operands elsewhere +15: the dispatchers' RAM and interrupt-controller addresses (0x50180CCC,
+  0x34000100, ...).
+
+Against them: numeric branch targets 28 -> 0 (`jmp 0x4c3f7a07`), numeric operands in the image 19 -> 1.
+
 The same naming of typed ranges shows the KN2400's `RamCodeTrailer` is read after all: func_4870587E reads it
 byte by byte from +3, 12 bytes a record (`kn2400/notes/data-region/README.md`, corrected).
 
