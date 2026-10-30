@@ -659,9 +659,10 @@ FUNC_DOC = {
     "KernelErrorHook2": (
         "[INFERENCE] As KernelErrorHook, from three other call sites.",
     ),
-    "KernelTimeoutHook": (
+    "KernelWaitAbortHook": (
         "[INFERENCE] An empty hook (`retf 0, 0`): 0x4C03B514 calls it with a0 = the",
-        "TCB and d0 = -0x55 (E_TMOUT) for a wait whose time ran out.",
+        "TCB and d0 = -0x55 (uITRON E_TMOUT) for a wait whose time ran out; the KN6000's",
+        "copy is also called with -0x51 (E_DLT).",
     ),
     "KernelInitHook": (
         "[INFERENCE] An empty hook (`ret 0, 0`) KernelInit calls before it starts the",
