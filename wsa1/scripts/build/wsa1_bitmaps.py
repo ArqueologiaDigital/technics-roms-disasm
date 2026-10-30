@@ -314,6 +314,15 @@ def build_manifest():
                        '(BC=3, HL=24 from DrawValueGlyph_24x24); the geometry is inherited '
                        'from the identity, not independently established'))
 
+    # The older build's copy of the first four value glyphs, OldBuild_ValueGlyph_Bitmaps at
+    # 0xF0EEE0 (288 B): byte-identical to entries 0-3 of the 0xF31EE1 array, as its source header
+    # states; nothing in this build reads it.  Added by lane media-files, 2026-10-30.
+    for i in range(4):
+        ad = 0xF0EEE0 + i * 72
+        m.append(entry(f'OldBuild_ValueGlyph_{i:02d}_{ad:06X}', 'b', ad, 3, 24,
+                       'byte-identical to entries 0-3 of the 0xF31EE1 value-glyph array (BC=3, HL=24 '
+                       'from DrawValueGlyph_24x24); unread older-build copy, geometry inherited from the identity'))
+
     # The 80x24 line drawing.  ⚠ Its geometry is the WEAKEST here: no record and no
     # code names 0xF0D5BF.  BC=10 is a boundary argument (the run must end at
     # 0xF0D6AF; the only 24-aligned start that does not split the 0x01..0x21 ramp

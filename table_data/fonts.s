@@ -114,12 +114,12 @@ FontDescriptor_Table:
 ; Glyph banks 0-5 (1bpp, column-major, chars 0x20-0xFF; offsets are into
 ; includes/icons_to_strings.bin, whose file offset 0 = ROM 0x944D78)
 ; -----------------------------------------------------------------------------
-Font0_Glyphs:	.incbin	"includes/generated/Font0_Glyphs.bin"	; 224 x 16 B (8x16)
-Font1_Glyphs:	.incbin	"includes/generated/Font1_Glyphs.bin"	; 224 x 16 B (8x16)
-Font2_Glyphs:	.incbin	"includes/generated/Font2_Glyphs.bin"	; 224 x 32 B (16x16)
-Font3_Glyphs:	.incbin	"includes/generated/Font3_Glyphs.bin"	; 224 x 8 B (6x8)
-Font4_Glyphs:	.incbin	"includes/generated/Font4_Glyphs.bin"	; 224 x 32 B (11x16)
-Font5_Glyphs:	.incbin	"includes/generated/Font5_Glyphs.bin"	; 224 variable-size glyphs, tiled per kern table
+Font0_Glyphs:	.incbin	"includes/generated/Font0_Glyphs.bin"	; 224 x 16 B (8x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font0_Glyphs.png
+Font1_Glyphs:	.incbin	"includes/generated/Font1_Glyphs.bin"	; 224 x 16 B (8x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font1_Glyphs.png
+Font2_Glyphs:	.incbin	"includes/generated/Font2_Glyphs.bin"	; 224 x 32 B (16x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font2_Glyphs.png
+Font3_Glyphs:	.incbin	"includes/generated/Font3_Glyphs.bin"	; 224 x 8 B (6x8); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font3_Glyphs.png
+Font4_Glyphs:	.incbin	"includes/generated/Font4_Glyphs.bin"	; 224 x 32 B (11x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font4_Glyphs.png
+Font5_Glyphs:	.incbin	"includes/generated/Font5_Glyphs.bin"	; 224 variable-size glyphs, tiled per kern table; census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font5_Glyphs.png
 
 ; -----------------------------------------------------------------------------
 ; Font 5 kern table: one {word char_width, word glyph_offset} pair per
@@ -357,10 +357,10 @@ Font5_KernTable:
 ; Glyph banks 6-9.  Font9's bank crosses 0x950000: chars 0xAD-0xFF occupy
 ; 0x950000-0x950A5F (see module header).
 ; -----------------------------------------------------------------------------
-Font6_Glyphs:	.incbin	"includes/generated/Font6_Glyphs.bin"	; 224 x 10 B (8x10)
-Font7_Glyphs:	.incbin	"includes/generated/Font7_Glyphs.bin"	; 224 x 16 B (8x16)
-Font8_Glyphs:	.incbin	"includes/generated/Font8_Glyphs.bin"	; 224 x 16 B (8x16)
-Font9_Glyphs:	.incbin	"includes/generated/Font9_Glyphs.bin"	; 224 x 32 B (11x16), ends 0x950A5F
+Font6_Glyphs:	.incbin	"includes/generated/Font6_Glyphs.bin"	; 224 x 10 B (8x10); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font6_Glyphs.png
+Font7_Glyphs:	.incbin	"includes/generated/Font7_Glyphs.bin"	; 224 x 16 B (8x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font7_Glyphs.png
+Font8_Glyphs:	.incbin	"includes/generated/Font8_Glyphs.bin"	; 224 x 16 B (8x16); census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font8_Glyphs.png
+Font9_Glyphs:	.incbin	"includes/generated/Font9_Glyphs.bin"	; 224 x 32 B (11x16), ends 0x950A5F; census: generated -- scripts/build/font_images.py, from table_data/images/fonts/Font9_Glyphs.png
 
 	; unused gap up to the style/preset record area at 0x951000
 	.fill 1440, 1, 0xff	; 0x950A60-0x950FFF

@@ -72,12 +72,12 @@ gui-census:
 # Every ROM range that is pixel data is committed as a PNG beside the source,
 # and the `.byte` rows are regenerated from it.  `images-check` re-derives every
 # one of those values from the committed PNG and asserts the assembly already
-# holds exactly it -- 216 images, 93,656 bytes.  See notes/FINDINGS-image-files.md.
+# holds exactly it -- 220 images, 93,944 bytes.  See notes/FINDINGS-image-files.md.
 #
-# ⚠ NOT a prerequisite of `all` ON PURPOSE, for now: a dozen lanes are editing
-#   prom_b concurrently and a reframing that moves a range out of plain `.byte`
-#   lines would hard-fail every one of their builds rather than just this check.
-#   The integrator should wire it into the gate once the push settles.
+# ⚠ NOT a prerequisite of `all` ON PURPOSE: a reframing that moves a range out of
+#   plain `.byte` lines should fail this check, not every build.  Since 2026-10-30
+#   (lane media-files) the root `make gate-wsa1` runs it, so the PNGs are the
+#   checked source of these rows (208 bitmaps, 46,440 B, and 12 font faces).
 images-check:
 	python3 scripts/build/wsa1_bitmaps.py check
 	python3 scripts/build/wsa1_fonts.py check

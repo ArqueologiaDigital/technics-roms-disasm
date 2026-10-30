@@ -592,7 +592,14 @@ baserom/kn7000_ic18_boot.bin:
 	echo "$(IC18_BOOT_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/kn7000_ic18_boot.bin: src/ic18/boot.s tools/kn7asm.py tools/mn10300_asm.py
+# the boot ROM's 8x16 font is the PNG sheet src/ic18/media/FontGlyphs8x16.png (lane media-files)
+IC18_PNGS := $(wildcard src/ic18/media/*.png)
+build/ic18_png/.stamp: $(IC18_PNGS) tools/table_png.py
+	@mkdir -p build/ic18_png
+	$(PYTHON) tools/table_png.py build --out-dir build/ic18_png --src-root src/ic18/media $(IC18_PNGS)
+	@touch $@
+
+build/kn7000_ic18_boot.bin: src/ic18/boot.s tools/kn7asm.py tools/mn10300_asm.py build/ic18_png/.stamp
 	@mkdir -p build
 	$(ASM) src/ic18/boot.s -I . -o $@
 
@@ -627,7 +634,7 @@ baserom/kn7000_ic18.rom:
 	echo "$(IC18_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/kn7000_ic18.bin: $(IC18_SRC) tools/kn7asm.py tools/mn10300_asm.py
+build/kn7000_ic18.bin: $(IC18_SRC) tools/kn7asm.py tools/mn10300_asm.py build/ic18_png/.stamp
 	@mkdir -p build
 	$(ASM) src/ic18/ic18.s -I . -o $@ --labels build/kn7000_ic18.labels
 
@@ -815,7 +822,28 @@ baserom/kn7000_wave_main.bin baserom/kn7000_wave_sub.bin: baserom/kn7000_wave_%.
 	echo "$(WAVE_$*_SHA1)  $@.tmp" | sha1sum --quiet -c
 	mv $@.tmp $@
 
-build/kn7000_wave_%.bin: src/wave/%.s src/wave/wave_format.inc tools/kn7asm.py baserom/kn7000_wave_%.bin
+# The recordings are WAV files, wav/main/ and wav/sub/ (git-ignored: dump bytes, never committed).
+# `make wave-wav` extracts any missing one from the reference stream; ../scripts/build/pcm_wav.py
+# turns them into the raw items build/wav_pcm/<tg>/<label>.pcm the sources `.incbin`, using the
+# manifests src/wave/<tg>_wav.tsv (written by tools/gen_wave_s.py).  See
+# ../notes/media-files-2026-10-30/README.md.
+PCM_WAV := $(PYTHON) ../scripts/build/pcm_wav.py
+define WAVE_WAV_RULES
+wav/$(1)/.extracted: baserom/kn7000_wave_$(1).bin src/wave/$(1)_wav.tsv ../scripts/build/pcm_wav.py
+	$$(PCM_WAV) extract --missing src/wave/$(1)_wav.tsv $$< wav/$(1)
+	@touch $$@
+build/wav_pcm/$(1).done: wav/$(1)/.extracted $$(wildcard wav/$(1)/*.wav) src/wave/$(1)_wav.tsv ../scripts/build/pcm_wav.py
+	$$(PCM_WAV) build --ref baserom/kn7000_wave_$(1).bin src/wave/$(1)_wav.tsv wav/$(1) build/wav_pcm/$(1)
+	@touch $$@
+endef
+$(foreach t,main sub,$(eval $(call WAVE_WAV_RULES,$(t))))
+
+.PHONY: wave-wav
+# re-extract the WAVs that are missing (an edited WAV is never overwritten)
+wave-wav: baserom/kn7000_wave_main.bin baserom/kn7000_wave_sub.bin
+	for t in main sub; do $(PCM_WAV) extract --missing src/wave/$${t}_wav.tsv baserom/kn7000_wave_$${t}.bin wav/$${t} && touch wav/$${t}/.extracted || exit 1; done
+
+build/kn7000_wave_%.bin: src/wave/%.s src/wave/wave_format.inc tools/kn7asm.py build/wav_pcm/%.done
 	@mkdir -p build
 	$(ASM) $< -I . -o $@
 

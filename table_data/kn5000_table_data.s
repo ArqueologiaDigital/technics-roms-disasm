@@ -370,7 +370,7 @@ Compressed_Preset_Data_LZSS:
 DemoSongPreset18:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x95, 0x00	; uncompressed size = 38144 bytes
-	.incbin "includes/demo_presets/demo_preset_18_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_18_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_18.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	; Unused space after compressed data
 	.fill 25281, 1, 0xff
@@ -689,187 +689,187 @@ Icon_175:	desc_entry	28, 28, IconPixels_175
 ; Extracted gallery: table_data/images/icons/Icon_NNN.png.
 ; DrawIcons_Impl (v10 0xFABF9B) reaches each run through the +4 pointer of
 ; its IconTable entry.
-IconPixels_000:	.incbin "includes/generated/IconPixels_000.bin"
-IconPixels_001:	.incbin "includes/generated/IconPixels_001.bin"
-IconPixels_002:	.incbin "includes/generated/IconPixels_002.bin"
-IconPixels_003:	.incbin "includes/generated/IconPixels_003.bin"
-IconPixels_004:	.incbin "includes/generated/IconPixels_004.bin"
-IconPixels_005:	.incbin "includes/generated/IconPixels_005.bin"
-IconPixels_006:	.incbin "includes/generated/IconPixels_006.bin"
-IconPixels_007:	.incbin "includes/generated/IconPixels_007.bin"
-IconPixels_008:	.incbin "includes/generated/IconPixels_008.bin"
-IconPixels_009:	.incbin "includes/generated/IconPixels_009.bin"
-IconPixels_010:	.incbin "includes/generated/IconPixels_010.bin"
-IconPixels_011:	.incbin "includes/generated/IconPixels_011.bin"
-IconPixels_012:	.incbin "includes/generated/IconPixels_012.bin"
-IconPixels_013:	.incbin "includes/generated/IconPixels_013.bin"
-IconPixels_014:	.incbin "includes/generated/IconPixels_014.bin"
-IconPixels_015:	.incbin "includes/generated/IconPixels_015.bin"
-IconPixels_016:	.incbin "includes/generated/IconPixels_016.bin"
-IconPixels_017:	.incbin "includes/generated/IconPixels_017.bin"
-IconPixels_018:	.incbin "includes/generated/IconPixels_018.bin"
-IconPixels_019:	.incbin "includes/generated/IconPixels_019.bin"
-IconPixels_020:	.incbin "includes/generated/IconPixels_020.bin"
-IconPixels_021:	.incbin "includes/generated/IconPixels_021.bin"
-IconPixels_022:	.incbin "includes/generated/IconPixels_022.bin"
-IconPixels_023:	.incbin "includes/generated/IconPixels_023.bin"
-IconPixels_024:	.incbin "includes/generated/IconPixels_024.bin"
-IconPixels_025:	.incbin "includes/generated/IconPixels_025.bin"
-IconPixels_026:	.incbin "includes/generated/IconPixels_026.bin"
-IconPixels_027:	.incbin "includes/generated/IconPixels_027.bin"
-IconPixels_028:	.incbin "includes/generated/IconPixels_028.bin"
-IconPixels_029:	.incbin "includes/generated/IconPixels_029.bin"
-IconPixels_030:	.incbin "includes/generated/IconPixels_030.bin"
-IconPixels_031:	.incbin "includes/generated/IconPixels_031.bin"
-IconPixels_032:	.incbin "includes/generated/IconPixels_032.bin"
-IconPixels_033:	.incbin "includes/generated/IconPixels_033.bin"
-IconPixels_034:	.incbin "includes/generated/IconPixels_034.bin"
-IconPixels_035:	.incbin "includes/generated/IconPixels_035.bin"
-IconPixels_036:	.incbin "includes/generated/IconPixels_036.bin"
-IconPixels_037:	.incbin "includes/generated/IconPixels_037.bin"
-IconPixels_038:	.incbin "includes/generated/IconPixels_038.bin"
-IconPixels_039:	.incbin "includes/generated/IconPixels_039.bin"
-IconPixels_040:	.incbin "includes/generated/IconPixels_040.bin"
-IconPixels_041:	.incbin "includes/generated/IconPixels_041.bin"
-IconPixels_042:	.incbin "includes/generated/IconPixels_042.bin"
-IconPixels_043:	.incbin "includes/generated/IconPixels_043.bin"
-IconPixels_044:	.incbin "includes/generated/IconPixels_044.bin"
-IconPixels_045:	.incbin "includes/generated/IconPixels_045.bin"
-IconPixels_046:	.incbin "includes/generated/IconPixels_046.bin"
-IconPixels_047:	.incbin "includes/generated/IconPixels_047.bin"
-IconPixels_048:	.incbin "includes/generated/IconPixels_048.bin"
-IconPixels_049:	.incbin "includes/generated/IconPixels_049.bin"
-IconPixels_050:	.incbin "includes/generated/IconPixels_050.bin"
-IconPixels_051:	.incbin "includes/generated/IconPixels_051.bin"
-IconPixels_052:	.incbin "includes/generated/IconPixels_052.bin"
-IconPixels_053:	.incbin "includes/generated/IconPixels_053.bin"
-IconPixels_054:	.incbin "includes/generated/IconPixels_054.bin"
-IconPixels_055:	.incbin "includes/generated/IconPixels_055.bin"
-IconPixels_056:	.incbin "includes/generated/IconPixels_056.bin"
-IconPixels_057:	.incbin "includes/generated/IconPixels_057.bin"
-IconPixels_058:	.incbin "includes/generated/IconPixels_058.bin"
-IconPixels_059:	.incbin "includes/generated/IconPixels_059.bin"
-IconPixels_060:	.incbin "includes/generated/IconPixels_060.bin"
-IconPixels_061:	.incbin "includes/generated/IconPixels_061.bin"
-IconPixels_062:	.incbin "includes/generated/IconPixels_062.bin"
-IconPixels_063:	.incbin "includes/generated/IconPixels_063.bin"
-IconPixels_064:	.incbin "includes/generated/IconPixels_064.bin"
-IconPixels_065:	.incbin "includes/generated/IconPixels_065.bin"
-IconPixels_066:	.incbin "includes/generated/IconPixels_066.bin"
-IconPixels_067:	.incbin "includes/generated/IconPixels_067.bin"
-IconPixels_068:	.incbin "includes/generated/IconPixels_068.bin"
-IconPixels_069:	.incbin "includes/generated/IconPixels_069.bin"
-IconPixels_070:	.incbin "includes/generated/IconPixels_070.bin"
-IconPixels_071:	.incbin "includes/generated/IconPixels_071.bin"
-IconPixels_072:	.incbin "includes/generated/IconPixels_072.bin"
-IconPixels_073:	.incbin "includes/generated/IconPixels_073.bin"
-IconPixels_074:	.incbin "includes/generated/IconPixels_074.bin"
-IconPixels_075:	.incbin "includes/generated/IconPixels_075.bin"
-IconPixels_076:	.incbin "includes/generated/IconPixels_076.bin"
-IconPixels_077:	.incbin "includes/generated/IconPixels_077.bin"
-IconPixels_078:	.incbin "includes/generated/IconPixels_078.bin"
-IconPixels_079:	.incbin "includes/generated/IconPixels_079.bin"
-IconPixels_080:	.incbin "includes/generated/IconPixels_080.bin"
-IconPixels_081:	.incbin "includes/generated/IconPixels_081.bin"
-IconPixels_082:	.incbin "includes/generated/IconPixels_082.bin"
-IconPixels_083:	.incbin "includes/generated/IconPixels_083.bin"
-IconPixels_084:	.incbin "includes/generated/IconPixels_084.bin"
-IconPixels_085:	.incbin "includes/generated/IconPixels_085.bin"
-IconPixels_086:	.incbin "includes/generated/IconPixels_086.bin"
-IconPixels_087:	.incbin "includes/generated/IconPixels_087.bin"
-IconPixels_088:	.incbin "includes/generated/IconPixels_088.bin"
-IconPixels_089:	.incbin "includes/generated/IconPixels_089.bin"
-IconPixels_090:	.incbin "includes/generated/IconPixels_090.bin"
-IconPixels_091:	.incbin "includes/generated/IconPixels_091.bin"
-IconPixels_092:	.incbin "includes/generated/IconPixels_092.bin"
-IconPixels_093:	.incbin "includes/generated/IconPixels_093.bin"
-IconPixels_094:	.incbin "includes/generated/IconPixels_094.bin"
-IconPixels_095:	.incbin "includes/generated/IconPixels_095.bin"
-IconPixels_096:	.incbin "includes/generated/IconPixels_096.bin"
-IconPixels_097:	.incbin "includes/generated/IconPixels_097.bin"
-IconPixels_098:	.incbin "includes/generated/IconPixels_098.bin"
-IconPixels_099:	.incbin "includes/generated/IconPixels_099.bin"
-IconPixels_100:	.incbin "includes/generated/IconPixels_100.bin"
-IconPixels_101:	.incbin "includes/generated/IconPixels_101.bin"
-IconPixels_102:	.incbin "includes/generated/IconPixels_102.bin"
-IconPixels_103:	.incbin "includes/generated/IconPixels_103.bin"
-IconPixels_104:	.incbin "includes/generated/IconPixels_104.bin"
-IconPixels_105:	.incbin "includes/generated/IconPixels_105.bin"
-IconPixels_106:	.incbin "includes/generated/IconPixels_106.bin"
-IconPixels_107:	.incbin "includes/generated/IconPixels_107.bin"
-IconPixels_108:	.incbin "includes/generated/IconPixels_108.bin"
-IconPixels_109:	.incbin "includes/generated/IconPixels_109.bin"
-IconPixels_110:	.incbin "includes/generated/IconPixels_110.bin"
-IconPixels_111:	.incbin "includes/generated/IconPixels_111.bin"
-IconPixels_112:	.incbin "includes/generated/IconPixels_112.bin"
-IconPixels_113:	.incbin "includes/generated/IconPixels_113.bin"
-IconPixels_114:	.incbin "includes/generated/IconPixels_114.bin"
-IconPixels_115:	.incbin "includes/generated/IconPixels_115.bin"
-IconPixels_116:	.incbin "includes/generated/IconPixels_116.bin"
-IconPixels_117:	.incbin "includes/generated/IconPixels_117.bin"
-IconPixels_118:	.incbin "includes/generated/IconPixels_118.bin"
-IconPixels_119:	.incbin "includes/generated/IconPixels_119.bin"
-IconPixels_120:	.incbin "includes/generated/IconPixels_120.bin"
-IconPixels_121:	.incbin "includes/generated/IconPixels_121.bin"
-IconPixels_122:	.incbin "includes/generated/IconPixels_122.bin"
-IconPixels_123:	.incbin "includes/generated/IconPixels_123.bin"
-IconPixels_124:	.incbin "includes/generated/IconPixels_124.bin"
-IconPixels_125:	.incbin "includes/generated/IconPixels_125.bin"
-IconPixels_126:	.incbin "includes/generated/IconPixels_126.bin"
-IconPixels_127:	.incbin "includes/generated/IconPixels_127.bin"
-IconPixels_128:	.incbin "includes/generated/IconPixels_128.bin"
-IconPixels_129:	.incbin "includes/generated/IconPixels_129.bin"
-IconPixels_130:	.incbin "includes/generated/IconPixels_130.bin"
-IconPixels_131:	.incbin "includes/generated/IconPixels_131.bin"
-IconPixels_132:	.incbin "includes/generated/IconPixels_132.bin"
-IconPixels_133:	.incbin "includes/generated/IconPixels_133.bin"
-IconPixels_134:	.incbin "includes/generated/IconPixels_134.bin"
-IconPixels_135:	.incbin "includes/generated/IconPixels_135.bin"
-IconPixels_136:	.incbin "includes/generated/IconPixels_136.bin"
-IconPixels_137:	.incbin "includes/generated/IconPixels_137.bin"
-IconPixels_138:	.incbin "includes/generated/IconPixels_138.bin"
-IconPixels_139:	.incbin "includes/generated/IconPixels_139.bin"
-IconPixels_140:	.incbin "includes/generated/IconPixels_140.bin"
-IconPixels_141:	.incbin "includes/generated/IconPixels_141.bin"
-IconPixels_142:	.incbin "includes/generated/IconPixels_142.bin"
-IconPixels_143:	.incbin "includes/generated/IconPixels_143.bin"
-IconPixels_144:	.incbin "includes/generated/IconPixels_144.bin"
-IconPixels_145:	.incbin "includes/generated/IconPixels_145.bin"
-IconPixels_146:	.incbin "includes/generated/IconPixels_146.bin"
-IconPixels_147:	.incbin "includes/generated/IconPixels_147.bin"
-IconPixels_148:	.incbin "includes/generated/IconPixels_148.bin"
-IconPixels_149:	.incbin "includes/generated/IconPixels_149.bin"
-IconPixels_150:	.incbin "includes/generated/IconPixels_150.bin"
-IconPixels_151:	.incbin "includes/generated/IconPixels_151.bin"
-IconPixels_152:	.incbin "includes/generated/IconPixels_152.bin"
-IconPixels_153:	.incbin "includes/generated/IconPixels_153.bin"
-IconPixels_154:	.incbin "includes/generated/IconPixels_154.bin"
-IconPixels_155:	.incbin "includes/generated/IconPixels_155.bin"
-IconPixels_156:	.incbin "includes/generated/IconPixels_156.bin"
-IconPixels_157:	.incbin "includes/generated/IconPixels_157.bin"
-IconPixels_158:	.incbin "includes/generated/IconPixels_158.bin"
-IconPixels_159:	.incbin "includes/generated/IconPixels_159.bin"
-IconPixels_160:	.incbin "includes/generated/IconPixels_160.bin"
-IconPixels_161:	.incbin "includes/generated/IconPixels_161.bin"
-IconPixels_162:	.incbin "includes/generated/IconPixels_162.bin"
-IconPixels_163:	.incbin "includes/generated/IconPixels_163.bin"
-IconPixels_164:	.incbin "includes/generated/IconPixels_164.bin"
-IconPixels_165:	.incbin "includes/generated/IconPixels_165.bin"
-IconPixels_166:	.incbin "includes/generated/IconPixels_166.bin"
-IconPixels_167:	.incbin "includes/generated/IconPixels_167.bin"
-IconPixels_168:	.incbin "includes/generated/IconPixels_168.bin"
-IconPixels_169:	.incbin "includes/generated/IconPixels_169.bin"
-IconPixels_170:	.incbin "includes/generated/IconPixels_170.bin"
-IconPixels_171:	.incbin "includes/generated/IconPixels_171.bin"
-IconPixels_172:	.incbin "includes/generated/IconPixels_172.bin"
-IconPixels_173:	.incbin "includes/generated/IconPixels_173.bin"
-IconPixels_174:	.incbin "includes/generated/IconPixels_174.bin"
-IconPixels_175:	.incbin "includes/generated/IconPixels_175.bin"
+IconPixels_000:	.incbin "includes/generated/IconPixels_000.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_000.png
+IconPixels_001:	.incbin "includes/generated/IconPixels_001.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_001.png
+IconPixels_002:	.incbin "includes/generated/IconPixels_002.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_002.png
+IconPixels_003:	.incbin "includes/generated/IconPixels_003.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_003.png
+IconPixels_004:	.incbin "includes/generated/IconPixels_004.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_004.png
+IconPixels_005:	.incbin "includes/generated/IconPixels_005.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_005.png
+IconPixels_006:	.incbin "includes/generated/IconPixels_006.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_006.png
+IconPixels_007:	.incbin "includes/generated/IconPixels_007.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_007.png
+IconPixels_008:	.incbin "includes/generated/IconPixels_008.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_008.png
+IconPixels_009:	.incbin "includes/generated/IconPixels_009.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_009.png
+IconPixels_010:	.incbin "includes/generated/IconPixels_010.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_010.png
+IconPixels_011:	.incbin "includes/generated/IconPixels_011.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_011.png
+IconPixels_012:	.incbin "includes/generated/IconPixels_012.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_012.png
+IconPixels_013:	.incbin "includes/generated/IconPixels_013.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_013.png
+IconPixels_014:	.incbin "includes/generated/IconPixels_014.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_014.png
+IconPixels_015:	.incbin "includes/generated/IconPixels_015.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_015.png
+IconPixels_016:	.incbin "includes/generated/IconPixels_016.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_016.png
+IconPixels_017:	.incbin "includes/generated/IconPixels_017.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_017.png
+IconPixels_018:	.incbin "includes/generated/IconPixels_018.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_018.png
+IconPixels_019:	.incbin "includes/generated/IconPixels_019.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_019.png
+IconPixels_020:	.incbin "includes/generated/IconPixels_020.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_020.png
+IconPixels_021:	.incbin "includes/generated/IconPixels_021.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_021.png
+IconPixels_022:	.incbin "includes/generated/IconPixels_022.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_022.png
+IconPixels_023:	.incbin "includes/generated/IconPixels_023.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_023.png
+IconPixels_024:	.incbin "includes/generated/IconPixels_024.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_024.png
+IconPixels_025:	.incbin "includes/generated/IconPixels_025.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_025.png
+IconPixels_026:	.incbin "includes/generated/IconPixels_026.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_026.png
+IconPixels_027:	.incbin "includes/generated/IconPixels_027.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_027.png
+IconPixels_028:	.incbin "includes/generated/IconPixels_028.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_028.png
+IconPixels_029:	.incbin "includes/generated/IconPixels_029.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_029.png
+IconPixels_030:	.incbin "includes/generated/IconPixels_030.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_030.png
+IconPixels_031:	.incbin "includes/generated/IconPixels_031.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_031.png
+IconPixels_032:	.incbin "includes/generated/IconPixels_032.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_032.png
+IconPixels_033:	.incbin "includes/generated/IconPixels_033.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_033.png
+IconPixels_034:	.incbin "includes/generated/IconPixels_034.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_034.png
+IconPixels_035:	.incbin "includes/generated/IconPixels_035.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_035.png
+IconPixels_036:	.incbin "includes/generated/IconPixels_036.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_036.png
+IconPixels_037:	.incbin "includes/generated/IconPixels_037.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_037.png
+IconPixels_038:	.incbin "includes/generated/IconPixels_038.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_038.png
+IconPixels_039:	.incbin "includes/generated/IconPixels_039.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_039.png
+IconPixels_040:	.incbin "includes/generated/IconPixels_040.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_040.png
+IconPixels_041:	.incbin "includes/generated/IconPixels_041.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_041.png
+IconPixels_042:	.incbin "includes/generated/IconPixels_042.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_042.png
+IconPixels_043:	.incbin "includes/generated/IconPixels_043.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_043.png
+IconPixels_044:	.incbin "includes/generated/IconPixels_044.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_044.png
+IconPixels_045:	.incbin "includes/generated/IconPixels_045.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_045.png
+IconPixels_046:	.incbin "includes/generated/IconPixels_046.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_046.png
+IconPixels_047:	.incbin "includes/generated/IconPixels_047.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_047.png
+IconPixels_048:	.incbin "includes/generated/IconPixels_048.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_048.png
+IconPixels_049:	.incbin "includes/generated/IconPixels_049.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_049.png
+IconPixels_050:	.incbin "includes/generated/IconPixels_050.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_050.png
+IconPixels_051:	.incbin "includes/generated/IconPixels_051.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_051.png
+IconPixels_052:	.incbin "includes/generated/IconPixels_052.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_052.png
+IconPixels_053:	.incbin "includes/generated/IconPixels_053.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_053.png
+IconPixels_054:	.incbin "includes/generated/IconPixels_054.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_054.png
+IconPixels_055:	.incbin "includes/generated/IconPixels_055.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_055.png
+IconPixels_056:	.incbin "includes/generated/IconPixels_056.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_056.png
+IconPixels_057:	.incbin "includes/generated/IconPixels_057.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_057.png
+IconPixels_058:	.incbin "includes/generated/IconPixels_058.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_058.png
+IconPixels_059:	.incbin "includes/generated/IconPixels_059.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_059.png
+IconPixels_060:	.incbin "includes/generated/IconPixels_060.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_060.png
+IconPixels_061:	.incbin "includes/generated/IconPixels_061.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_061.png
+IconPixels_062:	.incbin "includes/generated/IconPixels_062.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_062.png
+IconPixels_063:	.incbin "includes/generated/IconPixels_063.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_063.png
+IconPixels_064:	.incbin "includes/generated/IconPixels_064.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_064.png
+IconPixels_065:	.incbin "includes/generated/IconPixels_065.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_065.png
+IconPixels_066:	.incbin "includes/generated/IconPixels_066.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_066.png
+IconPixels_067:	.incbin "includes/generated/IconPixels_067.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_067.png
+IconPixels_068:	.incbin "includes/generated/IconPixels_068.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_068.png
+IconPixels_069:	.incbin "includes/generated/IconPixels_069.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_069.png
+IconPixels_070:	.incbin "includes/generated/IconPixels_070.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_070.png
+IconPixels_071:	.incbin "includes/generated/IconPixels_071.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_071.png
+IconPixels_072:	.incbin "includes/generated/IconPixels_072.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_072.png
+IconPixels_073:	.incbin "includes/generated/IconPixels_073.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_073.png
+IconPixels_074:	.incbin "includes/generated/IconPixels_074.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_074.png
+IconPixels_075:	.incbin "includes/generated/IconPixels_075.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_075.png
+IconPixels_076:	.incbin "includes/generated/IconPixels_076.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_076.png
+IconPixels_077:	.incbin "includes/generated/IconPixels_077.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_077.png
+IconPixels_078:	.incbin "includes/generated/IconPixels_078.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_078.png
+IconPixels_079:	.incbin "includes/generated/IconPixels_079.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_079.png
+IconPixels_080:	.incbin "includes/generated/IconPixels_080.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_080.png
+IconPixels_081:	.incbin "includes/generated/IconPixels_081.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_081.png
+IconPixels_082:	.incbin "includes/generated/IconPixels_082.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_082.png
+IconPixels_083:	.incbin "includes/generated/IconPixels_083.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_083.png
+IconPixels_084:	.incbin "includes/generated/IconPixels_084.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_084.png
+IconPixels_085:	.incbin "includes/generated/IconPixels_085.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_085.png
+IconPixels_086:	.incbin "includes/generated/IconPixels_086.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_086.png
+IconPixels_087:	.incbin "includes/generated/IconPixels_087.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_087.png
+IconPixels_088:	.incbin "includes/generated/IconPixels_088.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_088.png
+IconPixels_089:	.incbin "includes/generated/IconPixels_089.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_089.png
+IconPixels_090:	.incbin "includes/generated/IconPixels_090.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_090.png
+IconPixels_091:	.incbin "includes/generated/IconPixels_091.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_091.png
+IconPixels_092:	.incbin "includes/generated/IconPixels_092.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_092.png
+IconPixels_093:	.incbin "includes/generated/IconPixels_093.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_093.png
+IconPixels_094:	.incbin "includes/generated/IconPixels_094.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_094.png
+IconPixels_095:	.incbin "includes/generated/IconPixels_095.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_095.png
+IconPixels_096:	.incbin "includes/generated/IconPixels_096.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_096.png
+IconPixels_097:	.incbin "includes/generated/IconPixels_097.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_097.png
+IconPixels_098:	.incbin "includes/generated/IconPixels_098.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_098.png
+IconPixels_099:	.incbin "includes/generated/IconPixels_099.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_099.png
+IconPixels_100:	.incbin "includes/generated/IconPixels_100.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_100.png
+IconPixels_101:	.incbin "includes/generated/IconPixels_101.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_101.png
+IconPixels_102:	.incbin "includes/generated/IconPixels_102.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_102.png
+IconPixels_103:	.incbin "includes/generated/IconPixels_103.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_103.png
+IconPixels_104:	.incbin "includes/generated/IconPixels_104.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_104.png
+IconPixels_105:	.incbin "includes/generated/IconPixels_105.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_105.png
+IconPixels_106:	.incbin "includes/generated/IconPixels_106.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_106.png
+IconPixels_107:	.incbin "includes/generated/IconPixels_107.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_107.png
+IconPixels_108:	.incbin "includes/generated/IconPixels_108.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_108.png
+IconPixels_109:	.incbin "includes/generated/IconPixels_109.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_109.png
+IconPixels_110:	.incbin "includes/generated/IconPixels_110.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_110.png
+IconPixels_111:	.incbin "includes/generated/IconPixels_111.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_111.png
+IconPixels_112:	.incbin "includes/generated/IconPixels_112.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_112.png
+IconPixels_113:	.incbin "includes/generated/IconPixels_113.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_113.png
+IconPixels_114:	.incbin "includes/generated/IconPixels_114.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_114.png
+IconPixels_115:	.incbin "includes/generated/IconPixels_115.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_115.png
+IconPixels_116:	.incbin "includes/generated/IconPixels_116.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_116.png
+IconPixels_117:	.incbin "includes/generated/IconPixels_117.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_117.png
+IconPixels_118:	.incbin "includes/generated/IconPixels_118.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_118.png
+IconPixels_119:	.incbin "includes/generated/IconPixels_119.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_119.png
+IconPixels_120:	.incbin "includes/generated/IconPixels_120.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_120.png
+IconPixels_121:	.incbin "includes/generated/IconPixels_121.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_121.png
+IconPixels_122:	.incbin "includes/generated/IconPixels_122.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_122.png
+IconPixels_123:	.incbin "includes/generated/IconPixels_123.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_123.png
+IconPixels_124:	.incbin "includes/generated/IconPixels_124.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_124.png
+IconPixels_125:	.incbin "includes/generated/IconPixels_125.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_125.png
+IconPixels_126:	.incbin "includes/generated/IconPixels_126.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_126.png
+IconPixels_127:	.incbin "includes/generated/IconPixels_127.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_127.png
+IconPixels_128:	.incbin "includes/generated/IconPixels_128.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_128.png
+IconPixels_129:	.incbin "includes/generated/IconPixels_129.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_129.png
+IconPixels_130:	.incbin "includes/generated/IconPixels_130.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_130.png
+IconPixels_131:	.incbin "includes/generated/IconPixels_131.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_131.png
+IconPixels_132:	.incbin "includes/generated/IconPixels_132.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_132.png
+IconPixels_133:	.incbin "includes/generated/IconPixels_133.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_133.png
+IconPixels_134:	.incbin "includes/generated/IconPixels_134.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_134.png
+IconPixels_135:	.incbin "includes/generated/IconPixels_135.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_135.png
+IconPixels_136:	.incbin "includes/generated/IconPixels_136.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_136.png
+IconPixels_137:	.incbin "includes/generated/IconPixels_137.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_137.png
+IconPixels_138:	.incbin "includes/generated/IconPixels_138.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_138.png
+IconPixels_139:	.incbin "includes/generated/IconPixels_139.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_139.png
+IconPixels_140:	.incbin "includes/generated/IconPixels_140.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_140.png
+IconPixels_141:	.incbin "includes/generated/IconPixels_141.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_141.png
+IconPixels_142:	.incbin "includes/generated/IconPixels_142.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_142.png
+IconPixels_143:	.incbin "includes/generated/IconPixels_143.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_143.png
+IconPixels_144:	.incbin "includes/generated/IconPixels_144.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_144.png
+IconPixels_145:	.incbin "includes/generated/IconPixels_145.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_145.png
+IconPixels_146:	.incbin "includes/generated/IconPixels_146.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_146.png
+IconPixels_147:	.incbin "includes/generated/IconPixels_147.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_147.png
+IconPixels_148:	.incbin "includes/generated/IconPixels_148.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_148.png
+IconPixels_149:	.incbin "includes/generated/IconPixels_149.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_149.png
+IconPixels_150:	.incbin "includes/generated/IconPixels_150.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_150.png
+IconPixels_151:	.incbin "includes/generated/IconPixels_151.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_151.png
+IconPixels_152:	.incbin "includes/generated/IconPixels_152.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_152.png
+IconPixels_153:	.incbin "includes/generated/IconPixels_153.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_153.png
+IconPixels_154:	.incbin "includes/generated/IconPixels_154.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_154.png
+IconPixels_155:	.incbin "includes/generated/IconPixels_155.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_155.png
+IconPixels_156:	.incbin "includes/generated/IconPixels_156.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_156.png
+IconPixels_157:	.incbin "includes/generated/IconPixels_157.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_157.png
+IconPixels_158:	.incbin "includes/generated/IconPixels_158.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_158.png
+IconPixels_159:	.incbin "includes/generated/IconPixels_159.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_159.png
+IconPixels_160:	.incbin "includes/generated/IconPixels_160.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_160.png
+IconPixels_161:	.incbin "includes/generated/IconPixels_161.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_161.png
+IconPixels_162:	.incbin "includes/generated/IconPixels_162.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_162.png
+IconPixels_163:	.incbin "includes/generated/IconPixels_163.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_163.png
+IconPixels_164:	.incbin "includes/generated/IconPixels_164.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_164.png
+IconPixels_165:	.incbin "includes/generated/IconPixels_165.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_165.png
+IconPixels_166:	.incbin "includes/generated/IconPixels_166.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_166.png
+IconPixels_167:	.incbin "includes/generated/IconPixels_167.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_167.png
+IconPixels_168:	.incbin "includes/generated/IconPixels_168.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_168.png
+IconPixels_169:	.incbin "includes/generated/IconPixels_169.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_169.png
+IconPixels_170:	.incbin "includes/generated/IconPixels_170.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_170.png
+IconPixels_171:	.incbin "includes/generated/IconPixels_171.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_171.png
+IconPixels_172:	.incbin "includes/generated/IconPixels_172.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_172.png
+IconPixels_173:	.incbin "includes/generated/IconPixels_173.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_173.png
+IconPixels_174:	.incbin "includes/generated/IconPixels_174.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_174.png
+IconPixels_175:	.incbin "includes/generated/IconPixels_175.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_175.png
 ; A 177th icon sits after the last referenced icon: yellow "E.L.S." lettering
 ; with small glyphs below -- apparently a developer signature.  No IconTable
 ; entry points at it (entry 176 is the null terminator), so it is unreachable
 ; art.  Extracted to the gallery as Icon_176.png.
-IconPixels_176_Unreferenced:	.incbin "includes/generated/IconPixels_176.bin"
+IconPixels_176_Unreferenced:	.incbin "includes/generated/IconPixels_176.bin"	; census: generated -- scripts/build/icon_images.py, from table_data/images/icons_png/IconPixels_176.png
 	.fill 208, 1, 0xff	; pad to 0x944D78
 
 ; =============================================================================
@@ -1097,7 +1097,7 @@ Composer_FactoryMemoryImage:	.incbin	"includes/generated/Composer_FactoryMemoryI
 DemoSongPreset00:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x69, 0x00	; uncompressed size = 26880 bytes
-	.incbin "includes/demo_presets/demo_preset_00_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_00_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_00.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9C9018 - 0x800000, 0xFF
 ; Demo song 01 (pointer-table slot 1): Demo_ParseSlideHeader (0xF87189)
@@ -1108,7 +1108,7 @@ DemoSongPreset00:
 DemoSongPreset01:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x71, 0x00	; uncompressed size = 28928 bytes
-	.incbin "includes/demo_presets/demo_preset_01_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_01_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_01.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9CE17C - 0x800000, 0xFF
 ; Demo song 02 (pointer-table slot 2): Demo_ParseSlideHeader (0xF87189)
@@ -1119,7 +1119,7 @@ DemoSongPreset01:
 DemoSongPreset02:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x4A, 0x00	; uncompressed size = 18944 bytes
-	.incbin "includes/demo_presets/demo_preset_02_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_02_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_02.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9D16F2 - 0x800000, 0xFF
 ; Demo song 03 (pointer-table slot 3): Demo_ParseSlideHeader (0xF87189)
@@ -1130,7 +1130,7 @@ DemoSongPreset02:
 DemoSongPreset03:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x6B, 0x00	; uncompressed size = 27392 bytes
-	.incbin "includes/demo_presets/demo_preset_03_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_03_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_03.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9D645C - 0x800000, 0xFF
 ; Demo song 04 (pointer-table slot 4): Demo_ParseSlideHeader (0xF87189)
@@ -1141,7 +1141,7 @@ DemoSongPreset03:
 DemoSongPreset04:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x56, 0x00	; uncompressed size = 22016 bytes
-	.incbin "includes/demo_presets/demo_preset_04_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_04_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_04.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9DA016 - 0x800000, 0xFF
 ; Demo song 05 (pointer-table slot 5): Demo_ParseSlideHeader (0xF87189)
@@ -1152,7 +1152,7 @@ DemoSongPreset04:
 DemoSongPreset05:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x62, 0x00	; uncompressed size = 25088 bytes
-	.incbin "includes/demo_presets/demo_preset_05_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_05_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_05.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9DE072 - 0x800000, 0xFF
 ; Demo song 06 (pointer-table slot 6): Demo_ParseSlideHeader (0xF87189)
@@ -1163,7 +1163,7 @@ DemoSongPreset05:
 DemoSongPreset06:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x44, 0x00	; uncompressed size = 17408 bytes
-	.incbin "includes/demo_presets/demo_preset_06_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_06_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_06.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9E0CE2 - 0x800000, 0xFF
 ; Demo song 07 (pointer-table slot 7): Demo_ParseSlideHeader (0xF87189)
@@ -1174,7 +1174,7 @@ DemoSongPreset06:
 DemoSongPreset07:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x21, 0x00	; uncompressed size = 8448 bytes
-	.incbin "includes/demo_presets/demo_preset_07_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_07_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_07.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9E2358 - 0x800000, 0xFF
 ; Demo song 08 (pointer-table slot 8): Demo_ParseSlideHeader (0xF87189)
@@ -1185,7 +1185,7 @@ DemoSongPreset07:
 DemoSongPreset08:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x5A, 0x00	; uncompressed size = 23040 bytes
-	.incbin "includes/demo_presets/demo_preset_08_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_08_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_08.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9E61C2 - 0x800000, 0xFF
 ; Demo song 09 (pointer-table slot 9): Demo_ParseSlideHeader (0xF87189)
@@ -1196,7 +1196,7 @@ DemoSongPreset08:
 DemoSongPreset09:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1B, 0x00	; uncompressed size = 6912 bytes
-	.incbin "includes/demo_presets/demo_preset_09_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_09_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_09.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9E72E8 - 0x800000, 0xFF
 ; Demo song 10 (pointer-table slot 10): Demo_ParseSlideHeader (0xF87189)
@@ -1207,7 +1207,7 @@ DemoSongPreset09:
 DemoSongPreset10:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x44, 0x00	; uncompressed size = 17408 bytes
-	.incbin "includes/demo_presets/demo_preset_10_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_10_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_10.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9EA1F2 - 0x800000, 0xFF
 ; Demo song 11 (pointer-table slot 11): Demo_ParseSlideHeader (0xF87189)
@@ -1218,7 +1218,7 @@ DemoSongPreset10:
 DemoSongPreset11:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x5B, 0x00	; uncompressed size = 23296 bytes
-	.incbin "includes/demo_presets/demo_preset_11_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_11_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_11.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9EDFFC - 0x800000, 0xFF
 ; Demo song 12 (pointer-table slot 12): Demo_ParseSlideHeader (0xF87189)
@@ -1229,7 +1229,7 @@ DemoSongPreset11:
 DemoSongPreset12:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1B, 0x00	; uncompressed size = 6912 bytes
-	.incbin "includes/demo_presets/demo_preset_12_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_12_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_12.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9EEC62 - 0x800000, 0xFF
 ; Demo song 13 (pointer-table slot 13): Demo_ParseSlideHeader (0xF87189)
@@ -1240,7 +1240,7 @@ DemoSongPreset12:
 DemoSongPreset13:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x2C, 0x00	; uncompressed size = 11264 bytes
-	.incbin "includes/demo_presets/demo_preset_13_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_13_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_13.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9F0E72 - 0x800000, 0xFF
 ; Demo song 14 (pointer-table slot 14): Demo_ParseSlideHeader (0xF87189)
@@ -1251,7 +1251,7 @@ DemoSongPreset13:
 DemoSongPreset14:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1A, 0x00	; uncompressed size = 6656 bytes
-	.incbin "includes/demo_presets/demo_preset_14_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_14_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_14.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9F1C70 - 0x800000, 0xFF
 ; Demo song 15 (pointer-table slot 15): Demo_ParseSlideHeader (0xF87189)
@@ -1262,7 +1262,7 @@ DemoSongPreset14:
 DemoSongPreset15:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x2D, 0x00	; uncompressed size = 11520 bytes
-	.incbin "includes/demo_presets/demo_preset_15_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_15_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_15.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9F3B52 - 0x800000, 0xFF
 ; Demo song 16 (pointer-table slot 16): Demo_ParseSlideHeader (0xF87189)
@@ -1273,7 +1273,7 @@ DemoSongPreset15:
 DemoSongPreset16:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x1A, 0x00	; uncompressed size = 6656 bytes
-	.incbin "includes/demo_presets/demo_preset_16_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_16_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_16.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9F494E - 0x800000, 0xFF
 ; Demo song 17 (pointer-table slot 17): Demo_ParseSlideHeader (0xF87189)
@@ -1284,7 +1284,7 @@ DemoSongPreset16:
 DemoSongPreset17:
 	.asciz "SLIDE4K"
 	.byte 0x00, 0x17, 0x00	; uncompressed size = 5888 bytes
-	.incbin "includes/demo_presets/demo_preset_17_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
+	.incbin "includes/demo_presets/demo_preset_17_compressed.bin"	; census: generated -- midi_to_preset.py + compress_lzss.py --strict, from demo_presets/midi/demo_preset_17.mid + sidecar (encoder decisions replayed from original_ROMs/demo_preset_NN_compressed.original.bin)
 
 	.org 0x9FA000 - 0x800000, 0xFF
 FileIdentifierStringsTable:
