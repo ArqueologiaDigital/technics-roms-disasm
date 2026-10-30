@@ -284,6 +284,10 @@ def main():
                     help="data range to emit as .byte rows with the text beside them")
     ap.add_argument("--decode-gaps", action="store_true",
                     help="decode the unreached bytes after each entry's code (see the header)")
+    ap.add_argument("--rows", action="append", default=[], metavar="LO:HI:W[:x]",
+                    help="data range the code reads W bytes at a time (1, 2 or 4): .byte / .word / "
+                         ".long rows, by name where a word is the address of an emitted label; "
+                         ":x writes the values in hex")
     ap.add_argument("--fill", action="append", default=[], metavar="LO:HI",
                     help="data range of one repeated byte (erased flash) to emit as .space")
     ap.add_argument("--data-src", action="append", default=[], metavar="FILE:LO:HI",
@@ -612,6 +616,7 @@ def main():
     typed = [tuple(int(x, 0) for x in r.split(":")) + ("long",) for r in a.long_table]
     typed += [tuple(int(x, 0) for x in r.split(":")) + ("text",) for r in a.text]
     typed += [tuple(int(x, 0) for x in r.split(":")) + ("fill",) for r in a.fill]
+    typed += [tuple(int(x, 0) for x in r.split(":")[:2]) + (f"rows{int(r.split(':')[2])}" + ("x" if r.endswith(":x") else ""),) for r in a.rows]
     n_reflect = 0
     if a.reflection_tables:
         import gen_symbols as GS
@@ -632,8 +637,37 @@ def main():
         if nm is not None and not img.in_code(lo):
             data_labels[lo] = nm
             label_at[base + lo] = nm
+            # (lane generic-zero) the code's absolute operands into a named typed range are
+            # spelled with its name (`Name`, `Name+N`), as those into the --data-src regions
+            data_label.setdefault(base + lo, nm)
+            data_items.append((base + lo, base + _hi, nm))
+            data_names.add(nm)
+    data_items.sort()
+    data_starts[:] = [x[0] for x in data_items]
 
     def emit_typed(lo, hi, kind):
+        if kind.startswith("rows"):
+            # --rows LO:HI:W: the code reads these bytes W at a time (u8 / u16 / u32 rows)
+            w = int(kind[4:].rstrip("x"))
+            hexv = kind.endswith("x")
+            dirv = {1: ".byte", 2: ".word", 4: ".long"}[w]
+            vals = [int.from_bytes(d[o:o + w], "little") for o in range(lo, hi, w)]
+            for i in range(0, len(vals), 16 // w * 2 if w < 4 else 8):
+                row = vals[i:i + (16 // w * 2 if w < 4 else 8)]
+                body.append(f"\t{dirv}\t" + ", ".join(label_at.get(v) or (f"0x{v:0{2 * w}x}" if hexv else f"0x{v:x}" if v >= 0x10000 else str(v))
+                                                    for v in row))
+            return
+        if kind == "text":
+            # a NUL-terminated string (and its 0xFF pad), or text with no NUL: .asciz / .ascii
+            bs = d[lo:hi]
+            z = bs.find(b"\0")
+            txt = bs if z < 0 else bs[:z]
+            if txt and all(32 <= c < 127 and c not in (0x22, 0x5c) for c in txt) and (
+                    z < 0 or set(bs[z + 1:]) <= {0xFF}):
+                body.append(f'\t.ascii\t"{txt.decode()}"' if z < 0 else f'\t.asciz\t"{txt.decode()}"')
+                if z >= 0 and z + 1 < len(bs):
+                    body.append(f"\t.space\t{len(bs) - z - 1}, 0xff")
+                return
         if kind == "fill":
             if len(set(d[lo:hi])) != 1:
                 sys.exit(f"gen_image_s: --fill {lo:#x}:{hi:#x} is not one repeated byte")

@@ -159,6 +159,10 @@ PROFILES["sp7001plugin"] = dict(rom="baserom/kn7000_table_sp7001.rom", src="src/
                                 raminit=(0x483FA104, 0x50298000, 0x1498),
                                 # func_483E803E's first loop clears 0xA48 bytes from 0x50299498
                                 bss=(0x50299498, 0xA48, "KssWorkRam"), raminit_label="KssRamImage")
+# lane generic-zero: the bytes an instruction reads that no pass typed are rows of the reads' widths
+# (reader_rows), not a generic .incbin_range, in the program builds and the siblings
+for _m in ("941", "b935", "b893", "sp7001", "kn6000", "kn6500", "kn2400", "hdsx3"):
+    PROFILES[_m]["reader_rows"] = True
 PROFILE = "941"
 KN7_DIR = KN7                 # this tree; KN7 is rebound to the profile's root by configure()
 
@@ -1304,9 +1308,32 @@ class Gen:
             # a string
             e = self.rom.find(b"\0", o)
             if 0 <= e - o < 512 and e > o and is_text(self.rom[o:e]) and not self.pointerish(o, e) \
-                    and self.free(a, e - o + 1):
+                    and self.free(a, e - o + 1) and not self.record_start(a, e - o + 1):
                 s = self.rom[o:e].decode("latin-1")
                 self.str_item(a, "Str_" + (sanitize(s, 40) or "empty"), "string")
+
+    def record_start(self, a, n):
+        """(`reader_rows` profiles, lane generic-zero) True when the reader walk reads the n bytes
+        at `a` as the start of a record whose read fields reach past them: `a` is one of the
+        records a T value selects (a switch, a stack slot, a return value) or a target of a pointer
+        field the code reads through, with a read at +n or later.  Such an address is not taken for
+        a short string (the 260-way switch's descriptors whose first word is 0x0000B024, "$\\xB0";
+        the resource-id trie's leaves), so ptr_records() types it as the record it is."""
+        if not P.get("reader_rows"):
+            return False
+        if not hasattr(self, "_rec_need"):
+            self.build_index()
+            self._lmemo, self._tmemo = {}, {}
+            need = collections.defaultdict(int)
+            for x in self.dr.accesses:
+                k = x.key
+                if k[0] != "ptr" or k[1][0] not in ("fld", "tgt") or not x.width or x.off < 0:
+                    continue
+                for t in self.field_targets(k[1]):
+                    need[t] = max(need[t], x.off + x.width)
+            self._rec_need = need
+            self._lmemo, self._tmemo = {}, {}
+        return self._rec_need.get(a, 0) > n
 
     # -- struct arrays, from their readers (tools/data_structs.py) ----------------
     def is_addr(self, v):
@@ -3295,8 +3322,219 @@ class Gen:
                     note = self.gap_note(int(mo.group(1), 16), int(mo.group(2), 16))
                     if note:
                         res.append(note)
+                    elif P.get("reader_rows"):
+                        res += self.reader_rows(int(mo.group(1), 16), int(mo.group(2), 16))
+                        continue
                 res.append(ln)
             return res
+        return out
+
+    # -- the last fallback: a read gap as rows of its readers' widths (lane generic-zero) -------------
+    def _reads_index(self):
+        """{file offset: [Access]} of every load / store / base / argument of the walk that lands at
+        that offset (gap_note's landing rule: a fixed address, a record array's first record + the
+        field offset, each record a T value selects + the field offset), and the record arrays'
+        (first landing, stride, Access) for the rows of the later records."""
+        if hasattr(self, "_reads_at"):
+            return self._reads_at, self._reads_strided
+        at, strided = collections.defaultdict(list), []
+        for x in self.dr.accesses:
+            k = x.key
+            if k[0] in ("abs", "base", "step") and self.in_data(k[1]):
+                at[self.off(k[1])].append(x)
+            elif k[0] == "rec" and self.in_data(k[1] + x.off):
+                o = self.off(k[1] + x.off)
+                at[o].append(x)
+                if k[2] and x.width:
+                    strided.append((o, k[2], x))
+            elif k[0] == "ptr" and k[1][0] == "tgt":
+                for t in k[1][1]:
+                    if self.in_data(t + x.off):
+                        at[self.off(t + x.off)].append(x)
+        self._reads_at, self._reads_strided = at, sorted(strided, key=lambda s: s[0])
+        self._gap_label_offs = None
+        return self._reads_at, self._reads_strided
+
+    def reader_row_refs(self):
+        """(`reader_rows` profiles) Before gaps() labels the raw bytes: in every run no item holds
+        that an instruction reads, a word-aligned word that is an address of this data region
+        outside any item is a pointer reader_rows() writes `.long Label`: label its target, unless
+        the target lies in a read run itself (then it is `Label+N` of the label before it in that
+        run: a label there would split bytes the walk reads into a piece it does not)."""
+        import bisect
+        at, _st = self._reads_index()
+        ks = sorted(at)
+        o = R1_END
+        runs = []
+        while o < DATA_END:
+            if self.claimed[o]:
+                o += 1
+                continue
+            e = o
+            while e < DATA_END and not self.claimed[e]:
+                e += 1
+            i = bisect.bisect_left(ks, o)
+            if i < len(ks) and ks[i] < e:
+                runs.append((o, e))
+            o = e
+        rs = [r[0] for r in runs]
+
+        def in_read_run(q):
+            i = bisect.bisect_right(rs, q) - 1
+            return i >= 0 and runs[i][0] <= q < runs[i][1]
+        n = 0
+        for o, e in runs:
+            for q in range(o + (-self.addr_of(o) % 4), e - 3, 4):
+                v = int.from_bytes(self.rom[q:q + 4], "little")
+                if self.in_data(v) and self.item_containing(v) is None and v not in self.refs \
+                        and not in_read_run(self.off(v)):
+                    self.refs.add(v)
+                    n += 1
+        print(f"gen_data_s: {n} addresses read rows point at")
+
+    def _gap_ref(self, v):
+        """A 32-bit value as a symbol: ref(), or `Label+N` where Label is the nearest label of
+        the raw bytes before v with no typed item between them (a record's pointer into its own
+        tail, or into the gap after it)."""
+        import bisect
+        r = self.ref(v)
+        if not r.startswith("0x") or not self.in_data(v):
+            return r
+        if self._gap_label_offs is None:
+            labs = sorted((self.off(a), n) for a, n in self.label_at.items()
+                          if self.in_data(a) and self.item_containing(a) is None)
+            self._gap_label_offs = ([o for o, _ in labs], [n for _, n in labs])
+        offs, names = self._gap_label_offs
+        o = self.off(v)
+        i = bisect.bisect_right(offs, o) - 1
+        if i < 0 or o - offs[i] > 0x1000:
+            return r
+        lo = offs[i]
+        if any(self.claimed[lo:o]):
+            return r
+        return f"{names[i]}+{o - lo}" if o > lo else names[i]
+
+    @staticmethod
+    def _cite(cites, a):
+        """The readers of a reader_rows() piece, for its header: function, address, instruction,
+        and where in the piece it lands at what width (or as a base / a call argument)."""
+        rd = []
+        for q, x in sorted(cites, key=lambda c: (c[1].cpu or 0, c[1].func or "", c[1].insn, c[0])):
+            fn = re.sub(r"_entry$", "", x.func or "?")
+            t = f"{fn} 0x{x.cpu or 0:08X} `{' '.join(x.insn.split())}` (+{q - a}" + (
+                f", {'s' if x.signed else 'u'}{8 * x.width}" if x.width else ", as a base" if x.rw == "base"
+                else f", {x.rw}") + ")"
+            if t not in rd:
+                rd.append(t)
+        return rd
+
+    def reader_rows(self, a, b):
+        """(`reader_rows` profiles) The bytes a..b (file offsets) that an instruction reads but no
+        pass turned into a type: rows at the width and signedness of the reads that land in them
+        (tab_u8 / tab_s8 / tab_u16 / tab_s16 / tab_u32), a 4-aligned word no read narrower than 4
+        lands in and that is an address as `.long Label` (or `Label+N`), the bytes between the reads
+        on the grid of the commonest read width, the rest as u8; the header names the readers and
+        the instructions.  [INFERENCE] only the read fields are known; the other rows' width is
+        the grid's, not traced."""
+        at, strided = self._reads_index()
+        n = b - a
+        reads = collections.defaultdict(list)          # offset -> [Access] (width > 0)
+        cites = []
+        for q in range(a, b):
+            for x in at.get(q, ()):
+                cites.append((q, x))
+                if x.width and q + x.width <= b:
+                    reads[q].append(x)
+        import bisect
+        i = bisect.bisect_left(strided, (a,))
+        for o, s, x in strided[i:]:
+            if o >= b:
+                break
+            for q in range(o + s, b, s):
+                if q + x.width <= b:
+                    reads[q].append(x)
+        width = {}
+        for q, xs in reads.items():
+            c = collections.Counter(x.width for x in xs)
+            w = max(c, key=lambda k: (c[k], k))
+            width[q] = (w, any(x.signed for x in xs if x.width == w))
+        # the grid of the commonest read width, anchored at a read of that width
+        wc = collections.Counter(w for w, _s in width.values())
+        bs = self.rom[a:b]
+        strarg = [x for _q, x in cites if x.rw.startswith("arg") and x.extra
+                  and re.match(r"(str|sprintf|vsprintf|printf)", str(x.extra[0]))]
+        z = bs.find(b"\0")
+        if not wc and z >= 0 and all(0x20 <= c < 0x7F or c in (9, 10, 13) for c in bs[:z]) and set(bs[z + 1:]) <= {0xFF} \
+                and (b - (a + z + 1)) < 4 and (self.addr_of(b) % 4 == 0 or z + 1 == n):
+            # a (short or empty) string and its pad: handed to a string routine, or only as a base
+            # [INFERENCE in the latter case: the NUL and the 0xFF pad of the string layout]
+            why = ("handed to " + ", ".join(sorted({str(x.extra[0]) for x in strarg})) if strarg
+                   else "[INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]")
+            rd = self._cite(cites, a)
+            return ([f"\t# a string, {n} bytes with its pad, read by {'; '.join(rd[:3])}"
+                     + (f" (+{len(rd) - 3} more)" if len(rd) > 3 else "")
+                     + f"; {why}", f'\t.asciz\t"{c_escape(bs[:z])}"']
+                    + ([f"\t.align\t4, 0xFF"] if z + 1 < n else []))
+        if wc:
+            W = max(wc, key=lambda k: (wc[k], k))
+            anchor = min(q for q, (w, _s) in width.items() if w == W)
+            gsigned = any(s for w, s in width.values() if w == W)
+            how = "between them the commonest read width"
+        else:
+            # read only as a base or a call argument (the width is the callee's): words when the
+            # piece is word-aligned and every word is 0, an address or below 2^24 (a count, a
+            # 0x00BBGGRR colour), else bytes
+            words = [int.from_bytes(bs[k:k + 4], "little") for k in range(0, n - 3, 4)]
+            W = 4 if self.addr_of(a) % 4 == 0 and n % 4 == 0 and all(
+                w < 0x1000000 or self.is_addr(w) or w >> 24 == RAMINIT_RAM >> 24 for w in words) else 1
+            anchor, gsigned = a, False
+            how = ("word rows: the piece is word-aligned and every word is below 2^24 or an address" if W == 4
+                   else "byte rows")
+        elems = []                                      # (kind, text, offset)
+        q = a
+        while q < b:
+            w, sg = width.get(q, (0, False))
+            if (w in (0, 4)) and self.addr_of(q) % 4 == 0 and q + 4 <= b and not any(q < p < q + 4 for p in width):
+                v = int.from_bytes(self.rom[q:q + 4], "little")
+                if self.is_addr(v) and not (self.in_code(v) and v not in self.extern):
+                    r = self._gap_ref(v)
+                    if not r.startswith("0x"):
+                        elems.append(("ptr", r, q))
+                        q += 4
+                        continue
+            if not w:
+                if (q - anchor) % W == 0 and q + W <= b and not any(q < p < q + W for p in width):
+                    w, sg = W, gsigned
+                else:
+                    w, sg = 1, False
+            v = int.from_bytes(self.rom[q:q + w], "little", signed=sg)
+            elems.append((("s" if sg else "u") + str(8 * w), v, q))
+            q += w
+        # a kind any of whose values is 2^16 or more is written in hex throughout (addresses,
+        # colours, flag words), the others in decimal
+        hexk = {k for k, v, _q in elems if k != "ptr" and v >= 0x10000}
+        elems = [(k, v if k == "ptr" else f"0x{v:X}" if k in hexk and v >= 0 else str(v), q) for k, v, q in elems]
+        rd = self._cite(cites, a)
+        kinds = sorted({k for k, _t, _q in elems if k != "ptr"}) + (["pointers"] if any(k == "ptr" for k, _t, _q in elems) else [])
+        more = f" (+{len(rd) - 3} more)" if len(rd) > 3 else ""
+        if wc:
+            out = [f"\t# {n} bytes read by {'; '.join(rd[:3])}{more}; the read fields at their widths"
+                   f" ({', '.join(kinds)}), {how} [INFERENCE: the fields no instruction is seen to read are"
+                   f" not traced]"]
+        else:
+            out = [f"\t# {n} bytes the code takes the address of: {'; '.join(rd[:3])}{more}; {how}"
+                   f" ({', '.join(kinds)}) [INFERENCE: what the callee reads through the address is not traced]"]
+        i = 0
+        per = {"u8": 16, "s8": 16, "u16": 12, "s16": 12, "u32": 8, "s32": 8, "ptr": 4}
+        while i < len(elems):
+            k = elems[i][0]
+            j = i
+            while j < len(elems) and elems[j][0] == k and j - i < per[k]:
+                j += 1
+            vals = ", ".join(t for _k, t, _q in elems[i:j])
+            mn = ".long" if k == "ptr" else f"tab_{k}"
+            out.append(f"\t{mn}\t{vals}\t# +{elems[i][2] - a}")
+            i = j
         return out
 
     def _gap_lines(self, a, b):
@@ -3471,6 +3709,8 @@ class Gen:
         if P.get("residue"):
             self.residue()
         self.build_index()
+        if P.get("reader_rows"):
+            self.reader_row_refs()
         self.gaps()
         n = self.emit(outdir)
         kinds = collections.Counter()
