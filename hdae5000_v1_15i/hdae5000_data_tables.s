@@ -1294,10 +1294,10 @@ HDAE5000_Fmt_2_2d_SongScreen_Refresh_2:
 	; read by SongScreen_Refresh at 0x283C90 (pushed operand)
 	.asciz "%2.2d"
 ;
-; HDAE5000_FILE_LOAD_Screen_CaseTable (0x2E253A, 14 x u16): the switch of HDAE5000_FILE_LOAD_Screen
-; (dispatch at 0x283DDD, hdae5000_hd_driver.s:1447: `sub xwa,0x01ea0000`, bound `cp xwa,13`, `add xwa,xwa`, `ld wa,(<table>+2i)`,
+; HDAE5000_FILE_LOAD_Screen_CaseTable (13 x u16): the switch of HDAE5000_FILE_LOAD_Screen
+; (dispatch at 0x283DDD, hdae5000_hd_driver.s:1447: `sub xwa,0x01ea0000`, bound `cp xwa,12`, `add xwa,xwa`, `ld wa,(<table>+2i)`,
 ; `lda xix,(HDAE5000_FILE_LOAD_Screen_Ev01C00001)`, `jp T,XIX+WA`).  Entry i is the offset from
-; HDAE5000_FILE_LOAD_Screen_Ev01C00001 of the case for event 0x01EA0000+i; 14 entries, pinned by the bound
+; HDAE5000_FILE_LOAD_Screen_Ev01C00001 of the case for event 0x01EA0000+i; 13 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
 HDAE5000_FILE_LOAD_Screen_CaseTable:
@@ -1312,9 +1312,8 @@ HDAE5000_FILE_LOAD_Screen_CaseTable:
 	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA0008 - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0008
 	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0009 (default)
 	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000A (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000B (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA000C - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000C
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA000D - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000D
+	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA000B - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000B, MT_SelectDEL in v1.x
+	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA000C - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000C, MT_SelectDelFile in v1.x
 HDAE5000_Str_DELD:
 	; read by AttenDelDirSwCatch at 0x283FCA (lda operand)
 	.asciz "DELD"
@@ -3563,13 +3562,13 @@ HDAE5000_LangMsg_NoMessage:
 	.asciz "No Message"
 	.balign 2, 0x00					; pad after "No Message"
 ;
-; HDAE5000_LangText_CaseTable (76 x u16): the message switch of
+; HDAE5000_LangText_CaseTable (75 x u16): the message switch of
 ; HDAE5000_AcLanguageText1Proc.  Entry i serves message i+1 (i <= 0x3f) or
 ; i+0x88 (0x40 <= i <= 0x4c, the `sub wa,0x87` range); each value is an offset
 ; from HDAE5000_AcLanguageText1Proc_Msg001, the first case, and the reader
 ; jumps there (`jp T,XIX+WA`).  Messages 63, 204 and 205, and every number
-; out of range, share the _NoMessage case.  v1.x has messages 1-63 and 200-212
-; (v2.01i also 64, v2.06i 64-67).
+; out of range, share the _NoMessage case.  v1.x's table covers messages 1-62 and
+; 200-212 (v2.01i 1-64, v2.06i 1-67; message 63 is a _NoMessage entry in v2.x).
 ;
 HDAE5000_LangText_CaseTable:
 	.short	HDAE5000_AcLanguageText1Proc_Msg001 - HDAE5000_AcLanguageText1Proc_Msg001	; message 1
@@ -3634,7 +3633,6 @@ HDAE5000_LangText_CaseTable:
 	.short	HDAE5000_AcLanguageText1Proc_Msg060 - HDAE5000_AcLanguageText1Proc_Msg001	; message 60
 	.short	HDAE5000_AcLanguageText1Proc_Msg061 - HDAE5000_AcLanguageText1Proc_Msg001	; message 61
 	.short	HDAE5000_AcLanguageText1Proc_Msg062 - HDAE5000_AcLanguageText1Proc_Msg001	; message 62
-	.short	HDAE5000_AcLanguageText1Proc_NoMessage - HDAE5000_AcLanguageText1Proc_Msg001	; message 63
 	.short	HDAE5000_AcLanguageText1Proc_Msg200 - HDAE5000_AcLanguageText1Proc_Msg001	; message 200
 	.short	HDAE5000_AcLanguageText1Proc_Msg201 - HDAE5000_AcLanguageText1Proc_Msg001	; message 201
 	.short	HDAE5000_AcLanguageText1Proc_Msg202 - HDAE5000_AcLanguageText1Proc_Msg001	; message 202
@@ -3649,129 +3647,6 @@ HDAE5000_LangText_CaseTable:
 	.short	HDAE5000_AcLanguageText1Proc_Msg211 - HDAE5000_AcLanguageText1Proc_Msg001	; message 211
 	.short	HDAE5000_AcLanguageText1Proc_Msg212 - HDAE5000_AcLanguageText1Proc_Msg001	; message 212
 
-; ============================================================================
-; LYRICS MODULE .RODATA, 0x2E5B80-0x2E5DCD: the read-only data of the code
-; around HDAE5000_LyricBoxProc and HDAE5000_FDFileSelectProc (lyric files
-; "TLhd"/"TLtr", ".TLX"/".TTX"/".MID", the lyric messages), laid out
-; after the trilingual message block.  Rebuilt object by object by
-; scripts/generators/gen_hdae5000_rodata.py --block2, as the main .rodata
-; block above: every object starts where the code names it, and its note
-; names the readers; the switch tables keep their own headers.
-; ============================================================================
-HDAE5000_Str_Blank34:
-	; only in v2.01i
-	.asciz "                                  "
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Reset:
-	; read by LyricBoxProc at 0x28D261 (lda operand)
-	.asciz "Reset"
-HDAE5000_Str_Load:
-	; read by LyricBoxProc at 0x28D283 (lda operand)
-	.asciz "Load"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Fmt_03i_i:
-	; read by LyricBoxProc at 0x28D4B7 (pushed operand)
-	.asciz "%03i - %i "
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Rb:
-	; read by Display_Error at 0x28D67B (lda operand)
-	.asciz "rb"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_TESTTESTTLX:
-	; read by Display_Error at 0x28D676 (lda operand)
-	.asciz "TESTTEST.TLX"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Fmt_Fault_No_Lyrics_loaded_o:
-	; read by File_Operation at 0x28D78B (pushed operand)
-	.asciz "Fault : No Lyrics loaded or corrupt Data - Code %i %i %i     "
-HDAE5000_Fmt_i_i:
-	; read by File_Operation at 0x28D9F3 (pushed operand)
-	.asciz " %i/%i "
-HDAE5000_Fmt_Chord_s:
-	; read by File_Operation at 0x28DA35 (pushed operand)
-	.asciz "Chord : %s               "
-HDAE5000_Str_Info:
-	; read by File_Save at 0x28DB2F (pushed operand)
-	.asciz "Info :                            "
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_NoCopyrightInfo:
-	; read by File_Load at 0x28DC63 (pushed operand)
-	.asciz "No Copyright Info"
-HDAE5000_Str_NoSongTitle:
-	; read by File_Load at 0x28DCDD (pushed operand)
-	.asciz "No Song Title"
-HDAE5000_Fmt_i_i_File_Load:
-	; read by File_Load at 0x28DDB7 (pushed operand)
-	.asciz " %i/%i "
-HDAE5000_Str_Empty_File_Delete:
-	; read by File_Delete at 0x28DF7B (pushed operand)
-	.zero 2
-HDAE5000_Str_Empty_File_Delete_2:
-	; read by File_Delete at 0x28DFF0 (pushed operand)
-	.zero 2
-HDAE5000_Str_Tlhd:
-	; read by Display_Notify at 0x28E540 (lda operand)
-	.asciz "TLhd"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Tltr:
-	; read by Display_Progress at 0x28E5B1 (lda operand)
-	.asciz "TLtr"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Empty_FDFileSelectProc:
-	; read by FDFileSelectProc at 0x28E78D (pushed operand)
-	.zero 2
-HDAE5000_Str_Blank27:
-	; read by FDFileSelectProc at 0x28E85E (lda operand)
-	.asciz "                           "
-HDAE5000_Str_Blank27_FDFileSelectProc:
-	; read by FDFileSelectProc at 0x28E917 (lda operand)
-	.asciz "                           "
-HDAE5000_Str_Mid:
-	; read by FDFileSelectProc at 0x28E9EA (lda operand)
-	.asciz "mid"
-HDAE5000_Str_Blank3:
-	; read by FDFileSelectProc at 0x28EA19 (lda operand)
-	.asciz "   "
-HDAE5000_Str_Blank49:
-	; read by FDFileSelectProc at 0x28EB62 (lda operand)
-	.asciz "                                                 "
-HDAE5000_Fmt_s_s:
-	; read by FDFileSelectProc at 0x28EBC8 (pushed operand)
-	.asciz "%s %s"
-HDAE5000_Str_TLX_FDFileSelectProc:
-	; read by FDFileSelectProc at 0x28EEE1 (pushed operand)
-	.asciz ".TLX"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Rb_FDFileSelectProc:
-	; read by FDFileSelectProc at 0x28EEF2 (lda operand)
-	.asciz "rb"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Chr202D3E:
-	; read by FdLyricList_Scan at 0x28EFF1 (pushed operand)
-	.asciz " ->"
-HDAE5000_Str_Chr2A2E2A:
-	; read by FdLyricList_Scan at 0x28F000 (lda operand)
-	.asciz "*.*"
-HDAE5000_Str_TTX:
-	; read by FdLyricList_Scan at 0x28F08E (pushed operand)
-	.asciz ".TTX"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Rb_FdLyricTtx:
-	; read by FdLyricList_Scan at 0x28F0A3 (lda operand)
-	.asciz "rb"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_MID:
-	; read by FdLyricList_Scan at 0x28F114 (pushed operand)
-	.asciz ".MID"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_Rb_FdLyricMid:
-	; read by FdLyricList_Scan at 0x28F129 (lda operand)
-	.asciz "rb"
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Str_XLT:
-	; read by FdLyricList_AddTlx at 0x28F1BA (pushed operand)
-	.asciz "XLT."
-	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_TextPtrs_LANENG001_to_LANENG006:	; 6 x .long -> string
 	; read by LanguageTextReturn at 0x28F2FF (lda operand); 6 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_LANENG001

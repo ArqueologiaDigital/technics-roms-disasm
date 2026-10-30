@@ -719,7 +719,7 @@ HDAE5000_Browser_PageRows:
 ; ----------------------------------------------------------------------------
 HDAE5000_Init_Data_End:
 	.short 14
-	.zero 124096
+	.zero 124532
 
 ; ----------------------------------------------------------------------------
 ; RAM addresses of the image labels the code reaches: the image is copied to

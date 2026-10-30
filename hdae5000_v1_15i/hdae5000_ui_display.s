@@ -3151,7 +3151,7 @@ HDAE5000_AcLanguageText1Proc_Epilogue:
 HDAE5000_LanguageTextReturn:
 	cp xbc, EVT_GET_LANGUAGE_PTR
 	jr nz, .Ldec_no
-	lda xhl, (HDAE5000_Str_Blank34:24)
+	lda xhl, (HDAE5000_TextPtrs_LANENG001_to_LANENG006:24)
 	ret
 .Ldec_no:
 	ld xhl, 0:i3

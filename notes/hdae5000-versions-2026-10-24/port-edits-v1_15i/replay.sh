@@ -41,4 +41,5 @@ for r in 1 2; do
   $P strings v1_15i | tail -1
 done
 $P afix v1_15i | tail -1
+python3 $E/99_tail_fill.py
 $P status v1_15i | head -1
