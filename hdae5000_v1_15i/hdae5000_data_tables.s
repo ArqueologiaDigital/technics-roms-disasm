@@ -2438,7 +2438,6 @@ HDAE5000_Str_RCM:
 HDAE5000_Str_MD:
 	; read by CopyToHd_Execute at 0x289B8E (pushed operand)
 	.asciz ".MD"
-HDAE5000_Str_TLX:	; PORT-ORPHAN: its v1.15i object is gone
 HDAE5000_Str_Wrcn:
 	; read by WrConfirmEventCatch at 0x28A1EB (lda operand)
 	.asciz "WrCn"
@@ -3442,14 +3441,6 @@ HDAE5000_LangMsg_062_FR:
 	.ascii "Version d'"
 	.byte 0xe9  ; "é"
 	.asciz "valuation"
-	; message 64, language 1 (English): read by HDAE5000_AcLanguageText1Proc.  v2.01i
-	; only: its message 64 is the jump-after-load setting; v2.06i's is "LYRICS LOAD
-	; MODE", and v2.06i adds messages 65-67 (lyric colour settings, overwrite query).
-	; message 64, language 2 (German)
-	; message 64, language 3 (French), as the ROM has it
-HDAE5000_LangMsg_064_EN:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_LangMsg_064_DE:	; PORT-ORPHAN: its v1.15i object is gone
-HDAE5000_LangMsg_064_FR:	; PORT-ORPHAN: its v1.15i object is gone
 	.balign 2, 0x00                       ; word-align pad
 HDAE5000_LangMsg_200_EN:
 	; message 200, language 1 (English): read by HDAE5000_AcLanguageText1Proc
@@ -3457,6 +3448,7 @@ HDAE5000_LangMsg_200_EN:
 HDAE5000_LangMsg_200_DE:
 	; message 200, language 2 (German): read by HDAE5000_AcLanguageText1Proc
 	.asciz "JA"
+	.balign 2, 0x00                       ; word-align pad
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
 HDAE5000_LangMsg_200_FR:
 	; message 200, language 3 (French): read by HDAE5000_AcLanguageText1Proc
@@ -3571,13 +3563,13 @@ HDAE5000_LangMsg_NoMessage:
 	.asciz "No Message"
 	.balign 2, 0x00					; pad after "No Message"
 ;
-; HDAE5000_LangText_CaseTable (77 x u16): the message switch of
+; HDAE5000_LangText_CaseTable (76 x u16): the message switch of
 ; HDAE5000_AcLanguageText1Proc.  Entry i serves message i+1 (i <= 0x3f) or
 ; i+0x88 (0x40 <= i <= 0x4c, the `sub wa,0x87` range); each value is an offset
 ; from HDAE5000_AcLanguageText1Proc_Msg001, the first case, and the reader
 ; jumps there (`jp T,XIX+WA`).  Messages 63, 204 and 205, and every number
-; out of range, share the _NoMessage case.  v2.01i has no messages 65-67
-; (v2.06i's table has 80 entries: 1-67 and 200-212).
+; out of range, share the _NoMessage case.  v1.x has messages 1-63 and 200-212
+; (v2.01i also 64, v2.06i 64-67).
 ;
 HDAE5000_LangText_CaseTable:
 	.short	HDAE5000_AcLanguageText1Proc_Msg001 - HDAE5000_AcLanguageText1Proc_Msg001	; message 1
@@ -3643,7 +3635,6 @@ HDAE5000_LangText_CaseTable:
 	.short	HDAE5000_AcLanguageText1Proc_Msg061 - HDAE5000_AcLanguageText1Proc_Msg001	; message 61
 	.short	HDAE5000_AcLanguageText1Proc_Msg062 - HDAE5000_AcLanguageText1Proc_Msg001	; message 62
 	.short	HDAE5000_AcLanguageText1Proc_NoMessage - HDAE5000_AcLanguageText1Proc_Msg001	; message 63
-	.short	HDAE5000_AcLanguageText1Proc_Msg064 - HDAE5000_AcLanguageText1Proc_Msg001	; message 64
 	.short	HDAE5000_AcLanguageText1Proc_Msg200 - HDAE5000_AcLanguageText1Proc_Msg001	; message 200
 	.short	HDAE5000_AcLanguageText1Proc_Msg201 - HDAE5000_AcLanguageText1Proc_Msg001	; message 201
 	.short	HDAE5000_AcLanguageText1Proc_Msg202 - HDAE5000_AcLanguageText1Proc_Msg001	; message 202

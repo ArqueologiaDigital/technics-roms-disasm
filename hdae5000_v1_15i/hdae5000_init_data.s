@@ -687,10 +687,6 @@ HDAE5000_ScreenName_Table:
 ; ----------------------------------------------------------------------------
 ; File/name editing scalars and buffers  (RAM 0x239fd2 onwards)
 ; ----------------------------------------------------------------------------
-HDAE5000_FileFormat_VersionMajor:
-	.short 2			; low byte -> saved-file header 0x238ff6
-HDAE5000_FileFormat_VersionMinor:
-	.short 1			; low byte -> 0x238ff7; load compares the major against 0x2390f4
 HDAE5000_Name_ColumnRuler:
 	.asciz "123456789012345678901234567890"
 	.byte 0x00		; 16-bit alignment pad
@@ -712,19 +708,7 @@ HDAE5000_Browser_PageRows:
 	.short 16, 16		; RAM 0x23a028/0x23a02a
 	.short 0			; RAM 0x23a02c, byte-tested flag
 				; ^ = HDAE5000_RAM_SeparateBassPartSent
-	.short 2			; RAM 0x23a02e
-	.short 0			; RAM 0x23a030
-HDAE5000_LyricLines_Init:
-	; HDAE5000_RAM_LyricLines: the six text lines of the lyric window, 35 bytes
-	; each in v2.01i (40 in v2.06i); HDAE5000_Lyrics_FillLines
-	; (hdae5000_ui_display.s) scrolls them up one line before refilling the last
-	.zero 210
-	.zero 4			; RAM 0x23a104 (set to 1 by HDAE5000_Lyrics_ResetState) and
-				; 0x23a106 (HDAE5000_RAM_LyricLoaded)
-HDAE5000_LyricBoxObj_Init:
-	.long 0xffffffff	; RAM 0x23a108 = HDAE5000_RAM_LyricBoxObj: no lyric box open
-	.zero 10		; RAM 0x23a10c (main workspace pointer) + 6 bytes; last byte of
-				; the copied image is 0x23a115 = 0x2394ce + 0x0c48 - 1
+	.zero 10		; HDAE5000_RAM_MainWorkspacePtr's slot + 6 bytes; the copied image ends here
 
 ; ----------------------------------------------------------------------------
 ; Tail of the ROM (0x2f95e6-0x2fffff)
@@ -735,26 +719,10 @@ HDAE5000_LyricBoxObj_Init:
 ; ----------------------------------------------------------------------------
 HDAE5000_Init_Data_End:
 	.short 14
-	.zero 27160
+	.zero 124096
 
 ; ----------------------------------------------------------------------------
 ; RAM addresses of the image labels the code reaches: the image is copied to
 ; HDAE5000_DATA_COPY_DEST, so HDAE5000_RAM_<name> follows HDAE5000_<name>.  The
 ; code spells its RAM operands with these (scripts/converters/hdae5000_ram_image_refs.py).
 ; ----------------------------------------------------------------------------
-	.set	HDAE5000_RAM_ObjHandler_Table, HDAE5000_ObjHandler_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_ObjName_Table, HDAE5000_ObjName_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_EventName_Table, HDAE5000_EventName_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_EventName_Count, HDAE5000_EventName_Count - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_MessageName_Table, HDAE5000_MessageName_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_MessageName_Count, HDAE5000_MessageName_Count - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_ClassProc_Table, HDAE5000_ClassProc_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_ClassName_Table, HDAE5000_ClassName_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_ScreenProc_Table, HDAE5000_ScreenProc_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_ScreenName_Table, HDAE5000_ScreenName_Table - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_FileFormat_VersionMajor, HDAE5000_FileFormat_VersionMajor - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_FileFormat_VersionMinor, HDAE5000_FileFormat_VersionMinor - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_Name_ColumnRuler, HDAE5000_Name_ColumnRuler - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_Name_EditBuffer, HDAE5000_Name_EditBuffer - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_Browser_State, HDAE5000_Browser_State - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST
-	.set	HDAE5000_RAM_LyricLines_Init, HDAE5000_LyricLines_Init - HDAE5000_DataSegmentImage + HDAE5000_DATA_COPY_DEST

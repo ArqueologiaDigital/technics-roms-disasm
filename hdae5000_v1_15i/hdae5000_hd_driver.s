@@ -57,7 +57,7 @@ HDAE5000_FdList_Scan:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
 	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL				; 40 e0 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR				; 41 0a 00 ea 01
 	call (xhl)					; b3 e8
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
@@ -185,7 +185,7 @@ HDAE5000_FdList_Scan:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
 	ld xwa, HDAE5000_OBJ_CP_FD_LIST				; 40 d9 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR				; 41 0a 00 ea 01
 	call (xhl)					; b3 e8
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
@@ -554,7 +554,7 @@ HDAE5000_TitleInfo_Build:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23 — ld xhl, (xwa+0x0100)
 	ld xwa, HDAE5000_OBJ_HARD_DISK_OPT			; 40 0a 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Register event 0x01C0000F with XDE=0xFFFFFFFF (deregister)
@@ -650,7 +650,7 @@ HDAE5000_HDAETitleFunc:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
 	ld xwa, HDAE5000_OBJ_HARD_DISK_OPT			; 40 0a 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 	ld wa, 0:i3				; d8 a8
 	ld bc, 0:i3				; d9 a8
@@ -663,7 +663,7 @@ HDAE5000_HDAETitleFunc:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
 	ld xwa, HDAE5000_OBJ_SEL_FLS			; 40 fd 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 	ld wa, 0:i3				; d8 a8
 	ld bc, 2:i3				; d9 aa
@@ -676,7 +676,7 @@ HDAE5000_HDAETitleFunc:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
 	ld xwa, HDAE5000_OBJ_SEL_DIR			; 40 26 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 	ld xwa, HDAE5000_OBJ_SEL_DIR			; 40 26 00 7f 00
 	calr HDAE5000_DirList_BuildPage		; 1e xx xx
@@ -703,7 +703,7 @@ HDAE5000_HDAETitleFunc:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
 	ld xwa, HDAE5000_OBJ_PP_STATUS			; 40 69 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Set initial disk status
@@ -884,7 +884,7 @@ HDAE5000_DirList_BuildPage:
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xbc, (xbc + WS_RootFnTable)             ; XBC = (XBC + 0x0e0a)
 	ld xhl, (xbc + RootFn_ApPostEvent)             ; XHL = (XBC + 0x0124)
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 
 	ld xwa, (xsp + 0x18)		; restore context ptr
@@ -1238,7 +1238,7 @@ HDAE5000_PartList_Build:
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xbc, (xbc + WS_RootFnTable)             ; XBC = (XBC + 0x0e0a)
 	ld xhl, (xbc + RootFn_ApPostEvent)             ; XHL = (XBC + 0x0124)
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 
 	ld xwa, (xsp + 0x02)		; restore context ptr
@@ -1325,7 +1325,7 @@ HDAE5000_SongScreen_Refresh:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld	xhl, (xbc + RootFn_ApPostEvent)
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	a, (xsp+26)
 	extz wa
@@ -1403,7 +1403,7 @@ HDAE5000_SongScreen_Refresh_Join2:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld	xhl, (xbc + RootFn_ApPostEvent)
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	a, (xsp+26)
 	extz wa
@@ -2478,7 +2478,7 @@ HDAE5000_PPORT_Svc26_ShowStatus_Join:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
 	ld	xwa, HDAE5000_OBJ_PP_STATUS
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -2522,7 +2522,7 @@ HDAE5000_PcLink_ShowStatus:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld_sril xhl, (xwa + RootFn_SendEvent)
 	ld xwa, HDAE5000_OBJ_PP_STATUS
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 	; Clear display line
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -4525,7 +4525,7 @@ HDAE5000_SetupPage_BuildDriveInfo:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_HD_INFO_LIST
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)

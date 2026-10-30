@@ -6,6 +6,7 @@ v1.15i, unidasm:
     HDAE5000_PPORT_FlagPacketError.  It does not latch packet bytes 1-2 (v2.x: into
     0x239098 / 0x23909a) and does not compare the PC program's version with
     HDAE5000_FileFormat_VersionMajor -- so no "Error : Wrong Dll Ver " record either;
+  * service 03 stores no file-format version at PportInfoBlock+200 / +201;
   * command 20 (0x292824) is `jp HDAE5000_PPORT_CommandDone` alone: no status record, no
     XAP flash transfer.  Its record in the status-string table reads "20>nothing" (as 12,
     15 and 19 do); v2.x's "20>End flash right" / "20>End flash false" are not there.
@@ -34,5 +35,10 @@ s, n = re.subn(rb"HDAE5000_PPORT_Cmd20_Str_EndFlashRight:\n(?:.*\n){2}HDAE5000_P
                rb"HDAE5000_PPORT_Cmd01_SendInfosAboutHd_Str_Error_Wrong_Dll_Ver:[^\n]*\n\t\.byte 0x00[^\n]*\n", b"", s)
 assert n == 1, "records"
 s = re.sub(rb"HDAE5000_PPORT_Cmd20_SendXapFileFlash(?![\w])", b"HDAE5000_PPORT_Cmd20_Nothing", s)
+# service 03: the info block ends at +190 (CopyInfoToPacket copies 0xbf bytes): no
+# file-format version bytes at +200 / +201
+s, n = re.subn(rb"\tld\ta, \(HDAE5000_RAM_FileFormat_VersionMajor:24\)\n\tld\t\(HDAE5000_RAM_PportInfoBlock\+200:24\), a\n"
+               rb"\tld\ta, \(HDAE5000_RAM_FileFormat_VersionMinor:24\)\n\tld\t\(HDAE5000_RAM_PportInfoBlock\+201:24\), a\n", b"", s)
+assert n == 1, "svc03"
 write(f, s)
 print("ok")

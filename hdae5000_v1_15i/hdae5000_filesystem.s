@@ -242,7 +242,7 @@ HDAE5000_Lbn_ShowEntry_Join:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xhl, (xwa + RootFn_SendEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_DIRNO_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -257,7 +257,7 @@ HDAE5000_Lbn_ShowEntry_Join:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xhl, (xwa + RootFn_SendEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_DIRNAME_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -272,7 +272,7 @@ HDAE5000_Lbn_ShowEntry_Join:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xhl, (xwa + RootFn_SendEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_FILENO_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -287,7 +287,7 @@ HDAE5000_Lbn_ShowEntry_Join:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld_sril	xhl, (xwa + RootFn_SendEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_FILENAME_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -304,7 +304,7 @@ HDAE5000_Lbn_ShowEntry_Reset_Skip:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_DIRNO_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -319,7 +319,7 @@ HDAE5000_Lbn_ShowEntry_Reset_Skip:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_DIRNAME_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -334,7 +334,7 @@ HDAE5000_Lbn_ShowEntry_Reset_Skip:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_FILENO_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -349,7 +349,7 @@ HDAE5000_Lbn_ShowEntry_Reset_Skip:
 	ld	xwa, (xwa + WS_RootFnTable)
 	ld	xhl, (xwa + RootFn_ApPostEvent)
 	ld	xwa, HDAE5000_OBJ_LBN_FILENAME_BOX
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xwa, (xwa + WS_RootFnTable)
@@ -1368,7 +1368,7 @@ HDAE5000_FlsList_BuildPage:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_SEL_FLS
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xwa, (xwa + WS_RootFnTable)
@@ -1673,7 +1673,7 @@ HDAE5000_FlsScreen_Refresh_Join:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	a, (xsp+32)
 	extz wa
@@ -1789,7 +1789,7 @@ HDAE5000_FlsScreen_Refresh_Join5:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	a, (xsp+32)
 	extz wa
@@ -1861,7 +1861,7 @@ HDAE5000_FlsScreen_Refresh_Join7:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, 0x01ea0009
+	ld	xbc, EVT_HDAE_SET_STR_ADR
 	call	(xhl)
 	ld	a, (xsp+32)
 	extz wa
@@ -3124,7 +3124,7 @@ HDAE5000_FdList_Redisplay:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — ld xwa, (xwa+0x0e0a)
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23 — ld xhl, (xwa+0x0124)
 	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL			; 40 e0 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Deregister event 0x01C0000F
@@ -3183,7 +3183,7 @@ HDAE5000_FdList_Redisplay:
 	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
 	ld xhl, (xwa + RootFn_ApPostEvent)             ; e3 e1 24 01 23
 	ld xwa, HDAE5000_OBJ_CP_FD_LIST			; 40 d9 00 7f 00
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR			; 41 0a 00 ea 01
 	call (xhl)				; b3 e8
 
 	; Deregister event 0x01C0000F
@@ -3212,20 +3212,16 @@ HDAE5000_FdList_Redisplay:
 	ld xbc, EVT_DRAW			; 41 0d 00 c0 01
 	ld xde, 0:i3				; ea a8
 	jp (xhl)				; b3 d8 — tail call
+
 ; --- Event handler sub-function ---
 HDAE5000_CopyToHDScreen:
 	; registered as "CopyToHDScreen" in HDAE5000_ScreenProc_Table
-	cp	xbc, 0x01ea0002
+	cp xbc, EVT_HDAE_CHANGE_SEL_NUM			; e9 cf 02 00 ea 01
 	jrl	z, .Lfbs_evt_0002
-	cp	xbc, 0x01ea0008
+	cp xbc, EVT_HDAE_SELECT_SAVE			; e9 cf 08 00 ea 01
 	jr	z, .Lfbs_evt_0008
-	cp	xbc, 0x01ea0006
-	jrl	nz, .Lfbs_evt_done
-	; Event 0x01EA0009: scan all 20 entries, mark active ones
-.Lfbs_evt_0009:
-.Lfbs_evt_0009_loop:
-	; Entry is active: mark status flag
-.Lfbs_evt_0009_next:
+	cp xbc, EVT_HDAE_SELECT_OK			; e9 cf 06 00 ea 01
+	jrl nz, .Lfbs_evt_done
 
 	; Event 0x01EA0006: format params and check active files
 .Lfbs_evt_0006:
@@ -3309,7 +3305,7 @@ HDAE5000_CopyToHd_Execute:
 	ld iz, 0:i3
 .LFSD__loop:
 	cp	iz, (xsp+302)
-	jrl	nc, .LFSD__loop_done
+	jrl nc, .LFSD__loop_done
 .LFSD__loop_body:
 	ld wa, iz
 	extz xwa
@@ -3317,7 +3313,7 @@ HDAE5000_CopyToHd_Execute:
 	ld xbc, HDAE5000_RAM_FdList
 	add xbc, xwa
 	cp	(xbc), 0x01
-	jrl	nz, .LFSD__loop_next
+	jrl nz, .LFSD__loop_next
 	; Valid entry — format and display
 	pushw 0x000d
 	pushw 0x0000
@@ -3365,7 +3361,7 @@ HDAE5000_CopyToHd_Execute:
 	jr c, .LFSD__qiz_loop
 .LFSD__qiz_done:
 	cpw	(xsp+4), 0xffff
-	jrl	z, .LFSD__loop_next
+	jrl z, .LFSD__loop_next
 	; Copy 8 bytes from entry
 	pushw 0x0008
 	lda xwa, (xsp+288)
@@ -3557,14 +3553,13 @@ HDAE5000_CopyToHd_Execute:
 	call (xix)
 	ld xwa, xhl
 	cp xwa, 0xffffffff
-	jr z, .LFSD__f8
+	jr z, .LFSD__post_search
 	set	0x07, qiz
 	ld xwa, xhl
 	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
 	ld xbc, (xbc + WS_HamaFnTable)
 	ld_sril xhl, (xbc + HamaFn__findclose)
 	call (xhl)
-.LFSD__f8:				; Field 8 (0x2F56)
 .LFSD__post_search:
 	; Check results and call directory handler
 	lda xwa, (xsp+286)
@@ -3654,7 +3649,7 @@ HDAE5000_CopyToHd_Execute:
 .LFSD__loop_next:
 	inc 1, iz
 	cp	iz, (xsp+302)
-	jrl	c, .LFSD__loop_body
+	jrl c, .LFSD__loop_body
 .LFSD__loop_done:
 	ld hl, 0:i3
 .LFSD__exit:
@@ -4010,7 +4005,7 @@ HDAE5000_WrConfirmEventCatch:
 	ld xhl, (xhl + WS_RootFnTable)
 	ld_sril xhl, (xhl + RootFn_InheritedProc)
 	call (xhl)
-	lda xwa, (HDAE5000_Str_TLX:24)
+	lda xwa, (HDAE5000_Str_Wrcn:24)
 	ld xbc, xwa
 	ld xwa, (xsp + 0x08)
 	ld xde, xbc

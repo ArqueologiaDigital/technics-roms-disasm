@@ -72,23 +72,11 @@
 	.equ HDAE5000_RAM_SeparateDrumPartSent, 0x23d2da	; drum part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_SeparateBassPartSent, 0x23d2dc	; bass part last sent by HDAE5000_SeparateOutput_Apply
 	.equ HDAE5000_RAM_MainWorkspacePtr, 0x23d2de	; the main CPU's workspace; every call into it is (this)->0x0E88 or ->0x0E0A table + offset (init image: 4 bytes after HDAE5000_LyricBoxObj_Init; the object table at 0x027ED2)
-	.equ HDAE5000_RAM_LyricBuffer, 0x22b430	; the lyric file, 0x5000 bytes: TLhd/TLtr chunks, events from +22 (HDAE5000_Lyrics_ClearBuffer, _ParseEvent)
-	.equ HDAE5000_RAM_LyricLines, 0x23a032	; six 40-byte text lines of the lyric window (HDAE5000_Lyrics_FillLines)
-	.equ HDAE5000_RAM_LyricLoaded, 0x23a106	; 1 once a lyric file passed its checks (HDAE5000_Lyrics_CheckFile)
-	.equ HDAE5000_RAM_LyricBoxObj, 0x23a108	; the open lyric box's object id, 0xFFFFFFFF when closed (HDAE5000_LyricBoxProc); redraw events go to it
-	.equ HDAE5000_RAM_LyricPosEvt, 0x230e66	; parameter block of event 0x01CA0004 to the lyric box: +0 sqbtof word, +2 LyricPosStep, +4 LyricPosition (HDAE5000_Frame_Handler)
-	.equ HDAE5000_RAM_LyricPosStep, 0x230e68	; (sq_beadt >> 3) + 1 at the last post; a change triggers the next one
-	.equ HDAE5000_RAM_LyricPosition, 0x230e6a	; sqbtof * 12 + (sq_beadt >> 3) + 2: the position HDAE5000_Lyrics_PlayToPosition scales by division / 12
 	.equ HDAE5000_RAM_SqSrtcPtr, 0x22b3de	; address of the main CPU's sqsrtc byte (HamaFn_GetAdr_sqsrtc = 0x0421, HDAE5000_Boot_Init); HDAE5000_Frame_Handler watches its bit 2
 	.equ HDAE5000_RAM_SqSrtcBit2Prev, 0x22b3e2	; bit 2 of sqsrtc at the previous frame (HDAE5000_Frame_Handler_Status)
 	.equ HDAE5000_RAM_SqBtofPtr, 0x22b3e4	; address of the main CPU's sqbtof word (HamaFn_GetAdr_sqbtof = 0x041C, HDAE5000_Boot_Init)
 	.equ HDAE5000_RAM_SqBeadtPtr, 0x22b3e8	; address of the main CPU's sq_beadt byte (HamaFn_GetAdr_sq_beadt = 0x041B, HDAE5000_Boot_Init)
 	.equ HDAE5000_RAM_HdPresent, 0x22b3ec	; HDAE5000_Check_HD_Present's result (HDAE5000_Boot_Init; HDAE5000_Get_Init_Flag)
-	.equ HDAE5000_RAM_FdLyricNames, 0x230828	; 40 x 9-byte base names of the *.TLX files on the floppy, sorted (HDAE5000_FdLyricList_AddTlx)
-	.equ HDAE5000_RAM_FdLyricTitles, 0x23099a	; 40 x 27 bytes: the first 26 bytes of each <name>.TTX (HDAE5000_FdLyricList_Scan)
-	.equ HDAE5000_RAM_FdLyricHasMid, 0x230dee	; 40 flags: <name>.MID opens (HDAE5000_FdLyricList_Scan)
-	.equ HDAE5000_RAM_FdLyricCount, 0x230e16	; entries in FdLyricNames, at most 40 (HDAE5000_FdLyricList_AddTlx)
-	.equ HDAE5000_RAM_FdVolumeLabel, 0x230e1e	; the floppy's volume label (HamaFn_GetVolumeLabel) + " ->" (HDAE5000_FdLyricList_Scan)
 	.equ HDAE5000_RAM_PportLinkActive, 0x23c4c4	; 1 while the PC-link context exists (HDAE5000_PPORT_StartLink sets it; _ReturnToLink / _Reset clear it); HDAE5000_PPORT_ServicePending tests it
 	.equ HDAE5000_RAM_PportLinkSp, 0x23c4c6	; the PC-link context's saved XSP (HDAE5000_PPORT_YieldToMain stores, HDAE5000_PPORT_SwitchToLink loads)
 	.equ HDAE5000_RAM_PportMainSp, 0x23c4ca	; the main context's saved XSP (HDAE5000_PPORT_SwitchToLink stores, HDAE5000_PPORT_YieldToMain loads)
@@ -196,14 +184,11 @@
 	.equ HDAE5000_RAM_PportSizeFieldOffset, 0x23c4ea	; byte offset of the size field in a part file's first sector (InitRegionDescriptors -> _Lookup)
 	.equ HDAE5000_RAM_PportSizeFieldWidth, 0x23c4ec	; 0x20: that field is a long; 0x10: a word counting 16-byte units
 	.equ HDAE5000_RAM_PportSendMaskLo, 0x23c4ee	; low byte of the part mask SendRegionToPc puts in PportInfoBlock+0 before opening the read (service 24)
-	.equ HDAE5000_RAM_PportSendMaskHi, 0x239096	; its high byte
 	.equ HDAE5000_RAM_PportSectorOffset, 0x23c4f0	; word: byte offset into PportSectorBuffer while SendRegionToPc sends it; 512 = read the next sector
 	.equ HDAE5000_RAM_PportRegions, 0x23c4fa	; (address, size) long pairs: SendTwoRegions sends pairs 0 and 1; InitRegionDescriptors stores part sizes in the slots
 	.equ HDAE5000_RAM_PportBytesLeft, 0x23c54e	; bytes SendRegionToPc still has to send
 	.equ HDAE5000_RAM_Errno, 0x22b3dc	; word: set to 34 (ERANGE) by HDAE5000_Float_Pack / _Double_Pack on overflow
 	.equ HDAE5000_RAM_MathErrorHook, 0x23d2e4	; routine pointer HDAE5000_Float_Pack / _Double_Pack call after setting Errno, when it is non-zero
-	.equ HDAE5000_RAM_LyricEvent, 0x230430	; the lyric event just parsed, right after LyricBuffer: +0 word meta type (HDAE5000_Lyrics_ParseEvent stores it, 0x2F = end of track; FindEvent compares it), +4 end-of-track flag, +6 its data (Lyrics_ParseEvent, _FindEvent, _PlayToPosition, _ReadSongInfo)
-	.equ HDAE5000_RAM_LyricFileLength, 0x2304f2	; the TLX file's length: the TLtr length (big-endian at LyricBuffer+18) + 22; 0 after HDAE5000_Lyrics_ClearBuffer (Lyrics_CheckTrackChunk, TlxPart_Describe)
 	.equ HDAE5000_RAM_RcmStreamDir, 0x23b3f0	; directory of the song whose RCM part is streamed (HDAE5000_LoadSong_Rcm / _SaveSong_Rcm; read by HDAE5000_RcmStream_Read / _Write)
 	.equ HDAE5000_RAM_RcmStreamSong, 0x23b3f2	; song of that RCM stream
 	.equ HDAE5000_RAM_RcmStreamResult, 0x23b3f4	; word: the last HD result of the RCM stream (HDAE5000_RcmStream_LastResult returns it)
@@ -217,10 +202,6 @@
 	.equ HDAE5000_RAM_FlsNameHistory, 0x22acc2	; 5-entry history of FLS names, same layout as DirNameHistory
 	.equ HDAE5000_IO_VgaPorts, 0x170000	; the display controller's I/O ports: port N is at this + N (HDAE5000_VGA_Port_Write; 0x3C8 palette index, 0x3C9 palette data)
 	.equ HDAE5000_RAM_FdList, 0x22aa54	; the floppy song list: +0 title text (14), +14 the 20 row texts, +0x100 20 present flags (HDAE5000_FdList_Scan), +0x114 20 selected flags (the copy screen toggles them; HDAE5000_FdList_Redisplay marks those rows "*")
-	.equ HDAE5000_RAM_SmfHeader, 0x230e50	; 14 bytes: the header HDAE5000_Smf_ReadHeader reads from a floppy file
-	.equ HDAE5000_RAM_SmfFormat, 0x230e5e	; word: SMF format of the checked header, <= 1 (HDAE5000_Smf_CheckHeader)
-	.equ HDAE5000_RAM_SmfTrackCount, 0x230e60	; word: its track count
-	.equ HDAE5000_RAM_SmfDivision, 0x230e62	; word: its division; bit 15 (SMPTE) must be clear
 	.equ HDAE5000_RAM_SongScreenTitle, 0x22a038	; "DIRECTORY NN:<name>" of the song screen (HDAE5000_SongScreen_Refresh)
 	.equ HDAE5000_RAM_FlsListText, 0x22a282	; 24 rows x 21 bytes + NUL: "NNN:" and the 16-byte FLS name at +4 (HDAE5000_FlsList_BuildPage)
 	.equ HDAE5000_RAM_LbnEntryText, 0x22aa1a	; the load-by-number entry: digits, directory and song name (HDAE5000_Lbn_ShowEntry)
@@ -1120,7 +1101,7 @@ HDAE5000_SelectListProc:
 	jrl	z, HDAE5000_SelectListProc_Skip10
 	cp	xwa, EVT_INDEXSW_UP_AIC
 	jrl	z, HDAE5000_SelectListProc_Skip10
-	cp	xwa, 0x01ea0009
+	cp	xwa, EVT_HDAE_SET_STR_ADR
 	jrl	z, HDAE5000_SelectListProc_OnHdaeSetStrAdr
 	cp	xwa, EVT_HDAE_REQ_SEL_NUM
 	jrl	z, HDAE5000_SelectListProc_OnHdaeReqSelNum
@@ -1867,7 +1848,7 @@ HDAE5000_SelectListProc_Skip16:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld	xhl, (xbc + RootFn_MainFuncCall)
-	ld	xbc, 0x01ea000c
+	ld	xbc, EVT_HDAE_SELECT_DEL_FILE
 	call	(xhl)
 	ld	xhl, 0:i3
 	jrl	t, HDAE5000_SelectListProc_Epilogue
@@ -1903,8 +1884,7 @@ HDAE5000_SelectListProc_Skip18:
 	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
 	ld	xbc, (xbc + WS_RootFnTable)
 	ld	xhl, (xbc + RootFn_MainFuncCall)
-	ld	xbc, 0x01ea000b
-HDAE5000_SelectListProc_Skip19:
+	ld	xbc, EVT_HDAE_SELECT_DEL
 	call	(xhl)
 	ld	xhl, 0:i3
 	jr	t, HDAE5000_SelectListProc_Epilogue
@@ -4152,7 +4132,7 @@ HDAE5000_FdList_Clear:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_CP_FD_VOLLABEL
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 	; Register second handler (0xDE, different params)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
@@ -4177,7 +4157,7 @@ HDAE5000_FdList_Clear:
 	ld xwa, (xwa + WS_RootFnTable)
 	ld xhl, (xwa + RootFn_ApPostEvent)
 	ld xwa, HDAE5000_OBJ_CP_FD_LIST
-	ld	xbc, 0x01ea0009
+	ld xbc, EVT_HDAE_SET_STR_ADR
 	call (xhl)
 	; Second handler (0xD7, different params)
 	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)

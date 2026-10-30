@@ -6,7 +6,8 @@ set -e
 cd "$(dirname "$0")/../../.."
 P="python3 scripts/tools/port_hdae5000_version.py"
 E=notes/hdae5000-versions-2026-10-24/port-edits-v1_15i
-rm -f -- hdae5000_v1_15i/*.s hdae5000_v1_15i/hdae5000.ld
+rm -f -- hdae5000_v1_15i/*.s hdae5000_v1_15i/hdae5000.ld hdae5000_v1_15i/shared/event_codes.s
+rmdir hdae5000_v1_15i/shared 2>/dev/null || true
 rm -f -- hdae5000_v1_15i/includes/generated/*.bin
 rmdir hdae5000_v1_15i/includes/generated hdae5000_v1_15i/includes 2>/dev/null || true
 mv hdae5000_v1_15i/images "${TMPDIR:?}/replay_v1_15i_images.$$"
