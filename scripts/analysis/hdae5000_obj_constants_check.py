@@ -32,7 +32,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 NM = os.path.expanduser("~/compartilhado/llvm-project/build/bin/llvm-nm")
 BASE = 0x280000
-IMAGE = {"hdae5000": "hd-ae5000_v2_06i", "hdae5000_v2_01i": "hd-ae5000_v2_01i"}
+IMAGE = {"hdae5000": "hd-ae5000_v2_06i", "hdae5000_v2_01i": "hd-ae5000_v2_01i",
+         "hdae5000_v1_15i": "hd-ae5000_v1_15i", "hdae5000_v1_10i": "hd-ae5000_v1_10i"}
 
 
 def check(tree):
@@ -86,6 +87,10 @@ def main():
                              sorted(glob.glob(os.path.join(ROOT, "hdae5000_v*"))))
     bad = []
     for t in trees:
+        img = IMAGE.get(os.path.basename(os.path.normpath(t)))
+        if img is None or not os.path.exists(os.path.join(ROOT, "rebuilt_ROMs", img + ".llvm.elf")):
+            print("%-17s not built (no ELF in rebuilt_ROMs/): skipped" % os.path.basename(os.path.normpath(t)))
+            continue
         bad += check(t)
     for b in bad:
         print("FAIL  " + b)
