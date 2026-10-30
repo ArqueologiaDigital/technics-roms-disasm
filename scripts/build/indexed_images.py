@@ -71,6 +71,10 @@ MANIFEST = [
     ('v10/maincpu/images/BitmapSplitPoint_no_split.bin', 'v10/maincpu/images/BitmapSplitPoint_no_split.png', 58, 52, 58),
     ('v10/maincpu/images/BitmapTechnicsLogo.bin', 'v10/maincpu/images/BitmapTechnicsLogo.png', 312, 45, 312),
     ('v10/maincpu/images/BitmapWormWearingHat.bin', 'v10/maincpu/images/BitmapWormWearingHat.png', 24, 24, 24),
+    # The HD-AE5000's one bitmap object, "BitmapButt01" (42 x 15, 8 bpp, no row pad): it answers the main
+    # CPU's EVT_GET_BITMAP_DATA / _WIDTH / _HEIGHT (hdae5000_data_tables.s), so the main palette is shown.
+    # v2.06i and v2.01i hold the same 630 bytes; both trees include this file (lane media-files, 2026-10-30).
+    ('hdae5000/images/HDAE5000_Bitmap_Button01.bin', 'hdae5000/images/HDAE5000_Bitmap_Button01.png', 42, 15, 42),
 ]
 
 

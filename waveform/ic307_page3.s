@@ -290,177 +290,181 @@ P3_Rec0056:	WaveRecHead	IC307_Page3, P3_W0041_DanceBass
 ; the first wave starts on a 16-byte granule (wave offsets count granules): zero fill
 	.balign	16, 0
 
-; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
+; ---- PCM: one item per distinct wave start, each from its WAV file waveform/wav/<label>.wav ----
+; scripts/build/pcm_wav.py turns the WAV back into the raw item build/pcm/<label>.pcm (make
+; waveform-wav extracts the WAVs from the git-ignored reference image).  IC307 is the Y chip of a
+; word-interleaved pair, so an item is every other word of a recording: signed 16-bit little-endian
+; samples, or two signed 8-bit samples per word, low byte first (notes/media-files-2026-10-30).
 ; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
 ; play on into the next items: see the notes on sequence records ([INFERENCE]).
-; wave 0: 26,128 samples (52,256 B); entry 0
+; wave 0: 26,128 16-bit samples (52,256 B); entry 0
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0000:	.incbin	"kn5000_waveform_rom.ic307", 0x300240, 52256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1: 22,544 samples (45,088 B); entry 1
+P3_W0000:	.incbin	"pcm/P3_W0000.pcm", 0, 52256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0000.wav (16-bit)
+; wave 1: 22,544 16-bit samples (45,088 B); entry 1
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0001:	.incbin	"kn5000_waveform_rom.ic307", 0x30ce60, 45088	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 2: 22,288 samples (44,576 B); entry 2
+P3_W0001:	.incbin	"pcm/P3_W0001.pcm", 0, 45088	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0001.wav (16-bit)
+; wave 2: 22,288 16-bit samples (44,576 B); entry 2
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0002:	.incbin	"kn5000_waveform_rom.ic307", 0x317e80, 44576	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 3: 21,264 samples (42,528 B); entry 3
+P3_W0002:	.incbin	"pcm/P3_W0002.pcm", 0, 44576	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0002.wav (16-bit)
+; wave 3: 21,264 16-bit samples (42,528 B); entry 3
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0003:	.incbin	"kn5000_waveform_rom.ic307", 0x322ca0, 42528	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 4: 20,112 samples (40,224 B); entry 4
+P3_W0003:	.incbin	"pcm/P3_W0003.pcm", 0, 42528	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0003.wav (16-bit)
+; wave 4: 20,112 16-bit samples (40,224 B); entry 4
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0004:	.incbin	"kn5000_waveform_rom.ic307", 0x32d2c0, 40224	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 5: 19,216 samples (38,432 B); entry 5
+P3_W0004:	.incbin	"pcm/P3_W0004.pcm", 0, 40224	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0004.wav (16-bit)
+; wave 5: 19,216 16-bit samples (38,432 B); entry 5
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0005:	.incbin	"kn5000_waveform_rom.ic307", 0x336fe0, 38432	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 6: 18,832 samples (37,664 B); entry 6
+P3_W0005:	.incbin	"pcm/P3_W0005.pcm", 0, 38432	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0005.wav (16-bit)
+; wave 6: 18,832 16-bit samples (37,664 B); entry 6
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0006:	.incbin	"kn5000_waveform_rom.ic307", 0x340600, 37664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 7: 16,656 samples (33,312 B); entry 7
+P3_W0006:	.incbin	"pcm/P3_W0006.pcm", 0, 37664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0006.wav (16-bit)
+; wave 7: 16,656 16-bit samples (33,312 B); entry 7
 ;   source "BrightPiano L", "Piano (Mono)", "Piano L"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Fusion Lead 1, Fusion Lead 2, Glimmer +24 more
-P3_W0007:	.incbin	"kn5000_waveform_rom.ic307", 0x349920, 33312	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 8: 15,504 samples (31,008 B); entry 8
+P3_W0007:	.incbin	"pcm/P3_W0007.pcm", 0, 33312	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0007.wav (16-bit)
+; wave 8: 15,504 16-bit samples (31,008 B); entry 8
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0008:	.incbin	"kn5000_waveform_rom.ic307", 0x351b40, 31008	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 9: 12,560 samples (25,120 B); entry 9
+P3_W0008:	.incbin	"pcm/P3_W0008.pcm", 0, 31008	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0008.wav (16-bit)
+; wave 9: 12,560 16-bit samples (25,120 B); entry 9
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0009:	.incbin	"kn5000_waveform_rom.ic307", 0x359460, 25120	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 10: 11,888 samples (23,776 B); entry 10
+P3_W0009:	.incbin	"pcm/P3_W0009.pcm", 0, 25120	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0009.wav (16-bit)
+; wave 10: 11,888 16-bit samples (23,776 B); entry 10
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0010:	.incbin	"kn5000_waveform_rom.ic307", 0x35f680, 23776	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 11: 11,536 samples (23,072 B); entry 11
+P3_W0010:	.incbin	"pcm/P3_W0010.pcm", 0, 23776	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0010.wav (16-bit)
+; wave 11: 11,536 16-bit samples (23,072 B); entry 11
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0011:	.incbin	"kn5000_waveform_rom.ic307", 0x365360, 23072	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 12: 10,608 samples (21,216 B); entry 12
+P3_W0011:	.incbin	"pcm/P3_W0011.pcm", 0, 23072	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0011.wav (16-bit)
+; wave 12: 10,608 16-bit samples (21,216 B); entry 12
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0012:	.incbin	"kn5000_waveform_rom.ic307", 0x36ad80, 21216	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 13: 9,184 samples (18,368 B); entry 13
+P3_W0012:	.incbin	"pcm/P3_W0012.pcm", 0, 21216	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0012.wav (16-bit)
+; wave 13: 9,184 16-bit samples (18,368 B); entry 13
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0013:	.incbin	"kn5000_waveform_rom.ic307", 0x370060, 18368	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 14: 7,760 samples (15,520 B); entry 14
+P3_W0013:	.incbin	"pcm/P3_W0013.pcm", 0, 18368	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0013.wav (16-bit)
+; wave 14: 7,760 16-bit samples (15,520 B); entry 14
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0014:	.incbin	"kn5000_waveform_rom.ic307", 0x374820, 15520	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 15: 8,448 samples (16,896 B); entry 15
+P3_W0014:	.incbin	"pcm/P3_W0014.pcm", 0, 15520	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0014.wav (16-bit)
+; wave 15: 8,448 16-bit samples (16,896 B); entry 15
 ;   source "BrightPiano L", "Piano L"
 ;   tones Bright Piano, Honky-Tonk Piano, Mellow Piano, Piano, Rock Piano 2
-P3_W0015:	.incbin	"kn5000_waveform_rom.ic307", 0x3784c0, 16896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 16: 26,128 samples (52,256 B); entry 16
+P3_W0015:	.incbin	"pcm/P3_W0015.pcm", 0, 16896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0015.wav (16-bit)
+; wave 16: 26,128 16-bit samples (52,256 B); entry 16
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0016:	.incbin	"kn5000_waveform_rom.ic307", 0x37c6c0, 52256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 17: 22,544 samples (45,088 B); entry 17
+P3_W0016:	.incbin	"pcm/P3_W0016.pcm", 0, 52256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0016.wav (16-bit)
+; wave 17: 22,544 16-bit samples (45,088 B); entry 17
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0017:	.incbin	"kn5000_waveform_rom.ic307", 0x3892e0, 45088	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 18: 22,288 samples (44,576 B); entry 18
+P3_W0017:	.incbin	"pcm/P3_W0017.pcm", 0, 45088	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0017.wav (16-bit)
+; wave 18: 22,288 16-bit samples (44,576 B); entry 18
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0018:	.incbin	"kn5000_waveform_rom.ic307", 0x394300, 44576	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 19: 21,264 samples (42,528 B); entry 19
+P3_W0018:	.incbin	"pcm/P3_W0018.pcm", 0, 44576	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0018.wav (16-bit)
+; wave 19: 21,264 16-bit samples (42,528 B); entry 19
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0019:	.incbin	"kn5000_waveform_rom.ic307", 0x39f120, 42528	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 20: 20,112 samples (40,224 B); entry 20
+P3_W0019:	.incbin	"pcm/P3_W0019.pcm", 0, 42528	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0019.wav (16-bit)
+; wave 20: 20,112 16-bit samples (40,224 B); entry 20
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0020:	.incbin	"kn5000_waveform_rom.ic307", 0x3a9740, 40224	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 21: 19,216 samples (38,432 B); entry 21
+P3_W0020:	.incbin	"pcm/P3_W0020.pcm", 0, 40224	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0020.wav (16-bit)
+; wave 21: 19,216 16-bit samples (38,432 B); entry 21
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0021:	.incbin	"kn5000_waveform_rom.ic307", 0x3b3460, 38432	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 22: 18,832 samples (37,664 B); entry 22
+P3_W0021:	.incbin	"pcm/P3_W0021.pcm", 0, 38432	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0021.wav (16-bit)
+; wave 22: 18,832 16-bit samples (37,664 B); entry 22
 ;   source "BrightPiano R", "Piano R"
 ;   tones Bright Piano, Electric Grand, Honky-Tonk Piano, Mellow Piano, Piano, Piano & Strings
-P3_W0022:	.incbin	"kn5000_waveform_rom.ic307", 0x3bca80, 37664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 23: 16,656 samples (33,312 B); entry 23
+P3_W0022:	.incbin	"pcm/P3_W0022.pcm", 0, 37664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0022.wav (16-bit)
+; wave 23: 16,656 16-bit samples (33,312 B); entry 23
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0023:	.incbin	"kn5000_waveform_rom.ic307", 0x3c5da0, 33312	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 24: 15,504 samples (31,008 B); entry 24
+P3_W0023:	.incbin	"pcm/P3_W0023.pcm", 0, 33312	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0023.wav (16-bit)
+; wave 24: 15,504 16-bit samples (31,008 B); entry 24
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0024:	.incbin	"kn5000_waveform_rom.ic307", 0x3cdfc0, 31008	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 25: 12,560 samples (25,120 B); entry 25
+P3_W0024:	.incbin	"pcm/P3_W0024.pcm", 0, 31008	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0024.wav (16-bit)
+; wave 25: 12,560 16-bit samples (25,120 B); entry 25
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0025:	.incbin	"kn5000_waveform_rom.ic307", 0x3d58e0, 25120	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 26: 11,888 samples (23,776 B); entry 26
+P3_W0025:	.incbin	"pcm/P3_W0025.pcm", 0, 25120	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0025.wav (16-bit)
+; wave 26: 11,888 16-bit samples (23,776 B); entry 26
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0026:	.incbin	"kn5000_waveform_rom.ic307", 0x3dbb00, 23776	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 27: 11,536 samples (23,072 B); entry 27
+P3_W0026:	.incbin	"pcm/P3_W0026.pcm", 0, 23776	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0026.wav (16-bit)
+; wave 27: 11,536 16-bit samples (23,072 B); entry 27
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0027:	.incbin	"kn5000_waveform_rom.ic307", 0x3e17e0, 23072	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 28: 10,608 samples (21,216 B); entry 28
+P3_W0027:	.incbin	"pcm/P3_W0027.pcm", 0, 23072	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0027.wav (16-bit)
+; wave 28: 10,608 16-bit samples (21,216 B); entry 28
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0028:	.incbin	"kn5000_waveform_rom.ic307", 0x3e7200, 21216	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 29: 9,184 samples (18,368 B); entry 29
+P3_W0028:	.incbin	"pcm/P3_W0028.pcm", 0, 21216	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0028.wav (16-bit)
+; wave 29: 9,184 16-bit samples (18,368 B); entry 29
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0029:	.incbin	"kn5000_waveform_rom.ic307", 0x3ec4e0, 18368	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 30: 7,760 samples (15,520 B); entry 30
+P3_W0029:	.incbin	"pcm/P3_W0029.pcm", 0, 18368	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0029.wav (16-bit)
+; wave 30: 7,760 16-bit samples (15,520 B); entry 30
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0030:	.incbin	"kn5000_waveform_rom.ic307", 0x3f0ca0, 15520	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 31: 8,448 samples (16,896 B); entry 31
+P3_W0030:	.incbin	"pcm/P3_W0030.pcm", 0, 15520	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0030.wav (16-bit)
+; wave 31: 8,448 16-bit samples (16,896 B); entry 31
 ;   source "BrightPiano R", "Piano (Mono)", "Piano R"
 ;   tones Analog Bass 2, Bell Piano, Bright Piano, Bright S.Brass, Clavi Lead, Electric Grand, Fusion Lead 1, Fusion Lead 2 +26 more
-P3_W0031:	.incbin	"kn5000_waveform_rom.ic307", 0x3f4940, 16896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 32: 2,816 samples (5,632 B); entry 32
+P3_W0031:	.incbin	"pcm/P3_W0031.pcm", 0, 16896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0031.wav (16-bit)
+; wave 32: 2,816 16-bit samples (5,632 B); entry 32
 ;   source "Slap Bass 2", "Thumb Bass 2"
 ;   tones Slap Bass 2, Synth Slap
-P3_W0032:	.incbin	"kn5000_waveform_rom.ic307", 0x3f8b40, 5632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 33: 3,328 samples (6,656 B); entries 33, 34, 35, 36, 37, 38, 39
+P3_W0032:	.incbin	"pcm/P3_W0032.pcm", 0, 5632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0032.wav (16-bit)
+; wave 33: 3,328 16-bit samples (6,656 B); entries 33, 34, 35, 36, 37, 38, 39
 ;   source "Pull Bass 2", "Slap Bass 2", "Thumb Bass 2"
 ;   tones Slap Bass 2, Synth Slap
-P3_W0033:	.incbin	"kn5000_waveform_rom.ic307", 0x3fa140, 6656	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 34: 2,816 samples (5,632 B); entries 40, 41, 42, 43
+P3_W0033:	.incbin	"pcm/P3_W0033.pcm", 0, 6656	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0033.wav (16-bit)
+; wave 34: 2,816 16-bit samples (5,632 B); entries 40, 41, 42, 43
 ;   source "Pull Bass 2", "Slap Bass 2"
 ;   tones Slap Bass 2
-P3_W0034:	.incbin	"kn5000_waveform_rom.ic307", 0x3fbb40, 5632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 35: 1,024 samples (2,048 B); entry 44
+P3_W0034:	.incbin	"pcm/P3_W0034.pcm", 0, 5632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0034.wav (16-bit)
+; wave 35: 1,024 16-bit samples (2,048 B); entry 44
 ;   source "Click Bass"
 ;   tones Metallica Solo, Wet Bass
-P3_W0035_ClickBass:	.incbin	"kn5000_waveform_rom.ic307", 0x3fd140, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 36: 768 samples (1,536 B); entry 45
+P3_W0035_ClickBass:	.incbin	"pcm/P3_W0035_ClickBass.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0035_ClickBass.wav (16-bit)
+; wave 36: 768 16-bit samples (1,536 B); entry 45
 ;   source "Click Bass"
 ;   tones Metallica Solo, Wet Bass
-P3_W0036_ClickBass:	.incbin	"kn5000_waveform_rom.ic307", 0x3fd940, 1536	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 37: 320 samples (640 B); entry 46
+P3_W0036_ClickBass:	.incbin	"pcm/P3_W0036_ClickBass.pcm", 0, 1536	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0036_ClickBass.wav (16-bit)
+; wave 37: 320 16-bit samples (640 B); entry 46
 ;   source "Click Bass"
 ;   tones Metallica Solo, Wet Bass
-P3_W0037_ClickBass:	.incbin	"kn5000_waveform_rom.ic307", 0x3fdf40, 640	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 38: 256 samples (512 B); entry 47
+P3_W0037_ClickBass:	.incbin	"pcm/P3_W0037_ClickBass.pcm", 0, 640	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0037_ClickBass.wav (16-bit)
+; wave 38: 256 16-bit samples (512 B); entry 47
 ;   source "Basic S.Bass2", "Click Bass"
 ;   tones Bass & Lead, Metallica Solo, Plastic Bass, Wet Bass
-P3_W0038:	.incbin	"kn5000_waveform_rom.ic307", 0x3fe1c0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 39: 256 samples (512 B); entry 48
+P3_W0038:	.incbin	"pcm/P3_W0038.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0038.wav (16-bit)
+; wave 39: 256 16-bit samples (512 B); entry 48
 ;   source "Basic S.Bass2", "Click Bass", "Soul Bass"
 ;   tones Bass & Lead, Metallica Solo, Plastic Bass, Wet Bass
-P3_W0039:	.incbin	"kn5000_waveform_rom.ic307", 0x3fe3c0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 40: 2,048 samples (4,096 B); entries 49, 50
+P3_W0039:	.incbin	"pcm/P3_W0039.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0039.wav (16-bit)
+; wave 40: 2,048 16-bit samples (4,096 B); entries 49, 50
 ;   source "Dance Bass"
 ;   tones Dance Bass
-P3_W0040_DanceBass:	.incbin	"kn5000_waveform_rom.ic307", 0x3fe5c0, 4096	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 41: 1,280 samples (2,560 B); entries 51, 52, 53, 54, 55, 56
+P3_W0040_DanceBass:	.incbin	"pcm/P3_W0040_DanceBass.pcm", 0, 4096	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0040_DanceBass.wav (16-bit)
+; wave 41: 1,280 16-bit samples (2,560 B); entries 51, 52, 53, 54, 55, 56
 ;   source "Dance Bass"
 ;   tones Dance Bass
-P3_W0041_DanceBass:	.incbin	"kn5000_waveform_rom.ic307", 0x3ff5c0, 2560	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
+P3_W0041_DanceBass:	.incbin	"pcm/P3_W0041_DanceBass.pcm", 0, 2560	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P3_W0041_DanceBass.wav (16-bit)
 
 ; ---- page tail: 64 bytes of 0xFF after the last wave ----
 IC307_Page3_TailFill:	.fill	64, 1, 0xff

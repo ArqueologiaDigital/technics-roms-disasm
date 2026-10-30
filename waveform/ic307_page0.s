@@ -3359,756 +3359,760 @@ P0_Rec0197:	WaveRecHead	IC307_Page0, P0_W0185_HouseBass
 ; the first wave starts on a 16-byte granule (wave offsets count granules): zero fill
 	.balign	16, 0
 
-; ---- PCM: signed 16-bit little-endian samples, one item per distinct wave start ----
+; ---- PCM: one item per distinct wave start, each from its WAV file waveform/wav/<label>.wav ----
+; scripts/build/pcm_wav.py turns the WAV back into the raw item build/pcm/<label>.pcm (make
+; waveform-wav extracts the WAVs from the git-ignored reference image).  IC307 is the Y chip of a
+; word-interleaved pair, so an item is every other word of a recording: signed 16-bit little-endian
+; samples, or two signed 8-bit samples per word, low byte first (notes/media-files-2026-10-30).
 ; A wave's length here is the distance to the next wave start (or to the 0xFF tail).  An entry may
 ; play on into the next items: see the notes on sequence records ([INFERENCE]).
-; wave 0: 256 samples (512 B); entry 0
-P0_W0000_Sine:	.incbin	"kn5000_waveform_rom.ic307", 0x001a30, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 1: 1,408 samples (2,816 B); entry 1
+; wave 0: 256 16-bit samples (512 B); entry 0
+P0_W0000_Sine:	.incbin	"pcm/P0_W0000_Sine.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0000_Sine.wav (16-bit)
+; wave 1: 1,408 16-bit samples (2,816 B); entry 1
 ;   source "Perc Organ"
 ;   tones Perc Organ
-P0_W0001_PercOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x001c30, 2816	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 2: 1,152 samples (2,304 B); entry 2
+P0_W0001_PercOrgan:	.incbin	"pcm/P0_W0001_PercOrgan.pcm", 0, 2816	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0001_PercOrgan.wav (16-bit)
+; wave 2: 1,152 16-bit samples (2,304 B); entry 2
 ;   source "Perc Organ"
 ;   tones Perc Organ
-P0_W0002_PercOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x002730, 2304	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 3: 704 samples (1,408 B); entry 3
+P0_W0002_PercOrgan:	.incbin	"pcm/P0_W0002_PercOrgan.pcm", 0, 2304	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0002_PercOrgan.wav (16-bit)
+; wave 3: 704 16-bit samples (1,408 B); entry 3
 ;   source "Perc Organ"
 ;   tones Perc Organ
-P0_W0003_PercOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x003030, 1408	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 4: 512 samples (1,024 B); entry 4
+P0_W0003_PercOrgan:	.incbin	"pcm/P0_W0003_PercOrgan.pcm", 0, 1408	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0003_PercOrgan.wav (16-bit)
+; wave 4: 512 16-bit samples (1,024 B); entry 4
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0004_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x0035b0, 1024	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 5: 640 samples (1,280 B); entry 5
+P0_W0004_FullDrawbars:	.incbin	"pcm/P0_W0004_FullDrawbars.pcm", 0, 1024	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0004_FullDrawbars.wav (16-bit)
+; wave 5: 640 16-bit samples (1,280 B); entry 5
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0005_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x0039b0, 1280	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 6: 448 samples (896 B); entry 6
+P0_W0005_FullDrawbars:	.incbin	"pcm/P0_W0005_FullDrawbars.pcm", 0, 1280	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0005_FullDrawbars.wav (16-bit)
+; wave 6: 448 16-bit samples (896 B); entry 6
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0006_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x003eb0, 896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 7: 160 samples (320 B); entry 7
+P0_W0006_FullDrawbars:	.incbin	"pcm/P0_W0006_FullDrawbars.pcm", 0, 896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0006_FullDrawbars.wav (16-bit)
+; wave 7: 320 8-bit samples (320 B); entry 7
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0007_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x004230, 320	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 8: 80 samples (160 B); entry 8
+P0_W0007_FullDrawbars:	.incbin	"pcm/P0_W0007_FullDrawbars.pcm", 0, 320	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0007_FullDrawbars.wav (8-bit)
+; wave 8: 160 8-bit samples (160 B); entry 8
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0008_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x004370, 160	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 9: 128 samples (256 B); entry 9
+P0_W0008_FullDrawbars:	.incbin	"pcm/P0_W0008_FullDrawbars.pcm", 0, 160	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0008_FullDrawbars.wav (8-bit)
+; wave 9: 256 8-bit samples (256 B); entry 9
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0009_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x004410, 256	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 10: 640 samples (1,280 B); entry 10
+P0_W0009_FullDrawbars:	.incbin	"pcm/P0_W0009_FullDrawbars.pcm", 0, 256	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0009_FullDrawbars.wav (8-bit)
+; wave 10: 640 16-bit samples (1,280 B); entry 10
 ;   source "Full Drawbars"
 ;   tones Digi Organ, Full Drawbars, Rock Organ, Telstar
-P0_W0010_FullDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x004510, 1280	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 11: 640 samples (1,280 B); entry 11
+P0_W0010_FullDrawbars:	.incbin	"pcm/P0_W0010_FullDrawbars.pcm", 0, 1280	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0010_FullDrawbars.wav (16-bit)
+; wave 11: 640 16-bit samples (1,280 B); entry 11
 ;   source "Jazz Drawbars"
 ;   tones Jazz Drawbars
-P0_W0011_JazzDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x004a10, 1280	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 12: 448 samples (896 B); entry 12
+P0_W0011_JazzDrawbars:	.incbin	"pcm/P0_W0011_JazzDrawbars.pcm", 0, 1280	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0011_JazzDrawbars.wav (16-bit)
+; wave 12: 448 16-bit samples (896 B); entry 12
 ;   source "Jazz Drawbars"
 ;   tones Jazz Drawbars
-P0_W0012_JazzDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x004f10, 896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 13: 512 samples (1,024 B); entry 13
+P0_W0012_JazzDrawbars:	.incbin	"pcm/P0_W0012_JazzDrawbars.pcm", 0, 896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0012_JazzDrawbars.wav (16-bit)
+; wave 13: 512 16-bit samples (1,024 B); entry 13
 ;   source "Jazz Drawbars"
 ;   tones Jazz Drawbars
-P0_W0013_JazzDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x005290, 1024	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 14: 704 samples (1,408 B); entry 14
+P0_W0013_JazzDrawbars:	.incbin	"pcm/P0_W0013_JazzDrawbars.pcm", 0, 1024	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0013_JazzDrawbars.wav (16-bit)
+; wave 14: 704 16-bit samples (1,408 B); entry 14
 ;   source "Jazz Drawbars"
 ;   tones Jazz Drawbars
-P0_W0014_JazzDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x005690, 1408	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 15: 480 samples (960 B); entry 15
+P0_W0014_JazzDrawbars:	.incbin	"pcm/P0_W0014_JazzDrawbars.pcm", 0, 1408	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0014_JazzDrawbars.wav (16-bit)
+; wave 15: 480 16-bit samples (960 B); entry 15
 ;   source "Jazz Drawbars"
 ;   tones Jazz Drawbars
-P0_W0015_JazzDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x005c10, 960	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 16: 640 samples (1,280 B); entry 16
+P0_W0015_JazzDrawbars:	.incbin	"pcm/P0_W0015_JazzDrawbars.pcm", 0, 960	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0015_JazzDrawbars.wav (16-bit)
+; wave 16: 640 16-bit samples (1,280 B); entry 16
 ;   source "Jazz Drawbars"
 ;   tones Jazz Drawbars
-P0_W0016_JazzDrawbars:	.incbin	"kn5000_waveform_rom.ic307", 0x005fd0, 1280	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 17: 896 samples (1,792 B); entry 17
+P0_W0016_JazzDrawbars:	.incbin	"pcm/P0_W0016_JazzDrawbars.pcm", 0, 1280	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0016_JazzDrawbars.wav (16-bit)
+; wave 17: 896 16-bit samples (1,792 B); entry 17
 ;   source "16' & 1'"
 ;   tones 16' & 1', Full Drawbars
-P0_W0017_16ftAnd1ft:	.incbin	"kn5000_waveform_rom.ic307", 0x0064d0, 1792	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 18: 640 samples (1,280 B); entry 18
+P0_W0017_16ftAnd1ft:	.incbin	"pcm/P0_W0017_16ftAnd1ft.pcm", 0, 1792	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0017_16ftAnd1ft.wav (16-bit)
+; wave 18: 640 16-bit samples (1,280 B); entry 18
 ;   source "16' & 1'"
 ;   tones 16' & 1', Full Drawbars
-P0_W0018_16ftAnd1ft:	.incbin	"kn5000_waveform_rom.ic307", 0x006bd0, 1280	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 19: 384 samples (768 B); entry 19
+P0_W0018_16ftAnd1ft:	.incbin	"pcm/P0_W0018_16ftAnd1ft.pcm", 0, 1280	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0018_16ftAnd1ft.wav (16-bit)
+; wave 19: 384 16-bit samples (768 B); entry 19
 ;   source "16' & 1'", "Full Drawbars", "Perc Organ"
 ;   tones 16' & 1', Digi Organ, Full Drawbars, Perc Organ, Rock Organ, Telstar
-P0_W0019:	.incbin	"kn5000_waveform_rom.ic307", 0x0070d0, 768	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 20: 1,920 samples (3,840 B); entry 20
+P0_W0019:	.incbin	"pcm/P0_W0019.pcm", 0, 768	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0019.wav (16-bit)
+; wave 20: 1,920 16-bit samples (3,840 B); entry 20
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0020_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x0073d0, 3840	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 21: 1,024 samples (2,048 B); entry 21
+P0_W0020_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0020_Pipe16ftPlus8ftL.pcm", 0, 3840	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0020_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 21: 1,024 16-bit samples (2,048 B); entry 21
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0021_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x0082d0, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 22: 1,024 samples (2,048 B); entry 22
+P0_W0021_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0021_Pipe16ftPlus8ftL.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0021_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 22: 1,024 16-bit samples (2,048 B); entry 22
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0022_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x008ad0, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 23: 576 samples (1,152 B); entry 23
+P0_W0022_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0022_Pipe16ftPlus8ftL.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0022_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 23: 576 16-bit samples (1,152 B); entry 23
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0023_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x0092d0, 1152	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 24: 768 samples (1,536 B); entry 24
+P0_W0023_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0023_Pipe16ftPlus8ftL.pcm", 0, 1152	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0023_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 24: 768 16-bit samples (1,536 B); entry 24
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0024_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x009750, 1536	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 25: 1,152 samples (2,304 B); entry 25
+P0_W0024_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0024_Pipe16ftPlus8ftL.pcm", 0, 1536	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0024_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 25: 1,152 16-bit samples (2,304 B); entry 25
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0025_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x009d50, 2304	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 26: 1,440 samples (2,880 B); entry 26
+P0_W0025_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0025_Pipe16ftPlus8ftL.pcm", 0, 2304	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0025_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 26: 1,440 16-bit samples (2,880 B); entry 26
 ;   source "Pipe 16'+8' L"
 ;   tones Chapel Organ
-P0_W0026_Pipe16ftPlus8ftL:	.incbin	"kn5000_waveform_rom.ic307", 0x00a650, 2880	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 27: 1,920 samples (3,840 B); entry 27
+P0_W0026_Pipe16ftPlus8ftL:	.incbin	"pcm/P0_W0026_Pipe16ftPlus8ftL.pcm", 0, 2880	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0026_Pipe16ftPlus8ftL.wav (16-bit)
+; wave 27: 1,920 16-bit samples (3,840 B); entry 27
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0027_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00b190, 3840	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 28: 1,024 samples (2,048 B); entry 28
+P0_W0027_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0027_Pipe16ftPlus8ftR.pcm", 0, 3840	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0027_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 28: 1,024 16-bit samples (2,048 B); entry 28
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0028_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00c090, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 29: 1,024 samples (2,048 B); entry 29
+P0_W0028_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0028_Pipe16ftPlus8ftR.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0028_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 29: 1,024 16-bit samples (2,048 B); entry 29
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0029_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00c890, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 30: 576 samples (1,152 B); entry 30
+P0_W0029_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0029_Pipe16ftPlus8ftR.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0029_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 30: 576 16-bit samples (1,152 B); entry 30
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0030_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00d090, 1152	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 31: 768 samples (1,536 B); entry 31
+P0_W0030_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0030_Pipe16ftPlus8ftR.pcm", 0, 1152	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0030_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 31: 768 16-bit samples (1,536 B); entry 31
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0031_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00d510, 1536	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 32: 1,152 samples (2,304 B); entry 32
+P0_W0031_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0031_Pipe16ftPlus8ftR.pcm", 0, 1536	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0031_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 32: 1,152 16-bit samples (2,304 B); entry 32
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0032_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00db10, 2304	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 33: 1,440 samples (2,880 B); entry 33
+P0_W0032_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0032_Pipe16ftPlus8ftR.pcm", 0, 2304	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0032_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 33: 1,440 16-bit samples (2,880 B); entry 33
 ;   source "Pipe 16'+8' R"
 ;   tones Chapel Organ, Full Organ, Theatre Accomp
-P0_W0033_Pipe16ftPlus8ftR:	.incbin	"kn5000_waveform_rom.ic307", 0x00e410, 2880	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 34: 7,688 samples (15,376 B); entry 34
+P0_W0033_Pipe16ftPlus8ftR:	.incbin	"pcm/P0_W0033_Pipe16ftPlus8ftR.pcm", 0, 2880	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0033_Pipe16ftPlus8ftR.wav (16-bit)
+; wave 34: 15,376 8-bit samples (15,376 B); entry 34
 ;   source "Full Organ"
 ;   tones Cathedral, Cathedral Organ, Full Organ, Pipe Organ
-P0_W0034_FullOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x00ef50, 15376	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 35: 6,664 samples (13,328 B); entry 35
+P0_W0034_FullOrgan:	.incbin	"pcm/P0_W0034_FullOrgan.pcm", 0, 15376	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0034_FullOrgan.wav (8-bit)
+; wave 35: 13,328 8-bit samples (13,328 B); entry 35
 ;   source "Full Organ"
 ;   tones Cathedral, Cathedral Organ, Full Organ, Pipe Organ
-P0_W0035_FullOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x012b60, 13328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 36: 6,344 samples (12,688 B); entry 36
+P0_W0035_FullOrgan:	.incbin	"pcm/P0_W0035_FullOrgan.pcm", 0, 13328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0035_FullOrgan.wav (8-bit)
+; wave 36: 12,688 8-bit samples (12,688 B); entry 36
 ;   source "Full Organ"
 ;   tones Cathedral, Cathedral Organ, Full Organ, Pipe Organ
-P0_W0036_FullOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x015f70, 12688	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 37: 5,288 samples (10,576 B); entry 37
+P0_W0036_FullOrgan:	.incbin	"pcm/P0_W0036_FullOrgan.pcm", 0, 12688	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0036_FullOrgan.wav (8-bit)
+; wave 37: 10,576 8-bit samples (10,576 B); entry 37
 ;   source "Full Organ"
 ;   tones Cathedral, Cathedral Organ, Full Organ, Pipe Organ
-P0_W0037_FullOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x019100, 10576	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 38: 5,224 samples (10,448 B); entry 38
+P0_W0037_FullOrgan:	.incbin	"pcm/P0_W0037_FullOrgan.pcm", 0, 10576	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0037_FullOrgan.wav (8-bit)
+; wave 38: 10,448 8-bit samples (10,448 B); entry 38
 ;   source "Full Organ"
 ;   tones Cathedral, Cathedral Organ, Full Organ, Pipe Organ
-P0_W0038_FullOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x01ba50, 10448	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 39: 8,872 samples (17,744 B); entry 39
+P0_W0038_FullOrgan:	.incbin	"pcm/P0_W0038_FullOrgan.pcm", 0, 10448	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0038_FullOrgan.wav (8-bit)
+; wave 39: 17,744 8-bit samples (17,744 B); entry 39
 ;   source "Full Organ"
 ;   tones Cathedral, Cathedral Organ, Full Organ, Pipe Organ
-P0_W0039_FullOrgan:	.incbin	"kn5000_waveform_rom.ic307", 0x01e320, 17744	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 40: 6,928 samples (13,856 B); entry 40
+P0_W0039_FullOrgan:	.incbin	"pcm/P0_W0039_FullOrgan.pcm", 0, 17744	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0039_FullOrgan.wav (8-bit)
+; wave 40: 6,928 16-bit samples (13,856 B); entry 40
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0040_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x022870, 13856	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 41: 6,416 samples (12,832 B); entry 41
+P0_W0040_FullPipeL:	.incbin	"pcm/P0_W0040_FullPipeL.pcm", 0, 13856	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0040_FullPipeL.wav (16-bit)
+; wave 41: 6,416 16-bit samples (12,832 B); entry 41
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0041_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x025e90, 12832	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 42: 3,072 samples (6,144 B); entry 42
+P0_W0041_FullPipeL:	.incbin	"pcm/P0_W0041_FullPipeL.pcm", 0, 12832	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0041_FullPipeL.wav (16-bit)
+; wave 42: 3,072 16-bit samples (6,144 B); entry 42
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0042_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x0290b0, 6144	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 43: 3,456 samples (6,912 B); entry 43
+P0_W0042_FullPipeL:	.incbin	"pcm/P0_W0042_FullPipeL.pcm", 0, 6144	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0042_FullPipeL.wav (16-bit)
+; wave 43: 3,456 16-bit samples (6,912 B); entry 43
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0043_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x02a8b0, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 44: 2,432 samples (4,864 B); entry 44
+P0_W0043_FullPipeL:	.incbin	"pcm/P0_W0043_FullPipeL.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0043_FullPipeL.wav (16-bit)
+; wave 44: 2,432 16-bit samples (4,864 B); entry 44
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0044_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x02c3b0, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 45: 3,456 samples (6,912 B); entry 45
+P0_W0044_FullPipeL:	.incbin	"pcm/P0_W0044_FullPipeL.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0044_FullPipeL.wav (16-bit)
+; wave 45: 3,456 16-bit samples (6,912 B); entry 45
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0045_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x02d6b0, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 46: 2,432 samples (4,864 B); entry 46
+P0_W0045_FullPipeL:	.incbin	"pcm/P0_W0045_FullPipeL.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0045_FullPipeL.wav (16-bit)
+; wave 46: 4,864 8-bit samples (4,864 B); entry 46
 ;   source "Full Pipe L"
 ;   tones Cathedral, Cathedral Organ, Theatre Organ
-P0_W0046_FullPipeL:	.incbin	"kn5000_waveform_rom.ic307", 0x02f1b0, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 47: 6,928 samples (13,856 B); entry 47
+P0_W0046_FullPipeL:	.incbin	"pcm/P0_W0046_FullPipeL.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0046_FullPipeL.wav (8-bit)
+; wave 47: 6,928 16-bit samples (13,856 B); entry 47
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0047_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x0304b0, 13856	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 48: 6,416 samples (12,832 B); entry 48
+P0_W0047_FullPipeR:	.incbin	"pcm/P0_W0047_FullPipeR.pcm", 0, 13856	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0047_FullPipeR.wav (16-bit)
+; wave 48: 6,416 16-bit samples (12,832 B); entry 48
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0048_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x033ad0, 12832	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 49: 3,072 samples (6,144 B); entry 49
+P0_W0048_FullPipeR:	.incbin	"pcm/P0_W0048_FullPipeR.pcm", 0, 12832	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0048_FullPipeR.wav (16-bit)
+; wave 49: 3,072 16-bit samples (6,144 B); entry 49
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0049_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x036cf0, 6144	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 50: 3,456 samples (6,912 B); entry 50
+P0_W0049_FullPipeR:	.incbin	"pcm/P0_W0049_FullPipeR.pcm", 0, 6144	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0049_FullPipeR.wav (16-bit)
+; wave 50: 3,456 16-bit samples (6,912 B); entry 50
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0050_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x0384f0, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 51: 2,432 samples (4,864 B); entry 51
+P0_W0050_FullPipeR:	.incbin	"pcm/P0_W0050_FullPipeR.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0050_FullPipeR.wav (16-bit)
+; wave 51: 2,432 16-bit samples (4,864 B); entry 51
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0051_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x039ff0, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 52: 3,456 samples (6,912 B); entry 52
+P0_W0051_FullPipeR:	.incbin	"pcm/P0_W0051_FullPipeR.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0051_FullPipeR.wav (16-bit)
+; wave 52: 3,456 16-bit samples (6,912 B); entry 52
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0052_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x03b2f0, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 53: 2,432 samples (4,864 B); entry 53
+P0_W0052_FullPipeR:	.incbin	"pcm/P0_W0052_FullPipeR.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0052_FullPipeR.wav (16-bit)
+; wave 53: 4,864 8-bit samples (4,864 B); entry 53
 ;   source "Full Pipe R"
 ;   tones Cathedral, Cathedral Organ
-P0_W0053_FullPipeR:	.incbin	"kn5000_waveform_rom.ic307", 0x03cdf0, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 54: 1,664 samples (3,328 B); entry 54
+P0_W0053_FullPipeR:	.incbin	"pcm/P0_W0053_FullPipeR.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0053_FullPipeR.wav (8-bit)
+; wave 54: 1,664 16-bit samples (3,328 B); entry 54
 ;   source "Brt.Accordion"
 ;   tones Accordion, Bright Accordion, Harmonium
-P0_W0054_BrtAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x03e0f0, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 55: 1,088 samples (2,176 B); entry 55
+P0_W0054_BrtAccordion:	.incbin	"pcm/P0_W0054_BrtAccordion.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0054_BrtAccordion.wav (16-bit)
+; wave 55: 1,088 16-bit samples (2,176 B); entry 55
 ;   source "Brt.Accordion"
 ;   tones Accordion, Bright Accordion, Harmonium
-P0_W0055_BrtAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x03edf0, 2176	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 56: 832 samples (1,664 B); entry 56
+P0_W0055_BrtAccordion:	.incbin	"pcm/P0_W0055_BrtAccordion.pcm", 0, 2176	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0055_BrtAccordion.wav (16-bit)
+; wave 56: 832 16-bit samples (1,664 B); entry 56
 ;   source "Brt.Accordion"
 ;   tones Accordion, Bright Accordion, Harmonium
-P0_W0056_BrtAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x03f670, 1664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 57: 1,024 samples (2,048 B); entry 57
+P0_W0056_BrtAccordion:	.incbin	"pcm/P0_W0056_BrtAccordion.pcm", 0, 1664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0056_BrtAccordion.wav (16-bit)
+; wave 57: 1,024 16-bit samples (2,048 B); entry 57
 ;   source "Mel.Accordion"
 ;   tones Bandoneon, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0057_MelAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x03fcf0, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 58: 256 samples (512 B); entry 58
+P0_W0057_MelAccordion:	.incbin	"pcm/P0_W0057_MelAccordion.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0057_MelAccordion.wav (16-bit)
+; wave 58: 512 8-bit samples (512 B); entry 58
 ;   source "Mel.Accordion"
 ;   tones Bandoneon, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0058_MelAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x0404f0, 512	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 59: 192 samples (384 B); entry 59
+P0_W0058_MelAccordion:	.incbin	"pcm/P0_W0058_MelAccordion.pcm", 0, 512	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0058_MelAccordion.wav (8-bit)
+; wave 59: 384 8-bit samples (384 B); entry 59
 ;   source "Mel.Accordion"
 ;   tones Bandoneon, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0059_MelAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x0406f0, 384	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 60: 288 samples (576 B); entry 60
+P0_W0059_MelAccordion:	.incbin	"pcm/P0_W0059_MelAccordion.pcm", 0, 384	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0059_MelAccordion.wav (8-bit)
+; wave 60: 576 8-bit samples (576 B); entry 60
 ;   source "FolkAcdn Bass", "Mel.Accordion"
 ;   tones Bandoneon, Folk Accordion, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0060:	.incbin	"kn5000_waveform_rom.ic307", 0x040870, 576	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 61: 144 samples (288 B); entry 61
+P0_W0060:	.incbin	"pcm/P0_W0060.pcm", 0, 576	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0060.wav (8-bit)
+; wave 61: 288 8-bit samples (288 B); entry 61
 ;   source "FolkAcdn Bass", "Mel.Accordion"
 ;   tones Bandoneon, Folk Accordion, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0061:	.incbin	"kn5000_waveform_rom.ic307", 0x040ab0, 288	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 62: 704 samples (1,408 B); entry 62
+P0_W0061:	.incbin	"pcm/P0_W0061.pcm", 0, 288	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0061.wav (8-bit)
+; wave 62: 704 16-bit samples (1,408 B); entry 62
 ;   source "Brt.Accordion", "FolkAcdn Bass", "Mel.Accordion"
 ;   tones Accordion, Bandoneon, Bright Accordion, Folk Accordion, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0062:	.incbin	"kn5000_waveform_rom.ic307", 0x040bd0, 1408	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 63: 448 samples (896 B); entry 63
+P0_W0062:	.incbin	"pcm/P0_W0062.pcm", 0, 1408	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0062.wav (16-bit)
+; wave 63: 448 16-bit samples (896 B); entry 63
 ;   source "Brt.Accordion", "FolkAcdn Bass", "Mel.Accordion"
 ;   tones Accordion, Bandoneon, Bright Accordion, Folk Accordion, German Acdn Bs2, Harmonium, Mellow Accordion
-P0_W0063:	.incbin	"kn5000_waveform_rom.ic307", 0x041150, 896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 64: 22,672 samples (45,344 B); entry 64
+P0_W0063:	.incbin	"pcm/P0_W0063.pcm", 0, 896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0063.wav (16-bit)
+; wave 64: 22,672 16-bit samples (45,344 B); entry 64
 ;   source "Musette"
 ;   tones Folk Accordion, Musette
-P0_W0064_Musette:	.incbin	"kn5000_waveform_rom.ic307", 0x0414d0, 45344	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 65: 10,504 samples (21,008 B); entry 65
+P0_W0064_Musette:	.incbin	"pcm/P0_W0064_Musette.pcm", 0, 45344	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0064_Musette.wav (16-bit)
+; wave 65: 21,008 8-bit samples (21,008 B); entry 65
 ;   source "Musette"
 ;   tones Folk Accordion, Musette
-P0_W0065_Musette:	.incbin	"kn5000_waveform_rom.ic307", 0x04c5f0, 21008	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 66: 13,352 samples (26,704 B); entry 66
+P0_W0065_Musette:	.incbin	"pcm/P0_W0065_Musette.pcm", 0, 21008	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0065_Musette.wav (8-bit)
+; wave 66: 26,704 8-bit samples (26,704 B); entry 66
 ;   source "Musette"
 ;   tones Folk Accordion, Musette
-P0_W0066_Musette:	.incbin	"kn5000_waveform_rom.ic307", 0x051800, 26704	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 67: 9,032 samples (18,064 B); entry 67
+P0_W0066_Musette:	.incbin	"pcm/P0_W0066_Musette.pcm", 0, 26704	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0066_Musette.wav (8-bit)
+; wave 67: 18,064 8-bit samples (18,064 B); entry 67
 ;   source "Musette"
 ;   tones Folk Accordion, Musette
-P0_W0067_Musette:	.incbin	"kn5000_waveform_rom.ic307", 0x058050, 18064	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 68: 8,200 samples (16,400 B); entry 68
+P0_W0067_Musette:	.incbin	"pcm/P0_W0067_Musette.pcm", 0, 18064	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0067_Musette.wav (8-bit)
+; wave 68: 16,400 8-bit samples (16,400 B); entry 68
 ;   source "Musette"
 ;   tones Folk Accordion, Musette
-P0_W0068_Musette:	.incbin	"kn5000_waveform_rom.ic307", 0x05c6e0, 16400	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 69: 37,520 samples (75,040 B); entry 69
+P0_W0068_Musette:	.incbin	"pcm/P0_W0068_Musette.pcm", 0, 16400	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0068_Musette.wav (8-bit)
+; wave 69: 37,520 16-bit samples (75,040 B); entry 69
 ;   source "FolkAccordion", "Musette"
 ;   tones Folk Accordion, Musette
-P0_W0069:	.incbin	"kn5000_waveform_rom.ic307", 0x0606f0, 75040	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 70: 15,248 samples (30,496 B); entry 70
+P0_W0069:	.incbin	"pcm/P0_W0069.pcm", 0, 75040	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0069.wav (16-bit)
+; wave 70: 15,248 16-bit samples (30,496 B); entry 70
 ;   source "FolkAccordion"
 ;   tones Folk Accordion
-P0_W0070_FolkAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x072c10, 30496	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 71: 6,408 samples (12,816 B); entry 71
+P0_W0070_FolkAccordion:	.incbin	"pcm/P0_W0070_FolkAccordion.pcm", 0, 30496	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0070_FolkAccordion.wav (16-bit)
+; wave 71: 12,816 8-bit samples (12,816 B); entry 71
 ;   source "FolkAccordion"
 ;   tones Folk Accordion
-P0_W0071_FolkAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x07a330, 12816	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 72: 5,608 samples (11,216 B); entry 72
+P0_W0071_FolkAccordion:	.incbin	"pcm/P0_W0071_FolkAccordion.pcm", 0, 12816	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0071_FolkAccordion.wav (8-bit)
+; wave 72: 11,216 8-bit samples (11,216 B); entry 72
 ;   source "FolkAccordion"
 ;   tones Folk Accordion
-P0_W0072_FolkAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x07d540, 11216	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 73: 5,208 samples (10,416 B); entry 73
+P0_W0072_FolkAccordion:	.incbin	"pcm/P0_W0072_FolkAccordion.pcm", 0, 11216	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0072_FolkAccordion.wav (8-bit)
+; wave 73: 10,416 8-bit samples (10,416 B); entry 73
 ;   source "FolkAccordion"
 ;   tones Folk Accordion
-P0_W0073_FolkAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x080110, 10416	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 74: 13,896 samples (27,792 B); entry 74
+P0_W0073_FolkAccordion:	.incbin	"pcm/P0_W0073_FolkAccordion.pcm", 0, 10416	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0073_FolkAccordion.wav (8-bit)
+; wave 74: 27,792 8-bit samples (27,792 B); entry 74
 ;   source "FolkAccordion"
 ;   tones Folk Accordion
-P0_W0074_FolkAccordion:	.incbin	"kn5000_waveform_rom.ic307", 0x0829c0, 27792	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 75: 3,072 samples (6,144 B); entry 75
+P0_W0074_FolkAccordion:	.incbin	"pcm/P0_W0074_FolkAccordion.pcm", 0, 27792	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0074_FolkAccordion.wav (8-bit)
+; wave 75: 3,072 16-bit samples (6,144 B); entry 75
 ;   source "FolkAcdn Bass"
 ;   tones Folk Accordion
-P0_W0075_FolkAcdnBass:	.incbin	"kn5000_waveform_rom.ic307", 0x089650, 6144	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 76: 7,936 samples (15,872 B); entry 76
+P0_W0075_FolkAcdnBass:	.incbin	"pcm/P0_W0075_FolkAcdnBass.pcm", 0, 6144	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0075_FolkAcdnBass.wav (16-bit)
+; wave 76: 7,936 16-bit samples (15,872 B); entry 76
 ;   source "FolkAcdn Bass"
 ;   tones Folk Accordion
-P0_W0076_FolkAcdnBass:	.incbin	"kn5000_waveform_rom.ic307", 0x08ae50, 15872	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 77: 5,376 samples (10,752 B); entry 77
+P0_W0076_FolkAcdnBass:	.incbin	"pcm/P0_W0076_FolkAcdnBass.pcm", 0, 15872	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0076_FolkAcdnBass.wav (16-bit)
+; wave 77: 5,376 16-bit samples (10,752 B); entry 77
 ;   source "FolkAcdn Bass"
 ;   tones Folk Accordion
-P0_W0077_FolkAcdnBass:	.incbin	"kn5000_waveform_rom.ic307", 0x08ec50, 10752	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 78: 2,176 samples (4,352 B); entry 78
+P0_W0077_FolkAcdnBass:	.incbin	"pcm/P0_W0077_FolkAcdnBass.pcm", 0, 10752	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0077_FolkAcdnBass.wav (16-bit)
+; wave 78: 2,176 16-bit samples (4,352 B); entry 78
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0078_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x091650, 4352	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 79: 2,432 samples (4,864 B); entry 79
+P0_W0078_GermanAcdn1:	.incbin	"pcm/P0_W0078_GermanAcdn1.pcm", 0, 4352	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0078_GermanAcdn1.wav (16-bit)
+; wave 79: 2,432 16-bit samples (4,864 B); entry 79
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0079_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x092750, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 80: 2,688 samples (5,376 B); entry 80
+P0_W0079_GermanAcdn1:	.incbin	"pcm/P0_W0079_GermanAcdn1.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0079_GermanAcdn1.wav (16-bit)
+; wave 80: 2,688 16-bit samples (5,376 B); entry 80
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0080_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x093a50, 5376	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 81: 2,560 samples (5,120 B); entry 81
+P0_W0080_GermanAcdn1:	.incbin	"pcm/P0_W0080_GermanAcdn1.pcm", 0, 5376	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0080_GermanAcdn1.wav (16-bit)
+; wave 81: 2,560 16-bit samples (5,120 B); entry 81
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0081_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x094f50, 5120	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 82: 1,600 samples (3,200 B); entry 82
+P0_W0081_GermanAcdn1:	.incbin	"pcm/P0_W0081_GermanAcdn1.pcm", 0, 5120	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0081_GermanAcdn1.wav (16-bit)
+; wave 82: 1,600 16-bit samples (3,200 B); entry 82
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0082_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x096350, 3200	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 83: 1,408 samples (2,816 B); entry 83
+P0_W0082_GermanAcdn1:	.incbin	"pcm/P0_W0082_GermanAcdn1.pcm", 0, 3200	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0082_GermanAcdn1.wav (16-bit)
+; wave 83: 1,408 16-bit samples (2,816 B); entry 83
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0083_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x096fd0, 2816	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 84: 1,280 samples (2,560 B); entry 84
+P0_W0083_GermanAcdn1:	.incbin	"pcm/P0_W0083_GermanAcdn1.pcm", 0, 2816	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0083_GermanAcdn1.wav (16-bit)
+; wave 84: 1,280 16-bit samples (2,560 B); entry 84
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0084_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x097ad0, 2560	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 85: 1,664 samples (3,328 B); entry 85
+P0_W0084_GermanAcdn1:	.incbin	"pcm/P0_W0084_GermanAcdn1.pcm", 0, 2560	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0084_GermanAcdn1.wav (16-bit)
+; wave 85: 1,664 16-bit samples (3,328 B); entry 85
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0085_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0984d0, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 86: 896 samples (1,792 B); entry 86
+P0_W0085_GermanAcdn1:	.incbin	"pcm/P0_W0085_GermanAcdn1.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0085_GermanAcdn1.wav (16-bit)
+; wave 86: 896 16-bit samples (1,792 B); entry 86
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0086_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0991d0, 1792	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 87: 1,024 samples (2,048 B); entry 87
+P0_W0086_GermanAcdn1:	.incbin	"pcm/P0_W0086_GermanAcdn1.pcm", 0, 1792	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0086_GermanAcdn1.wav (16-bit)
+; wave 87: 1,024 16-bit samples (2,048 B); entry 87
 ;   source "German Acdn 1"
 ;   tones German Acdn 2, German Acdn 3
-P0_W0087_GermanAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0998d0, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 88: 2,176 samples (4,352 B); entry 88
+P0_W0087_GermanAcdn1:	.incbin	"pcm/P0_W0087_GermanAcdn1.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0087_GermanAcdn1.wav (16-bit)
+; wave 88: 2,176 16-bit samples (4,352 B); entry 88
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0088_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09a0d0, 4352	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 89: 2,304 samples (4,608 B); entry 89
+P0_W0088_GermanAcdn2:	.incbin	"pcm/P0_W0088_GermanAcdn2.pcm", 0, 4352	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0088_GermanAcdn2.wav (16-bit)
+; wave 89: 2,304 16-bit samples (4,608 B); entry 89
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0089_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09b1d0, 4608	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 90: 1,280 samples (2,560 B); entry 90
+P0_W0089_GermanAcdn2:	.incbin	"pcm/P0_W0089_GermanAcdn2.pcm", 0, 4608	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0089_GermanAcdn2.wav (16-bit)
+; wave 90: 1,280 16-bit samples (2,560 B); entry 90
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0090_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09c3d0, 2560	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 91: 1,472 samples (2,944 B); entry 91
+P0_W0090_GermanAcdn2:	.incbin	"pcm/P0_W0090_GermanAcdn2.pcm", 0, 2560	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0090_GermanAcdn2.wav (16-bit)
+; wave 91: 1,472 16-bit samples (2,944 B); entry 91
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0091_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09cdd0, 2944	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 92: 1,728 samples (3,456 B); entry 92
+P0_W0091_GermanAcdn2:	.incbin	"pcm/P0_W0091_GermanAcdn2.pcm", 0, 2944	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0091_GermanAcdn2.wav (16-bit)
+; wave 92: 1,728 16-bit samples (3,456 B); entry 92
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0092_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09d950, 3456	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 93: 1,856 samples (3,712 B); entry 93
+P0_W0092_GermanAcdn2:	.incbin	"pcm/P0_W0092_GermanAcdn2.pcm", 0, 3456	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0092_GermanAcdn2.wav (16-bit)
+; wave 93: 1,856 16-bit samples (3,712 B); entry 93
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0093_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09e6d0, 3712	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 94: 1,024 samples (2,048 B); entry 94
+P0_W0093_GermanAcdn2:	.incbin	"pcm/P0_W0093_GermanAcdn2.pcm", 0, 3712	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0093_GermanAcdn2.wav (16-bit)
+; wave 94: 1,024 16-bit samples (2,048 B); entry 94
 ;   source "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0094_GermanAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x09f550, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 95: 1,152 samples (2,304 B); entry 95
+P0_W0094_GermanAcdn2:	.incbin	"pcm/P0_W0094_GermanAcdn2.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0094_GermanAcdn2.wav (16-bit)
+; wave 95: 1,152 16-bit samples (2,304 B); entry 95
 ;   source "German Acdn 1", "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0095:	.incbin	"kn5000_waveform_rom.ic307", 0x09fd50, 2304	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 96: 1,344 samples (2,688 B); entry 96
+P0_W0095:	.incbin	"pcm/P0_W0095.pcm", 0, 2304	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0095.wav (16-bit)
+; wave 96: 1,344 16-bit samples (2,688 B); entry 96
 ;   source "German Acdn 1", "German Acdn 2"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 6, German Acdn 7, German Acdn 8
-P0_W0096:	.incbin	"kn5000_waveform_rom.ic307", 0x0a0650, 2688	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 97: 1,728 samples (3,456 B); entry 97
+P0_W0096:	.incbin	"pcm/P0_W0096.pcm", 0, 2688	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0096.wav (16-bit)
+; wave 97: 1,728 16-bit samples (3,456 B); entry 97
 ;   source "German Acdn 3"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4, German Acdn 5, German Acdn 6, German Acdn 7, German Acdn Bs1
-P0_W0097_GermanAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0a10d0, 3456	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 98: 2,112 samples (4,224 B); entry 98
+P0_W0097_GermanAcdn3:	.incbin	"pcm/P0_W0097_GermanAcdn3.pcm", 0, 3456	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0097_GermanAcdn3.wav (16-bit)
+; wave 98: 2,112 16-bit samples (4,224 B); entry 98
 ;   source "German Acdn 3"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4, German Acdn 5, German Acdn 6, German Acdn 7, German Acdn Bs1
-P0_W0098_GermanAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0a1e50, 4224	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 99: 1,152 samples (2,304 B); entry 99
+P0_W0098_GermanAcdn3:	.incbin	"pcm/P0_W0098_GermanAcdn3.pcm", 0, 4224	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0098_GermanAcdn3.wav (16-bit)
+; wave 99: 2,304 8-bit samples (2,304 B); entry 99
 ;   source "German Acdn 3"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4, German Acdn 5, German Acdn 6, German Acdn 7, German Acdn Bs1
-P0_W0099_GermanAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0a2ed0, 2304	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 100: 1,632 samples (3,264 B); entry 100
+P0_W0099_GermanAcdn3:	.incbin	"pcm/P0_W0099_GermanAcdn3.pcm", 0, 2304	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0099_GermanAcdn3.wav (8-bit)
+; wave 100: 3,264 8-bit samples (3,264 B); entry 100
 ;   source "German Acdn 3"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4, German Acdn 5, German Acdn 6, German Acdn 7, German Acdn Bs1
-P0_W0100_GermanAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0a37d0, 3264	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 101: 1,120 samples (2,240 B); entry 101
+P0_W0100_GermanAcdn3:	.incbin	"pcm/P0_W0100_GermanAcdn3.pcm", 0, 3264	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0100_GermanAcdn3.wav (8-bit)
+; wave 101: 2,240 8-bit samples (2,240 B); entry 101
 ;   source "German Acdn 3"
 ;   tones German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4, German Acdn 5, German Acdn 6, German Acdn 7, German Acdn Bs1
-P0_W0101_GermanAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0a4490, 2240	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 102: 1,280 samples (2,560 B); entry 102
+P0_W0101_GermanAcdn3:	.incbin	"pcm/P0_W0101_GermanAcdn3.pcm", 0, 2240	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0101_GermanAcdn3.wav (8-bit)
+; wave 102: 1,280 16-bit samples (2,560 B); entry 102
 ;   source "Brt.Accordion", "FolkAcdn Bass", "German Acdn 1", "German Acdn 2", "German Acdn 3", "German Acdn 4", "German Acdn 5", "Mel.Accordion"
 ;   tones Accordion, Bandoneon, Bright Accordion, Folk Accordion, German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4 +8 more
-P0_W0102:	.incbin	"kn5000_waveform_rom.ic307", 0x0a4d50, 2560	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 103: 1,280 samples (2,560 B); entry 103
+P0_W0102:	.incbin	"pcm/P0_W0102.pcm", 0, 2560	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0102.wav (16-bit)
+; wave 103: 1,280 16-bit samples (2,560 B); entry 103
 ;   source "Brt.Accordion", "FolkAcdn Bass", "German Acdn 1", "German Acdn 2", "German Acdn 3", "German Acdn 4", "German Acdn 5", "ItalianAcdn 1", "ItalianAcdn 2", "ItalianAcdn 3", "ItalianAcdn 4", "Mel.Accordion"
 ;   tones Accordion, Bandoneon, Bright Accordion, Folk Accordion, German Acdn 1, German Acdn 2, German Acdn 3, German Acdn 4 +18 more
-P0_W0103:	.incbin	"kn5000_waveform_rom.ic307", 0x0a5750, 2560	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 104: 3,072 samples (6,144 B); entry 104
+P0_W0103:	.incbin	"pcm/P0_W0103.pcm", 0, 2560	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0103.wav (16-bit)
+; wave 104: 3,072 16-bit samples (6,144 B); entry 104
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0104_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0a6150, 6144	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 105: 1,664 samples (3,328 B); entry 105
+P0_W0104_GermanAcdn4:	.incbin	"pcm/P0_W0104_GermanAcdn4.pcm", 0, 6144	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0104_GermanAcdn4.wav (16-bit)
+; wave 105: 1,664 16-bit samples (3,328 B); entry 105
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0105_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0a7950, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 106: 1,664 samples (3,328 B); entry 106
+P0_W0105_GermanAcdn4:	.incbin	"pcm/P0_W0105_GermanAcdn4.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0105_GermanAcdn4.wav (16-bit)
+; wave 106: 1,664 16-bit samples (3,328 B); entry 106
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0106_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0a8650, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 107: 1,920 samples (3,840 B); entry 107
+P0_W0106_GermanAcdn4:	.incbin	"pcm/P0_W0106_GermanAcdn4.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0106_GermanAcdn4.wav (16-bit)
+; wave 107: 1,920 16-bit samples (3,840 B); entry 107
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0107_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0a9350, 3840	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 108: 1,216 samples (2,432 B); entry 108
+P0_W0107_GermanAcdn4:	.incbin	"pcm/P0_W0107_GermanAcdn4.pcm", 0, 3840	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0107_GermanAcdn4.wav (16-bit)
+; wave 108: 1,216 16-bit samples (2,432 B); entry 108
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0108_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0aa250, 2432	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 109: 1,344 samples (2,688 B); entry 109
+P0_W0108_GermanAcdn4:	.incbin	"pcm/P0_W0108_GermanAcdn4.pcm", 0, 2432	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0108_GermanAcdn4.wav (16-bit)
+; wave 109: 1,344 16-bit samples (2,688 B); entry 109
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0109_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0aabd0, 2688	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 110: 1,728 samples (3,456 B); entry 110
+P0_W0109_GermanAcdn4:	.incbin	"pcm/P0_W0109_GermanAcdn4.pcm", 0, 2688	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0109_GermanAcdn4.wav (16-bit)
+; wave 110: 1,728 16-bit samples (3,456 B); entry 110
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0110_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0ab650, 3456	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 111: 2,048 samples (4,096 B); entry 111
+P0_W0110_GermanAcdn4:	.incbin	"pcm/P0_W0110_GermanAcdn4.pcm", 0, 3456	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0110_GermanAcdn4.wav (16-bit)
+; wave 111: 2,048 16-bit samples (4,096 B); entry 111
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0111_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0ac3d0, 4096	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 112: 1,120 samples (2,240 B); entry 112
+P0_W0111_GermanAcdn4:	.incbin	"pcm/P0_W0111_GermanAcdn4.pcm", 0, 4096	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0111_GermanAcdn4.wav (16-bit)
+; wave 112: 1,120 16-bit samples (2,240 B); entry 112
 ;   source "German Acdn 4"
 ;   tones German Acdn Bs1
-P0_W0112_GermanAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0ad3d0, 2240	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 113: 2,432 samples (4,864 B); entry 113
+P0_W0112_GermanAcdn4:	.incbin	"pcm/P0_W0112_GermanAcdn4.pcm", 0, 2240	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0112_GermanAcdn4.wav (16-bit)
+; wave 113: 2,432 16-bit samples (4,864 B); entry 113
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0113_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0adc90, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 114: 928 samples (1,856 B); entry 114
+P0_W0113_GermanAcdn5:	.incbin	"pcm/P0_W0113_GermanAcdn5.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0113_GermanAcdn5.wav (16-bit)
+; wave 114: 1,856 8-bit samples (1,856 B); entry 114
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0114_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0aef90, 1856	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 115: 704 samples (1,408 B); entry 115
+P0_W0114_GermanAcdn5:	.incbin	"pcm/P0_W0114_GermanAcdn5.pcm", 0, 1856	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0114_GermanAcdn5.wav (8-bit)
+; wave 115: 1,408 8-bit samples (1,408 B); entry 115
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0115_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0af6d0, 1408	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 116: 832 samples (1,664 B); entry 116
+P0_W0115_GermanAcdn5:	.incbin	"pcm/P0_W0115_GermanAcdn5.pcm", 0, 1408	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0115_GermanAcdn5.wav (8-bit)
+; wave 116: 1,664 8-bit samples (1,664 B); entry 116
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0116_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0afc50, 1664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 117: 1,024 samples (2,048 B); entry 117
+P0_W0116_GermanAcdn5:	.incbin	"pcm/P0_W0116_GermanAcdn5.pcm", 0, 1664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0116_GermanAcdn5.wav (8-bit)
+; wave 117: 2,048 8-bit samples (2,048 B); entry 117
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0117_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0b02d0, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 118: 512 samples (1,024 B); entry 118
+P0_W0117_GermanAcdn5:	.incbin	"pcm/P0_W0117_GermanAcdn5.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0117_GermanAcdn5.wav (8-bit)
+; wave 118: 1,024 8-bit samples (1,024 B); entry 118
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0118_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0b0ad0, 1024	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 119: 656 samples (1,312 B); entry 119
+P0_W0118_GermanAcdn5:	.incbin	"pcm/P0_W0118_GermanAcdn5.pcm", 0, 1024	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0118_GermanAcdn5.wav (8-bit)
+; wave 119: 1,312 8-bit samples (1,312 B); entry 119
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0119_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0b0ed0, 1312	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 120: 1,632 samples (3,264 B); entry 120
+P0_W0119_GermanAcdn5:	.incbin	"pcm/P0_W0119_GermanAcdn5.pcm", 0, 1312	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0119_GermanAcdn5.wav (8-bit)
+; wave 120: 1,632 16-bit samples (3,264 B); entry 120
 ;   source "German Acdn 5"
 ;   tones Folk Accordion, German Acdn 4, German Acdn Bs2
-P0_W0120_GermanAcdn5:	.incbin	"kn5000_waveform_rom.ic307", 0x0b13f0, 3264	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 121: 3,840 samples (7,680 B); entry 121
+P0_W0120_GermanAcdn5:	.incbin	"pcm/P0_W0120_GermanAcdn5.pcm", 0, 3264	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0120_GermanAcdn5.wav (16-bit)
+; wave 121: 3,840 16-bit samples (7,680 B); entry 121
 ;   source "ItalianAcdn 1", "ItalianAcdn 2", "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7 +3 more
-P0_W0121:	.incbin	"kn5000_waveform_rom.ic307", 0x0b20b0, 7680	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 122: 6,656 samples (13,312 B); entry 122
+P0_W0121:	.incbin	"pcm/P0_W0121.pcm", 0, 7680	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0121.wav (16-bit)
+; wave 122: 6,656 16-bit samples (13,312 B); entry 122
 ;   source "ItalianAcdn 1", "ItalianAcdn 2", "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7 +3 more
-P0_W0122:	.incbin	"kn5000_waveform_rom.ic307", 0x0b3eb0, 13312	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 123: 2,304 samples (4,608 B); entry 123
+P0_W0122:	.incbin	"pcm/P0_W0122.pcm", 0, 13312	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0122.wav (16-bit)
+; wave 123: 2,304 16-bit samples (4,608 B); entry 123
 ;   source "ItalianAcdn 1", "ItalianAcdn 2", "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7 +3 more
-P0_W0123:	.incbin	"kn5000_waveform_rom.ic307", 0x0b72b0, 4608	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 124: 2,432 samples (4,864 B); entry 124
+P0_W0123:	.incbin	"pcm/P0_W0123.pcm", 0, 4608	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0123.wav (16-bit)
+; wave 124: 2,432 16-bit samples (4,864 B); entry 124
 ;   source "ItalianAcdn 1"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0124_ItalianAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0b84b0, 4864	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 125: 2,176 samples (4,352 B); entry 125
+P0_W0124_ItalianAcdn1:	.incbin	"pcm/P0_W0124_ItalianAcdn1.pcm", 0, 4864	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0124_ItalianAcdn1.wav (16-bit)
+; wave 125: 2,176 16-bit samples (4,352 B); entry 125
 ;   source "ItalianAcdn 1"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0125_ItalianAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0b97b0, 4352	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 126: 1,408 samples (2,816 B); entry 126
+P0_W0125_ItalianAcdn1:	.incbin	"pcm/P0_W0125_ItalianAcdn1.pcm", 0, 4352	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0125_ItalianAcdn1.wav (16-bit)
+; wave 126: 1,408 16-bit samples (2,816 B); entry 126
 ;   source "ItalianAcdn 1"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0126_ItalianAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0ba8b0, 2816	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 127: 1,536 samples (3,072 B); entry 127
+P0_W0126_ItalianAcdn1:	.incbin	"pcm/P0_W0126_ItalianAcdn1.pcm", 0, 2816	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0126_ItalianAcdn1.wav (16-bit)
+; wave 127: 1,536 16-bit samples (3,072 B); entry 127
 ;   source "ItalianAcdn 1"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0127_ItalianAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0bb3b0, 3072	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 128: 1,856 samples (3,712 B); entry 128
+P0_W0127_ItalianAcdn1:	.incbin	"pcm/P0_W0127_ItalianAcdn1.pcm", 0, 3072	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0127_ItalianAcdn1.wav (16-bit)
+; wave 128: 1,856 16-bit samples (3,712 B); entry 128
 ;   source "ItalianAcdn 1"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0128_ItalianAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0bbfb0, 3712	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 129: 2,048 samples (4,096 B); entry 129
+P0_W0128_ItalianAcdn1:	.incbin	"pcm/P0_W0128_ItalianAcdn1.pcm", 0, 3712	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0128_ItalianAcdn1.wav (16-bit)
+; wave 129: 2,048 16-bit samples (4,096 B); entry 129
 ;   source "ItalianAcdn 1"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0129_ItalianAcdn1:	.incbin	"kn5000_waveform_rom.ic307", 0x0bce30, 4096	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 130: 3,456 samples (6,912 B); entry 130
+P0_W0129_ItalianAcdn1:	.incbin	"pcm/P0_W0129_ItalianAcdn1.pcm", 0, 4096	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0129_ItalianAcdn1.wav (16-bit)
+; wave 130: 3,456 16-bit samples (6,912 B); entry 130
 ;   source "ItalianAcdn 2", "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8 +2 more
-P0_W0130:	.incbin	"kn5000_waveform_rom.ic307", 0x0bde30, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 131: 3,456 samples (6,912 B); entry 131
+P0_W0130:	.incbin	"pcm/P0_W0130.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0130.wav (16-bit)
+; wave 131: 3,456 16-bit samples (6,912 B); entry 131
 ;   source "ItalianAcdn 2", "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8 +2 more
-P0_W0131:	.incbin	"kn5000_waveform_rom.ic307", 0x0bf930, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 132: 2,816 samples (5,632 B); entry 132
+P0_W0131:	.incbin	"pcm/P0_W0131.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0131.wav (16-bit)
+; wave 132: 2,816 16-bit samples (5,632 B); entry 132
 ;   source "ItalianAcdn 2", "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8 +2 more
-P0_W0132:	.incbin	"kn5000_waveform_rom.ic307", 0x0c1430, 5632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 133: 960 samples (1,920 B); entry 133
+P0_W0132:	.incbin	"pcm/P0_W0132.pcm", 0, 5632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0132.wav (16-bit)
+; wave 133: 1,920 8-bit samples (1,920 B); entry 133
 ;   source "ItalianAcdn 2"
 ;   tones Italian Acdn 2, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8, Italian Acdn Bs1
-P0_W0133_ItalianAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x0c2a30, 1920	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 134: 1,088 samples (2,176 B); entry 134
+P0_W0133_ItalianAcdn2:	.incbin	"pcm/P0_W0133_ItalianAcdn2.pcm", 0, 1920	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0133_ItalianAcdn2.wav (8-bit)
+; wave 134: 2,176 8-bit samples (2,176 B); entry 134
 ;   source "ItalianAcdn 2"
 ;   tones Italian Acdn 2, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8, Italian Acdn Bs1
-P0_W0134_ItalianAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x0c31b0, 2176	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 135: 608 samples (1,216 B); entry 135
+P0_W0134_ItalianAcdn2:	.incbin	"pcm/P0_W0134_ItalianAcdn2.pcm", 0, 2176	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0134_ItalianAcdn2.wav (8-bit)
+; wave 135: 1,216 8-bit samples (1,216 B); entry 135
 ;   source "ItalianAcdn 2"
 ;   tones Italian Acdn 2, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8, Italian Acdn Bs1
-P0_W0135_ItalianAcdn2:	.incbin	"kn5000_waveform_rom.ic307", 0x0c3a30, 1216	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 136: 2,816 samples (5,632 B); entry 136
+P0_W0135_ItalianAcdn2:	.incbin	"pcm/P0_W0135_ItalianAcdn2.pcm", 0, 1216	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0135_ItalianAcdn2.wav (8-bit)
+; wave 136: 2,816 16-bit samples (5,632 B); entry 136
 ;   source "ItalianAcdn 1", "ItalianAcdn 2"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8 +2 more
-P0_W0136:	.incbin	"kn5000_waveform_rom.ic307", 0x0c3ef0, 5632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 137: 3,136 samples (6,272 B); entry 137
+P0_W0136:	.incbin	"pcm/P0_W0136.pcm", 0, 5632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0136.wav (16-bit)
+; wave 137: 3,136 16-bit samples (6,272 B); entry 137
 ;   source "ItalianAcdn 1", "ItalianAcdn 2"
 ;   tones Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn 8 +2 more
-P0_W0137:	.incbin	"kn5000_waveform_rom.ic307", 0x0c54f0, 6272	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 138: 1,664 samples (3,328 B); entry 138
+P0_W0137:	.incbin	"pcm/P0_W0137.pcm", 0, 6272	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0137.wav (16-bit)
+; wave 138: 1,664 16-bit samples (3,328 B); entry 138
 ;   source "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0138_ItalianAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0c6d70, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 139: 2,048 samples (4,096 B); entry 139
+P0_W0138_ItalianAcdn3:	.incbin	"pcm/P0_W0138_ItalianAcdn3.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0138_ItalianAcdn3.wav (16-bit)
+; wave 139: 2,048 16-bit samples (4,096 B); entry 139
 ;   source "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0139_ItalianAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0c7a70, 4096	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 140: 2,496 samples (4,992 B); entry 140
+P0_W0139_ItalianAcdn3:	.incbin	"pcm/P0_W0139_ItalianAcdn3.pcm", 0, 4096	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0139_ItalianAcdn3.wav (16-bit)
+; wave 140: 2,496 16-bit samples (4,992 B); entry 140
 ;   source "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0140_ItalianAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0c8a70, 4992	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 141: 2,752 samples (5,504 B); entry 141
+P0_W0140_ItalianAcdn3:	.incbin	"pcm/P0_W0140_ItalianAcdn3.pcm", 0, 4992	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0140_ItalianAcdn3.wav (16-bit)
+; wave 141: 2,752 16-bit samples (5,504 B); entry 141
 ;   source "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0141_ItalianAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0c9df0, 5504	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 142: 768 samples (1,536 B); entry 142
+P0_W0141_ItalianAcdn3:	.incbin	"pcm/P0_W0141_ItalianAcdn3.pcm", 0, 5504	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0141_ItalianAcdn3.wav (16-bit)
+; wave 142: 768 16-bit samples (1,536 B); entry 142
 ;   source "ItalianAcdn 3"
 ;   tones German Acdn Bs2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7, Italian Acdn Bs1, Italian Acdn Bs2
-P0_W0142_ItalianAcdn3:	.incbin	"kn5000_waveform_rom.ic307", 0x0cb370, 1536	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 143: 768 samples (1,536 B); entry 143
+P0_W0142_ItalianAcdn3:	.incbin	"pcm/P0_W0142_ItalianAcdn3.pcm", 0, 1536	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0142_ItalianAcdn3.wav (16-bit)
+; wave 143: 768 16-bit samples (1,536 B); entry 143
 ;   source "ItalianAcdn 1", "ItalianAcdn 2", "ItalianAcdn 3", "ItalianAcdn 4"
 ;   tones German Acdn Bs2, Italian Acdn 1, Italian Acdn 2, Italian Acdn 3, Italian Acdn 4, Italian Acdn 5, Italian Acdn 6, Italian Acdn 7 +3 more
-P0_W0143:	.incbin	"kn5000_waveform_rom.ic307", 0x0cb970, 1536	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 144: 2,688 samples (5,376 B); entry 144
+P0_W0143:	.incbin	"pcm/P0_W0143.pcm", 0, 1536	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0143.wav (16-bit)
+; wave 144: 2,688 16-bit samples (5,376 B); entry 144
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0144_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0cbf70, 5376	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 145: 3,072 samples (6,144 B); entry 145
+P0_W0144_ItalianAcdn4:	.incbin	"pcm/P0_W0144_ItalianAcdn4.pcm", 0, 5376	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0144_ItalianAcdn4.wav (16-bit)
+; wave 145: 3,072 16-bit samples (6,144 B); entry 145
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0145_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0cd470, 6144	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 146: 1,664 samples (3,328 B); entry 146
+P0_W0145_ItalianAcdn4:	.incbin	"pcm/P0_W0145_ItalianAcdn4.pcm", 0, 6144	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0145_ItalianAcdn4.wav (16-bit)
+; wave 146: 3,328 8-bit samples (3,328 B); entry 146
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0146_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0cec70, 3328	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 147: 864 samples (1,728 B); entry 147
+P0_W0146_ItalianAcdn4:	.incbin	"pcm/P0_W0146_ItalianAcdn4.pcm", 0, 3328	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0146_ItalianAcdn4.wav (8-bit)
+; wave 147: 1,728 8-bit samples (1,728 B); entry 147
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0147_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0cf970, 1728	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 148: 1,024 samples (2,048 B); entry 148
+P0_W0147_ItalianAcdn4:	.incbin	"pcm/P0_W0147_ItalianAcdn4.pcm", 0, 1728	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0147_ItalianAcdn4.wav (8-bit)
+; wave 148: 2,048 8-bit samples (2,048 B); entry 148
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0148_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0d0030, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 149: 1,120 samples (2,240 B); entry 149
+P0_W0148_ItalianAcdn4:	.incbin	"pcm/P0_W0148_ItalianAcdn4.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0148_ItalianAcdn4.wav (8-bit)
+; wave 149: 2,240 8-bit samples (2,240 B); entry 149
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0149_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0d0830, 2240	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 150: 2,560 samples (5,120 B); entry 150
+P0_W0149_ItalianAcdn4:	.incbin	"pcm/P0_W0149_ItalianAcdn4.pcm", 0, 2240	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0149_ItalianAcdn4.wav (8-bit)
+; wave 150: 2,560 16-bit samples (5,120 B); entry 150
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0150_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0d10f0, 5120	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 151: 3,840 samples (7,680 B); entry 151
+P0_W0150_ItalianAcdn4:	.incbin	"pcm/P0_W0150_ItalianAcdn4.pcm", 0, 5120	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0150_ItalianAcdn4.wav (16-bit)
+; wave 151: 3,840 16-bit samples (7,680 B); entry 151
 ;   source "ItalianAcdn 4"
 ;   tones Italian Acdn 4, Italian Acdn Bs2
-P0_W0151_ItalianAcdn4:	.incbin	"kn5000_waveform_rom.ic307", 0x0d24f0, 7680	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 152: 3,840 samples (7,680 B); entry 152
-P0_W0152:	.incbin	"kn5000_waveform_rom.ic307", 0x0d42f0, 7680	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 153: 2,808 samples (5,616 B); entry 153
+P0_W0151_ItalianAcdn4:	.incbin	"pcm/P0_W0151_ItalianAcdn4.pcm", 0, 7680	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0151_ItalianAcdn4.wav (16-bit)
+; wave 152: 3,840 16-bit samples (7,680 B); entry 152
+P0_W0152:	.incbin	"pcm/P0_W0152.pcm", 0, 7680	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0152.wav (16-bit)
+; wave 153: 5,616 8-bit samples (5,616 B); entry 153
 ;   source "White Noise"
-P0_W0153_WhiteNoise:	.incbin	"kn5000_waveform_rom.ic307", 0x0d60f0, 5616	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 154: 2,808 samples (5,616 B); entry 154
+P0_W0153_WhiteNoise:	.incbin	"pcm/P0_W0153_WhiteNoise.pcm", 0, 5616	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0153_WhiteNoise.wav (8-bit)
+; wave 154: 5,616 8-bit samples (5,616 B); entry 154
 ;   source "HiPass Noise", "Syn.HH.Closed", "Syn.Rev.Snare", "Synth HH.Open"
 ;   tones Steamy Keys
 ;   drums Syn.HH.Accent, Syn.HH.Close1, Syn.HH.Close2, Syn.HH.HfOpen, Syn.HH.Pedal, Syn.Rev.Snare, Synth HH.Open, Synth Snare 3
-P0_W0154:	.incbin	"kn5000_waveform_rom.ic307", 0x0d76e0, 5616	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 155: 2,816 samples (5,632 B); entry 155
+P0_W0154:	.incbin	"pcm/P0_W0154.pcm", 0, 5616	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0154.wav (8-bit)
+; wave 155: 5,632 8-bit samples (5,632 B); entry 155
 ;   source "Sax Breath", "Sax Breath 1"
 ;   tones Alto Sax, Distortion Sax, Jazz Clarinet 2, Soprano Sax
 ;   drums Sax Breath
-P0_W0155:	.incbin	"kn5000_waveform_rom.ic307", 0x0d8cd0, 5632	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 156: 2,072 samples (4,144 B); entry 156
+P0_W0155:	.incbin	"pcm/P0_W0155.pcm", 0, 5632	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0155.wav (8-bit)
+; wave 156: 4,144 8-bit samples (4,144 B); entry 156
 ;   source "Sax Breath 2"
 ;   tones Baritone Sax, Breathy Tenor, Jazz Clarinet 1, Mellow Alto Sax, Mellow Clarinet, Rock Tenor Sax, Tenor Sax, Tenor Sax 1
-P0_W0156_SaxBreath2:	.incbin	"kn5000_waveform_rom.ic307", 0x0da2d0, 4144	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 157: 352 samples (704 B); entry 157
+P0_W0156_SaxBreath2:	.incbin	"pcm/P0_W0156_SaxBreath2.pcm", 0, 4144	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0156_SaxBreath2.wav (8-bit)
+; wave 157: 704 8-bit samples (704 B); entry 157
 ;   source "Flute Breath", "Flute Breath1"
 ;   tones Alto Flute, Blown Bottle, Breath Noise, Chiff Flute, Chiffer Lead, Classical Flute, Flutter Flute, Jazz Flute +7 more
 ;   drums Flute Breath
-P0_W0157:	.incbin	"kn5000_waveform_rom.ic307", 0x0db300, 704	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 158: 2,016 samples (4,032 B); entry 158
+P0_W0157:	.incbin	"pcm/P0_W0157.pcm", 0, 704	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0157.wav (8-bit)
+; wave 158: 4,032 8-bit samples (4,032 B); entry 158
 ;   source "Flute Breath2"
-P0_W0158_FluteBreath2:	.incbin	"kn5000_waveform_rom.ic307", 0x0db5c0, 4032	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 159: 2,712 samples (5,424 B); entry 159
-P0_W0159:	.incbin	"kn5000_waveform_rom.ic307", 0x0dc580, 5424	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 160: 208 samples (416 B); entry 160
+P0_W0158_FluteBreath2:	.incbin	"pcm/P0_W0158_FluteBreath2.pcm", 0, 4032	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0158_FluteBreath2.wav (8-bit)
+; wave 159: 5,424 8-bit samples (5,424 B); entry 159
+P0_W0159:	.incbin	"pcm/P0_W0159.pcm", 0, 5424	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0159.wav (8-bit)
+; wave 160: 416 8-bit samples (416 B); entry 160
 ;   source "Fl.Key Click"
 ;   drums FluteKeyClick
-P0_W0160_FlKeyClick:	.incbin	"kn5000_waveform_rom.ic307", 0x0ddab0, 416	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 161: 240 samples (480 B); entry 161
+P0_W0160_FlKeyClick:	.incbin	"pcm/P0_W0160_FlKeyClick.pcm", 0, 416	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0160_FlKeyClick.wav (8-bit)
+; wave 161: 480 8-bit samples (480 B); entry 161
 ;   source "AmbientHammer", "SynSmbWhistle"
 ;   tones Knock Whistle, Windy Sweep
 ;   drums AmbientHammer, SynSambaWhi H, SynSambaWhi L, SynSmbWh Long, SynSmbWhShort
-P0_W0161:	.incbin	"kn5000_waveform_rom.ic307", 0x0ddc50, 480	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 162: 2,584 samples (5,168 B); entry 162
+P0_W0161:	.incbin	"pcm/P0_W0161.pcm", 0, 480	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0161.wav (8-bit)
+; wave 162: 5,168 8-bit samples (5,168 B); entry 162
 ;   source "Hammer", "SynthTimbales"
 ;   drums SynTimbOpenHi, SynTimbOpenLo, SynTimbOpenRm
-P0_W0162:	.incbin	"kn5000_waveform_rom.ic307", 0x0dde30, 5168	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 163: 1,184 samples (2,368 B); entry 163
+P0_W0162:	.incbin	"pcm/P0_W0162.pcm", 0, 5168	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0162.wav (8-bit)
+; wave 163: 2,368 8-bit samples (2,368 B); entry 163
 ;   source "Harpsi.KeyOff"
 ;   tones Cembalo, Harpsichord
-P0_W0163_HarpsiKeyOff:	.incbin	"kn5000_waveform_rom.ic307", 0x0df260, 2368	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 164: 448 samples (896 B); entry 164
+P0_W0163_HarpsiKeyOff:	.incbin	"pcm/P0_W0163_HarpsiKeyOff.pcm", 0, 2368	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0163_HarpsiKeyOff.wav (8-bit)
+; wave 164: 896 8-bit samples (896 B); entry 164
 ;   source "Clavi KeyOff"
 ;   tones Clavi
-P0_W0164_ClaviKeyOff:	.incbin	"kn5000_waveform_rom.ic307", 0x0dfba0, 896	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 165: 1,024 samples (2,048 B); entry 165
+P0_W0164_ClaviKeyOff:	.incbin	"pcm/P0_W0164_ClaviKeyOff.pcm", 0, 896	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0164_ClaviKeyOff.wav (8-bit)
+; wave 165: 1,024 16-bit samples (2,048 B); entry 165
 ;   source "Slap Shot"
 ;   drums Slap Shot
-P0_W0165_SlapShot:	.incbin	"kn5000_waveform_rom.ic307", 0x0dff20, 2048	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 166: 1,112 samples (2,224 B); entry 166
+P0_W0165_SlapShot:	.incbin	"pcm/P0_W0165_SlapShot.pcm", 0, 2048	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0165_SlapShot.wav (16-bit)
+; wave 166: 2,224 8-bit samples (2,224 B); entry 166
 ;   source "Scratch 2"
 ;   drums Scratch 3, Scratch 4
-P0_W0166_Scratch2:	.incbin	"kn5000_waveform_rom.ic307", 0x0e0720, 2224	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 167: 1,112 samples (2,224 B); entry 167
+P0_W0166_Scratch2:	.incbin	"pcm/P0_W0166_Scratch2.pcm", 0, 2224	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0166_Scratch2.wav (8-bit)
+; wave 167: 2,224 8-bit samples (2,224 B); entry 167
 ;   source "Scratch 1"
 ;   tones Telephone
 ;   drums Scratch 1, Scratch 2
-P0_W0167_Scratch1:	.incbin	"kn5000_waveform_rom.ic307", 0x0e0fd0, 2224	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 168: 2,216 samples (4,432 B); entry 168
+P0_W0167_Scratch1:	.incbin	"pcm/P0_W0167_Scratch1.pcm", 0, 2224	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0167_Scratch1.wav (8-bit)
+; wave 168: 4,432 8-bit samples (4,432 B); entry 168
 ;   source "Voice Ah"
 ;   drums Voice Ah
-P0_W0168_VoiceAh:	.incbin	"kn5000_waveform_rom.ic307", 0x0e1880, 4432	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 169: 2,216 samples (4,432 B); entry 169
+P0_W0168_VoiceAh:	.incbin	"pcm/P0_W0168_VoiceAh.pcm", 0, 4432	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0168_VoiceAh.wav (8-bit)
+; wave 169: 4,432 8-bit samples (4,432 B); entry 169
 ;   source "Voice Yeh"
 ;   drums Voice Yeh
-P0_W0169_VoiceYeh:	.incbin	"kn5000_waveform_rom.ic307", 0x0e29d0, 4432	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 170: 2,768 samples (5,536 B); entry 170
+P0_W0169_VoiceYeh:	.incbin	"pcm/P0_W0169_VoiceYeh.pcm", 0, 4432	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0169_VoiceYeh.wav (8-bit)
+; wave 170: 5,536 8-bit samples (5,536 B); entry 170
 ;   source "Voice Uh"
 ;   drums Voice Uh, Voice Uh 1, Voice Uh 2
-P0_W0170_VoiceUh:	.incbin	"kn5000_waveform_rom.ic307", 0x0e3b20, 5536	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 171: 1,384 samples (2,768 B); entry 171
+P0_W0170_VoiceUh:	.incbin	"pcm/P0_W0170_VoiceUh.pcm", 0, 5536	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0170_VoiceUh.wav (8-bit)
+; wave 171: 2,768 8-bit samples (2,768 B); entry 171
 ;   source "Bird 1"
 ;   tones Bird Tweet
 ;   drums Bird 2
-P0_W0171_Bird1:	.incbin	"kn5000_waveform_rom.ic307", 0x0e50c0, 2768	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 172: 968 samples (1,936 B); entry 172
+P0_W0171_Bird1:	.incbin	"pcm/P0_W0171_Bird1.pcm", 0, 2768	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0171_Bird1.wav (8-bit)
+; wave 172: 1,936 8-bit samples (1,936 B); entry 172
 ;   source "Bird 2"
 ;   tones Bird Tweet
 ;   drums Bird 3
-P0_W0172_Bird2:	.incbin	"kn5000_waveform_rom.ic307", 0x0e5b90, 1936	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 173: 3,200 samples (6,400 B); entry 173
+P0_W0172_Bird2:	.incbin	"pcm/P0_W0172_Bird2.pcm", 0, 1936	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0172_Bird2.wav (8-bit)
+; wave 173: 6,400 8-bit samples (6,400 B); entry 173
 ;   source "Seashore 1", "Wave 1"
 ;   tones Seashore
 ;   drums Wave 1, Wave 10, Wave 11, Wave 3, Wave 4, Wave 7, Wave 8
-P0_W0173:	.incbin	"kn5000_waveform_rom.ic307", 0x0e6320, 6400	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 174: 3,200 samples (6,400 B); entry 174
+P0_W0173:	.incbin	"pcm/P0_W0173.pcm", 0, 6400	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0173.wav (8-bit)
+; wave 174: 6,400 8-bit samples (6,400 B); entry 174
 ;   source "Seashore 2", "Wave 2"
 ;   drums Wave 12, Wave 13, Wave 14, Wave 2, Wave 5, Wave 6, Wave 9
-P0_W0174:	.incbin	"kn5000_waveform_rom.ic307", 0x0e7c20, 6400	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 175: 3,832 samples (7,664 B); entry 175
+P0_W0174:	.incbin	"pcm/P0_W0174.pcm", 0, 6400	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0174.wav (8-bit)
+; wave 175: 7,664 8-bit samples (7,664 B); entry 175
 ;   source "Seashore 3"
-P0_W0175_Seashore3:	.incbin	"kn5000_waveform_rom.ic307", 0x0e9520, 7664	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 176: 7,312 samples (14,624 B); entry 176
+P0_W0175_Seashore3:	.incbin	"pcm/P0_W0175_Seashore3.pcm", 0, 7664	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0175_Seashore3.wav (8-bit)
+; wave 176: 14,624 8-bit samples (14,624 B); entry 176
 ;   source "Seashore 4"
 ;   tones Seashore
-P0_W0176_Seashore4:	.incbin	"kn5000_waveform_rom.ic307", 0x0eb310, 14624	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 177: 3,592 samples (7,184 B); entry 177
+P0_W0176_Seashore4:	.incbin	"pcm/P0_W0176_Seashore4.pcm", 0, 14624	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0176_Seashore4.wav (8-bit)
+; wave 177: 7,184 8-bit samples (7,184 B); entry 177
 ;   source "Seashore 5"
 ;   tones Seashore
-P0_W0177_Seashore5:	.incbin	"kn5000_waveform_rom.ic307", 0x0eec30, 7184	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 178: 4,552 samples (9,104 B); entry 178
+P0_W0177_Seashore5:	.incbin	"pcm/P0_W0177_Seashore5.pcm", 0, 7184	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0177_Seashore5.wav (8-bit)
+; wave 178: 9,104 8-bit samples (9,104 B); entry 178
 ;   source "Telephone"
 ;   tones Telephone
 ;   drums Telephone
-P0_W0178_Telephone:	.incbin	"kn5000_waveform_rom.ic307", 0x0f0840, 9104	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 179: 4,112 samples (8,224 B); entry 179
+P0_W0178_Telephone:	.incbin	"pcm/P0_W0178_Telephone.pcm", 0, 9104	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0178_Telephone.wav (8-bit)
+; wave 179: 8,224 8-bit samples (8,224 B); entry 179
 ;   source "Helicopter"
 ;   tones Helicopter
 ;   drums Helicopter, Train, Train 2, Train 3
-P0_W0179_Helicopter:	.incbin	"kn5000_waveform_rom.ic307", 0x0f2bd0, 8224	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 180: 2,600 samples (5,200 B); entry 180
+P0_W0179_Helicopter:	.incbin	"pcm/P0_W0179_Helicopter.pcm", 0, 8224	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0179_Helicopter.wav (8-bit)
+; wave 180: 5,200 8-bit samples (5,200 B); entry 180
 ;   source "Gun Shot"
 ;   tones Bonanza, Gun Shot
 ;   drums Explosion, Gun Shot, Syn.HandClaps
-P0_W0180_GunShot:	.incbin	"kn5000_waveform_rom.ic307", 0x0f4bf0, 5200	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 181: 5,520 samples (11,040 B); entry 181
+P0_W0180_GunShot:	.incbin	"pcm/P0_W0180_GunShot.pcm", 0, 5200	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0180_GunShot.wav (8-bit)
+; wave 181: 11,040 8-bit samples (11,040 B); entry 181
 ;   source "Applause"
 ;   tones Applause
 ;   drums Applause 1, Applause 2, Applause 3, Applause 4, Applause 5, Applause 6, Applause 7
-P0_W0181_Applause:	.incbin	"kn5000_waveform_rom.ic307", 0x0f6040, 11040	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 182: 3,456 samples (6,912 B); entries 182, 183
+P0_W0181_Applause:	.incbin	"pcm/P0_W0181_Applause.pcm", 0, 11040	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0181_Applause.wav (8-bit)
+; wave 182: 3,456 16-bit samples (6,912 B); entries 182, 183
 ;   source "Electric Bass"
 ;   tones Bonanza, Electric Bass
-P0_W0182_ElectricBass:	.incbin	"kn5000_waveform_rom.ic307", 0x0f8b60, 6912	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 183: 4,608 samples (9,216 B); entry 184
+P0_W0182_ElectricBass:	.incbin	"pcm/P0_W0182_ElectricBass.pcm", 0, 6912	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0182_ElectricBass.wav (16-bit)
+; wave 183: 4,608 16-bit samples (9,216 B); entry 184
 ;   source "Electric Bass"
 ;   tones Bonanza, Electric Bass
-P0_W0183_ElectricBass:	.incbin	"kn5000_waveform_rom.ic307", 0x0fa660, 9216	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 184: 4,736 samples (9,472 B); entries 185, 186, 187, 188, 189, 190
+P0_W0183_ElectricBass:	.incbin	"pcm/P0_W0183_ElectricBass.pcm", 0, 9216	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0183_ElectricBass.wav (16-bit)
+; wave 184: 4,736 16-bit samples (9,472 B); entries 185, 186, 187, 188, 189, 190
 ;   source "Electric Bass"
 ;   tones Bonanza, Electric Bass
-P0_W0184_ElectricBass:	.incbin	"kn5000_waveform_rom.ic307", 0x0fca60, 9472	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
-; wave 185: 2,064 samples (4,128 B); entries 191, 192, 193, 194, 195, 196, 197
+P0_W0184_ElectricBass:	.incbin	"pcm/P0_W0184_ElectricBass.pcm", 0, 9472	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0184_ElectricBass.wav (16-bit)
+; wave 185: 2,064 16-bit samples (4,128 B); entries 191, 192, 193, 194, 195, 196, 197
 ;   source "House Bass"
 ;   tones House Bass, Plastic Bass, Wet Bass
-P0_W0185_HouseBass:	.incbin	"kn5000_waveform_rom.ic307", 0x0fef60, 4128	; census: opaque -- pcm: signed 16-bit LE samples, no CPU reads them
+P0_W0185_HouseBass:	.incbin	"pcm/P0_W0185_HouseBass.pcm", 0, 4128	; census: generated -- scripts/build/pcm_wav.py, from waveform/wav/P0_W0185_HouseBass.wav (16-bit)
 
 ; ---- page tail: 128 bytes of 0xFF after the last wave ----
 IC307_Page0_TailFill:	.fill	128, 1, 0xff
