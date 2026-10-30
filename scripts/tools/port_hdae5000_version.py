@@ -582,10 +582,18 @@ class Ctx:
         self.used = set(bld.symaddr) | set(self.equs)
 
     def w_of_b(self, b):
-        """W address of B address b when b lies in an identical block."""
+        """W address of B address b when b lies in an identical block (of the block aligner,
+        or between two anchors of the lockstep walk whose stretches are identical)."""
         for s, e, sb in self.blocks:            # blocks are few hundred: linear is fine
             if sb <= b - BASE < sb + (e - s):
                 return s + (b - BASE - sb) + BASE
+        pts = getattr(self, "anchor_pts", None)
+        if pts:
+            k = bisect.bisect_right([y for _, y in pts], b) - 1
+            if 0 <= k < len(pts) - 1:
+                (w0, b0), (w1, b1) = pts[k], pts[k + 1]
+                if w1 - w0 == b1 - b0 and self.bld.img[w0 - BASE:w1 - BASE] == self.ref[b0 - BASE:b1 - BASE]:
+                    return w0 + (b - b0)
         return None
 
     def label_at(self, b):
@@ -837,12 +845,34 @@ class Anchors:
         todo = list(seeds)
         for wa, ba in seeds:
             self.votes[wa][ba] += 1
-        while todo:
-            wa, ba = todo.pop()
-            if (wa, ba) in self.walked or not (wa < CODE_END and ba < CODE_END):
-                continue
-            self.walked.add((wa, ba))
-            todo += self.walk(wa, ba)
+        tables_seen = set()
+        while True:
+            while todo:
+                wa, ba = todo.pop()
+                if (wa, ba) in self.walked or not (wa < CODE_END and ba < CODE_END):
+                    continue
+                self.walked.add((wa, ba))
+                todo += self.walk(wa, ba)
+            # pointer tables: a data anchor whose W bytes are a run of code pointers pairs
+            # its entries with the target's, in order (the PC-link command and service
+            # tables reach routines no walk does)
+            for wa, c in list(self.votes.items()):
+                if wa < CODE_END or wa in tables_seen or len(c) != 1:
+                    continue
+                tables_seen.add(wa)
+                ba = next(iter(c))
+                k = 0
+                while k < 256:
+                    x = int.from_bytes(wimg[wa - BASE + 4 * k:wa - BASE + 4 * k + 4], "little")
+                    y = int.from_bytes(ref[ba - BASE + 4 * k:ba - BASE + 4 * k + 4], "little")
+                    if not (BASE <= x < CODE_END and BASE <= y < CODE_END):
+                        break
+                    if not self.votes[x][y]:
+                        todo.append((x, y))
+                    self.votes[x][y] += 1
+                    k += 1
+            if not todo:
+                break
 
     def decoded(self, side, a):
         """(length, text) of the instruction at a in image `side` (0 = W, 1 = B), decoding a
@@ -1349,6 +1379,11 @@ def cmd_code(ver, only=None, dry=False, same_only=False, spans=None, widen=False
         # differ: each changed stretch of code between two points the walk pinned down
         an = Anchors(bld.img, ref, registry_pairs(bld.img, ref) + [(BASE, BASE)])
         pts = [(w, b) for w, b in sorted(an.rom_map().items()) if w < CODE_END and b < CODE_END]
+        ctx.anchor_pts = pts
+        for w, b in pts:                        # anchors name their target address too
+            n = [x for a, x in bld.syms if a == w and not x.startswith("__PM_")]
+            if n:
+                ctx.bmap.setdefault(b, n[0])
         hs = []
         for (w0, b0), (w1, b1) in zip(pts, pts[1:]):
             if bld.img[w0 - BASE:w1 - BASE] != ref[b0 - BASE:b1 - BASE] and w1 - w0 < 0x1000:
@@ -1665,6 +1700,14 @@ def cmd_strings(ver, only=None, dry=False, tag="v2.01i"):
             if op == "equal":
                 for i in range(i1, i2):
                     out += items[i][2] + [items[i][3]]
+                continue
+            if op == "replace" and i2 - i1 == j2 - j1 and \
+                    all(items[i][0] == "s" == bi[j][0] for i, j in zip(range(i1, i2), range(j1, j2))):
+                # the same strings in the same places with other text (v1.15i's part-name list
+                # has eight names, v2.x's nine): each keeps its label and its readers
+                for i, j in zip(range(i1, i2), range(j1, j2)):
+                    m = re.match(rb'^(.*?\.asciz\s+)"', items[i][3])
+                    out += items[i][2] + [m.group(1) + b'"' + esc(bi[j][1][:-1]) + b'"']
                 continue
             orphan = []
             for i in range(i1, i2):
