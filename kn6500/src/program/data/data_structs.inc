@@ -3839,12 +3839,28 @@
 	.ascii	\x1
 .endm
 
-# REC_func_4C02CBDA_Records_p0: 20-byte records (func_4C02CBDA_Records_p0, 74 records); fields, and what reads them:
+# REC_func_4C02CBDA_Records_p0: 20-byte records (func_4C02CBDA_Records_p0, 130 records); fields, and what reads them:
 #   +0   f0           u32            func_4C02CBDA_entry_L20 0x4C02CBFC `mov (a0), d1`
 #   +4   x4           u8[16]         no reader seen
 .macro REC_func_4C02CBDA_Records_p0 f0=0, x4
 	.long	\f0
 	.ascii	\x4
+.endm
+
+# REC_data_4C192110_p0: 20-byte records (data_4C192110_p0, 1 records); fields, and what reads them:
+#   +0   f0           u32            func_4C02B14F_entry_L21 0x4C02B175 `mov (a0), d0`; func_4C02B14F_entry_L58 0x4C02B1AC `mov (a0), d0`
+#   +4   x4           u8[8]          no reader seen
+#   +12  f12          u32            func_4C02B14F_entry_L21 0x4C02B175 `mov (0xc, a0), a3`
+#   +16  f16          u16            func_4C02B14F_entry_L21 0x4C02B175 `movhu (a2), d0`; func_4C02B14F_entry_L58 0x4C02B1AC `movhu (a2), d0` (+1)
+#   +18  x18          u8[1]          no reader seen
+#   +19  f19          u8             func_4C02B14F_entry_L21 0x4C02B175 `movbu (0x13, a0), d0`
+.macro REC_data_4C192110_p0 f0=0, x4, f12=0, f16=0, x18, f19=0
+	.long	\f0
+	.ascii	\x4
+	.long	\f12
+	.word	\f16
+	.ascii	\x18
+	.byte	\f19
 .endm
 
 # REC_data_4C192028_p0: 4-byte records (data_4C192028_p0, 1 records); fields, and what reads them:
@@ -3853,20 +3869,48 @@
 	.long	\f0
 .endm
 
-# REC_func_4C04D4E1_entry_L26_Table_p0: 24-byte records (func_4C04D4E1_entry_L26_Table_p0, 16 records); fields, and what reads them:
+# REC_func_4C04D4E1_entry_L26_Table_p0: 108-byte records (func_4C04D4E1_entry_L26_Table_p0, 13 records); fields, and what reads them:
 #   +0   f0           u32            func_4C04D4E1_entry_L47 0x4C04D52D `mov (a2), d0`
 #   +4   f4           u8             func_4C04D4E1_entry_L47 0x4C04D52D `movbu (a1), d1`
 #   +5   x5           u8[3]          no reader seen
 #   +8   p8           ptr            func_4C04D4E1_entry_L47 0x4C04D52D `mov (a3), a1`
 #   +12  x12          u8[8]          no reader seen
 #   +20  p20          ptr            no reader seen
-.macro REC_func_4C04D4E1_entry_L26_Table_p0 f0=0, f4=0, x5, p8=0, x12, p20=0
+#   +24  x24          u8[8]          no reader seen
+#   +32  p32          ptr            no reader seen
+#   +36  x36          u8[8]          no reader seen
+#   +44  p44          ptr            no reader seen
+#   +48  x48          u8[8]          no reader seen
+#   +56  p56          ptr            no reader seen
+#   +60  x60          u8[8]          no reader seen
+#   +68  p68          ptr            no reader seen
+#   +72  x72          u8[8]          no reader seen
+#   +80  p80          ptr            no reader seen
+#   +84  x84          u8[8]          no reader seen
+#   +92  p92          ptr            no reader seen
+#   +96  x96          u8[8]          no reader seen
+#   +104 p104         ptr            no reader seen
+.macro REC_func_4C04D4E1_entry_L26_Table_p0 f0=0, f4=0, x5, p8=0, x12, p20=0, x24, p32=0, x36, p44=0, x48, p56=0, x60, p68=0, x72, p80=0, x84, p92=0, x96, p104=0
 	.long	\f0
 	.byte	\f4
 	.ascii	\x5
 	.long	\p8
 	.ascii	\x12
 	.long	\p20
+	.ascii	\x24
+	.long	\p32
+	.ascii	\x36
+	.long	\p44
+	.ascii	\x48
+	.long	\p56
+	.ascii	\x60
+	.long	\p68
+	.ascii	\x72
+	.long	\p80
+	.ascii	\x84
+	.long	\p92
+	.ascii	\x96
+	.long	\p104
 .endm
 
 # REC_func_4C062204_entry_L9_Records_p4: 180-byte records (func_4C062204_entry_L9_Records_p4, 2 records); fields, and what reads them:
@@ -3939,7 +3983,7 @@
 	.ascii	\x2
 .endm
 
-# REC_func_4C09CCB5_Table_p0: 12-byte records (func_4C09CCB5_Table_p0, 465 records); fields, and what reads them:
+# REC_func_4C09CCB5_Table_p0: 12-byte records (func_4C09CCB5_Table_p0, 466 records); fields, and what reads them:
 #   +0   p0           ptr            func_4C09CCB5_entry_L38 0x4C09CCF2 `mov (a2), a2`
 #   +4   f4           u16            func_4C09CCB5_entry_L25 0x4C09CCDF `movhu (4, a2), d1`
 #   +6   x6           u8[6]          no reader seen
@@ -4037,6 +4081,20 @@
 	.ascii	\x0
 .endm
 
+# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0: 28-byte records (SndRecTriFieldGet2_entry_L16_Table_2_p0, 601 records); fields, and what reads them:
+#   +0   x0           u8[18]         no reader seen
+#   +18  f18          u16            func_4C15EE05_entry_L16 0x4C15EE20 `movhu (0x12, a0), d0`; func_4C15EE05_entry_Lb6 0x4C15EEC0 `movhu (0x12, a0), d0`
+#   +20  f20          u16            SndRecCountGet_entry_L16 0x4C15EB5B `movhu (0x14, a0), d0`; SndRecCountGet_entry_Lb6 0x4C15EBFB `movhu (0x14, a0), d0` (+2)
+#   +22  x22          u8[2]          no reader seen
+#   +24  p24          ptr            func_4C15EF34_entry_L19 0x4C15EF52 `mov (0x18, a0), a0`; func_4C15EF34_entry_Lcf 0x4C15F008 `mov (0x18, a0), a1`
+.macro REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 x0, f18=0, f20=0, x22, p24=0
+	.ascii	\x0
+	.word	\f18
+	.word	\f20
+	.ascii	\x22
+	.long	\p24
+.endm
+
 # REC_func_4C15ECAA_Table_2_p0_p4: 32-byte records (func_4C15ECAA_Table_2_p0_p4, 91 records); fields, and what reads them:
 #   +0   x0           u8[32]         no reader seen
 .macro REC_func_4C15ECAA_Table_2_p0_p4 x0
@@ -4093,11 +4151,11 @@
 	.ascii	\x9
 .endm
 
-# REC_StyleGenreTable_p4_p4: 210-byte records (StyleGenreTable_p4_p4, 3 records); fields, and what reads them:
+# REC_StyleGenreTable_p4_p4: 190-byte records (StyleGenreTable_p4_p4, 4 records); fields, and what reads them:
 #   +0   f0           u16            func_4C1642F7_entry_Lf 0x4C164309 `movhu (a0), d0`; func_4C1648A1_entry_L4f 0x4C1648F5 `movhu (a0), d0` (+3)
 #   +2   x2           u8[4]          no reader seen
 #   +6   f6           u16            func_4C16508E 0x4C16508E `movhu (6, a0), d0`
-#   +8   x8           u8[202]        no reader seen
+#   +8   x8           u8[182]        no reader seen
 .macro REC_StyleGenreTable_p4_p4 f0=0, x2, f6=0, x8
 	.word	\f0
 	.ascii	\x2

@@ -12,7 +12,7 @@
 .include "src/labels.inc"
 .include "src/program/data/gui_code_ids.inc"
 
-	.byte	0x58, 0x41, 0x50, 0x52	# "XAPR"
+	.ascii	"XAPR"
 	.long	XaprTrailerSignature
 	.long	func_9783DBC9
 	.long	func_9783DC78
@@ -99974,7 +99974,7 @@ func_9783DE8A_L49:
 .include "src/program/data/data.s"
 
 XaprTrailerSignature:
-	.byte	0x58, 0x41, 0x50, 0x52	# "XAPR"
+	.ascii	"XAPR"
 	.space	39584, 0xff	# erased flash
 
 .org 0x0c0000

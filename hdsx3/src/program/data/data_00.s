@@ -55,7 +55,9 @@ Str_Total_Faults_li:	.asciz "Total Faults : %li"
 	.align	4, 0xFF	# pad after Str_Total_Faults_li
 Str_Read_FatCluster_bad:	.asciz "Read FatCluster bad"
 data_9783E130:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E130, 0x03E134
+	# a string, 4 bytes with its pad, read by func_978055BD_entry_L8a 0x9780564C `call func_978027D8_entry, [d2], 0x4c` (+0, arg a0); func_978055BD_entry_L8a 0x9780564C `mov data_9783E130, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_Bad_MLFinishSave:	.asciz "Bad MLFinishSave"
 	.align	4, 0xFF	# pad after Str_Bad_MLFinishSave
 Str_Bad_AskForHDFinishSave:	.asciz "Bad AskForHDFinishSave"
@@ -73,7 +75,9 @@ Str_StartAdress_lu_2:	.asciz "StartAdress : %lu"
 	.align	4, 0xFF	# pad after Str_StartAdress_lu_2
 Str_EndAdress_lu_2:	.asciz "EndAdress : %lu"
 data_9783E1FC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x03E1FC, 0x03E200
+	# a string, 4 bytes with its pad, read by func_97805A74_entry_L232 0x97805CAB `call func_978027D8_entry, [d2], 0x4c` (+0, arg a0); func_97805A74_entry_L232 0x97805CAB `mov data_9783E1FC, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_Fault_3_2:	.asciz "Fault -3"
 	.align	4, 0xFF	# pad after Str_Fault_3_2
 Str_Fault_4_2:	.asciz "Fault -4"
@@ -5465,7 +5469,8 @@ BitmapBg002_Palette:	# 256 colours, 0x00BBGGRR (BitmapBg002: MT_GetBitmapPalette
 BitmapBg002_Pixels:	# 640 x 240, 8 bit(s) a pixel, rows padded to even bytes: the bitmap BitmapBg002 answers MT_GetBitmapData with (src/program/data/media/BitmapBg002_Pixels.png)
 	.incbin	"build/bitmaps/BitmapBg002_Pixels.bin"	# census: generated -- ../kn7000/tools/table_png.py (pk 8 640 240) from src/program/data/media/BitmapBg002_Pixels.png
 data_9789D88C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x09D88C, 0x09D88E
+	# a string, 2 bytes with its pad, read by KssPsMultiLangTextBoxProc_L25b 0x9780F8BB `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); KssPsMultiLangTextBoxProc_L25b 0x9780F8BB `mov data_9789D88C, a1` (+0, as a base); KssPsWarnBoxProc_L196 0x9781008C `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1) (+11 more); handed to strcspn
+	.asciz	"\x0D"
 
 Str_WSL:	.asciz "WSL."
 # census: opaque -- unknown-dump: 25 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -8019,7 +8024,9 @@ Str_CpS2:	.asciz "CpS2"
 Str_WrCn:	.asciz "WrCn"
 	.align	4, 0xFF	# pad after Str_WrCn
 data_978A22F0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A22F0, 0x0A22F4
+	# a string, 4 bytes with its pad, read by FDFileSelectProc_L10e 0x9781CD8D `call strcpy_entry, [a2], 4` (+0, arg a1); FDFileSelectProc_L10e 0x9781CD8D `mov data_978A22F0, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 Str_empty_450:	.asciz "                           "
 Str_empty_449:	.asciz "                           "
 Str_mid_2:	.asciz "mid"
@@ -8268,13 +8275,17 @@ KssCOMM_DISPProc_L345_Table:
 	.long	ptrs_978A2AD0
 	.long	ptrs_978A2BAC
 data_978A2BFC:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2BFC, 0x0A2C04
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2BFC, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x500014, 0x6E0140	# +0
 data_978A2C04:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C04, 0x0A2C08
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C04, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x500014	# +0
 data_978A2C08:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C08, 0x0A2C10
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C08, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x50017C, 0x6E0208	# +0
 data_978A2C10:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C10, 0x0A2C14
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_Lb4 0x9781DAEA `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_Lb4 0x9781DAEA `mov data_978A2C10, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x50017C	# +0
 
 Str_empty_444:	.asciz "("
 # census: opaque -- unknown-dump: 6 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -8283,29 +8294,41 @@ Str_empty_443:	.asciz "("
 # census: opaque -- unknown-dump: 2 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C1E, 0x0A2C20
 data_978A2C20:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C20, 0x0A2C28
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C20, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5000C8, 0x6E015E	# +0
 data_978A2C28:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C28, 0x0A2C2C
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C28, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5000C8	# +0
 data_978A2C2C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C2C, 0x0A2C34
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L1d0 0x9781DC06 `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L1d0 0x9781DC06 `mov data_978A2C2C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x4A00B4, 0x60015E	# +0
 data_978A2C34:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C34, 0x0A2C3C
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C34, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x500212, 0x6E0276	# +0
 data_978A2C3C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C3C, 0x0A2C40
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C3C, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x500212	# +0
 data_978A2C40:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C40, 0x0A2C48
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L239 0x9781DC6F `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L239 0x9781DC6F `mov data_978A2C40, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x4A0208, 0x600276	# +0
 data_978A2C48:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C48, 0x0A2C50
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C48, a0` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a2)` (+0, arg a0) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xA000C8, 0xB40276	# +0
 data_978A2C50:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C50, 0x0A2C54
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C50, a1` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a2)` (+0, arg a1) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xA000C8	# +0
 data_978A2C54:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C54, 0x0A2C5C
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L29d 0x9781DCD3 `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L29d 0x9781DCD3 `mov data_978A2C54, a0` (+0, as a base); KssCOMM_DISPProc_L3a7 0x9781DDDD `calls (a1)` (+0, arg a0) (+3 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x9C00BE, 0xAA0258	# +0
 data_978A2C5C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C5C, 0x0A2C64
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a2)` (+0, arg a0); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C5C, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xBE0190, 0xD20276	# +0
 data_978A2C64:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C64, 0x0A2C68
+	# 4 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a2)` (+0, arg a1); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C64, a1` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xBE0190	# +0
 data_978A2C68:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A2C68, 0x0A2C70
+	# 8 bytes the code takes the address of: KssCOMM_DISPProc_L345 0x9781DD7B `calls (a1)` (+0, arg a0); KssCOMM_DISPProc_L345 0x9781DD7B `mov data_978A2C68, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xBA0186, 0xC80276	# +0
 Str_USPP:	.asciz "USPP"
 	.align	4, 0xFF	# pad after Str_USPP
 Str_s_fAbortDataTransfer_TRUE:	.asciz "s_fAbortDataTransfer : TRUE"
@@ -9097,7 +9120,8 @@ func_97827B50_Var_141:	# s16, a constant; read / written by func_97827B50 0x9782
 func_97827B50_Var_142:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	236
 data_978A40C8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A40C8, 0x0A40D0
+	# 8 bytes the code takes the address of: KssAudioOutputProc_L460 0x97825B7B `calls (a1)` (+0, arg a0); KssAudioOutputProc_L460 0x97825B7B `mov data_978A40C8, a0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x350106, 0x44021A	# +0
 func_97827C18_Var:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (a0), d1`
 	.word	262
 func_97827C18_Var_2:	# s16, a constant; read / written by func_97827C18 0x97827C18: `movhu (2, a0), d1`
@@ -9372,11 +9396,15 @@ Str_02i_s_2:	.asciz "%02i:%s"
 Str_AL_2:	.asciz "AL"
 	.align	4, 0xFF	# pad after Str_AL_2
 data_978A44B0:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A44B0, 0x0A44B4
+	# a string, 4 bytes with its pad, read by KSSCLSFileListProc_L65c 0x9782A201 `call strcpy_entry, [a2], 4` (+0, arg a1); KSSCLSFileListProc_L65c 0x9782A201 `mov data_978A44B0, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 Str_AS_2:	.asciz "AS"
 	.align	4, 0xFF	# pad after Str_AS_2
 data_978A44B8:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A44B8, 0x0A44BC
+	# a string, 4 bytes with its pad, read by KSSCLSFileListProc_L68a 0x9782A22F `call strcpy_entry, [a2], 4` (+0, arg a1); KSSCLSFileListProc_L68a 0x9782A22F `mov data_978A44B8, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 Str_AL:	.asciz "AL"
 	.align	4, 0xFF	# pad after Str_AL
 Str_AS:	.asciz "AS"
@@ -9491,7 +9519,8 @@ func_97827B50_Var_184:	# s16, a constant; read / written by func_97827B50 0x9782
 func_97827B50_Var_185:	# s16, a constant; read / written by func_97827B50 0x97827B50: `movhu (6, a0), d1`
 	.word	238
 data_978A4568:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4568, 0x0A4570
+	# 8 bytes the code takes the address of: KssxJukeBoxProc_L13c 0x9782B6A9 `calls (a1)` (+0, arg a0); KssxJukeBoxProc_L13c 0x9782B6A9 `mov data_978A4568, a0` (+0, as a base); KssxJukeBoxProc_L535 0x9782BAA2 `calls (a1)` (+0, arg a0) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0xCC011A, 0xE60167	# +0
 func_978279FE_Var_46:	# u16, a constant; read / written by func_978279FE 0x978279FE: `movhu (a0), d1`
 	.word	281
 
@@ -10153,11 +10182,17 @@ Str_empty_404:	.asciz " "
 Str_empty_403:	.asciz " "
 	.align	4, 0xFF	# pad after Str_empty_403
 data_978A4C10:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4C10, 0x0A4C14
+	# a string, 4 bytes with its pad, read by func_97831F65_entry_L106 0x97832071 `call strcpy_entry, [a2], 4` (+0, arg a1); func_97831F65_entry_L106 0x97832071 `mov data_978A4C10, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 data_978A4C14:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4C14, 0x0A4C18
+	# a string, 4 bytes with its pad, read by func_97831F65_entry_L192 0x978320FD `call strcpy_entry, [a2], 4` (+0, arg a1); func_97831F65_entry_L192 0x978320FD `mov data_978A4C14, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 data_978A4C18:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0A4C18, 0x0A4C1C
+	# a string, 4 bytes with its pad, read by LFDFileSelectProc_La8 0x978327B3 `call strcpy_entry, [a2], 4` (+0, arg a1); LFDFileSelectProc_La8 0x978327B3 `mov data_978A4C18, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 Str_empty_402:	.asciz "                           "
 Str_empty_401:	.asciz "                           "
 Str_mid:	.asciz "mid"
@@ -10518,7 +10553,8 @@ Str_Belonging_tag_not_found_stack_empty:	.asciz "Belonging tag not found (stack 
 	.align	4, 0xFF	# pad after Str_Belonging_tag_not_found_stack_empty
 Str_Belonging_tag_not_found:	.asciz "Belonging tag not found"
 data_978AF210:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF210, 0x0AF218
+	# 8 bytes the code takes the address of: func_97834997_entry_L1f 0x978349B9 `call strchr_entry, [d2], 4` (+0, arg a0); func_97834997_entry_L1f 0x978349B9 `mov data_978AF210, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 0, 255	# +0
 
 func_9780A35F_Var:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	.byte	32
@@ -10528,21 +10564,25 @@ func_9780A35F_Table:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu 
 data_978AF220:
 	.space	1, 0x00
 data_978AF221:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF221, 0x0AF22C
+	# 11 bytes the code takes the address of: func_97834997_entry_L52 0x978349EC `mov data_978AF221, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 38, 60, 0, 255, 255	# +0
 
 Str_x:	.asciz "#x"
 Str_X:	.asciz "#X"
 	.align	4, 0xFF	# pad after Str_X
 data_978AF234:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF234, 0x0AF240
+	# 12 bytes the code takes the address of: func_97834997_entry_Lba 0x97834A54 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834997_entry_Lba 0x97834A54 `mov data_978AF234, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 59, 60, 0, 255, 255, 255	# +0
 Str_Invalid_dec_character_reference:	.asciz "Invalid dec character reference"
 data_978AF260:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF260, 0x0AF26C
+	# 12 bytes the code takes the address of: func_97834997_entry_L126 0x97834AC0 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97834997_entry_L126 0x97834AC0 `mov data_978AF260, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 59, 60, 0, 255, 255, 255	# +0
 Str_Invalid_hex_character_reference:	.asciz "Invalid hex character reference"
 data_978AF28C:
 	.space	1, 0x00
 data_978AF28D:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF28D, 0x0AF298
+	# 11 bytes the code takes the address of: func_97834997_entry_L183 0x97834B1D `mov data_978AF28D, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 59, 60, 0, 255, 255	# +0
 Str_Invalid_entity_character_reference:	.asciz "Invalid entity character reference"
 	.align	4, 0xFF	# pad after Str_Invalid_entity_character_reference
 Str_supposed:	.asciz " '<' supposed "
@@ -10550,7 +10590,8 @@ Str_supposed:	.asciz " '<' supposed "
 data_978AF2CC:
 	.space	1, 0x00
 data_978AF2CD:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF2CD, 0x0AF2D8
+	# 11 bytes the code takes the address of: func_97834BA2_entry_Lcd 0x97834C72 `mov data_978AF2CD, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 62, 0, 255, 255, 255	# +0
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_4:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_3:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-_"
 
@@ -10560,9 +10601,11 @@ func_9780A35F_Var_2:	# s8, a constant; read / written by func_9780A35F 0x9780A35
 func_9780A35F_Table_2:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF358:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF358, 0x0AF35F
+	# 7 bytes the code takes the address of: func_97834BA2_entry_L12a 0x97834CCF `call func_97833C07_entry, [d2], 0x20` (+0, arg d1); func_97834BA2_entry_L12a 0x97834CCF `mov data_978AF358, d1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 0	# +0
 data_978AF35F:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF35F, 0x0AF368
+	# 9 bytes the code takes the address of: func_97834BA2_entry_L12a 0x97834CCF `mov data_978AF35F, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 61, 62, 0	# +0
 
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn_2:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 Str_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmn:	.asciz "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789:.-_"
@@ -10581,11 +10624,14 @@ func_9780A35F_Var_4:	# s8, a constant; read / written by func_9780A35F 0x9780A35
 func_9780A35F_Table_4:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF3F4:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3F4, 0x0AF3F8
+	# a string, 4 bytes with its pad, read by func_97834BA2_entry_L1cc 0x97834D71 `call func_97833C07_entry, [d2], 0x20` (+0, arg d1); func_97834BA2_entry_L1cc 0x97834D71 `mov data_978AF3F4, d1` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_978AF3F8:
 	.space	1, 0x00
 data_978AF3F9:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF3F9, 0x0AF404
+	# 11 bytes the code takes the address of: func_97834BA2_entry_L213 0x97834DB8 `mov data_978AF3F9, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 62, 0, 255, 255, 255	# +0
 
 func_9780A35F_Var_5:	# s8, a constant; read / written by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	.byte	32
@@ -10593,9 +10639,11 @@ func_9780A35F_Var_5:	# s8, a constant; read / written by func_9780A35F 0x9780A35
 func_9780A35F_Table_5:	# 7 x s8, -1..13; read by func_9780A35F 0x9780A35F: `movbu (a1), d0`
 	tab_s8	10, 11, 9, 13, 12, 0, -1
 data_978AF40C:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF40C, 0x0AF410
+	# 4 bytes the code takes the address of: func_97834F63_entry_L48 0x97834FB0 `mov data_978AF40C, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 255, 255	# +0
 data_978AF410:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF410, 0x0AF418
+	# 8 bytes the code takes the address of: func_97835087_entry_L179 0x97835205 `call strcspn_entry, [d2,a2,a3], 0xc` (+0, arg a1); func_97835087_entry_L179 0x97835205 `mov data_978AF410, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	32, 10, 11, 9, 13, 12, 0, 255	# +0
 
 func_97834719_Table_p136_0:	# REC_func_97834719_Table_p136 (4 bytes)
 	REC_func_97834719_Table_p136	f0=72, f1=97, x2="ll"
@@ -10603,7 +10651,8 @@ func_97834719_Table_p136_0:	# REC_func_97834719_Table_p136 (4 bytes)
 Str_o_FONT_face_Arial_size_3_color_807060_Se:	.asciz "o <FONT face=\"Arial\" size=3 color=\"#807060\"> Senorflo </FONT> Bye Bye "
 	.align	4, 0xFF	# pad after Str_o_FONT_face_Arial_size_3_color_807060_Se
 data_978AF464:
-.incbin_range "baserom/hdsx3_extapr.rom", 0x0AF464, 0x0AF468
+	# 4 bytes the code takes the address of: func_978352F0_entry_L13a 0x9783542C `mov data_978AF464, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 255, 255	# +0
 Str_Parsed_Tag_s_i:	.asciz "Parsed Tag:\"%s\" ,%i"
 Str_Attribute_i_is_s_with_value_s_i_i:	.asciz "Attribute %i is \"%s\" with value \"%s\",%i,%i"
 # census: opaque -- unknown-dump: 3 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them

@@ -198,6 +198,9 @@ beat markers for 4 x 4 beats, so the beat count is not checked for these copies;
 
 ## What is still generic or opaque
 
+(Superseded for the generic pieces by "generic-zero" below, 2026-10-30: none is generic any more; the
+opaque table stays as it was measured.)
+
 The census leaves 18,810 / 18,930 / 18,853 / 266 bytes generic. Each such piece is **read** by
 some instruction (the reader search finds a load, store, base or argument in it) but no pass turned it
 into a type. The largest runs (`untyped_regions.py <model> --kind generic`):
@@ -231,8 +234,91 @@ a pointer computed in a way it does not follow is not seen. The biggest:
 The rest is thousands of pieces under 256 bytes, mostly in the initialised-RAM images (variables that
 no instruction names) and between the effect and parameter names.
 
+## generic-zero (lane generic-zero, 2026-10-30)
+
+Every generic piece the table above lists had a reader, so by the owner's rule none may stay a generic
+`.incbin_range` (and none may be declared opaque).  `kn7000/tools/gen_data_s.py`'s new last fallback,
+`reader_rows()` (profile key `reader_rows`, on for the four siblings and the KN7000 builds; described in
+`kn7000/notes/data-final/README.md`, "generic-zero"), writes each such piece as rows at the width and
+signedness of the reads that land in it, its address words as `.long Label` / `Label+N`, with a header naming
+the readers.  `record_start()` stops typed_refs() from taking a record that the walk reads past its first bytes
+for a short string: on the KN6000 / KN6500 the `func_4C02CA6A_Records_p0` records (`Str_empty_918`,
+`Str_P_19`, ... before), on the KN2400 the `func_5014A95C_Records_p0` ones (`Str_empty_1261`, `Str_4_33` ...).
+
+What the pieces became (`kn7000/notes/data-final-probes/reader_rows_stats.py`):
+
+| tree   | read at a width (n / bytes) | address only taken (n / bytes) | strings (n) | total n | total bytes |
+|--------|-----------------------------|--------------------------------|-------------|---------|-------------|
+| kn6000 | 5 / 129                     | 339 / 17,838                   | 34          | 378     | 18,109      |
+| kn6500 | 5 / 129                     | 345 / 17,958                   | 34          | 384     | 18,229      |
+| kn2400 | 3 / 109                     | 380 / 18,475                   | 48          | 431     | 18,853      |
+| hdsx3  | 0 / 0                       | 30 / 228                       | 10          | 40      | 266         |
+
+Most are "address only taken": the code loads the piece's address into a register or passes it to a
+routine, and the walk does not follow the reads the callee makes.  Examples:
+
+- KN2400 0x48409720.. (`data_48409720`, `data_48409740`, ... 32 bytes each): the KN7000's 260-way switch
+  descriptors, `{u32, u16, u16, pointer, u16 ...}` followed by the SysEx the pointer names (`F0 7F 7F 04 ..
+  F7`, `F0 50 2C 20 32 1F ..`): u8 rows with `.long data_48409720+20` ([INFERENCE] by the KN7000's
+  `REC_func_484C01F1_Result`; the KN2400's code reaches them as `mov data_X, d0`, which the walk does not
+  carry into the reader);
+- the 16-colour table of VwUserBitmapProc (`data_4C176EA8`, u32 0x00BBGGRR rows), the empty strings handed to
+  strcpy (`.asciz ""`), the "\r" handed to strcspn;
+- HD-SX3's coordinate words (0x500014 = x 0x14, y 0x50) passed to the host's drawing routines through `calls (a2)`.
+
+The KN6000 / KN6500 code file had two `.incbin_range`s outside every range (115 + 586 bytes).  They are
+typed by the Makefile's `TYPED` (`gen_image_s.py --fill / --rows / --text / --long-table`, `--rows` new) and
+named in `<model>_manual.sym`, each with the code that reads it:
+
+| name                                           | KN6000                 | KN6500                 | what it is, and its reader                                                                                                 |
+|------------------------------------------------|------------------------|------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `FirmwareVersionByte`                          | 0x4C00000F             | 0x4C00000F             | the boot header's last byte, 0x71 / 0x13 (v7.1 / v1.3; the KN2400 v1.1's is 0x11): func_4C07B3D7 / func_4C07B56B answer it |
+| `Str_MILK_MN10300_Ver1_0R1`                    | 0x4C3F77E8             | 0x4C381448             | the kernel's version string                                                                                                |
+| `KernelServiceHash`                            | 0x4C3F7800             | 0x4C381460             | 16 x {u32 key, handler}: func_4C3F7632 / func_4C381292 probe it by (key & 0xF) * 8 and `jmp` through +4                    |
+| `KernelRamLayout`                              | 0x4C3F7880             | 0x4C3814E0             | 6 RAM addresses: func_4C3F61BB, func_4C3F61F7, func_4C3F62A4, func_4C3F7793 (KN6000 names) read +4 .. +0x14                |
+| `KernelParams`                                 | 0x4C3F7898             | 0x4C3814F8             | 14 u16: get_tid (+0), func_4C3F47EC (+0x10, +0x12), func_4C3F4A69 (+0x16)                                                  |
+| `KernelStartStub`                              | 0x4C3F78B4             | 0x4C381514             | code: `jmp func_4C3F7793`, the routine crt0_start's func_4C000350 ends by jumping to                                       |
+| `KernelGroup0IntDispatch`, `KernelIntDispatch` | 0x4C3F78BC, 0x4C3F7942 | 0x4C38151C, 0x4C3815A2 | code: the kernel's interrupt dispatchers; func_4C000350 writes a `jmp KernelIntDispatch` at 0x90000000                     |
+
+Those two dispatchers were outside the code ranges because nothing but that written `jmp` reaches them: they
+are a code range now (`--code 0x3f78b4:0x3f7a31` / `0x381514:0x381691`), decoded; the five `movm` with the
+`other3` register group (save and restore) stay `.byte` escapes with the disassembly beside them (the
+encoder does not spell that group), and the twelve `udf` instructions (the MN103002A's extension unit) are
+instructions.  [INFERENCE] on what the hash keys, the RAM words and the u16 parameters mean.
+
+Readability counters (`scripts/analysis/doc_quality_census.py --compare docs/coverage/doc-quality-2026-10-30-01.json`)
+rise on the KN6000 and KN6500 for one reason, the kernel tail made code and the hash table typed:
+
+- routines without a header +12 / +12 and placeholder names +13 / +13: `--long-table` makes each code
+  pointer of `KernelServiceHash` an entry, so the twelve service handlers func_4C3F7632 jumps to (KN6000
+  func_4C3F7693 .. func_4C3F7756; they were `func_4C3F7632_entry_L11f` ... before) are routines now, and
+  the return path the tasks `jmp` to is func_4C3F7A07;
+- `.byte` runs +3 / +1 (8 bytes): the `movm` with the `other3` group in the two dispatchers;
+- numeric operands elsewhere +15: the dispatchers' RAM and interrupt-controller addresses (0x50180CCC,
+  0x34000100, ...).
+
+Against them: numeric branch targets 28 -> 0 (`jmp 0x4c3f7a07`), numeric operands in the image 19 -> 1.
+
+The same naming of typed ranges shows the KN2400's `RamCodeTrailer` is read after all: func_4870587E reads it
+byte by byte from +3, 12 bytes a record (`kn2400/notes/data-region/README.md`, corrected).
+
+Census (`scripts/analysis/data_incbin_census.py`; "before" is bf0581312, the lane's base):
+
+| tree   | generic before n / bytes | opaque before   | generic after | opaque after    |
+|--------|--------------------------|-----------------|---------------|-----------------|
+| kn6000 | 380 / 18,810             | 3,336 / 79,522  | 0 / 0         | 3,197 / 70,137  |
+| kn6500 | 386 / 18,930             | 3,346 / 83,667  | 0 / 0         | 3,213 / 74,371  |
+| kn2400 | 431 / 18,853             | 5,048 / 197,205 | 0 / 0         | 5,051 / 196,479 |
+| hdsx3  | 40 / 266                 | 101 / 3,133     | 0 / 0         | 101 / 3,133     |
+
+The opaque bytes fall (the record starts are records now); the KN2400's opaque piece count rises by 3 while
+its opaque bytes fall by 726 (pieces split at labels the new records and reader rows name; not traced one by one).
+
 ## Open questions
 
+- The siblings' reader rows of address-only pieces: the walk does not carry a register argument into the
+  routine that reads it (the KN7000 profiles' extended walk, `readers_ext`, made the KN2400 worse: 78.1% typed
+  instead of 82.6%, bitmaps lost, tried 2026-10-30 and not applied).
 - [INFERENCE] The KN2400's two setup lists by model (the 0x98070000 bits).
 - The hash tables' payloads past their first field, and ShortKeyHash's key.
 - The KN2400's effect-program blocks: 0x4853C5BE.., 20 KB, and 0x48537CDC.. (`7c aa aa 7d 55 55 ...`).

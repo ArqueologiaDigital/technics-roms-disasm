@@ -61,6 +61,11 @@ for 941 types 2,106,173 of 2,306,001 bytes (91.3%; 89.0% before).
 
 ### What stays generic (941: 177 pieces, 2,948 bytes; the other builds the same pieces)
 
+Superseded by "generic-zero" below (2026-10-30): none of these is generic any more.  Two corrections to the
+list: the 30-byte "switch records" were descriptors whose first word reads as a short string (`Str_L_4`,
+"$\xB0"), which typed_refs() had taken first, so ptr_records() never saw them free; and 0x5000102C /
+0x50001120 are not zeros but zlib's `cplext` / `cpdext` tables (only their first 16 bytes are 0).
+
 Each is read by some instruction (`generic_readers.py` lists the readers) that no pass turns into a
 type yet:
 
@@ -158,6 +163,59 @@ What stays open in the plug-in: `image_id=32872` and `icon=1` of the `KssBgScree
 hold values like 0x00C5CF2D / 0x01514568 that are no address of this image or of the program
 ([INFERENCE] initial values the code overwrites; written `.long` with "initial value").
 
+## generic-zero (lane generic-zero, 2026-10-30)
+
+The owner's rule, applied to the last generic pieces: *"ensure any data block in the source is only left as a
+generic binclude if there's no other better semantic representation for it"*.  Every piece listed above has
+a reader, so none may stay an `.incbin_range` and none may be declared opaque.  `tools/gen_data_s.py`
+(profile key `reader_rows`, set for 941, b935, b893, sp7001 and the four siblings) does two things:
+
+| change            | what it does                                                                                                                                                                                                                           |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `record_start()`  | typed_refs() does not take a T-value target, or a pointer field's target, for a short string when the walk reads fields of it past the string's NUL: those are record starts, and ptr_records() then types them                        |
+| `reader_rows()`   | the last fallback: a gap gap_note() finds a reader in becomes rows at the reads' widths and signedness, address words as `.long Label` / `Label+N`, the rest on the grid of the commonest read width, with a header naming the readers |
+| `reader_row_refs` | before gaps(), labels what those address words point at, unless the target lies in a read run itself (spelled `Label+N` of the label before it there, so read bytes are never split off into an unread, "opaque" piece)                |
+
+A piece the code only takes the address of (a base in a register, a call argument: the callee's reads are
+not traced) is written as u32 rows when it is word-aligned and every word is below 2^24 or an address (a
+count, a 0x00BBGGRR colour), else as u8 rows; a NUL with its 0xFF pad handed to strcpy / strcspn, or only
+taken as an address, is `.asciz ""` (or `"\r"`).  The header says which case it is; everything past the read
+fields is `[INFERENCE]`.
+
+What the 177 pieces of 941 became (the other builds the same):
+
+- **the 260-way switch's descriptors** and resource-id-trie leaves (`Str_L_4`, `Str_empty_1231`, ... before): typed
+  `REC_func_484C01F1_Result` / trie-leaf records by record_start(); each descriptor's `p8` now names its SysEx
+  (`SysEx_48615730` ...), which sysex_strings() then types.  This also took about 18 KB out of the opaque
+  declarations: the 14-byte "binary nothing reads" pieces after each mistyped string were the records' tails;
+- **reader rows**, 87 pieces / 1,390 bytes (`../data-final-probes/reader_rows_stats.py`):
+  - read at a known width (4 pieces): `func_4841493C_Table`'s tail (u32, `mov (0x40, a0), d1`),
+    func_484FF7D2's byte, the 33 bytes before func_4856E588's 16-byte records (fields at -564 .. -572 of the
+    array it indexes) and a 12-byte switch-descriptor tail read at +0x10 by func_484BA434 and 26 more;
+  - address taken only: the RAM-image tables `data_500077A4` (208 bytes of small values, u8 rows) and
+    0x5000102C / 0x50001120 (u32 rows; they are zlib 1.0.4's `cplext` and `cpdext`, identified by their
+    contents: 0 x 8, 1 x 4 ... 5 x 4, 0, 192, 192 and 0, 0, 0, 0, 1, 1 ... 13, 13; read by
+    inflate_trees_dynamic / inflate_trees_fixed, whose neighbour `huft_build_Table_2` is `cpdist`), the three
+    20-byte `static_tree_desc` records `_tr_init` takes (`{tree, extra_bits, extra_base, elems, max_length}` =
+    `{0x5004CA74, tr_static_init_Table, 257, 286, 15}` ... [INFERENCE: zlib's static_l_desc / static_d_desc /
+    static_bl_desc by their values]), the two 16-colour tables of VwUserBitmapProc / AcMonImageProc
+    (0x00000000, 0x00000080, ... 0x00FFFFFF), `SjisMissingGlyph` (32 bytes, u8 rows: a 16 x 16 glyph
+    [INFERENCE]), MainTitleControl's MILK id pairs (`0x30001, 0x600DD`: (slot << 16) | index ids
+    [INFERENCE]) and the library routines' argument words;
+  - strings: 32 empty strings (`.asciz ""`) handed to strcpy or named only as an address.
+
+Census (`scripts/analysis/data_incbin_census.py`; "before" is bf0581312, the lane's base):
+
+| tree           | generic before n / bytes | opaque before  | generic after | opaque after   |
+|----------------|--------------------------|----------------|---------------|----------------|
+| kn7000-program | 177 / 2,948              | 4,298 / 82,196 | 0 / 0         | 3,459 / 63,917 |
+| kn7000-sp7001  | 179 / 3,044              | 4,321 / 80,480 | 0 / 0         | 3,482 / 62,187 |
+| kn7000-b935    | 179 / 3,044              | 4,309 / 83,003 | 0 / 0         | 3,470 / 64,710 |
+| kn7000-b893    | 176 / 2,944              | 4,303 / 81,886 | 0 / 0         | 3,464 / 63,600 |
+
+Nothing new is declared opaque: every former generic piece had a reader.  The opaque figures fall because
+the record starts are records now.
+
 ## Open questions
 
 - The `KssBgScreen` `image_id` / `icon` numbers of the plug-in (a host resource id: not traced).
@@ -166,7 +224,11 @@ hold values like 0x00C5CF2D / 0x01514568 that are no address of this image or of
 - 4-byte demo-stream events (func_485831BA_Table's three streams) are u8 rows: the reader indexes +0 of
   every 4-byte step (`asl2`), the other three bytes' readers were not traced.
 - Records whose pointer fields point into their own tail (the switch descriptors, 30-byte pieces) want a
-  "record + inline payload" representation.
+  "record + inline payload" representation.  (generic-zero: the KN7000's were short strings in the way,
+  now records; the KN2400's twins, reached only as a base, are u8 rows with `.long data_X+20`.)
+- The reader rows of pieces whose address is only passed on: their layout is the callee's (the walk does
+  not carry an argument into a library routine).  Naming zlib's `cplext` / `cpdext` / `static_*_desc`
+  in the symbol files would need the ported 935 / 893 / 942 symbol files regenerated (symbols-check).
 
 ## Shared files touched
 

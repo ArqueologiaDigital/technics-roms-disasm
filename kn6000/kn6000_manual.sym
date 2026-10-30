@@ -19,3 +19,13 @@
 0x4C3DF128  StyleAlphabetTable         ; the Music Stylist alphabet index, 34 x {letter, setups}: func_4C164F3F indexes it by StyleRecordTable.letter * 8
 0x4C3850BC  NoteConvRules              ; 128 x 8-byte note-conversion rules {is_melody, alt_chord, no_third_adj, no_transpose, table}: func_4C05805C 0x4C05805C (the KN7000's func_48436229)
 0x4C35FF84  TechnicsPadsResource       ; the built-in "Technics Pads" PERFORMANCE PAD bank (the table flash's segment 4 format): TechnicsPadsResourceInit stores it when the table flash's resource does not check; typed by ../kn7000/tools/gen_data_s.py pads()
+;
+; ---- outside the code and data ranges (lane generic-zero; the Makefile's TYPED) ------------------
+0x4C00000F  FirmwareVersionByte          ; the boot header's last byte, the update's version as two nibbles (v7.1: 0x71; the KN2400 v1.1's is 0x11): func_4C07B3D7 answers it (`movbu (FirmwareVersionByte), d0 / ret`)
+0x4C3F77E8  Str_MILK_MN10300_Ver1_0R1   ; "MILK MN10300 Ver1.0R1", the kernel's version string (the KN7000 and KN2400 hold the same one in their data regions)
+0x4C3F7800  KernelServiceHash            ; 16 x {u32 key, code pointer}: func_4C3F7632 takes d1 - 0xFF, indexes the table by (key & 0xF) * 8, probes the records in turn (`cmp KernelRamLayout, a0` is the table's end) and jumps through +4 of the one whose +0 is the key [INFERENCE: the kernel's service-call codes]
+0x4C3F7880  KernelRamLayout              ; 6 RAM addresses (0x50180000, 0x501BFFFF, 0x501C0000, 0x501FFFFF, 0x50180CE0, 0x501813C8): func_4C3F61BB reads +4, +8 and +0x14, func_4C3F61F7 +8 and +0xC, func_4C3F62A4 +8, func_4C3F7793 +0x14 [INFERENCE: the kernel's memory pools' bounds]
+0x4C3F7898  KernelParams                 ; 14 u16 (10, 20, 20, 20, 10 ...): get_tid reads +0, func_4C3F47EC +0x10 and +0x12, func_4C3F4A69 +0x16 (`movhu`); the KN2400 types its copy as get_tid_Table
+0x4C3F78B4  KernelStartStub              ; `jmp func_4C3F7793` (the routine crt0_start's func_4C000350 ends by jumping to); no word of the image holds this address
+0x4C3F78BC  KernelGroup0IntDispatch      ; an interrupt handler: saves the registers and psw, counts the nesting at 0x50180CCC, takes the group from 0x34000100 (0x34000104 + 8 when zero), calls the handler the RAM tables 0x50180A6C / 0x50180B64 give for it, rti [INFERENCE: group 0, the non-maskable sources; nothing in the image holds this address]
+0x4C3F7942  KernelIntDispatch            ; the interrupt handler func_4C000350 writes a `jmp` to at 0x90000000: as KernelGroup0IntDispatch, but it switches to the kernel stack when not nested and takes the group from 0x34000200

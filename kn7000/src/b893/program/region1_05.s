@@ -21286,130 +21286,130 @@ loc_484ADDF8:
     mov     (4, a0), a0
     jmp     (a0)
 loc_484ADDFD:
-    mov     Str_h_p, a0
+    mov     func_484ADDBB_Result_0, a0
     retf    0, 0
 loc_484ADE06:
-    mov     Str_p_28, a0
+    mov     func_484ADDBB_Result_1, a0
     retf    0, 0
 loc_484ADE0F:
-    mov     Str_p_27, a0
+    mov     func_484ADDBB_Result_2, a0
     retf    0, 0
 loc_484ADE18:
-    mov     Str_p_26, a0
+    mov     func_484ADDBB_Result_3, a0
     retf    0, 0
 loc_484ADE21:
-    mov     Str_p_25, a0
+    mov     func_484ADDBB_Result_4, a0
     retf    0, 0
 loc_484ADE2A:
-    mov     Str_p_24, a0
+    mov     func_484ADDBB_Result_5, a0
     retf    0, 0
 loc_484ADE33:
-    mov     Str_p_23, a0
+    mov     func_484ADDBB_Result_6, a0
     retf    0, 0
 loc_484ADE3C:
-    mov     Str_p_22, a0
+    mov     func_484ADDBB_Result_7, a0
     retf    0, 0
 loc_484ADE45:
-    mov     Str_m_p, a0
+    mov     func_484ADDBB_Result_8, a0
     retf    0, 0
 loc_484ADE4E:
-    mov     Str_i_p, a0
+    mov     func_484ADDBB_Result_9, a0
     retf    0, 0
 loc_484ADE57:
-    mov     Str_a_p, a0
+    mov     func_484ADDBB_Result_10, a0
     retf    0, 0
 loc_484ADE60:
-    mov     Str_p_21, a0
+    mov     func_484ADDBB_Result_11, a0
     retf    0, 0
 loc_484ADE69:
-    mov     Str_p_20, a0
+    mov     func_484ADDBB_Result_12, a0
     retf    0, 0
 loc_484ADE72:
-    mov     Str_l_p, a0
+    mov     func_484ADDBB_Result_13, a0
     retf    0, 0
 loc_484ADE7B:
-    mov     Str_p_19, a0
+    mov     func_484ADDBB_Result_14, a0
     retf    0, 0
 loc_484ADE84:
-    mov     Str_p_18, a0
+    mov     func_484ADDBB_Result_15, a0
     retf    0, 0
 loc_484ADE8D:
-    mov     Str_p_17, a0
+    mov     func_484ADDBB_Result_16, a0
     retf    0, 0
 loc_484ADE96:
-    mov     Str_p_16, a0
+    mov     func_484ADDBB_Result_17, a0
     retf    0, 0
 loc_484ADE9F:
-    mov     Str_p_15, a0
+    mov     func_484ADDBB_Result_18, a0
     retf    0, 0
 loc_484ADEA8:
-    mov     Str_p_14, a0
+    mov     func_484ADDBB_Result_19, a0
     retf    0, 0
 loc_484ADEB1:
-    mov     Str_p_13, a0
+    mov     func_484ADDBB_Result_20, a0
     retf    0, 0
 loc_484ADEBA:
-    mov     Str_p_12, a0
+    mov     func_484ADDBB_Result_21, a0
     retf    0, 0
 loc_484ADEC3:
-    mov     Str_p_11, a0
+    mov     func_484ADDBB_Result_22, a0
     retf    0, 0
 loc_484ADECC:
-    mov     Str_p_10, a0
+    mov     func_484ADDBB_Result_23, a0
     retf    0, 0
 loc_484ADED5:
-    mov     Str_p_9, a0
+    mov     func_484ADDBB_Result_24, a0
     retf    0, 0
 loc_484ADEDE:
-    mov     Str_p_8, a0
+    mov     func_484ADDBB_Result_25, a0
     retf    0, 0
 loc_484ADEE7:
-    mov     Str_p_7, a0
+    mov     func_484ADDBB_Result_26, a0
     retf    0, 0
 loc_484ADEF0:
-    mov     Str_p_6, a0
+    mov     func_484ADDBB_Result_27, a0
     retf    0, 0
 loc_484ADEF9:
-    mov     Str_p_5, a0
+    mov     func_484ADDBB_Result_28, a0
     retf    0, 0
 loc_484ADF02:
-    mov     Str_k_p, a0
+    mov     func_484ADDBB_Result_29, a0
     retf    0, 0
 loc_484ADF0B:
-    mov     Str_j_p, a0
+    mov     func_484ADDBB_Result_30, a0
     bra     loc_484ADF6D
 loc_484ADF13:
-    mov     Str_d_p, a0
+    mov     func_484ADDBB_Result_31, a0
     bra     loc_484ADF6D
 loc_484ADF1B:
-    mov     Str_c_p, a0
+    mov     func_484ADDBB_Result_32, a0
     bra     loc_484ADF6D
 loc_484ADF23:
-    mov     Str_p_4, a0
+    mov     func_484ADDBB_Result_33, a0
     bra     loc_484ADF6D
 loc_484ADF2B:
-    mov     Str_p_3, a0
+    mov     func_484ADDBB_Result_34, a0
     bra     loc_484ADF6D
 loc_484ADF33:
-    mov     Str_p_2, a0
+    mov     func_484ADDBB_Result_35, a0
     bra     loc_484ADF6D
 loc_484ADF3B:
-    mov     Str_0_p_6, a0
+    mov     func_484ADDBB_Result_36, a0
     bra     loc_484ADF6D
 loc_484ADF43:
-    mov     Str_0_p_5, a0
+    mov     func_484ADDBB_Result_37, a0
     bra     loc_484ADF6D
 loc_484ADF4B:
-    mov     Str_0_p_4, a0
+    mov     func_484ADDBB_Result_38, a0
     bra     loc_484ADF6D
 loc_484ADF53:
-    mov     Str_0_p_3, a0
+    mov     func_484ADDBB_Result_39, a0
     bra     loc_484ADF6D
 loc_484ADF5B:
-    mov     Str_0_p_2, a0
+    mov     func_484ADDBB_Result_40, a0
     bra     loc_484ADF6D
 loc_484ADF63:
-    mov     Str_0_p, a0
+    mov     func_484ADDBB_Result_41, a0
     bra     loc_484ADF6D
 loc_484ADF6B:
     mov     0, a0
@@ -54379,11 +54379,11 @@ loc_484BFDF7:
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE02:
-    mov     Str_empty_1173, d0
+    mov     func_484BFFE4_Result_16_2, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE0D:
-    mov     Str_3_25, d0
+    mov     func_484BFFE4_Result_90_2, d0
     mov     d0, (0, sp)
     jmp     loc_484BFFDF
 loc_484BFE18:
@@ -54821,19 +54821,19 @@ loc_484C01A9:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01B4:
-    mov     Str_P_18, d0
+    mov     func_484BFFE4_Result_11_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01BF:
-    mov     Str_P_17, d0
+    mov     func_484BFFE4_Result_12_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01CA:
-    mov     Str_P_16, d0
+    mov     func_484BFFE4_Result_13_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01D5:
-    mov     Str_P_15, d0
+    mov     func_484BFFE4_Result_14_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C01E0:
@@ -54885,7 +54885,7 @@ loc_484C0228:
 loc_484C0230:
     jmp     loc_484C1908
 loc_484C0233:
-    mov     Str_empty_1173, d0
+    mov     func_484BFFE4_Result_16_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C023E:
@@ -55021,7 +55021,7 @@ loc_484C033B:
 loc_484C0344:
     jmp     loc_484C1908
 loc_484C0347:
-    mov     Str_empty_1172, d0
+    mov     func_484BFFE4_Result_24_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0352:
@@ -55037,67 +55037,67 @@ loc_484C0368:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0373:
-    mov     Str_empty_1171, d0
+    mov     func_484BFFE4_Result_28_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C037E:
-    mov     Str_empty_1170, d0
+    mov     func_484BFFE4_Result_29_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0389:
-    mov     Str_empty_1169, d0
+    mov     func_484BFFE4_Result_30_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0394:
-    mov     Str_empty_1168, d0
+    mov     func_484BFFE4_Result_31_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C039F:
-    mov     Str_empty_1167, d0
+    mov     func_484BFFE4_Result_32_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03AA:
-    mov     Str_4_28, d0
+    mov     func_484BFFE4_Result_33_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03B5:
-    mov     Str_4_27, d0
+    mov     func_484BFFE4_Result_34_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03C0:
-    mov     Str_5_20, d0
+    mov     func_484BFFE4_Result_35_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03CB:
-    mov     Str_empty_1166, d0
+    mov     func_484BFFE4_Result_36_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03D6:
-    mov     Str_D_13, d0
+    mov     func_484BFFE4_Result_37_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03E1:
-    mov     Str_D_12, d0
+    mov     func_484BFFE4_Result_38_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03EC:
-    mov     Str_E_8, d0
+    mov     func_484BFFE4_Result_39_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C03F7:
-    mov     Str_empty_1165, d0
+    mov     func_484BFFE4_Result_40_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0402:
-    mov     Str_T_6, d0
+    mov     func_484BFFE4_Result_41_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C040D:
-    mov     Str_T_5, d0
+    mov     func_484BFFE4_Result_42_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0418:
-    mov     Str_U_2, d0
+    mov     func_484BFFE4_Result_43_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0423:
@@ -55620,7 +55620,7 @@ loc_484C0871:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C087C:
-    mov     Str_3_25, d0
+    mov     func_484BFFE4_Result_90_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0887:
@@ -55710,11 +55710,11 @@ loc_484C0943:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C094E:
-    mov     Str_empty_1164, d0
+    mov     func_484BFFE4_Result_104_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0959:
-    mov     Str_P_14, d0
+    mov     func_484BFFE4_Result_105_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0964:
@@ -55722,11 +55722,11 @@ loc_484C0964:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C096F:
-    mov     Str_empty_1163, d0
+    mov     func_484BFFE4_Result_107_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C097A:
-    mov     Str_P_13, d0
+    mov     func_484BFFE4_Result_108_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0985:
@@ -55774,15 +55774,15 @@ loc_484C09C2:
 loc_484C09CA:
     jmp     loc_484C1908
 loc_484C09CD:
-    mov     Str_empty_1162, d0
+    mov     func_484BFFE4_Result_109_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C09D8:
-    mov     Str_D_11, d0
+    mov     func_484BFFE4_Result_110_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C09E3:
-    mov     Str_D_10, d0
+    mov     func_484BFFE4_Result_111_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C09EE:
@@ -55790,15 +55790,15 @@ loc_484C09EE:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C09F9:
-    mov     Str_empty_1161, d0
+    mov     func_484BFFE4_Result_113_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0A04:
-    mov     Str_T_4, d0
+    mov     func_484BFFE4_Result_114_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0A0F:
-    mov     Str_T_3, d0
+    mov     func_484BFFE4_Result_115_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C0A1A:
@@ -56826,35 +56826,35 @@ loc_484C1241:
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C124C:
-    mov     Str_L_4, d0
+    mov     func_484BFFE4_Result_141_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1257:
-    mov     Str_M_3, d0
+    mov     func_484BFFE4_Result_142_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1262:
-    mov     Str_J_3, d0
+    mov     func_484BFFE4_Result_143_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C126D:
-    mov     Str_G_10, d0
+    mov     func_484BFFE4_Result_144_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1278:
-    mov     Str_I_4, d0
+    mov     func_484BFFE4_Result_145_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1283:
-    mov     Str_K_3, d0
+    mov     func_484BFFE4_Result_146_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C128E:
-    mov     Str_H_5, d0
+    mov     func_484BFFE4_Result_147_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1299:
-    mov     Str_N_3, d0
+    mov     func_484BFFE4_Result_148_2, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C12A4:
@@ -57307,35 +57307,35 @@ loc_484C162D:
 loc_484C1636:
     jmp     loc_484C1908
 loc_484C1639:
-    mov     Str_L_3, d0
+    mov     func_484BFFE4_Result_180, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1644:
-    mov     Str_M_2, d0
+    mov     func_484BFFE4_Result_181, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C164F:
-    mov     Str_N_2, d0
+    mov     func_484BFFE4_Result_182, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C165A:
-    mov     Str_J_2, d0
+    mov     func_484BFFE4_Result_183, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1665:
-    mov     Str_G_9, d0
+    mov     func_484BFFE4_Result_184, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1670:
-    mov     Str_I_3, d0
+    mov     func_484BFFE4_Result_185, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C167B:
-    mov     Str_K_2, d0
+    mov     func_484BFFE4_Result_186, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1686:
-    mov     Str_H_4, d0
+    mov     func_484BFFE4_Result_187, d0
     mov     d0, (0, sp)
     jmp     loc_484C1908
 loc_484C1691:

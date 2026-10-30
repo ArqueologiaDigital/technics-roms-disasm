@@ -208,9 +208,13 @@ func_4C0AC676_Table:	# 9 x u16, 0..20557; read by func_4C0AC676 0x4C0AC676: `mov
 func_4C0AC85A_Table:	# 10 x u8, 18..255; read by func_4C0AC85A_entry : `movbu	(a2), d0`
 	tab_u8	80, 18, 32, 76, 85, 18, 32, 76, 255, 255
 data_4C201264:
-.incbin_range "baserom/kn6000_program.rom", 0x201264, 0x201268
+	# a string, 4 bytes with its pad, read by func_4C0ACA79_entry_L39 0x4C0ACAB7 `call strcpy_entry, [a2], 4` (+0, arg a1); func_4C0ACA79_entry_L39 0x4C0ACAB7 `mov data_4C201264, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 data_4C201268:
-.incbin_range "baserom/kn6000_program.rom", 0x201268, 0x20126C
+	# a string, 4 bytes with its pad, read by func_4C0ACB0B 0x4C0ACB0B `mov data_4C201268, d3` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 
 Str_PRESENTATION_2:	.asciz "<PRESENTATION>"
 Str_PRESENTATION:	.asciz "</PRESENTATION>"
@@ -356,27 +360,36 @@ Str_2d_16s_3:	.asciz "%2d:%16s"
 Str_ALL_SONGS:	.asciz "     ALL SONGS     "
 Str_2d_16s_3d:	.asciz "%2d:%16s:%3d%%\n"
 data_4C2015BC:
-.incbin_range "baserom/kn6000_program.rom", 0x2015BC, 0x2015C0
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L5ad 0x4C0B4D06 `mov data_4C2015BC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	179, 0, 255, 255	# +0
 data_4C2015C0:
-.incbin_range "baserom/kn6000_program.rom", 0x2015C0, 0x2015C4
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L658 0x4C0B4DB1 `mov data_4C2015C0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	178, 0, 255, 255	# +0
 data_4C2015C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2015C4, 0x2015C8
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L7b1 0x4C0B4F0A `mov data_4C2015C4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	179, 0, 255, 255	# +0
 data_4C2015C8:
-.incbin_range "baserom/kn6000_program.rom", 0x2015C8, 0x2015CC
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_L86b 0x4C0B4FC4 `mov data_4C2015C8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	178, 0, 255, 255	# +0
 Str_END_2:	.asciz "END     "
 	.align	4, 0xFF	# pad after Str_END_2
 Str_REPEAT_3:	.asciz "REPEAT  "
 	.align	4, 0xFF	# pad after Str_REPEAT_3
 data_4C2015E4:
-.incbin_range "baserom/kn6000_program.rom", 0x2015E4, 0x2015E8
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb12 0x4C0B526B `mov data_4C2015E4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	178, 0, 255, 255	# +0
 data_4C2015E8:
-.incbin_range "baserom/kn6000_program.rom", 0x2015E8, 0x2015EC
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb1c 0x4C0B5275 `mov data_4C2015E8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	179, 0, 255, 255	# +0
 data_4C2015EC:
-.incbin_range "baserom/kn6000_program.rom", 0x2015EC, 0x2015F0
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb1c 0x4C0B5275 `mov data_4C2015EC, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	178, 0, 255, 255	# +0
 data_4C2015F0:
-.incbin_range "baserom/kn6000_program.rom", 0x2015F0, 0x2015F4
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lb35 0x4C0B528E `mov data_4C2015F0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	179, 0, 255, 255	# +0
 data_4C2015F4:
-.incbin_range "baserom/kn6000_program.rom", 0x2015F4, 0x2015F8
+	# 4 bytes the code takes the address of: MainSEQ_StepRecRedraw_entry_Lc20 0x4C0B5379 `mov data_4C2015F4, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	178, 0, 255, 255	# +0
 
 func_4C0AD6C6_entry_L13_Table:
 	.long	loc_4C0AD723
@@ -844,10 +857,10 @@ Str_Ab:	.asciz "Ab"
 Str_A_23:	.asciz "A "
 Str_Bb:	.asciz "Bb"
 Str_B_9:	.asciz "B "
-Str_empty_901:	.asciz "  "
-Str_empty_900:	.asciz "  "
 Str_empty_899:	.asciz "  "
 Str_empty_898:	.asciz "  "
+Str_empty_897:	.asciz "  "
+Str_empty_896:	.asciz "  "
 
 FE_CmpRecSetKey_L50_Table:
 	.long	Str_C_10
@@ -862,10 +875,10 @@ FE_CmpRecSetKey_L50_Table:
 	.long	Str_A_23
 	.long	Str_Bb
 	.long	Str_B_9
-	.long	Str_empty_901
-	.long	Str_empty_900
 	.long	Str_empty_899
 	.long	Str_empty_898
+	.long	Str_empty_897
+	.long	Str_empty_896
 
 Str_OFF_20:	.asciz "OFF"
 Str_ad_b8_2:	.asciz " ~ad~b8"
@@ -1577,7 +1590,8 @@ ptrs_4C205AB8:
 	.long	Str_Any_existing_song_will_be_cleared_Press
 	.long	Str_Any_existing_song_will_be_cleared_Press
 data_4C205AD4:
-.incbin_range "baserom/kn6000_program.rom", 0x205AD4, 0x205AF0
+	# 28 bytes the code takes the address of: TrAsSureLangCheck_Lb9 0x4C0B5C84 `mov data_4C205AD4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468, 0x5004B468	# +0
 
 Str_Patterns_and_Registrations_for_Custom_d:	.asciz "Patterns and Registrations for Custom #%d uses following Custom Sound memories or Custom Effect memories."
 Str_Pattern_und_Registrierungen_f_r_Custom_d:	.asciz "Pattern und Registrierungen f\xFCr Custom#%d verwenden folgende Custom Sound Memories oder Custom Effekt-Memories."
@@ -1594,7 +1608,8 @@ CustomCopySure1_L1d_Table:
 	.long	Str_Patterns_and_Registrations_for_Custom_d
 	.long	Str_Patterns_and_Registrations_for_Custom_d
 data_4C205D14:
-.incbin_range "baserom/kn6000_program.rom", 0x205D14, 0x205D30
+	# 28 bytes the code takes the address of: CustomCopySure1_L1d 0x4C0B5CC9 `mov data_4C205D14, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C, 0x5004B56C	# +0
 
 Str_Sound_Memory_d_2:	.asciz "Sound Memory:%d  "
 Str_User_Drum_Kit_d_2:	.asciz "User Drum Kit:%d  "
@@ -1674,7 +1689,8 @@ CustomCopySure2_L27_Table:
 	.long	ptrs_4C205D94
 	.long	ptrs_4C205D94
 data_4C205FC8:
-.incbin_range "baserom/kn6000_program.rom", 0x205FC8, 0x205FE4
+	# 28 bytes the code takes the address of: CustomCopySure2_L1b8 0x4C0B5EC8 `mov data_4C205FC8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670, 0x5004B670	# +0
 
 Str_Some_of_the_Sound_Group_memories_and_Eff:	.asciz "Some of the Sound Group memories and Effect memories will be replaced by them. OK?"
 Str_Einige_der_Sound_Group_Memories_und_Effe:	.asciz "Einige der Sound Group Memories und Effekt Memories werden durch diese ersetzt. OK ?"
@@ -1912,13 +1928,13 @@ Str_SOLO_50:	.asciz "-SOLO"
 Str_empty_623:	.asciz "     "
 Str_USER_BANK_1c:	.asciz "USER BANK: %1c"
 	.align	4, 0xFF	# pad after Str_USER_BANK_1c
-Str_empty_897:	.asciz "    "
+Str_empty_895:	.asciz "    "
 Str_MUTE:	.asciz "MUTE"
 Str_REC_8:	.asciz "REC"
 	.align	4, 0xFF	# pad after Str_REC_8
 
 AcCmpRecMuteBoxProc_Ld6_Table:
-	.long	Str_empty_897
+	.long	Str_empty_895
 	.long	Str_MUTE
 	.long	Str_REC_8
 
@@ -2024,7 +2040,8 @@ CmpPartSetGrid2_L24c_Table:	# 8 x u8, 88..127; read by CmpPartSetGrid2 : `movbu	
 	tab_u8	120, 88, 120, 88, 127, 127, 127, 127
 CmpPartSetGrid2_L19e_Table:	# 4 x u32, 1..1; read by CmpPartSetGrid2_L19e 0x4C0BCD52: `mov	(-4, a0), d0`; CmpPartSetGrid2_L713 0x4C0BD2C7: `mov	(-4, a0), d0` ...
 	tab_u32	1, 1, 1, 1
-.incbin_range "baserom/kn6000_program.rom", 0x206D40, 0x206D50
+	# 16 bytes read by CmpPartSetGrid2_L450 0x4C0BD004 `mov (-4, a0), d1` (+12, u32); CmpPartSetGrid2_L644 0x4C0BD1F8 `mov (-4, a0), d1` (+12, u32); the read fields at their widths (u32), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	tab_u32	1, 1, 1, 1	# +0
 CmpPartSetGrid2_L450_Table:	# 8 x u32, 0..108; read by CmpPartSetGrid2_L450 0x4C0BD004: `mov	(-4, a0), d1`; CmpPartSetGrid2_L644 0x4C0BD1F8: `mov	(-4, a0), d1`
 	tab_u32	108, 64, 28, 64, 0, 0, 0, 0
 
@@ -2396,14 +2413,14 @@ ptrs_4C20745C:
 	.long	Text_43_2d_32+1260
 	.long	Text_43_2d_32+1270
 
-Str_empty_896:	.asciz "    "
+Str_empty_894:	.asciz "    "
 Str_PLAY_4:	.asciz "PLAY"
 Str_REC_7:	.asciz "REC"
 Str_PUNCH:	.asciz "PUNCH"
 Str_CLR_6:	.asciz "CLR"
 
 AcSeqPlayRecBoxProc_Lc5_Table:
-	.long	Str_empty_896
+	.long	Str_empty_894
 	.long	Str_PLAY_4
 	.long	Str_REC_7
 	.long	Str_PUNCH
@@ -2468,7 +2485,8 @@ Str_CLEAR_3:	.asciz "CLEAR"
 Str_ERROR_6:	.asciz "ERROR"
 	.align	4, 0xFF	# pad after Str_ERROR_6
 data_4C207784:
-.incbin_range "baserom/kn6000_program.rom", 0x207784, 0x20778C
+	# 8 bytes the code takes the address of: CmpPartCopyOk_L56 0x4C0C1A4B `mov data_4C207784, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 7, 1, 2, 3, 4, 5, 6	# +0
 Str_CcEv_6:	.asciz "CcEv"
 	.align	4, 0xFF	# pad after Str_CcEv_6
 
@@ -2610,7 +2628,9 @@ FE_SeqTrkMrgTrack_Table:	# 12 x u8, 0..3; read by FE_SeqTrkMrgTrack : `movbu	(a1
 
 Str_2d_28:	.asciz "%2d"
 data_4C207A4C:
-.incbin_range "baserom/kn6000_program.rom", 0x207A4C, 0x207A50
+	# a string, 4 bytes with its pad, read by AcSongSelBoxProc_L124 0x4C0C753E `call strcpy_entry, [a2], 4` (+0, arg a1); AcSongSelBoxProc_L124 0x4C0C753E `mov data_4C207A4C, a1` (+0, as a base); handed to strcpy
+	.asciz	""
+	.align	4, 0xFF
 
 SeqTrAsGridCheck_entry_L19b_Table:	# 24 x u8, 0..255; read by SeqTrAsGridCheck_entry : `movbu	(a0), d0`; SeqTrAsGridCheck_entry : `movbu	(d1, a0), d0`
 	tab_u8	16, 17, 18, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12	# [0]
@@ -2755,15 +2775,18 @@ Str_fdemo_c_x_2:	.asciz "fdemo_%c%x"
 Str_fdemo_c_x:	.asciz "fdemo_%c%x"
 	.align	4, 0xFF	# pad after Str_fdemo_c_x
 data_4C207CD8:
-.incbin_range "baserom/kn6000_program.rom", 0x207CD8, 0x207CDC
+	# 4 bytes the code takes the address of: func_4C0CB746_entry_L20 0x4C0CB76B `call strcpy_entry, [a2], 4` (+0, arg a1); func_4C0CB746_entry_L20 0x4C0CB76B `mov data_4C207CD8, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	173, 184, 0, 255	# +0
 Str_empty_577:	.asciz "\xAD "
 	.align	4, 0xFF	# pad after Str_empty_577
 data_4C207CE0:
-.incbin_range "baserom/kn6000_program.rom", 0x207CE0, 0x207CE4
+	# 4 bytes the code takes the address of: func_4C0CB746_entry_L3e 0x4C0CB789 `call strcpy_entry, [a2], 4` (+0, arg a1); func_4C0CB746_entry_L3e 0x4C0CB789 `mov data_4C207CE0, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	172, 184, 0, 255	# +0
 Str_empty_576:	.asciz "\xAC "
 	.align	4, 0xFF	# pad after Str_empty_576
 data_4C207CE8:
-.incbin_range "baserom/kn6000_program.rom", 0x207CE8, 0x207CEC
+	# 4 bytes the code takes the address of: func_4C0CB746_entry_L5c 0x4C0CB7A7 `call strcpy_entry, [a2], 4` (+0, arg a1); func_4C0CB746_entry_L5c 0x4C0CB7A7 `mov data_4C207CE8, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	171, 184, 0, 255	# +0
 Str_empty_575:	.asciz "\xAB "
 	.align	4, 0xFF	# pad after Str_empty_575
 Str_empty_574:	.asciz "\xAA "
@@ -2783,19 +2806,22 @@ Str_3s_12:	.asciz "%3s"
 Str_3s_11:	.asciz "%3s"
 Str_1d_3:	.asciz "%1d"
 data_4C207D70:
-.incbin_range "baserom/kn6000_program.rom", 0x207D70, 0x207D74
+	# 4 bytes the code takes the address of: AcNoteEditBoxProc_Lbc2 0x4C0CC3AD `mov data_4C207D70, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	129, 0, 255, 255	# +0
 Str_3s_2d_2d_s_v_3d_5d_s:	.asciz "     %3s. %2d. %2d.   %s v%3d %5d    %s"
 Str_3s_2d_2d_5d_s:	.asciz "     %3s. %2d. %2d.            %5d    %s"
 	.align	4, 0xFF	# pad after Str_3s_2d_2d_5d_s
 Str_3d_141:	.asciz " %3d"
 	.align	4, 0xFF	# pad after Str_3d_141
 data_4C207DD0:
-.incbin_range "baserom/kn6000_program.rom", 0x207DD0, 0x207DD4
+	# 4 bytes the code takes the address of: AcDrumEditBoxProc_L3d4 0x4C0CCB37 `mov data_4C207DD0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	175, 0, 255, 255	# +0
 Str_3s_10:	.asciz "%3s"
 Str_3s_9:	.asciz "%3s"
 Str_1d_2:	.asciz "%1d"
 data_4C207DE0:
-.incbin_range "baserom/kn6000_program.rom", 0x207DE0, 0x207DE4
+	# 4 bytes the code takes the address of: AcDrumEditBoxProc_L887 0x4C0CCFEA `mov data_4C207DE0, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	129, 0, 255, 255	# +0
 Str_3d_140:	.asciz " %3d "
 	.align	4, 0xFF	# pad after Str_3d_140
 Str_3s_2d_2d_3d_v_3d_s:	.asciz "     %3s. %2d. %2d.   %3d  v%3d    %s"
@@ -2910,41 +2936,41 @@ Str_3s_s_V_3d_5d:	.asciz " %3s          %s V%3d %5d"
 	.align	4, 0xFF	# pad after Str_3s_s_V_3d_5d
 Str_3s_7:	.asciz " %3s                          "
 	.align	4, 0xFF	# pad after Str_3s_7
-Str_empty_895:	.asciz "   "
+Str_empty_893:	.asciz "   "
 data_4C20810C:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x20810C, 0x208110
-Str_empty_894:	.asciz " \xAD "
+Str_empty_892:	.asciz " \xAD "
 data_4C208114:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x208114, 0x208118
-Str_empty_893:	.asciz " \xAC "
+Str_empty_891:	.asciz " \xAC "
 data_4C20811C:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x20811C, 0x208120
-Str_empty_892:	.asciz " \xAB "
+Str_empty_890:	.asciz " \xAB "
 data_4C208124:
 # census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x208124, 0x208128
-Str_empty_891:	.asciz " \xAA "
-Str_empty_890:	.asciz " \xA6 "
-Str_empty_889:	.asciz " \xA1 "
+Str_empty_889:	.asciz " \xAA "
+Str_empty_888:	.asciz " \xA6 "
+Str_empty_887:	.asciz " \xA1 "
 Str_x2:	.asciz "\xA1x2"
 Str_x3:	.asciz "\xA1x3"
 Str_x4:	.asciz "\xA1x4"
 
 ptrs_4C208140:
-	.long	Str_empty_895
-	.long	data_4C20810C
-	.long	Str_empty_894
-	.long	data_4C208114
 	.long	Str_empty_893
-	.long	data_4C20811C
+	.long	data_4C20810C
 	.long	Str_empty_892
-	.long	data_4C208124
+	.long	data_4C208114
 	.long	Str_empty_891
+	.long	data_4C20811C
 	.long	Str_empty_890
+	.long	data_4C208124
 	.long	Str_empty_889
+	.long	Str_empty_888
+	.long	Str_empty_887
 	.long	Str_x2
 	.long	Str_x3
 	.long	Str_x4
@@ -3000,7 +3026,7 @@ Str_TRANSPOSE_A_80:	.asciz "TRANSPOSE:A ~80"
 Str_TRANSPOSE_B_a0_80:	.asciz "TRANSPOSE:B~a0~80"
 Str_TRANSPOSE_B_80:	.asciz "TRANSPOSE:B ~80"
 Str_TRANSPOSE_C_80:	.asciz "TRANSPOSE:C ~80"
-Str_empty_888:	.asciz "             "
+Str_empty_886:	.asciz "             "
 
 func_4C0CF8EE_Table:
 	.long	Str_TRANSPOSE_7fC
@@ -3028,7 +3054,7 @@ func_4C0CF8EE_Table:
 	.long	Str_TRANSPOSE_B_a0_80
 	.long	Str_TRANSPOSE_B_80
 	.long	Str_TRANSPOSE_C_80
-	.long	Str_empty_888
+	.long	Str_empty_886
 
 Str_s_SOUND_s:	.asciz " %s    SOUND       %s   "
 	.align	4, 0xFF	# pad after Str_s_SOUND_s
@@ -3289,7 +3315,8 @@ Str_x_d:	.asciz "\xB2 x %d"
 Str_empty_547:	.asciz " + \xB3"
 	.align	4, 0xFF	# pad after Str_empty_547
 data_4C2097CC:
-.incbin_range "baserom/kn6000_program.rom", 0x2097CC, 0x2097D0
+	# 4 bytes the code takes the address of: func_4C0D0E4C_entry_L42 0x4C0D0E93 `call strcpy_entry, [a2], 4` (+0, arg a1); func_4C0D0E4C_entry_L42 0x4C0D0E93 `mov data_4C2097CC, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	179, 0, 255, 255	# +0
 Str_s_56:	.asciz "     %s"
 Str_empty_546:	.asciz "                                       "
 Str_3s_s_5:	.asciz " %3s %s"
@@ -6472,9 +6499,13 @@ func_4C0D55CA_entry_L105_Table:	# 4 x u32, 1108..1139; read by func_4C0D55CA_ent
 func_4C0D55CA_entry_L71_Table:	# 1 x u32, 4294967040..4294967040; read by func_4C0D55CA_entry : `mov	(a0), a1`
 	tab_u32	4294967040
 data_4C2102E4:
-.incbin_range "baserom/kn6000_program.rom", 0x2102E4, 0x2102E8
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D55CA_entry_L11b 0x4C0D56EB `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D55CA_entry_L11b 0x4C0D56EB `mov data_4C2102E4, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_4C2102E8:
-.incbin_range "baserom/kn6000_program.rom", 0x2102E8, 0x2102EC
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D55CA_entry_L11b 0x4C0D56EB `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D55CA_entry_L11b 0x4C0D56EB `mov data_4C2102E8, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 
 Str_empty_528:	.asciz "                                                                 "
 	.align	4, 0xFF	# pad after Str_empty_528
@@ -6482,9 +6513,13 @@ Str_empty_528:	.asciz "                                                         
 func_4C0D572B_entry_L1b_Table:	# 4 x u32, 1107..1140; read by func_4C0D572B_entry_L1b 0x4C0D574C: `mov (d0, a3), d0`; func_4C0D572B_entry_L6c 0x4C0D579D: `mov (d2, a3), d0`
 	tab_u32	1107, 1110, 1137, 1140
 data_4C210340:
-.incbin_range "baserom/kn6000_program.rom", 0x210340, 0x210344
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D57B2_entry_L35 0x4C0D57EC `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D57B2_entry_L35 0x4C0D57EC `mov data_4C210340, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_4C210344:
-.incbin_range "baserom/kn6000_program.rom", 0x210344, 0x210348
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D57B2_entry_L35 0x4C0D57EC `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D57B2_entry_L35 0x4C0D57EC `mov data_4C210344, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 
 Str_NOTE_4:	.asciz "NOTE"
 	.align	4, 0xFF	# pad after Str_NOTE_4
@@ -6515,7 +6550,9 @@ Str_TRACKBALL_X_2:	.asciz "TRACKBALL X"
 Str_TRACKBALL_Y_2:	.asciz "TRACKBALL Y"
 Str_CTL_ERR_2:	.asciz "CTL ERR"
 data_4C2103F8:
-.incbin_range "baserom/kn6000_program.rom", 0x2103F8, 0x2103FC
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D581D_entry_L3a4 0x4C0D5BC6 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D581D_entry_L3a4 0x4C0D5BC6 `mov data_4C2103F8, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_SOUND_9:	.asciz "SOUND"
 	.align	4, 0xFF	# pad after Str_SOUND_9
 Str_AFTER_TOUCH_5:	.asciz "AFTER TOUCH"
@@ -6523,11 +6560,15 @@ Str_PITCH_BEND_2:	.asciz "PITCH BEND"
 	.align	4, 0xFF	# pad after Str_PITCH_BEND_2
 Str_CTL_ERR:	.asciz "CTL ERR"
 data_4C210424:
-.incbin_range "baserom/kn6000_program.rom", 0x210424, 0x210428
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D581D_entry_L4b2 0x4C0D5CD4 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D581D_entry_L4b2 0x4C0D5CD4 `mov data_4C210424, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_EVENT_ERR:	.asciz "EVENT ERR"
 	.align	4, 0xFF	# pad after Str_EVENT_ERR
 data_4C210434:
-.incbin_range "baserom/kn6000_program.rom", 0x210434, 0x210438
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D581D_entry_L4d7 0x4C0D5CF9 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D581D_entry_L4d7 0x4C0D5CF9 `mov data_4C210434, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_ON_50:	.asciz "ON "
 Str_OFF_62:	.asciz "OFF"
 Str_ON_49:	.asciz "ON "
@@ -6537,9 +6578,13 @@ Str_CENTER_4:	.asciz "CENTER"
 Str_L_2d_2:	.asciz "  L %2d"
 Str_R_2d_2:	.asciz "  R %2d"
 data_4C210460:
-.incbin_range "baserom/kn6000_program.rom", 0x210460, 0x210464
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D5D27_entry_L144 0x4C0D5E70 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D5D27_entry_L144 0x4C0D5E70 `mov data_4C210460, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_4C210464:
-.incbin_range "baserom/kn6000_program.rom", 0x210464, 0x210468
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D5D27_entry_L178 0x4C0D5EA4 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D5D27_entry_L178 0x4C0D5EA4 `mov data_4C210464, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 
 GetTitleNow_Records:	# 4 x REC_GetTitleNow_Records (18 bytes each); read by func_4C0D61A2_entry_L16 0x4C0D61BD `movhu (0x10, a0), d0`; func_4C0D61A2_entry_L16 0x4C0D61BD `movhu (0x10, a0), d2`; func_4C0D61A2_entry_Ld3f 0x4C0D6EE6 `movhu (0x10, a0), d2` (+19)
 	REC_GetTitleNow_Records	x0="   \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
@@ -6577,18 +6622,26 @@ Str_EFF_DYNAMIC_CTRL:	.asciz "EFF.DYNAMIC CTRL"
 Str_TRACKBALL_X:	.asciz "TRACKBALL X"
 Str_TRACKBALL_Y:	.asciz "TRACKBALL Y"
 data_4C2105E8:
-.incbin_range "baserom/kn6000_program.rom", 0x2105E8, 0x2105EC
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D61A2_entry_L55c 0x4C0D6703 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D61A2_entry_L55c 0x4C0D6703 `mov data_4C2105E8, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_4C2105EC:
-.incbin_range "baserom/kn6000_program.rom", 0x2105EC, 0x2105F0
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D61A2_entry_L55c 0x4C0D6703 `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D61A2_entry_L55c 0x4C0D6703 `mov data_4C2105EC, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_SOUND_8:	.asciz "SOUND"
 	.align	4, 0xFF	# pad after Str_SOUND_8
 Str_AFTER_TOUCH_4:	.asciz "AFTER TOUCH"
 Str_PITCH_BEND:	.asciz "PITCH BEND"
 	.align	4, 0xFF	# pad after Str_PITCH_BEND
 data_4C210610:
-.incbin_range "baserom/kn6000_program.rom", 0x210610, 0x210614
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D61A2_entry_L627 0x4C0D67CE `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D61A2_entry_L627 0x4C0D67CE `mov data_4C210610, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_4C210614:
-.incbin_range "baserom/kn6000_program.rom", 0x210614, 0x210618
+	# a string, 4 bytes with its pad, read by func_4C0B124D 0x4C0B124D `call GetTitleNow_entry, 0, 0x10` (+0, arg a0); func_4C0D61A2_entry_L627 0x4C0D67CE `call func_4C0B124D_entry, [d2,d3,a2,a3], 0x2c` (+0, arg a0); func_4C0D61A2_entry_L627 0x4C0D67CE `mov data_4C210614, a0` (+0, as a base); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 
 func_4C0D5FD8_entry_Lda_Records:	# 16 x REC_func_4C0D5FD8_entry_Lda_Records (8 bytes each); read by func_4C0D5FD8_entry_Lda 0x4C0D60B7 `mov (a0), d0`; func_4C0D5FD8_entry_L102 0x4C0D60DF `mov (a0), d0`; func_4C0D5FD8_entry_L105 0x4C0D60E2 `mov (4, a0), a0`
 	REC_func_4C0D5FD8_entry_Lda_Records	f0=16, p4=loc_4C0D60E7	# [0]
@@ -6662,11 +6715,9 @@ GetGenreName_entry_L14_Records_p20_4:	# REC_GetGenreName_entry_L14_Records_p20 (
 	REC_GetGenreName_entry_L14_Records_p20	x0="~\x08\x00\x00|\x0B\x00\x00y\x03\x00\x00\x7F\x0E\x00\x00~\x09\x00\x00}\x05\x00\x00y\x02\x00\x00~\n\x00\x00|\x08\x00\x00\x7F\x0C\x00\x00z\x02\x00\x004\x02\x00\x00"
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x2108F0, 0x210904
-
-Str_M_4:	.asciz "M\x09"
-# census: opaque -- unknown-dump: 33 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x210907, 0x210928
-
+data_4C210904:
+# census: opaque -- unknown-dump: 36 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x210904, 0x210928
 GetGenreName_entry_L14_Records_p20_5:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
 	REC_GetGenreName_entry_L14_Records_p20	x0="\x14\x05\x00\x00\x14\x04\x00\x00\x18\x01\x00\x00\x11\x00\x00\x00\x13\x00\x00\x00U\x07\x00\x00\x12\x01\x00\x00U\x08\x00\x00\x11\x09\x00\x00\x11\x06\x00\x00K\x03\x00\x00\x12\x03\x00\x00"
 GetGenreName_entry_L14_Records_p20_6:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
@@ -6678,24 +6729,23 @@ GetGenreName_entry_L14_Records_p20_7:	# REC_GetGenreName_entry_L14_Records_p20 (
 data_4C2109C8:
 # census: opaque -- unknown-dump: 40 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x2109C8, 0x2109F0
-
-Str_empty_887:	.asciz ":\x09"
-# census: opaque -- unknown-dump: 77 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2109F3, 0x210A40
-
 GetGenreName_entry_L14_Records_p20_8:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
+	REC_GetGenreName_entry_L14_Records_p20	x0=":\x09\x00\x009\x07\x00\x00\x1D\x0C\x00\x00\x1E\x04\x00\x00\x1D\x02\x00\x00\x0F\x00\x00\x00b\x01\x00\x00b\x02\x00\x00\x1E\x02\x00\x00\x0F\x04\x00\x00\x1D\x03\x00\x00\x1C\x03\x00\x00"
+# census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x210A20, 0x210A40
+GetGenreName_entry_L14_Records_p20_9:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
 	REC_GetGenreName_entry_L14_Records_p20	x0="?\x01\x00\x00?\x02\x00\x00;\x03\x00\x009\x06\x00\x005\x07\x00\x003\x01\x00\x00t\x04\x00\x00D\x05\x00\x00>\x00\x00\x004\x03\x00\x000\x00\x00\x002\x02\x00\x00"
 # census: opaque -- unknown-dump: 20 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x210A70, 0x210A84
-GetGenreName_entry_L14_Records_p20_9:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
+GetGenreName_entry_L14_Records_p20_10:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
 	REC_GetGenreName_entry_L14_Records_p20	x0="G\x06\x00\x00v\x05\x00\x00=\x01\x00\x00\x05\x04\x00\x00\x05\x03\x00\x00G\x05\x00\x00C\x02\x00\x00<\x03\x00\x00\x1A\x04\x00\x00\x0B\x05\x00\x00<\x04\x00\x00<\x02\x00\x00"
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x210AB4, 0x210AB8
-GetGenreName_entry_L14_Records_p20_10:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
+GetGenreName_entry_L14_Records_p20_11:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
 	REC_GetGenreName_entry_L14_Records_p20	x0="\x00\x00 \x00\x01\x00 \x00\x02\x00 \x00\x03\x00 \x00\x04\x00 \x00\x05\x00 \x00\x06\x00 \x00\x07\x00 \x00\x08\x00 \x00\x09\x00 \x00\n\x00 \x00\x0B\x00 \x00"
 # census: opaque -- unknown-dump: 32 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x210AE8, 0x210B08
-GetGenreName_entry_L14_Records_p20_11:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
+GetGenreName_entry_L14_Records_p20_12:	# REC_GetGenreName_entry_L14_Records_p20 (48 bytes)
 	REC_GetGenreName_entry_L14_Records_p20	x0="\x00\x00\x10\x00\x01\x00\x10\x00\x02\x00\x10\x00\x00\x00\xFF\xFF\x00\x04\xC0@\x00&\x00\x00\x08\xF4\x90J@_\x00\x00\xF5\x00\x01\xFF\xFF\x00\x04\xC0@\x00&\x00\x00\x0F\xF4\x90"
 # census: opaque -- unknown-dump: 13 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x210B38, 0x210B45
@@ -12930,7 +12980,9 @@ Str_NORMAL_2:	.asciz " NORMAL "
 Str_RANDOM:	.asciz " RANDOM "
 	.align	4, 0xFF	# pad after Str_RANDOM
 data_4C221AA0:
-.incbin_range "baserom/kn6000_program.rom", 0x221AA0, 0x221AAC
+	# a string, 12 bytes with its pad, read by func_4C0FCD17_entry_L39 0x4C0FCD53 `call sprintf_entry, [a2], 0x20` (+0, arg d0); func_4C0FCD17_entry_L39 0x4C0FCD53 `mov data_4C221AA0, d0` (+0, as a base); handed to sprintf
+	.asciz	"STEREO-L"
+	.align	4, 0xFF
 Str_STEREO_R:	.asciz "STEREO-R"
 	.align	4, 0xFF	# pad after Str_STEREO_R
 Str_CTR:	.asciz "CTR"
@@ -16066,8 +16118,11 @@ RN_empty_2534:	.asciz ""
 RN_empty_2535:	.asciz ""
 RN_empty_2536:	.asciz ""
 RN_empty_2537:	.asciz ""
-# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2290B7, 0x2290BC
+data_4C2290B7:
+	.align	4, 0x00	# pad after RN_empty_2537
+data_4C2290B8:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x2290B8, 0x2290BC
 RN_DSPSel:	.asciz "DSPSel"
 RN_empty_2538:	.asciz ""
 RN_empty_2539:	.asciz ""
@@ -16138,8 +16193,11 @@ RN_empty_2594:	.asciz ""
 RN_empty_2595:	.asciz ""
 RN_empty_2596:	.asciz ""
 RN_empty_2597:	.asciz ""
-# census: opaque -- unknown-dump: 5 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x22912F, 0x229134
+data_4C22912F:
+	.align	4, 0x00	# pad after RN_empty_2597
+data_4C229130:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x229130, 0x229134
 RN_SplitSel:	.asciz "SplitSel"
 RN_empty_5009:	.asciz ""
 RN_empty_5010:	.asciz ""
@@ -16874,7 +16932,13 @@ data_4C2366BC:
 # census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x2366BC, 0x2366DD
 data_4C2366DD:
-.incbin_range "baserom/kn6000_program.rom", 0x2366DD, 0x2366FE
+	# 33 bytes read by func_4C0FF1C3_entry_L49 0x4C0FF211 `mov (4, a0), d0` (+7, u32); func_4C0FF1C3_entry_L49 0x4C0FF211 `mov (8, a0), d0` (+11, u32); func_4C0FF1C3_entry_L49 0x4C0FF211 `movhu (0xc, a0), d0` (+15, s16) (+2 more); the read fields at their widths (s16, u32, u8), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	tab_u8	4, 12, 48	# +0
+	tab_u32	0xFF3B3634, 0x3414FFFF, 0xFF3C3B36	# +3
+	tab_s16	-1	# +15
+	tab_u8	28, 54	# +17
+	tab_u32	0xFF403C3B, 0x3B24FFFF, 0xFF42403C	# +19
+	tab_s16	-1	# +31
 data_4C2366FE:
 # census: opaque -- unknown-dump: 33 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x2366FE, 0x23671F
@@ -20560,8 +20624,12 @@ RN_TM_EXP2_IC4_OK:	.asciz "TM_EXP2_IC4_OK"
 RN_empty_5445:	.asciz ""
 RN_TM_EXP2_IC4_NG:	.asciz "TM_EXP2_IC4_NG"
 RN_empty_5446:	.asciz ""
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x24104C, 0x241054
+data_4C24104C:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x24104C, 0x241050
+data_4C241050:
+# census: opaque -- unknown-dump: 4 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x241050, 0x241054
 Str_MD_CONTROL:	.asciz "MD_CONTROL"
 	.align	4, 0xFF	# pad after Str_MD_CONTROL
 Str_MD_CUSTOMIZE:	.asciz "MD_CUSTOMIZE"
@@ -20617,7 +20685,8 @@ Str_TT_GUEST:	.asciz "TT_GUEST"
 TchSensGridCheck_Table:	# 2 x u32, 0..0; read by DataProtectGridCheck : `mov	(a0), d0`; DispTimeSetGridCheck : `mov	(a0), d0` ...
 	tab_u32	0, 0
 data_4C2411C8:
-.incbin_range "baserom/kn6000_program.rom", 0x2411C8, 0x2411D4
+	# 12 bytes the code takes the address of: TestDiskFunc_L20 0x4C10E55F `mov data_4C2411C8, d0` (+0, as a base); TestDiskFunc_L3d 0x4C10E57C `mov data_4C2411C8, d0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	18, 0, 76, 1, 0, 0, 140, 1, 0, 0, 0, 0	# +0
 
 InOutTestWindowProc_L9f4_Records:	# u16, a constant; read / written by InOutTestWindowProc_L9f4 0x4C10F393: `movhu (a1), d0`
 	.word	15
@@ -22078,15 +22147,57 @@ func_4C11B33A_Table:	# 256 x s8, a sparse map by index: 33 entries set, the rest
 	map8	244, 9
 	map_none8	11	# [245..255]
 data_4C244568:
-.incbin_range "baserom/kn6000_program.rom", 0x244568, 0x244664
+	# 252 bytes the code takes the address of: func_4C11B347 0x4C11B347 `mov data_4C244568, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 144, 0, 0, 0, 192, 0, 7, 0, 176, 0, 0, 0, 32, 0	# +0
+	tab_u8	11, 0, 176, 0, 92, 0, 176, 0, 92, 0, 32, 0, 91, 0, 176, 0	# +16
+	tab_u8	126, 0, 176, 0, 20, 176, 0, 0, 36, 176, 0, 0, 52, 176, 0, 0	# +32
+	tab_u8	68, 176, 0, 0, 84, 176, 0, 0, 95, 0, 176, 0, 95, 0, 32, 0	# +48
+	tab_u8	93, 0, 176, 0, 93, 0, 32, 0, 5, 0, 176, 0, 65, 0, 176, 0	# +64
+	tab_u8	80, 0, 176, 0, 81, 0, 176, 0, 82, 0, 176, 0, 83, 0, 176, 0	# +80
+	tab_u8	129, 0, 32, 0, 136, 0, 32, 0, 137, 0, 32, 0, 138, 0, 32, 0	# +96
+	tab_u8	139, 0, 32, 0, 144, 0, 32, 0, 145, 0, 32, 0, 146, 0, 32, 0	# +112
+	tab_u8	147, 0, 32, 0, 148, 0, 32, 0, 149, 0, 32, 0, 150, 0, 32, 0	# +128
+	tab_u8	151, 0, 32, 0, 152, 0, 32, 0, 121, 0, 176, 0, 120, 0, 176, 0	# +144
+	tab_u8	94, 0, 176, 0, 64, 0, 176, 0, 128, 64, 32, 0, 129, 64, 32, 0	# +160
+	tab_u8	10, 0, 176, 0, 0, 128, 176, 0, 1, 128, 176, 0, 2, 128, 176, 0	# +176
+	tab_u8	5, 128, 176, 0, 0, 0, 208, 0, 0, 0, 224, 0, 1, 0, 176, 0	# +192
+	tab_u8	66, 0, 176, 0, 67, 0, 176, 0, 71, 0, 176, 0, 72, 0, 176, 0	# +208
+	tab_u8	73, 0, 176, 0, 74, 0, 176, 0, 75, 0, 176, 0, 76, 0, 176, 0	# +224
+	tab_u8	77, 0, 176, 0, 78, 0, 176, 0, 255, 255, 255, 255	# +240
 data_4C244664:
-.incbin_range "baserom/kn6000_program.rom", 0x244664, 0x244710
+	# 172 bytes the code takes the address of: func_4C11B347 0x4C11B347 `mov data_4C244664, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 144, 0, 0, 0, 192, 0, 7, 0, 176, 0, 0, 0, 32, 0	# +0
+	tab_u8	11, 0, 176, 0, 92, 0, 176, 0, 92, 0, 32, 0, 91, 0, 176, 0	# +16
+	tab_u8	126, 0, 176, 0, 20, 176, 0, 0, 36, 176, 0, 0, 52, 176, 0, 0	# +32
+	tab_u8	68, 176, 0, 0, 84, 176, 0, 0, 95, 0, 176, 0, 95, 0, 32, 0	# +48
+	tab_u8	93, 0, 176, 0, 93, 0, 32, 0, 5, 0, 176, 0, 65, 0, 176, 0	# +64
+	tab_u8	80, 0, 176, 0, 81, 0, 176, 0, 82, 0, 176, 0, 83, 0, 176, 0	# +80
+	tab_u8	129, 0, 32, 0, 136, 0, 32, 0, 137, 0, 32, 0, 138, 0, 32, 0	# +96
+	tab_u8	139, 0, 32, 0, 144, 0, 32, 0, 145, 0, 32, 0, 146, 0, 32, 0	# +112
+	tab_u8	147, 0, 32, 0, 148, 0, 32, 0, 149, 0, 32, 0, 150, 0, 32, 0	# +128
+	tab_u8	151, 0, 32, 0, 152, 0, 32, 0, 121, 0, 176, 0, 120, 0, 176, 0	# +144
+	tab_u8	10, 0, 176, 0, 2, 128, 176, 0, 255, 255, 255, 255	# +160
 data_4C244710:
-.incbin_range "baserom/kn6000_program.rom", 0x244710, 0x244744
+	# 52 bytes the code takes the address of: func_4C11B347_entry_L28 0x4C11B374 `mov data_4C244710, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 144, 0, 128, 192, 0, 0, 129, 192, 0, 0, 130, 192, 0, 0	# +0
+	tab_u8	131, 192, 0, 0, 7, 0, 176, 0, 0, 0, 32, 0, 2, 208, 0, 0	# +16
+	tab_u8	35, 32, 112, 0, 1, 208, 0, 0, 3, 208, 0, 0, 1, 0, 0, 0	# +32
+	tab_u8	255, 255, 255, 255	# +48
 data_4C244744:
-.incbin_range "baserom/kn6000_program.rom", 0x244744, 0x2447C4
+	# 128 bytes the code takes the address of: func_4C11B347_entry_L28 0x4C11B374 `mov data_4C244744, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	128, 192, 0, 0, 129, 192, 0, 0, 130, 192, 0, 0, 131, 192, 0, 0	# +0
+	tab_u8	50, 128, 0, 0, 7, 0, 176, 0, 0, 0, 32, 0, 2, 208, 0, 0	# +16
+	tab_u8	35, 32, 112, 0, 1, 208, 0, 0, 3, 208, 0, 0, 1, 0, 0, 0	# +32
+	tab_u8	0, 192, 0, 0, 4, 192, 0, 0, 4, 0, 0, 0, 128, 128, 0, 0	# +48
+	tab_u8	64, 128, 0, 0, 32, 128, 0, 0, 96, 128, 0, 0, 3, 0, 0, 0	# +64
+	tab_u8	51, 128, 0, 0, 128, 0, 0, 0, 49, 128, 0, 0, 160, 0, 0, 0	# +80
+	tab_u8	2, 128, 0, 0, 1, 224, 0, 0, 2, 224, 0, 0, 0, 224, 0, 0	# +96
+	tab_u8	0, 0, 0, 0, 6, 128, 0, 0, 8, 128, 0, 0, 255, 255, 255, 255	# +112
 data_4C2447C4:
-.incbin_range "baserom/kn6000_program.rom", 0x2447C4, 0x2447E8
+	# 36 bytes the code takes the address of: func_4C11B347_entry_L28 0x4C11B374 `mov data_4C2447C4, a0` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	2, 208, 0, 0, 35, 32, 112, 0, 1, 208, 0, 0, 3, 208, 0, 0	# +0
+	tab_u8	1, 0, 0, 0, 0, 192, 0, 0, 4, 192, 0, 0, 4, 0, 0, 0	# +16
+	tab_u8	255, 255, 255, 255	# +32
 func_4C11B347_Table:	# 20 x u8, 0..255; read by func_4C11B347_entry : `movbu	(d0, a0), d0`
 	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0	# [0]
 	tab_u8	0, 0, 0, 255	# [16]
@@ -22489,7 +22600,9 @@ Str_empty_339:	.asciz ".          "
 Str_r:	.asciz "r"
 	.align	4, 0xFF	# pad after Str_r
 data_4C24549C:
-.incbin_range "baserom/kn6000_program.rom", 0x24549C, 0x2454BC
+	# 32 bytes the code takes the address of: func_4C1326F8_entry_L67 0x4C132764 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C1326F8_entry_L67 0x4C132764 `mov data_4C24549C, a1` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1, 0	# +0
+	tab_u8	2, 112, 0, 160, 5, 249, 3, 0, 9, 0, 2, 0, 0, 0, 255, 255	# +16
 
 func_4C112249_Table:	# 14 x u32, 0..5; read by func_4C112249 0x4C112249: `mov (a0), d1`
 	tab_u32	5, 0, 0, 0, 0, 0, 0, 5	# [0]
@@ -28399,8 +28512,8 @@ Str_1_0_4_10:	.asciz "1.0.4"
 func_4C13A6D0_entry_L43_Table:	# 5 x u8, 96..113; read by func_4C13A6D0_entry : `movbu	(d0, a0), d0`
 	tab_u8	96, 96, 97, 110, 113
 
-Str_empty_886:	.asciz "---"
 Str_empty_885:	.asciz "---"
+Str_empty_884:	.asciz "---"
 Str_2DD_2:	.asciz "2DD"
 Str_2HD:	.asciz "2HD"
 Str_2DD:	.asciz "2DD"
@@ -28410,8 +28523,8 @@ Str_DOC_2:	.asciz "DOC"
 	.align	4, 0xFF	# pad after Str_DOC_2
 
 DiskInfoFunc_entry_L5b_Table:
-	.long	Str_empty_886
 	.long	Str_empty_885
+	.long	Str_empty_884
 	.long	Str_2DD_2
 	.long	Str_2HD
 	.long	Str_2DD
@@ -28424,8 +28537,8 @@ Str_SEQUENCER_9:	.asciz " SEQUENCER  "
 Str_COMPOSER_7:	.asciz "  COMPOSER  "
 Str_SOUND_MEMORY_4:	.asciz "SOUND MEMORY"
 Str_USER_EFFECT:	.asciz "USER  EFFECT"
-Str_empty_884:	.asciz "            "
-	.align	4, 0xFF	# pad after Str_empty_884
+Str_empty_883:	.asciz "            "
+	.align	4, 0xFF	# pad after Str_empty_883
 
 SingleLoadModeFunc_Table:
 	.long	Str_PANEL_MEMORY_8
@@ -28433,23 +28546,23 @@ SingleLoadModeFunc_Table:
 	.long	Str_COMPOSER_7
 	.long	Str_SOUND_MEMORY_4
 	.long	Str_USER_EFFECT
-	.long	Str_empty_884
+	.long	Str_empty_883
 
 Str_BANK_15:	.asciz "BANK"
-Str_empty_883:	.asciz "----"
+Str_empty_882:	.asciz "----"
 Str_BANK_14:	.asciz "BANK"
 Str_BANK_13:	.asciz "BANK"
 Str_BANK_12:	.asciz "BANK"
-Str_empty_882:	.asciz "----"
-	.align	4, 0xFF	# pad after Str_empty_882
+Str_empty_881:	.asciz "----"
+	.align	4, 0xFF	# pad after Str_empty_881
 
 func_4C141A96_Table:
 	.long	Str_BANK_15
-	.long	Str_empty_883
+	.long	Str_empty_882
 	.long	Str_BANK_14
 	.long	Str_BANK_13
 	.long	Str_BANK_12
-	.long	Str_empty_882
+	.long	Str_empty_881
 
 Str_MEMORY_19:	.asciz " MEMORY "
 Str_SONG_19:	.asciz "  SONG  "
@@ -28457,8 +28570,8 @@ Str_PATTERN_7:	.asciz "PATTERN"
 	.align	4, 0x00	# pad after Str_PATTERN_7
 Str_MEMORY_18:	.asciz " MEMORY "
 Str_EFFECT_8:	.asciz " EFFECT "
-Str_empty_881:	.asciz "  ----  "
-	.align	4, 0xFF	# pad after Str_empty_881
+Str_empty_880:	.asciz "  ----  "
+	.align	4, 0xFF	# pad after Str_empty_880
 
 func_4C141AFC_entry_L63_Table:
 	.long	Str_MEMORY_19
@@ -28466,7 +28579,7 @@ func_4C141AFC_entry_L63_Table:
 	.long	Str_PATTERN_7
 	.long	Str_MEMORY_18
 	.long	Str_EFFECT_8
-	.long	Str_empty_881
+	.long	Str_empty_880
 
 Str_FILE_4:	.asciz " FILE "
 # census: opaque -- unknown-dump: 9 bytes of printable bytes, not NUL-terminated text in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
@@ -28511,7 +28624,9 @@ Str_KB_free:	.asciz "KB free ("
 	.align	4, 0xFF	# pad after Str_KB_free
 Str_used:	.asciz "% used)"
 data_4C2588D4:
-.incbin_range "baserom/kn6000_program.rom", 0x2588D4, 0x2588D8
+	# a string, 4 bytes with its pad, read by FmmComposerLoadFunc_L249 0x4C13D906 `call func_4C14CF43_entry, [d2], 0x10` (+0, arg a1); FmmComposerLoadFunc_L249 0x4C13D906 `mov data_4C2588D4, a1` (+0, as a base); func_4C14CF43 0x4C14CF43 `call func_4C14CEBA, 0, 0` (+0, arg a1); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 Str_empty_327:	.asciz "-----"
 	.align	4, 0xFF	# pad after Str_empty_327
 Str_YES_7:	.asciz " YES "
@@ -28594,13 +28709,13 @@ Str_GM2:	.asciz "GM2"
 Str_NX:	.asciz " NX "
 	.space	4, 0x00
 Str_PREV_TEC:	.asciz "PREV.TEC"
-Str_empty_880:	.asciz "        "
+Str_empty_879:	.asciz "        "
 
 SmfPlayAsFunc_Table:
 	.long	Str_GM2
 	.long	Str_NX
 	.long	Str_PREV_TEC
-	.long	Str_empty_880
+	.long	Str_empty_879
 
 Str_MID_3:	.asciz "________.MID"
 	.align	4, 0xFF	# pad after Str_MID_3
@@ -28828,13 +28943,13 @@ Str_ALL_6:	.asciz "      ALL       "
 Str_OFF_12:	.asciz "    OFF    "
 Str_PART_11:	.asciz "    PART   "
 Str_TYPE_PART_2:	.asciz "TYPE & PART"
-Str_empty_879:	.asciz "    ---    "
+Str_empty_878:	.asciz "    ---    "
 
 CmpSnglLdOptionFunc_entry_L75_Table:
 	.long	Str_OFF_12
 	.long	Str_PART_11
 	.long	Str_TYPE_PART_2
-	.long	Str_empty_879
+	.long	Str_empty_878
 SingleLoadSrcDstFunc_L1e4_Table:
 	.long	func_4C14203D
 	.long	func_4C142587
@@ -28846,13 +28961,13 @@ SingleLoadSrcDstFunc_L1e4_Table:
 Str_OFF_11:	.asciz "    OFF    "
 Str_PART_10:	.asciz "    PART   "
 Str_TYPE_PART:	.asciz "TYPE & PART"
-Str_empty_878:	.asciz "    ---    "
+Str_empty_877:	.asciz "    ---    "
 
 CmpSingleLoadSrcDstFunc_entry_L121_Table:
 	.long	Str_OFF_11
 	.long	Str_PART_10
 	.long	Str_TYPE_PART
-	.long	Str_empty_878
+	.long	Str_empty_877
 
 CmpSingleLoadSrcDstFunc_entry_L2c7_Table:	# 8 x u8, 0..255; read by CmpSingleLoadSrcDstFunc_entry : `movbu	(d0, a0), d0`
 	tab_u8	1, 3, 5, 7, 0, 255, 255, 255
@@ -28865,9 +28980,13 @@ CmpSingleLoadSrcDstFunc_entry_L149_Table:
 	.long	func_4C143D15
 	.long	func_4C144340
 data_4C258F38:
-.incbin_range "baserom/kn6000_program.rom", 0x258F38, 0x258F3C
+	# a string, 4 bytes with its pad, read by CmpSingleLoadFileFunc_L5b 0x4C145150 `call func_4C14CF43_entry, [d2], 0x10` (+0, arg a1); CmpSingleLoadFileFunc_L5b 0x4C145150 `mov data_4C258F38, a1` (+0, as a base); CmpSingleLoadFileFunc_Lfa 0x4C1451EF `mov data_4C258F38, a2` (+0, as a base) (+1 more); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 data_4C258F3C:
-.incbin_range "baserom/kn6000_program.rom", 0x258F3C, 0x258F40
+	# a string, 4 bytes with its pad, read by FmmDiskMedleySelectFunc_entry_L8cf 0x4C146C1F `call func_4C14CF43_entry, [d2], 0x10` (+0, arg a0); FmmDiskMedleySelectFunc_entry_L8cf 0x4C146C1F `mov data_4C258F3C, a0` (+0, as a base); func_4C14CF43 0x4C14CF43 `call func_4C14CEBA, 0, 0` (+0, arg a0); [INFERENCE: a string by its layout, a NUL then the 0xFF pad to a word]
+	.asciz	""
+	.align	4, 0xFF
 func_4C1416B9_Table:
 	.long	loc_4C1416D9
 	.long	loc_4C1416D9
@@ -31891,7 +32010,7 @@ SmfFileNaming_L2b_Table:
 	.long	Str_PLEASE_WAIT
 	.long	Str_SILAHKAN_TUNGGU
 
-Str_empty_877:	.asciz "                "
+Str_empty_876:	.asciz "                "
 Str_CURRENT_PANEL_3:	.asciz "CURRENT PANEL   "
 Str_PANEL_MEMORY_7:	.asciz "PANEL MEMORY    "
 Str_SEQUENCER_8:	.asciz "SEQUENCER       "
@@ -31905,7 +32024,7 @@ Str_HOME_PAGE_4:	.asciz "HOME PAGE       "
 Str_ALL_CUSTOM_STYLE_3:	.asciz "ALL CUSTOM STYLE"
 
 AcFileSfxBoxProc_Lea_Table:
-	.long	Str_empty_877
+	.long	Str_empty_876
 	.long	Str_CURRENT_PANEL_3
 	.long	Str_PANEL_MEMORY_7
 	.long	Str_SEQUENCER_8
@@ -31919,7 +32038,7 @@ AcFileSfxBoxProc_Lea_Table:
 	.long	Str_ALL_CUSTOM_STYLE_3
 
 Str_NEXT_PAGE:	.asciz "   NEXT PAGE    "
-Str_empty_876:	.asciz "   ---------    "
+Str_empty_875:	.asciz "   ---------    "
 Str_This_is:	.asciz "    This is     "
 Str_temporary:	.asciz "   temporary    "
 Str_message:	.asciz "    message.    "
@@ -31927,7 +32046,7 @@ Str_message:	.asciz "    message.    "
 
 AcFileSfxBoxProc_L1d3_Table:
 	.long	Str_NEXT_PAGE
-	.long	Str_empty_876
+	.long	Str_empty_875
 	.long	Str_This_is
 	.long	Str_temporary
 	.long	Str_message
@@ -33151,5418 +33270,5188 @@ SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_0:	# REC_SndRecTriFieldGet2_entry_L1
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x13"
 	tab_u16	3072, 5120, 12800, 24064, 29184	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_0
-
-Str_Room1:	.asciz "     Room1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265AFD, 0x265B0C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_0:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Room1      \x00\x00", f18=16, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_0
+	.space	4, 0x00
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_1:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x19"
 	tab_u16	3072, 5632, 12800, 23040, 28160	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_1
-
-Str_Room2:	.asciz "     Room2      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265B29, 0x265B38
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_1:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Room2      \x00\x00", f18=16, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_1
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265B34, 0x265B38
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_2:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="#"
 	tab_u16	11520, 6656, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_2
-
-Str_Plate1:	.asciz "     Plate1     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265B55, 0x265B64
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_2:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Plate1     \x00\x00", f18=18, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_2
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265B60, 0x265B64
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_3:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="*"
 	tab_u16	11520, 5632, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_3
-
-Str_Plate2:	.asciz "     Plate2     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265B81, 0x265B90
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_3:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Plate2     \x00\x00", f18=18, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_3
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265B8C, 0x265B90
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_4:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="#"
 	tab_u16	2816, 5376, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_4
-
-Str_Concert1:	.asciz "    Concert1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265BAD, 0x265BBC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_4:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Concert1    \x00\x00", f18=20, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_4
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265BB8, 0x265BBC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_5:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="'"
 	tab_u16	15360, 5888, 20480, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_5
-
-Str_Concert2:	.asciz "    Concert2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265BD9, 0x265BE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_5:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Concert2    \x00\x00", f18=20, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_5
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265BE4, 0x265BE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_6:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="-"
 	tab_u16	11520, 3584, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_6
-
-Str_Dark1:	.asciz "     Dark1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265C05, 0x265C14
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_6:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Dark1      \x00\x00", f18=22, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_6
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265C10, 0x265C14
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_7:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="7"
 	tab_u16	23040, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_7
-
-Str_Dark2:	.asciz "     Dark2      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265C31, 0x265C40
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_7:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Dark2      \x00\x00", f18=22, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_7
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265C3C, 0x265C40
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_8:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0=")"
 	tab_u16	6400, 5376, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_8
-
-Str_Bright1:	.asciz "    Bright1     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265C5D, 0x265C6C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_8:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Bright1     \x00\x00", f18=24, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_8
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265C68, 0x265C6C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_9:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="-"
 	tab_u16	7680, 5888, 12800, 12800, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_9
-
-Str_Bright2:	.asciz "    Bright2     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265C89, 0x265C98
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_9:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Bright2     \x00\x00", f18=24, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_9
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265C94, 0x265C98
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_10:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="A"
 	tab_u16	25600, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_10
-
-Str_Long1:	.asciz "     Long1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265CB5, 0x265CC4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_10:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Long1      \x00\x00", f18=20, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_10
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265CC0, 0x265CC4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_11:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="K"
 	tab_u16	31744, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_11
-
-Str_Long2:	.asciz "     Long2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265CE1, 0x265CF0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_11:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Long2      \x00\x00", f18=20, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_11
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265CEC, 0x265CF0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_12:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="-"
 	tab_u16	11520, 4096, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_12
-
-Str_Large_Hall1:	.asciz "  Large Hall1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265D0D, 0x265D1C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_12:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Large Hall1   \x00\x00", f18=20, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_12
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265D18, 0x265D1C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_13:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="7"
 	tab_u16	23040, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_13
-
-Str_Large_Hall2:	.asciz "  Large Hall2   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265D39, 0x265D48
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_13:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Large Hall2   \x00\x00", f18=20, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_13
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265D44, 0x265D48
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_14:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="-"
 	tab_u16	5120, 4096, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_14
-
-Str_Live_Stage:	.asciz "   Live Stage   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265D65, 0x265D74
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_14:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Live Stage   \x00\x00", f18=30, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_14
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265D70, 0x265D74
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_15:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="7"
 	tab_u16	64000, 4608, 12800, 17920, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_15
-
-Str_Stadium:	.asciz "    Stadium     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265D91, 0x265DA0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_15:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Stadium     \x00\x00", f18=30, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_15
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265D9C, 0x265DA0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_16:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3072, 10240, 5120, 5120, 21504	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_16
-
-Str_Medium_Gate:	.asciz "  Medium Gate   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265DBD, 0x265DCC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_16:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Medium Gate   \x00\x00", f18=8, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_16
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265DC8, 0x265DCC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_17:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	3072, 10240, 5120, 7680, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_17
-
-Str_Short_Gate:	.asciz "   Short Gate   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265DE9, 0x265DF8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_17:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Short Gate   \x00\x00", f18=8, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_17
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265DF4, 0x265DF8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_18:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="7"
 	tab_u16	3072, 2560, 1280, 3840, 23040	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_18
-
-Str_Long_Gate:	.asciz "   Long Gate    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265E15, 0x265E24
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_18:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Long Gate    \x00\x00", f18=8, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_18
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265E20, 0x265E24
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_19:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_19
-
-Str_Deep1_8:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265E41, 0x265E50
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_19:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_19
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265E4C, 0x265E50
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_20:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_20
-
-Str_Deep2_8:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265E6D, 0x265E7C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_20:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_20
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265E78, 0x265E7C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_21:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_21
-
-Str_Deep3_8:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265E99, 0x265EA8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_21:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_21
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265EA4, 0x265EA8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_22:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_22
-
-Str_Deep4_8:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265EC5, 0x265ED4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_22:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_22
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265ED0, 0x265ED4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_23:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_23
-
-Str_Deep5_8:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265EF1, 0x265F00
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_23:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_23
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265EFC, 0x265F00
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_24:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_24
-
-Str_Deep6_8:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265F1D, 0x265F2C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_24:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_24
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265F28, 0x265F2C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_25:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_25
-
-Str_Deep7_8:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265F49, 0x265F58
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_25:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_25
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265F54, 0x265F58
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_26:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_26
-
-Str_Deep8_8:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265F75, 0x265F84
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_26:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_26
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265F80, 0x265F84
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_27:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_27
-
-Str_Normal1_9:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265FA1, 0x265FB0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_27:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_27
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265FAC, 0x265FB0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_28:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_28
-
-Str_Normal2_9:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265FCD, 0x265FDC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_28:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_28
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x265FD8, 0x265FDC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_29:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_29
-
-Str_Normal3_9:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x265FF9, 0x266008
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_29:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_29
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266004, 0x266008
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_30:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_30
-
-Str_Normal4_9:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266025, 0x266034
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_30:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_30
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266030, 0x266034
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_31:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_31
-
-Str_Normal5_8:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266051, 0x266060
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_31:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_31
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26605C, 0x266060
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_32:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_32
-
-Str_Normal6_8:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26607D, 0x26608C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_32:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_32
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266088, 0x26608C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_33:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_33
-
-Str_Normal7_8:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2660A9, 0x2660B8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_33:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_33
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2660B4, 0x2660B8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_34:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_34
-
-Str_Normal8_8:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2660D5, 0x2660E4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_34:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_34
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2660E0, 0x2660E4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_35:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_35
-
-Str_Shallow1_8:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266101, 0x266110
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_35:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_35
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26610C, 0x266110
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_36:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_36
-
-Str_Shallow2_8:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26612D, 0x26613C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_36:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_36
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266138, 0x26613C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_37:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_37
-
-Str_Shallow3_8:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266159, 0x266168
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_37:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_37
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266164, 0x266168
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_38:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_38
-
-Str_Shallow4_8:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266185, 0x266194
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_38:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_38
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266190, 0x266194
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_39:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_39
-
-Str_Shallow5_8:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2661B1, 0x2661C0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_39:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_39
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2661BC, 0x2661C0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_40:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_40
-
-Str_Shallow6_8:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2661DD, 0x2661EC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_40:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_40
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2661E8, 0x2661EC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_41:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_41
-
-Str_Shallow7_8:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266209, 0x266218
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_41:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_41
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266214, 0x266218
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_42:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_42
-
-Str_Shallow8_8:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266235, 0x266244
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_42:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_42
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266240, 0x266244
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_43:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_43
-
-Str_Deep9_7:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266261, 0x266270
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_43:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_43
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26626C, 0x266270
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_44:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_44
-
-Str_Deep10_7:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26628D, 0x26629C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_44:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_44
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266298, 0x26629C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_45:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_45
-
-Str_Deep11_7:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2662B9, 0x2662C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_45:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_45
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2662C4, 0x2662C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_46:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 7936, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_46
-
-Str_Deep12_7:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2662E5, 0x2662F4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_46:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_46
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2662F0, 0x2662F4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_47:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 8960, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_47
-
-Str_Deep13_7:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266311, 0x266320
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_47:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_47
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26631C, 0x266320
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_48:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_48
-
-Str_Normal9_7:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26633D, 0x26634C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_48:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_48
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266348, 0x26634C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_49:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_49
-
-Str_Normal10_7:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266369, 0x266378
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_49:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_49
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266374, 0x266378
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_50:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_50
-
-Str_Normal11_7:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266395, 0x2663A4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_50:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_50
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2663A0, 0x2663A4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_51:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 7936, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_51
-
-Str_Normal12_7:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2663C1, 0x2663D0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_51:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_51
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2663CC, 0x2663D0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_52:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 8960, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_52
-
-Str_Normal13_7:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2663ED, 0x2663FC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_52:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_52
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2663F8, 0x2663FC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_53:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_53
-
-Str_Shallow9_7:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266419, 0x266428
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_53:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_53
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266424, 0x266428
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_54:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_54
-
-Str_Shallow10_7:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266445, 0x266454
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_54:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_54
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266450, 0x266454
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_55:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_55
-
-Str_Shallow11_7:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266471, 0x266480
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_55:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_55
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26647C, 0x266480
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_56:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	6144, 7936, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_56
-
-Str_Shallow12_7:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26649D, 0x2664AC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_56:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_56
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2664A8, 0x2664AC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_57:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	6144, 8960, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_57
-
-Str_Shallow13_7:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2664C9, 0x2664D8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_57:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_57
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2664D4, 0x2664D8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_58:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 768, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_58
-
-Str_Deep1_7:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2664F5, 0x266504
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_58:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_58
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266500, 0x266504
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_59:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 1024, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_59
-
-Str_Deep2_7:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266521, 0x266530
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_59:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_59
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26652C, 0x266530
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_60:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1280, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_60
-
-Str_Deep3_7:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26654D, 0x26655C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_60:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_60
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266558, 0x26655C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_61:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_61
-
-Str_Deep4_7:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266579, 0x266588
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_61:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_61
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266584, 0x266588
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_62:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1792, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_62
-
-Str_Deep5_7:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2665A5, 0x2665B4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_62:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_62
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2665B0, 0x2665B4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_63:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2048, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_63
-
-Str_Deep6_7:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2665D1, 0x2665E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_63:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_63
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2665DC, 0x2665E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_64:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2304, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_64
-
-Str_Deep7_7:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2665FD, 0x26660C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_64:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_64
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266608, 0x26660C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_65:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2560, 20480, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_65
-
-Str_Deep8_7:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266629, 0x266638
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_65:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_65
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266634, 0x266638
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_66:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 768, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_66
-
-Str_Normal1_8:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266655, 0x266664
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_66:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_66
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266660, 0x266664
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_67:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 1024, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_67
-
-Str_Normal2_8:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266681, 0x266690
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_67:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_67
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26668C, 0x266690
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_68:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1280, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_68
-
-Str_Normal3_8:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2666AD, 0x2666BC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_68:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_68
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2666B8, 0x2666BC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_69:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_69
-
-Str_Normal4_8:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2666D9, 0x2666E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_69:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_69
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2666E4, 0x2666E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_70:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1792, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_70
-
-Str_Normal5_7:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266705, 0x266714
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_70:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_70
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266710, 0x266714
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_71:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2048, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_71
-
-Str_Normal6_7:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266731, 0x266740
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_71:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_71
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26673C, 0x266740
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_72:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2304, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_72
-
-Str_Normal7_7:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26675D, 0x26676C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_72:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_72
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266768, 0x26676C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_73:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	13824, 2560, 18432, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_73
-
-Str_Normal8_7:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266789, 0x266798
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_73:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_73
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266794, 0x266798
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_74:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 768, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_74
-
-Str_Shallow1_7:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2667B5, 0x2667C4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_74:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_74
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2667C0, 0x2667C4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_75:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 1024, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_75
-
-Str_Shallow2_7:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2667E1, 0x2667F0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_75:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_75
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2667EC, 0x2667F0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_76:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1280, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_76
-
-Str_Shallow3_7:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26680D, 0x26681C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_76:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_76
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266818, 0x26681C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_77:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_77
-
-Str_Shallow4_7:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266839, 0x266848
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_77:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_77
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266844, 0x266848
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_78:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1792, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_78
-
-Str_Shallow5_7:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266865, 0x266874
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_78:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_78
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266870, 0x266874
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_79:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2048, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_79
-
-Str_Shallow6_7:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266891, 0x2668A0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_79:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_79
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26689C, 0x2668A0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_80:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2304, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_80
-
-Str_Shallow7_7:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2668BD, 0x2668CC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_80:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_80
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2668C8, 0x2668CC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_81:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 2560, 16896, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_81
-
-Str_Shallow8_7:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2668E9, 0x2668F8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_81:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=83, f20=5, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_81
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2668F4, 0x2668F8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_82:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_82
-
-Str_Deep1_6:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266919, 0x266928
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_82:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_82
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266924, 0x266928
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_83:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_83
-
-Str_Deep2_6:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266949, 0x266958
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_83:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_83
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266954, 0x266958
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_84:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_84
-
-Str_Deep3_6:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266979, 0x266988
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_84:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_84
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266984, 0x266988
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_85:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_85
-
-Str_Deep4_6:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2669A9, 0x2669B8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_85:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_85
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2669B4, 0x2669B8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_86:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_86
-
-Str_Deep5_6:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2669D9, 0x2669E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_86:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_86
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2669E4, 0x2669E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_87:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_87
-
-Str_Deep6_6:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266A09, 0x266A18
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_87:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_87
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266A14, 0x266A18
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_88:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_88
-
-Str_Deep7_6:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266A39, 0x266A48
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_88:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_88
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266A44, 0x266A48
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_89:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_89
-
-Str_Deep8_6:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266A69, 0x266A78
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_89:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_89
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266A74, 0x266A78
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_90:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_90
-
-Str_Normal1_7:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266A99, 0x266AA8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_90:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_90
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266AA4, 0x266AA8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_91:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_91
-
-Str_Normal2_7:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266AC9, 0x266AD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_91:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_91
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266AD4, 0x266AD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_92:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 512, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_92
-
-Str_Normal3_7:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266AF9, 0x266B08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_92:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_92
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266B04, 0x266B08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_93:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_93
-
-Str_Normal4_7:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266B29, 0x266B38
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_93:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_93
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266B34, 0x266B38
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_94:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_94
-
-Str_Normal5_6:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266B59, 0x266B68
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_94:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_94
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266B64, 0x266B68
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_95:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_95
-
-Str_Normal6_6:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266B89, 0x266B98
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_95:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_95
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266B94, 0x266B98
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_96:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_96
-
-Str_Normal7_6:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266BB9, 0x266BC8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_96:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_96
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266BC4, 0x266BC8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_97:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_97
-
-Str_Normal8_6:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266BE9, 0x266BF8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_97:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_97
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266BF4, 0x266BF8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_98:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_98
-
-Str_Shallow1_6:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266C19, 0x266C28
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_98:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_98
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266C24, 0x266C28
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_99:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_99
-
-Str_Shallow2_6:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266C49, 0x266C58
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_99:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_99
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266C54, 0x266C58
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_100:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 1024, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_100
-
-Str_Shallow3_6:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266C79, 0x266C88
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_100:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_100
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266C84, 0x266C88
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_101:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_101
-
-Str_Shallow4_6:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266CA9, 0x266CB8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_101:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_101
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266CB4, 0x266CB8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_102:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_102
-
-Str_Shallow5_6:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266CD9, 0x266CE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_102:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_102
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266CE4, 0x266CE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_103:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_103
-
-Str_Shallow6_6:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266D09, 0x266D18
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_103:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_103
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266D14, 0x266D18
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_104:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_104
-
-Str_Shallow7_6:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266D39, 0x266D48
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_104:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_104
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266D44, 0x266D48
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_105:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_105
-
-Str_Shallow8_6:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266D69, 0x266D78
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_105:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_105
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266D74, 0x266D78
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_106:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_106
-
-Str_Deep9_6:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266D99, 0x266DA8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_106:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_106
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266DA4, 0x266DA8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_107:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_107
-
-Str_Deep10_6:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266DC9, 0x266DD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_107:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_107
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266DD4, 0x266DD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_108:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_108
-
-Str_Deep11_6:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266DF9, 0x266E08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_108:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_108
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266E04, 0x266E08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_109:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_109
-
-Str_Deep12_6:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266E29, 0x266E38
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_109:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_109
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266E34, 0x266E38
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_110:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_110
-
-Str_Deep13_6:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266E59, 0x266E68
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_110:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_110
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266E64, 0x266E68
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_111:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_111
-
-Str_Normal9_6:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266E89, 0x266E98
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_111:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_111
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266E94, 0x266E98
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_112:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_112
-
-Str_Normal10_6:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266EB9, 0x266EC8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_112:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_112
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266EC4, 0x266EC8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_113:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_113
-
-Str_Normal11_6:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266EE9, 0x266EF8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_113:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_113
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266EF4, 0x266EF8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_114:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_114
-
-Str_Normal12_6:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266F19, 0x266F28
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_114:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_114
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266F24, 0x266F28
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_115:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 19456, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_115
-
-Str_Normal13_6:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266F49, 0x266F58
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_115:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_115
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266F54, 0x266F58
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_116:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_116
-
-Str_Shallow9_6:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266F79, 0x266F88
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_116:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_116
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266F84, 0x266F88
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_117:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_117
-
-Str_Shallow10_6:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266FA9, 0x266FB8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_117:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_117
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266FB4, 0x266FB8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_118:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_118
-
-Str_Shallow11_6:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x266FD9, 0x266FE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_118:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_118
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x266FE4, 0x266FE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_119:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_119
-
-Str_Shallow12_6:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267009, 0x267018
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_119:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_119
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267014, 0x267018
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_120:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 17920, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_120
-
-Str_Shallow13_6:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267039, 0x267048
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_120:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=6, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_120
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267044, 0x267048
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_121:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_121
-
-Str_Dry_Wet_1_4:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267069, 0x267078
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_121:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_121
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267074, 0x267078
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_122:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	25344, 512, 512, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_122
-
-Str_Dry_Wet_2_4:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267099, 0x2670A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_122:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_122
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2670A4, 0x2670A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_123:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	25344, 512, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_123
-
-Str_Dry_Wet_3_4:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2670C9, 0x2670D8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_123:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_123
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2670D4, 0x2670D8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_124:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1024, 1024, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_124
-
-Str_Dry_Wet_4_4:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2670F9, 0x267108
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_124:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_124
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267104, 0x267108
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_125:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 1536, 1536, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_125
-
-Str_Dry_Wet_5_4:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267129, 0x267138
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_125:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_125
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267134, 0x267138
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_126:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2048, 2048, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_126
-
-Str_Dry_Wet_6_4:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267159, 0x267168
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_126:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_126
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267164, 0x267168
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_127:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 2560, 2560, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_127
-
-Str_Dry_Wet_7_4:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267189, 0x267198
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_127:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_127
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267194, 0x267198
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_128:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3072, 3072, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_128
-
-Str_Dry_Wet_8_4:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2671B9, 0x2671C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_128:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_128
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2671C4, 0x2671C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_129:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 3584, 3584, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_129
-
-Str_Dry_Wet_9_4:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2671E9, 0x2671F8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_129:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_129
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2671F4, 0x2671F8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_130:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4096, 4096, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_130
-
-Str_Dry_Wet_10_4:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267219, 0x267228
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_130:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_130
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267224, 0x267228
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_131:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4608, 4608, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_131
-
-Str_Dry_Wet_11_4:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267249, 0x267258
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_131:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_131
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267254, 0x267258
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_132:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 4864, 4864, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_132
-
-Str_Dry_Wet_12_4:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267279, 0x267288
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_132:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_132
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267284, 0x267288
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_133:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	9216, 5120, 5120, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_133
-
-Str_Dry_Wet_13_4:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2672A9, 0x2672B8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_133:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=14, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_133
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2672B4, 0x2672B8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_134:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_134
-
-Str_Deep1_5:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2672D9, 0x2672E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_134:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_134
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2672E4, 0x2672E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_135:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 7680, 5120, 10240, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_135
-
-Str_Deep2_5:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267309, 0x267318
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_135:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_135
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267314, 0x267318
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_136:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_136
-
-Str_Deep3_5:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267339, 0x267348
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_136:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_136
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267344, 0x267348
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_137:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_137
-
-Str_Deep4_5:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267369, 0x267378
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_137:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_137
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267374, 0x267378
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_138:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_138
-
-Str_Deep5_5:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267399, 0x2673A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_138:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_138
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2673A4, 0x2673A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_139:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 14080, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_139
-
-Str_Deep6_5:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2673C9, 0x2673D8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_139:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_139
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2673D4, 0x2673D8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_140:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_140
-
-Str_Deep7_5:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2673F9, 0x267408
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_140:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_140
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267404, 0x267408
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_141:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 8960, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_141
-
-Str_Deep8_5:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267429, 0x267438
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_141:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_141
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267434, 0x267438
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_142:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_142
-
-Str_Normal1_6:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267459, 0x267468
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_142:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_142
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267464, 0x267468
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_143:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 8960, 5120, 10240, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_143
-
-Str_Normal2_6:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267489, 0x267498
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_143:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_143
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267494, 0x267498
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_144:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 8960, 8960, 15360, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_144
-
-Str_Normal3_6:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2674B9, 0x2674C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_144:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_144
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2674C4, 0x2674C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_145:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 8960, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_145
-
-Str_Normal4_6:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2674E9, 0x2674F8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_145:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_145
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2674F4, 0x2674F8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_146:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 8960, 8960, 15360, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_146
-
-Str_Normal5_5:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267519, 0x267528
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_146:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_146
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267524, 0x267528
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_147:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 14080, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_147
-
-Str_Normal6_5:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267549, 0x267558
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_147:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_147
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267554, 0x267558
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_148:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_148
-
-Str_Normal7_5:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267579, 0x267588
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_148:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_148
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267584, 0x267588
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_149:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 11520, 8960, 15360, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_149
-
-Str_Normal8_5:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2675A9, 0x2675B8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_149:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_149
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2675B4, 0x2675B8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_150:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_150
-
-Str_Shallow1_5:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2675D9, 0x2675E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_150:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_150
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2675E4, 0x2675E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_151:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 8960, 5120, 10240, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_151
-
-Str_Shallow2_5:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267609, 0x267618
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_151:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_151
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267614, 0x267618
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_152:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 8960, 8960, 15360, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_152
-
-Str_Shallow3_5:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267639, 0x267648
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_152:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_152
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267644, 0x267648
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_153:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 8960, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_153
-
-Str_Shallow4_5:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267669, 0x267678
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_153:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_153
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267674, 0x267678
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_154:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 8960, 8960, 15360, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_154
-
-Str_Shallow5_5:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267699, 0x2676A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_154:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_154
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2676A4, 0x2676A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_155:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 14080, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_155
-
-Str_Shallow6_5:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2676C9, 0x2676D8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_155:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_155
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2676D4, 0x2676D8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_156:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 8960, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_156
-
-Str_Shallow7_5:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2676F9, 0x267708
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_156:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_156
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267704, 0x267708
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_157:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 11520, 8960, 15360, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_157
-
-Str_Shallow8_5:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267729, 0x267738
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_157:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_157
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267734, 0x267738
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_158:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7168, 16640, 25344, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_158
-
-Str_Deep9_5:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267759, 0x267768
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_158:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_158
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267764, 0x267768
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_159:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_159
-
-Str_Deep10_5:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267789, 0x267798
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_159:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_159
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267794, 0x267798
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_160:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	1024, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_160
-
-Str_Deep11_5:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2677B9, 0x2677C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_160:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_160
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2677C4, 0x2677C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_161:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 7680, 4864, 9728, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_161
-
-Str_Deep12_5:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2677E9, 0x2677F8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_161:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_161
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2677F4, 0x2677F8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_162:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 10240, 6400, 12800, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_162
-
-Str_Deep13_5:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267819, 0x267828
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_162:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_162
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267824, 0x267828
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_163:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7936, 16640, 25344, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_163
-
-Str_Normal9_5:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267849, 0x267858
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_163:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_163
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267854, 0x267858
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_164:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_164
-
-Str_Normal10_5:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267879, 0x267888
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_164:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_164
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267884, 0x267888
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_165:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	1024, 8960, 3840, 7680, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_165
-
-Str_Normal11_5:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2678A9, 0x2678B8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_165:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_165
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2678B4, 0x2678B8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_166:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 8960, 4864, 9728, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_166
-
-Str_Normal12_5:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2678D9, 0x2678E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_166:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_166
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2678E4, 0x2678E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_167:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 15360, 6400, 12800, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_167
-
-Str_Normal13_5:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267909, 0x267918
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_167:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_167
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267914, 0x267918
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_168:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7936, 16640, 25344, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_168
-
-Str_Shallow9_5:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267939, 0x267948
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_168:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_168
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267944, 0x267948
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_169:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_169
-
-Str_Shallow10_5:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267969, 0x267978
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_169:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_169
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267974, 0x267978
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_170:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	1024, 8960, 3840, 7680, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_170
-
-Str_Shallow11_5:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267999, 0x2679A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_170:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_170
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2679A4, 0x2679A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_171:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 8960, 4864, 9728, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_171
-
-Str_Shallow12_5:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2679C9, 0x2679D8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_171:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_171
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2679D4, 0x2679D8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_172:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 15360, 6400, 12800, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_172
-
-Str_Shallow13_5:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2679F9, 0x267A08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_172:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_172
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267A04, 0x267A08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_173:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 15360, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_173
-
-Str_Dry_Wet_1_3:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267A29, 0x267A38
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_173:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_173
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267A34, 0x267A38
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_174:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1024, 7680, 5120, 10240, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_174
-
-Str_Dry_Wet_2_3:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267A59, 0x267A68
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_174:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_174
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267A64, 0x267A68
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_175:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2048, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_175
-
-Str_Dry_Wet_3_3:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267A89, 0x267A98
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_175:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_175
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267A94, 0x267A98
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_176:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	2816, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_176
-
-Str_Dry_Wet_4_3:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267AB9, 0x267AC8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_176:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_176
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267AC4, 0x267AC8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_177:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 7680, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_177
-
-Str_Dry_Wet_5_3:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267AE9, 0x267AF8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_177:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_177
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267AF4, 0x267AF8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_178:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 14080, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_178
-
-Str_Dry_Wet_6_3:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267B19, 0x267B28
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_178:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_178
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267B24, 0x267B28
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_179:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_179
-
-Str_Dry_Wet_7_3:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267B49, 0x267B58
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_179:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_179
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267B54, 0x267B58
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_180:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 8960, 8960, 15360, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_180
-
-Str_Dry_Wet_8_3:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267B79, 0x267B88
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_180:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_180
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267B84, 0x267B88
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_181:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4096, 7168, 16640, 25344, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_181
-
-Str_Dry_Wet_9_3:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267BA9, 0x267BB8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_181:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_181
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267BB4, 0x267BB8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_182:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	3328, 6400, 11520, 20480, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_182
-
-Str_Dry_Wet_10_3:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267BD9, 0x267BE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_182:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_182
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267BE4, 0x267BE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_183:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	1024, 7680, 3840, 7680, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_183
-
-Str_Dry_Wet_11_3:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267C09, 0x267C18
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_183:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_183
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267C14, 0x267C18
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_184:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 7680, 4864, 9728, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_184
-
-Str_Dry_Wet_12_3:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267C39, 0x267C48
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_184:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_184
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267C44, 0x267C48
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_185:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	4608, 10240, 6400, 12800, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_185
-
-Str_Dry_Wet_13_3:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267C69, 0x267C78
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_185:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=7, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_185
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267C74, 0x267C78
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_186:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	768, 2816, 6144, 5632, 7168, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_186
-
-Str_Chorus1:	.asciz "    Chorus1     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267C99, 0x267CA8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_186:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Chorus1     \x00\x00", f18=82, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_186
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267CA4, 0x267CA8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_187:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	1536, 2816, 6144, 5632, 7168, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_187
-
-Str_Chorus2:	.asciz "    Chorus2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267CC9, 0x267CD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_187:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Chorus2     \x00\x00", f18=82, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_187
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267CD4, 0x267CD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_188:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	768, 2816, 7168, 5632, 8192, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_188
-
-Str_Chorus3:	.asciz "    Chorus3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267CF9, 0x267D08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_188:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Chorus3     \x00\x00", f18=82, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_188
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267D04, 0x267D08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_189:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	768, 2048, 7680, 4864, 7680, 25344, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_189
-
-Str_Chorus4:	.asciz "    Chorus4     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267D29, 0x267D38
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_189:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Chorus4     \x00\x00", f18=82, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_189
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267D34, 0x267D38
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_190:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	5120, 1024, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_190
-
-Str_GM_Chorus1:	.asciz "   GM Chorus1   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267D55, 0x267D64
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_190:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   GM Chorus1   \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_190
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267D60, 0x267D64
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_191:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="L"
 	tab_u16	2816, 1024, 2560, 2560, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_191
-
-Str_GM_Chorus2:	.asciz "   GM Chorus2   "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267D85, 0x267D94
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_191:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   GM Chorus2   \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_191
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267D90, 0x267D94
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_192:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="L"
 	tab_u16	19456, 2816, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_192
-
-Str_GM_Chorus3:	.asciz "   GM Chorus3   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267DB1, 0x267DC0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_192:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   GM Chorus3   \x00\x00", f18=1, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_192
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267DBC, 0x267DC0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_193:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	2816, 5632, 2560, 2560, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_193
-
-Str_GM_Chorus4:	.asciz "   GM Chorus4   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267DE1, 0x267DF0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_193:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   GM Chorus4   \x00\x00", f18=2, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_193
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267DEC, 0x267DF0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_194:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	12288, 12288, 60416, 60671, 60671, 60671, 25599, 25344, 512, 0, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_194
-
-Str_Feedback_Chorus:	.asciz "Feedback Chorus "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267E1D, 0x267E2C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_194:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="Feedback Chorus \x00\x00", f18=64, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_194
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267E28, 0x267E2C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_195:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 15360, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_195
-
-Str_Flanger:	.asciz "    Flanger     "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267E51, 0x267E60
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_195:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Flanger     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_195
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267E5C, 0x267E60
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_196:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 1536, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_196
-
-Str_Celeste1:	.asciz "    Celeste1    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267E7D, 0x267E8C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_196:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste1    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_196
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267E88, 0x267E8C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_197:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x15"
 	tab_u16	7680, 256, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_197
-
-Str_Celeste2:	.asciz "    Celeste2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267EA9, 0x267EB8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_197:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste2    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_197
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267EB4, 0x267EB8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_198:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1024, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_198
-
-Str_Celeste3:	.asciz "    Celeste3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267ED5, 0x267EE4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_198:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste3    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_198
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267EE0, 0x267EE4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_199:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 1536, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_199
-
-Str_Celeste4:	.asciz "    Celeste4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267F01, 0x267F10
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_199:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste4    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_199
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267F0C, 0x267F10
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_200:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2048, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_200
-
-Str_Celeste5:	.asciz "    Celeste5    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267F2D, 0x267F3C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_200:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste5    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_200
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267F38, 0x267F3C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_201:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 2560, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_201
-
-Str_Celeste6:	.asciz "    Celeste6    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267F59, 0x267F68
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_201:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste6    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_201
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267F64, 0x267F68
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_202:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3072, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_202
-
-Str_Celeste7:	.asciz "    Celeste7    "
-# census: opaque -- unknown-dump: 15 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267F85, 0x267F94
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_202:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste7    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_202
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267F90, 0x267F94
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_203:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 3584, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_203
-
-Str_Celeste8:	.asciz "    Celeste8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267FB1, 0x267FC0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_203:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste8    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_203
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267FBC, 0x267FC0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_204:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 4096, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_204
-
-Str_Celeste9:	.asciz "    Celeste9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x267FDD, 0x267FEC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_204:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Celeste9    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_204
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x267FE8, 0x267FEC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_205:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 5120, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_205
-
-Str_Celeste10:	.asciz "   Celeste10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268009, 0x268018
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_205:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Celeste10    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_205
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268014, 0x268018
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_206:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x10"
 	tab_u16	6144, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_206
-
-Str_Celeste11:	.asciz "   Celeste11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268035, 0x268044
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_206:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Celeste11    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_206
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268040, 0x268044
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_207:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 7936, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_207
-
-Str_Celeste12:	.asciz "   Celeste12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268061, 0x268070
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_207:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Celeste12    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_207
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26806C, 0x268070
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_208:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	4608, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_208
-
-Str_Celeste13:	.asciz "   Celeste13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26808D, 0x26809C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_208:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Celeste13    \x00\x00", f18=44, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_208
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268098, 0x26809C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_209:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	7680, 1536, 15360, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_209
-
-Str_Mod_Cel_1:	.asciz "   Mod. Cel.1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2680BD, 0x2680CC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_209:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.1   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_209
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2680C8, 0x2680CC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_210:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	10240, 1024, 8960, 5120, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_210
-
-Str_Mod_Cel_2:	.asciz "   Mod. Cel.2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2680ED, 0x2680FC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_210:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.2   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_210
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2680F8, 0x2680FC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_211:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 2048, 8960, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_211
-
-Str_Mod_Cel_3:	.asciz "   Mod. Cel.3   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26811D, 0x26812C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_211:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.3   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_211
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268128, 0x26812C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_212:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	7680, 2816, 8960, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_212
-
-Str_Mod_Cel_4:	.asciz "   Mod. Cel.4   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26814D, 0x26815C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_212:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.4   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_212
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268158, 0x26815C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_213:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 3328, 8960, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_213
-
-Str_Mod_Cel_5:	.asciz "   Mod. Cel.5   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26817D, 0x26818C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_213:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.5   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_213
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268188, 0x26818C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_214:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	23040, 4096, 8960, 14080, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_214
-
-Str_Mod_Cel_6:	.asciz "   Mod. Cel.6   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2681AD, 0x2681BC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_214:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.6   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_214
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2681B8, 0x2681BC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_215:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	7680, 4096, 8960, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_215
-
-Str_Mod_Cel_7:	.asciz "   Mod. Cel.7   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2681DD, 0x2681EC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_215:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.7   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_215
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2681E8, 0x2681EC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_216:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 4608, 11520, 8960, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_216
-
-Str_Mod_Cel_8:	.asciz "   Mod. Cel.8   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26820D, 0x26821C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_216:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.8   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_216
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268218, 0x26821C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_217:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	25344, 4096, 7936, 16640, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_217
-
-Str_Mod_Cel_9:	.asciz "   Mod. Cel.9   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26823D, 0x26824C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_217:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Mod. Cel.9   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_217
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268248, 0x26824C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_218:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	20480, 3328, 6400, 11520, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_218
-
-Str_Mod_Cel_10:	.asciz "  Mod. Cel.10   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26826D, 0x26827C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_218:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Mod. Cel.10   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_218
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268278, 0x26827C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_219:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	7680, 1024, 8960, 3840, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_219
-
-Str_Mod_Cel_11:	.asciz "  Mod. Cel.11   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26829D, 0x2682AC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_219:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Mod. Cel.11   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_219
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2682A8, 0x2682AC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_220:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	9728, 1024, 8960, 4864, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_220
-
-Str_Mod_Cel_12:	.asciz "  Mod. Cel.12   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2682CD, 0x2682DC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_220:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Mod. Cel.12   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_220
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2682D8, 0x2682DC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_221:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	12800, 4608, 15360, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_221
-
-Str_Mod_Cel_13:	.asciz "  Mod. Cel.13   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2682FD, 0x26830C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_221:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Mod. Cel.13   \x00\x00", f18=45, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_221
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268308, 0x26830C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_222:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_222
+SndRecTriFieldGet2_entry_L16_Table_2_p0_222:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_222
 
-Str_Deep1_4:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268331, 0x268340
+Str_text:	.asciz " "
+	.align	4, 0x00	# pad after Str_text
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_223:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_223
-
-Str_Deep2_4:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268365, 0x268374
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_223:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_223
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268370, 0x268374
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_224:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_224
-
-Str_Deep3_4:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268399, 0x2683A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_224:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_224
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2683A4, 0x2683A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_225:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_225
-
-Str_Deep4_4:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2683CD, 0x2683DC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_225:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_225
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2683D8, 0x2683DC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_226:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_226
-
-Str_Deep5_4:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268401, 0x268410
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_226:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_226
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26840C, 0x268410
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_227:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_227
-
-Str_Deep6_4:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268435, 0x268444
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_227:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_227
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268440, 0x268444
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_228:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_228
-
-Str_Deep7_4:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268469, 0x268478
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_228:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_228
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268474, 0x268478
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_229:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_229
-
-Str_Normal1_5:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26849D, 0x2684AC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_229:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_229
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2684A8, 0x2684AC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_230:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_230
-
-Str_Normal2_5:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2684D1, 0x2684E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_230:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_230
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2684DC, 0x2684E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_231:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_231
-
-Str_Normal3_5:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268505, 0x268514
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_231:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_231
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268510, 0x268514
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_232:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_232
-
-Str_Normal4_5:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268539, 0x268548
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_232:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_232
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268544, 0x268548
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_233:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_233
-
-Str_Normal5_4:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26856D, 0x26857C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_233:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_233
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268578, 0x26857C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_234:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_234
-
-Str_Normal6_4:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2685A1, 0x2685B0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_234:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_234
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2685AC, 0x2685B0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_235:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_235
-
-Str_Normal7_4:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2685D5, 0x2685E4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_235:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_235
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2685E0, 0x2685E4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_236:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_236
-
-Str_Shallow1_4:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268609, 0x268618
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_236:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_236
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268614, 0x268618
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_237:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_237
-
-Str_Shallow2_4:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26863D, 0x26864C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_237:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_237
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268648, 0x26864C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_238:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_238
-
-Str_Shallow3_4:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268671, 0x268680
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_238:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_238
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26867C, 0x268680
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_239:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_239
-
-Str_Shallow4_4:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2686A5, 0x2686B4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_239:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_239
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2686B0, 0x2686B4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_240:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_240
-
-Str_Shallow5_4:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2686D9, 0x2686E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_240:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_240
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2686E4, 0x2686E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_241:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_241
-
-Str_Shallow6_4:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26870D, 0x26871C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_241:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_241
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268718, 0x26871C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_242:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_242
-
-Str_Shallow7_4:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268741, 0x268750
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_242:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_242
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26874C, 0x268750
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_243:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_243
+SndRecTriFieldGet2_entry_L16_Table_2_p0_243:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_243
 
-Str_Deep8_4:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268775, 0x268784
+Str_text_2:	.asciz "  "
+	.align	4, 0x00	# pad after Str_text_2
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_244:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_244
+SndRecTriFieldGet2_entry_L16_Table_2_p0_244:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_244
 
-Str_Deep9_4:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2687A9, 0x2687B8
+Str_text_3:	.asciz " !"
+	.align	4, 0x00	# pad after Str_text_3
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_245:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_245
+SndRecTriFieldGet2_entry_L16_Table_2_p0_245:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_245
 
-Str_Deep10_4:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2687DD, 0x2687EC
+Str_text_4:	.asciz " \""
+	.align	4, 0x00	# pad after Str_text_4
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_246:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_246
+SndRecTriFieldGet2_entry_L16_Table_2_p0_246:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_246
 
-Str_Deep11_4:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268811, 0x268820
+Str_text_5:	.asciz " #"
+	.align	4, 0x00	# pad after Str_text_5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_247:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_247
+SndRecTriFieldGet2_entry_L16_Table_2_p0_247:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_247
 
-Str_Deep12_4:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268845, 0x268854
+Str_text_6:	.asciz " $"
+	.align	4, 0x00	# pad after Str_text_6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_248:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_248
+SndRecTriFieldGet2_entry_L16_Table_2_p0_248:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_248
 
-Str_Deep13_4:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268879, 0x268888
+Str_text_7:	.asciz " %"
+	.align	4, 0x00	# pad after Str_text_7
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_249:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_249
+SndRecTriFieldGet2_entry_L16_Table_2_p0_249:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_249
 
-Str_Normal8_4:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2688AD, 0x2688BC
+Str_text_8:	.asciz " ("
+	.align	4, 0x00	# pad after Str_text_8
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_250:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_250
+SndRecTriFieldGet2_entry_L16_Table_2_p0_250:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_250
 
-Str_Normal9_4:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2688E1, 0x2688F0
+Str_text_9:	.asciz " )"
+	.align	4, 0x00	# pad after Str_text_9
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_251:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_251
+SndRecTriFieldGet2_entry_L16_Table_2_p0_251:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_251
 
-Str_Normal10_4:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268915, 0x268924
+Str_text_10:	.asciz " *"
+	.align	4, 0x00	# pad after Str_text_10
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_252:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_252
+SndRecTriFieldGet2_entry_L16_Table_2_p0_252:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_252
 
-Str_Normal11_4:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268949, 0x268958
+Str_text_11:	.asciz " +"
+	.align	4, 0x00	# pad after Str_text_11
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_253:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_253
+SndRecTriFieldGet2_entry_L16_Table_2_p0_253:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_253
 
-Str_Normal12_4:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26897D, 0x26898C
+Str_text_12:	.asciz " ,"
+	.align	4, 0x00	# pad after Str_text_12
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_254:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_254
+SndRecTriFieldGet2_entry_L16_Table_2_p0_254:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_254
 
-Str_Normal13_4:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2689B1, 0x2689C0
+Str_text_13:	.asciz " -"
+	.align	4, 0x00	# pad after Str_text_13
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_255:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_255
+SndRecTriFieldGet2_entry_L16_Table_2_p0_255:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_255
 
-Str_Shallow8_4:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2689E5, 0x2689F4
+Str_0_22:	.asciz " 0"
+	.align	4, 0x00	# pad after Str_0_22
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_256:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_256
+SndRecTriFieldGet2_entry_L16_Table_2_p0_256:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_256
 
-Str_Shallow9_4:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268A19, 0x268A28
+Str_1_36:	.asciz " 1"
+	.align	4, 0x00	# pad after Str_1_36
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_257:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_257
+SndRecTriFieldGet2_entry_L16_Table_2_p0_257:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_257
 
-Str_Shallow10_4:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268A4D, 0x268A5C
+Str_2_38:	.asciz " 2"
+	.align	4, 0x00	# pad after Str_2_38
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_258:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_258
+SndRecTriFieldGet2_entry_L16_Table_2_p0_258:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_258
 
-Str_Shallow11_4:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268A81, 0x268A90
+Str_3_31:	.asciz " 3"
+	.align	4, 0x00	# pad after Str_3_31
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_259:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_259
+SndRecTriFieldGet2_entry_L16_Table_2_p0_259:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_259
 
-Str_Shallow12_4:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268AB5, 0x268AC4
+Str_4_32:	.asciz " 4"
+	.align	4, 0x00	# pad after Str_4_32
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_260:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_260
+SndRecTriFieldGet2_entry_L16_Table_2_p0_260:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=5, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_260
 
-Str_Shallow13_4:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268AE9, 0x268AF8
+Str_5_28:	.asciz " 5"
+	.align	4, 0x00	# pad after Str_5_28
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_261:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	19712, 16384, 11520, 1792, 2560, 2560, 15360, 10240, 1536, 18432, 20224, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_261
+SndRecTriFieldGet2_entry_L16_Table_2_p0_261:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Standard     \x00\x00", f18=53, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_261
 
-Str_Standard_2:	.asciz "   Standard     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268B25, 0x268B34
+Str_text_14:	.asciz "\""
+	.align	4, 0x00	# pad after Str_text_14
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_262:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	19712, 14848, 9984, 1792, 6144, 8960, 15360, 9984, 1792, 6144, 8960, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_262
-
-Str_Single_Rotor_2:	.asciz " Single Rotor   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268B61, 0x268B70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_262:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Single Rotor   \x00\x00", f18=53, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_262
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268B6C, 0x268B70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_263:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="#"
 	tab_u16	15360, 15360, 11520, 1792, 1280, 2560, 14080, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_263
-
-Str_Distorted_2:	.asciz "   Distorted    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268B9D, 0x268BAC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_263:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Distorted    \x00\x00", f18=53, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_263
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268BA8, 0x268BAC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_264:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	19200, 15360, 11520, 1792, 1280, 2560, 14848, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_264
-
-Str_Bright_Twin_2:	.asciz "  Bright  Twin  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268BD9, 0x268BE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_264:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Bright  Twin  \x00\x00", f18=134, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_264
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268BE4, 0x268BE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_265:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	19200, 16384, 11520, 1792, 1280, 2560, 14080, 10240, 1536, 11520, 17920, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_265
-
-Str_Normal_Twin:	.asciz "  Normal Twin   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268C15, 0x268C24
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_265:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Normal Twin   \x00\x00", f18=138, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_265
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268C20, 0x268C24
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_266:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	17920, 15360, 11520, 1792, 1280, 2560, 15360, 10240, 1536, 11520, 17408, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_266
-
-Str_Mellow_Twin_2:	.asciz "  Mellow Twin   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268C51, 0x268C60
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_266:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Mellow Twin   \x00\x00", f18=135, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_266
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268C5C, 0x268C60
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_267:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	19712, 15360, 11520, 1792, 1536, 2048, 14336, 10240, 1536, 12544, 18688, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_267
-
-Str_Brilliant_Twin_2:	.asciz " Brilliant Twin "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268C8D, 0x268C9C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_267:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Brilliant Twin \x00\x00", f18=136, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_267
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268C98, 0x268C9C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_268:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	16640, 16384, 11520, 1792, 1024, 2560, 12800, 10240, 1536, 15360, 15360, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_268
+SndRecTriFieldGet2_entry_L16_Table_2_p0_268:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Standard    \x00\x00", f18=15, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_268
 
-Str_Standard:	.asciz "    Standard    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268CC9, 0x268CD8
+Str_text_15:	.asciz "\" "
+	.align	4, 0x00	# pad after Str_text_15
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_269:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="0"
 	tab_u16	15360, 17920, 9984, 1792, 6144, 8960, 15360, 9984, 1792, 6144, 8960, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_269
+SndRecTriFieldGet2_entry_L16_Table_2_p0_269:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Single Rotor   \x00\x00", f18=15, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_269
 
-Str_Single_Rotor:	.asciz " Single Rotor   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268D05, 0x268D14
+Str_text_16:	.asciz "\"!"
+	.align	4, 0x00	# pad after Str_text_16
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_270:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	14080, 17920, 11520, 1792, 1280, 2560, 15360, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_270
+SndRecTriFieldGet2_entry_L16_Table_2_p0_270:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Distorted    \x00\x00", f18=15, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_270
 
-Str_Distorted:	.asciz "   Distorted    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268D41, 0x268D50
+Str_text_17:	.asciz "\"\""
+	.align	4, 0x00	# pad after Str_text_17
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_271:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	16640, 15360, 11520, 1792, 1280, 2560, 14848, 10240, 1536, 11520, 14848, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_271
+SndRecTriFieldGet2_entry_L16_Table_2_p0_271:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Bright Twin   \x00\x00", f18=128, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_271
 
-Str_Bright_Twin:	.asciz "  Bright Twin   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268D7D, 0x268D8C
+Str_text_18:	.asciz "\"#"
+	.align	4, 0x00	# pad after Str_text_18
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_272:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15872, 17920, 11520, 1792, 2560, 2560, 15360, 10240, 1536, 18432, 20224, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_272
+SndRecTriFieldGet2_entry_L16_Table_2_p0_272:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Mellow Twin   \x00\x00", f18=129, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_272
 
-Str_Mellow_Twin:	.asciz "  Mellow Twin   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268DB9, 0x268DC8
+Str_text_19:	.asciz "\"$"
+	.align	4, 0x00	# pad after Str_text_19
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_273:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	19456, 19456, 11520, 1792, 2560, 2560, 15360, 10240, 1536, 18432, 20224, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_273
+SndRecTriFieldGet2_entry_L16_Table_2_p0_273:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Brilliant Twin \x00\x00", f18=137, f20=14, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_273
 
-Str_Brilliant_Twin:	.asciz " Brilliant Twin "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268DF5, 0x268E04
+Str_text_20:	.asciz "\"%"
+	.align	4, 0x00	# pad after Str_text_20
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_274:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_274
+SndRecTriFieldGet2_entry_L16_Table_2_p0_274:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_274
 
-Str_Deep1_3:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268E29, 0x268E38
+Str_text_21:	.asciz "#"
+	.align	4, 0x00	# pad after Str_text_21
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_275:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_275
-
-Str_Deep2_3:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268E5D, 0x268E6C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_275:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_275
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268E68, 0x268E6C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_276:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_276
-
-Str_Deep3_3:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268E91, 0x268EA0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_276:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_276
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268E9C, 0x268EA0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_277:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_277
-
-Str_Deep4_3:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268EC5, 0x268ED4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_277:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_277
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268ED0, 0x268ED4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_278:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_278
-
-Str_Deep5_3:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268EF9, 0x268F08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_278:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_278
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268F04, 0x268F08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_279:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_279
-
-Str_Deep6_3:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268F2D, 0x268F3C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_279:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_279
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268F38, 0x268F3C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_280:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_280
-
-Str_Deep7_3:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268F61, 0x268F70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_280:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_280
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268F6C, 0x268F70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_281:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_281
-
-Str_Normal1_4:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268F95, 0x268FA4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_281:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_281
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268FA0, 0x268FA4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_282:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_282
-
-Str_Normal2_4:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268FC9, 0x268FD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_282:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_282
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x268FD4, 0x268FD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_283:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_283
-
-Str_Normal3_4:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x268FFD, 0x26900C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_283:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_283
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269008, 0x26900C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_284:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_284
-
-Str_Normal4_4:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269031, 0x269040
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_284:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_284
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26903C, 0x269040
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_285:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_285
-
-Str_Normal5_3:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269065, 0x269074
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_285:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_285
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269070, 0x269074
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_286:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_286
-
-Str_Normal6_3:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269099, 0x2690A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_286:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_286
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2690A4, 0x2690A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_287:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_287
-
-Str_Normal7_3:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2690CD, 0x2690DC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_287:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_287
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2690D8, 0x2690DC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_288:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_288
-
-Str_Shallow1_3:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269101, 0x269110
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_288:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_288
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26910C, 0x269110
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_289:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_289
-
-Str_Shallow2_3:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269135, 0x269144
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_289:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_289
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269140, 0x269144
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_290:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_290
-
-Str_Shallow3_3:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269169, 0x269178
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_290:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_290
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269174, 0x269178
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_291:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_291
-
-Str_Shallow4_3:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26919D, 0x2691AC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_291:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_291
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2691A8, 0x2691AC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_292:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_292
-
-Str_Shallow5_3:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2691D1, 0x2691E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_292:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_292
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2691DC, 0x2691E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_293:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_293
-
-Str_Shallow6_3:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269205, 0x269214
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_293:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_293
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269210, 0x269214
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_294:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_294
-
-Str_Shallow7_3:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269239, 0x269248
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_294:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_294
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269244, 0x269248
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_295:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_295
+SndRecTriFieldGet2_entry_L16_Table_2_p0_295:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_295
 
-Str_Deep8_3:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26926D, 0x26927C
+Str_text_22:	.asciz "# "
+	.align	4, 0x00	# pad after Str_text_22
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_296:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_296
+SndRecTriFieldGet2_entry_L16_Table_2_p0_296:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_296
 
-Str_Deep9_3:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2692A1, 0x2692B0
+Str_text_23:	.asciz "#!"
+	.align	4, 0x00	# pad after Str_text_23
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_297:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_297
+SndRecTriFieldGet2_entry_L16_Table_2_p0_297:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_297
 
-Str_Deep10_3:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2692D5, 0x2692E4
+Str_text_24:	.asciz "#\""
+	.align	4, 0x00	# pad after Str_text_24
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_298:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_298
+SndRecTriFieldGet2_entry_L16_Table_2_p0_298:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_298
 
-Str_Deep11_3:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269309, 0x269318
+Str_text_25:	.asciz "##"
+	.align	4, 0x00	# pad after Str_text_25
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_299:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_299
+SndRecTriFieldGet2_entry_L16_Table_2_p0_299:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_299
 
-Str_Deep12_3:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26933D, 0x26934C
+Str_text_26:	.asciz "#$"
+	.align	4, 0x00	# pad after Str_text_26
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_300:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 23040, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_300
+SndRecTriFieldGet2_entry_L16_Table_2_p0_300:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_300
 
-Str_Deep13_3:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269371, 0x269380
+Str_text_27:	.asciz "#%"
+	.align	4, 0x00	# pad after Str_text_27
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_301:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_301
+SndRecTriFieldGet2_entry_L16_Table_2_p0_301:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_301
 
-Str_Normal8_3:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2693A5, 0x2693B4
+Str_text_28:	.asciz "#("
+	.align	4, 0x00	# pad after Str_text_28
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_302:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_302
+SndRecTriFieldGet2_entry_L16_Table_2_p0_302:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_302
 
-Str_Normal9_3:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2693D9, 0x2693E8
+Str_text_29:	.asciz "#)"
+	.align	4, 0x00	# pad after Str_text_29
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_303:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_303
+SndRecTriFieldGet2_entry_L16_Table_2_p0_303:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_303
 
-Str_Normal10_3:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26940D, 0x26941C
+Str_text_30:	.asciz "#*"
+	.align	4, 0x00	# pad after Str_text_30
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_304:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_304
+SndRecTriFieldGet2_entry_L16_Table_2_p0_304:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_304
 
-Str_Normal11_3:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269441, 0x269450
+Str_text_31:	.asciz "#+"
+	.align	4, 0x00	# pad after Str_text_31
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_305:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_305
+SndRecTriFieldGet2_entry_L16_Table_2_p0_305:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_305
 
-Str_Normal12_3:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269475, 0x269484
+Str_text_32:	.asciz "#,"
+	.align	4, 0x00	# pad after Str_text_32
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_306:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 23040, 23040, 0, 23040, 0, 19456, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_306
+SndRecTriFieldGet2_entry_L16_Table_2_p0_306:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_306
 
-Str_Normal13_3:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2694A9, 0x2694B8
+Str_text_33:	.asciz "#-"
+	.align	4, 0x00	# pad after Str_text_33
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_307:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_307
+SndRecTriFieldGet2_entry_L16_Table_2_p0_307:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_307
 
-Str_Shallow8_3:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2694DD, 0x2694EC
+Str_0_23:	.asciz "#0"
+	.align	4, 0x00	# pad after Str_0_23
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_308:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_308
+SndRecTriFieldGet2_entry_L16_Table_2_p0_308:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_308
 
-Str_Shallow9_3:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269511, 0x269520
+Str_1_37:	.asciz "#1"
+	.align	4, 0x00	# pad after Str_1_37
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_309:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_309
+SndRecTriFieldGet2_entry_L16_Table_2_p0_309:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_309
 
-Str_Shallow10_3:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269545, 0x269554
+Str_2_39:	.asciz "#2"
+	.align	4, 0x00	# pad after Str_2_39
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_310:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_310
+SndRecTriFieldGet2_entry_L16_Table_2_p0_310:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_310
 
-Str_Shallow11_3:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269579, 0x269588
+Str_3_32:	.asciz "#3"
+	.align	4, 0x00	# pad after Str_3_32
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_311:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_311
+SndRecTriFieldGet2_entry_L16_Table_2_p0_311:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_311
 
-Str_Shallow12_3:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2695AD, 0x2695BC
+Str_4_33:	.asciz "#4"
+	.align	4, 0x00	# pad after Str_4_33
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_312:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 23040, 23040, 0, 23040, 0, 17920, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_312
+SndRecTriFieldGet2_entry_L16_Table_2_p0_312:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=4, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_312
 
-Str_Shallow13_3:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2695E1, 0x2695F0
+Str_5_29:	.asciz "#5"
+	.align	4, 0x00	# pad after Str_5_29
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_313:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_313
+SndRecTriFieldGet2_entry_L16_Table_2_p0_313:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo1    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_313
 
-Str_Tremolo1:	.asciz "    Tremolo1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26960D, 0x26961C
+Str_text_34:	.asciz "%"
+	.align	4, 0x00	# pad after Str_text_34
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_314:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	2560, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_314
-
-Str_Tremolo2:	.asciz "    Tremolo2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269639, 0x269648
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_314:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo2    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_314
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269644, 0x269648
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_315:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_315
-
-Str_Tremolo3:	.asciz "    Tremolo3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269665, 0x269674
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_315:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo3    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_315
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269670, 0x269674
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_316:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	6144, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_316
-
-Str_Tremolo4:	.asciz "    Tremolo4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269691, 0x2696A0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_316:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo4    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_316
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26969C, 0x2696A0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_317:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	6400, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_317
-
-Str_Tremolo5:	.asciz "    Tremolo5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2696BD, 0x2696CC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_317:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo5    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_317
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2696C8, 0x2696CC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_318:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	7680, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_318
-
-Str_Tremolo6:	.asciz "    Tremolo6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2696E9, 0x2696F8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_318:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo6    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_318
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2696F4, 0x2696F8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_319:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	10496, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_319
-
-Str_Tremolo7:	.asciz "    Tremolo7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269715, 0x269724
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_319:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo7    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_319
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269720, 0x269724
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_320:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	12800, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_320
-
-Str_Tremolo8:	.asciz "    Tremolo8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269741, 0x269750
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_320:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Tremolo8    \x00\x00", f18=40, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_320
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26974C, 0x269750
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_321:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_321
+SndRecTriFieldGet2_entry_L16_Table_2_p0_321:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan1    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_321
 
-Str_Auto_Pan1:	.asciz "   Auto Pan1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269771, 0x269780
+Str_text_35:	.asciz "% "
+	.align	4, 0x00	# pad after Str_text_35
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_322:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	256, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_322
+SndRecTriFieldGet2_entry_L16_Table_2_p0_322:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan2    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_322
 
-Str_Auto_Pan2:	.asciz "   Auto Pan2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2697A1, 0x2697B0
+Str_text_36:	.asciz "%!"
+	.align	4, 0x00	# pad after Str_text_36
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_323:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	512, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_323
+SndRecTriFieldGet2_entry_L16_Table_2_p0_323:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan3    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_323
 
-Str_Auto_Pan3:	.asciz "   Auto Pan3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2697D1, 0x2697E0
+Str_text_37:	.asciz "%\""
+	.align	4, 0x00	# pad after Str_text_37
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_324:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1024, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_324
+SndRecTriFieldGet2_entry_L16_Table_2_p0_324:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan4    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_324
 
-Str_Auto_Pan4:	.asciz "   Auto Pan4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269801, 0x269810
+Str_text_38:	.asciz "%#"
+	.align	4, 0x00	# pad after Str_text_38
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_325:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	1536, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_325
+SndRecTriFieldGet2_entry_L16_Table_2_p0_325:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan5    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_325
 
-Str_Auto_Pan5:	.asciz "   Auto Pan5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269831, 0x269840
+Str_text_39:	.asciz "%$"
+	.align	4, 0x00	# pad after Str_text_39
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_326:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	2048, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_326
+SndRecTriFieldGet2_entry_L16_Table_2_p0_326:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan6    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_326
 
-Str_Auto_Pan6:	.asciz "   Auto Pan6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269861, 0x269870
+Str_text_40:	.asciz "%%"
+	.align	4, 0x00	# pad after Str_text_40
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_327:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	3072, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_327
+SndRecTriFieldGet2_entry_L16_Table_2_p0_327:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Auto Pan7    \x00\x00", f18=48, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_327
 
-Str_Auto_Pan7:	.asciz "   Auto Pan7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269891, 0x2698A0
+Str_text_41:	.asciz "%&"
+	.align	4, 0x00	# pad after Str_text_41
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_328:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	8192, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_328
+SndRecTriFieldGet2_entry_L16_Table_2_p0_328:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato1    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_328
 
-Str_Vibrato1:	.asciz "    Vibrato1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2698C1, 0x2698D0
+Str_text_42:	.asciz "'"
+	.align	4, 0x00	# pad after Str_text_42
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_329:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\n"
 	tab_u16	10752, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_329
-
-Str_Vibrato2:	.asciz "    Vibrato2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2698F1, 0x269900
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_329:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato2    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_329
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2698FC, 0x269900
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_330:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x06"
 	tab_u16	14336, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_330
-
-Str_Vibrato3:	.asciz "    Vibrato3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269921, 0x269930
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_330:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato3    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_330
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26992C, 0x269930
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_331:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x05"
 	tab_u16	15360, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_331
-
-Str_Vibrato4:	.asciz "    Vibrato4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269951, 0x269960
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_331:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato4    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_331
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26995C, 0x269960
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_332:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	5120, 23040, 46080, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_332
-
-Str_Vibrato5:	.asciz "    Vibrato5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269981, 0x269990
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_332:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato5    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_332
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26998C, 0x269990
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_333:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	8960, 46080, 23040, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_333
-
-Str_Vibrato6:	.asciz "    Vibrato6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2699B1, 0x2699C0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_333:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato6    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_333
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2699BC, 0x2699C0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_334:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\n"
 	tab_u16	5632, 32000, 23040, 512, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_334
-
-Str_Vibrato7:	.asciz "    Vibrato7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x2699E1, 0x2699F0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_334:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato7    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_334
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x2699EC, 0x2699F0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_335:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x13"
 	tab_u16	6400, 14592, 46080, 256, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_335
-
-Str_Vibrato8:	.asciz "    Vibrato8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269A11, 0x269A20
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_335:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Vibrato8    \x00\x00", f18=50, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_335
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269A1C, 0x269A20
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_336:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x01"
 	tab_u16	20480, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_336
+SndRecTriFieldGet2_entry_L16_Table_2_p0_336:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Ring Mod.1   \x00\x00", f18=54, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_336
 
-Str_Ring_Mod_1:	.asciz "   Ring Mod.1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269A3D, 0x269A4C
+Str_text_43:	.asciz ")"
+	.align	4, 0x00	# pad after Str_text_43
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_337:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x07"
 	tab_u16	23040, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_337
-
-Str_Ring_Mod_2:	.asciz "   Ring Mod.2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269A69, 0x269A78
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_337:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Ring Mod.2   \x00\x00", f18=54, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_337
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269A74, 0x269A78
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_338:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0=":"
 	tab_u16	23040, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_338
-
-Str_Ring_Mod_3:	.asciz "   Ring Mod.3   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269A95, 0x269AA4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_338:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Ring Mod.3   \x00\x00", f18=54, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_338
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269AA0, 0x269AA4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_339:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="E"
 	tab_u16	23040, 0, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_339
-
-Str_Ring_Mod_4:	.asciz "   Ring Mod.4   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269AC1, 0x269AD0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_339:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Ring Mod.4   \x00\x00", f18=54, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_339
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269ACC, 0x269AD0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_340:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	3840, 17408, 15872, 23040, 0, 256, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_340
+SndRecTriFieldGet2_entry_L16_Table_2_p0_340:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Mixup1     \x00\x00", f18=56, f20=9, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_340
 
-Str_Mixup1:	.asciz "     Mixup1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269AF5, 0x269B04
+Str_text_44:	.asciz ") "
+	.align	4, 0x00	# pad after Str_text_44
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_341:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	3840, 17408, 15872, 23040, 0, 256, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_341
+SndRecTriFieldGet2_entry_L16_Table_2_p0_341:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Mixup2     \x00\x00", f18=56, f20=9, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_341
 
-Str_Mixup2:	.asciz "     Mixup2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269B29, 0x269B38
+Str_text_45:	.asciz ")!"
+	.align	4, 0x00	# pad after Str_text_45
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_342:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	3840, 17408, 15872, 23040, 256, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_342
+SndRecTriFieldGet2_entry_L16_Table_2_p0_342:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Mixup3     \x00\x00", f18=56, f20=9, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_342
 
-Str_Mixup3:	.asciz "     Mixup3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269B5D, 0x269B6C
+Str_text_46:	.asciz ")\""
+	.align	4, 0x00	# pad after Str_text_46
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_343:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0=":"
 	tab_u16	2048, 7936, 9472, 23040, 256, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_343
+SndRecTriFieldGet2_entry_L16_Table_2_p0_343:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Mixup4     \x00\x00", f18=56, f20=9, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_343
 
-Str_Mixup4:	.asciz "     Mixup4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269B91, 0x269BA0
+Str_text_47:	.asciz ")#"
+	.align	4, 0x00	# pad after Str_text_47
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_344:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_344
+SndRecTriFieldGet2_entry_L16_Table_2_p0_344:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_344
 
-Str_Dry_Wet_1_2:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269BC5, 0x269BD4
+Str_text_48:	.asciz "*"
+	.align	4, 0x00	# pad after Str_text_48
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_345:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	768, 768, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_345
-
-Str_Dry_Wet_2_2:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269BF9, 0x269C08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_345:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_345
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269C04, 0x269C08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_346:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_346
-
-Str_Dry_Wet_3_2:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269C2D, 0x269C3C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_346:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_346
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269C38, 0x269C3C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_347:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3072, 3072, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_347
-
-Str_Dry_Wet_4_2:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269C61, 0x269C70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_347:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_347
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269C6C, 0x269C70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_348:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	3840, 3840, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_348
-
-Str_Dry_Wet_5_2:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269C95, 0x269CA4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_348:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_348
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269CA0, 0x269CA4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_349:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	4864, 4864, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_349
-
-Str_Dry_Wet_6_2:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269CC9, 0x269CD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_349:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_349
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269CD4, 0x269CD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_350:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	5632, 5632, 15360, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_350
-
-Str_Dry_Wet_7_2:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269CFD, 0x269D0C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_350:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_350
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269D08, 0x269D0C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_351:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 43520, 43775, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_351
+SndRecTriFieldGet2_entry_L16_Table_2_p0_351:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_351
 
-Str_Dry_Wet_8_2:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269D31, 0x269D40
+Str_text_49:	.asciz "* "
+	.align	4, 0x00	# pad after Str_text_49
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_352:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 46080, 46335, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_352
+SndRecTriFieldGet2_entry_L16_Table_2_p0_352:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_352
 
-Str_Dry_Wet_9_2:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269D65, 0x269D74
+Str_text_50:	.asciz "*!"
+	.align	4, 0x00	# pad after Str_text_50
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_353:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1280, 2560, 42496, 42751, 15615, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_353
+SndRecTriFieldGet2_entry_L16_Table_2_p0_353:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_353
 
-Str_Dry_Wet_10_2:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269D99, 0x269DA8
+Str_text_51:	.asciz "*\""
+	.align	4, 0x00	# pad after Str_text_51
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_354:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1024, 22016, 22016, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_354
+SndRecTriFieldGet2_entry_L16_Table_2_p0_354:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_354
 
-Str_Dry_Wet_11_2:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269DCD, 0x269DDC
+Str_text_52:	.asciz "*#"
+	.align	4, 0x00	# pad after Str_text_52
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_355:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="F"
 	tab_u16	1536, 3072, 19456, 19456, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_355
+SndRecTriFieldGet2_entry_L16_Table_2_p0_355:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_355
 
-Str_Dry_Wet_12_2:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269E01, 0x269E10
+Str_text_53:	.asciz "*$"
+	.align	4, 0x00	# pad after Str_text_53
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_356:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 2048, 23040, 23040, 15360, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_356
+SndRecTriFieldGet2_entry_L16_Table_2_p0_356:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=13, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_356
 
-Str_Dry_Wet_13_2:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269E35, 0x269E44
+Str_text_54:	.asciz "*%"
+	.align	4, 0x00	# pad after Str_text_54
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_357:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_357
+SndRecTriFieldGet2_entry_L16_Table_2_p0_357:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 1    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_357
 
-Str_Dry_Wet_1:	.asciz "   Dry/Wet 1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269E69, 0x269E78
+Str_text_55:	.asciz "+"
+	.align	4, 0x00	# pad after Str_text_55
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_358:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 512, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_358
-
-Str_Dry_Wet_2:	.asciz "   Dry/Wet 2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269E9D, 0x269EAC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_358:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 2    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_358
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269EA8, 0x269EAC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_359:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1024, 1024, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_359
-
-Str_Dry_Wet_3:	.asciz "   Dry/Wet 3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269ED1, 0x269EE0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_359:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 3    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_359
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269EDC, 0x269EE0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_360:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1536, 1536, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_360
-
-Str_Dry_Wet_4:	.asciz "   Dry/Wet 4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269F05, 0x269F14
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_360:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 4    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_360
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269F10, 0x269F14
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_361:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	1792, 1792, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_361
-
-Str_Dry_Wet_5:	.asciz "   Dry/Wet 5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269F39, 0x269F48
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_361:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 5    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_361
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269F44, 0x269F48
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_362:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2048, 2048, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_362
-
-Str_Dry_Wet_6:	.asciz "   Dry/Wet 6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269F6D, 0x269F7C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_362:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 6    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_362
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269F78, 0x269F7C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_363:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	2560, 2560, 15360, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_363
-
-Str_Dry_Wet_7:	.asciz "   Dry/Wet 7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269FA1, 0x269FB0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_363:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 7    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_363
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x269FAC, 0x269FB0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_364:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 43520, 43775, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_364
+SndRecTriFieldGet2_entry_L16_Table_2_p0_364:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 8    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_364
 
-Str_Dry_Wet_8:	.asciz "   Dry/Wet 8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x269FD5, 0x269FE4
+Str_text_56:	.asciz "+ "
+	.align	4, 0x00	# pad after Str_text_56
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_365:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 46080, 46335, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_365
+SndRecTriFieldGet2_entry_L16_Table_2_p0_365:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 9    \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_365
 
-Str_Dry_Wet_9:	.asciz "   Dry/Wet 9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A009, 0x26A018
+Str_text_57:	.asciz "+!"
+	.align	4, 0x00	# pad after Str_text_57
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_366:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 42496, 42751, 255, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_366
+SndRecTriFieldGet2_entry_L16_Table_2_p0_366:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 10   \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_366
 
-Str_Dry_Wet_10:	.asciz "   Dry/Wet 10   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A03D, 0x26A04C
+Str_text_58:	.asciz "+\""
+	.align	4, 0x00	# pad after Str_text_58
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_367:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	512, 1536, 22016, 22016, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_367
+SndRecTriFieldGet2_entry_L16_Table_2_p0_367:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 11   \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_367
 
-Str_Dry_Wet_11:	.asciz "   Dry/Wet 11   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A071, 0x26A080
+Str_text_59:	.asciz "+#"
+	.align	4, 0x00	# pad after Str_text_59
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_368:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 768, 19456, 19456, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_368
+SndRecTriFieldGet2_entry_L16_Table_2_p0_368:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 12   \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_368
 
-Str_Dry_Wet_12:	.asciz "   Dry/Wet 12   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A0A5, 0x26A0B4
+Str_text_60:	.asciz "+$"
+	.align	4, 0x00	# pad after Str_text_60
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_369:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	256, 256, 23040, 23040, 0, 23040, 0, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_369
+SndRecTriFieldGet2_entry_L16_Table_2_p0_369:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Dry/Wet 13   \x00\x00", f18=11, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_369
 
-Str_Dry_Wet_13:	.asciz "   Dry/Wet 13   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A0D9, 0x26A0E8
+Str_text_61:	.asciz "+%"
+	.align	4, 0x00	# pad after Str_text_61
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_370:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x08"
 	tab_u16	7168, 8192, 3584, 3840, 5888, 5888, 4864, 3840, 5376, 5376, 5376, 3840, 6144, 6144, 5632, 8704	# [0]
 	tab_u16	11264, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_370
+SndRecTriFieldGet2_entry_L16_Table_2_p0_370:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Make Up     \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_370
 
-Str_Make_Up_2:	.asciz "    Make Up     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A121, 0x26A130
+Str_0_24:	.asciz "0"
+	.align	4, 0x00	# pad after Str_0_24
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_371:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\n"
 	tab_u16	1024, 1024, 3584, 3840, 6144, 6144, 3840, 3840, 6144, 4608, 4864, 3840, 1024, 0, 5632, 6144	# [0]
 	tab_u16	6144, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_371
-
-Str_Middle_Cut:	.asciz "   Middle Cut   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A169, 0x26A178
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_371:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Middle Cut   \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_371
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A174, 0x26A178
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_372:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x09"
 	tab_u16	768, 768, 3072, 3840, 10752, 12288, 4096, 3840, 10496, 12288, 4352, 3840, 6144, 6144, 4864, 0	# [0]
 	tab_u16	0, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_372
-
-Str_Radio_2:	.asciz "     Radio      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A1B1, 0x26A1C0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_372:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Radio      \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_372
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A1BC, 0x26A1C0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_373:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x03"
 	tab_u16	3584, 4864, 2816, 3840, 6144, 6144, 3584, 3840, 6144, 8704, 4096, 2560, 6144, 7168, 5376, 10240	# [0]
 	tab_u16	3072, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_373
-
-Str_Treble_Boost_2:	.asciz "  Treble Boost  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A1F9, 0x26A208
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_373:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Treble Boost  \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_373
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A204, 0x26A208
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_374:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	7168, 7168, 2304, 3840, 5120, 2560, 3072, 3840, 5120, 5120, 4096, 3840, 1024, 1024, 4608, 6144	# [0]
 	tab_u16	6144, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_374
-
-Str_Treble_Cut:	.asciz "   Treble Cut   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A241, 0x26A250
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_374:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Treble Cut   \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_374
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A24C, 0x26A250
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_375:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x05"
 	tab_u16	6144, 6144, 2816, 3840, 6144, 6144, 3584, 3840, 6144, 6144, 5120, 3840, 512, 0, 5888, 6144	# [0]
 	tab_u16	6144, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_375
-
-Str_No_Hi_Hat_2:	.asciz "   No Hi Hat    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A289, 0x26A298
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_375:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   No Hi Hat    \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_375
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A294, 0x26A298
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_376:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x07"
 	tab_u16	0, 0, 2816, 3840, 6144, 6144, 3584, 3840, 6144, 6144, 4352, 3840, 6144, 6144, 6400, 5120	# [0]
 	tab_u16	2560, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_376
-
-Str_Bass_Cut:	.asciz "    Bass Cut    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A2D1, 0x26A2E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_376:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Bass Cut    \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_376
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A2DC, 0x26A2E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_377:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 19 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x04"
 	tab_u16	7424, 8704, 4864, 3840, 10752, 12288, 5888, 3840, 12288, 12288, 6144, 3840, 6144, 6144, 6656, 12288	# [0]
 	tab_u16	12288, 21504, 25344	# [16]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_377
-
-Str_Too_Bright:	.asciz "   Too Bright   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A319, 0x26A328
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_377:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Too Bright   \x00\x00", f18=39, f20=20, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_377
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A324, 0x26A328
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_378:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x05"
 	tab_u16	6144, 2816, 3840, 6144, 3584, 3840, 6144, 4352, 3840, 6144, 5888, 6144, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_378
+SndRecTriFieldGet2_entry_L16_Table_2_p0_378:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     5 Band     \x00\x00", f18=79, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_378
 
-Str_5_Band:	.asciz "     5 Band     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A355, 0x26A364
+Str_1_38:	.asciz "1"
+	.align	4, 0x00	# pad after Str_1_38
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_379:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 256, 7680, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_379
+SndRecTriFieldGet2_entry_L16_Table_2_p0_379:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 2Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_379
 
-Str_For_2Beat_1_2:	.asciz "  For 2Beat 1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A38D, 0x26A39C
+Str_3_33:	.asciz "3"
+	.align	4, 0x00	# pad after Str_3_33
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_380:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 7680, 15360, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_380
-
-Str_For_2Beat_2_2:	.asciz "  For 2Beat 2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A3C5, 0x26A3D4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_380:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 2Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_380
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A3D0, 0x26A3D4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_381:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 256, 7680, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_381
-
-Str_For_3Beat_1_2:	.asciz "  For 3Beat 1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A3FD, 0x26A40C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_381:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 3Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_381
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A408, 0x26A40C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_382:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 7680, 15360, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_382
-
-Str_For_3Beat_2_2:	.asciz "  For 3Beat 2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A435, 0x26A444
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_382:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 3Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_382
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A440, 0x26A444
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_383:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 256, 7680, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_383
+SndRecTriFieldGet2_entry_L16_Table_2_p0_383:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 4Beat 1   \x00\x00", f18=140, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_383
 
-Str_For_4Beat_1_2:	.asciz "  For 4Beat 1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A46D, 0x26A47C
+Str_3_34:	.asciz "3 "
+	.align	4, 0x00	# pad after Str_3_34
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_384:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 7680, 15360, 6400, 21504, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_384
+SndRecTriFieldGet2_entry_L16_Table_2_p0_384:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 4Beat 2   \x00\x00", f18=140, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_384
 
-Str_For_4Beat_2_2:	.asciz "  For 4Beat 2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A4A5, 0x26A4B4
+Str_3_35:	.asciz "3!"
+	.align	4, 0x00	# pad after Str_3_35
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_385:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	23040, 12800, 12800, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_385
+SndRecTriFieldGet2_entry_L16_Table_2_p0_385:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Enhancer1    \x00\x00", f18=3, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_385
 
-Str_Enhancer1:	.asciz "   Enhancer1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A4D5, 0x26A4E4
+Str_5_30:	.asciz "5 "
+	.align	4, 0x00	# pad after Str_5_30
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_386:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	23040, 25344, 2560, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_386
+SndRecTriFieldGet2_entry_L16_Table_2_p0_386:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Enhancer2    \x00\x00", f18=3, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_386
 
-Str_Enhancer2:	.asciz "   Enhancer2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A505, 0x26A514
+Str_5_31:	.asciz "5!"
+	.align	4, 0x00	# pad after Str_5_31
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_387:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	23040, 2560, 25344, 6400, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_387
+SndRecTriFieldGet2_entry_L16_Table_2_p0_387:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Enhancer3    \x00\x00", f18=3, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_387
 
-Str_Enhancer3:	.asciz "   Enhancer3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A535, 0x26A544
+Str_5_32:	.asciz "5\""
+	.align	4, 0x00	# pad after Str_5_32
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_388:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\\"
 	tab_u16	12800, 25344, 25344, 5120, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_388
+SndRecTriFieldGet2_entry_L16_Table_2_p0_388:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Enhancer4    \x00\x00", f18=3, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_388
 
-Str_Enhancer4:	.asciz "   Enhancer4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A565, 0x26A574
+Str_5_33:	.asciz "5#"
+	.align	4, 0x00	# pad after Str_5_33
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_389:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="Z"
 	tab_u16	12800, 25344, 25344, 7680, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_389
+SndRecTriFieldGet2_entry_L16_Table_2_p0_389:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Enhancer5    \x00\x00", f18=3, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_389
 
-Str_Enhancer5:	.asciz "   Enhancer5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A595, 0x26A5A4
+Str_5_34:	.asciz "5$"
+	.align	4, 0x00	# pad after Str_5_34
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_390:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="c"
 	tab_u16	12800, 25344, 25344, 11520, 256, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_390
+SndRecTriFieldGet2_entry_L16_Table_2_p0_390:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Enhancer6    \x00\x00", f18=3, f20=8, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_390
 
-Str_Enhancer6:	.asciz "   Enhancer6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A5C5, 0x26A5D4
+Str_5_35:	.asciz "5%"
+	.align	4, 0x00	# pad after Str_5_35
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_391:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	22016, 5120, 4096, 17920, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_391
+SndRecTriFieldGet2_entry_L16_Table_2_p0_391:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Exciter1    \x00\x00", f18=35, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_391
 
-Str_Exciter1:	.asciz "    Exciter1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A5F5, 0x26A604
+Str_7_14:	.asciz "7"
+	.align	4, 0x00	# pad after Str_7_14
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_392:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	22016, 5888, 4096, 22016, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_392
-
-Str_Exciter2:	.asciz "    Exciter2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A625, 0x26A634
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_392:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Exciter2    \x00\x00", f18=35, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_392
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A630, 0x26A634
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_393:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	22016, 6144, 4608, 25344, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_393
-
-Str_Exciter3:	.asciz "    Exciter3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A655, 0x26A664
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_393:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Exciter3    \x00\x00", f18=35, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_393
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A660, 0x26A664
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_394:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 15360, 25344, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_394
+SndRecTriFieldGet2_entry_L16_Table_2_p0_394:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah1      \x00\x00", f18=52, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_394
 
-Str_Wah1_3:	.asciz "      Wah1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A681, 0x26A690
+Str_8_15:	.asciz "8 "
+	.align	4, 0x00	# pad after Str_8_15
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_395:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	3840, 25344, 15360, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_395
+SndRecTriFieldGet2_entry_L16_Table_2_p0_395:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah2      \x00\x00", f18=52, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_395
 
-Str_Wah2_3:	.asciz "      Wah2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A6AD, 0x26A6BC
+Str_8_16:	.asciz "8!"
+	.align	4, 0x00	# pad after Str_8_16
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_396:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	12800, 25344, 15360, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_396
+SndRecTriFieldGet2_entry_L16_Table_2_p0_396:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah3      \x00\x00", f18=52, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_396
 
-Str_Wah3_3:	.asciz "      Wah3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A6D9, 0x26A6E8
+Str_8_17:	.asciz "8\""
+	.align	4, 0x00	# pad after Str_8_17
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_397:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 7680, 15360, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_397
+SndRecTriFieldGet2_entry_L16_Table_2_p0_397:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah4      \x00\x00", f18=52, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_397
 
-Str_Wah4_2:	.asciz "      Wah4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A705, 0x26A714
+Str_8_18:	.asciz "8#"
+	.align	4, 0x00	# pad after Str_8_18
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_398:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 15360, 25344, 25344, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_398
+SndRecTriFieldGet2_entry_L16_Table_2_p0_398:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah5      \x00\x00", f18=52, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_398
 
-Str_Wah5_2:	.asciz "      Wah5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A731, 0x26A740
+Str_8_19:	.asciz "8$"
+	.align	4, 0x00	# pad after Str_8_19
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_399:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	512, 0, 15360, 25344, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_399
+SndRecTriFieldGet2_entry_L16_Table_2_p0_399:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah1      \x00\x00", f18=51, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_399
 
-Str_Wah1_2:	.asciz "      Wah1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A761, 0x26A770
+Str_8_20:	.asciz "8%"
+	.align	4, 0x00	# pad after Str_8_20
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_400:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	512, 3840, 15360, 25344, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_400
+SndRecTriFieldGet2_entry_L16_Table_2_p0_400:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah2      \x00\x00", f18=51, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_400
 
-Str_Wah2_2:	.asciz "      Wah2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A791, 0x26A7A0
+Str_8_21:	.asciz "8&"
+	.align	4, 0x00	# pad after Str_8_21
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_401:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	512, 12800, 15360, 25344, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_401
+SndRecTriFieldGet2_entry_L16_Table_2_p0_401:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah3      \x00\x00", f18=51, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_401
 
-Str_Wah3_2:	.asciz "      Wah3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A7C1, 0x26A7D0
+Str_8_22:	.asciz "8'"
+	.align	4, 0x00	# pad after Str_8_22
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_402:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 20480, 10240, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_402
+SndRecTriFieldGet2_entry_L16_Table_2_p0_402:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 2Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_402
 
-Str_For_2Beat_1:	.asciz "  For 2Beat 1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A7F9, 0x26A808
+Str_9_13:	.asciz "9"
+	.align	4, 0x00	# pad after Str_9_13
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_403:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	512, 256, 0, 10240, 20480, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_403
-
-Str_For_2Beat_2:	.asciz "  For 2Beat 2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A831, 0x26A840
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_403:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 2Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_403
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A83C, 0x26A840
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_404:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 20480, 10240, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_404
-
-Str_For_3Beat_1:	.asciz "  For 3Beat 1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A869, 0x26A878
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_404:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 3Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_404
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A874, 0x26A878
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_405:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	768, 256, 0, 10240, 20480, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_405
-
-Str_For_3Beat_2:	.asciz "  For 3Beat 2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A8A1, 0x26A8B0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_405:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 3Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_405
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A8AC, 0x26A8B0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_406:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 20480, 10240, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_406
+SndRecTriFieldGet2_entry_L16_Table_2_p0_406:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 4Beat 1   \x00\x00", f18=145, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_406
 
-Str_For_4Beat_1:	.asciz "  For 4Beat 1   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A8D9, 0x26A8E8
+Str_9_14:	.asciz "9 "
+	.align	4, 0x00	# pad after Str_9_14
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_407:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	1024, 256, 0, 10240, 20480, 0, 7680, 0, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_407
+SndRecTriFieldGet2_entry_L16_Table_2_p0_407:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  For 4Beat 2   \x00\x00", f18=145, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_407
 
-Str_For_4Beat_2:	.asciz "  For 4Beat 2   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A911, 0x26A920
+Str_9_15:	.asciz "9!"
+	.align	4, 0x00	# pad after Str_9_15
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_408:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_408
+SndRecTriFieldGet2_entry_L16_Table_2_p0_408:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah1      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_408
 
-Str_Wah1:	.asciz "      Wah1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A941, 0x26A950
+Str_text_62:	.asciz ":"
+	.align	4, 0x00	# pad after Str_text_62
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_409:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_409
-
-Str_Wah2:	.asciz "      Wah2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A971, 0x26A980
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_409:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah2      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_409
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A97C, 0x26A980
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_410:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_410
-
-Str_Wah3:	.asciz "      Wah3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A9A1, 0x26A9B0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_410:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah3      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_410
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A9AC, 0x26A9B0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_411:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="Z"
 	tab_u16	0, 25344, 12800, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_411
-
-Str_Wah4:	.asciz "      Wah4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26A9D1, 0x26A9E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_411:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah4      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_411
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26A9DC, 0x26A9E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_412:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 20480, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_412
-
-Str_Wah5:	.asciz "      Wah5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AA01, 0x26AA10
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_412:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah5      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_412
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AA0C, 0x26AA10
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_413:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 17920, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_413
-
-Str_Wah6:	.asciz "      Wah6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AA31, 0x26AA40
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_413:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah6      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_413
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AA3C, 0x26AA40
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_414:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	0, 25344, 12800, 12800, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_414
-
-Str_Wah7:	.asciz "      Wah7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AA61, 0x26AA70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_414:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah7      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_414
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AA6C, 0x26AA70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_415:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	0, 12800, 25344, 14848, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_415
-
-Str_Wah8:	.asciz "      Wah8      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AA91, 0x26AAA0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_415:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Wah8      \x00\x00", f18=144, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_415
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AA9C, 0x26AAA0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_416:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 20480, 25344, 17920, 16384, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_416
+SndRecTriFieldGet2_entry_L16_Table_2_p0_416:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Normal     \x00\x00", f18=32, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_416
 
-Str_Normal_3:	.asciz "     Normal     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AAC5, 0x26AAD4
+Str_text_63:	.asciz "@"
+	.align	4, 0x00	# pad after Str_text_63
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_417:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 10240, 15360, 19200, 17664, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_417
-
-Str_Mild_2:	.asciz "      Mild      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AAF9, 0x26AB08
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_417:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Mild      \x00\x00", f18=32, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_417
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AB04, 0x26AB08
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_418:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 25344, 17920, 18432, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_418
-
-Str_Hard_2:	.asciz "      Hard      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AB2D, 0x26AB3C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_418:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Hard      \x00\x00", f18=32, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_418
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AB38, 0x26AB3C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_419:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 25344, 17920, 18432, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_419
-
-Str_Bright_2:	.asciz "     Bright     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AB61, 0x26AB70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_419:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Bright     \x00\x00", f18=130, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_419
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AB6C, 0x26AB70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_420:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	8192, 2560, 2560, 25344, 17920, 19456, 19968, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_420
-
-Str_Fat_2:	.asciz "      Fat       "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AB95, 0x26ABA4
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_420:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Fat       \x00\x00", f18=131, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_420
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26ABA0, 0x26ABA4
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_421:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x08"
 	tab_u16	2304, 2560, 2560, 25344, 17920, 18432, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_421
-
-Str_Hard_Compress_3:	.asciz " Hard Compress  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26ABC9, 0x26ABD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_421:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=32, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_421
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26ABD4, 0x26ABD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_422:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 18432, 25344, 17408, 16384, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_422
+SndRecTriFieldGet2_entry_L16_Table_2_p0_422:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Normal     \x00\x00", f18=33, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_422
 
-Str_Normal_2:	.asciz "     Normal     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26ABFD, 0x26AC0C
+Str_text_64:	.asciz "@ "
+	.align	4, 0x00	# pad after Str_text_64
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_423:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 14080, 20480, 18432, 17408, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_423
+SndRecTriFieldGet2_entry_L16_Table_2_p0_423:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Mild      \x00\x00", f18=33, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_423
 
-Str_Mild:	.asciz "      Mild      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AC31, 0x26AC40
+Str_text_65:	.asciz "@!"
+	.align	4, 0x00	# pad after Str_text_65
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_424:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 25344, 17920, 17920, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_424
+SndRecTriFieldGet2_entry_L16_Table_2_p0_424:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Hard      \x00\x00", f18=33, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_424
 
-Str_Hard:	.asciz "      Hard      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AC65, 0x26AC74
+Str_text_66:	.asciz "@\""
+	.align	4, 0x00	# pad after Str_text_66
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_425:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 15360, 25344, 17920, 15360, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_425
+SndRecTriFieldGet2_entry_L16_Table_2_p0_425:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Bright     \x00\x00", f18=132, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_425
 
-Str_Bright:	.asciz "     Bright     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AC99, 0x26ACA8
+Str_text_67:	.asciz "@#"
+	.align	4, 0x00	# pad after Str_text_67
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_426:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 25344, 17920, 17920, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_426
+SndRecTriFieldGet2_entry_L16_Table_2_p0_426:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Fat       \x00\x00", f18=133, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_426
 
-Str_Fat:	.asciz "      Fat       "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26ACCD, 0x26ACDC
+Str_text_68:	.asciz "@$"
+	.align	4, 0x00	# pad after Str_text_68
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_427:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x08"
 	tab_u16	2304, 2560, 2560, 25344, 17920, 17920, 18944, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_427
+SndRecTriFieldGet2_entry_L16_Table_2_p0_427:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=33, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_427
 
-Str_Hard_Compress_2:	.asciz " Hard Compress  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AD01, 0x26AD10
+Str_text_69:	.asciz "@%"
+	.align	4, 0x00	# pad after Str_text_69
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_428:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0D"
 	tab_u16	7424, 2560, 2560, 15360, 25344, 18944, 15360, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_428
+SndRecTriFieldGet2_entry_L16_Table_2_p0_428:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Normal     \x00\x00", f18=34, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_428
 
-Str_Normal:	.asciz "     Normal     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AD35, 0x26AD44
+Str_A_33:	.asciz "A"
+	.align	4, 0x00	# pad after Str_A_33
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_429:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 9 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x06"
 	tab_u16	1792, 2560, 2560, 25344, 17920, 18944, 19968, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_429
-
-Str_Hard_Compress:	.asciz " Hard Compress  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AD69, 0x26AD78
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_429:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Hard Compress  \x00\x00", f18=34, f20=10, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_429
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AD74, 0x26AD78
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_430:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	16384, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_430
+SndRecTriFieldGet2_entry_L16_Table_2_p0_430:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Loud1      \x00\x00", f18=100, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_430
 
-Str_Loud1:	.asciz "     Loud1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AD95, 0x26ADA4
+Str_A_34:	.asciz "A "
+	.align	4, 0x00	# pad after Str_A_34
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_431:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	18944, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_431
+SndRecTriFieldGet2_entry_L16_Table_2_p0_431:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Loud2      \x00\x00", f18=101, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_431
 
-Str_Loud2:	.asciz "     Loud2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26ADC1, 0x26ADD0
+Str_A_35:	.asciz "A!"
+	.align	4, 0x00	# pad after Str_A_35
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_432:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_432
+SndRecTriFieldGet2_entry_L16_Table_2_p0_432:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Loud3      \x00\x00", f18=102, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_432
 
-Str_Loud3:	.asciz "     Loud3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26ADED, 0x26ADFC
+Str_A_36:	.asciz "A\""
+	.align	4, 0x00	# pad after Str_A_36
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_433:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_433
+SndRecTriFieldGet2_entry_L16_Table_2_p0_433:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Loud4      \x00\x00", f18=103, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_433
 
-Str_Loud4:	.asciz "     Loud4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AE19, 0x26AE28
+Str_A_37:	.asciz "A#"
+	.align	4, 0x00	# pad after Str_A_37
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_434:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	16384, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_434
+SndRecTriFieldGet2_entry_L16_Table_2_p0_434:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=100, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_434
 
-Str_Normal1_3:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AE45, 0x26AE54
+Str_A_38:	.asciz "A("
+	.align	4, 0x00	# pad after Str_A_38
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_435:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	18944, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_435
+SndRecTriFieldGet2_entry_L16_Table_2_p0_435:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=101, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_435
 
-Str_Normal2_3:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AE71, 0x26AE80
+Str_A_39:	.asciz "A)"
+	.align	4, 0x00	# pad after Str_A_39
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_436:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_436
+SndRecTriFieldGet2_entry_L16_Table_2_p0_436:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=102, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_436
 
-Str_Normal3_3:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AE9D, 0x26AEAC
+Str_A_40:	.asciz "A*"
+	.align	4, 0x00	# pad after Str_A_40
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_437:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 16896, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_437
+SndRecTriFieldGet2_entry_L16_Table_2_p0_437:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=103, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_437
 
-Str_Normal4_3:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AEC9, 0x26AED8
+Str_A_41:	.asciz "A+"
+	.align	4, 0x00	# pad after Str_A_41
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_438:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	16384, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_438
+SndRecTriFieldGet2_entry_L16_Table_2_p0_438:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Soft1      \x00\x00", f18=100, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_438
 
-Str_Soft1:	.asciz "     Soft1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AEF5, 0x26AF04
+Str_A0:	.asciz "A0"
+	.align	4, 0x00	# pad after Str_A0
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_439:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	18944, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_439
+SndRecTriFieldGet2_entry_L16_Table_2_p0_439:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Soft2      \x00\x00", f18=101, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_439
 
-Str_Soft2:	.asciz "     Soft2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AF21, 0x26AF30
+Str_A1:	.asciz "A1"
+	.align	4, 0x00	# pad after Str_A1
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_440:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_440
+SndRecTriFieldGet2_entry_L16_Table_2_p0_440:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Soft3      \x00\x00", f18=102, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_440
 
-Str_Soft3:	.asciz "     Soft3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AF4D, 0x26AF5C
+Str_A2:	.asciz "A2"
+	.align	4, 0x00	# pad after Str_A2
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_441:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	17920, 5120, 5632, 12800, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_441
+SndRecTriFieldGet2_entry_L16_Table_2_p0_441:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Soft4      \x00\x00", f18=103, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_441
 
-Str_Soft4:	.asciz "     Soft4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AF79, 0x26AF88
+Str_A3:	.asciz "A3"
+	.align	4, 0x00	# pad after Str_A3
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_442:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_442
+SndRecTriFieldGet2_entry_L16_Table_2_p0_442:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Limiter1    \x00\x00", f18=41, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_442
 
-Str_Limiter1:	.asciz "    Limiter1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AFA9, 0x26AFB8
+Str_D_20:	.asciz "D"
+	.align	4, 0x00	# pad after Str_D_20
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_443:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\n"
 	tab_u16	4608, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_443
-
-Str_Limiter2:	.asciz "    Limiter2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26AFD9, 0x26AFE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_443:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Limiter2    \x00\x00", f18=41, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_443
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26AFE4, 0x26AFE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_444:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x05"
 	tab_u16	1280, 2560, 10240, 2560, 25344, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_444
-
-Str_Limiter3:	.asciz "    Limiter3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B009, 0x26B018
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_444:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Limiter3    \x00\x00", f18=41, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_444
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B014, 0x26B018
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_445:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	12800, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_445
-
-Str_Limiter4:	.asciz "    Limiter4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B039, 0x26B048
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_445:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Limiter4    \x00\x00", f18=41, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_445
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B044, 0x26B048
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_446:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_446
+SndRecTriFieldGet2_entry_L16_Table_2_p0_446:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Comp.1     \x00\x00", f18=36, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_446
 
-Str_Comp_1:	.asciz "     Comp.1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B069, 0x26B078
+Str_E_16:	.asciz "E"
+	.align	4, 0x00	# pad after Str_E_16
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_447:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0B"
 	tab_u16	5120, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_447
-
-Str_Comp_2:	.asciz "     Comp.2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B099, 0x26B0A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_447:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Comp.2     \x00\x00", f18=36, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_447
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B0A4, 0x26B0A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_448:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x05"
 	tab_u16	3584, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_448
-
-Str_Comp_3:	.asciz "     Comp.3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B0C9, 0x26B0D8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_448:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Comp.3     \x00\x00", f18=36, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_448
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B0D4, 0x26B0D8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_449:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 7 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	15360, 2560, 10240, 2560, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_449
-
-Str_Comp_4:	.asciz "     Comp.4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B0F9, 0x26B108
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_449:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Comp.4     \x00\x00", f18=36, f20=7, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_449
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B104, 0x26B108
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_450:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	1024, 25088, 25088, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_450
+SndRecTriFieldGet2_entry_L16_Table_2_p0_450:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Slow Attacker1 \x00\x00", f18=37, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_450
 
-Str_Slow_Attacker1:	.asciz " Slow Attacker1 "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B125, 0x26B134
+Str_F_16:	.asciz "F"
+	.align	4, 0x00	# pad after Str_F_16
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_451:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0C"
 	tab_u16	1024, 25088, 10240, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_451
-
-Str_Slow_Attacker2:	.asciz " Slow Attacker2 "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B151, 0x26B160
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_451:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Slow Attacker2 \x00\x00", f18=37, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_451
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B15C, 0x26B160
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_452:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x04"
 	tab_u16	3072, 25088, 25088, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_452
-
-Str_Slow_Attacker3:	.asciz " Slow Attacker3 "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B17D, 0x26B18C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_452:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Slow Attacker3 \x00\x00", f18=37, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_452
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B188, 0x26B18C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_453:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 5 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x04"
 	tab_u16	3072, 25088, 10240, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_453
-
-Str_Slow_Attacker4:	.asciz " Slow Attacker4 "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B1A9, 0x26B1B8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_453:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Slow Attacker4 \x00\x00", f18=37, f20=6, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_453
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B1B4, 0x26B1B8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_454:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0=","
 	tab_u16	11265, 11265, 11265, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_454
+SndRecTriFieldGet2_entry_L16_Table_2_p0_454:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_454
 
-Str_Deep1_2:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B1E1, 0x26B1F0
+Str_H_10:	.asciz "H"
+	.align	4, 0x00	# pad after Str_H_10
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_455:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x96"
 	tab_u16	38400, 38400, 38400, 55296, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_455
-
-Str_Deep2_2:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B219, 0x26B228
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_455:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_455
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B224, 0x26B228
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_456:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 55296, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_456
-
-Str_Deep3_2:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B251, 0x26B260
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_456:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_456
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B25C, 0x26B260
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_457:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xFA"
 	tab_u16	64000, 64000, 64000, 55296, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_457
-
-Str_Deep4_2:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B289, 0x26B298
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_457:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_457
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B294, 0x26B298
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_458:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	16385, 16385, 16385, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_458
-
-Str_Deep5_2:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B2C1, 0x26B2D0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_458:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_458
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B2CC, 0x26B2D0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_459:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="T"
 	tab_u16	21505, 21505, 21505, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_459
-
-Str_Deep6_2:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B2F9, 0x26B308
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_459:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_459
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B304, 0x26B308
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_460:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 55297, 50431, 55551, 50431, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_460
-
-Str_Deep7_2:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B331, 0x26B340
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_460:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_460
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B33C, 0x26B340
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_461:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 47617, 55551, 47871, 55551, 3327, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_461
-
-Str_Deep8_2:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B369, 0x26B378
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_461:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_461
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B374, 0x26B378
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_462:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0=","
 	tab_u16	11265, 11265, 11265, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_462
-
-Str_Normal1_2:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B3A1, 0x26B3B0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_462:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_462
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B3AC, 0x26B3B0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_463:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x96"
 	tab_u16	38400, 38400, 38400, 55296, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_463
-
-Str_Normal2_2:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B3D9, 0x26B3E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_463:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_463
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B3E4, 0x26B3E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_464:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 55296, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_464
-
-Str_Normal3_2:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B411, 0x26B420
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_464:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_464
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B41C, 0x26B420
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_465:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xFA"
 	tab_u16	64000, 64000, 64000, 55296, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_465
-
-Str_Normal4_2:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B449, 0x26B458
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_465:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_465
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B454, 0x26B458
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_466:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	16385, 16385, 16385, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_466
-
-Str_Normal5_2:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B481, 0x26B490
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_466:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_466
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B48C, 0x26B490
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_467:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="T"
 	tab_u16	21505, 21505, 21505, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_467
-
-Str_Normal6_2:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B4B9, 0x26B4C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_467:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_467
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B4C4, 0x26B4C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_468:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 55297, 50431, 55551, 50431, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_468
-
-Str_Normal7_2:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B4F1, 0x26B500
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_468:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_468
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B4FC, 0x26B500
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_469:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 47617, 55551, 47871, 55551, 3327, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_469
-
-Str_Normal8_2:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B529, 0x26B538
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_469:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_469
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B534, 0x26B538
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_470:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0=","
 	tab_u16	11265, 11265, 11265, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_470
-
-Str_Shallow1_2:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B561, 0x26B570
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_470:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_470
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B56C, 0x26B570
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_471:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x96"
 	tab_u16	38400, 38400, 38400, 55296, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_471
-
-Str_Shallow2_2:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B599, 0x26B5A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_471:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_471
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B5A4, 0x26B5A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_472:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 55296, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_472
-
-Str_Shallow3_2:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B5D1, 0x26B5E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_472:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_472
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B5DC, 0x26B5E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_473:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xFA"
 	tab_u16	64000, 64000, 64000, 55296, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_473
-
-Str_Shallow4_2:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B609, 0x26B618
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_473:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_473
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B614, 0x26B618
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_474:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="@"
 	tab_u16	16385, 16385, 16385, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_474
-
-Str_Shallow5_2:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B641, 0x26B650
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_474:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_474
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B64C, 0x26B650
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_475:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="T"
 	tab_u16	21505, 21505, 21505, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_475
-
-Str_Shallow6_2:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B679, 0x26B688
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_475:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_475
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B684, 0x26B688
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_476:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 55297, 50431, 55551, 50431, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_476
-
-Str_Shallow7_2:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B6B1, 0x26B6C0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_476:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_476
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B6BC, 0x26B6C0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_477:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 47617, 55551, 47871, 55551, 3327, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_477
-
-Str_Shallow8_2:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B6E9, 0x26B6F8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_477:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_477
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26B6F4, 0x26B6F8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_478:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="#"
 	tab_u16	12800, 8960, 12800, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_478
+SndRecTriFieldGet2_entry_L16_Table_2_p0_478:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_478
 
-Str_Deep9_2:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B721, 0x26B730
+Str_H_11:	.asciz "H "
+	.align	4, 0x00	# pad after Str_H_11
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_479:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="A"
 	tab_u16	25088, 16640, 25088, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_479
+SndRecTriFieldGet2_entry_L16_Table_2_p0_479:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_479
 
-Str_Deep10_2:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B759, 0x26B768
+Str_H_12:	.asciz "H!"
+	.align	4, 0x00	# pad after Str_H_12
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_480:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="U"
 	tab_u16	32768, 21760, 32768, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_480
+SndRecTriFieldGet2_entry_L16_Table_2_p0_480:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_480
 
-Str_Deep11_2:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B791, 0x26B7A0
+Str_H_13:	.asciz "H\""
+	.align	4, 0x00	# pad after Str_H_13
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_481:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	38400, 16384, 24576, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_481
+SndRecTriFieldGet2_entry_L16_Table_2_p0_481:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_481
 
-Str_Deep12_2:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B7C9, 0x26B7D8
+Str_H_14:	.asciz "H#"
+	.align	4, 0x00	# pad after Str_H_14
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_482:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_482
+SndRecTriFieldGet2_entry_L16_Table_2_p0_482:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_482
 
-Str_Deep13_2:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B801, 0x26B810
+Str_H_15:	.asciz "H$"
+	.align	4, 0x00	# pad after Str_H_15
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_483:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_483
+SndRecTriFieldGet2_entry_L16_Table_2_p0_483:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep14     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_483
 
-Str_Deep14_2:	.asciz "     Deep14     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B839, 0x26B848
+Str_H_16:	.asciz "H%"
+	.align	4, 0x00	# pad after Str_H_16
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_484:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_484
+SndRecTriFieldGet2_entry_L16_Table_2_p0_484:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep15     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_484
 
-Str_Deep15_2:	.asciz "     Deep15     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B871, 0x26B880
+Str_H_17:	.asciz "H&"
+	.align	4, 0x00	# pad after Str_H_17
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_485:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_485
+SndRecTriFieldGet2_entry_L16_Table_2_p0_485:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep16     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_485
 
-Str_Deep16_2:	.asciz "     Deep16     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B8A9, 0x26B8B8
+Str_H_18:	.asciz "H'"
+	.align	4, 0x00	# pad after Str_H_18
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_486:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="#"
 	tab_u16	12800, 8960, 12800, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_486
+SndRecTriFieldGet2_entry_L16_Table_2_p0_486:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_486
 
-Str_Normal9_2:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B8E1, 0x26B8F0
+Str_H_19:	.asciz "H("
+	.align	4, 0x00	# pad after Str_H_19
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_487:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="A"
 	tab_u16	25088, 16640, 25088, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_487
+SndRecTriFieldGet2_entry_L16_Table_2_p0_487:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_487
 
-Str_Normal10_2:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B919, 0x26B928
+Str_H_20:	.asciz "H)"
+	.align	4, 0x00	# pad after Str_H_20
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_488:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="U"
 	tab_u16	32768, 21760, 32768, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_488
+SndRecTriFieldGet2_entry_L16_Table_2_p0_488:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_488
 
-Str_Normal11_2:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B951, 0x26B960
+Str_H_21:	.asciz "H*"
+	.align	4, 0x00	# pad after Str_H_21
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_489:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	38400, 16384, 24576, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_489
+SndRecTriFieldGet2_entry_L16_Table_2_p0_489:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_489
 
-Str_Normal12_2:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B989, 0x26B998
+Str_H_22:	.asciz "H+"
+	.align	4, 0x00	# pad after Str_H_22
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_490:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_490
+SndRecTriFieldGet2_entry_L16_Table_2_p0_490:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_490
 
-Str_Normal13_2:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B9C1, 0x26B9D0
+Str_H_23:	.asciz "H,"
+	.align	4, 0x00	# pad after Str_H_23
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_491:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_491
+SndRecTriFieldGet2_entry_L16_Table_2_p0_491:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal14    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_491
 
-Str_Normal14_2:	.asciz "    Normal14    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26B9F9, 0x26BA08
+Str_H_24:	.asciz "H-"
+	.align	4, 0x00	# pad after Str_H_24
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_492:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_492
+SndRecTriFieldGet2_entry_L16_Table_2_p0_492:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal15    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_492
 
-Str_Normal15_2:	.asciz "    Normal15    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BA31, 0x26BA40
+Str_H_25:	.asciz "H."
+	.align	4, 0x00	# pad after Str_H_25
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_493:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_493
+SndRecTriFieldGet2_entry_L16_Table_2_p0_493:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal16    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_493
 
-Str_Normal16_2:	.asciz "    Normal16    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BA69, 0x26BA78
+Str_H_26:	.asciz "H/"
+	.align	4, 0x00	# pad after Str_H_26
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_494:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="#"
 	tab_u16	12800, 8960, 12800, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_494
+SndRecTriFieldGet2_entry_L16_Table_2_p0_494:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_494
 
-Str_Shallow9_2:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BAA1, 0x26BAB0
+Str_H0:	.asciz "H0"
+	.align	4, 0x00	# pad after Str_H0
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_495:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="A"
 	tab_u16	25088, 16640, 25088, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_495
+SndRecTriFieldGet2_entry_L16_Table_2_p0_495:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_495
 
-Str_Shallow10_2:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BAD9, 0x26BAE8
+Str_H1:	.asciz "H1"
+	.align	4, 0x00	# pad after Str_H1
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_496:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="U"
 	tab_u16	32768, 21760, 32768, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_496
+SndRecTriFieldGet2_entry_L16_Table_2_p0_496:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_496
 
-Str_Shallow11_2:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BB11, 0x26BB20
+Str_H2:	.asciz "H2"
+	.align	4, 0x00	# pad after Str_H2
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_497:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	38400, 16384, 24576, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_497
+SndRecTriFieldGet2_entry_L16_Table_2_p0_497:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_497
 
-Str_Shallow12_2:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BB49, 0x26BB58
+Str_H3:	.asciz "H3"
+	.align	4, 0x00	# pad after Str_H3
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_498:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_498
+SndRecTriFieldGet2_entry_L16_Table_2_p0_498:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_498
 
-Str_Shallow13_2:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BB81, 0x26BB90
+Str_H4:	.asciz "H4"
+	.align	4, 0x00	# pad after Str_H4
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_499:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_499
+SndRecTriFieldGet2_entry_L16_Table_2_p0_499:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow14    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_499
 
-Str_Shallow14_2:	.asciz "   Shallow14    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BBB9, 0x26BBC8
+Str_H5:	.asciz "H5"
+	.align	4, 0x00	# pad after Str_H5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_500:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_500
+SndRecTriFieldGet2_entry_L16_Table_2_p0_500:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow15    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_500
 
-Str_Shallow15_2:	.asciz "   Shallow15    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BBF1, 0x26BC00
+Str_H6:	.asciz "H6"
+	.align	4, 0x00	# pad after Str_H6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_501:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_501
+SndRecTriFieldGet2_entry_L16_Table_2_p0_501:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow16    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_501
 
-Str_Shallow16_2:	.asciz "   Shallow16    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BC29, 0x26BC38
+Str_H7:	.asciz "H7"
+	.align	4, 0x00	# pad after Str_H7
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_502:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 40960, 40960, 53248, 47359, 53503, 47359, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_502
+SndRecTriFieldGet2_entry_L16_Table_2_p0_502:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep17     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_502
 
-Str_Deep17_2:	.asciz "     Deep17     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BC61, 0x26BC70
+Str_I_8:	.asciz "I"
+	.align	4, 0x00	# pad after Str_I_8
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_503:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 54016, 48383, 54271, 48383, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_503
-
-Str_Deep18_2:	.asciz "     Deep18     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BC99, 0x26BCA8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_503:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep18     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_503
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BCA4, 0x26BCA8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_504:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	6145, 6145, 6145, 56321, 51967, 56575, 51967, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_504
-
-Str_Deep19_2:	.asciz "     Deep19     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BCD1, 0x26BCE0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_504:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep19     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_504
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BCDC, 0x26BCE0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_505:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 57857, 54271, 58111, 54271, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_505
-
-Str_Deep20_2:	.asciz "     Deep20     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BD09, 0x26BD18
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_505:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep20     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_505
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BD14, 0x26BD18
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_506:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 40960, 40960, 53248, 47359, 53503, 47359, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_506
-
-Str_Normal17_2:	.asciz "    Normal17    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BD41, 0x26BD50
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_506:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal17    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_506
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BD4C, 0x26BD50
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_507:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 54016, 48383, 54271, 48383, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_507
-
-Str_Normal18_2:	.asciz "    Normal18    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BD79, 0x26BD88
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_507:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal18    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_507
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BD84, 0x26BD88
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_508:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	6145, 6145, 6145, 56321, 51967, 56575, 51967, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_508
-
-Str_Normal19_2:	.asciz "    Normal19    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BDB1, 0x26BDC0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_508:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal19    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_508
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BDBC, 0x26BDC0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_509:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 57857, 54271, 58111, 54271, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_509
-
-Str_Normal20_2:	.asciz "    Normal20    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BDE9, 0x26BDF8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_509:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal20    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_509
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BDF4, 0x26BDF8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_510:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 40960, 40960, 53248, 47359, 53503, 47359, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_510
-
-Str_Shallow17_2:	.asciz "   Shallow17    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BE21, 0x26BE30
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_510:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow17    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_510
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BE2C, 0x26BE30
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_511:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xC8"
 	tab_u16	51200, 51200, 51200, 54016, 48383, 54271, 48383, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_511
-
-Str_Shallow18_2:	.asciz "   Shallow18    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BE59, 0x26BE68
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_511:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow18    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_511
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BE64, 0x26BE68
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_512:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x18"
 	tab_u16	6145, 6145, 6145, 56321, 51967, 56575, 51967, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_512
-
-Str_Shallow19_2:	.asciz "   Shallow19    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BE91, 0x26BEA0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_512:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow19    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_512
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BE9C, 0x26BEA0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_513:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	24065, 24065, 24065, 57857, 54271, 58111, 54271, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_513
-
-Str_Shallow20_2:	.asciz "   Shallow20    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BEC9, 0x26BED8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_513:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow20    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_513
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BED4, 0x26BED8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_514:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_514
+SndRecTriFieldGet2_entry_L16_Table_2_p0_514:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep1      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_514
 
-Str_Deep1:	.asciz "     Deep1      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BF01, 0x26BF10
+Str_L_7:	.asciz "L"
+	.align	4, 0x00	# pad after Str_L_7
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_515:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_515
-
-Str_Deep2:	.asciz "     Deep2      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BF39, 0x26BF48
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_515:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep2      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_515
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BF44, 0x26BF48
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_516:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_516
-
-Str_Deep3:	.asciz "     Deep3      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BF71, 0x26BF80
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_516:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep3      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_516
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BF7C, 0x26BF80
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_517:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_517
-
-Str_Deep4:	.asciz "     Deep4      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BFA9, 0x26BFB8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_517:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep4      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_517
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BFB4, 0x26BFB8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_518:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="x"
 	tab_u16	30720, 61440, 61440, 50176, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_518
-
-Str_Deep5:	.asciz "     Deep5      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26BFE1, 0x26BFF0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_518:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep5      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_518
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26BFEC, 0x26BFF0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_519:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x8C"
 	tab_u16	35840, 6144, 6145, 50177, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_519
-
-Str_Deep6:	.asciz "     Deep6      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C019, 0x26C028
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_519:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep6      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_519
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C024, 0x26C028
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_520:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 16384, 16385, 50177, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_520
-
-Str_Deep7:	.asciz "     Deep7      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C051, 0x26C060
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_520:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep7      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_520
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C05C, 0x26C060
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_521:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xAF"
 	tab_u16	44800, 24064, 24065, 50177, 45311, 50431, 45311, 6399, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_521
-
-Str_Deep8:	.asciz "     Deep8      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C089, 0x26C098
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_521:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep8      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_521
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C094, 0x26C098
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_522:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_522
-
-Str_Normal1:	.asciz "    Normal1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C0C1, 0x26C0D0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_522:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal1     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_522
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C0CC, 0x26C0D0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_523:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_523
-
-Str_Normal2:	.asciz "    Normal2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C0F9, 0x26C108
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_523:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal2     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_523
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C104, 0x26C108
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_524:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_524
-
-Str_Normal3:	.asciz "    Normal3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C131, 0x26C140
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_524:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal3     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_524
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C13C, 0x26C140
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_525:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_525
-
-Str_Normal4:	.asciz "    Normal4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C169, 0x26C178
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_525:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal4     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_525
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C174, 0x26C178
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_526:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="x"
 	tab_u16	30720, 61440, 61440, 50176, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_526
-
-Str_Normal5:	.asciz "    Normal5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C1A1, 0x26C1B0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_526:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal5     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_526
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C1AC, 0x26C1B0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_527:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x8C"
 	tab_u16	35840, 6144, 6145, 50177, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_527
-
-Str_Normal6:	.asciz "    Normal6     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C1D9, 0x26C1E8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_527:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal6     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_527
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C1E4, 0x26C1E8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_528:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 16384, 16385, 50177, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_528
-
-Str_Normal7:	.asciz "    Normal7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C211, 0x26C220
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_528:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal7     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_528
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C21C, 0x26C220
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_529:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xAF"
 	tab_u16	44800, 24064, 24065, 50177, 45311, 50431, 45311, 6399, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_529
-
-Str_Normal8:	.asciz "    Normal8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C249, 0x26C258
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_529:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal8     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_529
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C254, 0x26C258
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_530:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_530
-
-Str_Shallow1:	.asciz "    Shallow1    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C281, 0x26C290
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_530:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow1    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_530
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C28C, 0x26C290
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_531:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_531
-
-Str_Shallow2:	.asciz "    Shallow2    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C2B9, 0x26C2C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_531:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow2    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_531
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C2C4, 0x26C2C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_532:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_532
-
-Str_Shallow3:	.asciz "    Shallow3    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C2F1, 0x26C300
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_532:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow3    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_532
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C2FC, 0x26C300
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_533:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_533
-
-Str_Shallow4:	.asciz "    Shallow4    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C329, 0x26C338
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_533:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow4    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_533
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C334, 0x26C338
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_534:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="x"
 	tab_u16	30720, 61440, 61440, 50176, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_534
-
-Str_Shallow5:	.asciz "    Shallow5    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C361, 0x26C370
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_534:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow5    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_534
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C36C, 0x26C370
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_535:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x8C"
 	tab_u16	35840, 6144, 6145, 50177, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_535
-
-Str_Shallow6:	.asciz "    Shallow6    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C399, 0x26C3A8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_535:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow6    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_535
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C3A4, 0x26C3A8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_536:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	40960, 16384, 16385, 50177, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_536
-
-Str_Shallow7:	.asciz "    Shallow7    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C3D1, 0x26C3E0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_536:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow7    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_536
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C3DC, 0x26C3E0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_537:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xAF"
 	tab_u16	44800, 24064, 24065, 50177, 45311, 50431, 45311, 6399, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_537
-
-Str_Shallow8:	.asciz "    Shallow8    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C409, 0x26C418
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_537:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow8    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_537
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C414, 0x26C418
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_538:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 25600, 38400, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_538
+SndRecTriFieldGet2_entry_L16_Table_2_p0_538:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep9      \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_538
 
-Str_Deep9:	.asciz "     Deep9      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C441, 0x26C450
+Str_L_8:	.asciz "L "
+	.align	4, 0x00	# pad after Str_L_8
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_539:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 15360, 23040, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_539
+SndRecTriFieldGet2_entry_L16_Table_2_p0_539:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep10     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_539
 
-Str_Deep10:	.asciz "     Deep10     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C479, 0x26C488
+Str_L_9:	.asciz "L!"
+	.align	4, 0x00	# pad after Str_L_9
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_540:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	15360, 20480, 30720, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_540
+SndRecTriFieldGet2_entry_L16_Table_2_p0_540:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep11     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_540
 
-Str_Deep11:	.asciz "     Deep11     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C4B1, 0x26C4C0
+Str_L_10:	.asciz "L\""
+	.align	4, 0x00	# pad after Str_L_10
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_541:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	23040, 30720, 46080, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_541
+SndRecTriFieldGet2_entry_L16_Table_2_p0_541:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep12     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_541
 
-Str_Deep12:	.asciz "     Deep12     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C4E9, 0x26C4F8
+Str_L_11:	.asciz "L#"
+	.align	4, 0x00	# pad after Str_L_11
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_542:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_542
+SndRecTriFieldGet2_entry_L16_Table_2_p0_542:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep13     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_542
 
-Str_Deep13:	.asciz "     Deep13     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C521, 0x26C530
+Str_L_12:	.asciz "L$"
+	.align	4, 0x00	# pad after Str_L_12
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_543:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_543
+SndRecTriFieldGet2_entry_L16_Table_2_p0_543:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep14     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_543
 
-Str_Deep14:	.asciz "     Deep14     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C559, 0x26C568
+Str_L_13:	.asciz "L%"
+	.align	4, 0x00	# pad after Str_L_13
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_544:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_544
+SndRecTriFieldGet2_entry_L16_Table_2_p0_544:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep15     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_544
 
-Str_Deep15:	.asciz "     Deep15     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C591, 0x26C5A0
+Str_L_14:	.asciz "L&"
+	.align	4, 0x00	# pad after Str_L_14
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_545:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 18944, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_545
+SndRecTriFieldGet2_entry_L16_Table_2_p0_545:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep16     \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_545
 
-Str_Deep16:	.asciz "     Deep16     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C5C9, 0x26C5D8
+Str_L_15:	.asciz "L'"
+	.align	4, 0x00	# pad after Str_L_15
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_546:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 25600, 38400, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_546
+SndRecTriFieldGet2_entry_L16_Table_2_p0_546:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal9     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_546
 
-Str_Normal9:	.asciz "    Normal9     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C601, 0x26C610
+Str_L_16:	.asciz "L("
+	.align	4, 0x00	# pad after Str_L_16
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_547:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 15360, 23040, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_547
+SndRecTriFieldGet2_entry_L16_Table_2_p0_547:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal10    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_547
 
-Str_Normal10:	.asciz "    Normal10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C639, 0x26C648
+Str_L_17:	.asciz "L)"
+	.align	4, 0x00	# pad after Str_L_17
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_548:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	15360, 20480, 30720, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_548
+SndRecTriFieldGet2_entry_L16_Table_2_p0_548:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal11    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_548
 
-Str_Normal11:	.asciz "    Normal11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C671, 0x26C680
+Str_L_18:	.asciz "L*"
+	.align	4, 0x00	# pad after Str_L_18
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_549:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	23040, 30720, 46080, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_549
+SndRecTriFieldGet2_entry_L16_Table_2_p0_549:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal12    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_549
 
-Str_Normal12:	.asciz "    Normal12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C6A9, 0x26C6B8
+Str_L_19:	.asciz "L+"
+	.align	4, 0x00	# pad after Str_L_19
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_550:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_550
+SndRecTriFieldGet2_entry_L16_Table_2_p0_550:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal13    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_550
 
-Str_Normal13:	.asciz "    Normal13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C6E1, 0x26C6F0
+Str_L_20:	.asciz "L,"
+	.align	4, 0x00	# pad after Str_L_20
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_551:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_551
+SndRecTriFieldGet2_entry_L16_Table_2_p0_551:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal14    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_551
 
-Str_Normal14:	.asciz "    Normal14    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C719, 0x26C728
+Str_L_21:	.asciz "L-"
+	.align	4, 0x00	# pad after Str_L_21
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_552:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_552
+SndRecTriFieldGet2_entry_L16_Table_2_p0_552:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal15    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_552
 
-Str_Normal15:	.asciz "    Normal15    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C751, 0x26C760
+Str_L_22:	.asciz "L."
+	.align	4, 0x00	# pad after Str_L_22
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_553:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_553
+SndRecTriFieldGet2_entry_L16_Table_2_p0_553:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal16    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_553
 
-Str_Normal16:	.asciz "    Normal16    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C789, 0x26C798
+Str_L_23:	.asciz "L/"
+	.align	4, 0x00	# pad after Str_L_23
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_554:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="2"
 	tab_u16	19200, 25600, 38400, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_554
+SndRecTriFieldGet2_entry_L16_Table_2_p0_554:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Shallow9    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_554
 
-Str_Shallow9:	.asciz "    Shallow9    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C7C1, 0x26C7D0
+Str_L0:	.asciz "L0"
+	.align	4, 0x00	# pad after Str_L0
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_555:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1E"
 	tab_u16	11520, 15360, 23040, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_555
+SndRecTriFieldGet2_entry_L16_Table_2_p0_555:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow10    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_555
 
-Str_Shallow10:	.asciz "   Shallow10    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C7F9, 0x26C808
+Str_L1:	.asciz "L1"
+	.align	4, 0x00	# pad after Str_L1
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_556:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	15360, 20480, 30720, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_556
+SndRecTriFieldGet2_entry_L16_Table_2_p0_556:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow11    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_556
 
-Str_Shallow11:	.asciz "   Shallow11    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C831, 0x26C840
+Str_L2:	.asciz "L2"
+	.align	4, 0x00	# pad after Str_L2
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_557:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	23040, 30720, 46080, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_557
+SndRecTriFieldGet2_entry_L16_Table_2_p0_557:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow12    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_557
 
-Str_Shallow12:	.asciz "   Shallow12    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C869, 0x26C878
+Str_L3:	.asciz "L3"
+	.align	4, 0x00	# pad after Str_L3
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_558:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xA0"
 	tab_u16	61440, 21504, 32256, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_558
+SndRecTriFieldGet2_entry_L16_Table_2_p0_558:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow13    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_558
 
-Str_Shallow13:	.asciz "   Shallow13    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C8A1, 0x26C8B0
+Str_L4:	.asciz "L4"
+	.align	4, 0x00	# pad after Str_L4
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_559:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE6"
 	tab_u16	24064, 26625, 39936, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_559
+SndRecTriFieldGet2_entry_L16_Table_2_p0_559:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow14    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_559
 
-Str_Shallow14:	.asciz "   Shallow14    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C8D9, 0x26C8E8
+Str_L5:	.asciz "L5"
+	.align	4, 0x00	# pad after Str_L5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_560:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="6"
 	tab_u16	52737, 36864, 24576, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_560
+SndRecTriFieldGet2_entry_L16_Table_2_p0_560:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow15    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_560
 
-Str_Shallow15:	.asciz "   Shallow15    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C911, 0x26C920
+Str_L6:	.asciz "L6"
+	.align	4, 0x00	# pad after Str_L6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_561:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="^"
 	tab_u16	59905, 49664, 33280, 0, 0, 0, 0, 3072, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_561
+SndRecTriFieldGet2_entry_L16_Table_2_p0_561:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow16    \x00\x00", f18=9, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_561
 
-Str_Shallow16:	.asciz "   Shallow16    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C949, 0x26C958
+Str_L7:	.asciz "L7"
+	.align	4, 0x00	# pad after Str_L7
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_562:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_562
+SndRecTriFieldGet2_entry_L16_Table_2_p0_562:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep17     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_562
 
-Str_Deep17:	.asciz "     Deep17     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C981, 0x26C990
+Str_M_6:	.asciz "M"
+	.align	4, 0x00	# pad after Str_M_6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_563:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_563
-
-Str_Deep18:	.asciz "     Deep18     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C9B9, 0x26C9C8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_563:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep18     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_563
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C9C4, 0x26C9C8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_564:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_564
-
-Str_Deep19:	.asciz "     Deep19     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26C9F1, 0x26CA00
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_564:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep19     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_564
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26C9FC, 0x26CA00
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_565:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 3583, 16384, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_565
-
-Str_Deep20:	.asciz "     Deep20     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CA29, 0x26CA38
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_565:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Deep20     \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_565
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CA34, 0x26CA38
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_566:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_566
-
-Str_Normal17:	.asciz "    Normal17    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CA61, 0x26CA70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_566:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal17    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_566
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CA6C, 0x26CA70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_567:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_567
-
-Str_Normal18:	.asciz "    Normal18    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CA99, 0x26CAA8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_567:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal18    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_567
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CAA4, 0x26CAA8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_568:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_568
-
-Str_Normal19:	.asciz "    Normal19    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CAD1, 0x26CAE0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_568:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal19    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_568
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CADC, 0x26CAE0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_569:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 3583, 13824, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_569
-
-Str_Normal20:	.asciz "    Normal20    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CB09, 0x26CB18
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_569:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Normal20    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_569
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CB14, 0x26CB18
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_570:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	20480, 40960, 40960, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_570
-
-Str_Shallow17:	.asciz "   Shallow17    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CB41, 0x26CB50
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_570:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow17    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_570
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CB4C, 0x26CB50
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_571:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="("
 	tab_u16	10240, 20480, 20480, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_571
-
-Str_Shallow18:	.asciz "   Shallow18    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CB79, 0x26CB88
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_571:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow18    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_571
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CB84, 0x26CB88
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_572:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="<"
 	tab_u16	15360, 30720, 30720, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_572
-
-Str_Shallow19:	.asciz "   Shallow19    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CBB1, 0x26CBC0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_572:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow19    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_572
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CBBC, 0x26CBC0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_573:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="d"
 	tab_u16	25600, 51200, 51200, 50176, 45311, 50431, 45311, 3583, 11264, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_573
-
-Str_Shallow20:	.asciz "   Shallow20    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CBE9, 0x26CBF8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_573:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Shallow20    \x00\x00", f18=12, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_573
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CBF4, 0x26CBF8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_574:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x88"
 	tab_u16	4096, 38913, 8193, 2, 7680, 15360, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_574
+SndRecTriFieldGet2_entry_L16_Table_2_p0_574:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi1     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_574
 
-Str_Multi1:	.asciz "     Multi1     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CC25, 0x26CC34
+Str_Q_5:	.asciz "Q"
+	.align	4, 0x00	# pad after Str_Q_5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_575:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 0, 7680, 15360, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_575
-
-Str_Multi2:	.asciz "     Multi2     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CC61, 0x26CC70
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_575:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi2     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_575
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CC6C, 0x26CC70
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_576:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 25344, 15360, 7680, 0, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_576
-
-Str_Multi3:	.asciz "     Multi3     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CC9D, 0x26CCAC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_576:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi3     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_576
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CCA8, 0x26CCAC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_577:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 0, 15360, 7680, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_577
-
-Str_Multi4:	.asciz "     Multi4     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CCD9, 0x26CCE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_577:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi4     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_577
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CCE4, 0x26CCE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_578:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\""
 	tab_u16	17408, 26112, 34816, 25344, 7680, 15360, 0, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_578
-
-Str_Multi5:	.asciz "     Multi5     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CD15, 0x26CD24
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_578:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi5     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_578
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CD20, 0x26CD24
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_579:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="D"
 	tab_u16	34816, 52224, 4096, 1, 15360, 7680, 25344, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_579
-
-Str_Multi6:	.asciz "     Multi6     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CD51, 0x26CD60
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_579:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi6     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_579
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CD5C, 0x26CD60
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_580:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="D"
 	tab_u16	34816, 52224, 4096, 25345, 7680, 15360, 0, 0, 57856, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_580
-
-Str_Multi7:	.asciz "     Multi7     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CD8D, 0x26CD9C
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_580:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi7     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_580
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CD98, 0x26CD9C
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_581:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="D"
 	tab_u16	34816, 52224, 4096, 25345, 7680, 15360, 0, 55296, 50431, 3327, 21504, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_581
-
-Str_Multi8:	.asciz "     Multi8     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CDC9, 0x26CDD8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_581:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Multi8     \x00\x00", f18=10, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_581
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CDD4, 0x26CDD8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_582:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 13055, 10240, 1536, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_582
+SndRecTriFieldGet2_entry_L16_Table_2_p0_582:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Delay+Chorus  \x00\x00", f18=64, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_582
 
-Str_Delay_Chorus:	.asciz "  Delay+Chorus  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CE05, 0x26CE14
+Str_R_5:	.asciz "R"
+	.align	4, 0x00	# pad after Str_R_5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_583:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 20735, 20480, 512, 15360, 12800, 46080, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_583
+SndRecTriFieldGet2_entry_L16_Table_2_p0_583:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Delay+Flanger  \x00\x00", f18=66, f20=16, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_583
 
-Str_Delay_Flanger:	.asciz " Delay+Flanger  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CE45, 0x26CE54
+Str_R_6:	.asciz "R "
+	.align	4, 0x00	# pad after Str_R_6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_584:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 13 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 10495, 1536, 23040, 0, 21504, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_584
+SndRecTriFieldGet2_entry_L16_Table_2_p0_584:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Delay+Vibrato  \x00\x00", f18=67, f20=13, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_584
 
-Str_Delay_Vibrato:	.asciz " Delay+Vibrato  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CE81, 0x26CE90
+Str_S_4:	.asciz "S"
+	.align	4, 0x00	# pad after Str_S_4
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_585:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x14"
 	tab_u16	11264, 11265, 55297, 50431, 55551, 50431, 20735, 20480, 1024, 15360, 12800, 46080, 0, 21504, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_585
+SndRecTriFieldGet2_entry_L16_Table_2_p0_585:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="  Delay+Phaser  \x00\x00", f18=68, f20=16, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_585
 
-Str_Delay_Phaser:	.asciz "  Delay+Phaser  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CEC1, 0x26CED0
+Str_S_5:	.asciz "S "
+	.align	4, 0x00	# pad after Str_S_5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_586:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x02"
 	tab_u16	0, 25344, 5120, 11264, 11265, 55297, 50431, 55551, 50431, 25599, 25344	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_586
+SndRecTriFieldGet2_entry_L16_Table_2_p0_586:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Autowah+Delay  \x00\x00", f18=70, f20=12, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_586
 
-Str_Autowah_Delay:	.asciz " Autowah+Delay  "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CEF9, 0x26CF08
+Str_T_10:	.asciz "T"
+	.align	4, 0x00	# pad after Str_T_10
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_587:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 5120, 19712, 3072, 11264, 11265, 50177, 55551, 50431, 55551, 21759, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_587
+SndRecTriFieldGet2_entry_L16_Table_2_p0_587:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Comp+Dst+Delay \x00\x00", f18=80, f20=15, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_587
 
-Str_Comp_Dst_Delay:	.asciz " Comp+Dst+Delay "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CF39, 0x26CF48
+Str_U_6:	.asciz "U"
+	.align	4, 0x00	# pad after Str_U_6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_588:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 15 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	7168, 2560, 2560, 5120, 19712, 3072, 11264, 11265, 50177, 55551, 50431, 55551, 21759, 25344, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_588
+SndRecTriFieldGet2_entry_L16_Table_2_p0_588:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Comp+Ovd+Delay \x00\x00", f18=81, f20=15, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_588
 
-Str_Comp_Ovd_Delay:	.asciz " Comp+Ovd+Delay "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CF79, 0x26CF88
+Str_U_7:	.asciz "U "
+	.align	4, 0x00	# pad after Str_U_7
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_589:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 11 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 24064, 20480, 65280	# [0]
 	.align	4, 0xFF	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_589
+SndRecTriFieldGet2_entry_L16_Table_2_p0_589:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="Vocal Harmonizer\x00\x00", f18=124, f20=11, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_589
 
-Str_Vocal_Harmonizer:	.asciz "Vocal Harmonizer"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CFB1, 0x26CFC0
+Str_Z_4:	.asciz "Z"
+	.align	4, 0x00	# pad after Str_Z_4
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_590:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x1D"
 	tab_u16	7424, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_590
-
-Str_Voice_Changer1:	.asciz " Voice Changer1 "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26CFD9, 0x26CFE8
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_590:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Voice Changer1 \x00\x00", f18=120, f20=4, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_590
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26CFE4, 0x26CFE8
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_591:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\xE3"
 	tab_u16	58367, 21759, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_591
-
-Str_Voice_Changer2:	.asciz " Voice Changer2 "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D001, 0x26D010
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_591:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0=" Voice Changer2 \x00\x00", f18=120, f20=4, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_591
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26D00C, 0x26D010
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_592:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="T"
 	tab_u16	20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_592
+SndRecTriFieldGet2_entry_L16_Table_2_p0_592:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="Brass simulator1\x00\x00", f18=121, f20=2, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_592
 
-Str_Brass_simulator1:	.asciz "Brass simulator1"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D025, 0x26D034
+Str_Z_5:	.asciz "Z!"
+	.align	4, 0x00	# pad after Str_Z_5
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_593:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	6144, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_593
+SndRecTriFieldGet2_entry_L16_Table_2_p0_593:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="Brass simulator2\x00\x00", f18=122, f20=4, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_593
 
-Str_Brass_simulator2:	.asciz "Brass simulator2"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D04D, 0x26D05C
+Str_Z_6:	.asciz "Z\""
+	.align	4, 0x00	# pad after Str_Z_6
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_594:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 3 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x0E"
 	tab_u16	6144, 21504, 20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_594
+SndRecTriFieldGet2_entry_L16_Table_2_p0_594:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="Brass simulator3\x00\x00", f18=123, f20=4, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_594
 
-Str_Brass_simulator3:	.asciz "Brass simulator3"
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D075, 0x26D084
+Str_Z_7:	.asciz "Z#"
+	.align	4, 0x00	# pad after Str_Z_7
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_595:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_595
+SndRecTriFieldGet2_entry_L16_Table_2_p0_595:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Room      \x00\x00", f18=88, f20=2, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_595
 
-Str_Room:	.asciz "      Room      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D099, 0x26D0A8
+Str_text_70:	.asciz "["
+	.align	4, 0x00	# pad after Str_text_70
 
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_596:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_596
-
-Str_Karaoke:	.asciz "    Karaoke     "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D0BD, 0x26D0CC
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_596:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Karaoke     \x00\x00", f18=89, f20=2, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_596
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26D0C8, 0x26D0CC
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_597:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_597
-
-Str_Stage:	.asciz "     Stage      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D0E1, 0x26D0F0
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_597:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="     Stage      \x00\x00", f18=90, f20=2, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_597
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26D0EC, 0x26D0F0
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_598:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="P"
 	tab_u16	15360	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_598
-
-Str_Cave:	.asciz "      Cave      "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D105, 0x26D114
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_598:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="      Cave      \x00\x00", f18=91, f20=2, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_598
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26D110, 0x26D114
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_599:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="T"
 	tab_u16	20480	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_599
-
-Str_Spreader:	.asciz "    Spreader    "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D129, 0x26D138
-
+SndRecTriFieldGet2_entry_L16_Table_2_p0_599:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="    Spreader    \x00\x00", f18=57, f20=2, x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_599
+# census: opaque -- unknown-dump: 4 bytes of 7-bit values in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
+.incbin_range "baserom/kn6000_program.rom", 0x26D134, 0x26D138
 SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_600:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24 (1 bytes), then 1 x u16 the code indexes from +0 (read by func_4C15E978_entry_L19 0x4C15E996 `movhu (d0, a0), d0`; func_4C15E978_entry_Lcf 0x4C15EA4C `movhu (d0, a1), d0`)
 	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0_p24	x0="\x00"
 	tab_u16	0	# [0]
 	.align	4, 0x00	# pad after SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_600
+SndRecTriFieldGet2_entry_L16_Table_2_p0_600:	# REC_SndRecTriFieldGet2_entry_L16_Table_2_p0 (28 bytes)
+	REC_SndRecTriFieldGet2_entry_L16_Table_2_p0	x0="   Non Effect   \x00\x00", x22="\x00\x00", p24=SndRecTriFieldGet2_entry_L16_Table_2_p0_p24_600
 
-Str_Non_Effect:	.asciz "   Non Effect   "
-# census: opaque -- unknown-dump: 15 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x26D14D, 0x26D15C
+Str_o_3:	.asciz "o "
+	.align	4, 0x00	# pad after Str_o_3
 
 func_4C15E6EE_Table_2_p0_p4_0:	# REC_func_4C15E6EE_Table_2_p0_p4 (32 bytes), then 4 x s8 the code indexes from +20 (read by func_4C15EC5C 0x4C15EC5C `movhu (0x16, a1), d0`; func_4C15ECA2 0x4C15ECA2 `movhu (0x18, a1), d0` (+6))
 	REC_func_4C15E6EE_Table_2_p0_p4	x0="ETC \x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00c\x00\xFF\x00\x00\xFF\x00\x00"

@@ -18,3 +18,13 @@
 0x4C3108F8  NoteConvRules              ; 128 x 8-byte note-conversion rules {is_melody, alt_chord, no_third_adj, no_transpose, table}: func_4C058353 (the KN6000's func_4C05805C)
 0x4C2B7668  FactoryPanelMemory         ; the factory PANEL MEMORY banks (the .PMT bank layout, as the KN6000's): func_4C03D5A1 copies the .PMT header (func_4C03D5A1_Table) and 0x2D8D0 bytes from here to the backup RAM 0x840007C2 / 0x840007D2; typed by ../kn7000/tools/gen_data_s.py panel_banks()
 0x4C2EB7C8  TechnicsPadsResource       ; the built-in "Technics Pads" PERFORMANCE PAD bank (the table flash's segment 4 format): TechnicsPadsResourceInit stores it when the table flash's resource does not check; typed by ../kn7000/tools/gen_data_s.py pads()
+;
+; ---- outside the code and data ranges (lane generic-zero; the Makefile's TYPED) ------------------
+0x4C00000F  FirmwareVersionByte          ; the boot header's last byte, the update's version as two nibbles (v1.3: 0x13; the KN2400 v1.1's is 0x11): func_4C07B56B answers it (`movbu (FirmwareVersionByte), d0 / ret`)
+0x4C381448  Str_MILK_MN10300_Ver1_0R1   ; "MILK MN10300 Ver1.0R1", the kernel's version string (the KN7000 and KN2400 hold the same one in their data regions)
+0x4C381460  KernelServiceHash            ; 16 x {u32 key, code pointer}: func_4C381292 takes d1 - 0xFF, indexes the table by (key & 0xF) * 8, probes the records in turn (`cmp KernelRamLayout, a0` is the table's end) and jumps through +4 of the one whose +0 is the key [INFERENCE: the kernel's service-call codes]
+0x4C3814E0  KernelRamLayout              ; 6 RAM addresses (0x50180000, 0x501BFFFF, 0x501C0000, 0x501FFFFF, 0x50180CE0, 0x501813C8): func_4C37FE1B reads +4, +8 and +0x14, func_4C37FE57 +8 and +0xC, func_4C37FF04 +8, func_4C3813F3 +0x14 [INFERENCE: the kernel's memory pools' bounds]
+0x4C3814F8  KernelParams                 ; 14 u16 (10, 20, 20, 20, 10 ...): get_tid reads +0, func_4C37E44C +0x10 and +0x12, func_4C37E6C9 +0x16 (`movhu`); the KN2400 types its copy as get_tid_Table
+0x4C381514  KernelStartStub              ; `jmp func_4C3813F3` (the routine crt0_start's func_4C000350 ends by jumping to); no word of the image holds this address
+0x4C38151C  KernelGroup0IntDispatch      ; an interrupt handler: saves the registers and psw, counts the nesting at 0x50180CCC, takes the group from 0x34000100 (0x34000104 + 8 when zero), calls the handler the RAM tables 0x50180A6C / 0x50180B64 give for it, rti [INFERENCE: group 0, the non-maskable sources; nothing in the image holds this address]
+0x4C3815A2  KernelIntDispatch            ; the interrupt handler func_4C000350 writes a `jmp` to at 0x90000000: as KernelGroup0IntDispatch, but it switches to the kernel stack when not nested and takes the group from 0x34000200

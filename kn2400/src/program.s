@@ -494115,29 +494115,29 @@ func_4870587E:
 	add	-0x44, sp
 
 func_4870587E_entry:
-	mov	0x487965bb, d0
+	mov	RamCodeTrailer+3, d0
 	mov	d0, (0x2c, sp)
-	mov	0x487965bc, d0
+	mov	RamCodeTrailer+4, d0
 	mov	d0, (0x30, sp)
-	mov	0x487965be, d0
+	mov	RamCodeTrailer+6, d0
 	mov	d0, (0x28, sp)
-	mov	0x487965bd, d0
+	mov	RamCodeTrailer+5, d0
 	mov	d0, (0x24, sp)
-	mov	0x487965c2, a3
+	mov	RamCodeTrailerWords+3, a3
 	mov	a3, (0x18, sp)
-	mov	0x487965c1, a2
+	mov	RamCodeTrailerWords+2, a2
 	mov	a2, (0x14, sp)
-	mov	0x487965c0, a1
+	mov	RamCodeTrailerWords+1, a1
 	mov	a1, (0x1c, sp)
-	mov	0x487965bf, a0
+	mov	RamCodeTrailerWords, a0
 	mov	a0, (0x20, sp)
-	mov	0x487965c6, d0
+	mov	RamCodeTrailerWords+7, d0
 	mov	d0, (0xc, sp)
-	mov	0x487965c5, d0
+	mov	RamCodeTrailerWords+6, d0
 	mov	d0, (0x10, sp)
-	mov	0x487965c4, d0
+	mov	RamCodeTrailerWords+5, d0
 	mov	d0, (4, sp)
-	mov	0x487965c3, d0
+	mov	RamCodeTrailerWords+4, d0
 	mov	d0, (8, sp)
 	mov	a3, (0x34, sp)
 	mov	a2, (0x38, sp)
@@ -624865,11 +624865,11 @@ func_50144D28_entry_L2f:
 	mov	0x0000b014, d0
 	bra	func_50144D28_entry_L5d
 func_50144D28_entry_L3d:
-	mov	Str_empty_1261, a0
+	mov	func_5014A95C_Records_p0_64, a0
 	mov	0x0000b024, d0
 	bra	func_50144D28_entry_L5d
 func_50144D28_entry_L4b:
-	mov	Str_4_33, a0
+	mov	func_5014A95C_Records_p0_66, a0
 	mov	0x0000b034, d0
 	bra	func_50144D28_entry_L5d
 func_50144D28_entry_L59:
@@ -627992,12 +627992,12 @@ func_50146713_entry_L34:
 	add	0xb014, d3
 	bra	func_50146713_entry_L68
 func_50146713_entry_L44:
-	mov	Str_empty_1261, a0
+	mov	func_5014A95C_Records_p0_64, a0
 	and	d2, d3
 	add	0xb024, d3
 	bra	func_50146713_entry_L68
 func_50146713_entry_L54:
-	mov	Str_4_33, a0
+	mov	func_5014A95C_Records_p0_66, a0
 	and	d2, d3
 	add	0xb034, d3
 	bra	func_50146713_entry_L68
@@ -628891,7 +628891,7 @@ func_50146E69_entry:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x18, sp)
-	mov	Str_empty_1262, a0
+	mov	func_5014A95C_Records_p0_48, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x18, a1
@@ -632764,7 +632764,7 @@ func_50148E95_entry_L46:
 	mov	(0x20, sp), d0
 	asl	24, d1
 	add	d2, d1
-	mov	Str_empty_1254, a0
+	mov	func_5014A95C_Records_p0_98, a0
 	call	func_5014552F_entry, [d2,d3,a2,a3], 0x38
 	mov	d0, (0x18, sp)
 func_50148E95_entry_Lac:
@@ -635036,7 +635036,7 @@ func_5014A096_entry:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x1c, sp)
-	mov	Str_empty_1262, a0
+	mov	func_5014A95C_Records_p0_48, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x1c, a1
@@ -637406,7 +637406,7 @@ func_5014AF95_entry_L336:
 	bne	func_5014AF95_entry_L37d
 func_5014AF95_entry_L36b:
 	mov	a3, (0x14, sp)
-	mov	Str_empty_1256, a0
+	mov	func_5014A95C_Records_p0_113, a0
 	mov	(0x24, sp), d0
 	mov	d3, d1
 	call	func_5014542B_entry, [d2,d3,a2,a3], 0x30
@@ -637588,7 +637588,7 @@ func_5014AF95_entry_L4ee:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d0
-	mov	Str_empty_1257, a0
+	mov	func_5014A95C_Records_p0_112, a0
 	call	func_5014542B_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_5014AF95_entry_L502:
@@ -637648,7 +637648,7 @@ func_5014AF95_entry_L570:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x24, sp), d0
-	mov	Str_J_8, a0
+	mov	func_5014A95C_Records_p0_103, a0
 	call	func_5014542B_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_5014AF95_entry_L584:
@@ -637708,7 +637708,7 @@ func_5014AF95_entry_L5f2:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x1c, sp), d0
-	mov	Str_G_23, a0
+	mov	func_5014A95C_Records_p0_100, a0
 	call	func_5014542B_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_5014AF95_entry_L606:
@@ -637886,7 +637886,7 @@ func_5014AF95_entry_L743:
 	bne	func_5014AF95_entry_L78a
 func_5014AF95_entry_L778:
 	mov	a3, (0x14, sp)
-	mov	Str_I_9, a0
+	mov	func_5014A95C_Records_p0_102, a0
 	mov	(0x28, sp), d0
 	mov	d3, d1
 	call	func_5014542B_entry, [d2,d3,a2,a3], 0x30
@@ -637948,7 +637948,7 @@ func_5014AF95_entry_L7f8:
 	mov	d3, d1
 	mov	d0, (0x14, sp)
 	mov	(0x28, sp), d0
-	mov	Str_H_13, a0
+	mov	func_5014A95C_Records_p0_101, a0
 	call	func_5014542B_entry, [d2,d3,a2,a3], 0x30
 	mov	d0, (0x20, sp)
 func_5014AF95_entry_L80c:
@@ -638270,7 +638270,7 @@ func_5014BA01_entry_L71:
 func_5014BA01_entry_L8f:
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_1_40, a0
+	mov	data_48402E94_p0_0, a0
 	and	0xf0000000, d2
 	add	0x8031, d2
 	clr	d1
@@ -638459,7 +638459,7 @@ func_5014BBDB_entry_L6b:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x1c, sp)
-	mov	Str_empty_1262, a0
+	mov	func_5014A95C_Records_p0_48, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x1c, a1
@@ -638488,7 +638488,7 @@ func_5014BBDB_entry_L94:
 	add	0x8040, d2
 	clr	d0
 	mov	d0, (0x1c, sp)
-	mov	Str_empty_1262, a0
+	mov	func_5014A95C_Records_p0_48, a0
 	mov	d2, d0
 	mov	sp, a1
 	add	0x1c, a1
@@ -638540,14 +638540,14 @@ func_5014BCBC_L2f:
 	call	func_50147586_entry, [d2,d3,a2,a3], 0x2c
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_empty_1254, a0
+	mov	func_5014A95C_Records_p0_98, a0
 	mov	0x07b00040, d0
 	add	d2, d0
 	mov	d3, d1
 	call	func_5014552F_entry, [d2,d3,a2,a3], 0x38
 	clr	d0
 	mov	d0, (0x14, sp)
-	mov	Str_A_44, a0
+	mov	func_5014A95C_Records_p0_99, a0
 	mov	0x07b00041, d0
 	add	d2, d0
 	mov	d3, d1
@@ -757622,6 +757622,7 @@ func_5018DFD0:
 .mnbase 0x48400000
 RamCodeTrailer:
 	.byte	0xde, 0x00, 0x00, 0x02, 0x00, 0xfa, 0xdf	# "......."
+RamCodeTrailerWords:
 	.long	0x487285be
 	.long	LibF64Pow
 	.long	0x00038003

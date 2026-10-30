@@ -36108,11 +36108,13 @@ InitializeUser09_Table_3:	# 2 x u16, 0..65535; read by InitializeUser09 0x4C16E1
 User09_Functions:
 	.space	4, 0x00
 data_4C3DC57C:
-.incbin_range "baserom/kn6000_program.rom", 0x3DC57C, 0x3DC580
+	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E19F `mov data_4C3DC57C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2774F4	# +0
 User09_MainFunctions:
 	.space	4, 0x00
 data_4C3DC584:
-.incbin_range "baserom/kn6000_program.rom", 0x3DC584, 0x3DC588
+	# 4 bytes the code takes the address of: InitializeUser09 0x4C16E19F `mov data_4C3DC584, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2774F8	# +0
 
 # 303 objects of block V_demo1_1; object <name> is index <name>_ix, id <name>_id = (0xd6 << 16) | <name>_ix
 V_demo1_1_Viewables:
@@ -36725,7 +36727,8 @@ V_demo1_1_ResNames:
 	.long	RN_empty_4507	# fdemo_kd_JpegFile1
 	.long	RN_empty_4508	# fdemo_kd_Label_Jazz_Flute_Soloist
 	.long	RN_empty_4509	# fdemo_kd_Label_Jazz_Vibes
-.incbin_range "baserom/kn6000_program.rom", 0x3DCF04, 0x3DCF08
+	# 4 bytes read by MssNameFunc_L121 0x4C1637F8 `movhu (-2, a0), d0` (+2, u16); the read fields at their widths (u16), between them the commonest read width [INFERENCE: the fields no instruction is seen to read are not traced]
+	tab_u16	43786, 19495	# +0
 
 func_4C16B39F_entry_L43_Table:	# 1004 x u16, 0..999; read by MssNameFunc_L121 0x4C1637F8: `movhu	(-2, a0), d0`; func_4C16B39F_entry_L43 0x4C16B3E7: `movhu	(d0, a1), d1` ...
 	tab_u16	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11	# [0]
@@ -36829,19 +36832,19 @@ data_4C3DD70A:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DD70A, 0x3DD714
 
-Str_empty_265:	.asciz "$"
+Str_empty_264:	.asciz "$"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD716, 0x3DD71E
-Str_empty_264:	.asciz "("
+Str_empty_263:	.asciz "("
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD720, 0x3DD728
-Str_empty_263:	.asciz ","
+Str_empty_262:	.asciz ","
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD72A, 0x3DD732
 Str_0_8:	.asciz "0"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD734, 0x3DD73C
-Str_empty_262:	.asciz "@"
+Str_empty_261:	.asciz "@"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD73E, 0x3DD746
 Str_L:	.asciz "L"
@@ -36850,7 +36853,7 @@ Str_L:	.asciz "L"
 Str_P:	.asciz "P"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD752, 0x3DD75A
-Str_empty_261:	.asciz "`"
+Str_empty_260:	.asciz "`"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD75C, 0x3DD764
 Str_h:	.asciz "h"
@@ -36859,7 +36862,7 @@ Str_h:	.asciz "h"
 Str_x:	.asciz "x"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD770, 0x3DD778
-Str_empty_260:	.asciz "|"
+Str_empty_259:	.asciz "|"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD77A, 0x3DD782
 data_4C3DD782:
@@ -36973,13 +36976,13 @@ data_4C3DD8E0:
 data_4C3DD8EA:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DD8EA, 0x3DD8F4
-Str_empty_259:	.asciz " "
+Str_empty_258:	.asciz " "
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD8F6, 0x3DD8FE
 Str_X:	.asciz "X"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD900, 0x3DD908
-Str_empty_258:	.asciz "\\"
+Str_empty_257:	.asciz "\\"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DD90A, 0x3DD912
 Str_d:	.asciz "d"
@@ -37051,9 +37054,9 @@ data_4C3DD9E4:
 data_4C3DD9EE:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DD9EE, 0x3DD9F8
-Str_4_18:	.asciz "4"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DD9FA, 0x3DDA02
+data_4C3DD9F8:
+# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x3DD9F8, 0x3DDA02
 Str_8_5:	.asciz "8"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DDA04, 0x3DDA0C
@@ -37096,9 +37099,9 @@ data_4C3DDA7A:
 data_4C3DDA84:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDA84, 0x3DDA8E
-Str_empty_257:	.asciz "<"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DDA90, 0x3DDA98
+data_4C3DDA8E:
+# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
+.incbin_range "baserom/kn6000_program.rom", 0x3DDA8E, 0x3DDA98
 Str_D:	.asciz "D"
 # census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
 .incbin_range "baserom/kn6000_program.rom", 0x3DDA9A, 0x3DDAA2
@@ -37159,60 +37162,9 @@ data_4C3DDB4C:
 data_4C3DDB56:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDB56, 0x3DDB60
-Str_p:	.asciz "p"
-# census: opaque -- unknown-dump: 8 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); no address the code or a typed item holds points into them
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB62, 0x3DDB6A
-data_4C3DDB6A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB6A, 0x3DDB74
-data_4C3DDB74:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB74, 0x3DDB7E
-data_4C3DDB7E:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB7E, 0x3DDB88
-data_4C3DDB88:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB88, 0x3DDB92
-data_4C3DDB92:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB92, 0x3DDB9C
-data_4C3DDB9C:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDB9C, 0x3DDBA6
-data_4C3DDBA6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBA6, 0x3DDBB0
-data_4C3DDBB0:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBB0, 0x3DDBBA
-data_4C3DDBBA:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBBA, 0x3DDBC4
-data_4C3DDBC4:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBC4, 0x3DDBCE
-data_4C3DDBCE:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBCE, 0x3DDBD8
-data_4C3DDBD8:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBD8, 0x3DDBE2
-data_4C3DDBE2:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBE2, 0x3DDBEC
-data_4C3DDBEC:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBEC, 0x3DDBF6
-data_4C3DDBF6:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDBF6, 0x3DDC00
-data_4C3DDC00:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDC00, 0x3DDC0A
-data_4C3DDC0A:
-# census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
-.incbin_range "baserom/kn6000_program.rom", 0x3DDC0A, 0x3DDC14
+
+StyleGenreTable_p4_p4_0:	# REC_StyleGenreTable_p4_p4 (180 bytes)
+	REC_StyleGenreTable_p4_p4	f0=112, x2="q\x00r\x00", f6=115, x8="\xFF\xFF\xE8\x00\xE9\x00\xEA\x00\xEB\x00\xFF\xFF\xEC\x00\xED\x00\xEE\x00\xEF\x00\xFF\xFF\xF0\x00\xF1\x00\xF2\x00\xF3\x00\xFF\xFF\xF8\x00\xF9\x00\xFA\x00\xFB\x00\xFF\xFF\x04\x01\x05\x01\x06\x01\x07\x01\xFF\xFF\x10\x01\x11\x01\x12\x01\x13\x01\xFF\xFF\x14\x01\x15\x01\x16\x01\x17\x01\xFF\xFF\x18\x01\x19\x01\x1A\x01\x1B\x01\xFF\xFF \x01!\x01\"\x01#\x01\xFF\xFF$\x01%\x01&\x01'\x01\xFF\xFFl\x01m\x01n\x01o\x01\xFF\xFFp\x01q\x01r\x01s\x01\xFF\xFFt\x01u\x01v\x01w\x01\xFF\xFFx\x01y\x01z\x01{\x01\xFF\xFF|\x01}\x01~\x01\x7F\x01\xFF\xFF\x80\x01\x81\x01\x82\x01\x83\x01\xFF\xFF\x80\x03\x81\x03\x82\x03\x83\x03\xFF\xFF"
 data_4C3DDC14:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDC14, 0x3DDC1E
@@ -37225,8 +37177,7 @@ data_4C3DDC28:
 data_4C3DDC32:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDC32, 0x3DDC3C
-
-StyleGenreTable_p4_p4_0:	# REC_StyleGenreTable_p4_p4 (180 bytes)
+StyleGenreTable_p4_p4_1:	# REC_StyleGenreTable_p4_p4 (180 bytes)
 	REC_StyleGenreTable_p4_p4	f0=256, x2="\x01\x01\x02\x01", f6=259, x8="\xFF\xFF\x1C\x01\x1D\x01\x1E\x01\x1F\x01\xFF\xFF\x84\x01\x85\x01\x86\x01\x87\x01\xFF\xFF\xC0\x01\xC1\x01\xC2\x01\xC3\x01\xFF\xFF\xC4\x01\xC5\x01\xC6\x01\xC7\x01\xFF\xFF\xC8\x01\xC9\x01\xCA\x01\xCB\x01\xFF\xFF\xCC\x01\xCD\x01\xCE\x01\xCF\x01\xFF\xFF\xD0\x01\xD1\x01\xD2\x01\xD3\x01\xFF\xFF\xD4\x01\xD5\x01\xD6\x01\xD7\x01\xFF\xFF\xD8\x01\xD9\x01\xDA\x01\xDB\x01\xFF\xFF\xDC\x01\xDD\x01\xDE\x01\xDF\x01\xFF\xFF\xE0\x01\xE1\x01\xE2\x01\xE3\x01\xFF\xFF\xE4\x01\xE5\x01\xE6\x01\xE7\x01\xFF\xFF\xE8\x01\xE9\x01\xEA\x01\xEB\x01\xFF\xFF\xEC\x01\xED\x01\xEE\x01\xEF\x01\xFF\xFF\xF0\x01\xF1\x01\xF2\x01\xF3\x01\xFF\xFF\xF4\x01\xF5\x01\xF6\x01\xF7\x01\xFF\xFF\xF8\x01\xF9\x01\xFA\x01\xFB\x01\xFF\xFF"
 data_4C3DDCF0:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
@@ -37276,7 +37227,7 @@ data_4C3DDD7C:
 data_4C3DDD86:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDD86, 0x3DDD90
-StyleGenreTable_p4_p4_1:	# REC_StyleGenreTable_p4_p4 (180 bytes)
+StyleGenreTable_p4_p4_2:	# REC_StyleGenreTable_p4_p4 (180 bytes)
 	REC_StyleGenreTable_p4_p4	f0=392, x2="\x89\x01\x8A\x01", f6=395, x8="\xFF\xFF\x8C\x01\x8D\x01\x8E\x01\x8F\x01\xFF\xFF\xAC\x01\xAD\x01\xAE\x01\xAF\x01\xFF\xFF0\x021\x022\x023\x02\xFF\xFF4\x025\x026\x027\x02\xFF\xFF8\x029\x02:\x02;\x02\xFF\xFF<\x02=\x02>\x02?\x02\xFF\xFF@\x02A\x02B\x02C\x02\xFF\xFFH\x02I\x02J\x02K\x02\xFF\xFFL\x02M\x02N\x02O\x02\xFF\xFFP\x02Q\x02R\x02S\x02\xFF\xFFT\x02U\x02V\x02W\x02\xFF\xFF\xF4\x02\xF5\x02\xF6\x02\xF7\x02\xFF\xFF\xF8\x02\xF9\x02\xFA\x02\xFB\x02\xFF\xFF\xFC\x02\xFD\x02\xFE\x02\xFF\x02\xFF\xFF\x08\x03\x09\x03\n\x03\x0B\x03\xFF\xFF(\x03)\x03*\x03+\x03\xFF\xFF\xA8\x03\xA9\x03\xAA\x03\xAB\x03\xFF\xFF"
 data_4C3DDE44:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
@@ -37314,9 +37265,9 @@ data_4C3DDEA8:
 data_4C3DDEB2:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3DDEB2, 0x3DDEBC
-StyleGenreTable_p4_p4_2:	# REC_StyleGenreTable_p4_p4 (180 bytes)
-	REC_StyleGenreTable_p4_p4	f0=580, x2="E\x02F\x02", f6=583, x8="\xFF\xFFX\x02Y\x02Z\x02[\x02\xFF\xFF`\x02a\x02b\x02c\x02\xFF\xFFd\x02e\x02f\x02g\x02\xFF\xFFh\x02i\x02j\x02k\x02\xFF\xFFl\x02m\x02n\x02o\x02\xFF\xFFx\x02y\x02z\x02{\x02\xFF\xFF|\x02}\x02~\x02\x7F\x02\xFF\xFF\x80\x02\x81\x02\x82\x02\x83\x02\xFF\xFF\x84\x02\x85\x02\x86\x02\x87\x02\xFF\xFF\x88\x02\x89\x02\x8A\x02\x8B\x02\xFF\xFF\x90\x02\x91\x02\x92\x02\x93\x02\xFF\xFF\x94\x02\x95\x02\x96\x02\x97\x02\xFF\xFF\x9C\x02\x9D\x02\x9E\x02\x9F\x02\xFF\xFF\xA0\x02\xA1\x02\xA2\x02\xA3\x02\xFF\xFF\xB4\x03\xB5\x03\xB6\x03\xB7\x03\xFF\xFF\xB8\x03\xB9\x03\xBA\x03\xBB\x03\xFF\xFF\xC0\x03\xC1\x03\xC2\x03\xC3\x03\xFF\xFF"
 StyleGenreTable_p4_p4_3:	# REC_StyleGenreTable_p4_p4 (180 bytes)
+	REC_StyleGenreTable_p4_p4	f0=580, x2="E\x02F\x02", f6=583, x8="\xFF\xFFX\x02Y\x02Z\x02[\x02\xFF\xFF`\x02a\x02b\x02c\x02\xFF\xFFd\x02e\x02f\x02g\x02\xFF\xFFh\x02i\x02j\x02k\x02\xFF\xFFl\x02m\x02n\x02o\x02\xFF\xFFx\x02y\x02z\x02{\x02\xFF\xFF|\x02}\x02~\x02\x7F\x02\xFF\xFF\x80\x02\x81\x02\x82\x02\x83\x02\xFF\xFF\x84\x02\x85\x02\x86\x02\x87\x02\xFF\xFF\x88\x02\x89\x02\x8A\x02\x8B\x02\xFF\xFF\x90\x02\x91\x02\x92\x02\x93\x02\xFF\xFF\x94\x02\x95\x02\x96\x02\x97\x02\xFF\xFF\x9C\x02\x9D\x02\x9E\x02\x9F\x02\xFF\xFF\xA0\x02\xA1\x02\xA2\x02\xA3\x02\xFF\xFF\xB4\x03\xB5\x03\xB6\x03\xB7\x03\xFF\xFF\xB8\x03\xB9\x03\xBA\x03\xBB\x03\xFF\xFF\xC0\x03\xC1\x03\xC2\x03\xC3\x03\xFF\xFF"
+StyleGenreTable_p4_p4_4:	# REC_StyleGenreTable_p4_p4 (180 bytes)
 	REC_StyleGenreTable_p4_p4	f0=604, x2="]\x02^\x02", f6=607, x8="\xFF\xFF\x8C\x02\x8D\x02\x8E\x02\x8F\x02\xFF\xFF\xA8\x02\xA9\x02\xAA\x02\xAB\x02\xFF\xFF\xAC\x02\xAD\x02\xAE\x02\xAF\x02\xFF\xFF\xB0\x02\xB1\x02\xB2\x02\xB3\x02\xFF\xFF\xB4\x02\xB5\x02\xB6\x02\xB7\x02\xFF\xFF\xB8\x02\xB9\x02\xBA\x02\xBB\x02\xFF\xFF\xBC\x02\xBD\x02\xBE\x02\xBF\x02\xFF\xFF\xC0\x02\xC1\x02\xC2\x02\xC3\x02\xFF\xFF\xC4\x02\xC5\x02\xC6\x02\xC7\x02\xFF\xFF\xC8\x02\xC9\x02\xCA\x02\xCB\x02\xFF\xFF\xCC\x02\xCD\x02\xCE\x02\xCF\x02\xFF\xFF\xD0\x02\xD1\x02\xD2\x02\xD3\x02\xFF\xFF\xD4\x02\xD5\x02\xD6\x02\xD7\x02\xFF\xFF\xD8\x02\xD9\x02\xDA\x02\xDB\x02\xFF\xFF\xDC\x02\xDD\x02\xDE\x02\xDF\x02\xFF\xFF\xE0\x02\xE1\x02\xE2\x02\xE3\x02\xFF\xFF\xE4\x02\xE5\x02\xE6\x02\xE7\x02\xFF\xFF"
 data_4C3DE024:
 # census: opaque -- unknown-dump: 10 bytes of binary in the program flash; no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
@@ -37369,27 +37320,27 @@ ptrs_4C3DE09C:
 	.long	Text_Italian_Pop+85
 	.long	data_4C3DD70A
 	.long	Text_Italian_Pop+102
-	.long	Str_empty_265
-	.long	Text_Italian_Pop+119
 	.long	Str_empty_264
-	.long	Text_Italian_Pop+136
+	.long	Text_Italian_Pop+119
 	.long	Str_empty_263
+	.long	Text_Italian_Pop+136
+	.long	Str_empty_262
 	.long	Text_Italian_Pop+153
 	.long	Str_0_8
 	.long	Text_Italian_Pop+170
-	.long	Str_empty_262
+	.long	Str_empty_261
 	.long	Text_Italian_Pop+187
 	.long	Str_L
 	.long	Text_Italian_Pop+204
 	.long	Str_P
 	.long	Text_Italian_Pop+221
-	.long	Str_empty_261
+	.long	Str_empty_260
 	.long	Text_Italian_Pop+238
 	.long	Str_h
 	.long	Text_Italian_Pop+255
 	.long	Str_x
 	.long	Text_Italian_Pop+272
-	.long	Str_empty_260
+	.long	Str_empty_259
 	.long	Text_Italian_Pop+289
 	.long	data_4C3DD782
 	.long	Text_Italian_Pop+306
@@ -37468,11 +37419,11 @@ ptrs_4C3DE244:
 	.long	Text_Italian_Pop+901
 	.long	data_4C3DD8EA
 	.long	Text_Italian_Pop+918
-	.long	Str_empty_259
+	.long	Str_empty_258
 	.long	Text_Italian_Pop+935
 	.long	Str_X
 	.long	Text_Italian_Pop+952
-	.long	Str_empty_258
+	.long	Str_empty_257
 	.long	Text_Italian_Pop+969
 	.long	Str_d
 	.long	Text_Italian_Pop+986
@@ -37523,7 +37474,7 @@ ptrs_4C3DE244:
 	.space	4, 0x00
 ptrs_4C3DE32C:
 	.long	Text_Italian_Pop+1360
-	.long	Str_4_18
+	.long	data_4C3DD9F8
 	.long	Text_Italian_Pop+1377
 	.long	Str_8_5
 	.long	Text_Italian_Pop+1394
@@ -37556,7 +37507,7 @@ ptrs_4C3DE32C:
 	.space	4, 0x00
 ptrs_4C3DE3AC:
 	.long	Text_90_s_Boy_Groups
-	.long	Str_empty_257
+	.long	data_4C3DDA8E
 	.long	Text_90_s_Boy_Groups+17
 	.long	Str_D
 	.long	Text_90_s_Boy_Groups+34
@@ -37601,41 +37552,41 @@ ptrs_4C3DE3AC:
 	.space	4, 0x00
 ptrs_4C3DE45C:
 	.long	Text_Slowest_Ballads
-	.long	Str_p
+	.long	StyleGenreTable_p4_p4_0
 	.long	Text_Slowest_Ballads+17
-	.long	data_4C3DDB6A
+	.long	StyleGenreTable_p4_p4_0+10
 	.long	Text_Slowest_Ballads+34
-	.long	data_4C3DDB74
+	.long	StyleGenreTable_p4_p4_0+20
 	.long	Text_Slowest_Ballads+51
-	.long	data_4C3DDB7E
+	.long	StyleGenreTable_p4_p4_0+30
 	.long	Text_Slowest_Ballads+68
-	.long	data_4C3DDB88
+	.long	StyleGenreTable_p4_p4_0+40
 	.long	Text_Slowest_Ballads+85
-	.long	data_4C3DDB92
+	.long	StyleGenreTable_p4_p4_0+50
 	.long	Text_Slowest_Ballads+102
-	.long	data_4C3DDB9C
+	.long	StyleGenreTable_p4_p4_0+60
 	.long	Text_Slowest_Ballads+119
-	.long	data_4C3DDBA6
+	.long	StyleGenreTable_p4_p4_0+70
 	.long	Text_Slowest_Ballads+136
-	.long	data_4C3DDBB0
+	.long	StyleGenreTable_p4_p4_0+80
 	.long	Text_Slowest_Ballads+153
-	.long	data_4C3DDBBA
+	.long	StyleGenreTable_p4_p4_0+90
 	.long	Text_Slowest_Ballads+170
-	.long	data_4C3DDBC4
+	.long	StyleGenreTable_p4_p4_0+100
 	.long	Text_Slowest_Ballads+187
-	.long	data_4C3DDBCE
+	.long	StyleGenreTable_p4_p4_0+110
 	.long	Text_Slowest_Ballads+204
-	.long	data_4C3DDBD8
+	.long	StyleGenreTable_p4_p4_0+120
 	.long	Text_Slowest_Ballads+221
-	.long	data_4C3DDBE2
+	.long	StyleGenreTable_p4_p4_0+130
 	.long	Text_Slowest_Ballads+238
-	.long	data_4C3DDBEC
+	.long	StyleGenreTable_p4_p4_0+140
 	.long	Text_Slowest_Ballads+255
-	.long	data_4C3DDBF6
+	.long	StyleGenreTable_p4_p4_0+150
 	.long	Text_Slowest_Ballads+272
-	.long	data_4C3DDC00
+	.long	StyleGenreTable_p4_p4_0+160
 	.long	Text_Slowest_Ballads+289
-	.long	data_4C3DDC0A
+	.long	StyleGenreTable_p4_p4_0+170
 	.long	Text_Slowest_Ballads+306
 	.long	data_4C3DDC14
 	.long	Text_Slowest_Ballads+323
@@ -37648,41 +37599,41 @@ ptrs_4C3DE45C:
 	.space	4, 0x00
 ptrs_4C3DE514:
 	.long	Text_Tower_Of_Jazz
-	.long	StyleGenreTable_p4_p4_0
+	.long	StyleGenreTable_p4_p4_1
 	.long	Text_Tower_Of_Jazz+17
-	.long	StyleGenreTable_p4_p4_0+10
+	.long	StyleGenreTable_p4_p4_1+10
 	.long	Text_Tower_Of_Jazz+34
-	.long	StyleGenreTable_p4_p4_0+20
+	.long	StyleGenreTable_p4_p4_1+20
 	.long	Text_Tower_Of_Jazz+51
-	.long	StyleGenreTable_p4_p4_0+30
+	.long	StyleGenreTable_p4_p4_1+30
 	.long	Text_Tower_Of_Jazz+68
-	.long	StyleGenreTable_p4_p4_0+40
+	.long	StyleGenreTable_p4_p4_1+40
 	.long	Text_Tower_Of_Jazz+85
-	.long	StyleGenreTable_p4_p4_0+50
+	.long	StyleGenreTable_p4_p4_1+50
 	.long	Text_Tower_Of_Jazz+102
-	.long	StyleGenreTable_p4_p4_0+60
+	.long	StyleGenreTable_p4_p4_1+60
 	.long	Text_Tower_Of_Jazz+119
-	.long	StyleGenreTable_p4_p4_0+70
+	.long	StyleGenreTable_p4_p4_1+70
 	.long	Text_Tower_Of_Jazz+136
-	.long	StyleGenreTable_p4_p4_0+80
+	.long	StyleGenreTable_p4_p4_1+80
 	.long	Text_Tower_Of_Jazz+153
-	.long	StyleGenreTable_p4_p4_0+90
+	.long	StyleGenreTable_p4_p4_1+90
 	.long	Text_Tower_Of_Jazz+170
-	.long	StyleGenreTable_p4_p4_0+100
+	.long	StyleGenreTable_p4_p4_1+100
 	.long	Text_Tower_Of_Jazz+187
-	.long	StyleGenreTable_p4_p4_0+110
+	.long	StyleGenreTable_p4_p4_1+110
 	.long	Text_Tower_Of_Jazz+204
-	.long	StyleGenreTable_p4_p4_0+120
+	.long	StyleGenreTable_p4_p4_1+120
 	.long	Text_Tower_Of_Jazz+221
-	.long	StyleGenreTable_p4_p4_0+130
+	.long	StyleGenreTable_p4_p4_1+130
 	.long	Text_Tower_Of_Jazz+238
-	.long	StyleGenreTable_p4_p4_0+140
+	.long	StyleGenreTable_p4_p4_1+140
 	.long	Text_Tower_Of_Jazz+255
-	.long	StyleGenreTable_p4_p4_0+150
+	.long	StyleGenreTable_p4_p4_1+150
 	.long	Text_Tower_Of_Jazz+272
-	.long	StyleGenreTable_p4_p4_0+160
+	.long	StyleGenreTable_p4_p4_1+160
 	.long	Text_Tower_Of_Jazz+289
-	.long	StyleGenreTable_p4_p4_0+170
+	.long	StyleGenreTable_p4_p4_1+170
 	.long	Text_Tower_Of_Jazz+306
 	.long	data_4C3DDCF0
 	.long	Text_Tower_Of_Jazz+323
@@ -37719,41 +37670,41 @@ ptrs_4C3DE514:
 	.space	4, 0x00
 ptrs_4C3DE62C:
 	.long	Text_Island_Romance
-	.long	StyleGenreTable_p4_p4_1
+	.long	StyleGenreTable_p4_p4_2
 	.long	Text_Island_Romance+17
-	.long	StyleGenreTable_p4_p4_1+10
+	.long	StyleGenreTable_p4_p4_2+10
 	.long	Text_Island_Romance+34
-	.long	StyleGenreTable_p4_p4_1+20
+	.long	StyleGenreTable_p4_p4_2+20
 	.long	Text_Island_Romance+51
-	.long	StyleGenreTable_p4_p4_1+30
+	.long	StyleGenreTable_p4_p4_2+30
 	.long	Text_Island_Romance+68
-	.long	StyleGenreTable_p4_p4_1+40
+	.long	StyleGenreTable_p4_p4_2+40
 	.long	Text_Island_Romance+85
-	.long	StyleGenreTable_p4_p4_1+50
+	.long	StyleGenreTable_p4_p4_2+50
 	.long	Text_Island_Romance+102
-	.long	StyleGenreTable_p4_p4_1+60
+	.long	StyleGenreTable_p4_p4_2+60
 	.long	Text_Island_Romance+119
-	.long	StyleGenreTable_p4_p4_1+70
+	.long	StyleGenreTable_p4_p4_2+70
 	.long	Text_Island_Romance+136
-	.long	StyleGenreTable_p4_p4_1+80
+	.long	StyleGenreTable_p4_p4_2+80
 	.long	Text_Island_Romance+153
-	.long	StyleGenreTable_p4_p4_1+90
+	.long	StyleGenreTable_p4_p4_2+90
 	.long	Text_Island_Romance+170
-	.long	StyleGenreTable_p4_p4_1+100
+	.long	StyleGenreTable_p4_p4_2+100
 	.long	Text_Island_Romance+187
-	.long	StyleGenreTable_p4_p4_1+110
+	.long	StyleGenreTable_p4_p4_2+110
 	.long	Text_Island_Romance+204
-	.long	StyleGenreTable_p4_p4_1+120
+	.long	StyleGenreTable_p4_p4_2+120
 	.long	Text_Island_Romance+221
-	.long	StyleGenreTable_p4_p4_1+130
+	.long	StyleGenreTable_p4_p4_2+130
 	.long	Text_Island_Romance+238
-	.long	StyleGenreTable_p4_p4_1+140
+	.long	StyleGenreTable_p4_p4_2+140
 	.long	Text_Island_Romance+255
-	.long	StyleGenreTable_p4_p4_1+150
+	.long	StyleGenreTable_p4_p4_2+150
 	.long	Text_Island_Romance+272
-	.long	StyleGenreTable_p4_p4_1+160
+	.long	StyleGenreTable_p4_p4_2+160
 	.long	Text_Island_Romance+289
-	.long	StyleGenreTable_p4_p4_1+170
+	.long	StyleGenreTable_p4_p4_2+170
 	.long	0
 	.space	4, 0x00
 ptrs_4C3DE6C4:
@@ -37785,80 +37736,80 @@ ptrs_4C3DE6C4:
 	.space	4, 0x00
 ptrs_4C3DE72C:
 	.long	Text_Bluegrass_Dance+204
-	.long	StyleGenreTable_p4_p4_2
+	.long	StyleGenreTable_p4_p4_3
 	.long	Text_Bluegrass_Dance+221
-	.long	StyleGenreTable_p4_p4_2+10
+	.long	StyleGenreTable_p4_p4_3+10
 	.long	Text_Bluegrass_Dance+238
-	.long	StyleGenreTable_p4_p4_2+20
+	.long	StyleGenreTable_p4_p4_3+20
 	.long	Text_Bluegrass_Dance+255
-	.long	StyleGenreTable_p4_p4_2+30
+	.long	StyleGenreTable_p4_p4_3+30
 	.long	Text_Bluegrass_Dance+272
-	.long	StyleGenreTable_p4_p4_2+40
+	.long	StyleGenreTable_p4_p4_3+40
 	.long	Text_Bluegrass_Dance+289
-	.long	StyleGenreTable_p4_p4_2+50
+	.long	StyleGenreTable_p4_p4_3+50
 	.long	Text_Bluegrass_Dance+306
-	.long	StyleGenreTable_p4_p4_2+60
+	.long	StyleGenreTable_p4_p4_3+60
 	.long	Text_Bluegrass_Dance+323
-	.long	StyleGenreTable_p4_p4_2+70
+	.long	StyleGenreTable_p4_p4_3+70
 	.long	Text_Bluegrass_Dance+340
-	.long	StyleGenreTable_p4_p4_2+80
+	.long	StyleGenreTable_p4_p4_3+80
 	.long	Text_Bluegrass_Dance+357
-	.long	StyleGenreTable_p4_p4_2+90
+	.long	StyleGenreTable_p4_p4_3+90
 	.long	Text_Bluegrass_Dance+374
-	.long	StyleGenreTable_p4_p4_2+100
+	.long	StyleGenreTable_p4_p4_3+100
 	.long	Text_Bluegrass_Dance+391
-	.long	StyleGenreTable_p4_p4_2+110
+	.long	StyleGenreTable_p4_p4_3+110
 	.long	Text_Bluegrass_Dance+408
-	.long	StyleGenreTable_p4_p4_2+120
+	.long	StyleGenreTable_p4_p4_3+120
 	.long	Text_Bluegrass_Dance+425
-	.long	StyleGenreTable_p4_p4_2+130
+	.long	StyleGenreTable_p4_p4_3+130
 	.long	Text_Bluegrass_Dance+442
-	.long	StyleGenreTable_p4_p4_2+140
+	.long	StyleGenreTable_p4_p4_3+140
 	.long	Text_Bluegrass_Dance+459
-	.long	StyleGenreTable_p4_p4_2+150
+	.long	StyleGenreTable_p4_p4_3+150
 	.long	Text_Bluegrass_Dance+476
-	.long	StyleGenreTable_p4_p4_2+160
+	.long	StyleGenreTable_p4_p4_3+160
 	.long	Text_Bluegrass_Dance+493
-	.long	StyleGenreTable_p4_p4_2+170
+	.long	StyleGenreTable_p4_p4_3+170
 	.long	0
 	.space	4, 0x00
 ptrs_4C3DE7C4:
 	.long	Text_Uptown_Cha_Cha
-	.long	StyleGenreTable_p4_p4_3
+	.long	StyleGenreTable_p4_p4_4
 	.long	Text_Uptown_Cha_Cha+17
-	.long	StyleGenreTable_p4_p4_3+10
+	.long	StyleGenreTable_p4_p4_4+10
 	.long	Text_Uptown_Cha_Cha+34
-	.long	StyleGenreTable_p4_p4_3+20
+	.long	StyleGenreTable_p4_p4_4+20
 	.long	Text_Uptown_Cha_Cha+51
-	.long	StyleGenreTable_p4_p4_3+30
+	.long	StyleGenreTable_p4_p4_4+30
 	.long	Text_Uptown_Cha_Cha+68
-	.long	StyleGenreTable_p4_p4_3+40
+	.long	StyleGenreTable_p4_p4_4+40
 	.long	Text_Uptown_Cha_Cha+85
-	.long	StyleGenreTable_p4_p4_3+50
+	.long	StyleGenreTable_p4_p4_4+50
 	.long	Text_Uptown_Cha_Cha+102
-	.long	StyleGenreTable_p4_p4_3+60
+	.long	StyleGenreTable_p4_p4_4+60
 	.long	Text_Uptown_Cha_Cha+119
-	.long	StyleGenreTable_p4_p4_3+70
+	.long	StyleGenreTable_p4_p4_4+70
 	.long	Text_Uptown_Cha_Cha+136
-	.long	StyleGenreTable_p4_p4_3+80
+	.long	StyleGenreTable_p4_p4_4+80
 	.long	Text_Uptown_Cha_Cha+153
-	.long	StyleGenreTable_p4_p4_3+90
+	.long	StyleGenreTable_p4_p4_4+90
 	.long	Text_Uptown_Cha_Cha+170
-	.long	StyleGenreTable_p4_p4_3+100
+	.long	StyleGenreTable_p4_p4_4+100
 	.long	Text_Uptown_Cha_Cha+187
-	.long	StyleGenreTable_p4_p4_3+110
+	.long	StyleGenreTable_p4_p4_4+110
 	.long	Text_Uptown_Cha_Cha+204
-	.long	StyleGenreTable_p4_p4_3+120
+	.long	StyleGenreTable_p4_p4_4+120
 	.long	Text_Uptown_Cha_Cha+221
-	.long	StyleGenreTable_p4_p4_3+130
+	.long	StyleGenreTable_p4_p4_4+130
 	.long	Text_Uptown_Cha_Cha+238
-	.long	StyleGenreTable_p4_p4_3+140
+	.long	StyleGenreTable_p4_p4_4+140
 	.long	Text_Uptown_Cha_Cha+255
-	.long	StyleGenreTable_p4_p4_3+150
+	.long	StyleGenreTable_p4_p4_4+150
 	.long	Text_Uptown_Cha_Cha+272
-	.long	StyleGenreTable_p4_p4_3+160
+	.long	StyleGenreTable_p4_p4_4+160
 	.long	Text_Uptown_Cha_Cha+289
-	.long	StyleGenreTable_p4_p4_3+170
+	.long	StyleGenreTable_p4_p4_4+170
 	.long	Text_Uptown_Cha_Cha+306
 	.long	data_4C3DE024
 	.long	Text_Uptown_Cha_Cha+323
@@ -38031,7 +37982,7 @@ StyleAlphabetTable_p4_27:	# REC_StyleAlphabetTable_p4 (6 bytes)
 StyleAlphabetTable:	# 34 x StyleLetter (8 bytes each); read by func_4C164F3F 0x4C164F3F `mov (4, a0), a0`; func_4C164F3F 0x4C164F3F `mov (d2, a2), a1`; func_4C16506A 0x4C16506A `mov (4, a0), a0` (+6)
 	StyleLetter	letter=Str_1_17, setups=StyleAlphabetTable_p4_0	# [0]
 	StyleLetter	letter=Str_2_19, setups=StyleAlphabetTable_p4_1
-	StyleLetter	letter=Str_4_19, setups=StyleAlphabetTable_p4_2
+	StyleLetter	letter=Str_4_18, setups=StyleAlphabetTable_p4_2
 	StyleLetter	letter=Str_5_14, setups=StyleAlphabetTable_p4_3
 	StyleLetter	letter=Str_6_14, setups=StyleAlphabetTable_p4_4
 	StyleLetter	letter=Str_7_5, setups=StyleAlphabetTable_p4_5
@@ -39540,7 +39491,8 @@ User07_FunctionNames:
 User07_MainFunctions:
 	.space	4, 0x00
 data_4C3E5D8C:
-.incbin_range "baserom/kn6000_program.rom", 0x3E5D8C, 0x3E5D90
+	# 4 bytes the code takes the address of: InitializeUser07 0x4C171CF2 `mov data_4C3E5D8C, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (pointers) [INFERENCE: what the callee reads through the address is not traced]
+	.long	data_4C2ABFA8	# +0
 
 # 18 objects of block V_HD_MENU; object <name> is index <name>_ix, id <name>_id = (0x77 << 16) | <name>_ix
 V_HD_MENU_Viewables:

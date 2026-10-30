@@ -4575,16 +4575,19 @@ TitleProc_L75_Table:	# 4 x u32, 32505856..32505856; read by ModeProc_L2d5 0x4C01
 ApTitleControl_Lfd_Table:	# 12 x u16, 0..55159; read by ApTitleControl_Lfd 0x4C01E01A: `movhu	(d0, a1), d0`; ApTitleControl_Lfd 0x4C01E01A: `movhu	(d0, a1), d2` ...
 	tab_u16	0, 0, 0, 0, 0, 288, 0, 288, 55159, 19457, 55159, 19457
 data_5000071C:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF7C, 0x3EDF84
+	# 8 bytes the code takes the address of: MainTitleControl_L2d5 0x4C01E31B `mov data_5000071C, d2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	1, 0, 64, 1, 223, 0, 160, 1	# +0
 
 MainTitleControl_L2d5_Var:	# u32, initial value of a RAM variable; read / written by MainTitleControl_L2d5 0x4C01E31B: `mov a0, (MainTitleControl_L2d5_Var)`
 	.long	0
 data_50000728:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF88, 0x3EDF90
+	# 8 bytes the code takes the address of: MainTitleControl_L2d5 0x4C01E31B `mov data_50000728, d2` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	1, 0, 64, 1, 224, 0, 160, 1	# +0
 MainTitleControl_L2d5_Var_2:	# u32, initial value of a RAM variable; read / written by MainTitleControl_L2d5 0x4C01E31B: `mov a0, (MainTitleControl_L2d5_Var_2)`
 	.long	0
 data_50000734:
-.incbin_range "baserom/kn6000_program.rom", 0x3EDF94, 0x3EDF9C
+	# 8 bytes the code takes the address of: MainTitleControl_L22a 0x4C01E270 `mov data_50000734, d3` (+0, as a base); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	1, 0, 64, 1, 236, 0, 160, 1	# +0
 MainTitleControl_L22a_Var:	# u32, initial value of a RAM variable; read / written by MainTitleControl_L22a 0x4C01E270: `mov d2, (MainTitleControl_L22a_Var)`
 	.long	0
 PanelSimulator_window:
@@ -6996,7 +6999,9 @@ SvariAccordion_AcdnTab6_visible:
 # census: opaque -- unknown-dump: 4 bytes of 7-bit values in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3EEAA8, 0x3EEAAC
 SvariAccordion_AcdnTab6_selected:
-	.space	4, 0x00
+	.space	3, 0x00
+data_5000124F:
+	.align	4, 0x00
 SvariAccordion_AcdnTab6_swvari:
 # census: opaque -- unknown-dump: 4 bytes of binary in the initialised-RAM image (initial values no instruction names); no instruction reads them (tools/data_readers.py: no load, store, base or call argument in them); a typed pointer or a code immediate holds their address, but nothing is read through it
 .incbin_range "baserom/kn6000_program.rom", 0x3EEAB0, 0x3EEAB4
@@ -8165,7 +8170,7 @@ AcMixPartSoundProc_L118_Table:
 	.long	Text_PART_2_2+256
 	.long	Text_PART_2_2+264
 	.long	Text_PART_2_2+272
-	.long	Str_empty_907
+	.long	Str_empty_905
 func_4C075F32_entry_Lae_Table:
 	.long	Str_PT_1
 	.long	Str_PT_2
@@ -8749,7 +8754,9 @@ SctlBox_prow:
 SctlBox_crow:
 	.space	4, 0x00
 data_500022B4:
-.incbin_range "baserom/kn6000_program.rom", 0x3EFB14, 0x3EFB28
+	# 20 bytes the code takes the address of: func_4C03D0C7 0x4C03D0C7 `call memcpy_entry, [a2,a3], 8` (+0, arg a1); func_4C03D13B 0x4C03D13B `call LibDiv32, 0, 0` (+0, arg a0); func_4C03D13B 0x4C03D13B `call memcpy_entry, [a2,a3], 8` (+0, arg a1) (+4 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +0
+	tab_u8	0, 255, 255, 255	# +16
 SeqMenuScreen_window:
 	.space	4, 0xFF
 SeqMenuScreen_TitleMenu_RECORD_EDIT_selected:
@@ -13718,11 +13725,20 @@ send_all_trees_entry_L14b_Table:	# 18 x u8, 0..18; read by send_all_trees_entry_
 build_bl_tree_Table:	# 2 x u8, 15..255; read by build_bl_tree_entry : `movbu	(a1), d0`
 	tab_u8	15, 255
 data_50004DB8:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2618, 0x3F262C
+	# 20 bytes the code takes the address of: _tr_init 0x4C136454 `mov data_50004DB8, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5005DE04	# +0
+	.long	compress_block_entry_L155_Table	# +4
+	tab_u32	0x101, 0x11E, 0xF	# +8
 data_50004DCC:
-.incbin_range "baserom/kn6000_program.rom", 0x3F262C, 0x3F2640
+	# 20 bytes the code takes the address of: _tr_init 0x4C136454 `mov data_50004DCC, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0x5005E284	# +0
+	.long	_tr_tally_entry_L77_Table	# +4
+	tab_u32	0x0, 0x1E, 0xF	# +8
 data_50004DE0:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2640, 0x3F2654
+	# 20 bytes the code takes the address of: _tr_init 0x4C136454 `mov data_50004DE0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32, pointers) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0	# +0
+	.long	_tr_tally_entry_L77_Table+120	# +4
+	tab_u32	0, 19, 7	# +8
 
 tr_static_init_Var:	# u32, initial value of a RAM variable; read / written by tr_static_init 0x4C136299: `mov (tr_static_init_Var), d0`; tr_static_init_entry_L195 0x4C136433: `mov d0, (tr_static_init_Var)`
 	.long	0
@@ -13732,13 +13748,29 @@ inflate_blocks_entry_L61f_Table:	# 19 x u32, 0..18; read by inflate_blocks_entry
 	tab_u32	10, 5, 11, 4, 12, 3, 13, 2	# [8]
 	tab_u32	14, 1, 15	# [16]
 data_50004E44:
-.incbin_range "baserom/kn6000_program.rom", 0x3F26A4, 0x3F2720
+	# 124 bytes the code takes the address of: inflate_trees_dynamic 0x4C139315 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); inflate_trees_dynamic 0x4C139315 `mov data_50004E44, a1` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139483 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	3, 4, 5, 6, 7, 8, 9, 10	# +0
+	tab_u32	11, 13, 15, 17, 19, 23, 27, 31	# +32
+	tab_u32	35, 43, 51, 59, 67, 83, 99, 115	# +64
+	tab_u32	131, 163, 195, 227, 258, 0, 0	# +96
 data_50004EC0:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2720, 0x3F279C
+	# 124 bytes the code takes the address of: inflate_trees_dynamic 0x4C139315 `mov data_50004EC0, d0` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139483 `mov data_50004EC0, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0, 0, 0, 0, 0, 0, 0, 0	# +0
+	tab_u32	1, 1, 1, 1, 2, 2, 2, 2	# +32
+	tab_u32	3, 3, 3, 3, 4, 4, 4, 4	# +64
+	tab_u32	5, 5, 5, 5, 0, 192, 192	# +96
 data_50004F3C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F279C, 0x3F2814
+	# 120 bytes the code takes the address of: inflate_trees_dynamic_entry_L57 0x4C139371 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1); inflate_trees_dynamic_entry_L57 0x4C139371 `mov data_50004F3C, a1` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139483 `call huft_build_entry, [d2,d3,a2,a3], 0x10` (+0, arg a1) (+1 more); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	1, 2, 3, 4, 5, 7, 9, 13	# +0
+	tab_u32	17, 25, 33, 49, 65, 97, 129, 193	# +32
+	tab_u32	257, 385, 513, 769, 1025, 1537, 2049, 3073	# +64
+	tab_u32	4097, 6145, 8193, 12289, 16385, 24577	# +96
 data_50004FB4:
-.incbin_range "baserom/kn6000_program.rom", 0x3F2814, 0x3F288C
+	# 120 bytes the code takes the address of: inflate_trees_dynamic_entry_L57 0x4C139371 `mov data_50004FB4, d0` (+0, as a base); inflate_trees_fixed_entry_L95 0x4C139483 `mov data_50004FB4, d0` (+0, as a base); word rows: the piece is word-aligned and every word is below 2^24 or an address (u32) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u32	0, 0, 0, 0, 1, 1, 2, 2	# +0
+	tab_u32	3, 3, 4, 4, 5, 5, 6, 6	# +32
+	tab_u32	7, 7, 8, 8, 9, 9, 10, 10	# +64
+	tab_u32	11, 11, 12, 12, 13, 13	# +96
 
 inflate_trees_fixed_Var:	# u32, initial value of a RAM variable; read / written by inflate_trees_fixed 0x4C1393EC: `mov (inflate_trees_fixed_Var), d0`; inflate_trees_fixed_entry_L95 0x4C139483: `mov d0, (inflate_trees_fixed_Var)`
 	.long	0
@@ -14660,7 +14692,20 @@ func_4C07C1A7_entry_L35_Records:	# 7 x REC_func_4C07C1A7_entry_L35_Records (8 by
 	REC_func_4C07C1A7_entry_L35_Records	p0=func_4C07C1A7_entry_L35_Records_p0_10, p4=func_4C07C1A7_entry_L35_Records_p0_0
 	REC_func_4C07C1A7_entry_L35_Records	p0=func_4C07C1A7_entry_L35_Records_p0_11, p4=func_4C07C1A7_entry_L35_Records_p0_1
 data_50005948:
-.incbin_range "baserom/kn6000_program.rom", 0x3F31A8, 0x3F3278
+	# 208 bytes the code takes the address of: func_4C09E889_entry_L75 0x4C09E903 `mov data_50005948, d2` (+0, as a base); func_4C09E889_entry_L156 0x4C09E9E4 `mov data_50005948, d2` (+0, as a base); func_4C09E889_entry_L33c 0x4C09EBCA `mov data_50005948, d2` (+0, as a base) (+7 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	3, 0, 4, 7, 0, 4, 0, 4, 7, 10, 4, 0, 4, 7, 11, 3	# +0
+	tab_u8	0, 4, 8, 0, 3, 0, 3, 7, 0, 4, 0, 3, 7, 10, 4, 0	# +16
+	tab_u8	3, 6, 9, 4, 0, 3, 6, 10, 4, 0, 3, 7, 11, 4, 0, 5	# +32
+	tab_u8	7, 10, 4, 0, 4, 7, 9, 4, 0, 4, 8, 10, 3, 0, 4, 6	# +48
+	tab_u8	0, 4, 0, 4, 6, 10, 4, 4, 7, 10, 2, 4, 4, 7, 10, 1	# +64
+	tab_u8	4, 4, 7, 11, 2, 4, 4, 7, 9, 2, 4, 0, 3, 7, 9, 3	# +80
+	tab_u8	0, 3, 6, 0, 4, 3, 7, 10, 2, 4, 3, 9, 2, 7, 3, 0	# +96
+	tab_u8	5, 7, 0, 4, 4, 7, 10, 3, 4, 0, 4, 6, 11, 4, 0, 4	# +112
+	tab_u8	8, 11, 4, 0, 3, 6, 11, 4, 0, 4, 9, 10, 4, 0, 4, 8	# +128
+	tab_u8	10, 4, 0, 4, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +144
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +160
+	tab_u8	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# +176
+	tab_u8	0, 0, 0, 4, 0, 4, 7, 2, 4, 0, 3, 7, 2, 255, 255, 255	# +192
 
 func_4C09EE17_entry_Lcb_Table_2:	# 20 x u16, 0..0; read by func_4C09EE17_entry_Lcb 0x4C09EEE7: `movhu	d0, (a0)`
 	tab_u16	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0	# [0]
@@ -15092,22 +15137,22 @@ func_4C155072_Table:
 	.long	data_4C398D71
 	.long	data_4C398DD4
 	.long	data_4C398FDA
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
-	.long	Str_empty_267
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
+	.long	Str_empty_266
 	.long	data_4C399059
 	.long	data_4C3990BC
 	.long	data_4C39911F
@@ -15200,7 +15245,7 @@ func_4C155072_Table:
 	.long	data_4C39A320
 	.long	data_4C39A32F
 	.long	data_4C39A35A
-	.long	Str_empty_266
+	.long	Str_empty_265
 	.long	0
 	.long	0
 	.long	0
@@ -15216,59 +15261,59 @@ func_4C155072_Table:
 	.long	data_4C399A84
 	.long	data_4C399B03
 	.long	0
-	.long	Str_empty_269
-	.long	0
-	.long	0
-	.long	0
-	.long	data_4C399C01
 	.long	Str_empty_268
 	.long	0
 	.long	0
 	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
-	.long	0
+	.long	data_4C399C01
 	.long	Str_empty_267
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	Str_empty_266
 	.long	0
 	.long	0
 	.long	0
@@ -15496,9 +15541,17 @@ func_4C16A13A_Var_2:	# u32, initial value of a RAM variable; read / written by f
 func_4C171FC8_entry_L61_Var:	# u32, initial value of a RAM variable; read / written by func_4C171FC8_entry_L61 0x4C17202E: `mov d0, (func_4C171FC8_entry_L61_Var)`; func_4C171FC8_entry_Ld1 0x4C17209E: `mov d0, (func_4C171FC8_entry_L61_Var)` ...
 	.long	0x97800000
 data_50006E8C:
-.incbin_range "baserom/kn6000_program.rom", 0x3F46EC, 0x3F471E
+	# 50 bytes the code takes the address of: func_4C171F46 0x4C171F46 `call dly_tsk_entry, [d2,a2], 0x18` (+0, arg a1); func_4C171F7C 0x4C171F7C `call func_4C171F46_entry, [d2], 0x10` (+0, arg a1); func_4C171FC8 0x4C171FC8 `call func_4C171F7C_entry, [d2,d3,a2,a3], 0x58` (+0, arg a1) (+6 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	188, 3, 37, 17, 188, 0, 190, 3, 192, 3, 198, 3, 214, 3, 238, 3	# +0
+	tab_u8	34, 4, 150, 4, 34, 6, 62, 5, 8, 192, 72, 252, 53, 61, 38, 232	# +16
+	tab_u8	188, 3, 193, 218, 242, 242, 222, 250, 10, 217, 41, 40, 8, 2, 148, 0	# +32
+	tab_u8	24, 3	# +48
 data_50006EBE:
-.incbin_range "baserom/kn6000_program.rom", 0x3F471E, 0x3F4750
+	# 50 bytes the code takes the address of: func_4C171F46 0x4C171F46 `call dly_tsk_entry, [d2,a2], 0x18` (+0, arg a1); func_4C171F7C 0x4C171F7C `call func_4C171F46_entry, [d2], 0x10` (+0, arg a1); func_4C171FC8 0x4C171FC8 `call func_4C171F7C_entry, [d2,d3,a2,a3], 0x58` (+0, arg a1) (+7 more); byte rows (u8) [INFERENCE: what the callee reads through the address is not traced]
+	tab_u8	224, 0, 37, 17, 37, 0, 226, 0, 230, 0, 238, 0, 254, 0, 34, 1	# +0
+	tab_u8	104, 1, 225, 64, 93, 254, 147, 149, 81, 186, 227, 200, 211, 19, 111, 13	# +16
+	tab_u8	224, 0, 251, 233, 206, 2, 82, 254, 229, 227, 22, 219, 24, 1, 56, 3	# +32
+	tab_u8	44, 2	# +48
 
 Str_empty_252:	.asciz "\x10'"
 	.align	4, 0x00	# pad after Str_empty_252
