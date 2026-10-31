@@ -14,15 +14,19 @@ F_01LIVE___TM:
 
 F_01LIVE___TM_Bank0:
 	.ascii	"WSA SOUND RAM S0"	; SoundRam_BankName_S0, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"ORGAN SOUNDS 1  "
-	.ascii	"ORGAN SOUNDS 2  "
-	.ascii	"REEDS           "
-	.ascii	"DANCE / TECHNO  "
-	.ascii	"PADS            "
-	.ascii	"EPs / PIANO     "
-	.ascii	"LEAD + FLUTES   "
-	.ascii	"FOLKS           "
+; the names of USER 1 sound groups 0-7, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01LIVE___TM_Bank0_GroupNames:
+	.ascii	"ORGAN SOUNDS 1  "	; USER 1 group 0
+	.ascii	"ORGAN SOUNDS 2  "	; USER 1 group 1
+	.ascii	"REEDS           "	; USER 1 group 2
+	.ascii	"DANCE / TECHNO  "	; USER 1 group 3
+	.ascii	"PADS            "	; USER 1 group 4
+	.ascii	"EPs / PIANO     "	; USER 1 group 5
+	.ascii	"LEAD + FLUTES   "	; USER 1 group 6
+	.ascii	"FOLKS           "	; USER 1 group 7
 	.include	"tm/tone_da965776ca34.s"	; tone 1: Jazz Organ 1
 	.include	"tm/tone_963e08ff1114.s"	; tone 2: Jazz Organ 2
 	.include	"tm/tone_bedcda119121.s"	; tone 3: Small Drawbars
@@ -239,15 +243,19 @@ F_01LIVE___TM_Bank0_Kit:
 
 F_01LIVE___TM_Bank1:
 	.ascii	"WSA SOUND RAM S1"	; SoundRam_BankName_S1, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"BRASSY          "
-	.ascii	"MALLETS         "
-	.ascii	"ORCHESTRAL      "
-	.ascii	"SPLIT / CLUB    "
-	.ascii	"GUITARS         "
-	.ascii	"GLITTER         "
-	.ascii	"ACCORDEON       "
-	.ascii	"EFFECTS         "
+; the names of USER 1 sound groups 8-15, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01LIVE___TM_Bank1_GroupNames:
+	.ascii	"BRASSY          "	; USER 1 group 8
+	.ascii	"MALLETS         "	; USER 1 group 9
+	.ascii	"ORCHESTRAL      "	; USER 1 group 10
+	.ascii	"SPLIT / CLUB    "	; USER 1 group 11
+	.ascii	"GUITARS         "	; USER 1 group 12
+	.ascii	"GLITTER         "	; USER 1 group 13
+	.ascii	"ACCORDEON       "	; USER 1 group 14
+	.ascii	"EFFECTS         "	; USER 1 group 15
 	.include	"tm/tone_1c93418aa692.s"	; tone 1: Golden Trumpets
 	.include	"tm/tone_64d181e784af.s"	; tone 2: Brass Combo
 	.include	"tm/tone_c7facf9b7692.s"	; tone 3: The EgerLands 1
@@ -464,15 +472,19 @@ F_01LIVE___TM_Bank1_Kit:
 
 F_01LIVE___TM_Bank2:
 	.ascii	"WSA SOUND RAM S2"	; SoundRam_BankName_S2, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"Sweep Pad       "
-	.ascii	"Effect Pad 1    "
-	.ascii	"Ensemble Pad    "
-	.ascii	"Percussive Pad  "
-	.ascii	"Synth Perc.1    "
-	.ascii	"Ethno Synth     "
-	.ascii	"Synth Brass     "
-	.ascii	"Percussive Shot "
+; the names of USER 2 sound groups 0-7, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01LIVE___TM_Bank2_GroupNames:
+	.ascii	"Sweep Pad       "	; USER 2 group 0
+	.ascii	"Effect Pad 1    "	; USER 2 group 1
+	.ascii	"Ensemble Pad    "	; USER 2 group 2
+	.ascii	"Percussive Pad  "	; USER 2 group 3
+	.ascii	"Synth Perc.1    "	; USER 2 group 4
+	.ascii	"Ethno Synth     "	; USER 2 group 5
+	.ascii	"Synth Brass     "	; USER 2 group 6
+	.ascii	"Percussive Shot "	; USER 2 group 7
 	.include	"tm/tone_bbabe437a5a5.s"	; tone 1: Imperial Sweep
 	.include	"tm/tone_fac30dbcbb82.s"	; tone 2: Big Wave
 	.include	"tm/tone_f52816b7c2fd.s"	; tone 3: Mysterious
@@ -689,15 +701,19 @@ F_01LIVE___TM_Bank2_Kit:
 
 F_01LIVE___TM_Bank3:
 	.ascii	"WSA SOUND RAM S3"	; SoundRam_BankName_S3, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"E.Piano         "
-	.ascii	"Synth Perc.2    "
-	.ascii	"Strings         "
-	.ascii	"Effect Pad 1    "
-	.ascii	"Sax & Flute     "
-	.ascii	"Bass            "
-	.ascii	"Percussion      "
-	.ascii	"Amok Sounds     "
+; the names of USER 2 sound groups 8-15, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01LIVE___TM_Bank3_GroupNames:
+	.ascii	"E.Piano         "	; USER 2 group 8
+	.ascii	"Synth Perc.2    "	; USER 2 group 9
+	.ascii	"Strings         "	; USER 2 group 10
+	.ascii	"Effect Pad 1    "	; USER 2 group 11
+	.ascii	"Sax & Flute     "	; USER 2 group 12
+	.ascii	"Bass            "	; USER 2 group 13
+	.ascii	"Percussion      "	; USER 2 group 14
+	.ascii	"Amok Sounds     "	; USER 2 group 15
 	.include	"tm/tone_7a77bd7abcc8.s"	; tone 1: Pop E.P.
 	.include	"tm/tone_8ab9bd49bd10.s"	; tone 2: More Suitcase
 	.include	"tm/tone_316876be40a1.s"	; tone 3: Ideal E.P.

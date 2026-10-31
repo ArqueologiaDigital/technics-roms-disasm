@@ -14,15 +14,19 @@ F_01DANCE__TM:
 
 F_01DANCE__TM_Bank0:
 	.ascii	"WSA SOUND RAM S0"	; SoundRam_BankName_S0, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"A.SCHLESINGER 1 "
-	.ascii	"ANDREW 2        "
-	.ascii	"ANDREW 3        "
-	.ascii	"ANDREW 4        "
-	.ascii	"LEE GROVES 1    "
-	.ascii	"LEE 2           "
-	.ascii	"LEE 3           "
-	.ascii	"LEE 4           "
+; the names of USER 1 sound groups 0-7, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DANCE__TM_Bank0_GroupNames:
+	.ascii	"A.SCHLESINGER 1 "	; USER 1 group 0
+	.ascii	"ANDREW 2        "	; USER 1 group 1
+	.ascii	"ANDREW 3        "	; USER 1 group 2
+	.ascii	"ANDREW 4        "	; USER 1 group 3
+	.ascii	"LEE GROVES 1    "	; USER 1 group 4
+	.ascii	"LEE 2           "	; USER 1 group 5
+	.ascii	"LEE 3           "	; USER 1 group 6
+	.ascii	"LEE 4           "	; USER 1 group 7
 	.include	"tm/tone_0f8a3fbf247a.s"	; tone 1: New Worlds
 	.include	"tm/tone_e7d33ace169b.s"	; tone 2: Saw Teeth
 	.include	"tm/tone_4e29f420f24a.s"	; tone 3: Grunged Guitar 2
@@ -239,15 +243,19 @@ F_01DANCE__TM_Bank0_Kit:
 
 F_01DANCE__TM_Bank1:
 	.ascii	"WSA SOUND RAM S1"	; SoundRam_BankName_S1, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"LUTZ  DETERRA 1 "
-	.ascii	"LUTZ 2          "
-	.ascii	"LUTZ 3          "
-	.ascii	"LUTZ 4 & ANDREW "
-	.ascii	"JALL HUTTEMANN 1"
-	.ascii	"JALL 2          "
-	.ascii	"JALL 3          "
-	.ascii	"JALL 4          "
+; the names of USER 1 sound groups 8-15, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DANCE__TM_Bank1_GroupNames:
+	.ascii	"LUTZ  DETERRA 1 "	; USER 1 group 8
+	.ascii	"LUTZ 2          "	; USER 1 group 9
+	.ascii	"LUTZ 3          "	; USER 1 group 10
+	.ascii	"LUTZ 4 & ANDREW "	; USER 1 group 11
+	.ascii	"JALL HUTTEMANN 1"	; USER 1 group 12
+	.ascii	"JALL 2          "	; USER 1 group 13
+	.ascii	"JALL 3          "	; USER 1 group 14
+	.ascii	"JALL 4          "	; USER 1 group 15
 	.include	"tm/tone_cfc8d0c856d3.s"	; tone 1: Modeling Mallet
 	.include	"tm/tone_14c0d1d4ecd0.s"	; tone 2: Ice Box
 	.include	"tm/tone_5ed2e03aff00.s"	; tone 3: Bad Town Stack
@@ -464,15 +472,19 @@ F_01DANCE__TM_Bank1_Kit:
 
 F_01DANCE__TM_Bank2:
 	.ascii	"WSA SOUND RAM S2"	; SoundRam_BankName_S2, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"EXTRA FOR DEMO 1"
-	.ascii	"EXTRA FOR DEMO 2"
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
+; the names of USER 2 sound groups 0-7, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DANCE__TM_Bank2_GroupNames:
+	.ascii	"EXTRA FOR DEMO 1"	; USER 2 group 0
+	.ascii	"EXTRA FOR DEMO 2"	; USER 2 group 1
+	.ascii	"CLEAR           "	; USER 2 group 2
+	.ascii	"CLEAR           "	; USER 2 group 3
+	.ascii	"CLEAR           "	; USER 2 group 4
+	.ascii	"CLEAR           "	; USER 2 group 5
+	.ascii	"CLEAR           "	; USER 2 group 6
+	.ascii	"CLEAR           "	; USER 2 group 7
 	.include	"tm/tone_22b9c1770a6a.s"	; tone 1: Don't Croak It
 	.include	"tm/tone_07cf01ec0e77.s"	; tone 2: & Vinylly
 	.include	"tm/tone_6883a9cee6e1.s"	; tone 3: Don't Scratch It
@@ -689,15 +701,19 @@ F_01DANCE__TM_Bank2_Kit:
 
 F_01DANCE__TM_Bank3:
 	.ascii	"WSA SOUND RAM S3"	; SoundRam_BankName_S3, copied here by SoundRam_ClearFourBanks
-; eight 16-character lines, which SoundRam_ClearFourBanks does not write (no reader found)
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
-	.ascii	"CLEAR           "
+; the names of USER 2 sound groups 8-15, 16 characters each: UserSoundBank_RemoteGroupNameAddr (prom_a
+; 0xF9F7F6) and SoundGroupName_Lookup (prom_a 0xFC2035) read group H of USER 1 / USER 2 at
+; 0xE80010 / 0xEA0010 + 16*H for H 0-7 and 0xE90010 / 0xEB0010 + 16*(H-8) for 8-15 (a group is eight of
+; the bank's 64 tones; SoundRam_ClearFourBanks does not write the names)
+F_01DANCE__TM_Bank3_GroupNames:
+	.ascii	"CLEAR           "	; USER 2 group 8
+	.ascii	"CLEAR           "	; USER 2 group 9
+	.ascii	"CLEAR           "	; USER 2 group 10
+	.ascii	"CLEAR           "	; USER 2 group 11
+	.ascii	"CLEAR           "	; USER 2 group 12
+	.ascii	"CLEAR           "	; USER 2 group 13
+	.ascii	"CLEAR           "	; USER 2 group 14
+	.ascii	"CLEAR           "	; USER 2 group 15
 	.include	"tm/tone_f99c13e7ff1d.s"	; tone 1: Clear
 	.include	"tm/tone_f99c13e7ff1d.s"	; tone 2: Clear
 	.include	"tm/tone_f99c13e7ff1d.s"	; tone 3: Clear
