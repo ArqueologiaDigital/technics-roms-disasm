@@ -12,13 +12,13 @@ Each rule is a key of `gen_data_s.FEATURES`, on by default; the environment vari
 (a comma list) turns rules off, which is how `typer_stats.py` measures each one against the generator
 as it was.
 
-| rule           | item | what it does                                                                                                                                                                                  |
-|----------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `ptr_starts`   | 1    | a 32-bit word is a pointer into code only when it is the first byte of an instruction; otherwise it is text or a number, as the readers say                                                  |
-| `array_end`    | 2    | a pointer loop proven to stop at an address (`cmp End, aN` and a branch back) ends the array it walks                                                                                         |
-| `mem_ptrs`     | 3a   | data addresses stored to a memory slot (a RAM global, a zero-initialised data word, a field of a record) and loaded back elsewhere                                                            |
-| `loop_index`   | 3b   | a constant in a data register a loop writes is the loop's induction variable at its head; a pointer plus a scaled index keeps the scale                                                      |
-| `step_arrays`  | 3c   | a block a routine steps through (or indexes) by s >= 2 is an array of s-byte records, counted by the loop when it is proven, else by the block's extent                                      |
+| rule           | item | what it does                                                                                                                                                                            |
+|----------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ptr_starts`   | 1    | a 32-bit word is a pointer into code only when it is the first byte of an instruction; otherwise it is text or a number, as the readers say                                             |
+| `array_end`    | 2    | a pointer loop proven to stop at an address (`cmp End, aN` and a branch back) ends the array it walks                                                                                   |
+| `mem_ptrs`     | 3a   | data addresses stored to a memory slot (a RAM global, a zero-initialised data word, a field of a record) and loaded back elsewhere                                                      |
+| `loop_index`   | 3b   | a constant in a data register a loop writes is the loop's induction variable at its head; a pointer plus a scaled index keeps the scale                                                 |
+| `step_arrays`  | 3c   | a block a routine steps through (or indexes) by s >= 2 is an array of s-byte records, counted by the loop when it is proven, else by the block's extent                                 |
 | `deep_records` | 3d   | a loop that walks records through their own field types every record of the chain; blocks a record's pointer field leads to that the code copies whole are typed copies (all trees now) |
 
 ## 1. Pointer fields that hold text (`ptr_starts`)
@@ -39,8 +39,8 @@ it of every code value before `is_addr()`, the pointer-table pass (`typed_refs()
 `pointerish()` (the guard that keeps a string from being taken when its words look like addresses) accept
 it.  RAM, the host program and data addresses are never judged by it.
 
-`insn_starts_check.py` compares the oracle with what kn7asm assembles, byte by byte (the lane's base,
-f4045a81c):
+`insn_starts_check.py` compares the oracle with what kn7asm assembles, byte by byte (the lane's base
+f4045a81c, and again on this branch's final sources, with the same figures):
 
 | tree          | instruction bytes | agree     | disagree | undecided (before the first anchor) |
 |---------------|-------------------|-----------|----------|-------------------------------------|
@@ -70,7 +70,7 @@ and the table header cites the compare (`...; ends at +20, where func_4850DF34 0
 (`cmp func_4850DF34_Table+20, a2`)`).  Only bottom-tested loops count: a loop that compares before its
 step (`cmp End, aN` / exit / `bra` back) does not show the step at the compare.  Bounds found: 40 in
 build 941 (`MainMmmControl_Table` 260 -> 256 entries; its +1024 / +1028 are `MainMmmControl`'s two
-variables), 15 tables shortened.
+variables), 16 tables shortened (headers `...; ends at +N, where ... loop stops`).
 
 The churn: `--only array_end` on 941 changes 311 lines of the generated data sources (data_NN.s,
 data_structs.inc, labels.sym), and gen_program_s.py then respells the code that names the bytes after a
@@ -117,7 +117,10 @@ head and the pointer loaded from field f of it at the branch back walks a chain 
 `chain_closure()` makes every record the chain reaches (visited once, at most 4,096) a target of kind K.
 In the KN7000 that is the voice directory's five hash tables (`VoiceDirRemapFind`, `VoiceDirClassFind`,
 `VoiceDirIndexFind`, `VoiceDirRefFind`, `VoiceDirPartRefFind`: `a2 = Table[hash]; while (a2) { ...; a2 =
-*a2 }`), 1,222 records, and Malloc / Free's free list (in RAM: nothing to type).  `copied_blocks()` (a block
+*a2 }`): their records go from 2,118 (the bucket heads the tables point at) to 3,351 in build 941
+(VoiceDirRemapFind 357 -> 984, VoiceDirClassFind and VoiceDirIndexFind 453 -> 570, VoiceDirRefFind
+466 -> 645, VoiceDirPartRefFind 389 -> 582; 645 and 582 are also the record counts the comment above
+VoiceDirRemapFind gives for two of the directories), and Malloc / Free's free list (in RAM: nothing to type).  `copied_blocks()` (a block
 the code memcpy's / memcmp's with a constant length) follows pointer fields of typed records and now runs
 for the siblings too: the KN2400's 12-byte blocks the switch descriptors' `p8` leads to
 (`func_5016594F_entry_L63_Block*`, `memcpy(.., 12)`), which lane callee-walk left as opaque pieces.
@@ -142,18 +145,106 @@ it right after KernelInitHook and install their own tick handler for interrupt 1
 
 ## Figures
 
-PLACEHOLDER
+Measured against main 868b201f0 (lanes mn10300-formats, ic21-own and hdae-ledgers merged), with
+`typer_stats.py` (the generator with every rule off, which reproduces main's committed sources byte for
+byte -- checked for 941 -- against every rule on, the same inputs) and `code_in_data.py` (main's committed
+sources, then this branch's final ones).  Main's later merge, lane media-build (b256f3b36), touches none of
+these sources.  The "typed after" column is also what gen_data_s.py reports on this branch's final, fixpoint
+sources, for every profile.
+
+**Per tree, all rules** (n / bytes; reader rows = the read / address-only / string row pieces):
+
+| tree       | typed before | typed after | change  | reader rows before | reader rows after | opaque before   | opaque after    | P before | P after | line churn |
+|------------|--------------|-------------|---------|--------------------|-------------------|-----------------|-----------------|----------|---------|------------|
+| kn7000-941 | 2,125,911    | 2,143,981   | +18,070 | 85 / 995           | 78 / 905          | 3,448 / 63,227  | 2,174 / 45,394  | 3        | 0       | 24,731     |
+| kn7000-942 | 2,132,336    | 2,150,400   | +18,064 | 87 / 1,091         | 81 / 1,013        | 3,471 / 61,497  | 2,196 / 43,654  | 3        | 0       | 24,847     |
+| kn7000-935 | 2,126,637    | 2,144,574   | +17,937 | 87 / 1,091         | 84 / 1,049        | 3,459 / 64,020  | 2,193 / 46,280  | 1        | 0       | 24,396     |
+| kn7000-893 | 2,126,357    | 2,144,470   | +18,113 | 85 / 995           | 79 / 917          | 3,453 / 62,910  | 2,177 / 45,007  | 2        | 0       | 24,769     |
+| kn6000     | 2,424,027    | 2,436,905   | +12,878 | 185 / 11,215       | 142 / 9,370       | 2,833 / 65,733  | 2,347 / 54,782  | 0        | 0       | 12,952     |
+| kn6500     | 1,935,342    | 1,948,203   | +12,861 | 190 / 11,331       | 147 / 9,486       | 2,849 / 69,967  | 2,364 / 59,027  | 0        | 0       | 12,882     |
+| kn2400     | 1,670,358    | 1,688,962   | +18,604 | 218 / 9,889        | 184 / 8,255       | 4,448 / 172,071 | 3,419 / 155,297 | 1        | 0       | 26,804     |
+| hdsx3      | 481,868      | 482,118     | +250    | 34 / 211           | 34 / 211          | 98 / 3,103      | 98 / 2,981      | 0        | 0       | 64         |
+
+"P" is `code_in_data.py`'s mid-instruction `.long` count (distinct addresses); every other column of that
+probe (T, T-mid, F, L) is 0 before and after.  "line churn" is the lines of data_NN.s, data_structs.inc and
+labels.sym that differ between the two generator runs.
+
+**Per rule, build 941** (`--only R`: that rule alone against all off):
+
+| rule           | typed change | reader rows | opaque                           | line churn |
+|----------------|--------------|-------------|----------------------------------|------------|
+| `ptr_starts`   | +119         | 85 -> 80    | 3,448 / 63,227 -> 3,441 / 63,161 | 230        |
+| `array_end`    | +12          | 85 -> 85    | 3,448 / 63,227 -> 3,447 / 63,215 | 311        |
+| `mem_ptrs`     | +0           | 85 -> 85    | unchanged                        | 0          |
+| `loop_index`   | +5,959       | 85 -> 85    | 3,448 / 63,227 -> 3,157 / 57,371 | 4,533      |
+| `step_arrays`  | +32          | 85 -> 84    | unchanged                        | 403        |
+| `deep_records` | +11,924      | 85 -> 84    | 3,448 / 63,227 -> 2,475 / 51,352 | 20,564     |
+
+The rules overlap (the sum is more than the +18,070 of all of them).  The churn is mostly names: a new
+record gets a label, the generator's numbered names after it (`Str_d_5` -> `Str_d_19`, `func_X_Table_3`
+...) renumber, and gen_program_s.py then respells the code that names them; `deep_records`' 1,233 new hash-chain
+records of the voice directory each get a label of their own.
+
+**Bytes typed before and not after** (`typer_stats.py`'s "typed in the off run only"; they become reader
+rows, `.space` fill or opaque pieces):
+
+| tree       | bytes | what                                                                                                                                                                                                          |
+|------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| kn7000-941 | 23    | the `0xFFFFFFFF` after `func_484161BE_Table` and its three twins (the loop starts at the counter's first value and stops before it), `func_48440E4D_Records` 6 -> 3 "User Bank" records, `data_50001850_p0_1` |
+| kn7000-942 | 23    | the same                                                                                                                                                                                                      |
+| kn7000-935 | 87    | the same, and the 64-character map at 0x48613508 (a string before, running into the next record; now a piece of printable bytes, no NUL)                                                                      |
+| kn7000-893 | 23    | the same as 941                                                                                                                                                                                               |
+| kn6000     | 32    | the same tables' terminators (`func_4C007A5B_entry_L27_Table` ...), `func_4C062A3D_entry_Lcd_Records`                                                                                                         |
+| kn6500     | 35    | the same, and `TtSqmixer_L64_Table`                                                                                                                                                                           |
+| kn2400     | 17    | `func_5017E2AD_entry_Lcd_Records`, `func_4863A91F_Table_4`, `TtSqmixer_L74_Table`, two `SdWorkerCmdHandler` variables (now inside records)                                                                    |
+| hdsx3      | 6     | two `KssCopy*_Table_p0_0` records, now part of a larger one                                                                                                                                                   |
+
+No tree loses typed coverage: every tree types more bytes (the table above), and the bytes it no longer
+types are those an over-long item held.
+
+**Census figures** (read-only; `scripts/analysis/data_incbin_census.py --compare
+docs/coverage/data-incbin-2026-10-31-01.json` exits 0, nothing rose, generic 0 everywhere).  Opaque n /
+bytes on this branch: kn7000-program 2,174 / 45,394, kn7000-sp7001 2,196 / 43,654, kn7000-b935 2,192 /
+46,280, kn7000-b893 2,177 / 45,007, kn6000 2,347 / 54,782, kn6500 2,364 / 59,027, kn2400 3,419 / 155,297,
+hdsx3 98 / 2,981 (main b256f3b36: the "opaque before" column above, which `typer_stats.py` counts the same
+way; the census counts b935's one fewer).
+
+`scripts/analysis/doc_quality_census.py --compare` (against doc-quality-2026-10-31-01; on main b256f3b36 it
+shows no rise in these images) exits 1 for three siblings:
+
+| image  | debt                          | before -> after  | why                                                                                                                                                                                                                   |
+|--------|-------------------------------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| kn2400 | (a) routines without a header | 21,233 -> 21,242 | new records' pointer fields name code addresses no label had (`loc_486D0C7E` ..., a table of handlers now typed), and a pointed-to label counts as a routine; `func_5018DD6C_entry`, the call of KernelTickIsrDefault |
+| kn2400 | (c) loc_ locals               | 4,967 -> 4,975   | the same `loc_486D0C7E` ... labels                                                                                                                                                                                    |
+| kn6000 | (a) routines without a header | 19,020 -> 19,021 | `func_4C3F7272_entry`: KernelTickIsrDefault is a function now, so its call names an entry                                                                                                                             |
+| kn6500 | (a) routines without a header | 19,065 -> 19,070 | the same entry, and four `loc_4C04F405` ... code addresses new records name                                                                                                                                           |
+| kn6500 | (c) loc_ locals               | 5,061 -> 5,065   | those four labels                                                                                                                                                                                                     |
+
+What fell: placeholder routine names in the KN7000 program builds (`func_487B8FB2` -> `KernelTickIsrDefault`)
+and the siblings (the three twins).  `make dispatch-census` measures no MN10300 image.
 
 ## Regenerating
 
-After the tool commits, in this order (in a worktree, with the absolute Makefile overrides and `UNIDASM=`):
+After the tool commits, in this order (in a worktree, with the absolute Makefile overrides, `UNIDASM=` and
+`SP7001_UPDATES=`):
 
-1. `make -C kn2400 data-and-code-src`, `make -C kn6000 data-and-code-src`, the same for `kn6500`, then
-   `hdsx3` (fixpoints after 3, 3, 3 and 2 rounds; each runs `program-src`, which takes the new symbol);
+1. `make -C kn2400 data-and-code-src`, the same for `kn6000` and `kn6500`, then `hdsx3` (fixpoints after 3,
+   3, 3 and 2 rounds; each runs `program-src`, which takes the new symbol);
 2. `make -C kn7000 symbols-sp7001 symbols-935 symbols-893 SYMOUT=<scratch>` and copy the three
    `kn7000_*_manual.sym` (only `KernelTickIsrDefault` changes);
-3. `python3 tools/gen_program_s.py --profile <b>` for 941, sp7001, b935 and b893, then `make -C kn7000
-   data-and-code-src` (`tools/regen_data_and_code.sh`) to the fixpoint.
+3. `python3 tools/gen_program_s.py --profile <b>` for 941, sp7001, b935 and b893;
+4. `make -C kn7000 data-and-code-src` (`tools/regen_data_and_code.sh`; fixpoint after 3 rounds), then
+   `make -C kn7000 plugin-src`;
+5. build the four programs (`make -C kn7000 verify verify-sp7001 verify-935 verify-893`), then
+   `data-and-code-src` once more: it reached its fixpoint in round 1.
+
+Two loop hazards the regeneration showed, fixed in the tools: a generated `func_<ADDR>` the data names
+must stay in `code_refs.txt` (gen_program_s.py names a prologue a table points at `func_` only while the
+data lists it; lane mn10300-formats made the same `ref()` change, kept at the merge), and gen_program_s.py
+writes no `loc_<ADDR>` `.equ` for such a prologue unless the data spells that `loc_` name
+(`read_data_loc_names()`; 941, 935 and 893 lose 245-265 unused equates from program.s, 942 five).  copied_blocks()
+cites a block's copies in a fixed order (a memcpy and a memcmp from one routine tied, and a set's order
+varies from run to run).
 
 ## Left open
 
